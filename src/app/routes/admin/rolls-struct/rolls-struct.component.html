@@ -1,0 +1,152 @@
+<div class="content-heading">
+    <div>
+      Privilegios
+      <span class="text-sm d-none d-sm-block">Administraci&oacute;n de privilegios.</span>
+    </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/home']">Inicio</a>
+      </li>
+      <li class="breadcrumb-item active">Privilegios</li>
+    </ol>
+  </div>
+  
+<div class="panel panel-default panel-flat mat-elevation-z8">
+  <div class="panel-body">
+    <div *ngIf="!hiddenSelect" class="row">
+      <div class="col-md-6">
+        <select class="form-control" (change)="selected($event.target.value); id = $event.target.value; flag=true" >
+            <option  [value]="0">Seleccionar Rol</option>
+            <option *ngFor="let rol of listRoles" [value]="rol.id">{{rol.rol}}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <btn-view id='read' chkPrivilegiosButtons (click)="staticModal.show()" data-toggle="modal" data-target="#staticModal" matTooltip="Ver integrantes del rol"></btn-view>
+
+        <btn-add id='create' chkPrivilegiosButtons (click)="GetTreeRoles(id); modalNodes.show()" data-toggle="modal" data-target="#modalNodes" matTooltip="Agregar nueva sección"></btn-add>
+
+        <btn-delete id='delete' chkPrivilegiosButtons (click)="DeleteRoles(id)" matTooltip="Eliminar Rol Seleccionado"></btn-delete>
+        
+      </div>
+    </div>
+    <br/>
+    <br/>
+    <div class="row">
+      <div class="col-md-2 pull-left">
+        <div class="input-group">
+          <input (input)="Search($event)" class="input-sm form-control" type="text" placeholder="Filtrar" />
+        </div> 
+      </div>
+      <div class="col-md-8 text-center">
+        <p class="text-center pv">ROLES - PRIVILEGIOS</p>
+      </div>
+    </div>
+    <br/>
+    <br/>
+    <div class="row">
+        <span>{{alert}}</span>
+        <table #tbl class="table table-responsive table-bordered table-hover" (change)="UpdateFoto() ">
+          <thead><tr><td *ngFor="let c of columns" class="text-center">{{c.title}}</td></tr></thead>
+            <tbody>
+              <tr *ngFor="let r of filteredData; let rowIndex = index">
+                
+                <td class="text-center">
+                    {{r['rol']}}
+                  <!-- <span matTooltip="Double click to edit" (dblclick)="editing[rowIndex + '-' + 'rol'] = true" *ngIf="!editing[rowIndex + '-' + 'rol']">
+                    {{r['rol']}}
+                  </span>
+                  <input autofocus (blur)="updateValue($event, rol, rowIndex)" *ngIf="editing[rowIndex + '-' + 'rol']" type="text" [value] = "r['rol']" />  -->
+                </td>
+                <td class="text-center">
+                    {{r['nombre']}}
+                    <!-- <span matTooltip="Double click to edit" (dblclick)="editing[rowIndex + '-' + 'nombre' ] = true" *ngIf="!editing[rowIndex + '-' + 'nombre']">
+                      {{r['nombre']}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'nombre', rowIndex)" *ngIf="editing[rowIndex + '-' + 'nombre']" type="text" [value] = "r['nombre']" />  -->
+                </td>
+                <td class="center">
+                  <mat-checkbox #crear id="{{ 'C-' + rowIndex}}" (change)="r['create'] = crear.checked" class="checkbox" [checked]="r.create" [disabled] = "hiddenSelect"></mat-checkbox><span></span>
+                </td>
+                <td>
+                  <mat-checkbox #leer id="{{ 'R-' + rowIndex}}" (change)="r['read'] = leer.checked" class=" center-block checkbox" [checked]="r.read" [disabled] = "hiddenSelect"></mat-checkbox>
+                  <span></span>
+                </td>
+                <td class="center">
+                  <mat-checkbox #modificar id="{{ 'U-' + rowIndex}}" (change)="r['update'] = modificar.checked" class="checkbox" [checked]="r.update" [disabled] = "hiddenSelect"></mat-checkbox>
+                  <span></span>
+                </td>
+                <td class="center">
+                  <mat-checkbox #borrar id="{{ 'D-' + rowIndex}}" (change)="r['delete'] = borrar.checked" class="checkbox" [checked]="r.delete" [disabled] = "hiddenSelect"></mat-checkbox>
+                  <span></span>
+                </td>
+                <td class="center">
+                  <mat-checkbox #especial (change)="r['especial'] = especial.checked" class="checkbox" [checked]="r.especial" [disabled] = "hiddenSelect"></mat-checkbox>
+                  <span></span>
+                </td>
+                <td *ngIf="!hiddenSelect" class="center-block" >
+                  <btn-check id='update' chkPrivilegiosButtons matTooltip="Guardar Cambios" (click)="GuardarCambios(r)"></btn-check>
+                </td>
+            </tr>
+          </tbody>
+      </table>
+      <span>{{alert}}</span>
+    </div>
+  </div>
+
+    <!-- Modal  -->
+
+    <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h4 class="modal-title pull-left"></h4>
+             <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+               <span aria-hidden="true">&times;</span>
+             </button>
+           </div>
+           <div class="modal-body panel panel-default panel-flat mat-elevation-z8">
+           <table class="table table-hover table-responsive">
+              <thead>
+                <tr>
+                  <th class="text-center">Imagen</th>
+                  <th class="text-center">Nombre</th>
+                  <th class="text-center">Descripción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr matTooltip="click to select" *ngFor="let e of listAux; let i = index">
+                  <td><img class="center-block media img-responsive img-circle thumb32" src="{{e.fotoAux}}" alt="" /></td>
+                  <td class="text-center">{{e.nombre + ' ' + e.apellidoPaterno}}</td>
+                  <td class="text-center">{{e.descripcion}}</td>
+                  <!-- <td><btn-delete id='delete' chkPrivilegiosButtons matTooltip="Borrar Usuario de Grupo" class="pull-right" (click)="DeleteUserRoles(e.entidadId, id)"> 
+                    </btn-delete></td> -->
+                </tr>
+              </tbody>
+            </table>
+           <!-- <div class="modal-footer">
+               <btn-closed data-dismiss="modal" (click)="staticModal.hide()"></btn-closed>
+             </div> -->
+         </div>
+       </div>
+     </div>
+     </div>
+
+     
+    <!-- Modal Nodes -->
+
+    <div class="modal fade" bsModal #modalNodes="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h4 class="modal-title pull-left"></h4>
+             <button type="button" class="close pull-right" aria-label="Close" (click)="modalNodes.hide()">
+               <span aria-hidden="true">&times;</span>
+             </button>
+           </div>
+           <div class="modal-body">
+            <grid-roles #gridTree [nodes] = "nodes"></grid-roles>
+          </div>
+       </div>
+     </div>
+     </div>

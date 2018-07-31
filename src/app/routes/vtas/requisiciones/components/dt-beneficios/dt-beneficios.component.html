@@ -1,0 +1,36 @@
+
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <em class="fa fa-trophy"></em>
+      </mat-panel-title>
+      <mat-panel-description>
+        Beneficios
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row"><!--Agregar la información que ira en el panel-->
+      <div class="dt-container">
+        <mat-table #table [dataSource]="dataSource">
+          <ng-container matColumnDef="beneficio">
+            <mat-header-cell *matHeaderCellDef> Beneficio</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.tipoBeneficio?.tipoBeneficio}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="cantidad">
+            <mat-header-cell class="mat-cell-center" *matHeaderCellDef> Cantidad</mat-header-cell>
+            <mat-cell class="mat-cell-right" *matCellDef="let element"> {{element.cantidad | currency:"MX $"}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="observeciones">
+            <mat-header-cell *matHeaderCellDef> Observaciones</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.observaciones}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

@@ -1,0 +1,55 @@
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+<div>
+  <h3>Generar nueva requisici&oacute;n</h3>
+</div>
+<div mat-dialog-content>
+    <div class="row">
+      <div class="col-sm-6">
+        <small><strong>Cliente: </strong> {{data.cliente?.razonSocial}}</small>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-sm-4">
+        <small><strong>Giro: </strong>{{data.cliente?.giroEmpresas?.giroEmpresa}}</small>
+      </div>
+      <div class="col-md-4 col-sm-4">
+        <small><strong>Actividad: </strong>{{data.cliente?.actividadEmpresas?.actividadEmpresa}}</small>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-sm-4">
+        <small><strong>Puesto: </strong>{{data.nombrePerfil}}</small>
+      </div>
+      <div class="col-md-4 col-sm-4">
+        <small><strong>Sueldo Minimo: </strong>{{data.sueldoMinimo | currency: '$'}}</small>
+      </div>
+      <div class="col-md-4 col-sm-4">
+        <small><strong>Sueldo Maximo: </strong>{{data.sueldoMaximo | currency: '$'}}</small>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-sm-4">
+         <small><strong>Clase Reclutamiento: </strong>{{data.claseReclutamiento?.clasesReclutamiento}}</small>
+      </div>
+      <div class="col-md-4 col-sm-4">
+        <small><strong>Tipo Reclutamiento: </strong>{{data.tipoReclutamiento?.tipoReclutamiento}}</small>
+      </div>
+    </div>
+    <br>
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <app-direccionauto [Damfo]='IdDamfo' [IdDireccion]='FDireccion' (change)='FiltroDireccion($event)'></app-direccionauto>
+        </div>
+      </div>
+</div>
+<mat-divider></mat-divider>
+<div mat-dialog-actions>
+  <div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-6">
+      <btn-closed [text]="textBtnCancel" (click)="onNoClick()"></btn-closed>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-6">
+      <btn-accept [text]="textBtnAccept" (click)="createRequisicion()"></btn-accept>
+    </div>
+  </div>
+</div>

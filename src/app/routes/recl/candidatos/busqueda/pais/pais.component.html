@@ -1,0 +1,15 @@
+<mat-form-field class="fieldautocomplete-full-width">
+  <input matInput placeholder="País" aria-label="Country" [matAutocomplete]="auto" [formControl]="countryCtrl" (blur)="SendIdCountry()">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let country of filteredCountry | async" [value]="country.pais">
+        <div class="row">
+          <div class="col-md-2">
+            <img style="vertical-align:middle;" aria-hidden src="assets/img/flags-mini/{{country.pais}}.png" height="12" />
+          </div>
+          <div class="col-md-4">
+            <small>{{ country.pais }}</small>
+          </div>
+        </div>
+      </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

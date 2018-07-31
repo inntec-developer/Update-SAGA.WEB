@@ -1,0 +1,35 @@
+.find-form {
+  min-width: 100%;
+  max-width: 100%;
+  width: 100%;
+}
+.fieldautocomplete-full-width {
+  width: 100%;
+  font-size: 12px;
+}
+.example-card {
+  max-width: 100%;
+}
+.example-header-image {
+  background-image: url('/assets/img/user/05.jpg');
+  background-size: cover;
+}
+.button-find
+{
+  background-color: #3498DB;
+  color: white;
+}
+.button-clean
+{
+  background-color: #48C9B0;
+  color: white;
+}
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}

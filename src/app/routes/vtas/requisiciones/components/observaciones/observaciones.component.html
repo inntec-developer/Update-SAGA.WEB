@@ -1,0 +1,17 @@
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <em class="fa fa-book"></em>
+      </mat-panel-title>
+      <mat-panel-description>
+        Observaciones
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row"><!--Agregar la información que ira en el panel-->
+      <ol>
+         <li *ngFor="let x of Observaciones"><small>{{x.observaciones}}</small></li>
+     </ol>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

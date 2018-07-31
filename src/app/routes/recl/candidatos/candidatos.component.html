@@ -1,0 +1,17 @@
+<div class="content-heading">
+    <div>
+        Candidatos
+        <span class="text-sm d-none d-sm-block">Administraci&oacute;n de candidatos.</span>
+    </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+        <li class="breadcrumb-item"><a [routerLink]="['/home']" >Inicio</a></li>
+        <li class="breadcrumb-item active">Candidatos</li>
+    </ol>
+</div>
+ <!-- Componente Busqueda -->
+<app-busqueda-candidatos (filtro)="Filtrado($event)"></app-busqueda-candidatos>
+<br>
+<!-- Componente datatable vacantes -->
+<app-dt-candidatos *ngIf="filtradocandidatos" [Filtrado]='filtradocandidatos'></app-dt-candidatos>
+

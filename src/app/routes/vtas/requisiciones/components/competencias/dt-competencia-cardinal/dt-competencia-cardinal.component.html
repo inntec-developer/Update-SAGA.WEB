@@ -1,0 +1,30 @@
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <em class="fa fa-bar-chart"></em>
+      </mat-panel-title>
+      <mat-panel-description>
+        Competencias Cardinales
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row"><!--Agregar la información que ira en el panel-->
+      <div class="dt-container">
+        <mat-table #table [dataSource]="dataSource">
+          <ng-container matColumnDef="competencia">
+            <mat-header-cell *matHeaderCellDef> Competencia</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.competencia?.competenciaCardinal}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="nivel">
+            <mat-header-cell class="mat-cell-center" *matHeaderCellDef> Nivel</mat-header-cell>
+            <mat-cell class="mat-cell-center" *matCellDef="let element"> {{element.nivel}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

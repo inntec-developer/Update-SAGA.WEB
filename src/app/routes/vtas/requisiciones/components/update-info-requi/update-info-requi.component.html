@@ -1,0 +1,75 @@
+<ngx-spinner bdColor = "rgba(198,195,195,0.8)" size = "medium" color = "#90daff" type = "square-jelly-box"></ngx-spinner>
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+<form [formGroup]="formRequi" (ngSubmit)="Save()">
+  <mat-card>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field>
+          <input matInput formControlName="folio" placeholder="No. FOLIO: " required>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 text-right">
+        <mat-slide-toggle
+            class="example-margin"
+            [color]="warn"
+            formControlName="confidencial">
+          Vacante Confidencial
+        </mat-slide-toggle>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <mat-form-field>
+          <input matInput [matDatepicker]="solicitud" placeholder="Fecha Solicitud"
+          formControlName="fch_Solicitud">
+          <mat-datepicker-toggle matSuffix [for]="solicitud"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #solicitud></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field>
+          <input matInput [matDatepicker]="limite" placeholder="Fecha Limite"
+          formControlName="fch_Limite">
+          <mat-datepicker-toggle matSuffix [for]="limite"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #limite></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+          <mat-form-field>
+            <mat-select placeholder="Prioridad" formControlName="prioridad" required>
+              <mat-option *ngFor="let x of Prioridades" [value]="x.id">
+                {{x.descripcion}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field>
+          <input matInput [min]="minLimitDate" [matDatepicker]="cumplimiento" placeholder="Fecha Cumplimiento"
+          formControlName="fch_Cumplimiento" required>
+          <mat-datepicker-toggle matSuffix [for]="cumplimiento"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #cumplimiento></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field>
+          <mat-select placeholder="Estatus" formControlName="estatus" required>
+            <mat-option *ngFor="let x of Estatus" [value]="x.id">
+              {{x.descripcion}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <br>
+    <app-asignar-requisicion #asginaciones [placeHolder]='placeHolderSelect' (Asignacion)='getAsignacion($event)' disabled='true'></app-asignar-requisicion>
+    <div class="row">
+      <div class="col-md-12 text-right">
+        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+        <btn-save matTooltip="Actualizar" *ngIf="formRequi.valid"></btn-save>
+      </div>
+    </div>
+  </mat-card>
+</form>

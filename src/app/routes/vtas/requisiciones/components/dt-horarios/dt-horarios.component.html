@@ -1,0 +1,71 @@
+
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <em class="fa fa-clock-o"></em>
+      </mat-panel-title>
+      <mat-panel-description>
+        Horarios
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row">
+      <div class="dt-container">
+        <mat-table #table [dataSource]="dataSource">
+          <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef> Nombre</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="deDia">
+            <mat-header-cell *matHeaderCellDef> De Día</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.deDia?.diaSemana}}  </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="aDia">
+            <mat-header-cell *matHeaderCellDef> A Día</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.aDia.diaSemana}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="deHora">
+            <mat-header-cell *matHeaderCellDef> De Hora</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.deHora | date:"HH:mm":'UTC-6'}} hrs.</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="aHora">
+            <mat-header-cell *matHeaderCellDef> A Hora</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.aHora | date:"HH:mm":'UTC-6'}} hrs.</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="vacantes">
+            <mat-header-cell  *matHeaderCellDef> Vacantes</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.numeroVacantes}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="especificaciones">
+            <mat-header-cell *matHeaderCellDef> Espc.</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.especificaciones}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="activo">
+            <mat-header-cell *matHeaderCellDef> Activo</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <span *ngIf="element.activo"><em class="fa fa-check-square-o"></em></span>
+              <span *ngIf="!element.activo"><em class="fa fa-square-o"></em></span>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="accion">
+            <mat-header-cell *matHeaderCellDef> Accion</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <btn-edit id="update" (click)="openDialogEdit(element)" chkPrivilegiosButtons  matTooltip="Editar Requisición"></btn-edit>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

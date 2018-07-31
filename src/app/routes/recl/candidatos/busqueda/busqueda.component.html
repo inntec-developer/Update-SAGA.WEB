@@ -1,0 +1,68 @@
+<mat-accordion class="example-headers-align">
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <mat-icon class="text-primary">find_in_page</mat-icon>
+    </mat-panel-title>
+    <mat-panel-description>
+      <label class="text-primary">Filtrado de candidatos</label>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+    <form class="find-form">
+      <hr>
+          <div class="row">
+            <!-- Inicio de filtros. Filtro de Paises. -->
+            <div class="col-md-2"><app-pais [IdPais]="FPais" (change)="FiltroPais($event)"></app-pais></div>
+            <!-- Filtro de Estados -->
+            <div class="col-md-2"><app-estado [Pais]='IdPais' [IdEstado]="FEstado" (change)="FiltroEstado($event)"></app-estado></div>
+            <!-- Filtro de Municipios -->
+            <div class="col-md-2"><app-municipio [Estado]='IdEstado' [IdMunicipio]="FMunicipio" (change)="FiltroMunicipio($event)"></app-municipio></div>
+            <!-- Filtro de Colonias -->
+            <div class="col-md-2"><app-colonia [Municipio]='IdMunicipio' [IdColonia]="FColonia" (change)="FiltroColonia($event)"></app-colonia></div>
+            <!-- Filtro de C.P. -->
+            <div class="col-md-2"><app-cp (change)="FiltroCp($event)"></app-cp></div>
+            <!-- Filtro de Area de experiencia -->
+            <div class="col-md-2"><app-area-exp (change)="Filtroareaexp($event)"></app-area-exp></div>
+          </div>
+          <div class="row">
+            <!-- Filtro de Perfil -->
+            <div class="col-md-2"><app-perfil (change)="Filtroperfil($event)"></app-perfil></div>
+            <!-- Filtro de Salario -->
+            <div class="col-md-2">
+              <mat-form-field class="fieldautocomplete-full-width">
+                <input matInput placeholder="Salario" type="number" class="example-right-align" #Salario (blur)="FiltroSalario(Salario.value)">
+                <span matPrefix>$&nbsp;</span>
+                <span matSuffix>.00</span>
+              </mat-form-field>
+            </div>
+            <!-- Filtro de Genero -->
+            <div class="col-md-2"><app-genero (change)="FiltroGenero($event)"></app-genero></div>
+            <!-- Filtro de Edad -->
+            <div class="col-md-2"><app-edad (change)="FiltroEdad($event)"></app-edad></div>
+            <!-- Filtro de Reubicacion -->
+            <div class="col-md-2"><app-reubicacion (change)="FiltroRe($event)"></app-reubicacion></div>
+            <!-- Filtro de Persona con discapasidad -->
+            <div class="col-md-2"><app-pcondiscapacidad (change)="FiltroPd($event)"></app-pcondiscapacidad></div>
+          </div>
+          <div class="row">
+            <!-- Filtro de Tipo de licencia -->
+            <div class="col-md-2"><app-tplicencia (change)="FiltroTpLic($event)"></app-tplicencia></div>
+            <!-- Filtro de vehiculo propio -->
+            <div class="col-md-2"><app-vehpropio (change)="FiltroVh($event)"></app-vehpropio></div>
+            <!-- Filtro de Nivel de estudios -->
+            <div class="col-md-2"><app-nivestudios (change)="FiltroNv($event)"></app-nivestudios></div>
+            <!-- Filtro de Idiomas -->
+            <div class="col-md-2"><app-idiomas (change)="FiltroIdioma($event)"></app-idiomas></div>
+          </div>
+          <hr>
+    </form>
+  <div class="row">
+    <button class="btn btn-labeled btn-outline btn-info  mb-2" type="button" (click)="Buscar()" matTooltip="Busca candidatos">
+      <span class="btn-label"><i class="fa fa-search"></i></span>Buscar
+    </button>
+    <button class="btn btn-labeled btn-outline btn-green  mb-2" type="button" matTooltip="Limpia todo los filtros">
+      <span class="btn-label"><i class="fa fa-eraser"></i></span>Limpiar filtros
+    </button>
+  </div>
+</mat-expansion-panel>
+</mat-accordion>

@@ -1,0 +1,107 @@
+import {DataTableModule, SharedModule} from 'primeng/primeng'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule, MatInputModule, MatNativeDateModule, MatSelectModule, MatTooltipModule } from '@angular/material';
+import { RouterModule, Routes } from '@angular/router';
+
+import { AddGrupoComponent } from './add-grupo/add-grupo.component';
+import { AddPersonaComponent } from './add-persona/add-persona.component';
+import { AddRolesComponent } from './add-roles/add-roles.component';
+import { AddadminComponent } from './admin/addadmin.component';
+import { AgGridModule } from 'ag-grid-angular/main';
+import { CommonModule } from '@angular/common';
+import { ComponentsModule } from './../../components/components.module';
+import { CustomFormsModule } from 'ng2-validation';
+import { DndModule } from 'ng2-dnd';
+import { FileUploadModule } from 'ng2-file-upload';
+import { GridRolesComponent } from './add-roles/grid-roles/grid-roles.component';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
+import { ImageCropperModule } from 'ng2-img-cropper';
+import {MatCheckboxModule} from '@angular/material/checkbox'
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatDialogModule} from '@angular/material/dialog';
+import {ModalModule} from 'ngx-bootstrap';
+import { Ng2TableModule } from 'ng2-table/ng2-table';
+import { NgModule } from '@angular/core';
+import {NgxDatatableModule} from '@swimlane/ngx-datatable'
+import { PagesModule } from './../pages/pages.module';
+import {PopoverModule} from 'ngx-popover';
+import { RegistroComponent } from './registro/registro.component';
+import { RolGrupoComponent } from './rol-grupo/rol-grupo.component';
+import { RollsStructComponent } from './rolls-struct/rolls-struct.component';
+import { SelectModule } from 'ng2-select';
+import { TreeModule } from 'angular-tree-component';
+import { TreeNode } from 'primeng/api';
+import { TreeTableModule } from 'primeng/primeng';
+import { UploadImgsComponent } from './upload-imgs/upload-imgs.component';
+
+const routes: Routes = [
+    { path: 'roles', component: AddRolesComponent, data: {'componente':'Roles'} },
+    { path: 'agregar', component: AddPersonaComponent, data: {'componente':'Usuarios'} },
+    { path: 'grupo', component: AddadminComponent, data: {'componente':'Usuarios a grupos'} },
+    { path: 'grupoAdd', component: AddGrupoComponent, data: {'componente':'Grupos'} },
+    { path: 'rol', component: RolGrupoComponent, data: {'componente':'Grupos a roles'} },
+    { path: 'privilegios', component: RollsStructComponent, data: {'componente':'Privilegios'}},
+    { path: 'GridRoles', component: GridRolesComponent },
+    { path: 'registro', component: RegistroComponent}
+
+];
+
+
+@NgModule({
+    imports: [
+        RouterModule.forChild(routes),
+        HttpClientModule,
+        HttpModule,
+        CommonModule,
+        DndModule.forRoot(),
+        MatSelectModule,
+        SelectModule,
+        MatNativeDateModule,
+        MatIconModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CustomFormsModule,
+        MatDatepickerModule,
+        FileUploadModule,
+        ImageCropperModule,
+        Ng2TableModule,
+        MatCheckboxModule,
+        AgGridModule,
+        NgxDatatableModule, 
+        MatDialogModule, 
+        MatTooltipModule,
+        PagesModule,
+        ComponentsModule,
+        ModalModule.forRoot(),
+        PopoverModule,
+        TreeTableModule, 
+        DataTableModule,
+        SharedModule, 
+        TreeModule
+        
+      ],
+    declarations:
+    [
+      AddadminComponent,
+      AddPersonaComponent,
+      AddGrupoComponent,
+      AddRolesComponent,
+      RolGrupoComponent,
+      UploadImgsComponent,
+      RollsStructComponent,
+      RegistroComponent,
+      GridRolesComponent 
+
+    ],
+    exports: [
+        RouterModule,
+        AddPersonaComponent
+    ], 
+    providers: []
+})
+
+export class AdminModule {
+  constructor() {	}
+ }

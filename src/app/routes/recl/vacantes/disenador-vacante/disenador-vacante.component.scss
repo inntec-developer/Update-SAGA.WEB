@@ -1,0 +1,92 @@
+
+td{
+  color: #656565;
+}
+
+.margen{
+  margin-top:15px
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+  color: #656565 !important;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+  color: #656565 !important;
+}
+
+
+.switch input:checked + span  {
+    background-color: #72bf72 !important;
+    border-color: green !important;
+    transition: all .5s !important;
+}
+
+.material-switch > input[type="checkbox"] {
+       display: none;
+   }
+.verde{
+  background-color: green;
+}
+   .material-switch > label {
+       cursor: pointer;
+       height: 0px;
+       position: relative;
+       width: 40px;
+   }
+
+       .material-switch > label::before {
+           background: rgb(0, 0, 0);
+           box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+           border-radius: 8px;
+           content: '';
+           height: 16px;
+           margin-top: -8px;
+           position: absolute;
+           opacity: 0.3;
+           transition: all 0.4s ease-in-out;
+           width: 40px;
+       }
+
+       .material-switch > label::after {
+           background: rgb(255, 255, 255);
+           border-radius: 16px;
+           box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+           content: '';
+           height: 24px;
+           left: -4px;
+           margin-top: -8px;
+           position: absolute;
+           top: -4px;
+           transition: all 0.3s ease-in-out;
+           width: 24px;
+       }
+
+   .material-switch > input[type="checkbox"]:checked + label::before {
+       background: inherit;
+       opacity: 0.5;
+   }
+
+   .material-switch > input[type="checkbox"]:checked + label::after {
+       background: inherit;
+       left: 20px;
+   }
+
+   .modal-content {
+       top: 100px;
+   }

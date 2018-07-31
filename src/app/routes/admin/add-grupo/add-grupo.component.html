@@ -1,0 +1,220 @@
+
+<div class="content-heading">
+    <div>
+      Grupos
+      <span class="text-sm d-none d-sm-block">Administraci&oacute;n de grupos.</span>
+    </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/home']">Inicio</a>
+      </li>
+      <li class="breadcrumb-item active">Grupos</li>
+    </ol>
+  </div>
+  
+
+<form [formGroup]="formGrupos" novalidate >
+  <div class="row">
+      <span>{{alert}}</span>
+    <div class="panel mat-elevation-z8">
+     <div class="panel-body">
+       <p class="text-center pv">GRUPOS</p>
+           <div class="table-responsive">
+               <table #tableG class="table table-bordered table-hover">
+                   <thead>
+                       <tr >
+                          <th class="text-center"></th>
+                          <th class="text-center"></th>
+                           <th class="text-center">Nombre</th>
+                           <th class="text-center">Descripción</th>
+                           <th class="text-center">Usuario Alta</th>
+                           <th class="text-center">Activo</th>
+                           <th class="text-center"></th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       <tr *ngFor="let g of Grupos; let rowIndex = index; let value = index">
+                          <td class="text-center">
+                            <btn-view (click)="grupo=g.nombre; GetUsuarios(g.id)" [popover]="myPopover" matTooltip="Ver integrantes del grupo"></btn-view>
+                          </td>
+                          <td class="text-center">
+                              <div class="media">
+                                <a matTooltip="Click to edit" (click)="rowAux=rowIndex; CrearURL(g.id); staticModal.show()"><img class="img-responsive img-circle" src={{g.fotoAux}} alt="Image" /></a>
+                              </div>
+                          </td>
+                           <td class="text-center">
+                              <span matTooltip="Double click to edit" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
+                                  {{g.nombre}}
+                              </span>
+                              <input autofocus (blur)="updateValue($event, 'nombre', rowIndex)" *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=g.nombre />
+                           </td>
+                           <td class="text-center">
+                              <span matTooltip="Double click to edit" (dblclick)="editing[rowIndex + '-descripcion'] = true" *ngIf="!editing[rowIndex + '-descripcion']">
+                                  {{g.descripcion}}
+                              </span>
+                              <textarea autofocus (blur)="updateValue($event, 'descripcion', rowIndex)" *ngIf="editing[rowIndex + '-descripcion']" [value]=g.descripcion maxlength="80" rows="1"></textarea>
+                           </td>
+                           <td class="text-center">
+                              {{g.usuarioAlta}}
+                           </td>
+                           <td class="text-center">
+                             <mat-checkbox class="checkbox" (change)="updateValue($event, 'activo', rowIndex)" [checked]="g.activo"></mat-checkbox>
+                           </td>
+                           <td class="text-center">
+                              <btn-check id='update' chkPrivilegiosButtons (click)="updateGrupo($event, rowIndex)" matTooltip="Guardar Cambios"></btn-check>
+                              <btn-delete id='delete' chkPrivilegiosButtons matTooltip="Eliminar Grupo" (click)="DeleteGrupo($event,rowIndex)"></btn-delete>
+                           </td>
+                       </tr>
+                   </tbody>
+               </table>
+               <br/>
+               <span>{{alert}}</span>
+           </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="panel panel-body">
+        <p class="text-center pv">AGREGAR GRUPO</p>
+      <section>
+        <mat-form-field>
+          <input matInput formControlName="Nombre" placeholder="Nombre">
+        </mat-form-field>
+        <p>
+          <span *ngIf="formGrupos.controls['Nombre'].touched && !formGrupos.controls['Nombre'].valid">Nombre es requerido</span>
+        </p>
+        <mat-form-field>
+          <textarea matInput formControlName="Descripcion" placeholder="Descripción" maxlength="80" rows="1"></textarea>
+        </mat-form-field>  
+      </section>
+    
+      <input matInput placeholder="Grupo Activo">
+       <section>
+         <mat-checkbox class="checkbox" formControlName="Activo"></mat-checkbox>
+       </section>
+       <section>
+        <div class="col-md-6">
+          <input matInput placeholder="{{alert}}">
+        </div>
+        <button [disabled]="!formGrupos.valid" (click)="saveData()" class="btn btn-primary example-label pull-right">Guardar</button>
+       </section>
+    </div>
+  </div>
+</form>
+
+
+
+  <!-- popover-->
+
+  <div id="content">
+  <popover-content #myPopover
+  [closeOnClickOutside]="true"
+  placement="right"
+  [animation]="true" 
+  >
+  <div class="headermio">
+      {{grupo}}
+      <button type="button" class="close pull-right" aria-label="Close" (click)="myPopover.hide()">
+          <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <div class="bodymio" *ngFor="let r of UsuariosList">
+      <img class="pull-left media img-responsive img-circle thumb32" src={{r.fotoAux}} alt="Image" />
+      <p class="margenmio"> {{ ' ' + r.nombre + ' ' + r.apellidoPaterno + ' ' + r.apellidoMaterno}} </p>
+  </div>
+ 
+</popover-content>
+</div>
+ 
+  
+ <!-- Modal  -->
+
+ <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h4 class="modal-title pull-left"Actualizar Foto de Perfile></h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+         <span aria-hidden="true">&times;</span>
+       </button>
+     </div>
+     <div class="modal-body">
+          <div class="row">
+              <div class="col-md-12">
+                  <app-upload-imgs #uploadImg
+                      [maxFileSize]="1*1024*1024"
+                      [accept]="['image/png', 'image/jpeg', 'image/jpg', 'image/bmp']"
+                      [errorMessageMaxSize]="'File size great than 1MB'"
+                      [name]="name"
+                      (onItemChanged)="updateFoto()"
+                  ></app-upload-imgs>
+              </div>
+            </div> 
+     <!-- <div class="modal-footer">
+         <btn-closed data-dismiss="modal" (click)="staticModal.hide()"></btn-closed>
+       </div>
+   </div> -->
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+<!-- <div class="row">
+   <div class="col-md-8">
+
+      <div class="panel panel-default">
+        <div class="panel-body">
+               <fieldset>
+                 <div class="row">
+                   <div class="col-md-6">
+                     <label>Nombre</label>
+                     <select class="form-control" (change)="selected($event)" >
+                         <option>Seleccionar Grupo</option>
+                         <option *ngFor="let user of listGrupos" value="{{user.tipo}}">
+                               {{user.tipo}}
+                         </option>
+                     </select>
+                   </div>
+                   <div class="col-md-4">
+                     <br/>
+                      <button type="button" class="btn btn-sm btn-oval btn-success"><i class="material-icons">add</i></button>
+                   </div>
+                 </div>
+               </fieldset>
+
+             <fieldset>
+             <div class="row">
+                <div class="col-lg-2">
+                    <label class="control-label">Permisos:</label>
+                </div>
+                <div class="col-lg-2 checkbox">
+                      <mat-checkbox #myCheckbox [checked]>Create</mat-checkbox>
+                </div>
+                <div class="col-lg-2">
+                      <mat-checkbox class="checkbox">Read</mat-checkbox>
+                </div>
+                <div class="col-lg-2">
+                      <mat-checkbox class="checkbox">Update</mat-checkbox>
+                </div>
+                <div class="col-lg-2">
+                      <mat-checkbox class="checkbox">Delete</mat-checkbox>
+                </div>
+           </div>
+         </fieldset>
+              <div class="row">
+                  <div class="col-md-4">
+                      <button class="btn btn-lg btn-oval btn-primary">Asignar</button>
+                  </div>
+             </div>
+      </div>
+   </div>
+</div> -->

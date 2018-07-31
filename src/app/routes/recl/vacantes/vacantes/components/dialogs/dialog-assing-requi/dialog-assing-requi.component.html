@@ -1,0 +1,73 @@
+  <div>
+    <h3>Asignar Requisición folio: {{data?.folio}}</h3>
+  </div>
+  <br>
+  <mat-divider></mat-divider>
+  <br>
+  <div class="container">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <app-asignar-requisicion #asginaciones [placeHolder]='placeHolderSelect' (Asignacion)='getAsignacion($event)' disabled='true'></app-asignar-requisicion>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-sm-10">
+          <p><strong>EMPRESA: </strong>{{data?.cliente?.nombrecomercial}}</p>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-sm-4">
+        <p><strong>PUESTO: </strong>{{data?.vBtra}}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10">
+        <p><strong>SUELDO: </strong>De {{data?.sueldoMinimo | currency:"$"}} a {{data?.sueldoMaximo | currency:"$"}}</p>
+      </div>
+    </div>
+  </div>
+  
+  <br>
+  <form [formGroup]="formAsignaciones">
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field>
+              <input matInput [matDatepicker]="cumplimiento" placeholder="Fecha Cumplimiento"
+              formControlName="fch_Cumplimiento" required>
+              <mat-datepicker-toggle matSuffix [for]="cumplimiento"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #cumplimiento></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field>
+              <input type="number" 
+              matInput placeholder="Días Envío" 
+              formControlName="diasEnvio" 
+              required>
+            </mat-form-field> 
+        </div>
+    </div>
+    <br>
+    <div class="row">
+    </div>
+    <mat-divider></mat-divider>
+    <div mat-dialog-actions>
+      <div class="row">
+        <div class="col-md-5 col-sm-5 col-xs-5">
+          <btn-closed [text]="textBtnCerrar" (click)="onCloseDialog()"></btn-closed>
+        </div>
+        <div class="col-md-5 col-sm-5 col-xs-5">
+          <btn-accept [text]="textBtnAceptar"  
+          (click)="Save()"
+          *ngIf="formAsignaciones.valid && asignadosRequi.length > 0"></btn-accept>
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-2">
+          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+        </div>
+      </div>
+      <div *ngIf="errorDE" class="alert alert-danger text-center" role="alert">
+        <span> Verifique los días de envió  rango 1-20 </span>
+      </div>
+    </div>
+  </form>
+

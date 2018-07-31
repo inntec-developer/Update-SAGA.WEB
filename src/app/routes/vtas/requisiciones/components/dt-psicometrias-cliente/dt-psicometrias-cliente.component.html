@@ -1,0 +1,32 @@
+
+
+<mat-accordion class="example-headers-align">
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <em class="fa fa-file-text-o"></em>
+      </mat-panel-title>
+      <mat-panel-description>
+        Psicometrias Cliente
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row"><!--Agregar la información que ira en el panel-->
+      <div class="dt-container">
+        <mat-table #table [dataSource]="dataSource">
+          <ng-container matColumnDef="psicometrias">
+            <mat-header-cell *matHeaderCellDef> Psicometría</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.psicometria}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="descripcion">
+            <mat-header-cell *matHeaderCellDef> Descripción</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

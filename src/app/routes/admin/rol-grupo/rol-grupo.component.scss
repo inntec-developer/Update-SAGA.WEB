@@ -1,0 +1,28 @@
+
+table {
+  background-color: transparent;
+  box-shadow: 0 0 0 #000;
+}
+tr td {
+  cursor: pointer
+}
+
+tr.selected td {
+  background-color:  #5d9cec !important;
+  color: white;
+}
+
+.empty-row {
+  text-align: center;
+  margin-top: 20px;
+}
+.widthSelect
+{
+  width: 50%;
+}
+
+.marginButtons
+{
+  margin-top: -32.5px;
+}
+

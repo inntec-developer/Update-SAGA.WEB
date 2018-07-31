@@ -1,0 +1,100 @@
+<div class="content-heading">
+  <div>
+      Diseñador de vacantes
+      <span class="text-sm d-none d-sm-block">Administraci&oacute;n de vacantes.</span>
+  </div>
+  <!-- Breadcrumb right aligned-->
+  <ol class="breadcrumb ml-auto">
+      <li class="breadcrumb-item"><a [routerLink]="['/home']" >Inicio</a></li>
+      <li class="breadcrumb-item active">Diseñador de vacantes</li>
+  </ol>
+</div>
+
+<div class="dtDamfo-container mat-elevation-z8 ">
+  <div class="dtDamfo-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
+    </mat-form-field>
+  </div>
+  <div  class="table table-hover table-bordered ">
+
+  </div>
+  <mat-table #table [dataSource]="dataSource" >
+    <!-- Cliente <Razon Social> Column -->
+    <!-- <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> Cliente </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+    </ng-container> -->
+    <!-- Puesto a cubrir Column -->
+    <ng-container matColumnDef="vBtra">
+      <mat-header-cell *matHeaderCellDef> Puesto a Cubrir </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element?.vBtra}} </mat-cell>
+    </ng-container>
+
+    <!-- Giro Empresas <Experiencia Solicitada> Column -->
+    <ng-container matColumnDef="experiencia">
+      <mat-header-cell *matHeaderCellDef> Experiencia Solicitada</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element?.experiencia}} </mat-cell>
+    </ng-container>
+
+    <!-- Actividad Empresas <Area Nombre> Column -->
+    <ng-container matColumnDef="nombre">
+      <mat-header-cell *matHeaderCellDef> Area Nombre</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element?.area?.nombre}} </mat-cell>
+    </ng-container>
+
+    <!-- Actividad Empresas <Actividad a realizar> Column -->
+    <ng-container matColumnDef="actividad">
+      <mat-header-cell *matHeaderCellDef> Actividad a realizar</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element?.actividad}} </mat-cell>
+    </ng-container>
+
+    <!-- Actividad Empresas <Tipo de Reclutamiento> Column -->
+    <ng-container matColumnDef="claseReclutamiento">
+      <mat-header-cell *matHeaderCellDef> Tipo de Reclutamiento</mat-header-cell>
+      <mat-cell style="margin:10px"  *matCellDef="let element"> {{element?.tipoReclutamiento?.tipoReclutamiento}} </mat-cell>
+    </ng-container>
+
+
+
+    <!-- Accion -->
+    <ng-container matColumnDef="accion">
+      <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button class=" mb-sm btn-sm btn btn-primary btn-outline" (click)="Onclick(element.id)" type="button" placement="bottom" tooltip="Configurar Vacante">
+
+            <mat-icon>settings_input_component</mat-icon>
+          </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+
+
+
+
+
+<!-- <table  class="table table-hover tab">
+  <tr>
+    <td><h4>Numero Requi</h4> </td>
+    <td><h4>Puesto</h4></td>
+    <td><h4>Experiencia</h4></td>
+    <td><h4>Areas</h4></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><input  class="form-control" placeholder="Filtar por puesto" ></td>
+    <td><input class="form-control" placeholder="Filtar por experencia" type="text"></td>
+    <td><input class="form-control" placeholder="Filtar por area" type="text"></td>
+  </tr>
+  <tr *ngFor="let item of datos">
+    <td>{{item.id}}</td>
+    <td>{{item.vBtra}}</td>
+    <td>{{item.experiencia}}</td>
+      <td>{{item.area.nombre}}</td>
+    <td><button class="btn btn-primary" (click)="Onclick(item.id)" >Configurar</button></td>
+  </tr>
+ </table> -->

@@ -1,0 +1,120 @@
+<div class="content-heading">
+  <div>
+    Usuario - Grupo
+    <span class="text-sm d-none d-sm-block">Administraci&oacute;n de Usuario - Grupo.</span>
+  </div>
+  <!-- Breadcrumb right aligned-->
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item">
+      <a [routerLink]="['/home']">Inicio</a>
+    </li>
+    <li class="breadcrumb-item active">Usuario - Grupo</li>
+  </ol>
+</div>
+
+
+<form [formGroup]="formAdmin" novalidate>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="input-group">
+        <input formControlName="filterInput" (input)="Search($event)" class="input-sm form-control" type="text" placeholder="Filtrar"
+        />
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default panel-flat mat-elevation-z8">
+        <div class="panel-heading text-center">USUARIOS</div>
+        <div class="panel-body" dnd-sortable-container [dropZones]="['demo1']" [sortableData]="ListEntidades">
+
+          <!-- dnd-sortable-container [dropZones]="['demo1']" [sortableData]="ListEntidades" -->
+          <!--  <div *ngFor="let p of ListaPersonas; let i = index" class="panel panel-defaul" dnd-draggable [dragData]="p" (onDragSuccess)="popPerson(p, i)"  [dropZones]="['demo1']"> -->
+          <div *ngFor="let p of ListEntidades; let i = index" class="panel panel-defaul" dnd-sortable [sortableIndex]="i" dnd-draggable
+            [dragData]="p" [dragEnabled]="draggable">
+            <img class="pull-left media img-responsive img-circle thumb64 marginimg" src="{{p.fotoAux}}" />
+            <div class="media-body">
+              <div class="media-heading margintextthumb">
+                <div class="pull-right badge baed-info tituloPuesto">{{p.departamento}}</div>
+                <h4>{{p.nombre + ' ' + p.apellidoPaterno + ' ' + p.apellidoMaterno }}</h4>
+                <p *ngIf="p.clave != '' && p.clave != null">Clave: {{ p.clave }}</p>
+                <p *ngIf="p.usuario != '' && p.usuario != null">Álias: {{ p.usuario }}</p>
+                <p *ngFor="let e of p.email">email: {{e.email}} </p>
+                <p *ngIf="p.descripcion != '' && p.descripcion != null">{{ p.descripcion }}</p>
+                <p *ngIf="p.grupos.length > 0">Grupo: {{p.grupos.length}}
+                  <span *ngFor="let g of p.grupos">
+                    <div>{{g.grupo}}
+                      <button type="button" class="close pull-right" aria-label="Close" (click)="DeleteUsers(g.id, p.entidadId)">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default panel-flat mat-elevation-z8">
+        <div class="panel-heading">Grupos:
+          <select class="form-control width-mio" #slcGrupo formControlName="slcGrupo" (change)="flag = true; draggable = true; IdGrupo = $event.target.value; GetUserByGroup($event.target.value); ">
+            <option *ngFor="let grupos of listGrupos" [value]="grupos.id">{{grupos.nombre}}</option>
+          </select>
+          <span class="text-danger" *ngIf="formAdmin.controls['slcGrupo'].hasError('required')">Debe seleccionar un Grupo</span>
+          <div class="pull-right margin-mio">
+            <btn-check id='create' [disabled]="!formAdmin.invalid" chkPrivilegiosButtons matTooltip="Guardar Cambios" (click)="addUsuarioGrupo()"></btn-check>
+            <span></span>
+            <btn-delete matTooltip="Vaciar Lista" (click)="resetBasket()"></btn-delete>
+          </div>
+        </div>
+        <!--   -->
+        <!-- dnd-droppable (onDropSuccess)="addToGroups($event)" [dropZones]="['demo1']" dnd-sortable-container [dropZones]="['demo1']" [sortableData]="ListaPG" dnd-sortable [sortableIndex]="i" -->
+        <div class="panel-body" dnd-sortable-container [dropZones]="['demo1']" [sortableData]="ListaPG">
+          <p [hidden]="ListaPG.length > 0">{{msj}}</p>
+          <div *ngFor="let pg of ListaPG; let i = index" class="panel panel-default mat-elevation-z8" dnd-sortable [sortableIndex]="i"
+            dnd-droppable (onDropSuccess)="addToGroups($event)">
+            <button type="button" class="close pull-right" aria-label="Close" (click)="DeleteUsers(slcGrupo.value, pg.entidadId)">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <img class="pull-left media img-responsive img-circle thumb48 marginimg" src="{{pg.fotoAux}}" alt="" />
+            <div class="media-body">
+              <div class="media-heading margintextthumb">
+                <div class="pull-right badge baed-info tituloPuesto">{{pg.departamento}}</div>
+                <h4>{{pg.nombre + ' ' + pg.apellidoPaterno }}</h4>
+                <p *ngIf="pg.grupos.length > 0">Grupo:
+                  <span *ngFor="let g of pg.grupos">{{g.grupo}}, </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- drag para eleiminar de grupo
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">Grupo: {{grupo}}
+            <button class="mb-sm btn btn-sm btn-danger btn-outline pull-right" matTooltip="Vaciar Lista" (click)="resetBasket()">
+              <em class="fa fa-trash-o"></em>
+            </button>
+          </div>
+          <div class="panel-body" dnd-sortable-container [dropZones]="['demo1']" [sortableData]="ListaBorrar">
+            <p [hidden]="ListaBorrar.length > 0">{{alert}}</p>
+            <div *ngFor="let lb of ListaBorrar; let i = index" class="panel panel-default mat-elevation-z8 media-heading margintextthumb"
+              dnd-sortable [sortableIndex]="i">
+              <img class="pull-left media img-responsive img-circle thumb48 marginimg" src="{{lb.foto}}" alt="" />
+              <div class="media-body">
+                <div class="media-heading margintextthumb">
+                  <h4>{{lb.nombre + ' ' + lb.apellidoPaterno }}</h4>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+  </div>
+</form>

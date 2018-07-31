@@ -1,0 +1,25 @@
+<ngx-spinner bdOpacity="0.5" bdColor="#333" size="default" color="#fff" type="ball-atom"></ngx-spinner>
+<div class="content-heading">
+  <div>
+    Revisión DAM-FO-290
+    <span class="text-sm d-none d-sm-block">Generar nueva requisicion.</span>
+  </div>
+  <!-- Breadcrumb right aligned-->
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item ">
+      <a [routerLink]="['/home']">Inicio</a>
+    </li>
+    <li class="breadcrumb-item ">
+      <a [routerLink]="['/ventas/requisicion']">Requisicion</a>
+    </li>
+    <li class="breadcrumb-item active">Revisión DAM-FO-290</li>
+  </ol>
+</div>
+<div class="row">
+  <div class="col-md-12 text-right">
+    <btn-return matTooltip="Regresar" [routerLink]="['/ventas/requisicion']"></btn-return >
+  </div>
+</div>
+<br/>
+
+<app-dt-damfo></app-dt-damfo>

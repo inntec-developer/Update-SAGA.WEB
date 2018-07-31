@@ -1,0 +1,15 @@
+<mat-form-field class="fieldautocomplete-full-width" >
+  <input matInput placeholder="Estado" aria-label="State" [matAutocomplete]="auto" [formControl]="StatesCtrl" (blur)="SendIdState()">
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let state of filteredStates | async" [value]="state.estado">
+      <div class="row">
+        <!-- <div class="col-md-2">
+          <img style="vertical-align:middle;" aria-hidden src="assets/img/flags-mini/{{state.estado}}.jpg" height="15" />
+        </div> -->
+        <div class="col-md-4">
+          <small>{{ state.estado }}</small>
+        </div>
+      </div>
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

@@ -1,0 +1,147 @@
+<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
+<!-- <toaster-container [toasterconfig]="toasterconfig"></toaster-container> -->
+<div class="dt-container mat-elevation-z8">
+  <div class="dt-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <btn-add class="form-control btn-block" id="create" chkPrivilegiosButtons [text]="textBtnAdd" [routerLink]="['/ventas/crearRequisicion']">
+      </btn-add>
+    </div>
+  </div>
+
+  <mat-table #table [dataSource]="dataSource">
+    <!-- Folio -->
+    <ng-container matColumnDef="folio">
+      <mat-header-cell *matHeaderCellDef>Folio </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <small [ngClass]="{'badge badge-sm  badge-purple': element.confidencial == true}"> {{element?.folio}}</small>
+      </mat-cell>
+    </ng-container>
+    <!-- Cliente <Razon Social> Column -->
+    <ng-container matColumnDef="cliente">
+      <mat-header-cell *matHeaderCellDef>Cliente </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <small>{{element?.cliente?.nombrecomercial}} </small>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Cliente <RFC> Column -->
+    <!-- <ng-container matColumnDef="rfc">
+      <mat-header-cell *matHeaderCellDef>RFC </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element?.cliente?.rfc}} </mat-cell>
+    </ng-container> -->
+
+    <!-- Nombre Perfil Column -->
+    <ng-container matColumnDef="vBtra">
+      <mat-header-cell class="mat-cell-center" *matHeaderCellDef>Nombre Perfil </mat-header-cell>
+      <mat-cell class="mat-cell-center" *matCellDef="let element">
+        <small> {{element?.vBtra}} </small>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Vacantes Column -->
+    <ng-container matColumnDef="vacantes">
+      <mat-header-cell class="mat-cell-center" *matHeaderCellDef>Vacantes </mat-header-cell>
+      <mat-cell class="mat-cell-center" *matCellDef="let element">
+        <small class="px-2 mr-2 float-right badge badge-success"> {{element.vacantes}} </small>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Giro Empresas <Giro Empresa> Column -->
+    <!-- <ng-container matColumnDef="empresa">
+      <mat-header-cell *matHeaderCellDef>Empresa </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element?.cliente?.giroEmpresas?.giroEmpresa}} - {{element?.cliente?.actividadEmpresas?.actividadEmpresa}}</mat-cell>
+    </ng-container> -->
+
+    <!-- Tipo Reclutamiento  <Actividad Empresa> Column -->
+    <ng-container matColumnDef="reclutamiento">
+      <mat-header-cell *matHeaderCellDef>Reclutamiento</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <small> {{element?.tipoReclutamiento?.tipoReclutamiento}} - {{element?.claseReclutamiento?.clasesReclutamiento}} </small>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Sueldo minimo Column -->
+    <ng-container matColumnDef="sueldoMinimo">
+      <mat-header-cell class="mat-cell-right" *matHeaderCellDef>Sueldo Mn.</mat-header-cell>
+      <mat-cell class="mat-cell-right" *matCellDef="let element">
+        <small>{{element?.sueldoMinimo | currency: $}}</small>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Sueldo Maximo -->
+    <ng-container matColumnDef="sueldoMaximo">
+      <mat-header-cell class="mat-cell-right" *matHeaderCellDef>Sueldo Mx.</mat-header-cell>
+      <mat-cell class="mat-cell-right" *matCellDef="let element">
+        <small>{{element?.sueldoMaximo | currency: $}}</small>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Fecha Creacion Maximo -->
+    <ng-container matColumnDef="fch_Creacion">
+      <mat-header-cell *matHeaderCellDef>Creación</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <small>{{element?.fch_Creacion | date:'dd/MM/yyyy'}}</small>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fch_Cumplimiento">
+      <mat-header-cell *matHeaderCellDef>Cumplimiento</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <small>{{element?.fch_Cumplimiento | date:'dd/MM/yyyy'}}</small>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="estatus">
+      <mat-header-cell *matHeaderCellDef>Estatus</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <h5>
+          <small class="badge badge-pill" [class.badge-warning]="element.estatus.id  === 4" [class.badge-primary]="element.estatus.id  === 5"
+            [class.badge-info]="element.estatus.id  === 6" [class.badge-success]="element.estatus.id  === 7" [class.badge-danger]="element.estatus.id  === 8">
+          {{element?.estatus?.descripcion}}
+          </small>
+        </h5>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="prioridad">
+      <mat-header-cell *matHeaderCellDef>Prioridad</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <h5>
+          <small class="badge badge-pill" [class.badge-danger]="element.prioridad.id  === 1" [class.badge-warning]="element.prioridad.id  === 2">
+          {{element?.prioridad?.descripcion}}
+          </small>
+        </h5>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Accion -->
+    <ng-container matColumnDef="accion">
+      <mat-header-cell *matHeaderCellDef>Acciones </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <btn-view (click)="showRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view>
+        <btn-edit id="update" chkPrivilegiosButtons (click)="editRequi(element.id, element.folio)" *ngIf="element.estatus.id != 8"
+          matTooltip="Editar Requisición"></btn-edit>
+        <btn-cancel id="special" chkPrivilegiosButtons (click)="openDialogCancel(element)" *ngIf="element.estatus.id != 8 && element.enProceso == 0"
+          matTooltip="Cancelar Requisición"></btn-cancel>
+        <btn-refresh id="special" chkPrivilegiosButtons (click)="openDialogReActivar(element)" *ngIf="element.estatus.id == 8" matTooltip="Re-activar Requisición"></btn-refresh>
+        <btn-delete id="delete" chkPrivilegiosButtons (click)="openDialogDelete(element)" *ngIf="element.enProceso == 0" matTooltip="Eliminar Requisición"></btn-delete>
+      </mat-cell>
+
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <!-- <mat-paginator 
+    [showFirstLastButtons]="true"
+    [length]="TotalRecords"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="pageEvent = paginate($event)">
+  </mat-paginator> -->
+</div>

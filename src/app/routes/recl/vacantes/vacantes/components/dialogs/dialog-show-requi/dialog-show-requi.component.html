@@ -1,0 +1,20 @@
+
+<div>
+  <h3>Vista de Requisición {{folio}}</h3>
+</div>
+<br>
+<mat-divider></mat-divider>
+<app-view-info-requi [Folios]="folio"></app-view-info-requi>
+<br>
+<app-view-cuerpo-requi [Requisicion]="id"></app-view-cuerpo-requi>
+<br>
+<mat-divider></mat-divider>
+<div>
+  <div mat-dialog-actions>
+    <div class="row">
+      <div class="col-md-5 col-sm-5 col-xs-5">
+        <btn-closed [text]="textBtnCerrar" (click)="onCloseDialog()"></btn-closed>
+      </div>
+    </div>
+  </div>
+</div>

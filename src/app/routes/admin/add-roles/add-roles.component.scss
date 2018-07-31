@@ -1,0 +1,60 @@
+
+/* COLOR DEFAULTS
+============================================= */
+$orange: #ffa600;
+$green: #c1d72e;
+$blue: #82d2e5;
+$white: #fff;
+
+.table
+{
+  overflow: hidden;
+}
+.espacios
+{
+  letter-spacing: 16px;
+
+}
+
+.colorPadres
+{
+  color:blue;
+}
+
+/* PLACEHOLDERS
+============================================= */
+
+
+%list-item{
+  // border-radius:50%;
+  // color:$white;
+  // background:$blue;
+  // float:left;
+  // text-align:center;
+  padding-left:15px;
+}
+
+/* STYLE
+============================================= */
+
+
+
+@for  $i from 1 through 6{
+  $unit: 12px * ($i *2);
+	.esparbol:nth-child(#{$i}){
+       @extend %list-item;
+       padding-left: $unit;
+  }
+  .esparbol2:nth-child(#{$i}){
+    @extend %list-item;
+    padding-left: $unit * ($i *2);
+  }
+  .esparbol3:nth-child(#{$i}){
+    @extend %list-item;
+    padding-left: $unit * ($i *2);
+  }
+  .esparbol4:nth-child(#{$i}){
+    @extend %list-item;
+    padding-left: $unit * ($i * 3);
+  }
+}

@@ -1,0 +1,438 @@
+<ngx-spinner bdColor = "rgba(198,195,195,0.8)" size = "medium" color = "#90daff" type = "square-jelly-box"></ngx-spinner>
+<div class="content-heading">
+  <div>
+    Visualizar DAM-FO-290
+    <span class="text-sm d-none d-sm-block">Caracteristicas de DAM-FO-290</span>
+  </div>
+  <!-- Breadcrumb right aligned-->
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item ">
+      <a [routerLink]="['/home']">Inicio</a>
+    </li>
+    <li class="breadcrumb-item ">
+      <a [routerLink]="['/ventas/requisicion']">Requisicion</a>
+    </li>
+    <li class="breadcrumb-item ">
+      <a [routerLink]="['/ventas/crearRequisicion']">Revisión DAM-FO-290</a>
+    </li>
+    <li class="breadcrumb-item active">Visualizar DAM-FO-290</li>
+  </ol>
+</div>
+
+<div class="row">
+  <!-- <button (click)="print()">Imprimir</button> -->
+  <div class="col-md-12 text-right">
+    <btn-docs (click)="openDialog()" matTooltip="Generar Requisición"></btn-docs>
+    <btn-return [routerLink]="['/ventas/crearRequisicion']" matTooltip="Regresar"></btn-return>
+  </div>
+</div>
+<br/>
+<div id="print-section">
+  <div class="row">
+    <div class="col-md-4">
+      <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <em class="fa fa-user"></em>
+            </mat-panel-title>
+            <mat-panel-description>
+              Información General
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="row">
+            <!--Agregar la información que ira en el panel-->
+            <div [formGroup]="formCliente">
+              <mat-form-field>
+                <input matInput formControlName="nombrecomercial" placeholder="Nombre Comercial">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput formControlName="razonSocial" placeholder="Razon Social">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput formControlName="rfc" placeholder="RFC">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput formControlName="giroEmpresa" placeholder="Giro Empresa">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput formControlName="actividadEmpresas" placeholder="Actividad Empresa">
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <div class="col-md-4">
+      <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <em class="fa fa-archive"></em>
+            </mat-panel-title>
+            <mat-panel-description>
+              Reclutamiento
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="row">
+            <!--Agregar la información que ira en el panel-->
+            <form [formGroup]=formRecl>
+              <div class="col-md-6">
+                <mat-form-field>
+                  <input matInput formControlName="tipo" placeholder="Tipo">
+                </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field>
+                  <input matInput formControlName="clase" placeholder="Clase">
+                </mat-form-field>
+              </div>
+            </form>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <div class="col-md-4">
+      <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <em class="fa fa-eye"></em>
+            </mat-panel-title>
+            <mat-panel-description>
+              Contrato
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="row">
+            <!--Agregar la información que ira en el panel-->
+            <form [formGroup]="formContrato">
+              <div class="col-md-12">
+                <mat-form-field>
+                  <input matInput formControlName="tipoContrato" placeholder="Tipo">
+                </mat-form-field>
+              </div>
+              <div class="col-md-12" *ngIf="damfo290?.contratoInicial?.periodoPrueba == true">
+                <mat-form-field>
+                  <input matInput formControlName="diasPrueba" placeholder="Días Prueba">
+                </mat-form-field>
+              </div>
+            </form>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-md-12">
+      <!-- DIRECCIONES -->
+      <app-dt-direccion [Direcciones]="damfo290?.cliente?.direcciones"></app-dt-direccion>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-md-6">
+      <!-- TELEFONOS -->
+      <app-dt-telefonos [Telefonos]="damfo290?.cliente?.telefonos"></app-dt-telefonos>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-md-10">
+      <!-- CONTACTOS -->
+      <app-dt-contactos [Contactos]="damfo290?.cliente?.contactos"></app-dt-contactos>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-lg-12">
+      <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <em class="fa fa-child"></em>
+            </mat-panel-title>
+            <mat-panel-description>
+              Puesto a Reclutar
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <form [formGroup]=formPerfil>
+            <div class="row">
+              <div class="col-md-12">
+                <mat-form-field>
+                  <input matInput formControlName="vBtra" placeholder="Nombre del Perfil">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <!--Agregar la información que ira en el panel-->
+              <div class="col-lg-3 col-md-3">
+                <mat-form-field>
+                  <input matInput formControlName="genero" placeholder="Genero">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput formControlName="edadMinima" type="number" placeholder="Edad Minima">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput formControlName="edadMaxima" type="number" placeholder="Edad Maxima">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput formControlName="estadoCivil" placeholder="Estado Civil">
+                </mat-form-field>
+              </div>
+              <div class="col-lg-3 col-md-3">
+                <h4>
+                  <p>
+                    <small>
+                      <strong>Estudios / Escolaridades </strong>
+                    </small>
+                  </p>
+                </h4>
+                <h4>
+                  <p>
+                    <small>
+                      <strong>Nivel: </strong>{{damfo290?.escolardadesPerfil[0]?.estadoEstudio?.estadoEstudio}}</small>
+                  </p>
+                </h4>
+                <h4>
+                  <p>
+                    <small>
+                      <strong>Escolaridades: </strong>
+                    </small>
+                  </p>
+                </h4>
+                <ol>
+                  <li *ngFor="let x of damfo290?.escolardadesPerfil">
+                    <small>{{x.escolaridad.gradoEstudio}}</small>
+                  </li>
+                </ol>
+              </div>
+              <div class="col-lg-3 col-md-3">
+                <h4>
+                  <p>
+                    <small>
+                      <strong>Aptitudes: </strong>
+                    </small>
+                  </p>
+                </h4>
+                <ol>
+                  <li *ngFor="let x of damfo290?.aptitudesPerfil">
+                    <small>{{x.aptitud.aptitud}}</small>
+                  </li>
+                </ol>
+              </div>
+              <div class="col-lg-3 col-md-3">
+                <h4>
+                  <p>
+                    <small>
+                      <strong>Experiencia: </strong>
+                    </small>
+                  </p>
+                </h4>
+                <h4>
+                  <p>
+                    <small>{{damfo290?.experiencia}}</small>
+                  </p>
+                </h4>
+
+              </div>
+            </div>
+          </form>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-md-6">
+      <!-- HORARIOS -->
+      <app-dt-horarios [Horarios]="damfo290?.horariosPerfil"></app-dt-horarios>
+    </div>
+    <div class="col-md-6">
+      <!-- BENEFICIOS -->
+      <app-dt-beneficios [Beneficios]="damfo290?.beneficiosPerfil"></app-dt-beneficios>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-md-3">
+      <!-- ACTIVIDADES -->
+      <app-actividades [Actividades]="damfo290?.actividadesPerfil"></app-actividades>
+    </div>
+    <div class="col-md-3">
+      <!-- OBSERVACIONES -->
+      <!-- damfo290?.observacionesPerfil -->
+      <app-observaciones [Observaciones]="damfo290?.observacionesPerfil"></app-observaciones>
+    </div>
+    <div class="col-md-3">
+      <!-- PROCESO -->
+      <app-procesos [Proceso]="damfo290?.procesoPerfil"></app-procesos>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-lg-12 col-md-12">
+      <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <em class="fa fa-dollar"></em>
+            </mat-panel-title>
+            <mat-panel-description>
+              Sueldos
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="row">
+            <!--Agregar la información que ira en el panel-->
+            <form [formGroup]="formSueldo">
+              <div class="col-md-2 col-lg-2">
+                <mat-form-field>
+                  <input matInput formControlName="diaCorte" placeholder="Días de Corte">
+                </mat-form-field>
+              </div>
+              <div class="col-md-2 col-lg-2">
+                <mat-form-field>
+                  <input matInput formControlName="tipoNomina" placeholder="Tipo de Nomina">
+                </mat-form-field>
+              </div>
+              <div class="col-md-2 col-lg-2">
+                <mat-form-field>
+                  <input matInput formControlName="diaPago" placeholder="Días de Pago">
+                </mat-form-field>
+              </div>
+              <div class="col-md-2 col-lg-2">
+                <mat-form-field>
+                  <input matInput formControlName="periodoPago" placeholder="Periodo de Pago">
+                </mat-form-field>
+              </div>
+              <div class="col-md-2 col-lg-2" *ngIf="requisicion?.periodoPago.id == 5">
+                <mat-form-field>
+                  <input matInput formControlName="especifique" placeholder="Especificación periodo de pago.">
+                </mat-form-field>
+              </div>
+            </form>
+          </div>
+          <div class="row">
+            <div class="col-md-2 col-lg-2">
+              <h4>
+                <p>
+                  <small>
+                    <strong>Sueldo mensual minimo </strong>
+                  </small>
+                </p>
+              </h4>
+              <h4>
+                <p>{{damfo290?.sueldoMinimo | currency:"MX $"}}</p>
+              </h4>
+            </div>
+            <div class="col-md-2 col-lg-2">
+              <h4>
+                <p>
+                  <small>
+                    <strong>Calculo semanal minimo</strong>
+                  </small>
+                </p>
+              </h4>
+              <h4>
+                <p>{{(damfo290?.sueldoMinimo / 30) * 7 | currency:"MX $"}}</p>
+              </h4>
+            </div>
+            <div class="col-md-2 col-lg-2">
+              <h4>
+                <p>
+                  <small>
+                    <strong>Calculo diario minimo</strong>
+                  </small>
+                </p>
+              </h4>
+              <h4>
+                <p>{{damfo290?.sueldoMinimo / 30 | currency:"MX $"}}</p>
+              </h4>
+            </div>
+            <div class="col-md-2 col-lg-2">
+              <h4>
+                <p>
+                  <small>
+                    <strong>Sueldo mensual maximo </strong>
+                  </small>
+                </p>
+              </h4>
+              <h4>
+                <p>{{damfo290?.sueldoMaximo | currency:"MX $"}}</p>
+              </h4>
+            </div>
+            <div class="col-md-2 col-lg-2">
+              <h4>
+                <p>
+                  <small>
+                    <strong>Calculo semanal maximo</strong>
+                  </small>
+                </p>
+              </h4>
+              <h4>
+                <p>{{(damfo290?.sueldoMaximo / 30) * 7 | currency:"MX $"}}</p>
+              </h4>
+            </div>
+            <div class="col-md-2 col-lg-2">
+              <h4>
+                <p>
+                  <small>
+                    <strong>Calculo diario maximo </strong>
+                  </small>
+                </p>
+              </h4>
+              <h4>
+                <p>{{damfo290?.sueldoMaximo / 30 | currency:"MX $"}}</p>
+              </h4>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-md-3">
+      <!-- DOCUMENTOS dAMSA -->
+      <app-documentos-damsa></app-documentos-damsa>
+    </div>
+    <div class="col-md-3">
+      <!-- DOCUMENTOS CLIENTE -->
+      <app-documentos-cliente [Documentos]="damfo290?.documentosCliente"></app-documentos-cliente>
+    </div>
+    <div class="col-md-3">
+      <!-- PRESTACIONES LEY -->
+      <app-prestaciones-ley></app-prestaciones-ley>
+    </div>
+    <div class="col-md-3">
+      <!-- PRESTACIONES SUPERIORES -->
+      <app-prestaciones-cliente [Prestaciones]="damfo290?.prestacionesCliente"></app-prestaciones-cliente>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-md-6">
+      <!-- PSICOMETRIAS DAMSA -->
+      <app-dt-psicometrias-damsa [Psicometrias]="damfo290?.psicometriasDamsa"></app-dt-psicometrias-damsa>
+    </div>
+    <div class="col-md-6">
+      <!-- PSICOMETRIA CLIENTE -->
+      <app-dt-psicometrias-cliente [Psicometrias]="damfo290?.psicometriasCliente"></app-dt-psicometrias-cliente>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-md-4 col-lg-4">
+      <!-- COMPTENCIAS CARDINALES -->
+      <app-dt-competencia-cardinal [Competencias]="damfo290?.competenciasCardinalPerfil"></app-dt-competencia-cardinal>
+    </div>
+    <div class="col-md-4 col-lg-4">
+      <!-- COMPETENCIAS POR AREA -->
+      <app-dt-competencia-area [Competencias]="damfo290?.competenciasAreaPerfil"></app-dt-competencia-area>
+    </div>
+    <div class="col-md-4 col-lg-4">
+      <!-- COMPETENCIAS GERENCIALES -->
+      <app-dt-competencia-gerencial [Competencias]="damfo290?.competetenciasGerencialPerfil"></app-dt-competencia-gerencial>
+    </div>
+  </div>
+</div>

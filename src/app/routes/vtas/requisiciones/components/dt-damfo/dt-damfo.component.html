@@ -1,0 +1,70 @@
+<ngx-spinner bdColor = "rgba(198,195,195,0.8)" size = "medium" color = "#90daff" type = "square-jelly-box"></ngx-spinner>
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+<div class="dt-container mat-elevation-z8">
+  <div class="dt-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
+    </mat-form-field>
+  </div>
+  <mat-table #table [dataSource]="dataSource">
+    <!-- Cliente <Razon Social> Column -->
+    <ng-container matColumnDef="cliente">
+      <mat-header-cell *matHeaderCellDef> Cliente </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element?.cliente?.razonSocial}} </mat-cell>
+    </ng-container>
+    <!-- Nombre Perfil Column -->
+    <ng-container matColumnDef="nombrePerfil">
+      <mat-header-cell *matHeaderCellDef> Nombre Perfil </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element?.nombrePerfil}} </mat-cell>
+    </ng-container>
+
+    <!-- Giro Empresas <Giro Empresa> Column -->
+    <ng-container matColumnDef="empresa">
+      <mat-header-cell *matHeaderCellDef> Empresa </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element?.cliente?.giroEmpresas?.giroEmpresa}} - {{element?.cliente?.actividadEmpresas?.actividadEmpresa}} </mat-cell>
+    </ng-container>
+
+    <!-- Tipo Reclutamiento  <Actividad Empresa> Column -->
+    <ng-container matColumnDef="reclutamiento">
+      <mat-header-cell *matHeaderCellDef>Reclutamiento</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element?.tipoReclutamiento?.tipoReclutamiento}} - {{element?.claseReclutamiento?.clasesReclutamiento}}</mat-cell>
+    </ng-container>
+
+    <!-- Sueldo minimo Column -->
+    <ng-container matColumnDef="sueldoMinimo">
+      <mat-header-cell *matHeaderCellDef> Sueldo Mn. </mat-header-cell>
+      <mat-cell calss="mat-cell-right" *matCellDef="let element"> {{element?.sueldoMinimo | currency: $}} </mat-cell>
+    </ng-container>
+
+    <!-- Sueldo Maximo -->
+    <ng-container matColumnDef="sueldoMaximo">
+      <mat-header-cell *matHeaderCellDef> Sueldo Mx. </mat-header-cell>
+      <mat-cell calss="mat-cell-right" *matCellDef="let element"> {{element?.sueldoMaximo | currency: $}} </mat-cell>
+    </ng-container>
+
+    <!-- Fecha Creacion Maximo -->
+    <ng-container matColumnDef="fch_Creacion">
+      <mat-header-cell *matHeaderCellDef> Fecha Creación </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element?.fch_Creacion | date:'dd/MM/yyyy'}} </mat-cell>
+    </ng-container>
+
+    <!-- Accion -->
+    <ng-container matColumnDef="accion">
+      <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <btn-docs (click)="openDialog(element)" matTooltip="Crear Requisición"></btn-docs>
+          <btn-view (click)="showDamfo(element.id)" matTooltip="Ver DAM-FO-290"></btn-view>
+      </mat-cell>
+
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <!-- <mat-paginator [showFirstLastButtons]="true"
+                 [length]="TotalRecords"
+                 [pageSize]="pageSize"
+                 [pageSizeOptions]="pageSizeOptions"
+                 (page)="pageEvent = paginate($event)">
+  </mat-paginator> -->
+</div>

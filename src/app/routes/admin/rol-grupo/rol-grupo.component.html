@@ -1,0 +1,113 @@
+<div class="content-heading">
+    <div>
+      Rol - Grupo
+      <span class="text-sm d-none d-sm-block">Administraci&oacute;n de reol - grupo.</span>
+    </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/home']">Inicio</a>
+      </li>
+      <li class="breadcrumb-item active">Administrador rol - grupo</li>
+    </ol>
+  </div>
+  
+
+<form [formGroup]="formRol" novalidate >
+    <div class="row">
+        <div class="col-md-4">
+            <div class="input-group">
+                <input #filterInput (input)="Search($event)" class="input-sm form-control" type="text" placeholder="Filtrar" />
+            </div> 
+        </div>
+    </div>
+    <br/>
+<div class="row">
+  <div class="col-md-8">
+    <div class="mat-elevation-z8">
+      <p class="text-center pv">GRUPOS</p>
+      <table class="table table-hover table-responsive">
+        <thead>
+          <tr>
+            <th class="text-center">Imagen</th>
+            <th class="text-center">Nombre</th>
+            <th class="text-center">Descripción</th>
+            <th class="text-center">Rol</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="empty-row" matTooltip="Doble click para seleccionar" *ngFor="let g of Grupos; let i = index" (dblclick)="onSelect(g, i)" [class.selected]="g.selected">
+            <td><img class="center-block media img-responsive img-circle thumb32" src="{{g.fotoAux}}" alt="" /></td>
+            <td class="text-center">{{g.nombre + ' ' + g.apellidoPaterno}}</td>
+            <td class="text-center">{{g.descripcion}}</td>
+            <td [ngClass]="{'empty-row': g.roles.length === 0 }">
+              <tr class="text-center" *ngFor="let r of g.roles" >
+                <div  class="text-center">
+                {{r.rol}}
+                <button type="button" class="close pull-right" aria-label="Close" (click)="DeleteUserRoles(g.entidadId, r.id)">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              </tr>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-default mat-elevation-z8">
+      <div class="row">
+        <div class="panel-heading">
+          <div class="col-md-6">
+            <select #slcRol class="form-control" (change)="selected($event, i)" formControlName="slcRol" >
+               <option *ngFor="let r of Roles; let i = index" [value]="r.id">{{r.rol}}</option>
+            </select>
+            <span class="text-danger" *ngIf="formRol.controls['slcRol'].hasError('required')">Debe seleccionar un Rol</span>
+          </div>
+            
+            <div class="col-md-2"><btn-view class="pull-left" (click)="staticModal.show()" matTooltip="Visualizar Rol"></btn-view></div>
+           <div class="col-md-4">
+             <btn-check class="pull-right" id='create' chkPrivilegiosButtons matTooltip="Guardar Cambios" (click)="saveData(slcRol.value)"></btn-check>
+           </div>
+         </div>
+        </div>
+        <div class="panel-body">
+
+            <div *ngFor='let sel of ListaRG'>
+                <img class="media img-responsive img-circle thumb32" src="{{sel.fotoAux}}" alt="" />
+                {{sel.nombre}}
+                </div>
+            <p *ngIf="!ListaRG.length">No se ha seleccionado grupo</p>
+
+        </div>
+    </div>
+  </div>
+</div>
+<br/>
+</form>
+
+
+   <!-- Modal  -->
+
+   <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h4 class="modal-title pull-left"></h4>
+           <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+             <span aria-hidden="true">&times;</span>
+           </button>
+         </div>
+         <div class="modal-body">
+              <div class="row">
+                  <app-rolls-struct #Struct [hiddenSelect]="true" (onItemChanged)="setData()" [StructList]="filteredData"></app-rolls-struct>
+                </div>  
+              </div>
+         <!-- <div class="modal-footer">
+             <btn-closed data-dismiss="modal" (click)="staticModal.hide()"></btn-closed>
+           </div>
+       </div> -->
+     </div>
+   </div>
+   </div>

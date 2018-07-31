@@ -1,0 +1,110 @@
+<div class="wrapper">
+  <div class="block-center mt-4 wd-xl">
+    <!-- START card-->
+    <div class="card card-flat">
+      <div class="card-header text-center bg-dark">
+        <a href="#">
+          <img class="block-center rounded" src="assets/img/damsa/logo.png" alt="Image" />
+        </a>
+      </div>
+      <div class="card-body">
+        <p class="text-center py-2">REGISTRO</p>
+        <form [formGroup]="valForm" class="form-validate mb-3" role="form" name="registerForm" novalidate="" (submit)="submitForm($event, valForm.value)">
+          <div class="form-group">
+            <label class="text-muted mb-1">Correo Electronico</label>
+            <div class="input-group with-focus">
+              <input class="form-control border-right-0" type="email" name="account_email" placeholder="Enter email" autocomplete="off"
+                formControlName="email" required="" />
+              <div class="input-group-append">
+                <span class="input-group-text fa fa-envelope text-muted bg-transparent border-left-0"></span>
+              </div>
+            </div>
+            <div class="text-danger" *ngIf="valForm.controls['email'].hasError('required') && (valForm.controls['email'].dirty || valForm.controls['email'].touched)">
+              <small> El correo es requerido</small>
+            </div>
+            <div class="text-danger" *ngIf="valForm.controls['email'].hasError('email') && (valForm.controls['email'].dirty || valForm.controls['email'].touched)">
+              <small>El correo ingresado no es valido</small>
+            </div>
+          </div>
+          <div formGroupName="passwordGroup">
+            <div class="form-group">
+              <label class="text-muted mb-1">Contraseña</label>
+              <div class="input-group with-focus">
+                <input class="form-control border-right-0" id="id-password" type="password" name="password" formControlName="password" [formControl]="valForm.get('passwordGroup.password')"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text fa fa-lock text-muted bg-transparent border-left-0"></span>
+                </div>
+              </div>
+              <div class="text-danger" *ngIf="valForm.get('passwordGroup.password').hasError('required') && (valForm.get('passwordGroup.password').dirty || valForm.get('passwordGroup.password').touched)">
+                <small>Las contraseñas no coinciden</small>
+              </div>
+              <div class="text-danger" *ngIf="valForm.get('passwordGroup.password').hasError('pattern') && (valForm.get('passwordGroup.password').dirty || valForm.get('passwordGroup.password').touched)">
+                <small>Crear contraseñas con 'a-zA-Z0-9' y 6-10 caracteres</small>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="text-muted mb-1">Confirmar Contraseña</label>
+              <div class="input-group with-focus">
+                <input class="form-control border-right-0" type="password" name="confirmPassword" formControlName="confirmPassword" [formControl]="valForm.get('passwordGroup.confirmPassword')"
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text fa fa-lock text-muted bg-transparent border-left-0"></span>
+                </div>
+              </div>
+              <div class="text-danger" *ngIf="valForm.get('passwordGroup.confirmPassword').hasError('required') && (valForm.get('passwordGroup.confirmPassword').dirty || valForm.get('passwordGroup.confirmPassword').touched)">This field is required</div>
+              <div class="text-danger" *ngIf="valForm.get('passwordGroup.confirmPassword').hasError('equalTo')">
+                <small>Las contraseñas no coinciden</small>
+              </div>
+            </div>
+          </div>
+          <label class="text-muted">Clave</label>
+          <input class="form-control" type="text" placeholder="Ingresar Clave" autocomplete="off" formControlName="Clave" required="" />
+          <div class="text-danger" *ngIf="valForm.controls['Clave'].touched && !valForm.controls['Clave'].valid">
+            <small>Clave es un campo requerido</small>
+          </div>
+          <label class="text-muted">Nombre</label>
+          <input class="form-control" type="text" placeholder="Ingresar Nombre" autocomplete="off" formControlName="Nombre" required="" />
+          <div class="text-danger" *ngIf="valForm.controls['Nombre'].touched && !valForm.controls['Nombre'].valid">
+            <small>Nombre es un campo requerido</small>
+          </div>
+          <label class="text-muted">Apellido Paterno</label>
+          <input class="form-control" type="text" placeholder="Ingresar Apellido Paterno" autocomplete="off" formControlName="ApellidoPaterno"
+          required="" />
+          <div class="text-danger" *ngIf="valForm.controls['ApellidoPaterno'].touched && !valForm.controls['ApellidoPaterno'].valid">
+            <small>Apellido paterno es un campo requerido</small>
+          </div>
+          <label class="text-muted">Apellido Materno</label>
+          <input class="form-control" type="text" placeholder="Ingresar Apellido Materno" autocomplete="off" formControlName="ApellidoMaterno"
+          required="" />
+          <div class="text-danger" *ngIf="valForm.controls['ApellidoMaterno'].touched && !valForm.controls['ApellidoMaterno'].valid">
+            <small>Apellido materno es un campo requerido</small>
+          </div>
+          <label class="text-muted">Alias</label>
+          <input class="form-control" type="text" placeholder="DAMSA.{{valForm.controls['Nombre'].value}}" autocomplete="off" formControlName="Usuario"
+          required="" />
+          <!-- <p><span class="text-danger" *ngIf="valForm.controls['Usuario'].touched">Si no selecciona usuario se le asignará uno</span></p>                       -->
+          <label class="text-muted">Departamentos</label>
+          <select class="form-control" formControlName="DepartamentoId">
+            <option value="0">Seleccionar departamento</option>
+            <!-- not selected / blank option -->
+            <option *ngFor="let d of ListDepas" [value]="d.id">{{d.nombre}}</option>
+          </select>
+          <button class="btn btn-block btn-primary mt-3" [disabled]="valForm.validate" type="submit">Crear cuenta</button>
+        </form>
+        <!-- <div class="alert alert-danger text-center"></div> -->
+        <p class="pt-3 text-center">Ya estas registrado?</p>
+        <a class="btn btn-block btn-secondary" [routerLink]="'/login'">Ingresar</a>
+      </div>
+    </div>
+    <!-- END card-->
+    <div class="p-3 text-center">
+      <span>&copy;</span>
+      <span>{{ settings.app.year }}</span>
+      <span class="mx-2">-</span>
+      <span>{{ settings.app.name }}</span>
+      <br/>
+      <span>{{ settings.app.description }}</span>
+    </div>
+  </div>
+</div>
