@@ -15,9 +15,10 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class GridRolesComponent implements OnInit {
 
 @Input() public nodes: Array<any> = null; // Url api process upload
+collapsed = true;
 privilegios = [];
 alert = '';
-
+listAux = [];
   constructor(private service: AdminServiceService ,public fb: FormBuilder) {
    
    }
@@ -50,6 +51,26 @@ alert = '';
         this.descendantsChecked($event, element, title)
       });
     }
+  }
+
+  //de arbol la convierto en lista solo pra visualizar como grid
+  CrearEstructura(node) {
+    this.listAux.push(node);
+
+    if (node.children.length > 0) {
+        node.children.forEach(element => {
+          this.CrearEstructura(element)
+      });
+    }
+  }
+
+  GetNodes($event, node)
+  {
+    this.CrearEstructura(node);
+    
+    this.nodes = this.listAux;
+    console.log(this.listAux)
+    this.listAux = [];
   }
 
   saveData() {

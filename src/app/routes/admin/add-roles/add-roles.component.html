@@ -12,15 +12,16 @@
         </ol>
       </div>
       
-
+<grid-roles [nodes] = "nodes"></grid-roles>
 <form [formGroup]="formRoles" novalidate>
    
     <div class="panel panel-default panel-flat mat-elevation-z8">
         <div class="panel-body">
-            <div class="row">
+            <div>
                 <div class="panel col-md-12">
+                    <br/>
                     <p class="text-center pv">AGREGAR ROL</p>
-                    <section>
+
                         <mat-form-field>
                             <input matInput formControlName="Rol" placeholder="Nombre">
                         </mat-form-field>
@@ -28,10 +29,10 @@
                         <p>
                             <span *ngIf="formRoles.controls['Rol'].touched && !formRoles.controls['Rol'].valid">Nombre es requerido</span>
                         </p>
-                    </section>
+                 <br/>
                 </div>
             </div>
-            <div class="row">
+            <div>
                     <div class="col-md-12 pull-left">
                         {{alert}}
                     </div>
@@ -41,8 +42,8 @@
                 </div>
                 <br/>
             <br/>
-            <div class="row">
-                    <table class="table table-responsive table-bordered table-hover">
+            <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <td class="text-center">Estructura</td>
@@ -72,7 +73,7 @@
                         </tbody>
                     </table>
                 <br/>
-                <div class="row">
+                <div>
                     <div class="col-md-12 pull-left">
                        <span>{{alert}}</span>
                     </div>

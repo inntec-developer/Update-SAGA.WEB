@@ -64,19 +64,36 @@ export class AddadminComponent implements OnInit {
       
   }
 
-  addToGroups($event, index) {
-
+  addToGroups($event) {
     console.log($event)
-    //el drag me agrega solo el item por eso lo borro por que se repite
 
-    var idx = this.ListaPG.findIndex(x => x.entidadId == $event.entidadId);
+    //el drag me agrega solo el item por eso lo borro por que se repite
+    var rep = this.ListaPG.filter(x => x.entidadId == $event.entidadId);
+
+    if(rep.length > 1)
+    {
+      var idx = this.ListaPG.findIndex(x => x.entidadId == $event.entidadId);
+      console.log(idx)
+      this.ListaPG.splice(idx, 1)
+      this.ListEntidades.push($event);
+    }
+    
+    // if (idx != -1 ) {
+    //   this.ListaPG.splice(idx, 1)
+    // }
+
+    // this.ListEntidades.push($event);
+
+
+  }
+
+  PopUsers(id)
+  {
+    var idx = this.ListaPG.findIndex(x => x.entidadId == id);
 
     if (idx != -1) {
       this.ListaPG.splice(idx, 1)
     }
-
-    this.ListEntidades.push($event);
-
 
   }
 
@@ -102,12 +119,14 @@ export class AddadminComponent implements OnInit {
       .subscribe(
         e => {
           
-          this.ListaPG = e; //para llenar el panel donde se hace drop solo se utiliza npara cunado le den select to grupo
-
+          this.ListaPG = e;
+          
           this.ListaPG.forEach(item => {
             item.fotoAux = ApiConection.ServiceUrlFoto + item.foto;
           })
 
+          
+          //para llenar el panel donde se hace drop solo se utiliza npara cunado le den select to grupo
           //por si arrastras un usuario y despues selecionas un grupo donde esta incluido el usuario i.e. para que no se repita el usuario
           //ya no es necesario por que no puedes hacer el drag a menos que selecciones un grupo 
 

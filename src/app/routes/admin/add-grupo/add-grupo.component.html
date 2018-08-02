@@ -15,11 +15,13 @@
   
 
 <form [formGroup]="formGrupos" novalidate >
-  <div class="row">
+  <div>
       <span>{{alert}}</span>
     <div class="panel mat-elevation-z8">
      <div class="panel-body">
+       <br/><br/>
        <p class="text-center pv">GRUPOS</p>
+       <br/>
            <div class="table-responsive">
                <table #tableG class="table table-bordered table-hover">
                    <thead>
@@ -34,13 +36,26 @@
                        </tr>
                    </thead>
                    <tbody>
+                      <ng-template #popTemplate>
+      
+                          <h3 class="popover-header text-center">{{grupo}}</h3>
+
+                          <div class="popover-body" *ngFor="let r of UsuariosList">
+                            <img class="img-responsive float-left img-fluid circle thumb32" src={{r.fotoAux}} alt="Image" />
+                            <span class="bodymio"> {{ ' ' + r.nombre + ' ' + r.apellidoPaterno + ' ' + r.apellidoMaterno}} </span> 
+                          
+                          </div>
+    
+
+                  </ng-template>
+
                        <tr *ngFor="let g of Grupos; let rowIndex = index; let value = index">
                           <td class="text-center">
-                            <btn-view (click)="grupo=g.nombre; GetUsuarios(g.id)" [popover]="myPopover" matTooltip="Ver integrantes del grupo"></btn-view>
+                            <btn-view (click)="grupo=g.nombre; GetUsuarios(g.id);" data-toggle="popover" [popover]="popTemplate" placement="right" trigger="" matTooltip="Ver integrantes del grupo"></btn-view>
                           </td>
-                          <td class="text-center">
-                              <div class="media">
-                                <a matTooltip="Click to edit" (click)="rowAux=rowIndex; CrearURL(g.id); staticModal.show()"><img class="img-responsive img-circle" src={{g.fotoAux}} alt="Image" /></a>
+                          <td class="align-middle">
+                              <div class="align-middle">
+                                <a matTooltip="Click to edit" (click)="rowAux=rowIndex; CrearURL(g.id); staticModal.show()"><img class="center-block img-responsive img-fluid circle thumb48" src={{g.fotoAux}} alt="Image" /></a>
                               </div>
                           </td>
                            <td class="text-center">
@@ -53,7 +68,7 @@
                               <span matTooltip="Double click to edit" (dblclick)="editing[rowIndex + '-descripcion'] = true" *ngIf="!editing[rowIndex + '-descripcion']">
                                   {{g.descripcion}}
                               </span>
-                              <textarea autofocus (blur)="updateValue($event, 'descripcion', rowIndex)" *ngIf="editing[rowIndex + '-descripcion']" [value]=g.descripcion maxlength="80" rows="1"></textarea>
+                              <textarea autofocus (blur)="updateValue($event, 'descripcion', rowIndex)" *ngIf="editing[rowIndex + '-descripcion']" [value]=g.descripcion maxlength="200" rows="1"></textarea>
                            </td>
                            <td class="text-center">
                               {{g.usuarioAlta}}
@@ -63,6 +78,7 @@
                            </td>
                            <td class="text-center">
                               <btn-check id='update' chkPrivilegiosButtons (click)="updateGrupo($event, rowIndex)" matTooltip="Guardar Cambios"></btn-check>
+                              <span class="col-sm-1"></span>
                               <btn-delete id='delete' chkPrivilegiosButtons matTooltip="Eliminar Grupo" (click)="DeleteGrupo($event,rowIndex)"></btn-delete>
                            </td>
                        </tr>
@@ -74,8 +90,11 @@
         </div>
     </div>
   </div>
-
-  <div class="row">
+<br/>
+<br/>
+<br/>
+<hr>
+  <div>
     <div class="panel panel-body">
         <p class="text-center pv">AGREGAR GRUPO</p>
       <section>
@@ -101,6 +120,7 @@
         <button [disabled]="!formGrupos.valid" (click)="saveData()" class="btn btn-primary example-label pull-right">Guardar</button>
        </section>
     </div>
+    <br/><br/><br/>
   </div>
 </form>
 
@@ -108,7 +128,9 @@
 
   <!-- popover-->
 
-  <div id="content">
+  
+
+  <!-- <div id="content">
   <popover-content #myPopover
   [closeOnClickOutside]="true"
   placement="right"
@@ -126,7 +148,7 @@
   </div>
  
 </popover-content>
-</div>
+</div> -->
  
   
  <!-- Modal  -->
@@ -141,8 +163,8 @@
        </button>
      </div>
      <div class="modal-body">
-          <div class="row">
-              <div class="col-md-12">
+         
+       
                   <app-upload-imgs #uploadImg
                       [maxFileSize]="1*1024*1024"
                       [accept]="['image/png', 'image/jpeg', 'image/jpg', 'image/bmp']"
@@ -150,8 +172,8 @@
                       [name]="name"
                       (onItemChanged)="updateFoto()"
                   ></app-upload-imgs>
-              </div>
-            </div> 
+      
+           
      <!-- <div class="modal-footer">
          <btn-closed data-dismiss="modal" (click)="staticModal.hide()"></btn-closed>
        </div>

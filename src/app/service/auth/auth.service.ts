@@ -11,6 +11,7 @@ import { SettingsService } from '../../core/settings/settings.service';
 export class AuthService {
   IdUser;
   private UrlGetSession = ApiConection.ServiceUrl+ApiConection.getSession;
+  private UrlValidarEmail = ApiConection.ServiceUrl+ApiConection.validarEmail;
 
   constructor(private http: HttpClient, public settings: SettingsService) { }
 
@@ -26,6 +27,14 @@ export class AuthService {
     // remove user from local storage to log user out
   
     localStorage.removeItem('currentUser');
+}
+
+public isUserActive(email: string) : Observable<any>
+{
+  return this.http.get(this.UrlValidarEmail + '?e=' + email)
+        .map(user => {
+          return user;
+        });
 }
 
 public isAuthenticated() : boolean

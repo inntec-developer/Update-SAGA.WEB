@@ -29,9 +29,13 @@ $white: #fff;
 
 .colorPadres
 {
-  color:blue;
+  color: #00b3ee;
 }
 
+.table > td 
+{
+  text-align: center;
+}
 /* PLACEHOLDERS
 ============================================= */
 
@@ -67,5 +71,13 @@ $white: #fff;
   .esparbol4:nth-child(#{$i}){
     @extend %list-item;
     padding-left: $unit * ($i * 3);
+  }
+  .esparbol5:nth-child(#{$i}){
+    @extend %list-item;
+    padding-left: $unit * ($i * 4);
+  }
+  .esparbol6:nth-child(#{$i}){
+    @extend %list-item;
+    padding-left: $unit * ($i * 5);
   }
 }

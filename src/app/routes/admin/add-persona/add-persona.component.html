@@ -14,15 +14,16 @@
 
 <div class="panel panel-default panel-flat mat-elevation-z8">
   <div class="panel-body">
-    <div class="row">
+    <br/>
     <div class="col-md-4">
         <div class="input-group">
         <input (input)="Search($event)" class="input-sm form-control" type="text" placeholder="Filtrar" />
         </div>
     </div>
+    <br/>
     <div class="col-md-2 pull-right">{{alert}}</div>
-    </div>
-    <p class="text-center pv">USUARIOS</p>
+
+    <p class="text-center"></p>
     <div class="table-responsive">
       <table #tableU class="bootstrap table table-bordered table-hover">
         <thead>
@@ -45,7 +46,7 @@
             <td class="text-center">
               <div class="media">
                 <a matTooltip="Click to edit" data-toggle="modal" data-target="#staticModal" (click)="rowAux = rowIndex; CrearURL(p.id); staticModal.show()">
-                  <img class="img-responsive img-circle" src="{{p.fotoAux}}" alt="Image" />
+                  <img class="img-responsive img-fluid circle thumb48" src="{{p.fotoAux}}" alt="Image" />
                 </a>
               </div>
             </td>

@@ -70,11 +70,6 @@ export class AddGrupoComponent implements OnInit {
     .subscribe(
       e=>{
         this.Grupos = e;
-
-        this.Grupos.forEach(item => {
-          item.fotoAux = ApiConection.ServiceUrlFoto + item.foto
-        })
-
         console.log(this.Grupos)
       });
   }
@@ -85,10 +80,7 @@ export class AddGrupoComponent implements OnInit {
     .subscribe(
       e=>{
         this.UsuariosList = e;
-
-        this.UsuariosList.forEach(item => {
-          item.fotoAux = ApiConection.ServiceUrlFoto + item.foto
-        })
+        console.log(this.UsuariosList)
       });
   }
 
@@ -113,20 +105,13 @@ export class AddGrupoComponent implements OnInit {
   {
     this.name = this.name + '.' + this.someInput.selectedFile.type.split('/')[1];
 
-    this.service.UploadImg(this.someInput.selectedFile, this.name)
-      .subscribe( data => {
-
-        this.closeModal();
-          
-        this.alert = data;
-
-          this.Grupos[this.rowAux]['foto'] = 'utilerias/img/user/' +  this.someInput.name;
-          this.Grupos[this.rowAux]['fotoAux'] = ApiConection.ServiceUrlFoto + 'utilerias/img/user/' +  this.someInput.name;
-          this.Grupos = [...this.Grupos];
-
-          console.log(this.Grupos)
-         
-    }); 
+    if(this.someInput.StatusCode == 201 || this.someInput.StatusCode == 500)
+    {
+      this.closeModal();
+        this.Grupos[this.rowAux]['foto'] = 'utilerias/img/user/' +  this.someInput.name;
+        this.Grupos[this.rowAux]['fotoAux'] = this.someInput.image.src;
+        this.Grupos = [...this.Grupos]; 
+    }
   }
 
   updateGrupo($event,rowIndex)

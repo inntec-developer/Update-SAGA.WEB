@@ -54,15 +54,14 @@ export class AddPersonaComponent implements OnInit {
   {
     this.name = this.name + '.' + this.someInput.selectedFile.type.split('/')[1];
 
-     this.Users[this.rowAux]['foto'] = 'utilerias/img/user/' + this.name;
-     this.Users[this.rowAux]['fotoAux'] = ApiConection.ServiceUrlFoto + 'utilerias/img/user/' + this.name;
-     this.Users = [...this.Users];
-   
-     this.modal.hide();
-
-   
-    //       console.log(this.Users)
-        
+    if(this.someInput.StatusCode == 201 || this.someInput.StatusCode == 500)
+    {
+      this.closeModal();
+      this.Users[this.rowAux]['foto'] = 'utilerias/img/user/' + this.name;
+      this.Users[this.rowAux]['fotoAux'] = this.someInput.image.src;
+      this.Users = [...this.Users];
+    
+    }
     
   }
 
@@ -72,7 +71,6 @@ export class AddPersonaComponent implements OnInit {
     this.someInput.selectedFile = null;
 
     this.modal.hide();
-
   }
 
   public Search(data: any) {

@@ -107,7 +107,7 @@ export class ApiConection {
   public static deleteGrupo = '/admin/deleteGrupo';
   public static deleteRoles = 'admin/deleteRoles';
   public static getTreeRoles = '/admin/GetEstructura';
-  public static getEntidadesUG = '/admin/getEntidades';
+  public static getEntidadesUG = '/admin/getEntidades2';
   public static getEstructuraRoles = '/admin/getEstructuraRoles';
   public static getPrivilegios = '/admin/getPrivilegios';
   public static modificarPrivilegios = '/admin/modificarPrivilegios'
@@ -117,4 +117,6 @@ export class ApiConection {
   public static getStruct = 'admin/getStruct';
   public static uploadImage = 'admin/UploadImage';
   public static addSeccion = 'admin/agregarSeccion';
+  public static validarEmail = 'admin/validarEmail';
+  public static getImage = 'admin/getImage';
 }

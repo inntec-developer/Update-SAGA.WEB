@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import { CustomValidators } from 'ng2-validation';
 import { RequestOptions } from '@angular/http';
 import { SettingsService } from '../../../core/settings/settings.service';
+import { AuthService } from './../../../service/auth/auth.service';
 
 @Component({
     selector: 'app-register',
@@ -20,10 +21,13 @@ export class RegisterComponent implements OnInit {
     msj: string = '';
     ListDepas: Array<any> = [];
     user: string = '';
+    @ViewChild('pop') epopover;
+    disabled = false;
 
     constructor(public settings: SettingsService,
                 fb: FormBuilder,
-                private service: AdminServiceService )
+                private service: AdminServiceService,
+                private authService: AuthService )
     {
         let password = new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9]{6,10}$')]));
         let certainPassword = new FormControl('', CustomValidators.equalTo(password));
@@ -60,6 +64,7 @@ export class RegisterComponent implements OnInit {
 
         if (this.valForm.valid)
         {
+            debugger;
            this.user = ((this.valForm.controls['Usuario'].value == null || this.valForm.controls['Usuario'].value == '') ? "DAMSA." + this.valForm.controls['Nombre'].value : this.valForm.controls['Usuario'].value);
 
            this.email.push({email: this.valForm.controls['email'].value, UsuarioAlta: 'INNTEC'});
@@ -93,6 +98,34 @@ export class RegisterComponent implements OnInit {
         })
     }
 
+    closePop()
+    {
+        this.epopover.hide();
+        this.msj = "";
+    }
+
+    ValidarEmail(email: string)
+    {
+        this.authService.isUserActive(email)
+            .subscribe(
+                data => {
+                    if( data != 404)
+                    {
+                        this.msj = 'El email: ' + this.valForm.controls['email'].value + ' ya se encuentra registrado';
+                        this.epopover.show();
+                        this.disabled = false;
+                    }
+                    else
+                    {
+                       this.epopover.hide();
+                       this.disabled = true;
+                    }
+                },
+                error => {
+                   this.msj = error;
+                });
+    }
+
     ngOnInit() {
    
        this.valForm.controls['Clave'].reset();
@@ -107,6 +140,9 @@ export class RegisterComponent implements OnInit {
        this.passwordForm.controls['confirmPassword'].reset();
 
        this.getDepartamentos();
+
+       this.disabled = false;
+       this.closePop();
     }
 
 }

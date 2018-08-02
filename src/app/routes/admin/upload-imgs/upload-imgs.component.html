@@ -1,6 +1,6 @@
 <div class="panel">
   <div class="panel-body">
-    <div class="row text-center">
+    <div class="text-center">
       <div class="result" *ngIf="fileInput.value !==''">
         <img class="center-block img-responsive" [src]="image.src" [width]="200" [height]="200">  
         <br/>
@@ -12,7 +12,7 @@
         </button>
       </div>
     </div>
-    <div class="row">
+    <div>
       <input type="file" #fileInput (change)="fileChangeListener($event)" [accept]="accept.toString()"/>
     </div>
   </div>

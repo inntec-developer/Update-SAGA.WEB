@@ -13,10 +13,11 @@
           <div class="form-group">
             <label class="text-muted mb-1">Correo Electronico</label>
             <div class="input-group with-focus">
-              <input class="form-control border-right-0" type="email" name="account_email" placeholder="Enter email" autocomplete="off"
+              <input class="form-control border-right-0" (change)="closePop()" (blur)="ValidarEmail($event.target.value)" type="email" name="account_email" placeholder="Enter email" autocomplete="off"
                 formControlName="email" required="" />
               <div class="input-group-append">
-                <span class="input-group-text fa fa-envelope text-muted bg-transparent border-left-0"></span>
+                <span class="input-group-text fa fa-envelope text-muted bg-transparent border-left-0" popover= "El email:  {{valForm.controls['email'].value}}  ya se encuentra registrado" placement="right" trigger=""
+                #pop="bs-popover"></span>
               </div>
             </div>
             <div class="text-danger" *ngIf="valForm.controls['email'].hasError('required') && (valForm.controls['email'].dirty || valForm.controls['email'].touched)">

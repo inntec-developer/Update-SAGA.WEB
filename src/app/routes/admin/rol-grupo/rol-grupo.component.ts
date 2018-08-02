@@ -25,6 +25,7 @@ export class RolGrupoComponent implements OnInit, AfterViewInit {
   msj: string = "";
   alert = "";
   flag = false;
+  verMsj = false;
   constructor(private service: AdminServiceService, public fb: FormBuilder) 
   {
     this.formRol = this.fb.group({
@@ -77,11 +78,10 @@ export class RolGrupoComponent implements OnInit, AfterViewInit {
         lrg.push(element);
       }
 
-      console.log(lrg)
       this.service.AddGroupRol(lrg)
       .subscribe( data => {
         this.msj = data;
-        console.log(this.msj);
+        this.verMsj = true;
         this.ngOnInit();
       });
       
@@ -95,6 +95,7 @@ export class RolGrupoComponent implements OnInit, AfterViewInit {
 
   selected($event, rol: any)
   {
+    this.verMsj = false;
 
     this.flag = true;
     var id = $event.target.value;
@@ -161,7 +162,6 @@ export class RolGrupoComponent implements OnInit, AfterViewInit {
             item.fotoAux = ApiConection.ServiceUrlFoto + item.foto;
           })
 
-          console.log(this.Grupos)
           this.filteredGroups = this.Grupos;
 
         })
@@ -185,7 +185,7 @@ export class RolGrupoComponent implements OnInit, AfterViewInit {
         }
   
         let dts = { RolId: rol, EntidadId: user};
-        console.log(dts)
+        
         this.service.DeleteUserRol(dts)
         .subscribe(
           e=>{

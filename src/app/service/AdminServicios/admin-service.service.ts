@@ -46,6 +46,7 @@ export class AdminServiceService {
   private UrlGetStruct = ApiConection.ServiceUrl+ApiConection.getStruct;
   private UrlUploadImage = ApiConection.ServiceUrl+ApiConection.uploadImage;
   private UrlAddSeccion = ApiConection.ServiceUrl+ApiConection.addSeccion;
+  private UrlValidarEmail = ApiConection.ServiceUrl+ApiConection.validarEmail;
 
   // Error.
   private handleError(error: any) {

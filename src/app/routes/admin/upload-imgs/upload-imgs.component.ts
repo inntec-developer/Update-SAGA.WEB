@@ -28,7 +28,8 @@ export class UploadImgsComponent implements OnInit {
   @Input() public errorMessageWrongType: string = 'El archivo no es una imagen';
 
   @Output() image: any = new Image();
-  
+  @Output() StatusCode: any;
+
   selectedFile: File;
 
   constructor( private service: AdminServiceService, private http: HttpClient) { }
@@ -71,9 +72,8 @@ export class UploadImgsComponent implements OnInit {
   {
      
     this.onItemChanged.emit(this.setImage());
-
     this.service.UploadImg(this.selectedFile, this.name).subscribe(result => {
-      console.log(result)
+    this.StatusCode = result;
     });
   }
 
