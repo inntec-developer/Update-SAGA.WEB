@@ -48,12 +48,15 @@ import { ButtonClosedComponent } from './buttons/button-closed/button-closed.com
 import { ButtonDeleteComponent } from './buttons/button-delete/button-delete.component';
 import { ButtonDesignComponent } from './buttons/button-design/button-design.component';
 import { ButtonDesingReclComponent } from './buttons/button-desing-recl/button-desing-recl.component';
+import { ButtonDislikeComponent } from './buttons/button-dislike/button-dislike.component';
 import { ButtonDocsComponent } from './buttons/button-docs/button-docs.component';
 import { ButtonEditComponent } from './buttons/button-edit/button-edit.component';
+import { ButtonLikeComponent } from './buttons/button-like/button-like.component';
 import { ButtonPrintComponent } from './buttons/button-print/button-print.component';
 import { ButtonRefreshComponent } from './buttons/button-refresh/button-refresh.component';
 import { ButtonReturnComponent } from './buttons/button-return/button-return.component';
 import { ButtonSaveComponent } from './buttons/button-save/button-save.component';
+import { ButtonSendComponent } from './buttons/button-send/button-send.component';
 import { ButtonViewComponent } from './buttons/button-view/button-view.component';
 import { ClockComponent } from './clock/clock.component';
 import { ColorPickerService } from '../../../node_modules/ngx-color-picker';
@@ -126,7 +129,10 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonDesingReclComponent,
     ButtonAddComponent,
     BusquedaCandidatosComponent,
-    ClockComponent
+    ClockComponent,
+    ButtonLikeComponent,
+    ButtonDislikeComponent,
+    ButtonSendComponent
 
   ],
   exports: [
@@ -148,7 +154,10 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonDesingReclComponent,
     ButtonAddComponent,
     BusquedaCandidatosComponent,
-    ClockComponent
+    ClockComponent,
+    ButtonLikeComponent,
+    ButtonDislikeComponent,
+    ButtonSendComponent
     
   ],
   providers: [ColorPickerService, { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() }, ToasterService],
