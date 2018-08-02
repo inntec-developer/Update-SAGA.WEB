@@ -118,5 +118,6 @@ export class ApiConection {
   public static uploadImage = 'admin/UploadImage';
   public static addSeccion = 'admin/agregarSeccion';
   public static validarEmail = 'admin/validarEmail';
+  public static validarDAL = 'admin/validarDAL';
   public static getImage = 'admin/getImage';
 }

@@ -24,19 +24,11 @@
                 </tr>
             </thead>
             <tbody>
-              <ng-container *ngFor="let node of nodes; let i = index">
-                <tr *ngIf="node.tipoEstructuraId == 2 || !collapsed">
-                    <td [ngClass]="{'colorPadres': node.tipoEstructuraId == 2,
-                                    'esparbol': node.tipoEstructuraId == 3,
-                                    'esparbol2': node.tipoEstructuraId == 4,
-                                    'esparbol3': node.tipoEstructuraId > 4 && node.tipoEstructuraId <= 8,
-                                    'esparbol4': node.tipoEstructuraId >= 6,
-                                    'esparbol5': node.tipoEstructuraId >= 7,
-                                    'esparbol6': node.tipoEstructuraId >= 8
-                                    }">
-                                     <btn-add *ngIf="node.tipoEstructuraId==2 && node.children.length > 0"  class="float-left" (click)="collapsed=!collapsed; GetNodes($event, node)"></btn-add>
-                                     <span class="col-md-2">{{node.nombre }}</span>
-                                         
+              <ng-container>
+                <tr *ngFor="let node of nodes; let i = index" ></tr>
+                    <td [ngClass]="{'colorPadres': node.tipoEstructuraId == 2}">
+                        <btn-add *ngIf="node.tipoEstructuraId==2 && node.children.length > 0" class="float-left" (click)="collapsed=!collapsed; GetNodes($event, node)"></btn-add>
+                        <span class="col-md-2">{{node.nombre }}</span>
                     </td>
                     <td class="text-center">{{node.idPadre}}</td>
                     <td class="block-center"><mat-checkbox id="{{ 'compC-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Create')" [checked]="node.create" matTooltip="Create"></mat-checkbox></td>
@@ -44,6 +36,18 @@
                     <td class="center"><mat-checkbox id="{{ 'compU-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Update')" [checked]="node['update']" matTooltip="Update"></mat-checkbox></td>
                     <td class="center"><mat-checkbox id="{{ 'compD-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Delete')" [checked]="node['delete']" matTooltip="Delete"></mat-checkbox></td>
                     <td class="center"><mat-checkbox id="{{ 'compE-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Especial')" [checked]="node['especial']" matTooltip="Special"></mat-checkbox></td>
+                <tr *ngIf="!collapsed">
+                    <td [ngClass]="{'esparbol': node.tipoEstructuraId == 3,
+                                    'esparbol2': node.tipoEstructuraId == 4,
+                                    'esparbol3': node.tipoEstructuraId > 4 && node.tipoEstructuraId <= 8,
+                                    'esparbol4': node.tipoEstructuraId >= 6,
+                                    'esparbol5': node.tipoEstructuraId >= 7,
+                                    'esparbol6': node.tipoEstructuraId >= 8
+                                    }">
+                                     <span class="col-md-2">{{node.nombre }}</span>
+                                         
+                    </td>
+                 
                     
                 </tr>
             </ng-container>

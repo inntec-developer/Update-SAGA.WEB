@@ -60,7 +60,12 @@
             </div>
           </div>
           <label class="text-muted">Clave</label>
-          <input class="form-control" type="text" placeholder="Ingresar Clave" autocomplete="off" formControlName="Clave" required="" />
+          <div class="input-group with-focus">
+            <input class="form-control" type="text" placeholder="DAL" autocomplete="off" formControlName="Clave" required="" (change)="closePop()" (blur)="ValidarDAL(valForm.controls['Clave'].value)" />
+            <div class="input-group-append">
+              <span popover= "Clave: {{valForm.controls['Clave'].value}} ya se encuentra registrado" placement="right" trigger="" #pop2="bs-popover"></span>
+            </div>
+          </div>
           <div class="text-danger" *ngIf="valForm.controls['Clave'].touched && !valForm.controls['Clave'].valid">
             <small>Clave es un campo requerido</small>
           </div>
@@ -91,7 +96,11 @@
             <!-- not selected / blank option -->
             <option *ngFor="let d of ListDepas" [value]="d.id">{{d.nombre}}</option>
           </select>
-          <button class="btn btn-block btn-primary mt-3" [disabled]="valForm.validate" type="submit">Crear cuenta</button>
+          <br/>
+          <div *ngIf="verMsj" class="alert alert-success">
+              {{msj}}
+            </div>
+          <button class="btn btn-block btn-primary mt-3" [disabled]="!disabledC" type="submit">Crear cuenta</button>
         </form>
         <!-- <div class="alert alert-danger text-center"></div> -->
         <p class="pt-3 text-center">Ya estas registrado?</p>

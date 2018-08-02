@@ -21,9 +21,11 @@ export class RegisterComponent implements OnInit {
     msj: string = '';
     ListDepas: Array<any> = [];
     user: string = '';
+    verMsj = false;
     @ViewChild('pop') epopover;
-    disabled = false;
-
+    @ViewChild('pop2') epopover2;
+    disabledE = false;
+    disabledC= false;
     constructor(public settings: SettingsService,
                 fb: FormBuilder,
                 private service: AdminServiceService,
@@ -53,7 +55,6 @@ export class RegisterComponent implements OnInit {
 
     submitForm($ev, value: any)
     {
-       
         $ev.preventDefault();
         for (let c in this.valForm.controls) {
            this.valForm.controls[c].markAsTouched();
@@ -64,12 +65,13 @@ export class RegisterComponent implements OnInit {
 
         if (this.valForm.valid)
         {
-            debugger;
-           this.user = ((this.valForm.controls['Usuario'].value == null || this.valForm.controls['Usuario'].value == '') ? "DAMSA." + this.valForm.controls['Nombre'].value : this.valForm.controls['Usuario'].value);
+            if(this.disabledE)
+            {
+            this.user = ((this.valForm.controls['Usuario'].value == null || this.valForm.controls['Usuario'].value == '') ? "DAMSA." + this.valForm.controls['Nombre'].value : this.valForm.controls['Usuario'].value);
 
            this.email.push({email: this.valForm.controls['email'].value, UsuarioAlta: 'INNTEC'});
            let persona = {
-                Clave: this.valForm.controls['Clave'].value,
+                Clave: this.valForm.controls['Clave'].value.trim(),
                 Nombre: this.valForm.controls['Nombre'].value,
                 ApellidoPaterno: this.valForm.controls['ApellidoPaterno'].value,
                 ApellidoMaterno: this.valForm.controls['ApellidoMaterno'].value,
@@ -83,9 +85,20 @@ export class RegisterComponent implements OnInit {
              
            this.service.AddUsers(persona)
                .subscribe( data => {
+                   console.log(data)
                this.msj = data;
+               this.verMsj = true;
                this.ngOnInit()
                });
+            }
+            else
+            {
+                this.msj = 'El email: ' + this.valForm.controls['email'].value + ' ya se encuentra registrado';
+                        this.epopover.show();
+                        this.disabledE = false;
+                        this.verMsj = true;
+
+            }
         }
     }
 
@@ -101,7 +114,6 @@ export class RegisterComponent implements OnInit {
     closePop()
     {
         this.epopover.hide();
-        this.msj = "";
     }
 
     ValidarEmail(email: string)
@@ -111,14 +123,41 @@ export class RegisterComponent implements OnInit {
                 data => {
                     if( data != 404)
                     {
-                        this.msj = 'El email: ' + this.valForm.controls['email'].value + ' ya se encuentra registrado';
+                        this.msj = 'El email: ' + email + ' ya se encuentra registrado';
                         this.epopover.show();
-                        this.disabled = false;
+                        this.disabledE = false;
+                        this.verMsj = true;
                     }
                     else
                     {
+                        this.disabledE = true;
                        this.epopover.hide();
-                       this.disabled = true;
+                    }
+                },
+                error => {
+                   this.msj = error;
+                });
+    }
+
+    ValidarDAL(dal: string)
+    {
+        console.log(dal)
+        this.authService.isUserDAL(dal)
+            .subscribe(
+                data => {
+                    console.log(dal)
+                    if( data != 404)
+                    {console.log(this.epopover2)
+                        this.msj = 'Clave: ' + dal + ' ya se encuentra registrado';
+                        this.epopover2.show();
+                        this.disabledC = false;
+                        this.verMsj = true;
+                    }
+                    else
+                    {
+                       this.epopover2.hide();
+                       this.verMsj = false;
+                       this.disabledC = true;
                     }
                 },
                 error => {
@@ -141,8 +180,10 @@ export class RegisterComponent implements OnInit {
 
        this.getDepartamentos();
 
-       this.disabled = false;
+       this.disabledE = false;
+       this.disabledC = false;
        this.closePop();
+ 
     }
 
 }
