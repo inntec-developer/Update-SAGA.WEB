@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
             'Nombre': ['',  [Validators.required]],
             'ApellidoPaterno': ['',  [Validators.required]],
             'ApellidoMaterno': ['',  [Validators.required]],
-            'Usuario': '',
+            'Usuario': [{value:'', disabled:true}],
             'DepartamentoId': ['',  [Validators.required]]
         });
 
@@ -67,9 +67,14 @@ export class RegisterComponent implements OnInit {
         {
             if(this.disabledE)
             {
-            this.user = ((this.valForm.controls['Usuario'].value == null || this.valForm.controls['Usuario'].value == '') ? "DAMSA." + this.valForm.controls['Nombre'].value : this.valForm.controls['Usuario'].value);
+                this.user = this.valForm.controls['email'].value.trim();
+                var idx =  this.user.indexOf( "@" ); 
+                this.user = "DAMSA." + this.user.substring(0, idx);
+
+            //this.user = ((this.valForm.controls['Usuario'].value == null || this.valForm.controls['Usuario'].value == '') ? "DAMSA." + this.valForm.controls['Nombre'].value : this.valForm.controls['Usuario'].value);
 
            this.email.push({email: this.valForm.controls['email'].value, UsuarioAlta: 'INNTEC'});
+
            let persona = {
                 Clave: this.valForm.controls['Clave'].value.trim(),
                 Nombre: this.valForm.controls['Nombre'].value,
@@ -118,6 +123,10 @@ export class RegisterComponent implements OnInit {
 
     ValidarEmail(email: string)
     {
+        this.user = this.valForm.controls['email'].value.trim();
+        var idx =  this.user.indexOf( "@" ); 
+        this.user = "DAMSA." + this.user.substring(0, idx);
+
         this.authService.isUserActive(email)
             .subscribe(
                 data => {

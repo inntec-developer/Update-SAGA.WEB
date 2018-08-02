@@ -24,7 +24,7 @@
                 </tr>
             </thead>
             <tbody>
-              <ng-container>
+    
                 <tr *ngFor="let node of nodes; let i = index" ></tr>
                     <td [ngClass]="{'colorPadres': node.tipoEstructuraId == 2}">
                         <btn-add *ngIf="node.tipoEstructuraId==2 && node.children.length > 0" class="float-left" (click)="collapsed=!collapsed; GetNodes($event, node)"></btn-add>
@@ -50,7 +50,7 @@
                  
                     
                 </tr>
-            </ng-container>
+        
             </tbody>
         </table>
     <br/>
