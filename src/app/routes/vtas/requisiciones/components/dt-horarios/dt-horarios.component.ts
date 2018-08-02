@@ -60,7 +60,6 @@ export class DtHorariosComponent implements OnInit, AfterContentChecked {
     'aHora',
     'vacantes',
     'especificaciones',
-    'activo',
     'accion'
   ]
 }
@@ -73,5 +72,4 @@ export interface Element{
   aHHora: string;
   vacantes: number;
   especificaciones: string;
-  activo: boolean;
 }

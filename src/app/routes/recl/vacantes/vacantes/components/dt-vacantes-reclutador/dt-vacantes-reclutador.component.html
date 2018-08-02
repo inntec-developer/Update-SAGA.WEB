@@ -10,7 +10,7 @@
     <ng-container matColumnDef="folio">
       <mat-header-cell *matHeaderCellDef>Folio </mat-header-cell>
       <mat-cell *matCellDef="let element" >
-        <small [ngClass]="{'label label-pink': element.confidencial == true}">{{element?.folio}}</small>
+        <small [ngClass]="{'badge badge-sm  badge-purple': element.confidencial == true}">{{element?.folio}}</small>
       </mat-cell>
     </ng-container>
      <!-- Solicitante -->
@@ -46,7 +46,7 @@
     <ng-container matColumnDef="vacantes">
       <mat-header-cell class="mat-cell-center" *matHeaderCellDef>Vacantes </mat-header-cell>
       <mat-cell class="mat-cell-center" *matCellDef="let element">
-        <small>{{element.vacantes}}</small>
+        <small class="px-2 mr-2 float-right badge badge-success">{{element.vacantes}}</small>
       </mat-cell>
     </ng-container>
 
@@ -93,12 +93,13 @@
       <mat-header-cell *matHeaderCellDef>Estatus</mat-header-cell>
       <mat-cell *matCellDef="let element">
         <h5>
-          <small class="label"
-            [class.label-warning]="element.estatus.id  === 4"
-            [class.label-primary]="element.estatus.id  === 5"
-            [class.label-info]="element.estatus.id  === 6"
-            [class.label-success]="element.estatus.id  === 7"
-            [class.label-danger]="element.estatus.id  === 8"> {{element?.estatus?.descripcion}}
+          <small 
+          class="badge badge-pill" 
+          [class.badge-warning]="element.estatus.id  === 4" 
+          [class.badge-primary]="element.estatus.id  === 5"
+          [class.badge-info]="element.estatus.id  === 6" 
+          [class.badge-success]="element.estatus.id  === 7" 
+          [class.badge-danger]="element.estatus.id  === 8"> {{element?.estatus?.descripcion}}
           </small>
         </h5>
       </mat-cell>
@@ -108,9 +109,9 @@
       <mat-header-cell *matHeaderCellDef>Prioridad</mat-header-cell>
       <mat-cell *matCellDef="let element">
         <h5>
-          <small class="label"
-            [class.label-danger]="element.prioridad.id  === 1"
-            [class.label-warning]="element.prioridad.id  === 2"> {{element?.prioridad?.descripcion}}
+          <small class="badge badge-pill"
+            [class.badge-danger]="element.prioridad.id  === 1"
+            [class.badge-warning]="element.prioridad.id  === 2"> {{element?.prioridad?.descripcion}}
           </small>
         </h5>
       </mat-cell>
@@ -119,14 +120,14 @@
     <ng-container matColumnDef="postulados">
       <mat-header-cell class="mat-cell-center" *matHeaderCellDef>Postulaciones</mat-header-cell>
       <mat-cell class="mat-cell-center" *matCellDef="let element"> 
-        <small>{{element?.postulados}}</small>
+        <small class="px-2 mr-2 float-right badge badge-primary" >{{element?.postulados}}</small>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="enProceso">
       <mat-header-cell class="mat-cell-center" *matHeaderCellDef>En Proceso</mat-header-cell>
       <mat-cell class="mat-cell-center" *matCellDef="let element"> 
-        <small> {{element?.enProceso}}</small>
+        <small class="px-2 mr-2 float-right badge badge-info"> {{element?.enProceso}}</small>
       </mat-cell>
     </ng-container>
 
