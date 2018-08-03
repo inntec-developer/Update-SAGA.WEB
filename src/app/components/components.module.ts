@@ -36,6 +36,8 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
+import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
+import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../core/translator/config-paginator/config-paginator.component';
 
 import { AsignarRequisicionComponent } from './asignar-requisicion/asignar-requisicion.component';
 import { BusquedaCandidatosComponent } from './busqueda-candidatos/busqueda-candidatos.component';
@@ -61,9 +63,10 @@ import { ButtonViewComponent } from './buttons/button-view/button-view.component
 import { ClockComponent } from './clock/clock.component';
 import { ColorPickerService } from '../../../node_modules/ngx-color-picker';
 import { CommonModule } from '@angular/common';
+import { Ng2TableModule } from 'ng2-table/ng2-table';
 import { NgModule } from '@angular/core';
+import { TablaPruebaComponent } from './dataTable/tabla-prueba/tabla-prueba.component';
 import { ToasterService } from '../../../node_modules/angular2-toaster';
-import { getSpanishPaginatorIntl } from '../core/translator/config-paginator/config-paginator.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -108,7 +111,10 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    Ng2TableModule,
+    PaginationModule.forRoot()
+    
   ],
   declarations: [
     AsignarRequisicionComponent,
@@ -132,7 +138,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ClockComponent,
     ButtonLikeComponent,
     ButtonDislikeComponent,
-    ButtonSendComponent
+    ButtonSendComponent,
+    TablaPruebaComponent
 
   ],
   exports: [
@@ -157,9 +164,14 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ClockComponent,
     ButtonLikeComponent,
     ButtonDislikeComponent,
-    ButtonSendComponent
+    ButtonSendComponent,
+    TablaPruebaComponent
     
   ],
-  providers: [ColorPickerService, { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() }, ToasterService],
+  providers: [ColorPickerService,
+    { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
+    { provide: PaginationConfig, useValue: getSpanishPaginatorBtp()},
+    ToasterService
+    ],
 })
 export class ComponentsModule { }
