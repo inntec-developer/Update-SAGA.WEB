@@ -14,7 +14,7 @@
 </div>
 
 <div class="row">
-  <div class="col-xs-12 text-right">
+  <div class="col-xs-12 right">
     <div class="col-xs-2 margen ">
       <button (click)="Publicar()" _ngcontent-c40="" class="mb-sm btn-md btn btn-success btn-outline" mattooltip="Publicar"   >
           <em _ngcontent-c40="" class="fa fa-download"></em> Publicar vacante
@@ -40,8 +40,8 @@
 
     <div class="row">
       <div *ngFor="let item2 of General">
-        <div class="col-lg-4 col-md-6 col-sm-12 Column width {{item2.publica?'':'hidden'}}" *ngIf="item.id == item2.idPadre;" >
-              <div class="panel panel-default"  >
+        <div class="col-md-12   Column width {{item2.publica?'':'.d-none'}}" *ngIf="item.id == item2.idPadre;" >
+              <div class="panel panel-default sombra"  >
 
                   <div class="panel-body">
                       <div class="table-responsive">
