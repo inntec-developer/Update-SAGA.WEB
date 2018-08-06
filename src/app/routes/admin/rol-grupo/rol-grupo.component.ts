@@ -205,10 +205,7 @@ export class RolGrupoComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit()
   {
-    if(this.someInput)
-    {
-      this.setData();
-    }
+   
   }
 
 }
