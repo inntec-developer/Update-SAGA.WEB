@@ -169,7 +169,7 @@ export class AddadminComponent implements OnInit {
   }
 
   GetEntidades() {
-    this.service.GetEntidadesUG()
+    this.service.GetEntidades()
       .subscribe(
         e => {
           this.ListEntidades = e;

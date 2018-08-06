@@ -17,7 +17,7 @@ export class AddRolesComponent implements OnInit {
   formRoles: FormGroup;
   nodes: Array<any> = [];
   privilegios = [];
-  nodeAux: TreeNode;
+  nodeAux = [];
   listAux = [];
   alert: string = '';
 
@@ -156,25 +156,35 @@ export class AddRolesComponent implements OnInit {
     this.service.GetTreeRoles()
       .subscribe(
         e => {
-          aux = e;
-          aux.forEach(element => {
-            this.CrearEstructura(element)
-          });
-
-          this.nodes = this.listAux;
-          this.listAux = [];
-
+           this.nodes = e;
         })
   }
-  GetEstructura() {
-    //id == estructuraId
-    this.service.GetEstructuraRoles()
-      .subscribe(
-        e => {
-          this.nodes = e;
 
-        })
-  }
+  // GetTreeRoles() {
+  //   var aux = [];
+  //   this.service.GetTreeRoles()
+  //     .subscribe(
+  //       e => {
+  //         aux = e;
+  //         this.nodeAux = e;
+  //         aux.forEach(element => {
+  //           this.CrearEstructura(element)
+  //         });
+
+  //         this.nodes = this.listAux;
+  //         this.listAux = [];
+
+  //       })
+  // }
+  // GetEstructura() {
+  //   //id == estructuraId
+  //   this.service.GetEstructuraRoles()
+  //     .subscribe(
+  //       e => {
+  //         this.nodes = e;
+
+  //       })
+  // }
 
   ngOnInit() {
     this.GetTreeRoles();

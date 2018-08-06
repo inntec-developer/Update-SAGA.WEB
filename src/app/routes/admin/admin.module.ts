@@ -35,7 +35,7 @@ import { ModalModule, PopoverModule } from 'ngx-bootstrap';
 
 
 const routes: Routes = [
-    { path: 'roles', component: AddRolesComponent, data: {'componente':'Roles'} },
+    { path: 'roles', component: RollsStructComponent, data: {'componente':'Roles'} },
     { path: 'agregar', component: AddPersonaComponent, data: {'componente':'Usuarios'} },
     { path: 'grupo', component: AddadminComponent, data: {'componente':'Usuarios a grupos'} },
     { path: 'grupoAdd', component: AddGrupoComponent, data: {'componente':'Grupos'} },

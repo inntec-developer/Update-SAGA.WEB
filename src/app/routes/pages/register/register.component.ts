@@ -21,7 +21,9 @@ export class RegisterComponent implements OnInit {
     msj: string = '';
     ListDepas: Array<any> = [];
     user: string = '';
-    verMsj = false;
+    verMsg = false;
+    success = false;
+    haserror = false;
     @ViewChild('pop') epopover;
     @ViewChild('pop2') epopover2;
     disabledE = false;
@@ -73,36 +75,45 @@ export class RegisterComponent implements OnInit {
 
             //this.user = ((this.valForm.controls['Usuario'].value == null || this.valForm.controls['Usuario'].value == '') ? "DAMSA." + this.valForm.controls['Nombre'].value : this.valForm.controls['Usuario'].value);
 
-           this.email.push({email: this.valForm.controls['email'].value, UsuarioAlta: 'INNTEC'});
+                this.email.push({email: this.valForm.controls['email'].value.trim(), UsuarioAlta: 'INNTEC'});
 
-           let persona = {
-                Clave: this.valForm.controls['Clave'].value.trim(),
-                Nombre: this.valForm.controls['Nombre'].value,
-                ApellidoPaterno: this.valForm.controls['ApellidoPaterno'].value,
-                ApellidoMaterno: this.valForm.controls['ApellidoMaterno'].value,
-                Usuario: this.user.toUpperCase(),
-                DepartamentoId: this.valForm.controls['DepartamentoId'].value,
-                Email: this.email,
-                Password: this.passwordForm.controls['password'].value,
-                Foto: "/utilerias/img/user/default.jpg"
-              };
-              console.log(persona)
-             
-           this.service.AddUsers(persona)
-               .subscribe( data => {
-                   console.log(data)
-               this.msj = data;
-               this.verMsj = true;
-               this.ngOnInit()
-               });
+                let persona = {
+                    Clave: this.valForm.controls['Clave'].value.trim(),
+                    Nombre: this.valForm.controls['Nombre'].value,
+                    ApellidoPaterno: this.valForm.controls['ApellidoPaterno'].value,
+                    ApellidoMaterno: this.valForm.controls['ApellidoMaterno'].value,
+                    Usuario: this.user.toUpperCase(),
+                    DepartamentoId: this.valForm.controls['DepartamentoId'].value,
+                    Email: this.email,
+                    Password: this.passwordForm.controls['password'].value,
+                    Foto: "/utilerias/img/user/default.jpg"
+                };
+           
+                this.service.AddUsers(persona)
+                    .subscribe(data => {
+                        if (data == 201) {
+                            this.msj = 'El usuario' + persona.Usuario + 'se registro con éxito';
+                            this.verMsg = true;
+                            this.success = true;
+                            this.haserror = false;
+                            this.ngOnInit();
+                        }
+                        else {
+                            this.msj = 'Ocurrio un error al intentar agregar usuario: ' + persona.Usuario;
+                            this.verMsg = true;
+                            this.haserror = true;
+                            this.success = false;
+                            this.ngOnInit();
+                        }
+                    });
             }
-            else
-            {
+            else {
                 this.msj = 'El email: ' + this.valForm.controls['email'].value + ' ya se encuentra registrado';
-                        this.epopover.show();
-                        this.disabledE = false;
-                        this.verMsj = true;
-
+                this.epopover.show();
+                this.disabledE = false;
+                this.verMsg = true;
+                this.haserror = true;
+                this.success = false;
             }
         }
     }
@@ -123,6 +134,7 @@ export class RegisterComponent implements OnInit {
 
     ValidarEmail(email: string)
     {
+        this.epopover.hide();
         this.user = this.valForm.controls['email'].value.trim();
         var idx =  this.user.indexOf( "@" ); 
         this.user = "DAMSA." + this.user.substring(0, idx);
@@ -135,22 +147,29 @@ export class RegisterComponent implements OnInit {
                         this.msj = 'El email: ' + email + ' ya se encuentra registrado';
                         this.epopover.show();
                         this.disabledE = false;
-                        this.verMsj = true;
+                        this.verMsg = true;
+                        this.haserror = true;
+                        this.success = false;
+
                     }
                     else
                     {
                         this.disabledE = true;
+                        this.haserror = false;
+                        this.success = false;
                        this.epopover.hide();
                     }
                 },
                 error => {
                    this.msj = error;
+                   this.haserror = true;
+                   this.success = false;
                 });
     }
 
     ValidarDAL(dal: string)
     {
-        console.log(dal)
+        this.epopover2.hide();
         this.authService.isUserDAL(dal)
             .subscribe(
                 data => {
@@ -160,17 +179,23 @@ export class RegisterComponent implements OnInit {
                         this.msj = 'Clave: ' + dal + ' ya se encuentra registrado';
                         this.epopover2.show();
                         this.disabledC = false;
-                        this.verMsj = true;
+                        this.verMsg = true;
+                        this.haserror = true;
+                        this.success = false;
                     }
                     else
                     {
                        this.epopover2.hide();
-                       this.verMsj = false;
+                       this.verMsg = false;
                        this.disabledC = true;
+
                     }
                 },
                 error => {
                    this.msj = error;
+                   this.verMsg = true;
+                   this.haserror = true;
+                   this.success = false;
                 });
     }
 

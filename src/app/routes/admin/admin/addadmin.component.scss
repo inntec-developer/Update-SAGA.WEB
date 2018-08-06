@@ -1,13 +1,19 @@
 .panel-body {
-  overflow-x: scroll;
+  overflow-x: hidden;
   height: 800px;
 }
 .tituloPuesto
 {
   background-color: #23b7e5 !important;
-  margin-right: 0px;
+  margin-right: 10px;
 }
 
+.tituloPuesto2
+{
+  background-color: #23b7e5 !important;
+  margin-right: 10px;
+  margin-top:10px;
+}
 .margin-mio
 {
   margin-top: -32.5px;

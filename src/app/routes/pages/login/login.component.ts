@@ -64,6 +64,7 @@ export class LoginComponent implements OnInit {
                         localStorage.setItem('foto', data.foto);
                         localStorage.setItem('id', data.id)
                         
+                        console.log(data)
                         this.router.navigate(['/home']);
                     }
                     if(data == 404){

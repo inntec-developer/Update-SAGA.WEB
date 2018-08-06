@@ -37,7 +37,7 @@ export class RolGrupoComponent implements OnInit, AfterViewInit {
   setData()
   {
     this.StructList = this.someInput.StructList;
-    this.someInput.setStruct(this.filteredData)
+    // this.someInput.setStruct(this.filteredData)
   }
   
   onSelect(item: any) 
@@ -102,7 +102,7 @@ export class RolGrupoComponent implements OnInit, AfterViewInit {
     this.permisoRol = this.Roles.filter(item => item.id == id);
     this.filteredData = this.StructList.filter(item => item.rolId == id)
     
-     this.someInput.setStruct(this.filteredData)
+    //  this.someInput.setStruct(this.filteredData)
     
   }
 
@@ -153,7 +153,7 @@ export class RolGrupoComponent implements OnInit, AfterViewInit {
   GetEntidades()
     {
       this.Grupos = [];
-      this.service.GetEntidadesUG()
+      this.service.GetEntidades()
       .subscribe(
         e=>{
           this.Grupos = e;

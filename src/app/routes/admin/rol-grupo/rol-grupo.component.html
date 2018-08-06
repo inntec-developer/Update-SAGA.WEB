@@ -87,9 +87,9 @@
           
           </div>
         
-          <div class="col-md-4">
+          <!-- <div class="col-md-4">
             <btn-view class="pull-left" (click)="staticModal.show()" matTooltip="Visualizar Rol"></btn-view>
-          </div>
+          </div> -->
           <div class="col-md-2">
             <btn-check class="pull-right" id='create' chkPrivilegiosButtons matTooltip="Guardar Cambios" (click)="saveData(slcRol.value)"></btn-check>
           </div>
@@ -111,7 +111,7 @@
 </form>
 <!-- Modal  -->
 
-<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+<!-- <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -126,10 +126,7 @@
           <app-rolls-struct #Struct [hiddenSelect]="true" (onItemChanged)="setData()" [StructList]="filteredData"></app-rolls-struct>
         </div>
       </div>
-      <!-- <div class="modal-footer">
-             <btn-closed data-dismiss="modal" (click)="staticModal.hide()"></btn-closed>
-           </div>
-       </div> -->
+    
     </div>
   </div>
-</div>
+</div> -->

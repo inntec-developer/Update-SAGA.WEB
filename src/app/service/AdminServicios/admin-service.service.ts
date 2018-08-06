@@ -18,6 +18,7 @@ export class AdminServiceService {
   // Url de servicios.
   private Url = ApiConection.ServiceUrl+ApiConection.getDtosPersonal;
   private UrlGetEntidadesUG = ApiConection.ServiceUrl+ApiConection.getEntidadesUG;
+  private UrlGetEntidades = ApiConection.ServiceUrl+ApiConection.getEntidades;
   private UrlTiposUsuarios = ApiConection.ServiceUrl+ApiConection.getTiposUsuarios;
   private UrlAddRol = ApiConection.ServiceUrl+ApiConection.addRol;
   private UrlAddGrupo = ApiConection.ServiceUrl+ApiConection.addGrupo;
@@ -79,9 +80,16 @@ export class AdminServiceService {
          .catch(this.handleError);
   }
 
-  GetEntidadesUG(): Observable<any>
+  GetEntidades(): Observable<any>
   {
-     return this.http.get(this.UrlGetEntidadesUG)
+     return this.http.get(this.UrlGetEntidades)
+         .map(result => result.json())
+         .catch(this.handleError);
+  }
+
+  GetEntidadesUG(id): Observable<any>
+  {
+     return this.http.get(this.UrlGetEntidadesUG + '?id=' + id)
          .map(result => result.json())
          .catch(this.handleError);
   }
@@ -146,9 +154,9 @@ export class AdminServiceService {
          .catch(this.handleError);
   }
 
-  GetEstructuraRoles(): Observable<any>
+  GetEstructuraRoles( rol ): Observable<any>
   {
-     return this.http.get(this.UrlGetEstructuraRoles)
+     return this.http.get(this.UrlGetEstructuraRoles + '?rol=' + rol)
          .map(result => result.json())
          .catch(this.handleError);
   }

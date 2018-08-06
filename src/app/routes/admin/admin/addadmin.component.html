@@ -73,14 +73,14 @@
         <!-- dnd-droppable (onDropSuccess)="addToGroups($event)" [dropZones]="['demo1']" dnd-sortable-container [dropZones]="['demo1']" [sortableData]="ListaPG" dnd-sortable [sortableIndex]="i" -->
         <div class="panel-body" dnd-sortable-container [dropZones]="['demo1']" [sortableData]="ListaPG"> 
           <p [hidden]="ListaPG.length > 0">{{msj}}</p>
-          <div *ngFor="let pg of ListaPG; let i = index" class="panel panel-default" dnd-sortable [sortableIndex]="i" (onDropSuccess)="addToGroups($event)">
+          <div *ngFor="let pg of ListaPG; let i = index" class="panel panel-default panel-flat" dnd-sortable [sortableIndex]="i" (onDropSuccess)="addToGroups($event)">
             <button type="button" class="close pull-right" aria-label="Close" (click)="PopUsers(pg.entidadId)">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="media">
               <img class="float-left img-fluid circle thumb32 marginimg" src="{{pg.fotoAux}}" alt="" />
               <div class="media-body">
-                  <div class="float-right badge badge-info tituloPuesto">{{pg.departamento}}</div>
+                  <div class="float-right badge badge-info tituloPuesto2">{{pg.departamento}}</div>
                   <h4 class="margintextthumb">{{pg.nombre + ' ' + pg.apellidoPaterno + ' ' + pg.apellidoMaterno }}</h4>
                      <!--   <p *ngIf="pg.grupos.length > 0">Grupo:
                         <span *ngFor="let g of pg.grupos">{{g.grupo}}, </span>
@@ -88,6 +88,7 @@
                 
               </div>
             </div>
+            <hr>
           </div>
         </div>
       </div>

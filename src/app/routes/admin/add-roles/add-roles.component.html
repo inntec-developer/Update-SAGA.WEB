@@ -12,12 +12,29 @@
         </ol>
       </div>
       
-<!-- <grid-roles [nodes] = "nodes"></grid-roles> -->
+
 <form [formGroup]="formRoles" novalidate>
    
     <div class="panel panel-default panel-flat mat-elevation-z8">
         <div class="panel-body">
-            <div>
+                <grid-roles #grid [nodes] = "nodes"></grid-roles>
+      
+        </div>
+
+    </div>
+</form>
+
+<grid-roles [nodes] = "nodeAux"></grid-roles>
+
+
+
+
+
+
+
+
+
+      <!-- <div>
                 <div class="panel col-md-12">
                     <br/>
                     <p class="text-center pv">AGREGAR ROL</p>
@@ -25,125 +42,60 @@
                         <mat-form-field>
                             <input matInput formControlName="Rol" placeholder="Nombre">
                         </mat-form-field>
-                        <!-- validar nombre rol -->
+                      
                         <p>
                             <span *ngIf="formRoles.controls['Rol'].touched && !formRoles.controls['Rol'].valid">Nombre es requerido</span>
                         </p>
                  <br/>
                 </div>
-            </div>
-            <div>
-                    <div class="col-md-12 pull-left">
+            </div> -->
+ 
+                    <!-- <div class="col-md-12 pull-left">
                         {{alert}}
                     </div>
                     <div class="col-md-12">
                         <btn-check id='create' chkPrivilegiosButtons class="pull-right" (click)="saveData()" matTooltip="Guardar Cambios"></btn-check>
                     </div>
-                </div>
-                <br/>
-            <br/>
-            <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <td class="text-center">Estructura</td>
-                                <td>C</td>
-                                <td>R</td>
-                                <td>U</td>
-                                <td>D</td>
-                                <td>S</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let node of nodes; let i = index">
-                                <td [ngClass]="{'colorPadres': node.tipoEstructuraId === 2,
-                                                'esparbol': node.id != node.idPadre && node.tipoEstructuraId == 3,
-                                                'esparbol2': node.id != node.idPadre && node.tipoEstructuraId == 4,
-                                                'esparbol3': node.id != node.idPadre && node.tipoEstructuraId > 4 && node.tipoEstructuraId < 8,
-                                                'esparbol4': node.id != node.idPadre && node.tipoEstructuraId == 8
-                                                }">{{node.nombre }}</td>
-                                
-                                <td class="center"><mat-checkbox id="{{ 'C-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Create')" [checked]="node.create" matTooltip="Create"></mat-checkbox></td>
-                                <td class="center"> <mat-checkbox id="{{ 'R-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Read')" [checked]="node['read']" matTooltip="Read"></mat-checkbox></td>
-                                <td class="center"><mat-checkbox id="{{ 'U-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Update')" [checked]="node['update']" matTooltip="Update"></mat-checkbox></td>
-                                <td class="center"><mat-checkbox id="{{ 'D-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Delete')" [checked]="node['delete']" matTooltip="Delete"></mat-checkbox></td>
-                                <td class="center"><mat-checkbox id="{{ 'E-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Especial')" [checked]="node['especial']" matTooltip="Special"></mat-checkbox></td>
-                                
-                            </tr>
-                        </tbody>
-                    </table>
-                <br/>
-                <div>
-                    <div class="col-md-12 pull-left">
-                       <span>{{alert}}</span>
-                    </div>
-                    <div class="col-md-12">
-                        <btn-check id='create' chkPrivilegiosButtons class="pull-right" (click)="saveData()" matTooltip="Guardar Cambios"></btn-check>
-                    </div>
-                </div>
-            </div>
-        </div>
+            -->
 
+
+<!-- <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <td class="text-center">Estructura</td>
+                    <td>C</td>
+                    <td>R</td>
+                    <td>U</td>
+                    <td>D</td>
+                    <td>S</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let node of nodes; let i = index">
+                    <td [ngClass]="{'colorPadres': node.tipoEstructuraId === 2,
+                                    'esparbol': node.id != node.idPadre && node.tipoEstructuraId == 3,
+                                    'esparbol2': node.id != node.idPadre && node.tipoEstructuraId == 4,
+                                    'esparbol3': node.id != node.idPadre && node.tipoEstructuraId > 4 && node.tipoEstructuraId < 8,
+                                    'esparbol4': node.id != node.idPadre && node.tipoEstructuraId == 8
+                                    }">{{node.nombre }}</td>
+                    
+                    <td class="center"><mat-checkbox id="{{ 'C-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Create')" [checked]="node.create" matTooltip="Create"></mat-checkbox></td>
+                    <td class="center"> <mat-checkbox id="{{ 'R-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Read')" [checked]="node['read']" matTooltip="Read"></mat-checkbox></td>
+                    <td class="center"><mat-checkbox id="{{ 'U-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Update')" [checked]="node['update']" matTooltip="Update"></mat-checkbox></td>
+                    <td class="center"><mat-checkbox id="{{ 'D-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Delete')" [checked]="node['delete']" matTooltip="Delete"></mat-checkbox></td>
+                    <td class="center"><mat-checkbox id="{{ 'E-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Especial')" [checked]="node['especial']" matTooltip="Special"></mat-checkbox></td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    <br/>
+    <div>
+        <div class="col-md-12 pull-left">
+           <span>{{alert}}</span>
+        </div>
+        <div class="col-md-12">
+            <btn-check id='create' chkPrivilegiosButtons class="pull-right" (click)="saveData()" matTooltip="Guardar Cambios"></btn-check>
+        </div>
     </div>
-</form>
-<!--
-                            
-                <tree-root class="espacios" #tree [nodes]="nodes" [options]="customTemplateStringOptions" (updateData)="click($event)">
-                        <ng-template #treeNodeFullTemplate
-                        let-node
-                        let-index="index"
-                        let-templates="templates">
-                <div 
-                  [class]="node.getClass()"
-                  [class.tree-node]="true"
-                  [class.tree-node-expanded]="true"
-               >
-       <span class="espacios">{{node.data.nombre}}</span>
-  <div >
-                  
-                </div>
-         
-           
-                  <tree-node-drop-slot
-                                       *ngIf="index === 0"
-                                       [dropIndex]="node.index"
-                                       [node]="node.parent">
-                  </tree-node-drop-slot>
-              
-                 
-              
-                  <tree-node-children [node]="node" [templates]="templates">
-                      
-                  </tree-node-children>
-                  <tree-node-drop-slot [dropIndex]="node.index + 1" [node]="node.parent">
-                  </tree-node-drop-slot>
-                </div>
-              </ng-template>
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            <ng-template #treeNodeTemplate let-node>
-                    <tr>
-                        <td>
-                        
-                            <span>{{node.data.nombre}}</span>
-                      
-                        </td>
-              
-                        <td>
-                                
-                         <mat-checkbox id="{{ 'C-' + node.data.estructuraId}}" (change)="descendantsChecked($event, node, 'Create')"  [checked] = "node.data['create']" matTooltip="Create" ></mat-checkbox>
-                         <mat-checkbox id="{{ 'R-' + node.data.estructuraId}}" (change)="descendantsChecked($event, node, 'Read')" [checked] = "node.data['read']" matTooltip="Read" ></mat-checkbox>
-                         <mat-checkbox id="{{ 'U-' + node.data.estructuraId}}" (change)="descendantsChecked($event, node, 'Update')" [checked] = "node.data['update']" matTooltip="Update" ></mat-checkbox>
-                         <mat-checkbox  id="{{ 'D-' + node.data.estructuraId}}" (change)="descendantsChecked($event, node, 'Delete')" [checked] = "node.data['delete']" matTooltip="Delete" ></mat-checkbox>
-                         <mat-checkbox  id="{{ 'E-' + node.data.estructuraId}}" (change)="descendantsChecked($event, node, 'Especial')"  [checked] = "node.data['especial']" matTooltip="Special"></mat-checkbox>
-                
-                        </td>
-                     </tr>     
-                       <ng-template #loadingTemplate>Loading, please hold....</ng-template>
-        </tree-root> 
-                    </ng-template> -->
+</div> -->

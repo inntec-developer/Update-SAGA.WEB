@@ -107,7 +107,8 @@ export class ApiConection {
   public static deleteGrupo = '/admin/deleteGrupo';
   public static deleteRoles = 'admin/deleteRoles';
   public static getTreeRoles = '/admin/GetEstructura';
-  public static getEntidadesUG = '/admin/getEntidades2';
+  public static getEntidadesUG = '/admin/getEntidadesByRol';
+  public static getEntidades = '/admin/getEntidades2';
   public static getEstructuraRoles = '/admin/getEstructuraRoles';
   public static getPrivilegios = '/admin/getPrivilegios';
   public static modificarPrivilegios = '/admin/modificarPrivilegios'
