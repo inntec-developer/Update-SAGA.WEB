@@ -96,7 +96,7 @@ export class RolGrupoComponent implements OnInit, AfterViewInit {
   selected($event, rol: any)
   {
     this.verMsj = false;
-
+    this.ListaRG = [];
     this.flag = true;
     var id = $event.target.value;
     this.permisoRol = this.Roles.filter(item => item.id == id);
@@ -199,7 +199,7 @@ export class RolGrupoComponent implements OnInit, AfterViewInit {
     this.GetEntidades();
     this.getRoles();
     this.setData();
-    this.someInput.setStruct(this.filteredData)
+   
     
   }
 
