@@ -68,6 +68,7 @@ import { DtRequisicionComponent } from './requisiciones/components/dt-requisicio
 import { DtTelefonosComponent } from './requisiciones/components/dt-telefonos/dt-telefonos.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import { Ng2TableModule } from 'ng2-table/ng2-table';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ObservacionesComponent } from './requisiciones/components/observaciones/observaciones.component';
 import { PrestacionesClienteComponent } from './requisiciones/components/prestaciones-cliente/prestaciones-cliente.component';
@@ -115,7 +116,7 @@ const routes: Routes = [
         MatSelectModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule,
         MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule,
         MatToolbarModule, MatTooltipModule, MatOptionModule, NgxSpinnerModule, ToasterModule,
-        SelectModule, ComponentsModule
+        SelectModule, ComponentsModule, Ng2TableModule
     ],
     providers: [ColorPickerService,
          { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
