@@ -1,13 +1,16 @@
-<ngx-spinner bdColor = "rgba(198,195,195,0.8)" size = "medium" color = "#90daff" type = "square-jelly-box"></ngx-spinner>
 <div class="content-heading">
-    <ul class="breadcrumb pull-right">
-        <li><a [routerLink]="['/home']" >Inicio</a></li>
-        <li><a [routerLink]="['/ventas/requisicion']" >Requisiciones</a></li>
-        <li class="active">Nueva Requisicion</li>
-    </ul>
-    Nueva Requisicion
-    <small> Generador de Requisiciones.</small>
+    <div>
+        Nueva Requisici&oacute;n
+        <span class="text-sm d-none d-sm-block">Generador de Requisicioness.</span>
+    </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+        <li class="breadcrumb-item"><a [routerLink]="['/home']" >Inicio</a></li>
+        <li class="breadcrumb-item"><a [routerLink]="['/ventas/requisicion']" >Requisiciones</a></li>
+        <li class="breadcrumb-item active">Nueva Requisicion</li>
+    </ol>
 </div>
+
 <div *ngIf="createRequi">
   <div class="row">
     <div class="col-md-4">

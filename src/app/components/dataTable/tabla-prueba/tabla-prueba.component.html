@@ -7,8 +7,8 @@
   </div>
 </div>
 <div class="card card-default">
-  <div class="table-responsive">
-      <ng-table id="resultDataTable" [config]="config" (tableChanged)="onChangeTable(config)" (cellClicked)="onCellClick($event)" [rows]="rows" [columns]="columns"></ng-table>
+  <div class="table-responsive" #tableContainer>
+      <ng-table id="resultDataTable" [config]="config" (tableChanged)="onChangeTable(config)" (cellClicked)="onCellClick($event)"  [columns]="columns"></ng-table>
   </div>
 </div>
 <div class="text-right">
@@ -29,4 +29,4 @@
     (numPages)="numPages = $event">
   </pagination>
 </div>
-<pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}</pre>
+<pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>

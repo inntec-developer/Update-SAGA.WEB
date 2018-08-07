@@ -36,8 +36,10 @@ import {
          MatToolbarModule,
          MatTooltipModule
 } from '@angular/material';
+import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
 import { RouterModule, Routes } from '@angular/router';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
+import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
 
 import { ActividadesComponent } from './requisiciones/components/actividades/actividades.component';
 import { ClientesComponent } from './directorio-empresarial/clientes/clientes.component';
@@ -85,7 +87,6 @@ import { ViewCuerpoRequiComponent } from './requisiciones/components/view-cuerpo
 import { ViewInforRequiComponent } from './requisiciones/components/view-info-requi/view-info-requi.component';
 import { ViewRequisicionComponent } from './requisiciones/components/view-requisicion/view-requisicion.component';
 import { ViewdamfoComponent } from './requisiciones/components/viewdamfo/viewdamfo.component';
-import { getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
 
 const routes: Routes = [
     { path: 'directorio', component: DirectorioEmpresarialComponent, data: {componente: 'Directorio Empresarial'}},
@@ -116,10 +117,11 @@ const routes: Routes = [
         MatSelectModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule,
         MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule,
         MatToolbarModule, MatTooltipModule, MatOptionModule, NgxSpinnerModule, ToasterModule,
-        SelectModule, ComponentsModule, Ng2TableModule
+        SelectModule, ComponentsModule, Ng2TableModule, PaginationModule.forRoot()
     ],
     providers: [ColorPickerService,
          { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
+         { provide: PaginationConfig, useValue: getSpanishPaginatorBtp()},
          {provide: MAT_DATE_LOCALE, useValue: 'en-MX'},
           ToasterService ],
     declarations: [

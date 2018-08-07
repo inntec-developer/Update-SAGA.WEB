@@ -138,9 +138,7 @@
           <btn-view (click)="openDialogShowRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view>
           <btn-assign id="update" chkPrivilegiosButtons (click)="openDialogAssingRequi(element)" matTooltip="Asignar"></btn-assign>
           <btn-desing-recl id="special" chkPrivilegiosButtons  (click)="openDesignVacante(element.id, element.folio, element.vBtra)" matTooltip="Diseñar Vacante" *ngIf="element.estatus.id == 7 || element.estatus.id == 6 && !element.confidencial" ></btn-desing-recl>
-          
       </mat-cell>
-
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

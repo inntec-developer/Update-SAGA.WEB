@@ -1,0 +1,17 @@
+.actions{
+    margin-left: 10px;
+}
+
+tbody {
+    height: 10%;
+    overflow-y: scroll;
+  }
+
+tr.confident td {
+    background-color:  #fcffdd;
+    color: black;  
+}
+tr.cancel td {
+    background-color:  #fd9e9e;
+    color: black;  
+}

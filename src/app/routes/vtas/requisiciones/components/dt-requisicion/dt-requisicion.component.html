@@ -3,133 +3,78 @@
 <div class="dt-container mat-elevation-z8">
   <div class="dt-header">
     <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
+      <input #filterInput matInput placeholder="Filter todas las columnas" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)">
     </mat-form-field>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <btn-add class="form-control btn-block" id="create" chkPrivilegiosButtons [text]="textBtnAdd" [routerLink]="['/ventas/crearRequisicion']">
+
+    <div class="d-flex align-items-stretch ">
+      <btn-add class="btn-acciones" mattooltip="Nuevo" id="create" chkPrivilegiosButtons [routerLink]="['/ventas/crearRequisicion']">
       </btn-add>
+      <btn-view id="view" class="btn-acciones" matTooltip="Visualizar" (click)="showRequi()"></btn-view>
+      <btn-edit id="update" class="btn-acciones" *ngIf="estatusId != 8" matTooltip="Editar" (click)="editRequi()"></btn-edit>
+      <btn-cancel id='delete' class="btn-acciones" *ngIf="estatusId != 8 && enProceso == 0" matTooltip="Cancelar" (click)="openDialogCancel()"></btn-cancel>
+      <btn-refresh id='update' class="btn-acciones" *ngIf="estatusId == 8" matTooltip="Activar" (click)="openDialogReActivar()"></btn-refresh>
+      <btn-delete id='delete' class="btn-acciones" *ngIf="enProceso == 0" matTooltip="Eliminar" (click)="openDialogDelete()"></btn-delete>
     </div>
   </div>
+  <div class="card card-default">
+    <div class="table-responsive" #tableContainer>
+      <table id="resultDataTable" class="dataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+        <thead>
+          <tr>
+            <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+              {{column.title}}
+              <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
+              </i>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="showFilterRow">
+            <td *ngFor="let column of columns">
+              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                class="form-control">
+            </td>
+          </tr>
+          <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of rows" 
+            [class.confident]="row.confidencial" 
+            [class.cancel]="row.estatusId == 8">
+            <td>
+              {{row.folio}}
+            </td>
+            <td> {{row.cliente}}</td>
+            <td> {{row.vBtra}}</td>
+            <td class="text-center">
+              <span class="px-1 mr-1  badge  badge-pill badge-info"> {{row.vacantes}}</span>
+            </td>
+            <td class="text-right"> {{row.sueldoMinimo | currency: $}}</td>
+            <td class="text-right"> {{row.sueldoMaximo | currency: $}}</td>
+            <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
+            <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
+            <td class="text-center">
+              <small class="badge badge-pill" 
+                [class.badge-warning]="row.estatusId  === 4" 
+                [class.badge-primary]="row.estatusId  === 5"
+                [class.badge-info]="row.estatusId  === 6" 
+                [class.badge-success]="row.estatusId  === 7" 
+                [class.badge-danger]="row.estatusId  === 8">
+                {{row.estatus}}
+              </small>
+            </td>
+            <td class="text-center">
+              <small class="badge badge-pill" [class.badge-danger]="row.prioridadId  === 1" [class.badge-warning]="row.prioridadId  === 2">
+                {{row.prioridad}}
+              </small>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="text-right">
+    <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+      [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+    </pagination>
+  </div>
+  <pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
 
-  <mat-table #table [dataSource]="dataSource">
-    <!-- Folio -->
-    <ng-container matColumnDef="folio">
-      <mat-header-cell *matHeaderCellDef>Folio </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <small [ngClass]="{'badge badge-sm  badge-purple': element.confidencial == true}"> {{element?.folio}}</small>
-      </mat-cell>
-    </ng-container>
-    <!-- Cliente <Razon Social> Column -->
-    <ng-container matColumnDef="cliente">
-      <mat-header-cell *matHeaderCellDef>Cliente </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <small>{{element?.cliente?.nombrecomercial}} </small>
-      </mat-cell>
-    </ng-container>
-
-    <!-- Nombre Perfil Column -->
-    <ng-container matColumnDef="vBtra">
-      <mat-header-cell class="mat-cell-center" *matHeaderCellDef>Nombre Perfil </mat-header-cell>
-      <mat-cell class="mat-cell-center" *matCellDef="let element">
-        <small> {{element?.vBtra}} </small>
-      </mat-cell>
-    </ng-container>
-
-    <!-- Vacantes Column -->
-    <ng-container matColumnDef="vacantes">
-      <mat-header-cell class="mat-cell-center" *matHeaderCellDef>Vacantes </mat-header-cell>
-      <mat-cell class="mat-cell-center" *matCellDef="let element">
-        <small class="px-1 mr-1 float-right badge badge-success"> {{element.vacantes}} </small>
-      </mat-cell>
-    </ng-container>
-
-    <!-- Tipo Reclutamiento  <Actividad Empresa> Column -->
-    <ng-container matColumnDef="reclutamiento">
-      <mat-header-cell *matHeaderCellDef>Reclutamiento</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <small> {{element?.tipoReclutamiento?.tipoReclutamiento}} - {{element?.claseReclutamiento?.clasesReclutamiento}} </small>
-      </mat-cell>
-    </ng-container>
-
-    <!-- Sueldo minimo Column -->
-    <ng-container matColumnDef="sueldoMinimo">
-      <mat-header-cell class="mat-cell-right" *matHeaderCellDef>Sueldo Mn.</mat-header-cell>
-      <mat-cell class="mat-cell-right" *matCellDef="let element">
-        <small>{{element?.sueldoMinimo | currency: $}}</small>
-      </mat-cell>
-    </ng-container>
-
-    <!-- Sueldo Maximo -->
-    <ng-container matColumnDef="sueldoMaximo">
-      <mat-header-cell class="mat-cell-right" *matHeaderCellDef>Sueldo Mx.</mat-header-cell>
-      <mat-cell class="mat-cell-right" *matCellDef="let element">
-        <small>{{element?.sueldoMaximo | currency: $}}</small>
-      </mat-cell>
-    </ng-container>
-
-    <!-- Fecha Creacion Maximo -->
-    <ng-container matColumnDef="fch_Creacion">
-      <mat-header-cell *matHeaderCellDef>Creación</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <small>{{element?.fch_Creacion | date:'dd/MM/yyyy'}}</small>
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="fch_Cumplimiento">
-      <mat-header-cell *matHeaderCellDef>Cumplimiento</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <small>{{element?.fch_Cumplimiento | date:'dd/MM/yyyy'}}</small>
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="estatus">
-      <mat-header-cell *matHeaderCellDef>Estatus</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <h5>
-          <small class="badge badge-pill" [class.badge-warning]="element.estatus.id  === 4" [class.badge-primary]="element.estatus.id  === 5"
-            [class.badge-info]="element.estatus.id  === 6" [class.badge-success]="element.estatus.id  === 7" [class.badge-danger]="element.estatus.id  === 8">
-          {{element?.estatus?.descripcion}}
-          </small>
-        </h5>
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="prioridad">
-      <mat-header-cell *matHeaderCellDef>Prioridad</mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <h5>
-          <small class="badge badge-pill" [class.badge-danger]="element.prioridad.id  === 1" [class.badge-warning]="element.prioridad.id  === 2">
-          {{element?.prioridad?.descripcion}}
-          </small>
-        </h5>
-      </mat-cell>
-    </ng-container>
-
-    <!-- Accion -->
-    <ng-container matColumnDef="accion">
-      <mat-header-cell *matHeaderCellDef>Acciones </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <btn-view (click)="showRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view>
-        <btn-edit id="update" chkPrivilegiosButtons (click)="editRequi(element.id, element.folio)" *ngIf="element.estatus.id != 8"
-          matTooltip="Editar Requisición"></btn-edit>
-        <btn-cancel id="special" chkPrivilegiosButtons (click)="openDialogCancel(element)" *ngIf="element.estatus.id != 8 && element.enProceso == 0"
-          matTooltip="Cancelar Requisición"></btn-cancel>
-        <btn-refresh id="special" chkPrivilegiosButtons (click)="openDialogReActivar(element)" *ngIf="element.estatus.id == 8" matTooltip="Re-activar Requisición"></btn-refresh>
-        <btn-delete id="delete" chkPrivilegiosButtons (click)="openDialogDelete(element)" *ngIf="element.enProceso == 0" matTooltip="Eliminar Requisición"></btn-delete>
-      </mat-cell>
-
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
-  <!-- <mat-paginator 
-    [showFirstLastButtons]="true"
-    [length]="TotalRecords"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="pageSizeOptions"
-    (page)="pageEvent = paginate($event)">
-  </mat-paginator> -->
 </div>
