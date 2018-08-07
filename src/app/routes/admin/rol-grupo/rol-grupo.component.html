@@ -60,7 +60,7 @@
                   </tr>
                   <tr class="text-left" *ngFor="let r of g.grupos">
                       <div *ngFor="let gr of r.rol"> <!--roles como grupo-->
-                        {{r.grupo + ' - ' + gr.rol}}
+                        {{gr.rol + ' - ' + r.grupo }}
                       </div>
                       <hr>
                   </tr>
@@ -78,7 +78,7 @@
           <div class="row">
    
           <div class="col-md-6">
-            <select #slcRol class="form-control" (change)="selected($event, i)" formControlName="slcRol">
+            <select #slcRol class="form-control" (change)="selected($event); rolId = $event.target.value" formControlName="slcRol">
               <option [value]="0">Seleccionar Rol</option>
               <option *ngFor="let r of Roles; let i = index" [value]="r.id">{{r.rol}}</option>
             </select>
@@ -95,14 +95,17 @@
           </div>
         </div>
         </div>
-
+<br/>
         <div class="panel-body">
-          <div class="media" *ngFor='let sel of ListaRG'>
-            <img class="img-responsive img-fluid circle thumb32" src="{{sel.fotoAux}}" alt="" /> 
-            <span class="media-body"><strong>{{sel.nombre + ' ' + sel.apellidoPaterno + ' ' + sel.apellidoMaterno }}</strong></span>
+          <div *ngFor='let sel of ListaRG'>
+            <div class="media">
+              <img class="img-responsive img-fluid circle thumb32" src="{{sel.fotoAux}}" alt="" /> 
+              <span class="media-body"><strong>{{sel.nombre + ' ' + sel.apellidoPaterno + ' ' + sel.apellidoMaterno }}</strong></span>
+            </div>
+            <hr>   
           </div>
-          <p *ngIf="!ListaRG.length">No se ha seleccionado grupo</p>
         </div>
+        <p *ngIf="!ListaRG.length">No se ha seleccionado grupo</p>
       </div>
     </div>
     <br/>

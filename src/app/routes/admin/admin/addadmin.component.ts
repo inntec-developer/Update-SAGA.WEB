@@ -40,12 +40,12 @@ export class AddadminComponent implements OnInit {
 
   public Search(data: any) {
     let tempArray: Array<any> = [];
-    let colFiltar: Array<any> = [ { title: "apellidoPaterno" }, { title: "nombre" }];
+    let colFiltar: Array<any> = [ { title: "nombre" }, { title: "apellidoPaterno" }];
 
     this.filteredData.forEach(function (item) {
       let flag = false;
       colFiltar.forEach(function (c) {
-        if (item[c.title].toString().match(data.target.value)) {
+        if (item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
           flag = true;
         }
       });
@@ -64,26 +64,31 @@ export class AddadminComponent implements OnInit {
       
   }
 
-  addToGroups($event) {
-    console.log($event)
-
+  addToGroups($event, idG) {
     //el drag me agrega solo el item por eso lo borro por que se repite
     var rep = this.ListaPG.filter(x => x.entidadId == $event.entidadId);
 
     if(rep.length > 1)
     {
       var idx = this.ListaPG.findIndex(x => x.entidadId == $event.entidadId);
-      console.log(idx)
+
       this.ListaPG.splice(idx, 1)
       this.ListEntidades.push($event);
     }
-    
-    // if (idx != -1 ) {
-    //   this.ListaPG.splice(idx, 1)
-    // }
+    else if(rep.length == 1 && rep[0]['entidadId'] == idG)
+    {
+        var idx = this.ListaPG.findIndex(x => x.entidadId == idG);
 
-    // this.ListEntidades.push($event);
-
+        if( idx != -1)
+        {
+          this.ListaPG.splice(idx, 1)
+          this.ListEntidades.push($event);
+        }
+    }
+    else
+    {
+      this.ListEntidades.push($event)
+    }
 
   }
 
@@ -93,6 +98,10 @@ export class AddadminComponent implements OnInit {
 
     if (idx != -1) {
       this.ListaPG.splice(idx, 1)
+      if( this.ListaPG.length == 0)
+      {
+        this.ListaPG = [];
+      }
     }
 
   }
@@ -114,18 +123,20 @@ export class AddadminComponent implements OnInit {
   }
 
   GetUserByGroup(Id) {
-    
     this.service.GetUsuarioByGrupo(Id)
       .subscribe(
         e => {
-          
+  
           this.ListaPG = e;
-          
           this.ListaPG.forEach(item => {
             item.fotoAux = ApiConection.ServiceUrlFoto + item.foto;
           })
 
-          
+          // var idx = this.ListEntidades.findIndex(x => x.entidadId == Id);
+          // if( idx != -1)
+          // {
+          //   this.ListEntidades.splice(idx, 1);
+          // }
           //para llenar el panel donde se hace drop solo se utiliza npara cunado le den select to grupo
           //por si arrastras un usuario y despues selecionas un grupo donde esta incluido el usuario i.e. para que no se repita el usuario
           //ya no es necesario por que no puedes hacer el drag a menos que selecciones un grupo 
@@ -143,7 +154,7 @@ export class AddadminComponent implements OnInit {
 
   addUsuarioGrupo() {
     let lug = [];
-
+    
     var uniq = this.ListaPG.filter((elem, pos, arr) => {
       return elem.grupos.findIndex(x => x.id == this.IdGrupo) < 0
 
@@ -178,6 +189,7 @@ export class AddadminComponent implements OnInit {
           this.ListEntidades.forEach(item => {
             item.fotoAux = ApiConection.ServiceUrlFoto + item.foto;
           })
+          this.ListAuxEntidades = this.ListEntidades;
 
           this.filteredData = this.ListEntidades;
         })

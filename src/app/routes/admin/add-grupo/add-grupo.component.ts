@@ -22,7 +22,7 @@ export class AddGrupoComponent implements OnInit {
   editing = {};
   name: string;
   rowAux: any;
-  UsuariosList: Array<any> = [];
+  UsuariosList = [];
   alert = '';
 
   constructor( public fb: FormBuilder, private service: AdminServiceService )
@@ -70,7 +70,10 @@ export class AddGrupoComponent implements OnInit {
     .subscribe(
       e=>{
         this.Grupos = e;
-        console.log(this.Grupos)
+
+        this.Grupos.forEach(item => {
+          item.fotoAux = ApiConection.ServiceUrlFoto + item.foto
+        })
       });
   }
 
@@ -80,7 +83,10 @@ export class AddGrupoComponent implements OnInit {
     .subscribe(
       e=>{
         this.UsuariosList = e;
-        console.log(this.UsuariosList)
+        
+        this.UsuariosList.forEach(item => {
+          item.fotoAux = ApiConection.ServiceUrlFoto + item.foto
+        })
       });
   }
 
