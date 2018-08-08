@@ -16,10 +16,21 @@
 
 <form [formGroup]="formGrupos" novalidate >
   <div>
-      <span>{{alert}}</span>
+      <div *ngIf="verMsj" class="alert" [class.alert-success]="success" [class.alert-danger] ="haserror">
+          {{alert}}
+          <button type="button" (click) = "verMsj=false" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+           </button>
+        </div>
     <div class="panel mat-elevation-z8">
      <div class="panel-body">
        <br/><br/>
+       <div class="col-md-4">
+          <div class="input-group">
+          <input (input)="Search($event)" class="input-sm form-control" type="text" placeholder="Filtrar" />
+          </div>
+      </div>
+      
        <p class="text-center pv">GRUPOS</p>
        <br/>
            <div class="table-responsive">
@@ -53,7 +64,7 @@
 
                        <tr *ngFor="let g of Grupos; let rowIndex = index; let value = index">
                           <td class="text-center">
-                            <btn-view (click)="grupo=g.nombre; GetUsuarios(g.id);" data-toggle="popover" [popover]="popTemplate" placement="right" trigger="" matTooltip="Ver integrantes del grupo"></btn-view>
+                            <btn-view [xs]="true" (click)="grupo=g.nombre; GetUsuarios(g.id);" data-toggle="popover" [popover]="popTemplate" placement="right" trigger="" matTooltip="Ver integrantes del grupo"></btn-view>
                           </td>
                           <td class="align-middle text-center">
                             <a matTooltip="Click to edit" (click)="rowAux=rowIndex; CrearURL(g.id); staticModal.show()"><img class="img-fluid circle thumb48" src={{g.fotoAux}} alt="Image" /></a>
@@ -85,7 +96,12 @@
                    </tbody>
                </table>
                <br/>
-               <span>{{alert}}</span>
+               <div *ngIf="verMsj" class="alert" [class.alert-success]="success" [class.alert-danger] ="haserror">
+                  {{alert}}
+                  <button type="button" (click) = "verMsj=false" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                   </button>
+                </div>
            </div>
         </div>
     </div>

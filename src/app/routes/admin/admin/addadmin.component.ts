@@ -24,6 +24,10 @@ export class AddadminComponent implements OnInit {
   IdGrupo: any = null;
   draggable = false;
   msj = 'Arrastrar usuario aqui'
+  alert = '';
+  verMsj = false;
+  success = false;
+  haserror = false;
 
   constructor(private service: AdminServiceService, public fb: FormBuilder) {}
 
@@ -107,18 +111,29 @@ export class AddadminComponent implements OnInit {
   }
 
   DeleteUsers(grupo, user, index) {
-    var idx = this.ListaPG.findIndex(x => x.entidadId === user);
+    var idx = this.ListAuxEntidades.findIndex(x => x.entidadId === user);
 
-    if (idx != -1) {
-      this.ListaPG.splice(idx, 1)
+    var grupos = this.ListAuxEntidades[idx]['grupos'];
+    var id = grupos.findIndex(x => x.id == grupo);
+    if(id != -1)
+    {
+      grupos.splice(id, 1);
+      this.ListAuxEntidades[idx]['grupos'] = grupos;
+      this.ListEntidades = this.ListAuxEntidades;
     }
-
+          
     let dts = { GrupoId: grupo, EntidadId: user };
 
     this.service.DeleteUserGroup(dts)
       .subscribe(
         e => {
-          this.GetEntidades();
+          var idx = this.ListEntidades.findIndex(x => x.entidadId === user);
+          if(idx != -1)
+          {
+            this.ListEntidades[idx]['grupos'] = grupos;
+          }
+          grupos = [];
+         // this.GetEntidades();
         })
   }
 
@@ -168,8 +183,23 @@ export class AddadminComponent implements OnInit {
 
       this.service.addUserGroup(lug)
         .subscribe(data => {
-          this.ListaPG = [];
-          this.ngOnInit();
+          if(data == 201)
+          {
+            this.alert = 'Los datos se actualizaron con éxito';
+            this.verMsj = true;
+            this.success = true;
+            this.haserror = false;
+            this.ListaPG = [];
+            this.ngOnInit();
+          }
+          else
+          {
+            this.alert = 'Ocurrio un error al intentar actualizar datos';
+            this.verMsj = true;
+            this.success = false;
+            this.haserror = true;
+          }
+         
         });
 
     }

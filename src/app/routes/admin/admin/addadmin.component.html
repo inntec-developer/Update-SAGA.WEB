@@ -22,6 +22,12 @@
       </div>
     </div>
   </div>
+  <div *ngIf="verMsj" class="alert" [class.alert-success]="success" [class.alert-danger] ="haserror">
+      {{alert}}
+      <button type="button" (click) = "verMsj=false" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+       </button>
+    </div>
   <br/>
 <div class="row">
     <div class="col-md-6">

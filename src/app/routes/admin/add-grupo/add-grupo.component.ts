@@ -24,7 +24,10 @@ export class AddGrupoComponent implements OnInit {
   rowAux: any;
   UsuariosList = [];
   alert = '';
-
+  verMsj = false;
+  success = false;
+  haserror = false;
+  filteredData = [];
   constructor( public fb: FormBuilder, private service: AdminServiceService )
   {
     this.formGrupos = this.fb.group({
@@ -37,6 +40,26 @@ export class AddGrupoComponent implements OnInit {
   CrearURL(idG: any)
   {
     this.name = idG;
+  }
+
+  public Search(data: any) {
+    let tempArray: Array<any> = [];
+    let colFiltar: Array<any> = [{ title: "nombre" }];
+
+    this.filteredData.forEach(function (item) {
+      let flag = false;
+      colFiltar.forEach(function (c) {
+        if (item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
+          flag = true;
+        }
+      });
+
+      if (flag) {
+        tempArray.push(item)
+      }
+    });
+
+    this.Grupos = tempArray;
   }
 
   updateValue($event, cell, rowIndex)
@@ -74,6 +97,8 @@ export class AddGrupoComponent implements OnInit {
         this.Grupos.forEach(item => {
           item.fotoAux = ApiConection.ServiceUrlFoto + item.foto
         })
+
+        this.filteredData = this.Grupos;
       });
   }
 
@@ -101,9 +126,22 @@ export class AddGrupoComponent implements OnInit {
 
     this.service.addGrupos(grupo)
     .subscribe( data => {
-      this.alert = data;
-
-      this.getGrupos();
+      console.log(data)
+      if(data == 201)
+      {
+        this.alert = 'Los datos se agregaron con éxito';
+        this.verMsj = true;
+        this.success = true;
+        this.haserror = false;
+        this.ngOnInit();
+      }
+      else
+      {
+        this.alert = 'Ocurrio un error al intentar agregar datos';
+        this.verMsj = true;
+        this.success = false;
+        this.haserror = true;
+      }
     });
   }
 
@@ -125,8 +163,21 @@ export class AddGrupoComponent implements OnInit {
     let gu = this.Grupos[rowIndex]
     this.service.UpdateGrupo(gu)
       .subscribe( data => {
-        this.alert = data;
-        this.getGrupos();
+        if(data == 201)
+        {
+          this.alert = 'Los datos se actualizaron con éxito';
+          this.verMsj = true;
+          this.success = true;
+          this.haserror = false;
+          this.getGrupos();
+        }
+        else
+        {
+          this.alert = 'Ocurrio un error al intentar actualizar datos';
+          this.verMsj = true;
+          this.success = false;
+          this.haserror = true;
+        }
     });
   }
 
@@ -135,16 +186,32 @@ export class AddGrupoComponent implements OnInit {
     let g = this.Grupos[rowIndex]
     this.service.DeleteGrupo(g)
       .subscribe( data => {
-        this.alert = data;
+        if(data == 201)
+        {
+          this.alert = 'Los datos se actualizaron con éxito';
+          this.verMsj = true;
+          this.success = true;
+          this.haserror = false;
 
-        this.Grupos.splice(rowIndex, 1);
-        this.Grupos = [...this.Grupos];
+          this.Grupos.splice(rowIndex, 1);
+          this.Grupos = [...this.Grupos];
+        }
+        else
+        {
+          this.alert = 'Ocurrio un error al intentar actualizar datos';
+          this.verMsj = true;
+          this.success = false;
+          this.haserror = true;
+
+        }
     });
    
   }
 
   ngOnInit() {
     this.getGrupos();
+    this.formGrupos.controls['Nombre'].reset();
+    this.formGrupos.controls['Descripcion'].reset();
   }
 
 

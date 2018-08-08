@@ -26,7 +26,9 @@ export class AddPersonaComponent implements OnInit {
   paginacion = [];
   pagIndex = 0;
   alert: string = '';
-
+  verMsj = false;
+  success = false;
+  haserror = false;
   @ViewChild('uploadImg') someInput: UploadImgsComponent;
   @ViewChild('staticModal') modal;
 
@@ -76,12 +78,12 @@ export class AddPersonaComponent implements OnInit {
   public Search(data: any) {
 
     let tempArray: Array<any> = [];
-    let colFiltar: Array<any> = [{ title: "clave" },{ title: "apellidoPaterno" }, { title: "nombre" }];
+    let colFiltar: Array<any> = [{ title: "nombre" },{ title: "apellidoPaterno" }, { title: "clave" }];
 
     this.filteredData.forEach(function (item) {
       let flag = false;
       colFiltar.forEach(function (c) {
-        if (item[c.title].toString().match(data.target.value)) {
+        if(item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
           flag = true;
         }
       });
@@ -129,8 +131,21 @@ export class AddPersonaComponent implements OnInit {
     let u = this.Users[rowIndex];
     this.service.UpdateUsuario(u)
       .subscribe(data => {
-        this.alert = data;
-        this.ngOnInit();
+        if(data == 201)
+        {
+          this.alert = 'Los datos se actualizaron con éxito';
+          this.verMsj = true;
+          this.success = true;
+          this.haserror = false;
+        }
+        else
+        {
+          this.alert = 'Ocurrio un error al intentar actualizar datos';
+          this.verMsj = true;
+          this.success = false;
+          this.haserror = true;
+        }
+        
       });
   }
 
@@ -138,8 +153,21 @@ export class AddPersonaComponent implements OnInit {
   {
     this.service.UDActivoUsers(id, $ev.target.checked )
         .subscribe( data => {
-          this.alert = data;
-          this.getUsuarios();
+          if(data == 201)
+          {
+            this.alert = 'Los datos se actualizaron con éxito';
+            this.verMsj = true;
+            this.success = true;
+            this.haserror = false;
+          }
+          else
+          {
+            this.alert = 'Ocurrio un error al intentar actualizar datos';
+            this.verMsj = true;
+            this.success = false;
+            this.haserror = true;
+          }
+          
         });
   }
 
