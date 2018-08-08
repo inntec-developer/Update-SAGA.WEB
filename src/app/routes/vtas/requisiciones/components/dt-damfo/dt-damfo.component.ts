@@ -4,14 +4,12 @@ import { Component, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatTableDataSource, PageEvent} from '@angular/material';
 
 import { DialogdamfoComponent } from '../dialogdamfo/dialogdamfo.component'
+import { Element } from './../dt-horarios/dt-horarios.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../service/index';
+import { element } from 'protractor';
 
-//Components
-
-
-//Servicios
-
+declare var $: any;
 
 @Component({
   selector: 'app-dt-damfo',
@@ -20,6 +18,22 @@ import { RequisicionesService } from '../../../../../service/index';
   providers: [RequisicionesService]
 })
 export class DtDamfoComponent implements OnInit {
+  //Varaibales Globales
+  public dataSource : Array<any> = [];
+  Vacantes: number = 0;
+
+  // Varaibles del paginador
+  public page: number = 1;
+  public itemsPerPage: number = 20;
+  public maxSize: number = 5;
+  public numPages: number = 1;
+  public length: number = 0;
+
+  showFilterRow: boolean;
+  registros: number;
+  errorMessage: any;
+  element: any;
+  damfoId: any;
 
   constructor(
     private service: RequisicionesService,
@@ -29,131 +43,189 @@ export class DtDamfoComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toasterService: ToasterService
   ) {}
-  //Configuracion de mensaje.
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    limit: 7,tapToDismiss: false,
-    showCloseButton: true,
-    mouseoverTimerStop: true,
-  });
-  //Crear el mensaje
-   popToast(type, title, body ) {
+  
 
-     var toast : Toast = {
-       type: type,
-       title: title,
-       timeout:5000,
-       body: body
-     }
-     this.toasterService.pop(toast);
-   }
-
-
-  //Varaibales Globales
-  damfo: any;
-  arrayDamfo: any[];
-  public dataSource: MatTableDataSource<any[]>;
+  
 
   ngOnInit() {
-    /** spinner starts on init */
+     /** spinner starts on init */
     this.spinner.show();
-    this.service.getDamgo290().subscribe(data => {
-        this.dataSource = new MatTableDataSource(data);
-        this.damfo = data;
-        this.arrayDamfo = data;
-        // this.pageCount = Math.round(this.damfo.length / this.rows);
-        // this.TotalRecords = this.damfo.length;
-        // this.paginador();
-        this.spinner.hide();
-      });
-  }
-  showDamfo(id){
-    //mandamos la información por medio de la URL sin que esta se muestre en la liga.
-    this._Router.navigate(['/ventas/visualizarDamfo290', id], {skipLocationChange:true});
+    setTimeout(() => {
+      this.onChangeTable(this.config);
+    }, 300); 
   }
 
-  openDialog(element){
-    let dialogRef = this.dialog.open(DialogdamfoComponent,{
-      width: '50%',
-      height: 'auto',
-      data: element
-    });
-    dialogRef.afterClosed().subscribe(result => {
-    });
-  }
-
-//*******************************-- GRID-- *********************************************//
-  // // Paginador.
-  // length = 0;
-  // pageSize = 10;
-  // pageSizeOptions = [10, 30, 50];
-
-  // rows: number = 10;
-  // first: number = 0;
-  // page: number = 1;
-  // pageCount: number = 0;
-  // TotalRecords: number = 0;
-  // paginate(event?: PageEvent){
-  //     if(event.length > event.pageSize )
-  //     {
-  //       this.first = event.pageIndex;
-  //       this.rows = event.pageSize;
-  //       this.page = event.pageIndex;
-  //       this.pageCount = event.length;
-  //     }
-  //     else{
-  //       this.rows = event.length;
-  //     }
-  //     this.paginador();
-  // }
-
-  // paginador(){
-  //     if (this.page < this.pageCount) {
-  //         this.damfo = new Array(this.rows);
-  //         for (var i = 0; i < this.rows; i++) {
-  //             this.damfo[i] = this.arrayDamfo[this.first + i];
-  //         }
-  //     }
-  //     else {
-  //         let length = this.arrayDamfo.length - this.first;
-  //         this.damfo = new Array(length);
-  //         for (var i = 0; i < length; i++) {
-  //             this.damfo[i] = this.arrayDamfo[this.first + i];
-  //         }
-  //     }
-  //     this.dataSource =  new MatTableDataSource(this.damfo);
-  // }
-  //termina paginador
-
-  // Display para mostrar los objetos en el Grid
-  displayedColumns = [
-    'cliente',
-    'nombrePerfil',
-    'empresa',
-    'reclutamiento',
-    'sueldoMinimo',
-    'sueldoMaximo',
-    'fch_Creacion',
-    'accion'
+  public rows: Array<any> = [];
+  public columns: Array<any> = [
+      {title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
+      {title: 'Perfil', className: 'text-info text-center', name: 'nombrePerfil', filtering: { filterString: '', placeholder: 'Perfil' }},
+      {title: 'No. Vacantes', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' }},
+      {title: 'Sueldo Minimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' }},
+      {title: 'Sueldo Maximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' }},
+      {title: 'Tipo Recl.', className: 'text-info text-center',name:'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo Recl.' }},
+      {title: 'clase Recl.', className: 'text-info text-center', name:'claseReclutamiento', filtering: { filterString: '', placeholder: 'Clase Recl.' }},
+      {title: 'Creación', className: 'text-info text-center',name:'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }}
   ];
-  // Filtro dentro del Grid
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+
+  public config: any = {
+    paging: true,
+    sorting: { columns: this.columns },
+    filtering: { filterString: '' },
+    className: ['table-striped table-bordered mb-0 d-table-fixed']
+  };
+
+  public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
+    let start = (page.page - 1) * page.itemsPerPage;
+    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    return data.slice(start, end);
   }
+
+  public changeSort(data: any, config: any): any {
+    if (!config.sorting) {
+        return data;
+    }
+
+    let columns = this.config.sorting.columns || [];
+    let columnName: string = void 0;
+    let sort: string = void 0;
+
+    for (let i = 0; i < columns.length; i++) {
+        if (columns[i].sort !== '' && columns[i].sort !== false) {
+            columnName = columns[i].name;
+            sort = columns[i].sort;
+        }
+    }
+
+    if (!columnName) {
+        return data;
+    }
+
+    // simple sorting
+    return data.sort((previous: any, current: any) => {
+        if (previous[columnName] > current[columnName]) {
+            return sort === 'desc' ? -1 : 1;
+        } else if (previous[columnName] < current[columnName]) {
+            return sort === '' ? -1 : 1;
+        }
+        return 0;
+    });
+  }
+
+  public changeFilter(data: any, config: any): any {
+    let filteredData: Array<any> = data;
+    this.columns.forEach((column: any) => {
+        if (column.filtering) {
+            this.showFilterRow = true;
+            filteredData = filteredData.filter((item: any) => {
+              if(item[column.name] != null)
+                return item[column.name].toString().match(column.filtering.filterString);
+            });
+        }
+    });
+
+    if (!config.filtering) {
+        return filteredData;
+    }
+
+    if (config.filtering.columnName) {
+        return filteredData.filter((item: any) =>
+            item[config.filtering.columnName].match(this.config.filtering.filterString));
+    }
+
+    let tempArray: Array<any> = [];
+    filteredData.forEach((item: any) => {
+        let flag = false;
+        this.columns.forEach((column: any) => {
+          if(item[column.name] == null){
+            flag = true;
+          }else{
+            if (item[column.name].toString().match(this.config.filtering.filterString)) {
+              flag = true;
+            }
+          }            
+        });
+        if (flag) {
+            tempArray.push(item);
+        }
+    });
+    filteredData = tempArray;
+
+    return filteredData;
+  }
+
+  public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
+    if (config.filtering) {
+        (<any>Object).assign(this.config.filtering, config.filtering);
+    }
+
+    if (config.sorting) {
+        (<any>Object).assign(this.config.sorting, config.sorting);
+    }
+    this.service.getDamgo290().subscribe(data => {
+      this.dataSource = data;
+      console.log(this.dataSource);
+      this.registros = this.dataSource.length;
+      this.rows = this.dataSource;
+      let filteredData = this.changeFilter(this.dataSource, this.config);
+      let sortedData = this.changeSort(filteredData, this.config);
+      this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
+      this.length = sortedData.length;
+      this.spinner.hide();
+    }, error => this.errorMessage = <any>error );
+    
+  }
+  
+  public onCellClick(data: any): any {
+    let index = this.dataSource.indexOf(data.row);
+    this.element = data;
+    this.damfoId = data.id
+    /* add an class 'active' on click */
+    $('#resultDataTable').on('click', 'tr', function (event: any) {
+        //noinspection TypeScriptUnresolvedFunction
+        $(this).addClass('selected').siblings().removeClass('selected');
+    });
+  }
+
+  /*
+  * Funciones para la administracion del 290
+  * */
+  showDamfo(){
+    //mandamos la información por medio de la URL sin que esta se muestre en la liga.
+    if(this.damfoId){
+      this._Router.navigate(['/ventas/visualizarDamfo290', this.damfoId], {skipLocationChange:true});
+    }
+  }
+
+  openDialog(){
+    if(this.element){
+      let dialogRef = this.dialog.open(DialogdamfoComponent,{
+        width: '50%',
+        height: 'auto',
+        data: this.element
+      });
+    }
+  }
+  /*
+  * Creacion de mensajes
+  * */
+ toaster: any;
+ toasterConfig: any;
+ toasterconfig: ToasterConfig = new ToasterConfig({
+   positionClass: 'toast-bottom-right',
+   limit: 7,tapToDismiss: false,
+   showCloseButton: true,
+   mouseoverTimerStop: true,
+ });
+  popToast(type, title, body ) {
+
+    var toast : Toast = {
+      type: type,
+      title: title,
+      timeout:5000,
+      body: body
+    }
+    this.toasterService.pop(toast);
+  }
+
 }
-export interface Element {
-  id: string;
-  cliente: string;
-  nombrePerfil: string;
-  giroEmpresa: string;
-  actividadEmpresa: string;
-  tipoReclutamiento: string;
-  claseReclutamiento: string;
-  sueldoMinimo: string;
-  sueldoMaximo: string;
-  fch_Creacion: string;
-}
+

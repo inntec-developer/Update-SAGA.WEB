@@ -104,8 +104,8 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        CommonModule,
         SharedModule,
+        CommonModule,
         RouterModule.forChild(routes),
         HttpModule,
         HttpClientModule,

@@ -1,38 +1,30 @@
 <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
 <div>
-  <h3>Generar nueva requisici&oacute;n</h3>
+  <h4>Generar nueva requisici&oacute;n</h4>
 </div>
 <div mat-dialog-content>
     <div class="row">
-      <div class="col-sm-6">
-        <small><strong>Cliente: </strong> {{data.cliente?.razonSocial}}</small>
+      <div class="col-sm-12">
+        <h5><strong>Cliente: </strong> {{data.cliente}}</h5>
       </div>
     </div>
     <div class="row">
       <div class="col-md-4 col-sm-4">
-        <small><strong>Giro: </strong>{{data.cliente?.giroEmpresas?.giroEmpresa}}</small>
+        <h5><strong>Puesto: </strong>{{data.nombrePerfil}}</h5>
       </div>
       <div class="col-md-4 col-sm-4">
-        <small><strong>Actividad: </strong>{{data.cliente?.actividadEmpresas?.actividadEmpresa}}</small>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 col-sm-4">
-        <small><strong>Puesto: </strong>{{data.nombrePerfil}}</small>
+        <h5><strong>Sueldo Minimo: </strong>{{data.sueldoMinimo | currency: '$'}}</h5>
       </div>
       <div class="col-md-4 col-sm-4">
-        <small><strong>Sueldo Minimo: </strong>{{data.sueldoMinimo | currency: '$'}}</small>
-      </div>
-      <div class="col-md-4 col-sm-4">
-        <small><strong>Sueldo Maximo: </strong>{{data.sueldoMaximo | currency: '$'}}</small>
+        <h5><strong>Sueldo Maximo: </strong>{{data.sueldoMaximo | currency: '$'}}</h5>
       </div>
     </div>
     <div class="row">
       <div class="col-md-4 col-sm-4">
-         <small><strong>Clase Reclutamiento: </strong>{{data.claseReclutamiento?.clasesReclutamiento}}</small>
+         <h5><strong>Clase Reclutamiento: </strong>{{data.claseReclutamiento}}</h5>
       </div>
       <div class="col-md-4 col-sm-4">
-        <small><strong>Tipo Reclutamiento: </strong>{{data.tipoReclutamiento?.tipoReclutamiento}}</small>
+        <h5><strong>Tipo Reclutamiento: </strong>{{data.tipoReclutamiento}}</h5>
       </div>
     </div>
     <br>

@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster/angular2-toaster';
 
 import { DialogActivarRequiComponent } from './../dialog-activar-requi/dialog-activar-requi.component';
@@ -21,7 +21,6 @@ declare var $: any;
 export class DtRequisicionComponent implements  OnInit {
   // Variables Globales
   public dataSource : Array<any> = [];
-  public textBtnAdd: string;
   Vacantes: number = 0;
 
   // Varaibles del paginador
@@ -31,13 +30,15 @@ export class DtRequisicionComponent implements  OnInit {
   public numPages: number = 1;
   public length: number = 0;
 
-
-  errorMessage: any;
-  estatusId: any;
-  enProceso: any;
-  element: any = {};
   showFilterRow: boolean;
   registros: number;
+  errorMessage: any;
+  element: any = {};
+
+  estatusId: any;
+  enProceso: any;
+ 
+ 
 
   constructor(
     private service: RequisicionesService,
@@ -47,10 +48,7 @@ export class DtRequisicionComponent implements  OnInit {
     private spinner: NgxSpinnerService,
     private toasterService: ToasterService
 
-  ) {
-    
-    this.textBtnAdd = 'Nueva Requisicion';
-  }
+  ) {  }
 
   ngOnInit(): void {
     /** spinner starts on init */
@@ -60,26 +58,18 @@ export class DtRequisicionComponent implements  OnInit {
     }, 300);    
   }
 
-  // public getDateRequisiciones() {
-  //   this.service.getRequisiciones(localStorage.getItem('usuario')).subscribe(data => {
-  //     this.dataSource = data;
-  //     this.registros = this.dataSource.length;
-  //     this.rows = this.dataSource;
-  //   }, error => this.errorMessage = <any>error );
-  // }
-
   public rows: Array<any> = [];
   public columns: Array<any> = [
-      {title: 'Folio', sort: false, className: 'text-info text-center', name:'folio', filtering: { filterString: '', placeholder: 'Folio' } },
-      {title: 'Cliente', sort: false, className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
-      {title: 'Perfil', sort: false, className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' }},
-      {title: 'No. Vacantes', sort: false, className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' }},
-      {title: 'Sueldo Minimo', sort: false, className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' }},
-      {title: 'Sueldo Maximo', sort: false, className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' }},
-      {title: 'Creación', sort: false, className: 'text-info text-center',name:'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }},
-      {title: 'Cumplimiento', sort: false, className: 'text-info text-center', name:'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }},
-      {title: 'Estatus', sort: false, className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' }},
-      {title: 'Prioridad', sort: false, className: 'text-info text-center', name:'prioridad', filtering: { filterString: '', placeholder: 'Prioridad' }},
+      {title: 'Folio',  className: 'text-info text-center', name:'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+      {title: 'Cliente',  className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
+      {title: 'Perfil',  className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' }},
+      {title: 'No. Vacantes',  className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' }},
+      {title: 'Sueldo Minimo',  className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' }},
+      {title: 'Sueldo Maximo',  className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' }},
+      {title: 'Creación',  className: 'text-info text-center',name:'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }},
+      {title: 'Cumplimiento',  className: 'text-info text-center', name:'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }},
+      {title: 'Estatus',  className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' }},
+      {title: 'Prioridad',  className: 'text-info text-center', name:'prioridad', filtering: { filterString: '', placeholder: 'Prioridad' }},
   ];
 
   public config: any = {
@@ -120,7 +110,7 @@ export class DtRequisicionComponent implements  OnInit {
         if (previous[columnName] > current[columnName]) {
             return sort === 'desc' ? -1 : 1;
         } else if (previous[columnName] < current[columnName]) {
-            //return sort === false ? -1 : 1;
+            // return sort === false ? -1 : 1;
         }
         return 0;
     });
@@ -194,13 +184,14 @@ export class DtRequisicionComponent implements  OnInit {
     this.estatusId = data.estatusId;
     this.enProceso = data.enProceso;
     this.element = data;
-    console.log(data);
     /* add an class 'active' on click */
     $('#resultDataTable').on('click', 'tr', function (event: any) {
         //noinspection TypeScriptUnresolvedFunction
         $(this).addClass('selected').siblings().removeClass('selected');
     });
   }
+
+
   /*
   * Funciones para la administracion de las requisiciones.
   * */

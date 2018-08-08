@@ -5,13 +5,13 @@
     <mat-form-field>
       <input #filterInput matInput placeholder="Filter todas las columnas" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)">
     </mat-form-field>
-
     <div class="d-flex align-items-stretch ">
-      <btn-add class="btn-acciones" mattooltip="Nuevo" id="create" chkPrivilegiosButtons [routerLink]="['/ventas/crearRequisicion']">
+      <btn-add id="create" chkPrivilegiosButtons class="btn-acciones" mattooltip="Nuevo"  [routerLink]="['/ventas/crearRequisicion']">
       </btn-add>
       <btn-view id="view" chkPrivilegiosButtons class="btn-acciones" matTooltip="Visualizar" (click)="showRequi()"></btn-view>
       <btn-edit id="update" chkPrivilegiosButtons class="btn-acciones" *ngIf="estatusId != 8" matTooltip="Editar" (click)="editRequi()"></btn-edit>
-      <btn-cancel id='delete' chkPrivilegiosButtons class="btn-acciones" *ngIf="estatusId != 8 && enProceso == 0" matTooltip="Cancelar" (click)="openDialogCancel()"></btn-cancel>
+      <btn-cancel id='delete' chkPrivilegiosButtons class="btn-acciones" *ngIf="estatusId != 8 && enProceso == 0" matTooltip="Cancelar"
+        (click)="openDialogCancel()"></btn-cancel>
       <btn-refresh id='update' chkPrivilegiosButtons class="btn-acciones" *ngIf="estatusId == 8" matTooltip="Activar" (click)="openDialogReActivar()"></btn-refresh>
       <btn-delete id='delete' chkPrivilegiosButtons class="btn-acciones" *ngIf="enProceso == 0" matTooltip="Eliminar" (click)="openDialogDelete()"></btn-delete>
     </div>
@@ -35,9 +35,7 @@
                 class="form-control">
             </td>
           </tr>
-          <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of rows" 
-            [class.confident]="row.confidencial" 
-            [class.cancel]="row.estatusId == 8">
+          <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8">
             <td>
               {{row.folio}}
             </td>
@@ -51,13 +49,9 @@
             <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">
-              <small class="badge badge-pill" 
-                [class.badge-warning]="row.estatusId  === 4" 
-                [class.badge-primary]="row.estatusId  === 5"
-                [class.badge-info]="row.estatusId  === 6" 
-                [class.badge-success]="row.estatusId  === 7" 
-                [class.badge-danger]="row.estatusId  === 8">
-                {{row.estatus }} 
+              <small class="badge badge-pill" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
+                [class.badge-info]="row.estatusId  === 6" [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
+                {{row.estatus }}
               </small>
             </td>
             <td class="text-center">
@@ -76,5 +70,4 @@
     </pagination>
   </div>
   <pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
-
 </div>
