@@ -208,8 +208,8 @@ export class RolGrupoComponent implements OnInit {
             this.Grupos[idx]['roles'] = roles;
 
             roles = [];
-
-            // this.GetEntidades();
+            this.ListaAux = [];
+             //this.GetEntidades();
             console.log(e)
           })
         }

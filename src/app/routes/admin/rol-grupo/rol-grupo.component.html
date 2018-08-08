@@ -91,7 +91,7 @@
             <btn-view class="pull-left" (click)="staticModal.show()" matTooltip="Visualizar Rol"></btn-view>
           </div> -->
           <div class="col-md-2">
-            <btn-check class="pull-right" id='create' chkPrivilegiosButtons matTooltip="Guardar Cambios" (click)="saveData(slcRol.value)"></btn-check>
+            <btn-check class="pull-right" id='create' [xs]="true" chkPrivilegiosButtons matTooltip="Guardar Cambios" (click)="saveData(slcRol.value)"></btn-check>
           </div>
         </div>
         </div>

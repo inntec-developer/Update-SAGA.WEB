@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'btn-save',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./button-save.component.scss']
 })
 export class ButtonSaveComponent implements OnInit {
-
+  @Input('xs') xs: boolean = false;
   constructor() { }
 
   ngOnInit() {

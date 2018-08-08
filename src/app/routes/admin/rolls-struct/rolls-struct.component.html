@@ -31,14 +31,14 @@
         </div>
       </div>
       <div *ngIf="!nuevoRol" class="col-md-4" >
-        <btn-view id='read' class="marginButtons" chkPrivilegiosButtons (click)="staticModal.show();GetEntidades(id)" data-toggle="modal" data-target="#staticModal" matTooltip="Ver integrantes del rol"></btn-view>
+        <btn-view id='read' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="staticModal.show();GetEntidades(id)" data-toggle="modal" data-target="#staticModal" matTooltip="Ver integrantes del rol"></btn-view>
 
-        <btn-add id='create' class="marginButtons" chkPrivilegiosButtons (click)="nuevoRol=true;GetTreeRoles()" data-toggle="modal" data-target="#modalNodes"
+        <btn-add id='create' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="nuevoRol=true;GetTreeRoles()" data-toggle="modal" data-target="#modalNodes"
           matTooltip="Agregar Rol"></btn-add>
 
-        <btn-check id='update' class="marginButtons" chkPrivilegiosButtons (click)="GuardarCambios()" matTooltip="Guardar Cambios"></btn-check>
+        <btn-check id='update' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="GuardarCambios()" matTooltip="Guardar Cambios"></btn-check>
 
-        <btn-delete id='delete' class="marginButtons" chkPrivilegiosButtons (click)="DeleteRoles(id)" matTooltip="Eliminar Rol Seleccionado"></btn-delete>
+        <btn-delete id='delete' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="DeleteRoles(id)" matTooltip="Eliminar Rol Seleccionado"></btn-delete>
 
       </div>
     </div>
@@ -62,7 +62,7 @@
               <span aria-hidden="true">&times;</span>
            </button>
         </div>
-        <btn-check id='create' chkPrivilegiosButtons class="float-right marginButtonsFinal" (click)="GuardarCambios()" matTooltip="Guardar Cambios"></btn-check>
+        <btn-check id='create' [xs]="true" chkPrivilegiosButtons class="btn-xs float-right marginButtonsFinal" (click)="GuardarCambios()" matTooltip="Guardar Cambios"></btn-check>
           </div>
         </div>
         <br/>

@@ -68,7 +68,9 @@ children = [];
 
   GetNodes( node, i)
   {
+    
     this.collapsed[i] = !this.collapsed[i];
+  
 
     //  Object.entries(node.children).forEach(([k, v]) => { 
     //   console.log(k,v)

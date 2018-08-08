@@ -29,6 +29,7 @@ export class RollsStructComponent implements OnInit {
   success = false;
   haserror = false;
   verMsg = false;
+  collapsed = false;
   constructor(private service: AdminServiceService) { }
   
   GuardarCambios()
@@ -190,6 +191,7 @@ export class RollsStructComponent implements OnInit {
           e => {
             this.StructList = e;
             this.filteredData = e;
+            this.collapsed = false;
             console.log(this.StructList)
             this.filtrarTree(rol)
           });

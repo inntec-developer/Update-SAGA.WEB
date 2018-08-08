@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'btn-assign',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./button-assign.component.scss']
 })
 export class ButtonAssignComponent implements OnInit {
+  @Input('xs') xs: boolean = false;
 
   constructor() { }
 

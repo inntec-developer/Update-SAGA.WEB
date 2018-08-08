@@ -9,7 +9,7 @@ export class ButtonDislikeComponent implements OnInit {
   @Input('VacanteId') vacantesId : string;
   @Input('Status') Status: any;;
   @Input('RequisicionId') requisicionId: string;
-  
+  @Input('xs') xs: boolean = false;
   constructor() { }
 
   ngOnInit() {

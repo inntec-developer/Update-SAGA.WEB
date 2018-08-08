@@ -64,7 +64,7 @@
           </select>
           <span class="text-danger" *ngIf="formAdmin.controls['slcGrupo'].hasError('required')">Debe seleccionar un Grupo</span>
           <div class="pull-right margin-mio">
-            <btn-check id='create' [disabled]="!formAdmin.invalid" chkPrivilegiosButtons matTooltip="Guardar Cambios" (click)="addUsuarioGrupo()"></btn-check>
+            <btn-check id='create' [xs]="true" [disabled]="!formAdmin.invalid" chkPrivilegiosButtons matTooltip="Guardar Cambios" (click)="addUsuarioGrupo()"></btn-check>
             <span></span>
             <!-- <btn-delete matTooltip="Vaciar Lista" (click)="resetBasket()"></btn-delete> -->
           </div>
@@ -80,7 +80,7 @@
             <div class="media">
               <img class="float-left img-fluid circle thumb32 marginimg" src="{{pg.fotoAux}}" alt="" />
               <div class="media-body">
-                  <div class="float-right badge badge-info tituloPuesto2">{{pg.departamento}}</div>
+                  <div class="float-right badge badge-info tituloPuesto2v">{{pg.departamento}}</div>
                   <h4 class="margintextthumb">{{pg.nombre + ' ' + pg.apellidoPaterno + ' ' + pg.apellidoMaterno }}</h4>
                      <!--   <p *ngIf="pg.grupos.length > 0">Grupo:
                         <span *ngFor="let g of pg.grupos">{{g.grupo}}, </span>

@@ -4,12 +4,12 @@
       <div class="panel-heading" >
           
                     <p class="text-center pv">ROLES - PRIVILEGIOS</p>
-                 <div class="row">
+                 <!-- <div class="row">
         <div class="col-md-2 pull-left">
           <div class="input-group">
             <input (input)="Search($event)" class="input-sm form-control" type="text" placeholder="Filtrar" />
           </div> 
-        </div></div>
+        </div></div> -->
     
       </div>
          <table class="table table-bordered table-hover table-striped">
@@ -27,9 +27,8 @@
             <tbody>
                 <ng-container *ngFor="let node of nodes; let i = index">
                     <tr *ngIf="node.tipoEstructuraId == 2">
-                            
                          <td [ngClass]="{'colorPadres': node.tipoEstructuraId == 2}">
-                            <btn-add *ngIf="node.tipoEstructuraId==2 && node.children.length > 0" class="float-left" (click)="GetNodes(node, i)"></btn-add>
+                            <btn-add [xs]="true" *ngIf="node.tipoEstructuraId==2 && node.children.length > 0" class="float-left" (click)="GetNodes(node, i)"></btn-add>
                             <span class="col-md-2">{{node.nombre}}</span>
                         </td>
                     <td class="text-center">{{node.idPadre}}</td> 

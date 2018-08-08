@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'btn-refresh',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./button-refresh.component.scss']
 })
 export class ButtonRefreshComponent implements OnInit {
-
+  @Input('xs') xs: boolean = false;
   constructor() { }
 
   ngOnInit() {

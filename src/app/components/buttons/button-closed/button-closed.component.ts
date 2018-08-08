@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ButtonClosedComponent implements OnInit {
   @Input('text') text : string;
+  @Input('xs') xs: boolean = false;
   constructor() { }
 
   ngOnInit() {
