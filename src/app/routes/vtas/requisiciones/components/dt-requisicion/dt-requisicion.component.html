@@ -9,11 +9,11 @@
     <div class="d-flex align-items-stretch ">
       <btn-add class="btn-acciones" mattooltip="Nuevo" id="create" chkPrivilegiosButtons [routerLink]="['/ventas/crearRequisicion']">
       </btn-add>
-      <btn-view id="view" class="btn-acciones" matTooltip="Visualizar" (click)="showRequi()"></btn-view>
-      <btn-edit id="update" class="btn-acciones" *ngIf="estatusId != 8" matTooltip="Editar" (click)="editRequi()"></btn-edit>
-      <btn-cancel id='delete' class="btn-acciones" *ngIf="estatusId != 8 && enProceso == 0" matTooltip="Cancelar" (click)="openDialogCancel()"></btn-cancel>
-      <btn-refresh id='update' class="btn-acciones" *ngIf="estatusId == 8" matTooltip="Activar" (click)="openDialogReActivar()"></btn-refresh>
-      <btn-delete id='delete' class="btn-acciones" *ngIf="enProceso == 0" matTooltip="Eliminar" (click)="openDialogDelete()"></btn-delete>
+      <btn-view id="view" chkPrivilegiosButtons class="btn-acciones" matTooltip="Visualizar" (click)="showRequi()"></btn-view>
+      <btn-edit id="update" chkPrivilegiosButtons class="btn-acciones" *ngIf="estatusId != 8" matTooltip="Editar" (click)="editRequi()"></btn-edit>
+      <btn-cancel id='delete' chkPrivilegiosButtons class="btn-acciones" *ngIf="estatusId != 8 && enProceso == 0" matTooltip="Cancelar" (click)="openDialogCancel()"></btn-cancel>
+      <btn-refresh id='update' chkPrivilegiosButtons class="btn-acciones" *ngIf="estatusId == 8" matTooltip="Activar" (click)="openDialogReActivar()"></btn-refresh>
+      <btn-delete id='delete' chkPrivilegiosButtons class="btn-acciones" *ngIf="enProceso == 0" matTooltip="Eliminar" (click)="openDialogDelete()"></btn-delete>
     </div>
   </div>
   <div class="card card-default">
@@ -57,7 +57,7 @@
                 [class.badge-info]="row.estatusId  === 6" 
                 [class.badge-success]="row.estatusId  === 7" 
                 [class.badge-danger]="row.estatusId  === 8">
-                {{row.estatus}}
+                {{row.estatus }} 
               </small>
             </td>
             <td class="text-center">

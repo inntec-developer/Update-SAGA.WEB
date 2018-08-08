@@ -55,19 +55,18 @@ export class DtRequisicionComponent implements  OnInit {
   ngOnInit(): void {
     /** spinner starts on init */
     this.spinner.show();
-    this.getDateRequisiciones();
     setTimeout(() => {
       this.onChangeTable(this.config);
-    }, 500);    
+    }, 300);    
   }
 
-  public getDateRequisiciones() {
-    this.service.getRequisiciones(localStorage.getItem('usuario')).subscribe(data => {
-      this.dataSource = data;
-      this.registros = this.dataSource.length;
-      this.rows = this.dataSource;
-    }, error => this.errorMessage = <any>error );
-  }
+  // public getDateRequisiciones() {
+  //   this.service.getRequisiciones(localStorage.getItem('usuario')).subscribe(data => {
+  //     this.dataSource = data;
+  //     this.registros = this.dataSource.length;
+  //     this.rows = this.dataSource;
+  //   }, error => this.errorMessage = <any>error );
+  // }
 
   public rows: Array<any> = [];
   public columns: Array<any> = [
@@ -177,12 +176,17 @@ export class DtRequisicionComponent implements  OnInit {
     if (config.sorting) {
         (<any>Object).assign(this.config.sorting, config.sorting);
     }
+    this.service.getRequisiciones(localStorage.getItem('usuario')).subscribe(data => {
+      this.dataSource = data;
+      this.registros = this.dataSource.length;
+      this.rows = this.dataSource;
+      let filteredData = this.changeFilter(this.dataSource, this.config);
+      let sortedData = this.changeSort(filteredData, this.config);
+      this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
+      this.length = sortedData.length;
+      this.spinner.hide();
+    }, error => this.errorMessage = <any>error );
     
-    let filteredData = this.changeFilter(this.dataSource, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
-    this.length = sortedData.length;
-    this.spinner.hide();
   }
   
   public onCellClick(data: any): any {
@@ -200,6 +204,10 @@ export class DtRequisicionComponent implements  OnInit {
   /*
   * Funciones para la administracion de las requisiciones.
   * */
+  public onRefreshDataSource(){
+    this.onChangeTable(this.config);
+  }
+
   showRequi() {
     this._Router.navigate(['/ventas/visualizarRequisicion/', this.element.id, this.element.folio], { skipLocationChange: true });
   }
@@ -216,7 +224,7 @@ export class DtRequisicionComponent implements  OnInit {
     });
     var window: Window
     dialogDlt.afterClosed().subscribe(result => {
-      this.getDateRequisiciones();
+      this.onRefreshDataSource();
     });
   }
 
@@ -228,7 +236,7 @@ export class DtRequisicionComponent implements  OnInit {
     });
     var window: Window
     dialogCnc.afterClosed().subscribe(result => {
-      this.getDateRequisiciones();
+      this.onRefreshDataSource();
     })
   }
 
@@ -240,7 +248,7 @@ export class DtRequisicionComponent implements  OnInit {
     });
     var window: Window
     dialogCnc.afterClosed().subscribe(result => {
-      this.getDateRequisiciones();
+      this.onRefreshDataSource();
     })
   }
 
