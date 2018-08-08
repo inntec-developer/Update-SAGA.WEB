@@ -56,13 +56,13 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <hr>
                   </tr>
                   <tr class="text-left" *ngFor="let r of g.grupos">
+                      <hr>
                       <div *ngFor="let gr of r.rol"> <!--roles como grupo-->
                         {{gr.rol + ' - ' + r.grupo }}
                       </div>
-                      <hr>
+                      
                   </tr>
                 </td>
               </tr>

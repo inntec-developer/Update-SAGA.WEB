@@ -89,10 +89,12 @@ export class RolGrupoComponent implements OnInit {
       .subscribe( data => {
         this.msj = data;
         this.verMsj = true;
+        this.ListaRG = [];
+        this.ListaAux = [];
         this.ngOnInit();
       });
       
-      this.ListaRG = [];
+      
     }
     else
     {
