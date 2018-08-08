@@ -44,6 +44,7 @@ import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../../core/tran
 import { ActividadesComponent } from './requisiciones/components/actividades/actividades.component';
 import { ClientesComponent } from './directorio-empresarial/clientes/clientes.component';
 import { ColorPickerService } from 'ngx-color-picker';
+import { CommonModule } from '../../../../node_modules/@angular/common';
 import { ComponentsModule } from './../../components/components.module';
 import { DialogActivarRequiComponent } from './requisiciones/components/dialog-activar-requi/dialog-activar-requi.component';
 import { DialogCancelRequiComponent } from './requisiciones/components/dialog-cancel-requi/dialog-cancel-requi.component';
@@ -103,6 +104,7 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
+        CommonModule,
         SharedModule,
         RouterModule.forChild(routes),
         HttpModule,
