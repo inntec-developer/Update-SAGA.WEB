@@ -104,7 +104,7 @@ tr.cancel td {
   }
   thead {
       display: none;
-  }1
+  }
   tr:nth-of-type(2n) {
       background-color: inherit;
   }
@@ -122,4 +122,12 @@ tr.cancel td {
       display: block;
       text-align:center;
   }
+}
+
+/* ---------------------------------------------------------------------- */
+/*  Encabezados de vistas de tablas Views
+/* ---------------------------------------------------------------------- */
+
+.title-headre-view{
+  padding: 8px 25px 0 !important;
 }

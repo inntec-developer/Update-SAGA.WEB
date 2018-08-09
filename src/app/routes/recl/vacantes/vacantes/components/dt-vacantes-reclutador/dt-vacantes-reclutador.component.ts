@@ -48,7 +48,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
    ngOnInit() {
     this.spinner.show();
-    this.getVacantes();
     setTimeout(() => {
       this.onChangeTable(this.config);
     }, 300); 
@@ -59,10 +58,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
     {title: 'Folio',  className: 'text-info text-center', name:'folio', filtering: { filterString: '', placeholder: 'Folio' } },
     {title: 'Solicita',  className: 'text-info text-center', name:'solicita', filtering: { filterString: '', placeholder: 'Solicita' } },
     {title: 'Cliente',  className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
-    {title: 'Tipo Recl.',  className: 'text-info text-center', name:'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo' } },
-    {title: 'Clase Recl.',  className: 'text-info text-center', name:'claseReclutamiento', filtering: { filterString: '', placeholder: 'Clase' } },
     {title: 'Perfil',  className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' }},
     {title: 'No. Vacantes',  className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' }},
+    {title: 'Tipo Recl.',  className: 'text-info text-center', name:'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo' } },
+    {title: 'Clase Recl.',  className: 'text-info text-center', name:'claseReclutamiento', filtering: { filterString: '', placeholder: 'Clase' } },
     {title: 'Sueldo Minimo',  className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' }},
     {title: 'Sueldo Maximo',  className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' }},
     {title: 'Creación',  className: 'text-info text-center',name:'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }},
@@ -171,18 +170,21 @@ export class DtVacantesReclutadorComponent implements OnInit {
     if (config.sorting) {
         (<any>Object).assign(this.config.sorting, config.sorting);
     }
+    this.getVacantes();
+    setTimeout(() => {
+      this.registros = this.dataSource.length;
+      this.rows = this.dataSource;
+      let filteredData = this.changeFilter(this.dataSource, this.config);
+      let sortedData = this.changeSort(filteredData, this.config);
+      this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
+      this.length = sortedData.length;
+      this.spinner.hide();
+    }, 300);
     
-    console.log(this.dataSource)
-    this.registros = this.dataSource.length;
-    this.rows = this.dataSource;
-    let filteredData = this.changeFilter(this.dataSource, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
-    this.length = sortedData.length;
-    this.spinner.hide();
   }
 
   public getVacantes(){
+    this.dataSource = [];
     this.service.getRequiReclutador(localStorage.getItem('id')).subscribe(data => {
       data.forEach(x => {
         let solicita = x.solicita.nombre + ' ' + x.solicita.apellidoPaterno;

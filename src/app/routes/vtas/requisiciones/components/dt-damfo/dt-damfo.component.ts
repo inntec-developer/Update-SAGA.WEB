@@ -4,7 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatTableDataSource, PageEvent} from '@angular/material';
 
 import { DialogdamfoComponent } from '../dialogdamfo/dialogdamfo.component'
-import { Element } from './../dt-horarios/dt-horarios.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../service/index';
 import { element } from 'protractor';
@@ -63,7 +62,7 @@ export class DtDamfoComponent implements OnInit {
       {title: 'Sueldo Minimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' }},
       {title: 'Sueldo Maximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' }},
       {title: 'Tipo Recl.', className: 'text-info text-center',name:'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo Recl.' }},
-      {title: 'clase Recl.', className: 'text-info text-center', name:'claseReclutamiento', filtering: { filterString: '', placeholder: 'Clase Recl.' }},
+      {title: 'Clase Recl.', className: 'text-info text-center', name:'claseReclutamiento', filtering: { filterString: '', placeholder: 'Clase Recl.' }},
       {title: 'Creación', className: 'text-info text-center',name:'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }}
   ];
 

@@ -1,63 +1,29 @@
-
-<mat-accordion class="example-headers-align">
-  <mat-expansion-panel [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <em class="fa fa-clock-o"></em>
-      </mat-panel-title>
-      <mat-panel-description>
-        Horarios
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <div class="row">
-      <div class="dt-container">
-        <mat-table #table [dataSource]="dataSource">
-          <ng-container matColumnDef="nombre">
-            <mat-header-cell *matHeaderCellDef> Nombre</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="deDia">
-            <mat-header-cell *matHeaderCellDef> De Día</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.deDia?.diaSemana}}  </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="aDia">
-            <mat-header-cell *matHeaderCellDef> A Día</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.aDia.diaSemana}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="deHora">
-            <mat-header-cell *matHeaderCellDef> De Hora</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.deHora | date:"HH:mm"}} hrs.</mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="aHora">
-            <mat-header-cell *matHeaderCellDef> A Hora</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.aHora | date:"HH:mm"}} hrs.</mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="vacantes">
-            <mat-header-cell  *matHeaderCellDef> Vacantes</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.numeroVacantes}}</mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="especificaciones">
-            <mat-header-cell *matHeaderCellDef> Espc.</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{element.especificaciones}}</mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="accion">
-            <mat-header-cell *matHeaderCellDef> Accion</mat-header-cell>
-            <mat-cell *matCellDef="let element">
-              <btn-edit id="update" (click)="openDialogEdit(element)" chkPrivilegiosButtons  matTooltip="Editar Requisición"></btn-edit>
-            </mat-cell>
-          </ng-container>
-
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-      </div>
+<div class="dt-container mat-elevation-z8">
+    <div class="title-headre-view d-flex justify-content-between">
+      <h4>Horarios</h4>
+      <btn-edit id="update" [xs]="true" *ngIf="ruta != 'Formato 290'"  (click)="openDialogEdit()" chkPrivilegiosButtons  matTooltip="Editar Requisición"></btn-edit>
     </div>
-  </mat-expansion-panel>
-</mat-accordion>
+    <!-- <div class="card card-default"> -->
+      <div class="table-responsive" #tableContainer>
+        <table id="tablaHorarios"  ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+          <thead>
+            <tr>
+              <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr (click)="onCellClick(row)" *ngFor="let row of rows">
+              <td class="text-center"> {{row.nombre}} </td>
+              <td class="text-center"> {{row.deDia?.diaSemana}}</td>
+              <td class="text-center"> {{row.aDia.diaSemana}}</td>
+              <td class="text-center"> {{row.deHora | date:"HH:mm"}}</td>
+              <td class="text-center"> {{row.aHora | date:"HH:mm"}}</td>
+              <td class="text-center"> {{row.numeroVacantes}}</td>
+              <td class="text-center"> {{row.especificaciones}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    <!-- </div> -->
+  </div>
