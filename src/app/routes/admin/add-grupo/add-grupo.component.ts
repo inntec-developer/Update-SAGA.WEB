@@ -98,6 +98,7 @@ export class AddGrupoComponent implements OnInit {
           item.fotoAux = ApiConection.ServiceUrlFoto + item.foto
         })
 
+        console.log(this.Grupos)
         this.filteredData = this.Grupos;
       });
   }

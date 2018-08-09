@@ -25,6 +25,7 @@ export class RollsStructComponent implements OnInit {
   nodesAux = [];
   nuevoRol = false;
   nomRol = '';
+  rol = -1;
   alert = '';
   success = false;
   haserror = false;
@@ -34,6 +35,7 @@ export class RollsStructComponent implements OnInit {
   
   GuardarCambios()
   {
+    debugger;
     var privilegios = this.grid.privilegios;
     if (this.grid.privilegios.length > 0) {
       if(this.nomRol != '' && this.nuevoRol == true)
@@ -135,6 +137,8 @@ export class RollsStructComponent implements OnInit {
 
   CrearEstructura(node, rolId) {
     node.rolId = rolId;
+    node.collapsed = true;
+
     this.nodesAux.push(node);
 
     if (node.children.length > 0) {
@@ -155,21 +159,54 @@ export class RollsStructComponent implements OnInit {
     }
 
   }
+
   filtrarTree(rol)
   {
+
     this.grid.ngOnInit();
 
-     var aux = this.StructList.filter( element =>{
-      return element.rolId == rol && element.tipoEstructuraId === 2
-    })
+    // var aux = this.StructList.filter( element =>{
+    //    return element.rolId == rol && element.tipoEstructuraId === 2
+    // })
 
-    aux.forEach(element => {
-        this.CrearArbol(element)
-    })
+    // aux.forEach(element => {
+    //   this.CrearArbol(element);
+    // })
 
-    this.grid.nodes = aux;
-    this.nodes = aux;
+ 
+    // aux.forEach(element => {
+    //   var idx = this.nodes.findIndex(x => x.estructuraId === element.estructuraId)
+    //   if(idx >= 0)
+    //   {
+    //     this.nodes.splice(idx, 1);
+    //     this.nodes.push(element);
+    //   }
+    // })
+    
+    // this.grid.nodes = this.nodes;
+    // this.StructList = [];
+   
+    //  
+ 
+    
+    this.StructList.forEach(element => {
+      var idx = this.nodes.findIndex(x => x.estructuraId == element.estructuraId )
+      if(idx != -1)
+      {
+        this.nodes[idx]['create'] = element.create;
+        this.nodes[idx]['read'] = element.read;
+        this.nodes[idx]['update'] = element.update;
+        this.nodes[idx]['delete'] = element.delete;
+        this.nodes[idx]['especial'] = element.especial;
+        this.nodes[idx]['collapsed'] = true;
+        this.nodes[idx]['rolId'] = rol;
+      //  this.CrearArbol(element)
+      }
+       
+    });
 
+    this.grid.rol = rol;
+    this.grid.nodes = this.nodes;
   }
   
   GetTreeRoles() {
@@ -177,9 +214,16 @@ export class RollsStructComponent implements OnInit {
     this.service.GetTreeRoles()
       .subscribe(
         e => {
-          this.grid.ngOnInit();
+          //this.grid.ngOnInit();
+      
            this.nodes = e;
            this.StructList = e;
+
+           this.nodes.forEach(element => {
+            this.CrearEstructura(element, 0)
+           });
+
+           this.nodes = this.nodesAux;
         })
   }
 
@@ -191,7 +235,6 @@ export class RollsStructComponent implements OnInit {
           e => {
             this.StructList = e;
             this.filteredData = e;
-            this.collapsed = false;
             console.log(this.StructList)
             this.filtrarTree(rol)
           });
