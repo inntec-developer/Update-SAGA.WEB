@@ -28,14 +28,14 @@ children = [];
    }
 
    descendantsChecked($event, node, title) {
-debugger;
+
     node[title.toLowerCase()] = $event.checked;
 
     if(this.rol > 0)
     {
       node.rolId = this.rol;
     }
-    
+
     if (this.privilegios.length > 0) {
       let idx = this.privilegios.findIndex(x => {
         return x.estructuraId == node.estructuraId
