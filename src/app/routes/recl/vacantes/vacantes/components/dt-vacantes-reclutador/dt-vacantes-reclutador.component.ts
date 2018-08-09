@@ -1,13 +1,14 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatTableDataSource } from '@angular/material';
 
 import { DialogAssingRequiComponent } from './../dialogs/dialog-assing-requi/dialog-assing-requi.component';
 import { DialogShowRequiComponent } from './../dialogs/dialog-show-requi/dialog-show-requi.component';
+import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../../service';
 import { ToasterService } from 'angular2-toaster';
-import { element } from 'protractor';
+
+declare var $: any;
 
 @Component({
   selector: 'app-dt-vacantes-reclutador',
@@ -16,46 +17,229 @@ import { element } from 'protractor';
   providers: [RequisicionesService]
 })
 export class DtVacantesReclutadorComponent implements OnInit {
+  public dataSource : Array<any> = [];
+  Vacantes: number = 0;
+
+  // Varaibles del paginador
+  public page: number = 1;
+  public itemsPerPage: number = 20;
+  public maxSize: number = 5;
+  public numPages: number = 1;
+  public length: number = 0;
+
+  showFilterRow: boolean;
+  registros: number;
+  errorMessage: any;
+  element: any = {};
+
+  estatusId: any;
+  enProceso: any;
   requi: { folio: any; id: any; };
-  ruta: any;
+  vBtra: any;
+  id: any;
+  folio: any;
 
   constructor(
     private service: RequisicionesService,
     private dialog: MatDialog,
     private _Router: Router,
-    private _Route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private toasterService: ToasterService,
-    private activateRoute : ActivatedRoute
-  ) {
-    this.ruta = this.activateRoute.snapshot.routeConfig.data;
-    localStorage.setItem('ruta', this.ruta.componente);
-   }
-  // Variables Globales
-  requisicion: any;
-  arrayRequisicion: any[];
-  public dataSource = new MatTableDataSource(<any>[]);
+  ) {}
 
-  ngOnInit() {
-    this.getDataRequisiciones();
+   ngOnInit() {
+    this.spinner.show();
+    this.getVacantes();
+    setTimeout(() => {
+      this.onChangeTable(this.config);
+    }, 300); 
   }
 
-  getDataRequisiciones(){
-    this.service.getRequiReclutador(localStorage.getItem('id')).subscribe(data => {
-      this.requisicion = data;
-      this.dataSource =  new MatTableDataSource(this.requisicion);
-      this.arrayRequisicion = this.requisicion;
-      this.spinner.hide();
-      console.log(this.requisicion);
+  public rows: Array<any> = [];
+  public columns: Array<any> = [
+    {title: 'Folio',  className: 'text-info text-center', name:'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+    {title: 'Solicita',  className: 'text-info text-center', name:'solicita', filtering: { filterString: '', placeholder: 'Solicita' } },
+    {title: 'Cliente',  className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
+    {title: 'Tipo Recl.',  className: 'text-info text-center', name:'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo' } },
+    {title: 'Clase Recl.',  className: 'text-info text-center', name:'claseReclutamiento', filtering: { filterString: '', placeholder: 'Clase' } },
+    {title: 'Perfil',  className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' }},
+    {title: 'No. Vacantes',  className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' }},
+    {title: 'Sueldo Minimo',  className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' }},
+    {title: 'Sueldo Maximo',  className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' }},
+    {title: 'Creación',  className: 'text-info text-center',name:'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }},
+    {title: 'Cumplimiento',  className: 'text-info text-center', name:'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }},
+    {title: 'Estatus',  className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' }},
+    {title: 'Prioridad',  className: 'text-info text-center', name:'prioridad', filtering: { filterString: '', placeholder: 'Prioridad' }},
+    {title: 'Postulados',  className: 'text-info text-center', name:'postulados', filtering: { filterString: '', placeholder: 'Postulados' }},
+    {title: 'En Proceso',  className: 'text-info text-center', name:'enProceso', filtering: { filterString: '', placeholder: 'Proceso' }},
+  ];
+
+  public config: any = {
+    paging: true,
+    sorting: { columns: this.columns },
+    filtering: { filterString: '' },
+    className: ['table-striped table-bordered mb-0 d-table-fixed']
+  };
+
+  public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
+    let start = (page.page - 1) * page.itemsPerPage;
+    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    return data.slice(start, end);
+  }
+
+  public changeSort(data: any, config: any): any {
+    if (!config.sorting) {
+        return data;
+    }
+
+    let columns = this.config.sorting.columns || [];
+    let columnName: string = void 0;
+    let sort: string = void 0;
+
+    for (let i = 0; i < columns.length; i++) {
+        if (columns[i].sort !== '' && columns[i].sort !== false) {
+            columnName = columns[i].name;
+            sort = columns[i].sort;
+        }
+    }
+
+    if (!columnName) {
+        return data;
+    }
+
+    // simple sorting
+    return data.sort((previous: any, current: any) => {
+        if (previous[columnName] > current[columnName]) {
+            return sort === 'desc' ? -1 : 1;
+        } else if (previous[columnName] < current[columnName]) {
+            // return sort === false ? -1 : 1;
+        }
+        return 0;
     });
   }
 
-  // Dialogs
-  openDialogShowRequi(id, folio){
-      this.requi = {
-        folio : folio,
-        id : id
-      }
+  public changeFilter(data: any, config: any): any {
+    let filteredData: Array<any> = data;
+    this.columns.forEach((column: any) => {
+        if (column.filtering) {
+            this.showFilterRow = true;
+            filteredData = filteredData.filter((item: any) => {
+              if(item[column.name] != null)
+                return item[column.name].toString().match(column.filtering.filterString);
+            });
+        }
+    });
+
+    if (!config.filtering) {
+        return filteredData;
+    }
+
+    if (config.filtering.columnName) {
+        return filteredData.filter((item: any) =>
+            item[config.filtering.columnName].match(this.config.filtering.filterString));
+    }
+
+    let tempArray: Array<any> = [];
+    filteredData.forEach((item: any) => {
+        let flag = false;
+        this.columns.forEach((column: any) => {
+          if(item[column.name] == null){
+            flag = true;
+          }else{
+            if (item[column.name].toString().match(this.config.filtering.filterString)) {
+              flag = true;
+            }
+          }            
+        });
+        if (flag) {
+            tempArray.push(item);
+        }
+    });
+    filteredData = tempArray;
+
+    return filteredData;
+  }
+
+
+
+
+
+  public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
+    if (config.filtering) {
+        (<any>Object).assign(this.config.filtering, config.filtering);
+    }
+
+    if (config.sorting) {
+        (<any>Object).assign(this.config.sorting, config.sorting);
+    }
+    
+    console.log(this.dataSource)
+    this.registros = this.dataSource.length;
+    this.rows = this.dataSource;
+    let filteredData = this.changeFilter(this.dataSource, this.config);
+    let sortedData = this.changeSort(filteredData, this.config);
+    this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
+    this.length = sortedData.length;
+    this.spinner.hide();
+  }
+
+  public getVacantes(){
+    this.service.getRequiReclutador(localStorage.getItem('id')).subscribe(data => {
+      data.forEach(x => {
+        let solicita = x.solicita.nombre + ' ' + x.solicita.apellidoPaterno;
+        let source = {
+          id: x.id,
+          vBtra: x.vBtra,
+          tipoReclutamiento: x.tipoReclutamiento,
+          tipoReclutamientoId: x.tipoReclutamientoId,
+          claseReclutamiento: x.claseReclutamiento,
+          claseReclutamientoId: x.claseReclutamientoId,
+          diasEnvio: x.diasEnvio,
+          sueldoMinimo: x.sueldoMinimo,
+          sueldoMaximo: x.sueldoMaximo,
+          fch_Creacion: x.fch_Creacion,
+          fch_Cumplimiento: x.fch_Cumplimiento,
+          estatus: x.estatus,
+          estatusId: x.estatusId,
+          prioridad: x.prioridad,
+          prioridadId: x.prioridadId,
+          cliente: x.cliente,
+          vacantes: x.vacantes,
+          solicita: solicita, 
+          folio: x.folio,
+          confidencial: x.confidencial,
+          postulados: x.postulados,
+          enProceso: x.enProceso,
+        }
+        console.log(source);
+        this.dataSource.push(source);
+      });
+    });
+  }
+
+  public onCellClick(data: any): any {
+    let index = this.dataSource.indexOf(data.row);
+    this.estatusId = data.estatusId;
+    this.element = data;
+    this.vBtra = data.vBtra;
+    this.id = data.id;
+    this.folio = data.folio;
+    this.requi = {
+      folio : data.folio,
+      id : data.id
+    }
+    console.log(this.requi);
+    /* add an class 'active' on click */
+    $('#resultDataTable').on('click', 'tr', function (event: any) {
+        //noinspection TypeScriptUnresolvedFunction
+        $(this).addClass('selected').siblings().removeClass('selected');
+    });
+  }
+
+ /*
+  * Funciones para la administracion de las requisiciones.
+  * */
+  openDialogShowRequi(){
+      
       let dialogShow = this.dialog.open(DialogShowRequiComponent, {
         width: '1200px',
         height: '700px',
@@ -63,72 +247,19 @@ export class DtVacantesReclutadorComponent implements OnInit {
       });    
       
   }
-
-  openDialogAssingRequi(element){
+  openDialogAssingRequi(){
     let dialogAssing = this.dialog.open(DialogAssingRequiComponent, {
       width: '1200px',
       height: 'auto',
-      data: element
+      data: this.element
     });   
     dialogAssing.afterClosed().subscribe(result => {
-      this.getDataRequisiciones();
+      this.onChangeTable(this.config);
     })
   }
 
-  openDesignVacante(id,folio,vBtra){
-    this._Router.navigate(['/reclutamiento/configuracionVacante/', id, folio, vBtra], {skipLocationChange:true});
-    // this._Router.navigate(['/reclutamiento/configuracionVacante'], { queryParams: { Requi: id, Folio: folio, VBtra: vBtra } });
+  openDesignVacante(){
+    this._Router.navigate(['/reclutamiento/configuracionVacante/', this.id, this.folio, this.vBtra], {skipLocationChange:true});
   }
-
-   // Display para mostrar los objetos en el Grid
-   private _displayedColumns = [
-    'folio',
-    'solicita',
-    'cliente',
-    // 'rfc',
-    'vBtra',
-    'vacantes',
-    'reclutamiento',
-    'sueldoMinimo',
-    'sueldoMaximo',
-    'fch_Creacion',
-    'fch_Cumplimiento',
-    'estatus',
-    'prioridad',
-    'postulados',
-    'enProceso',
-    'accion'
-  ];
-  public get displayedColumns() {
-    return this._displayedColumns;
-  }
-  public set displayedColumns(value) {
-    this._displayedColumns = value;
-  }
-  // Filtro dentro del Grid
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
-  }
-}
-export interface Element {
-  folio: string;
-  solicita: string;
-  id: string;
-  cliente: string;
-  // rfc: string;
-  vBtra: string;
-  vacantes: number;
-  tipoReclutamiento: string;
-  claseReclutamiento: string;
-  sueldoMinimo: string;
-  sueldoMaximo: string;
-  fch_Creacion: string;
-  fch_Cumplimiento: string;
-  estatus: number;
-  prioridad: number;
-  postulados: number;
-  enProceso: number;
 }
 

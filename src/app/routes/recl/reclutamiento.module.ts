@@ -1,5 +1,3 @@
-// Librerias necesarias para el modulo.
-
 import { ColorPickerModule, ColorPickerService } from 'ngx-color-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -38,8 +36,10 @@ import {
          MatToolbarModule,
          MatTooltipModule
 } from '@angular/material';
+import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
 import { RouterModule, Routes } from '@angular/router';
 import {ToasterModule, ToasterService} from 'angular2-toaster';
+import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
 
 import { AreaExpComponent } from './candidatos/busqueda/area-exp/area-exp.component';
 import { BusquedaComponent } from './candidatos/busqueda/busqueda.component';
@@ -66,6 +66,7 @@ import { HttpModule } from '@angular/http';
 import { IdiomasComponent } from './candidatos/busqueda/idiomas/idiomas.component';
 import { ImageCropperModule } from 'ng2-img-cropper';
 import { MunicipioComponent } from './candidatos/busqueda/municipio/municipio.component';
+import { Ng2TableModule } from 'ng2-table/ng2-table';
 import { NgModule } from '@angular/core';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NivestudiosComponent } from './candidatos/busqueda/nivestudios/nivestudios.component';
@@ -83,7 +84,6 @@ import { VacantesComponent } from './vacantes/vacantes.component';
 import { VacantesReclutadorComponent } from './vacantes/vacantes/vacantes-reclutador/vacantes-reclutador.component';
 import { VehpropioComponent } from './candidatos/busqueda/vehpropio/vehpropio.component';
 import { VentaModule } from '../vtas/ventas.module';
-import { getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
 
 const routes: Routes = [
     { path: '290', component: Damfo290Component },
@@ -111,9 +111,14 @@ const routes: Routes = [
         MatProgressSpinnerModule, MatRadioModule, MatRippleModule,
         MatSelectModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule,
         MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule,
-        MatToolbarModule, MatTooltipModule, MatOptionModule, MatDialogModule, PaginatorModule,
-        ToasterModule, VentaModule, ComponentsModule, NgxSpinnerModule ],
-    providers: [ColorPickerService, { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() }, ToasterService],
+        MatToolbarModule, MatTooltipModule, MatOptionModule, MatDialogModule,
+        ToasterModule, VentaModule, ComponentsModule, NgxSpinnerModule,
+        PaginationModule.forRoot(),Ng2TableModule
+    ],
+    providers: [ColorPickerService, 
+        { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
+        { provide: PaginationConfig, useValue: getSpanishPaginatorBtp()}
+        , ToasterService],
     declarations: [ Damfo290Component, CandidatosComponent, VacantesComponent,
                     BusquedaComponent, PaisComponent, EstadoComponent,
                     MunicipioComponent, ColoniaComponent, AreaExpComponent,

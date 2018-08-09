@@ -44,7 +44,6 @@ export class DtRequisicionComponent implements  OnInit {
     private service: RequisicionesService,
     private dialog: MatDialog,
     private _Router: Router,
-    private _Route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private toasterService: ToasterService
 
@@ -114,7 +113,7 @@ export class DtRequisicionComponent implements  OnInit {
         }
         return 0;
     });
-}
+  }
 
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
@@ -156,7 +155,7 @@ export class DtRequisicionComponent implements  OnInit {
     filteredData = tempArray;
 
     return filteredData;
-}
+  }
 
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
     if (config.filtering) {

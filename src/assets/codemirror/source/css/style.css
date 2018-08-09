@@ -75,10 +75,22 @@
   text-align: center !important;
 }
 
+/* ---------------------------------------------------------------------- */
+/*  Estados en Grid
+/* ---------------------------------------------------------------------- */
 
 tr.selected td {
   background-color:  #5d9cec !important;
   color: white;
+}
+
+tr.confident td {
+  background-color:  #fcffdd;
+  color: black;  
+}
+tr.cancel td {
+  background-color:  #ffc7c7;
+  color: black;  
 }
 
 
