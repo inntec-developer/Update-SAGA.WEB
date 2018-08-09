@@ -15,7 +15,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class GridRolesComponent implements OnInit {
 
-@Input() public nodes: Array<any> = null; // Url api process upload
+@Input() public nodes: Array<any> = null;
+@Input() public rol = -1;
+
 collapsed = [];
 privilegios = [];
 alert = '';
@@ -29,6 +31,11 @@ children = [];
 
     node[title.toLowerCase()] = $event.checked;
 
+    if(this.rol > 0)
+    {
+      node.rolId = this.rol;
+    }
+
     if (this.privilegios.length > 0) {
       let idx = this.privilegios.findIndex(x => {
         return x.estructuraId == node.estructuraId
@@ -37,7 +44,7 @@ children = [];
         this.privilegios.push(node);
       }
       else {
-        this.privilegios[idx][title] = $event.checked;
+        this.privilegios[idx][title.toLowerCase()] = $event.checked;
       }
     }
     else {
@@ -66,10 +73,28 @@ children = [];
      }
   }
 
+  ChangeCollapsed(node) {
+    node.collapsed = !node.collapsed;
+ 
+     if (node.children.length > 0) {
+       node.children.forEach(element => {
+         this.ChangeCollapsed(element)
+       });
+     }
+ 
+   }
+
   GetNodes( node, i)
   {
-    
-    this.collapsed[i] = !this.collapsed[i];
+
+    if(node.children)
+    {
+      node.children.forEach(element => {
+        this.ChangeCollapsed(element);
+      });
+    }
+   // this.CrearArbol(node)
+   // this.collapsed[i] = !this.collapsed[i];
   
 
     //  Object.entries(node.children).forEach(([k, v]) => { 
@@ -78,15 +103,14 @@ children = [];
     
     // })
     
- node.children.forEach(element => { 
+    // node.children.forEach(element => { 
 
-      this.CrearEstructura(element);
+    //   this.CrearEstructura(element);
     
-     })
+    //  })
     
-     console.log(this.listAux)
-    this.children = this.listAux;
-    this.listAux = [];
+    // this.children = node.children;
+    // this.listAux = [];
   }
 
   saveData() {

@@ -177,13 +177,14 @@ export class AddPersonaComponent implements OnInit {
     .subscribe(
       e=>{
         this.Users = e;
-        this.filteredData = e;
+        
         this.paginacion = this.Users.slice(0, (this.Users.length / 10 ) );
 
         this.Users.forEach(item => {
           item.fotoAux = ApiConection.ServiceUrlFoto + item.foto
         })
 
+        this.filteredData = this.Users;
         console.log(this.Users)
         //this.Users = this.Users.slice(0, 10)
 
