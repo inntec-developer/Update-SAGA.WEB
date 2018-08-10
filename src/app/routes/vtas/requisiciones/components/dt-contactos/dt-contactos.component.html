@@ -20,6 +20,9 @@
               <td class="text-center"> {{row.telefonos[0]?.clavePais}} - {{row.telefonos[0]?.claveLada}} - {{row.telefonos[0]?.telefono}}</td>
               <td class="text-center"> {{row.emails[0]?.email}}</td>
             </tr>
+            <tr *ngIf="!rows">
+              Sin resultados...
+            </tr>
           </tbody>
         </table>
       </div>

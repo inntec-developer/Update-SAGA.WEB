@@ -1,31 +1,23 @@
-
-<mat-accordion class="example-headers-align">
-  <mat-expansion-panel [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <em class="fa fa-file-text-o"></em>
-      </mat-panel-title>
-      <mat-panel-description>
-        Psicometrias DAMSA
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <div class="row"><!--Agregar la información que ira en el panel-->
-      <div class="dt-container">
-        <mat-table #table [dataSource]="dataSource">
-          <ng-container matColumnDef="psicometrias">
-            <mat-header-cell *matHeaderCellDef> Psicometría</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.psicometria?.tipoPsicometria}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="descripcion">
-            <mat-header-cell *matHeaderCellDef> Descripción</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.psicometria?.descripcion}} </mat-cell>
-          </ng-container>
-
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-      </div>
+<div class="dt-container mat-elevation-z8">
+  <div class="title-headre-view d-flex justify-content-between">
+    <h4>Psicometrias Damsa</h4>
+  </div>
+  <!-- <div class="card card-default"> -->
+    <div class="table-responsive">
+      <table ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+        <thead>
+          <tr>
+            <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of rows">
+            <td class="text-center"> {{row.psicometria?.tipoPsicometria}} </td>
+            <td class="text-center"> {{row.psicometria?.descripcion}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </mat-expansion-panel>
-</mat-accordion>
+  <!-- </div> -->
+</div>

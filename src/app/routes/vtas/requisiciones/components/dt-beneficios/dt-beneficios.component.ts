@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MatTableDataSource } from '@angular/material'
 
 @Component({
   selector: 'app-dt-beneficios',
@@ -8,8 +7,8 @@ import { MatTableDataSource } from '@angular/material'
 })
 export class DtBeneficiosComponent implements OnInit {
   @Input() Beneficios : any[];
-  public dataSource : MatTableDataSource<any[]>;
   getBeneficio : boolean = false;
+  public rows: Array<any> = [];
   constructor() { }
 
   ngOnInit() {
@@ -23,21 +22,19 @@ export class DtBeneficiosComponent implements OnInit {
 
   cargarBeneficios(data){
     if(!this.getBeneficio){
-      this.dataSource = new MatTableDataSource(data);
+      this.rows = data;
       this.getBeneficio = true;
     }
   }
 
-  //*******************************-- GRID-- *********************************************//
-  // Display para mostrar los objetos en el Grid
-  displayedColumns = [
-  'beneficio',
-  'cantidad',
-  'observeciones'
-  ]
+  public columns: Array<any> = [
+    {title: 'Beneficio', className: 'text-info text-center'},
+    {title: 'Cantidad', className: 'text-info text-center'},
+    {title: 'Observeciones', className: 'text-info text-center'},
+  ];
+
+  public config: any = {
+    className: ['table-striped table-bordered mb-0 d-table-fixed']
+  };
 }
-export interface Element{
-  beneficio: string;
-  cantidad: number;
-  observacion: string;
-}
+

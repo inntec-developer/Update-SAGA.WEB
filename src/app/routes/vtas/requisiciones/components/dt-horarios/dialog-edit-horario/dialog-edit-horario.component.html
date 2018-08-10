@@ -18,10 +18,10 @@
 <div mat-dialog-actions>
   <div class="row">
     <div class="col-md-5 col-sm-5 col-xs-5">
-      <btn-closed [text]="textBtnCerrar" (click)="onCloseDialog()"></btn-closed>
+      <btn-closed [xs]="true" [text]="textBtnCerrar" (click)="onCloseDialog()"></btn-closed>
     </div>
     <div class="col-md-5 col-sm-5 col-xs-5">
-      <btn-accept [text]="textBtnAceptar" (click)="updateVacante()" *ngIf="vacanteN > 0 && vacanteN <= 999">
+      <btn-accept [xs]="true" [text]="textBtnAceptar" (click)="updateVacante()" *ngIf="vacanteN > 0 && vacanteN <= 999">
       </btn-accept>
     </div>
     <div class="col-md-2 col-sm-2 col-xs-2">
@@ -29,12 +29,8 @@
     </div>
   </div>
   <hr>
-  <div class="row">
-    <div class="col-md-12">
-      <div *ngIf="msgDanger" class="alert alert-sm alert-danger text-center" role="alert">
-       
-        <p><small> Error al actualizar las vacantes. </small></p>
-      </div>
-    </div>
+  <div class="col-md-12">
+    <p *ngIf="msgDanger" class="alert alert-danger text-center" role="alert"> Error al actualizar las vacantes.
+    </p>
   </div>
 </div>
