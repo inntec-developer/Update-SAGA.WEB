@@ -67,6 +67,7 @@ import { Ng2TableModule } from 'ng2-table/ng2-table';
 import { NgModule } from '@angular/core';
 import { TablaPruebaComponent } from './dataTable/tabla-prueba/tabla-prueba.component';
 import { ToasterService } from '../../../node_modules/angular2-toaster';
+import { CardVacanteComponent } from './card-vacantes/card-vacante/card-vacante.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -139,7 +140,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonLikeComponent,
     ButtonDislikeComponent,
     ButtonSendComponent,
-    TablaPruebaComponent
+    TablaPruebaComponent,
+    CardVacanteComponent
 
   ],
   exports: [
@@ -165,7 +167,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonLikeComponent,
     ButtonDislikeComponent,
     ButtonSendComponent,
-    TablaPruebaComponent
+    TablaPruebaComponent,
+    CardVacanteComponent
     
   ],
   providers: [ColorPickerService,

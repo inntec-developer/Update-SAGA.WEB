@@ -11,7 +11,7 @@ import { NgModule } from '@angular/core';
 import { RoutesModule } from './routes/routes.module';
 import { SharedModule } from './shared/shared.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
+import {CardService} from './service/SeguimientoVacante/CardService.service';
 // https://github.com/ocombe/ng2-translate/issues/218
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -37,7 +37,7 @@ export function createTranslateLoader(http: HttpClient) {
             }
         })
     ],
-    providers: [HttpClientModule],
+    providers: [HttpClientModule,CardService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

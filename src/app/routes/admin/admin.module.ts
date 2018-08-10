@@ -1,3 +1,4 @@
+import { CardVacanteComponent } from './../../components/card-vacantes/card-vacante/card-vacante.component';
 import {DataTableModule, SharedModule} from 'primeng/primeng'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule, MatInputModule, MatNativeDateModule, MatSelectModule, MatTooltipModule } from '@angular/material';
@@ -40,7 +41,8 @@ const routes: Routes = [
     { path: 'grupo', component: AddadminComponent, data: {'componente':'Usuarios a grupos'} },
     { path: 'grupoAdd', component: AddGrupoComponent, data: {'componente':'Grupos'} },
     { path: 'rol', component: RolGrupoComponent, data: {'componente':'Grupos a roles'} },
-    { path: 'privilegios', component: RollsStructComponent, data: {'componente':'Privilegios'}}
+    { path: 'privilegios', component: RollsStructComponent, data: {'componente':'Privilegios'}},
+    { path: 'registro', component: RegistroComponent}
 ];
 
 
@@ -89,7 +91,6 @@ const routes: Routes = [
       RollsStructComponent,
       RegistroComponent,
       GridRolesComponent 
-
     ],
     exports: [
         RouterModule,
