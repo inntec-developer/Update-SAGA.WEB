@@ -8,7 +8,7 @@ import { MatTableDataSource } from '@angular/material'
 })
 export class DtCompetenciaAreaComponent implements OnInit {
   @Input() Competencias: any[];
-  public dataSource: MatTableDataSource<any[]>;
+  public rows: Array<any> = [];
   getCompetencia : boolean = false;
   constructor() { }
 
@@ -22,20 +22,18 @@ export class DtCompetenciaAreaComponent implements OnInit {
 
   cargarCompetencia(data){
     if(!this.getCompetencia){
-      this.dataSource = new MatTableDataSource(data);
+      this.rows = data;
       this.getCompetencia  = true;
     }
   }
-  //*******************************-- GRID-- *********************************************//
-  // Display para mostrar los objetos en el Grid
-  displayedColumns = [
-  'competencia',
-  'nivel'
-  ]
+  
+  public columns: Array<any> = [
+    {title: 'Competencia', className: 'text-info text-center'},
+    {title: 'Nivel', className: 'text-info text-center'},
+  ];
 
-}
+  public config: any = {
+    className: ['table-striped table-bordered mb-0 d-table-fixed']
+  };
 
-export interface Element{
-  competencia: string;
-  nivel: string;
 }

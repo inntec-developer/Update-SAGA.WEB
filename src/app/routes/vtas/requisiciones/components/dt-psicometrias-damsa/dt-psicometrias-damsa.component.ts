@@ -1,20 +1,16 @@
-import { Component, OnInit, Input, OnChanges, AfterContentChecked } from '@angular/core';
-import { MatTableDataSource } from '@angular/material'
+import { Component, Input, OnChanges, AfterContentChecked } from '@angular/core';
 
 @Component({
   selector: 'app-dt-psicometrias-damsa',
   templateUrl: './dt-psicometrias-damsa.component.html',
   styleUrls: ['./dt-psicometrias-damsa.component.scss']
 })
-export class DtPsicometriasDamsaComponent implements OnInit, AfterContentChecked {
+export class DtPsicometriasDamsaComponent implements AfterContentChecked {
 
   @Input()  Psicometrias: any[];
-  public dataSource : MatTableDataSource<any[]>;
+  public rows: Array<any> = [];
   getPsicometria : boolean = false;
   constructor() { }
-
-  ngOnInit() {
-  }
 
   ngAfterContentChecked(){
     if(this.Psicometrias != null){
@@ -24,19 +20,17 @@ export class DtPsicometriasDamsaComponent implements OnInit, AfterContentChecked
 
   cargarPsicometrias(data){
     if(!this.getPsicometria){
-      this.dataSource = new MatTableDataSource(data);
+      this.rows = data;
       this.getPsicometria = true;
     }
   }
 
-  //*******************************-- GRID-- *********************************************//
-  // Display para mostrar los objetos en el Grid
-  displayedColumns = [
-  'psicometrias',
-  'descripcion'
-  ]
-}
+  public columns: Array<any> = [
+    {title: 'Psicometrias', className: 'text-info text-center'},
+    {title: 'Descripcion', className: 'text-info text-center'},
+  ];
 
-export interface Element {
-  psicometria: string;
+  public config: any = {
+    className: ['table-striped table-bordered mb-0 d-table-fixed']
+  };
 }
