@@ -24,9 +24,9 @@ export class DtHorariosComponent implements  AfterContentChecked {
     private service: RequisicionesService,
     private activeRoute: ActivatedRoute
   ) {
-    this.ruta = this.activeRoute.snapshot.routeConfig ? 
-    this.activeRoute.routeConfig.data.componente : 
-    localStorage.getItem('ruta')
+    // this.ruta = this.activeRoute.snapshot.routeConfig ? 
+    // this.activeRoute.routeConfig.data.componente : 
+    // localStorage.getItem('ruta')
    }
 
   ngAfterContentChecked(){
@@ -50,10 +50,13 @@ export class DtHorariosComponent implements  AfterContentChecked {
         data: this.horario
       });
       dialogEditH.afterClosed().subscribe(result => {
-        this.service.getRequiHorarios(this.horario.requisicionId).subscribe(data =>{
-          this.getHorarios = false;
-          this.rows = data;
-        });
+        if(result){
+          this.rows = result;
+        }
+      //   this.service.getRequiHorarios(this.horario.requisicionId).subscribe(data =>{
+      //     this.getHorarios = false;
+      //     this.cargarHorarios(data);
+      //   });
       });
     }
   }

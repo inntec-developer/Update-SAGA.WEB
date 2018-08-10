@@ -59,8 +59,10 @@ export class DialogEditHorarioComponent implements OnInit {
       this.result = data;
       if(this.result == 200){
         setTimeout(() =>{
-          this.loading = false;
-          this.dialogVacantes.close();
+            this.service.getRequiHorarios(this.RequisicionId).subscribe(result =>{
+              this.dialogVacantes.close(result);
+              this.loading = false;
+            });
         },2000);
       }
       else{
