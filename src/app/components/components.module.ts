@@ -37,6 +37,7 @@ import {
   MatTooltipModule
 } from '@angular/material';
 import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
+import { PopoverModule, TooltipModule } from 'ngx-bootstrap';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../core/translator/config-paginator/config-paginator.component';
 
 import { AsignarRequisicionComponent } from './asignar-requisicion/asignar-requisicion.component';
@@ -60,16 +61,16 @@ import { ButtonReturnComponent } from './buttons/button-return/button-return.com
 import { ButtonSaveComponent } from './buttons/button-save/button-save.component';
 import { ButtonSendComponent } from './buttons/button-send/button-send.component';
 import { ButtonViewComponent } from './buttons/button-view/button-view.component';
+import {ButtonsPostulacionesComponent} from './buttons-postulaciones/buttons-postulaciones.component';
+import { CardVacanteComponent } from './card-vacantes/card-vacante.component';
 import { ClockComponent } from './clock/clock.component';
 import { ColorPickerService } from '../../../node_modules/ngx-color-picker';
+import { ComentarioVacanteComponent } from './comentario-vacante/comentario-vacante.component';
 import { CommonModule } from '@angular/common';
 import { Ng2TableModule } from 'ng2-table/ng2-table';
 import { NgModule } from '@angular/core';
 import { TablaPruebaComponent } from './dataTable/tabla-prueba/tabla-prueba.component';
 import { ToasterService } from '../../../node_modules/angular2-toaster';
-import { CardVacanteComponent } from './card-vacantes/card-vacante.component';
-import {ButtonsPostulacionesComponent} from './buttons-postulaciones/buttons-postulaciones.component';
-import { PopoverModule,TooltipModule } from 'ngx-bootstrap';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -146,7 +147,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonSendComponent,
     TablaPruebaComponent,
     CardVacanteComponent,
-    ButtonsPostulacionesComponent
+    ButtonsPostulacionesComponent,
+    ComentarioVacanteComponent
 
   ],
   exports: [
@@ -174,7 +176,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonSendComponent,
     TablaPruebaComponent,
     CardVacanteComponent,
-    ButtonsPostulacionesComponent
+    ButtonsPostulacionesComponent,
+    ComentarioVacanteComponent
     
   ],
   providers: [ColorPickerService,
