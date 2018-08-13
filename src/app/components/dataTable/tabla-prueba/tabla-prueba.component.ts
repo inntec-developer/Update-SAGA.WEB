@@ -152,7 +152,6 @@ export class TablaPruebaComponent implements OnInit {
     public onCellClick(data: any): any {
 
         let index = this.ng2TableData.indexOf(data.row);
-        console.log(data);
         /* add an class 'active' on click */
         // $('#resultDataTable').on('click', 'tr', function (event: any) {
         //     //noinspection TypeScriptUnresolvedFunction

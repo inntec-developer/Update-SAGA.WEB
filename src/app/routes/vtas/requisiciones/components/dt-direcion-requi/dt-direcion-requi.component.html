@@ -1,83 +1,48 @@
-<mat-accordion class="example-headers-align">
-  <mat-expansion-panel [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <em class="fa fa-map-marker"></em>
-      </mat-panel-title>
-      <mat-panel-description>
-        Dirección
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <div class="row"><!--Agregar la información que ira en el panel-->
-      <div class="dt-container">
-        <mat-table #table [dataSource]="dataSource">
-          <ng-container matColumnDef="tipoDireccion">
-            <mat-header-cell *matHeaderCellDef> Tipo</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.tipoDireccion?.tipoDireccion}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="pais">
-            <mat-header-cell *matHeaderCellDef> Pais </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.pais?.pais}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="estado">
-            <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.estado?.estado}} </mat-cell>
-          </ng-container>
-
-
-          <ng-container matColumnDef="municipio">
-            <mat-header-cell *matHeaderCellDef> Municipio</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.municipio?.municipio}} </mat-cell>
-          </ng-container>
-
-
-          <ng-container matColumnDef="colonia">
-            <mat-header-cell *matHeaderCellDef> Colonia</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.colonia.colonia}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="calle">
-            <mat-header-cell *matHeaderCellDef> Calle</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.calle}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="numeroExterior">
-            <mat-header-cell class="mat-cell-center" *matHeaderCellDef> No. Ext</mat-header-cell>
-            <mat-cell class="mat-cell-right" *matCellDef="let element"> {{element.numeroExterior}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="numeroInterior">
-            <mat-header-cell class="mat-cell-center" *matHeaderCellDef> No. Int </mat-header-cell>
-            <mat-cell class="mat-cell-right" *matCellDef="let element"> {{element.numeroInterior}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="codigoPostal">
-            <mat-header-cell class="mat-cell-center" *matHeaderCellDef> C.P. </mat-header-cell>
-            <mat-cell class="mat-cell-right" *matCellDef="let element"> {{element.codigoPostal}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="activo">
-            <mat-header-cell class="mat-cell-center" *matHeaderCellDef> Activo </mat-header-cell>
-            <mat-cell class="mat-cell-center" *matCellDef="let element">
-              <span *ngIf="element.activo"><em class="fa fa-check-square-o"></em></span>
-              <span *ngIf="!element.activo"><em class="fa fa-square-o"></em></span>
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="esPrincipal">
-            <mat-header-cell class="mat-cell-center" *matHeaderCellDef> Principal </mat-header-cell>
-            <mat-cell class="mat-cell-center" *matCellDef="let element">
-              <span *ngIf="element.esPrincipal"><em class="fa fa-check-square-o"></em></span>
-              <span *ngIf="!element.esPrincipal"><em class="fa fa-square-o"></em></span>
-            </mat-cell>
-          </ng-container>
-
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-      </div>
+<div class="dt-container mat-elevation-z8">
+    <div class="title-headre-view">
+      <h4>Direccion</h4>
     </div>
-  </mat-expansion-panel>
-</mat-accordion>
+    <!-- <div class="card card-default"> -->
+      <div class="table-responsive" #tableContainer>
+        <table id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+          <thead>
+            <tr>
+              <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr (click)="onCellClick(row)" *ngFor="let row of rows">
+              <td class="text-center">
+                {{row.tipoDireccion?.tipoDireccion}}
+              </td>
+              <td class="text-center"> {{row.pais?.pais}}</td>
+              <td class="text-center"> {{row.estado?.estado}}</td>
+              <td class="text-center"> {{row.municipio?.municipio}}</td>
+              <td class="text-center"> {{row.colonia?.colonia}}</td>
+              <td class="text-center"> {{row.calle}}</td>
+              <td class="text-center"> {{row.numeroExterior}}</td>
+              <td class="text-center"> {{row.numeroInterior}}</td>
+              <td class="text-center"> {{row.codigoPostal}}</td>
+              <td class="text-center">
+                <span *ngIf="row.activo">
+                  <em class="fa fa-check-square-o"></em>
+                </span>
+                <span *ngIf="!row.activo">
+                  <em class="fa fa-square-o"></em>
+                </span>
+              </td>
+              <td class="text-center">
+                <span *ngIf="row.esPrincipal">
+                  <em class="fa fa-check-square-o"></em>
+                </span>
+                <span *ngIf="!row.esPrincipal">
+                  <em class="fa fa-square-o"></em>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    <!-- </div> -->
+  </div>

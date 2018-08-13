@@ -13,66 +13,18 @@
   display: flex !important;
   flex-direction: column !important;
   min-width: 100% !important;
+  font-size: 12px !important;
 }
 
 .dt-header {
   min-height: 64px !important;
   padding: 8px 24px 0 !important;
+  font-size: 12px !important;
 }
 
 .mat-form-field {
-  font-size: 10px !important;
+  font-size: 12px !important;
   width: 100% !important;
-}
-
-.mat-table {
-  font-size: 10px !important;
-  overflow: auto !important;
-  max-height:100% !important;
-}
-
-.mat-header-cell {
-    font-weight: bold !important;
-    color: whitesmoke !important;
-}
-
-.mat-cell{
-  font-size: 10px !important;
-}
-
-.mat-header-row {
-    min-height: 40px !important;
-    background-color: rgb(91, 176, 255) !important;
-}
-
-.mat-header-cell{
-
-  font-weight: auto !important;
-  color: whitesmoke !important;
-}
-
-.mat-header-row, .mat-row {
-  border-collapse: separate !important;
-  table-layout: auto !important;
-  display: flex !important;
-  border-bottom-width: 1px !important;
-  border-bottom-style: solid !important;
-  align-items: center;
-  padding: 0px 7px !important;
-  box-sizing: border-box;
-}
-
-.mat-row {
-    min-height: 40px !important;
-}
-
-
-.mat-cell-right{
-  text-align: right !important;
-  margin-right: 15px !important;
-}
-.mat-cell-center{
-  text-align: center !important;
 }
 
 /* ---------------------------------------------------------------------- */
@@ -131,3 +83,8 @@ tr.cancel td {
 .title-headre-view{
   padding: 8px 25px 0 !important;
 }
+
+
+div.card-header em{
+  margin-right: 10px;
+} 

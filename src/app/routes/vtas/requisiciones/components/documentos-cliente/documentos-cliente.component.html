@@ -1,17 +1,12 @@
-<mat-accordion class="example-headers-align">
-  <mat-expansion-panel [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <em class="ico icon-docs"></em>
-      </mat-panel-title>
-      <mat-panel-description>
-        Documentos Cliente
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <div class="row"><!--Agregar la información que ira en el panel-->
+<div class="dt-container  mat-elevation-z8">
+    <div class="card-header">
+      <em class="fa fa-list-alt"></em>  Documentos Cliente
+    </div>
+    <div class="card-body">
       <ol>
-        <li *ngFor="let x of Documentos"><small>{{x.documento}}</small></li>
+        <li *ngFor="let x of Documentos">
+          <label class="card-text"> {{x.documento}}</label>
+        </li>
       </ol>
     </div>
-  </mat-expansion-panel>
-</mat-accordion>
+  </div>

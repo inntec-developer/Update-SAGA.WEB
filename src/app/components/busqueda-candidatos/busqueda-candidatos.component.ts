@@ -310,7 +310,6 @@ export class BusquedaCandidatosComponent implements OnInit {
     filtroCandidatos.IdIdiomas = this.filtroidioma ? this.filtroidioma[0].id : null;
     filtroCandidatos.IdNvEstudios = this.filtronv ? this.filtronv[0].id : null
 
-    console.log(filtroCandidatos);
     this.service.getcandidatos(filtroCandidatos).subscribe( data =>{
       this.Candidatos = data;
       this.filtro.emit(this.Candidatos);

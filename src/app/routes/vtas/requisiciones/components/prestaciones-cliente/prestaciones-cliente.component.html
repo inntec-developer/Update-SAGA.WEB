@@ -1,17 +1,12 @@
-<mat-accordion class="example-headers-align">
-  <mat-expansion-panel [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <em class="fa fa-gift"></em>
-      </mat-panel-title>
-      <mat-panel-description>
-        Prestaciones Superiores
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <div class="row"><!--Agregar la información que ira en el panel-->
+<div class="dt-container  mat-elevation-z8">
+    <div class="card-header">
+      <em class="fa fa-list-alt"></em>  Prestaciones Superiores
+    </div>
+    <div class="card-body">
       <ol>
-        <li *ngFor="let x of Prestaciones"><small>{{x.prestamo}}</small></li>
+        <li *ngFor="let x of Prestaciones">
+          <label class="card-text"> {{x.prestamo}}</label>
+        </li>
       </ol>
     </div>
-  </mat-expansion-panel>
-</mat-accordion>
+  </div>
