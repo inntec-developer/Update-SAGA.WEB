@@ -69,7 +69,6 @@ import { ComentarioVacanteComponent } from './comentario-vacante/comentario-vaca
 import { CommonModule } from '@angular/common';
 import { Ng2TableModule } from 'ng2-table/ng2-table';
 import { NgModule } from '@angular/core';
-import { TablaPruebaComponent } from './dataTable/tabla-prueba/tabla-prueba.component';
 import { ToasterService } from '../../../node_modules/angular2-toaster';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
@@ -145,7 +144,6 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonLikeComponent,
     ButtonDislikeComponent,
     ButtonSendComponent,
-    TablaPruebaComponent,
     CardVacanteComponent,
     ButtonsPostulacionesComponent,
     ComentarioVacanteComponent
@@ -174,7 +172,6 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonLikeComponent,
     ButtonDislikeComponent,
     ButtonSendComponent,
-    TablaPruebaComponent,
     CardVacanteComponent,
     ButtonsPostulacionesComponent,
     ComentarioVacanteComponent
