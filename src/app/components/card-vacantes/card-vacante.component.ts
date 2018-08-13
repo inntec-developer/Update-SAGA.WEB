@@ -1,6 +1,7 @@
-import { CardService } from './../../../service/SeguimientoVacante/CardService.service';
-import { ApiConection } from './../../../service/api-conection.service';
+import { CardService } from './../../service/SeguimientoVacante/CardService.service';
+import { ApiConection } from './../../service/api-conection.service';
 import { Component, OnInit, Input } from '@angular/core';
+
 
 @Component({
   selector: 'app-card-vacante',
@@ -17,6 +18,7 @@ export class CardVacanteComponent implements OnInit {
 
   GetDtosCard()
   {
+    var ext = [];
     this._service.GetDtosCard(this.ClientId).subscribe( data =>
       {
         this.Datos = data;

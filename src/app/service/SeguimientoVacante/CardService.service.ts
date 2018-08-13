@@ -30,3 +30,4 @@ export class CardService {
 
     return this._HttpClient.get(this.UrlDtsCard, { params: params })
   }
+}

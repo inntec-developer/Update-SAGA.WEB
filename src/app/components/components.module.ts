@@ -67,7 +67,9 @@ import { Ng2TableModule } from 'ng2-table/ng2-table';
 import { NgModule } from '@angular/core';
 import { TablaPruebaComponent } from './dataTable/tabla-prueba/tabla-prueba.component';
 import { ToasterService } from '../../../node_modules/angular2-toaster';
-import { CardVacanteComponent } from './card-vacantes/card-vacante/card-vacante.component';
+import { CardVacanteComponent } from './card-vacantes/card-vacante.component';
+import {ButtonsPostulacionesComponent} from './buttons-postulaciones/buttons-postulaciones.component';
+import { PopoverModule,TooltipModule } from 'ngx-bootstrap';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -114,7 +116,9 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     MatToolbarModule,
     MatTooltipModule,
     Ng2TableModule,
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    PopoverModule.forRoot(),
+    TooltipModule.forRoot()
     
   ],
   declarations: [
@@ -141,7 +145,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonDislikeComponent,
     ButtonSendComponent,
     TablaPruebaComponent,
-    CardVacanteComponent
+    CardVacanteComponent,
+    ButtonsPostulacionesComponent
 
   ],
   exports: [
@@ -168,7 +173,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonDislikeComponent,
     ButtonSendComponent,
     TablaPruebaComponent,
-    CardVacanteComponent
+    CardVacanteComponent,
+    ButtonsPostulacionesComponent
     
   ],
   providers: [ColorPickerService,
