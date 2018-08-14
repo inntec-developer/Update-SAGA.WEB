@@ -29,9 +29,9 @@ export class DtContactosComponent implements OnInit {
   public columns: Array<any> = [
     {title: 'Nombre', className: 'text-info text-center'},
     {title: 'Puesto', className: 'text-info text-center'},
-    {title: 'TipoTelefono', className: 'text-info text-center'},
-    {title: 'Extension', className: 'text-info text-center'},
-    {title: 'Telefono', className: 'text-info text-center'},
+    {title: 'Tipo Teléfono', className: 'text-info text-center'},
+    {title: 'Extensión', className: 'text-info text-center'},
+    {title: 'Teléfono', className: 'text-info text-center'},
     {title: 'Email', className: 'text-info text-center'},
   ]
   public config: any = {

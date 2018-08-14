@@ -39,14 +39,14 @@ export class DtDirecionRequiComponent implements OnInit {
 
   public columns: Array<any> = [
     {title: 'Tipo Dirección', className: 'text-info text-center'},
-    {title: 'Pais', className: 'text-info text-center'},
+    {title: 'País', className: 'text-info text-center'},
     {title: 'Estado', className: 'text-info text-center'},
     {title: 'Municipio', className: 'text-info text-center'},
     {title: 'Colonia', className: 'text-info text-center'},
     {title: 'Calle', className: 'text-info text-center'},
-    {title: 'Numero Ext.', className: 'text-info text-center'},
-    {title: 'Numero Int.', className: 'text-info text-center'},
-    {title: 'Codigo Postal', className: 'text-info text-center'},
+    {title: 'Número Ext.', className: 'text-info text-center'},
+    {title: 'Número Int.', className: 'text-info text-center'},
+    {title: 'Código Postal', className: 'text-info text-center'},
     {title: 'Activo', className: 'text-info text-center'},
     {title: 'Principal', className: 'text-info text-center'},
   ];

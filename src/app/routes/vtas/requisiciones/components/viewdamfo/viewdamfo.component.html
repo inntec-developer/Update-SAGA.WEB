@@ -23,9 +23,11 @@
 
 <div class="row">
   <!-- <button (click)="print()">Imprimir</button> -->
-  <div class="col-md-12 text-right">
-    <btn-docs (click)="openDialog()" matTooltip="Generar Requisición"></btn-docs>
-    <btn-return [routerLink]="['/ventas/crearRequisicion']" matTooltip="Regresar"></btn-return>
+  <div class="col-md-12">
+    <div class="d-flex justify-content-between">
+      <btn-docs (click)="openDialog()" matTooltip="Generar Requisición"></btn-docs>
+      <btn-return [routerLink]="['/ventas/crearRequisicion']" matTooltip="Regresar"></btn-return>
+    </div>
   </div>
 </div>
 <br/>
@@ -44,7 +46,7 @@
             <label id="nombre" class="card-text"> {{nombreComercial}}</label>
           </p>
           <p>
-            <strong>Razon Social: </strong>
+            <strong>Raz&0acute;n Social: </strong>
             <label class="card-text"> {{razonSocial}}</label>
           </p>
           <p>
@@ -69,7 +71,7 @@
           </p>
           <p>
             <strong>Clase: </strong>
-            <label class="card-text"> {{clasesReclutamiento}}</label>
+            <label class="card-text"> {{claseReclutamiento}}</label>
           </p>
           <h5 class="card-title">Contrato</h5>
           <mat-divider></mat-divider>
@@ -90,7 +92,11 @@
             <label class="card-text"> {{damfo290.nombrePerfil}}</label>
           </p>
           <p>
-            <strong>Genero: </strong>
+            <strong>Area Experiencia </strong>
+            <label class="card-text"> {{damfo290.area.areaExperiencia}}</label>
+          </p>
+          <p>
+            <strong>G&eacute;nero: </strong>
             <label class="card-text"> {{damfo290.genero.genero}}</label>
           </p>
           <p>
@@ -122,7 +128,7 @@
               </p>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
-              <h5 class="card-title">Maximo</h5>
+              <h5 class="card-title">M&aacute;ximo</h5>
               <p>
                 <strong>Mensual: </strong>
                 <label class="card-text"> {{damfo290.sueldoMaximo | currency:"$"}}</label>
@@ -176,7 +182,7 @@
           <h5 class="card-title">Informaci&oacute;n de Pagos</h5>
           <mat-divider></mat-divider>
           <p>
-            <strong>Dias Corte: </strong>
+            <strong>D&iacute;as Corte: </strong>
             <label class="card-text"> {{damfo290.diaCorte.diaSemana}}</label>
           </p>
           <p>

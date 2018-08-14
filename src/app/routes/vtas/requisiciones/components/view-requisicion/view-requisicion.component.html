@@ -1,24 +1,30 @@
-<ngx-spinner bdColor = "rgba(198,195,195,0.8)" size = "medium" color = "#90daff" type = "square-jelly-box"></ngx-spinner>
+<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
 <div class="content-heading">
-    <div>
-        Requisiciones
-        <span class="text-sm d-none d-sm-block">Edici&oacute;n de requisici&oacute;n.</span>
-    </div>
-    <!-- Breadcrumb right aligned-->
-    <ol class="breadcrumb ml-auto">
-        <li class="breadcrumb-item"><a [routerLink]="['/home']" >Inicio</a></li>
-        <li class="breadcrumb-item"><a [routerLink]="['/ventas/requisicion']" >Requisición</a></li>
-        <li class="breadcrumb-item active">Vista requisici&oacute;n</li>
-    </ol>
+  <div>
+    Requisiciones
+    <span class="text-sm d-none d-sm-block">Edici&oacute;n de requisici&oacute;n.</span>
+  </div>
+  <!-- Breadcrumb right aligned-->
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item">
+      <a [routerLink]="['/home']">Inicio</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a [routerLink]="['/ventas/requisicion']">Requisición</a>
+    </li>
+    <li class="breadcrumb-item active">Vista requisici&oacute;n</li>
+  </ol>
 </div>
 <!-- Botones superiores Izquierdos -->
 <div class="row">
-  <div class="col-md-12 text-right">
-    <btn-edit id="update" chkPrivilegiosButtons  matTooltip="Editar Requisición" (click)="editRequi()" *ngIf="estatusId != 8"></btn-edit>
-    <btn-return matTooltip="Regresar" [routerLink]="['/ventas/requisicion']"></btn-return>
+  <div class="col-md-12">
+    <div class="d-flex justify-content-between">
+      <btn-edit id="update" chkPrivilegiosButtons matTooltip="Editar Requisición" (click)="editRequi()" *ngIf="estatusId != 8"></btn-edit>
+      <btn-return matTooltip="Regresar" [routerLink]="['/ventas/requisicion']"></btn-return>
+    </div>
   </div>
 </div>
 <br/>
-<app-view-info-requi [Folios]= "folio" (EstatusId)="getEstatusRequi($event)"  ></app-view-info-requi>
+<app-view-info-requi [Folios]="folio" (EstatusId)="getEstatusRequi($event)"></app-view-info-requi>
 <br/>
 <app-view-cuerpo-requi [Requisicion]="requiId"></app-view-cuerpo-requi>

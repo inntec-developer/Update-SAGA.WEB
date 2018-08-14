@@ -399,6 +399,11 @@ export class DtCandidatosComponent implements OnInit, AfterViewInit, OnChanges {
       }
       // Termina paginador
 
+      public ShowMessage($event){
+        debugger;
+        console.log($event);
+      }
+
 }
   // Interface de la tabla de candidatos. ***
   export interface Candidatos {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dt-beneficios',
@@ -30,7 +30,7 @@ export class DtBeneficiosComponent implements OnInit {
   public columns: Array<any> = [
     {title: 'Beneficio', className: 'text-info text-center'},
     {title: 'Cantidad', className: 'text-info text-center'},
-    {title: 'Observeciones', className: 'text-info text-center'},
+    {title: 'Observaciones', className: 'text-info text-center'},
   ];
 
   public config: any = {

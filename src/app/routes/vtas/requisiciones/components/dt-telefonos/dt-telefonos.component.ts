@@ -26,9 +26,9 @@ export class DtTelefonosComponent implements AfterContentChecked {
   }
 
   public columns: Array<any> = [
-    {title: 'Tipo Telefono', className: 'text-info text-center'},
-    {title: 'Telefono', className: 'text-info text-center'},
-    {title: 'Extension', className: 'text-info text-center'},
+    {title: 'Tipo Teléfono', className: 'text-info text-center'},
+    {title: 'Teléfono', className: 'text-info text-center'},
+    {title: 'Extensión', className: 'text-info text-center'},
     {title: 'Activo', className: 'text-info text-center'},
     {title: 'Principal', className: 'text-info text-center'}
   ];

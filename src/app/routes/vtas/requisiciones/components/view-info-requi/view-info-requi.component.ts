@@ -36,6 +36,9 @@ export class ViewInforRequiComponent implements OnInit, AfterContentChecked {
   confidencial: any;
   estatusId: any;
   prioridadId: any;
+  vacantes: any;
+  asignados:Array<any[]> = [];
+  vBtra: any;
 
 
     constructor(
@@ -70,6 +73,10 @@ export class ViewInforRequiComponent implements OnInit, AfterContentChecked {
           this.estatus = DataRequisicion.estatus.descripcion;
           this.estatusId = DataRequisicion.estatus.id;
           this.confidencial = DataRequisicion.confidencial;
+          this.vacantes = DataRequisicion.vacantes;
+          this.asignados = DataRequisicion.asignadosN;
+          this.vBtra = DataRequisicion.vBtra;
+          console.log(this.asignados);
         this.EstatusId.emit(this.estatusId);
       });
     }

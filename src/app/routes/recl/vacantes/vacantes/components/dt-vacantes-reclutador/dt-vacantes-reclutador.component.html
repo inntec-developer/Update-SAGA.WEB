@@ -3,7 +3,7 @@
 <div class="dt-container mat-elevation-z8">
   <div class="dt-header">
     <mat-form-field>
-        <input #filterInput matInput placeholder="Filter todas las columnas" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)">
+        <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)">
     </mat-form-field>
     <div class="d-flex align-items-stretch ">
         <btn-view (click)="openDialogShowRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view>
@@ -30,7 +30,7 @@
                 class="form-control">
             </td>
           </tr>
-          <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8">
+          <tr (click)="onCellClick(row)" (dblclick)="openDialogShowRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8">
             <td>
               {{row.folio}}
             </td>
@@ -73,5 +73,5 @@
       [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
     </pagination>
   </div>
-  <pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
+  <pre *ngIf="config.paging" class="card card-block card-header">Pag&iacute;na: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
 </div>

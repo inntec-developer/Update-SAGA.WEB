@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, OnChanges, AfterContentChecked } from '@angular/core';
+import { AfterContentChecked, Component, Input, OnChanges, OnInit } from '@angular/core';
+
 import { MatTableDataSource } from '@angular/material'
 
 @Component({
@@ -30,8 +31,8 @@ export class DtPsicometriasClienteComponent implements OnInit, AfterContentCheck
   }
 
   public columns: Array<any> = [
-    {title: 'Psicometrias', className: 'text-info text-center'},
-    {title: 'Descripcion', className: 'text-info text-center'},
+    {title: 'Psicometrías', className: 'text-info text-center'},
+    {title: 'Descripción', className: 'text-info text-center'},
   ];
 
   public config: any = {
