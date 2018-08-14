@@ -9,7 +9,6 @@ import { AddPersonaComponent } from './add-persona/add-persona.component';
 import { AddRolesComponent } from './add-roles/add-roles.component';
 import { AddadminComponent } from './admin/addadmin.component';
 import { AgGridModule } from 'ag-grid-angular';
-import { CardVacanteComponent } from '../../components/card-vacantes/card-vacante.component';
 import { CommonModule } from '@angular/common';
 import { ComponentsModule } from '../../components/components.module';
 import { CustomFormsModule } from 'ng2-validation';
@@ -92,8 +91,7 @@ const routes: Routes = [
       RegistroComponent,
       GridRolesComponent ,
       UploadImgsComponent,
-      FileManagerComponent,
-      CardVacanteComponent
+      FileManagerComponent
     ],
     exports: [
         RouterModule,
