@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { MatTableDataSource } from '@angular/material';
-import { RequisicionesService } from './../../../../../service/requisiciones/requisiciones.service';
+import { RequisicionesService } from '../../../../../service/requisiciones/requisiciones.service';
 
 @Component({
   selector: 'app-dt-direcion-requi',

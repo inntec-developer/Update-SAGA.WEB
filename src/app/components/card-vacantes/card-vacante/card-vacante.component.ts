@@ -1,5 +1,5 @@
-import { CardService } from './../../../service/SeguimientoVacante/CardService.service';
-import { ApiConection } from './../../../service/api-conection.service';
+import { CardService } from '../../../service/SeguimientoVacante/CardService.service';
+import { ApiConection } from '../../../service/api-conection.service';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({

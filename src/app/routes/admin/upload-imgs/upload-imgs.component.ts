@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ApiConection } from './../../../service/api-conection.service';
+import { ApiConection } from '../../../service/api-conection.service';
 import { Component, OnInit, Input, EventEmitter, Output, ElementRef, ViewChild } from '@angular/core';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';

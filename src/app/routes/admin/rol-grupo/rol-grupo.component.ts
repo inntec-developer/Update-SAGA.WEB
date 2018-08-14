@@ -1,8 +1,8 @@
-import { RollsStructComponent } from './../rolls-struct/rolls-struct.component';
+import { RollsStructComponent } from '../rolls-struct/rolls-struct.component';
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
-import { ApiConection } from './../../../service/api-conection.service';
+import { ApiConection } from '../../../service/api-conection.service';
 
 @Component({
   selector: 'app-rol-grupo',

@@ -1,4 +1,4 @@
-import { UploadImgsComponent } from './../upload-imgs/upload-imgs.component';
+import { UploadImgsComponent } from '../upload-imgs/upload-imgs.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';

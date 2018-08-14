@@ -1,7 +1,7 @@
-import { AuthRolesGuard } from './../auth-guard/auth-roles.guard';
-import { AuthService } from './../service/auth/auth.service';
-import { ComponentsModule } from './../components/components.module';
-import { LogInGuardGuard } from './../auth-guard/log-in-guard.guard';
+import { AuthRolesGuard } from '../auth-guard/auth-roles.guard';
+import { AuthService } from '../service/auth/auth.service';
+import { ComponentsModule } from '../components/components.module';
+import { LogInGuardGuard } from '../auth-guard/log-in-guard.guard';
 import { MenuService } from '../core/menu/menu.service';
 import { NgModule } from '@angular/core';
 import { PagesModule } from './pages/pages.module';

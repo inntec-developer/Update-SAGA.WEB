@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ApiConection } from './../../../service/api-conection.service';
+import { ApiConection } from '../../../service/api-conection.service';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { UserblockService } from './userblock.service';
 

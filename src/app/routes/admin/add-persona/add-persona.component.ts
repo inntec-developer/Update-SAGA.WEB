@@ -1,9 +1,9 @@
-import { ApiConection } from './../../../service/api-conection.service';
+import { ApiConection } from '../../../service/api-conection.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {FormBuilder } from '@angular/forms';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import {MatDialog } from '@angular/material';
-import { UploadImgsComponent } from './../upload-imgs/upload-imgs.component';
+import { UploadImgsComponent } from '../upload-imgs/upload-imgs.component';
 
 
 @Component({

@@ -1,10 +1,10 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
-import { Toast, ToasterConfig } from 'angular2-toaster/angular2-toaster';
+import { Toast, ToasterConfig } from 'angular2-toaster';
 
-import { RequisicionesService } from './../../../../../service/requisiciones/requisiciones.service';
-import { SettingsService } from './../../../../../core/settings/settings.service';
+import { RequisicionesService } from '../../../../../service/requisiciones/requisiciones.service';
+import { SettingsService } from '../../../../../core/settings/settings.service';
 import { ToasterService } from 'angular2-toaster';
 import { providers } from 'ng2-dnd';
 

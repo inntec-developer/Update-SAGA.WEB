@@ -3,7 +3,7 @@ import { NgModule, ViewChild } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { CommonModule } from '@angular/common';
-import { ComponentsModule } from './../../components/components.module';
+import { ComponentsModule } from '../../components/components.module';
 import { CustomFormsModule } from 'ng2-validation';
 import { HomeComponent } from './home/home.component';
 import { NgxSelectModule } from 'ngx-select-ex'

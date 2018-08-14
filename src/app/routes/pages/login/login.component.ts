@@ -4,11 +4,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import { ApiConection } from "../../../service";
-import { AuthService } from './../../../service/auth/auth.service';
+import { AuthService } from '../../../service/auth/auth.service';
 import { CustomValidators } from 'ng2-validation';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { debug } from "util";
-import { looseIdentical } from "../../../../../node_modules/@angular/core/src/util";
+import { looseIdentical } from "@angular/core/src/util";
 
 @Component({
     selector: 'app-login',

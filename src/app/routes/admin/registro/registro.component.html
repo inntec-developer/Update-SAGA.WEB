@@ -13,6 +13,11 @@
 </div>
 <br/>
 
-
- <app-card-vacante [ClientId]="ClientId"></app-card-vacante>
-
+<div class="row">
+  <div class="col-md-3">
+   <app-card-vacante [ClientId]="ClientId"></app-card-vacante>
+  </div>
+  <div class="col-md-9">
+   <app-detail-vacantes [VacanteId]="VacanteId"></app-detail-vacantes>
+  </div>
+</div>

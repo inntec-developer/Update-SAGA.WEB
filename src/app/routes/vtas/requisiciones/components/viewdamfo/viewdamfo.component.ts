@@ -1,6 +1,6 @@
 import { ActivatedRoute, CanDeactivate, Router, } from '@angular/router';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { CatalogosService, RequisicionesService } from '../../../../../service/index';
+import { CatalogosService, RequisicionesService } from '../../../../../service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatTableDataSource, PageEvent} from '@angular/material';
 
