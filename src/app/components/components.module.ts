@@ -62,16 +62,15 @@ import { ButtonSaveComponent } from './buttons/button-save/button-save.component
 import { ButtonSendComponent } from './buttons/button-send/button-send.component';
 import { ButtonViewComponent } from './buttons/button-view/button-view.component';
 import {ButtonsPostulacionesComponent} from './buttons-postulaciones/buttons-postulaciones.component';
+import { CardVacanteComponent } from './card-vacantes/card-vacante/card-vacante.component';
 import { ClockComponent } from './clock/clock.component';
 import { ColorPickerService } from 'ngx-color-picker';
 import { ComentarioVacanteComponent } from './comentario-vacante/comentario-vacante.component';
 import { CommonModule } from '@angular/common';
+import { DetailVacantesComponent } from './detail-vacantes/detail-vacantes.component';
 import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
-import { TablaPruebaComponent } from './dataTable/tabla-prueba/tabla-prueba.component';
 import { ToasterService } from 'angular2-toaster';
-import { CardVacanteComponent } from './card-vacantes/card-vacante/card-vacante.component';
-import { DetailVacantesComponent } from './detail-vacantes/detail-vacantes.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -146,7 +145,6 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonLikeComponent,
     ButtonDislikeComponent,
     ButtonSendComponent,
-    TablaPruebaComponent,
     CardVacanteComponent,
     DetailVacantesComponent,
     ButtonsPostulacionesComponent,
