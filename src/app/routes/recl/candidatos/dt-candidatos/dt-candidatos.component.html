@@ -89,7 +89,7 @@
               <p>{{candidatodtl[0]?.aboutMe[0]?.acercaDeMi}}</p>
             </div>
             <div class="col-md-12">
-              <strong>Genero: </strong> {{candidatodtl[0]?.candidato?.genero?.genero}}
+              <strong>G&eacute;nero: </strong> {{candidatodtl[0]?.candidato?.genero?.genero}}
             </div>
             <div *ngIf="Status == 0 || Usuario == Reclutador">
               <div class="my-3" *ngFor="let correo of candidatodtl[0].candidato.emails">
@@ -744,11 +744,11 @@
               </mat-panel-description>
             </mat-expansion-panel-header>
             <br>
-            <div class="card list-group-item list-group-item-action">
+            <div class="card">
               <div class="card-body" *ngFor="let coment of this.comentarios">
                 <div class="media">
-                  <img class="align-self-start mx-2 circle thumb32" [src]="coment.usuario.foto" alt="Image">
-                  <div class="media-body">
+                  <img class="mr-3 rounded-circle thumb64" [src]="coment.usuario.foto" alt="Image">
+                  <div class="media-body mb-3">
                     <strong class="text-primary">
                       <!-- <span class="circle bg-success circle-lg text-left"></span> -->
                       <span>{{coment.usuario.nombre}}</span>
@@ -757,16 +757,17 @@
                         <small *ngIf="coment?.requisicion?.folio" class="text-muted ml-2">Folio: {{coment?.requisicion?.folio}}</small>
                       </p>
                     </strong>
-                    <p>{{coment.comentario}}</p>
+                    <p class="text-danger">{{coment.comentario}}</p>
                   </div>
                 </div>
                 <div class="ml-auto">
                   <small class="text-muted ml-2">{{coment.fchComentario | date:'hh:mm:ss'}}</small>
                   <small class="text-muted ml-2">{{coment.fchComentario | date:'dd/MM/yyyy'}}</small>
                   <div class="car-body">
-                    +12 <btn-like></btn-like>
-                    -13 <btn-dislike></btn-dislike>
-                    <button class="mb-1 btn btn-secondary" type="button">Responder</button>
+                    <!-- +12 <btn-like></btn-like>
+                    -13 <btn-dislike></btn-dislike> -->
+                    <button class="mb-1 btn btn-secondary" matTooltip="Respender Comentario" (click)="ShowMessage(coment)" type="button">
+                      <em class="icon icon-action-redo"></em></button>
                   </div>
                   
                 </div>

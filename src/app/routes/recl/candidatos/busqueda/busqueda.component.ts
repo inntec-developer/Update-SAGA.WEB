@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
-import { CandidatosService } from '../../../../service/index';
+import { CandidatosService } from '../../../../service';
 import {DomSanitizer} from '@angular/platform-browser';
 import { Filtros } from '../../../../models/recl/candidatos';
 import {MatIconRegistry} from '@angular/material';

@@ -3,11 +3,19 @@
     <em class="fa fa-list-alt"></em> Información Principal
   </div>
   <div class="card-body">
-    <div class="text-right">
+    <div class="d-flex justify-content-between">
       <h4>
-        <strong>Folio: </strong> {{folio}}</h4>
-        <mat-divider></mat-divider>
+        <strong> Vacantes: </strong>
+        <label class="badge badge-pill badge-info">{{vacantes}}</label>
+      </h4>
+      <h4>
+        <strong> {{vBtra}} </strong>
+      </h4>
+      <h4>
+        <strong>Folio: </strong> {{folio}}
+      </h4>
     </div>
+    <mat-divider></mat-divider>
     <br>
     <div class="row">
       <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
@@ -26,9 +34,7 @@
       <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
         <h5>
           <strong>Prioridad: </strong>
-          <label class="badge badge-pill" 
-          [class.badge-danger]="prioridadId  === 1" 
-          [class.badge-warning]="prioridadId  === 2"> {{prioridad}} </label>
+          <label class="badge badge-pill" [class.badge-danger]="prioridadId  === 1" [class.badge-warning]="prioridadId  === 2"> {{prioridad}} </label>
         </h5>
       </div>
       <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
@@ -40,12 +46,8 @@
       <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
         <h5>
           <strong>Estatus: </strong>
-          <label class="badge badge-pill" 
-          [class.badge-warning]="estatusId  === 4" 
-          [class.badge-primary]="estatusId  === 5"
-          [class.badge-info]="estatusId  === 6" 
-          [class.badge-success]="estatusId  === 7" 
-          [class.badge-danger]="estatusId  === 8"> {{estatus}} </label>
+          <label class="badge badge-pill" [class.badge-warning]="estatusId  === 4" [class.badge-primary]="estatusId  === 5" [class.badge-info]="estatusId  === 6"
+            [class.badge-success]="estatusId  === 7" [class.badge-danger]="estatusId  === 8"> {{estatus}} </label>
         </h5>
       </div>
       <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
@@ -56,6 +58,20 @@
         </h5>
       </div>
 
+    </div>
+    <mat-divider></mat-divider>
+    <br>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <h4>
+          <strong> Asignados </strong>
+        </h4>
+        <ol class="list-inline">
+          <li  class="list-inline-item" *ngFor="let x of asignados">
+            <h5>{{x.nombre}} {{x.apellidoPaterno}} {{x.apellidoMaterno}} / </h5>
+          </li>
+        </ol>
+      </div>
     </div>
 
 

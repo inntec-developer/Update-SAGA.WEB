@@ -1,6 +1,6 @@
 import { ActivatedRoute, CanDeactivate, Router } from '@angular/router';
 import { AfterContentChecked, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CatalogosService, RequisicionesService } from '../../../../../service/index';
+import { CatalogosService, RequisicionesService } from '../../../../../service';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
@@ -36,6 +36,9 @@ export class ViewInforRequiComponent implements OnInit, AfterContentChecked {
   confidencial: any;
   estatusId: any;
   prioridadId: any;
+  vacantes: any;
+  asignados:Array<any[]> = [];
+  vBtra: any;
 
 
     constructor(
@@ -70,6 +73,10 @@ export class ViewInforRequiComponent implements OnInit, AfterContentChecked {
           this.estatus = DataRequisicion.estatus.descripcion;
           this.estatusId = DataRequisicion.estatus.id;
           this.confidencial = DataRequisicion.confidencial;
+          this.vacantes = DataRequisicion.vacantes;
+          this.asignados = DataRequisicion.asignadosN;
+          this.vBtra = DataRequisicion.vBtra;
+          console.log(this.asignados);
         this.EstatusId.emit(this.estatusId);
       });
     }

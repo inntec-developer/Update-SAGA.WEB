@@ -1,5 +1,9 @@
+<<<<<<< HEAD
+import { CardVacanteComponent } from '../../components/card-vacantes/card-vacante/card-vacante.component';
+=======
 
 
+>>>>>>> 0e03a4c531ec2eef9c97b504e87162fe7aa741c4
 import {DataTableModule, SharedModule} from 'primeng/primeng'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule, MatInputModule, MatNativeDateModule, MatSelectModule, MatTooltipModule } from '@angular/material';
@@ -9,9 +13,9 @@ import { AddGrupoComponent } from './add-grupo/add-grupo.component';
 import { AddPersonaComponent } from './add-persona/add-persona.component';
 import { AddRolesComponent } from './add-roles/add-roles.component';
 import { AddadminComponent } from './admin/addadmin.component';
-import { AgGridModule } from 'ag-grid-angular/main';
+import { AgGridModule } from 'ag-grid-angular';
 import { CommonModule } from '@angular/common';
-import { ComponentsModule } from './../../components/components.module';
+import { ComponentsModule } from '../../components/components.module';
 import { CustomFormsModule } from 'ng2-validation';
 import { DndModule } from 'ng2-dnd';
 import { FileUploadModule } from 'ng2-file-upload';
@@ -22,10 +26,10 @@ import { ImageCropperModule } from 'ng2-img-cropper';
 import {MatCheckboxModule} from '@angular/material/checkbox'
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule} from '@angular/material/dialog';
-import { Ng2TableModule } from 'ng2-table/ng2-table';
+import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable'
-import { PagesModule } from './../pages/pages.module';
+import { PagesModule } from '../pages/pages.module';
 import { RegistroComponent } from './registro/registro.component';
 import { RolGrupoComponent } from './rol-grupo/rol-grupo.component';
 import { RollsStructComponent } from './rolls-struct/rolls-struct.component';

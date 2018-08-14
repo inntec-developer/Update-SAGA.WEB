@@ -26,7 +26,7 @@ import { ScrollableDirective } from './directives/scrollable/scrollable.directiv
 import { SparklineDirective } from './directives/sparkline/sparkline.directive';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
-import { ToasterModule } from 'angular2-toaster/angular2-toaster';
+import { ToasterModule } from 'angular2-toaster';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import {TreeGridDirective} from './directives/treeGrid/treeGrid.directive';

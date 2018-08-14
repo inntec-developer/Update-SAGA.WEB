@@ -4,10 +4,10 @@ import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angul
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSort, MatTableDataSource, PageEvent } from '@angular/material';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
 
-import { Apartado } from './../../../../models/recl/candidatos';
-import { ApiConection } from './../../../../service/api-conection.service';
+import { Apartado } from '../../../../models/recl/candidatos';
+import { ApiConection } from '../../../../service/api-conection.service';
 import { BusquedaComponent } from '../busqueda/busqueda.component';
-import { CandidatosService } from '../../../../service/index';
+import { CandidatosService } from '../../../../service';
 import { Comentarios } from '../../../../models/recl/candidatos';
 import { DialogcandidatosComponent } from './dialogcandidatos/dialogcandidatos.component';
 import { element } from 'protractor';
@@ -398,6 +398,11 @@ export class DtCandidatosComponent implements OnInit, AfterViewInit, OnChanges {
           this.dataSourcev =  new MatTableDataSource(this.vacantes);
       }
       // Termina paginador
+
+      public ShowMessage($event){
+        debugger;
+        console.log($event);
+      }
 
 }
   // Interface de la tabla de candidatos. ***

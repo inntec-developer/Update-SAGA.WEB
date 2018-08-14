@@ -66,7 +66,7 @@ import { HttpModule } from '@angular/http';
 import { IdiomasComponent } from './candidatos/busqueda/idiomas/idiomas.component';
 import { ImageCropperModule } from 'ng2-img-cropper';
 import { MunicipioComponent } from './candidatos/busqueda/municipio/municipio.component';
-import { Ng2TableModule } from 'ng2-table/ng2-table';
+import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NivestudiosComponent } from './candidatos/busqueda/nivestudios/nivestudios.component';

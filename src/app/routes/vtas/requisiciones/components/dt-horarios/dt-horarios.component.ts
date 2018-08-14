@@ -63,8 +63,8 @@ export class DtHorariosComponent implements  AfterContentChecked {
 
   public columns: Array<any> = [
     {title: 'Nombre', className: 'text-info text-center'},
-    {title: 'De Dia', className: 'text-info text-center'},
-    {title: 'A Dia', className: 'text-info text-center'},
+    {title: 'De Día', className: 'text-info text-center'},
+    {title: 'A Día', className: 'text-info text-center'},
     {title: 'De Hora', className: 'text-info text-center'},
     {title: 'A Hora', className: 'text-info text-center'},
     {title: 'Vacantes', className: 'text-info text-center'},

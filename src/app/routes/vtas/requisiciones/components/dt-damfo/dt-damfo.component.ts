@@ -1,11 +1,11 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { BodyOutputType, Toast, ToasterConfig, ToasterService } from 'angular2-toaster/angular2-toaster';
+import { BodyOutputType, Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { Component, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatTableDataSource, PageEvent} from '@angular/material';
 
 import { DialogdamfoComponent } from '../dialogdamfo/dialogdamfo.component'
 import { NgxSpinnerService } from 'ngx-spinner';
-import { RequisicionesService } from '../../../../../service/index';
+import { RequisicionesService } from '../../../../../service';
 import { element } from 'protractor';
 
 declare var $: any;
@@ -60,7 +60,7 @@ export class DtDamfoComponent implements OnInit {
       {title: 'Perfil', className: 'text-info text-center', name: 'nombrePerfil', filtering: { filterString: '', placeholder: 'Perfil' }},
       {title: 'No. Vacantes', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' }},
       {title: 'Sueldo Minimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' }},
-      {title: 'Sueldo Maximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' }},
+      {title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' }},
       {title: 'Tipo Recl.', className: 'text-info text-center',name:'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo Recl.' }},
       {title: 'Clase Recl.', className: 'text-info text-center', name:'claseReclutamiento', filtering: { filterString: '', placeholder: 'Clase Recl.' }},
       {title: 'Creación', className: 'text-info text-center',name:'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }}

@@ -79,7 +79,7 @@
           <mat-form-field class="fieldautocomplete-full-width">
             <input maxlength="7" matInput #codigo placeholder="CP" [formControl]="CodigoPostal" [(ngModel)]="cp">
             <mat-hint align="start">
-              <strong>Codigo Postal</strong>
+              <strong>C&oacute;digo Postal</strong>
             </mat-hint>
             <mat-hint align="end">{{codigo.value.length}} / 7</mat-hint>
           </mat-form-field>
@@ -87,7 +87,7 @@
         <!-- Filtro de Area de experiencia -->
         <div class="col-md-2">
           <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="Areas experiencia" aria-label="Area Exp" [matAutocomplete]="ae" [formControl]="aresexpCtrl">
+            <input matInput placeholder="Áreas experiencia" aria-label="Area Exp" [matAutocomplete]="ae" [formControl]="aresexpCtrl">
             <mat-autocomplete #ae="matAutocomplete">
               <mat-option *ngFor="let areaexp of filteredareaexp | async" [value]="areaexp.areaExperiencia">
                 <div class="row">

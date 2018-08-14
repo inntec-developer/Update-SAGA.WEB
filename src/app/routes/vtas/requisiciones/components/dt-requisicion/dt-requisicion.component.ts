@@ -1,13 +1,13 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import {Component, OnInit} from '@angular/core';
-import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster/angular2-toaster';
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
-import { DialogActivarRequiComponent } from './../dialog-activar-requi/dialog-activar-requi.component';
-import { DialogCancelRequiComponent } from './../dialog-cancel-requi/dialog-cancel-requi.component';
+import { DialogActivarRequiComponent } from '../dialog-activar-requi/dialog-activar-requi.component';
+import { DialogCancelRequiComponent } from '../dialog-cancel-requi/dialog-cancel-requi.component';
 import { DialogDeleteRequiComponent } from '../dialog-delete-requi/dialog-delete-requi.component';
 import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { RequisicionesService } from '../../../../../service/index';
+import { RequisicionesService } from '../../../../../service';
 
 declare var $: any;
 
@@ -64,7 +64,7 @@ export class DtRequisicionComponent implements  OnInit {
       {title: 'Perfil',  className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' }},
       {title: 'No. Vacantes',  className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' }},
       {title: 'Sueldo Minimo',  className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' }},
-      {title: 'Sueldo Maximo',  className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' }},
+      {title: 'Sueldo Máximo',  className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' }},
       {title: 'Creación',  className: 'text-info text-center',name:'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }},
       {title: 'Cumplimiento',  className: 'text-info text-center', name:'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }},
       {title: 'Estatus',  className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' }},

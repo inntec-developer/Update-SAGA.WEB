@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, AfterContentChecked } from '@angular/core';
+import { AfterContentChecked, Component, Input, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-dt-psicometrias-damsa',
@@ -26,8 +26,8 @@ export class DtPsicometriasDamsaComponent implements AfterContentChecked {
   }
 
   public columns: Array<any> = [
-    {title: 'Psicometrias', className: 'text-info text-center'},
-    {title: 'Descripcion', className: 'text-info text-center'},
+    {title: 'Psicometrías', className: 'text-info text-center'},
+    {title: 'Descripción', className: 'text-info text-center'},
   ];
 
   public config: any = {

@@ -1,4 +1,4 @@
-import { ActivatedRoute, Router } from '@angular/router/';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -7,7 +7,7 @@ import { CatalogoConfiguracionService } from '../../../../service/DisenioVacante
 import { ConfiguracionService } from '../../../../service/DisenioVacante/configuracion.service';
 import {Http} from '@angular/http';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { RequisicionesService } from './../../../../service/requisiciones/requisiciones.service';
+import { RequisicionesService } from '../../../../service/requisiciones/requisiciones.service';
 
 @Component({
   selector: 'app-disenador-vacante',

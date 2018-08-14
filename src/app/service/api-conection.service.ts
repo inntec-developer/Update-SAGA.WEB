@@ -111,7 +111,7 @@ export class ApiConection {
   public static getEntidades = '/admin/getEntidades2';
   public static getEstructuraRoles = '/admin/getEstructuraRoles';
   public static getPrivilegios = '/admin/getPrivilegios';
-  public static modificarPrivilegios = '/admin/modificarPrivilegios'
+  public static modificarPrivilegios = '/admin/modificarPrivilegios';
   public static getUsuariosByGrupo = '/admin/getUsuarioByGrupo';
   public static deleteUserGroup = 'admin/deleteUserGroup';
   public static deleteUserRol = 'admin/deleteUserRol';
@@ -126,4 +126,5 @@ export class ApiConection {
 
   /*Seguimiento Vacantes*/
   public static getDtosCard = 'reclutamiento/seguimientovacante/getCard';
+  public static getDtosDetail = 'reclutamiento/seguimientovacante/getvacantesdtl';
 }

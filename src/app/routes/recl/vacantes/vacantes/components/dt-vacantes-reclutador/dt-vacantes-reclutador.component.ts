@@ -1,8 +1,8 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
-import { DialogAssingRequiComponent } from './../dialogs/dialog-assing-requi/dialog-assing-requi.component';
-import { DialogShowRequiComponent } from './../dialogs/dialog-show-requi/dialog-show-requi.component';
+import { DialogAssingRequiComponent } from '../dialogs/dialog-assing-requi/dialog-assing-requi.component';
+import { DialogShowRequiComponent } from '../dialogs/dialog-show-requi/dialog-show-requi.component';
 import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../../service';
@@ -62,8 +62,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
     {title: 'No. Vacantes',  className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' }},
     {title: 'Tipo Recl.',  className: 'text-info text-center', name:'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo' } },
     {title: 'Clase Recl.',  className: 'text-info text-center', name:'claseReclutamiento', filtering: { filterString: '', placeholder: 'Clase' } },
-    {title: 'Sueldo Minimo',  className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' }},
-    {title: 'Sueldo Maximo',  className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' }},
+    {title: 'Sueldo Mínimo',  className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' }},
+    {title: 'Sueldo Máximo',  className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' }},
     {title: 'Creación',  className: 'text-info text-center',name:'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }},
     {title: 'Cumplimiento',  className: 'text-info text-center', name:'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }},
     {title: 'Estatus',  className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' }},
@@ -247,7 +247,9 @@ export class DtVacantesReclutadorComponent implements OnInit {
         height: '700px',
         data: this.requi
       });    
-      
+      dialogShow.afterClosed().subscribe(result => {
+        this.onChangeTable(this.config);
+      });
   }
   openDialogAssingRequi(){
     let dialogAssing = this.dialog.open(DialogAssingRequiComponent, {
@@ -257,7 +259,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     });   
     dialogAssing.afterClosed().subscribe(result => {
       this.onChangeTable(this.config);
-    })
+    });
   }
 
   openDesignVacante(){

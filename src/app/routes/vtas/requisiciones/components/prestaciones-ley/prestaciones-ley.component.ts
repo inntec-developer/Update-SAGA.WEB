@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CatalogosService } from '../../../../../service/index';
+import { CatalogosService } from '../../../../../service';
 
 @Component({
   selector: 'app-prestaciones-ley',

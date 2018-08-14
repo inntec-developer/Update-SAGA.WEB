@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
-import { FormGroup } from '../../../../../../../../node_modules/@angular/forms';
-import { RequisicionesService } from './../../../../../../service/requisiciones/requisiciones.service';
-import { Vacante } from './../../../../../../models/vtas/Requisicion';
+import { FormGroup } from '@angular/forms';
+import { RequisicionesService } from '../../../../../../service/requisiciones/requisiciones.service';
+import { Vacante } from '../../../../../../models/vtas/Requisicion';
 
 @Component({
   selector: 'app-dialog-edit-horario',

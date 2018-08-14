@@ -14,14 +14,14 @@
 <br/>
 
 <div class="row">
-<div class="col-md-6">
- <app-card-vacante [ClientId]="ClientId"></app-card-vacante>
+  <div class="col-md-6">
+    <app-card-vacante [ClientId]="ClientId"></app-card-vacante>
+  </div>
 
-</div>
-
-<div class="col-md-6">
-  <div class="panel panel-default">
-  <app-buttons-postulaciones></app-buttons-postulaciones>
- </div>
- </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <app-buttons-postulaciones></app-buttons-postulaciones>
+      <app-detail-vacantes [VacanteId]="VacanteId"></app-detail-vacantes>
+    </div>
+  </div>
 </div>
