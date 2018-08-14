@@ -62,7 +62,7 @@ import { ButtonSaveComponent } from './buttons/button-save/button-save.component
 import { ButtonSendComponent } from './buttons/button-send/button-send.component';
 import { ButtonViewComponent } from './buttons/button-view/button-view.component';
 import {ButtonsPostulacionesComponent} from './buttons-postulaciones/buttons-postulaciones.component';
-import { CardVacanteComponent } from './card-vacantes/card-vacante/card-vacante.component';
+import { CardVacanteComponent } from './card-vacantes/card-vacante.component';
 import { ClockComponent } from './clock/clock.component';
 import { ColorPickerService } from 'ngx-color-picker';
 import { ComentarioVacanteComponent } from './comentario-vacante/comentario-vacante.component';

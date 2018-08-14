@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-import { CardVacanteComponent } from '../../components/card-vacantes/card-vacante/card-vacante.component';
-=======
-
-
->>>>>>> 0e03a4c531ec2eef9c97b504e87162fe7aa741c4
-import {DataTableModule, SharedModule} from 'primeng/primeng'
+import {DataTableModule, SharedModule} from 'primeng/primeng';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule, MatInputModule, MatNativeDateModule, MatSelectModule, MatTooltipModule } from '@angular/material';
 import { RouterModule, Routes } from '@angular/router';
@@ -85,7 +79,6 @@ const routes: Routes = [
         DataTableModule,
         SharedModule, 
         TreeModule
-        
       ],
     declarations:
     [
@@ -99,7 +92,8 @@ const routes: Routes = [
       RegistroComponent,
       GridRolesComponent ,
       UploadImgsComponent,
-      FileManagerComponent
+      FileManagerComponent,
+      CardVacanteComponent
     ],
     exports: [
         RouterModule,
