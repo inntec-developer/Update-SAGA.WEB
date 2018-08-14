@@ -37,6 +37,7 @@ import {
   MatTooltipModule
 } from '@angular/material';
 import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
+import { PopoverModule, TooltipModule } from 'ngx-bootstrap';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../core/translator/config-paginator/config-paginator.component';
 
 import { AsignarRequisicionComponent } from './asignar-requisicion/asignar-requisicion.component';
@@ -60,8 +61,10 @@ import { ButtonReturnComponent } from './buttons/button-return/button-return.com
 import { ButtonSaveComponent } from './buttons/button-save/button-save.component';
 import { ButtonSendComponent } from './buttons/button-send/button-send.component';
 import { ButtonViewComponent } from './buttons/button-view/button-view.component';
+import {ButtonsPostulacionesComponent} from './buttons-postulaciones/buttons-postulaciones.component';
 import { ClockComponent } from './clock/clock.component';
 import { ColorPickerService } from 'ngx-color-picker';
+import { ComentarioVacanteComponent } from './comentario-vacante/comentario-vacante.component';
 import { CommonModule } from '@angular/common';
 import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
@@ -115,7 +118,9 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     MatToolbarModule,
     MatTooltipModule,
     Ng2TableModule,
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    PopoverModule.forRoot(),
+    TooltipModule.forRoot()
     
   ],
   declarations: [
@@ -143,7 +148,9 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonSendComponent,
     TablaPruebaComponent,
     CardVacanteComponent,
-    DetailVacantesComponent
+    DetailVacantesComponent,
+    ButtonsPostulacionesComponent,
+    ComentarioVacanteComponent
 
   ],
   exports: [
@@ -169,10 +176,10 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonLikeComponent,
     ButtonDislikeComponent,
     ButtonSendComponent,
-    TablaPruebaComponent,
     CardVacanteComponent,
-    DetailVacantesComponent
-    
+    DetailVacantesComponent,
+    ButtonsPostulacionesComponent,
+    ComentarioVacanteComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

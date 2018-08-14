@@ -4,8 +4,10 @@ import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@ang
 import { FormControl, FormGroup, NgForm, ReactiveFormsModule, Validator } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material'
 
+import { RequisicionesService } from '../../../../../service/index';
+
 //Services
-import { RequisicionesService } from '../../../../../service';
+
 
 @Component({
   selector: 'app-dialogdamfo',

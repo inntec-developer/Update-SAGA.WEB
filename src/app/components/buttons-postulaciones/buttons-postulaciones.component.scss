@@ -1,0 +1,31 @@
+.box span {
+    display:inline-flex;
+    overflow: hidden;
+ }
+.box ul {
+     margin:0;
+     padding:0;
+ }
+.box ul li {
+    display:inline-block;
+     list-style: none ;
+
+ }
+.box ul li a {
+    display:block;
+     color:#aaa;
+     //color:#00b3ee;
+     margin:0 2px;
+     font-size:14px;
+     transition:0.5s;
+     text-align:center;
+ }
+.box li:hover a {
+     color:#e91e63;
+    transform:rotateY(360deg);
+ }
+
+ .vl {
+    border-left: 1px solid green;
+    height: 50px;
+}

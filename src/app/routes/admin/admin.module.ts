@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import { CardVacanteComponent } from '../../components/card-vacantes/card-vacante/card-vacante.component';
+=======
+
+
+>>>>>>> 0e03a4c531ec2eef9c97b504e87162fe7aa741c4
 import {DataTableModule, SharedModule} from 'primeng/primeng'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule, MatInputModule, MatNativeDateModule, MatSelectModule, MatTooltipModule } from '@angular/material';
@@ -33,6 +38,7 @@ import { TreeModule } from 'angular-tree-component';
 import { TreeTableModule } from 'primeng/primeng';
 import { UploadImgsComponent } from './upload-imgs/upload-imgs.component';
 import { ModalModule, PopoverModule } from 'ngx-bootstrap';
+import { FileManagerComponent } from './file-manager/file-manager.component';
 
 
 const routes: Routes = [
@@ -42,7 +48,8 @@ const routes: Routes = [
     { path: 'grupoAdd', component: AddGrupoComponent, data: {'componente':'Grupos'} },
     { path: 'rol', component: RolGrupoComponent, data: {'componente':'Grupos a roles'} },
     { path: 'privilegios', component: RollsStructComponent, data: {'componente':'Privilegios'}},
-    { path: 'registro', component: RegistroComponent}
+    { path: 'registro', component: RegistroComponent},
+    { path: 'filemanager', component: FileManagerComponent }
 ];
 
 
@@ -90,7 +97,9 @@ const routes: Routes = [
       UploadImgsComponent,
       RollsStructComponent,
       RegistroComponent,
-      GridRolesComponent 
+      GridRolesComponent ,
+      UploadImgsComponent,
+      FileManagerComponent
     ],
     exports: [
         RouterModule,

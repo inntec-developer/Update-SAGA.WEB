@@ -18,7 +18,7 @@
     <br/>
     <div class="row">
       <div class="col-md-4">
-        <select *ngIf="!nuevoRol" class="form-control select" (change)="GetTreeByRol($event.target.value); id = $event.target.value;">
+        <select *ngIf="!nuevoRol" class="form-control form-control-sm select" (change)="GetTreeByRol($event.target.value); id = $event.target.value;">
           <option [value]="0">Seleccionar Rol</option>
           <option *ngFor="let rol of listRoles" [value]="rol.id">{{rol.rol}}</option>
         </select>

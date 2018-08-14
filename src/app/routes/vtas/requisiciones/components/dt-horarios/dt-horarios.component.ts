@@ -68,7 +68,7 @@ export class DtHorariosComponent implements  AfterContentChecked {
     {title: 'De Hora', className: 'text-info text-center'},
     {title: 'A Hora', className: 'text-info text-center'},
     {title: 'Vacantes', className: 'text-info text-center'},
-    {title: 'Especificaciones', className: 'text-info text-center'},
+    {title: 'Espec.', className: 'text-info text-center'},
   ];
 
   public config: any = {

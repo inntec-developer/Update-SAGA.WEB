@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TablaPruebaComponent } from './tabla-prueba.component';
+import { FileManagerComponent } from './file-manager.component';
 
-describe('TablaPruebaComponent', () => {
-  let component: TablaPruebaComponent;
-  let fixture: ComponentFixture<TablaPruebaComponent>;
+describe('FileManagerComponent', () => {
+  let component: FileManagerComponent;
+  let fixture: ComponentFixture<FileManagerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TablaPruebaComponent ]
+      declarations: [ FileManagerComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TablaPruebaComponent);
+    fixture = TestBed.createComponent(FileManagerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
