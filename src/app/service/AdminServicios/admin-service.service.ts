@@ -48,6 +48,7 @@ export class AdminServiceService {
   private UrlUploadImage = ApiConection.ServiceUrl+ApiConection.uploadImage;
   private UrlAddSeccion = ApiConection.ServiceUrl+ApiConection.addSeccion;
   private UrlValidarEmail = ApiConection.ServiceUrl+ApiConection.validarEmail;
+  private UrlGetFiles = ApiConection.ServiceUrl+ApiConection.getFiles;
 
   // Error.
   private handleError(error: any) {
@@ -71,6 +72,13 @@ export class AdminServiceService {
     let options = new RequestOptions({headers: headers});
 
     return this.http.post(this.UrlUploadImage, formData ).map(result => result.json());
+  }
+
+  GetFiles(): Observable<any>
+  {
+     return this.http.get(this.UrlGetFiles)
+         .map(result => result.json())
+         .catch(this.handleError);
   }
  
   getPersonas(): Observable<any>
