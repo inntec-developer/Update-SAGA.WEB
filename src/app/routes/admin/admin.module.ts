@@ -1,6 +1,7 @@
 import {DataTableModule, SharedModule} from 'primeng/primeng';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule, MatInputModule, MatNativeDateModule, MatSelectModule, MatTooltipModule } from '@angular/material';
+import { ModalModule, PopoverModule } from 'ngx-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AddGrupoComponent } from './add-grupo/add-grupo.component';
@@ -8,10 +9,12 @@ import { AddPersonaComponent } from './add-persona/add-persona.component';
 import { AddRolesComponent } from './add-roles/add-roles.component';
 import { AddadminComponent } from './admin/addadmin.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { CardVacanteComponent } from '../../components/card-vacantes/card-vacante.component';
 import { CommonModule } from '@angular/common';
 import { ComponentsModule } from '../../components/components.module';
 import { CustomFormsModule } from 'ng2-validation';
 import { DndModule } from 'ng2-dnd';
+import { FileManagerComponent } from './file-manager/file-manager.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { GridRolesComponent } from './add-roles/grid-roles/grid-roles.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -31,9 +34,6 @@ import { SelectModule } from 'ng2-select';
 import { TreeModule } from 'angular-tree-component';
 import { TreeTableModule } from 'primeng/primeng';
 import { UploadImgsComponent } from './upload-imgs/upload-imgs.component';
-import { ModalModule, PopoverModule } from 'ngx-bootstrap';
-import { FileManagerComponent } from './file-manager/file-manager.component';
-
 
 const routes: Routes = [
     { path: 'roles', component: RollsStructComponent, data: {'componente':'Roles'} },
