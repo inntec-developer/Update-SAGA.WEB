@@ -5,7 +5,7 @@ import { AdminServiceService } from '../../../service/AdminServicios/admin-servi
 import { CustomValidators } from 'ng2-validation';
 import { RequestOptions } from '@angular/http';
 import { SettingsService } from '../../../core/settings/settings.service';
-import { AuthService } from './../../../service/auth/auth.service';
+import { AuthService } from '../../../service/auth/auth.service';
 
 @Component({
     selector: 'app-register',

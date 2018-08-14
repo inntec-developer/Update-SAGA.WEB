@@ -1,13 +1,13 @@
 import { ActivatedRoute, CanDeactivate, Router, } from '@angular/router';
-import { CatalogosService, RequisicionesService } from '../../../../../service/index';
+import { CatalogosService, RequisicionesService } from '../../../../../service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 import { CreateRequisicion } from '../../../../../models/vtas/Requisicion';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SettingsService } from '../../../../../core/settings/settings.service';
-import { UpdateInfoRequiComponent } from './../update-info-requi/update-info-requi.component';
-import { UpdateRequisicionComponent } from './../update-requisicion/update-requisicion.component';
+import { UpdateInfoRequiComponent } from '../update-info-requi/update-info-requi.component';
+import { UpdateRequisicionComponent } from '../update-requisicion/update-requisicion.component';
 
 @Component({
   selector: 'app-requisicion-nueva',

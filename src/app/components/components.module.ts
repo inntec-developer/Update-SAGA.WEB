@@ -62,14 +62,16 @@ import { ButtonSaveComponent } from './buttons/button-save/button-save.component
 import { ButtonSendComponent } from './buttons/button-send/button-send.component';
 import { ButtonViewComponent } from './buttons/button-view/button-view.component';
 import {ButtonsPostulacionesComponent} from './buttons-postulaciones/buttons-postulaciones.component';
-import { CardVacanteComponent } from './card-vacantes/card-vacante.component';
 import { ClockComponent } from './clock/clock.component';
-import { ColorPickerService } from '../../../node_modules/ngx-color-picker';
+import { ColorPickerService } from 'ngx-color-picker';
 import { ComentarioVacanteComponent } from './comentario-vacante/comentario-vacante.component';
 import { CommonModule } from '@angular/common';
-import { Ng2TableModule } from 'ng2-table/ng2-table';
+import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
-import { ToasterService } from '../../../node_modules/angular2-toaster';
+import { TablaPruebaComponent } from './dataTable/tabla-prueba/tabla-prueba.component';
+import { ToasterService } from 'angular2-toaster';
+import { CardVacanteComponent } from './card-vacantes/card-vacante/card-vacante.component';
+import { DetailVacantesComponent } from './detail-vacantes/detail-vacantes.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -144,7 +146,9 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonLikeComponent,
     ButtonDislikeComponent,
     ButtonSendComponent,
+    TablaPruebaComponent,
     CardVacanteComponent,
+    DetailVacantesComponent,
     ButtonsPostulacionesComponent,
     ComentarioVacanteComponent
 
@@ -173,9 +177,9 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonDislikeComponent,
     ButtonSendComponent,
     CardVacanteComponent,
+    DetailVacantesComponent,
     ButtonsPostulacionesComponent,
     ComentarioVacanteComponent
-    
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

@@ -1,8 +1,10 @@
-import { ActivatedRoute, Router, } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, CanDeactivate, Router, } from '@angular/router';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { CatalogosService } from '../../../../../service';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatTableDataSource, PageEvent} from '@angular/material';
 
 import { DialogdamfoComponent } from '../dialogdamfo/dialogdamfo.component'
-import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../service/index';
 

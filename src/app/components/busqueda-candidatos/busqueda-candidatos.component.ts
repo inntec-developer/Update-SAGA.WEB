@@ -1,13 +1,13 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, Validators } from '../../../../node_modules/@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
-import { Candidatos } from './../../routes/recl/candidatos/dt-candidatos/dt-candidatos.component';
-import { CandidatosService } from './../../service/Candidatos/candidatos.service';
-import { Filtros } from './../../models/recl/candidatos';
-import { Observable } from '../../../../node_modules/rxjs';
-import { PcondiscapacidadComponent } from './../../routes/recl/candidatos/busqueda/pcondiscapacidad/pcondiscapacidad.component';
+import { Candidatos } from '../../routes/recl/candidatos/dt-candidatos/dt-candidatos.component';
+import { CandidatosService } from '../../service/Candidatos/candidatos.service';
+import { Filtros } from '../../models/recl/candidatos';
+import { Observable } from 'rxjs';
+import { PcondiscapacidadComponent } from '../../routes/recl/candidatos/busqueda/pcondiscapacidad/pcondiscapacidad.component';
 import { map } from 'rxjs/operators/map';
-import { startWith } from '../../../../node_modules/rxjs/operators';
+import { startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-busqueda-candidatos',

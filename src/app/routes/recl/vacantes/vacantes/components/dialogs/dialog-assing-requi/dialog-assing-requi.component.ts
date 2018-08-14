@@ -5,7 +5,7 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { AsignarRequis } from '../../../../../../../models/models';
-import { RequisicionesService } from './../../../../../../../service/requisiciones/requisiciones.service';
+import { RequisicionesService } from '../../../../../../../service/requisiciones/requisiciones.service';
 
 @Component({
   selector: 'app-dialog-assing-requi',

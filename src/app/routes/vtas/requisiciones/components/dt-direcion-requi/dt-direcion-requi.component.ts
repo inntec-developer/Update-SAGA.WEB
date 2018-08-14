@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { RequisicionesService } from './../../../../../service/requisiciones/requisiciones.service';
+import { MatTableDataSource } from '@angular/material';
+import { RequisicionesService } from '../../../../../service/requisiciones/requisiciones.service';
 
 declare var $: any;
 

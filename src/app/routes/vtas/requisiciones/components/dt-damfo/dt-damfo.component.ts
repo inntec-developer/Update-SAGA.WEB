@@ -1,11 +1,11 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { BodyOutputType, Toast, ToasterConfig, ToasterService } from 'angular2-toaster/angular2-toaster';
+import { BodyOutputType, Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { Component, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatTableDataSource, PageEvent} from '@angular/material';
 
 import { DialogdamfoComponent } from '../dialogdamfo/dialogdamfo.component'
 import { NgxSpinnerService } from 'ngx-spinner';
-import { RequisicionesService } from '../../../../../service/index';
+import { RequisicionesService } from '../../../../../service';
 import { element } from 'protractor';
 
 declare var $: any;

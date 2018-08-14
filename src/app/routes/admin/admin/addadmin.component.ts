@@ -1,4 +1,4 @@
-import { ApiConection } from './../../../service/api-conection.service';
+import { ApiConection } from '../../../service/api-conection.service';
 import { Component, OnInit } from '@angular/core';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';

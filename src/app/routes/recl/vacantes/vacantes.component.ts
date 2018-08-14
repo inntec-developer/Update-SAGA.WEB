@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Requis } from '../../../service/DisenioVacante/CatalogoRequi.service';
-import { ActivatedRoute,Router} from '@angular/router/';
+import { ActivatedRoute,Router} from '@angular/router';
 import {Http} from '@angular/http';
 //Element  Angular Material
 import {MatTableDataSource} from '@angular/material';

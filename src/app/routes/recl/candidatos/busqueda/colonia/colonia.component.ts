@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
-import { CandidatosService } from '../../../../../service/index';
+import { CandidatosService } from '../../../../../service';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
 import {map} from 'rxjs/operators/map';
