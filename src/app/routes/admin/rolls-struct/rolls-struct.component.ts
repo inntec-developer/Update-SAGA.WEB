@@ -1,3 +1,5 @@
+import { element } from 'protractor';
+import { forEach } from '@angular/router/src/utils/collection';
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
@@ -47,13 +49,14 @@ export class RollsStructComponent implements OnInit {
   
         this.service.AddRoles(obj)
           .subscribe(data => {
-            this.ngOnInit();
             if(data == 201)
             {
               this.alert = 'Los datos se agregaron con éxito'
               this.success = true;
               this.haserror = false;
               this.verMsg = true;
+              this.grid.privilegios = [];
+              
             }
             else
             {
@@ -66,17 +69,15 @@ export class RollsStructComponent implements OnInit {
       }
       else
       {
-        console.log(privilegios)
         this.service.UpdatePrivilegios(privilegios)
           .subscribe(data => {
-            console.log(data)
-
             if(data == 201)
             {
               this.alert = 'Los datos se actualizaron con éxito'
               this.success = true;
               this.haserror = false;
               this.verMsg = true;
+              this.grid.privilegios = [];
             }
             else
             {
@@ -162,8 +163,6 @@ export class RollsStructComponent implements OnInit {
   filtrarTree(rol)
   {
 
-    this.grid.ngOnInit();
-
     // var aux = this.StructList.filter( element =>{
     //    return element.rolId == rol && element.tipoEstructuraId === 2
     // })
@@ -213,16 +212,20 @@ export class RollsStructComponent implements OnInit {
     this.service.GetTreeRoles()
       .subscribe(
         e => {
-          //this.grid.ngOnInit();
+
+          this.grid.ngOnInit();
       
            this.nodes = e;
            this.StructList = e;
+
+           this.nodesAux = [];
 
            this.nodes.forEach(element => {
             this.CrearEstructura(element, 0)
            });
 
            this.nodes = this.nodesAux;
+           this.grid.nodes = this.nodes;
         })
   }
 
@@ -232,9 +235,19 @@ export class RollsStructComponent implements OnInit {
     this.service.GetEstructuraRoles(rol)
         .subscribe(
           e => {
+            this.grid.ngOnInit();
+            
+            //limpio las variables pero no pierdo la estructura
+            this.nodes.forEach(element => {
+              element.create = false;
+              element.read = false;
+              element.update = false;
+              element.delete = false;
+              element.especial = false;
+            });
+
             this.StructList = e;
             this.filteredData = e;
-            console.log(this.StructList)
             this.filtrarTree(rol)
           });
 
@@ -265,7 +278,7 @@ export class RollsStructComponent implements OnInit {
   {
     this.listAux = [];
     let aux = [];
-    console.log(value)
+
     let tempArray: Array<any> = [];
 
     this.filteredData = this.StructList.filter(function(item){

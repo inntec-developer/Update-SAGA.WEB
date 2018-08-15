@@ -27,7 +27,7 @@
             <div class="input-group-prepend">
                 <button class="btn btn-outline-secondary" (click)="GetTreeRoles();nuevoRol=false;" type="button"> <span aria-hidden="true">&times;</span></button>
             </div>
-            <btn-check id='create' class="marginButtons" chkPrivilegiosButtons (click)="GuardarCambios()" matTooltip="Guardar Cambios"></btn-check>
+            <btn-check id='create' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="GuardarCambios()" matTooltip="Guardar Cambios"></btn-check>
         </div>
       </div>
       <div *ngIf="!nuevoRol" class="col-md-4" >
