@@ -18,7 +18,7 @@
                 <a *ngIf="!item.heading && !item.submenu && item.elink" [attr.target]="item.target" [attr.href]="item.elink" title="{{item.text}}">
                     <span class="float-right" *ngIf="item.alert" [ngClass]="item.label || 'badge badge-success'">{{item.alert}}</span>
                     <em class="{{item.icon}}" *ngIf="item.icon"></em>
-                    <span>{{(item.translate | translate) || item.text}}</span>
+                    <span class="colorItems">{{(item.translate | translate) || item.text}}</span>
                 </a>
                 <!-- single menu item -->
                 <a *ngIf="!item.heading && !item.submenu && !item.elink" [routerLink]="item.link" [attr.route]="item.link" title="{{item.text}}"
@@ -32,17 +32,17 @@
                     (click)="toggleSubmenuClick($event)" (mouseenter)="toggleSubmenuHover($event)">
                         <span class="float-right" *ngIf="item.alert" [ngClass]="item.label || 'badge badge-success'">{{item.alert}}</span>
                         <em class="{{item.icon}}" *ngIf="item.icon"></em>
-                        <span>{{(item.translate | translate) || item.text}}</span>
+                        <span class="colorItems">{{(item.translate | translate) || item.text}}</span>
                 </a>
                 <!-- SUBLEVEL -->
                 <ul *ngIf="item.submenu" class="sidebar-nav sidebar-subnav" [routerLinkActive]="['opening']">
-                    <li class="sidebar-subnav-header">{{(item.translate | translate) || item.text}}</li>
+                    <!-- <li class="sidebar-subnav-header">{{(item.translate | translate) || item.text}}</li> -->
                     <li *ngFor='let subitem of item.submenu' [routerLinkActive]="['active']">
                         <!-- sublevel: external links -->
                         <a *ngIf="!subitem.heading && !subitem.submenu && subitem.elink" [attr.target]="subitem.target" [attr.href]="subitem.elink" title="{{subitem.text}}">
                             <span class="float-right" *ngIf="subitem.alert" [ngClass]="subitem.label || 'badge badge-success'">{{subitem.alert}}</span>
                             <em class="{{subitem.icon}}" *ngIf="subitem.icon"></em>
-                            <span>{{(subitem.translate | translate) || subitem.text}}</span>
+                            <span class="colorItems">{{(subitem.translate | translate) || subitem.text}}</span>
                         </a>
                         <!-- sublevel: single menu item  -->
                         <a *ngIf="!subitem.submenu && !subitem.elink" [routerLink]="subitem.link" [attr.route]="subitem.link" title="{{subitem.text}}">
@@ -55,7 +55,7 @@
                             (click)="toggleSubmenuClick($event)" (mouseenter)="toggleSubmenuHover($event)">
                                 <span class="float-right" *ngIf="subitem.alert" [ngClass]="subitem.label || 'badge badge-success'">{{subitem.alert}}</span>
                                 <em class="{{subitem.icon}}" *ngIf="subitem.icon"></em>
-                                <span>{{(subitem.translate | translate) || subitem.text}}</span>
+                                <span class="colorItems">{{(subitem.translate | translate) || subitem.text}}</span>
                         </a>
                         <!-- SUBLEVEL 2 -->
                         <ul *ngIf="subitem.submenu" class="sidebar-nav sidebar-subnav level2" [routerLinkActive]="['opening']">
@@ -71,7 +71,7 @@
                                     (click)="toggleSubmenuClick($event)" (mouseenter)="toggleSubmenuHover($event)">
                                         <span class="float-right" *ngIf="subitem2.alert" [ngClass]="subitem2.label || 'badge badge-success'">{{subitem2.alert}}</span>
                                         <em class="{{subitem2.icon}}" *ngIf="subitem2.icon"></em>
-                                        <span>{{(subitem2.translate | translate) || subitem2.text}}</span>
+                                        <span class="colorItems">{{(subitem2.translate | translate) || subitem2.text}}</span>
                                 </a>
                                 <!-- SUBLEVEL 3 -->
                                 <ul *ngIf="subitem2.submenu" class="sidebar-nav sidebar-subnav level3" [routerLinkActive]="['opening']">
@@ -87,7 +87,7 @@
                                             (click)="toggleSubmenuClick($event)" (mouseenter)="toggleSubmenuHover($event)">
                                                 <span class="float-right" *ngIf="subitem3.alert" [ngClass]="subitem3.label || 'badge badge-success'">{{subitem3.alert}}</span>
                                                 <em class="{{subitem3.icon}}" *ngIf="subitem3.icon"></em>
-                                                <span>{{(subitem3.translate | translate) || subitem3.text}}</span>
+                                                <span class="colorItems">{{(subitem3.translate | translate) || subitem3.text}}</span>
                                         </a>
                                         <!-- SUBLEVEL 4 -->
                                         <ul *ngIf="subitem3.submenu" class="sidebar-nav sidebar-subnav level3" [routerLinkActive]="['opening']">
