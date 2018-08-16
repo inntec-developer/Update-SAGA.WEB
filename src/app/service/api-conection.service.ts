@@ -128,4 +128,5 @@ export class ApiConection {
   /*Seguimiento Vacantes*/
   public static getDtosCard = 'reclutamiento/seguimientovacante/getCard';
   public static getDtosDetail = 'reclutamiento/seguimientovacante/getvacantesdtl';
+  public static getPostulados = 'reclutamiento/seguimientovacante/getPostulate'
 }

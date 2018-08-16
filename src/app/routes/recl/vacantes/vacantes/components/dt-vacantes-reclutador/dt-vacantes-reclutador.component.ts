@@ -266,5 +266,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
   openDesignVacante(){
     this._Router.navigate(['/reclutamiento/configuracionVacante/', this.id, this.folio, this.vBtra], {skipLocationChange:true});
   }
+  openViewPostulados(){
+    if(this.id != null){
+      this._Router.navigate(['/reclutamiento/postulados', this.id, this.folio, this.vBtra ], {skipLocationChange:true});
+    }
+  }
 }
 
