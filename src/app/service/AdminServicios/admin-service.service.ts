@@ -1,4 +1,3 @@
-import { ApiConection } from './../api-conection.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -9,7 +8,7 @@ import 'rxjs/add/observable/throw';
 
 import { Headers, Http, RequestOptions, Response } from '@angular/http';
 
-import { ApiConection } from '../api-conection.service';
+import { ApiConection } from './../api-conection.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
