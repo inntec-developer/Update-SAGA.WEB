@@ -37,6 +37,7 @@ import {
          MatTooltipModule
 } from '@angular/material';
 import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
+import { PopoverModule, TooltipModule } from 'ngx-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 import {ToasterModule, ToasterService} from 'angular2-toaster';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
@@ -113,7 +114,9 @@ const routes: Routes = [
         MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule,
         MatToolbarModule, MatTooltipModule, MatOptionModule, MatDialogModule,
         ToasterModule, VentaModule, ComponentsModule, NgxSpinnerModule,
-        PaginationModule.forRoot(),Ng2TableModule
+        PaginationModule.forRoot(),Ng2TableModule,
+        PopoverModule.forRoot(),
+        TooltipModule.forRoot()     
     ],
     providers: [ColorPickerService, 
         { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

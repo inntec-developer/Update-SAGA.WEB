@@ -82,7 +82,7 @@ export class UpdateInfoRequiComponent implements OnInit, AfterContentChecked {
      }
 
     ngOnInit() {
-      this.placeHolderSelect = 'ASIGNAR CORDINADOR DE CELULA'
+      this.placeHolderSelect = 'ASIGNAR COORDINADOR DE CELULA'
       this.getPrioridades();
       this.getEstatus(2);
       this.formRequi = this.fb.group({

@@ -68,6 +68,7 @@ import { ColorPickerService } from 'ngx-color-picker';
 import { ComentarioVacanteComponent } from './comentario-vacante/comentario-vacante.component';
 import { CommonModule } from '@angular/common';
 import { DetailVacantesComponent } from './detail-vacantes/detail-vacantes.component';
+import { DtCandidatosPostComponent } from './dt-candidatos-post/dt-candidatos-post.component';
 import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
@@ -150,7 +151,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DetailVacantesComponent,
     ButtonsPostulacionesComponent,
     ComentarioVacanteComponent,
-    ButtonEmailComponent
+    ButtonEmailComponent,
+    DtCandidatosPostComponent
 
   ],
   exports: [
@@ -180,7 +182,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DetailVacantesComponent,
     ButtonsPostulacionesComponent,
     ComentarioVacanteComponent,
-    ButtonEmailComponent
+    ButtonEmailComponent,
+    DtCandidatosPostComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

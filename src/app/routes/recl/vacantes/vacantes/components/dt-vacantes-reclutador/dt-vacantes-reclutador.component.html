@@ -3,12 +3,13 @@
 <div class="dt-container mat-elevation-z8">
   <div class="dt-header">
     <mat-form-field>
-        <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)">
+      <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)">
     </mat-form-field>
     <div class="d-flex align-items-stretch ">
-        <btn-view (click)="openDialogShowRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view>
-        <btn-assign id="update" chkPrivilegiosButtons (click)="openDialogAssingRequi(element)" matTooltip="Asignar"></btn-assign>
-        <btn-desing-recl id="special" chkPrivilegiosButtons  (click)="openDesignVacante(element.id, element.folio, element.vBtra)" matTooltip="Diseñar Vacante" *ngIf="element.estatusId == 7 || element.estatusId == 6 && !element.confidencial" ></btn-desing-recl>
+      <btn-view (click)="openDialogShowRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view>
+      <btn-assign id="update" chkPrivilegiosButtons (click)="openDialogAssingRequi(element)" matTooltip="Asignar"></btn-assign>
+      <btn-desing-recl id="special" chkPrivilegiosButtons (click)="openDesignVacante(element.id, element.folio, element.vBtra)"
+        matTooltip="Diseñar Vacante" *ngIf="element.estatusId == 7 || element.estatusId == 6 && !element.confidencial"></btn-desing-recl>
     </div>
   </div>
   <div class="card card-default">
@@ -30,7 +31,8 @@
                 class="form-control">
             </td>
           </tr>
-          <tr (click)="onCellClick(row)" (dblclick)="openDialogShowRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8">
+          <tr (click)="onCellClick(row)" (dblclick)="openDialogShowRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial"
+            [class.cancel]="row.estatusId == 8">
             <td>
               {{row.folio}}
             </td>
@@ -41,7 +43,7 @@
               <span class="px-1 mr-1  badge  badge-pill badge-info"> {{row.vacantes}}</span>
             </td>
             <td class="text-center"> {{row.tipoReclutamiento}}</td>
-            <td class="text-center"> {{row.claseReclutamiento}}</td> 
+            <td class="text-center"> {{row.claseReclutamiento}}</td>
             <td class="text-right"> {{row.sueldoMinimo | currency: $}}</td>
             <td class="text-right"> {{row.sueldoMaximo | currency: $}}</td>
             <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
@@ -58,11 +60,41 @@
               </small>
             </td>
             <td class="text-center">
-                <span class="px-1 mr-1  badge  badge-pill badge-warning"> {{row.postulados}}</span>
-              </td>
-              <td class="text-center">
-                  <span class="px-1 mr-1  badge  badge-pill badge-primary"> {{row.enProceso}}</span>
-                </td>
+              <!-- <ng-template #popTemplatePostulados>
+                <div *ngIf="row.postulados > 0">
+                  <h5 class="popover-header">Postulados</h5>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="popover-body">
+                        <ng-container *ngFor="let p of row.postuladosN">
+                          <small>
+                            <ol>
+                              <li>
+                                <a href="">
+                                  {{p.nombre}} {{p.apellidoPaterno}} {{apellidoMAterno}} {{p.curp}}
+                                </a>
+                              </li>
+                            </ol>
+                          </small>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="row.postulados == 0">
+                  <small>Sin Postulaciones...</small>
+                </div>
+
+              </ng-template> -->
+
+              <span class="px-1 mr-1  badge  badge-pill badge-warning" [popover]="popTemplatePostulados" container="body" placement="left"
+                triggers="click">
+                {{row.postulados}}
+              </span>
+            </td>
+            <td class="text-center">
+              <span class="px-1 mr-1  badge  badge-pill badge-primary"> {{row.enProceso}}</span>
+            </td>
           </tr>
         </tbody>
       </table>

@@ -9,8 +9,14 @@ export class ButtonDislikeComponent implements OnInit {
   @Input('VacanteId') vacantesId : string;
   @Input('Status') Status: any;;
   @Input('RequisicionId') requisicionId: string;
-  @Input('xs') xs: boolean = false;
-  constructor() { }
+  @Input('Reclutador') Reclutador: string;
+  Usuario : any;
+  
+
+  constructor() {
+    this.Usuario = localStorage.getItem('nombre');
+    console.log("Dis-Like", this.vacantesId,this.Status, this.requisicionId, this.Reclutador)
+   }
 
   ngOnInit() {
   }
