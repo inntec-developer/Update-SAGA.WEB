@@ -123,6 +123,7 @@ export class ApiConection {
   public static validarDAL = 'admin/validarDAL';
   public static getImage = 'admin/getImage';
   public static getFiles = 'admin/getFiles';
+  public static sendEmailRegister = 'admin/sendEmailRegister';
 
 
   /*Seguimiento Vacantes*/

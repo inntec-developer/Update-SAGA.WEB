@@ -67,6 +67,33 @@ export class AddPersonaComponent implements OnInit {
     
   }
 
+  SendEmail(data)
+  {
+    console.log(data)
+    this.service.SendEmailRegister(data).subscribe( res => {
+      if(res == 201)
+        {
+          this.alert = 'El correo se envió con éxito';
+          this.verMsj = true;
+          this.success = true;
+          this.haserror = false;
+        }
+        else
+        {
+          this.alert = 'Ocurrio un error al intentar enviar correo';
+          this.verMsj = true;
+          this.success = false;
+          this.haserror = true;
+        }
+    });
+
+  }
+
+  onSelect(item)
+  {
+    item.selected ? item.selected = false : item.selected = true; //para poner el backgroun cuando seleccione
+  }
+
   closeModal()
   {
     this.someInput.removeItem();

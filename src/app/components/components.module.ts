@@ -54,6 +54,7 @@ import { ButtonDesingReclComponent } from './buttons/button-desing-recl/button-d
 import { ButtonDislikeComponent } from './buttons/button-dislike/button-dislike.component';
 import { ButtonDocsComponent } from './buttons/button-docs/button-docs.component';
 import { ButtonEditComponent } from './buttons/button-edit/button-edit.component';
+import { ButtonEmailComponent } from './buttons/button-email/button-email.component';
 import { ButtonLikeComponent } from './buttons/button-like/button-like.component';
 import { ButtonPrintComponent } from './buttons/button-print/button-print.component';
 import { ButtonRefreshComponent } from './buttons/button-refresh/button-refresh.component';
@@ -151,6 +152,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DetailVacantesComponent,
     ButtonsPostulacionesComponent,
     ComentarioVacanteComponent,
+    ButtonEmailComponent,
 
   ],
   exports: [
@@ -180,6 +182,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DetailVacantesComponent,
     ButtonsPostulacionesComponent,
     ComentarioVacanteComponent,
+    ButtonEmailComponent,
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

@@ -1,4 +1,4 @@
-import {DataTableModule, SharedModule} from 'primeng/primeng';
+import {DataTableModule} from 'primeng/primeng';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule, MatInputModule, MatNativeDateModule, MatSelectModule, MatTooltipModule } from '@angular/material';
 import { ModalModule, PopoverModule } from 'ngx-bootstrap';
@@ -33,6 +33,7 @@ import { SelectModule } from 'ng2-select';
 import { TreeModule } from 'angular-tree-component';
 import { TreeTableModule } from 'primeng/primeng';
 import { UploadImgsComponent } from './upload-imgs/upload-imgs.component';
+import { SharedModule } from '../../shared/shared.module';
 
 const routes: Routes = [
     { path: 'roles', component: RollsStructComponent, data: {'componente':'Roles'} },
@@ -48,6 +49,7 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
+        SharedModule, 
         RouterModule.forChild(routes),
         HttpClientModule,
         HttpModule,
@@ -76,7 +78,6 @@ const routes: Routes = [
         PopoverModule.forRoot(),
         TreeTableModule, 
         DataTableModule,
-        SharedModule, 
         TreeModule
       ],
     declarations:
@@ -92,10 +93,10 @@ const routes: Routes = [
       GridRolesComponent ,
       UploadImgsComponent,
       FileManagerComponent
+      
     ],
     exports: [
-        RouterModule,
-        AddPersonaComponent
+        RouterModule
     ], 
     providers: []
 })

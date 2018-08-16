@@ -12,24 +12,34 @@
   </ol>
 </div>
 
+
 <div class="panel panel-default panel-flat mat-elevation-z8">
     <div *ngIf="verMsj" class="alert" [class.alert-success]="success" [class.alert-danger] ="haserror">
         {{alert}}
         <button type="button" (click) = "verMsj=false" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
          </button>
+         <br/>
       </div>
   <div class="panel-body">
     <br/>
-    <div class="col-md-4">
+
+      <div class="col-md-4">
         <div class="input-group">
-        <input (input)="Search($event)" class="input-sm form-control" type="text" placeholder="Filtrar" />
+        <input (input)="Search($event)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
         </div>
-    </div>
-    <br/>
-    <p class="text-center"></p>
+      </div>
+         <!-- <div class="col-md-4 float-right">
+        
+                <btn-check class="float-right margin-button" id='update' chkPrivilegiosButtons [xs]="true" (click)="updateUser($event, rowIndex)" matTooltip="Guardar Cambios"></btn-check>
+   
+
+                <btn-email class="float-right" id='create' chkPrivilegiosButtons [xs]="true" matTooltip="Enviar Correo"></btn-email>
+         
+            </div> -->
+      <br/>
     <div class="table-responsive">
-      <table #tableU class="table table-bordered table-hover table-striped">
+      <table #tableU class="table table-hover table-striped">
         <thead>
           <tr>
             <th class="text-center"></th>
@@ -42,7 +52,6 @@
             <th class="text-center">Departamento</th>
             <th class="text-center">Tipo Usuario</th>
             <th class="text-center">Activar</th>
-            <th class="text-center"></th>
           </tr>
         </thead>
         <tbody>
@@ -117,13 +126,16 @@
               </label>
             </td>
             <td class="text-center">
-              <btn-check id='update' chkPrivilegiosButtons [xs]="true" (click)="updateUser($event, rowIndex)" matTooltip="Guardar Cambios"></btn-check>
-            </td>
+                <btn-check id='update' chkPrivilegiosButtons [xs]="true" (click)="updateUser($event, rowIndex)" matTooltip="Guardar Cambios"></btn-check>
+                <btn-email id='create' chkPrivilegiosButtons class="float-right margin-button" (click)="SendEmail(p)"  [xs]="true" matTooltip="Enviar Correo"></btn-email>
+              </td>
           </tr>
         </tbody>
       </table>
     </div>
 
+  </div>
+  <br/>
       <div class="panel-footer">
           <div *ngIf="verMsj" class="alert" [class.alert-success]="success" [class.alert-danger] ="haserror">
               {{alert}}
@@ -131,19 +143,7 @@
                   <span aria-hidden="true">&times;</span>
                </button>
             </div>
-        <div class="col-lg-2 pull-right text-right">
-          <ul class="pagination pagination-sm">
-            <li *ngFor='let pag of paginacion; let i = index' [ngClass]="{'active': i == pagIndex }">
-              <a>
-                <span>{{i + 1}}</span>
-              </a>
-            </li>
-            <!-- <li><a href="">2</a></li>
-                        <li><a href="">3</a></li>
-                        <li><a href="">»</a></li> -->
-          </ul>
-        </div>
-      </div>
+      
   </div>
 
 
