@@ -1,3 +1,4 @@
+import { ApiConection } from './../api-conection.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -49,7 +50,7 @@ export class AdminServiceService {
   private UrlAddSeccion = ApiConection.ServiceUrl+ApiConection.addSeccion;
   private UrlValidarEmail = ApiConection.ServiceUrl+ApiConection.validarEmail;
   private UrlGetFiles = ApiConection.ServiceUrl+ApiConection.getFiles;
-
+  private UrlSendEmailRegister = ApiConection.ServiceUrl+ApiConection.sendEmailRegister;
   // Error.
   private handleError(error: any) {
          console.log('sever error:', error);
@@ -86,6 +87,14 @@ export class AdminServiceService {
      return this.http.get(this.Url)
          .map(result => result.json())
          .catch(this.handleError);
+  }
+
+  SendEmailRegister(data: any): Observable<any>{
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.post(this.UrlSendEmailRegister, JSON.stringify(data), options)
+            .map(result => result.json())
+            .catch(this.handleError);
   }
 
   GetEntidades(): Observable<any>

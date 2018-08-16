@@ -71,6 +71,7 @@ import { DetailVacantesComponent } from './detail-vacantes/detail-vacantes.compo
 import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import { ToasterService } from 'angular2-toaster';
+import { ButtonEmailComponent } from './buttons/button-email/button-email.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -148,7 +149,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     CardVacanteComponent,
     DetailVacantesComponent,
     ButtonsPostulacionesComponent,
-    ComentarioVacanteComponent
+    ComentarioVacanteComponent,
+    ButtonEmailComponent
 
   ],
   exports: [
@@ -177,7 +179,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     CardVacanteComponent,
     DetailVacantesComponent,
     ButtonsPostulacionesComponent,
-    ComentarioVacanteComponent
+    ComentarioVacanteComponent,
+    ButtonEmailComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

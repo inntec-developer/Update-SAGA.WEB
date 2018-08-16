@@ -97,6 +97,7 @@ export class RegisterComponent implements OnInit {
                             this.success = true;
                             this.haserror = false;
                             this.ngOnInit();
+                            this.valForm = null;
                         }
                         else {
                             this.msj = 'Ocurrio un error al intentar agregar usuario: ' + persona.Usuario;
@@ -217,6 +218,8 @@ export class RegisterComponent implements OnInit {
        this.disabledE = false;
        this.disabledC = false;
        this.closePop();
+
+       console.log(this.valForm)
  
     }
 

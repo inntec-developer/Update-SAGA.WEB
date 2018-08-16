@@ -41,7 +41,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="empty-row" matTooltip="Doble click para seleccionar" *ngFor="let g of Grupos; let i = index" (dblclick)="onSelect(g, i)"
+              <tr class="empty-row" matTooltip="Doble click para seleccionar" *ngFor="let g of Grupos; let i = index" (dblclick)="onSelect(g)"
                 [class.selected]="g.selected">
                 <td>
                   <img class="center-block media img-responsive img-fluid circle thumb32" src="{{g.fotoAux}}" alt="" />
