@@ -48,9 +48,9 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
    ngOnInit() {
     this.spinner.show();
-    setTimeout(() => {
+    // setTimeout(() => {
       this.onChangeTable(this.config);
-    }, 300); 
+    // }, 300); 
   }
 
   public rows: Array<any> = [];
@@ -210,6 +210,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
           folio: x.folio,
           confidencial: x.confidencial,
           postulados: x.postulados,
+          postuladosN: x.postuladosN,
           enProceso: x.enProceso,
         }
         console.log(source);

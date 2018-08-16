@@ -52,9 +52,9 @@ export class DtRequisicionComponent implements  OnInit {
   ngOnInit(): void {
     /** spinner starts on init */
     this.spinner.show();
-    setTimeout(() => {
+    // setTimeout(() => {
       this.onChangeTable(this.config);
-    }, 300);    
+    // }, 300);    
   }
 
   public rows: Array<any> = [];

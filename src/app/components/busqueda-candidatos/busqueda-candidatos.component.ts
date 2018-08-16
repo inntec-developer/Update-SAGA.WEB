@@ -289,6 +289,14 @@ export class BusquedaCandidatosComponent implements OnInit {
       id.idioma.toLowerCase().indexOf(idiom.toLowerCase()) === 0);
   }
   
+  BusacarMisCandidatos(){
+    this.loading = true;
+    this.service.getMisCandidatos(localStorage.getItem('nombre')).subscribe(data =>{
+      this.Candidatos = data;
+      this.filtro.emit(this.Candidatos);
+      this.loading = false;
+    });
+  }
 
   Buscar() {
     this.loading = true;

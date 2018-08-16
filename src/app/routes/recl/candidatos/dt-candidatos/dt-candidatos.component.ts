@@ -68,6 +68,7 @@ export class DtCandidatosComponent implements OnInit, AfterViewInit, OnChanges {
   // Columnas de tabla de candidatos. ***
   displayedColumns = ['Candidato','Experiencias', 'AreaInteres', 'Curp', 'Rfc', 'accion'];
   public dataSource = new MatTableDataSource(<any>[]);
+  public apartado : boolean;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -175,13 +176,16 @@ export class DtCandidatosComponent implements OnInit, AfterViewInit, OnChanges {
               this.Status = estatus.length;
               this.Reclutador = 'Candidato disponible';
               this.requisicionId = null;
+              this.apartado = false;
             }else{
+              this.apartado = true;
               this.Status = estatus[0].estatus;
               this.Reclutador = estatus[0].reclutador;
               this.requisicionId = estatus[0].requisicionId;
               this.StatusId = estatus[0].id;
               this.tpcontrato = estatus[0].tpContrato;
             }
+            console.log("Estatus Candidato", this.requisicionId, this.Reclutador, this.Status)
         });
         // Buscamos las postulaciones del candidato. ***
         this.service.getpostulaciones(this.candidatodtl[0].candidatoId)
@@ -212,7 +216,6 @@ export class DtCandidatosComponent implements OnInit, AfterViewInit, OnChanges {
       .subscribe(comentarios => {
         this.comentarios = comentarios;
         this.CountComent = this.comentarios.length; 
-        console.log(comentarios);
         this.comentarios.forEach( element => {
             element.usuario.foto = ApiConection.ServiceUrlFoto +   element.usuario.foto;
         });

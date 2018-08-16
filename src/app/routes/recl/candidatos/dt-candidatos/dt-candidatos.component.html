@@ -231,9 +231,37 @@
               <ng-container matColumnDef="Accion">
                 <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
                 <mat-cell *matCellDef="let vacantes">
-                  <btn-view matTooltip="Detalle" (click)="OpenDtl(vacantes.id)"></btn-view>
-                  <btn-like [VacanteId]='vacantes.id' [Status]='Status' [RequisicionId]='requisicionId' matTooltip="Apartar" (click)="Apartar(vacantes.id)"></btn-like>
-                  <btn-dislike [VacanteId]='vacantes.id' [Status]='Status' [RequisicionId]='requisicionId' (click)="Liberar(vacantes.id)"></btn-dislike>
+                  <btn-view matTooltip="Detalle" [xs]="true" (click)="OpenDtl(vacantes.id)"></btn-view>
+                  <button 
+                    [disabled]="vacantes.id != requisicionId && StatusId != 0 || Reclutador != Usuario"
+                    [ngClass]="(StatusId == 0 || vacantes.id == requisicionId) ? 'mb-1 btn-xs btn btn-outline-success' : 'mb-1 btn-xs btn btn-outline-secondary'"
+                    matTooltip="Apartar" 
+                    (click)="Apartar(vacantes.id)">
+                    <em class="fa fa-thumbs-o-up"></em>
+                  </button>
+                  <button 
+                    [disabled]="vacantes.id != requisicionId && StatusId != 0 || Reclutador != Usuario"
+                    [ngClass]="(Status == 0 || vacantes.id == requisicionId)?'mb-1 btn-xs btn btn-outline-danger':'mb-1 btn-xs btn btn-outline-secondary'"
+                    matTooltip="Desapartar"
+                    (click)="Liberar(vacantes.id)">
+                    <em class="fa fa-thumbs-o-down"></em>
+                  </button>
+                  <!-- <btn-like 
+                    [VacanteId]='vacantes.id'  
+                    [Status]='StatusId' 
+                    [RequisicionId]='requisicionId' 
+                    [Reclutador]='Reclutador' 
+                    matTooltip="Apartar" 
+                    (click)="Apartar(vacantes.id)">
+                  </btn-like>
+                  <btn-dislike 
+                    [VacanteId]='vacantes.id' 
+                    [Status]='StatusId' 
+                    [RequisicionId]='requisicionId' 
+                    [Reclutador]='Reclutador' 
+                    matTooltip="Desapartar"
+                    (click)="Liberar(vacantes.id)">
+                  </btn-dislike> -->
                 </mat-cell>
               </ng-container>
 
@@ -316,7 +344,7 @@
                 <strong class="text-primary">Salario deseado:</strong> {{candidatodtl[0]?.aboutMe[0]?.salarioDeseado | currency:'CAD':'Mxn':'4.2-2'}}
               </div>
               <div class="col-md-6 text-muted">
-                <strong class="text-primary">Área de experiencia:</strong> {{candidatodtl[0]?.aboutMe[0]?.areaExperiencia?.areaExperiencia}}
+                <strong class="text-primary">&Aacute;rea de experiencia:</strong> {{candidatodtl[0]?.aboutMe[0]?.areaExperiencia?.areaExperiencia}}
               </div>
             </div>
             <div class="row">
@@ -472,7 +500,7 @@
               </div>
               <div class="row">
                 <div class="col-md-6 text-muted">
-                  <strong class="text-primary">Área: </strong> {{exp?.area?.nombre}}
+                  <strong class="text-primary">&Aacute;rea: </strong> {{exp?.area?.nombre}}
                 </div>
                 <div class="col-md-6 text-muted">
                   <strong class="text-primary">Salario: </strong> {{exp?.salario | currency:'CAD':'Mxn':'4.2-2'}}
