@@ -71,7 +71,7 @@ export class AddPersonaComponent implements OnInit {
   {
     console.log(data)
     this.service.SendEmailRegister(data).subscribe( res => {
-      if(data == 201)
+      if(res == 201)
         {
           this.alert = 'El correo se envió con éxito';
           this.verMsj = true;

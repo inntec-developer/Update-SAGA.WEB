@@ -23,8 +23,6 @@ export class ChkButtonsDirective implements AfterViewInit {
      this.activeRoute.routeConfig.data.componente : 
      localStorage.getItem('ruta')
 
-    
-
     var campos = privilegios.filter(function(row){
       return row.tipoEstructuraId === 4 && row.nombre == ruta
        });

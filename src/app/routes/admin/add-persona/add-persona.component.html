@@ -19,6 +19,7 @@
         <button type="button" (click) = "verMsj=false" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
          </button>
+         <br/>
       </div>
   <div class="panel-body">
     <br/>
@@ -126,7 +127,7 @@
             </td>
             <td class="text-center">
                 <btn-check id='update' chkPrivilegiosButtons [xs]="true" (click)="updateUser($event, rowIndex)" matTooltip="Guardar Cambios"></btn-check>
-                <btn-email id='create' class="float-right margin-button" (click)="SendEmail(p) chkPrivilegiosButtons [xs]="true" matTooltip="Enviar Correo"></btn-email>
+                <btn-email id='create' chkPrivilegiosButtons class="float-right margin-button" (click)="SendEmail(p)"  [xs]="true" matTooltip="Enviar Correo"></btn-email>
               </td>
           </tr>
         </tbody>
@@ -134,6 +135,7 @@
     </div>
 
   </div>
+  <br/>
       <div class="panel-footer">
           <div *ngIf="verMsj" class="alert" [class.alert-success]="success" [class.alert-danger] ="haserror">
               {{alert}}
