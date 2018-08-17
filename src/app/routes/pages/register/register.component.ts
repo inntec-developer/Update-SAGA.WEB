@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
@@ -6,6 +7,7 @@ import { CustomValidators } from 'ng2-validation';
 import { RequestOptions } from '@angular/http';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { AuthService } from '../../../service/auth/auth.service';
+import { ModalDirective } from 'ngx-bootstrap';
 
 @Component({
     selector: 'app-register',
@@ -25,13 +27,18 @@ export class RegisterComponent implements OnInit {
     success = false;
     haserror = false;
     @ViewChild('pop') epopover;
-    @ViewChild('pop2') epopover2;
+    @ViewChild('MessageModal') ShownModal: ModalDirective;
+    isModalShown: boolean = false;
+    prefijo: string = 'DAL';
+
+   // @ViewChild('pop2') epopover2;
     disabledE = false;
-    disabledC= false;
+    //disabledC= false;
     constructor(public settings: SettingsService,
                 fb: FormBuilder,
                 private service: AdminServiceService,
-                private authService: AuthService )
+                private authService: AuthService,
+                private router: Router )
     {
         let password = new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9]{6,10}$')]));
         let certainPassword = new FormControl('', CustomValidators.equalTo(password));
@@ -73,12 +80,32 @@ export class RegisterComponent implements OnInit {
                 var idx =  this.user.indexOf( "@" ); 
                 this.user = "DAMSA." + this.user.substring(0, idx);
 
+                var clave = this.valForm.controls['Clave'].value.trim();
+                var id = clave.indexOf(this.prefijo.substring(this.prefijo.length - 1, this.prefijo.length));
+
+                if(id >= 0)
+                {
+                    var lon = clave.substring(id + 1, clave.length);
+                    if(lon.length < 4)
+                    {
+                        clave = this.prefijo + "0".repeat(4-lon.length) + lon;
+                    }
+                }
+                else
+                {
+                    var lon = clave;
+                    if(lon.length < 4)
+                    {
+                        clave = this.prefijo + "0".repeat(4-lon.length) + lon;
+                    }
+                }
+
             //this.user = ((this.valForm.controls['Usuario'].value == null || this.valForm.controls['Usuario'].value == '') ? "DAMSA." + this.valForm.controls['Nombre'].value : this.valForm.controls['Usuario'].value);
 
                 this.email.push({email: this.valForm.controls['email'].value.trim(), UsuarioAlta: 'INNTEC'});
 
                 let persona = {
-                    Clave: this.valForm.controls['Clave'].value.trim(),
+                    Clave: clave,
                     Nombre: this.valForm.controls['Nombre'].value,
                     ApellidoPaterno: this.valForm.controls['ApellidoPaterno'].value,
                     ApellidoMaterno: this.valForm.controls['ApellidoMaterno'].value,
@@ -96,8 +123,9 @@ export class RegisterComponent implements OnInit {
                             this.verMsg = true;
                             this.success = true;
                             this.haserror = false;
-                            this.ngOnInit();
-                            this.valForm = null;
+                           
+                            this.showModal();
+                            //this.valForm = null;
                         }
                         else {
                             this.msj = 'Ocurrio un error al intentar agregar usuario: ' + persona.Usuario;
@@ -132,10 +160,23 @@ export class RegisterComponent implements OnInit {
     {
         this.epopover.hide();
     }
+    closeModal()
+    {
+        this.ShownModal.hide();
+        this.router.navigate(['/login']);
+    }
+    showModal(): void {
+        this.isModalShown = true;
+    }
+
+    onHidden(): void {
+        this.isModalShown = false;
+      }
 
     ValidarEmail(email: string)
     {
-        this.epopover.hide();
+        this.closePop();
+
         this.user = this.valForm.controls['email'].value.trim();
         var idx =  this.user.indexOf( "@" ); 
         this.user = "DAMSA." + this.user.substring(0, idx);
@@ -158,6 +199,7 @@ export class RegisterComponent implements OnInit {
                         this.disabledE = true;
                         this.haserror = false;
                         this.success = false;
+                        this.verMsg = false;
                        this.epopover.hide();
                     }
                 },
@@ -168,37 +210,37 @@ export class RegisterComponent implements OnInit {
                 });
     }
 
-    ValidarDAL(dal: string)
-    {
-        this.epopover2.hide();
-        this.authService.isUserDAL(dal)
-            .subscribe(
-                data => {
-                    console.log(dal)
-                    if( data != 404)
-                    {console.log(this.epopover2)
-                        this.msj = 'Clave: ' + dal + ' ya se encuentra registrado';
-                        this.epopover2.show();
-                        this.disabledC = false;
-                        this.verMsg = true;
-                        this.haserror = true;
-                        this.success = false;
-                    }
-                    else
-                    {
-                       this.epopover2.hide();
-                       this.verMsg = false;
-                       this.disabledC = true;
+    // ValidarDAL(dal: string)
+    // {
+    //    // this.epopover2.hide();
+    //     this.authService.isUserDAL(dal)
+    //         .subscribe(
+    //             data => {
+    //                 console.log(dal)
+    //                 if( data != 404)
+    //                 {
+    //                     this.msj = 'Clave: ' + dal + ' ya se encuentra registrado';
+    //                     this.epopover2.show();
+    //                     this.disabledC = false;
+    //                     this.verMsg = true;
+    //                     this.haserror = true;
+    //                     this.success = false;
+    //                 }
+    //                 else
+    //                 {
+    //                    this.epopover2.hide();
+    //                    this.verMsg = false;
+    //                    this.disabledC = true;
 
-                    }
-                },
-                error => {
-                   this.msj = error;
-                   this.verMsg = true;
-                   this.haserror = true;
-                   this.success = false;
-                });
-    }
+    //                 }
+    //             },
+    //             error => {
+    //                this.msj = error;
+    //                this.verMsg = true;
+    //                this.haserror = true;
+    //                this.success = false;
+    //             });
+    // }
 
     ngOnInit() {
    
@@ -216,10 +258,8 @@ export class RegisterComponent implements OnInit {
        this.getDepartamentos();
 
        this.disabledE = false;
-       this.disabledC = false;
+      // this.disabledC = false;
        this.closePop();
-
-       console.log(this.valForm)
  
     }
 
