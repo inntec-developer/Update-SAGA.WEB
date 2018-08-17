@@ -27,6 +27,7 @@ export class DtCandidatosPostComponent implements OnInit {
   registros: number;
   errorMessage: any;
   element: any = {};
+  postulados: any;
   constructor(
     private service : PostulateService,
     private dialog: MatDialog,
@@ -45,12 +46,12 @@ export class DtCandidatosPostComponent implements OnInit {
 
   public rows: Array<any> = []
   public columns: Array<any> = [
-    {title: 'Nombre candidato', className: 'text-info', name: 'nombre' , filtering: {filterString: '', placeholder: 'Nombre'} },
-    {title: 'Área experiencia', className: 'text-info', name: 'areaExp', filtering: {filterString: '', placeholder: 'Experiencia'} },
-    {title: 'Área interes', className: 'text-info' , name: 'areaInt' , filtering: {filterString: '', placeholder: 'Interes'} },
+    {title: 'Nombre Candidato', className: 'text-info', name: 'nombre' , filtering: {filterString: '', placeholder: 'Nombre'} },
+    {title: 'Área Experiencia', className: 'text-info', name: 'areaExp', filtering: {filterString: '', placeholder: 'Experiencia'} },
+    {title: 'Área Interes', className: 'text-info' , name: 'areaInt' , filtering: {filterString: '', placeholder: 'Interes'} },
     {title: 'Localidad', className: 'text-info' , name: 'localidad' , filtering: {filterString: '', placeholder: 'Localidad'} },
-    {title: 'Sueldo aceptable', className: 'text-info' , name: 'sueldoMinimo' , filtering: {filterString: '', placeholder: 'Sueldo aceptable'} },
-    {title: 'Fecha nacimiento', className: 'text-info' , name: 'edad' , filtering: {filterString: '', placeholder: 'Interes'} },
+    {title: 'Sueldo Aceptable', className: 'text-info text-center' , name: 'sueldoMinimo' , filtering: {filterString: '', placeholder: 'Sueldo aceptable'} },
+    {title: 'Fecha Nacimiento', className: 'text-info text-center' , name: 'edad' , filtering: {filterString: '', placeholder: 'Fecha Nacimiento'} },
     {title: 'CURP' , className: 'text-success' , name: 'curp', filtering: {filterString: '', placeholder: 'CURP'} },
     {title: 'RFC' , className: 'text-success', name: 'rfc' , filtering: {filterString: '', placeholder: 'RFC'} },
   ]

@@ -13,16 +13,6 @@ import { DialogcandidatosComponent } from './dialogcandidatos/dialogcandidatos.c
 import { element } from 'protractor';
 import { forEach } from '@angular/router/src/utils/collection';
 
-// Modelos
-
-
-// Componentes
-
-
-
-// Servicios
-
-
 @Component({
   selector: 'app-dt-candidatos',
   templateUrl: './dt-candidatos.component.html',
@@ -171,21 +161,21 @@ export class DtCandidatosComponent implements OnInit, AfterViewInit, OnChanges {
       // Buscamos el estatus del candidato del apartado o liberado. ***
       this.service.getEstatusCandidato(this.candidatodtl[0].candidatoId)
           .subscribe(estatus => {
-            console.log('Estatus: ', estatus);
+            debugger;
             if (estatus.length == 0){
               this.Status = estatus.length;
               this.Reclutador = 'Candidato disponible';
               this.requisicionId = null;
               this.apartado = false;
             }else{
-              this.apartado = true;
               this.Status = estatus[0].estatus;
               this.Reclutador = estatus[0].reclutador;
               this.requisicionId = estatus[0].requisicionId;
               this.StatusId = estatus[0].id;
               this.tpcontrato = estatus[0].tpContrato;
+              this.apartado = true;
             }
-            console.log("Estatus Candidato", this.requisicionId, this.Reclutador, this.Status)
+            console.log("Estatus Candidato",estatus, this.requisicionId, this.Reclutador, this.StatusId, this.apartado, this.Usuario)
         });
         // Buscamos las postulaciones del candidato. ***
         this.service.getpostulaciones(this.candidatodtl[0].candidatoId)
@@ -235,36 +225,45 @@ export class DtCandidatosComponent implements OnInit, AfterViewInit, OnChanges {
 
  // Proceso de apartado del candidato. ***
   Apartar(idvct: any){
-    let Apartar: Apartado = new Apartado();
-    Apartar.CandidatoId = this.candidatodtl[0].candidatoId;
-    Apartar.RequisicionId = idvct;
-    Apartar.Reclutador = localStorage.getItem('nombre');
-    Apartar.Estatus = 1;
-    Apartar.TpContrato = 2;
-    // Se manda el objeto con los datos necesarios para su inserción al servicio. ***
-    this.service.postApartar(Apartar)
-    .subscribe(data => {
-      this.pop(data.mensaje, true, data.estatus, 'Apartado', data.reclutador);
-      let diaEnMils = 1000 * 60 * 60 * 24;
-      let fchapartado = new Date(data.fch_Creacion.substr(0, 10));
-      fchapartado.setDate(fchapartado.getDate() + 1);
-      let fchliberacion = new Date();
-      fchliberacion.setDate(fchapartado.getDate() + 2);
-      const hoy = new Date();
-      this.timerest = Math.round((hoy.getTime() - fchliberacion.getTime()) / diaEnMils * -24);
-    });
-    // Recargamos de nuevo la vacante con el apartado. ***
-    this.vercandidato(this.candidatodtl[0].candidatoId);
+    if(this.Reclutador == this.Usuario || !this.apartado){
+      let Apartar: Apartado = new Apartado();
+      Apartar.CandidatoId = this.candidatodtl[0].candidatoId;
+      Apartar.RequisicionId = idvct;
+      Apartar.Reclutador = localStorage.getItem('nombre');
+      Apartar.Estatus = 1;
+      Apartar.TpContrato = 2;
+      // Se manda el objeto con los datos necesarios para su inserción al servicio. ***
+      this.service.postApartar(Apartar)
+      .subscribe(data => {
+        this.pop(data.mensaje, true, data.estatus, 'Apartado', data.reclutador);
+        let diaEnMils = 1000 * 60 * 60 * 24;
+        let fchapartado = new Date(data.fch_Creacion.substr(0, 10));
+        fchapartado.setDate(fchapartado.getDate() + 1);
+        let fchliberacion = new Date();
+        fchliberacion.setDate(fchapartado.getDate() + 2);
+        const hoy = new Date();
+        this.timerest = Math.round((hoy.getTime() - fchliberacion.getTime()) / diaEnMils * -24);
+      });
+      // Recargamos de nuevo la vacante con el apartado. ***
+      this.vercandidato(this.candidatodtl[0].candidatoId);
+    }else{
+      this.popNotChange()
+    }
   }
 
   // Proceso de liberación del candidato. ***
   Liberar(idvct: any){
-    this.service.Liberar(this.StatusId)
-    .subscribe(data => {
-      this.pop('Hola', false, 0, 'Liberado', data);
-    })
-    // Recargamos de nuevo la vacante con el borrado. ***
-    this.vercandidato(this.candidatodtl[0].candidatoId);
+    if(this.Reclutador == this.Usuario || !this.apartado){
+      this.service.Liberar(this.StatusId)
+      .subscribe(data => {
+        this.pop('Hola', false, 0, 'Liberado', data);
+      })
+      // Recargamos de nuevo la vacante con el borrado. ***
+      this.vercandidato(this.candidatodtl[0].candidatoId);
+    }
+    else{
+      this.popNotChange()
+    }
   }
 
   // Agregar un nuevo comentaior para le candidato.
@@ -312,6 +311,12 @@ export class DtCandidatosComponent implements OnInit, AfterViewInit, OnChanges {
     }
     }
       this.toasterService.pop(type, titulo, mensaje);
+  }
+
+  popNotChange() {
+    let mensaje = 'No eres el usuario que aparto principalemnte el candidato.'
+    let titulo = 'No autorizado'
+      this.toasterService.pop('error', titulo, mensaje);
   }
 
   // Parametros para paginador candidatos. ***

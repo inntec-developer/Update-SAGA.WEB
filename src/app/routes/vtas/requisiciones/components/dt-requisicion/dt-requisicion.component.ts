@@ -52,9 +52,9 @@ export class DtRequisicionComponent implements  OnInit {
   ngOnInit(): void {
     /** spinner starts on init */
     this.spinner.show();
-    // setTimeout(() => {
+    setTimeout(() => {
       this.onChangeTable(this.config);
-    // }, 300);    
+    }, 500);    
   }
 
   public rows: Array<any> = [];
@@ -78,11 +78,11 @@ export class DtRequisicionComponent implements  OnInit {
       className: ['table-striped table-bordered mb-0 d-table-fixed']
   };
 
-  public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
-    let start = (page.page - 1) * page.itemsPerPage;
-    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
-    return data.slice(start, end);
-  }
+    public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
+      let start = (page.page - 1) * page.itemsPerPage;
+      let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+      return data.slice(start, end);
+    }
 
   public changeSort(data: any, config: any): any {
     if (!config.sorting) {

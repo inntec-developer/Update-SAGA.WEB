@@ -38,6 +38,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   vBtra: any;
   id: any;
   folio: any;
+  postulados: any;
 
   constructor(
     private service: RequisicionesService,
@@ -183,6 +184,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
     
   }
 
+  public refreshTable(){
+    this.onChangeTable(this.config);
+  }
+
   public getVacantes(){
     this.dataSource = [];
     this.service.getRequiReclutador(localStorage.getItem('id')).subscribe(data => {
@@ -226,6 +231,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.vBtra = data.vBtra;
     this.id = data.id;
     this.folio = data.folio;
+    this.postulados = data.postulados;
+    this.enProceso = data.enProceso;
     this.requi = {
       folio : data.folio,
       id : data.id

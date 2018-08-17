@@ -13,8 +13,9 @@
             matTooltip="Diseñar Vacante" *ngIf="element.estatusId == 7 || element.estatusId == 6 && !element.confidencial"></btn-desing-recl>
         </div>
         <div>
-          <button (click)="openViewPostulados()">Postulados</button>
-          <button>En Proceso</button>
+          <button class="mb-1 btn btn-outline-warning" *ngIf="postulados > 0" (click)="openViewPostulados()">Postulados</button>
+          <button class="mb-1 btn btn-outline-primary" *ngIf="enProceso > 0">En Proceso</button>
+          <btn-refresh (click)="refreshTable()"></btn-refresh>
         </div>
     </div>
   </div>
