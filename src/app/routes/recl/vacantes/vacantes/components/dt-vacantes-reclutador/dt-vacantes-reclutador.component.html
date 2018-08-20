@@ -14,8 +14,8 @@
         </div>
         <div>
           <button class="mb-1 btn btn-outline-warning" *ngIf="postulados > 0" (click)="openViewPostulados()">Postulados</button>
-          <button class="mb-1 btn btn-outline-primary" *ngIf="enProceso > 0">En Proceso</button>
-          <btn-refresh (click)="refreshTable()"></btn-refresh>
+          <!-- <button class="mb-1 btn btn-outline-primary" *ngIf="enProceso > 0">En Proceso</button> -->
+          <btn-refresh (click)="refreshTable()" matTooltip="Actualizar"></btn-refresh>
         </div>
     </div>
   </div>

@@ -5,17 +5,22 @@
     <mat-form-field>
       <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)">
     </mat-form-field>
-    <div class="d-flex align-items-stretch ">
-      <btn-add id="create" chkPrivilegiosButtons class="btn-acciones" matTooltip="Nuevo"  [routerLink]="['/ventas/crearRequisicion']">
-      </btn-add>
-      <btn-view id="view" chkPrivilegiosButtons class="btn-acciones" matTooltip="Visualizar" (click)="showRequi()"></btn-view>
-      <btn-edit id="update" chkPrivilegiosButtons class="btn-acciones" *ngIf="estatusId != 8" matTooltip="Editar" (click)="editRequi()"></btn-edit>
-      <btn-cancel id='delete' chkPrivilegiosButtons class="btn-acciones" *ngIf="estatusId != 8 && enProceso == 0" matTooltip="Cancelar"
-        (click)="openDialogCancel()"></btn-cancel>
-      <btn-refresh id='update' chkPrivilegiosButtons class="btn-acciones" *ngIf="estatusId == 8" matTooltip="Activar" (click)="openDialogReActivar()"></btn-refresh>
-      <btn-delete id='delete' chkPrivilegiosButtons class="btn-acciones" *ngIf="enProceso == 0" matTooltip="Eliminar" (click)="openDialogDelete()"></btn-delete>
+    <div class="row justify-content-between">
+      <div class="d-flex align-items-stretch ">
+        <btn-add id="create" chkPrivilegiosButtons class="btn-acciones" matTooltip="Nuevo"  [routerLink]="['/ventas/crearRequisicion']">
+        </btn-add>
+        <btn-view id="view" chkPrivilegiosButtons class="btn-acciones" matTooltip="Visualizar" (click)="showRequi()"></btn-view>
+        <btn-edit id="update" chkPrivilegiosButtons class="btn-acciones" *ngIf="estatusId != 8" matTooltip="Editar" (click)="editRequi()"></btn-edit>
+        <btn-cancel id='delete' chkPrivilegiosButtons class="btn-acciones" *ngIf="estatusId != 8 && enProceso == 0" matTooltip="Cancelar"
+          (click)="openDialogCancel()"></btn-cancel>
+        <btn-refresh id='update' chkPrivilegiosButtons class="btn-acciones" *ngIf="estatusId == 8" matTooltip="Activar" (click)="openDialogReActivar()"></btn-refresh>
+        <btn-delete id='delete' chkPrivilegiosButtons class="btn-acciones" *ngIf="enProceso == 0" matTooltip="Eliminar" (click)="openDialogDelete()"></btn-delete>
+      </div>
+      <div>
+        <btn-refresh (click)="refreshTable()" matTooltip="Actualizar"></btn-refresh>
+      </div>
     </div>
-  </div>
+    </div>
   <div class="card card-default">
     <div class="table-responsive" #tableContainer>
       <table id="resultDataTable" class="table-responsive" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">

@@ -161,7 +161,6 @@ export class DtCandidatosComponent implements OnInit, AfterViewInit, OnChanges {
       // Buscamos el estatus del candidato del apartado o liberado. ***
       this.service.getEstatusCandidato(this.candidatodtl[0].candidatoId)
           .subscribe(estatus => {
-            debugger;
             if (estatus.length == 0){
               this.Status = estatus.length;
               this.Reclutador = 'Candidato disponible';
@@ -314,7 +313,7 @@ export class DtCandidatosComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   popNotChange() {
-    let mensaje = 'No eres el usuario que aparto principalemnte el candidato.'
+    let mensaje = 'No eres el usuario que aparto principalmente el candidato.'
     let titulo = 'No autorizado'
       this.toasterService.pop('error', titulo, mensaje);
   }
@@ -408,7 +407,6 @@ export class DtCandidatosComponent implements OnInit, AfterViewInit, OnChanges {
       // Termina paginador
 
       public ShowMessage($event){
-        debugger;
         console.log($event);
       }
 

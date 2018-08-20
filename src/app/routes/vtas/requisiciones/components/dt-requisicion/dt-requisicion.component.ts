@@ -194,7 +194,7 @@ export class DtRequisicionComponent implements  OnInit {
   /*
   * Funciones para la administracion de las requisiciones.
   * */
-  public onRefreshDataSource(){
+  public refreshTable(){
     this.onChangeTable(this.config);
   }
 
@@ -214,7 +214,7 @@ export class DtRequisicionComponent implements  OnInit {
     });
     var window: Window
     dialogDlt.afterClosed().subscribe(result => {
-      this.onRefreshDataSource();
+      this.refreshTable();
     });
   }
 
@@ -226,7 +226,7 @@ export class DtRequisicionComponent implements  OnInit {
     });
     var window: Window
     dialogCnc.afterClosed().subscribe(result => {
-      this.onRefreshDataSource();
+      this.refreshTable();
     })
   }
 
@@ -238,7 +238,7 @@ export class DtRequisicionComponent implements  OnInit {
     });
     var window: Window
     dialogCnc.afterClosed().subscribe(result => {
-      this.onRefreshDataSource();
+      this.refreshTable();
     })
   }
 
