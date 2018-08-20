@@ -1,4 +1,3 @@
-import { FileSaver } from 'file-saver';
 
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
@@ -46,7 +45,7 @@ export class FileManagerComponent implements OnInit {
   {
     this.service.GetImage(datos.nom).subscribe( res => {
       console.log(datos)
-      FileSaver.saveAs(res, datos.nom)
+   
     });
 
   }
