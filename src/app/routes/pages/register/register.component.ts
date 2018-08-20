@@ -83,12 +83,16 @@ export class RegisterComponent implements OnInit {
                 var clave = this.valForm.controls['Clave'].value.trim();
                 var id = clave.indexOf(this.prefijo.substring(this.prefijo.length - 1, this.prefijo.length));
 
-                if(id >= 0)
+                if(id >= 0 )
                 {
                     var lon = clave.substring(id + 1, clave.length);
                     if(lon.length < 4)
                     {
                         clave = this.prefijo + "0".repeat(4-lon.length) + lon;
+                    }
+                    else
+                    {
+                        clave = this.prefijo + lon;
                     }
                 }
                 else
@@ -97,6 +101,10 @@ export class RegisterComponent implements OnInit {
                     if(lon.length < 4)
                     {
                         clave = this.prefijo + "0".repeat(4-lon.length) + lon;
+                    }
+                    else
+                    {
+                        clave = this.prefijo + lon;
                     }
                 }
 
@@ -120,8 +128,8 @@ export class RegisterComponent implements OnInit {
                     .subscribe(data => {
                         if (data == 201) {
                             this.msj = 'El usuario' + persona.Usuario + 'se registro con éxito';
-                            this.verMsg = true;
-                            this.success = true;
+                            this.verMsg = false;
+                            this.success = false;
                             this.haserror = false;
                            
                             this.showModal();

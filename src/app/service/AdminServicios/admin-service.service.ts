@@ -1,3 +1,4 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -49,6 +50,7 @@ export class AdminServiceService {
   private UrlAddSeccion = ApiConection.ServiceUrl+ApiConection.addSeccion;
   private UrlValidarEmail = ApiConection.ServiceUrl+ApiConection.validarEmail;
   private UrlGetFiles = ApiConection.ServiceUrl+ApiConection.getFiles;
+  private UrlGetImage = ApiConection.ServiceUrl+ApiConection.getImage;
   private UrlSendEmailRegister = ApiConection.ServiceUrl+ApiConection.sendEmailRegister;
   // Error.
   private handleError(error: any) {
@@ -60,7 +62,7 @@ export class AdminServiceService {
      }
 
 
-  constructor(private http: Http ) {
+  constructor(private http: Http, private _httpClient: HttpClient ) {
 
   }
 
@@ -81,6 +83,13 @@ export class AdminServiceService {
          .catch(this.handleError);
   }
  
+  
+  GetImage(ruta): Observable<any>
+  {
+    let params = new HttpParams().set('ruta', ruta);
+    return this._httpClient.get(this.UrlGetImage, { params: params})
+  }
+
   getPersonas(): Observable<any>
   {
      return this.http.get(this.Url)

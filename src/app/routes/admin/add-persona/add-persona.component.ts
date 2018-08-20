@@ -69,7 +69,6 @@ export class AddPersonaComponent implements OnInit {
 
   SendEmail(data)
   {
-    console.log(data)
     this.service.SendEmailRegister(data).subscribe( res => {
       if(res == 201)
         {
@@ -105,12 +104,20 @@ export class AddPersonaComponent implements OnInit {
   public Search(data: any) {
 
     let tempArray: Array<any> = [];
-    let colFiltar: Array<any> = [{ title: "nombre" },{ title: "apellidoPaterno" }, { title: "clave" }];
+    let colFiltar: Array<any> = [{ title: "nombre" },{ title: "apellidoPaterno" }, { title: "clave" }, { title: "email"}];
 
     this.filteredData.forEach(function (item) {
       let flag = false;
       colFiltar.forEach(function (c) {
-        if(item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
+        if(c.title == 'email')
+        {
+          var mail = item['email'];
+          if(mail[0]['email'].toString().toLowerCase().match(data.target.value.toLowerCase())) {
+            flag = true;
+          }
+
+        }
+        else if(item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
           flag = true;
         }
       });

@@ -24,11 +24,11 @@
                 <a *ngIf="!item.heading && !item.submenu && !item.elink" [routerLink]="item.link" [attr.route]="item.link" title="{{item.text}}"
                     (click)="toggleSubmenuClick($event)" (mouseenter)="toggleSubmenuHover($event)">
                     <span class="float-right" *ngIf="item.alert" [ngClass]="item.label || 'badge badge-success'">{{item.alert}}</span>
-                    <em class="{{item.icon}}" *ngIf="item.icon"></em>
+                    <em class="{{item.icon}} colorIcons" *ngIf="item.icon"></em>
                     <span>{{(item.translate | translate) || item.text}}</span>
                 </a>
                 <!-- has submenu -->
-                <a *ngIf="!item.heading && item.submenu" title="{{item.text}}"
+                <a class="colorItems" *ngIf="!item.heading && item.submenu" title="{{item.text}}"
                     (click)="toggleSubmenuClick($event)" (mouseenter)="toggleSubmenuHover($event)">
                         <span class="float-right" *ngIf="item.alert" [ngClass]="item.label || 'badge badge-success'">{{item.alert}}</span>
                         <em class="{{item.icon}}" *ngIf="item.icon"></em>

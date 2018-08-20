@@ -17,6 +17,7 @@
                 <tr>
                     <td class="text-center">Estructura</td>
                     <td class="text-center">idPadre</td>
+                    <td class="text-center">ID</td>
                     <td>C</td>
                     <td>R</td>
                     <td>U</td>
@@ -38,6 +39,7 @@
                                <span class="col-md-12">{{node.nombre}}</span>
                        </td>
                        <td class="text-center">{{node.idPadre}}</td> 
+                       <td class="text-center">{{node.estructuraId}}</td> 
                         <td class="block-center"><mat-checkbox id="{{ 'compC-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Create')" [checked]="node.create" matTooltip="Create"></mat-checkbox></td>
                            <td class="center"> <mat-checkbox id="{{ 'compR-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Read')" [checked]="node['read']" matTooltip="Read"></mat-checkbox></td>
                            <td class="center"><mat-checkbox id="{{ 'compU-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Update')" [checked]="node['update']" matTooltip="Update"></mat-checkbox></td>

@@ -3,7 +3,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule, MatInputModule, MatNativeDateModule, MatSelectModule, MatTooltipModule } from '@angular/material';
 import { ModalModule, PopoverModule } from 'ngx-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
-
 import { AddGrupoComponent } from './add-grupo/add-grupo.component';
 import { AddPersonaComponent } from './add-persona/add-persona.component';
 import { AddRolesComponent } from './add-roles/add-roles.component';
@@ -30,8 +29,6 @@ import { RegistroComponent } from './registro/registro.component';
 import { RolGrupoComponent } from './rol-grupo/rol-grupo.component';
 import { RollsStructComponent } from './rolls-struct/rolls-struct.component';
 import { SelectModule } from 'ng2-select';
-import { TreeModule } from 'angular-tree-component';
-import { TreeTableModule } from 'primeng/primeng';
 import { UploadImgsComponent } from './upload-imgs/upload-imgs.component';
 import { SharedModule } from '../../shared/shared.module';
 
@@ -76,9 +73,7 @@ const routes: Routes = [
         ComponentsModule,
         ModalModule.forRoot(),
         PopoverModule.forRoot(),
-        TreeTableModule, 
-        DataTableModule,
-        TreeModule
+        DataTableModule
       ],
     declarations:
     [
