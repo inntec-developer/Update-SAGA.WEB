@@ -41,6 +41,7 @@ import { PopoverModule, TooltipModule } from 'ngx-bootstrap';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../core/translator/config-paginator/config-paginator.component';
 
 import { AsignarRequisicionComponent } from './asignar-requisicion/asignar-requisicion.component';
+import { AsignarRequisicionLiderComponent } from './asignar-requisicion-lider/asignar-requisicion-lider.component';
 import { BusquedaCandidatosComponent } from './busqueda-candidatos/busqueda-candidatos.component';
 import { ButtonAcceptComponent } from './buttons/button-accept/button-accept.component';
 import { ButtonAddComponent } from './buttons/button-add/button-add.component';
@@ -73,6 +74,7 @@ import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import { NgxSpinnerModule } from '../../../node_modules/ngx-spinner';
 import { ToasterService } from 'angular2-toaster';
+import { InfoCandidatoComponent } from './info-candidato/info-candidato.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -153,6 +155,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonsPostulacionesComponent,
     ComentarioVacanteComponent,
     ButtonEmailComponent,
+    AsignarRequisicionLiderComponent,
+    InfoCandidatoComponent,
 
   ],
   exports: [
@@ -183,6 +187,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonsPostulacionesComponent,
     ComentarioVacanteComponent,
     ButtonEmailComponent,
+    AsignarRequisicionLiderComponent,
+    InfoCandidatoComponent,
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

@@ -99,7 +99,7 @@ export class AdminServiceService {
     // let ruta = "utilerias/img/user/08155cc8-3568-e811-80e1-9e274155325e.jpeg";
     // console.log(ruta)
 
-    let httpHeaders = new HttpHeaders().set('Content-Type', 'image/.*');
+    let httpHeaders = new HttpHeaders().set('Content-Type', 'image/*.*');
     let params = new HttpParams().set('ruta', ruta);     
     let options = new RequestOptions({headers: httpHeaders, params: params, responseType: ResponseContentType.Blob });
       // return this.http.get(ruta, options)

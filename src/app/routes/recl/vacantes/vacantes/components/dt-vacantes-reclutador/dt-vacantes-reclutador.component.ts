@@ -1,3 +1,4 @@
+import { debug } from 'util';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -56,7 +57,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   public rows: Array<any> = [];
   public columns: Array<any> = [
-    { title: 'Folio', className: 'text-info text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+    { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
     { title: 'Solicita', className: 'text-info text-center', name: 'solicita', filtering: { filterString: '', placeholder: 'Solicita' } },
     { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
     { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
@@ -111,7 +112,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       if (previous[columnName] > current[columnName]) {
         return sort === 'desc' ? -1 : 1;
       } else if (previous[columnName] < current[columnName]) {
-        // return sort === false ? -1 : 1;
+        return sort === 'asc' ? -1 : 1;
       }
       return 0;
     });
@@ -124,7 +125,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
         this.showFilterRow = true;
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
-            return item[column.name].toString().match(column.filtering.filterString);
+            return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
         });
       }
     });
@@ -135,7 +136,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
     if (config.filtering.columnName) {
       return filteredData.filter((item: any) =>
-        item[config.filtering.columnName].match(this.config.filtering.filterString));
+        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
     }
 
     let tempArray: Array<any> = [];
@@ -145,7 +146,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
         if (item[column.name] == null) {
           flag = true;
         } else {
-          if (item[column.name].toString().match(this.config.filtering.filterString)) {
+          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
             flag = true;
           }
         }
@@ -168,40 +169,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
       (<any>Object).assign(this.config.sorting, config.sorting);
     }
     setTimeout(() => {
-      this.dataSource = [];
       this.service.getRequiReclutador(localStorage.getItem('id')).subscribe(data => {
-        data.forEach(x => {
-          let solicita = x.solicita.nombre + ' ' + x.solicita.apellidoPaterno;
-          let source = {
-            id: x.id,
-            vBtra: x.vBtra,
-            tipoReclutamiento: x.tipoReclutamiento,
-            tipoReclutamientoId: x.tipoReclutamientoId,
-            claseReclutamiento: x.claseReclutamiento,
-            claseReclutamientoId: x.claseReclutamientoId,
-            diasEnvio: x.diasEnvio,
-            sueldoMinimo: x.sueldoMinimo,
-            sueldoMaximo: x.sueldoMaximo,
-            fch_Creacion: x.fch_Creacion,
-            fch_Cumplimiento: x.fch_Cumplimiento,
-            estatus: x.estatus,
-            estatusId: x.estatusId,
-            prioridad: x.prioridad,
-            prioridadId: x.prioridadId,
-            cliente: x.cliente,
-            vacantes: x.vacantes,
-            solicita: solicita,
-            folio: x.folio,
-            confidencial: x.confidencial,
-            postulados: x.postulados,
-            postuladosN: x.postuladosN,
-            enProceso: x.enProceso,
-          }
-          console.log(source);
-          this.dataSource.push(source);
-        });
+        this.dataSource = data;
         this.registros = this.dataSource.length;
-        this.rows = this.dataSource;
+        this.rows = this.dataSource.sort();
         let filteredData = this.changeFilter(this.dataSource, this.config);
         let sortedData = this.changeSort(filteredData, this.config);
         this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
@@ -226,6 +197,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     let index = this.dataSource.indexOf(data.row);
     this.estatusId = data.estatusId;
     this.element = data;
+    console.log(this.element);
     this.vBtra = data.vBtra;
     this.id = data.id;
     this.folio = data.folio;
@@ -235,7 +207,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       folio: data.folio,
       id: data.id
     }
-    console.log(this.requi);
     /* add an class 'active' on click */
     $('#resultDataTable').on('click', 'tr', function (event: any) {
       //noinspection TypeScriptUnresolvedFunction

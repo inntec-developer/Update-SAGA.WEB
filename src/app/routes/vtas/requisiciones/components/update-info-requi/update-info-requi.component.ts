@@ -99,9 +99,7 @@ export class UpdateInfoRequiComponent implements OnInit, AfterContentChecked {
     ngAfterContentChecked() {
       if(!this.checked){
         this.getInformacionRequisicio(this.Folios)
-        
       }
-
     }
     getAsignacion(event){
       this.asignadosRequi = event;

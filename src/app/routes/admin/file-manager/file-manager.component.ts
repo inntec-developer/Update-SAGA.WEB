@@ -66,18 +66,11 @@ export class FileManagerComponent implements OnInit {
 
   downloadFile(datos)
   {
-    if(datos.type === '.jpeg' || datos.type === '.jpg')
-    {
-      this.service.downloadImage('utilerias/img/user/default.jpg')
-        .subscribe( data => {
-          saveAs(data, datos.nom)
-        })
-    }
-    else if(datos.type === '.pdf')
-    {
-      this.downloadPDF(datos) 
-    }
-   
+    this.service.GetImage(datos.nom).subscribe( res => {
+      console.log(datos)
+      saveAs(res, datos.nom);
+    });
+
   }
 
 

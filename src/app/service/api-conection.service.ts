@@ -10,6 +10,7 @@ export class ApiConection {
 
   /* Componentes */
   public static GetUserGroup = 'AsignacionRequi/getUserGroup';
+  public static GetUserGroupL = 'AsignacionRequi/getUserGroupL';
 
   /* Catalogos */
   public static GetDocumentosDamsa = 'Catalogos/getDocDamsa';
