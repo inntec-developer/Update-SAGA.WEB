@@ -1,6 +1,9 @@
+import { saveAs } from 'file-saver';
 
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
+
+
 
 @Component({
   selector: 'app-file-manager',
@@ -33,22 +36,50 @@ export class FileManagerComponent implements OnInit {
 
   verArchivo(datos)
   {
-    this.service.GetImage(datos.nom).subscribe( res => {
-      this.image = res;
-      this.nomImg = datos.nom;
-      this.modal.show();
-    });
-    
+    console.log(datos)
+    if(datos.type === '.jpeg' || datos.type === '.jpg')
+    {
+      this.service.GetImage(datos.nom).subscribe( res => {
+        this.image = 'data:image/jpeg;base64,' + res;
+        this.nomImg = datos.nom;
+        this.modal.show();
+      });
+    }
+    else if(datos.type === '.pdf')
+    {
+      this.service.downloadPDF('1571180738_201808_C1.pdf').subscribe(res => {
+        console.log(res)
+      })
+    }
+  }
+
+  downloadPDF(data) {
+    let tab = window.open();
+    this.service
+      .downloadPDF('1571180738_201808_C1.pdf')
+      .subscribe(data => {
+        console.log(data)
+        const fileUrl = URL.createObjectURL(data);
+        tab.location.href = fileUrl;
+      });
   }
 
   downloadFile(datos)
   {
-    this.service.GetImage(datos.nom).subscribe( res => {
-      console.log(datos)
+    if(datos.type === '.jpeg' || datos.type === '.jpg')
+    {
+      this.service.downloadImage('utilerias/img/user/default.jpg')
+        .subscribe( data => {
+          saveAs(data, datos.nom)
+        })
+    }
+    else if(datos.type === '.pdf')
+    {
+      this.downloadPDF(datos) 
+    }
    
-    });
-
   }
+
 
   // downloadFile(data: Response){
   //   var blob = new Blob([data], { type: 'application/pdf' });

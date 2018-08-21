@@ -1,4 +1,5 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { saveAs } from 'file-saver';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -7,7 +8,7 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
 
-import { Headers, Http, RequestOptions, Response } from '@angular/http';
+import { Headers, Http, RequestOptions, Response, ResponseContentType } from '@angular/http';
 
 import { ApiConection } from './../api-conection.service';
 import { Injectable } from '@angular/core';
@@ -86,8 +87,40 @@ export class AdminServiceService {
   
   GetImage(ruta): Observable<any>
   {
-    let params = new HttpParams().set('ruta', ruta);
-    return this._httpClient.get(this.UrlGetImage, { params: params})
+     let httpHeaders = new HttpHeaders().set('Accept', 'image/jpeg;base64');
+    let params = new HttpParams().set('ruta', ruta);     
+    let options = new RequestOptions({headers: httpHeaders, params: params, responseType: ResponseContentType.Blob });
+     
+     return this._httpClient.get(this.UrlGetImage, {params: params});
+ 
+  }
+  downloadImage(ruta): Observable<any>
+  {
+    // let ruta = "utilerias/img/user/08155cc8-3568-e811-80e1-9e274155325e.jpeg";
+    // console.log(ruta)
+
+    let httpHeaders = new HttpHeaders().set('Content-Type', 'image/.*');
+    let params = new HttpParams().set('ruta', ruta);     
+    let options = new RequestOptions({headers: httpHeaders, params: params, responseType: ResponseContentType.Blob });
+      // return this.http.get(ruta, options)
+      // .map(res => res.blob())
+      //   .catch(this.handleError)
+     
+      // return this._httpClient.get(ApiConection.ServiceUrlFoto + ruta, {headers: httpHeaders, responseType: "blob"});
+      return this._httpClient.get(ApiConection.ServiceUrlFoto + ruta, {headers: httpHeaders, responseType: "blob"});
+    
+    
+    // return this._httpClient.get(this.UrlGetImage, { headers: httpHeaders,
+    //   params: params
+    //   })
+ 
+  }
+
+  downloadPDF(url): any {
+    return this._httpClient.get(ApiConection.ServiceUrlFoto+ 'utilerias/pdf/' + url, { responseType: 'blob'})
+            .map(res => {
+            return new Blob([res], { type: 'application/pdf'});
+        });
   }
 
   getPersonas(): Observable<any>
