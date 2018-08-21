@@ -1,0 +1,24 @@
+<form [formGroup]="AsignacionForm">
+  <div class="form-group">
+    <ngx-select
+      formControlName="selectControl"
+      (data)="value"
+      class="select-asig"
+      [multiple]="true" 
+      [items]="items"
+      (remove)="valueChange($event)"
+      (select)="valueChange($event)"
+      optionValueField="id" 
+      optionTextField="nombre" >
+        <ng-template ngx-select-option-selected let-option let-text="descripcion">
+          <span *ngIf="option.data.tipoEntidadId != 1">{{option.data.nombre}}</span>
+          <span *ngIf="option.data.tipoEntidadId == 1">  {{option.data.descripcion}}({{option.data.email}})</span>
+        </ng-template>
+        <ng-template ngx-select-option-not-found>
+          No se encotraron resultados...
+          <!-- <app-button-save (click)="addItem()">(+) Add new item</app-button-save> -->
+        </ng-template>
+    </ngx-select>
+    <label class="form-control-placeholder">{{placeHolder}}</label>
+  </div>
+</form>

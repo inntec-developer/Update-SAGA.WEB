@@ -41,6 +41,7 @@ import { PopoverModule, TooltipModule } from 'ngx-bootstrap';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../core/translator/config-paginator/config-paginator.component';
 
 import { AsignarRequisicionComponent } from './asignar-requisicion/asignar-requisicion.component';
+import { AsignarRequisicionLiderComponent } from './asignar-requisicion-lider/asignar-requisicion-lider.component';
 import { BusquedaCandidatosComponent } from './busqueda-candidatos/busqueda-candidatos.component';
 import { ButtonAcceptComponent } from './buttons/button-accept/button-accept.component';
 import { ButtonAddComponent } from './buttons/button-add/button-add.component';
@@ -153,6 +154,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonsPostulacionesComponent,
     ComentarioVacanteComponent,
     ButtonEmailComponent,
+    AsignarRequisicionLiderComponent,
 
   ],
   exports: [
@@ -183,6 +185,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonsPostulacionesComponent,
     ComentarioVacanteComponent,
     ButtonEmailComponent,
+    AsignarRequisicionLiderComponent,
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

@@ -15,11 +15,18 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class ComponentsService {
   private urlGetUserGroup = ApiConection.ServiceUrl + ApiConection.GetUserGroup;
+  private urlGetUserGroupL = ApiConection.ServiceUrl + ApiConection.GetUserGroupL;
 
   constructor(private http: Http) { }
 
   getUserGroup() : Observable<any>{
     return this.http.get(this.urlGetUserGroup)
+    .map(result => result.json())
+    .catch(this.handleError);
+  }
+
+  getUserGroupL() : Observable<any>{
+    return this.http.get(this.urlGetUserGroupL)
     .map(result => result.json())
     .catch(this.handleError);
   }

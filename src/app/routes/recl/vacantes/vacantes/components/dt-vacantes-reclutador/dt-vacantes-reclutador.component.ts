@@ -176,9 +176,9 @@ export class DtVacantesReclutadorComponent implements OnInit {
             id: x.id,
             vBtra: x.vBtra,
             tipoReclutamiento: x.tipoReclutamiento,
-            tipoReclutamientoId: x.tipoReclutamientoId,
+            tipoReclutamientoId: x.tipoReclutamiento.id,
             claseReclutamiento: x.claseReclutamiento,
-            claseReclutamientoId: x.claseReclutamientoId,
+            claseReclutamientoId: x.claseReclutamiento.id,
             diasEnvio: x.diasEnvio,
             sueldoMinimo: x.sueldoMinimo,
             sueldoMaximo: x.sueldoMaximo,
@@ -193,11 +193,11 @@ export class DtVacantesReclutadorComponent implements OnInit {
             solicita: solicita,
             folio: x.folio,
             confidencial: x.confidencial,
+            asignados: x.asignados,
             postulados: x.postulados,
             postuladosN: x.postuladosN,
             enProceso: x.enProceso,
           }
-          console.log(source);
           this.dataSource.push(source);
         });
         this.registros = this.dataSource.length;
@@ -226,6 +226,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     let index = this.dataSource.indexOf(data.row);
     this.estatusId = data.estatusId;
     this.element = data;
+    console.log(this.element);
     this.vBtra = data.vBtra;
     this.id = data.id;
     this.folio = data.folio;
@@ -235,7 +236,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       folio: data.folio,
       id: data.id
     }
-    console.log(this.requi);
     /* add an class 'active' on click */
     $('#resultDataTable').on('click', 'tr', function (event: any) {
       //noinspection TypeScriptUnresolvedFunction
