@@ -74,6 +74,7 @@ import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import { NgxSpinnerModule } from '../../../node_modules/ngx-spinner';
 import { ToasterService } from 'angular2-toaster';
+import { InfoCandidatoComponent } from './info-candidato/info-candidato.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -155,6 +156,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ComentarioVacanteComponent,
     ButtonEmailComponent,
     AsignarRequisicionLiderComponent,
+    InfoCandidatoComponent,
 
   ],
   exports: [
@@ -186,6 +188,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ComentarioVacanteComponent,
     ButtonEmailComponent,
     AsignarRequisicionLiderComponent,
+    InfoCandidatoComponent,
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

@@ -23,7 +23,7 @@ export class SettingsService {
         // App Settings
         // -----------------------------------
         this.app = {
-            vertion: 'V1.20180306_1119',
+            vertion: 'V1.0.1',
             name: 'SAGA - Inntec',
             description: 'Sistema Administrativo de Gestión Avanzada',
             year: ((new Date()).getFullYear()),
