@@ -58,7 +58,7 @@
           <tr *ngFor="let p of Users; let rowIndex = index">
             <td class="text-center">
               <div class="media">
-                <a matTooltip="Click to edit" data-toggle="modal" data-target="#staticModal" (click)="rowAux = rowIndex; CrearURL(p.id); staticModal.show()">
+                <a matTooltip="Click to edit" data-toggle="modal" data-target="#staticModal" (click)="rowAux = rowIndex; CrearURL(p.entidadId); staticModal.show()">
                   <img class="img-fluid circle thumb32" src="{{p.fotoAux}}" alt="Image" />
                 </a>
               </div>

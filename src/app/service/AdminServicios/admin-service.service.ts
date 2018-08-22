@@ -69,6 +69,7 @@ export class AdminServiceService {
 
   UploadImg( file: File, name: any) : Observable<any>
   {
+    console.log(name)
     let formData = new FormData();
     formData.append('image', file, name );
     let headers = new Headers({'Content-Type': 'image/*.*'});
@@ -103,7 +104,7 @@ export class AdminServiceService {
     // console.log(ruta)
 
     let httpHeaders = new HttpHeaders({
-     'Access-Control-Allow-Origin': '*'
+     'Access-Control-Allow-Origin': 'localhost:4200'
     })
 
     let params = new HttpParams().set('ruta', ruta);     
@@ -292,6 +293,7 @@ export class AdminServiceService {
 
   UpdateUsuario(data: any) : Observable<any>
   {
+    console.log(data)
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
     return this.http.post(this.UrlUpdateUsuario, JSON.stringify(data), options)
