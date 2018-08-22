@@ -14,6 +14,7 @@ export class ChkButtonsDirective implements AfterViewInit {
 
   ngAfterViewInit(){ 
     var ruta; 
+
     var btncreate = document.querySelectorAll("#create");
     var btnupdate = document.querySelectorAll("#update");
     var btndelete = document.querySelectorAll("#delete");
@@ -33,9 +34,9 @@ export class ChkButtonsDirective implements AfterViewInit {
         for (var i = 0; i < btncreate.length; i++)
         {
           btncreate[i].setAttribute('hidden', 'true')
-          if( btnupdate[i].childElementCount > 0)
+          if( btncreate[i].childElementCount > 0)
           {
-            btnupdate[i].firstElementChild.removeAttribute('disabled')
+            btncreate[i].firstElementChild.removeAttribute('disabled')
           }
         }
       }

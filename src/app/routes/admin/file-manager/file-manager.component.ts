@@ -20,8 +20,11 @@ export class FileManagerComponent implements OnInit {
   cont_image = 0;
   cont_pdf = 0;
   files = [];
-  image = [];
+  image;
   nomImg = "";
+  pdfSrc;
+  imgShow = false;
+  pdfShow = false;
   constructor(private service: AdminServiceService) { }
 
   ngOnInit() {
@@ -39,17 +42,22 @@ export class FileManagerComponent implements OnInit {
     console.log(datos)
     if(datos.type === '.jpeg' || datos.type === '.jpg')
     {
-      this.service.GetImage(datos.nom).subscribe( res => {
-        this.image = 'data:image/jpeg;base64,' + res;
+      
+        this.imgShow = true;
+        this.pdfShow = false;
+        this.image = this.service.GetImage(datos.nom);
         this.nomImg = datos.nom;
         this.modal.show();
-      });
+  
     }
     else if(datos.type === '.pdf')
     {
-      this.service.downloadPDF('1571180738_201808_C1.pdf').subscribe(res => {
-        console.log(res)
-      })
+    
+        this.imgShow = false;
+        this.pdfShow = true;
+        this.pdfSrc = this.service.GetPdf('670_Constancias.pdf');
+        this.modal.show()
+    
     }
   }
 
@@ -66,10 +74,21 @@ export class FileManagerComponent implements OnInit {
 
   downloadFile(datos)
   {
-    this.service.GetImage(datos.nom).subscribe( res => {
-      console.log(datos)
-      saveAs(res, datos.nom);
-    });
+    if(datos.type === '.jpg' || datos.type === '.jpeg')
+    {
+      this.service.downloadImage(datos.nom).subscribe( res => {
+        saveAs(res, datos.nom);
+      });
+    }
+    else if(datos.type === '.pdf')
+    {
+      this.service
+       .downloadPDF(datos.nom)
+        .subscribe(data => {
+          saveAs(data, datos.nom);
+      });
+
+    }
 
   }
 

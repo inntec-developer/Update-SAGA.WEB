@@ -134,7 +134,8 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-12 text-center">
-            <img class="center-block img-responsive" [src]="image" [width]="200" [height]="200">  
+            <img *ngIf="imgShow" class="center-block img-responsive" [src]="image" [width]="200" [height]="200">  
+            <pdf-viewer *ngIf="pdfShow" [src]="pdfSrc" [render-text]="true" style="display: block;"></pdf-viewer>
           </div>
         </div>
       </div>

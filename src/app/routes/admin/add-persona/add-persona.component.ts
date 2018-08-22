@@ -102,7 +102,6 @@ export class AddPersonaComponent implements OnInit {
   }
 
   public Search(data: any) {
-
     let tempArray: Array<any> = [];
     let colFiltar: Array<any> = [{ title: "nombre" },{ title: "apellidoPaterno" }, { title: "clave" }, { title: "email"}];
 
@@ -112,10 +111,12 @@ export class AddPersonaComponent implements OnInit {
         if(c.title == 'email')
         {
           var mail = item['email'];
-          if(mail[0]['email'].toString().toLowerCase().match(data.target.value.toLowerCase())) {
-            flag = true;
+          if(mail.length > 0)
+          {
+            if(mail[0]['email'].toString().toLowerCase().match(data.target.value.toLowerCase())) {
+              flag = true;
+            }
           }
-
         }
         else if(item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
           flag = true;

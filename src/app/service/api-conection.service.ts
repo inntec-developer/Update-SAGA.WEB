@@ -2,6 +2,7 @@ export class ApiConection {
   public static ServiceUrlWeb = 'http://localhost:4200/'
   /*Servicio de purbeas locales*/
   public static ServiceUrl = 'http://localhost:33333/api/';
+  public static ServiceUrlFileManager = 'http://localhost:4200/assets/';
   public static ServiceUrlFoto = 'http://localhost:33333/';
   // Conexiones a bolsa de trabajo.
   public static ServiceUrlBolsa = 'http://sagainn.com.mx:403';

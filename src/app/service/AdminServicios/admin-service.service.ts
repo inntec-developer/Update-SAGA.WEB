@@ -71,7 +71,7 @@ export class AdminServiceService {
   {
     let formData = new FormData();
     formData.append('image', file, name );
-    let headers = new Headers({'Content-Type': 'image/.*'});
+    let headers = new Headers({'Content-Type': 'image/*.*'});
     let options = new RequestOptions({headers: headers});
 
     return this.http.post(this.UrlUploadImage, formData ).map(result => result.json());
@@ -79,19 +79,22 @@ export class AdminServiceService {
 
   GetFiles(): Observable<any>
   {
-     return this.http.get(this.UrlGetFiles)
-         .map(result => result.json())
-         .catch(this.handleError);
+
+     return this._httpClient.get(this.UrlGetFiles);
   }
  
   
-  GetImage(ruta): Observable<any>
+  GetImage(ruta): string
   {
-     let httpHeaders = new HttpHeaders().set('Accept', 'image/jpeg;base64');
-    let params = new HttpParams().set('ruta', ruta);     
-    let options = new RequestOptions({headers: httpHeaders, params: params, responseType: ResponseContentType.Blob });
-     
-     return this._httpClient.get(this.UrlGetImage, {params: params});
+          
+      return ApiConection.ServiceUrlFileManager + 'img/user/' + ruta;
+  }
+
+  GetPdf(ruta): string
+  {
+   
+    return ApiConection.ServiceUrlFileManager + 'pdf/' + ruta;
+    
  
   }
   downloadImage(ruta): Observable<any>
@@ -99,15 +102,19 @@ export class AdminServiceService {
     // let ruta = "utilerias/img/user/08155cc8-3568-e811-80e1-9e274155325e.jpeg";
     // console.log(ruta)
 
-    let httpHeaders = new HttpHeaders().set('Content-Type', 'image/*.*');
+    let httpHeaders = new HttpHeaders({
+     'Access-Control-Allow-Origin': '*'
+    })
+
     let params = new HttpParams().set('ruta', ruta);     
-    let options = new RequestOptions({headers: httpHeaders, params: params, responseType: ResponseContentType.Blob });
+    //let options = new RequestOptions({headers: httpHeaders, params: params, responseType: ResponseContentType.Blob });
       // return this.http.get(ruta, options)
       // .map(res => res.blob())
       //   .catch(this.handleError)
      
-      // return this._httpClient.get(ApiConection.ServiceUrlFoto + ruta, {headers: httpHeaders, responseType: "blob"});
-      return this._httpClient.get(ApiConection.ServiceUrlFoto + ruta, {headers: httpHeaders, responseType: "blob"});
+      
+     return this._httpClient.get(ApiConection.ServiceUrlFileManager + '/img/user/' + ruta, {headers: httpHeaders, responseType: "blob"});
+    //  return this._httpClient.get(ApiConection.ServiceUrlFoto + ruta, {responseType: "blob"});
     
     
     // return this._httpClient.get(this.UrlGetImage, { headers: httpHeaders,
@@ -116,11 +123,8 @@ export class AdminServiceService {
  
   }
 
-  downloadPDF(url): any {
-    return this._httpClient.get(ApiConection.ServiceUrlFoto+ 'utilerias/pdf/' + url, { responseType: 'blob'})
-            .map(res => {
-            return new Blob([res], { type: 'application/pdf'});
-        });
+  downloadPDF(url):  Observable<any> {
+    return this._httpClient.get(ApiConection.ServiceUrlFileManager + 'pdf/' + url, {responseType: "blob"});
   }
 
   getPersonas(): Observable<any>
