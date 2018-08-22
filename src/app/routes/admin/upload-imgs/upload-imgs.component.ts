@@ -70,7 +70,7 @@ export class UploadImgsComponent implements OnInit {
 
   UploadImg()
   {
-     
+    
     this.onItemChanged.emit(this.setImage());
     this.service.UploadImg(this.selectedFile, this.name).subscribe(result => {
     this.StatusCode = result;

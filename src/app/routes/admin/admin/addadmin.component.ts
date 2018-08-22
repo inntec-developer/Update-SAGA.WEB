@@ -222,6 +222,7 @@ export class AddadminComponent implements OnInit {
           this.ListAuxEntidades = this.ListEntidades;
 
           this.filteredData = this.ListEntidades;
+          console.log(this.ListEntidades)
         })
   }
 
