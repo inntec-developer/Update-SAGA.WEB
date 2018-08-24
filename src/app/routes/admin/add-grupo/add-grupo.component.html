@@ -65,16 +65,16 @@
                             <btn-view [xs]="true" (click)="grupo=g.nombre; GetUsuarios(g.id);" data-toggle="popover" [popover]="popTemplate" placement="right" trigger="" matTooltip="Ver integrantes del grupo"></btn-view>
                           </td>
                           <td class="align-middle text-center">
-                            <a matTooltip="Click to edit" (click)="rowAux=rowIndex; CrearURL(g.id); staticModal.show()"><img class="img-fluid circle thumb48" src={{g.fotoAux}} alt="Image" /></a>
+                            <a matTooltip="Click para editar" (click)="rowAux=rowIndex; CrearURL(g.id); staticModal.show()"><img class="img-fluid circle thumb48" src={{g.fotoAux}} alt="Image" /></a>
                           </td>
                            <td class="text-center">
-                              <span matTooltip="Double click to edit" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
+                              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
                                   {{g.nombre}}
                               </span>
                               <input autofocus (blur)="updateValue($event, 'nombre', rowIndex)" *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=g.nombre />
                            </td>
                            <td class="text-center">
-                              <span matTooltip="Double click to edit" (dblclick)="editing[rowIndex + '-descripcion'] = true" *ngIf="!editing[rowIndex + '-descripcion']">
+                              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-descripcion'] = true" *ngIf="!editing[rowIndex + '-descripcion']">
                                   {{g.descripcion}}
                               </span>
                               <textarea autofocus (blur)="updateValue($event, 'descripcion', rowIndex)" *ngIf="editing[rowIndex + '-descripcion']" [value]=g.descripcion maxlength="200" rows="1"></textarea>

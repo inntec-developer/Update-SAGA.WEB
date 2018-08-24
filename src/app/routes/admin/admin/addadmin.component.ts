@@ -26,7 +26,6 @@ export class AddadminComponent implements OnInit {
   msj = 'Arrastrar usuario aqui'
   verMsj = false;
 
-
   alerts: any[] = [
     {
       type: 'success',
@@ -84,8 +83,9 @@ onClosed(): void {
   }
 
   addToGroups($event, idG) {
+
     //el drag me agrega solo el item por eso lo borro por que se repite
-    var rep = this.ListaPG.filter(x => x.entidadId == $event.entidadId);
+    var rep = this.ListaPG.filter(x => x.entidadId === $event.entidadId);
 
     if(rep.length > 1)
     {
@@ -104,10 +104,7 @@ onClosed(): void {
           this.ListEntidades.push($event);
         }
     }
-    else
-    {
-      this.ListEntidades.push($event)
-    }
+   
 
   }
 
@@ -116,10 +113,11 @@ onClosed(): void {
     var idx = this.ListaPG.findIndex(x => x.entidadId == id);
 
     if (idx != -1) {
-      this.ListaPG.splice(idx, 1)
+      this.ListaPG.splice(idx, 1) 
       if( this.ListaPG.length == 0)
       {
         this.ListaPG = [];
+        this.ListEntidades = this.filteredData;
       }
     }
 
