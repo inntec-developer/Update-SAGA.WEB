@@ -40,6 +40,7 @@ import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
 import { PopoverModule, TooltipModule } from 'ngx-bootstrap';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../core/translator/config-paginator/config-paginator.component';
 
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { AsignarRequisicionComponent } from './asignar-requisicion/asignar-requisicion.component';
 import { AsignarRequisicionLiderComponent } from './asignar-requisicion-lider/asignar-requisicion-lider.component';
 import { BusquedaCandidatosComponent } from './busqueda-candidatos/busqueda-candidatos.component';
@@ -70,11 +71,12 @@ import { ColorPickerService } from 'ngx-color-picker';
 import { ComentarioVacanteComponent } from './comentario-vacante/comentario-vacante.component';
 import { CommonModule } from '@angular/common';
 import { DetailVacantesComponent } from './detail-vacantes/detail-vacantes.component';
+import { InfoCandidatoComponent } from './info-candidato/info-candidato.component';
 import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import { NgxSpinnerModule } from '../../../node_modules/ngx-spinner';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ToasterService } from 'angular2-toaster';
-import { InfoCandidatoComponent } from './info-candidato/info-candidato.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -122,9 +124,11 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     MatTooltipModule,
     Ng2TableModule,
     NgxSpinnerModule,
+    TabsModule.forRoot(),
     PaginationModule.forRoot(),
     PopoverModule.forRoot(),
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    AccordionModule.forRoot()
     
   ],
   declarations: [
