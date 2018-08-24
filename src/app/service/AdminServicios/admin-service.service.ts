@@ -54,6 +54,8 @@ export class AdminServiceService {
   private UrlGetImage = ApiConection.ServiceUrl+ApiConection.getImage;
   private UrlSendEmailRegister = ApiConection.ServiceUrl+ApiConection.sendEmailRegister;
   private UrlDownloadFiles = ApiConection.ServiceUrl+ApiConection.downloadFiles;
+  private UrlViewFile = ApiConection.ServiceUrl + ApiConection.viewFile;
+  private UrlUploadFile = ApiConection.ServiceUrl + ApiConection.uploadFile;
 
   // Error.
   private handleError(error: any) {
@@ -85,38 +87,36 @@ export class AdminServiceService {
     let httpHeaders = new HttpHeaders({
       'Access-Control-Allow-Origin': 'http://localhost:4200'
      })
+
+     let params = new HttpParams().set('entidadId', '83569bac-0d68-e811-80e1-9e274155325e')
  
-     return this._httpClient.get(this.UrlGetFiles, {headers:httpHeaders});
+     return this._httpClient.get(this.UrlGetFiles, {params: params});
   }
  
   GetImage(ruta): string
   {
-    return ApiConection.ServiceUrlFileManager + 'img/user/' + ruta;
+    return ApiConection.ServiceUrlFileManager + 'Files/users/83569bac-0d68-e811-80e1-9e274155325e/' + ruta;
   }
 
-  GetPdf(ruta): string
+  GetPdf(ruta): Observable<any>
   {
-
-     fetch(ApiConection.ServiceUrlFileManager + 'pdf/' + ruta, { 'mode': 'no-cors'})
-  .then(data => {
-    console.log(data);
-
-  })
-  .catch(e => {
-    console.log(e);
-
-  });
-
-  
-
-  return './../assets/pdf/670_Constancias.pdf';
+    let params = new HttpParams().set('ruta', ruta);  
+    return this._httpClient.get(this.UrlViewFile, {params: params, responseType: 'blob'});
   }
 
   DownloadFiles(ruta) : Observable<any>
   {
     console.log(ruta)
     let params = new HttpParams().set('file', ruta);  
-    return this._httpClient.get(this.UrlDownloadFiles, {params: params});
+    return this._httpClient.get(this.UrlDownloadFiles, {params: params, responseType: 'blob'});
+  }
+
+  UploadFile( file: File ) : Observable<any>
+  {
+    let formData = new FormData();
+    formData.append('file', file, file.name );
+
+    return this.http.post(this.UrlUploadFile, formData ).map(result => result.json());
   }
 
   downloadImage(ruta): Observable<any>

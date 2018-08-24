@@ -19,27 +19,69 @@ export class FileManagerComponent implements OnInit {
   selectedFile: File;
   cont_image = 0;
   cont_pdf = 0;
+  cont_xls = 0;
+  cont_word = 0;
   files = [];
   image;
   nomImg = "";
   pdfSrc;
   imgShow = false;
   pdfShow = false;
+  verMsj = false;
+  
+  alerts: any[] = [
+    {
+      type: 'success',
+      msg: '',
+      timeout: 4000
+    },
+    {
+      type: 'danger',
+      msg: '',
+      timeout: 4000
+    }
+  ];
+alert = this.alerts;
+onClosed(): void {
+  this.verMsj = false;
+}
+
   constructor(private service: AdminServiceService) { }
 
   ngOnInit() {
+    this.files = [];
+    this.cont_image = 0;
+    this.cont_pdf = 0;
+    this.cont_word = 0;
+    this.cont_xls = 0;
     this.GetFiles();
   }
 
   fileChangeListener($event) 
   {
     let file: File = $event.target.files[0];
-    console.log(file)
+
+    this.service.UploadFile(file).subscribe(result => {
+      if(result === 201)
+      {
+        this.ngOnInit();
+        this.alerts[0]['msg'] = "El archivo " + file.name + " se subió con éxito";
+        this.alert = this.alerts[0];
+        this.verMsj = true;
+      }
+      else
+      {
+        this.alerts[1]['msg'] = "Ocurrió un error al intentar subir archivo " + file.name;
+        this.alert = this.alerts[1];
+        this.verMsj = true;
+      }
+    });
+
   }
 
   verArchivo(datos)
   {
-    if(datos.type === '.jpeg' || datos.type === '.jpg')
+    if(datos.type === '.jpeg' || datos.type === '.jpg' || datos.type === '.png')
     {
       
         this.imgShow = true;
@@ -49,55 +91,30 @@ export class FileManagerComponent implements OnInit {
         this.modal.show();
   
     }
-    else if(datos.type === '.pdf')
+    else
     {
-    
         this.imgShow = false;
         this.pdfShow = true;
-        this.pdfSrc = this.service.GetPdf(datos.nom);
-        console.log(this.pdfSrc)
-        this.modal.show()
-    
+        this.pdfSrc = this.service.GetPdf('utilerias/Files/users/83569bac-0d68-e811-80e1-9e274155325e/' + datos.nom).subscribe( data=>{
+        var fileurl = window.URL.createObjectURL(data);
+        window.open(fileurl)
+          // this.pdfSrc = fileurl;
+          // this.modal.show();
+        })
+          
     }
   }
 
-  downloadPDF(data) {
-    let tab = window.open();
-    this.service
-      .downloadPDF('1571180738_201808_C1.pdf')
-      .subscribe(data => {
-        console.log(data)
-        const fileUrl = URL.createObjectURL(data);
-        tab.location.href = fileUrl;
-      });
-  }
 
   downloadFile(datos)
   {
-    console.log("entro")
-    var ruta;
-    if(datos.type === '.jpg' || datos.type === '.jpeg')
-    {
-      ruta = '/utilerias/img/user/'
-     
-    }
-    else if(datos.type === '.pdf')
-    {
-      ruta = '/utilerias/pdf/'
-    }
+    var ruta = '/utilerias/Files/users/83569bac-0d68-e811-80e1-9e274155325e/'
 
     this.service.DownloadFiles(ruta + datos.nom).subscribe( res =>{
-      console.log(res);
+      saveAs(res, datos.nom)
     })
   
   }
-
-
-  // downloadFile(data: Response){
-  //   var blob = new Blob([data], { type: 'application/pdf' });
-  //   var url= window.URL.createObjectURL(blob);
-  //   window.open(url);
-  // }
 
   closeModal()
   {
@@ -107,7 +124,7 @@ export class FileManagerComponent implements OnInit {
   getTypes(data)
   {
     data.forEach(element => {
-      if(element.ext == '.jpeg' || element.ext == '.jpg')
+      if(element.ext == '.jpeg' || element.ext == '.jpg' || element.ext == '.png')
       {
         this.files.push({
           type: element.ext, 
@@ -127,16 +144,36 @@ export class FileManagerComponent implements OnInit {
           icon: 'fa-file-pdf-o'});
         this.cont_pdf++;
       }
-      
+      else if(element.ext == '.xlsx')
+      {
+        this.files.push({
+          type: element.ext,
+          nom: element.nom,
+          size: element.size,
+          fc: element.fc,
+          icon: 'fa-file-excel-o'});
+        this.cont_xls++;
+      }
+      else 
+      {
+        this.files.push({
+          type: element.ext,
+          nom: element.nom,
+          size: element.size,
+          fc: element.fc,
+          icon: 'fa-file-word-o'});
+        this.cont_word++;
+      }
     });
-    console.log(this.files)
+
   }
 
   GetFiles()
   {
+   
     this.service.GetFiles()
     .subscribe( data => {
-      this.getTypes(data)
+       this.getTypes(data)
     });
     
   }

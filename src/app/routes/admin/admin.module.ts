@@ -31,7 +31,6 @@ import { RollsStructComponent } from './rolls-struct/rolls-struct.component';
 import { SelectModule } from 'ng2-select';
 import { UploadImgsComponent } from './upload-imgs/upload-imgs.component';
 import { SharedModule } from '../../shared/shared.module';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 const routes: Routes = [
     { path: 'roles', component: RollsStructComponent, data: {'componente':'Roles'} },
@@ -75,7 +74,6 @@ const routes: Routes = [
         ModalModule.forRoot(),
         PopoverModule.forRoot(),
         DataTableModule,
-        PdfViewerModule,
         AlertModule.forRoot()
       ],
     declarations:

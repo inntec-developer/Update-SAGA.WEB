@@ -128,7 +128,8 @@ export class ApiConection {
   public static getFiles = 'admin/getFiles';
   public static sendEmailRegister = 'admin/sendEmailRegister';
   public static downloadFiles = 'admin/downloadFiles';
-
+  public static viewFile = 'admin/viewFile';
+  public static uploadFile = 'admin/uploadFile';
 
   /*Seguimiento Vacantes*/
   public static getDtosCard = 'reclutamiento/seguimientovacante/getCard';
