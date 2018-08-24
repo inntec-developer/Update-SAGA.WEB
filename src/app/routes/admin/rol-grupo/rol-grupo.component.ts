@@ -23,10 +23,26 @@ export class RolGrupoComponent implements OnInit {
   filteredGroups: Array<any> = [];
   permisoRol: Array<any> = [];
   msj: string = "";
-  alert = "";
   flag = false;
   verMsj = false;
   rolId = 0;
+  alerts: any[] = [
+    {
+      type: 'success',
+      msg: '',
+      timeout: 4000
+    },
+    {
+      type: 'danger',
+      msg: '',
+      timeout: 4000
+    }
+  ];
+alert = this.alerts;
+onClosed(): void {
+  this.verMsj = false;
+}
+
   constructor(private service: AdminServiceService, public fb: FormBuilder) 
   {
     this.formRol = this.fb.group({
@@ -87,7 +103,8 @@ export class RolGrupoComponent implements OnInit {
 
       this.service.AddGroupRol(lrg)
       .subscribe( data => {
-        this.msj = data;
+        this.alerts[0]['msg'] = data;
+        this.alert = this.alerts[0];
         this.verMsj = true;
         this.ListaRG = [];
         this.ListaAux = [];
@@ -98,7 +115,9 @@ export class RolGrupoComponent implements OnInit {
     }
     else
     {
-      this.alert = "Debe agregar al menos un grupo";
+      this.alerts[1]['msg'] = "Debe agregar al menos un grupo";
+      this.alert = this.alerts[1];
+      this.verMsj = true;
     }
   }
 

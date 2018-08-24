@@ -23,11 +23,26 @@ export class AddGrupoComponent implements OnInit {
   name: string;
   rowAux: any;
   UsuariosList = [];
-  alert = '';
   verMsj = false;
-  success = false;
-  haserror = false;
+
   filteredData = [];
+
+  alerts: any[] = [
+    {
+      type: 'success',
+      msg: '',
+      timeout: 4000
+    },
+    {
+      type: 'danger',
+      msg: '',
+      timeout: 4000
+    }
+  ];
+alert = this.alerts;
+onClosed(): void {
+  this.verMsj = false;
+}
   constructor( public fb: FormBuilder, private service: AdminServiceService )
   {
     this.formGrupos = this.fb.group({
@@ -130,18 +145,16 @@ export class AddGrupoComponent implements OnInit {
       console.log(data)
       if(data == 201)
       {
-        this.alert = 'Los datos se agregaron con éxito';
+        this.alerts[0]['msg'] = 'Los datos se agregaron con éxito';
+        this.alert = this.alerts[0];
         this.verMsj = true;
-        this.success = true;
-        this.haserror = false;
         this.ngOnInit();
       }
       else
       {
-        this.alert = 'Ocurrio un error al intentar agregar datos';
+        this.alerts[1]['msg'] = 'Ocurrio un error al intentar agregar datos';
+        this.alert = this.alerts[1];
         this.verMsj = true;
-        this.success = false;
-        this.haserror = true;
       }
     });
   }
@@ -164,17 +177,15 @@ export class AddGrupoComponent implements OnInit {
       .subscribe( data => {
         if(data == 201)
         {
-          this.alert = 'Los datos se actualizaron con éxito';
+          this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
+          this.alert = this.alerts[0];
           this.verMsj = true;
-          this.success = true;
-          this.haserror = false;
         }
         else
         {
-          this.alert = 'Ocurrio un error al intentar actualizar datos';
+          this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
+          this.alert = this.alerts[1];
           this.verMsj = true;
-          this.success = false;
-          this.haserror = true;
         }
     });
   }
@@ -186,21 +197,18 @@ export class AddGrupoComponent implements OnInit {
       .subscribe( data => {
         if(data == 201)
         {
-          this.alert = 'Los datos se actualizaron con éxito';
+          this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
+          this.alert = this.alerts[0];
           this.verMsj = true;
-          this.success = true;
-          this.haserror = false;
 
           this.Grupos.splice(rowIndex, 1);
           this.Grupos = [...this.Grupos];
         }
         else
         {
-          this.alert = 'Ocurrio un error al intentar actualizar datos';
+          this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
+          this.alert = this.alerts[1];
           this.verMsj = true;
-          this.success = false;
-          this.haserror = true;
-
         }
     });
    

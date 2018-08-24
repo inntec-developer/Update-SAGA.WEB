@@ -1,8 +1,7 @@
-
 import {DataTableModule} from 'primeng/primeng';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule, MatInputModule, MatNativeDateModule, MatSelectModule, MatTooltipModule } from '@angular/material';
-import { ModalModule, PopoverModule } from 'ngx-bootstrap';
+import { ModalModule, PopoverModule, AlertModule } from 'ngx-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 import { AddGrupoComponent } from './add-grupo/add-grupo.component';
 import { AddPersonaComponent } from './add-persona/add-persona.component';
@@ -76,7 +75,8 @@ const routes: Routes = [
         ModalModule.forRoot(),
         PopoverModule.forRoot(),
         DataTableModule,
-        PdfViewerModule
+        PdfViewerModule,
+        AlertModule.forRoot()
       ],
     declarations:
     [

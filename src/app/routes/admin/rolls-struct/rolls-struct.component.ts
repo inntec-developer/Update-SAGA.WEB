@@ -28,11 +28,26 @@ export class RollsStructComponent implements OnInit {
   nuevoRol = false;
   nomRol = '';
   rol = -1;
-  alert = '';
-  success = false;
-  haserror = false;
-  verMsg = false;
+  verMsj = false;
   collapsed = false;
+
+  alerts: any[] = [
+    {
+      type: 'success',
+      msg: '',
+      timeout: 4000
+    },
+    {
+      type: 'danger',
+      msg: '',
+      timeout: 4000
+    }
+  ];
+alert = this.alerts;
+onClosed(): void {
+  this.verMsj = false;
+}
+
   constructor(private service: AdminServiceService) { }
   
   GuardarCambios()
@@ -51,19 +66,17 @@ export class RollsStructComponent implements OnInit {
           .subscribe(data => {
             if(data == 201)
             {
-              this.alert = 'Los datos se agregaron con éxito'
-              this.success = true;
-              this.haserror = false;
-              this.verMsg = true;
+              this.alerts[0]['msg'] = 'Los datos se agregaron con éxito';
+              this.alert = this.alerts[0]; 
+              this.verMsj = true;
               this.grid.privilegios = [];
-              
+              this.GetRoles();              
             }
             else
             {
-              this.alert = 'Ocurrio un error al intentar agregar'
-              this.haserror = true;
-              this.success = false;
-              this.verMsg = true;
+              this.alerts[1]['msg'] = 'Ocurrio un error al intentar agregar'
+              this.alert = this.alerts[1]; 
+              this.verMsj = true;
             }
           });
       }
@@ -73,31 +86,26 @@ export class RollsStructComponent implements OnInit {
           .subscribe(data => {
             if(data == 201)
             {
-              this.alert = 'Los datos se actualizaron con éxito'
-              this.success = true;
-              this.haserror = false;
-              this.verMsg = true;
+              this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito'
+              this.alert = this.alerts[0]; 
+              this.verMsj = true;
               this.grid.privilegios = [];
             }
             else
             {
-              this.alert = 'Ocurrio un error al intentar actualizar'
-              this.haserror = true;
-              this.success = false;
-              this.verMsg = true;
+              this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar'
+              this.alert = this.alerts[1]; 
+              this.verMsj = true;
             }
           });
 
       }
     }
     else {
-      this.alert = 'No se ha seleccionado Estructuras'
-      this.haserror = true;
-      this.success = false;
-      this.verMsg = true;
+      this.alerts[1]['msg'] =  'No se ha seleccionado Estructuras';
+      this.alert = this.alerts[1]; 
+      this.verMsj = true;
     }
-  
-    
   }
 
   public Search(data: any) {
@@ -230,7 +238,7 @@ export class RollsStructComponent implements OnInit {
   }
 
   GetTreeByRol(rol) {
-    this.verMsg = false;
+    this.verMsj = false;
     
     this.service.GetEstructuraRoles(rol)
         .subscribe(
@@ -301,22 +309,18 @@ export class RollsStructComponent implements OnInit {
 
   DeleteRoles(id)
   {
-    console.log(id)
     this.service.DeleteRoles(id)
       .subscribe( data => {
         if(data == 201)
             {
-              this.alert = 'Se borró el Rol con éxito'
-              this.success = true;
-              this.haserror = false;
-              this.verMsg = true;
+              this.alerts[0]['msg'] = 'Se borró el Rol con éxito';
+              this.alert = this.alerts[0]; 
+              this.verMsj = true;
             }
             else
             {
-              this.alert = 'Ocurrio un error al intentar borrar rol'
-              this.haserror = true;
-              this.success = false;
-              this.verMsg = true;
+              this.alerts[1]['msg'] = 'Ocurrio un error al intentar borrar rol';
+              this.alert = this.alerts[1]; 
             }
         this.ngOnInit();
     });

@@ -53,6 +53,8 @@ export class AdminServiceService {
   private UrlGetFiles = ApiConection.ServiceUrl+ApiConection.getFiles;
   private UrlGetImage = ApiConection.ServiceUrl+ApiConection.getImage;
   private UrlSendEmailRegister = ApiConection.ServiceUrl+ApiConection.sendEmailRegister;
+  private UrlDownloadFiles = ApiConection.ServiceUrl+ApiConection.downloadFiles;
+
   // Error.
   private handleError(error: any) {
          console.log('sever error:', error);
@@ -69,7 +71,6 @@ export class AdminServiceService {
 
   UploadImg( file: File, name: any) : Observable<any>
   {
-    console.log(name)
     let formData = new FormData();
     formData.append('image', file, name );
     let headers = new Headers({'Content-Type': 'image/*.*'});
@@ -81,30 +82,51 @@ export class AdminServiceService {
   GetFiles(): Observable<any>
   {
 
-     return this._httpClient.get(this.UrlGetFiles);
+    let httpHeaders = new HttpHeaders({
+      'Access-Control-Allow-Origin': 'http://localhost:4200'
+     })
+ 
+     return this._httpClient.get(this.UrlGetFiles, {headers:httpHeaders});
   }
  
-  
   GetImage(ruta): string
   {
-          
-      return ApiConection.ServiceUrlFileManager + 'img/user/' + ruta;
+    return ApiConection.ServiceUrlFileManager + 'img/user/' + ruta;
   }
 
   GetPdf(ruta): string
   {
-   
-    return ApiConection.ServiceUrlFileManager + 'pdf/' + ruta;
-    
- 
+
+     fetch(ApiConection.ServiceUrlFileManager + 'pdf/' + ruta, { 'mode': 'no-cors'})
+  .then(data => {
+    console.log(data);
+
+  })
+  .catch(e => {
+    console.log(e);
+
+  });
+
+  
+
+  return './../assets/pdf/670_Constancias.pdf';
   }
+
+  DownloadFiles(ruta) : Observable<any>
+  {
+    console.log(ruta)
+    let params = new HttpParams().set('file', ruta);  
+    return this._httpClient.get(this.UrlDownloadFiles, {params: params});
+  }
+
   downloadImage(ruta): Observable<any>
   {
     // let ruta = "utilerias/img/user/08155cc8-3568-e811-80e1-9e274155325e.jpeg";
     // console.log(ruta)
 
     let httpHeaders = new HttpHeaders({
-     'Access-Control-Allow-Origin': 'localhost:4200'
+     'Access-Control-Allow-Origin': 'http://localhost:4200',
+     'Content-Type': 'image/*.*'
     })
 
     let params = new HttpParams().set('ruta', ruta);     

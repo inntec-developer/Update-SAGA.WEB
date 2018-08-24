@@ -24,10 +24,24 @@ export class AddadminComponent implements OnInit {
   IdGrupo: any = null;
   draggable = false;
   msj = 'Arrastrar usuario aqui'
-  alert = '';
   verMsj = false;
-  success = false;
-  haserror = false;
+
+  alerts: any[] = [
+    {
+      type: 'success',
+      msg: '',
+      timeout: 4000
+    },
+    {
+      type: 'danger',
+      msg: '',
+      timeout: 4000
+    }
+  ];
+alert = this.alerts;
+onClosed(): void {
+  this.verMsj = false;
+}
 
   constructor(private service: AdminServiceService, public fb: FormBuilder) {}
 
@@ -69,8 +83,9 @@ export class AddadminComponent implements OnInit {
   }
 
   addToGroups($event, idG) {
+
     //el drag me agrega solo el item por eso lo borro por que se repite
-    var rep = this.ListaPG.filter(x => x.entidadId == $event.entidadId);
+    var rep = this.ListaPG.filter(x => x.entidadId === $event.entidadId);
 
     if(rep.length > 1)
     {
@@ -89,10 +104,7 @@ export class AddadminComponent implements OnInit {
           this.ListEntidades.push($event);
         }
     }
-    else
-    {
-      this.ListEntidades.push($event)
-    }
+   
 
   }
 
@@ -101,10 +113,11 @@ export class AddadminComponent implements OnInit {
     var idx = this.ListaPG.findIndex(x => x.entidadId == id);
 
     if (idx != -1) {
-      this.ListaPG.splice(idx, 1)
+      this.ListaPG.splice(idx, 1) 
       if( this.ListaPG.length == 0)
       {
         this.ListaPG = [];
+        this.ListEntidades = this.filteredData;
       }
     }
 
@@ -185,19 +198,17 @@ export class AddadminComponent implements OnInit {
         .subscribe(data => {
           if(data == 201)
           {
-            this.alert = 'Los datos se actualizaron con éxito';
+            this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
+            this.alert = this.alerts[0];
             this.verMsj = true;
-            this.success = true;
-            this.haserror = false;
             this.ListaPG = [];
             this.ngOnInit();
           }
           else
           {
-            this.alert = 'Ocurrio un error al intentar actualizar datos';
+            this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
+            this.alert = this.alerts[1];
             this.verMsj = true;
-            this.success = false;
-            this.haserror = true;
           }
          
         });
