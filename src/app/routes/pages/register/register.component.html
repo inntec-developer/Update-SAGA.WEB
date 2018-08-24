@@ -99,11 +99,8 @@
           </select>
           <br/>
 
-         <div *ngIf="verMsg" class="alert" [class.alert-success]="success" [class.alert-danger] ="haserror">
-                {{msj}}
-            <button type="button" (click) = "verMsg=false" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+          <div *ngIf="verMsj">
+            <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
           </div>
 
           <button class="btn btn-block btn-primary mt-3"  type="submit" [disabled]="!disabledE"  (click)="submitForm($event, valForm.value)">Crear cuenta</button>

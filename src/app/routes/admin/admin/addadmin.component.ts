@@ -24,10 +24,25 @@ export class AddadminComponent implements OnInit {
   IdGrupo: any = null;
   draggable = false;
   msj = 'Arrastrar usuario aqui'
-  alert = '';
   verMsj = false;
-  success = false;
-  haserror = false;
+
+
+  alerts: any[] = [
+    {
+      type: 'success',
+      msg: '',
+      timeout: 4000
+    },
+    {
+      type: 'danger',
+      msg: '',
+      timeout: 4000
+    }
+  ];
+alert = this.alerts;
+onClosed(): void {
+  this.verMsj = false;
+}
 
   constructor(private service: AdminServiceService, public fb: FormBuilder) {}
 
@@ -185,19 +200,17 @@ export class AddadminComponent implements OnInit {
         .subscribe(data => {
           if(data == 201)
           {
-            this.alert = 'Los datos se actualizaron con éxito';
+            this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
+            this.alert = this.alerts[0];
             this.verMsj = true;
-            this.success = true;
-            this.haserror = false;
             this.ListaPG = [];
             this.ngOnInit();
           }
           else
           {
-            this.alert = 'Ocurrio un error al intentar actualizar datos';
+            this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
+            this.alert = this.alerts[1];
             this.verMsj = true;
-            this.success = false;
-            this.haserror = true;
           }
          
         });

@@ -4,7 +4,7 @@ import {FormBuilder } from '@angular/forms';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import {MatDialog } from '@angular/material';
 import { UploadImgsComponent } from '../upload-imgs/upload-imgs.component';
-
+import { AlertComponent } from 'ngx-bootstrap/alert/alert.component';
 
 @Component({
   selector: 'app-add-persona',
@@ -25,13 +25,29 @@ export class AddPersonaComponent implements OnInit {
   filteredData: Array<any> = [];
   paginacion = [];
   pagIndex = 0;
-  alert: string = '';
   verMsj = false;
-  success = false;
-  haserror = false;
+
   @ViewChild('uploadImg') someInput: UploadImgsComponent;
   @ViewChild('staticModal') modal;
 
+  alerts: any[] = [
+    {
+      type: 'success',
+      msg: '',
+      timeout: 4000
+    },
+    {
+      type: 'danger',
+      msg: '',
+      timeout: 4000
+    }
+  ];
+alert = this.alerts;
+
+ 
+  onClosed(): void {
+    this.verMsj = false;
+  }
   constructor(private service: AdminServiceService ,public fb: FormBuilder, public dialog: MatDialog){}
   
   CrearURL(idP: any)
@@ -39,24 +55,11 @@ export class AddPersonaComponent implements OnInit {
     this.name = idP;
   }
 
-  CrearPaginacion(pag)
-  {
-    console.log(pag)
-    this.paginacion = this.Users;
-    this.Users = this.filteredData;
-
-    this.pagIndex = pag;
-
-  
-    this.Users = this.Users.slice((pag-1) * 5, pag * 5)
-
-  }
 
   updateFoto()
   {
     //this.name = this.name + '.' + this.someInput.selectedFile.type.split('/')[1];
 
-    console.log(this.name)
     if(this.someInput.StatusCode == 201 || this.someInput.StatusCode == 500)
     {
       this.closeModal();
@@ -74,17 +77,19 @@ export class AddPersonaComponent implements OnInit {
     this.service.SendEmailRegister(data).subscribe( res => {
       if(res == 201)
         {
-          this.alert = 'El correo se envió con éxito';
+          this.alerts[0]['msg'] = 'El correo se envió con éxito';
+          this.alert = this.alerts[0];
           this.verMsj = true;
-          this.success = true;
-          this.haserror = false;
+          // this.success = true;
+          // this.haserror = false;
         }
         else
         {
-          this.alert = 'Ocurrio un error al intentar enviar correo';
+          this.alerts[1]['msg'] = 'Ocurrio un error al intentar enviar correo';
+          this.alert = this.alerts[1];
           this.verMsj = true;
-          this.success = false;
-          this.haserror = true;
+          // this.success = false;
+          // this.haserror = true;
         }
     });
 
@@ -170,17 +175,20 @@ export class AddPersonaComponent implements OnInit {
       .subscribe(data => {
         if(data == 201)
         {
-          this.alert = 'Los datos se actualizaron con éxito';
+          
+          this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
+          this.alert = this.alerts[0];
           this.verMsj = true;
-          this.success = true;
-          this.haserror = false;
+          // this.success = true;
+          // this.haserror = false;
         }
         else
         {
-          this.alert = 'Ocurrio un error al intentar actualizar datos';
+          this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
+          this.alert = this.alerts[1];
           this.verMsj = true;
-          this.success = false;
-          this.haserror = true;
+          // this.success = false;
+          // this.haserror = true;
         }
         
       });
@@ -192,17 +200,19 @@ export class AddPersonaComponent implements OnInit {
         .subscribe( data => {
           if(data == 201)
           {
-            this.alert = 'Los datos se actualizaron con éxito';
+            this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
+            this.alert = this.alerts[0];
             this.verMsj = true;
-            this.success = true;
-            this.haserror = false;
+            // this.success = true;
+            // this.haserror = false;
           }
           else
           {
-            this.alert = 'Ocurrio un error al intentar actualizar datos';
+            this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
+            this.alert = this.alerts[1];
             this.verMsj = true;
-            this.success = false;
-            this.haserror = true;
+            // this.success = false;
+            // this.haserror = true;
           }
           
         });

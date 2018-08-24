@@ -12,15 +12,20 @@
   </ol>
 </div>
 
-
+<div *ngIf="verMsj">
+    <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+  </div>
+<br/>
 <div class="panel panel-default panel-flat mat-elevation-z8">
-    <div *ngIf="verMsj" class="alert" [class.alert-success]="success" [class.alert-danger] ="haserror">
+    
+    <!-- <div *ngIf="verMsj" class="alert" [class.alert-success]="success" [class.alert-danger] ="haserror">
         {{alert}}
         <button type="button" (click) = "verMsj=false" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
          </button>
          <br/>
-      </div>
+      </div> -->
+     
   <div class="panel-body">
     <br/>
 
@@ -136,15 +141,10 @@
 
   </div>
   <br/>
-      <div class="panel-footer">
-          <div *ngIf="verMsj" class="alert" [class.alert-success]="success" [class.alert-danger] ="haserror">
-              {{alert}}
-              <button type="button" (click) = "verMsj=false" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-               </button>
+          <div *ngIf="verMsj">
+              <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
             </div>
-      
-  </div>
+
 
 
   <!-- Modal  -->

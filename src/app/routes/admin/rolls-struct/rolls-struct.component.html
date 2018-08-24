@@ -44,24 +44,18 @@
     </div>
 <br/><br/>
 
-<div *ngIf="verMsg" class="alert" [class.alert-success]="success" [class.alert-danger] ="haserror">
-    {{alert}}
-    <button type="button" (click) = "verMsg=false" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-     </button>
+<div *ngIf="verMsj">
+    <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
   </div>
-    
+  <br/>
        <grid-roles #grid [nodes] = "nodes" [rol]="rol"></grid-roles>
 
 
     <div class="row">
       <div class="col-md-12">
-       <div *ngIf="verMsg" class="alert" [class.alert-success]="success" [class.alert-danger] ="haserror">
-          {{alert}}
-          <button type="button" (click) = "verMsg=false" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-           </button>
-        </div>
+          <div *ngIf="verMsj">
+              <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+            </div>
         <btn-check id='create' [xs]="true" chkPrivilegiosButtons class="btn-xs float-right marginButtonsFinal" (click)="GuardarCambios()" matTooltip="Guardar Cambios"></btn-check>
           </div>
         </div>

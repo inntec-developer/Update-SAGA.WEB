@@ -20,20 +20,34 @@ export class RegisterComponent implements OnInit {
     valForm: FormGroup;
     passwordForm: FormGroup;
     email: Array<any>=[];
-    msj: string = '';
     ListDepas: Array<any> = [];
     user: string = '';
-    verMsg = false;
-    success = false;
-    haserror = false;
+    verMsj = false;
+
     @ViewChild('pop') epopover;
     @ViewChild('MessageModal') ShownModal: ModalDirective;
+
     isModalShown: boolean = false;
     prefijo: string = 'DAL';
-
-   // @ViewChild('pop2') epopover2;
     disabledE = false;
-    //disabledC= false;
+    alerts: any[] = [
+        {
+          type: 'success',
+          msg: '',
+          timeout: 4000
+        },
+        {
+          type: 'danger',
+          msg: '',
+          timeout: 4000
+        }
+      ];
+    alert = this.alerts;
+
+    onClosed(): void {
+      this.verMsj = false;
+    }
+
     constructor(public settings: SettingsService,
                 fb: FormBuilder,
                 private service: AdminServiceService,
@@ -127,30 +141,27 @@ export class RegisterComponent implements OnInit {
                 this.service.AddUsers(persona)
                     .subscribe(data => {
                         if (data == 201) {
-                            this.msj = 'El usuario' + persona.Usuario + 'se registro con éxito';
-                            this.verMsg = false;
-                            this.success = false;
-                            this.haserror = false;
-                           
+                            this.alerts[0]['msg'] = 'El usuario' + persona.Usuario + 'se registro con éxito';
+                            this.alert = this.alerts[0];
+                            this.verMsj = false;
+
                             this.showModal();
                             //this.valForm = null;
                         }
                         else {
-                            this.msj = 'Ocurrio un error al intentar agregar usuario: ' + persona.Usuario;
-                            this.verMsg = true;
-                            this.haserror = true;
-                            this.success = false;
+                            this.alerts[1]['msg'] = 'Ocurrio un error al intentar agregar usuario: ' + persona.Usuario;
+                            this.alert = this.alerts[1];
+                            this.verMsj = true;
                             this.ngOnInit();
                         }
                     });
             }
             else {
-                this.msj = 'El email: ' + this.valForm.controls['email'].value + ' ya se encuentra registrado';
+                this.alerts[1]['msg'] = 'El email: ' + this.valForm.controls['email'].value + ' ya se encuentra registrado';
+                this.alert = this.alerts[1];
                 this.epopover.show();
                 this.disabledE = false;
-                this.verMsg = true;
-                this.haserror = true;
-                this.success = false;
+                this.verMsj = true;
             }
         }
     }
@@ -194,27 +205,23 @@ export class RegisterComponent implements OnInit {
                 data => {
                     if( data != 404)
                     {
-                        this.msj = 'El email: ' + email + ' ya se encuentra registrado';
+                        this.alerts[1]['msg'] = 'El email: ' + email + ' ya se encuentra registrado';
+                        this.alert = this.alerts[1];
                         this.epopover.show();
                         this.disabledE = false;
-                        this.verMsg = true;
-                        this.haserror = true;
-                        this.success = false;
-
+                        this.verMsj = true;
                     }
                     else
                     {
                         this.disabledE = true;
-                        this.haserror = false;
-                        this.success = false;
-                        this.verMsg = false;
+                        this.verMsj = false;
                        this.epopover.hide();
                     }
                 },
                 error => {
-                   this.msj = error;
-                   this.haserror = true;
-                   this.success = false;
+                  this.alerts[1]['msg'] = error;
+                  this.alert = this.alerts[1];
+                  this.verMsj = true;
                 });
     }
 

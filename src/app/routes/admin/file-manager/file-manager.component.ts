@@ -39,7 +39,6 @@ export class FileManagerComponent implements OnInit {
 
   verArchivo(datos)
   {
-    console.log(datos)
     if(datos.type === '.jpeg' || datos.type === '.jpg')
     {
       
@@ -55,7 +54,8 @@ export class FileManagerComponent implements OnInit {
     
         this.imgShow = false;
         this.pdfShow = true;
-        this.pdfSrc = this.service.GetPdf('670_Constancias.pdf');
+        this.pdfSrc = this.service.GetPdf(datos.nom);
+        console.log(this.pdfSrc)
         this.modal.show()
     
     }
@@ -74,22 +74,22 @@ export class FileManagerComponent implements OnInit {
 
   downloadFile(datos)
   {
+    console.log("entro")
+    var ruta;
     if(datos.type === '.jpg' || datos.type === '.jpeg')
     {
-      this.service.downloadImage(datos.nom).subscribe( res => {
-        saveAs(res, datos.nom);
-      });
+      ruta = '/utilerias/img/user/'
+     
     }
     else if(datos.type === '.pdf')
     {
-      this.service
-       .downloadPDF(datos.nom)
-        .subscribe(data => {
-          saveAs(data, datos.nom);
-      });
-
+      ruta = '/utilerias/pdf/'
     }
 
+    this.service.DownloadFiles(ruta + datos.nom).subscribe( res =>{
+      console.log(res);
+    })
+  
   }
 
 
@@ -136,7 +136,6 @@ export class FileManagerComponent implements OnInit {
   {
     this.service.GetFiles()
     .subscribe( data => {
-      console.log(data)
       this.getTypes(data)
     });
     

@@ -14,9 +14,10 @@
 
 
 <form [formGroup]="formRol" novalidate>
-    <div *ngIf="verMsj" class="alert alert-success">
-        {{msj}}
+    <div *ngIf="verMsj">
+        <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
       </div>
+    <br/>
   <div class="row">
     <div class="col-md-4">
       <div class="input-group">
