@@ -117,7 +117,7 @@ export class DtDamfoComponent implements OnInit {
             this.showFilterRow = true;
             filteredData = filteredData.filter((item: any) => {
               if(item[column.name] != null)
-                return item[column.name].toString().match(column.filtering.filterString);
+                return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
             });
         }
     });
@@ -128,7 +128,7 @@ export class DtDamfoComponent implements OnInit {
 
     if (config.filtering.columnName) {
         return filteredData.filter((item: any) =>
-            item[config.filtering.columnName].match(this.config.filtering.filterString));
+            item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
     }
 
     let tempArray: Array<any> = [];
@@ -138,7 +138,7 @@ export class DtDamfoComponent implements OnInit {
           if(item[column.name] == null){
             flag = true;
           }else{
-            if (item[column.name].toString().match(this.config.filtering.filterString)) {
+            if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
               flag = true;
             }
           }            
