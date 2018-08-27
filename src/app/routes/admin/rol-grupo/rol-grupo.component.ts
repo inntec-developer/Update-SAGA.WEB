@@ -46,14 +46,15 @@ onClosed(): void {
   constructor(private service: AdminServiceService, public fb: FormBuilder) 
   {
     this.formRol = this.fb.group({
-      slcRol: ['0', [Validators.required]]
+      slcRol: ["-1", [Validators.required]]
     })
 
   }
 
   onSelect(item: any) 
   {
-    if(this.formRol.controls['slcRol'].value !== '0')
+    console.log(this.formRol.controls['slcRol'].value)
+    if(this.formRol.controls['slcRol'].value !== '-1' && this.formRol.controls['slcRol'].value !== null)
     {
       var entidad = this.ListaRG.findIndex(x => x.entidadId == item.entidadId);
 
@@ -87,7 +88,8 @@ onClosed(): void {
 
   saveData(RolId: any)
   {
-    console.log(this.ListaAux)
+    if(RolId !== "-1")
+    {
     if(this.ListaAux.length > 0)
     {
       let lrg = [];
@@ -120,9 +122,15 @@ onClosed(): void {
       this.verMsj = true;
     }
   }
+  else
+  {
+    this.formRol.markAsDirty;
+  }
+  }
 
   selected($event)
   {
+    console.log($event.target.value)
     this.verMsj = false;
     this.service.GetEntidadesUG($event.target.value)
         .subscribe( data => {

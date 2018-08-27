@@ -24,7 +24,7 @@ export class AddGrupoComponent implements OnInit {
   rowAux: any;
   UsuariosList = [];
   verMsj = false;
-
+  ListTipos = [];
   filteredData = [];
 
   alerts: any[] = [
@@ -48,7 +48,8 @@ onClosed(): void {
     this.formGrupos = this.fb.group({
       Nombre: ['', [Validators.required]],
       Descripcion: "",
-      Activo: 1
+      Activo: 1,
+      slcTipos: ['', [Validators.required]],
       });
   }
 
@@ -91,6 +92,25 @@ onClosed(): void {
       }
       this.editing[rowIndex + '-' + cell] = false;
     }
+    this.Grupos = [...this.Grupos];
+  }
+
+  UpdateTipo(event, cell, rowIndex) 
+  {
+    var aux;
+    if (cell === "tipoUsuarioId") 
+    {
+      aux = this.ListTipos.find(nt => nt.id == event.target.value);
+      this.Grupos[rowIndex]['tipoUsuario'] = aux.tipo;
+      this.Grupos[rowIndex]['tipoUsuarioId'] = event.target.value;
+      this.editing[rowIndex + '-' + 'tipoUsuario'] = false;
+    }
+    else if(event.target.value !== '')
+    {
+      this.Grupos[rowIndex][cell] = event.target.value;
+    }
+
+    this.editing[rowIndex + '-' + cell] = false;
     this.Grupos = [...this.Grupos];
   }
 
@@ -137,6 +157,7 @@ onClosed(): void {
       Nombre: this.formGrupos.controls['Nombre'].value,
       Descripcion: this.formGrupos.controls['Descripcion'].value, 
       Activo: this.formGrupos.controls['Activo'].value,
+      Tipo: this.formGrupos.controls['slcTipos'].value,
       Foto: "utilerias/img/user/WorkTeam.jpg"
     }
 
@@ -214,8 +235,18 @@ onClosed(): void {
    
   }
 
+  GetTipos() 
+  {
+    this.service.getTipos()
+      .subscribe(
+        e => {
+          this.ListTipos = e;
+        })
+  }
+
   ngOnInit() {
     this.getGrupos();
+    this.GetTipos();
     this.formGrupos.controls['Nombre'].reset();
     this.formGrupos.controls['Descripcion'].reset();
   }

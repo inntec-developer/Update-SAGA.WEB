@@ -63,11 +63,12 @@
       <div class="panel panel-default panel-flat mat-elevation-z8">
         <div class="panel-heading">Grupos:
           <select class="form-control form-control-sm width-mio" #slcGrupo formControlName="slcGrupo" (change)="flag = true; draggable = true; IdGrupo = $event.target.value; GetUserByGroup($event.target.value); ">
+            <option [value]="0">Seleccionar Grupo</option>
             <option *ngFor="let grupos of listGrupos" [value]="grupos.id">{{grupos.nombre}}</option>
           </select>
           <span class="text-danger" *ngIf="formAdmin.controls['slcGrupo'].hasError('required')">Debe seleccionar un Grupo</span>
           <div class="pull-right margin-mio">
-            <btn-check id='create' [xs]="true" [disabled]="!formAdmin.invalid" chkPrivilegiosButtons matTooltip="Guardar Cambios" (click)="addUsuarioGrupo()"></btn-check>
+            <btn-check id='create' [xs]="true" [disabled]="!formAdmin.invalid" chkPrivilegiosButtons matTooltip="Guardar Cambios" (click)="addUsuarioGrupo(IdGrupo)"></btn-check>
             <span></span>
             <!-- <btn-delete matTooltip="Vaciar Lista" (click)="resetBasket()"></btn-delete> -->
           </div>

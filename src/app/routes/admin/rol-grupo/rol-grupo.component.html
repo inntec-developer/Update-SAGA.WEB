@@ -80,11 +80,13 @@
    
           <div class="col-md-6">
             <select #slcRol class="form-control" (change)="selected($event); rolId = $event.target.value" formControlName="slcRol">
-              <option [value]="0">Seleccionar Rol</option>
+              <option [value]="-1">Seleccionar Rol</option>
               <option *ngFor="let r of Roles; let i = index" [value]="r.id">{{r.rol}}</option>
             </select>
 
-            <span class="text-danger" *ngIf="formRol.controls['slcRol'].hasError('required')">Debe seleccionar un Rol</span>
+            <div *ngIf="formRol.controls['slcRol'].invalid && (formRol.controls['slcRol'].dirty || formRol.controls['slcRol'].touched)" >
+            <span class="text-danger" *ngIf="formRol.controls['slcRol'].errors.required" >Debe seleccionar un Rol</span>
+            </div>
           
           </div>
         

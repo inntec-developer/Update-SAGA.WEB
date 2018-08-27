@@ -47,7 +47,7 @@ onClosed(): void {
 
   ngOnInit() {
     this.formAdmin = this.fb.group({
-      slcGrupo: ['', [Validators.required]],
+      slcGrupo: ['0', [Validators.required]],
       filterInput: ''
     });
 
@@ -58,7 +58,7 @@ onClosed(): void {
 
   public Search(data: any) {
     let tempArray: Array<any> = [];
-    let colFiltar: Array<any> = [ { title: "nombre" }, { title: "apellidoPaterno" }];
+    let colFiltar: Array<any> = [{ title: "nombre" }, { title: "apellidoPaterno" }];
 
     this.filteredData.forEach(function (item) {
       let flag = false;
@@ -124,33 +124,42 @@ onClosed(): void {
   }
 
   DeleteUsers(grupo, user, index) {
-    var idx = this.ListAuxEntidades.findIndex(x => x.entidadId === user);
-
-    var grupos = this.ListAuxEntidades[idx]['grupos'];
-    var id = grupos.findIndex(x => x.id == grupo);
-    if(id != -1)
-    {
-      grupos.splice(id, 1);
-      this.ListAuxEntidades[idx]['grupos'] = grupos;
-      this.ListEntidades = this.ListAuxEntidades;
-    }
+   
           
     let dts = { GrupoId: grupo, EntidadId: user };
 
     this.service.DeleteUserGroup(dts)
       .subscribe(
         e => {
-          var idx = this.ListEntidades.findIndex(x => x.entidadId === user);
-          if(idx != -1)
+          if(e === 201)
           {
-            this.ListEntidades[idx]['grupos'] = grupos;
+                      // var idx = this.ListAuxEntidades.findIndex(x => x.entidadId === user);
+              var idx = this.ListEntidades.findIndex(x => x.entidadId === user);
+              // var grupos = this.ListAuxEntidades[idx]['grupos'];
+              var grupos = this.ListEntidades[idx]['grupos'];
+
+              var id = grupos.findIndex(x => x.id == grupo);
+              if(id != -1)
+              {
+                grupos.splice(id, 1);
+                // this.ListAuxEntidades[idx]['grupos'] = grupos;
+                this.ListEntidades[idx]['grupos'] = grupos;
+              }
+
+              grupos = [];
           }
-          grupos = [];
-         // this.GetEntidades();
+          // var idx = this.ListEntidades.findIndex(x => x.entidadId === user);
+          // if(idx != -1)
+          // {
+          //   this.ListEntidades[idx]['grupos'] = grupos;
+          // }
+        
         })
   }
 
   GetUserByGroup(Id) {
+    if(Id !== "0")
+    {
     this.service.GetUsuarioByGrupo(Id)
       .subscribe(
         e => {
@@ -177,21 +186,29 @@ onClosed(): void {
           //   }
           // });
         })
+      }
+      else
+      {
+        this.ListaPG = [];
+      }
         
   }
 
-  addUsuarioGrupo() {
+  addUsuarioGrupo(idgrupo) {
+    console.log(idgrupo)
+    if(idgrupo !== "0" && idgrupo != null)
+    {
     let lug = [];
     
     var uniq = this.ListaPG.filter((elem, pos, arr) => {
-      return elem.grupos.findIndex(x => x.id == this.IdGrupo) < 0
+      return elem.grupos.findIndex(x => x.id == idgrupo) < 0
 
     }); //me regresa los que no estan repetidos
 
 
     if (uniq.length > 0) {
       for (let ug of uniq) {
-        lug.push({ EntidadId: ug.entidadId, GrupoId: this.IdGrupo });
+        lug.push({ EntidadId: ug.entidadId, GrupoId: idgrupo });
       }
 
       this.service.addUserGroup(lug)
@@ -202,6 +219,7 @@ onClosed(): void {
             this.alert = this.alerts[0];
             this.verMsj = true;
             this.ListaPG = [];
+            this.IdGrupo = "0";
             this.ngOnInit();
           }
           else
@@ -215,9 +233,15 @@ onClosed(): void {
 
     }
     else {
-      alert("Debe agregar al menos un usuario");
+      this.alerts[1]['msg'] = 'Debe al menos agregar un usuario';
+      this.alert = this.alerts[1];
+      this.verMsj = true;
     }
-
+  }
+  else
+  {
+    this.formAdmin.markAsDirty;
+  }
   }
 
   GetEntidades() {
@@ -233,7 +257,7 @@ onClosed(): void {
           this.ListAuxEntidades = this.ListEntidades;
 
           this.filteredData = this.ListEntidades;
-          console.log(this.ListEntidades)
+         
         })
   }
 
