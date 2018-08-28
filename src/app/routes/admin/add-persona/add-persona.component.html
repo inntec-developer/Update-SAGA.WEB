@@ -110,7 +110,7 @@
               <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-departamento'] = true" *ngIf="!editing[rowIndex + '-departamento']">
                 {{p.departamento}}
               </span>
-              <select (change)="updateValue($event, 'departamentoId', rowIndex)" *ngIf="editing[rowIndex + '-departamento']">
+              <select class="form-control-sm" (change)="updateValue($event, 'departamentoId', rowIndex)" *ngIf="editing[rowIndex + '-departamento']">
                 <option [value]=0>Seleccionar Departamento</option>
                 <option *ngFor="let d of ListDepas" [value]='d.id'>{{d.nombre}}</option>
               </select>

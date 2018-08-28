@@ -110,22 +110,32 @@ onClosed(): void {
 
   PopUsers(id)
   {
-    var idx = this.ListaPG.findIndex(x => x.entidadId == id);
-
+    var idx = this.ListaPG.findIndex(x => x.entidadId == id); //entidad que se quitará del panel
     if (idx != -1) {
-      this.ListaPG.splice(idx, 1) 
-      if( this.ListaPG.length == 0)
+      this.ListaPG.splice(idx, 1) //quito la entidad
+
+      var ind = this.ListAuxEntidades.findIndex(x => x.entidadId == id); //entidad que se agregara al panel principal
+      if(ind != -1 )
       {
-        this.ListaPG = [];
-        this.ListEntidades = this.filteredData;
+        if(this.ListEntidades.length > 0 )
+        {
+          var aux = this.ListEntidades.findIndex(x => x.entidadId === id)
+          if(aux === -1)
+          {
+            this.ListEntidades.push(this.ListAuxEntidades[ind]);  //para que no repita usuario
+          }
+        }
+        else
+        {
+          this.ListEntidades.push(this.ListAuxEntidades[ind]);
+        }
       }
     }
 
   }
 
   DeleteUsers(grupo, user, index) {
-   
-          
+
     let dts = { GrupoId: grupo, EntidadId: user };
 
     this.service.DeleteUserGroup(dts)
@@ -133,19 +143,18 @@ onClosed(): void {
         e => {
           if(e === 201)
           {
-                      // var idx = this.ListAuxEntidades.findIndex(x => x.entidadId === user);
               var idx = this.ListEntidades.findIndex(x => x.entidadId === user);
-              // var grupos = this.ListAuxEntidades[idx]['grupos'];
+
               var grupos = this.ListEntidades[idx]['grupos'];
 
               var id = grupos.findIndex(x => x.id == grupo);
               if(id != -1)
               {
                 grupos.splice(id, 1);
-                // this.ListAuxEntidades[idx]['grupos'] = grupos;
                 this.ListEntidades[idx]['grupos'] = grupos;
               }
 
+              this.GetUserByGroup(grupo);
               grupos = [];
           }
           // var idx = this.ListEntidades.findIndex(x => x.entidadId === user);
@@ -158,17 +167,17 @@ onClosed(): void {
   }
 
   GetUserByGroup(Id) {
-    if(Id !== "0")
-    {
-    this.service.GetUsuarioByGrupo(Id)
-      .subscribe(
-        e => {
-  
-          this.ListaPG = e;
-          this.ListaPG.forEach(item => {
-            item.fotoAux = ApiConection.ServiceUrlFoto + item.foto;
-          })
 
+    if(Id !== "0" && Id !== 0 && Id === this.IdGrupo)
+    {
+      this.service.GetUsuarioByGrupo(Id)
+        .subscribe(
+          e => {
+            this.ListaPG = e;
+            this.ListaPG.forEach(item => {
+              item.fotoAux = ApiConection.ServiceUrlFoto + item.foto;
+            })
+          
           // var idx = this.ListEntidades.findIndex(x => x.entidadId == Id);
           // if( idx != -1)
           // {
@@ -195,8 +204,8 @@ onClosed(): void {
   }
 
   addUsuarioGrupo(idgrupo) {
-    console.log(idgrupo)
-    if(idgrupo !== "0" && idgrupo != null)
+
+    if(idgrupo !== "0" && idgrupo != null && idgrupo != 0)
     {
     let lug = [];
     

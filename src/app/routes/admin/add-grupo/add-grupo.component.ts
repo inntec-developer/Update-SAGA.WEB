@@ -97,20 +97,14 @@ onClosed(): void {
 
   UpdateTipo(event, cell, rowIndex) 
   {
-    var aux;
-    if (cell === "tipoUsuarioId") 
-    {
-      aux = this.ListTipos.find(nt => nt.id == event.target.value);
-      this.Grupos[rowIndex]['tipoUsuario'] = aux.tipo;
-      this.Grupos[rowIndex]['tipoUsuarioId'] = event.target.value;
-      this.editing[rowIndex + '-' + 'tipoUsuario'] = false;
-    }
-    else if(event.target.value !== '')
-    {
-      this.Grupos[rowIndex][cell] = event.target.value;
-    }
+    console.log(event.target.value)
 
-    this.editing[rowIndex + '-' + cell] = false;
+    var aux;
+
+    aux = this.ListTipos.find(nt => nt.id == event.target.value);
+    this.Grupos[rowIndex]['tipoGrupo'] = aux.tipo;
+    this.Grupos[rowIndex]['tipoGrupoId'] = event.target.value;
+    this.editing[rowIndex + '-' + 'tipoGrupo'] = false;
     this.Grupos = [...this.Grupos];
   }
 
@@ -157,10 +151,11 @@ onClosed(): void {
       Nombre: this.formGrupos.controls['Nombre'].value,
       Descripcion: this.formGrupos.controls['Descripcion'].value, 
       Activo: this.formGrupos.controls['Activo'].value,
-      Tipo: this.formGrupos.controls['slcTipos'].value,
+      TipoGrupoId: this.formGrupos.controls['slcTipos'].value,
       Foto: "utilerias/img/user/WorkTeam.jpg"
     }
 
+    console.log(grupo)
     this.service.addGrupos(grupo)
     .subscribe( data => {
       console.log(data)
@@ -194,21 +189,24 @@ onClosed(): void {
   updateGrupo($event,rowIndex)
   {
     let gu = this.Grupos[rowIndex]
-    this.service.UpdateGrupo(gu)
-      .subscribe( data => {
-        if(data == 201)
-        {
-          this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
-          this.alert = this.alerts[0];
-          this.verMsj = true;
-        }
-        else
-        {
-          this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
-          this.alert = this.alerts[1];
-          this.verMsj = true;
-        }
-    });
+
+      this.service.UpdateGrupo(gu)
+        .subscribe( data => {
+          if(data == 201)
+          {
+            this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
+            this.alert = this.alerts[0];
+            this.verMsj = true;
+          }
+          else
+          {
+            this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
+            this.alert = this.alerts[1];
+            this.verMsj = true;
+          }
+      });
+  
+   
   }
 
   DeleteGrupo( $even, rowIndex: any ) 

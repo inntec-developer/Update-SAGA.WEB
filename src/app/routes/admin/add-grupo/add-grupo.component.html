@@ -78,14 +78,14 @@
                               <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-descripcion'] = true" *ngIf="!editing[rowIndex + '-descripcion']">
                                   {{g.descripcion}}
                               </span>
-                              <textarea autofocus (blur)="updateValue($event, 'descripcion', rowIndex)" *ngIf="editing[rowIndex + '-descripcion']" [value]=g.descripcion maxlength="200" rows="1"></textarea>
+                              <textarea class="form-control" autofocus (blur)="updateValue($event, 'descripcion', rowIndex)" *ngIf="editing[rowIndex + '-descripcion']" [value]=g.descripcion maxlength="200" rows="1"></textarea>
                            </td>
                            <td class="text-center">
-                            <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-tipoUsuario'] = true" *ngIf="!editing[rowIndex + '-tipoUsuario']">
-                              <!-- {{p.tipoUsuario}} -->
+                            <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-tipoGrupo'] = true" *ngIf="!editing[rowIndex + '-tipoGrupo']">
+                              {{g.tipoGrupo}}
                             </span>
-                            <select (change)="updateValue($event, 'tipoUsuarioId', rowIndex)" *ngIf="editing[rowIndex + '-tipoUsuario']">
-                              <option [value]=0>Seleccionar Tipo Usuario</option>
+                            <select class="form-control-sm" (change)="UpdateTipo($event, 'tipoGrupoId', rowIndex)" *ngIf="editing[rowIndex + '-tipoGrupo']">
+                              <option [value]='-1'>Seleccionar Tipo Grupo</option>
                               <option *ngFor="let t of ListTipos" [value]='t.id'>{{t.tipo}}</option>
                             </select>
                           </td>
@@ -129,16 +129,16 @@
         <mat-form-field>
           <textarea matInput formControlName="Descripcion" placeholder="Descripción" maxlength="80" rows="1"></textarea>
         </mat-form-field>  
-        <br/>
-        <div>
-        <select #slcTipos>
-          <option [value]=0>Seleccionar Tipo Grupo</option>
-          <option *ngFor="let t of ListTipos" [value]='t.id'>{{t.tipo}}</option>
-        </select>
-        <p>
-          <span *ngIf="formGrupos.controls['slcTipos'].touched && !formGrupos.controls['slcTipos'].valid">Tipo de grupo es requerido</span>
-        </p>
-      </div>
+        <mat-form-field>
+            <mat-select #slcTipos placeholder="Seleccionar Tipo Grupo" formControlName="slcTipos">
+              <mat-option *ngFor="let t of ListTipos" [value]="t.id">
+                {{t.tipo}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <p>
+              <span *ngIf="formGrupos.controls['slcTipos'].touched && !formGrupos.controls['slcTipos'].valid">Tipo de grupo es requerido</span>
+            </p>
       </section>
     <br/>
       <input matInput placeholder="Grupo Activo">
