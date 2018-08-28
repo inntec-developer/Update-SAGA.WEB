@@ -19,7 +19,6 @@ declare var $: any;
 })
 export class DtVacantesReclutadorComponent implements OnInit {
   public dataSource: Array<any> = [];
-  Vacantes: number = 0;
 
   // Varaibles del paginador
   public page: number = 1;
@@ -180,7 +179,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
         this.spinner.hide();
       });
     }, 500);
-
   }
 
   public refreshTable() {
