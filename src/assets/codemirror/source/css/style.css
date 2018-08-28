@@ -13,64 +13,78 @@
   display: flex !important;
   flex-direction: column !important;
   min-width: 100% !important;
+  font-size: 12px !important;
 }
 
 .dt-header {
   min-height: 64px !important;
   padding: 8px 24px 0 !important;
+  font-size: 12px !important;
 }
 
 .mat-form-field {
-  font-size: 10px !important;
+  font-size: 12px !important;
   width: 100% !important;
 }
 
-.mat-table {
-  font-size: 10px !important;
-  overflow: auto !important;
-  max-height:100% !important;
+/* ---------------------------------------------------------------------- */
+/*  Estados en Grid
+/* ---------------------------------------------------------------------- */
+
+tr.selected td {
+  background-color:  #5d9cec !important;
+  color: white;
 }
 
-.mat-header-cell {
-    font-weight: bold !important;
-    color: whitesmoke !important;
+tr.confident td {
+  background-color:  #fcffdd;
+  color: black;  
 }
-
-.mat-cell{
-  font-size: 10px !important;
-}
-
-.mat-header-row {
-    min-height: 40px !important;
-    background-color: rgb(91, 176, 255) !important;
-}
-
-.mat-header-cell{
-
-  font-weight: auto !important;
-  color: whitesmoke !important;
-}
-
-.mat-header-row, .mat-row {
-  border-collapse: separate !important;
-  table-layout: auto !important;
-  display: flex !important;
-  border-bottom-width: 1px !important;
-  border-bottom-style: solid !important;
-  align-items: center;
-  padding: 0px 7px !important;
-  box-sizing: border-box;
-}
-
-.mat-row {
-    min-height: 40px !important;
+tr.cancel td {
+  background-color:  #ffc7c7;
+  color: black;  
 }
 
 
-.mat-cell-right{
-  text-align: right !important;
-  margin-right: 15px !important;
+/* ---------------------------------------------------------------------- */
+/*  Table response
+/* ---------------------------------------------------------------------- */
+
+@media screen and (max-width: 1200px) {
+  table {
+      width:100%;
+  }
+  thead {
+      display: none;
+  }
+  tr:nth-of-type(2n) {
+      background-color: inherit;
+  }
+  tr td:first-child {
+      background: #f0f0f0;
+      font-weight:bold;
+      font-size:1.3em;
+  }
+  tbody td {
+      display: block;
+      text-align:center;
+  }
+  tbody td:before {
+      content: attr(data-th);
+      display: block;
+      text-align:center;
+  }
 }
-.mat-cell-center{
-  text-align: center !important;
+
+/* ---------------------------------------------------------------------- */
+/*  Encabezados de vistas de tablas Views
+/* ---------------------------------------------------------------------- */
+
+.title-headre-view{
+  padding: 8px 25px 0 !important;
 }
+
+
+div.card-header em{
+  margin-right: 10px;
+} 

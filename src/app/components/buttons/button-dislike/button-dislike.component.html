@@ -1,4 +1,6 @@
-<button [disabled]="vacantesId != requisicionId && Status != 0" type="button"
-  [ngClass]="(Status == 0 || vacantesId == requisicionId) ? 'mb-1 btn-xs btn btn-outline-danger':'mb-1 btn-xs btn btn-outline-secondary'">
+<button 
+  *ngIf="vacantesId == requisicionId && Status == 0 " type="button"
+  [ngClass]="{'btn-xs': xs}"
+  [ngClass]="(Status == 0 || vacantesId == requisicionId) ? 'mb-1 btn btn-outline-danger':'mb-1  btn btn-outline-secondary'">
   <em class="fa fa-thumbs-o-down"></em>
 </button>

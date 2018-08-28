@@ -6,7 +6,7 @@ import {startWith} from 'rxjs/operators/startWith';
 import {map} from 'rxjs/operators/map';
 
 // Servicios
-import { CandidatosService } from '../../../../../service/index';
+import { CandidatosService } from '../../../../../service';
 
 @Component({
   selector: 'app-estado',

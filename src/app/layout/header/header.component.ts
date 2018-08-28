@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
     constructor(public menu: MenuService, public userblockService: UserblockService, public settings: SettingsService) {
 
         // show only a few items on demo
-        this.menuItems = menu.getMenu().slice(0,4); // for horizontal layout
+        this.menuItems = menu.setEstructuraMenu().slice(0,4); // for horizontal layout
 
     }
 

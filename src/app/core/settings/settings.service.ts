@@ -23,10 +23,11 @@ export class SettingsService {
         // App Settings
         // -----------------------------------
         this.app = {
-            vertion: 'V1.20180306_1119',
+            vertion: 'V1.0.1',
             name: 'SAGA - Inntec',
             description: 'Sistema Administrativo de Gestión Avanzada',
-            year: ((new Date()).getFullYear())
+            year: ((new Date()).getFullYear()),
+            prefijo: 'DAL'
         };
 
         // Layout Settings
@@ -60,7 +61,6 @@ export class SettingsService {
     getLayoutSetting(name) {
         return name ? this.layout[name] : this.layout;
     }
-
     setAppSetting(name, value) {
         if (typeof this.app[name] !== 'undefined') {
             this.app[name] = value;

@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ButtonCheckComponent implements OnInit {
 
   @Input('disabled') disabled: boolean = false;
-
+  @Input('xs') xs: boolean = false;
   constructor() { }
 
   ngOnInit() {

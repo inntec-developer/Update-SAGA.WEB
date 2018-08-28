@@ -1,7 +1,7 @@
 import { AfterContentChecked, AfterViewChecked, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { ComponentsService } from './../../service/Components/components.service';
+import { ComponentsService } from '../../service/Components/components.service';
 
 @Component({
   selector: 'app-asignar-requisicion',

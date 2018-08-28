@@ -1,50 +1,50 @@
 <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
 <div>
-  <h3>Eliminar Requisicion {{requisicion.folio}}</h3>
+  <h3>Eliminar Requisici&oacute;n {{requisicion.folio}}</h3>
 </div>
 <mat-divider></mat-divider>
 <div class="row">
   <div class="col-sm-12">
-    <small>
-      <strong>Cliente: </strong> <p>{{data.cliente?.nombrecomercial}}</p></small>
+    
+      <strong>Cliente: </strong> <p>{{data.cliente}}</p>
   </div>
 </div>
 <div class="row">
   <div class="col-md-4 col-sm-4">
-    <small>
-      <strong>Giro: </strong><p>{{data.cliente?.giroEmpresas?.giroEmpresa}}</p></small>
+    
+      <strong>Giro: </strong><p>{{data.giroEmpresa}}</p>
   </div>
   <div class="col-md-4 col-sm-4">
-    <small>
-      <strong>Actividad: </strong><p>{{data.cliente?.actividadEmpresas?.actividadEmpresa}}</p></small>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-4 col-sm-4">
-    <small>
-      <strong>Puesto: </strong><p>{{data.vBtra}}</p></small>
-  </div>
-  <div class="col-md-4 col-sm-4">
-    <small>
-      <strong>Sueldo Minimo: </strong><p>{{data.sueldoMinimo | currency: '$'}}</p></small>
-  </div>
-  <div class="col-md-4 col-sm-4">
-    <small>
-      <strong>Sueldo Maximo: </strong><p>{{data.sueldoMaximo | currency: '$'}}</p></small>
+    
+      <strong>Actividad: </strong><p>{{data.actividadEmpresa}}</p>
   </div>
 </div>
 <div class="row">
   <div class="col-md-4 col-sm-4">
-    <small>
-      <strong>Clase Reclutamiento: </strong><p>{{data.claseReclutamiento?.clasesReclutamiento}}</p></small>
+    
+      <strong>Puesto: </strong><p>{{data.vBtra}}</p>
   </div>
   <div class="col-md-4 col-sm-4">
-    <small>
-      <strong>Tipo Reclutamiento: </strong><p>{{data.tipoReclutamiento?.tipoReclutamiento}}</p></small>
+    
+      <strong>Sueldo Minimo: </strong><p>{{data.sueldoMinimo | currency: '$'}}</p>
   </div>
   <div class="col-md-4 col-sm-4">
-      <small>
-        <strong>Fecha Creacion: </strong><p>{{data.fch_Creacion | date:'dd/MM/yyyy HH:mm'}}</p></small>
+    
+      <strong>Sueldo M&aacute;ximo: </strong><p>{{data.sueldoMaximo | currency: '$'}}</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-sm-4">
+    
+      <strong>Clase Reclutamiento: </strong><p>{{data.claseReclutamiento}}</p>
+  </div>
+  <div class="col-md-4 col-sm-4">
+    
+      <strong>Tipo Reclutamiento: </strong><p>{{data.tipoReclutamiento}}</p>
+  </div>
+  <div class="col-md-4 col-sm-4">
+      
+        <strong>Fecha Creacion: </strong><p>{{data.fch_Creacion | date:'dd/MM/yyyy HH:mm'}}</p>
     </div>
 </div>
 <mat-divider></mat-divider>
@@ -55,10 +55,10 @@
   </div>
   <div class=row>
     <div class="col-md-5 col-sm-5 col-xs-5">
-        <btn-closed [text]="textBtnCerrar" (click)="onCloseDialog()"></btn-closed>
+        <btn-closed [xs]="true" [text]="textBtnCerrar" (click)="onCloseDialog()"></btn-closed>
     </div>
     <div class="col-md-5 col-sm-5 col-xs-5">
-        <btn-accept [text]="textBtnAceptar" (click)="deleteRequisicion()"></btn-accept>
+        <btn-accept [xs]="true" [text]="textBtnAceptar" (click)="deleteRequisicion()"></btn-accept>
     </div>
     <div class="col-md-2 col-sm-2 col-xs-2">
       <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">

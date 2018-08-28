@@ -16,20 +16,30 @@
 
 <form [formGroup]="formGrupos" novalidate >
   <div>
-      <span>{{alert}}</span>
+      <div *ngIf="verMsj">
+          <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+        </div>
+
     <div class="panel mat-elevation-z8">
      <div class="panel-body">
        <br/><br/>
+       <div class="col-md-4">
+          <div class="input-group">
+          <input (input)="Search($event)" class="input-sm form-control" type="text" placeholder="Filtrar" />
+          </div>
+      </div>
+      
        <p class="text-center pv">GRUPOS</p>
        <br/>
            <div class="table-responsive">
-               <table #tableG class="table table-bordered table-hover">
+               <table #tableG class="table table-bordered table-hover table-striped">
                    <thead>
                        <tr >
                           <th class="text-center"></th>
-                          <th class="text-center"></th>
+                          <th class="text-center">Foto</th>
                            <th class="text-center">Nombre</th>
                            <th class="text-center">Descripción</th>
+                           <th class="text-center">Tipo Grupo</th>
                            <th class="text-center">Usuario Alta</th>
                            <th class="text-center">Activo</th>
                            <th class="text-center"></th>
@@ -39,37 +49,46 @@
                       <ng-template #popTemplate>
       
                           <h3 class="popover-header text-center">{{grupo}}</h3>
-
+                          <div class = "row">
+                          <div class="col-md-12">
                           <div class="popover-body" *ngFor="let r of UsuariosList">
-                            <img class="img-responsive float-left img-fluid circle thumb32" src={{r.fotoAux}} alt="Image" />
+                            <img class="float-left img-fluid circle thumb32" src={{r.fotoAux}} alt="" />
                             <span class="bodymio"> {{ ' ' + r.nombre + ' ' + r.apellidoPaterno + ' ' + r.apellidoMaterno}} </span> 
-                          
                           </div>
+                        </div>
+                      </div>
     
 
                   </ng-template>
 
                        <tr *ngFor="let g of Grupos; let rowIndex = index; let value = index">
                           <td class="text-center">
-                            <btn-view (click)="grupo=g.nombre; GetUsuarios(g.id);" data-toggle="popover" [popover]="popTemplate" placement="right" trigger="" matTooltip="Ver integrantes del grupo"></btn-view>
+                            <btn-view [xs]="true" (click)="grupo=g.nombre; GetUsuarios(g.id);" data-toggle="popover" [popover]="popTemplate" placement="right" trigger="" matTooltip="Ver integrantes del grupo"></btn-view>
                           </td>
-                          <td class="align-middle">
-                              <div class="align-middle">
-                                <a matTooltip="Click to edit" (click)="rowAux=rowIndex; CrearURL(g.id); staticModal.show()"><img class="center-block img-responsive img-fluid circle thumb48" src={{g.fotoAux}} alt="Image" /></a>
-                              </div>
+                          <td class="align-middle text-center">
+                            <a matTooltip="Click para editar" (click)="rowAux=rowIndex; CrearURL(g.id); staticModal.show()"><img class="img-fluid circle thumb48" src={{g.fotoAux}} alt="Image" /></a>
                           </td>
                            <td class="text-center">
-                              <span matTooltip="Double click to edit" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
+                              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
                                   {{g.nombre}}
                               </span>
                               <input autofocus (blur)="updateValue($event, 'nombre', rowIndex)" *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=g.nombre />
                            </td>
                            <td class="text-center">
-                              <span matTooltip="Double click to edit" (dblclick)="editing[rowIndex + '-descripcion'] = true" *ngIf="!editing[rowIndex + '-descripcion']">
+                              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-descripcion'] = true" *ngIf="!editing[rowIndex + '-descripcion']">
                                   {{g.descripcion}}
                               </span>
                               <textarea autofocus (blur)="updateValue($event, 'descripcion', rowIndex)" *ngIf="editing[rowIndex + '-descripcion']" [value]=g.descripcion maxlength="200" rows="1"></textarea>
                            </td>
+                           <td class="text-center">
+                            <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-tipoUsuario'] = true" *ngIf="!editing[rowIndex + '-tipoUsuario']">
+                              <!-- {{p.tipoUsuario}} -->
+                            </span>
+                            <select (change)="updateValue($event, 'tipoUsuarioId', rowIndex)" *ngIf="editing[rowIndex + '-tipoUsuario']">
+                              <option [value]=0>Seleccionar Tipo Usuario</option>
+                              <option *ngFor="let t of ListTipos" [value]='t.id'>{{t.tipo}}</option>
+                            </select>
+                          </td>
                            <td class="text-center">
                               {{g.usuarioAlta}}
                            </td>
@@ -77,15 +96,18 @@
                              <mat-checkbox class="checkbox" (change)="updateValue($event, 'activo', rowIndex)" [checked]="g.activo"></mat-checkbox>
                            </td>
                            <td class="text-center">
-                              <btn-check id='update' chkPrivilegiosButtons (click)="updateGrupo($event, rowIndex)" matTooltip="Guardar Cambios"></btn-check>
-                              <span class="col-sm-1"></span>
-                              <btn-delete id='delete' chkPrivilegiosButtons matTooltip="Eliminar Grupo" (click)="DeleteGrupo($event,rowIndex)"></btn-delete>
+                              <btn-check id='update' chkPrivilegiosButtons [xs]="true" (click)="updateGrupo($event, rowIndex)" matTooltip="Guardar Cambios"></btn-check>
+                              <span style="margin-left: 5px;"></span>
+                              <btn-delete id='delete' chkPrivilegiosButtons [xs]="true" matTooltip="Eliminar Grupo" (click)="DeleteGrupo($event,rowIndex)"></btn-delete>
                            </td>
                        </tr>
                    </tbody>
                </table>
                <br/>
-               <span>{{alert}}</span>
+               <div *ngIf="verMsj">
+                  <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+                </div>
+    
            </div>
         </div>
     </div>
@@ -107,15 +129,27 @@
         <mat-form-field>
           <textarea matInput formControlName="Descripcion" placeholder="Descripción" maxlength="80" rows="1"></textarea>
         </mat-form-field>  
+        <br/>
+        <div>
+        <select #slcTipos>
+          <option [value]=0>Seleccionar Tipo Grupo</option>
+          <option *ngFor="let t of ListTipos" [value]='t.id'>{{t.tipo}}</option>
+        </select>
+        <p>
+          <span *ngIf="formGrupos.controls['slcTipos'].touched && !formGrupos.controls['slcTipos'].valid">Tipo de grupo es requerido</span>
+        </p>
+      </div>
       </section>
-    
+    <br/>
       <input matInput placeholder="Grupo Activo">
        <section>
          <mat-checkbox class="checkbox" formControlName="Activo"></mat-checkbox>
        </section>
        <section>
         <div class="col-md-6">
-          <input matInput placeholder="{{alert}}">
+          <div *ngIf="verMsj">
+            <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+          </div>
         </div>
         <button [disabled]="!formGrupos.valid" (click)="saveData()" class="btn btn-primary example-label pull-right">Guardar</button>
        </section>

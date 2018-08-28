@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, OnChanges, AfterContentChecked } from '@angular/core';
+import { AfterContentChecked, Component, Input, OnChanges, OnInit } from '@angular/core';
+
 import { MatTableDataSource } from '@angular/material'
 
 @Component({
@@ -9,7 +10,7 @@ import { MatTableDataSource } from '@angular/material'
 export class DtPsicometriasClienteComponent implements OnInit, AfterContentChecked {
 
   @Input()  Psicometrias: any[];
-  public dataSource : MatTableDataSource<any[]>;
+  public rows: Array<any> = [];
   getPsicometria : boolean = false;
   constructor() { }
 
@@ -24,20 +25,17 @@ export class DtPsicometriasClienteComponent implements OnInit, AfterContentCheck
 
   cargarPsicometrias(data){
     if(!this.getPsicometria){
-      this.dataSource = new MatTableDataSource(data);
+      this.rows = data;
       this.getPsicometria = true;
     }
   }
 
-  //*******************************-- GRID-- *********************************************//
-  // Display para mostrar los objetos en el Grid
-  displayedColumns = [
-  'psicometrias',
-  'descripcion'
-  ]
-}
+  public columns: Array<any> = [
+    {title: 'Psicometrías', className: 'text-info text-center'},
+    {title: 'Descripción', className: 'text-info text-center'},
+  ];
 
-export interface Element {
-  psicometria: string;
-  descripcion: string;
+  public config: any = {
+    className: ['table-striped table-bordered mb-0 d-table-fixed']
+  };
 }

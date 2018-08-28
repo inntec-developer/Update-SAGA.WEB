@@ -1,51 +1,40 @@
-<mat-accordion class="example-headers-align">
-  <mat-expansion-panel [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <em class="fa fa-phone"></em>
-      </mat-panel-title>
-      <mat-panel-description>
-        Teléfonos
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <div class="row"><!--Agregar la información que ira en el panel-->
-      <div class="dt-container">
-        <mat-table #table [dataSource]="dataSource">
-          <ng-container matColumnDef="tipoTelefono">
-            <mat-header-cell *matHeaderCellDef> Tipo</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.tipoTelefono?.tipo}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="telefono">
-            <mat-header-cell *matHeaderCellDef> Teléfono</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.clavePais}} - {{element.claveLada}} - {{element.telefono}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="extension">
-            <mat-header-cell class="mat-cell-center" *matHeaderCellDef> Extensión</mat-header-cell>
-            <mat-cell class="mat-cell-right" *matCellDef="let element"> {{element.extension}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="activo">
-            <mat-header-cell class="mat-cell-center" *matHeaderCellDef> Activo</mat-header-cell>
-            <mat-cell class="mat-cell-center" *matCellDef="let element">
-                <span *ngIf="element.activo"><em class="fa fa-check-square-o"></em></span>
-                <span *ngIf="!element.activo"><em class="fa fa-square-o"></em></span>
-             </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="esPrincipal">
-            <mat-header-cell class=mat-cell-center *matHeaderCellDef> Principal</mat-header-cell>
-            <mat-cell class="mat-cell-center" *matCellDef="let element">
-              <span *ngIf="element.esPrincipal"><em class="fa fa-check-square-o"></em></span>
-              <span *ngIf="!element.esPrincipal"><em class="fa fa-square-o"></em></span>
-            </mat-cell>
-          </ng-container>
-
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-      </div>
+<div class="dt-container mat-elevation-z8">
+    <div class="title-headre-view">
+      <h4>Tel&eacute;fonos</h4>
     </div>
-  </mat-expansion-panel>
-</mat-accordion>
+    <!-- <div class="card card-default"> -->
+      <div class="table-responsive" #tableContainer>
+        <table id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+          <thead>
+            <tr>
+              <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of rows">
+              <td class="text-center"> {{row.tipoTelefono?.tipo}}</td>
+              <td class="text-center"> {{row.clavePais}} - {{row.claveLada}} - {{row.telefono}}</td>
+              <td class="text-center"> {{row.extension}}</td>
+              <td class="text-center">
+                <span *ngIf="row.activo">
+                  <em class="fa fa-check-square-o"></em>
+                </span>
+                <span *ngIf="!row.activo">
+                  <em class="fa fa-square-o"></em>
+                </span>
+              </td>
+              <td class="text-center">
+                <span *ngIf="row.esPrincipal">
+                  <em class="fa fa-check-square-o"></em>
+                </span>
+                <span *ngIf="!row.esPrincipal">
+                  <em class="fa fa-square-o"></em>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    <!-- </div> -->
+  </div>

@@ -6,7 +6,7 @@ import {map} from 'rxjs/operators/map';
 
 
 //Service
-import { RequisicionesService } from '../../../../../service/index'
+import { RequisicionesService } from '../../../../../service'
 
 @Component({
   selector: 'app-direccionauto',

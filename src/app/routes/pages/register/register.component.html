@@ -9,15 +9,15 @@
       </div>
       <div class="card-body">
         <p class="text-center py-2">REGISTRO</p>
-        <form [formGroup]="valForm" class="form-validate mb-3" role="form" name="registerForm" novalidate="" (submit)="submitForm($event, valForm.value)">
+        <form [formGroup]="valForm" class="form-validate mb-3" role="form" name="registerForm" novalidate="">
           <div class="form-group">
             <label class="text-muted mb-1">Correo Electronico</label>
             <div class="input-group with-focus">
-              <input class="form-control border-right-0" (change)="closePop()" (blur)="ValidarEmail($event.target.value)" type="email" name="account_email" placeholder="Enter email" autocomplete="off"
+              <input class="form-control border-right-0" (change)="pop.hide(); ValidarEmail($event.target.value)" name="account_email" placeholder="Enter email" autocomplete="off"
                 formControlName="email" required="" />
               <div class="input-group-append">
-                <span class="input-group-text fa fa-envelope text-muted bg-transparent border-left-0" popover= "El email:  {{valForm.controls['email'].value}}  ya se encuentra registrado" placement="right" trigger=""
-                #pop="bs-popover"></span>
+                  <ng-template #popTemplateEmail><p>"El email: {{ valForm.controls['email'].value }} ya se encuentra registrado"</p></ng-template>
+                <span class="input-group-text fa fa-envelope text-muted bg-transparent border-left-0" [popover]="popTemplateEmail" placement="right" triggers="focus" #pop="bs-popover"></span>
               </div>
             </div>
             <div class="text-danger" *ngIf="valForm.controls['email'].hasError('required') && (valForm.controls['email'].dirty || valForm.controls['email'].touched)">
@@ -61,10 +61,11 @@
           </div>
           <label class="text-muted">Clave</label>
           <div class="input-group with-focus">
-            <input class="form-control" type="text" placeholder="DAL" autocomplete="off" formControlName="Clave" required="" (change)="closePop()" (blur)="ValidarDAL(valForm.controls['Clave'].value)" />
-            <div class="input-group-append">
-              <span popover= "Clave: {{valForm.controls['Clave'].value}} ya se encuentra registrado" placement="right" trigger="" #pop2="bs-popover"></span>
-            </div>
+            <input class="form-control" type="text" placeholder="DAL" autocomplete="off" formControlName="Clave" required=""/>
+            <!-- <div class="input-group-append">
+               <ng-template #popTemplate>"Clave:{{Clave }} ya se encuentra registrado"</ng-template>
+              <span [popover]="popTemplate" placement="right" trigger="" #pop2="bs-popover"></span>
+            </div> -->
           </div>
           <div class="text-danger" *ngIf="valForm.controls['Clave'].touched && !valForm.controls['Clave'].valid">
             <small>Clave es un campo requerido</small>
@@ -89,7 +90,7 @@
           <label class="text-muted">Alias</label>
           <input class="form-control" type="text" placeholder="{{user}}" autocomplete="off" formControlName="Usuario"
           required="" />
-          <!-- <p><span class="text-danger" *ngIf="valForm.controls['Usuario'].touched">Si no selecciona usuario se le asignará uno</span></p>                       -->
+          <!-- <p><span class="text-danger" *ngIf="valForm.controls['Usuario'].touched">Si no selecciona usuario se le asignará uno</span></p>                  -->
           <label class="text-muted">Departamentos</label>
           <select class="form-control" formControlName="DepartamentoId">
             <option value="0">Seleccionar departamento</option>
@@ -97,10 +98,12 @@
             <option *ngFor="let d of ListDepas" [value]="d.id">{{d.nombre}}</option>
           </select>
           <br/>
-          <div *ngIf="verMsj" class="alert alert-success">
-              {{msj}}
-            </div>
-          <button class="btn btn-block btn-primary mt-3" [disabled]="!disabledC" type="submit">Crear cuenta</button>
+
+          <div *ngIf="verMsj">
+            <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+          </div>
+
+          <button class="btn btn-block btn-primary mt-3"  type="submit" [disabled]="!disabledE"  (click)="submitForm($event, valForm.value)">Crear cuenta</button>
         </form>
         <!-- <div class="alert alert-danger text-center"></div> -->
         <p class="pt-3 text-center">Ya estas registrado?</p>
@@ -117,4 +120,28 @@
       <span>{{ settings.app.description }}</span>
     </div>
   </div>
+</div>
+
+
+<!-- Modal -->
+<div *ngIf="isModalShown" [config]="{ show: true, ignoreBackdropClick: true }" (onHidden)="onHidden()" bsModal #MessageModal="bs-modal"
+     class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+     <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+<div class="modal-header">
+  <h4 class="modal-title float-left">{{valForm.controls['email'].value}}</h4>
+  <button type="button" class="close float-right" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+ <p style="color:#08af2f"><strong>¡El registro se realizó con éxito!</strong></p>
+ <p style="color: #4489e2;">Recibirá un correo con las instrucciones para acceder al sistema</p>
+ <p style="color: #4489e2;">Quedamos a tus órdenes para cualquier relativo, al correo inntec@damsa.com.mx</p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-success" (click)="closeModal()">Cerrar</button>
+</div>
+</div>
+</div>
 </div>

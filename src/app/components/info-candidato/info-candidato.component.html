@@ -1,0 +1,258 @@
+<div class="row">
+  <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+    <div *ngIf="candidato" class="dt-container mat-elevation-z8">
+      <div class="card-header justify-content-between">
+        <em class="fa fa-user-circle-o"></em>
+        <label> Informaci&oacute;n Principal</label>
+        <!-- <a class="float-right text-muted" (click)="favContact1=!favContact1">
+          <em class="fa" [ngClass]="favContact1 ? 'fa-star text-warning' : 'fa-star-o'"></em>
+        </a> -->
+      </div>
+      <div class="card-body text-center">
+        <img class="img-fluid img-thumbnail rounded-circle thumb96" [src]="candidato.picture" alt="Contact" />
+        <h4>{{candidato.nombre}}</h4>
+        <div *ngIf="!candidato.estatus">
+          <mat-divider></mat-divider>
+          <span class="text-muted">{{candidato.aboutMe}}</span>
+          <mat-divider></mat-divider>
+          <div>
+            <strong>Edad: </strong>
+            <label class="text-success">{{candidato.edad}} años</label>
+          </div>
+          <div>
+            <strong>G&eacute;nero: </strong>
+            <label class="text-success">{{candidato.genero}}</label>
+          </div>
+          <div *ngIf="candidato.info.estadoCivil">
+            <strong>Estado civil: </strong>
+            <label class="text-success">{{candidato.info.estadoCivil.estadoCivil}}</label>
+          </div>
+          <div>
+            <strong>Correo: </strong>
+            <label class="text-success">{{candidato.correo}}</label>
+          </div>
+          <div *ngFor="let x of candidato.telefonos">
+            <strong>Tel&eacute;fono {{x.tipoTelefono.tipo}}: </strong>
+            <label class="text-success">{{x.telefono}}</label>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <div class="row">
+          <div class="col-md-2 text-center">
+            <em *ngIf="!candidato.estatus" class="fa fa-unlock m-0  text-success"></em>
+            <em *ngIf="candidato.estatus" class="fa fa-lock m-0 text-primary"></em>
+          </div>
+          <div class="col-md-10 text-right">
+            <h5 *ngIf="candidato.estatus" class="m-0 text-primary">Apartado por: {{candidato.estatus.reclutador}}</h5>
+            <h5 *ngIf="!candidato.estatus" class="text-success">Candidato disponible</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
+    <div class="mat-elevation-z8">
+      <tabset [justified]="true" *ngIf="candidato">
+        <tab heading="Información de Candidato" id="infoCand">
+          <accordion [closeOthers]="oneAtATime">
+            <accordion-group [isOpen]="isFirstOpen">
+              <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
+                <div class="pull-left float-left">Acerca de m&iacute;</div>
+                <span class="float-right pull-right">
+                  <em class="fa fa-user-circle-o"></em>
+                </span>
+              </button>
+              <div class="row">
+                <div class="col-md-6 col-sm-12">
+                  <div id="nacionalidad">
+                    <h5 class="text-muted">Nacionalidad / Lugar Nacimiento
+                      <span class="pull-right">
+                        <em class="fa fa-globe"></em>
+                      </span>
+                    </h5>
+                    <mat-divider></mat-divider>
+                    <div>
+                      <strong class="text-primary">Fecha Nacimiento: </strong>
+                      <label class="text-muted">{{candidato.info.fechaNacimiento | date: 'dd/MM/yy'}}</label>
+                    </div>
+                    <div>
+                      <strong class="text-primary">Lugar Nacimiento: </strong>
+                      <label class="text-muted"> {{candidato.info.estadoNacimiento.estado}}, {{candidato.info.paisNacimiento.pais}}</label>
+                    </div>
+                  </div>
+                  <div id="discapacidad" *ngIf="candidato.info.esDiscapacitado">
+                    <br>
+                    <h5 class="text-muted">Discapacidad
+                      <span class="pull-right">
+                        <em class="fa fa-wheelchair"></em>
+                      </span>
+                    </h5>
+                    <mat-divider></mat-divider>
+                    <div>
+                      <strong class="text-primary">Tipo discapacidad: </strong>
+                      <label class="text-muted"> {{candidato.info.tipoDiscapacidad.tipoDiscapacidad}}</label>
+                    </div>
+                    <div>
+                      <strong class="text-primary">Descipci&oacute;n discapacidad: </strong>
+                      <label class="text-muted"> {{candidato.info.otraDiscapacidad}}</label>
+                    </div>
+                  </div>
+                  <div id="otraInformacion">
+                    <br>
+                    <h5 class="text-muted">Otra informaci&oacute;n
+                      <span class="pull-right">
+                        <em class="fa fa-info-circle"></em>
+                      </span>
+                    </h5>
+                    <mat-divider></mat-divider>
+                    <div>
+                      <strong class="text-primary">Licencia de conducir: </strong>
+                      <label *ngIf="candidato.info.tieneLicenciaConducir" class="text-muted"> SI</label>
+                      <label *ngIf="!candidato.info.tieneLicenciaConducir" class="text-muted"> NO</label>
+                    </div>
+                    <div *ngIf="candidato.info.tieneLicenciaConducir">
+                      <strong class="text-primary">Tipo de licencia: </strong>
+                      <label class="text-muted"> {{candidato.info.tipoLicencia.tipoLicencia}}</label>
+                    </div>
+                    <div *ngIf="candidato.info.tieneVehiculoPropio">
+                      <strong class="text-primary">Vehiculo propio: </strong>
+                      <label class="text-muted"> SI</label>
+                    </div>
+                    <div>
+                      <strong class="text-primary">Puede viajar: </strong>
+                      <label *ngIf="candidato.info.puedeViajar" class="text-muted"> SI</label>
+                      <label *ngIf="!candidato.info.puedeViajar" class="text-muted"> NO</label>
+                    </div>
+                    <div>
+                      <strong class="text-primary">Puede reubicarse: </strong>
+                      <label *ngIf="candidato.info.puedeRehubicarse" class="text-muted"> SI</label>
+                      <label *ngIf="!candidato.info.puedeRehubicarse" class="text-muted"> NO</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                  <div id="identificaciones">
+                    <h5 class="text-muted ">Identificaciones
+                      <span class="pull-right">
+                        <em class="fa fa-id-card-o"></em>
+                      </span>
+                    </h5>
+                    <mat-divider></mat-divider>
+                    <div>
+                      <strong class="text-primary">CURP: </strong>
+                      <label *ngIf="candidato.info.curp" class="text-muted"> {{candidato.info.curp}}</label>
+                      <label *ngIf="!candidato.info.curp" class="text-muted"> Sin Registro</label>
+                    </div>
+                    <div>
+                      <strong class="text-primary">RFC: </strong>
+                      <label *ngIf="candidato.info.rfc" class="text-muted"> {{candidato.info.rfc}}</label>
+                      <label *ngIf="!candidato.info.rfc" class="text-muted"> Sin Registro</label>
+                    </div>
+                    <div>
+                      <strong class="text-primary">NSS: </strong>
+                      <label *ngIf="candidato.info.nss" class="text-muted"> {{candidato.info.nss}}</label>
+                      <label *ngIf="!candidato.info.nss" class="text-muted"> Sin Registro</label>
+                    </div>
+                  </div>
+                  <br>
+                  <div id="acerdademi">
+                    <h5 class="text-muted "> Acerca de mi
+                      <span class="pull-right">
+                        <em class="fa fa-user"></em>
+                      </span>
+                    </h5>
+                    <mat-divider></mat-divider>
+                    <div>
+                      <strong class="text-primary">Puesto deseado: </strong>
+                      <label *ngIf="candidato.about.puestoDeseado" class="text-muted"> {{candidato.about.puestoDeseado}}</label>
+                      <label *ngIf="!candidato.about.puestoDeseado" class="text-muted"> Sin Registro</label>
+                    </div>
+                    <div>
+                      <strong class="text-primary">Salario aceptable: </strong>
+                      <label *ngIf="candidato.about.salarioAceptable" class="text-muted"> {{candidato.about.salarioAceptable | currency: '$'}}</label>
+                      <label *ngIf="!candidato.about.salarioAceptable" class="text-muted"> Sin Registro</label>
+                    </div>
+                    <div>
+                      <strong class="text-primary">Salario deseado: </strong>
+                      <label *ngIf="candidato.about.salarioDeseado" class="text-muted"> {{candidato.about.salarioDeseado | currency: '$'}}</label>
+                      <label *ngIf="!candidato.about.salarioDeseado" class="text-muted"> Sin Registro</label>
+                    </div>
+                    <div>
+                      <strong class="text-primary">Area experiencia: </strong>
+                      <label *ngIf="candidato.about.salarioDeseado" class="text-muted"> {{candidato.about.areaExperiencia.areaExperiencia}}</label>
+                      <label *ngIf="!candidato.about.salarioDeseado" class="text-muted"> Sin Registro</label>
+                    </div>
+                    <div>
+                      <strong class="text-primary">Intereses: </strong>
+                      <label *ngIf="candidato.about.salarioDeseado" class="text-muted"> {{candidato.about.areaInteres.areaInteres}}</label>
+                      <label *ngIf="!candidato.about.salarioDeseado" class="text-muted"> Sin Registro</label>
+                    </div>
+                    <div>
+                      <strong class="text-primary">Perfil: </strong>
+                      <label *ngIf="candidato.about.salarioDeseado" class="text-muted"> {{candidato.about.perfilExperiencia.perfilExperiencia}}</label>
+                      <label *ngIf="!candidato.about.salarioDeseado" class="text-muted"> Sin Registro</label>
+                    </div>
+                    <div>
+                      <strong class="text-primary">Sitio Web: </strong>
+                      <label *ngIf="candidato.about.salarioDeseado" class="text-muted"> {{candidato.about.sitioWeb}}</label>
+                      <label *ngIf="!candidato.about.salarioDeseado" class="text-muted"> Sin Registro</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </accordion-group>
+            <accordion-group>
+              <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
+                <div class="pull-left float-left">Direcci&oacute;n</div>
+                <span class="float-right pull-right">
+                  <em class="fa fa-home"></em>
+                </span>
+              </button>
+              <div class="row">
+                <div class="col-md-6 col-sm-12">
+                  <div>
+                    <strong class="text-primary">Tipo de direcci&oacute;n: </strong>
+                    <label class="text-muted">{{candidato.direccion.tipoDireccion.tipoDireccion}}</label>
+                  </div>
+                  <div>
+                    <strong class="text-primary">Localidad: </strong>
+                    <label class="text-muted">
+                      {{candidato.direccion.municipio.municipio}}, {{candidato.direccion.estado.estado}}, {{candidato.direccion.pais.pais}}
+                    </label>
+                  </div>
+                  <div>
+                    <strong class="text-primary">Colonia: </strong>
+                    <label class="text-muted">{{candidato.direccion.colonia.tipoColonia}}, {{candidato.direccion.colonia.colonia}}</label>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                  <div>
+                    <strong class="text-primary">Calle: </strong>
+                    <label class="text-muted">{{candidato.direccion.calle}}</label>
+                  </div>
+                  <div>
+                    <strong class="text-primary">Num. Ext / Int: </strong>
+                    <label class="text-muted">{{candidato.direccion.numeroExterior}} {{candidato.direccion.numeroInterior}}</label>
+                  </div>
+                  <div>
+                    <strong class="text-primary">Codigo Postal: </strong>
+                    <label class="text-muted">{{candidato.direccion.codigoPostal}}</label>
+                  </div>
+                </div>
+              </div>
+            </accordion-group>
+            <accordion-group heading="Content 2">
+              <p>Content 2</p>
+            </accordion-group>
+          </accordion>
+        </tab>
+        <tab heading="Mis Vacantes ({{countVacantes}})" id="vacantes">
+          Basic content
+        </tab>
+
+      </tabset>
+    </div>
+
+  </div>
+</div>

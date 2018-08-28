@@ -1,50 +1,30 @@
-<mat-accordion class="example-headers-align">
-  <mat-expansion-panel [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <em class="fa fa-group"></em>
-      </mat-panel-title>
-      <mat-panel-description>
-        Contactos
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <div class="row"><!--Agregar la información que ira en el panel-->
-      <div class="dt-container">
-        <mat-table #table [dataSource]="dataSource">
-          <ng-container matColumnDef="nombre">
-            <mat-header-cell *matHeaderCellDef> Nombre</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.nombre}} {{element.apellidoPaterno}} {{element.apellidoMaterno}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="puesto">
-            <mat-header-cell *matHeaderCellDef> Puesto</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.puesto}}</mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="tipoTelefono">
-            <mat-header-cell *matHeaderCellDef> Tipo</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.telefonos[0]?.tipoTelefono?.tipo}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="telefono">
-            <mat-header-cell *matHeaderCellDef> Teléfono</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.telefonos[0]?.clavePais}} - {{element.telefonos[0]?.claveLada}} - {{element.telefonos[0]?.telefono}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="extension">
-            <mat-header-cell *matHeaderCellDef> Extensión</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.telefonos[0]?.extension}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="email">
-            <mat-header-cell *matHeaderCellDef> E-mail</mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.emails[0]?.email}} </mat-cell>
-          </ng-container>
-
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-      </div>
+<div class="dt-container mat-elevation-z8">
+    <div class="title-headre-view">
+      <h4>Contactos</h4>
     </div>
-  </mat-expansion-panel>
-</mat-accordion>
+    <!-- <div class="card card-default"> -->
+      <div class="table-responsive" #tableContainer>
+        <table id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+          <thead>
+            <tr>
+              <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of rows">
+              <td class="text-center"> {{row.nombre}} {{row.apellidoPaterno}} {{row.apellidoMaterno}}</td>
+              <td class="text-center"> {{row.puesto}}</td>
+              <td class="text-center"> {{row.telefonos[0]?.tipoTelefono?.tipo}}</td>
+              <td class="text-center"> {{row.telefonos[0]?.extension}}</td>
+              <td class="text-center"> {{row.telefonos[0]?.clavePais}} - {{row.telefonos[0]?.claveLada}} - {{row.telefonos[0]?.telefono}}</td>
+              <td class="text-center"> {{row.emails[0]?.email}}</td>
+            </tr>
+            <tr *ngIf="!rows">
+              Sin resultados...
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    <!-- </div> -->
+  </div>

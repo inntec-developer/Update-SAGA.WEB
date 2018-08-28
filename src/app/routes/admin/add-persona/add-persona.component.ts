@@ -1,10 +1,10 @@
-import { ApiConection } from './../../../service/api-conection.service';
+import { ApiConection } from '../../../service/api-conection.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {FormBuilder } from '@angular/forms';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import {MatDialog } from '@angular/material';
-import { UploadImgsComponent } from './../upload-imgs/upload-imgs.component';
-
+import { UploadImgsComponent } from '../upload-imgs/upload-imgs.component';
+import { AlertComponent } from 'ngx-bootstrap/alert/alert.component';
 
 @Component({
   selector: 'app-add-persona',
@@ -25,11 +25,29 @@ export class AddPersonaComponent implements OnInit {
   filteredData: Array<any> = [];
   paginacion = [];
   pagIndex = 0;
-  alert: string = '';
+  verMsj = false;
 
   @ViewChild('uploadImg') someInput: UploadImgsComponent;
   @ViewChild('staticModal') modal;
 
+  alerts: any[] = [
+    {
+      type: 'success',
+      msg: '',
+      timeout: 4000
+    },
+    {
+      type: 'danger',
+      msg: '',
+      timeout: 4000
+    }
+  ];
+alert = this.alerts;
+
+ 
+  onClosed(): void {
+    this.verMsj = false;
+  }
   constructor(private service: AdminServiceService ,public fb: FormBuilder, public dialog: MatDialog){}
   
   CrearURL(idP: any)
@@ -37,32 +55,49 @@ export class AddPersonaComponent implements OnInit {
     this.name = idP;
   }
 
-  CrearPaginacion(pag)
-  {
-    console.log(pag)
-    this.paginacion = this.Users;
-    this.Users = this.filteredData;
-
-    this.pagIndex = pag;
-
-  
-    this.Users = this.Users.slice((pag-1) * 5, pag * 5)
-
-  }
 
   updateFoto()
   {
-    this.name = this.name + '.' + this.someInput.selectedFile.type.split('/')[1];
+    //this.name = this.name + '.' + this.someInput.selectedFile.type.split('/')[1];
 
     if(this.someInput.StatusCode == 201 || this.someInput.StatusCode == 500)
     {
       this.closeModal();
-      this.Users[this.rowAux]['foto'] = 'utilerias/img/user/' + this.name;
+ 
+      this.Users[this.rowAux]['foto'] = 'utilerias/img/user/' + this.someInput.name;
       this.Users[this.rowAux]['fotoAux'] = this.someInput.image.src;
       this.Users = [...this.Users];
     
     }
     
+  }
+
+  SendEmail(data)
+  {
+    this.service.SendEmailRegister(data).subscribe( res => {
+      if(res == 201)
+        {
+          this.alerts[0]['msg'] = 'El correo se envió con éxito';
+          this.alert = this.alerts[0];
+          this.verMsj = true;
+          // this.success = true;
+          // this.haserror = false;
+        }
+        else
+        {
+          this.alerts[1]['msg'] = 'Ocurrio un error al intentar enviar correo';
+          this.alert = this.alerts[1];
+          this.verMsj = true;
+          // this.success = false;
+          // this.haserror = true;
+        }
+    });
+
+  }
+
+  onSelect(item)
+  {
+    item.selected ? item.selected = false : item.selected = true; //para poner el backgroun cuando seleccione
   }
 
   closeModal()
@@ -74,14 +109,23 @@ export class AddPersonaComponent implements OnInit {
   }
 
   public Search(data: any) {
-
     let tempArray: Array<any> = [];
-    let colFiltar: Array<any> = [{ title: "clave" },{ title: "apellidoPaterno" }, { title: "nombre" }];
+    let colFiltar: Array<any> = [{ title: "nombre" },{ title: "apellidoPaterno" }, { title: "clave" }, { title: "email"}];
 
     this.filteredData.forEach(function (item) {
       let flag = false;
       colFiltar.forEach(function (c) {
-        if (item[c.title].toString().match(data.target.value)) {
+        if(c.title == 'email')
+        {
+          var mail = item['email'];
+          if(mail.length > 0)
+          {
+            if(mail[0]['email'].toString().toLowerCase().match(data.target.value.toLowerCase())) {
+              flag = true;
+            }
+          }
+        }
+        else if(item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
           flag = true;
         }
       });
@@ -129,8 +173,24 @@ export class AddPersonaComponent implements OnInit {
     let u = this.Users[rowIndex];
     this.service.UpdateUsuario(u)
       .subscribe(data => {
-        this.alert = data;
-        this.ngOnInit();
+        if(data == 201)
+        {
+          
+          this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
+          this.alert = this.alerts[0];
+          this.verMsj = true;
+          // this.success = true;
+          // this.haserror = false;
+        }
+        else
+        {
+          this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
+          this.alert = this.alerts[1];
+          this.verMsj = true;
+          // this.success = false;
+          // this.haserror = true;
+        }
+        
       });
   }
 
@@ -138,8 +198,23 @@ export class AddPersonaComponent implements OnInit {
   {
     this.service.UDActivoUsers(id, $ev.target.checked )
         .subscribe( data => {
-          this.alert = data;
-          this.getUsuarios();
+          if(data == 201)
+          {
+            this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
+            this.alert = this.alerts[0];
+            this.verMsj = true;
+            // this.success = true;
+            // this.haserror = false;
+          }
+          else
+          {
+            this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
+            this.alert = this.alerts[1];
+            this.verMsj = true;
+            // this.success = false;
+            // this.haserror = true;
+          }
+          
         });
   }
 
@@ -149,13 +224,14 @@ export class AddPersonaComponent implements OnInit {
     .subscribe(
       e=>{
         this.Users = e;
-        this.filteredData = e;
+        
         this.paginacion = this.Users.slice(0, (this.Users.length / 10 ) );
 
         this.Users.forEach(item => {
           item.fotoAux = ApiConection.ServiceUrlFoto + item.foto
         })
 
+        this.filteredData = this.Users;
         console.log(this.Users)
         //this.Users = this.Users.slice(0, 10)
 

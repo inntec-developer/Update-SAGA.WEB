@@ -1,5 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {MatTableDataSource, PageEvent, MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dt-contactos',
@@ -8,8 +7,8 @@ import {MatTableDataSource, PageEvent, MatDialog, MatDialogRef, MAT_DIALOG_DATA}
 })
 export class DtContactosComponent implements OnInit {
   @Input() Contactos: any[];
-  public dataSource : MatTableDataSource<any[]>;
   getPhone : boolean = false;
+  public rows: Array<any> = [];
   constructor() { }
 
   ngOnInit() {
@@ -23,33 +22,20 @@ export class DtContactosComponent implements OnInit {
 
   cargarContactos(data){
     if(!this.getPhone){
-      this.dataSource =  new MatTableDataSource(data);
+      this.rows =  data;
       this.getPhone = true;
     }
   }
-  //*******************************-- GRID-- *********************************************//
-  // Display para mostrar los objetos en el Grid
-  displayedColumns = [
-    'nombre',
-    'puesto',
-    'tipoTelefono',
-    'extension',
-    'telefono',
-    'email'
+  public columns: Array<any> = [
+    {title: 'Nombre', className: 'text-info text-center'},
+    {title: 'Puesto', className: 'text-info text-center'},
+    {title: 'Tipo Teléfono', className: 'text-info text-center'},
+    {title: 'Extensión', className: 'text-info text-center'},
+    {title: 'Teléfono', className: 'text-info text-center'},
+    {title: 'Email', className: 'text-info text-center'},
   ]
+  public config: any = {
+    className: ['table-striped table-bordered mb-0 d-table-fixed']
+  };
 }
 
-  export interface Element{
-  nombre: string;
-  apellidoPaterno: string;
-  apellidoMaterno: string;
-  puesto: string;
-  activo: boolean;
-  claveLada: string;
-  calvePais: string;
-  esPrincipal: string;
-  extension: string;
-  telefono: string;
-  tipoTelefono: string;
-  email: string;
-  }

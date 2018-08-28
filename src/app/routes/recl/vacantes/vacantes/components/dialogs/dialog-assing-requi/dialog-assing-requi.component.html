@@ -7,12 +7,12 @@
   <div class="container">
     <div class="row">
         <div class="col-md-12 col-sm-12">
-            <app-asignar-requisicion #asginaciones [placeHolder]='placeHolderSelect' (Asignacion)='getAsignacion($event)' disabled='true'></app-asignar-requisicion>
+            <app-asignar-requisicion-lider #asginaciones [Asignados]='data.asignados' [placeHolder]='placeHolderSelect' (Asignacion)='getAsignacion($event)'></app-asignar-requisicion-lider>
         </div>
     </div>
     <div class="row">
         <div class="col-md-10 col-sm-10">
-          <p><strong>EMPRESA: </strong>{{data?.cliente?.nombrecomercial}}</p>
+          <p><strong>EMPRESA: </strong>{{data?.cliente}}</p>
         </div>
     </div>
     <div class="row">

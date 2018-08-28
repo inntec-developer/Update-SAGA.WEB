@@ -2,6 +2,8 @@ export class ApiConection {
   public static ServiceUrlWeb = 'http://localhost:4200/'
   /*Servicio de purbeas locales*/
   public static ServiceUrl = 'http://localhost:33333/api/';
+  //public static ServiceUrlFileManager = 'http://localhost:4200/assets/';
+  public static ServiceUrlFileManager = 'http://localhost:33333/utilerias/';
   public static ServiceUrlFoto = 'http://localhost:33333/';
   // Conexiones a bolsa de trabajo.
   public static ServiceUrlBolsa = 'http://sagainn.com.mx:403';
@@ -10,6 +12,7 @@ export class ApiConection {
 
   /* Componentes */
   public static GetUserGroup = 'AsignacionRequi/getUserGroup';
+  public static GetUserGroupL = 'AsignacionRequi/getUserGroupL';
 
   /* Catalogos */
   public static GetDocumentosDamsa = 'Catalogos/getDocDamsa';
@@ -49,6 +52,7 @@ export class ApiConection {
   public static filtromunicipios = 'Candidatos/getmunicipios';
   public static filtrocolonias = 'Candidatos/getcolonias';
   public static Candidatos = 'Candidatos/getcandidatos';
+  public static MisCandidatos = 'candidatos/getMisCandidatos?reclutador='
   public static Candidatodetail = 'Candidatos/getcandidatoid';
   public static Postulaciones = 'Candidatos/getpostulaciones';
   public static Areasexp = 'Candidatos/getareasexp';
@@ -107,10 +111,11 @@ export class ApiConection {
   public static deleteGrupo = '/admin/deleteGrupo';
   public static deleteRoles = 'admin/deleteRoles';
   public static getTreeRoles = '/admin/GetEstructura';
-  public static getEntidadesUG = '/admin/getEntidades2';
+  public static getEntidadesUG = '/admin/getEntidadesByRol';
+  public static getEntidades = '/admin/getEntidades2';
   public static getEstructuraRoles = '/admin/getEstructuraRoles';
   public static getPrivilegios = '/admin/getPrivilegios';
-  public static modificarPrivilegios = '/admin/modificarPrivilegios'
+  public static modificarPrivilegios = '/admin/modificarPrivilegios';
   public static getUsuariosByGrupo = '/admin/getUsuarioByGrupo';
   public static deleteUserGroup = 'admin/deleteUserGroup';
   public static deleteUserRol = 'admin/deleteUserRol';
@@ -120,4 +125,15 @@ export class ApiConection {
   public static validarEmail = 'admin/validarEmail';
   public static validarDAL = 'admin/validarDAL';
   public static getImage = 'admin/getImage';
+  public static getFiles = 'admin/getFiles';
+  public static sendEmailRegister = 'admin/sendEmailRegister';
+  public static downloadFiles = 'admin/downloadFiles';
+  public static viewFile = 'admin/viewFile';
+  public static uploadFile = 'admin/uploadFile';
+
+  /*Seguimiento Vacantes*/
+  public static getDtosCard = 'reclutamiento/seguimientovacante/getCard';
+  public static getDtosDetail = 'reclutamiento/seguimientovacante/getvacantesdtl';
+  public static getPostulados = 'reclutamiento/seguimientovacante/getPostulate';
+  public static getInfoCandidato = 'reclutamiento/seguimientovacante/getInfoCandidato';
 }

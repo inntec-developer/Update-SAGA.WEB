@@ -7,7 +7,7 @@ import {MatTableDataSource} from '@angular/material';
 import { Apartado } from '../../../../../models/recl/candidatos';
 
 // Servicios
-import { CandidatosService } from '../../../../../service/index';
+import { CandidatosService } from '../../../../../service';
 
 @Component({
   selector: 'app-dialogcandidatos',

@@ -2,7 +2,7 @@ import 'rxjs/add/operator/map'
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { ApiConection } from './../api-conection.service';
+import { ApiConection } from '../api-conection.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { SettingsService } from '../../core/settings/settings.service';

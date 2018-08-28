@@ -19,7 +19,7 @@
     };
 
     function startCounter() {
-        var remaining = 100 - counter;
+        var remaining = 500 - counter;
         counter = counter + (0.015 * Math.pow(1 - Math.sqrt(remaining), 2));
 
         if (progressBar) progressBar.style.width = Math.round(counter) + '%';

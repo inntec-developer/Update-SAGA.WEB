@@ -11,6 +11,17 @@
     <li class="breadcrumb-item active">Registro</li>
   </ol>
 </div>
+<br/>
 
-<app-login></app-login>
-<app-register></app-register>
+<div class="row">
+  <div class="col-md-6">
+    <app-card-vacante [ClientId]="ClientId"></app-card-vacante>
+  </div>
+
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <app-buttons-postulaciones></app-buttons-postulaciones>
+      <app-detail-vacantes [VacanteId]="VacanteId"></app-detail-vacantes>
+    </div>
+  </div>
+</div>

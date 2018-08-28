@@ -1,0 +1,108 @@
+
+<div class="card">
+  <div class="box">
+      <div class="img">
+          <img src="{{logo}}">
+      </div>
+      <h2>{{Datos[0]['nombreComercial']}}</h2>
+      <p>{{Datos[0]['razonSocial']}}</p>
+      <div class="panel panel-default">
+        <div class="panel-heading">CONTACTOS</div>
+        <span>
+          <ul *ngFor="let contacto of Datos[0]['contactos']">
+              <ng-template #popTemplate>
+                  <h3 style="color:#e91e63;" class="popover-header text-center">{{contacto.puesto}}</h3>
+                  <div class = "row">
+                  <div class="col-md-12">
+                  <div class="popover-body">
+                    <p>(Ext. {{contacto.telefonos[0]['ext']}})-{{contacto.telefonos[0]['telefono']}}
+                        <span>{{contacto.emails[0]['email']}}</span>
+                    </p>
+                    
+                  </div>
+                </div>
+                </div>
+                </ng-template>
+
+            <li><a [popover]="popTemplate" placement="right" container="body" triggers="mouseenter:mouseleave">{{contacto.nombre}} {{contacto.apellidoParterno}} {{contacto.apellidoMaterno}}</a></li>
+          </ul>
+      </span>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">TELEFONOS</div>
+      <span>
+          <ng-template #popTemplateTelefonos>
+              <h3 class="popover-header text-center">Ext. - Telefono</h3>
+              <div class = "row">
+              <div class="col-md-12">
+              <div class="popover-body">
+                <ng-container *ngFor="let tel of Datos[0]['telefonos']">
+                <p *ngIf="!tel.principal">{{tel.tipo}} [ <span *ngFor="let e of tel.exts">{{e.ext}} - </span> ]  {{tel.telefono}} </p>
+              </ng-container>
+              </div>
+            </div>
+            </div>
+            </ng-template>
+          <ul *ngFor="let tel of Datos[0]['telefonos']">
+            <li *ngIf="tel.principal"><a [popover]="popTemplateTelefonos" container="body" placement="right" triggers="mouseenter:mouseleave">{{tel.tipo}} {{tel.telefono}} Ext. [ <span *ngFor="let e of tel.exts">{{e.ext}} - </span> ]</a></li>
+          </ul>
+      </span>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">DIRECCIONES</div>
+        <span>
+            <ul *ngFor="let dir of Datos[0]['direccion']">
+              <li><a matTooltip="{{dir.tipo}}">{{dir.calle}} {{dir.noExt}} Col. {{dir.colonia}} {{dir.municipio}} {{dir.estado}} {{dir.pais}} {{dir.cp}}</a></li>
+            </ul>
+        </span>
+      </div>
+      <div class="panel panel-default">
+          <div class="panel-heading">ASIGNADO</div>
+          <span *ngFor="let asig of Datos[0]['asignados']">
+              {{asig.nombre}} {{asig.apellidoParterno}} {{asig.apellidoMaterno}} <span>/</span>
+          </span>
+        </div>
+
+  </div>
+</div>
+
+
+
+
+
+<!-- <h2>Prakash Prajapati<br><span>Web Graphic Designer</span></h2>
+<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et.</p>
+<span>matTooltip="Puesto {{contacto.puesto}} (Ext. {{contacto.telefonos[0]['ext']}})-{{contacto.telefonos[0]['telefono']}} / {{contacto.emails[0]['email']}}"
+    <ul>
+        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+    </ul>
+</span> 
+          <div class="table-responsive">
+              <table class="table table-bordered table-hover table-striped">
+                  <thead>Contacto
+                      <tr >
+                         <th class="text-center">Nombre</th>
+                         <th class="text-center">Puesto</th>
+                          <th class="text-center">Tipo</th>
+                          <th class="text-center">Telefono</th>
+                          <th class="text-center">E-mail</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let contacto of Datos[0]['contactos']">
+                      <td>{{contacto.nombre}}</td>
+                      <td>{{contacto.puesto}}</td>
+                      <td>{{contacto.tipo}}</td>
+                      <td *ngFor="let tel of contacto.telefonos">Ext. {{tel.ext}} - {{tel.telefono}} </td>
+                      <td *ngFor="let email of contacto.emails">{{email.email}} </td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+
+-->

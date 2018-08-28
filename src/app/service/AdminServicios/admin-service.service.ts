@@ -1,3 +1,5 @@
+import { saveAs } from 'file-saver';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -6,7 +8,7 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
 
-import { Headers, Http, RequestOptions, Response } from '@angular/http';
+import { Headers, Http, RequestOptions, Response, ResponseContentType } from '@angular/http';
 
 import { ApiConection } from './../api-conection.service';
 import { Injectable } from '@angular/core';
@@ -18,6 +20,7 @@ export class AdminServiceService {
   // Url de servicios.
   private Url = ApiConection.ServiceUrl+ApiConection.getDtosPersonal;
   private UrlGetEntidadesUG = ApiConection.ServiceUrl+ApiConection.getEntidadesUG;
+  private UrlGetEntidades = ApiConection.ServiceUrl+ApiConection.getEntidades;
   private UrlTiposUsuarios = ApiConection.ServiceUrl+ApiConection.getTiposUsuarios;
   private UrlAddRol = ApiConection.ServiceUrl+ApiConection.addRol;
   private UrlAddGrupo = ApiConection.ServiceUrl+ApiConection.addGrupo;
@@ -47,6 +50,12 @@ export class AdminServiceService {
   private UrlUploadImage = ApiConection.ServiceUrl+ApiConection.uploadImage;
   private UrlAddSeccion = ApiConection.ServiceUrl+ApiConection.addSeccion;
   private UrlValidarEmail = ApiConection.ServiceUrl+ApiConection.validarEmail;
+  private UrlGetFiles = ApiConection.ServiceUrl+ApiConection.getFiles;
+  private UrlGetImage = ApiConection.ServiceUrl+ApiConection.getImage;
+  private UrlSendEmailRegister = ApiConection.ServiceUrl+ApiConection.sendEmailRegister;
+  private UrlDownloadFiles = ApiConection.ServiceUrl+ApiConection.downloadFiles;
+  private UrlViewFile = ApiConection.ServiceUrl + ApiConection.viewFile;
+  private UrlUploadFile = ApiConection.ServiceUrl + ApiConection.uploadFile;
 
   // Error.
   private handleError(error: any) {
@@ -58,7 +67,7 @@ export class AdminServiceService {
      }
 
 
-  constructor(private http: Http ) {
+  constructor(private http: Http, private _httpClient: HttpClient ) {
 
   }
 
@@ -66,12 +75,81 @@ export class AdminServiceService {
   {
     let formData = new FormData();
     formData.append('image', file, name );
-    let headers = new Headers({'Content-Type': 'image/.*'});
+    let headers = new Headers({'Content-Type': 'image/*.*'});
     let options = new RequestOptions({headers: headers});
 
     return this.http.post(this.UrlUploadImage, formData ).map(result => result.json());
   }
+
+  GetFiles(): Observable<any>
+  {
+
+    let httpHeaders = new HttpHeaders({
+      'Access-Control-Allow-Origin': 'http://localhost:4200'
+     })
+
+     let params = new HttpParams().set('entidadId', '83569bac-0d68-e811-80e1-9e274155325e')
  
+     return this._httpClient.get(this.UrlGetFiles, {params: params});
+  }
+ 
+  GetImage(ruta): string
+  {
+    return ApiConection.ServiceUrlFileManager + 'Files/users/83569bac-0d68-e811-80e1-9e274155325e/' + ruta;
+  }
+
+  GetPdf(ruta): Observable<any>
+  {
+    let params = new HttpParams().set('ruta', ruta);  
+    return this._httpClient.get(this.UrlViewFile, {params: params, responseType: 'blob'});
+  }
+
+  DownloadFiles(ruta) : Observable<any>
+  {
+    console.log(ruta)
+    let params = new HttpParams().set('file', ruta);  
+    return this._httpClient.get(this.UrlDownloadFiles, {params: params, responseType: 'blob'});
+  }
+
+  UploadFile( file: File ) : Observable<any>
+  {
+    let formData = new FormData();
+    formData.append('file', file, file.name );
+
+    return this.http.post(this.UrlUploadFile, formData ).map(result => result.json());
+  }
+
+  downloadImage(ruta): Observable<any>
+  {
+    // let ruta = "utilerias/img/user/08155cc8-3568-e811-80e1-9e274155325e.jpeg";
+    // console.log(ruta)
+
+    let httpHeaders = new HttpHeaders({
+     'Access-Control-Allow-Origin': 'http://localhost:4200',
+     'Content-Type': 'image/*.*'
+    })
+
+    let params = new HttpParams().set('ruta', ruta);     
+    //let options = new RequestOptions({headers: httpHeaders, params: params, responseType: ResponseContentType.Blob });
+      // return this.http.get(ruta, options)
+      // .map(res => res.blob())
+      //   .catch(this.handleError)
+     
+      
+     return this._httpClient.get(ApiConection.ServiceUrlFileManager + '/img/user/' + ruta, {headers: httpHeaders, responseType: "blob"});
+    //  return this._httpClient.get(ApiConection.ServiceUrlFoto + ruta, {responseType: "blob"});
+    
+    
+    // return this._httpClient.get(this.UrlGetImage, { headers: httpHeaders,
+    //   params: params
+    //   })
+ 
+  }
+
+  downloadPDF(url):  Observable<any> {
+    return this._httpClient.get(ApiConection.ServiceUrlFileManager + 'pdf/' + url, {responseType: "blob"});
+  }
+
   getPersonas(): Observable<any>
   {
      return this.http.get(this.Url)
@@ -79,9 +157,24 @@ export class AdminServiceService {
          .catch(this.handleError);
   }
 
-  GetEntidadesUG(): Observable<any>
+  SendEmailRegister(data: any): Observable<any>{
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.post(this.UrlSendEmailRegister, JSON.stringify(data), options)
+            .map(result => result.json())
+            .catch(this.handleError);
+  }
+
+  GetEntidades(): Observable<any>
   {
-     return this.http.get(this.UrlGetEntidadesUG)
+     return this.http.get(this.UrlGetEntidades)
+         .map(result => result.json())
+         .catch(this.handleError);
+  }
+
+  GetEntidadesUG(id): Observable<any>
+  {
+     return this.http.get(this.UrlGetEntidadesUG + '?id=' + id)
          .map(result => result.json())
          .catch(this.handleError);
   }
@@ -146,9 +239,9 @@ export class AdminServiceService {
          .catch(this.handleError);
   }
 
-  GetEstructuraRoles(): Observable<any>
+  GetEstructuraRoles( rol ): Observable<any>
   {
-     return this.http.get(this.UrlGetEstructuraRoles)
+     return this.http.get(this.UrlGetEstructuraRoles + '?rol=' + rol)
          .map(result => result.json())
          .catch(this.handleError);
   }
@@ -222,6 +315,7 @@ export class AdminServiceService {
 
   UpdateUsuario(data: any) : Observable<any>
   {
+    console.log(data)
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
     return this.http.post(this.UrlUpdateUsuario, JSON.stringify(data), options)

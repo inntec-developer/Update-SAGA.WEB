@@ -1,21 +1,20 @@
-import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatTableDataSource, PageEvent} from '@angular/material';
+import { Component, Input, OnInit, } from '@angular/core';
 
+declare var $: any;
 @Component({
   selector: 'app-dt-direccion',
   templateUrl: './dt-direccion.component.html',
   styleUrls: ['./dt-direccion.component.scss']
 })
-export class DtDireccionComponent implements OnInit,  AfterViewInit {
+export class DtDireccionComponent implements OnInit {
   @Input() Direcciones : any[];
   getAddress : boolean = false;
-  public dataSource: MatTableDataSource<any[]>;
+  public rows: Array<any> = [];
   constructor() { }
 
   ngOnInit() {
   }
-  ngAfterViewInit(){
-  }
+  
   ngAfterContentChecked(){
     if(this.Direcciones != null){
       this.cargarDirecciones(this.Direcciones);
@@ -24,39 +23,37 @@ export class DtDireccionComponent implements OnInit,  AfterViewInit {
 
   cargarDirecciones(data){
     if(!this.getAddress){
-        this.dataSource = new MatTableDataSource(data);
-        this.getAddress = true;
+        this.rows = data;
+        this.getAddress = true;        
     }
   }
 
-  //*******************************-- GRID-- *********************************************//
-  // Display para mostrar los objetos en el Grid
-  displayedColumns = [
-    'tipoDireccion',
-    'pais',
-    'estado',
-    'municipio',
-    'colonia',
-    'calle',
-    'numeroExterior',
-    'numeroInterior',
-    'codigoPostal',
-    'activo',
-    'esPrincipal'
+  
+  
+  public columns: Array<any> = [
+    {title: 'Tipo Dirección', className: 'text-info text-center'},
+    {title: 'País', className: 'text-info text-center'},
+    {title: 'Estado', className: 'text-info text-center'},
+    {title: 'Municipio', className: 'text-info text-center'},
+    {title: 'Colonia', className: 'text-info text-center'},
+    {title: 'Calle', className: 'text-info text-center'},
+    {title: 'Número Ext.', className: 'text-info text-center'},
+    {title: 'Número Int.', className: 'text-info text-center'},
+    {title: 'Código Postal', className: 'text-info text-center'},
+    {title: 'Activo', className: 'text-info text-center'},
+    {title: 'Principal', className: 'text-info text-center'},
   ];
 
+  public config: any = {
+    className: ['table-striped table-bordered mb-0 d-table-fixed']
+  };
+
+  public onCellClick(data: any): any {
+    /* add an class 'active' on click */
+    $('#resultDataTable').on('click', 'tr', function (event: any) {
+        //noinspection TypeScriptUnresolvedFunction
+        $(this).addClass('selected').siblings().removeClass('selected');
+    });
   }
 
-  export interface Element {
-    tipoDireccion: string;
-    pais: string;
-    estado: string;
-    municipio: string;
-    colonia: string;
-    calle: string;
-    numeroExterior: string;
-    numeroInterior: string;
-    codigoPostal: string;
-    activo: boolean;
-    esPrincipal: boolean;
-  }
+}

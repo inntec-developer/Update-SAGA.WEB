@@ -1,13 +1,15 @@
+import { debug } from 'util';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatTableDataSource } from '@angular/material';
 
-import { DialogAssingRequiComponent } from './../dialogs/dialog-assing-requi/dialog-assing-requi.component';
-import { DialogShowRequiComponent } from './../dialogs/dialog-show-requi/dialog-show-requi.component';
+import { DialogAssingRequiComponent } from '../dialogs/dialog-assing-requi/dialog-assing-requi.component';
+import { DialogShowRequiComponent } from '../dialogs/dialog-show-requi/dialog-show-requi.component';
+import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../../service';
 import { ToasterService } from 'angular2-toaster';
-import { element } from 'protractor';
+
+declare var $: any;
 
 @Component({
   selector: 'app-dt-vacantes-reclutador',
@@ -16,119 +18,234 @@ import { element } from 'protractor';
   providers: [RequisicionesService]
 })
 export class DtVacantesReclutadorComponent implements OnInit {
+  public dataSource: Array<any> = [];
+  Vacantes: number = 0;
+
+  // Varaibles del paginador
+  public page: number = 1;
+  public itemsPerPage: number = 20;
+  public maxSize: number = 5;
+  public numPages: number = 1;
+  public length: number = 0;
+
+  showFilterRow: boolean;
+  registros: number;
+  errorMessage: any;
+  element: any = {};
+
+  estatusId: any;
+  enProceso: any;
   requi: { folio: any; id: any; };
-  ruta: any;
+  vBtra: any;
+  id: any;
+  folio: any;
+  postulados: any;
 
   constructor(
     private service: RequisicionesService,
     private dialog: MatDialog,
     private _Router: Router,
-    private _Route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private toasterService: ToasterService,
-    private activateRoute : ActivatedRoute
-  ) {
-    this.ruta = this.activateRoute.snapshot.routeConfig.data;
-    localStorage.setItem('ruta', this.ruta.componente);
-   }
-  // Variables Globales
-  requisicion: any;
-  arrayRequisicion: any[];
-  public dataSource = new MatTableDataSource(<any>[]);
+  ) { }
 
   ngOnInit() {
-    this.getDataRequisiciones();
+    this.spinner.show();
+    // setTimeout(() => {
+    this.onChangeTable(this.config);
+    // }, 300); 
   }
 
-  getDataRequisiciones(){
-    this.service.getRequiReclutador(localStorage.getItem('id')).subscribe(data => {
-      this.requisicion = data;
-      this.dataSource =  new MatTableDataSource(this.requisicion);
-      this.arrayRequisicion = this.requisicion;
-      this.spinner.hide();
-      console.log(this.requisicion);
+  public rows: Array<any> = [];
+  public columns: Array<any> = [
+    { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+    { title: 'Solicita', className: 'text-info text-center', name: 'solicita', filtering: { filterString: '', placeholder: 'Solicita' } },
+    { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
+    { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
+    { title: 'No. Vacantes', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' } },
+    { title: 'Tipo Recl.', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo' } },
+    { title: 'Clase Recl.', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Clase' } },
+    { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
+    { title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
+    { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Cumplimiento', className: 'text-info text-center', name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
+    { title: 'Prioridad', className: 'text-info text-center', name: 'prioridad', filtering: { filterString: '', placeholder: 'Prioridad' } },
+    { title: 'Postulados', className: 'text-info text-center', name: 'postulados', filtering: { filterString: '', placeholder: 'Postulados' } },
+    { title: 'En Proceso', className: 'text-info text-center', name: 'enProceso', filtering: { filterString: '', placeholder: 'Proceso' } },
+  ];
+
+  public config: any = {
+    paging: true,
+    sorting: { columns: this.columns },
+    filtering: { filterString: '' },
+    className: ['table-striped table-bordered mb-0 d-table-fixed']
+  };
+
+  public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
+    let start = (page.page - 1) * page.itemsPerPage;
+    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    return data.slice(start, end);
+  }
+
+  public changeSort(data: any, config: any): any {
+    if (!config.sorting) {
+      return data;
+    }
+
+    let columns = this.config.sorting.columns || [];
+    let columnName: string = void 0;
+    let sort: string = void 0;
+
+    for (let i = 0; i < columns.length; i++) {
+      if (columns[i].sort !== '' && columns[i].sort !== false) {
+        columnName = columns[i].name;
+        sort = columns[i].sort;
+      }
+    }
+
+    if (!columnName) {
+      return data;
+    }
+
+    // simple sorting
+    return data.sort((previous: any, current: any) => {
+      if (previous[columnName] > current[columnName]) {
+        return sort === 'desc' ? -1 : 1;
+      } else if (previous[columnName] < current[columnName]) {
+        return sort === 'asc' ? -1 : 1;
+      }
+      return 0;
     });
   }
 
-  // Dialogs
-  openDialogShowRequi(id, folio){
-      this.requi = {
-        folio : folio,
-        id : id
+  public changeFilter(data: any, config: any): any {
+    let filteredData: Array<any> = data;
+    this.columns.forEach((column: any) => {
+      if (column.filtering) {
+        this.showFilterRow = true;
+        filteredData = filteredData.filter((item: any) => {
+          if (item[column.name] != null)
+            return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+        });
       }
-      let dialogShow = this.dialog.open(DialogShowRequiComponent, {
-        width: '1200px',
-        height: '700px',
-        data: this.requi
-      });    
-      
+    });
+
+    if (!config.filtering) {
+      return filteredData;
+    }
+
+    if (config.filtering.columnName) {
+      return filteredData.filter((item: any) =>
+        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
+    }
+
+    let tempArray: Array<any> = [];
+    filteredData.forEach((item: any) => {
+      let flag = false;
+      this.columns.forEach((column: any) => {
+        if (item[column.name] == null) {
+          flag = true;
+        } else {
+          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
+            flag = true;
+          }
+        }
+      });
+      if (flag) {
+        tempArray.push(item);
+      }
+    });
+    filteredData = tempArray;
+
+    return filteredData;
   }
 
-  openDialogAssingRequi(element){
+  public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
+    if (config.filtering) {
+      (<any>Object).assign(this.config.filtering, config.filtering);
+    }
+
+    if (config.sorting) {
+      (<any>Object).assign(this.config.sorting, config.sorting);
+    }
+    setTimeout(() => {
+      this.service.getRequiReclutador(localStorage.getItem('id')).subscribe(data => {
+        this.dataSource = data;
+        this.registros = this.dataSource.length;
+        this.rows = this.dataSource.sort();
+        let filteredData = this.changeFilter(this.dataSource, this.config);
+        let sortedData = this.changeSort(filteredData, this.config);
+        this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
+        this.length = sortedData.length;
+        this.spinner.hide();
+      });
+    }, 500);
+
+  }
+
+  public refreshTable() {
+    this.onChangeTable(this.config);
+    this.element = [];
+    this.vBtra = null;
+    this.id = null;
+    this.folio = null;
+    this.postulados = null;
+    this.enProceso = null;
+  }
+
+  public onCellClick(data: any): any {
+    let index = this.dataSource.indexOf(data.row);
+    this.estatusId = data.estatusId;
+    this.element = data;
+    console.log(this.element);
+    this.vBtra = data.vBtra;
+    this.id = data.id;
+    this.folio = data.folio;
+    this.postulados = data.postulados;
+    this.enProceso = data.enProceso;
+    this.requi = {
+      folio: data.folio,
+      id: data.id
+    }
+    /* add an class 'active' on click */
+    $('#resultDataTable').on('click', 'tr', function (event: any) {
+      //noinspection TypeScriptUnresolvedFunction
+      $(this).addClass('selected').siblings().removeClass('selected');
+    });
+  }
+
+  /*
+   * Funciones para la administracion de las requisiciones.
+   * */
+  openDialogShowRequi() {
+
+    let dialogShow = this.dialog.open(DialogShowRequiComponent, {
+      width: '1200px',
+      height: '700px',
+      data: this.requi
+    });
+    dialogShow.afterClosed().subscribe(result => {
+      this.onChangeTable(this.config);
+    });
+  }
+  openDialogAssingRequi() {
     let dialogAssing = this.dialog.open(DialogAssingRequiComponent, {
       width: '1200px',
       height: 'auto',
-      data: element
-    });   
+      data: this.element
+    });
     dialogAssing.afterClosed().subscribe(result => {
-      this.getDataRequisiciones();
-    })
+      this.onChangeTable(this.config);
+    });
   }
 
-  openDesignVacante(id,folio,vBtra){
-    this._Router.navigate(['/reclutamiento/configuracionVacante/', id, folio, vBtra], {skipLocationChange:true});
-    // this._Router.navigate(['/reclutamiento/configuracionVacante'], { queryParams: { Requi: id, Folio: folio, VBtra: vBtra } });
+  openDesignVacante() {
+    this._Router.navigate(['/reclutamiento/configuracionVacante/', this.id, this.folio, this.vBtra], { skipLocationChange: true });
   }
-
-   // Display para mostrar los objetos en el Grid
-   private _displayedColumns = [
-    'folio',
-    'solicita',
-    'cliente',
-    // 'rfc',
-    'vBtra',
-    'vacantes',
-    'reclutamiento',
-    'sueldoMinimo',
-    'sueldoMaximo',
-    'fch_Creacion',
-    'fch_Cumplimiento',
-    'estatus',
-    'prioridad',
-    'postulados',
-    'enProceso',
-    'accion'
-  ];
-  public get displayedColumns() {
-    return this._displayedColumns;
+  openViewPostulados() {
+    if (this.id != null) {
+      this._Router.navigate(['/reclutamiento/postulados', this.id, this.folio, this.vBtra], { skipLocationChange: true });
+    }
   }
-  public set displayedColumns(value) {
-    this._displayedColumns = value;
-  }
-  // Filtro dentro del Grid
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
-  }
-}
-export interface Element {
-  folio: string;
-  solicita: string;
-  id: string;
-  cliente: string;
-  // rfc: string;
-  vBtra: string;
-  vacantes: number;
-  tipoReclutamiento: string;
-  claseReclutamiento: string;
-  sueldoMinimo: string;
-  sueldoMaximo: string;
-  fch_Creacion: string;
-  fch_Cumplimiento: string;
-  estatus: number;
-  prioridad: number;
-  postulados: number;
-  enProceso: number;
 }
 

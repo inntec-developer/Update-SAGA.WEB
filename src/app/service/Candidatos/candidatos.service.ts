@@ -22,6 +22,7 @@ private UrlEstados = ApiConection.ServiceUrl+ApiConection.filtroestados;
 private UrlMunicipios = ApiConection.ServiceUrl+ApiConection.filtromunicipios;
 private UrlColonias = ApiConection.ServiceUrl+ApiConection.filtrocolonias;
 private UrlCandidatos = ApiConection.ServiceUrl+ApiConection.Candidatos;
+private UrlMisCandidatos = ApiConection.ServiceUrl+ApiConection.MisCandidatos;
 private UrlCandidatoDtl = ApiConection.ServiceUrl+ApiConection.Candidatodetail;
 private UrlPostulaciones = ApiConection.ServiceUrl+ApiConection.Postulaciones;
 private UrlAreaExp = ApiConection.ServiceUrl+ApiConection.Areasexp;
@@ -127,6 +128,11 @@ getcandidatos(filtrox: any): Observable<any> { // Obtener filtro de candidatos.
    // return this.http.get(this.UrlCandidatos)
    //     .map(result => result.json())
    //     .catch(this.handleError);
+}
+getMisCandidatos(reclutador: any): Observable<any> { // Obtener mis de candidatos.
+    return this.http.get(this.UrlMisCandidatos + reclutador)
+    .map(result => result.json())
+    .catch(this.handleError);
 }
 
 getcandidatodtl(Id: any): Observable<any> { // Obtener detalle de candidatos.

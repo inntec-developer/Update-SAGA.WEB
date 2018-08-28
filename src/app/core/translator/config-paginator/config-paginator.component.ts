@@ -34,8 +34,9 @@ export function getSpanishPaginatorBtp(){
   const paginator = new PaginationConfig
 
   paginator.main.firstText = 'Inicio';
-  paginator.main.previousText = '&lsaquo;';
-  paginator.main.nextText ='&rsaquo;';
+  paginator.main.previousText = '&lsaquo;&lsaquo;';
+  // '&lsaquo;' ---   < 
+  paginator.main.nextText ='&rsaquo;&rsaquo;';
   paginator.main.lastText = 'Final';
   return paginator;
 }

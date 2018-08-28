@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ApiConection } from './../../../service/api-conection.service';
+import { ApiConection } from '../../../service/api-conection.service';
 import { Component, OnInit, Input, EventEmitter, Output, ElementRef, ViewChild } from '@angular/core';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -70,7 +70,7 @@ export class UploadImgsComponent implements OnInit {
 
   UploadImg()
   {
-     
+    
     this.onItemChanged.emit(this.setImage());
     this.service.UploadImg(this.selectedFile, this.name).subscribe(result => {
     this.StatusCode = result;

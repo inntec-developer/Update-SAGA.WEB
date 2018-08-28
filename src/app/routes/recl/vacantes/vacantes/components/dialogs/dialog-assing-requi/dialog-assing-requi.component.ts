@@ -1,11 +1,13 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { AsignarRequisicionComponent } from './../../../../../../../components/asignar-requisicion/asignar-requisicion.component';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { AsignarRequis } from '../../../../../../../models/models';
-import { RequisicionesService } from './../../../../../../../service/requisiciones/requisiciones.service';
+import { RequisicionesService } from '../../../../../../../service/requisiciones/requisiciones.service';
+
 
 @Component({
   selector: 'app-dialog-assing-requi',
@@ -20,6 +22,7 @@ import { RequisicionesService } from './../../../../../../../service/requisicion
   ]
 })
 export class DialogAssingRequiComponent implements OnInit {
+  @ViewChild('asginaciones') asignaciones: AsignarRequisicionComponent;
   textBtnCerrar: string;
   textBtnAceptar: string;
   placeHolderSelect: string;
@@ -30,6 +33,7 @@ export class DialogAssingRequiComponent implements OnInit {
   alertAssing: boolean;
   errorDE: boolean;
   RequiId: string;
+  checked: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data : any, 
@@ -48,7 +52,6 @@ export class DialogAssingRequiComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    this.getInformacion();
   }
 
   initForm(){
@@ -59,14 +62,22 @@ export class DialogAssingRequiComponent implements OnInit {
 
   }
 
+  ngAfterContentChecked() {
+    if(!this.checked){
+      this.getInformacion()
+      this.getAsignacion(this.data.asignados);
+    }
+  }
+
   getInformacion(){
     if(this.data != null){
+      this.RequiId = this.data.id;
       this.formAsignaciones.patchValue({
         fch_Cumplimiento: this.data.fch_Cumplimiento,
         diasEnvio: this.data.diasEnvio
       })
-      this.RequiId = this.data.id;
     }
+    this.checked = true;
   }
 
   onCloseDialog(){
@@ -81,31 +92,8 @@ export class DialogAssingRequiComponent implements OnInit {
   }
 
    
-    // Toasts (Mensajes del sistema)
-    toaster: any;
-    toasterConfig: any;
-    toasterconfig: ToasterConfig = new ToasterConfig({
-      positionClass: 'toast-bottom-right',
-      limit: 7,tapToDismiss: false,
-      showCloseButton: true,
-      mouseoverTimerStop: true,
-    });
-
-    popToast(type, title, body ) {
-
-      var toast : Toast = {
-        type: type,
-        title: title,
-        timeout:4000,
-        body: body
-      }
-      this.toasterService.pop(toast);
-    }
-
   Save(){
-    debugger;
     this.errorDE = false;
-    console.log(this.RequiId);
     if(this.formAsignaciones.get('diasEnvio').value > 0 && this.formAsignaciones.get('diasEnvio').value <= 20 ){
       this.loading = true;
       this.asignadosRequi.push(localStorage.getItem('id'));
@@ -137,7 +125,6 @@ export class DialogAssingRequiComponent implements OnInit {
             this.dialogAssing.close();
           }
           else{
-              this.popToast('error', 'Oops!!','Algo salio mal intente de nuevo' );
               this.loading = false;
           }
         });
@@ -145,20 +132,6 @@ export class DialogAssingRequiComponent implements OnInit {
     else{
       this.errorDE = true;
     }
-
-
-
-    // if(this.asignadosRequi != []){
-    //   setTimeout(() => {
-    //     this.loading = false;
-    //     this.asignadosRequi.push(localStorage.getItem('id'));
-    //     console.log('Asignados ', this.asignadosRequi);
-    //     console.log('Cordinador Id: ', localStorage.getItem('id') )
-    //   }, 5000)
-    // }
-    // else{
-    //   this.alertAssing = true;
-    // }
   }
 }
 

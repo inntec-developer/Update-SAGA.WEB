@@ -8,7 +8,7 @@ import {map} from 'rxjs/operators/map';
 import { EstadoComponent } from '../estado/estado.component';
 
 // Servicios
-import { CandidatosService } from '../../../../../service/index';
+import { CandidatosService } from '../../../../../service';
 
 @Component({
   selector: 'app-pais',

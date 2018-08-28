@@ -1,7 +1,7 @@
 <div class="content-heading">
   <div>
     Rol - Grupo
-    <span class="text-sm d-none d-sm-block">Administraci&oacute;n de reol - grupo.</span>
+    <span class="text-sm d-none d-sm-block">Administraci&oacute;n de rol - grupo.</span>
   </div>
   <!-- Breadcrumb right aligned-->
   <ol class="breadcrumb ml-auto">
@@ -14,13 +14,14 @@
 
 
 <form [formGroup]="formRol" novalidate>
-    <div *ngIf="verMsj" class="alert alert-success">
-        {{msj}}
+    <div *ngIf="verMsj">
+        <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
       </div>
+    <br/>
   <div class="row">
     <div class="col-md-4">
       <div class="input-group">
-        <input #filterInput (input)="Search($event)" class="input-sm form-control" type="text" placeholder="Filtrar" />
+        <input #filterInput (input)="Search($event)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
       </div>
     </div>
   </div>
@@ -41,7 +42,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="empty-row" matTooltip="Doble click para seleccionar" *ngFor="let g of Grupos; let i = index" (dblclick)="onSelect(g, i)"
+              <tr class="empty-row" matTooltip="Doble click para seleccionar" *ngFor="let g of Grupos; let i = index" (dblclick)="onSelect(g)"
                 [class.selected]="g.selected">
                 <td>
                   <img class="center-block media img-responsive img-fluid circle thumb32" src="{{g.fotoAux}}" alt="" />
@@ -56,13 +57,13 @@
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
-                    <hr>
                   </tr>
                   <tr class="text-left" *ngFor="let r of g.grupos">
-                      <div *ngFor="let gr of r.rol"> <!--roles como grupo-->
-                        {{r.grupo + ' - ' + gr.rol}}
-                      </div>
                       <hr>
+                      <div *ngFor="let gr of r.rol"> <!--roles como grupo-->
+                        {{gr.rol + ' - ' + r.grupo }}
+                      </div>
+                      
                   </tr>
                 </td>
               </tr>
@@ -78,31 +79,36 @@
           <div class="row">
    
           <div class="col-md-6">
-            <select #slcRol class="form-control" (change)="selected($event, i)" formControlName="slcRol">
-              <option [value]="0">Seleccionar Rol</option>
+            <select #slcRol class="form-control" (change)="selected($event); rolId = $event.target.value" formControlName="slcRol">
+              <option [value]="-1">Seleccionar Rol</option>
               <option *ngFor="let r of Roles; let i = index" [value]="r.id">{{r.rol}}</option>
             </select>
 
-            <span class="text-danger" *ngIf="formRol.controls['slcRol'].hasError('required')">Debe seleccionar un Rol</span>
+            <div *ngIf="formRol.controls['slcRol'].invalid && (formRol.controls['slcRol'].dirty || formRol.controls['slcRol'].touched)" >
+            <span class="text-danger" *ngIf="formRol.controls['slcRol'].errors.required" >Debe seleccionar un Rol</span>
+            </div>
           
           </div>
         
-          <div class="col-md-4">
+          <!-- <div class="col-md-4">
             <btn-view class="pull-left" (click)="staticModal.show()" matTooltip="Visualizar Rol"></btn-view>
-          </div>
+          </div> -->
           <div class="col-md-2">
-            <btn-check class="pull-right" id='create' chkPrivilegiosButtons matTooltip="Guardar Cambios" (click)="saveData(slcRol.value)"></btn-check>
+            <btn-check class="pull-right" id='create' [xs]="true" chkPrivilegiosButtons matTooltip="Guardar Cambios" (click)="saveData(slcRol.value)"></btn-check>
           </div>
         </div>
         </div>
-
+<br/>
         <div class="panel-body">
-          <div class="media" *ngFor='let sel of ListaRG'>
-            <img class="img-responsive img-fluid circle thumb32" src="{{sel.fotoAux}}" alt="" /> 
-            <span class="media-body"><strong>{{sel.nombre + ' ' + sel.apellidoPaterno + ' ' + sel.apellidoMaterno }}</strong></span>
+          <div *ngFor='let sel of ListaRG'>
+            <div class="media">
+              <img class="img-responsive img-fluid circle thumb32" src="{{sel.fotoAux}}" alt="" /> 
+              <span class="media-body"><strong>{{sel.nombre + ' ' + sel.apellidoPaterno + ' ' + sel.apellidoMaterno }}</strong></span>
+            </div>
+            <hr>   
           </div>
-          <p *ngIf="!ListaRG.length">No se ha seleccionado grupo</p>
         </div>
+        <p *ngIf="!ListaRG.length">No se ha seleccionado grupo</p>
       </div>
     </div>
     <br/>
@@ -111,7 +117,7 @@
 </form>
 <!-- Modal  -->
 
-<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+<!-- <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -126,10 +132,7 @@
           <app-rolls-struct #Struct [hiddenSelect]="true" (onItemChanged)="setData()" [StructList]="filteredData"></app-rolls-struct>
         </div>
       </div>
-      <!-- <div class="modal-footer">
-             <btn-closed data-dismiss="modal" (click)="staticModal.hide()"></btn-closed>
-           </div>
-       </div> -->
+    
     </div>
   </div>
-</div>
+</div> -->

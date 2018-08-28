@@ -1,5 +1,3 @@
-// Librerias necesarias para el modulo.
-
 import { ColorPickerModule, ColorPickerService } from 'ngx-color-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -38,8 +36,11 @@ import {
          MatToolbarModule,
          MatTooltipModule
 } from '@angular/material';
+import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
+import { PopoverModule, TooltipModule } from 'ngx-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 import {ToasterModule, ToasterService} from 'angular2-toaster';
+import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
 
 import { AreaExpComponent } from './candidatos/busqueda/area-exp/area-exp.component';
 import { BusquedaComponent } from './candidatos/busqueda/busqueda.component';
@@ -55,6 +56,7 @@ import { DialogShowRequiComponent } from './vacantes/vacantes/components/dialogs
 import { DialogcandidatosComponent } from './candidatos/dt-candidatos/dialogcandidatos/dialogcandidatos.component';
 import { DisenadorVacanteComponent } from './vacantes/disenador-vacante/disenador-vacante.component';
 import { DtCandidatosComponent } from './candidatos/dt-candidatos/dt-candidatos.component';
+import { DtCandidatosPostComponent } from './vacantes/vacantes/components/dt-candidatos-post/dt-candidatos-post.component';
 import { DtVacantesComponent } from './candidatos/dt-vacantes/dt-vacantes.component';
 import { DtVacantesReclutadorComponent } from './vacantes/vacantes/components/dt-vacantes-reclutador/dt-vacantes-reclutador.component';
 import { EdadComponent } from './candidatos/busqueda/edad/edad.component';
@@ -66,6 +68,7 @@ import { HttpModule } from '@angular/http';
 import { IdiomasComponent } from './candidatos/busqueda/idiomas/idiomas.component';
 import { ImageCropperModule } from 'ng2-img-cropper';
 import { MunicipioComponent } from './candidatos/busqueda/municipio/municipio.component';
+import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NivestudiosComponent } from './candidatos/busqueda/nivestudios/nivestudios.component';
@@ -80,10 +83,10 @@ import { TagInputModule } from 'ngx-chips';
 import { TextMaskModule } from 'angular2-text-mask';
 import { TplicenciaComponent } from './candidatos/busqueda/tplicencia/tplicencia.component';
 import { VacantesComponent } from './vacantes/vacantes.component';
+import { VacantesPostulateComponent } from './vacantes/vacantes/vacantes-postulate/vacantes-postulate.component';
 import { VacantesReclutadorComponent } from './vacantes/vacantes/vacantes-reclutador/vacantes-reclutador.component';
 import { VehpropioComponent } from './candidatos/busqueda/vehpropio/vehpropio.component';
 import { VentaModule } from '../vtas/ventas.module';
-import { getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
 
 const routes: Routes = [
     { path: '290', component: Damfo290Component },
@@ -91,7 +94,8 @@ const routes: Routes = [
     { path: 'vacantes', component: VacantesComponent, },
     { path: 'disenador', component: DisenadorVacanteComponent },
     { path: 'configuracionVacante/:Requi/:Folio/:VBtra', component: DisenadorVacanteComponent },
-    { path: 'vacantesReclutador', component: VacantesReclutadorComponent, data:{componente:'Vacantes'} }
+    { path: 'vacantesReclutador', component: VacantesReclutadorComponent, data:{componente:'Vacantes'} },
+    { path: 'postulados/:VacanteId/:Folio/:VBtra', component: VacantesPostulateComponent, data: {componnte: 'Vacantes'} }
 ];
 
 @NgModule({
@@ -111,9 +115,16 @@ const routes: Routes = [
         MatProgressSpinnerModule, MatRadioModule, MatRippleModule,
         MatSelectModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule,
         MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule,
-        MatToolbarModule, MatTooltipModule, MatOptionModule, MatDialogModule, PaginatorModule,
-        ToasterModule, VentaModule, ComponentsModule, NgxSpinnerModule ],
-    providers: [ColorPickerService, { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() }, ToasterService],
+        MatToolbarModule, MatTooltipModule, MatOptionModule, MatDialogModule,
+        ToasterModule, VentaModule, ComponentsModule, NgxSpinnerModule,
+        PaginationModule.forRoot(),Ng2TableModule,
+        PopoverModule.forRoot(),
+        TooltipModule.forRoot()     
+    ],
+    providers: [ColorPickerService, 
+        { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
+        { provide: PaginationConfig, useValue: getSpanishPaginatorBtp()}
+        , ToasterService],
     declarations: [ Damfo290Component, CandidatosComponent, VacantesComponent,
                     BusquedaComponent, PaisComponent, EstadoComponent,
                     MunicipioComponent, ColoniaComponent, AreaExpComponent,
@@ -124,7 +135,9 @@ const routes: Routes = [
                      DialogcandidatosComponent, DisenadorVacanteComponent, 
                      DtVacantesReclutadorComponent, VacantesReclutadorComponent,
                      DialogShowRequiComponent,
-                     DialogAssingRequiComponent],
+                     DialogAssingRequiComponent,
+                     DtCandidatosPostComponent,
+                     VacantesPostulateComponent],
     entryComponents: [
        DialogcandidatosComponent, DialogShowRequiComponent, DialogAssingRequiComponent],
     exports: [ RouterModule ]

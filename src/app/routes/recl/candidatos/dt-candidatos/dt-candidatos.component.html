@@ -89,7 +89,7 @@
               <p>{{candidatodtl[0]?.aboutMe[0]?.acercaDeMi}}</p>
             </div>
             <div class="col-md-12">
-              <strong>Genero: </strong> {{candidatodtl[0]?.candidato?.genero?.genero}}
+              <strong>G&eacute;nero: </strong> {{candidatodtl[0]?.candidato?.genero?.genero}}
             </div>
             <div *ngIf="Status == 0 || Usuario == Reclutador">
               <div class="my-3" *ngFor="let correo of candidatodtl[0].candidato.emails">
@@ -178,7 +178,7 @@
                 <mat-header-cell *matHeaderCellDef> Folio </mat-header-cell>
                 <mat-cell *matCellDef="let vacantes">
                   <h5>
-                    <small [ngClass]="{'label label-info': vacantes.id == requisicionId && Status != 0}">{{vacantes?.folio}}</small>
+                    <small [ngClass]="{'badge badge-info': vacantes.id == requisicionId && Status != 0}">{{vacantes?.folio}}</small>
                   </h5>
                 </mat-cell>
               </ng-container>
@@ -187,7 +187,7 @@
                 <mat-header-cell *matHeaderCellDef> Vacante </mat-header-cell>
                 <mat-cell *matCellDef="let vacantes">
                   <h5>
-                    <small [ngClass]="{'label label-info': vacantes.id == requisicionId && Status != 0}">{{vacantes?.vBtra}}</small>
+                    <small [ngClass]="{'badge badge-info': vacantes.id == requisicionId && Status != 0}">{{vacantes?.vBtra}}</small>
                   </h5>
                 </mat-cell>
               </ng-container>
@@ -196,7 +196,7 @@
                 <mat-header-cell *matHeaderCellDef> Fecha creación </mat-header-cell>
                 <mat-cell *matCellDef="let vacantes">
                   <h5>
-                    <small [ngClass]="{'label label-info': vacantes.id == requisicionId && Status != 0}">{{vacantes?.fch_Creacion | date:"dd/MM/yyyy"}}</small>
+                    <small [ngClass]="{'badge badge-info': vacantes.id == requisicionId && Status != 0}">{{vacantes?.fch_Creacion | date:"dd/MM/yyyy"}}</small>
                   </h5>
                 </mat-cell>
               </ng-container>
@@ -205,7 +205,7 @@
                 <mat-header-cell *matHeaderCellDef> Cliente </mat-header-cell>
                 <mat-cell *matCellDef="let vacantes">
                   <h5>
-                    <small [ngClass]="{'label label-info': vacantes.id == requisicionId && Status != 0}">{{vacantes?.cliente?.nombrecomercial}}</small>
+                    <small [ngClass]="{'badge badge-info': vacantes.id == requisicionId && Status != 0}">{{vacantes?.cliente?.nombrecomercial}}</small>
                   </h5>
                 </mat-cell>
               </ng-container>
@@ -214,7 +214,7 @@
                 <mat-header-cell *matHeaderCellDef> Reclutamiento </mat-header-cell>
                 <mat-cell *matCellDef="let vacantes">
                   <h5>
-                    <small [ngClass]="{'label label-info': vacantes.id == requisicionId && Status != 0}">{{vacantes?.claseReclutamiento?.clasesReclutamiento}}</small>
+                    <small [ngClass]="{'badge badge-info': vacantes.id == requisicionId && Status != 0}">{{vacantes?.claseReclutamiento?.clasesReclutamiento}}</small>
                   </h5>
                 </mat-cell>
               </ng-container>
@@ -223,7 +223,7 @@
                 <mat-header-cell *matHeaderCellDef> Area experiencia </mat-header-cell>
                 <mat-cell *matCellDef="let vacantes">
                   <h5>
-                    <small [ngClass]="{'label label-info': vacantes.id == requisicionId && Status != 0}">{{vacantes?.area?.nombre}}</small>
+                    <small [ngClass]="{'badge badge-info': vacantes.id == requisicionId && Status != 0}">{{vacantes?.area?.nombre}}</small>
                   </h5>
                 </mat-cell>
               </ng-container>
@@ -231,9 +231,21 @@
               <ng-container matColumnDef="Accion">
                 <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
                 <mat-cell *matCellDef="let vacantes">
-                  <btn-view matTooltip="Detalle" (click)="OpenDtl(vacantes.id)"></btn-view>
-                  <btn-like [VacanteId]='vacantes.id' [Status]='Status' [RequisicionId]='requisicionId' matTooltip="Apartar" (click)="Apartar(vacantes.id)"></btn-like>
-                  <btn-dislike [VacanteId]='vacantes.id' [Status]='Status' [RequisicionId]='requisicionId' (click)="Liberar(vacantes.id)"></btn-dislike>
+                  <btn-view matTooltip="Detalle" [xs]="true" (click)="OpenDtl(vacantes.id)"></btn-view>
+                  <button 
+                    [disabled]="vacantes.id != requisicionId && Status != 0"
+                    [ngClass]="( Status == 0 || vacantes.id == requisicionId) ? 'mb-1 btn-xs btn btn-outline-success':'mb-1 btn-xs btn btn-outline-secondary'"
+                    matTooltip="Apartar" 
+                    (click)="Apartar(vacantes.id)">
+                    <em class="fa fa-thumbs-o-up"></em>
+                  </button>
+                  <button 
+                    [disabled]="vacantes.id != requisicionId && Status != 0"
+                    [ngClass]="( Status == 0 || vacantes.id == requisicionId) ? 'mb-1 btn-xs btn btn-outline-danger':'mb-1 btn-xs btn btn-outline-secondary'"
+                    matTooltip="Desapartar"
+                    (click)="Liberar(vacantes.id)">
+                    <em class="fa fa-thumbs-o-down"></em>
+                  </button>
                 </mat-cell>
               </ng-container>
 
@@ -316,7 +328,7 @@
                 <strong class="text-primary">Salario deseado:</strong> {{candidatodtl[0]?.aboutMe[0]?.salarioDeseado | currency:'CAD':'Mxn':'4.2-2'}}
               </div>
               <div class="col-md-6 text-muted">
-                <strong class="text-primary">Área de experiencia:</strong> {{candidatodtl[0]?.aboutMe[0]?.areaExperiencia?.areaExperiencia}}
+                <strong class="text-primary">&Aacute;rea de experiencia:</strong> {{candidatodtl[0]?.aboutMe[0]?.areaExperiencia?.areaExperiencia}}
               </div>
             </div>
             <div class="row">
@@ -472,7 +484,7 @@
               </div>
               <div class="row">
                 <div class="col-md-6 text-muted">
-                  <strong class="text-primary">Área: </strong> {{exp?.area?.nombre}}
+                  <strong class="text-primary">&Aacute;rea: </strong> {{exp?.area?.nombre}}
                 </div>
                 <div class="col-md-6 text-muted">
                   <strong class="text-primary">Salario: </strong> {{exp?.salario | currency:'CAD':'Mxn':'4.2-2'}}
@@ -744,11 +756,11 @@
               </mat-panel-description>
             </mat-expansion-panel-header>
             <br>
-            <div class="card list-group-item list-group-item-action">
+            <div class="card">
               <div class="card-body" *ngFor="let coment of this.comentarios">
                 <div class="media">
-                  <img class="align-self-start mx-2 circle thumb32" [src]="coment.usuario.foto" alt="Image">
-                  <div class="media-body">
+                  <img class="mr-3 rounded-circle thumb64" [src]="coment.usuario.foto" alt="Image">
+                  <div class="media-body mb-3">
                     <strong class="text-primary">
                       <!-- <span class="circle bg-success circle-lg text-left"></span> -->
                       <span>{{coment.usuario.nombre}}</span>
@@ -757,16 +769,17 @@
                         <small *ngIf="coment?.requisicion?.folio" class="text-muted ml-2">Folio: {{coment?.requisicion?.folio}}</small>
                       </p>
                     </strong>
-                    <p>{{coment.comentario}}</p>
+                    <p class="text-muted md-2">{{coment.comentario}}</p>
                   </div>
                 </div>
                 <div class="ml-auto">
                   <small class="text-muted ml-2">{{coment.fchComentario | date:'hh:mm:ss'}}</small>
                   <small class="text-muted ml-2">{{coment.fchComentario | date:'dd/MM/yyyy'}}</small>
                   <div class="car-body">
-                    +12 <btn-like></btn-like>
-                    -13 <btn-dislike></btn-dislike>
-                    <button class="mb-1 btn btn-secondary" type="button">Responder</button>
+                    <!-- +12 <btn-like></btn-like>
+                    -13 <btn-dislike></btn-dislike> -->
+                    <button class="mb-1 btn btn-secondary" matTooltip="Responder Comentario" (click)="ShowMessage(coment)" type="button">
+                      <em class="icon icon-action-redo"></em></button>
                   </div>
                   
                 </div>

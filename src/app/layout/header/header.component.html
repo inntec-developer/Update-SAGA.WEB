@@ -7,23 +7,23 @@
                 <img class="img-responsive" src="assets/img/damsa/logo.png" alt="App Logo" />
             </div>
             <div class="brand-logo-collapsed">
-                <img class="img-fluid" src="assets/img/logo-single.png" alt="App Logo" />
+                <img class="img-fluid" style="width:50px; height:50px;" src="assets/img/damsa/logo-single.png" alt="App Logo" />
             </div>
         </a>
     </div>
     <!-- END navbar header-->
     <!-- START Left navbar-->
     <ul class="navbar-nav mr-auto flex-row">
-        <li class="nav-item">
-            <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+        <!-- <li class="nav-item">
+             Button used to collapse the left sidebar. Only visible on tablet and desktops
             <a class="nav-link d-none d-md-block d-lg-block d-xl-block" trigger-resize="" (click)="toggleCollapsedSideabar()" *ngIf="!isCollapsedText()">
                 <em class="fa fa-navicon"></em>
             </a>
-            <!-- Button to show/hide the sidebar on mobile. Visible on mobile only.-->
+             Button to show/hide the sidebar on mobile. Visible on mobile only.
             <a class="nav-link sidebar-toggle d-md-none" (click)="settings.layout.asideToggled =! settings.layout.asideToggled; $event.stopPropagation()">
                 <em class="fa fa-navicon"></em>
             </a>
-        </li>
+        </li> -->
         <!-- START User avatar toggle-->
         <li class="nav-item d-none d-md-block">
             <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
@@ -50,17 +50,15 @@
             </a>
         </li> -->
         <!-- START Alert menu-->
-        <li class="nav-item dropdown dropdown-list" dropdown>
+        <!-- <li class="nav-item dropdown dropdown-list" dropdown>
             <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" dropdownToggle>
                 <em class="icon-bell"></em>
                 <span class="badge badge-danger">11</span>
-            </a>
+            </a> -->
             <!-- START Dropdown menu-->
-            <div *dropdownMenu class="dropdown-menu dropdown-menu-right animated flipInX">
+            <!-- <div *dropdownMenu class="dropdown-menu dropdown-menu-right animated flipInX">
                 <div class="dropdown-item">
-                    <!-- START list group-->
                     <div class="list-group">
-                       <!-- list item-->
                        <div class="list-group-item list-group-item-action">
                           <div class="media">
                              <div class="align-self-start mr-2">
@@ -72,7 +70,6 @@
                              </div>
                           </div>
                        </div>
-                       <!-- list item-->
                        <div class="list-group-item list-group-item-action">
                           <div class="media">
                              <div class="align-self-start mr-2">
@@ -84,7 +81,6 @@
                              </div>
                           </div>
                        </div>
-                       <!-- list item-->
                        <div class="list-group-item list-group-item-action">
                           <div class="media">
                              <div class="align-self-start mr-2">
@@ -96,7 +92,6 @@
                              </div>
                           </div>
                        </div>
-                       <!-- last list item-->
                        <div class="list-group-item list-group-item-action">
                           <span class="d-flex align-items-center">
                              <span class="text-sm">More notifications</span>
@@ -104,11 +99,9 @@
                           </span>
                        </div>
                     </div>
-                    <!-- END list group-->
                 </div>
-            </div>
-            <!-- END Dropdown menu-->
-        </li>
+            </div> 
+        </li>-->
         <!-- Fullscreen (only desktops)-->
         <li class="nav-item d-none d-md-block">
             <a class="nav-link" #fsbutton (click)="toggleFullScreen($event)">
@@ -124,6 +117,7 @@
         </li> -->
         <!-- END Offsidebar menu-->
     </ul>
+
     <!-- END Right Navbar-->
 
     <!-- <app-navsearch [visible]="getNavSearchVisible()" (onclose)="setNavSearchVisible(false)"></app-navsearch> -->

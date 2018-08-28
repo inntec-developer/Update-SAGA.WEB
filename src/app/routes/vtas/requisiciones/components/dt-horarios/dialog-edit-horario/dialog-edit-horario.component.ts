@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
-import { FormGroup } from '../../../../../../../../node_modules/@angular/forms';
-import { RequisicionesService } from './../../../../../../service/requisiciones/requisiciones.service';
-import { Vacante } from './../../../../../../models/vtas/Requisicion';
+import { FormGroup } from '@angular/forms';
+import { RequisicionesService } from '../../../../../../service/requisiciones/requisiciones.service';
+import { Vacante } from '../../../../../../models/vtas/Requisicion';
 
 @Component({
   selector: 'app-dialog-edit-horario',
@@ -59,8 +59,10 @@ export class DialogEditHorarioComponent implements OnInit {
       this.result = data;
       if(this.result == 200){
         setTimeout(() =>{
-          this.loading = false;
-          this.dialogVacantes.close();
+            this.service.getRequiHorarios(this.RequisicionId).subscribe(result =>{
+              this.dialogVacantes.close(result);
+              this.loading = false;
+            });
         },2000);
       }
       else{

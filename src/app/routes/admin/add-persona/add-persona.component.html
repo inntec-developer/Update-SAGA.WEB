@@ -12,20 +12,39 @@
   </ol>
 </div>
 
+<div *ngIf="verMsj">
+    <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+  </div>
+<br/>
 <div class="panel panel-default panel-flat mat-elevation-z8">
+    
+    <!-- <div *ngIf="verMsj" class="alert" [class.alert-success]="success" [class.alert-danger] ="haserror">
+        {{alert}}
+        <button type="button" (click) = "verMsj=false" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+         </button>
+         <br/>
+      </div> -->
+     
   <div class="panel-body">
     <br/>
-    <div class="col-md-4">
-        <div class="input-group">
-        <input (input)="Search($event)" class="input-sm form-control" type="text" placeholder="Filtrar" />
-        </div>
-    </div>
-    <br/>
-    <div class="col-md-2 pull-right">{{alert}}</div>
 
-    <p class="text-center"></p>
+      <div class="col-md-4">
+        <div class="input-group">
+        <input (input)="Search($event)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
+        </div>
+      </div>
+         <!-- <div class="col-md-4 float-right">
+        
+                <btn-check class="float-right margin-button" id='update' chkPrivilegiosButtons [xs]="true" (click)="updateUser($event, rowIndex)" matTooltip="Guardar Cambios"></btn-check>
+   
+
+                <btn-email class="float-right" id='create' chkPrivilegiosButtons [xs]="true" matTooltip="Enviar Correo"></btn-email>
+         
+            </div> -->
+      <br/>
     <div class="table-responsive">
-      <table #tableU class="bootstrap table table-bordered table-hover">
+      <table #tableU class="table table-hover table-striped">
         <thead>
           <tr>
             <th class="text-center"></th>
@@ -38,48 +57,47 @@
             <th class="text-center">Departamento</th>
             <th class="text-center">Tipo Usuario</th>
             <th class="text-center">Activar</th>
-            <th class="text-center"></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let p of Users; let rowIndex = index">
             <td class="text-center">
               <div class="media">
-                <a matTooltip="Click to edit" data-toggle="modal" data-target="#staticModal" (click)="rowAux = rowIndex; CrearURL(p.id); staticModal.show()">
-                  <img class="img-responsive img-fluid circle thumb48" src="{{p.fotoAux}}" alt="Image" />
+                <a matTooltip="Click para editar" data-toggle="modal" data-target="#staticModal" (click)="rowAux = rowIndex; CrearURL(p.entidadId); staticModal.show()">
+                  <img class="img-fluid circle thumb32" src="{{p.fotoAux}}" alt="Image" />
                 </a>
               </div>
             </td>
             <td class="text-center">
-              <span matTooltip="Double click to edit" (dblclick)="editing[rowIndex + '-clave'] = true" *ngIf="!editing[rowIndex + '-clave']">
+              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-clave'] = true" *ngIf="!editing[rowIndex + '-clave']">
                 {{p.clave}}
               </span>
               <input autofocus (blur)="updateValue($event, 'clave', rowIndex)" *ngIf="editing[rowIndex + '-clave']" type="text" [value]=p.clave
               />
             </td>
             <td class="text-center">
-              <span title="Double click to edit" (dblclick)="editing[rowIndex + '-usuario'] = true" *ngIf="!editing[rowIndex + '-usuario']">
+              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-usuario'] = true" *ngIf="!editing[rowIndex + '-usuario']">
                 {{p.usuario}}
               </span>
               <input autofocus (blur)="updateValue($event, 'usuario', rowIndex)" *ngIf="editing[rowIndex + '-usuario']" type="text" [value]=p.usuario
               />
             </td>
             <td class="text-center">
-              <span matTooltip="Double click to edit" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
+              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
                 {{p.nombre}}
               </span>
               <input autofocus (blur)="updateValue($event, 'nombre', rowIndex)" *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=p.nombre
               />
             </td>
             <td class="text-center">
-              <span matTooltip="Double click to edit" (dblclick)="editing[rowIndex + '-apellidoPaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoPaterno']">
+              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoPaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoPaterno']">
                 {{p.apellidoPaterno}}
               </span>
               <input autofocus (blur)="updateValue($event, 'apellidoPaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoPaterno']"
                 type="text" [value]=p.apellidoPaterno />
             </td>
             <td class="text-center">
-              <span matTooltip="Double click to edit" (dblclick)="editing[rowIndex + '-apellidoMaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoMaterno']">
+              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoMaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoMaterno']">
                 {{p.apellidoMaterno}}
               </span>
               <input autofocus (blur)="updateValue($event, 'apellidoMaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoMaterno']"
@@ -89,7 +107,7 @@
               <tr *ngFor="let e of p.email" class="text-center">{{e.email}}</tr>
             </td>
             <td class="text-center">
-              <span matTooltip="Double click to edit" (dblclick)="editing[rowIndex + '-departamento'] = true" *ngIf="!editing[rowIndex + '-departamento']">
+              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-departamento'] = true" *ngIf="!editing[rowIndex + '-departamento']">
                 {{p.departamento}}
               </span>
               <select (change)="updateValue($event, 'departamentoId', rowIndex)" *ngIf="editing[rowIndex + '-departamento']">
@@ -98,7 +116,7 @@
               </select>
             </td>
             <td class="text-center">
-              <span matTooltip="Double click to edit" (dblclick)="editing[rowIndex + '-tipoUsuario'] = true" *ngIf="!editing[rowIndex + '-tipoUsuario']">
+              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-tipoUsuario'] = true" *ngIf="!editing[rowIndex + '-tipoUsuario']">
                 {{p.tipoUsuario}}
               </span>
               <select (change)="updateValue($event, 'tipoUsuarioId', rowIndex)" *ngIf="editing[rowIndex + '-tipoUsuario']">
@@ -108,37 +126,25 @@
             </td>
             <td class="text-center">
               <label class="switch">
-                <input type="checkbox" [checked]="p.activo" (change)="Actualizar($event, p.id)" />
+                <input type="checkbox" [checked]="p.activo" (change)="Actualizar($event, p.entidadId)" />
                 <span></span>
               </label>
             </td>
             <td class="text-center">
-              <btn-check id='update' chkPrivilegiosButtons (click)="updateUser($event, rowIndex)" matTooltip="Guardar Cambios"></btn-check>
-            </td>
+                <btn-check id='update' chkPrivilegiosButtons [xs]="true" (click)="updateUser($event, rowIndex)" matTooltip="Guardar Cambios"></btn-check>
+                <btn-email id='create' chkPrivilegiosButtons class="float-right margin-button" (click)="SendEmail(p)"  [xs]="true" matTooltip="Enviar Correo"></btn-email>
+              </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="row">
-      <div class="panel-footer">
-        <div class="col-lg-2">
-          <span>{{alert}}</span>
-        </div>
-        <div class="col-lg-2 pull-right text-right">
-          <ul class="pagination pagination-sm">
-            <li *ngFor='let pag of paginacion; let i = index' [ngClass]="{'active': i == pagIndex }">
-              <a>
-                <span>{{i + 1}}</span>
-              </a>
-            </li>
-            <!-- <li><a href="">2</a></li>
-                        <li><a href="">3</a></li>
-                        <li><a href="">»</a></li> -->
-          </ul>
-        </div>
-      </div>
-    </div>
+
   </div>
+  <br/>
+          <div *ngIf="verMsj">
+              <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+            </div>
+
 
 
   <!-- Modal  -->

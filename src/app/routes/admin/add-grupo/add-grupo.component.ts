@@ -1,4 +1,4 @@
-import { UploadImgsComponent } from './../upload-imgs/upload-imgs.component';
+import { UploadImgsComponent } from '../upload-imgs/upload-imgs.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -22,21 +22,60 @@ export class AddGrupoComponent implements OnInit {
   editing = {};
   name: string;
   rowAux: any;
-  UsuariosList: Array<any> = [];
-  alert = '';
+  UsuariosList = [];
+  verMsj = false;
+  ListTipos = [];
+  filteredData = [];
 
+  alerts: any[] = [
+    {
+      type: 'success',
+      msg: '',
+      timeout: 4000
+    },
+    {
+      type: 'danger',
+      msg: '',
+      timeout: 4000
+    }
+  ];
+alert = this.alerts;
+onClosed(): void {
+  this.verMsj = false;
+}
   constructor( public fb: FormBuilder, private service: AdminServiceService )
   {
     this.formGrupos = this.fb.group({
       Nombre: ['', [Validators.required]],
       Descripcion: "",
-      Activo: 1
+      Activo: 1,
+      slcTipos: ['', [Validators.required]],
       });
   }
 
   CrearURL(idG: any)
   {
     this.name = idG;
+  }
+
+  public Search(data: any) {
+    let tempArray: Array<any> = [];
+    let colFiltar: Array<any> = [{ title: "nombre" }];
+
+    this.filteredData.forEach(function (item) {
+      let flag = false;
+      colFiltar.forEach(function (c) {
+        if (item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
+          flag = true;
+        }
+      });
+
+      if (flag) {
+        tempArray.push(item)
+      }
+    });
+
+    this.Grupos = tempArray;
   }
 
   updateValue($event, cell, rowIndex)
@@ -56,6 +95,25 @@ export class AddGrupoComponent implements OnInit {
     this.Grupos = [...this.Grupos];
   }
 
+  UpdateTipo(event, cell, rowIndex) 
+  {
+    var aux;
+    if (cell === "tipoUsuarioId") 
+    {
+      aux = this.ListTipos.find(nt => nt.id == event.target.value);
+      this.Grupos[rowIndex]['tipoUsuario'] = aux.tipo;
+      this.Grupos[rowIndex]['tipoUsuarioId'] = event.target.value;
+      this.editing[rowIndex + '-' + 'tipoUsuario'] = false;
+    }
+    else if(event.target.value !== '')
+    {
+      this.Grupos[rowIndex][cell] = event.target.value;
+    }
+
+    this.editing[rowIndex + '-' + cell] = false;
+    this.Grupos = [...this.Grupos];
+  }
+
   closeModal()
   {
     this.someInput.removeItem();
@@ -70,7 +128,13 @@ export class AddGrupoComponent implements OnInit {
     .subscribe(
       e=>{
         this.Grupos = e;
+
+        this.Grupos.forEach(item => {
+          item.fotoAux = ApiConection.ServiceUrlFoto + item.foto
+        })
+
         console.log(this.Grupos)
+        this.filteredData = this.Grupos;
       });
   }
 
@@ -80,7 +144,10 @@ export class AddGrupoComponent implements OnInit {
     .subscribe(
       e=>{
         this.UsuariosList = e;
-        console.log(this.UsuariosList)
+        
+        this.UsuariosList.forEach(item => {
+          item.fotoAux = ApiConection.ServiceUrlFoto + item.foto
+        })
       });
   }
 
@@ -90,21 +157,31 @@ export class AddGrupoComponent implements OnInit {
       Nombre: this.formGrupos.controls['Nombre'].value,
       Descripcion: this.formGrupos.controls['Descripcion'].value, 
       Activo: this.formGrupos.controls['Activo'].value,
+      Tipo: this.formGrupos.controls['slcTipos'].value,
       Foto: "utilerias/img/user/WorkTeam.jpg"
     }
 
     this.service.addGrupos(grupo)
     .subscribe( data => {
-      this.alert = data;
-
-      this.getGrupos();
+      console.log(data)
+      if(data == 201)
+      {
+        this.alerts[0]['msg'] = 'Los datos se agregaron con éxito';
+        this.alert = this.alerts[0];
+        this.verMsj = true;
+        this.ngOnInit();
+      }
+      else
+      {
+        this.alerts[1]['msg'] = 'Ocurrio un error al intentar agregar datos';
+        this.alert = this.alerts[1];
+        this.verMsj = true;
+      }
     });
   }
 
   updateFoto()
   {
-    this.name = this.name + '.' + this.someInput.selectedFile.type.split('/')[1];
-
     if(this.someInput.StatusCode == 201 || this.someInput.StatusCode == 500)
     {
       this.closeModal();
@@ -119,8 +196,18 @@ export class AddGrupoComponent implements OnInit {
     let gu = this.Grupos[rowIndex]
     this.service.UpdateGrupo(gu)
       .subscribe( data => {
-        this.alert = data;
-        this.getGrupos();
+        if(data == 201)
+        {
+          this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
+          this.alert = this.alerts[0];
+          this.verMsj = true;
+        }
+        else
+        {
+          this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
+          this.alert = this.alerts[1];
+          this.verMsj = true;
+        }
     });
   }
 
@@ -129,16 +216,39 @@ export class AddGrupoComponent implements OnInit {
     let g = this.Grupos[rowIndex]
     this.service.DeleteGrupo(g)
       .subscribe( data => {
-        this.alert = data;
+        if(data == 201)
+        {
+          this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
+          this.alert = this.alerts[0];
+          this.verMsj = true;
 
-        this.Grupos.splice(rowIndex, 1);
-        this.Grupos = [...this.Grupos];
+          this.Grupos.splice(rowIndex, 1);
+          this.Grupos = [...this.Grupos];
+        }
+        else
+        {
+          this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
+          this.alert = this.alerts[1];
+          this.verMsj = true;
+        }
     });
    
   }
 
+  GetTipos() 
+  {
+    this.service.getTipos()
+      .subscribe(
+        e => {
+          this.ListTipos = e;
+        })
+  }
+
   ngOnInit() {
     this.getGrupos();
+    this.GetTipos();
+    this.formGrupos.controls['Nombre'].reset();
+    this.formGrupos.controls['Descripcion'].reset();
   }
 
 

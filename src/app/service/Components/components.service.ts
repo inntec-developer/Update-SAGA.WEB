@@ -8,18 +8,25 @@ import 'rxjs/add/observable/throw';
 
 import { Headers, Http, RequestOptions, Response } from '@angular/http';
 
-import { ApiConection } from './../api-conection.service';
+import { ApiConection } from '../api-conection.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ComponentsService {
   private urlGetUserGroup = ApiConection.ServiceUrl + ApiConection.GetUserGroup;
+  private urlGetUserGroupL = ApiConection.ServiceUrl + ApiConection.GetUserGroupL;
 
   constructor(private http: Http) { }
 
   getUserGroup() : Observable<any>{
     return this.http.get(this.urlGetUserGroup)
+    .map(result => result.json())
+    .catch(this.handleError);
+  }
+
+  getUserGroupL() : Observable<any>{
+    return this.http.get(this.urlGetUserGroupL)
     .map(result => result.json())
     .catch(this.handleError);
   }

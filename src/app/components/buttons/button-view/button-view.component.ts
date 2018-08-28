@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'btn-view',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./button-view.component.scss']
 })
 export class ButtonViewComponent implements OnInit {
-
+  @Input('xs') xs: boolean = false;
   constructor() { }
 
   ngOnInit() {

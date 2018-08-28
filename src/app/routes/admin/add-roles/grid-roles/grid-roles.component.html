@@ -1,21 +1,23 @@
-
-        <div class="col-md-12 pull-left">
-            {{alert}}
-        </div>
-        <div class="col-md-12">
-            <btn-check id='create' chkPrivilegiosButtons class="pull-right" (click)="saveData()" matTooltip="Guardar Cambios"></btn-check>
-        </div>
-
-    <br/>
-<br/>
-
-<div class="panel panel-default mat-elevation-z8">
+<div class="panel panel-default">
     <div class="panel-body">
-        <table class="table table-bordered table-hover">
+      
+      <div class="panel-heading" >
+          
+                    <p class="text-center pv">ROLES - PRIVILEGIOS</p>
+                 <!-- <div class="row">
+        <div class="col-md-2 pull-left">
+          <div class="input-group">
+            <input (input)="Search($event)" class="input-sm form-control" type="text" placeholder="Filtrar" />
+          </div> 
+        </div></div> -->
+    
+      </div>
+         <table class="table table-bordered table-hover table-striped">
             <thead>
                 <tr>
                     <td class="text-center">Estructura</td>
                     <td class="text-center">idPadre</td>
+                    <td class="text-center">ID</td>
                     <td>C</td>
                     <td>R</td>
                     <td>U</td>
@@ -24,44 +26,39 @@
                 </tr>
             </thead>
             <tbody>
-    
-                <tr *ngFor="let node of nodes; let i = index" ></tr>
-                    <td [ngClass]="{'colorPadres': node.tipoEstructuraId == 2}">
-                        <btn-add *ngIf="node.tipoEstructuraId==2 && node.children.length > 0" class="float-left" (click)="collapsed=!collapsed; GetNodes($event, node)"></btn-add>
-                        <span class="col-md-2">{{node.nombre }}</span>
-                    </td>
-                    <td class="text-center">{{node.idPadre}}</td>
-                    <td class="block-center"><mat-checkbox id="{{ 'compC-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Create')" [checked]="node.create" matTooltip="Create"></mat-checkbox></td>
-                    <td class="center"> <mat-checkbox id="{{ 'compR-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Read')" [checked]="node['read']" matTooltip="Read"></mat-checkbox></td>
-                    <td class="center"><mat-checkbox id="{{ 'compU-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Update')" [checked]="node['update']" matTooltip="Update"></mat-checkbox></td>
-                    <td class="center"><mat-checkbox id="{{ 'compD-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Delete')" [checked]="node['delete']" matTooltip="Delete"></mat-checkbox></td>
-                    <td class="center"><mat-checkbox id="{{ 'compE-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Especial')" [checked]="node['especial']" matTooltip="Special"></mat-checkbox></td>
-                <tr *ngIf="!collapsed">
-                    <td [ngClass]="{'esparbol': node.tipoEstructuraId == 3,
-                                    'esparbol2': node.tipoEstructuraId == 4,
-                                    'esparbol3': node.tipoEstructuraId > 4 && node.tipoEstructuraId <= 8,
-                                    'esparbol4': node.tipoEstructuraId >= 6,
-                                    'esparbol5': node.tipoEstructuraId >= 7,
-                                    'esparbol6': node.tipoEstructuraId >= 8
-                                    }">
-                                     <span class="col-md-2">{{node.nombre }}</span>
-                                         
-                    </td>
-                 
-                    
-                </tr>
-        
-            </tbody>
-        </table>
+                <ng-container *ngFor="let node of nodes; let i = index">
+                   <tr *ngIf="node.collapsed">
+                       <td [ngClass]="{'colorPadres': node.tipoEstructuraId == 2, 
+                            'esparbol': node.tipoEstructuraId == 3,
+                            'esparbol2': node.tipoEstructuraId == 4,
+                            'esparbol3': node.tipoEstructuraId > 4,
+                            'esparbol4': node.tipoEstructuraId >= 6,
+                            'esparbol5': node.tipoEstructuraId >= 7,
+                            'esparbol6': node.tipoEstructuraId >= 8}">
+                            <btn-add [xs]="true" *ngIf="node.tipoEstructuraId==2 && node.children.length > 0" class="float-left" (click)="GetNodes(node, i)"></btn-add>
+                               <span class="col-md-12">{{node.nombre}}</span>
+                       </td>
+                       <td class="text-center">{{node.idPadre}}</td> 
+                       <td class="text-center">{{node.estructuraId}}</td> 
+                        <td class="block-center"><mat-checkbox id="{{ 'compC-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Create')" [checked]="node.create" matTooltip="Create"></mat-checkbox></td>
+                           <td class="center"> <mat-checkbox id="{{ 'compR-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Read')" [checked]="node['read']" matTooltip="Read"></mat-checkbox></td>
+                           <td class="center"><mat-checkbox id="{{ 'compU-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Update')" [checked]="node['update']" matTooltip="Update"></mat-checkbox></td>
+                           <td class="center"><mat-checkbox id="{{ 'compD-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Delete')" [checked]="node['delete']" matTooltip="Delete"></mat-checkbox></td>
+                           <td class="center"><mat-checkbox id="{{ 'compE-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Especial')" [checked]="node['especial']" matTooltip="Special"></mat-checkbox></td> 
+                    </tr>
+
+                </ng-container>
+</tbody>
+</table>
     <br/>
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-md-12 pull-left">
            <span>{{alert}}</span>
         </div>
         <div class="col-md-12">
             <btn-check id='create' chkPrivilegiosButtons class="pull-right" (click)="saveData()" matTooltip="Guardar Cambios"></btn-check>
         </div>
-    </div>
+    </div> -->
 </div>
 </div>
 

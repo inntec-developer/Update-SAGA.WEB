@@ -1,11 +1,11 @@
 import { AfterContentChecked, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { CatalogosService, RequisicionesService } from '../../../../../service/index';
+import { CatalogosService, RequisicionesService } from '../../../../../service';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
-import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster/angular2-toaster';
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
-import { AsignarRequisicionComponent } from './../../../../../components/asignar-requisicion/asignar-requisicion.component';
+import { AsignarRequisicionComponent } from '../../../../../components/asignar-requisicion/asignar-requisicion.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SettingsService } from '../../../../../core/settings/settings.service';
 import { UpdateRequisicion } from '../../../../../models/vtas/Requisicion'
@@ -82,7 +82,7 @@ export class UpdateInfoRequiComponent implements OnInit, AfterContentChecked {
      }
 
     ngOnInit() {
-      this.placeHolderSelect = 'ASIGNAR CORDINADOR DE CELULA'
+      this.placeHolderSelect = 'ASIGNAR COORDINADOR DE CELULA'
       this.getPrioridades();
       this.getEstatus(2);
       this.formRequi = this.fb.group({
@@ -99,9 +99,7 @@ export class UpdateInfoRequiComponent implements OnInit, AfterContentChecked {
     ngAfterContentChecked() {
       if(!this.checked){
         this.getInformacionRequisicio(this.Folios)
-        
       }
-
     }
     getAsignacion(event){
       this.asignadosRequi = event;

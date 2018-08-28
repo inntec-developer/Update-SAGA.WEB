@@ -1,8 +1,8 @@
-import { RollsStructComponent } from './../rolls-struct/rolls-struct.component';
+import { RollsStructComponent } from '../rolls-struct/rolls-struct.component';
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
-import { ApiConection } from './../../../service/api-conection.service';
+import { ApiConection } from '../../../service/api-conection.service';
 
 @Component({
   selector: 'app-rol-grupo',
@@ -10,7 +10,7 @@ import { ApiConection } from './../../../service/api-conection.service';
   styleUrls: ['./rol-grupo.component.scss'],
   providers:[ AdminServiceService ]
 })
-export class RolGrupoComponent implements OnInit, AfterViewInit {
+export class RolGrupoComponent implements OnInit {
 
   @ViewChild('Struct') someInput: RollsStructComponent;
 
@@ -18,38 +18,61 @@ export class RolGrupoComponent implements OnInit, AfterViewInit {
   Grupos: Array<any> = [];
   Roles: Array<any> = [];
   ListaRG: any = [];
-  StructList: Array<any> = [];
+  ListaAux = [];
   filteredData: Array<any> = [];
   filteredGroups: Array<any> = [];
   permisoRol: Array<any> = [];
   msj: string = "";
-  alert = "";
   flag = false;
   verMsj = false;
+  rolId = 0;
+  alerts: any[] = [
+    {
+      type: 'success',
+      msg: '',
+      timeout: 4000
+    },
+    {
+      type: 'danger',
+      msg: '',
+      timeout: 4000
+    }
+  ];
+alert = this.alerts;
+onClosed(): void {
+  this.verMsj = false;
+}
+
   constructor(private service: AdminServiceService, public fb: FormBuilder) 
   {
     this.formRol = this.fb.group({
-      slcRol: ['', [Validators.required]]
+      slcRol: ["-1", [Validators.required]]
     })
 
   }
 
-  setData()
-  {
-    this.StructList = this.someInput.StructList;
-    this.someInput.setStruct(this.filteredData)
-  }
-  
   onSelect(item: any) 
   {
-    item.selected ? item.selected = false : item.selected = true; //para poner el backgroun cuando seleccione
-   
-    item.selected ? this.ListaRG.push(item) : this.ListaRG.splice(this.ListaRG.findIndex(x => x.entidadId == item.entidadId), 1); //agrega y quita el row seleccionado
-  }
+    console.log(this.formRol.controls['slcRol'].value)
+    if(this.formRol.controls['slcRol'].value !== '-1' && this.formRol.controls['slcRol'].value !== null)
+    {
+      var entidad = this.ListaRG.findIndex(x => x.entidadId == item.entidadId);
 
-  addToRol($event)
-  {
-    console.log($event)
+      if(entidad == -1) //para que no repita usuarios
+      {
+          item.selected ? item.selected = false : item.selected = true; //para poner el backgroun cuando seleccione
+   
+          item.selected ? this.ListaRG.push(item) : this.ListaRG.splice(this.ListaRG.findIndex(x => x.entidadId == item.entidadId), 1); //agrega y quita el row seleccionado
+          item.selected ? this.ListaAux.push(item) : this.ListaAux.splice(this.ListaAux.findIndex(x => x.entidadId == item.entidadId), 1);
+      }
+      else if( this.ListaRG[entidad]['rolId'] != this.rolId )
+      {
+        item.selected ? item.selected = false : item.selected = true; //para poner el backgroun cuando seleccione
+   
+        item.selected ? this.ListaRG.push(item) : this.ListaRG.splice(this.ListaRG.findIndex(x => x.entidadId == item.entidadId), 1); //agrega y quita el row seleccionado
+        item.selected ? this.ListaAux.push(item) : this.ListaAux.splice(this.ListaAux.findIndex(x => x.entidadId == item.entidadId), 1);
+      }
+    }
   }
 
   resetBasket() 
@@ -65,11 +88,13 @@ export class RolGrupoComponent implements OnInit, AfterViewInit {
 
   saveData(RolId: any)
   {
-    if(this.ListaRG.length > 0)
+    if(RolId !== "-1")
+    {
+    if(this.ListaAux.length > 0)
     {
       let lrg = [];
 
-      for(let rg of this.ListaRG)
+      for(let rg of this.ListaAux)
       {
         let element = {
           EntidadId: rg.entidadId,
@@ -80,29 +105,51 @@ export class RolGrupoComponent implements OnInit, AfterViewInit {
 
       this.service.AddGroupRol(lrg)
       .subscribe( data => {
-        this.msj = data;
+        this.alerts[0]['msg'] = data;
+        this.alert = this.alerts[0];
         this.verMsj = true;
+        this.ListaRG = [];
+        this.ListaAux = [];
         this.ngOnInit();
       });
       
-      this.ListaRG = [];
+      
     }
     else
     {
-      this.alert = "Debe agregar al menos un grupo";
+      this.alerts[1]['msg'] = "Debe agregar al menos un grupo";
+      this.alert = this.alerts[1];
+      this.verMsj = true;
     }
   }
-
-  selected($event, rol: any)
+  else
   {
-    this.verMsj = false;
+    this.formRol.markAsDirty;
+  }
+  }
 
-    this.flag = true;
-    var id = $event.target.value;
-    this.permisoRol = this.Roles.filter(item => item.id == id);
-    this.filteredData = this.StructList.filter(item => item.rolId == id)
+  selected($event)
+  {
+    console.log($event.target.value)
+    this.verMsj = false;
+    this.service.GetEntidadesUG($event.target.value)
+        .subscribe( data => {
+          this.ListaRG = [];
+          this.ListaRG = data;
+
+          this.ListaRG.forEach(item => {
+            item.fotoAux = ApiConection.ServiceUrlFoto + item.foto;
+            item.rolId = $event.target.value;
+          })
+        })
+    // this.verMsj = false;
+    // this.ListaRG = [];
+    // this.flag = true;
+    // var id = $event.target.value;
+    // this.permisoRol = this.Roles.filter(item => item.id == id);
+    // this.filteredData = this.StructList.filter(item => item.rolId == id)
     
-     this.someInput.setStruct(this.filteredData)
+    //  this.someInput.setStruct(this.filteredData)
     
   }
 
@@ -113,7 +160,7 @@ export class RolGrupoComponent implements OnInit, AfterViewInit {
     this.filteredGroups.forEach(function (item) {
       let flag = false;
       colFiltar.forEach(function (c) {
-        if (item[c.title].toString().match(data.target.value)) {
+        if (item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
           flag = true;
         }
       });
@@ -125,7 +172,6 @@ export class RolGrupoComponent implements OnInit, AfterViewInit {
 
     this.Grupos = tempArray;
   }
-
 
   getGrupos()
   {
@@ -153,7 +199,7 @@ export class RolGrupoComponent implements OnInit, AfterViewInit {
   GetEntidades()
     {
       this.Grupos = [];
-      this.service.GetEntidadesUG()
+      this.service.GetEntidades()
       .subscribe(
         e=>{
           this.Grupos = e;
@@ -163,52 +209,45 @@ export class RolGrupoComponent implements OnInit, AfterViewInit {
           })
 
           this.filteredGroups = this.Grupos;
-
         })
     }
   
     DeleteUserRoles(user, rol)
     {
-        var idx = this.Grupos.findIndex(x => x.id == user);
-        
-  
+        this.verMsj = false;
+        var idx = this.Grupos.findIndex(x => x.entidadId == user);
+
         if(idx != -1)
         {
-          var mocos = this.Grupos[idx]['roles'];
-          var id = mocos.findIndex(x => x.id == rol);
+          var roles = this.Grupos[idx]['roles'];
+          var id = roles.findIndex(x => x.id == rol);
           if(id != -1)
           {
-            mocos.splice(id, 1);
-            this.Grupos[idx]['roles'] = mocos;
+            roles.splice(id, 1);
+            this.Grupos[idx]['roles'] = roles;
           }
           
-        }
+        
   
         let dts = { RolId: rol, EntidadId: user};
         
         this.service.DeleteUserRol(dts)
         .subscribe(
           e=>{
-            this.GetEntidades();
+            this.Grupos[idx]['roles'] = roles;
+
+            roles = [];
+            this.ListaAux = [];
+             //this.GetEntidades();
             console.log(e)
           })
+        }
   
     }
 
   ngOnInit() {
     this.GetEntidades();
-    this.getRoles();
-    this.setData();
-    this.someInput.setStruct(this.filteredData)
-    
+    this.getRoles();    
+    this.formRol.controls['slcRol'].reset();
   }
-
-  ngAfterViewInit()
-  {
-    if(this.someInput)
-    {
-      this.setData();
-    }
-  }
-
 }

@@ -1,95 +1,174 @@
-<div class="row">
-  <div class="col-md-4">
-    <mat-accordion class="example-headers-align">
-      <mat-expansion-panel [expanded]="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <em class="fa fa-user"></em>
-          </mat-panel-title>
-          <mat-panel-description>
-            Información General
-          </mat-panel-description>
-        </mat-expansion-panel-header>
+<div class="dt-container  mat-elevation-z8">
+  <div class="card-header">
+    <em class="fa fa-user"></em> Informaci&oacute;n General
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title">Datos del cliente</h5>
+        <mat-divider></mat-divider>
+        <p>
+          <strong>Nombre Comercial: </strong>
+          <label id="nombre" class="card-text"> {{requisicion.cliente.nombrecomercial}}</label>
+        </p>
+        <p>
+          <strong>Raz&oacute;n Social: </strong>
+          <label class="card-text"> {{requisicion.cliente.razonSocial}}</label>
+        </p>
+        <p>
+          <strong>RFC: </strong>
+          <label class="card-text"> {{requisicion.cliente.rfc}}</label>
+        </p>
+        <p>
+          <strong>Giro Empresa: </strong>
+          <label class="card-text"> {{requisicion.cliente.giroEmpresas.giroEmpresa}}</label>
+        </p>
+        <p>
+          <strong>Actividad Empresa: </strong>
+          <label class="card-text"> {{requisicion.cliente.actividadEmpresas.actividadEmpresa}}</label>
+        </p>
+      </div>
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title">Reclutamiento</h5>
+        <mat-divider></mat-divider>
+        <p>
+          <strong>Tipo: </strong>
+          <label class="card-text"> {{requisicion.tipoReclutamiento.tipoReclutamiento}}</label>
+        </p>
+        <p>
+          <strong>Clase: </strong>
+          <label class="card-text"> {{requisicion.claseReclutamiento.clasesReclutamiento}}</label>
+        </p>
+        <h5 class="card-title">Contrato</h5>
+        <mat-divider></mat-divider>
+        <p>
+          <strong>Tipo: </strong>
+          <label class="card-text"> {{requisicion.contratoInicial.tipoContrato}}</label>
+        </p>
+        <p *ngIf="requisicion?.contratoInicial?.periodoPrueba == true">
+          <strong>D&iacute;as de Prueba: </strong>
+          <label class="card-text"> {{requisicion.tiempoContrato.tiempo}}</label>
+        </p>
+      </div>
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title">Puesto a Reclutar</h5>
+        <mat-divider></mat-divider>
+        <p>
+          <strong>Nombre del Perfil: </strong>
+          <label class="card-text"> {{requisicion.vBtra}}</label>
+        </p>
+        <p>
+          <strong>&Aacute;rea: </strong>
+          <label class="card-text"> {{requisicion.area.areaExperiencia}}</label>
+        </p>
+        <p>
+          <strong>G&eacute;nero: </strong>
+          <label class="card-text"> {{requisicion.genero.genero}}</label>
+        </p>
+        <p>
+          <strong>Edad: </strong>
+          <label class="card-text"> {{requisicion.edadMinima}} años a {{requisicion.edadMaxima}} años </label>
+        </p>
+        <p>
+          <strong>Estado Civil: </strong>
+          <label class="card-text"> {{requisicion.estadoCivil.estadoCivil}}</label>
+        </p>
+      </div>
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title">Sueldos</h5>
+        <mat-divider></mat-divider>
         <div class="row">
-          <!--Agregar la información que ira en el panel-->
-          <div [formGroup]="formCliente">
-            <mat-form-field>
-              <input matInput formControlName="nombrecomercial" placeholder="Nombre Comercial">
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput formControlName="razonSocial" placeholder="Razon Social">
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput formControlName="rfc" placeholder="RFC">
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput formControlName="giroEmpresa" placeholder="Giro Empresa">
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput formControlName="actividadEmpresas" placeholder="Actividad Empresa">
-            </mat-form-field>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <h5 class="card-title">M&iacute;nimo</h5>
+            <p>
+              <strong>Mensual: </strong>
+              <label class="card-text"> {{requisicion.sueldoMinimo | currency:"$"}}</label>
+            </p>
+            <p>
+              <strong>Semanal: </strong>
+              <label class="card-text"> {{(requisicion.sueldoMinimo / 30) * 7 | currency:"$"}}</label>
+            </p>
+            <p>
+              <strong>Diario: </strong>
+              <label class="card-text"> {{requisicion.sueldoMinimo / 30 | currency:"$"}}</label>
+            </p>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <h5 class="card-title">M&aacute;ximo</h5>
+            <p>
+              <strong>Mensual: </strong>
+              <label class="card-text"> {{requisicion.sueldoMaximo | currency:"$"}}</label>
+            </p>
+            <p>
+              <strong>Semanal: </strong>
+              <label class="card-text"> {{(requisicion.sueldoMaximo / 30) * 7 | currency:"$"}}</label>
+            </p>
+            <p>
+              <strong>Diario: </strong>
+              <label class="card-text"> {{requisicion.sueldoMaximo / 30 | currency:"$"}}</label>
+            </p>
           </div>
         </div>
-      </mat-expansion-panel>
-    </mat-accordion>
+
+      </div>
+    </div>
   </div>
-  <div class="col-md-4">
-    <mat-accordion class="example-headers-align">
-      <mat-expansion-panel [expanded]="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <em class="fa fa-archive"></em>
-          </mat-panel-title>
-          <mat-panel-description>
-            Reclutamiento
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div class="row">
-          <!--Agregar la información que ira en el panel-->
-          <form [formGroup]=formRecl>
-            <div class="col-md-6">
-              <mat-form-field>
-                <input matInput formControlName="tipo" placeholder="Tipo">
-              </mat-form-field>
-            </div>
-            <div class="col-md-6">
-              <mat-form-field>
-                <input matInput formControlName="clase" placeholder="Clase">
-              </mat-form-field>
-            </div>
-          </form>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion>
+</div>
+<br>
+<div class="dt-container  mat-elevation-z8">
+  <div class="card-header">
+    <em class="fa fa-id-badge"></em> Informaci&oacute;n Adicional del Perfil
   </div>
-  <div class="col-md-4">
-    <mat-accordion class="example-headers-align">
-      <mat-expansion-panel [expanded]="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <em class="fa fa-eye"></em>
-          </mat-panel-title>
-          <mat-panel-description>
-            Contrato
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div class="row">
-          <!--Agregar la información que ira en el panel-->
-          <form [formGroup]="formContrato">
-            <div class="col-md-12">
-              <mat-form-field>
-                <input matInput formControlName="tipoContrato" placeholder="Tipo">
-              </mat-form-field>
-            </div>
-            <div class="col-md-12" *ngIf="requisicion?.contratoInicial?.periodoPrueba == true">
-              <mat-form-field>
-                <input matInput formControlName="diasPrueba" placeholder="Días Prueba">
-              </mat-form-field>
-            </div>
-          </form>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title">Estudios / Escolaridades</h5>
+        <mat-divider></mat-divider>
+        <ol>
+          <li *ngFor="let x of requisicion?.escolaridadesRequi">
+            <label class="card-text"> {{x.escolaridad.gradoEstudio}} - {{x.estadoEstudio.estadoEstudio}}</label>
+          </li>
+        </ol>
+      </div>
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title">Aptitudes</h5>
+        <mat-divider></mat-divider>
+        <ol>
+          <li *ngFor="let x of requisicion?.aptitudesRequi">
+            <label class="card-text"> {{x.aptitud.aptitud}}</label>
+          </li>
+        </ol>
+      </div>
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title">Experiencia</h5>
+        <mat-divider></mat-divider>
+        <label class="card-text">{{requisicion.experiencia}}</label>
+      </div>
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title">Informaci&oacute;n de Pagos</h5>
+        <mat-divider></mat-divider>
+        <p>
+          <strong>D&iacute;as Corte: </strong>
+          <label class="card-text"> {{requisicion.diaCorte.diaSemana}}</label>
+        </p>
+        <p>
+          <strong>Tipo Nomina: </strong>
+          <label class="card-text"> {{requisicion.tipoNomina.tipoDeNomina}}</label>
+        </p>
+        <p>
+          <strong>D&iacute;as Pago: </strong>
+          <label class="card-text"> {{requisicion.diaPago.diaSemana}}</label>
+        </p>
+        <p>
+          <strong>Periodo de Pago: </strong>
+          <label class="card-text"> {{requisicion.periodoPago.periodoPago}}</label>
+        </p>
+        <p *ngIf="requisicion.periodoPago.id == 0">
+          <strong>Especifique: </strong>
+          <label class="card-text"> {{requisicion.especifique}}</label>
+        </p>
+      </div>
+    </div>
   </div>
 </div>
 <br/>
@@ -121,99 +200,6 @@
   </div>
 </div>
 <br/>
-<!-- PUESTO A RECLUTAR -->
-<div class="row">
-  <div class="col-lg-12">
-    <mat-accordion class="example-headers-align">
-      <mat-expansion-panel [expanded]="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <em class="fa fa-child"></em>
-          </mat-panel-title>
-          <mat-panel-description>
-            Puesto a Reclutar
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <form [formGroup]=formPerfil>
-          <div class="row">
-            <div class="col-md-12">
-              <mat-form-field>
-                <input matInput formControlName="vBtra" placeholder="Nombre del Perfil">
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row">
-            <!--Agregar la información que ira en el panel-->
-            <div class="col-lg-3 col-md-3">
-              <mat-form-field>
-                <input matInput formControlName="genero" placeholder="Genero">
-              </mat-form-field>
-              <mat-form-field>
-                <input matInput formControlName="edadMinima" type="number" placeholder="Edad Minima">
-              </mat-form-field>
-              <mat-form-field>
-                <input matInput formControlName="edadMaxima" type="number" placeholder="Edad Maxima">
-              </mat-form-field>
-              <mat-form-field>
-                <input matInput formControlName="estadoCivil" placeholder="Estado Civil">
-              </mat-form-field>
-            </div>
-            <div class="col-lg-3 col-md-3">
-              <h5>
-                <small>
-                  <strong>Estudios / Escolaridades </strong>
-                </small>
-              </h5>
-              <h5>
-                <p>
-                  <small>
-                    <strong>Nivel: </strong>{{requisicion?.escolaridadesRequi[0]?.estadoEstudio?.estadoEstudio}}</small>
-                </p>
-              </h5>
-              <h5>
-                <p>
-                  <small>
-                    <strong>Escolaridades: </strong>
-                  </small>
-                </p>
-              </h5>
-              <ol>
-                <li *ngFor="let x of requisicion?.escolaridadesRequi">
-                  <small>{{x.escolaridad.gradoEstudio}}</small>
-                </li>
-              </ol>
-            </div>
-            <div class="col-lg-3 col-md-3">
-              <h5>
-                <small>
-                  <strong>Aptitudes: </strong>
-                </small>
-              </h5>
-              <ol>
-                <li *ngFor="let x of requisicion?.aptitudesRequi">
-                  <small>{{x.aptitud.aptitud}}</small>
-                </li>
-              </ol>
-            </div>
-            <div class="col-lg-3 col-md-3">
-              <h5>
-                <small>
-                  <strong>Experiencia: </strong>
-                </small>
-              </h5>
-              <h5>
-                <p>
-                  <small>{{requisicion?.experiencia}}</small>
-                </p>
-              </h5>
-            </div>
-          </div>
-        </form>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </div>
-</div>
-<br/>
 <div class="row">
   <div class="col-md-12">
     <!-- BENEFICIOS -->
@@ -231,127 +217,6 @@
   </div>
   <div class="col-md-3">
     <app-procesos [Proceso]="requisicion?.procesoRequi"></app-procesos>
-  </div>
-</div>
-<br/>
-<div class="row">
-  <div class="col-lg-12 col-md-12">
-    <mat-accordion class="example-headers-align">
-      <mat-expansion-panel [expanded]="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <em class="fa fa-dollar"></em>
-          </mat-panel-title>
-          <mat-panel-description>
-            Sueldos
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <div class="row">
-          <!--Agregar la información que ira en el panel-->
-          <form [formGroup]="formSueldo">
-            <div class="col-md-2 col-lg-2">
-              <mat-form-field>
-                <input matInput formControlName="diaCorte" placeholder="Días de Corte">
-              </mat-form-field>
-            </div>
-            <div class="col-md-2 col-lg-2">
-              <mat-form-field>
-                <input matInput formControlName="tipoNomina" placeholder="Tipo de Nomina">
-              </mat-form-field>
-            </div>
-            <div class="col-md-2 col-lg-2">
-              <mat-form-field>
-                <input matInput formControlName="diaPago" placeholder="Días de Pago">
-              </mat-form-field>
-            </div>
-            <div class="col-md-2 col-lg-2">
-              <mat-form-field>
-                <input matInput formControlName="periodoPago" placeholder="Periodo de Pago">
-              </mat-form-field>
-            </div>
-            <div class="col-md-2 col-lg-2" *ngIf="requisicion?.periodoPago.id == 5">
-              <mat-form-field>
-                <input matInput formControlName="especifique" placeholder="Especificación periodo de pago.">
-              </mat-form-field>
-            </div>
-          </form>
-        </div>
-        <div class="row">
-          <div class="col-md-2 col-lg-2">
-            <h5>
-              <p>
-                <small>
-                  <strong>Sueldo mensual minimo </strong>
-                </small>
-              </p>
-            </h5>
-            <h5>
-              <p>{{sueldoMinimo | currency:"MX $"}}</p>
-            </h5>
-          </div>
-          <div class="col-md-2 col-lg-2">
-            <h5>
-              <p>
-                <small>
-                  <strong>Calculo semanal minimo</strong>
-                </small>
-              </p>
-            </h5>
-            <h5>
-              <p>{{sueldoSemanalMin | currency:"MX $"}}</p>
-            </h5>
-          </div>
-          <div class="col-md-2 col-lg-2">
-            <h5>
-              <p>
-                <small>
-                  <strong>Calculo diario minimo</strong>
-                </small>
-              </p>
-            </h5>
-            <h5>
-              <p>{{sueldoDiarioMin | currency:"MX $"}}</p>
-            </h5>
-          </div>
-          <div class="col-md-2 col-lg-2">
-            <h5>
-              <p>
-                <small>
-                  <strong>Sueldo mensual maximo </strong>
-                </small>
-              </p>
-            </h5>
-            <h5>
-              <p>{{sueldoMaximo | currency:"MX $"}}</p>
-            </h5>
-          </div>
-          <div class="col-md-2 col-lg-2">
-            <h5>
-              <p>
-                <small>
-                  <strong>Calculo semanal maximo</strong>
-                </small>
-              </p>
-            </h5>
-            <h5>
-              <p>{{sueldoSemanalMax | currency:"MX $"}}</p>
-            </h5>
-          </div>
-          <div class="col-md-2 col-lg-2">
-            <h5>
-              <p>
-                <small>
-                  <strong>Calculo diario maximo </strong>
-                </small>
-              </p>
-            </h5>
-            <h5>
-              <p>{{sueldoDiarioMax | currency:"MX $"}}</p>
-            </h5>
-          </div>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion>
   </div>
 </div>
 <br/>

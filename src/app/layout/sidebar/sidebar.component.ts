@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Injector, OnDestroy, OnInit } from '@angular/core';
 
-import { AuthService } from './../../service/auth/auth.service';
+import { AuthService } from '../../service/auth/auth.service';
 import { MenuService } from '../../core/menu/menu.service';
 import { Router } from '@angular/router';
 import { SettingsService } from '../../core/settings/settings.service';

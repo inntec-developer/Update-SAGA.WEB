@@ -1,6 +1,6 @@
 import { ActivatedRoute, CanDeactivate, Router } from '@angular/router';
 import { AfterContentChecked, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CatalogosService, RequisicionesService } from '../../../../../service/index';
+import { CatalogosService, RequisicionesService } from '../../../../../service';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
@@ -26,39 +26,30 @@ export class ViewInforRequiComponent implements OnInit, AfterContentChecked {
   public Estatus : any[];
   public msj: string;
 
-  @Output() EstatusId : EventEmitter<number> = new EventEmitter();;
-
-  public formRequi : FormGroup;
+  @Output() EstatusId : EventEmitter<number> = new EventEmitter();
+  fch_Solicitud: any;
+  folio: any;
+  fch_Limite: any;
+  prioridad: any;
+  estatus: any;
+  fch_Cumplimiento: any;
+  confidencial: any;
+  estatusId: any;
+  prioridadId: any;
+  vacantes: any;
+  asignados:Array<any[]> = [];
+  vBtra: any;
 
 
     constructor(
       public fb: FormBuilder,
       public serviceRequisicion: RequisicionesService,
       public serviceCatalogos: CatalogosService
-    ) {
-        this.formRequi = new FormGroup({
-          folio: new FormControl(),
-          fch_Solicitud: new FormControl(),
-          fch_Limite: new FormControl('',[Validators.required]),
-          prioridad: new FormControl(),
-          fch_Cumplimiento: new FormControl(),
-          confidencial: new FormControl(),
-          estatus:  new FormControl(),
-        });
-     }
+    ) { }
 
     ngOnInit() {
       this.getPrioridades();
       this.getEstatus(2);
-      this.formRequi = this.fb.group({
-        folio : [{value: '', disabled: true}],
-        fch_Solicitud: [{value: '', disabled:true}],
-        fch_Limite: [{value: '', disabled:true}],
-        prioridad: [{value:'', disabled:true}, Validators.required ],
-        fch_Cumplimiento: [{value: '', disabled: true}, Validators.required],
-        confidencial: [{value:false, disabled:true}],
-        estatus: [{value:'', disabled:true}, Validators.required ],
-      });
     }
 
     ngAfterContentChecked(){
@@ -71,17 +62,22 @@ export class ViewInforRequiComponent implements OnInit, AfterContentChecked {
     getInitialData(){
       this.serviceRequisicion.getRequiFolio(this.Folios)
         .subscribe(DataRequisicion => {
+          console.log(DataRequisicion);
           this.RequiId = DataRequisicion.id;
-          this.formRequi.patchValue({
-            folio: DataRequisicion.folio,
-            fch_Solicitud: DataRequisicion.fch_Creacion,
-            fch_Limite: DataRequisicion.fch_Limite,
-            prioridad: DataRequisicion.prioridad.id,
-            estatus: DataRequisicion.estatus.id,
-            fch_Cumplimiento: DataRequisicion.fch_Cumplimiento,
-            confidencial: DataRequisicion.confidencial,
-        });
-        this.EstatusId.emit(this.formRequi.get('estatus').value);
+          this.folio = DataRequisicion.folio;
+          this.fch_Solicitud = DataRequisicion.fch_Creacion;
+          this.fch_Limite = DataRequisicion.fch_Limite;
+          this.prioridad = DataRequisicion.prioridad.descripcion;
+          this.prioridadId = DataRequisicion.prioridad.id;
+          this.fch_Cumplimiento = DataRequisicion.fch_Cumplimiento;
+          this.estatus = DataRequisicion.estatus.descripcion;
+          this.estatusId = DataRequisicion.estatus.id;
+          this.confidencial = DataRequisicion.confidencial;
+          this.vacantes = DataRequisicion.vacantes;
+          this.asignados = DataRequisicion.asignadosN;
+          this.vBtra = DataRequisicion.vBtra;
+          console.log(this.asignados);
+        this.EstatusId.emit(this.estatusId);
       });
     }
 
