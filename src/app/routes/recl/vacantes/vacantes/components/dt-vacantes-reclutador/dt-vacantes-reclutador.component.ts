@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { DialogAssingRequiComponent } from '../dialogs/dialog-assing-requi/dialog-assing-requi.component';
 import { DialogShowRequiComponent } from '../dialogs/dialog-show-requi/dialog-show-requi.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../../service';
 import { ToasterService } from 'angular2-toaster';
@@ -49,9 +49,24 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   ngOnInit() {
     this.spinner.show();
-    // setTimeout(() => {
-    this.onChangeTable(this.config);
-    // }, 300); 
+    this.getVacantes();
+
+  }
+
+  ngAfterViewInit() {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    setTimeout(() => {
+      this.onChangeTable(this.config);
+    }, 500);
+
+  }
+
+  getVacantes() {
+    this.service.getRequiReclutador(localStorage.getItem('id')).subscribe(data => {
+      this.dataSource = data;
+      this.spinner.hide();
+    });
   }
 
   public rows: Array<any> = [];
@@ -159,6 +174,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     return filteredData;
   }
 
+  
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
     if (config.filtering) {
       (<any>Object).assign(this.config.filtering, config.filtering);
@@ -167,22 +183,19 @@ export class DtVacantesReclutadorComponent implements OnInit {
     if (config.sorting) {
       (<any>Object).assign(this.config.sorting, config.sorting);
     }
-    setTimeout(() => {
-      this.service.getRequiReclutador(localStorage.getItem('id')).subscribe(data => {
-        this.dataSource = data;
-        this.registros = this.dataSource.length;
-        this.rows = this.dataSource.sort();
-        let filteredData = this.changeFilter(this.dataSource, this.config);
-        let sortedData = this.changeSort(filteredData, this.config);
-        this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
-        this.length = sortedData.length;
-        this.spinner.hide();
-      });
-    }, 500);
+    this.registros = this.dataSource.length;
+    this.rows = this.dataSource;
+    let filteredData = this.changeFilter(this.dataSource, this.config);
+    let sortedData = this.changeSort(filteredData, this.config);
+    this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
+    this.length = sortedData.length;
   }
 
   public refreshTable() {
-    this.onChangeTable(this.config);
+    this.getVacantes();
+    setTimeout(() => {
+      this.onChangeTable(this.config);
+    }, 300);
     this.element = [];
     this.vBtra = null;
     this.id = null;
