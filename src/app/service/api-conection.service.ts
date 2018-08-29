@@ -91,6 +91,7 @@ export class ApiConection {
   public static getCopetencia = '/dvacante/getCopetencia';
   public static getUbicacion = '/dvacante/getUbicacion';
   public static updatePublicar = '/dvacante/updatePublicar';
+  public static GuardarConfi = '/dvacante/GuardarVacante';
   public static getCampos = '/dvacante/getCampos';
   public static getClasificaciones = '/dvacante/getClasificaciones';
 

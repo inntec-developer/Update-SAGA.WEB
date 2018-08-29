@@ -189,4 +189,56 @@ export class DisenadorVacanteComponent implements OnInit {
  prevStep() {
    this.step--;
  }
+
+ PrevResumen() {
+  this.spinner.show();
+  for (let item of this.ListaCampo) {
+    let d = document.getElementById('Detalle_' + item.id);
+    let r = document.getElementById('Resumen_' + item.id);
+    let det = d['checked'];
+    let res = r['checked'];
+    let config = {
+                    detalle:det,
+                    resumen:res,
+                    idCampo:item.id,
+                    nombre:item.nombre,
+                    id:this.Requi
+                 }
+    this.ListaCon.push(config);
+ }
+
+ this.Config.GuardarPublicacion(this.ListaCon)
+ .subscribe( data => {
+  this.spinner.hide();
+  window.open('http://localhost:58591/Home/Previsulizacion?RequiID='+this.Requi+'&tipo=1', '_blank');
+ });
+ this.ListaCon = [];
+ 
+  
+}
+PrevDetalle() {
+  this.spinner.show();
+  for (let item of this.ListaCampo) {
+    let d = document.getElementById('Detalle_' + item.id);
+    let r = document.getElementById('Resumen_' + item.id);
+    let det = d['checked'];
+    let res = r['checked'];
+    let config = {
+                    detalle:det,
+                    resumen:res,
+                    idCampo:item.id,
+                    nombre:item.nombre,
+                    id:this.Requi
+                 }
+    this.ListaCon.push(config);
+ }
+
+ this.Config.GuardarPublicacion(this.ListaCon)
+ .subscribe( data => {
+  this.spinner.hide();
+  window.open('http://localhost:58591/Home/Previsulizacion?RequiID='+this.Requi, '_blank');
+ });
+ this.ListaCon = [];
+  
+}
 }
