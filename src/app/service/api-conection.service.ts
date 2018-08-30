@@ -7,6 +7,7 @@ export class ApiConection {
   public static ServiceUrlFoto = 'http://localhost:33333/';
   // Conexiones a bolsa de trabajo.
   public static ServiceUrlBolsa = 'http://sagainn.com.mx:403';
+  public static ServiceUrlLoginBolsa = 'http://localhost:58591';
   // Conexion a FORMATO 290 
   public static ServicioUrl290 = 'http://sagainn.com.mx:413/Home/';
 

@@ -8,6 +8,7 @@ import { ConfiguracionService } from '../../../../service/DisenioVacante/configu
 import {Http} from '@angular/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../service/requisiciones/requisiciones.service';
+import { ApiConection } from '../../../../service/api-conection.service';
 
 @Component({
   selector: 'app-disenador-vacante',
@@ -42,6 +43,8 @@ export class DisenadorVacanteComponent implements OnInit {
   public variable:boolean = false;
   private toasterService: ToasterService;
   public bol:boolean;
+  private UrlBolsa = ApiConection.ServiceUrl+ApiConection.ServiceUrlLoginBolsa;
+  
   step = 0;
   toaster: any;
   toasterConfig: any;
@@ -190,6 +193,8 @@ export class DisenadorVacanteComponent implements OnInit {
    this.step--;
  }
 
+ 
+
  PrevResumen() {
   this.spinner.show();
   for (let item of this.ListaCampo) {
@@ -210,7 +215,7 @@ export class DisenadorVacanteComponent implements OnInit {
  this.Config.GuardarPublicacion(this.ListaCon)
  .subscribe( data => {
   this.spinner.hide();
-  window.open('http://btweb.damsa.com.mx/Home/Previsulizacion?RequiID='+this.Requi+'&tipo=1', '_blank');
+  window.open(this.UrlBolsa+'/Home/Previsulizacion?RequiID='+this.Requi+'&tipo=1', '_blank');
  });
  this.ListaCon = [];
  
@@ -236,7 +241,7 @@ PrevDetalle() {
  this.Config.GuardarPublicacion(this.ListaCon)
  .subscribe( data => {
   this.spinner.hide();
-  window.open('http://btweb.damsa.com.mx/Home/Previsulizacion?RequiID='+this.Requi, '_blank');
+  window.open(this.UrlBolsa+'/Home/Previsulizacion?RequiID='+this.Requi, '_blank');
  });
  this.ListaCon = [];
   
