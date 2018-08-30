@@ -134,6 +134,25 @@ onClosed(): void {
 
   }
 
+  PushUsers(user)
+  {
+    user.forEach(element => {
+      var idx = this.ListEntidades.findIndex(x => x.entidadId === element.entidadId);
+      if(idx > -1)
+      {
+        var aux = this.ListEntidades[idx]; //es por si esta pero no se puede ver por el filtro
+        this.ListEntidades.splice(idx, 1);
+        this.ListEntidades.push(element)
+      }
+      else
+      {
+        var id = this.ListAuxEntidades.findIndex(x => x.entidadId === element.entidadId);
+        this.ListEntidades.push(this.ListAuxEntidades[id]);
+      }  
+      
+    });
+  
+  }
   DeleteUsers(grupo, user, index) {
 
     let dts = { GrupoId: grupo, EntidadId: user };
@@ -214,7 +233,6 @@ onClosed(): void {
 
     }); //me regresa los que no estan repetidos
 
-
     if (uniq.length > 0) {
       for (let ug of uniq) {
         lug.push({ EntidadId: ug.entidadId, GrupoId: idgrupo });
@@ -224,12 +242,23 @@ onClosed(): void {
         .subscribe(data => {
           if(data == 201)
           {
+            var grupo = this.listGrupos.find(x => x.id == idgrupo);
+
+            this.PushUsers(uniq);
+
+            uniq.forEach(element => {
+              var idx = this.ListAuxEntidades.findIndex(x => x.entidadId == element.entidadId);
+              if(idx > -1)
+              {
+                this.ListAuxEntidades[idx]['grupos'].push({id:grupo.id, grupo: grupo.nombre});
+              }
+            });
+
             this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
             this.alert = this.alerts[0];
             this.verMsj = true;
             this.ListaPG = [];
             this.IdGrupo = "0";
-            this.ngOnInit();
           }
           else
           {
