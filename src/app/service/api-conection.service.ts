@@ -139,4 +139,5 @@ export class ApiConection {
   public static getPostulados = 'reclutamiento/seguimientovacante/getPostulate';
   public static getInfoCandidato = 'reclutamiento/seguimientovacante/getInfoCandidato';
   public static getMisVacantes = 'reclutamiento/seguimientovacante/getMisVacantes';
+  public static getPostulaciones = 'reclutamiento/seguimientovacante/getPostulaciones';
 }

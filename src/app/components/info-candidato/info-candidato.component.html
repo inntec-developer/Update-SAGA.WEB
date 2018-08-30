@@ -50,6 +50,43 @@
         </div>
       </div>
     </div>
+    <br>
+    <div *ngIf="candidato" class="dt-container mat-elevation-z8">
+      <div class="card-body">
+        <h5 class="text-primary">Postulaciones ({{registros_p}})
+          <span class="pull-right">
+            <em class="fa fa-bookmark-o"></em>
+          </span>
+        </h5>
+        <div *ngIf="!candidato.estatus">
+          <div class="card card-default">
+            <div class="table-responsive">
+              <table ngClass="{{config_p.className || ''}}" role="grid" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th *ngFor="let column of columns_p" class="{{column.className || ''}}">{{column.title}}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of rows_p">
+                    <td class="text-center"> {{row.folio}} </td>
+                    <td class="text-center"> {{row.vBtra}}</td>
+                    <td class="text-center">
+                      <small class="badge badge-pill" [class.badge-warning]="row.estatusId  === 1 || row.estatusId  === 2 || row.estatusId  === 3 "
+                        [class.badge-primary]="row.estatusId  === 4" [class.badge-danger]="row.estatusId  === 5"
+                        [class.badge-success]="row.estatusId  === 6" [class.badge-success]="row.estatusId  === 7">
+                        {{row.estatus }}
+                      </small>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="col-lg-8 col-md-9 col-sm-12 col-xs-12">
     <div class="mat-elevation-z8" *ngIf="candidato">
@@ -78,7 +115,8 @@
                     </div>
                     <div>
                       <strong class="text-primary">Lugar Nacimiento: </strong>
-                      <label class="text-muted"> {{candidato.info.estadoNacimiento.estado}}, {{candidato.info.paisNacimiento.pais}}</label>
+                      <label class="text-muted"> {{candidato.info.estadoNacimiento.estado}},
+                        {{candidato.info.paisNacimiento.pais}}</label>
                     </div>
                   </div>
                   <div id="discapacidad" *ngIf="candidato.info.esDiscapacitado">
@@ -171,49 +209,56 @@
                     <mat-divider></mat-divider>
                     <div>
                       <strong class="text-primary">Puesto deseado: </strong>
-                      <label *ngIf="candidato.about.puestoDeseado else NotPuestoDeseado" class="text-muted"> {{candidato.about.puestoDeseado}}</label>
+                      <label *ngIf="candidato.about.puestoDeseado else NotPuestoDeseado" class="text-muted">
+                        {{candidato.about.puestoDeseado}}</label>
                       <ng-template #NotPuestoDeseado>
                         <label class="text-muted"> Sin Registro</label>
                       </ng-template>
                     </div>
                     <div>
                       <strong class="text-primary">Salario aceptable: </strong>
-                      <label *ngIf="candidato.about.salarioAceptable else NotSalarioA" class="text-muted"> {{candidato.about.salarioAceptable | currency: '$'}}</label>
+                      <label *ngIf="candidato.about.salarioAceptable else NotSalarioA" class="text-muted">
+                        {{candidato.about.salarioAceptable | currency: '$'}}</label>
                       <ng-template #NotSalarioA>
                         <label class="text-muted"> Sin Registro</label>
                       </ng-template>
                     </div>
                     <div>
                       <strong class="text-primary">Salario deseado: </strong>
-                      <label *ngIf="candidato.about.salarioDeseado else NotSalarioD" class="text-muted"> {{candidato.about.salarioDeseado | currency: '$'}}</label>
+                      <label *ngIf="candidato.about.salarioDeseado else NotSalarioD" class="text-muted">
+                        {{candidato.about.salarioDeseado | currency: '$'}}</label>
                       <ng-template #NotSalarioD>
                         <label class="text-muted"> Sin Registro</label>
                       </ng-template>
                     </div>
                     <div>
                       <strong class="text-primary">Area experiencia: </strong>
-                      <label *ngIf="candidato.about.salarioDeseado else NotAreaE" class="text-muted"> {{candidato.about.areaExperiencia.areaExperiencia}}</label>
+                      <label *ngIf="candidato.about.salarioDeseado else NotAreaE" class="text-muted">
+                        {{candidato.about.areaExperiencia.areaExperiencia}}</label>
                       <ng-template #NotAreaE>
                         <label class="text-muted"> Sin Registro</label>
                       </ng-template>
                     </div>
                     <div>
                       <strong class="text-primary">Intereses: </strong>
-                      <label *ngIf="candidato.about.salarioDeseado else NotAreaI" class="text-muted"> {{candidato.about.areaInteres.areaInteres}}</label>
+                      <label *ngIf="candidato.about.salarioDeseado else NotAreaI" class="text-muted">
+                        {{candidato.about.areaInteres.areaInteres}}</label>
                       <ng-template #NotAreaI>
                         <label class="text-muted"> Sin Registro</label>
                       </ng-template>
                     </div>
                     <div>
                       <strong class="text-primary">Perfil: </strong>
-                      <label *ngIf="candidato.about.salarioDeseado else NotPerfilExp" class="text-muted"> {{candidato.about.perfilExperiencia.perfilExperiencia}}</label>
+                      <label *ngIf="candidato.about.salarioDeseado else NotPerfilExp" class="text-muted">
+                        {{candidato.about.perfilExperiencia.perfilExperiencia}}</label>
                       <ng-template #NotPerfilExp>
                         <label class="text-muted"> Sin Registro</label>
                       </ng-template>
                     </div>
                     <div>
                       <strong class="text-primary">Sitio Web: </strong>
-                      <label *ngIf="candidato.about.salarioDeseado else NotSitioWeb" class="text-muted"> {{candidato.about.sitioWeb}}</label>
+                      <label *ngIf="candidato.about.salarioDeseado else NotSitioWeb" class="text-muted">
+                        {{candidato.about.sitioWeb}}</label>
                       <ng-template #NotSitioWeb>
                         <label class="text-muted"> Sin Registro</label>
                       </ng-template>
@@ -254,12 +299,14 @@
                   <div>
                     <strong class="text-primary">Localidad: </strong>
                     <label class="text-muted">
-                      {{candidato.direccion.municipio.municipio}}, {{candidato.direccion.estado.estado}}, {{candidato.direccion.pais.pais}}
+                      {{candidato.direccion.municipio.municipio}}, {{candidato.direccion.estado.estado}},
+                      {{candidato.direccion.pais.pais}}
                     </label>
                   </div>
                   <div>
                     <strong class="text-primary">Colonia: </strong>
-                    <label class="text-muted">{{candidato.direccion.colonia.tipoColonia}}, {{candidato.direccion.colonia.colonia}}</label>
+                    <label class="text-muted">{{candidato.direccion.colonia.tipoColonia}},
+                      {{candidato.direccion.colonia.colonia}}</label>
                   </div>
                 </div>
                 <div class="col-md-6 col-sm-12">
@@ -269,7 +316,8 @@
                   </div>
                   <div>
                     <strong class="text-primary">Num. Ext / Int: </strong>
-                    <label class="text-muted">{{candidato.direccion.numeroExterior}} {{candidato.direccion.numeroInterior}}</label>
+                    <label class="text-muted">{{candidato.direccion.numeroExterior}}
+                      {{candidato.direccion.numeroInterior}}</label>
                   </div>
                   <div>
                     <strong class="text-primary">Codigo Postal: </strong>
@@ -313,7 +361,8 @@
                       <strong class="text-primary">Periodo: </strong>
                       <label class="text-muted">{{x.monthInicio.month}} {{ x.yearInicio.year}}</label>
                       <strong *ngIf="!x.trabajoActual" class="text-muted"> a </strong>
-                      <label *ngIf="!x.trabajoActual" class="text-muted">{{x.monthTermino.month}} {{ x.yearTermino.year}}</label>
+                      <label *ngIf="!x.trabajoActual" class="text-muted">{{x.monthTermino.month}} {{
+                        x.yearTermino.year}}</label>
                     </div>
                     <div>
                       <strong class="text-primary">Salario: </strong>
@@ -360,7 +409,8 @@
                       <strong class="text-primary">Periodo: </strong>
                       <label class="text-muted">{{x.monthInicio.month}} {{x.yearInicio.year}} </label>
                       <strong *ngIf="x.monthTermino && x.yearTermino" class="text-muted"> a </strong>
-                      <label class="text-muted" *ngIf="x.monthTermino && x.yearTermino"> {{x.monthTermino.month}} {{x.yearTermino.year}}</label>
+                      <label class="text-muted" *ngIf="x.monthTermino && x.yearTermino"> {{x.monthTermino.month}}
+                        {{x.yearTermino.year}}</label>
                     </div>
                   </div>
                 </div>
@@ -401,7 +451,8 @@
                       <strong class="text-primary">Periodo: </strong>
                       <label class="text-muted">{{x.monthInicio.month}} {{x.yearInicio.year}} </label>
                       <strong *ngIf="x.monthTermino && x.yearTermino" class="text-muted"> a </strong>
-                      <label class="text-muted" *ngIf="x.monthTermino && x.yearTermino"> {{x.monthTermino.month}} {{x.yearTermino.year}}</label>
+                      <label class="text-muted" *ngIf="x.monthTermino && x.yearTermino"> {{x.monthTermino.month}}
+                        {{x.yearTermino.year}}</label>
                     </div>
                   </div>
                 </div>
@@ -437,7 +488,8 @@
                       <strong class="text-primary">Periodo: </strong>
                       <label class="text-muted">{{x.monthInicio.month}} {{x.yearInicio.year}} </label>
                       <strong *ngIf="x.monthTermino && x.yearTermino" class="text-muted"> a </strong>
-                      <label class="text-muted" *ngIf="x.monthTermino && x.yearTermino"> {{x.monthTermino.month}} {{x.yearTermino.year}}</label>
+                      <label class="text-muted" *ngIf="x.monthTermino && x.yearTermino"> {{x.monthTermino.month}}
+                        {{x.yearTermino.year}}</label>
                     </div>
                   </div>
                 </div>
@@ -521,7 +573,8 @@
         <tab heading="Mis Vacantes ({{registros_v}})" id="vacantes">
           <div class="dt-header">
             <mat-form-field>
-              <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config_v.filtering" (tableChanged)="onChangeTable_v(config_v)">
+              <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config_v.filtering"
+                (tableChanged)="onChangeTable_v(config_v)">
             </mat-form-field>
             <div class="row justify-content-between">
               <div class="d-flex align-items-stretch ">
@@ -538,12 +591,14 @@
           </div>
           <div class="card card-default">
             <div class="container" #tableContainer>
-              <table id="resultDataTableVacantes" class="table-responsive" ngClass="{{config_v.className || ''}}" role="grid" style="width: 100%;">
+              <table id="resultDataTableVacantes" class="table-responsive" ngClass="{{config_v.className || ''}}" role="grid"
+                style="width: 100%;">
                 <thead>
                   <tr>
                     <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
                       {{column.title}}
-                      <i *ngIf="config_v && column.sort" class="pull-right fa" (click)="changeSort($event, config_v)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
+                      <i *ngIf="config_v && column.sort" class="pull-right fa" (click)="changeSort($event, config_v)"
+                        [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
                       </i>
                     </th>
                   </tr>
@@ -551,12 +606,12 @@
                 <tbody>
                   <tr *ngIf="showFilterRow_v">
                     <td *ngFor="let column of columns">
-                      <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable_v(config_v)"
-                        class="form-control">
+                      <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
+                        (tableChanged)="onChangeTable_v(config_v)" class="form-control">
                     </td>
                   </tr>
-                  <tr (click)="onCellClick_v(row)" (dblclick)="openDialogShowRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial"
-                    [class.cancel]="row.estatusId == 8">
+                  <tr (click)="onCellClick_v(row)" (dblclick)="openDialogShowRequi()" *ngFor="let row of rows"
+                    [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8">
                     <td>
                       {{row.folio}}
                     </td>
@@ -568,8 +623,9 @@
                     <td class="text-center"> {{row.tipoReclutamiento}}</td>
                     <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
                     <td class="text-center">
-                      <small class="badge badge-pill" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
-                        [class.badge-info]="row.estatusId  === 6" [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
+                      <small class="badge badge-pill" [class.badge-warning]="row.estatusId  === 4"
+                        [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6"
+                        [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
                         {{row.estatus }}
                       </small>
                     </td>
@@ -578,9 +634,9 @@
             </div>
           </div>
           <div class="text-right">
-            <pagination *ngIf="config_v.paging" class="pagination-sm" [(ngModel)]="page_v" [totalItems]="length_v" [itemsPerPage]="itemsPerPage_v"
-              [maxSize]="maxSize_v" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable_v(config_v, $event)"
-              (numPages)="numPages_v = $event">
+            <pagination *ngIf="config_v.paging" class="pagination-sm" [(ngModel)]="page_v" [totalItems]="length_v"
+              [itemsPerPage]="itemsPerPage_v" [maxSize]="maxSize_v" [boundaryLinks]="true" [rotate]="false"
+              (pageChanged)="onChangeTable_v(config_v, $event)" (numPages)="numPages_v = $event">
             </pagination>
           </div>
         </tab>

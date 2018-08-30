@@ -15,9 +15,10 @@ export class InfoCandidatoComponent implements OnInit {
   candidato: any;
   @Input('Id') CandidatoId: string;
   public dataSource_v: Array<any> = [];
+  public dataSource_p: Array<any> = [];
 
   /*
-    Variables y funcionamineot para el Grid de Mis Vacantes.
+    Variables y funcionamiento para Tabla de Mis Vacantes.
   */
   public page_v: number = 1;
   public itemsPerPage_v: number = 20;
@@ -27,20 +28,19 @@ export class InfoCandidatoComponent implements OnInit {
 
   showFilterRow_v: boolean;
   registros_v: number;
-  errorMessage_v: any;
-  element_v: any = {};
 
   vBtra: any;
   id: any;
   folio: any;
   requi: { folio: any; id: any; };
+  /*********************************************************/
 
 
   constructor(
     private _serviceCandidato: InfoCandidatoService
   ) {
     this.registros_v = 0;
-    this.onChangeTable_v(this.config_v);
+    this.registros_p = 0;
   }
 
   ngOnInit() {
@@ -73,6 +73,7 @@ export class InfoCandidatoComponent implements OnInit {
 
   ngAfterViewInit() {
     this.getMisVacates();
+    this.getPostulaciones();
     setTimeout(() => {
       this.onChangeTable_v(this.config_v);
     }, 500);
@@ -203,7 +204,6 @@ export class InfoCandidatoComponent implements OnInit {
     setTimeout(() => {
       this.onChangeTable_v(this.config_v);
     }, 500);
-    this.element_v = [];
     this.vBtra = null;
     this.id = null;
     this.folio = null;
@@ -211,8 +211,6 @@ export class InfoCandidatoComponent implements OnInit {
 
   public onCellClick_v(data: any): any {
     let index = this.dataSource_v.indexOf(data.row);
-    this.element_v = data;
-    console.log(this.element_v);
     this.vBtra = data.vBtra;
     this.id = data.id;
     this.folio = data.folio;
@@ -226,4 +224,37 @@ export class InfoCandidatoComponent implements OnInit {
       $(this).addClass('selected').siblings().removeClass('selected');
     });
   }
+
+  /*
+    Tabla de postulaciones del candidato visualizado.
+  */
+
+  public rows_p: Array<any> = [];
+  public columns_p: Array<any> = [
+    { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+    { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
+    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
+  ];
+  /*
+    Variables y funcionamiento para Tabla de Postulaciones de Candidato.
+  */
+  registros_p: number;
+
+  getPostulaciones() {
+    this._serviceCandidato.getPostulaciones(this.CandidatoId).subscribe(data => {
+      this.dataSource_p = data
+      this.rows_p = data;
+      this.registros_p = this.rows_p.length;
+    });
+  }
+
+  public refreshTable_p(){
+    this.getMisVacates();
+  }
+
+  public config_p: any = {
+    className: ['table-striped table-bordered mb-0 d-table-fixed']
+  };
+
+  
 }
