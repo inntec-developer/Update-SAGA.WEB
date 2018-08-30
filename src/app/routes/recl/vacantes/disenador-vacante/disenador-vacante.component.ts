@@ -210,7 +210,7 @@ export class DisenadorVacanteComponent implements OnInit {
  this.Config.GuardarPublicacion(this.ListaCon)
  .subscribe( data => {
   this.spinner.hide();
-  window.open('http://localhost:58591/Home/Previsulizacion?RequiID='+this.Requi+'&tipo=1', '_blank');
+  window.open('http://btweb.damsa.com.mx/Home/Previsulizacion?RequiID='+this.Requi+'&tipo=1', '_blank');
  });
  this.ListaCon = [];
  
@@ -236,7 +236,7 @@ PrevDetalle() {
  this.Config.GuardarPublicacion(this.ListaCon)
  .subscribe( data => {
   this.spinner.hide();
-  window.open('http://localhost:58591/Home/Previsulizacion?RequiID='+this.Requi, '_blank');
+  window.open('http://btweb.damsa.com.mx/Home/Previsulizacion?RequiID='+this.Requi, '_blank');
  });
  this.ListaCon = [];
   
