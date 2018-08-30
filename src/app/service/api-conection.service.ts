@@ -7,6 +7,7 @@ export class ApiConection {
   public static ServiceUrlFoto = 'http://localhost:33333/';
   // Conexiones a bolsa de trabajo.
   public static ServiceUrlBolsa = 'http://sagainn.com.mx:403';
+  public static ServiceUrlLoginBolsa = 'http://localhost:58591';
   // Conexion a FORMATO 290 
   public static ServicioUrl290 = 'http://sagainn.com.mx:413/Home/';
 
@@ -91,6 +92,7 @@ export class ApiConection {
   public static getCopetencia = '/dvacante/getCopetencia';
   public static getUbicacion = '/dvacante/getUbicacion';
   public static updatePublicar = '/dvacante/updatePublicar';
+  public static GuardarConfi = '/dvacante/GuardarVacante';
   public static getCampos = '/dvacante/getCampos';
   public static getClasificaciones = '/dvacante/getClasificaciones';
 
@@ -136,4 +138,5 @@ export class ApiConection {
   public static getDtosDetail = 'reclutamiento/seguimientovacante/getvacantesdtl';
   public static getPostulados = 'reclutamiento/seguimientovacante/getPostulate';
   public static getInfoCandidato = 'reclutamiento/seguimientovacante/getInfoCandidato';
+  public static getMisVacantes = 'reclutamiento/seguimientovacante/getMisVacantes';
 }

@@ -8,6 +8,7 @@ import { ConfiguracionService } from '../../../../service/DisenioVacante/configu
 import {Http} from '@angular/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../service/requisiciones/requisiciones.service';
+import { ApiConection } from '../../../../service/api-conection.service';
 
 @Component({
   selector: 'app-disenador-vacante',
@@ -42,6 +43,8 @@ export class DisenadorVacanteComponent implements OnInit {
   public variable:boolean = false;
   private toasterService: ToasterService;
   public bol:boolean;
+  private UrlBolsa = ApiConection.ServiceUrl+ApiConection.ServiceUrlLoginBolsa;
+  
   step = 0;
   toaster: any;
   toasterConfig: any;
@@ -189,4 +192,58 @@ export class DisenadorVacanteComponent implements OnInit {
  prevStep() {
    this.step--;
  }
+
+ 
+
+ PrevResumen() {
+  this.spinner.show();
+  for (let item of this.ListaCampo) {
+    let d = document.getElementById('Detalle_' + item.id);
+    let r = document.getElementById('Resumen_' + item.id);
+    let det = d['checked'];
+    let res = r['checked'];
+    let config = {
+                    detalle:det,
+                    resumen:res,
+                    idCampo:item.id,
+                    nombre:item.nombre,
+                    id:this.Requi
+                 }
+    this.ListaCon.push(config);
+ }
+
+ this.Config.GuardarPublicacion(this.ListaCon)
+ .subscribe( data => {
+  this.spinner.hide();
+  window.open(this.UrlBolsa+'/Home/Previsulizacion?RequiID='+this.Requi+'&tipo=1', '_blank');
+ });
+ this.ListaCon = [];
+ 
+  
+}
+PrevDetalle() {
+  this.spinner.show();
+  for (let item of this.ListaCampo) {
+    let d = document.getElementById('Detalle_' + item.id);
+    let r = document.getElementById('Resumen_' + item.id);
+    let det = d['checked'];
+    let res = r['checked'];
+    let config = {
+                    detalle:det,
+                    resumen:res,
+                    idCampo:item.id,
+                    nombre:item.nombre,
+                    id:this.Requi
+                 }
+    this.ListaCon.push(config);
+ }
+
+ this.Config.GuardarPublicacion(this.ListaCon)
+ .subscribe( data => {
+  this.spinner.hide();
+  window.open(this.UrlBolsa+'/Home/Previsulizacion?RequiID='+this.Requi, '_blank');
+ });
+ this.ListaCon = [];
+  
+}
 }

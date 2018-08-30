@@ -1,6 +1,8 @@
 <form [formGroup]="AsignacionForm">
   <div class="form-group">
     <ngx-select
+      autoClearSearch = true
+      placeholder="Busqueda..."
       formControlName="selectControl"
       (data)="value"
       class="select-asig"
@@ -15,7 +17,7 @@
           <span *ngIf="option.data.tipoEntidadId == 1">  {{option.data.descripcion}}({{option.data.email}})</span>
         </ng-template>
         <ng-template ngx-select-option-not-found>
-          No se encotraron resultados...
+          No se encontraron resultados...
           <!-- <app-button-save (click)="addItem()">(+) Add new item</app-button-save> -->
         </ng-template>
     </ngx-select>

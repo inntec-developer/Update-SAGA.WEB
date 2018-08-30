@@ -19,6 +19,7 @@ export class ConfiguracionService {
 private UrlResumen = ApiConection.ServiceUrl+ApiConection.setResumen;
 private UrlDetalle = ApiConection.ServiceUrl+ApiConection.setDetalle;
 private UrlPublicar = ApiConection.ServiceUrl+ApiConection.updatePublicar;
+private UrlGuardar = ApiConection.ServiceUrl+ApiConection.GuardarConfi;
 
 // Error.
 private handleError(error: any) {
@@ -55,5 +56,15 @@ UpdatePublicar(data: any): Observable<any>{
           .map(result => result.json())
           .catch(this.handleError);
 }
+
+
+
+GuardarPublicacion(data: any): Observable<any>{
+    let headers = new Headers({'Content-Type' : 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.post(this.UrlGuardar, JSON.stringify(data), options )
+            .map(result => result.json())
+            .catch(this.handleError);
+  }
 
 }

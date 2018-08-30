@@ -40,10 +40,12 @@ export class InfoCandidatoComponent implements OnInit {
     private _serviceCandidato: InfoCandidatoService
   ) {
     this.registros_v = 0;
+    this.onChangeTable_v(this.config_v);
   }
 
   ngOnInit() {
     this.CandidatoId = '4F65DAC1-C6A0-E811-80E8-9E274155325E'
+    
     this._serviceCandidato.getInfoCandidato(this.CandidatoId).subscribe(data => {
       this.candidato = {
         id: data.id,
@@ -69,6 +71,13 @@ export class InfoCandidatoComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    this.getMisVacates();
+    setTimeout(() => {
+      this.onChangeTable_v(this.config_v);
+    }, 500);
+  }
+
   /*
     Columnas para Tabla de Vacantes
   */
@@ -82,6 +91,12 @@ export class InfoCandidatoComponent implements OnInit {
     { title: 'Cumplimiento', className: 'text-info text-center', name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
   ];
+
+  getMisVacates() {
+    this._serviceCandidato.getMisVacantes(localStorage.getItem('id')).subscribe(data => {
+      this.dataSource_v = data.sort();
+    });
+  }
 
   public config_v: any = {
     paging: true,
@@ -167,7 +182,7 @@ export class InfoCandidatoComponent implements OnInit {
     return filteredData;
   }
 
-  public onChangeTable(config: any, page: any = { page: this.page_v, itemsPerPage: this.itemsPerPage_v }): any {
+  public onChangeTable_v(config: any, page: any = { page: this.page_v, itemsPerPage: this.itemsPerPage_v }): any {
     if (config.filtering) {
       (<any>Object).assign(this.config_v.filtering, config.filtering);
     }
@@ -175,22 +190,19 @@ export class InfoCandidatoComponent implements OnInit {
     if (config.sorting) {
       (<any>Object).assign(this.config_v.sorting, config.sorting);
     }
-    // setTimeout(() => {
-    //   this.service.getRequiReclutador(localStorage.getItem('id')).subscribe(data => {
-    //     this.dataSource = data;
-    //     this.registros = this.dataSource.length;
-    //     this.rows = this.dataSource.sort();
-    //     let filteredData = this.changeFilter(this.dataSource, this.config);
-    //     let sortedData = this.changeSort(filteredData, this.config);
-    //     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
-    //     this.length = sortedData.length;
-    //     this.spinner.hide();
-    //   });
-    // }, 500);
+    this.registros_v = this.dataSource_v.length;
+    this.rows = this.dataSource_v.sort();
+    let filteredData = this.changeFilter_v(this.dataSource_v, this.config_v);
+    let sortedData = this.changeSort_v(filteredData, this.config_v);
+    this.rows = page && config.paging ? this.changePage_v(page, sortedData) : sortedData;
+    this.length_v = sortedData.length;
   }
 
   public refreshTable_v() {
-    this.onChangeTable(this.config_v);
+    this.getMisVacates();
+    setTimeout(() => {
+      this.onChangeTable_v(this.config_v);
+    }, 500);
     this.element_v = [];
     this.vBtra = null;
     this.id = null;
