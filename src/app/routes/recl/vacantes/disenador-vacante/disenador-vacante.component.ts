@@ -43,7 +43,7 @@ export class DisenadorVacanteComponent implements OnInit {
   public variable:boolean = false;
   private toasterService: ToasterService;
   public bol:boolean;
-  private UrlBolsa = ApiConection.ServiceUrl+ApiConection.ServiceUrlLoginBolsa;
+  private UrlBolsa = ApiConection.ServiceUrlLoginBolsa;
   
   step = 0;
   toaster: any;
