@@ -21,7 +21,9 @@ export class AddGrupoComponent implements OnInit {
   Grupos: Array<any> = [];
   editing = {};
   name: string;
-  rowAux: any;
+  rowAux: any = 0;
+  dataRow: any;
+  dataRowIndex: any = 0;
   UsuariosList = [];
   verMsj = false;
   ListTipos = [];
@@ -53,6 +55,25 @@ onClosed(): void {
       });
   }
 
+  onSelect(row, rowIndex)
+  {
+    if(this.dataRowIndex != rowIndex)
+    {
+      if(this.dataRow)
+      {
+        this.dataRow.selected = false;
+      }
+      this.dataRowIndex = rowIndex;
+      this.dataRow = row;
+      row.selected = true;
+    }
+    else
+    {
+      this.dataRow = row;
+      this.dataRowIndex = rowIndex;
+      row.selected = true; //para poner el backgroun cuando seleccione
+    }
+  }
   CrearURL(idG: any)
   {
     this.name = idG;
@@ -78,8 +99,9 @@ onClosed(): void {
     this.Grupos = tempArray;
   }
 
-  updateValue($event, cell, rowIndex)
+  updateValue($event, cell, rowIndex, g)
   {
+    g.selected = true;
     if(cell === 'activo')
     {
       this.Grupos[rowIndex][cell] = $event.checked;
@@ -125,6 +147,7 @@ onClosed(): void {
 
         this.Grupos.forEach(item => {
           item.fotoAux = ApiConection.ServiceUrlFoto + item.foto
+          item.selected = false;
         })
 
         console.log(this.Grupos)

@@ -60,10 +60,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let p of Users; let rowIndex = index">
+          <tr *ngFor="let p of Users; let rowIndex = index" [class.selected]="p.selected" (click)="onSelect(p, rowIndex)">
             <td class="text-center">
               <div class="media">
-                <a matTooltip="Click para editar" data-toggle="modal" data-target="#staticModal" (click)="rowAux = rowIndex; CrearURL(p.entidadId); staticModal.show()">
+                <a matTooltip="Click para editar" data-toggle="modal" data-target="#staticModal" (click)="rowAux = rowIndex; CrearURL(p.entidadId); staticModal.show();">
                   <img class="img-fluid circle thumb32" src="{{p.fotoAux}}" alt="Image" />
                 </a>
               </div>
@@ -72,39 +72,39 @@
               <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-clave'] = true" *ngIf="!editing[rowIndex + '-clave']">
                 {{p.clave}}
               </span>
-              <input autofocus (blur)="updateValue($event, 'clave', rowIndex)" *ngIf="editing[rowIndex + '-clave']" type="text" [value]=p.clave
+              <input class="form-control-sm" autofocus (blur)="updateValue($event, 'clave', rowIndex)" *ngIf="editing[rowIndex + '-clave']" type="text" [value]=p.clave
               />
             </td>
             <td class="text-center">
               <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-usuario'] = true" *ngIf="!editing[rowIndex + '-usuario']">
                 {{p.usuario}}
               </span>
-              <input autofocus (blur)="updateValue($event, 'usuario', rowIndex)" *ngIf="editing[rowIndex + '-usuario']" type="text" [value]=p.usuario
+              <input class="form-control-sm" autofocus (blur)="updateValue($event, 'usuario', rowIndex)" *ngIf="editing[rowIndex + '-usuario']" type="text" [value]=p.usuario
               />
             </td>
             <td class="text-center">
               <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
                 {{p.nombre}}
               </span>
-              <input autofocus (blur)="updateValue($event, 'nombre', rowIndex)" *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=p.nombre
+              <input class="form-control-sm" autofocus (blur)="updateValue($event, 'nombre', rowIndex)" *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=p.nombre
               />
             </td>
             <td class="text-center">
               <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoPaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoPaterno']">
                 {{p.apellidoPaterno}}
               </span>
-              <input autofocus (blur)="updateValue($event, 'apellidoPaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoPaterno']"
+              <input class="form-control-sm" autofocus (blur)="updateValue($event, 'apellidoPaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoPaterno']"
                 type="text" [value]=p.apellidoPaterno />
             </td>
             <td class="text-center">
               <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoMaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoMaterno']">
                 {{p.apellidoMaterno}}
               </span>
-              <input autofocus (blur)="updateValue($event, 'apellidoMaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoMaterno']"
+              <input class="form-control-sm" autofocus (blur)="updateValue($event, 'apellidoMaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoMaterno']"
                 type="text" [value]=p.apellidoMaterno />
             </td>
-            <td>
-              <tr *ngFor="let e of p.email" class="text-center">{{e.email}}</tr>
+            <td class="text-center" *ngIf="p.email.length > 0">{{p.email[0].email}}
+              <!-- <tr *ngFor="let e of p.email" class="text-center" >{{e.email}}</tr> -->
             </td>
             <td class="text-center">
               <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-departamento'] = true" *ngIf="!editing[rowIndex + '-departamento']">
@@ -119,7 +119,7 @@
               <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-tipoUsuario'] = true" *ngIf="!editing[rowIndex + '-tipoUsuario']">
                 {{p.tipoUsuario}}
               </span>
-              <select (change)="updateValue($event, 'tipoUsuarioId', rowIndex)" *ngIf="editing[rowIndex + '-tipoUsuario']">
+              <select class="form-control-sm" (change)="updateValue($event, 'tipoUsuarioId', rowIndex)" *ngIf="editing[rowIndex + '-tipoUsuario']">
                 <option [value]=0>Seleccionar Tipo Usuario</option>
                 <option *ngFor="let t of ListTipos" [value]='t.id'>{{t.tipo}}</option>
               </select>

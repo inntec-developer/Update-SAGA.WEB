@@ -53,7 +53,6 @@ onClosed(): void {
 
   onSelect(item: any) 
   {
-    console.log(this.formRol.controls['slcRol'].value)
     if(this.formRol.controls['slcRol'].value !== '-1' && this.formRol.controls['slcRol'].value !== null)
     {
       var entidad = this.ListaRG.findIndex(x => x.entidadId == item.entidadId);

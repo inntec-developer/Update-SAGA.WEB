@@ -61,7 +61,7 @@
 
                   </ng-template>
 
-                       <tr *ngFor="let g of Grupos; let rowIndex = index; let value = index">
+                       <tr *ngFor="let g of Grupos; let rowIndex = index; let value = index" [class.selected]="g.selected" (click)="onSelect(g, rowIndex)">
                           <td class="text-center">
                             <btn-view [xs]="true" (click)="grupo=g.nombre; GetUsuarios(g.id);" data-toggle="popover" [popover]="popTemplate" placement="right" [outsideClick]="true" matTooltip="Ver integrantes del grupo"></btn-view>
                           </td>
@@ -72,19 +72,19 @@
                               <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
                                   {{g.nombre}}
                               </span>
-                              <input autofocus (blur)="updateValue($event, 'nombre', rowIndex)" *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=g.nombre />
+                              <input class="form-control-sm" autofocus (blur)="updateValue($event, 'nombre', rowIndex, g)" *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=g.nombre />
                            </td>
                            <td class="text-center">
                               <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-descripcion'] = true" *ngIf="!editing[rowIndex + '-descripcion']">
                                   {{g.descripcion}}
                               </span>
-                              <textarea class="form-control" autofocus (blur)="updateValue($event, 'descripcion', rowIndex)" *ngIf="editing[rowIndex + '-descripcion']" [value]=g.descripcion maxlength="200" rows="1"></textarea>
+                              <textarea class="form-control-sm" class="form-control" autofocus (blur)="updateValue($event, 'descripcion', rowIndex, g)" *ngIf="editing[rowIndex + '-descripcion']" [value]=g.descripcion maxlength="200" rows="1"></textarea>
                            </td>
                            <td class="text-center">
                             <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-tipoGrupo'] = true" *ngIf="!editing[rowIndex + '-tipoGrupo']">
                               {{g.tipoGrupo}}
                             </span>
-                            <select class="form-control-sm" (change)="UpdateTipo($event, 'tipoGrupoId', rowIndex)" *ngIf="editing[rowIndex + '-tipoGrupo']">
+                            <select class="form-control-sm" (change)="UpdateTipo($event, 'tipoGrupoId', rowIndex, g)" *ngIf="editing[rowIndex + '-tipoGrupo']">
                               <option [value]='-1'>Seleccionar Tipo Grupo</option>
                               <option *ngFor="let t of ListTipos" [value]='t.id'>{{t.tipo}}</option>
                             </select>
@@ -93,7 +93,7 @@
                               {{g.usuarioAlta}}
                            </td>
                            <td class="text-center">
-                             <mat-checkbox class="checkbox" (change)="updateValue($event, 'activo', rowIndex)" [checked]="g.activo"></mat-checkbox>
+                             <mat-checkbox class="checkbox" (change)="updateValue($event, 'activo', rowIndex, g)" [checked]="g.activo"></mat-checkbox>
                            </td>
                            <td class="text-center">
                               <btn-check id='update' chkPrivilegiosButtons [xs]="true" (click)="updateGrupo($event, rowIndex)" matTooltip="Guardar Cambios"></btn-check>

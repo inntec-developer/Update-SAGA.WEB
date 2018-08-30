@@ -26,6 +26,8 @@ export class AddPersonaComponent implements OnInit {
   paginacion = [];
   pagIndex = 0;
   verMsj = false;
+  dataRowIndex: any = 0;
+  dataRow: any;
 
   @ViewChild('uploadImg') someInput: UploadImgsComponent;
   @ViewChild('staticModal') modal;
@@ -95,11 +97,26 @@ alert = this.alerts;
 
   }
 
-  onSelect(item)
+  onSelect(row, rowIndex)
   {
-    item.selected ? item.selected = false : item.selected = true; //para poner el backgroun cuando seleccione
+    if(this.dataRowIndex != rowIndex)
+    {
+      if(this.dataRow)
+      {
+        this.dataRow.selected = false;
+      }
+      
+      this.dataRowIndex = rowIndex;
+      this.dataRow = row;
+      row.selected = true;
+    }
+    else
+    {
+      this.dataRow = row;
+      this.dataRowIndex = rowIndex;
+      row.selected = true; //para poner el backgroun cuando seleccione
+    }
   }
-
   closeModal()
   {
     this.someInput.removeItem();
@@ -145,6 +162,7 @@ alert = this.alerts;
   updateValue(event, cell, rowIndex) 
   {
     var aux;
+
     if (cell === "tipoUsuarioId") 
     {
       aux = this.ListTipos.find(nt => nt.id == event.target.value);
@@ -225,10 +243,9 @@ alert = this.alerts;
       e=>{
         this.Users = e;
         
-        this.paginacion = this.Users.slice(0, (this.Users.length / 10 ) );
-
         this.Users.forEach(item => {
           item.fotoAux = ApiConection.ServiceUrlFoto + item.foto
+          item.selected = false;
         })
 
         this.filteredData = this.Users;

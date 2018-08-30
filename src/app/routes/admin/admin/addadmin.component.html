@@ -79,7 +79,7 @@
         <div class="panel-body" dnd-sortable-container [dropZones]="['demo1']" [sortableData]="ListaPG"> 
           <p [hidden]="ListaPG.length > 0">{{msj}}</p>
           <div *ngFor="let pg of ListaPG; let i = index" class="panel panel-default panel-flat" dnd-sortable [sortableIndex]="i" (onDropSuccess)="addToGroups($event, IdGrupo)">
-            <button type="button" class="close pull-right" aria-label="Close" (click)="PopUsers(pg.entidadId)">
+            <button type="button" class="close pull-right" aria-label="Close" (click)="PopUsers(pg.entidadId)" matTooltip="Quitar de la lista">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="media">
