@@ -174,11 +174,7 @@ export class RegisterComponent implements OnInit {
           this.ListDepas = e;
         })
     }
-
-    closePop()
-    {
-        this.epopover.hide();
-    }
+    
     closeModal()
     {
         this.ShownModal.hide();
@@ -191,11 +187,18 @@ export class RegisterComponent implements OnInit {
     onHidden(): void {
         this.isModalShown = false;
       }
+    
+    showPop()
+    {
+    
+      this.epopover.show();
 
+      setTimeout(()=>{    //<<<---    using ()=> syntax
+            this.epopover.hide();
+       }, 3000);
+    }
     ValidarEmail(email: string)
     {
-        this.closePop();
-
         this.user = this.valForm.controls['email'].value.trim();
         var idx =  this.user.indexOf( "@" ); 
         this.user = "DAMSA." + this.user.substring(0, idx);
@@ -207,9 +210,9 @@ export class RegisterComponent implements OnInit {
                     {
                         this.alerts[1]['msg'] = 'El email: ' + email + ' ya se encuentra registrado';
                         this.alert = this.alerts[1];
-                        this.epopover.show();
                         this.disabledE = false;
                         this.verMsj = true;
+                        this.showPop();
                     }
                     else
                     {
@@ -274,7 +277,6 @@ export class RegisterComponent implements OnInit {
 
        this.disabledE = false;
       // this.disabledC = false;
-       this.closePop();
  
     }
 

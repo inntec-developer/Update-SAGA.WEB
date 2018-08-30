@@ -63,7 +63,7 @@
 
                        <tr *ngFor="let g of Grupos; let rowIndex = index; let value = index">
                           <td class="text-center">
-                            <btn-view [xs]="true" (click)="grupo=g.nombre; GetUsuarios(g.id);" data-toggle="popover" [popover]="popTemplate" placement="right" trigger="" matTooltip="Ver integrantes del grupo"></btn-view>
+                            <btn-view [xs]="true" (click)="grupo=g.nombre; GetUsuarios(g.id);" data-toggle="popover" [popover]="popTemplate" placement="right" [outsideClick]="true" matTooltip="Ver integrantes del grupo"></btn-view>
                           </td>
                           <td class="align-middle text-center">
                             <a matTooltip="Click para editar" (click)="rowAux=rowIndex; CrearURL(g.id); staticModal.show()"><img class="img-fluid circle thumb48" src={{g.fotoAux}} alt="Image" /></a>
