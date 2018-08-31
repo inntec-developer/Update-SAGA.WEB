@@ -33,7 +33,9 @@
 
 tr.selected td {
   background-color:  #5d9cec !important;
-  color: white;
+  color: white !important;
+  box-shadow:inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 7px 10px 0 rgba(60,64,67,.3), 0 2px 2px 1px rgb(60,64,67,.15) !important;
+  
 }
 
 tr.confident td {

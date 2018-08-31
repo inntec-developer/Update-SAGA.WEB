@@ -60,7 +60,7 @@ export class DtCandidatosPostComponent implements OnInit {
     paging: true,
     sorting: { colums: this.columns },
     filtering: { filterString: '' },
-    className: [ 'table-striped table-bordered mb-0 d-table-fixed' ]
+    className: [ 'table-striped mb-0 d-table-fixed' ]
   }
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {

@@ -92,7 +92,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     paging: true,
     sorting: { columns: this.columns },
     filtering: { filterString: '' },
-    className: ['table-striped table-bordered mb-0 d-table-fixed']
+    className: ['table-striped mb-0 ']
   };
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
@@ -231,8 +231,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
   openDialogShowRequi() {
 
     let dialogShow = this.dialog.open(DialogShowRequiComponent, {
-      width: '1200px',
-      height: '700px',
+      width: '200%',
+      height: '100%',
       data: this.requi
     });
     dialogShow.afterClosed().subscribe(result => {

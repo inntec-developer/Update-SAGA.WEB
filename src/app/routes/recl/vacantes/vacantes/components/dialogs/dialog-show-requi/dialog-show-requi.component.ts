@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 import { RequisicionesService } from '../../../../../../../service';
 
+declare var $: any;
 @Component({
   selector: 'app-dialog-show-requi',
   templateUrl: './dialog-show-requi.component.html',
@@ -28,5 +29,6 @@ export class DialogShowRequiComponent implements OnInit {
   onCloseDialog(){
     this.dialogShow.close();
   }
+
 
 }
