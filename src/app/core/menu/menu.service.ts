@@ -64,6 +64,7 @@ export class MenuService {
     }
     setEstructuraMenu() //creo el menu dependiendo de los privilegios de usuario
     {
+        debugger;
         var privilegios = JSON.parse(localStorage.getItem('privilegios'));
 
         if(this.menuItems.length > 2)
@@ -76,7 +77,14 @@ export class MenuService {
                     });
 
         modules.forEach(element => {
-            this.menuItems.push( { text: element.nombre, icon: element.icono, submenu: this.setSubMenu(element, privilegios) })
+            if(element.accion === null)
+            {
+                this.menuItems.push( { text: element.nombre, icon: element.icono, submenu: this.setSubMenu(element, privilegios) })
+            }
+            else
+            {
+                this.menuItems.push( { text: element.nombre, icon: element.icono, link: element.accion })
+            }
         });   
 
         modules = [];
