@@ -58,7 +58,7 @@ export class DtRequisicionComponent implements OnInit {
   ngAfterViewInit() {
     setTimeout(() => {
       this.onChangeTable(this.config);
-    }, 500);
+    }, 1500);
     
   }
 
@@ -70,7 +70,7 @@ export class DtRequisicionComponent implements OnInit {
 
   public rows: Array<any> = [];
   public columns: Array<any> = [
-    { title: 'Folio', className: 'text-info text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+    { title: 'Folio', sorting: 'desc', className: 'text-info text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
     { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
     { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
     { title: 'No. Vacantes', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' } },
@@ -84,9 +84,9 @@ export class DtRequisicionComponent implements OnInit {
 
   public config: any = {
     paging: true,
-    sorting: { columns: this.columns },
+    //sorting: { columns: this.columns },
     filtering: { filterString: '' },
-    className: ['table-striped  mb-0 d-table-fixed']
+    className: ['table-striped  mb-0']
   };
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
@@ -120,7 +120,7 @@ export class DtRequisicionComponent implements OnInit {
       if (previous[columnName] > current[columnName]) {
         return sort === 'desc' ? -1 : 1;
       } else if (previous[columnName] < current[columnName]) {
-        // return sort === false ? -1 : 1;
+        return sort === 'asc' ? -1 : 1;
       }
       return 0;
     });
@@ -183,7 +183,6 @@ export class DtRequisicionComponent implements OnInit {
     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
     this.length = sortedData.length;
     this.spinner.hide();
-
   }
 
   public onCellClick(data: any): any {

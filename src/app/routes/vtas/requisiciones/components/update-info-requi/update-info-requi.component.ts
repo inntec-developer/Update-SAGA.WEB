@@ -65,7 +65,8 @@ export class UpdateInfoRequiComponent implements OnInit, AfterContentChecked {
      toasterConfig: any;
      toasterconfig: ToasterConfig = new ToasterConfig({
        positionClass: 'toast-bottom-right',
-       limit: 7,tapToDismiss: false,
+       limit: 7,
+       tapToDismiss: false,
        showCloseButton: true,
        mouseoverTimerStop: true,
      });
