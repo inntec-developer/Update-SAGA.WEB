@@ -46,6 +46,10 @@ tr.cancel td {
   background-color:  #ffc7c7;
   color: black;  
 }
+tr.enProceso td{
+  background-color:  rgb(175, 245, 178);
+  box-shadow:inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 7px 10px 0 rgba(60,64,67,.3), 0 2px 2px 1px rgb(60,64,67,.15) !important;
+}
 
 
 /* ---------------------------------------------------------------------- */

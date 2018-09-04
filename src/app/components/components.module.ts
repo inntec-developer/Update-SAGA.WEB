@@ -38,6 +38,7 @@ import {
 } from '@angular/material';
 import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
 import { PopoverModule, TooltipModule } from 'ngx-bootstrap';
+import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../core/translator/config-paginator/config-paginator.component';
 
 import { AccordionModule } from 'ngx-bootstrap/accordion';
@@ -76,7 +77,6 @@ import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import { NgxSpinnerModule } from '../../../node_modules/ngx-spinner';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { ToasterService } from 'angular2-toaster';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -128,7 +128,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     PaginationModule.forRoot(),
     PopoverModule.forRoot(),
     TooltipModule.forRoot(),
-    AccordionModule.forRoot()
+    AccordionModule.forRoot(),
+    ToasterModule
     
   ],
   declarations: [

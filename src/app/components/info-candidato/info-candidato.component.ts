@@ -1,10 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
-import { ApiConection } from './../../service/api-conection.service';
 import { InfoCandidatoService } from '../../service/SeguimientoVacante/info-candidato.service';
 
 declare var $: any;
-
+declare module String {
+  export var format: any;
+}
 @Component({
   selector: 'app-info-candidato',
   templateUrl: './info-candidato.component.html',
@@ -29,23 +31,46 @@ export class InfoCandidatoComponent implements OnInit {
   showFilterRow_v: boolean;
   registros_v: number;
 
-  vBtra: any;
-  id: any;
-  folio: any;
   requi: { folio: any; id: any; };
+  vacante: any;
+  usuario: string;
+  usuarioId: string;
+  Status: any = 0;
+  requisicionId: any = '';
+  reclutador: any = '';
+  procesoCandidato: any = {};
+  msg: string;
+  procesoCandidatoId: any;
   /*********************************************************/
 
 
   constructor(
-    private _serviceCandidato: InfoCandidatoService
+    private _serviceCandidato: InfoCandidatoService,
+    private toasterService: ToasterService,
   ) {
     this.registros_v = 0;
     this.registros_p = 0;
+    this.vacante = {
+      id: null,
+      vBtra: null,
+      folio: null
+    }
+    this.usuario = localStorage.getItem('nombre');
+    this.usuarioId = localStorage.getItem('id')
+    this.getMisVacates();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    if (changes.CandidatoId && !changes.CandidatoId.isFirstChange()) {
+      this.ngOnInit();
+    }
+
   }
 
   ngOnInit() {
     this.CandidatoId = '4F65DAC1-C6A0-E811-80E8-9E274155325E'
-    
     this._serviceCandidato.getInfoCandidato(this.CandidatoId).subscribe(data => {
       this.candidato = {
         id: data.id,
@@ -68,15 +93,21 @@ export class InfoCandidatoComponent implements OnInit {
         about: data.aboutMe[0],
         info: data.candidato
       }
+      if (this.candidato.estatus) {
+        this.procesoCandidatoId = this.candidato.estatus.id;
+        this.Status = this.candidato.estatus.estatus;
+        this.requisicionId = this.candidato.estatus.requisicionId;
+        this.reclutador = this.candidato.estatus.reclutador;
+      }
+      console.log(this.candidato);
     });
   }
 
   ngAfterViewInit() {
-    this.getMisVacates();
     this.getPostulaciones();
     setTimeout(() => {
       this.onChangeTable_v(this.config_v);
-    }, 500);
+    }, 1500);
   }
 
   /*
@@ -95,15 +126,15 @@ export class InfoCandidatoComponent implements OnInit {
 
   getMisVacates() {
     this._serviceCandidato.getMisVacantes(localStorage.getItem('id')).subscribe(data => {
-      this.dataSource_v = data.sort();
+      this.dataSource_v = data;
     });
   }
 
   public config_v: any = {
     paging: true,
-    sorting: { columns: this.columns },
+    //sorting: { columns: this.columns },
     filtering: { filterString: '' },
-    className: ['table-striped table-bordered mb-0 d-table-fixed']
+    className: ['table-striped mb-0']
   };
 
   public changePage_v(page: any, data: Array<any> = this.dataSource_v): Array<any> {
@@ -192,7 +223,7 @@ export class InfoCandidatoComponent implements OnInit {
       (<any>Object).assign(this.config_v.sorting, config.sorting);
     }
     this.registros_v = this.dataSource_v.length;
-    this.rows = this.dataSource_v.sort();
+    this.rows = this.dataSource_v;
     let filteredData = this.changeFilter_v(this.dataSource_v, this.config_v);
     let sortedData = this.changeSort_v(filteredData, this.config_v);
     this.rows = page && config.paging ? this.changePage_v(page, sortedData) : sortedData;
@@ -203,21 +234,18 @@ export class InfoCandidatoComponent implements OnInit {
     this.getMisVacates();
     setTimeout(() => {
       this.onChangeTable_v(this.config_v);
-    }, 500);
-    this.vBtra = null;
-    this.id = null;
-    this.folio = null;
+    }, 800);
+    this.vacante = {};
   }
 
   public onCellClick_v(data: any): any {
     let index = this.dataSource_v.indexOf(data.row);
-    this.vBtra = data.vBtra;
-    this.id = data.id;
-    this.folio = data.folio;
-    this.requi = {
-      folio: data.folio,
-      id: data.id
+    this.vacante = {
+      id: data.id,
+      vBtra: data.vBtra,
+      folio: data.folio
     }
+    console.log(this.vacante);
     /* add an class 'active' on click */
     $('#resultDataTableVacantes').on('click', 'tr', function (event: any) {
       //noinspection TypeScriptUnresolvedFunction
@@ -248,7 +276,7 @@ export class InfoCandidatoComponent implements OnInit {
     });
   }
 
-  public refreshTable_p(){
+  public refreshTable_p() {
     this.getMisVacates();
   }
 
@@ -256,5 +284,111 @@ export class InfoCandidatoComponent implements OnInit {
     className: ['table-striped table-bordered mb-0 d-table-fixed']
   };
 
-  
+  /**
+   * configuracion para mensajes de acciones.
+   */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
+  popToast(type, title, body) {
+    var toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 4000,
+      body: body
+    }
+    this.toasterService.pop(toast);
+  }
+  notAccess() {
+    var msg = 'Accion no permitada, el candidato se encuentra en proceso con ' + this.reclutador;
+    this.popToast('error', 'No Autorizado', msg);
+  }
+
+
+  /**
+   * Funcionalidades del componente
+   */
+  _apartarCandidato() {
+    if (this.reclutador == this.usuario || !this.candidato.estatus) {
+      this.procesoCandidato = {
+        candidatoId: this.CandidatoId,
+        requisicionId: this.vacante.id,
+        folio: this.vacante.folio,
+        reclutador: this.usuario,
+        reclutadorId: this.usuarioId,
+        estatusId: 10
+      }
+      this._serviceCandidato.setApartarCandidato(this.procesoCandidato)
+        .subscribe(data => {
+
+          switch (data) {
+            case 200: {
+              this.ngOnInit();
+              this.ngAfterViewInit();
+              var msg = 'El candidato se aparto para la vacante: ' + this.vacante.folio + ' ' + this.vacante.vBtra + '.';
+              this.popToast('success', 'Apartado', msg);
+              break;
+            }
+            case 304: {
+              msg = 'El candidato ya esta apartado: ' + this.vacante.folio + ' ' + this.vacante.vBtra + '.';
+              this.popToast('info', 'Apartado', msg); ''
+              break;
+            }
+            case 404: {
+              var msg = 'Error el intentar apartar el candidato. Consulte al departamento de soporte si el problema persiste.';
+              this.popToast('error', 'Apartado', msg);
+              break;
+            }
+            default: {
+              var msg = 'Error inesperado y desconocido, reporte el problema el departamento de soprte.';
+              this.popToast('error', 'Oops!!', msg);
+              break;
+            }
+          }
+        }, err => {
+          console.log(err);
+        });
+    }
+    else {
+      this.notAccess();
+    }
+  }
+
+  _liberarCandidato() {
+    if (this.reclutador == this.usuario || !this.candidato.estatus) {
+      this._serviceCandidato.setLiberarCandidato(this.procesoCandidatoId)
+        .subscribe(data => {
+          switch (data) {
+            case 200: {
+              this.ngOnInit();
+              this.ngAfterViewInit();
+              setTimeout(() => {
+                this.vacante = {};
+                this.procesoCandidatoId = '';
+                this.Status = '';
+                this.requisicionId = '';
+                this.reclutador = '';
+              }, 800);
+              var msg = 'El candidato se libero corectamente de la vacante: ' + this.vacante.folio + ' ' + this.vacante.vBtra + '.';
+              this.popToast('success', 'Liberado', msg);
+              break;
+            }
+            case 404: {
+              var msg = 'Error el intentar liberar el candidato. Consulte al departamento de soporte si el problema persiste.';
+              this.popToast('error', 'Apartado', msg);
+              break;
+            }
+          }
+        })
+    }
+    else {
+      this.notAccess();
+    }
+  }
 }

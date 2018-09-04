@@ -1,13 +1,13 @@
-import { debug } from 'util';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatSort } from '@angular/material';
 
 import { DialogAssingRequiComponent } from '../dialogs/dialog-assing-requi/dialog-assing-requi.component';
 import { DialogShowRequiComponent } from '../dialogs/dialog-show-requi/dialog-show-requi.component';
-import { MatDialog, MatSort } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../../service';
 import { ToasterService } from 'angular2-toaster';
+import { debug } from 'util';
 
 declare var $: any;
 
@@ -58,14 +58,13 @@ export class DtVacantesReclutadorComponent implements OnInit {
     //Add 'implements AfterViewInit' to the class.
     setTimeout(() => {
       this.onChangeTable(this.config);
-    }, 500);
+    }, 1500);
 
   }
 
   getVacantes() {
     this.service.getRequiReclutador(localStorage.getItem('id')).subscribe(data => {
-      this.dataSource = data;
-      this.spinner.hide();
+      this.dataSource = data;      
     });
   }
 
@@ -90,7 +89,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   public config: any = {
     paging: true,
-    sorting: { columns: this.columns },
+    //sorting: { columns: this.columns },
     filtering: { filterString: '' },
     className: ['table-striped mb-0 ']
   };
@@ -189,13 +188,18 @@ export class DtVacantesReclutadorComponent implements OnInit {
     let sortedData = this.changeSort(filteredData, this.config);
     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
     this.length = sortedData.length;
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 500);
+    
+    
   }
 
   public refreshTable() {
     this.getVacantes();
     setTimeout(() => {
       this.onChangeTable(this.config);
-    }, 300);
+    }, 800);
     this.element = [];
     this.vBtra = null;
     this.id = null;
@@ -236,7 +240,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       data: this.requi
     });
     dialogShow.afterClosed().subscribe(result => {
-      this.onChangeTable(this.config);
+      this.refreshTable();
     });
   }
   openDialogAssingRequi() {
@@ -246,7 +250,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       data: this.element
     });
     dialogAssing.afterClosed().subscribe(result => {
-      this.onChangeTable(this.config);
+      this.refreshTable();
     });
   }
 

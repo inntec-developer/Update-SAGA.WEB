@@ -14,14 +14,14 @@ declare var $: any;
   styleUrls: ['./dt-candidatos-post.component.scss']
 })
 export class DtCandidatosPostComponent implements OnInit {
-  @Input() VacanteId : any;
-  public dataSource : Array<any> = [];
-   // Varaibles del paginador
-   public page: number = 1;
-   public itemsPerPage: number = 20;
-   public maxSize: number = 5;
-   public numPages: number = 1;
-   public length: number = 0;
+  @Input() VacanteId: any;
+  public dataSource: Array<any> = [];
+  // Varaibles del paginador
+  public page: number = 1;
+  public itemsPerPage: number = 20;
+  public maxSize: number = 5;
+  public numPages: number = 1;
+  public length: number = 0;
 
   showFilterRow: boolean;
   registros: number;
@@ -29,7 +29,7 @@ export class DtCandidatosPostComponent implements OnInit {
   element: any = {};
   postulados: any;
   constructor(
-    private service : PostulateService,
+    private service: PostulateService,
     private dialog: MatDialog,
     private _Router: Router,
     private spinner: NgxSpinnerService,
@@ -38,29 +38,37 @@ export class DtCandidatosPostComponent implements OnInit {
 
   ngOnInit() {
     this.spinner.show();
+    this.getpostulados()
     setTimeout(() => {
       this.onChangeTable(this.config);
+      this.spinner.hide();
     }, 1500);
-    
+
+  }
+
+  getpostulados() {
+    this.service.getPostulados(this.VacanteId).subscribe(data => {
+      this.dataSource = data;
+    }, error => this.errorMessage = <any>error);
   }
 
   public rows: Array<any> = []
   public columns: Array<any> = [
-    {title: 'Nombre Candidato', className: 'text-info', name: 'nombre' , filtering: {filterString: '', placeholder: 'Nombre'} },
-    {title: 'Área Experiencia', className: 'text-info', name: 'areaExp', filtering: {filterString: '', placeholder: 'Experiencia'} },
-    {title: 'Área Interes', className: 'text-info' , name: 'areaInt' , filtering: {filterString: '', placeholder: 'Interes'} },
-    {title: 'Localidad', className: 'text-info' , name: 'localidad' , filtering: {filterString: '', placeholder: 'Localidad'} },
-    {title: 'Sueldo Aceptable', className: 'text-info text-center' , name: 'sueldoMinimo' , filtering: {filterString: '', placeholder: 'Sueldo aceptable'} },
-    {title: 'Fecha Nacimiento', className: 'text-info text-center' , name: 'edad' , filtering: {filterString: '', placeholder: 'Fecha Nacimiento'} },
-    {title: 'CURP' , className: 'text-success' , name: 'curp', filtering: {filterString: '', placeholder: 'CURP'} },
-    {title: 'RFC' , className: 'text-success', name: 'rfc' , filtering: {filterString: '', placeholder: 'RFC'} },
+    { title: 'Nombre Candidato', className: 'text-info', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
+    { title: 'Área Experiencia', className: 'text-info', name: 'areaExp', filtering: { filterString: '', placeholder: 'Experiencia' } },
+    { title: 'Área Interes', className: 'text-info', name: 'areaInt', filtering: { filterString: '', placeholder: 'Interes' } },
+    { title: 'Localidad', className: 'text-info', name: 'localidad', filtering: { filterString: '', placeholder: 'Localidad' } },
+    { title: 'Sueldo Aceptable', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo aceptable' } },
+    { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad', filtering: { filterString: '', placeholder: 'Fecha Nacimiento' } },
+    { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
+    { title: 'RFC', className: 'text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
   ]
 
   public config: any = {
     paging: true,
-    sorting: { colums: this.columns },
+    //sorting: { colums: this.columns },
     filtering: { filterString: '' },
-    className: [ 'table-striped mb-0 d-table-fixed' ]
+    className: ['table-striped mb-0 d-table-fixed']
   }
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
@@ -71,7 +79,7 @@ export class DtCandidatosPostComponent implements OnInit {
 
   public changeSort(data: any, config: any): any {
     if (!config.sorting) {
-        return data;
+      return data;
     }
 
     let columns = this.config.sorting.columns || [];
@@ -79,63 +87,63 @@ export class DtCandidatosPostComponent implements OnInit {
     let sort: string = void 0;
 
     for (let i = 0; i < columns.length; i++) {
-        if (columns[i].sort !== '' && columns[i].sort !== false) {
-            columnName = columns[i].name;
-            sort = columns[i].sort;
-        }
+      if (columns[i].sort !== '' && columns[i].sort !== false) {
+        columnName = columns[i].name;
+        sort = columns[i].sort;
+      }
     }
 
     if (!columnName) {
-        return data;
+      return data;
     }
 
     // simple sorting
     return data.sort((previous: any, current: any) => {
-        if (previous[columnName] > current[columnName]) {
-            return sort === 'desc' ? -1 : 1;
-        } else if (previous[columnName] < current[columnName]) {
-            // return sort === false ? -1 : 1;
-        }
-        return 0;
+      if (previous[columnName] > current[columnName]) {
+        return sort === 'desc' ? -1 : 1;
+      } else if (previous[columnName] < current[columnName]) {
+        return sort === 'asc' ? -1 : 1;
+      }
+      return 0;
     });
   }
 
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
     this.columns.forEach((column: any) => {
-        if (column.filtering) {
-            this.showFilterRow = true;
-            filteredData = filteredData.filter((item: any) => {
-              if(item[column.name] != null)
-                return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
-            });
-        }
+      if (column.filtering) {
+        this.showFilterRow = true;
+        filteredData = filteredData.filter((item: any) => {
+          if (item[column.name] != null)
+            return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+        });
+      }
     });
 
     if (!config.filtering) {
-        return filteredData;
+      return filteredData;
     }
 
     if (config.filtering.columnName) {
-        return filteredData.filter((item: any) =>
-            item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
+      return filteredData.filter((item: any) =>
+        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
     }
 
     let tempArray: Array<any> = [];
     filteredData.forEach((item: any) => {
-        let flag = false;
-        this.columns.forEach((column: any) => {
-          if(item[column.name] == null){
+      let flag = false;
+      this.columns.forEach((column: any) => {
+        if (item[column.name] == null) {
+          flag = true;
+        } else {
+          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
             flag = true;
-          }else{
-            if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-              flag = true;
-            }
-          }            
-        });
-        if (flag) {
-            tempArray.push(item);
+          }
         }
+      });
+      if (flag) {
+        tempArray.push(item);
+      }
     });
     filteredData = tempArray;
 
@@ -144,22 +152,18 @@ export class DtCandidatosPostComponent implements OnInit {
 
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
     if (config.filtering) {
-        (<any>Object).assign(this.config.filtering, config.filtering);
+      (<any>Object).assign(this.config.filtering, config.filtering);
     }
 
     if (config.sorting) {
-        (<any>Object).assign(this.config.sorting, config.sorting);
+      (<any>Object).assign(this.config.sorting, config.sorting);
     }
-    this.service.getPostulados(this.VacanteId).subscribe(data => {
-      this.dataSource = data;
-      this.registros = this.dataSource.length;
-      this.rows = this.dataSource;
-      let filteredData = this.changeFilter(this.dataSource, this.config);
-      let sortedData = this.changeSort(filteredData, this.config);
-      this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
-      this.length = sortedData.length;
-      this.spinner.hide();
-    }, error => this.errorMessage = <any>error );
+    this.registros = this.dataSource.length;
+    this.rows = this.dataSource;
+    let filteredData = this.changeFilter(this.dataSource, this.config);
+    let sortedData = this.changeSort(filteredData, this.config);
+    this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
+    this.length = sortedData.length;
   }
 
   public onCellClick(data: any): any {
@@ -167,8 +171,8 @@ export class DtCandidatosPostComponent implements OnInit {
     this.element = data;
     /* add an class 'active' on click */
     $('#resultDataTable').on('click', 'tr', function (event: any) {
-        //noinspection TypeScriptUnresolvedFunction
-        $(this).addClass('selected').siblings().removeClass('selected');
+      //noinspection TypeScriptUnresolvedFunction
+      $(this).addClass('selected').siblings().removeClass('selected');
     });
   }
 
@@ -177,24 +181,24 @@ export class DtCandidatosPostComponent implements OnInit {
   * */
 
 
-   /*
-  * Creacion de mensajes
-  * */
- toaster: any;
- toasterConfig: any;
- toasterconfig: ToasterConfig = new ToasterConfig({
-   positionClass: 'toast-bottom-right',
-   limit: 7, tapToDismiss: false,
-   showCloseButton: true,
-   mouseoverTimerStop: true,
- });
- popToast(type, title, body) {
-   var toast: Toast = {
-     type: type,
-     title: title,
-     timeout: 5000,
-     body: body
-   }
-   this.toasterService.pop(toast);
- }
+  /*
+ * Creacion de mensajes
+ * */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7, tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
+  popToast(type, title, body) {
+    var toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 5000,
+      body: body
+    }
+    this.toasterService.pop(toast);
+  }
 }

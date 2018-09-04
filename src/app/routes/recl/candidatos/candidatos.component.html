@@ -13,5 +13,8 @@
 <app-busqueda-candidatos (filtro)="Filtrado($event)"></app-busqueda-candidatos>
 <br>
 <!-- Componente datatable vacantes -->
+
 <app-dt-candidatos *ngIf="filtradocandidatos" [Filtrado]='filtradocandidatos'></app-dt-candidatos>
+
+<app-info-candidato></app-info-candidato>
 
