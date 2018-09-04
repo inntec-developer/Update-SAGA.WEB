@@ -64,7 +64,6 @@ export class MenuService {
     }
     setEstructuraMenu() //creo el menu dependiendo de los privilegios de usuario
     {
-        debugger;
         var privilegios = JSON.parse(localStorage.getItem('privilegios'));
 
         if(this.menuItems.length > 2)
