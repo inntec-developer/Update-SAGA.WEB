@@ -36,6 +36,7 @@ export class AdminServiceService {
   private UrlGetRoles = ApiConection.ServiceUrl+ApiConection.GetRoles;
   private UrlUpdateUsuario = ApiConection.ServiceUrl+ApiConection.updateUsuario;
   private UrlUpdateGrupo = ApiConection.ServiceUrl+ApiConection.updateGrupo;
+  private UrlUpdateActivo = ApiConection.ServiceUrl+ApiConection.updateActivo;
   private UrlUpdateRoles = ApiConection.ServiceUrl+ApiConection.updateRoles;
   private UrlDeleteGrupo = ApiConection.ServiceUrl+ApiConection.deleteGrupo;
   private UrlDeleteRoles = ApiConection.ServiceUrl+ApiConection.deleteRoles;
@@ -197,6 +198,20 @@ export class AdminServiceService {
      return this.http.get(this.UrlGetGrupos)
          .map(result => result.json())
          .catch(this.handleError);
+  }
+
+  UpdateActivo(cell): Observable<any>
+  {
+    let params = new HttpParams().set('Id', cell.id);
+
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+
+    return this.http.post(this.UrlUpdateActivo, JSON.stringify(cell), options)
+    .map(result => result.json())
+    .catch(this.handleError);
+
+
   }
 
   getGruposRoles(): Observable<any>

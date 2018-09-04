@@ -70,6 +70,8 @@ onClosed(): void {
               this.alert = this.alerts[0]; 
               this.verMsj = true;
               this.grid.privilegios = [];
+              this.nomRol = "";
+              
               this.GetRoles();              
             }
             else

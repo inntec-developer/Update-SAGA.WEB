@@ -117,6 +117,25 @@ onClosed(): void {
     this.Grupos = [...this.Grupos];
   }
 
+  UpdateActivo(cell, $event)
+  {
+    this.service.UpdateActivo(cell).subscribe(data =>{
+      if(data == 201)
+      {
+        this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
+        this.alert = this.alerts[0];
+        this.verMsj = true;
+      }
+      else
+      {
+        this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
+        this.alert = this.alerts[1];
+        this.verMsj = true;
+      }
+    })
+
+  }
+
   UpdateTipo(event, cell, rowIndex) 
   {
     console.log(event.target.value)
@@ -150,7 +169,6 @@ onClosed(): void {
           item.selected = false;
         })
 
-        console.log(this.Grupos)
         this.filteredData = this.Grupos;
       });
   }
@@ -178,7 +196,6 @@ onClosed(): void {
       Foto: "utilerias/img/user/WorkTeam.jpg"
     }
 
-    console.log(grupo)
     this.service.addGrupos(grupo)
     .subscribe( data => {
       console.log(data)

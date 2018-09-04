@@ -93,7 +93,7 @@
                               {{g.usuarioAlta}}
                            </td>
                            <td class="text-center">
-                             <mat-checkbox class="checkbox" (change)="updateValue($event, 'activo', rowIndex, g)" [checked]="g.activo"></mat-checkbox>
+                             <mat-checkbox class="checkbox" (change)="updateValue($event, 'activo', rowIndex, g); UpdateActivo(g, $event)" [checked]="g.activo"></mat-checkbox>
                            </td>
                            <td class="text-center">
                               <btn-check id='update' chkPrivilegiosButtons [xs]="true" (click)="updateGrupo($event, rowIndex)" matTooltip="Guardar Cambios"></btn-check>

@@ -1,3 +1,5 @@
+import { ActivatedRoute } from '@angular/router';
+import { forEach } from '@angular/router/src/utils/collection';
 import { ApiConection } from '../../../service/api-conection.service';
 import { Component, OnInit } from '@angular/core';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
@@ -305,6 +307,10 @@ onClosed(): void {
       .subscribe(
         e => {
           this.listGrupos = e;
+          var aux = this.listGrupos.filter(x => {
+            return x.activo
+          })
+          this.listGrupos = aux;
         })
   }
 
