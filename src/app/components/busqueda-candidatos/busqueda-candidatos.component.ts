@@ -288,13 +288,14 @@ export class BusquedaCandidatosComponent implements OnInit {
       id.idioma.toLowerCase().indexOf(idiom.toLowerCase()) === 0);
   }
   
-  BusacarMisCandidatos(){
-    this.loading = true;
-    this.service.getMisCandidatos(localStorage.getItem('id')).subscribe(data =>{
-      this.Candidatos = data;
-      this.loading = false;
-    });
-  }
+  // BuscarMisCandidatos(){
+  //   this.loading = true;
+  //   this.service.getMisCandidatos(localStorage.getItem('id')).subscribe(data =>{
+  //     this.Candidatos = data;
+  //     console.log(data);
+  //     this.loading = false;
+  //   });
+  // }
 
   Buscar() {
     this.loading = true;

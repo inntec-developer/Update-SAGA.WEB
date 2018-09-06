@@ -42,6 +42,7 @@ import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../core/translator/config-paginator/config-paginator.component';
 
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { AlertModule } from 'ngx-bootstrap';
 import { AsignarRequisicionComponent } from './asignar-requisicion/asignar-requisicion.component';
 import { AsignarRequisicionLiderComponent } from './asignar-requisicion-lider/asignar-requisicion-lider.component';
 import { BusquedaCandidatosComponent } from './busqueda-candidatos/busqueda-candidatos.component';
@@ -73,12 +74,12 @@ import { ComentarioVacanteComponent } from './comentario-vacante/comentario-vaca
 import { CommonModule } from '@angular/common';
 import { DetailVacantesComponent } from './detail-vacantes/detail-vacantes.component';
 import { DtBusquedaCandidatosComponent } from './dt-busqueda-candidatos/dt-busqueda-candidatos.component';
+import { DtMisCandidatosComponent } from './dt-mis-candidatos/dt-mis-candidatos.component';
 import { InfoCandidatoComponent } from './info-candidato/info-candidato.component';
 import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import { NgxSpinnerModule } from '../../../node_modules/ngx-spinner';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { DtMisCandidatosComponent } from './dt-mis-candidatos/dt-mis-candidatos.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -131,7 +132,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     PopoverModule.forRoot(),
     TooltipModule.forRoot(),
     AccordionModule.forRoot(),
-    ToasterModule
+    ToasterModule,
+    AlertModule
     
   ],
   declarations: [
@@ -198,7 +200,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ButtonEmailComponent,
     AsignarRequisicionLiderComponent,
     InfoCandidatoComponent,
-    DtBusquedaCandidatosComponent
+    DtBusquedaCandidatosComponent,
+    DtMisCandidatosComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

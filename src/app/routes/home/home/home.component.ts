@@ -10,14 +10,13 @@ import { debug } from 'util';
     providers: []
 })
 export class HomeComponent implements OnInit {
+    usuario: string;
     constructor(
-    ) {
-     }
-
-     
-
+    ) { }
     ngOnInit() {
-        
+    }
+    getIdCandidato(event){
+        console.log(event);
     }
 }
     

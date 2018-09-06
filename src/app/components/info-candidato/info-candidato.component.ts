@@ -4,9 +4,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { InfoCandidatoService } from '../../service/SeguimientoVacante/info-candidato.service';
 
 declare var $: any;
-declare module String {
-  export var format: any;
-}
+
 @Component({
   selector: 'app-info-candidato',
   templateUrl: './info-candidato.component.html',
