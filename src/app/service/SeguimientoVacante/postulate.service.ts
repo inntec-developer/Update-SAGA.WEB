@@ -27,7 +27,6 @@ export class PostulateService {
   }
 
   GetProceso(VacanteId, ReclutadorId) : Observable<any>{
-    debugger;
     let params = new HttpParams().set('VacanteId', VacanteId).set('ReclutadorId', ReclutadorId);
     return this._HttpClient.get(this.UrlGetProceso, { params: params })
   }
