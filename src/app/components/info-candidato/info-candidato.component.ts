@@ -15,7 +15,7 @@ declare module String {
 })
 export class InfoCandidatoComponent implements OnInit {
   candidato: any;
-  @Input('Id') CandidatoId: string;
+  @Input('IdCanidato') CandidatoId: string;
   public dataSource_v: Array<any> = [];
   public dataSource_p: Array<any> = [];
 
@@ -65,21 +65,27 @@ export class InfoCandidatoComponent implements OnInit {
     //Add '${implements OnChanges}' to the class.
     if (changes.CandidatoId && !changes.CandidatoId.isFirstChange()) {
       this.ngOnInit();
+      this.getPostulaciones();
     }
 
   }
 
   ngOnInit() {
-    this.CandidatoId = '4F65DAC1-C6A0-E811-80E8-9E274155325E'
+    this.vacante = {};
+    this.procesoCandidatoId = '';
+    this.Status = '';
+    this.requisicionId = '';
+    this.reclutador = '';
+    // this.CandidatoId = '4F65DAC1-C6A0-E811-80E8-9E274155325E'
     this._serviceCandidato.getInfoCandidato(this.CandidatoId).subscribe(data => {
       this.candidato = {
         id: data.id,
         picture: localStorage.getItem('ConexionBolsa') + data.foto,
         nombre: data.nombre,
-        aboutMe: data.aboutMe[0]['acercaDeMi'],
+        aboutMe: data.aboutMe.length != 0 ? data.aboutMe[0]['acercaDeMi'] : null,
         edad: data.edad,
         genero: data.genero,
-        correo: data.email.email,
+        correo: data.email ? data.email.email : null ,
         telefonos: data.telefono,
         direccion: data.direccion,
         redSocial: data.redSocial,
@@ -331,12 +337,12 @@ export class InfoCandidatoComponent implements OnInit {
             case 200: {
               this.ngOnInit();
               this.ngAfterViewInit();
-              var msg = 'El candidato se aparto para la vacante: ' + this.vacante.folio + ' ' + this.vacante.vBtra + '.';
+              var msg = 'El candidato se aparto correctamente.';
               this.popToast('success', 'Apartado', msg);
               break;
             }
             case 304: {
-              msg = 'El candidato ya esta apartado: ' + this.vacante.folio + ' ' + this.vacante.vBtra + '.';
+              msg = 'El candidato ya esta apartado o en proceso.';
               this.popToast('info', 'Apartado', msg); ''
               break;
             }
@@ -368,6 +374,8 @@ export class InfoCandidatoComponent implements OnInit {
             case 200: {
               this.ngOnInit();
               this.ngAfterViewInit();
+              var msg = 'El candidato se libero corectamente.';
+              this.popToast('success', 'Liberado', msg);
               setTimeout(() => {
                 this.vacante = {};
                 this.procesoCandidatoId = '';
@@ -375,8 +383,6 @@ export class InfoCandidatoComponent implements OnInit {
                 this.requisicionId = '';
                 this.reclutador = '';
               }, 800);
-              var msg = 'El candidato se libero corectamente de la vacante: ' + this.vacante.folio + ' ' + this.vacante.vBtra + '.';
-              this.popToast('success', 'Liberado', msg);
               break;
             }
             case 404: {

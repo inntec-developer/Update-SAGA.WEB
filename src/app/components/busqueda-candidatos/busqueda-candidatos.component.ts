@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 
-import { Candidatos } from '../../routes/recl/candidatos/dt-candidatos/dt-candidatos.component';
 import { CandidatosService } from '../../service/Candidatos/candidatos.service';
 import { Filtros } from '../../models/recl/candidatos';
 import { Observable } from 'rxjs';
@@ -291,7 +290,7 @@ export class BusquedaCandidatosComponent implements OnInit {
   
   BusacarMisCandidatos(){
     this.loading = true;
-    this.service.getMisCandidatos(localStorage.getItem('nombre')).subscribe(data =>{
+    this.service.getMisCandidatos(localStorage.getItem('id')).subscribe(data =>{
       this.Candidatos = data;
       this.filtro.emit(this.Candidatos);
       this.loading = false;

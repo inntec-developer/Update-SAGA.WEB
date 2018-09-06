@@ -1,10 +1,10 @@
-import { Component, Output, Input, EventEmitter, OnInit } from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {DomSanitizer} from '@angular/platform-browser';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
+import {DomSanitizer} from '@angular/platform-browser';
+import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
-import {startWith} from 'rxjs/operators/startWith';
 import {map} from 'rxjs/operators/map';
+import {startWith} from 'rxjs/operators/startWith';
 
 @Component({
   selector: 'app-candidatos',
@@ -20,6 +20,5 @@ export class CandidatosComponent implements OnInit {
   }
 
   ngOnInit(){
-
   }
 }
