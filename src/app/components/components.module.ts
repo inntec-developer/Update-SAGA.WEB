@@ -36,8 +36,8 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
+import { ModalModule, PopoverModule, TooltipModule } from 'ngx-bootstrap';
 import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
-import { PopoverModule, TooltipModule } from 'ngx-bootstrap';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../core/translator/config-paginator/config-paginator.component';
 
@@ -133,7 +133,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     TooltipModule.forRoot(),
     AccordionModule.forRoot(),
     ToasterModule,
-    AlertModule
+    AlertModule,
+    ModalModule.forRoot()
     
   ],
   declarations: [

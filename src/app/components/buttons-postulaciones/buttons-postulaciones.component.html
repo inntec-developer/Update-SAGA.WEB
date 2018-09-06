@@ -6,55 +6,77 @@
           <span>
             <ul>
              <li><a>
-              <button class="mb-1 btn btn-xs btn-outline-primary"  type="button" (click)="SetProceso(30)"> 
+              <button class="mb-1 btn btn-xs btn-outline-primary"  type="button" (click)="SetProceso(30)" matTooltip="Liberado"> 
                 <em class="fa fa-thumbs-o-down"></em>
               </button>
             </a></li>
-              <li><a><em class="vl"></em></a></li>
-              <li><a>
-              <button class="mb-1 btn btn-xs btn-outline-warning"  type="button">
+            <li><a>
+              <button class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="VerCandidato()" matTooltip="Ver Candidato">
                   <em class="fa fa-eye"></em>
                 </button>
               </a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
+              <li><a><em class="vl"></em></a></li>
+          
+              <!-- <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
                 <em class="fa fa-phone"></em>
               </button></a></li>
               <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button">
                 <em class="fa fa-phone"></em>
-              </button></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button">
+              </button></a></li> -->
+              <li><a>
+                <button class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="SetProceso(11)" matTooltip="CV Visto">
+                    <em class="fa fa-file-text-o"></em>
+                  </button>
+                </a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="SetProceso(17)" matTooltip="Cita Reclutamiento">
                 <em class="fa fa-address-book"></em>
               </button></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
+              <li><a><button class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="SetProceso(18)" matTooltip="Entrevista Reclutamiento" >
                 <em class="fa fa-microphone"></em>
               </button></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
-                <em class="fa fa-search"></em>
-              </button></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-warning"  type="button">
-                <em class="fa fa-users"></em>
-              </button></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button">
-                <em class="fa fa-truck"></em>
-              </button></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-warning"  type="button">
+              <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button" (click)="SetProceso(24)" matTooltip="Finalista Reclutamiento">
                 <em class="fa fa-user-circle-o"></em>
               </button></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
-                <em class="fa fa-user-o"></em>
+              <li><a><em class="vl"></em></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button" (click)="SetProceso(16)" matTooltip="Cita Candidato">
+                <em class="fa fa-address-book"></em>
+              </button></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button" (click)="SetProceso(25)" matTooltip="Entrevista Cliente" >
+                <em class="fa fa-microphone"></em>
+              </button></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button" (click)="SetProceso(26)" matTooltip="Finalista Cliente">
+                <em class="fa fa-user-circle-o"></em>
               </button></a></li>
               <li><a><em class="vl"></em></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button">
-                <em class="fa fa-unlock"></em>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-secondary"  type="button" (click)="SetProceso(19)" matTooltip="Evaluación Técnica">
+                <em class="fa fa-search"></em>
+              </button></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-secondary"  type="button" (click)="SetProceso(20)" matTooltip="Evaluación Psicométrica">
+                <em class="fa fa-users"></em>
+              </button></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-secondary"  type="button" (click)="SetProceso(21)" matTooltip="Evaluación Médica">
+                <em class="fa fa-user-md"></em>
               </button></a></li>
               <li><a><em class="vl"></em></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
+              <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button" (click)="SetProceso(27)" matTooltip="Contratado">
+                <em class="fa fa-user-plus"></em>
+              </button></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(28)" matTooltip="Cancelada">
+                <em class="fa fa-user-times"></em>
+              </button></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="SetProceso(23)" matTooltip="Transferir">
                 <em class="fa fa-exchange"></em>
               </button></a></li>
-              <li><a><em class="vl"></em></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button">
+              <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(29)" matTooltip="Abandonó Proceso">
                 <em class="fa fa-flag"></em>
               </button></a></li>
+            
+              <!-- <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button">
+                <em class="fa fa-unlock"></em>
+              </button></a></li>
+ -->
+
+            
             </ul>
           </span>
           </div>
@@ -86,7 +108,7 @@
                 class="form-control">
             </td>
           </tr>
-          <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of dataSource" [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
+          <tr (click)="onCellClick(row)" *ngFor="let row of dataSource" [class.selected]="row.selected">
             <td class="text-center">
               {{row.nombre}}
             </td>
@@ -97,6 +119,7 @@
             <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
             <td class="text-center"> {{row.curp}}</td>
             <td class="text-center"> {{row.rfc}}</td>
+            <td class="text-center"><span class="badge badge-info"> {{row.estatus}}</span></td>
           </tr>
         </tbody>
       </table>
@@ -109,3 +132,28 @@
   </div>
   <pre *ngIf="config.paging" class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
 </div>
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+
+<!-- Modal -->
+<div *ngIf="isModalShown" [config]="{ show: true, ignoreBackdropClick: true }" (onHidden)="onHidden()" bsModal #MessageModal="bs-modal"
+     class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+     <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+<div class="modal-header">
+  <h4 class="modal-title float-left">Información de Candidato</h4>
+  <button type="button" class="close float-right" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+<app-info-candidato [IdCandidato] = 'candidatoId'></app-info-candidato>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-success" (click)="closeModal()">Cerrar</button>
+</div>
+</div>
+</div>
+</div>
+
+<!--spinner-->
+<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>

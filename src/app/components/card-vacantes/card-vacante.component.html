@@ -8,7 +8,10 @@
 
 <div class="panel panel-default">
 
-      <div class="panel-heading">TELEFONOS</div>
+      <div class="panel-heading">
+            <em class="fa fa-phone"></em>
+            <span>TELEFONOS</span>
+    </div>
       <span>
           <ng-template #popTemplateTelefonos>
               <h3 class="popover-header text-center">Ext. - Telefono</h3>
@@ -30,7 +33,10 @@
 
     <div class="panel panel-default">
         <br/>
-        <div class="panel-heading">DIRECCIONES</div>
+        <div class="panel-heading">
+            <em class="fa fa-map-marker"></em>
+            <span>DIRECCIONES</span>
+        </div>
         <span>
             <ul *ngFor="let dir of Datos[0]['direccion']">
               <li><a matTooltip="{{dir.tipo}}">{{dir.calle}} {{dir.noExt}} Col. {{dir.colonia}} {{dir.municipio}} {{dir.estado}} {{dir.pais}} {{dir.cp}}</a></li>
@@ -46,7 +52,10 @@
             <h2>{{Datos[0]['nombreComercial']}}</h2>
             <p>{{Datos[0]['razonSocial']}}</p>
             <div class="panel panel-default">
-              <div class="panel-heading">CONTACTOS</div>
+              <div class="panel-heading">
+                <em class="fa fa-address-card-o"></em>  
+                <span>CONTACTOS</span>
+            </div>
               <span>
                 <ul *ngFor="let contacto of Datos[0]['contactos']">
                     <ng-template #popTemplate>
@@ -72,7 +81,10 @@
    
             <div class="col-md-4">
       <div class="panel panel-default">
-          <div class="panel-heading">ASIGNADO</div>
+          <div class="panel-heading">
+              <em class="fa fa-user-plus"></em>
+              <span>ASIGNADO</span>
+        </div>
           <span>
               <ul *ngFor="let asig of Datos[0]['asignados']">
                 <li><a>{{asig.nombre}} {{asig.apellidoParterno}} {{asig.apellidoMaterno}}</a></li>

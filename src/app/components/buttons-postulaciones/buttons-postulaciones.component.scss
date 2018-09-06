@@ -46,4 +46,18 @@ tr.selected td {
     background-color:  #5d9cec !important;
     color: white;
   }
-  
+
+.btn-outline-secondary
+{
+  color: #6c757d;;
+  border-color: #6c757d !important;
+  background-color: transparent;
+}
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus,
+.btn-outline-secondary:active,
+.btn-outline-secondary.active {
+  color: #ffffff;
+  background-color: #6c757d !important;
+
+}

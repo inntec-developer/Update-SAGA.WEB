@@ -1,5 +1,8 @@
+import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../service/SeguimientoVacante/postulate.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+import { ModalDirective } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-buttons-postulaciones',
@@ -9,6 +12,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ButtonsPostulacionesComponent implements OnInit {
 
   @Input() RequisicionId;
+  @ViewChild('MessageModal') ShownModal: ModalDirective;
   public dataSource: Array<any> = [];
   // Varaibles del paginador
   public page: number = 1;
@@ -23,17 +27,34 @@ export class ButtonsPostulacionesComponent implements OnInit {
   element: any = {};
   postulados: any;
   selectedList: any = [];
-  constructor(private service: PostulateService) { }
+  candidatoId;
+  isModalShown: boolean = false;
+
+  constructor(private service: PostulateService, private toasterService: ToasterService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.getpostulados();
   }
 
   getpostulados() {
-    this.service.GetProceso(this.RequisicionId, localStorage.getItem('id')).subscribe(data => {
-      console.log(this.RequisicionId)
-      this.dataSource = data;
-      console.log(this.dataSource)
+    this.service.GetProceso(this.RequisicionId, localStorage.getItem('id')).subscribe(data => { 
+      this.dataSource = [];
+      data.forEach(element => {
+        var perfil = {
+          nombre: element.perfil[0]['nombre'],
+          areaExp: element.perfil[0]['areaExp'],
+          areaInt: element.perfil[0]['areaInt'],
+          curp: element.perfil[0]['curp'],
+          rfc: element.perfil[0]['rfc'],
+          edad: element.perfil[0]['edad'],
+          localidad: element.perfil[0]['localidad'],
+          sueldoMinimo: element.perfil[0]['sueldoMinimo'],
+          estatus: element.estatus,
+          candidatoId: element.candidatoId
+        }
+        this.dataSource.push(perfil)
+        
+      })
     }, error => this.errorMessage = <any>error);
   }
 
@@ -46,12 +67,36 @@ export class ButtonsPostulacionesComponent implements OnInit {
     this.service.SetProceso(this.selectedList).subscribe(data => {
       if(data == 201)
       {
-        console.log("entro");
+        this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+        this.selectedList =[];
+        this.getpostulados();
       }
     })
 
   }
 
+  VerCandidato()
+  {
+    var idx = this.selectedList.length - 1;
+    
+    this.candidatoId = this.selectedList[idx]['candidatoId'];
+    this.isModalShown = true;
+
+    this.spinner.show();
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+
+  }, 1000);
+
+  }
+
+  closeModal()
+  {
+    this.ShownModal.hide();
+    this.isModalShown = false;
+  }
+    
   public rows: Array<any> = []
   public columns: Array<any> = [
     { title: 'Nombre Candidato', className: 'text-info', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
@@ -62,6 +107,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
     { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad', filtering: { filterString: '', placeholder: 'Fecha Nacimiento' } },
     { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
     { title: 'RFC', className: 'text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
+    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } }
   ]
 
   public config: any = {
@@ -177,6 +223,28 @@ export class ButtonsPostulacionesComponent implements OnInit {
     //   //noinspection TypeScriptUnresolvedFunction
     //   $(this).addClass('selected').siblings().removeClass('selected');
     // });
+  }
+
+  /**
+   * configuracion para mensajes de acciones.
+   */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
+  popToast(type, title, body) {
+    var toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 4000,
+      body: body
+    }
+    this.toasterService.pop(toast);
   }
 
 }
