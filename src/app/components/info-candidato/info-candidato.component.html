@@ -13,9 +13,12 @@
         <img class="img-fluid img-thumbnail rounded-circle thumb96" [src]="candidato.picture" alt="Contact" />
         <h4>{{candidato.nombre}}</h4>
         <div *ngIf="!candidato.estatus || reclutador == usuario">
-          <mat-divider></mat-divider>
-          <span class="text-muted">{{candidato.aboutMe}}</span>
-          <mat-divider></mat-divider>
+          <div *ngIf="candidato.aboutMe">
+            <mat-divider></mat-divider>
+            <span class="text-muted">{{candidato.aboutMe}}</span>
+            <mat-divider></mat-divider>
+          </div>
+
           <div>
             <strong>Edad: </strong>
             <label class="text-success">{{candidato.edad}} años</label>
@@ -30,7 +33,10 @@
           </div>
           <div>
             <strong>Correo: </strong>
-            <label class="text-success">{{candidato.correo}}</label>
+            <label class="text-success" *ngIf="candidato.correo else NotEmail">{{candidato.correo}}</label>
+            <ng-template #NotEmail>
+              <label class="text-success">Sin Registro</label>
+            </ng-template>
           </div>
           <div *ngFor="let x of candidato.telefonos">
             <strong>Tel&eacute;fono {{x.tipoTelefono.tipo}}: </strong>
@@ -46,7 +52,7 @@
           </div>
           <div class="col-md-10 text-right">
             <h5 *ngIf="candidato.estatus" class="m-0 text-primary">Apartado por: {{reclutador}}</h5>
-            <h5 *ngIf="!candidato.estatus" class="text-success">Candidato disponible</h5>
+            <h5 *ngIf="!candidato.estatus" class="text-success">Candidato Disponible</h5>
           </div>
         </div>
       </div>
@@ -69,7 +75,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let row of rows_p" >
+                <tr *ngFor="let row of rows_p">
                   <td class="text-center"> {{row.folio}} </td>
                   <td class="text-center"> {{row.vBtra}}</td>
                   <td class="text-center">
@@ -94,7 +100,9 @@
           <accordion [closeOthers]="oneAtATime">
             <accordion-group [isOpen]="isFirstOpen">
               <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
-                <div class="pull-left float-left">Acerca de m&iacute;</div>
+                <div class="pull-left float-left text-warning">
+                  <h5>Acerca de m&iacute;</h5>
+                </div>
                 <span class="float-right pull-right">
                   <em class="fa fa-user-circle-o"></em>
                 </span>
@@ -128,11 +136,19 @@
                     <mat-divider></mat-divider>
                     <div>
                       <strong class="text-primary">Tipo discapacidad: </strong>
-                      <label class="text-muted"> {{candidato.info.tipoDiscapacidad.tipoDiscapacidad}}</label>
+                      <label class="text-muted" *ngIf="candidato.info.tipoDiscapacidad else NotDiscapacidad">
+                        {{candidato.info.tipoDiscapacidad.tipoDiscapacidad}}</label>
+                      <ng-template #NotDiscapacidad>
+                        <label class="text-muted">Sin Registro</label>
+                      </ng-template>
                     </div>
                     <div>
                       <strong class="text-primary">Descipci&oacute;n discapacidad: </strong>
-                      <label class="text-muted"> {{candidato.info.otraDiscapacidad}}</label>
+                      <label class="text-muted" *ngIf="candidato.info.otraDisacapacidad else NotOtraDiscapacidad">
+                        {{candidato.info.otraDiscapacidad}}</label>
+                      <ng-template #NotOtraDiscapacidad>
+                        <label class="text-muted">Sin Registro</label>
+                      </ng-template>
                     </div>
                   </div>
                   <div id="otraInformacion">
@@ -150,7 +166,8 @@
                     </div>
                     <div *ngIf="candidato.info.tieneLicenciaConducir">
                       <strong class="text-primary">Tipo de licencia: </strong>
-                      <label class="text-muted"> {{candidato.info.tipoLicencia.tipoLicencia}}</label>
+                      <label class="text-muted"> {{candidato.info.tipoLicencia.tipoLicencia}} -
+                        {{candidato.info.tipoLicencia.descripcion}}</label>
                     </div>
                     <div *ngIf="candidato.info.tieneVehiculoPropio">
                       <strong class="text-primary">Vehiculo propio: </strong>
@@ -199,7 +216,7 @@
                     </div>
                   </div>
                   <br>
-                  <div id="acerdademi">
+                  <div id="acerdademi" *ngIf="candidato.about">
                     <h5 class="text-muted "> Acerca de mi
                       <span class="pull-right">
                         <em class="fa fa-user"></em>
@@ -232,7 +249,7 @@
                     </div>
                     <div>
                       <strong class="text-primary">Area experiencia: </strong>
-                      <label *ngIf="candidato.about.salarioDeseado else NotAreaE" class="text-muted">
+                      <label *ngIf="candidato.about.areaExperiencia else NotAreaE" class="text-muted">
                         {{candidato.about.areaExperiencia.areaExperiencia}}</label>
                       <ng-template #NotAreaE>
                         <label class="text-muted"> Sin Registro</label>
@@ -240,7 +257,7 @@
                     </div>
                     <div>
                       <strong class="text-primary">Intereses: </strong>
-                      <label *ngIf="candidato.about.salarioDeseado else NotAreaI" class="text-muted">
+                      <label *ngIf="candidato.about.areaInteres else NotAreaI" class="text-muted">
                         {{candidato.about.areaInteres.areaInteres}}</label>
                       <ng-template #NotAreaI>
                         <label class="text-muted"> Sin Registro</label>
@@ -248,7 +265,7 @@
                     </div>
                     <div>
                       <strong class="text-primary">Perfil: </strong>
-                      <label *ngIf="candidato.about.salarioDeseado else NotPerfilExp" class="text-muted">
+                      <label *ngIf="candidato.about.perfilExperiencia else NotPerfilExp" class="text-muted">
                         {{candidato.about.perfilExperiencia.perfilExperiencia}}</label>
                       <ng-template #NotPerfilExp>
                         <label class="text-muted"> Sin Registro</label>
@@ -256,7 +273,7 @@
                     </div>
                     <div>
                       <strong class="text-primary">Sitio Web: </strong>
-                      <label *ngIf="candidato.about.salarioDeseado else NotSitioWeb" class="text-muted">
+                      <label *ngIf="candidato.about.sitioWeb else NotSitioWeb" class="text-muted">
                         {{candidato.about.sitioWeb}}</label>
                       <ng-template #NotSitioWeb>
                         <label class="text-muted"> Sin Registro</label>
@@ -266,7 +283,7 @@
                       <strong class="text-primary">
                         Redes Sociales:
                       </strong>
-                      <ng-container *ngIf="candidato.redSocial else NotRedSocial">
+                      <ng-container *ngIf="candidato.redSocial.length > 0 else NotRedSocial">
                         <div *ngFor="let x of candidato.redSocial">
                           <a href="{{x}}" class="text-muted">{{x}}</a>
                         </div>
@@ -281,7 +298,9 @@
             </accordion-group>
             <accordion-group>
               <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
-                <div class="pull-left float-left">Direcci&oacute;n</div>
+                <div class="pull-left float-left text-warning">
+                  <h5>Direcci&oacute;n</h5>
+                </div>
                 <span class="float-right pull-right">
                   <em class="fa fa-home"></em>
                 </span>
@@ -298,25 +317,38 @@
                   <div>
                     <strong class="text-primary">Localidad: </strong>
                     <label class="text-muted">
-                      {{candidato.direccion.municipio.municipio}}, {{candidato.direccion.estado.estado}},
-                      {{candidato.direccion.pais.pais}}
+                      {{candidato.direccion?.municipio?.municipio}}, {{candidato.direccion?.estado?.estado}},
+                      {{candidato.direccion?.pais?.pais}}
                     </label>
                   </div>
                   <div>
                     <strong class="text-primary">Colonia: </strong>
-                    <label class="text-muted">{{candidato.direccion.colonia.tipoColonia}},
+                    <label class="text-muted" *ngIf="candidato.direccion.colonia else NotColonia">{{candidato.direccion.colonia.tipoColonia}},
                       {{candidato.direccion.colonia.colonia}}</label>
+                    <ng-template #NotColonia>
+                      <label class="text-muted"> Sin Registro</label>
+                    </ng-template>
                   </div>
                 </div>
                 <div class="col-md-6 col-sm-12">
                   <div>
                     <strong class="text-primary">Calle: </strong>
-                    <label class="text-muted">{{candidato.direccion.calle}}</label>
+                    <label class="text-muted" *ngIf="candidato.direccion.calle else NotCalle">{{candidato.direccion.calle}}</label>
+                    <ng-template>
+                      <label class="text-muted">Sin Registro</label>
+                    </ng-template>
                   </div>
                   <div>
                     <strong class="text-primary">Num. Ext / Int: </strong>
-                    <label class="text-muted">{{candidato.direccion.numeroExterior}}
+                    <label class="text-muted" *ngIf="candidato.direccion.numeroExterior else NotExterior">{{candidato.direccion.numeroExterior}} - </label>
+                    <ng-template #NotExterior>
+                      <label class="text-muted"> S/N</label>
+                    </ng-template>
+                    <label class="text-muted" *ngIf="candidato.direccion.numeroInterior else NotInterior">
                       {{candidato.direccion.numeroInterior}}</label>
+                    <ng-template #NotInterior>
+                      <label class="text-muted"> S/N</label>
+                    </ng-template>
                   </div>
                   <div>
                     <strong class="text-primary">Codigo Postal: </strong>
@@ -327,7 +359,9 @@
             </accordion-group>
             <accordion-group *ngIf="candidato.experiencias">
               <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
-                <div class="pull-left float-left">Experiencia Profesional</div>
+                <div class="pull-left float-left text-warning">
+                  <h5>Experiencia Profesional ({{candidato.experiencias.length}})</h5>
+                </div>
                 <span class="float-right pull-right">
                   <em class="fa fa-briefcase"></em>
                 </span>
@@ -373,7 +407,9 @@
             </accordion-group>
             <accordion-group *ngIf="candidato.formaciones">
               <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
-                <div class="pull-left float-left">Formaci&oacute;n</div>
+                <div class="pull-left float-left text-warning">
+                  <h5>Formaci&oacute;n ({{candidato.formaciones.length}})</h5>
+                </div>
                 <span class="float-right pull-right">
                   <em class="fa fa-university"></em>
                 </span>
@@ -417,7 +453,9 @@
             </accordion-group>
             <accordion-group *ngIf="candidato.certificaciones">
               <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
-                <div class="pull-left float-left">Certificaciones</div>
+                <div class="pull-left float-left text-warning">
+                  <h5>Certificaciones ({{candidato.certificaciones.length}})</h5>
+                </div>
                 <span class="float-right pull-right">
                   <em class="fa fa-certificate"></em>
                 </span>
@@ -459,7 +497,9 @@
             </accordion-group>
             <accordion-group *ngIf="candidato.cursos">
               <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
-                <div class="pull-left float-left">Cursos</div>
+                <div class="pull-left float-left text-warning">
+                  <h5>Cursos ({{candidato.cursos.length}})</h5>
+                </div>
                 <span class="float-right pull-right">
                   <em class="fa fa-graduation-cap"></em>
                 </span>
@@ -485,10 +525,10 @@
                   <div class="col-md-6 col-sm-12">
                     <div>
                       <strong class="text-primary">Periodo: </strong>
-                      <label class="text-muted">{{x.monthInicio.month}} {{x.yearInicio.year}} </label>
+                      <label class="text-muted">{{x?.monthInicio?.month}} {{x?.yearInicio?.year}} </label>
                       <strong *ngIf="x.monthTermino && x.yearTermino" class="text-muted"> a </strong>
-                      <label class="text-muted" *ngIf="x.monthTermino && x.yearTermino"> {{x.monthTermino.month}}
-                        {{x.yearTermino.year}}</label>
+                      <label class="text-muted" *ngIf="x.monthTermino && x.yearTermino"> {{x?.monthTermino?.month}}
+                        {{x?.yearTermino?.year}}</label>
                     </div>
                   </div>
                 </div>
@@ -496,7 +536,9 @@
             </accordion-group>
             <accordion-group *ngIf="candidato.conocimientos">
               <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
-                <div class="pull-left float-left">Conocimientos / Habilidades</div>
+                <div class="pull-left float-lefttext-warning text-warning">
+                  <h5>Conocimientos / Habilidades ({{candidato.conocimientos.length}})</h5>
+                </div>
                 <span class="float-right pull-right">
                   <em class="fa fa-magic"></em>
                 </span>
@@ -529,7 +571,9 @@
             </accordion-group>
             <accordion-group *ngIf="candidato.idiomas">
               <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
-                <div class="pull-left float-left">Idiomas</div>
+                <div class="pull-left float-left text-warning">
+                  <h5>Idiomas ({{candidato.idiomas.length}})</h5>
+                </div>
                 <span class="float-right pull-right">
                   <em class="fa fa-language"></em>
                 </span>
@@ -578,20 +622,14 @@
             <div class="row justify-content-between">
               <div class="d-flex align-items-stretch ">
                 <btn-view (click)="openDialogShowRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view>
-                <button 
-                    [disabled]="vacante.id != requisicionId && Status != 0 "
-                    class="mb-1 btn btn-outline-success"
-                    matTooltip="Apartar" 
-                    (click)="_apartarCandidato()">
-                    <em class="fa fa-thumbs-o-up"></em>
-                  </button>
-                  <button 
-                  [disabled]="vacante.id != requisicionId && Status != 0 "
-                  class="mb-1 btn btn-outline-danger"
-                    matTooltip="Desapartar"
-                    (click)="_liberarCandidato()">
-                    <em class="fa fa-thumbs-o-down"></em>
-                  </button>
+                <button [disabled]="vacante.id != requisicionId && Status != 0 " class="mb-1 btn btn-outline-success"
+                  matTooltip="Apartar" (click)="_apartarCandidato()">
+                  <em class="fa fa-thumbs-o-up"></em>
+                </button>
+                <button [disabled]="vacante.id != requisicionId && Status != 0 " class="mb-1 btn btn-outline-danger"
+                  matTooltip="Desapartar" (click)="_liberarCandidato()">
+                  <em class="fa fa-thumbs-o-down"></em>
+                </button>
               </div>
               <div>
                 <!-- <button class="mb-1 btn btn-outline-primary" *ngIf="enProceso > 0">En Proceso</button> -->
@@ -620,11 +658,8 @@
                         (tableChanged)="onChangeTable_v(config_v)" class="form-control">
                     </td>
                   </tr>
-                  <tr 
-                    (click)="onCellClick_v(row)" 
-                    (dblclick)="openDialogShowRequi()" *ngFor="let row of rows"
-                    [class.confident]="row.confidencial"
-                    [class.enProceso]=" row.id === requisicionId">
+                  <tr (click)="onCellClick_v(row)" (dblclick)="openDialogShowRequi()" *ngFor="let row of rows"
+                    [class.confident]="row.confidencial" [class.enProceso]=" row.id === requisicionId">
                     <td>
                       {{row.folio}}
                     </td>

@@ -7,6 +7,7 @@ import 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
 
 import { Headers, Http, HttpModule, RequestOptions, Response } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { ApiConection } from '../api-conection.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -49,7 +50,7 @@ private handleError(error: any) {
        return Observable.throw(error || 'backend server error');
    }
 
-constructor(private http: Http) {  }
+constructor(private http: Http, private _httpClient : HttpClient) {  }
 
 // Servicios de controller de candidatos.
 
@@ -130,9 +131,8 @@ getcandidatos(filtrox: any): Observable<any> { // Obtener filtro de candidatos.
    //     .catch(this.handleError);
 }
 getMisCandidatos(reclutador: any): Observable<any> { // Obtener mis de candidatos.
-    return this.http.get(this.UrlMisCandidatos + reclutador)
-    .map(result => result.json())
-    .catch(this.handleError);
+    let params = new HttpParams().set('Id', reclutador);
+    return this._httpClient.get(this.UrlMisCandidatos, {params: params});
 }
 
 getcandidatodtl(Id: any): Observable<any> { // Obtener detalle de candidatos.

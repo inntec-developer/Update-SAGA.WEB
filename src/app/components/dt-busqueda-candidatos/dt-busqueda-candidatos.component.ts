@@ -1,20 +1,18 @@
-import { ActivatedRoute, CanDeactivate, Router, } from '@angular/router';
-import { Component, Input, OnInit } from '@angular/core';
-import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-
-import { MatDialog } from '@angular/material';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { PostulateService } from '../../../../../../service/SeguimientoVacante/postulate.service';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 
 declare var $: any;
 
 @Component({
-  selector: 'dt-candidatos-post',
-  templateUrl: './dt-candidatos-post.component.html',
-  styleUrls: ['./dt-candidatos-post.component.scss']
+  selector: 'app-dt-busqueda-candidatos',
+  templateUrl: './dt-busqueda-candidatos.component.html',
+  styleUrls: ['./dt-busqueda-candidatos.component.scss']
 })
-export class DtCandidatosPostComponent implements OnInit {
-  @Input() VacanteId: any;
+
+
+
+export class DtBusquedaCandidatosComponent implements OnInit {
+  @Input('Candidatos') Candidatos: any;
+  @Output('CandidatoId') CandidatoId: EventEmitter<any> = new EventEmitter<any>();
   public dataSource: Array<any> = [];
   // Varaibles del paginador
   public page: number = 1;
@@ -27,29 +25,19 @@ export class DtCandidatosPostComponent implements OnInit {
   registros: number;
   errorMessage: any;
   element: any = {};
-  
-  constructor(
-    private service: PostulateService,
-    private dialog: MatDialog,
-    private _Router: Router,
-    private spinner: NgxSpinnerService,
-    private toasterService: ToasterService
-  ) { }
+  constructor() { }
 
   ngOnInit() {
-    this.spinner.show();
-    this.getpostulados()
-    setTimeout(() => {
-      this.onChangeTable(this.config);
-      this.spinner.hide();
-    }, 1500);
-
+    this.dataSource = this.Candidatos;
+    this.onChangeTable(this.config);
   }
 
-  getpostulados() {
-    this.service.getPostulados(this.VacanteId).subscribe(data => {
-      this.dataSource = data;
-    }, error => this.errorMessage = <any>error);
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    if (changes.Candidatos && !changes.Candidatos.isFirstChange()) {
+      this.ngOnInit();
+    }
   }
 
   public rows: Array<any> = []
@@ -63,6 +51,7 @@ export class DtCandidatosPostComponent implements OnInit {
     { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
     { title: 'RFC', className: 'text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
   ]
+
 
   public config: any = {
     paging: true,
@@ -170,35 +159,15 @@ export class DtCandidatosPostComponent implements OnInit {
     let index = this.dataSource.indexOf(data.row);
     this.element = data;
     /* add an class 'active' on click */
-    $('#resultDataTable').on('click', 'tr', function (event: any) {
+    $('#resultBusqueda').on('click', 'tr', function (event: any) {
       //noinspection TypeScriptUnresolvedFunction
       $(this).addClass('selected').siblings().removeClass('selected');
     });
   }
 
-  /*
-  * Funciones propias del componente.
-  * */
-
-
-  /*
- * Creacion de mensajes
- * */
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    limit: 7, tapToDismiss: false,
-    showCloseButton: true,
-    mouseoverTimerStop: true,
-  });
-  popToast(type, title, body) {
-    var toast: Toast = {
-      type: type,
-      title: title,
-      timeout: 5000,
-      body: body
-    }
-    this.toasterService.pop(toast);
+  public getCandidato(event){
+    this.CandidatoId.emit(event);
   }
+
 }
+  
