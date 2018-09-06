@@ -1,51 +1,111 @@
-<div class="panel panel-default panel-flat">
-<div class=" box">
-<span>
-  <ul>
-    <li><a><btn-like></btn-like></a></li>
-    <li><a><btn-dislike></btn-dislike></a></li>
-    <li><a><em class="vl"></em></a></li>
-    <li><a><btn-view [xs]="true"></btn-view></a></li>
-    <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
-      <em class="fa fa-phone"></em>
-    </button></a></li>
-    <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button">
-      <em class="fa fa-phone"></em>
-    </button></a></li>
-    <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button">
-      <em class="fa fa-address-book"></em>
-    </button></a></li>
-    <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
-      <em class="fa fa-microphone"></em>
-    </button></a></li>
-    <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
-      <em class="fa fa-search"></em>
-    </button></a></li>
-    <li><a><button class="mb-1 btn btn-xs btn-outline-warning"  type="button">
-      <em class="fa fa-users"></em>
-    </button></a></li>
-    <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button">
-      <em class="fa fa-truck"></em>
-    </button></a></li>
-    <li><a><button class="mb-1 btn btn-xs btn-outline-warning"  type="button">
-      <em class="fa fa-user-circle-o"></em>
-    </button></a></li>
-    <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
-      <em class="fa fa-user-o"></em>
-    </button></a></li>
-    <li><a><em class="vl"></em></a></li>
-    <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button">
-      <em class="fa fa-unlock"></em>
-    </button></a></li>
-    <li><a><em class="vl"></em></a></li>
-    <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
-      <em class="fa fa-exchange"></em>
-    </button></a></li>
-    <li><a><em class="vl"></em></a></li>
-    <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button">
-      <em class="fa fa-flag"></em>
-    </button></a></li>
-  </ul>
-</span>
-</div>
+<div class="dt-container mat-elevation-z8">
+
+
+  <div class="dt-header">
+          <div class="box">
+          <span>
+            <ul>
+             <li><a>
+              <button class="mb-1 btn btn-xs btn-outline-primary"  type="button" (click)="SetProceso(30)"> 
+                <em class="fa fa-thumbs-o-down"></em>
+              </button>
+            </a></li>
+              <li><a><em class="vl"></em></a></li>
+              <li><a>
+              <button class="mb-1 btn btn-xs btn-outline-warning"  type="button">
+                  <em class="fa fa-eye"></em>
+                </button>
+              </a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
+                <em class="fa fa-phone"></em>
+              </button></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button">
+                <em class="fa fa-phone"></em>
+              </button></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button">
+                <em class="fa fa-address-book"></em>
+              </button></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
+                <em class="fa fa-microphone"></em>
+              </button></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
+                <em class="fa fa-search"></em>
+              </button></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-warning"  type="button">
+                <em class="fa fa-users"></em>
+              </button></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button">
+                <em class="fa fa-truck"></em>
+              </button></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-warning"  type="button">
+                <em class="fa fa-user-circle-o"></em>
+              </button></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
+                <em class="fa fa-user-o"></em>
+              </button></a></li>
+              <li><a><em class="vl"></em></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button">
+                <em class="fa fa-unlock"></em>
+              </button></a></li>
+              <li><a><em class="vl"></em></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
+                <em class="fa fa-exchange"></em>
+              </button></a></li>
+              <li><a><em class="vl"></em></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button">
+                <em class="fa fa-flag"></em>
+              </button></a></li>
+            </ul>
+          </span>
+          </div>
+          <br/>
+
+    <mat-form-field>
+      <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)">
+    </mat-form-field>
+    <br/>
+    <div class="d-flex align-items-stretch ">
+    </div>
+  </div>
+  <div class="card card-default">
+    <div class="table-responsive" #tableContainer>
+      <table id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+        <thead>
+          <tr>
+            <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+              {{column.title}}
+              <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
+              </i>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="showFilterRow">
+            <td *ngFor="let column of columns">
+              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                class="form-control">
+            </td>
+          </tr>
+          <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of dataSource" [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
+            <td class="text-center">
+              {{row.nombre}}
+            </td>
+            <td class="text-center"> {{row.areaExp}}</td>
+            <td class="text-center"> {{row.areaInt}}</td>
+            <td class="text-center"> {{row.localidad}} </td>
+            <td class="text-center"> {{row.sueldoMinimo | currency : '$'}} </td>
+            <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
+            <td class="text-center"> {{row.curp}}</td>
+            <td class="text-center"> {{row.rfc}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="text-right">
+    <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+      [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+    </pagination>
+  </div>
+  <pre *ngIf="config.paging" class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
 </div>

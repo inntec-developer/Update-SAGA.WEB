@@ -202,6 +202,7 @@ export class AdminServiceService {
 
   UpdateActivo(cell): Observable<any>
   {
+    debugger;
     let params = new HttpParams().set('Id', cell.id);
 
     let headers = new Headers({'Content-Type': 'application/json'});

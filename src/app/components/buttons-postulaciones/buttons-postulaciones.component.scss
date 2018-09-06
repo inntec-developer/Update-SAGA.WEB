@@ -41,3 +41,9 @@
     border-left: 1px solid green;
     height: 50px;
 }
+
+tr.selected td {
+    background-color:  #5d9cec !important;
+    color: white;
+  }
+  

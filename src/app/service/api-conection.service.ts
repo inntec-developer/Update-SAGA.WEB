@@ -138,10 +138,12 @@ export class ApiConection {
   public static getDtosCard = 'reclutamiento/seguimientovacante/getCard';
   public static getDtosDetail = 'reclutamiento/seguimientovacante/getvacantesdtl';
   public static getPostulados = 'reclutamiento/seguimientovacante/getPostulate';
+  public static getProcesoPostulados = 'reclutamiento/seguimientovacante/getProceso';
   public static getInfoCandidato = 'reclutamiento/seguimientovacante/getInfoCandidato';
   public static getMisVacantes = 'reclutamiento/seguimientovacante/getMisVacantes';
   public static getPostulaciones = 'reclutamiento/seguimientovacante/getPostulaciones';
   public static setApartarCandidato = 'reclutamiento/seguimientovacante/apartarCandidato';
   public static setLiberarCandidato = 'reclutamiento/seguimientovacante/liberarCandidato';
+  public static setProcesoPostulado = 'reclutamiento/seguimientovacante/updateStatus';
   
 }

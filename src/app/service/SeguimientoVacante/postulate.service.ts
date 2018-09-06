@@ -6,7 +6,7 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
 
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { ApiConection } from '../api-conection.service';
 import { Injectable } from '@angular/core';
@@ -17,10 +17,30 @@ import { Observable } from 'rxjs/Observable';
 })
 export class PostulateService {
   private UrlGetPostulados = ApiConection.ServiceUrl + ApiConection.getPostulados;
+  private UrlGetProceso = ApiConection.ServiceUrl + ApiConection.getProcesoPostulados;
+  private UrlSetProceso = ApiConection.ServiceUrl + ApiConection.setProcesoPostulado;
   constructor(private _HttpClient: HttpClient) { }
 
   getPostulados(VacanteId : string) : Observable<any>{
     let params = new HttpParams().set('VacanteId', VacanteId);
     return this._HttpClient.get(this.UrlGetPostulados, { params: params })
+  }
+
+  GetProceso(VacanteId, ReclutadorId) : Observable<any>{
+    debugger;
+    let params = new HttpParams().set('VacanteId', VacanteId).set('ReclutadorId', ReclutadorId);
+    return this._HttpClient.get(this.UrlGetProceso, { params: params })
+  }
+
+  SetProceso(data)
+  {
+    let params = new HttpParams().set('datos', data)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+
+    return this._HttpClient.post(this.UrlSetProceso, data, httpOptions )
   }
 }
