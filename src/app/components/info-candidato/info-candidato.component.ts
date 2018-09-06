@@ -15,7 +15,7 @@ declare module String {
 })
 export class InfoCandidatoComponent implements OnInit {
   candidato: any;
-  @Input('IdCanidato') CandidatoId: string;
+  @Input('IdCandidato') CandidatoId: string;
   public dataSource_v: Array<any> = [];
   public dataSource_p: Array<any> = [];
 
@@ -328,7 +328,7 @@ export class InfoCandidatoComponent implements OnInit {
         folio: this.vacante.folio,
         reclutador: this.usuario,
         reclutadorId: this.usuarioId,
-        estatusId: 10
+        estatusId: 12
       }
       this._serviceCandidato.setApartarCandidato(this.procesoCandidato)
         .subscribe(data => {
@@ -368,6 +368,7 @@ export class InfoCandidatoComponent implements OnInit {
 
   _liberarCandidato() {
     if (this.reclutador == this.usuario || !this.candidato.estatus) {
+      debugger;
       this._serviceCandidato.setLiberarCandidato(this.procesoCandidatoId)
         .subscribe(data => {
           switch (data) {

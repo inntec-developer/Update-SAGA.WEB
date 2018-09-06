@@ -78,6 +78,7 @@ import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import { NgxSpinnerModule } from '../../../node_modules/ngx-spinner';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { DtMisCandidatosComponent } from './dt-mis-candidatos/dt-mis-candidatos.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -164,6 +165,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     AsignarRequisicionLiderComponent,
     InfoCandidatoComponent,
     DtBusquedaCandidatosComponent,
+    DtMisCandidatosComponent,
 
   ],
   exports: [

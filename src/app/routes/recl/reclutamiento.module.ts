@@ -79,6 +79,7 @@ import { PerfilComponent } from './candidatos/busqueda/perfil/perfil.component';
 import { ReubicacionComponent } from './candidatos/busqueda/reubicacion/reubicacion.component';
 import { SelectModule } from 'ng2-select';
 import { SharedModule } from '../../shared/shared.module';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TagInputModule } from 'ngx-chips';
 import { TextMaskModule } from 'angular2-text-mask';
 import { TplicenciaComponent } from './candidatos/busqueda/tplicencia/tplicencia.component';
@@ -119,7 +120,8 @@ const routes: Routes = [
         ToasterModule, VentaModule, ComponentsModule, NgxSpinnerModule,
         PaginationModule.forRoot(),Ng2TableModule,
         PopoverModule.forRoot(),
-        TooltipModule.forRoot()     
+        TooltipModule.forRoot(),
+        TabsModule   
     ],
     providers: [ColorPickerService, 
         { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

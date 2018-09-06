@@ -15,7 +15,6 @@ export class DtCandidatosComponent implements OnInit, OnChanges {
 
   // Variables utilizadas. ***
   @Input('Filtrado') FCandidatos: any; //Datos que reciben del filtro. ***  
-  @Input('MisCandidatos') MisCandidatos: any;
   candidatos: any;
   step = 0;
   infoCnd = 0;

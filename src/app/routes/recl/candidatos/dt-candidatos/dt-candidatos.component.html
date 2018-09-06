@@ -9,11 +9,22 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <!-- Tabal con los resultados de candidatos -->
-    <app-dt-busqueda-candidatos 
-      [Candidatos]="candidatos"
-      (CandidatoId)="vercandidato($event)"
-      *ngIf="candidatos" >
-    </app-dt-busqueda-candidatos>
+    <tabset [justified]="true">
+      <tab heading="Resultados de Busqueda" id="resultBusqueda">
+        <div *ngIf="candidatos else NotResult">
+          <app-dt-busqueda-candidatos [Candidatos]="candidatos" (CandidatoId)="vercandidato($event)" *ngIf="candidatos">
+          </app-dt-busqueda-candidatos>
+        </div>
+        <ng-template #NotResult>
+          <alert type="info">
+            <strong>Oops!</strong> Realice una busqueda para mostrar candidatos...
+          </alert>
+        </ng-template>
+      </tab>
+      <tab heading="Mis Candidatos" id="misCandidatos">
+        Mis Candidatos . . .
+      </tab>
+    </tabset>
     <!-- Tabla con los resultados de los candidatos apartas -->
   </mat-expansion-panel>
 </mat-accordion>
@@ -28,7 +39,7 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <!-- Empieza el detalle del candidato.-->
-    <app-info-candidato [IdCanidato]="idCandidato"></app-info-candidato>
+    <app-info-candidato [IdCandidato]="idCandidato"></app-info-candidato>
   </mat-expansion-panel>
 </mat-accordion>
 

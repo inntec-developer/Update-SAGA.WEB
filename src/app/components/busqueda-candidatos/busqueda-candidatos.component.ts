@@ -292,7 +292,6 @@ export class BusquedaCandidatosComponent implements OnInit {
     this.loading = true;
     this.service.getMisCandidatos(localStorage.getItem('id')).subscribe(data =>{
       this.Candidatos = data;
-      this.filtro.emit(this.Candidatos);
       this.loading = false;
     });
   }
