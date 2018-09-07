@@ -14,7 +14,7 @@ declare var $: any;
 })
 export class DtCandidatosPostComponent implements OnInit {
   @Input('RequisicionId') RequisicionId: any;
-  @Input('Folio') folio: any;
+  @Input('Folio') Folio: any;
   @Input('Vacante') Vacante: any;
   public dataSource: Array<any> = [];
   // Varaibles del paginador
@@ -183,7 +183,12 @@ export class DtCandidatosPostComponent implements OnInit {
   /*
   * Funciones propias del componente.
   * */
-
+ public refreshTable() {
+  this.getpostulados()
+    setTimeout(() => {
+      this.onChangeTable(this.config);
+    }, 1500);
+}
 
   /*
  * Creacion de mensajes

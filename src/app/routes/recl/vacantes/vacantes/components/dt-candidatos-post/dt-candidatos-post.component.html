@@ -5,8 +5,13 @@
       <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
         (tableChanged)="onChangeTable(config)">
     </mat-form-field>
-    <div class="d-flex align-items-stretch ">
-    </div>
+    <div class="row justify-content-between">
+        <div class="d-flex align-items-stretch ">
+        </div>
+        <div>
+          <btn-refresh (click)="refreshTable()" matTooltip="Actualizar"></btn-refresh>
+        </div>
+      </div>
   </div>
   <div class="card card-default">
     <div class="table-responsive" #tableContainer>
