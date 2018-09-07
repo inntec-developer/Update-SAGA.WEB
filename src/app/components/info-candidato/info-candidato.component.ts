@@ -2,6 +2,7 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { InfoCandidatoService } from '../../service/SeguimientoVacante/info-candidato.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 declare var $: any;
 
@@ -45,6 +46,7 @@ export class InfoCandidatoComponent implements OnInit {
   constructor(
     private _serviceCandidato: InfoCandidatoService,
     private toasterService: ToasterService,
+    private spinner: NgxSpinnerService,
   ) {
     this.registros_v = 0;
     this.registros_p = 0;
@@ -64,17 +66,19 @@ export class InfoCandidatoComponent implements OnInit {
     if (changes.CandidatoId && !changes.CandidatoId.isFirstChange()) {
       this.ngOnInit();
       this.getPostulaciones();
+      this.vacante = {};
+      this.procesoCandidatoId = '';
+      this.Status = '';
+      this.requisicionId = '';
+      this.reclutador = '';
     }
 
   }
 
   ngOnInit() {
-    this.vacante = {};
-    this.procesoCandidatoId = '';
-    this.Status = '';
-    this.requisicionId = '';
-    this.reclutador = '';
+
     // this.CandidatoId = '4F65DAC1-C6A0-E811-80E8-9E274155325E'
+    this.spinner.show();
     this._serviceCandidato.getInfoCandidato(this.CandidatoId).subscribe(data => {
       this.candidato = {
         id: data.id,
@@ -83,7 +87,7 @@ export class InfoCandidatoComponent implements OnInit {
         aboutMe: data.aboutMe.length != 0 ? data.aboutMe[0]['acercaDeMi'] : null,
         edad: data.edad,
         genero: data.genero,
-        correo: data.email ? data.email.email : null ,
+        correo: data.email ? data.email.email : null,
         telefonos: data.telefono,
         direccion: data.direccion,
         redSocial: data.redSocial,
@@ -103,7 +107,7 @@ export class InfoCandidatoComponent implements OnInit {
         this.requisicionId = this.candidato.estatus.requisicionId;
         this.reclutador = this.candidato.estatus.reclutador;
       }
-      console.log(this.candidato);
+      this.spinner.hide();
     });
   }
 
@@ -232,6 +236,7 @@ export class InfoCandidatoComponent implements OnInit {
     let sortedData = this.changeSort_v(filteredData, this.config_v);
     this.rows = page && config.paging ? this.changePage_v(page, sortedData) : sortedData;
     this.length_v = sortedData.length;
+    
   }
 
   public refreshTable_v() {
@@ -374,7 +379,7 @@ export class InfoCandidatoComponent implements OnInit {
               this.ngOnInit();
               this.ngAfterViewInit();
               var msg = 'El candidato se libero corectamente.';
-              this.popToast('success', 'Liberado', msg);
+              this.popToast('warning', 'Liberado', msg);
               setTimeout(() => {
                 this.vacante = {};
                 this.procesoCandidatoId = '';

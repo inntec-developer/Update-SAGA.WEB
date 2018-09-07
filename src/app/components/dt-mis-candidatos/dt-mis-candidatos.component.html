@@ -1,4 +1,4 @@
-<div class="dt-container" *ngIf="rows.length > 0 else NotCandidatos">
+<div class="dt-container" *ngIf="registros > 0 else NotCandidatos">
   <div class="dt-header">
     <mat-form-field>
       <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
@@ -15,7 +15,7 @@
   </div>
   <div class="card card-default">
     <div class="table-responsive" #tableContainer>
-      <table id="resultBusqueda" class="table-responsive" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+      <table id="misCandidatos" class="table-responsive" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
         <thead>
           <tr>
             <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
@@ -34,7 +34,7 @@
           </tr>
           <tr (click)="onCellClick(row)" (dblclick)="getCandidato(row.candidatoId)" *ngFor="let row of rows"
             [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8">
-            <td>
+            <td class="text-center">
               {{row.folio}}
             </td>
             <td class="text-center">

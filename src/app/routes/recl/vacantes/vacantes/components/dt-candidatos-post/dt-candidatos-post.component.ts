@@ -3,7 +3,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { MatDialog } from '@angular/material';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from '../../../../../../service/SeguimientoVacante/postulate.service';
 
 declare var $: any;
@@ -14,7 +13,9 @@ declare var $: any;
   styleUrls: ['./dt-candidatos-post.component.scss']
 })
 export class DtCandidatosPostComponent implements OnInit {
-  @Input() VacanteId: any;
+  @Input('RequisicionId') RequisicionId: any;
+  @Input('Folio') folio: any;
+  @Input('Vacante') Vacante: any;
   public dataSource: Array<any> = [];
   // Varaibles del paginador
   public page: number = 1;
@@ -27,27 +28,27 @@ export class DtCandidatosPostComponent implements OnInit {
   registros: number;
   errorMessage: any;
   element: any = {};
+  idCandidato: any;
+
+  loading: boolean = true;
   
   constructor(
     private service: PostulateService,
     private dialog: MatDialog,
     private _Router: Router,
-    private spinner: NgxSpinnerService,
     private toasterService: ToasterService
   ) { }
 
   ngOnInit() {
-    this.spinner.show();
     this.getpostulados()
     setTimeout(() => {
       this.onChangeTable(this.config);
-      this.spinner.hide();
     }, 1500);
 
   }
 
   getpostulados() {
-    this.service.getPostulados(this.VacanteId).subscribe(data => {
+    this.service.getPostulados(this.RequisicionId).subscribe(data => {
       this.dataSource = data;
     }, error => this.errorMessage = <any>error);
   }
@@ -164,11 +165,14 @@ export class DtCandidatosPostComponent implements OnInit {
     let sortedData = this.changeSort(filteredData, this.config);
     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
     this.length = sortedData.length;
+    this.loading = false;
   }
 
   public onCellClick(data: any): any {
     let index = this.dataSource.indexOf(data.row);
     this.element = data;
+    console.log(data);
+    this.idCandidato = data.candidatoId;
     /* add an class 'active' on click */
     $('#resultDataTable').on('click', 'tr', function (event: any) {
       //noinspection TypeScriptUnresolvedFunction

@@ -1,6 +1,6 @@
 <div class="content-heading">
   <div>
-    Postulados a {{vBtra}} {{Folio}}
+    Postulados a {{Vacante}} {{Folio}}
     <span class="text-sm d-none d-sm-block">Visualizar Postulados</span>
   </div>
   <!-- Breadcrumb right aligned-->
@@ -23,4 +23,4 @@
     <btn-return matTooltip="Regresar" [routerLink]="['/reclutamiento/vacantesReclutador']"></btn-return>
   </div>
 </div>
-<dt-candidatos-post [VacanteId]="VacanteId"></dt-candidatos-post>
+<dt-candidatos-post [RequisicionId]="RequisicionId" [Vacante]="Vacante" [Folio]="Folio"></dt-candidatos-post>

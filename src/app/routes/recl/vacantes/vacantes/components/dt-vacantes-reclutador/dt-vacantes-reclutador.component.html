@@ -43,7 +43,7 @@
             (dblclick)="openDialogShowRequi()" 
             *ngFor="let row of rows" [class.confident]="row.confidencial"
             [class.cancel]="row.estatusId == 8">
-            <td>
+            <td class="text-center">
               {{row.folio}}
             </td>
             <td> {{row.solicita}}</td>

@@ -47,8 +47,8 @@ export class DtMisCandidatosComponent implements OnInit {
 
   public rows: Array<any> = []
   public columns: Array<any> = [
-    { title: 'Folio', className: 'text-info', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
-    { title: 'Estatus', className: 'text-info', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
+    { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
     { title: 'Vacante', className: 'text-info', name: 'vBtra', filtering: { filterString: '', placeholder: 'Vacante' } },
     { title: 'Nombre Candidato', className: 'text-info', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'Área Experiencia', className: 'text-info', name: 'areaExp', filtering: { filterString: '', placeholder: 'Experiencia' } },
@@ -166,7 +166,7 @@ export class DtMisCandidatosComponent implements OnInit {
     let index = this.dataSource.indexOf(data.row);
     this.element = data;
     /* add an class 'active' on click */
-    $('#resultBusqueda').on('click', 'tr', function (event: any) {
+    $('#misCandidatos').on('click', 'tr', function (event: any) {
       //noinspection TypeScriptUnresolvedFunction
       $(this).addClass('selected').siblings().removeClass('selected');
     });
@@ -185,9 +185,8 @@ export class DtMisCandidatosComponent implements OnInit {
   public refreshTable() {
     this.misCandidatos();
     setTimeout(() => {
+      this.registros = 0;
       this.onChangeTable(this.config);
     }, 800);
   }
-
-
 }

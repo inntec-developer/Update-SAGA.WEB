@@ -30,7 +30,7 @@
     </div>
   </div>
 </div>
-<br/>
+<br />
 <div id="print-section">
   <div class="dt-container  mat-elevation-z8">
     <div class="card-header">
@@ -205,21 +205,28 @@
       </div>
     </div>
   </div>
-  <br/>
+  <br />
+  <div class="row">
+    <div class="col-md-12">
+      <!-- HORARIOS -->
+      <app-dt-horarios [Horarios]="damfo290?.horariosPerfil"></app-dt-horarios>
+    </div>
+  </div>
+  <br>
   <div class="row">
     <div class="col-md-12">
       <!-- DIRECCIONES -->
       <app-dt-direccion [Direcciones]="damfo290?.cliente?.direcciones"></app-dt-direccion>
     </div>
   </div>
-  <br/>
+  <br />
   <div class="row">
     <div class="col-md-6">
       <!-- TELEFONOS -->
       <app-dt-telefonos [Telefonos]="damfo290?.cliente?.telefonos"></app-dt-telefonos>
     </div>
   </div>
-  <br/>
+  <br />
   <div class="row">
     <div class="col-md-10">
       <!-- CONTACTOS -->
@@ -227,18 +234,14 @@
     </div>
   </div>
   <br>
-  <br/>
+  <br />
   <div class="row">
-    <div class="col-md-6">
-      <!-- HORARIOS -->
-      <app-dt-horarios [Horarios]="damfo290?.horariosPerfil"></app-dt-horarios>
-    </div>
-    <div class="col-md-6">
+    <div class="col-md-12">
       <!-- BENEFICIOS -->
       <app-dt-beneficios [Beneficios]="damfo290?.beneficiosPerfil"></app-dt-beneficios>
     </div>
   </div>
-  <br/>
+  <br />
   <div class="row">
     <div class="col-md-4">
       <!-- ACTIVIDADES -->
@@ -254,7 +257,7 @@
       <app-procesos [Proceso]="damfo290?.procesoPerfil"></app-procesos>
     </div>
   </div>
-  <br/>
+  <br />
   <div class="row">
     <div class="col-md-3">
       <!-- DOCUMENTOS dAMSA -->
@@ -273,7 +276,7 @@
       <app-prestaciones-cliente [Prestaciones]="damfo290?.prestacionesCliente"></app-prestaciones-cliente>
     </div>
   </div>
-  <br/>
+  <br />
   <div class="row">
     <div class="col-md-6">
       <!-- PSICOMETRIAS DAMSA -->
@@ -284,7 +287,7 @@
       <app-dt-psicometrias-cliente [Psicometrias]="damfo290?.psicometriasCliente"></app-dt-psicometrias-cliente>
     </div>
   </div>
-  <br/>
+  <br />
   <div class="row">
     <div class="col-md-4 col-lg-4">
       <!-- COMPTENCIAS CARDINALES -->

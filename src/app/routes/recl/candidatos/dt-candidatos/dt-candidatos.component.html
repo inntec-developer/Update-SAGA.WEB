@@ -10,14 +10,14 @@
     </mat-expansion-panel-header>
     <!-- Tabal con los resultados de candidatos -->
     <tabset [justified]="true">
-      <tab heading="Resultados de Busqueda" id="resultBusqueda">
+      <tab heading="Resultados de Búsqueda" id="resultBusqueda">
         <div *ngIf="candidatos else NotResult">
           <app-dt-busqueda-candidatos [Candidatos]="candidatos" (CandidatoId)="vercandidato($event)" *ngIf="candidatos">
           </app-dt-busqueda-candidatos>
         </div>
         <ng-template #NotResult>
           <alert type="info">
-            <strong>Oops!</strong> Realice una busqueda para mostrar candidatos...
+            <strong>Oops!</strong> Realice una b&uacute;squeda para mostrar candidatos...
           </alert>
         </ng-template>
       </tab>
@@ -35,7 +35,7 @@
         <mat-icon class="text-primary">account_circle</mat-icon>
       </mat-panel-title>
       <mat-panel-description>
-        <label class="text-primary">Detalle de candidato.</label>
+        <label class="text-primary">Detalle de Candidato</label>
       </mat-panel-description>
     </mat-expansion-panel-header>
     <!-- Empieza el detalle del candidato.-->

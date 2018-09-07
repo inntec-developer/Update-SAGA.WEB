@@ -1,4 +1,5 @@
 <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
 <div class="row">
   <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12">
     <div *ngIf="candidato" class="dt-container mat-elevation-z8">
@@ -101,7 +102,7 @@
             <accordion-group [isOpen]="isFirstOpen">
               <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
                 <div class="pull-left float-left text-warning">
-                  <h5>Acerca de m&iacute;</h5>
+                  <h5>Acerca de M&iacute;</h5>
                 </div>
                 <span class="float-right pull-right">
                   <em class="fa fa-user-circle-o"></em>
@@ -135,7 +136,7 @@
                     </h5>
                     <mat-divider></mat-divider>
                     <div>
-                      <strong class="text-primary">Tipo discapacidad: </strong>
+                      <strong class="text-primary">Tipo Discapacidad: </strong>
                       <label class="text-muted" *ngIf="candidato.info.tipoDiscapacidad else NotDiscapacidad">
                         {{candidato.info.tipoDiscapacidad.tipoDiscapacidad}}</label>
                       <ng-template #NotDiscapacidad>
@@ -143,7 +144,7 @@
                       </ng-template>
                     </div>
                     <div>
-                      <strong class="text-primary">Descipci&oacute;n discapacidad: </strong>
+                      <strong class="text-primary">Descripci&oacute;n Discapacidad: </strong>
                       <label class="text-muted" *ngIf="candidato.info.otraDisacapacidad else NotOtraDiscapacidad">
                         {{candidato.info.otraDiscapacidad}}</label>
                       <ng-template #NotOtraDiscapacidad>
@@ -153,33 +154,34 @@
                   </div>
                   <div id="otraInformacion">
                     <br>
-                    <h5 class="text-muted">Otra informaci&oacute;n
+                    <h5 class="text-muted">Otra Informaci&oacute;n
                       <span class="pull-right">
                         <em class="fa fa-info-circle"></em>
                       </span>
                     </h5>
                     <mat-divider></mat-divider>
                     <div>
-                      <strong class="text-primary">Licencia de conducir: </strong>
+                      <strong class="text-primary">Licencia de Conducir: </strong>
                       <label *ngIf="candidato.info.tieneLicenciaConducir" class="text-muted"> SI</label>
                       <label *ngIf="!candidato.info.tieneLicenciaConducir" class="text-muted"> NO</label>
                     </div>
                     <div *ngIf="candidato.info.tieneLicenciaConducir">
-                      <strong class="text-primary">Tipo de licencia: </strong>
+                      <strong class="text-primary">Tipo de Licencia: </strong>
                       <label class="text-muted"> {{candidato.info.tipoLicencia.tipoLicencia}} -
                         {{candidato.info.tipoLicencia.descripcion}}</label>
                     </div>
-                    <div *ngIf="candidato.info.tieneVehiculoPropio">
-                      <strong class="text-primary">Vehiculo propio: </strong>
-                      <label class="text-muted"> SI</label>
+                    <div>
+                      <strong class="text-primary">Vehiculo Propio: </strong>
+                      <label  *ngIf="candidato.info.tieneVehiculoPropio" class="text-muted"> SI</label>
+                      <label  *ngIf="!candidato.info.tieneVehiculoPropio" class="text-muted"> SI</label>
                     </div>
                     <div>
-                      <strong class="text-primary">Puede viajar: </strong>
+                      <strong class="text-primary">Puede Viajar: </strong>
                       <label *ngIf="candidato.info.puedeViajar" class="text-muted"> SI</label>
                       <label *ngIf="!candidato.info.puedeViajar" class="text-muted"> NO</label>
                     </div>
                     <div>
-                      <strong class="text-primary">Puede reubicarse: </strong>
+                      <strong class="text-primary">Puede Reubicarse: </strong>
                       <label *ngIf="candidato.info.puedeRehubicarse" class="text-muted"> SI</label>
                       <label *ngIf="!candidato.info.puedeRehubicarse" class="text-muted"> NO</label>
                     </div>
@@ -217,14 +219,14 @@
                   </div>
                   <br>
                   <div id="acerdademi" *ngIf="candidato.about">
-                    <h5 class="text-muted "> Acerca de mi
+                    <h5 class="text-muted "> Acerca de M&iacute;
                       <span class="pull-right">
                         <em class="fa fa-user"></em>
                       </span>
                     </h5>
                     <mat-divider></mat-divider>
                     <div>
-                      <strong class="text-primary">Puesto deseado: </strong>
+                      <strong class="text-primary">Puesto Deseado: </strong>
                       <label *ngIf="candidato.about.puestoDeseado else NotPuestoDeseado" class="text-muted">
                         {{candidato.about.puestoDeseado}}</label>
                       <ng-template #NotPuestoDeseado>
@@ -232,7 +234,7 @@
                       </ng-template>
                     </div>
                     <div>
-                      <strong class="text-primary">Salario aceptable: </strong>
+                      <strong class="text-primary">Salario Aceptable: </strong>
                       <label *ngIf="candidato.about.salarioAceptable else NotSalarioA" class="text-muted">
                         {{candidato.about.salarioAceptable | currency: '$'}}</label>
                       <ng-template #NotSalarioA>
@@ -240,7 +242,7 @@
                       </ng-template>
                     </div>
                     <div>
-                      <strong class="text-primary">Salario deseado: </strong>
+                      <strong class="text-primary">Salario Deseado: </strong>
                       <label *ngIf="candidato.about.salarioDeseado else NotSalarioD" class="text-muted">
                         {{candidato.about.salarioDeseado | currency: '$'}}</label>
                       <ng-template #NotSalarioD>
@@ -248,7 +250,7 @@
                       </ng-template>
                     </div>
                     <div>
-                      <strong class="text-primary">Area experiencia: </strong>
+                      <strong class="text-primary">&Aacute;rea Experiencia: </strong>
                       <label *ngIf="candidato.about.areaExperiencia else NotAreaE" class="text-muted">
                         {{candidato.about.areaExperiencia.areaExperiencia}}</label>
                       <ng-template #NotAreaE>
@@ -308,7 +310,7 @@
               <div class="row">
                 <div class="col-md-6 col-sm-12">
                   <div>
-                    <strong class="text-primary">Tipo de direcci&oacute;n: </strong>
+                    <strong class="text-primary">Tipo de Direcci&oacute;n: </strong>
                     <label *ngIf="candidato.direccion.tipodoreccion else NotTipoDirec" class="text-muted">{{candidato.direccion.tipoDireccion.tipoDireccion}}</label>
                     <ng-template #NotTipoDirec>
                       <label class="text-muted"> Sin Registro</label>
@@ -351,7 +353,7 @@
                     </ng-template>
                   </div>
                   <div>
-                    <strong class="text-primary">Codigo Postal: </strong>
+                    <strong class="text-primary">C&oacute;digo Postal: </strong>
                     <label class="text-muted">{{candidato.direccion.codigoPostal}}</label>
                   </div>
                 </div>
@@ -377,7 +379,7 @@
                 <div class="row">
                   <div class="col-md-6 col-sm-12">
                     <div>
-                      <strong class="text-primary">Area: </strong>
+                      <strong class="text-primary">&Aacute;rea: </strong>
                       <label class="text-muted">{{x.area.areaExperiencia}}</label>
                     </div>
                     <div>
@@ -385,7 +387,7 @@
                       <label class="text-muted">{{x.cargoAsignado}}</label>
                     </div>
                     <div>
-                      <strong class="text-primary">Descripcion: </strong>
+                      <strong class="text-primary">Descripci&oacute;n: </strong>
                       <label class="text-muted">{{x.descripcion}}</label>
                     </div>
                   </div>
@@ -474,7 +476,7 @@
                       <label class="text-muted">{{x.licencia}}</label>
                     </div>
                     <div>
-                      <strong class="text-primary">Autoridad emisora: </strong>
+                      <strong class="text-primary">Autoridad Emisora: </strong>
                       <label class="text-muted">{{x.autoridadEmisora}}</label>
                     </div>
                   </div>
@@ -621,12 +623,14 @@
             </mat-form-field>
             <div class="row justify-content-between">
               <div class="d-flex align-items-stretch ">
-                <btn-view (click)="openDialogShowRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view>
-                <button [disabled]="vacante.id != requisicionId && Status != 0 " class="mb-1 btn btn-outline-success"
+                <!-- <btn-view (click)="openDialogShowRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view> -->
+                <button [disabled]="vacante.id != requisicionId && Status != 0 "
+                  [ngClass]="( Status == 0 || vacante.id == requisicionId) ? 'mb-1 btn btn-outline-success':'mb-1 btn btn-outline-secondary'"
                   matTooltip="Apartar" (click)="_apartarCandidato()">
                   <em class="fa fa-thumbs-o-up"></em>
                 </button>
-                <button [disabled]="vacante.id != requisicionId && Status != 0 " class="mb-1 btn btn-outline-danger"
+                <button [disabled]="vacante.id != requisicionId && Status != 0 "
+                  [ngClass]="( Status == 0 || vacante.id == requisicionId) ? 'mb-1 btn btn-outline-danger':'mb-1 btn btn-outline-secondary'"
                   matTooltip="Desapartar" (click)="_liberarCandidato()">
                   <em class="fa fa-thumbs-o-down"></em>
                 </button>
@@ -660,7 +664,7 @@
                   </tr>
                   <tr (click)="onCellClick_v(row)" (dblclick)="openDialogShowRequi()" *ngFor="let row of rows"
                     [class.confident]="row.confidencial" [class.enProceso]=" row.id === requisicionId">
-                    <td>
+                    <td class="text-center">
                       {{row.folio}}
                     </td>
                     <td> {{row.vBtra}}</td>
