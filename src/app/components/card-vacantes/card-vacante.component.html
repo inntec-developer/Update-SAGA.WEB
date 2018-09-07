@@ -1,5 +1,5 @@
 
-<div class="card">
+<div  *ngIf="Datos.length > 0"  class="card">
         <div class="box">
         <div class="row">
    
@@ -10,14 +10,14 @@
 
       <div class="panel-heading">
             <em class="fa fa-phone"></em>
-            <span>TELEFONOS</span>
+            <span><strong>TELEFONOS</strong></span>
     </div>
       <span>
           <ng-template #popTemplateTelefonos>
               <h3 class="popover-header text-center">Ext. - Telefono</h3>
               <div class = "row">
               <div class="col-md-12">
-              <div class="popover-body">
+              <div class="popover-body bodymio">
                 <ng-container *ngFor="let tel of Datos[0]['telefonos']">
                 <p *ngIf="!tel.principal">{{tel.tipo}} [ <span *ngFor="let e of tel.exts">{{e.ext}} - </span> ]  {{tel.telefono}} </p>
               </ng-container>
@@ -35,7 +35,7 @@
         <br/>
         <div class="panel-heading">
             <em class="fa fa-map-marker"></em>
-            <span>DIRECCIONES</span>
+            <span><strong>DIRECCIONES</strong></span>
         </div>
         <span>
             <ul *ngFor="let dir of Datos[0]['direccion']">
@@ -54,18 +54,18 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <em class="fa fa-address-card-o"></em>  
-                <span>CONTACTOS</span>
+                <span><strong>CONTACTOS</strong></span>
             </div>
               <span>
                 <ul *ngFor="let contacto of Datos[0]['contactos']">
                     <ng-template #popTemplate>
-                        <h3 style="color:#e91e63;" class="popover-header text-center">{{contacto.puesto}}</h3>
+                        <h3 class="popover-header text-center">{{contacto.puesto}}</h3>
                         <div class = "row">
                         <div class="col-md-12">
-                        <div class="popover-body">
-                          <p>(Ext. {{contacto.telefonos[0]['ext']}})-{{contacto.telefonos[0]['telefono']}}
+                        <div class="popover-body bodymio">
+                          (Ext. {{contacto.telefonos[0]['ext']}})-{{contacto.telefonos[0]['telefono']}}
                               <span>{{contacto.emails[0]['email']}}</span>
-                          </p>
+                          
                           
                         </div>
                       </div>
@@ -83,11 +83,25 @@
       <div class="panel panel-default">
           <div class="panel-heading">
               <em class="fa fa-user-plus"></em>
-              <span>ASIGNADO</span>
+              <span><strong>ASIGNADOS</strong></span>
         </div>
           <span>
               <ul *ngFor="let asig of Datos[0]['asignados']">
-                <li><a>{{asig.nombre}} {{asig.apellidoParterno}} {{asig.apellidoMaterno}}</a></li>
+                    <ng-template #popTemplateUsers>
+                            <h3 class="popover-header text-center">Integrantes</h3>
+                            <div class = "row">
+                            <div class="col-md-12">
+                            <div class="popover-body bodymio" *ngFor="let r of asig.data">
+
+                                <img class="float-left img-fluid circle thumb32" src={{r.foto}} alt="" /> 
+                                <span>{{r.nombre}} {{r.apellidoParterno}} {{r.apellidoMaterno}}</span> 
+        
+                            </div>
+                          </div>
+                          </div>
+                          </ng-template>
+
+                <li><a [popover]="popTemplateUsers" container="body" placement="left" triggers="mouseenter:mouseleave">{{asig.nombre}} {{asig.apellidoParterno}} {{asig.apellidoMaterno}}</a></li>
               </ul>
 
           </span>
@@ -97,6 +111,8 @@
     
 </div>
 </div>
+
+
 
 
 

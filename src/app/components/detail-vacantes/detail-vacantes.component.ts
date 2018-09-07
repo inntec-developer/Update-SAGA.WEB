@@ -28,8 +28,10 @@ export class DetailVacantesComponent implements OnInit {
   constructor(private _service: DetailService ) { }
 
   GetDtosDetail() {
+  
     this._service.GetDtosDetail(this.VacanteId).subscribe(data => {
       this.Datos = data;
+      this.Datos.length = 1;
       console.log(this.Datos);
     }
     );

@@ -24,9 +24,9 @@ export class CardService {
   }
 
 
-  GetDtosCard(ClientId: any): Observable<any>
+  GetDtosCard(ClientId: any, RequisicionId: any): Observable<any>
   {
-    let params = new HttpParams().set('ClientId', ClientId);
+    let params = new HttpParams().set('ClientId', ClientId).set('RequisicionId', RequisicionId);
     return this._HttpClient.get(this.UrlDtsCard, { params: params })
   }
 }
