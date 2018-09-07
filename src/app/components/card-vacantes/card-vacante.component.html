@@ -88,14 +88,13 @@
           <span>
               <ul *ngFor="let asig of Datos[0]['asignados']">
                     <ng-template #popTemplateUsers>
-                            <h3 class="popover-header text-center">Integrantes</h3>
+                            <h3 *ngIf="asig.data.length > 0" class="popover-header text-center">Integrantes</h3>
+                            <h3 *ngIf="asig.data.length === 0" class="popover-header text-center">Usuario</h3>
                             <div class = "row">
                             <div class="col-md-12">
                             <div class="popover-body bodymio" *ngFor="let r of asig.data">
-
                                 <img class="float-left img-fluid circle thumb32" src={{r.foto}} alt="" /> 
                                 <span>{{r.nombre}} {{r.apellidoParterno}} {{r.apellidoMaterno}}</span> 
-        
                             </div>
                           </div>
                           </div>

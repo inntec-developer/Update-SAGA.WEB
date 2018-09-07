@@ -24,7 +24,7 @@
                 <em class="fa fa-phone"></em>
               </button></a></li> -->
               <li><a>
-                <button class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="SetProceso(11)" matTooltip="CV Visto">
+                <button [disabled]="cv" class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="SetProceso(11)" matTooltip="CV Visto">
                     <em class="fa fa-file-text-o"></em>
                   </button>
                 </a></li>
@@ -58,7 +58,7 @@
                 <em class="fa fa-user-md"></em>
               </button></a></li>
               <li><a><em class="vl"></em></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button" (click)="SetProceso(27)" matTooltip="Contratado">
+              <li><a><button [disabled]="contratado" class="mb-1 btn btn-xs btn-outline-success"  type="button" (click)="SetProceso(27)" matTooltip="Contratado">
                 <em class="fa fa-user-plus"></em>
               </button></a></li>
               <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(28)" matTooltip="Cancelada">
@@ -108,7 +108,7 @@
                 class="form-control">
             </td>
           </tr>
-          <tr (click)="onCellClick(row)" *ngFor="let row of dataSource" [class.selected]="row.selected">
+          <tr (click)="onCellClick(row)" *ngFor="let row of dataSource" [class.selected]="row.selected" matTooltip="click para seleccionar">
             <td class="text-center">
               {{row.nombre}}
             </td>

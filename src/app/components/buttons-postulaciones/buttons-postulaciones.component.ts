@@ -13,6 +13,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   @Input() RequisicionId;
   @ViewChild('MessageModal') ShownModal: ModalDirective;
+ 
   public dataSource: Array<any> = [];
   // Varaibles del paginador
   public page: number = 1;
@@ -29,6 +30,9 @@ export class ButtonsPostulacionesComponent implements OnInit {
   selectedList: any = [];
   candidatoId;
   isModalShown: boolean = false;
+  contratado = false;
+  cv = false;
+
 
   constructor(private service: PostulateService, private toasterService: ToasterService, private spinner: NgxSpinnerService) { }
 
@@ -36,6 +40,11 @@ export class ButtonsPostulacionesComponent implements OnInit {
     this.getpostulados();
   }
 
+  ValidarEstatus(estatus)
+  {
+    estatus == 'Contratado' ? this.contratado = true : this.contratado = false;
+    estatus == 'CV Visto' ? this.cv = true : this.cv = false;
+  }
   getpostulados() {
     this.service.GetProceso(this.RequisicionId, localStorage.getItem('id')).subscribe(data => { 
       this.dataSource = [];
@@ -60,18 +69,21 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   SetProceso(estatusId)
   {
-    this.selectedList.forEach(element => {
-      element.estatusId = estatusId
-    });
+    if(this.selectedList.length > 0)
+    {
+      this.selectedList.forEach(element => {
+        element.estatusId = estatusId
+      });
 
-    this.service.SetProceso(this.selectedList).subscribe(data => {
-      if(data == 201)
-      {
-        this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
-        this.selectedList =[];
-        this.getpostulados();
-      }
-    })
+      this.service.SetProceso(this.selectedList).subscribe(data => {
+        if(data == 201)
+        {
+          this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+          this.selectedList =[];
+          this.getpostulados();
+        }
+      })
+    }
 
   }
 
@@ -216,6 +228,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
     data.selected ? data.selected = false : data.selected = true; //para poner el backgroun cuando seleccione
     data.selected ? this.selectedList.push({ candidatoId: data.candidatoId }) : this.selectedList.splice(this.selectedList.findIndex(x => x.candidatoId == data.candidatoId), 1); //agrega y quita el row seleccionado
+    this.ValidarEstatus(data.estatus)
     // let index = this.dataSource.indexOf(data.row);
     // this.element = data;
     // /* add an class 'active' on click */
