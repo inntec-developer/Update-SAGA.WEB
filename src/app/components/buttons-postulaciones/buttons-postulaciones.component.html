@@ -5,47 +5,20 @@
           <div class="box">
           <span>
             <ul>
-             <li><a>
-              <button class="mb-1 btn btn-xs btn-outline-primary"  type="button" (click)="SetProceso(30)" matTooltip="Liberado"> 
-                <em class="fa fa-thumbs-o-down"></em>
-              </button>
-            </a></li>
-            <li><a>
+             
+            <!-- <li><a>
               <button class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="VerCandidato()" matTooltip="Ver Candidato">
                   <em class="fa fa-eye"></em>
                 </button>
-              </a></li>
-              <li><a><em class="vl"></em></a></li>
-          
-              <!-- <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
-                <em class="fa fa-phone"></em>
+              </a></li> -->
+              <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button" (click)="SetProceso(16)" matTooltip="Cita Candidato">
+                <em class="fa fa-address-book"></em>
               </button></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button">
-                <em class="fa fa-phone"></em>
-              </button></a></li> -->
-              <li><a>
-                <button class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="SetProceso(11)" matTooltip="CV Visto">
-                    <em class="fa fa-file-text-o"></em>
-                  </button>
-                </a></li>
               <li><a><button class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="SetProceso(17)" matTooltip="Cita Reclutamiento">
                 <em class="fa fa-address-book"></em>
               </button></a></li>
               <li><a><button class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="SetProceso(18)" matTooltip="Entrevista Reclutamiento" >
                 <em class="fa fa-microphone"></em>
-              </button></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button" (click)="SetProceso(24)" matTooltip="Finalista Reclutamiento">
-                <em class="fa fa-user-circle-o"></em>
-              </button></a></li>
-              <li><a><em class="vl"></em></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button" (click)="SetProceso(16)" matTooltip="Cita Candidato">
-                <em class="fa fa-address-book"></em>
-              </button></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button" (click)="SetProceso(25)" matTooltip="Entrevista Cliente" >
-                <em class="fa fa-microphone"></em>
-              </button></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button" (click)="SetProceso(26)" matTooltip="Finalista Cliente">
-                <em class="fa fa-user-circle-o"></em>
               </button></a></li>
               <li><a><em class="vl"></em></a></li>
               <li><a><button class="mb-1 btn btn-xs btn-outline-secondary"  type="button" (click)="SetProceso(19)" matTooltip="Evaluación Técnica">
@@ -58,19 +31,56 @@
                 <em class="fa fa-user-md"></em>
               </button></a></li>
               <li><a><em class="vl"></em></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button" (click)="SetProceso(27)" matTooltip="Contratado">
+              <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button" (click)="SetProceso(24)" matTooltip="Finalista Reclutamiento">
+                <em class="fa fa-user-circle-o"></em>
+              </button></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button" (click)="SetProceso(25)" matTooltip="Entrevista Cliente" >
+                <em class="fa fa-microphone"></em>
+              </button></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button" (click)="SetProceso(26)" matTooltip="Finalista Cliente">
+                <em class="fa fa-user-circle-o"></em>
+              </button></a></li>
+              <li><a><button [disabled]="contratado" class="mb-1 btn btn-xs btn-outline-success"  type="button" (click)="SetProceso(27)" matTooltip="Contratado">
                 <em class="fa fa-user-plus"></em>
               </button></a></li>
+              <li><a><em class="vl"></em></a></li>
               <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(28)" matTooltip="Cancelada">
                 <em class="fa fa-user-times"></em>
               </button></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="SetProceso(23)" matTooltip="Transferir">
-                <em class="fa fa-exchange"></em>
-              </button></a></li>
+              <li><a>
+                <button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(30)" matTooltip="Liberado"> 
+                  <em class="fa fa-thumbs-o-down"></em>
+                </button>
+              </a></li>
               <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(29)" matTooltip="Abandonó Proceso">
                 <em class="fa fa-flag"></em>
               </button></a></li>
             
+              <!-- <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
+                <em class="fa fa-phone"></em>
+              </button></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button">
+                <em class="fa fa-phone"></em>
+              </button></a></li> -->
+           
+
+              <!-- <li><a>
+                <button [disabled]="cv" class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="SetProceso(11)" matTooltip="CV Visto">
+                    <em class="fa fa-file-text-o"></em>
+                  </button>
+                </a></li> -->
+            
+            
+          
+             
+            
+             
+              <!-- <li><a><em class="vl"></em></a></li>
+            
+              <li><a><button class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="SetProceso(23)" matTooltip="Transferir">
+                <em class="fa fa-exchange"></em>
+              </button></a></li>
+          -->
               <!-- <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button">
                 <em class="fa fa-unlock"></em>
               </button></a></li>
@@ -108,7 +118,7 @@
                 class="form-control">
             </td>
           </tr>
-          <tr (click)="onCellClick(row)" *ngFor="let row of dataSource" [class.selected]="row.selected">
+          <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of dataSource" [class.selected]="row.selected" matTooltip="click para seleccionar">
             <td class="text-center">
               {{row.nombre}}
             </td>
