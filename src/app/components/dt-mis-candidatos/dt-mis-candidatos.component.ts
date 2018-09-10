@@ -64,7 +64,7 @@ export class DtMisCandidatosComponent implements OnInit {
     paging: true,
     //sorting: { colums: this.columns },
     filtering: { filterString: '' },
-    className: ['table-striped mb-0 d-table-fixed']
+    className: ['table-hover mb-0']
   }
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {

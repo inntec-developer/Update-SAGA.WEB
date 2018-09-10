@@ -13,7 +13,7 @@
       <div class="card-body text-center">
         <img class="img-fluid img-thumbnail rounded-circle thumb96" [src]="candidato.picture" alt="Contact" />
         <h4>{{candidato.nombre}}</h4>
-        <div *ngIf="!candidato.estatus || reclutador == usuario">
+        <div *ngIf="!candidato.estatus || reclutador === usuario">
           <div *ngIf="candidato.aboutMe">
             <mat-divider></mat-divider>
             <span class="text-muted">{{candidato.aboutMe}}</span>
@@ -624,13 +624,13 @@
             <div class="row justify-content-between">
               <div class="d-flex align-items-stretch ">
                 <!-- <btn-view (click)="openDialogShowRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view> -->
-                <button [disabled]="vacante.id != requisicionId && Status != 0 "
-                  [ngClass]="( Status == 0 || vacante.id == requisicionId) ? 'mb-1 btn btn-outline-success':'mb-1 btn btn-outline-secondary'"
+                <button [disabled]="vacante.id != requisicionId && Status != 0 || vacante.id === requisicionId &&  reclutador != usuario "
+                  [ngClass]="( vacante.id != requisicionId && Status != 0 || vacante.id === requisicionId &&  reclutador != usuario  ) ? 'mb-1 btn btn-secondary':'mb-1 btn btn-outline-success'"
                   matTooltip="Apartar" (click)="_apartarCandidato()">
                   <em class="fa fa-thumbs-o-up"></em>
                 </button>
-                <button [disabled]="vacante.id != requisicionId && Status != 0 "
-                  [ngClass]="( Status == 0 || vacante.id == requisicionId) ? 'mb-1 btn btn-outline-danger':'mb-1 btn btn-outline-secondary'"
+                <button [disabled]="vacante.id != requisicionId && Status != 0 || vacante.id === requisicionId &&  reclutador != usuario"
+                  [ngClass]="( vacante.id != requisicionId && Status != 0 || vacante.id === requisicionId &&  reclutador != usuario  ) ? 'mb-1 btn btn-secondary':'mb-1 btn btn-outline-danger'"
                   matTooltip="Desapartar" (click)="_liberarCandidato()">
                   <em class="fa fa-thumbs-o-down"></em>
                 </button>
@@ -642,7 +642,7 @@
             </div>
           </div>
           <div class="card card-default">
-            <div class="container" #tableContainer>
+            <div #tableContainer>
               <table id="resultDataTableVacantes" class="table-responsive" ngClass="{{config_v.className || ''}}" role="grid"
                 style="width: 100%;">
                 <thead>

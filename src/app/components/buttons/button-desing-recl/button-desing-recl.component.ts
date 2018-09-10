@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'btn-desing-recl',
@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ButtonDesingReclComponent implements OnInit {
   @Input('xs') xs: boolean = false;
+  @Input('mostar') mostar: any;
   constructor() { }
 
   ngOnInit() {

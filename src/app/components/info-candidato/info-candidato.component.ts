@@ -22,7 +22,7 @@ export class InfoCandidatoComponent implements OnInit {
     Variables y funcionamiento para Tabla de Mis Vacantes.
   */
   public page_v: number = 1;
-  public itemsPerPage_v: number = 20;
+  public itemsPerPage_v: number = 5;
   public maxSize_v: number = 5;
   public numPages_v: number = 1;
   public length_v: number = 0;
@@ -142,7 +142,7 @@ export class InfoCandidatoComponent implements OnInit {
     paging: true,
     //sorting: { columns: this.columns },
     filtering: { filterString: '' },
-    className: ['table-striped mb-0']
+    className: ['table-hover mb-0']
   };
 
   public changePage_v(page: any, data: Array<any> = this.dataSource_v): Array<any> {
@@ -355,7 +355,7 @@ export class InfoCandidatoComponent implements OnInit {
               break;
             }
             default: {
-              var msg = 'Error inesperado y desconocido, reporte el problema el departamento de soprte.';
+              var msg = 'Error inesperado y desconocido, reporte el problema el departamento de soporte.';
               this.popToast('error', 'Oops!!', msg);
               break;
             }
@@ -371,7 +371,6 @@ export class InfoCandidatoComponent implements OnInit {
 
   _liberarCandidato() {
     if (this.reclutador == this.usuario || !this.candidato.estatus) {
-      debugger;
       this._serviceCandidato.setLiberarCandidato(this.procesoCandidatoId)
         .subscribe(data => {
           switch (data) {

@@ -1,0 +1,42 @@
+<div class="content-heading">
+  <div>
+   Seguimiento Vacante {{Folio}} {{Vacante}}
+    <span class="text-sm d-none d-sm-block">Gestion de Vacante</span>
+  </div>
+  <!-- Breadcrumb right aligned-->
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item">
+      <a [routerLink]="['/home']">Inicio</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a [routerLink]="['/reclutamiento/vacantesReclutador']"> Vacantes</a>
+    </li>
+    <li class="breadcrumb-item activate"> Gestion de Vacante</li>
+  </ol>
+</div>
+<div class="d-flex justify-content-between">
+  <div class="d-flex align-items-stretch ">
+    <!-- <btn-docs (click)="openDialog()" matTooltip="Crear Requisición"></btn-docs>
+    <btn-view (click)="showDamfo()" matTooltip="Ver DAM-FO-290"></btn-view> -->
+  </div>
+  <div>
+    <btn-return matTooltip="Regresar" [routerLink]="['/reclutamiento/vacantesReclutador']"></btn-return>
+  </div>
+</div>
+
+<div class="row" >
+  <div class="col-md-12">
+    <div class="panel panel-default">
+    <app-card-vacante [ClientId]="ClienteId" [RequisicionId]="RequisicionId"></app-card-vacante>
+  </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <app-buttons-postulaciones [RequisicionId]="RequisicionId" *ngIf="enProceso > 0 "></app-buttons-postulaciones>
+      <br/>
+      <app-detail-vacantes [RequisicionId]="RequisicionId"></app-detail-vacantes>
+    </div>
+  </div>
+</div>

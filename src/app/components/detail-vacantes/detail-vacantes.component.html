@@ -1,49 +1,50 @@
-
 <mat-accordion *ngIf="Datos.length > 0" class="example-headers-align">
   <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
     <mat-expansion-panel-header>
-      <mat-panel-title>
-        Datos de la vacante.
+      <mat-panel-title class="text-warning">
+        Datos de la Vacante.
       </mat-panel-title>
       <mat-panel-description>
-         
+
       </mat-panel-description>
       <mat-icon style="color: #2874A6;">info</mat-icon>
     </mat-expansion-panel-header>
 
     <div class="row">
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Folio: </strong> {{Datos.requisicion.folio}}
+        <strong class="text-primary">Folio: </strong> {{Datos.requisicion?.folio}}
       </div>
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Descripcion: </strong> {{Datos.requisicion.vBtra}}
+        <strong class="text-primary">Descripci&oacute;n: </strong> {{Datos.requisicion?.vBtra}}
       </div>
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Fecha creación: </strong> {{Datos.requisicion.fch_Creacion | date: 'dd/MMM/yyyy'}}
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-4 text-muted">
-        <strong class="text-primary">Fecha limite: </strong> {{Datos.requisicion.fch_Limite | date: 'dd/MMM/yyyy'}}
-      </div>
-      <div class="col-md-4 text-muted">
-        <strong class="text-primary">Fecha cumplimiento: </strong> {{Datos.requisicion.fch_Cumplimiento | date: 'dd/MMM/yyyy'}}
-      </div>
-      <div class="col-md-4 text-muted">
-        <strong class="text-primary">Estatus: </strong> {{Datos.requisicion.estatus.descripcion}}
+        <strong class="text-primary">Fecha Creaci&oacute;n: </strong> {{Datos.requisicion?.fch_Creacion | date:
+        'dd/MMM/yyyy'}}
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Confidencial: </strong> {{Datos.requisicion.confidencial? 'Si': 'No'}}
+        <strong class="text-primary">Fecha Limite: </strong> {{Datos.requisicion?.fch_Limite | date: 'dd/MMM/yyyy'}}
       </div>
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Asignada: </strong> {{Datos.requisicion.asignada? 'Si': 'No'}}
+        <strong class="text-primary">Fecha Cumplimiento: </strong> {{Datos.requisicion?.fch_Cumplimiento | date:
+        'dd/MMM/yyyy'}}
       </div>
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Dias envio: </strong> {{Datos.requisicion.diasEnvio}}
+        <strong class="text-primary">Estatus: </strong> {{Datos.requisicion?.estatus.descripcion}}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 text-muted">
+        <strong class="text-primary">Confidencial: </strong> {{Datos.requisicion?.confidencial? 'Si': 'No'}}
+      </div>
+      <div class="col-md-4 text-muted">
+        <strong class="text-primary">Asignada: </strong> {{Datos.requisicion?.asignada ? 'Si': 'No'}}
+      </div>
+      <div class="col-md-4 text-muted">
+        <strong class="text-primary">D&iacute;as de Envi&oacute;: </strong> {{Datos.requisicion?.diasEnvio}}
       </div>
     </div>
 
@@ -55,24 +56,27 @@
 
   <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
     <mat-expansion-panel-header>
-      <mat-panel-title>
+      <mat-panel-title class="text-warning">
         Reclutamiento
       </mat-panel-title>
       <mat-panel-description>
-        
+
       </mat-panel-description>
       <mat-icon style="color: #2874A6;">subject</mat-icon>
     </mat-expansion-panel-header>
 
     <div class="row">
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Tipo reclutamiento: </strong> {{Datos.requisicion.tipoReclutamiento.tipoReclutamiento}}
+        <strong class="text-primary">Tipo Reclutamiento: </strong>
+        {{Datos.requisicion?.tipoReclutamiento.tipoReclutamiento}}
       </div>
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Clase reclutamiento: </strong> {{Datos.requisicion.claseReclutamiento.clasesReclutamiento}}
+        <strong class="text-primary">Clase Reclutamiento: </strong>
+        {{Datos.requisicion?.claseReclutamiento?.clasesReclutamiento}}
       </div>
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Tiempo de contrato: </strong> {{Datos.requisicion.tiempoContrato.tiempo}} días.
+        <strong class="text-primary">Tiempo de Contrato: </strong> {{Datos.requisicion?.tiempoContrato?.tiempo}}
+        d&iacute;as.
       </div>
     </div>
 
@@ -84,18 +88,18 @@
 
   <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
     <mat-expansion-panel-header>
-      <mat-panel-title>
+      <mat-panel-title class="text-warning">
         Beneficios
       </mat-panel-title>
       <mat-panel-description>
-        
+
       </mat-panel-description>
       <mat-icon style="color: #2874A6;">list_alt</mat-icon>
     </mat-expansion-panel-header>
 
     <div *ngFor="let beneficio of Datos?.requisicion.beneficiosRequi" class="row">
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Tipo de beneficio: </strong> {{beneficio.tipoBeneficio.tipoBeneficio}}
+        <strong class="text-primary">Tipo de Beneficio: </strong> {{beneficio.tipoBeneficio?.tipoBeneficio}}
       </div>
       <div class="col-md-4 text-muted">
         <strong class="text-primary">Cantidad: </strong> {{beneficio.cantidad}}
@@ -104,7 +108,7 @@
         <strong class="text-primary">Observaciones: </strong> {{beneficio.observaciones}}
       </div>
     </div>
-  
+
     <mat-action-row>
       <button mat-button color="warn" (click)="prevStep()">Previo</button>
       <button mat-button color="primary" (click)="nextStep()">Siguiente</button>
@@ -113,11 +117,11 @@
 
   <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
     <mat-expansion-panel-header>
-      <mat-panel-title>
+      <mat-panel-title class="text-warning">
         Puesto
       </mat-panel-title>
       <mat-panel-description>
-        
+
       </mat-panel-description>
       <mat-icon style="color: #2874A6;">folder_shared</mat-icon>
     </mat-expansion-panel-header>
@@ -131,7 +135,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col-md-4 text-muted">
         <strong class="text-primary">Observaciones: </strong>
         <div *ngFor="let observaciones of Datos?.requisicion.observacionesRequi;let indice=index" class="row">
@@ -150,7 +154,7 @@
         </div>
       </div>
     </div>
-      
+
     <mat-action-row>
       <button mat-button color="warn" (click)="prevStep()">Previo</button>
       <button mat-button color="primary" (click)="nextStep()">Siguiente</button>
@@ -159,51 +163,58 @@
 
   <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle>
     <mat-expansion-panel-header>
-      <mat-panel-title>
+      <mat-panel-title class="text-warning">
         Sueldos
       </mat-panel-title>
       <mat-panel-description>
-        
+
       </mat-panel-description>
       <mat-icon style="color: #2874A6;">attach_money</mat-icon>
     </mat-expansion-panel-header>
 
     <div class="row">
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Tipo de nomina: </strong> {{Datos.requisicion.tipoNomina.tipoDeNomina}}
+        <strong class="text-primary">Tipo de Nomina: </strong> {{Datos.requisicion?.tipoNomina?.tipoDeNomina}}
       </div>
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Periodo de pago: </strong> {{Datos.requisicion.periodoPago.periodoPago}}
+        <strong class="text-primary">Periodo de Pago: </strong> {{Datos.requisicion?.periodoPago?.periodoPago}}
       </div>
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Día pago: </strong> {{Datos.requisicion.diaPago.diaSemana}} <strong class="text-primary">Día corte: </strong> {{Datos.requisicion.diaCorte.diaSemana}}
+        <strong class="text-primary">D&iacute;a Pago: </strong> {{Datos.requisicion?.diaPago?.diaSemana}} <strong class="text-primary">D&iacute;a
+          Corte: </strong> {{Datos.requisicion?.diaCorte?.diaSemana}}
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Sueldo minimo: </strong> ${{Datos.requisicion.sueldoMinimo | number: '1.2-2'}}
+        <strong class="text-primary">Sueldo M&iacute;nimo: </strong> ${{Datos.requisicion?.sueldoMinimo | number:
+        '1.2-2'}}
       </div>
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Sueldo minimo diario: </strong> ${{Datos.requisicion.sueldoMinimo/30.6 | number: '1.2-2'}}
+        <strong class="text-primary">Sueldo M&iacute;nimo Diario: </strong> ${{Datos.requisicion?.sueldoMinimo/30 |
+        number: '1.2-2'}}
       </div>
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Sueldo minimo semanal: </strong> ${{Datos.requisicion.sueldoMinimo/7 | number: '1.2-2'}}
+        <strong class="text-primary">Sueldo M&iacute;nimo Semanal: </strong> ${{Datos.requisicion?.sueldoMinimo/7 |
+        number: '1.2-2'}}
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Sueldo máximo: </strong> ${{Datos.requisicion.sueldoMaximo | number: '1.2-2'}}
+        <strong class="text-primary">Sueldo M&aacute;ximo: </strong> ${{Datos.requisicion.sueldoMaximo | number:
+        '1.2-2'}}
       </div>
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Sueldo máximo diario: </strong> ${{Datos.requisicion.sueldoMaximo/30.6 | number: '1.2-2'}}
+        <strong class="text-primary">Sueldo M&aacute;ximo Diario: </strong> ${{Datos.requisicion.sueldoMaximo/30 |
+        number: '1.2-2'}}
       </div>
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Sueldo máximo semanal: </strong> ${{Datos.requisicion.sueldoMaximo/7 | number: '1.2-2'}}
+        <strong class="text-primary">Sueldo M&aacute;ximo Semanal: </strong> ${{Datos.requisicion.sueldoMaximo/7 |
+        number: '1.2-2'}}
       </div>
     </div>
-  
+
     <mat-action-row>
       <button mat-button color="warn" (click)="prevStep()">Previo</button>
       <button mat-button color="primary" (click)="nextStep()">Siguiente</button>
@@ -212,27 +223,27 @@
 
   <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)" hideToggle>
     <mat-expansion-panel-header>
-      <mat-panel-title>
+      <mat-panel-title class="text-warning">
         Documentación
       </mat-panel-title>
       <mat-panel-description>
-        
+
       </mat-panel-description>
       <mat-icon style="color: #2874A6;">folder_special</mat-icon>
     </mat-expansion-panel-header>
 
     <div class="row">
       <div class="col-md-6 text-muted">
-        <strong class="text-primary">Documentos damsa: </strong>
+        <strong class="text-primary">Documentos Damsa: </strong>
         <div *ngFor="let documentosdamsa of Datos.documentosDamsa;let indice=index" class="row">
           <div class="col-md-12 text-muted">
             <strong>{{indice+1}}.</strong> {{documentosdamsa.documentoDamsa}}
           </div>
         </div>
       </div>
-    
+
       <div class="col-md-6 text-muted">
-        <strong class="text-primary">Documentos cliente: </strong>
+        <strong class="text-primary">Documentos Cliente: </strong>
         <div *ngFor="let documentosrequi of Datos?.requisicion.documentosClienteRequi;let indice=index" class="row">
           <div class="col-md-12 text-muted">
             <strong>{{indice+1}}.</strong> {{documentosrequi.observaciones}}
@@ -240,7 +251,7 @@
         </div>
       </div>
     </div>
-  
+
     <mat-action-row>
       <button mat-button color="warn" (click)="prevStep()">Previo</button>
       <button mat-button color="primary" (click)="nextStep()">Siguiente</button>
@@ -249,27 +260,27 @@
 
   <mat-expansion-panel [expanded]="step === 6" (opened)="setStep(6)" hideToggle>
     <mat-expansion-panel-header>
-      <mat-panel-title>
+      <mat-panel-title class="text-warning">
         Prestaciones
       </mat-panel-title>
       <mat-panel-description>
-        
+
       </mat-panel-description>
       <mat-icon style="color: #2874A6;">recent_actors</mat-icon>
     </mat-expansion-panel-header>
 
     <div class="row">
       <div class="col-md-6 text-muted">
-        <strong class="text-primary">Prestaciones de ley: </strong>
-          <div *ngFor="let prestley of Datos.prestacionesLey;let indice=index" class="row">
-            <div class="col-md-12 text-muted">
-              <strong>{{indice+1}}.</strong> {{prestley.prestacionLey}}
-            </div>
+        <strong class="text-primary">Prestaciones de Ley: </strong>
+        <div *ngFor="let prestley of Datos.prestacionesLey;let indice=index" class="row">
+          <div class="col-md-12 text-muted">
+            <strong>{{indice+1}}.</strong> {{prestley.prestacionLey}}
           </div>
+        </div>
       </div>
 
       <div class="col-md-6 text-muted">
-        <strong class="text-primary">Prestaciones adicionales: </strong>
+        <strong class="text-primary">Prestaciones Adicionales: </strong>
         <div *ngFor="let prestcliente of Datos?.requisicion.prestacionesClienteRequi;let indice=index" class="row">
           <div class="col-md-12 text-muted">
             <strong>{{indice+1}}.</strong> {{prestcliente.prestamo}}
@@ -277,7 +288,7 @@
         </div>
       </div>
     </div>
-  
+
     <mat-action-row>
       <button mat-button color="warn" (click)="prevStep()">Previo</button>
       <button mat-button color="primary" (click)="nextStep()">Siguiente</button>
@@ -286,35 +297,35 @@
 
   <mat-expansion-panel [expanded]="step === 7" (opened)="setStep(7)" hideToggle>
     <mat-expansion-panel-header>
-      <mat-panel-title>
+      <mat-panel-title class="text-warning">
         Psicometrias
       </mat-panel-title>
       <mat-panel-description>
-        
+
       </mat-panel-description>
       <mat-icon style="color: #2874A6;">assignment</mat-icon>
     </mat-expansion-panel-header>
 
     <div class="row">
       <div class="col-md-6 text-muted">
-        <strong class="text-primary">Piscometria: </strong>
+        <strong class="text-primary">Piscometr&iacute;a Damsa: </strong>
+        <div *ngFor="let psicodamsa of Datos?.requisicion.psicometriasDamsaRequi;let indice=index" class="row">
+          <div class="col-md-12 text-muted">
+            <strong>{{indice+1}}.</strong> {{psicodamsa.psicometria.tipoPsicometria}}
+            ({{psicodamsa.psicometria.descripcion}})
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 text-muted">
+        <strong class="text-primary">Piscometr&iacute;a Cliente: </strong>
         <div *ngFor="let psicoclientes of Datos?.requisicion.psicometriasClienteRequi;let indice=index" class="row">
           <div class="col-md-12 text-muted">
             <strong>{{indice+1}}.</strong> {{psicoclientes.psicometria}} ({{psicoclientes.descripcion}})
           </div>
         </div>
       </div>
-    
-      <div class="col-md-6 text-muted">
-        <strong class="text-primary">Psicometrias Damsa: </strong>
-        <div *ngFor="let psicodamsa of Datos?.requisicion.psicometriasDamsaRequi;let indice=index" class="row">
-          <div class="col-md-12 text-muted">
-            <strong>{{indice+1}}.</strong> {{psicodamsa.psicometria.tipoPsicometria}} ({{psicodamsa.psicometria.descripcion}})
-          </div>
-        </div>
-      </div>
     </div>
-  
+
     <mat-action-row>
       <button mat-button color="warn" (click)="prevStep()">Previo</button>
       <button mat-button color="primary" (click)="nextStep()">Siguiente</button>
@@ -323,27 +334,27 @@
 
   <mat-expansion-panel [expanded]="step === 8" (opened)="setStep(8)" hideToggle>
     <mat-expansion-panel-header>
-      <mat-panel-title>
-         Competencias
+      <mat-panel-title class="text-warning">
+        Competencias
       </mat-panel-title>
       <mat-panel-description>
-        
+
       </mat-panel-description>
       <mat-icon style="color: #2874A6;">school</mat-icon>
     </mat-expansion-panel-header>
 
     <div class="row">
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Competencias area: </strong>
+        <strong class="text-primary">Competencias &Aacute;rea: </strong>
         <div *ngFor="let comparea of Datos?.requisicion.competenciasAreaRequi;let indice=index" class="row">
           <div class="col-md-12 text-muted">
             <strong>{{indice+1}}.</strong> {{comparea.competencia.competenciaArea}} ({{comparea.nivel}})
           </div>
         </div>
       </div>
-    
+
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Competencias cardinal: </strong>
+        <strong class="text-primary">Competencias Cardinal: </strong>
         <div *ngFor="let compcardinal of Datos?.requisicion.competenciasCardinalRequi;let indice=index" class="row">
           <div class="col-md-12 text-muted">
             <strong>{{indice+1}}.</strong> {{compcardinal.competencia.competenciaCardinal}} ({{compcardinal.nivel}})
@@ -360,7 +371,7 @@
         </div>
       </div>
     </div>
-  
+
     <mat-action-row>
       <button mat-button color="warn" (click)="prevStep()">Previo</button>
       <button mat-button color="primary" (click)="nextStep()">Siguiente</button>

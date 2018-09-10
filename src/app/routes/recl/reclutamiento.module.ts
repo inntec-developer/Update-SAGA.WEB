@@ -77,6 +77,7 @@ import { PaisComponent } from './candidatos/busqueda/pais/pais.component';
 import { PcondiscapacidadComponent } from './candidatos/busqueda/pcondiscapacidad/pcondiscapacidad.component';
 import { PerfilComponent } from './candidatos/busqueda/perfil/perfil.component';
 import { ReubicacionComponent } from './candidatos/busqueda/reubicacion/reubicacion.component';
+import { SeguimientoVacanteComponent } from './vacantes/vacantes/seguimiento-vacante/seguimiento-vacante/seguimiento-vacante.component';
 import { SelectModule } from 'ng2-select';
 import { SharedModule } from '../../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
@@ -96,7 +97,8 @@ const routes: Routes = [
     { path: 'disenador', component: DisenadorVacanteComponent },
     { path: 'configuracionVacante/:Requi/:Folio/:VBtra', component: DisenadorVacanteComponent },
     { path: 'vacantesReclutador', component: VacantesReclutadorComponent, data:{componente:'Vacantes'} },
-    { path: 'postulados/:VacanteId/:Folio/:VBtra', component: VacantesPostulateComponent, data: {componnte: 'Vacantes'} }
+    { path: 'postulados/:VacanteId/:Folio/:VBtra', component: VacantesPostulateComponent, data: {componente: 'Vacantes'} },
+    { path: 'gestionVacante/:VacanteId/:Folio/:VBtra/:ClienteId/:enProceso', component: SeguimientoVacanteComponent, data: {componente: 'Vacantes'} }
 ];
 
 @NgModule({
@@ -139,7 +141,8 @@ const routes: Routes = [
                      DialogShowRequiComponent,
                      DialogAssingRequiComponent,
                      DtCandidatosPostComponent,
-                     VacantesPostulateComponent],
+                     VacantesPostulateComponent,
+                     SeguimientoVacanteComponent],
     entryComponents: [
        DialogcandidatosComponent, DialogShowRequiComponent, DialogAssingRequiComponent],
     exports: [ RouterModule ]

@@ -1,6 +1,7 @@
-import { DetailService } from '../../service/SeguimientoVacante/DetailService.service';
+import { Component, Input, OnInit } from '@angular/core';
+
 import { ApiConection } from '../../service/api-conection.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { DetailService } from '../../service/SeguimientoVacante/DetailService.service';
 
 @Component({
   selector: 'app-detail-vacantes',
@@ -9,7 +10,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DetailVacantesComponent implements OnInit {
 
-  @Input() VacanteId;
+  @Input('RequisicionId') RequisicionId;
   Datos = [];
 
    step = 0;
@@ -29,7 +30,7 @@ export class DetailVacantesComponent implements OnInit {
 
   GetDtosDetail() {
   
-    this._service.GetDtosDetail(this.VacanteId).subscribe(data => {
+    this._service.GetDtosDetail(this.RequisicionId).subscribe(data => {
       this.Datos = data;
       this.Datos.length = 1;
       console.log(this.Datos);

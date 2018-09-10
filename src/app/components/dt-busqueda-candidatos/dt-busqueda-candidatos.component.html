@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="card card-default">
-    <div class="table-responsive" #tableContainer>
+    <div #tableContainer>
       <table id="resultBusqueda" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
         <thead>
           <tr>
@@ -17,14 +17,14 @@
               </i>
             </th>
           </tr>
-        </thead>
-        <tbody>
-          <tr *ngIf="showFilterRow">
+          <tr *ngIf="showFilterRow" class="filter-colum">
             <td *ngFor="let column of columns">
               <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
                 class="form-control">
             </td>
           </tr>
+        </thead>
+        <tbody>
           <tr (click)="onCellClick(row)" (dblclick)="getCandidato(row.candidatoId)" *ngFor="let row of rows" [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8">
             <td>
               {{row.nombre}}

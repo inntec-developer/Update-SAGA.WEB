@@ -39,13 +39,18 @@ export class DtVacantesReclutadorComponent implements OnInit {
   id: any;
   folio: any;
   postulados: any;
+  ShowDV: boolean;
+  clienteId: any;
 
   constructor(
     private service: RequisicionesService,
     private dialog: MatDialog,
     private _Router: Router,
     private spinner: NgxSpinnerService,
-  ) { }
+  ) { 
+    this.enProceso = 0;
+    this.postulados = 0;
+  }
 
   ngOnInit() {
     this.spinner.show();
@@ -91,7 +96,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     paging: true,
     //sorting: { columns: this.columns },
     filtering: { filterString: '' },
-    className: ['table-striped mb-0 ']
+    className: ['table-hover mb-0 ']
   };
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
@@ -212,12 +217,12 @@ export class DtVacantesReclutadorComponent implements OnInit {
     let index = this.dataSource.indexOf(data.row);
     this.estatusId = data.estatusId;
     this.element = data;
-    console.log(this.element);
     this.vBtra = data.vBtra;
     this.id = data.id;
     this.folio = data.folio;
     this.postulados = data.postulados;
     this.enProceso = data.enProceso;
+    this.clienteId = data.clienteId,
     this.requi = {
       folio: data.folio,
       id: data.id
@@ -262,5 +267,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this._Router.navigate(['/reclutamiento/postulados', this.id, this.folio, this.vBtra], { skipLocationChange: true });
     }
   }
+
+  seguimientoRequi(){
+     this._Router.navigate(['/reclutamiento/gestionVacante', this.id, this.folio, this.vBtra, this.clienteId, this.enProceso], { skipLocationChange: true });
+  }
+
 }
 
