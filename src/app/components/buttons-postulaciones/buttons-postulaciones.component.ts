@@ -31,8 +31,15 @@ export class ButtonsPostulacionesComponent implements OnInit {
   candidatoId;
   isModalShown: boolean = false;
   contratado = false;
-  cv = false;
-
+  cr = false; //cita reclutamiento
+  enr = false; //entrevista reclutamiento
+  fr = false; //finalista reclutameinto
+  enc = false; //entrevista cliente
+  fc = false; // finalista cliente
+  evt = false; //evaluacion tecnica
+  evps = false; //evaluacion psicometrica
+  evm = false; //evaluacion medica
+  rowAux = [];
 
   constructor(private service: PostulateService, private toasterService: ToasterService, private spinner: NgxSpinnerService) { }
 
@@ -42,8 +49,91 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   ValidarEstatus(estatus)
   {
-    estatus == 'Contratado' ? this.contratado = true : this.contratado = false;
-    estatus == 'CV Visto' ? this.cv = true : this.cv = false;
+    if(estatus === 'Contratado')
+    {
+      this.cr = true;
+      this.enr = true;
+      this.fr = true;
+      this.enc = true;
+      this.fc = true;
+      this.evt = true;
+      this.evps = true;
+      this.evm = true;
+    }
+    else if(estatus === 'Cita Reclutamiento')
+    {
+      this.cr = true;
+      this.enr = false;
+      this.fr = true;
+      this.enc = true;
+      this.fc = true;
+      this.contratado = true;
+      this.evt = true;
+      this.evps = true;
+      this.evm = true;
+    }
+    else if(estatus === 'Entrevista Reclutamiento')
+    {
+      this.cr = true;
+      this.enr = true;
+      this.fr = false;
+      this.enc = true;
+      this.fc = true;
+      this.contratado = true;
+      this.evt = true;
+      this.evps = true;
+      this.evm = true;
+    }
+    else if(estatus === 'Finalista Reclutamiento')
+    {
+      this.cr = true;
+      this.enr = true;
+      this.fr = true;
+      this.enc = false;
+      this.fc = true;
+      this.contratado = true;
+      this.evt = true;
+      this.evps = true;
+      this.evm = true;
+    }
+    else if(estatus === 'Entrevista cliente')
+    {
+      this.cr = true;
+      this.enr = true;
+      this.fr = true;
+      this.enc = true;
+      this.fc = false;
+      this.contratado = true;
+      this.evt = true;
+      this.evps = true;
+      this.evm = true;
+    }
+    else if(estatus === 'Finalista Cliente')
+    {
+      this.cr = true;
+      this.enr = true;
+      this.fr = true;
+      this.enc = true;
+      this.fc = true;
+      this.contratado = false
+      this.evt = true;
+      this.evps = true;
+      this.evm = true;
+    }
+    else if(estatus === 'Evaluación Técnica' || estatus === 'Evaluación Psicométrica' || estatus === 'Evaluación Médica')
+    {
+      this.cr = false;
+      this.enr = true;
+      this.fr = true;
+      this.enc = true;
+      this.fc = true;
+      this.contratado = true;
+      this.evt = true;
+      this.evps = true;
+      this.evm = true;
+
+    }
+ 
   }
   getpostulados() {
     this.service.GetProceso(this.RequisicionId, localStorage.getItem('id')).subscribe(data => { 
@@ -79,7 +169,17 @@ export class ButtonsPostulacionesComponent implements OnInit {
         if(data == 201)
         {
           this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
-          this.selectedList =[];
+          this.selectedList = [];
+          this.cr = false;
+          this.enr = false;
+          this.fr = false;
+          this.enc = false;
+          this.fc = false;
+          this.contratado = false;
+          this.evt = false;
+          this.evps = false;
+          this.evm = false;
+    
           this.getpostulados();
         }
       })
@@ -135,6 +235,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   }
 
   public changeSort(data: any, config: any): any {
+    debugger;
     if (!config.sorting) {
       return data;
     }
@@ -208,6 +309,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   }
 
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
+    debugger;
     if (config.filtering) {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
@@ -224,10 +326,38 @@ export class ButtonsPostulacionesComponent implements OnInit {
   }
 
   public onCellClick(data: any) {
-
+    this.selectedList = [];
     data.selected ? data.selected = false : data.selected = true; //para poner el backgroun cuando seleccione
-    data.selected ? this.selectedList.push({ candidatoId: data.candidatoId }) : this.selectedList.splice(this.selectedList.findIndex(x => x.candidatoId == data.candidatoId), 1); //agrega y quita el row seleccionado
-    this.ValidarEstatus(data.estatus)
+    data.selected ? this.selectedList.push({ candidatoId: data.candidatoId }) : this.selectedList = []; //agrega y quita el row seleccionado
+    if(!data.selected)
+    {
+      this.cr = false;
+      this.enr = false;
+      this.fr = false;
+      this.enc = false;
+      this.fc = false;
+      this.contratado = false;
+      this.evt = false;
+      this.evps = false;
+      this.evm = false;
+    }
+    else
+    {
+      this.ValidarEstatus(data.estatus)
+    }
+    if(this.rowAux == [])
+    {
+      this.rowAux = data;
+    }
+    else if(this.rowAux != [] && data.selected)
+    {
+      var aux = data;
+      data = this.rowAux;
+      data.selected = false;
+      aux.selected = true;
+      this.rowAux = aux;
+    }
+    
     // let index = this.dataSource.indexOf(data.row);
     // this.element = data;
     // /* add an class 'active' on click */

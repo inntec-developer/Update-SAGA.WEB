@@ -29,11 +29,13 @@
      //color:#00b3ee;
      margin:0 2px;
      font-size:14px;
-     transition:0.5s;
+    // transition:0.5s;
      text-align:center;
+    // transition: all .2s ease-in-out;
  }
 .box li:hover a {
      color:#e91e63;
+     //transform: scale(1.1); 
     //transform:rotateY(360deg);
  }
 
