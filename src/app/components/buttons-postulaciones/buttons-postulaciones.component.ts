@@ -87,11 +87,10 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   }
 
-  VerCandidato()
+  VerCandidato(row)
   {
-    var idx = this.selectedList.length - 1;
-    
-    this.candidatoId = this.selectedList[idx]['candidatoId'];
+     
+    this.candidatoId = row.candidatoId;
     this.isModalShown = true;
 
     //this.spinner.show();
