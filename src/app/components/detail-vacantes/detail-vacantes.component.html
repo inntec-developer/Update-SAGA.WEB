@@ -2,7 +2,7 @@
   <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title class="text-warning">
-        Datos de la Vacante.
+        Datos de la Vacante
       </mat-panel-title>
       <mat-panel-description>
 
@@ -44,7 +44,7 @@
         <strong class="text-primary">Asignada: </strong> {{Datos.requisicion?.asignada ? 'Si': 'No'}}
       </div>
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">D&iacute;as de Envi&oacute;: </strong> {{Datos.requisicion?.diasEnvio}}
+        <strong class="text-primary">D&iacute;as de Env&iacute;o: </strong> {{Datos.requisicion?.diasEnvio}}
       </div>
     </div>
 
@@ -308,7 +308,7 @@
 
     <div class="row">
       <div class="col-md-6 text-muted">
-        <strong class="text-primary">Piscometr&iacute;a Damsa: </strong>
+        <strong class="text-primary">Psicometr&iacute;a Damsa: </strong>
         <div *ngFor="let psicodamsa of Datos?.requisicion.psicometriasDamsaRequi;let indice=index" class="row">
           <div class="col-md-12 text-muted">
             <strong>{{indice+1}}.</strong> {{psicodamsa.psicometria.tipoPsicometria}}
@@ -317,7 +317,7 @@
         </div>
       </div>
       <div class="col-md-6 text-muted">
-        <strong class="text-primary">Piscometr&iacute;a Cliente: </strong>
+        <strong class="text-primary">Psicometr&iacute;a Cliente: </strong>
         <div *ngFor="let psicoclientes of Datos?.requisicion.psicometriasClienteRequi;let indice=index" class="row">
           <div class="col-md-12 text-muted">
             <strong>{{indice+1}}.</strong> {{psicoclientes.psicometria}} ({{psicoclientes.descripcion}})
@@ -363,7 +363,7 @@
       </div>
 
       <div class="col-md-4 text-muted">
-        <strong class="text-primary">Competencias gerencial: </strong>
+        <strong class="text-primary">Competencias Gerencial: </strong>
         <div *ngFor="let compgerencial of Datos?.requisicion.competetenciasGerencialRequi;let indice=index" class="row">
           <div class="col-md-12 text-muted">
             <strong>{{indice+1}}.</strong> {{compgerencial.competencia.competenciaGerencial}} ({{compgerencial.nivel}})

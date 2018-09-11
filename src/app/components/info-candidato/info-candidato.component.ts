@@ -108,6 +108,7 @@ export class InfoCandidatoComponent implements OnInit {
         this.reclutador = this.candidato.estatus.reclutador;
       }
       this.spinner.hide();
+      console.log(this.candidato);
     });
   }
 
@@ -377,7 +378,7 @@ export class InfoCandidatoComponent implements OnInit {
             case 200: {
               this.ngOnInit();
               this.ngAfterViewInit();
-              var msg = 'El candidato se libero corectamente.';
+              var msg = 'El candidato se libero corRectamente.';
               this.popToast('warning', 'Liberado', msg);
               setTimeout(() => {
                 this.vacante = {};

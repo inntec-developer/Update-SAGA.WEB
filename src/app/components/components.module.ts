@@ -80,6 +80,7 @@ import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import { NgxSpinnerModule } from '../../../node_modules/ngx-spinner';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ComentarioCandidatoComponent } from './comentario-candidato/comentario-candidato.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -169,6 +170,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     InfoCandidatoComponent,
     DtBusquedaCandidatosComponent,
     DtMisCandidatosComponent,
+    ComentarioCandidatoComponent,
 
   ],
   exports: [

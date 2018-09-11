@@ -68,8 +68,8 @@ export class ApiConection {
   public static GetEstatus = 'Candidatos/getestatuscandidato';
   public static Liberar = 'Candidatos/postliberado';
   public static VacantesDtl = 'Candidatos/getvacantesdtl';
-  public static Comentarios = 'Candidatos/getComentarios';
-  public static AddComentarios = 'Candidatos/addComentarios';
+  public static ComentariosCandidato = 'Candidatos/getComentarios';
+  public static AddComentariosCandidato = 'Candidatos/addComentarios';
 
   /* Vacantes */
   public static getRequis = '/dvacante/get';
@@ -145,5 +145,7 @@ export class ApiConection {
   public static setApartarCandidato = 'reclutamiento/seguimientovacante/apartarCandidato';
   public static setLiberarCandidato = 'reclutamiento/seguimientovacante/liberarCandidato';
   public static setProcesoPostulado = 'reclutamiento/seguimientovacante/updateStatus';
+  public static ComentariosVacante = 'reclutamiento/seguimientovacante/getComentarios';
+  public static AddComentariosVacante = 'reclutamiento/seguimientovacante/addComentarios';
   
 }
