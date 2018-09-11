@@ -87,9 +87,8 @@
         </div>
           <span>
               <ul *ngFor="let asig of Datos[0]['asignados']">
-                    <ng-template #popTemplateUsers>
-                            <h3 *ngIf="asig.data.length > 0" class="popover-header text-center">Integrantes</h3>
-                            <h3 *ngIf="asig.data.length === 0" class="popover-header text-center">Usuario</h3>
+                    <ng-template #popTemplateUsers >
+                            <h3 class="popover-header text-center">Grupo</h3>
                             <div class = "row">
                             <div class="col-md-12">
                             <div class="popover-body bodymio" *ngFor="let r of asig.data">
@@ -98,9 +97,21 @@
                             </div>
                           </div>
                           </div>
-                          </ng-template>
+                   </ng-template>
+                   <ng-template #popTemplateUsers2 >
+                    <h3  class="popover-header text-center">Usuario</h3>
+                    <div class = "row">
+                    <div class="col-md-12">
+                    <div class="popover-body bodymio" >
+                        <img class="float-left img-fluid circle thumb32" src={{asig.foto}} alt="" /> 
+                        <span>{{asig.nombre}} {{asig.apellidoParterno}} {{asig.apellidoMaterno}}</span> 
+                    </div>
+                  </div>
+                  </div>
+           </ng-template>
 
-                <li><a [popover]="popTemplateUsers" container="body" placement="left" triggers="mouseenter:mouseleave">{{asig.nombre}} {{asig.apellidoParterno}} {{asig.apellidoMaterno}}</a></li>
+                <li *ngIf="asig.data.length > 0"><a [popover]="popTemplateUsers" container="body" placement="left" triggers="mouseenter:mouseleave">{{asig.nombre}} {{asig.apellidoParterno}} {{asig.apellidoMaterno}}</a></li>
+                <li *ngIf="asig.data.length === 0"><a [popover]="popTemplateUsers2" container="body" placement="left" triggers="mouseenter:mouseleave">{{asig.nombre}} {{asig.apellidoParterno}} {{asig.apellidoMaterno}}</a></li>
               </ul>
 
           </span>

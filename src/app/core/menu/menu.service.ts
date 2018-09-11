@@ -72,7 +72,7 @@ export class MenuService {
         }
 
         var modules = privilegios.filter(function(row){
-                   return row.tipoEstructuraId === 2
+                   return row.tipoEstructuraId === 2 && row.read
                     });
 
         modules.forEach(element => {

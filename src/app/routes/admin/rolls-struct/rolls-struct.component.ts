@@ -84,6 +84,7 @@ onClosed(): void {
       }
       else
       {
+        debugger;
         this.service.UpdatePrivilegios(privilegios)
           .subscribe(data => {
             if(data == 201)
