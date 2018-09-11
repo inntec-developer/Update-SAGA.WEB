@@ -19,6 +19,8 @@ export class PostulateService {
   private UrlGetPostulados = ApiConection.ServiceUrl + ApiConection.getPostulados;
   private UrlGetProceso = ApiConection.ServiceUrl + ApiConection.getProcesoPostulados;
   private UrlSetProceso = ApiConection.ServiceUrl + ApiConection.setProcesoPostulado;
+  private UrlSetStatusBolsa = ApiConection.ServiceUrl + ApiConection.setStatusBolsa;
+
   constructor(private _HttpClient: HttpClient) { }
 
   getPostulados(VacanteId : string) : Observable<any>{
@@ -42,4 +44,17 @@ export class PostulateService {
 
     return this._HttpClient.post(this.UrlSetProceso, data, httpOptions )
   }
+
+  SetStatusBolsa(data)
+  {
+    let params = new HttpParams().set('datos', data)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+
+    return this._HttpClient.post(this.UrlSetStatusBolsa, data, httpOptions )
+  }
+
 }

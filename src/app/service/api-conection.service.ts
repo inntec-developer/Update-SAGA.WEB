@@ -147,5 +147,6 @@ export class ApiConection {
   public static setProcesoPostulado = 'reclutamiento/seguimientovacante/updateStatus';
   public static ComentariosVacante = 'reclutamiento/seguimientovacante/getComentarios';
   public static AddComentariosVacante = 'reclutamiento/seguimientovacante/addComentarios';
+  public static setStatusBolsa = 'reclutamiento/seguimientovacante/updateStatusBolsa';
   
 }
