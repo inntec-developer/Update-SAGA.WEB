@@ -18,12 +18,18 @@ export class ComentarioCandidatoComponent implements OnInit {
   private comentario: any;
 
   constructor(
-    private _ComentariosService: ComentariosService;
+    private _ComentariosService: ComentariosService
   ) { }
 
   ngOnInit() {
+
   }
 
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    this.getComentarios(this.CandidatoId);
+  }
 
   getComentarios(Id): void {
     this._ComentariosService.getComentariosCandidato(Id).subscribe(data => {
@@ -40,7 +46,8 @@ export class ComentarioCandidatoComponent implements OnInit {
       Comentario: this.comentario,
       CandidatoId: this.CandidatoId,
       RequisicionId: this.RequisicionId,
-      Usuario: localStorage.getItem('usuario');
+      Usuario: localStorage.getItem('usuario'),
+      UsuarioId: localStorage.getItem('id')
     }
     this._ComentariosService.getComentariosCandidato(this.Comentario).subscribe(data => {
       if (data == 200) {

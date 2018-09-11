@@ -38,8 +38,6 @@ private UrlApartar = ApiConection.ServiceUrl+ApiConection.Apartar;
 private UrlGetEstatus = ApiConection.ServiceUrl+ApiConection.GetEstatus;
 private UrlLiberar = ApiConection.ServiceUrl+ApiConection.Liberar;
 private UrlVacantesDtl = ApiConection.ServiceUrl + ApiConection.VacantesDtl;
-private UrlComentarios = ApiConection.ServiceUrl + ApiConection.Comentarios;
-private UrlAddComentario = ApiConection.ServiceUrl + ApiConection.AddComentarios;
 
 // Error.
 private handleError(error: any) {
@@ -159,26 +157,12 @@ getvacantesdtl(Id: any){
        .catch(this.handleError);
 }
 
-getComentarios(Id: any){
-    return this.http.get(this.UrlComentarios + '?Id=' + Id)
-       .map(result => result.json())
-       .catch(this.handleError);
-}
-
 postApartar(candidato: any): Observable<any> { // Apartar el candidato y ligar a la vacante.
   let headers = new Headers({ 'Content-Type': 'application/json' });
   let options = new RequestOptions({ headers: headers });
   return this.http.post(this.UrlApartar, JSON.stringify(candidato), options)
     .map(result => result.json())
     .catch(this.handleError);
-}
-
-postComentarios(comentario : any): Observable<any>{
-    let headers =  new Headers({ 'Content-Type': 'application/json' })
-    let options = new RequestOptions({headers: headers});
-    return this.http.post(this.UrlAddComentario, JSON.stringify(comentario), options)
-        .map(result => result.json())
-        .catch(this.handleError);
 }
 
 getEstatusCandidato(Id: any): Observable<any> { // Obtener el esatus del candidato para las banderas de mostrar la información.
