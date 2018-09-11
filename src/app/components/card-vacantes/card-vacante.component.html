@@ -93,7 +93,7 @@
                             <div class="col-md-12">
                             <div class="popover-body bodymio" *ngFor="let r of asig.data">
                                 <img class="float-left img-fluid circle thumb32" src={{r.foto}} alt="" /> 
-                                <span>{{r.nombre}} {{r.apellidoParterno}} {{r.apellidoMaterno}}</span> 
+                                <span>{{r.nombre}} {{r.apellidoPaterno}} {{r.apellidoMaterno}}</span> 
                             </div>
                           </div>
                           </div>
@@ -104,14 +104,14 @@
                     <div class="col-md-12">
                     <div class="popover-body bodymio" >
                         <img class="float-left img-fluid circle thumb32" src={{asig.foto}} alt="" /> 
-                        <span>{{asig.nombre}} {{asig.apellidoParterno}} {{asig.apellidoMaterno}}</span> 
+                        <span>{{asig.nombre}} {{asig.apellidoPaterno}} {{asig.apellidoMaterno}}</span> 
                     </div>
                   </div>
                   </div>
            </ng-template>
 
-                <li *ngIf="asig.data.length > 0"><a [popover]="popTemplateUsers" container="body" placement="left" triggers="mouseenter:mouseleave">{{asig.nombre}} {{asig.apellidoParterno}} {{asig.apellidoMaterno}}</a></li>
-                <li *ngIf="asig.data.length === 0"><a [popover]="popTemplateUsers2" container="body" placement="left" triggers="mouseenter:mouseleave">{{asig.nombre}} {{asig.apellidoParterno}} {{asig.apellidoMaterno}}</a></li>
+                <li *ngIf="asig.data.length > 0"><a [popover]="popTemplateUsers" container="body" placement="left" triggers="mouseenter:mouseleave">{{asig.nombre}} {{asig.apellidoPaterno}} {{asig.apellidoMaterno}}</a></li>
+                <li *ngIf="asig.data.length === 0"><a [popover]="popTemplateUsers2" container="body" placement="left" triggers="mouseenter:mouseleave">{{asig.nombre}} {{asig.apellidoPaterno}} {{asig.apellidoMaterno}}</a></li>
               </ul>
 
           </span>
