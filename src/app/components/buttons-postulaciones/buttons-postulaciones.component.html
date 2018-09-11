@@ -12,7 +12,12 @@
                 </button>
               </a></li> -->
               <li><a>
-                <button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(30)" matTooltip="Liberado"> 
+                <button [ngClass]="pst ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" [disabled] = "pst"  type="button" (click)="SetProceso(10)" matTooltip="Postulado"> 
+                  <em class="fa fa-thumbs-o-up"></em>
+                </button>
+              </a></li>
+              <li><a>
+                <button [ngClass]="liberado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" [disabled]="liberado" type="button" (click)="SetProceso(27)" matTooltip="Liberado"> 
                   <em class="fa fa-thumbs-o-down"></em>
                 </button>
               </a></li>
@@ -37,16 +42,16 @@
                 <em class="fa fa-user-md"></em>
               </button></a></li>             
               <li><a><em class="vl"></em></a></li>
-              <li><a><button [disabled]="fr" [ngClass]="fr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"  type="button" (click)="SetProceso(24)" matTooltip="Finalista Reclutamiento">
+              <li><a><button [disabled]="fr" [ngClass]="fr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"  type="button" (click)="SetProceso(21)" matTooltip="Finalista Reclutamiento">
                 <em class="fa fa-user-circle-o"></em>
               </button></a></li>
-              <li><a><button [disabled]="enc" [ngClass]="enc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetProceso(25)" matTooltip="Entrevista Cliente" >
+              <li><a><button [disabled]="enc" [ngClass]="enc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetProceso(22)" matTooltip="Entrevista Cliente" >
                 <em class="fa fa-microphone"></em>
               </button></a></li>
-              <li><a><button [disabled]="fc" [ngClass]="fc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetProceso(26)" matTooltip="Finalista Cliente">
+              <li><a><button [disabled]="fc" [ngClass]="fc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetProceso(23)" matTooltip="Finalista Cliente">
                 <em class="fa fa-user-circle-o"></em>
               </button></a></li>
-              <li><a><button [disabled]="contratado" [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" type="button" (click)="SetProceso(27)" matTooltip="Contratado">
+              <li><a><button [disabled]="contratado" [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" type="button" (click)="SetProceso(24)" matTooltip="Contratado">
                 <em class="fa fa-user-plus"></em>
               </button></a></li>
               <!-- <li><a><em class="vl"></em></a></li>
@@ -91,7 +96,7 @@
             
             </ul>
           </span>
-          <btn-refresh class="float-right" [xs]='true' (click)="refreshTable()" matTooltip="Actualizar"></btn-refresh>
+          <btn-refresh class="float-right" [xs]='true' (click)="refresh()" matTooltip="Actualizar"></btn-refresh>
           </div>
           <br/>
 

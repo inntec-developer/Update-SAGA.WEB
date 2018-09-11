@@ -30,15 +30,17 @@ export class ButtonsPostulacionesComponent implements OnInit {
   postulados: any;
   candidatoId;
   isModalShown: boolean = false;
-  contratado = false;
-  cr = false; //cita reclutamiento
-  enr = false; //entrevista reclutamiento
-  fr = false; //finalista reclutameinto
-  enc = false; //entrevista cliente
-  fc = false; // finalista cliente
-  evt = false; //evaluacion tecnica
-  evps = false; //evaluacion psicometrica
-  evm = false; //evaluacion medica
+  contratado = true;
+  cr = true; //cita reclutamiento
+  enr = true; //entrevista reclutamiento
+  fr = true; //finalista reclutameinto
+  enc = true; //entrevista cliente
+  fc = true; // finalista cliente
+  evt = true; //evaluacion tecnica
+  evps = true; //evaluacion psicometrica
+  evm = true; //evaluacion medica
+  pst = true; //postulado
+  liberado = true; //liberado
   rowAux = [];
 
   constructor(private service: PostulateService, private toasterService: ToasterService, private spinner: NgxSpinnerService) { }
@@ -49,7 +51,21 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   ValidarEstatus(estatus)
   {
-    if(estatus === 27) //contratado
+    this.liberado = false;
+    this.pst = false;
+    if(estatus === 10) //postulado
+    {
+      this.cr = false;
+      this.enr = true;
+      this.fr = true;
+      this.enc = true;
+      this.fc = true;
+      this.evt = true;
+      this.evps = true;
+      this.evm = true;
+
+    }
+    else if(estatus === 24) //contratado
     {
       this.cr = true;
       this.enr = true;
@@ -76,15 +92,15 @@ export class ButtonsPostulacionesComponent implements OnInit {
     {
       this.cr = true;
       this.enr = true;
-      this.fr = false;
+      this.fr = true;
       this.enc = true;
       this.fc = true;
       this.contratado = true;
       this.evt = false;
-      this.evps = false;
-      this.evm = false;
+      this.evps = true;
+      this.evm = true;
     }
-    else if(estatus === 24) //finalista reclutamiento
+    else if(estatus === 21) //finalista reclutamiento
     {
       this.cr = true;
       this.enr = true;
@@ -96,7 +112,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
     }
-    else if(estatus === 25) //entrevista cliente
+    else if(estatus === 22) //entrevista cliente
     {
       this.cr = true;
       this.enr = true;
@@ -108,7 +124,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
     }
-    else if(estatus === 26) //finalista cliente
+    else if(estatus === 23) //finalista cliente
     {
       this.cr = true;
       this.enr = true;
@@ -120,11 +136,37 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
     }
-    else if(estatus === 13 || estatus === 14 || estatus === 15) // evalución técnica, psicométrica, médica
+    else if(estatus === 13) // evalución técnica, psicométrica, médica
     {
-      this.cr = false;
+      this.cr = true;
       this.enr = true;
       this.fr = true;
+      this.enc = true;
+      this.fc = true;
+      this.contratado = true;
+      this.evt = true;
+      this.evps = false;
+      this.evm = false;
+
+    }
+    else if( estatus === 14)
+    {
+      this.cr = true;
+      this.enr = true;
+      this.fr = false;
+      this.enc = true;
+      this.fc = true;
+      this.contratado = true;
+      this.evt = true;
+      this.evps = true;
+      this.evm = false;
+
+    }
+    else if( estatus === 15)
+    {
+      this.cr = true;
+      this.enr = true;
+      this.fr = false;
       this.enc = true;
       this.fc = true;
       this.contratado = true;
@@ -132,6 +174,18 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
 
+    }
+    else if( estatus === 27) //liberado
+    {
+      this.cr = false;
+      this.enr = false;
+      this.fr = false;
+      this.enc = false;
+      this.fc = false;
+      this.contratado = false;
+      this.evt = false;
+      this.evps = false;
+      this.evm = false;
     }
  
   }
@@ -160,7 +214,6 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   SetProceso(estatusId)
   {
-
     if(this.candidatoId != null)
     {
       var datos = {candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: 0};
@@ -170,16 +223,17 @@ export class ButtonsPostulacionesComponent implements OnInit {
         {
           this.SetStatusBolsa(this.candidatoId, estatusId);
 
-          this.cr = false;
-          this.enr = false;
-          this.fr = false;
-          this.enc = false;
-          this.fc = false;
-          this.contratado = false;
-          this.evt = false;
-          this.evps = false;
-          this.evm = false;
-    
+          this.cr = true;
+          this.enr = true;
+          this.fr = true;
+          this.enc = true;
+          this.fc = true;
+          this.contratado = true;
+          this.evt = true;
+          this.evps = true;
+          this.evm = true;
+          this.pst = true;
+          this.liberado = true;
           this.getpostulados();
         }
       })
@@ -191,7 +245,11 @@ export class ButtonsPostulacionesComponent implements OnInit {
   {
     if(this.candidatoId != null)
     {
-      if( estatusId == 13 || estatusId == 14 || estatusId == 15)
+      if( estatusId === 10)
+      {
+        var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 1};
+      }
+      else if( estatusId == 13 || estatusId == 14 || estatusId == 15)
       {
         var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 2};
       }
@@ -199,11 +257,11 @@ export class ButtonsPostulacionesComponent implements OnInit {
       {
         var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 3};
       }
-      else if(estatusId == 24 || estatusId == 25 || estatusId == 26)
+      else if(estatusId == 21 || estatusId == 22 || estatusId == 23)
       {
         var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 4};
       }
-      else if(estatusId == 27 || estatusId == 28 || estatusId == 30)
+      else if(estatusId == 24 || estatusId == 25 || estatusId == 27)
       {
         var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 5};
       }
@@ -277,6 +335,22 @@ export class ButtonsPostulacionesComponent implements OnInit {
   // }, 1000);
 
   }
+
+refresh()
+{
+  this.getpostulados();
+  this.cr = true;
+      this.enr = true;
+      this.fr = true;
+      this.enc = true;
+      this.fc = true;
+      this.contratado = true;
+      this.evt = true;
+      this.evps = true;
+      this.evm = true;
+      this.liberado = true;
+      this.pst = true;
+}
 
   closeModal()
   {
