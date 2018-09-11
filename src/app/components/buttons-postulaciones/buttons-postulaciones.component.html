@@ -12,12 +12,12 @@
                 </button>
               </a></li> -->
               <li><a>
-                <button [ngClass]="pst ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" [disabled] = "pst"  type="button" (click)="SetProceso(10)" matTooltip="Postulado"> 
+                <button [ngClass]="pst ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" [disabled] = "pst"  type="button" (click)="SetProceso(12)" matTooltip="Apartar"> 
                   <em class="fa fa-thumbs-o-up"></em>
                 </button>
               </a></li>
               <li><a>
-                <button [ngClass]="liberado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" [disabled]="liberado" type="button" (click)="SetProceso(27)" matTooltip="Liberado"> 
+                <button [ngClass]="liberado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" [disabled]="liberado" type="button" (click)="SetProceso(27)" matTooltip="Desapartar"> 
                   <em class="fa fa-thumbs-o-down"></em>
                 </button>
               </a></li>
