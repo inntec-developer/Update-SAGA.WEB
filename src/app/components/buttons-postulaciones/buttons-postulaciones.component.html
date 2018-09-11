@@ -20,33 +20,33 @@
               <!-- <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button" (click)="SetProceso(16)" matTooltip="Cita Candidato">
                 <em class="fa fa-address-book"></em>
               </button></a></li> -->
-              <li><a><button [disabled]="cr" [ngClass]="cr ? 'mb-1 btn btn-xs btn-warning' : 'mb-1 btn btn-xs btn-outline-warning'"  type="button" (click)="SetProceso(17)" matTooltip="Cita Reclutamiento">
+              <li><a><button [disabled]="cr" [ngClass]="cr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"  type="button" (click)="SetProceso(17)" matTooltip="Cita Reclutamiento">
                 <em class="fa fa-address-book"></em>
               </button></a></li>
-              <li><a><button [ngClass]="enr ? 'mb-1 btn btn-xs btn-warning' : 'mb-1 btn btn-xs btn-outline-warning'" [disabled]="enr"   type="button" (click)="SetProceso(18)" matTooltip="Entrevista Reclutamiento" >
+              <li><a><button [ngClass]="enr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'" [disabled]="enr"   type="button" (click)="SetProceso(18)" matTooltip="Entrevista Reclutamiento" >
                 <em class="fa fa-microphone"></em>
               </button></a></li>
               <li><a><em class="vl"></em></a></li>
-              <li><a><button [disabled]="evt" [ngClass]="evt ? 'mb-1 btn btn-xs btn-secondary' : 'mb-1 btn btn-xs btn-outline-secondary'"  type="button" (click)="SetProceso(19)" matTooltip="Evaluación Técnica">
+              <li><a><button [disabled]="evt" [ngClass]="evt ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetProceso(13)" matTooltip="Evaluación Técnica">
                 <em class="fa fa-search"></em>
               </button></a></li>
-              <li><a><button [disabled]="evps" [ngClass]="evps ? 'mb-1 btn btn-xs btn-secondary' : 'mb-1 btn btn-xs btn-outline-secondary'"  type="button" (click)="SetProceso(20)" matTooltip="Evaluación Psicométrica">
+              <li><a><button [disabled]="evps" [ngClass]="evps ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetProceso(14)" matTooltip="Evaluación Psicométrica">
                 <em class="fa fa-users"></em>
               </button></a></li>
-              <li><a><button [disabled]="evm" [ngClass]="evm ? 'mb-1 btn btn-xs btn-secondary' : 'mb-1 btn btn-xs btn-outline-secondary'"  type="button" (click)="SetProceso(21)" matTooltip="Evaluación Médica">
+              <li><a><button [disabled]="evm" [ngClass]="evm ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetProceso(15)" matTooltip="Evaluación Médica">
                 <em class="fa fa-user-md"></em>
               </button></a></li>             
               <li><a><em class="vl"></em></a></li>
-              <li><a><button [disabled]="fr" [ngClass]="fr ? 'mb-1 btn btn-xs btn-warning' : 'mb-1 btn btn-xs btn-outline-warning'"  type="button" (click)="SetProceso(24)" matTooltip="Finalista Reclutamiento">
+              <li><a><button [disabled]="fr" [ngClass]="fr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"  type="button" (click)="SetProceso(24)" matTooltip="Finalista Reclutamiento">
                 <em class="fa fa-user-circle-o"></em>
               </button></a></li>
-              <li><a><button [disabled]="enc" [ngClass]="enc ? 'mb-1 btn btn-xs btn-info' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetProceso(25)" matTooltip="Entrevista Cliente" >
+              <li><a><button [disabled]="enc" [ngClass]="enc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetProceso(25)" matTooltip="Entrevista Cliente" >
                 <em class="fa fa-microphone"></em>
               </button></a></li>
-              <li><a><button [disabled]="fc" [ngClass]="fc ? 'mb-1 btn btn-xs btn-info' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetProceso(26)" matTooltip="Finalista Cliente">
+              <li><a><button [disabled]="fc" [ngClass]="fc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetProceso(26)" matTooltip="Finalista Cliente">
                 <em class="fa fa-user-circle-o"></em>
               </button></a></li>
-              <li><a><button [disabled]="contratado" [ngClass]="contratado ? 'mb-1 btn btn-xs btn-success' : 'mb-1 btn btn-xs btn-outline-success'" type="button" (click)="SetProceso(27)" matTooltip="Contratado">
+              <li><a><button [disabled]="contratado" [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" type="button" (click)="SetProceso(27)" matTooltip="Contratado">
                 <em class="fa fa-user-plus"></em>
               </button></a></li>
               <!-- <li><a><em class="vl"></em></a></li>
@@ -91,6 +91,7 @@
             
             </ul>
           </span>
+          <btn-refresh class="float-right" [xs]='true' (click)="refreshTable()" matTooltip="Actualizar"></btn-refresh>
           </div>
           <br/>
 

@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../service/SeguimientoVacante/postulate.service';
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
@@ -27,7 +28,6 @@ export class ButtonsPostulacionesComponent implements OnInit {
   errorMessage: any;
   element: any = {};
   postulados: any;
-  selectedList: any = [];
   candidatoId;
   isModalShown: boolean = false;
   contratado = false;
@@ -49,7 +49,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   ValidarEstatus(estatus)
   {
-    if(estatus === 'Contratado')
+    if(estatus === 27) //contratado
     {
       this.cr = true;
       this.enr = true;
@@ -60,7 +60,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
     }
-    else if(estatus === 'Cita Reclutamiento')
+    else if(estatus === 17) //cita reclutamiento
     {
       this.cr = true;
       this.enr = false;
@@ -72,7 +72,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
     }
-    else if(estatus === 'Entrevista Reclutamiento')
+    else if(estatus === 18) //entrevista reclutamiento
     {
       this.cr = true;
       this.enr = true;
@@ -80,11 +80,11 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.enc = true;
       this.fc = true;
       this.contratado = true;
-      this.evt = true;
-      this.evps = true;
-      this.evm = true;
+      this.evt = false;
+      this.evps = false;
+      this.evm = false;
     }
-    else if(estatus === 'Finalista Reclutamiento')
+    else if(estatus === 24) //finalista reclutamiento
     {
       this.cr = true;
       this.enr = true;
@@ -96,7 +96,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
     }
-    else if(estatus === 'Entrevista cliente')
+    else if(estatus === 25) //entrevista cliente
     {
       this.cr = true;
       this.enr = true;
@@ -108,7 +108,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
     }
-    else if(estatus === 'Finalista Cliente')
+    else if(estatus === 26) //finalista cliente
     {
       this.cr = true;
       this.enr = true;
@@ -120,7 +120,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
     }
-    else if(estatus === 'Evaluación Técnica' || estatus === 'Evaluación Psicométrica' || estatus === 'Evaluación Médica')
+    else if(estatus === 13 || estatus === 14 || estatus === 15) // evalución técnica, psicométrica, médica
     {
       this.cr = false;
       this.enr = true;
@@ -149,7 +149,8 @@ export class ButtonsPostulacionesComponent implements OnInit {
           localidad: element.perfil[0]['localidad'],
           sueldoMinimo: element.perfil[0]['sueldoMinimo'],
           estatus: element.estatus,
-          candidatoId: element.candidatoId
+          candidatoId: element.candidatoId,
+          estatusId: element.estatusId
         }
         this.dataSource.push(perfil)
         
@@ -159,17 +160,16 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   SetProceso(estatusId)
   {
-    if(this.selectedList.length > 0)
-    {
-      this.selectedList.forEach(element => {
-        element.estatusId = estatusId
-      });
 
-      this.service.SetProceso(this.selectedList).subscribe(data => {
+    if(this.candidatoId != null)
+    {
+      var datos = {candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: 0};
+
+      this.service.SetProceso(datos).subscribe(data => {
         if(data == 201)
         {
-          this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
-          this.selectedList = [];
+          this.SetStatusBolsa(this.candidatoId, estatusId);
+
           this.cr = false;
           this.enr = false;
           this.fr = false;
@@ -186,6 +186,82 @@ export class ButtonsPostulacionesComponent implements OnInit {
     }
 
   }
+
+  SetStatusBolsa(candidatoId, estatusId)
+  {
+    if(this.candidatoId != null)
+    {
+      if( estatusId == 13 || estatusId == 14 || estatusId == 15)
+      {
+        var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 2};
+      }
+      else if(estatusId == 16 || estatusId == 17 || estatusId == 18)
+      {
+        var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 3};
+      }
+      else if(estatusId == 24 || estatusId == 25 || estatusId == 26)
+      {
+        var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 4};
+      }
+      else if(estatusId == 27 || estatusId == 28 || estatusId == 30)
+      {
+        var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 5};
+      }
+
+      this.service.SetStatusBolsa(datos).subscribe(data => {
+        if(data == 201)
+        {
+          this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');    
+        }
+      })
+    }
+
+  }
+
+  public onCellClick(data: any) {
+
+    data.selected ? data.selected = false : data.selected = true; //para poner el backgroun cuando seleccione
+    data.selected ? this.candidatoId = data.candidatoId : this.candidatoId = null; //agrega y quita el row seleccionado
+
+    if(!data.selected)
+    {
+      this.cr = false;
+      this.enr = false;
+      this.fr = false;
+      this.enc = false;
+      this.fc = false;
+      this.contratado = false;
+      this.evt = false;
+      this.evps = false;
+      this.evm = false;
+    }
+    else
+    {
+      this.ValidarEstatus(data.estatusId)
+    }
+
+    if(this.rowAux == [])
+    {
+      this.rowAux = data;
+    }
+    else if(this.rowAux != [] && data.selected)
+    {
+      var aux = data;
+      data = this.rowAux;
+      data.selected = false;
+      aux.selected = true;
+      this.rowAux = aux;
+    }
+    
+    // let index = this.dataSource.indexOf(data.row);
+    // this.element = data;
+    // /* add an class 'active' on click */
+    // $('#resultDataTable').on('click', 'tr', function (event: any) {
+    //   //noinspection TypeScriptUnresolvedFunction
+    //   $(this).addClass('selected').siblings().removeClass('selected');
+    // });
+  }
+
 
   VerCandidato(row)
   {
@@ -325,48 +401,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
     this.length = sortedData.length;
   }
 
-  public onCellClick(data: any) {
-    this.selectedList = [];
-    data.selected ? data.selected = false : data.selected = true; //para poner el backgroun cuando seleccione
-    data.selected ? this.selectedList.push({ candidatoId: data.candidatoId }) : this.selectedList = []; //agrega y quita el row seleccionado
-    if(!data.selected)
-    {
-      this.cr = false;
-      this.enr = false;
-      this.fr = false;
-      this.enc = false;
-      this.fc = false;
-      this.contratado = false;
-      this.evt = false;
-      this.evps = false;
-      this.evm = false;
-    }
-    else
-    {
-      this.ValidarEstatus(data.estatus)
-    }
-    if(this.rowAux == [])
-    {
-      this.rowAux = data;
-    }
-    else if(this.rowAux != [] && data.selected)
-    {
-      var aux = data;
-      data = this.rowAux;
-      data.selected = false;
-      aux.selected = true;
-      this.rowAux = aux;
-    }
-    
-    // let index = this.dataSource.indexOf(data.row);
-    // this.element = data;
-    // /* add an class 'active' on click */
-    // $('#resultDataTable').on('click', 'tr', function (event: any) {
-    //   //noinspection TypeScriptUnresolvedFunction
-    //   $(this).addClass('selected').siblings().removeClass('selected');
-    // });
-  }
-
+ 
   /**
    * configuracion para mensajes de acciones.
    */
