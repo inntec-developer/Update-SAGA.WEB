@@ -8,13 +8,11 @@
     </mat-form-field>
     <div class="row justify-content-between">
       <div class="d-flex align-items-stretch ">
-        <button (click)="openDialogShowRequi(element.id, element.folio)" class="mb-1 btn" [disabled]="!requi" [ngClass]="(!requi) ? 'disabled' : 'btn-outline-warning'"
-          matTooltip="Ver Requisición"><em class="fa fa-eye"></em></button>
-        <button id="update" chkPrivilegiosButtons (click)="openDialogAssingRequi(element)" class="mb-1 btn" [disabled]="!requi"
-          [ngClass]="(!requi) ? 'disabled' : 'btn-outline-purple'" matTooltip="Asignar"><em class="icon-user-follow"></em></button>
+        <btn-view (click)="openDialogShowRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view>
+        <btn-assign id="update" chkPrivilegiosButtons (click)="openDialogAssingRequi(element)" matTooltip="Asignar"></btn-assign>
         <button type="button" id="special" chkPrivilegiosButtons (click)="openDesignVacante(element.id, element.folio, element.vBtra)"
-          matTooltip="Diseñar Vacante" [disabled]="!requi || !element || element.estatusId === 4 || element.estatusId  === 5 || element.estatusId  === 8 || element.estatusId  === 9 || element.confidencial"
-          [ngClass]="(!requi || !element || element.estatusId === 4 || element.estatusId  === 5 || element.estatusId  === 8 || element.estatusId  === 9 || element.confidencial)? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
+          matTooltip="Diseñar Vacante" [disabled]="!element || element.estatusId === 4 || element.estatusId  === 5 || element.estatusId  === 8 || element.estatusId  === 9 || element.confidencial"
+          [ngClass]="(!element || element.estatusId === 4 || element.estatusId  === 5 || element.estatusId  === 8 || element.estatusId  === 9 || element.confidencial)? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
           <em class="icon-list"></em>
         </button>
       </div>
@@ -25,11 +23,19 @@
               <em class="fa fa-search-plus"></em>
             </button>
           </a></li>
+          <li><a><button [disabled]="contratado" [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" type="button" (click)="SetProceso(24)" matTooltip="Contratado">
+            <em class="fa fa-user-plus"></em>
+          </button></a></li>
+
           <li><a>
             <button [ngClass]="liberado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" [disabled]="liberado" type="button" (click)="SetProceso(27)" matTooltip="Desapartar"> 
               <em class="fa fa-thumbs-o-down"></em>
             </button>
           </a></li>
+           <li><a><em class="vl"></em></a></li>
+              <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(28)" matTooltip="Cancelada">
+                <em class="fa fa-user-times"></em>
+              </button></a></li>
           <li><a><em class="vl"></em></a></li>
           <li><a><button [disabled]="cr" [ngClass]="cr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"  type="button" (click)="SetProceso(17)" matTooltip="Cita Reclutamiento">
             <em class="fa fa-address-book"></em>
@@ -57,9 +63,7 @@
           <li><a><button [disabled]="fc" [ngClass]="fc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetProceso(23)" matTooltip="Finalista Cliente">
             <em class="fa fa-user-circle-o"></em>
           </button></a></li>
-          <li><a><button [disabled]="contratado" [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" type="button" (click)="SetProceso(24)" matTooltip="Contratado">
-            <em class="fa fa-user-plus"></em>
-          </button></a></li>
+        
 
         
         </ul>

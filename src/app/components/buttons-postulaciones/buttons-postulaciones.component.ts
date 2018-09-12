@@ -63,7 +63,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evm = true;
       this.pst = true;
       this.liberado = false;
-
+      this.contratado = true;
     }
     else if(estatus === 24) //contratado
     {
@@ -77,6 +77,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evm = true;
       this.pst = true;
       this.liberado = true;
+      this.contratado = true;
     }
     else if(estatus === 17) //cita reclutamiento
     {
@@ -344,6 +345,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
     this.candidatoId = row.candidatoId;
     this.isModalShown = true;
 
+    this.ValidarEstatus(row.estatusId);
     //this.spinner.show();
   //   setTimeout(() => {
   //     /** spinner ends after 5 seconds */
