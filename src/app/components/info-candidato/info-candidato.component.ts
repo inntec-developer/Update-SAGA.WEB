@@ -67,7 +67,7 @@ export class InfoCandidatoComponent implements OnInit {
       this.ngOnInit();
       this.getPostulaciones();
       this.vacante = {};
-      this.procesoCandidatoId = '';
+      this.procesoCandidatoId = 0;
       this.Status = '';
       this.requisicionId = '';
       this.reclutador = '';
@@ -102,8 +102,8 @@ export class InfoCandidatoComponent implements OnInit {
         info: data.candidato
       }
       if (this.candidato.estatus) {
-        this.procesoCandidatoId = this.candidato.estatus.id;
-        this.Status = this.candidato.estatus.estatus;
+        this.procesoCandidatoId = this.candidato.estatus.estatusId;
+        this.Status = this.candidato.estatus.estatus.descripcion;
         this.requisicionId = this.candidato.estatus.requisicionId;
         this.reclutador = this.candidato.estatus.reclutador;
       }
@@ -297,15 +297,7 @@ export class InfoCandidatoComponent implements OnInit {
   /**
    * configuracion para mensajes de acciones.
    */
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    limit: 7,
-    tapToDismiss: false,
-    showCloseButton: true,
-    mouseoverTimerStop: true,
-  });
+  
   popToast(type, title, body) {
     var toast: Toast = {
       type: type,
@@ -382,7 +374,7 @@ export class InfoCandidatoComponent implements OnInit {
               this.popToast('warning', 'Liberado', msg);
               setTimeout(() => {
                 this.vacante = {};
-                this.procesoCandidatoId = '';
+                this.procesoCandidatoId = 0;
                 this.Status = '';
                 this.requisicionId = '';
                 this.reclutador = '';

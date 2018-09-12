@@ -3,24 +3,33 @@
 <div class="dt-container mat-elevation-z8">
   <div class="dt-header">
     <mat-form-field>
-      <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)">
+      <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
+        (tableChanged)="onChangeTable(config)">
     </mat-form-field>
     <div class="row justify-content-between">
       <div class="d-flex align-items-stretch ">
-        <btn-add id="create" chkPrivilegiosButtons class="btn-acciones" matTooltip="Nuevo"  [routerLink]="['/ventas/crearRequisicion']">
+        <btn-add id="create" chkPrivilegiosButtons class="btn-acciones" matTooltip="Nuevo" [routerLink]="['/ventas/crearRequisicion']">
         </btn-add>
-        <btn-view id="view" chkPrivilegiosButtons class="btn-acciones" matTooltip="Visualizar" (click)="showRequi()"></btn-view>
-        <btn-edit id="update" chkPrivilegiosButtons class="btn-acciones" *ngIf="estatusId != 8" matTooltip="Editar" (click)="editRequi()"></btn-edit>
-        <btn-cancel id='delete' chkPrivilegiosButtons class="btn-acciones" *ngIf="estatusId != 7 && enProceso == 0" matTooltip="Cancelar"
-          (click)="openDialogCancel()"></btn-cancel>
-        <btn-refresh id='update' chkPrivilegiosButtons class="btn-acciones" *ngIf="estatusId == 8" matTooltip="Activar" (click)="openDialogReActivar()"></btn-refresh>
-        <btn-delete id='delete' chkPrivilegiosButtons class="btn-acciones" *ngIf="enProceso == 0 && estatusId != 7 " matTooltip="Eliminar" (click)="openDialogDelete()"></btn-delete>
+        <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones" [disabled]="!element"
+          [ngClass]="(!element) ? 'disabled' : 'btn-outline-warning'" matTooltip="Visualizar"><em class="fa fa-eye"></em></button>
+        <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones" [disabled]="estatusId == 8 || !element"
+          [ngClass]="(estatusId == 8 || !element) ? 'disabled' : 'btn-outline-primary'" matTooltip="Editar" (click)="editRequi()"><em
+            class="icon-pencil"></em></button>
+        <button id='delete' chkPrivilegiosButtons class="mb-1 btn btn-acciones" [disabled]="estatusId == 7 && enProceso > 0 || !element || estatusId == 8 "
+          [ngClass]="(estatusId == 7 && enProceso > 0 || !element || estatusId == 8) ? 'disabled' : 'btn-outline-green'"
+          matTooltip="Cancelar" (click)="openDialogCancel()"><em class="icon-ban"></em></button>
+        <button id='delete' chkPrivilegiosButtons class="mb-1 btn btn-acciones" [disabled]="enProceso > 0 && estatusId == 7 || !element "
+          [ngClass]="(enProceso > 0 && estatusId == 7 || !element ) ? 'disabled' : 'btn-outline-danger'" matTooltip="Eliminar"
+          (click)="openDialogDelete()"><em class="icon-trash"></em></button>
+        <button id='update' chkPrivilegiosButtons class="mb-1 btn btn-acciones" [disabled]="estatusId != 8 || !element"
+          matTooltip="Activar" [ngClass]="(estatusId != 8 || !element) ? 'disabled' : 'btn-outline-success'" (click)="openDialogReActivar()"><em
+            class="icon-refresh"></em></button>
       </div>
       <div>
         <btn-refresh (click)="refreshTable()" matTooltip="Actualizar"></btn-refresh>
       </div>
     </div>
-    </div>
+  </div>
   <div class="card card-default">
     <div #tableContainer>
       <table id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
@@ -34,13 +43,14 @@
           </tr>
           <tr *ngIf="showFilterRow" class="filter-colum">
             <td *ngFor="let column of columns">
-              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
-                class="form-control">
+              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
+                (tableChanged)="onChangeTable(config)" class="form-control">
             </td>
           </tr>
         </thead>
         <tbody>
-          <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8">
+          <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial"
+            [class.cancel]="row.estatusId == 8">
             <td class="text-center">
               {{row.folio}}
             </td>
@@ -54,19 +64,14 @@
             <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">
-              <small class="badge badge-pill" 
-                [class.badge-warning]="row.estatusId  === 4" 
-                [class.badge-primary]="row.estatusId  === 5"
-                [class.badge-info]="row.estatusId  === 6" 
-                [class.badge-success]="row.estatusId  === 7" 
+              <small class="badge badge-pill" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
+                [class.badge-info]="row.estatusId  === 6" [class.badge-success]="row.estatusId  === 7"
                 [class.badge-danger]="row.estatusId  === 8">
                 {{row.estatus }}
               </small>
             </td>
             <td class="text-center">
-              <small class="badge badge-pill" 
-                [class.badge-danger]="row.prioridadId  === 1" 
-                [class.badge-warning]="row.prioridadId  === 2">
+              <small class="badge badge-pill" [class.badge-danger]="row.prioridadId  === 1" [class.badge-warning]="row.prioridadId  === 2">
                 {{row.prioridad}}
               </small>
             </td>
@@ -77,7 +82,8 @@
   </div>
   <div class="text-right">
     <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
-      [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+      [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
+      (numPages)="numPages = $event">
     </pagination>
   </div>
   <pre *ngIf="config.paging" class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
