@@ -96,7 +96,7 @@
             
             </ul>
           </span>
-          <btn-refresh class="float-right" [xs]='true' (click)="refresh()" matTooltip="Actualizar"></btn-refresh>
+          <btn-refresh class="float-right" (click)="refresh()" matTooltip="Actualizar"></btn-refresh>
           </div>
           <br/>
 
@@ -109,7 +109,7 @@
   </div>
   <div class="card card-default">
     <div class="table-responsive" #tableContainer>
-      <table id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+      <table *ngIf="dataSource.length > 0 else NotCandidatos" id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
         <thead>
           <tr>
             <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
@@ -150,7 +150,7 @@
   </div>
   <pre *ngIf="config.paging" class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
 </div>
-<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+<toaster-container toaster-options="{'toaster-id': 2 }" [toasterconfig]="toasterconfig"></toaster-container>
 
 <!-- Modal -->
 <div *ngIf="isModalShown" [config]="{ show: true, ignoreBackdropClick: true }" (onHidden)="onHidden()" bsModal #MessageModal="bs-modal"
@@ -175,3 +175,14 @@
 
 <!--spinner-->
 <ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
+
+<!--mensaje cuando esta vacio la tabla-->
+<ng-template #NotCandidatos>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <alert type="info">
+            <strong>Oops!</strong> A&uacute;n no cuentas con candidatos en proceso / apartados.
+          </alert>
+    </div>
+  </div>
+</ng-template>

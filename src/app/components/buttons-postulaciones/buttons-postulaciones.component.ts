@@ -76,7 +76,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
       this.pst = true;
-      this.liberado = false;
+      this.liberado = true;
     }
     else if(estatus === 17) //cita reclutamiento
     {
@@ -504,15 +504,18 @@ refresh()
     tapToDismiss: false,
     showCloseButton: true,
     mouseoverTimerStop: true,
+    preventDuplicates: true,
   });
+  
   popToast(type, title, body) {
     var toast: Toast = {
       type: type,
       title: title,
       timeout: 4000,
-      body: body
+      body: body    
     }
     this.toasterService.pop(toast);
+
   }
 
 }
