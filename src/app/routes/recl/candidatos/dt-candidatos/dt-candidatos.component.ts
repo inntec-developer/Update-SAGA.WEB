@@ -68,7 +68,7 @@ export class DtCandidatosComponent implements OnInit, OnChanges {
     tapToDismiss: false,
     showCloseButton: true,
     mouseoverTimerStop: true,
-    preventDuplicates: true;
+    preventDuplicates: true
   });
 }
 

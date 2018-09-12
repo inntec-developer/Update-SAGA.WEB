@@ -39,7 +39,8 @@ export class InfoCandidatoComponent implements OnInit {
   reclutador: any = '';
   procesoCandidato: any = {};
   msg: string;
-  procesoCandidatoId: any;
+  procesoCandidatoId: any; // Recuperar el estatus en el que se encuetra el candidato.
+  Estatus: any; // Toma el Id del procesoCandidato para realizar las afectaciones correspondientes.
   /*********************************************************/
 
 
@@ -76,9 +77,8 @@ export class InfoCandidatoComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    // this.CandidatoId = '4F65DAC1-C6A0-E811-80E8-9E274155325E'
     this.spinner.show();
+    // this.CandidatoId = '4F65DAC1-C6A0-E811-80E8-9E274155325E'
     this._serviceCandidato.getInfoCandidato(this.CandidatoId).subscribe(data => {
       this.candidato = {
         id: data.id,
@@ -102,6 +102,7 @@ export class InfoCandidatoComponent implements OnInit {
         info: data.candidato
       }
       if (this.candidato.estatus) {
+        this.Estatus = this.candidato.estatus.id;
         this.procesoCandidatoId = this.candidato.estatus.estatusId;
         this.Status = this.candidato.estatus.estatus.descripcion;
         this.requisicionId = this.candidato.estatus.requisicionId;
@@ -364,21 +365,14 @@ export class InfoCandidatoComponent implements OnInit {
 
   _liberarCandidato() {
     if (this.reclutador == this.usuario || !this.candidato.estatus) {
-      this._serviceCandidato.setLiberarCandidato(this.procesoCandidatoId)
+      this._serviceCandidato.setLiberarCandidato(this.Estatus)
         .subscribe(data => {
           switch (data) {
             case 200: {
               this.ngOnInit();
               this.ngAfterViewInit();
-              var msg = 'El candidato se libero corRectamente.';
+              var msg = 'El candidato se libero correctamente.';
               this.popToast('warning', 'Liberado', msg);
-              setTimeout(() => {
-                this.vacante = {};
-                this.procesoCandidatoId = 0;
-                this.Status = '';
-                this.requisicionId = '';
-                this.reclutador = '';
-              }, 800);
               break;
             }
             case 404: {

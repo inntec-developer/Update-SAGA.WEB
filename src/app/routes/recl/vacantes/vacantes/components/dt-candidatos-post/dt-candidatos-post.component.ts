@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { MatDialog } from '@angular/material';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from '../../../../../../service/SeguimientoVacante/postulate.service';
 
 declare var $: any;
@@ -36,7 +37,8 @@ export class DtCandidatosPostComponent implements OnInit {
     private service: PostulateService,
     private dialog: MatDialog,
     private _Router: Router,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit() {
@@ -50,6 +52,7 @@ export class DtCandidatosPostComponent implements OnInit {
   getpostulados() {
     this.service.getPostulados(this.RequisicionId).subscribe(data => {
       this.dataSource = data;
+      
     }, error => this.errorMessage = <any>error);
   }
 

@@ -665,7 +665,7 @@
                     </td>
                   </tr>
                   <tr (click)="onCellClick_v(row)" (dblclick)="openDialogShowRequi()" *ngFor="let row of rows"
-                    [class.confident]="row.confidencial" [class.enProceso]=" row.id === requisicionId">
+                    [class.confident]="row.confidencial" [class.enProceso]=" row.id === requisicionId && procesoCandidatoId != 27 ">
                     <td class="text-center">
                       {{row.folio}}
                     </td>
