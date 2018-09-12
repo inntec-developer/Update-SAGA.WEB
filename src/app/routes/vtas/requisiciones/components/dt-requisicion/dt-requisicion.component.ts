@@ -33,7 +33,7 @@ export class DtRequisicionComponent implements OnInit {
   showFilterRow: boolean;
   registros: number;
   errorMessage: any;
-  element: any = {};
+  element: any = null;
 
   estatusId: any;
   enProceso: any;

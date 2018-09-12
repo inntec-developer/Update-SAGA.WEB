@@ -1,5 +1,4 @@
-<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
-<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
+
 <div class="row">
   <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12">
     <div *ngIf="candidato" class="dt-container mat-elevation-z8">
@@ -13,7 +12,7 @@
       <div class="card-body text-center">
         <img class="img-fluid img-thumbnail rounded-circle thumb96" [src]="candidato.picture" alt="Contact" />
         <h4>{{candidato.nombre}}</h4>
-        <div *ngIf="!candidato.estatus || reclutador === usuario">
+        <div *ngIf="!candidato.estatus || procesoCandidatoId === 27 || reclutador === usuario">
           <div *ngIf="candidato.aboutMe">
             <mat-divider></mat-divider>
             <span class="text-muted">{{candidato.aboutMe}}</span>
@@ -48,11 +47,12 @@
       <div class="card-footer">
         <div class="row">
           <div class="col-md-2 text-center">
-            <em *ngIf="!candidato.estatus" class="fa fa-unlock m-0  text-success"></em>
-            <em *ngIf="candidato.estatus" class="fa fa-lock m-0 text-primary"></em>
+            <em *ngIf="!candidato.estatus || procesoCandidatoId === 27" class="fa fa-unlock m-0  text-success"></em>
+            <em *ngIf="procesoCandidatoId != 27 && candidato.estatus" class="fa fa-lock m-0 text-primary"></em>
           </div>
           <div class="col-md-10 text-right">
-            <h5 *ngIf="candidato.estatus" class="m-0 text-primary">Apartado por: {{reclutador}}</h5>
+            <h5 *ngIf="candidato.estatus" class="m-0"
+              [ngClass]="(procesoCandidatoId === 27) ? 'text-success':'text-primary'">{{Status}} por: {{reclutador}}</h5>
             <h5 *ngIf="!candidato.estatus" class="text-success">Candidato Disponible</h5>
           </div>
         </div>
@@ -624,13 +624,15 @@
             <div class="row justify-content-between">
               <div class="d-flex align-items-stretch ">
                 <!-- <btn-view (click)="openDialogShowRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view> -->
-                <button [disabled]="vacante.id != requisicionId && Status != 0 || vacante.id === requisicionId &&  reclutador != usuario "
-                  [ngClass]="( vacante.id != requisicionId && Status != 0 || vacante.id === requisicionId &&  reclutador != usuario  ) ? 'mb-1 btn btn-secondary':'mb-1 btn btn-outline-success'"
+                <button [disabled]="procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === requisicionId &&  reclutador != usuario || vacante.id === requisicionId && procesoCandidatoId != 27 "
+                  [ngClass]="( procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === requisicionId &&  reclutador != usuario ||  vacante.id === requisicionId && procesoCandidatoId != 27 ) 
+                    ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
                   matTooltip="Apartar" (click)="_apartarCandidato()">
                   <em class="fa fa-thumbs-o-up"></em>
                 </button>
-                <button [disabled]="vacante.id != requisicionId && Status != 0 || vacante.id === requisicionId &&  reclutador != usuario"
-                  [ngClass]="( vacante.id != requisicionId && Status != 0 || vacante.id === requisicionId &&  reclutador != usuario  ) ? 'mb-1 btn btn-secondary':'mb-1 btn btn-outline-danger'"
+                <button [disabled]="vacante.id != requisicionId && procesoCandidatoId != 27 || vacante.id === requisicionId &&  reclutador != usuario || vacante.id === requisicionId && procesoCandidatoId === 24 || procesoCandidatoId === 27  || !candidato.estatus"
+                  [ngClass]="( vacante.id != requisicionId && procesoCandidatoId != 27 || vacante.id === requisicionId &&  reclutador != usuario || vacante.id === requisicionId && procesoCandidatoId === 24 || procesoCandidatoId === 27 || !candidato.estatus  ) 
+                    ? 'mb-1 btn disabled':'mb-1 btn btn-outline-danger'"
                   matTooltip="Desapartar" (click)="_liberarCandidato()">
                   <em class="fa fa-thumbs-o-down"></em>
                 </button>

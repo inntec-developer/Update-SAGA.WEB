@@ -1,9 +1,9 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { CandidatosService } from '../../../../service';
 import { MatDialog } from '@angular/material';
-import { ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'app-dt-candidatos',
@@ -59,5 +59,16 @@ export class DtCandidatosComponent implements OnInit, OnChanges {
     this.showCandidato = true;
     this.setInfoCnd(1);
   }
+
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+    preventDuplicates: true;
+  });
 }
 
