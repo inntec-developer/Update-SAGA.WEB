@@ -70,6 +70,7 @@ import {ButtonsPostulacionesComponent} from './buttons-postulaciones/buttons-pos
 import { CardVacanteComponent } from './card-vacantes/card-vacante.component';
 import { ClockComponent } from './clock/clock.component';
 import { ColorPickerService } from 'ngx-color-picker';
+import { ComentarioCandidatoComponent } from './comentario-candidato/comentario-candidato.component';
 import { ComentarioVacanteComponent } from './comentario-vacante/comentario-vacante.component';
 import { CommonModule } from '@angular/common';
 import { DetailVacantesComponent } from './detail-vacantes/detail-vacantes.component';
@@ -80,7 +81,6 @@ import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import { NgxSpinnerModule } from '../../../node_modules/ngx-spinner';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { ComentarioCandidatoComponent } from './comentario-candidato/comentario-candidato.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -204,7 +204,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     AsignarRequisicionLiderComponent,
     InfoCandidatoComponent,
     DtBusquedaCandidatosComponent,
-    DtMisCandidatosComponent
+    DtMisCandidatosComponent,
+    ComentarioCandidatoComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
