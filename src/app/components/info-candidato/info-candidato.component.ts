@@ -42,7 +42,7 @@ export class InfoCandidatoComponent implements OnInit {
   msg: string;
   procesoCandidatoId: any; // Recuperar el estatus en el que se encuetra el candidato.
   Estatus: any; // Toma el Id del procesoCandidato para realizar las afectaciones correspondientes.
-  Emiter: { estatusId: number; estatus: string; };
+  Emiter: { estatusId: number; estatus: string; candidatoId: string };
   /*********************************************************/
 
 
@@ -340,7 +340,8 @@ export class InfoCandidatoComponent implements OnInit {
               this.popToast('success', 'Apartado', msg);
               this.Emiter = {
                 estatusId: 12,
-                estatus: 'Apartado'
+                estatus: 'Apartado',
+                candidatoId: this.CandidatoId
               };
               this.EstatusEmitter.emit(this.Emiter);
               break;
@@ -382,7 +383,8 @@ export class InfoCandidatoComponent implements OnInit {
               this.popToast('warning', 'Liberado', msg);
               this.Emiter = {
                 estatusId: 27,
-                estatus: 'Liberado'
+                estatus: 'Liberado',
+                candidatoId: this.CandidatoId
               };
               this.EstatusEmitter.emit(this.Emiter);
               break;
