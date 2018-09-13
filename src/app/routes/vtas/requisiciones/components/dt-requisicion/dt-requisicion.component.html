@@ -25,6 +25,36 @@
           matTooltip="Activar" [ngClass]="(estatusId != 8 || !element) ? 'disabled' : 'btn-outline-success'" (click)="openDialogReActivar()"><em
             class="icon-refresh"></em></button>
       </div>
+      <div >
+
+          <button class="margen" [ngClass]="nbc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-primary'" [disabled] = "nbc"  type="button" (click)="SetStatus(12)" matTooltip="Nueva Busqueda de Candidatos"> 
+            <em class="fa fa-search-plus"></em>
+          </button>
+    
+       <button class="margen" [disabled]="contratado" [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" type="button" (click)="SetStatus(24)" matTooltip="Contratado">
+          <em class="fa fa-handshake-o"></em>
+        </button>
+
+
+          <button class="margen" [ngClass]="gbc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" [disabled]="gbc" type="button" (click)="SetStatus(27)" matTooltip="Garant&iacute;a B&uacute;squeda Candidatos"> 
+            <em class="fa fa-user-circle"></em>
+          </button>
+     
+            <button class="margen" [ngClass]="cancelada ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" [disabled]="cancelada"  type="button" (click)="SetStatus(28)" matTooltip="Cancelada">
+              <em class="fa fa-ban"></em>
+            </button>
+
+     <button class="margen" [disabled]="cc" [ngClass]="cc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"  type="button" (click)="SetStatus(17)" matTooltip="Cubierta por el Cliente">
+          <em class="fa fa fa-shield"></em>
+        </button>
+        <button class="margen" [ngClass]="crm ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'" [disabled]="crm"   type="button" (click)="SetStatus(18)" matTooltip="Cubierta por Reclutamiento Medios" >
+          <em class="fa fa-star"></em>
+        </button>
+        <button class="margen" [disabled]="cp" [ngClass]="cp ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"  type="button" (click)="SetStatus(13)" matTooltip="Cubierta Parcialmente">
+          <em class="fa fa-star-half-o"></em>
+        </button>
+      </div>
+    
       <div>
         <btn-refresh (click)="refreshTable()" matTooltip="Actualizar"></btn-refresh>
       </div>

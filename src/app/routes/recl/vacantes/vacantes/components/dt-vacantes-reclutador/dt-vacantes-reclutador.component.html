@@ -7,66 +7,66 @@
         (tableChanged)="onChangeTable(config)">
     </mat-form-field>
     <div class="row justify-content-between">
-      <div class="d-flex align-items-stretch ">
+      <div class="d-flex align-items-stretch">
         <btn-view (click)="openDialogShowRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view>
         <btn-assign id="update" chkPrivilegiosButtons (click)="openDialogAssingRequi(element)" matTooltip="Asignar"></btn-assign>
-        <button type="button" id="special" chkPrivilegiosButtons (click)="openDesignVacante(element.id, element.folio, element.vBtra)"
+         <button type="button" id="special" chkPrivilegiosButtons (click)="openDesignVacante(element.id, element.folio, element.vBtra)"
           matTooltip="Diseñar Vacante" [disabled]="!element || element.estatusId === 4 || element.estatusId  === 5 || element.estatusId  === 8 || element.estatusId  === 9 || element.confidencial"
-          [ngClass]="(!element || element.estatusId === 4 || element.estatusId  === 5 || element.estatusId  === 8 || element.estatusId  === 9 || element.confidencial)? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
+          [ngClass]="(!element || element.estatusId === 4 || element.estatusId  === 5 || element.estatusId  === 8 || element.estatusId  === 9 || element.confidencial) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
           <em class="icon-list"></em>
-        </button>
+        </button> 
       </div>
       <!-- estatus de la vacante -->
-      <ul>
-          <li><a>
-            <button [ngClass]="pst ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-primary'" [disabled] = "pst"  type="button" (click)="SetProceso(12)" matTooltip="Nueva Busqueda"> 
+      <div>
+          <!-- <li><a>
+            <button [ngClass]="nbc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-primary'" [disabled] = "nbc"  type="button" (click)="SetStatus(12)" matTooltip="Nueva Busqueda de Candidatos"> 
               <em class="fa fa-search-plus"></em>
             </button>
           </a></li>
-          <li><a><button [disabled]="contratado" [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" type="button" (click)="SetProceso(24)" matTooltip="Contratado">
-            <em class="fa fa-user-plus"></em>
+          <li><a><button [disabled]="contratado" [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" type="button" (click)="SetStatus(24)" matTooltip="Contratado">
+            <em class="fa fa-handshake-o"></em>
           </button></a></li>
 
           <li><a>
-            <button [ngClass]="liberado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" [disabled]="liberado" type="button" (click)="SetProceso(27)" matTooltip="Desapartar"> 
-              <em class="fa fa-thumbs-o-down"></em>
+            <button [ngClass]="gbc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" [disabled]="gbc" type="button" (click)="SetStatus(27)" matTooltip="Garant&iacute;a B&uacute;squeda Candidatos"> 
+              <em class="fa fa-user-circle"></em>
             </button>
           </a></li>
-           <li><a><em class="vl"></em></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(28)" matTooltip="Cancelada">
-                <em class="fa fa-user-times"></em>
+              <li><a><button [ngClass]="cancelada ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" [disabled]="cancelada"  type="button" (click)="SetStatus(28)" matTooltip="Cancelada">
+                <em class="fa fa-ban"></em>
               </button></a></li>
-          <li><a><em class="vl"></em></a></li>
-          <li><a><button [disabled]="cr" [ngClass]="cr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"  type="button" (click)="SetProceso(17)" matTooltip="Cita Reclutamiento">
-            <em class="fa fa-address-book"></em>
+              <li><a><em class="vl"></em></a></li>
+          <li><a><button [disabled]="cc" [ngClass]="cc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"  type="button" (click)="SetStatus(17)" matTooltip="Cubierta por el Cliente">
+            <em class="fa fa fa-shield"></em>
           </button></a></li>
-          <li><a><button [ngClass]="enr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'" [disabled]="enr"   type="button" (click)="SetProceso(18)" matTooltip="Entrevista Reclutamiento" >
-            <em class="fa fa-microphone"></em>
+          <li><a><button [ngClass]="crm ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'" [disabled]="crm"   type="button" (click)="SetStatus(18)" matTooltip="Cubierta por Reclutamiento Medios" >
+            <em class="fa fa-star"></em>
           </button></a></li>
-          <li><a><em class="vl"></em></a></li>
-          <li><a><button [disabled]="evt" [ngClass]="evt ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetProceso(13)" matTooltip="Evaluación Técnica">
+          <li><a><button [disabled]="cp" [ngClass]="cp ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"  type="button" (click)="SetStatus(13)" matTooltip="Cubierta Parcialmente">
+            <em class="fa fa-star-half-o"></em>
+          </button></a></li>
+          <li><a><em class="vl"></em></a></li> -->
+          <button class="margen" [disabled]="bc" [ngClass]="bc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetStatus(14)" matTooltip="B&uacute;squeda de Candidatos">
             <em class="fa fa-search"></em>
-          </button></a></li>
-          <li><a><button [disabled]="evps" [ngClass]="evps ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetProceso(14)" matTooltip="Evaluación Psicométrica">
-            <em class="fa fa-users"></em>
-          </button></a></li>
-          <li><a><button [disabled]="evm" [ngClass]="evm ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetProceso(15)" matTooltip="Evaluación Médica">
-            <em class="fa fa-user-md"></em>
-          </button></a></li>             
-          <li><a><em class="vl"></em></a></li>
-          <li><a><button [disabled]="fr" [ngClass]="fr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"  type="button" (click)="SetProceso(21)" matTooltip="Finalista Reclutamiento">
-            <em class="fa fa-user-circle-o"></em>
-          </button></a></li>
-          <li><a><button [disabled]="enc" [ngClass]="enc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetProceso(22)" matTooltip="Entrevista Cliente" >
-            <em class="fa fa-microphone"></em>
-          </button></a></li>
-          <li><a><button [disabled]="fc" [ngClass]="fc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetProceso(23)" matTooltip="Finalista Cliente">
-            <em class="fa fa-user-circle-o"></em>
-          </button></a></li>
+          </button>
+          <button class="margen" [disabled]="sc" [ngClass]="sc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetStatus(15)" matTooltip="Socioeconómico">
+            <em class="fa fa-bar-chart"></em>
+          </button>             
+
+          <button class="margen" [disabled]="ecc" [ngClass]="ecc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetStatus(21)" matTooltip="Env&iacute;o Candidato a Cliente">
+            <em class="fa fa-truck"></em>
+          </button>
+     
+          <button class="margen" [disabled]="ec" [ngClass]="ec ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetStatus(22)" matTooltip="En Espera de Contrataci&oacute;n" >
+            <em class="fa fa-hourglass-half"></em>
+          </button>
+          <button class="margen" [disabled]="pausa" [ngClass]="pausa ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetStatus(23)" matTooltip="En Pausa">
+            <em class="fa fa-pause-circle-o"></em>
+          </button>
         
 
         
-        </ul>
+        </div>
       <!-- estatus de la vacante -->
       <div>
         <button [disabled]="postulados <= 0" (click)="openViewPostulados()" [ngClass]="(postulados <= 0 )? 'mb-1 btn disabled':'mb-1 btn btn-outline-warning'">

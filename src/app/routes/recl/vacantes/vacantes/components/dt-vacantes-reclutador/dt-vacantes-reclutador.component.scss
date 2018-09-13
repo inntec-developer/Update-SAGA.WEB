@@ -18,26 +18,34 @@ table {
     width:400px;
 }
 
-ul li {
-    display:inline-block;
-     list-style: none ;
+.margen 
+{
+    margin:0 2px;
+}
+// ul li {
+//     display:inline-block;
+//      list-style: none ;
 
- }
-ul li a {
-    display:block;
-     color:#aaa;
-     //color:#00b3ee;
-     margin:0 2px;
-     font-size:14px;
-    // transition:0.5s;
-     text-align:center;
-    // transition: all .2s ease-in-out;
- }
-li:hover a {
-     color:#e91e63;
-     //transform: scale(1.1); 
-    //transform:rotateY(360deg);
- }
-// .btn{
-//     margin-left: 2px;
+//  }
+// ul li a {
+//     display:block;
+//      color:#aaa;
+//      //color:#00b3ee;
+//      margin:0 2px;
+//      font-size:14px;
+//     // transition:0.5s;
+//      text-align:center;
+//     // transition: all .2s ease-in-out;
+//  }
+// li:hover a {
+//      color:#e91e63;
+//      //transform: scale(1.1); 
+//     //transform:rotateY(360deg);
+//  }
+// // .btn{
+// //     margin-left: 2px;
+// // }
+// .vl {
+//     border-left: 1px solid #aaa;
+//     height: 50px;
 // }

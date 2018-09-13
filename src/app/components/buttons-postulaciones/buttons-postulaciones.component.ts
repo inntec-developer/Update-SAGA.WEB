@@ -252,7 +252,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
           this.evm = true;
           this.pst = true;
           this.liberado = true;
-          this.getpostulados();
+         // this.getpostulados();
         }
       })
     }
@@ -346,6 +346,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
     this.isModalShown = true;
 
     this.ValidarEstatus(row.estatusId);
+    row.selected = true;
     //this.spinner.show();
   //   setTimeout(() => {
   //     /** spinner ends after 5 seconds */

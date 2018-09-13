@@ -42,6 +42,14 @@ export class DtVacantesReclutadorComponent implements OnInit {
   ShowDV: boolean;
   clienteId: any;
 
+  //estatus vacantes
+
+  bc = true; //busqueda candidato
+  sc = true; //socieconomico
+  ecc = true; //envío candidato cliente
+  ec = true; //espera contratacion
+  pausa = true;
+
   constructor(
     private service: RequisicionesService,
     private dialog: MatDialog,
@@ -72,6 +80,13 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.dataSource = data;      
     });
   }
+
+  //estatus vacantes
+  SetStatus(estatusId)
+  {
+    console.log('entro')
+  }
+
 
   public rows: Array<any> = [];
   public columns: Array<any> = [

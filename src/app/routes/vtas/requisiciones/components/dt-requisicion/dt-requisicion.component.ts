@@ -39,6 +39,15 @@ export class DtRequisicionComponent implements OnInit {
   enProceso: any;
 
 
+  // Estatus
+  nbc = true; //nueva busqueda candidato
+  contratado = true;
+  gbc = true //garantía busqueda candidato
+  cancelada = true;
+  cc = true; //cubierta por el cliente
+  crm = true; //cubierta reclutamiento medios
+  cp = true; // cubierta parcialmente
+  
 
   constructor(
     private service: RequisicionesService,
