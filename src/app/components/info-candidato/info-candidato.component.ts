@@ -15,7 +15,7 @@ declare var $: any;
 export class InfoCandidatoComponent implements OnInit {
   candidato: any;
   @Input('IdCandidato') CandidatoId: string;
-  @Output('Estatus') Estatus: EventEmitter<any> =  new EventEmitter();
+  @Output('Estatus') EstatusEmitter: EventEmitter<any> =  new EventEmitter();
   public dataSource_v: Array<any> = [];
   public dataSource_p: Array<any> = [];
 
@@ -41,7 +41,7 @@ export class InfoCandidatoComponent implements OnInit {
   procesoCandidato: any = {};
   msg: string;
   procesoCandidatoId: any; // Recuperar el estatus en el que se encuetra el candidato.
-  EstatusId: any; // Toma el Id del procesoCandidato para realizar las afectaciones correspondientes.
+  Estatus: any; // Toma el Id del procesoCandidato para realizar las afectaciones correspondientes.
   Emiter: { estatusId: number; estatus: string; };
   /*********************************************************/
 
@@ -104,7 +104,7 @@ export class InfoCandidatoComponent implements OnInit {
         info: data.candidato
       }
       if (this.candidato.estatus) {
-        this.EstatusId = this.candidato.estatus.id;
+        this.Estatus = this.candidato.estatus.id;
         this.procesoCandidatoId = this.candidato.estatus.estatusId;
         this.Status = this.candidato.estatus.estatus.descripcion;
         this.RequisicionId = this.candidato.estatus.requisicionId;
@@ -331,7 +331,7 @@ export class InfoCandidatoComponent implements OnInit {
       }
       this._serviceCandidato.setApartarCandidato(this.procesoCandidato)
         .subscribe(data => {
-          this.Estatus.emit(this.Emiter);
+          
           switch (data) {
             case 200: {
               this.ngOnInit();
@@ -342,6 +342,7 @@ export class InfoCandidatoComponent implements OnInit {
                 estatusId: 12,
                 estatus: 'Apartado'
               };
+              this.EstatusEmitter.emit(this.Emiter);
               break;
             }
             case 304: {
@@ -371,7 +372,7 @@ export class InfoCandidatoComponent implements OnInit {
 
   _liberarCandidato() {
     if (this.reclutador == this.usuario || !this.candidato.estatus) {
-      this._serviceCandidato.setLiberarCandidato(this.EstatusId)
+      this._serviceCandidato.setLiberarCandidato(this.Estatus)
         .subscribe(data => {
           switch (data) {
             case 200: {
@@ -380,9 +381,10 @@ export class InfoCandidatoComponent implements OnInit {
               var msg = 'El candidato se libero correctamente.';
               this.popToast('warning', 'Liberado', msg);
               this.Emiter = {
-                estatusId: 12,
-                estatus: 'Apartado'
+                estatusId: 27,
+                estatus: 'Liberado'
               };
+              this.EstatusEmitter.emit(this.Emiter);
               break;
             }
             case 404: {
