@@ -320,7 +320,8 @@ export class InfoCandidatoComponent implements OnInit {
    * Funcionalidades del componente
    */
   _apartarCandidato() {
-    if (this.reclutador == this.usuario || !this.candidato.estatus) {
+    debugger;
+    // if (this.reclutador === this.usuario || !this.candidato.estatus) {
       this.procesoCandidato = {
         candidatoId: this.CandidatoId,
         requisicionId: this.vacante.id,
@@ -331,7 +332,6 @@ export class InfoCandidatoComponent implements OnInit {
       }
       this._serviceCandidato.setApartarCandidato(this.procesoCandidato)
         .subscribe(data => {
-          
           switch (data) {
             case 200: {
               this.ngOnInit();
@@ -365,10 +365,10 @@ export class InfoCandidatoComponent implements OnInit {
         }, err => {
           console.log(err);
         });
-    }
-    else {
-      this.notAccess();
-    }
+    // }
+    // else {
+    //   this.notAccess();
+    // }
   }
 
   _liberarCandidato() {

@@ -39,7 +39,7 @@ export class ComentariosService {
     return this._http.get(this.UrlComentariosCandidato, { params: params });
   }
 
-  getcomentariosVacante(Id: any): Observable<any> {
+  getComentariosVacante(Id: any): Observable<any> {
     let params = new HttpParams().set('Id', Id);
     return this._http.get(this.UrlComentariosVacante, { params: params });
   }
