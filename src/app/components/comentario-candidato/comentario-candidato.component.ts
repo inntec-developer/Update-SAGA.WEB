@@ -19,7 +19,10 @@ export class ComentarioCandidatoComponent implements OnInit {
 
   constructor(
     private _ComentariosService: ComentariosService
-  ) { }
+  ) { 
+    this.CandidatoId = '4F65DAC1-C6A0-E811-80E8-9E274155325E'
+    
+  }
 
   ngOnInit() {
 
@@ -41,23 +44,23 @@ export class ComentarioCandidatoComponent implements OnInit {
   }
 
   addComentario() {
-    if(this.comentario != null){
+    if (this.comentario != null) {
       this.Comentario = {
-      Comentario: this.comentario,
-      CandidatoId: this.CandidatoId,
-      RequisicionId: this.RequisicionId,
-      Usuario: localStorage.getItem('usuario'),
-      UsuarioId: localStorage.getItem('id')
-    }
-    this._ComentariosService.getComentariosCandidato(this.Comentario).subscribe(data => {
-      if (data == 200) {
-        this.getComentarios(this.CandidatoId);
+        Comentario: this.comentario,
+        CandidatoId: this.CandidatoId,
+        RequisicionId: this.RequisicionId,
+        Usuario: localStorage.getItem('usuario'),
+        UsuarioId: localStorage.getItem('id')
       }
-    }, err => {
-      console.log(err);
-    });
+      this._ComentariosService.addComentarioCandidato(this.Comentario).subscribe(data => {
+        if (data == 200) {
+          this.getComentarios(this.CandidatoId);
+        }
+      }, err => {
+        console.log(err);
+      });
     }
-    
+
   }
 }
 
