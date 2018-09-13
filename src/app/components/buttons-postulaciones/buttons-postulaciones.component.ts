@@ -312,15 +312,16 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
     if(!data.selected)
     {
-      this.cr = false;
-      this.enr = false;
-      this.fr = false;
-      this.enc = false;
-      this.fc = false;
-      this.contratado = false;
-      this.evt = false;
-      this.evps = false;
-      this.evm = false;
+      this.cr = true;
+      this.enr = true;
+      this.fr = true;
+      this.enc = true;
+      this.fc = true;
+      this.contratado = true;
+      this.evt = true;
+      this.evps = true;
+      this.evm = true;
+      this.liberado = true;
     }
     else
     {
@@ -352,18 +353,33 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   VerCandidato(row)
   {
-     
     this.candidatoId = row.candidatoId;
+
     this.isModalShown = true;
 
-    this.ValidarEstatus(row.estatusId);
-    row.selected = true;
+    // this.ValidarEstatus(row.estatusId);
+    // row.selected = true;
     //this.spinner.show();
   //   setTimeout(() => {
   //     /** spinner ends after 5 seconds */
   //     this.spinner.hide();
 
   // }, 1000);
+
+  }
+
+  EstatusModal($event)
+  {
+    console.log($event)
+    var idx = this.dataSource.findIndex(x => x.candidatoId === $event.candidatoId);
+
+    this.dataSource[idx]['estatusId'] = $event.estatusId;
+    this.dataSource[idx]['estatus'] = $event.estatus;
+
+     this.ValidarEstatus($event.estatusId);
+     this.dataSource[idx]['selected'] = true;
+
+    this.onChangeTable(this.config);
 
   }
 
@@ -416,7 +432,6 @@ refresh()
   }
 
   public changeSort(data: any, config: any): any {
-    debugger;
     if (!config.sorting) {
       return data;
     }

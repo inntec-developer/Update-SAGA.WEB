@@ -164,7 +164,7 @@
   </button>
 </div>
 <div class="modal-body">
-<app-info-candidato [IdCandidato] = 'candidatoId'></app-info-candidato>
+<app-info-candidato [IdCandidato] = 'candidatoId' (Estatus)="EstatusModal($event)"></app-info-candidato>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-outline-success" (click)="closeModal()">Cerrar</button>
