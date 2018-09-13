@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { InfoCandidatoService } from '../../service/SeguimientoVacante/info-candidato.service';
@@ -15,6 +15,7 @@ declare var $: any;
 export class InfoCandidatoComponent implements OnInit {
   candidato: any;
   @Input('IdCandidato') CandidatoId: string;
+  @Output('Estatus') Estatus: EventEmitter<any> =  new EventEmitter();
   public dataSource_v: Array<any> = [];
   public dataSource_p: Array<any> = [];
 
@@ -35,12 +36,13 @@ export class InfoCandidatoComponent implements OnInit {
   usuario: string;
   usuarioId: string;
   Status: any = 0;
-  requisicionId: any = '';
+  RequisicionId: any = '';
   reclutador: any = '';
   procesoCandidato: any = {};
   msg: string;
   procesoCandidatoId: any; // Recuperar el estatus en el que se encuetra el candidato.
-  Estatus: any; // Toma el Id del procesoCandidato para realizar las afectaciones correspondientes.
+  EstatusId: any; // Toma el Id del procesoCandidato para realizar las afectaciones correspondientes.
+  Emiter: { estatusId: number; estatus: string; };
   /*********************************************************/
 
 
@@ -70,7 +72,7 @@ export class InfoCandidatoComponent implements OnInit {
       this.vacante = {};
       this.procesoCandidatoId = 0;
       this.Status = '';
-      this.requisicionId = '';
+      this.RequisicionId = '';
       this.reclutador = '';
     }
 
@@ -102,10 +104,10 @@ export class InfoCandidatoComponent implements OnInit {
         info: data.candidato
       }
       if (this.candidato.estatus) {
-        this.Estatus = this.candidato.estatus.id;
+        this.EstatusId = this.candidato.estatus.id;
         this.procesoCandidatoId = this.candidato.estatus.estatusId;
         this.Status = this.candidato.estatus.estatus.descripcion;
-        this.requisicionId = this.candidato.estatus.requisicionId;
+        this.RequisicionId = this.candidato.estatus.requisicionId;
         this.reclutador = this.candidato.estatus.reclutador;
       }
       this.spinner.hide();
@@ -329,13 +331,17 @@ export class InfoCandidatoComponent implements OnInit {
       }
       this._serviceCandidato.setApartarCandidato(this.procesoCandidato)
         .subscribe(data => {
-
+          this.Estatus.emit(this.Emiter);
           switch (data) {
             case 200: {
               this.ngOnInit();
               this.ngAfterViewInit();
               var msg = 'El candidato se aparto correctamente.';
               this.popToast('success', 'Apartado', msg);
+              this.Emiter = {
+                estatusId: 12,
+                estatus: 'Apartado'
+              };
               break;
             }
             case 304: {
@@ -365,7 +371,7 @@ export class InfoCandidatoComponent implements OnInit {
 
   _liberarCandidato() {
     if (this.reclutador == this.usuario || !this.candidato.estatus) {
-      this._serviceCandidato.setLiberarCandidato(this.Estatus)
+      this._serviceCandidato.setLiberarCandidato(this.EstatusId)
         .subscribe(data => {
           switch (data) {
             case 200: {
@@ -373,6 +379,10 @@ export class InfoCandidatoComponent implements OnInit {
               this.ngAfterViewInit();
               var msg = 'El candidato se libero correctamente.';
               this.popToast('warning', 'Liberado', msg);
+              this.Emiter = {
+                estatusId: 12,
+                estatus: 'Apartado'
+              };
               break;
             }
             case 404: {

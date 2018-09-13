@@ -624,14 +624,14 @@
             <div class="row justify-content-between">
               <div class="d-flex align-items-stretch ">
                 <!-- <btn-view (click)="openDialogShowRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view> -->
-                <button [disabled]="procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === requisicionId &&  reclutador != usuario || vacante.id === requisicionId && procesoCandidatoId != 27 "
-                  [ngClass]="( procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === requisicionId &&  reclutador != usuario ||  vacante.id === requisicionId && procesoCandidatoId != 27 ) 
+                <button [disabled]="procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === RequisicionId &&  reclutador != usuario || vacante.id === RequisicionId && procesoCandidatoId != 27 "
+                  [ngClass]="( procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === RequisicionId &&  reclutador != usuario ||  vacante.id === RequisicionId && procesoCandidatoId != 27 ) 
                     ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
                   matTooltip="Apartar" (click)="_apartarCandidato()">
                   <em class="fa fa-thumbs-o-up"></em>
                 </button>
-                <button [disabled]="vacante.id != requisicionId && procesoCandidatoId != 27 || vacante.id === requisicionId &&  reclutador != usuario || vacante.id === requisicionId && procesoCandidatoId === 24 || procesoCandidatoId === 27  || !candidato.estatus"
-                  [ngClass]="( vacante.id != requisicionId && procesoCandidatoId != 27 || vacante.id === requisicionId &&  reclutador != usuario || vacante.id === requisicionId && procesoCandidatoId === 24 || procesoCandidatoId === 27 || !candidato.estatus  ) 
+                <button [disabled]="vacante.id != RequisicionId && procesoCandidatoId != 27 || vacante.id === RequisicionId &&  reclutador != usuario || vacante.id === RequisicionId && procesoCandidatoId === 24 || procesoCandidatoId === 27  || !candidato.estatus"
+                  [ngClass]="( vacante.id != RequisicionId && procesoCandidatoId != 27 || vacante.id === RequisicionId &&  reclutador != usuario || vacante.id === RequisicionId && procesoCandidatoId === 24 || procesoCandidatoId === 27 || !candidato.estatus  ) 
                     ? 'mb-1 btn disabled':'mb-1 btn btn-outline-danger'"
                   matTooltip="Desapartar" (click)="_liberarCandidato()">
                   <em class="fa fa-thumbs-o-down"></em>
@@ -665,7 +665,7 @@
                     </td>
                   </tr>
                   <tr (click)="onCellClick_v(row)" (dblclick)="openDialogShowRequi()" *ngFor="let row of rows"
-                    [class.confident]="row.confidencial" [class.enProceso]=" row.id === requisicionId && procesoCandidatoId != 27 ">
+                    [class.confident]="row.confidencial" [class.enProceso]=" row.id === RequisicionId && procesoCandidatoId != 27 ">
                     <td class="text-center">
                       {{row.folio}}
                     </td>
@@ -698,3 +698,5 @@
     </div>
   </div>
 </div>
+<br>
+<app-comentario-candidato [CandidatoId]="CandidatoId" [RequisicionId]="RequisicionId" [ProcesoCandidatoId]="procesoCandidatoId"></app-comentario-candidato>

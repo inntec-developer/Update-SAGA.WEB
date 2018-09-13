@@ -8,7 +8,7 @@
           </mat-panel-title>
           <mat-panel-description>
             <strong class="text-info">Comentarios</strong>
-            <span class="px-2 mr-2 text-right float-right badge badge-success">{{CountComent}}</span>
+            <span class="text-info"> ({{CountComent}})</span>
           </mat-panel-description>
         </mat-expansion-panel-header>
         <br>
@@ -21,7 +21,7 @@
                   <!-- <span class="circle bg-success circle-lg text-left"></span> -->
                   <span>{{coment.usuario.nombre}}</span>
                   <p>
-                    <small class="text-muted ml-2"> {{coment?.requisicion?.vBtra}}</small>
+                    <small *ngIf="coment?.requisicion?.vBtra" class="text-muted ml-2">Vacante: {{coment?.requisicion?.vBtra}}</small>
                     <small *ngIf="coment?.requisicion?.folio" class="text-muted ml-2">Folio: {{coment?.requisicion?.folio}}</small>
                   </p>
                 </strong>
@@ -29,8 +29,8 @@
               </div>
             </div>
             <div class="ml-auto">
-              <small class="text-muted ml-2">{{coment.fchComentario | date:'hh:mm:ss'}}</small>
-              <small class="text-muted ml-2">{{coment.fchComentario | date:'dd/MM/yyyy'}}</small>
+              <small class="text-warning ml-2">{{coment.fchComentario | date:'hh:mm:ss'}}</small>
+              <small class="text-warning ml-2">{{coment.fchComentario | date:'dd/MM/yyyy'}}</small>
               <!-- <div class="car-body">
                 <button class="mb-1 btn btn-secondary" matTooltip="Responder Comentario" (click)="ShowMessage(coment)" type="button">
                   <em class="icon icon-action-redo"></em></button>
@@ -50,7 +50,7 @@
           <mat-divider></mat-divider>
           <br>
           <div class="text-right">
-            <btn-send (click)="AddComentario()" *ngIf="comentario"></btn-send>
+            <btn-send (click)="addComentario()" *ngIf="comentario"></btn-send>
           </div>
         </div>
         <div *ngIf="msgError" role="alert" class="alert alert-danger">

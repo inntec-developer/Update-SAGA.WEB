@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 
+import { ApiConection } from '../../service';
 import { ComentariosService } from './../../service/Comentarios/comentarios.service';
-import { providers } from 'ng2-dnd';
 
 @Component({
   selector: 'app-comentario-candidato',
@@ -12,15 +12,17 @@ import { providers } from 'ng2-dnd';
 export class ComentarioCandidatoComponent implements OnInit {
   @Input('CandidatoId') CandidatoId: any;
   @Input('RequisicionId') RequisicionId: any;
+  @Input('ProcesoCandidatoId') ProcesocandidatoId: any;
 
   private Comentarios: any;
   private Comentario: any = {};
   private comentario: any;
+  CountComent: any;
 
   constructor(
     private _ComentariosService: ComentariosService
   ) { 
-    this.CandidatoId = '4F65DAC1-C6A0-E811-80E8-9E274155325E'
+    
     
   }
 
@@ -29,14 +31,24 @@ export class ComentarioCandidatoComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
     this.getComentarios(this.CandidatoId);
+  }
+  
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    if (changes.CandidatoId && !changes.CandidatoId.isFirstChange()) {
+      this.getComentarios(this.CandidatoId);
+    }
   }
 
   getComentarios(Id): void {
     this._ComentariosService.getComentariosCandidato(Id).subscribe(data => {
       this.Comentarios = data;
+      this.CountComent = this.Comentarios.length;
+      this.Comentarios.forEach(element => {
+        element.usuario.foto = ApiConection.ServiceUrlFoto + element.usuario.foto;
+      });
       console.log(this.Comentarios);
     }, err => {
       console.log(err)
@@ -45,6 +57,9 @@ export class ComentarioCandidatoComponent implements OnInit {
 
   addComentario() {
     if (this.comentario != null) {
+      if(this.ProcesocandidatoId === 27 || this.ProcesocandidatoId === 0){
+        this.RequisicionId = null;
+      }
       this.Comentario = {
         Comentario: this.comentario,
         CandidatoId: this.CandidatoId,
@@ -55,6 +70,7 @@ export class ComentarioCandidatoComponent implements OnInit {
       this._ComentariosService.addComentarioCandidato(this.Comentario).subscribe(data => {
         if (data == 200) {
           this.getComentarios(this.CandidatoId);
+          this.comentario = '';
         }
       }, err => {
         console.log(err);
