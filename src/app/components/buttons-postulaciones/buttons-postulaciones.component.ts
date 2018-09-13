@@ -76,7 +76,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
       this.pst = true;
-      this.liberado = true;
+      this.liberado = false;
       this.contratado = true;
     }
     else if(estatus === 17) //cita reclutamiento
@@ -230,7 +230,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
     }, error => this.errorMessage = <any>error);
   }
 
-  SetProceso(estatusId)
+  SetProceso(estatusId, estatus)
   {
     if(this.candidatoId != null)
     {
@@ -239,8 +239,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.service.SetProceso(datos).subscribe(data => {
         if(data == 201)
         {
-          this.SetStatusBolsa(this.candidatoId, estatusId);
-
+          this.SetStatusBolsa(this.candidatoId, estatusId, estatus);
           this.cr = true;
           this.enr = true;
           this.fr = true;
@@ -252,14 +251,16 @@ export class ButtonsPostulacionesComponent implements OnInit {
           this.evm = true;
           this.pst = true;
           this.liberado = true;
-         // this.getpostulados();
+
+          
+         // 
         }
       })
     }
 
   }
 
-  SetStatusBolsa(candidatoId, estatusId)
+  SetStatusBolsa(candidatoId, estatusId, estatus)
   {
     if(this.candidatoId != null)
     {
@@ -287,6 +288,16 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.service.SetStatusBolsa(datos).subscribe(data => {
         if(data == 201)
         {
+       
+          var aux = this.dataSource;
+          var idx = aux.findIndex(x => x.candidatoId === this.candidatoId);
+          this.ValidarEstatus(estatusId);
+     
+          this.dataSource[idx]['estatusId'] = estatusId;
+          this.dataSource[idx]['estatus'] = estatus;
+
+          this.onChangeTable(this.config)
+
           this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');    
         }
       })
@@ -316,11 +327,11 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.ValidarEstatus(data.estatusId)
     }
 
-    if(this.rowAux == [])
+    if(this.rowAux.length == 0)
     {
       this.rowAux = data;
     }
-    else if(this.rowAux != [] && data.selected)
+    else if(data.selected && this.rowAux != [])
     {
       var aux = data;
       data = this.rowAux;
@@ -479,7 +490,7 @@ refresh()
   }
 
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
-    debugger;
+
     if (config.filtering) {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
