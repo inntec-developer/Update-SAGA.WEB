@@ -13,6 +13,7 @@ import { ModalDirective } from 'ngx-bootstrap';
 export class ButtonsPostulacionesComponent implements OnInit {
 
   @Input() RequisicionId;
+  @Input() vacante;
   @ViewChild('MessageModal') ShownModal: ModalDirective;
  
   public dataSource: Array<any> = [];
@@ -297,6 +298,14 @@ export class ButtonsPostulacionesComponent implements OnInit {
           this.dataSource[idx]['estatus'] = estatus;
 
           this.onChangeTable(this.config)
+
+          if(estatusId === 17 || estatusId === 21)
+          {
+            var datos = {candidatoId: this.candidatoId, estatusId: estatusId, vacante: this.vacante, nombre: this.dataSource[idx]['nombre']};
+
+            this.service.SendEmailCandidato(datos).subscribe();
+
+          }
 
           this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');    
         }

@@ -20,6 +20,7 @@ export class PostulateService {
   private UrlGetProceso = ApiConection.ServiceUrl + ApiConection.getProcesoPostulados;
   private UrlSetProceso = ApiConection.ServiceUrl + ApiConection.setProcesoPostulado;
   private UrlSetStatusBolsa = ApiConection.ServiceUrl + ApiConection.setStatusBolsa;
+  private UrlSendEmailCandidato = ApiConection.ServiceUrl + ApiConection.sendEmailCandidato;
 
   constructor(private _HttpClient: HttpClient) { }
 
@@ -55,6 +56,19 @@ export class PostulateService {
     };
 
     return this._HttpClient.post(this.UrlSetStatusBolsa, data, httpOptions )
+  }
+
+  SendEmailCandidato(data)
+  {
+    let params = new HttpParams().set('datos', data)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+
+    return this._HttpClient.post(this.UrlSendEmailCandidato, data, httpOptions )
+
   }
 
 }

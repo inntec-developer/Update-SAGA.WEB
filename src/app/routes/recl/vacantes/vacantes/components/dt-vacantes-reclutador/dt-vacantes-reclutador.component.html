@@ -8,9 +8,9 @@
     </mat-form-field>
     <div class="row justify-content-between">
       <div class="d-flex align-items-stretch">
-        <btn-view (click)="openDialogShowRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view>
-        <btn-assign id="update" chkPrivilegiosButtons (click)="openDialogAssingRequi(element)" matTooltip="Asignar"></btn-assign>
-         <button type="button" id="special" chkPrivilegiosButtons (click)="openDesignVacante(element.id, element.folio, element.vBtra)"
+        <btn-view class="margen" (click)="openDialogShowRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view>
+        <btn-assign class="margen" id="update" chkPrivilegiosButtons (click)="openDialogAssingRequi(element)" matTooltip="Asignar"></btn-assign>
+         <button class="margen" type="button" id="special" chkPrivilegiosButtons (click)="openDesignVacante(element.id, element.folio, element.vBtra)"
           matTooltip="Diseñar Vacante" [disabled]="!element || element.estatusId === 4 || element.estatusId  === 5 || element.estatusId  === 8 || element.estatusId  === 9 || element.confidencial"
           [ngClass]="(!element || element.estatusId === 4 || element.estatusId  === 5 || element.estatusId  === 8 || element.estatusId  === 9 || element.confidencial) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
           <em class="icon-list"></em>
@@ -69,13 +69,13 @@
         </div>
       <!-- estatus de la vacante -->
       <div>
-        <button [disabled]="postulados <= 0" (click)="openViewPostulados()" [ngClass]="(postulados <= 0 )? 'mb-1 btn disabled':'mb-1 btn btn-outline-warning'">
+        <button class="margen" [disabled]="postulados <= 0" (click)="openViewPostulados()" [ngClass]="(postulados <= 0 )? 'mb-1 btn disabled':'mb-1 btn btn-outline-warning'">
           Postulados
         </button>
         <button [disabled]="enProceso <= 0" (click)="seguimientoRequi()" [ngClass]="(enProceso <= 0) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
           En Proceso
         </button>
-        <btn-refresh (click)="refreshTable()" matTooltip="Actualizar"></btn-refresh>
+        <btn-refresh class="margen" (click)="refreshTable()" matTooltip="Actualizar"></btn-refresh>
       </div>
     </div>
   </div>
