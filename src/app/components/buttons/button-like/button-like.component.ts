@@ -14,7 +14,7 @@ export class ButtonLikeComponent implements OnInit {
   
 
   constructor() {
-    this.Usuario = localStorage.getItem('nombre');
+    this.Usuario = sessionStorage.getItem('nombre');
     this.Reclutador == null ? '' : this.Reclutador
     console.log("Like", this.vacantesId,this.Status, this.requisicionId, this.Reclutador)
    }

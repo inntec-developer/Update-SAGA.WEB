@@ -26,7 +26,7 @@ export class DtHorariosComponent implements  AfterContentChecked {
   ) {
     // this.ruta = this.activeRoute.snapshot.routeConfig ? 
     // this.activeRoute.routeConfig.data.componente : 
-    // localStorage.getItem('ruta')
+    // sessionStorage.getItem('ruta')
    }
 
   ngAfterContentChecked(){

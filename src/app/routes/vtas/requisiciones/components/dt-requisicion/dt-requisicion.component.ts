@@ -72,7 +72,7 @@ export class DtRequisicionComponent implements OnInit {
   }
 
   getRequisiciones() {
-    this.service.getRequisiciones(localStorage.getItem('usuario')).subscribe(data => {
+    this.service.getRequisiciones(sessionStorage.getItem('usuario')).subscribe(data => {
       this.dataSource = data;
     }, error => this.errorMessage = <any>error);
   }

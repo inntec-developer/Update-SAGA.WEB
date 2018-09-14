@@ -1,9 +1,10 @@
-import { element } from 'protractor';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+
+import { ModalDirective } from 'ngx-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../service/SeguimientoVacante/postulate.service';
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-import { ModalDirective } from 'ngx-bootstrap';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-buttons-postulaciones',
@@ -209,7 +210,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
  
   }
   getpostulados() {
-    this.service.GetProceso(this.RequisicionId, localStorage.getItem('id')).subscribe(data => { 
+    this.service.GetProceso(this.RequisicionId, sessionStorage.getItem('id')).subscribe(data => { 
       this.dataSource = [];
       data.forEach(element => {
         var perfil = {

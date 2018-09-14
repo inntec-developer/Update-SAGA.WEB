@@ -55,14 +55,14 @@ export class LoginComponent implements OnInit {
             .subscribe(
                 data => {
                     if(data != 404 && data != 406){
-                        localStorage.setItem('ConexionBolsa', ApiConection.ServiceUrlBolsa);
-                        localStorage.setItem('privilegios', JSON.stringify(data.privilegios));
-                        localStorage.setItem('usuario',data.usuario);
-                        localStorage.setItem('nombre', data.nombre);
-                        localStorage.setItem('email', data.email);
-                        localStorage.setItem('clave', data.clave)
-                        localStorage.setItem('foto', data.foto);
-                        localStorage.setItem('id', data.id)
+                        sessionStorage.setItem('ConexionBolsa', ApiConection.ServiceUrlBolsa);
+                        sessionStorage.setItem('privilegios', JSON.stringify(data.privilegios));
+                        sessionStorage.setItem('usuario',data.usuario);
+                        sessionStorage.setItem('nombre', data.nombre);
+                        sessionStorage.setItem('email', data.email);
+                        sessionStorage.setItem('clave', data.clave)
+                        sessionStorage.setItem('foto', data.foto);
+                        sessionStorage.setItem('id', data.id)
                         
                         this.router.navigate(['/home']);
                     }
@@ -92,6 +92,6 @@ export class LoginComponent implements OnInit {
        // this.authenticationService.logout();
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-        localStorage.clear();
+        sessionStorage.clear();
     }
 }

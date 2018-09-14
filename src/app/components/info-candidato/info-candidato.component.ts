@@ -58,8 +58,8 @@ export class InfoCandidatoComponent implements OnInit {
       vBtra: null,
       folio: null
     }
-    this.usuario = localStorage.getItem('nombre');
-    this.usuarioId = localStorage.getItem('id')
+    this.usuario = sessionStorage.getItem('nombre');
+    this.usuarioId = sessionStorage.getItem('id')
     this.getMisVacates();
   }
 
@@ -84,7 +84,7 @@ export class InfoCandidatoComponent implements OnInit {
     this._serviceCandidato.getInfoCandidato(this.CandidatoId).subscribe(data => {
       this.candidato = {
         id: data.id,
-        picture: localStorage.getItem('ConexionBolsa') + data.foto,
+        picture: sessionStorage.getItem('ConexionBolsa') + data.foto,
         nombre: data.nombre,
         aboutMe: data.aboutMe.length != 0 ? data.aboutMe[0]['acercaDeMi'] : null,
         edad: data.edad,
@@ -137,7 +137,7 @@ export class InfoCandidatoComponent implements OnInit {
   ];
 
   getMisVacates() {
-    this._serviceCandidato.getMisVacantes(localStorage.getItem('id')).subscribe(data => {
+    this._serviceCandidato.getMisVacantes(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource_v = data;
     });
   }

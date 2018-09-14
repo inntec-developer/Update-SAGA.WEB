@@ -64,8 +64,8 @@ export class ComentarioCandidatoComponent implements OnInit {
         Comentario: this.comentario,
         CandidatoId: this.CandidatoId,
         RequisicionId: this.RequisicionId,
-        Usuario: localStorage.getItem('usuario'),
-        UsuarioId: localStorage.getItem('id')
+        Usuario: sessionStorage.getItem('usuario'),
+        UsuarioId: sessionStorage.getItem('id')
       }
       this._ComentariosService.addComentarioCandidato(this.Comentario).subscribe(data => {
         if (data == 200) {

@@ -59,7 +59,7 @@ export class DialogActivarRequiComponent implements OnInit {
     this.folio = this.data.folio;
     this.infoReactivarRequi = {
       id : this.data.id,
-      UsuarioMod: localStorage.getItem('usuario')
+      UsuarioMod: sessionStorage.getItem('usuario')
     }
   }
 
