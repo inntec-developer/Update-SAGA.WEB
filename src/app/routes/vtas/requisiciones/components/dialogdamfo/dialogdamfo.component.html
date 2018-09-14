@@ -3,45 +3,39 @@
   <h4>Generar Nueva Requisici&oacute;n</h4>
 </div>
 <div mat-dialog-content>
-    <div class="row">
-      <div class="col-sm-12">
-        <h5><strong>Cliente: </strong> {{data.cliente}}</h5>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 col-sm-4">
-        <h5><strong>Puesto: </strong>{{data.nombrePerfil}}</h5>
-      </div>
-      <div class="col-md-4 col-sm-4">
-        <h5><strong>Sueldo M&iacute;nimo: </strong>{{data.sueldoMinimo | currency: '$'}}</h5>
-      </div>
-      <div class="col-md-4 col-sm-4">
-        <h5><strong>Sueldo M&aacute;ximo: </strong>{{data.sueldoMaximo | currency: '$'}}</h5>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 col-sm-4">
-         <h5><strong>Clase Reclutamiento: </strong>{{data.claseReclutamiento}}</h5>
-      </div>
-      <div class="col-md-4 col-sm-4">
-        <h5><strong>Tipo Reclutamiento: </strong>{{data.tipoReclutamiento}}</h5>
-      </div>
-    </div>
-    <br>
-      <div class="row">
-        <div class="col-md-12 col-sm-12">
-            <app-direccionauto [Damfo]='IdDamfo' [IdDireccion]='FDireccion' (change)='FiltroDireccion($event)'></app-direccionauto>
-        </div>
-      </div>
-</div>
-<mat-divider></mat-divider>
-<div mat-dialog-actions>
   <div class="row">
-    <div class="col-md-6 col-sm-6 col-xs-6">
-      <btn-closed [text]="textBtnCancel" (click)="onNoClick()"></btn-closed>
-    </div>
-    <div class="col-md-6 col-sm-6 col-xs-6">
-      <btn-accept [text]="textBtnAccept" (click)="createRequisicion()"></btn-accept>
+    <div class="col-sm-12">
+      <h5><strong>Cliente: </strong> {{data.cliente}}</h5>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-4 col-sm-4">
+      <h5><strong>Puesto: </strong>{{data.nombrePerfil}}</h5>
+    </div>
+    <div class="col-md-4 col-sm-4">
+      <h5><strong>Sueldo M&iacute;nimo: </strong>{{data.sueldoMinimo | currency: '$'}}</h5>
+    </div>
+    <div class="col-md-4 col-sm-4">
+      <h5><strong>Sueldo M&aacute;ximo: </strong>{{data.sueldoMaximo | currency: '$'}}</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-sm-4">
+      <h5><strong>Clase Reclutamiento: </strong>{{data.claseReclutamiento}}</h5>
+    </div>
+    <div class="col-md-4 col-sm-4">
+      <h5><strong>Tipo Reclutamiento: </strong>{{data.tipoReclutamiento}}</h5>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <app-direccionauto [Damfo]='IdDamfo' [IdDireccion]='FDireccion' (change)='FiltroDireccion($event)'></app-direccionauto>
+    </div>
+  </div>
+</div>
+<br>
+<div class="modal-footer">
+  <btn-closed [text]="textBtnCancel" (click)="onNoClick()"></btn-closed>
+  <btn-accept [text]="textBtnAccept" (click)="createRequisicion()"></btn-accept>
 </div>

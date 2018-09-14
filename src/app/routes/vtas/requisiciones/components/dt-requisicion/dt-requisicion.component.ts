@@ -47,7 +47,10 @@ export class DtRequisicionComponent implements OnInit {
   cc = true; //cubierta por el cliente
   crm = true; //cubierta reclutamiento medios
   cp = true; // cubierta parcialmente
-  
+  RequisicionId: any;
+  Folio: any;
+  Vacante: any;
+
 
   constructor(
     private service: RequisicionesService,
@@ -68,7 +71,7 @@ export class DtRequisicionComponent implements OnInit {
     setTimeout(() => {
       this.onChangeTable(this.config);
     }, 1500);
-    
+
   }
 
   getRequisiciones() {
@@ -196,8 +199,11 @@ export class DtRequisicionComponent implements OnInit {
 
   public onCellClick(data: any): any {
     let index = this.dataSource.indexOf(data.row);
+    this.RequisicionId = data.id
     this.estatusId = data.estatusId;
     this.enProceso = data.enProceso;
+    this.Folio = data.folio;
+    this.Vacante = data.vBtra;
     this.element = data;
     /* add an class 'active' on click */
     $('#resultDataTable').on('click', 'tr', function (event: any) {
@@ -214,15 +220,16 @@ export class DtRequisicionComponent implements OnInit {
     this.getRequisiciones();
     setTimeout(() => {
       this.onChangeTable(this.config);
+      this.estatusId = null;
+      this.enProceso = null;
+      this.element = null;
     }, 300);
-    this.estatusId =[];
-    this.enProceso = [];
-    this.element = [];
-    
+
+
   }
 
   showRequi() {
-    this._Router.navigate(['/ventas/visualizarRequisicion/', this.element.id, this.element.folio], { skipLocationChange: true });
+    this._Router.navigate(['/ventas/visualizarRequisicion/', this.element.id, this.element.folio, this.Vacante], { skipLocationChange: true });
   }
 
   editRequi() {

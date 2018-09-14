@@ -30,11 +30,11 @@ export class DtVacantesReclutadorComponent implements OnInit {
   showFilterRow: boolean;
   registros: number;
   errorMessage: any;
-  element: any = {};
+  element: any = null;
 
   estatusId: any;
   enProceso: any;
-  requi: { folio: any; id: any; };
+  requi: { folio: any; id: any; vacante: string; };
   vBtra: any;
   id: any;
   folio: any;
@@ -55,7 +55,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     private dialog: MatDialog,
     private _Router: Router,
     private spinner: NgxSpinnerService,
-  ) { 
+  ) {
     this.enProceso = 0;
     this.postulados = 0;
   }
@@ -77,13 +77,12 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   getVacantes() {
     this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
-      this.dataSource = data;      
+      this.dataSource = data;
     });
   }
 
   //estatus vacantes
-  SetStatus(estatusId)
-  {
+  SetStatus(estatusId) {
     console.log('entro')
   }
 
@@ -193,7 +192,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     return filteredData;
   }
 
-  
+
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
     if (config.filtering) {
       (<any>Object).assign(this.config.filtering, config.filtering);
@@ -211,21 +210,22 @@ export class DtVacantesReclutadorComponent implements OnInit {
     setTimeout(() => {
       this.spinner.hide();
     }, 500);
-    
-    
+
+
   }
 
   public refreshTable() {
     this.getVacantes();
     setTimeout(() => {
       this.onChangeTable(this.config);
+      this.element = null;
+      this.vBtra = null;
+      this.id = null;
+      this.folio = null;
+      this.postulados = null;
+      this.enProceso = null;
     }, 800);
-    this.element = [];
-    this.vBtra = null;
-    this.id = null;
-    this.folio = null;
-    this.postulados = null;
-    this.enProceso = null;
+
   }
 
   public onCellClick(data: any): any {
@@ -238,10 +238,11 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.postulados = data.postulados;
     this.enProceso = data.enProceso;
     this.clienteId = data.clienteId,
-    this.requi = {
-      folio: data.folio,
-      id: data.id
-    }
+      this.requi = {
+        folio: data.folio,
+        id: data.id,
+        vacante: data.vBtra
+      }
     /* add an class 'active' on click */
     $('#resultDataTable').on('click', 'tr', function (event: any) {
       //noinspection TypeScriptUnresolvedFunction
@@ -283,8 +284,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
     }
   }
 
-  seguimientoRequi(){
-     this._Router.navigate(['/reclutamiento/gestionVacante', this.id, this.folio, this.vBtra, this.clienteId, this.enProceso], { skipLocationChange: true });
+  seguimientoRequi() {
+    this._Router.navigate(['/reclutamiento/gestionVacante', this.id, this.folio, this.vBtra, this.clienteId, this.enProceso], { skipLocationChange: true });
   }
 
 }
