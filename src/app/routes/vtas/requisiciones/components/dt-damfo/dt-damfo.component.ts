@@ -1,14 +1,16 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { BodyOutputType, Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { Component, OnInit } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatTableDataSource, PageEvent} from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatTableDataSource, PageEvent } from '@angular/material';
 
 import { DialogdamfoComponent } from '../dialogdamfo/dialogdamfo.component'
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../service';
 import { element } from 'protractor';
+import { switchAll } from 'rxjs/operators';
 
 declare var $: any;
+const swal = require('sweetalert');
 
 @Component({
   selector: 'app-dt-damfo',
@@ -18,7 +20,7 @@ declare var $: any;
 })
 export class DtDamfoComponent implements OnInit {
   //Varaibales Globales
-  public dataSource : Array<any> = [];
+  public dataSource: Array<any> = [];
   Vacantes: number = 0;
 
   // Varaibles del paginador
@@ -41,29 +43,42 @@ export class DtDamfoComponent implements OnInit {
     private _Route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private toasterService: ToasterService
-  ) {}
-  
+  ) { }
 
-  
+
+
 
   ngOnInit() {
-     /** spinner starts on init */
+    /** spinner starts on init */
     this.spinner.show();
+    this.getDamfo290();
+  }
+
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
     setTimeout(() => {
       this.onChangeTable(this.config);
-    }, 300); 
+    }, 1500);
+  }
+
+  getDamfo290() {
+    this.service.getDamgo290().subscribe(data => {
+      this.dataSource = data;
+      console.log(this.dataSource);
+    }, error => this.errorMessage = <any>error);
   }
 
   public rows: Array<any> = [];
   public columns: Array<any> = [
-      {title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
-      {title: 'Perfil', className: 'text-info text-center', name: 'nombrePerfil', filtering: { filterString: '', placeholder: 'Perfil' }},
-      {title: 'No. Vacantes', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' }},
-      {title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' }},
-      {title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' }},
-      {title: 'Tipo Recl.', className: 'text-info text-center',name:'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo Recl.' }},
-      {title: 'Clase Recl.', className: 'text-info text-center', name:'claseReclutamiento', filtering: { filterString: '', placeholder: 'Clase Recl.' }},
-      {title: 'Creación', className: 'text-info text-center',name:'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }}
+    { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
+    { title: 'Perfil', className: 'text-info text-center', name: 'nombrePerfil', filtering: { filterString: '', placeholder: 'Perfil' } },
+    { title: 'No. Vacantes', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' } },
+    { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
+    { title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
+    { title: 'Tipo Recl.', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo Recl.' } },
+    { title: 'Clase Recl.', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Clase Recl.' } },
+    { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } }
   ];
 
   public config: any = {
@@ -81,7 +96,7 @@ export class DtDamfoComponent implements OnInit {
 
   public changeSort(data: any, config: any): any {
     if (!config.sorting) {
-        return data;
+      return data;
     }
 
     let columns = this.config.sorting.columns || [];
@@ -89,63 +104,63 @@ export class DtDamfoComponent implements OnInit {
     let sort: string = void 0;
 
     for (let i = 0; i < columns.length; i++) {
-        if (columns[i].sort !== '' && columns[i].sort !== false) {
-            columnName = columns[i].name;
-            sort = columns[i].sort;
-        }
+      if (columns[i].sort !== '' && columns[i].sort !== false) {
+        columnName = columns[i].name;
+        sort = columns[i].sort;
+      }
     }
 
     if (!columnName) {
-        return data;
+      return data;
     }
 
     // simple sorting
     return data.sort((previous: any, current: any) => {
-        if (previous[columnName] > current[columnName]) {
-            return sort === 'desc' ? -1 : 1;
-        } else if (previous[columnName] < current[columnName]) {
-            return sort === '' ? -1 : 1;
-        }
-        return 0;
+      if (previous[columnName] > current[columnName]) {
+        return sort === 'desc' ? -1 : 1;
+      } else if (previous[columnName] < current[columnName]) {
+        return sort === '' ? -1 : 1;
+      }
+      return 0;
     });
   }
 
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
     this.columns.forEach((column: any) => {
-        if (column.filtering) {
-            this.showFilterRow = true;
-            filteredData = filteredData.filter((item: any) => {
-              if(item[column.name] != null)
-                return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
-            });
-        }
+      if (column.filtering) {
+        this.showFilterRow = true;
+        filteredData = filteredData.filter((item: any) => {
+          if (item[column.name] != null)
+            return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+        });
+      }
     });
 
     if (!config.filtering) {
-        return filteredData;
+      return filteredData;
     }
 
     if (config.filtering.columnName) {
-        return filteredData.filter((item: any) =>
-            item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
+      return filteredData.filter((item: any) =>
+        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
     }
 
     let tempArray: Array<any> = [];
     filteredData.forEach((item: any) => {
-        let flag = false;
-        this.columns.forEach((column: any) => {
-          if(item[column.name] == null){
+      let flag = false;
+      this.columns.forEach((column: any) => {
+        if (item[column.name] == null) {
+          flag = true;
+        } else {
+          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
             flag = true;
-          }else{
-            if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-              flag = true;
-            }
-          }            
-        });
-        if (flag) {
-            tempArray.push(item);
+          }
         }
+      });
+      if (flag) {
+        tempArray.push(item);
+      }
     });
     filteredData = tempArray;
 
@@ -154,76 +169,113 @@ export class DtDamfoComponent implements OnInit {
 
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
     if (config.filtering) {
-        (<any>Object).assign(this.config.filtering, config.filtering);
+      (<any>Object).assign(this.config.filtering, config.filtering);
     }
 
     if (config.sorting) {
-        (<any>Object).assign(this.config.sorting, config.sorting);
+      (<any>Object).assign(this.config.sorting, config.sorting);
     }
-    this.service.getDamgo290().subscribe(data => {
-      this.dataSource = data;
-      console.log(this.dataSource);
-      this.registros = this.dataSource.length;
-      this.rows = this.dataSource;
-      let filteredData = this.changeFilter(this.dataSource, this.config);
-      let sortedData = this.changeSort(filteredData, this.config);
-      this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
-      this.length = sortedData.length;
-      this.spinner.hide();
-    }, error => this.errorMessage = <any>error );
-    
+    this.registros = this.dataSource.length;
+    this.rows = this.dataSource;
+    let filteredData = this.changeFilter(this.dataSource, this.config);
+    let sortedData = this.changeSort(filteredData, this.config);
+    this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
+    this.length = sortedData.length;
+    this.spinner.hide();
+
   }
-  
+
   public onCellClick(data: any): any {
     let index = this.dataSource.indexOf(data.row);
     this.element = data;
     this.damfoId = data.id
     /* add an class 'active' on click */
     $('#resultDataTable').on('click', 'tr', function (event: any) {
-        //noinspection TypeScriptUnresolvedFunction
-        $(this).addClass('selected').siblings().removeClass('selected');
+      //noinspection TypeScriptUnresolvedFunction
+      $(this).addClass('selected').siblings().removeClass('selected');
     });
   }
 
   /*
   * Funciones para la administracion del 290
   * */
-  showDamfo(){
+  public refreshTable() {
+    this.getDamfo290();
+    setTimeout(() => {
+      this.onChangeTable(this.config);
+    }, 300);
+    this.element = [];
+  }
+
+  showDamfo() {
     //mandamos la información por medio de la URL sin que esta se muestre en la liga.
-    if(this.damfoId){
-      this._Router.navigate(['/ventas/visualizarDamfo290', this.damfoId], {skipLocationChange:true});
+    if(this.element.horariosActivos === 0){
+      swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. No es posible visualizarlo.', 'error');
+    }else if (this.damfoId) {
+      this._Router.navigate(['/ventas/visualizarDamfo290', this.damfoId], { skipLocationChange: true });
     }
   }
 
-  openDialog(){
-    if(this.element){
-      let dialogRef = this.dialog.open(DialogdamfoComponent,{
-        width: '50%',
-        height: 'auto',
-        data: this.element
-      });
+  openDialog() {
+    if (this.element) {
+      if(this.element.horariosActivos > 0){
+        let dialogRef = this.dialog.open(DialogdamfoComponent, {
+          width: '50%',
+          height: 'auto',
+          data: this.element
+        });
+      }else{
+        swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. No es posible generar la requisición', 'error');
+      }
     }
   }
   /*
   * Creacion de mensajes
   * */
- toaster: any;
- toasterConfig: any;
- toasterconfig: ToasterConfig = new ToasterConfig({
-   positionClass: 'toast-bottom-right',
-   limit: 7,tapToDismiss: false,
-   showCloseButton: true,
-   mouseoverTimerStop: true,
- });
-  popToast(type, title, body ) {
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7, tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
+  popToast(type, title, body) {
 
-    var toast : Toast = {
+    var toast: Toast = {
       type: type,
       title: title,
-      timeout:5000,
+      timeout: 5000,
       body: body
     }
     this.toasterService.pop(toast);
+  }
+  /**
+   * Creacion de Alertas modal
+   */
+  sweetalertNNotActivatedHours(){
+    swal({
+      title: 'Estas seguro? ',
+      text: 'Este formato DAM-FO-290 no cuenta con horarios activos.',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Si, generar requisición.',
+      cancelButtonText: 'No, cancelar',
+      closeOnConfirm: false,
+      closeOnCancel: false,
+    }, (isConfirm) => {
+      if(isConfirm){
+        swal('Generar Requisicion','', 'success');
+        let dialogRef = this.dialog.open(DialogdamfoComponent, {
+          width: '50%',
+          height: 'auto',
+          data: this.element
+        });
+      }else{
+        swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. :)', 'error');
+      }
+    });
   }
 
 }

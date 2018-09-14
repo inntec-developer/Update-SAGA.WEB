@@ -16,10 +16,10 @@
           [ngClass]="(estatusId == 8 || !element) ? 'disabled' : 'btn-outline-primary'" matTooltip="Editar" (click)="editRequi()"><em
             class="icon-pencil"></em></button>
         <button id='delete' chkPrivilegiosButtons class="mb-1 btn btn-acciones" [disabled]="estatusId == 7 && enProceso > 0 || !element || estatusId == 8 "
-          [ngClass]="(estatusId == 7 && enProceso > 0 || !element || estatusId == 8) ? 'disabled' : 'btn-outline-green'"
+          [ngClass]="(estatusId == 7 || !element || estatusId == 8) ? 'disabled' : 'btn-outline-green'"
           matTooltip="Cancelar" (click)="openDialogCancel()"><em class="icon-ban"></em></button>
         <button id='delete' chkPrivilegiosButtons class="mb-1 btn btn-acciones" [disabled]="enProceso > 0 && estatusId == 7 || !element "
-          [ngClass]="(enProceso > 0 && estatusId == 7 || !element ) ? 'disabled' : 'btn-outline-danger'" matTooltip="Eliminar"
+          [ngClass]="(estatusId == 7 || !element ) ? 'disabled' : 'btn-outline-danger'" matTooltip="Eliminar"
           (click)="openDialogDelete()"><em class="icon-trash"></em></button>
         <button id='update' chkPrivilegiosButtons class="mb-1 btn btn-acciones" [disabled]="estatusId != 8 || !element"
           matTooltip="Activar" [ngClass]="(estatusId != 8 || !element) ? 'disabled' : 'btn-outline-success'" (click)="openDialogReActivar()"><em

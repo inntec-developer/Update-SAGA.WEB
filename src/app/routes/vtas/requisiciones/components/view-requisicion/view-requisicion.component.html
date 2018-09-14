@@ -19,7 +19,9 @@
 <div class="row">
   <div class="col-md-12">
     <div class="d-flex justify-content-between">
-      <btn-edit id="update" chkPrivilegiosButtons matTooltip="Editar Requisición" (click)="editRequi()" *ngIf="estatusId != 8"></btn-edit>
+        <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones" [disabled]="estatusId == 8 || !element"
+        [ngClass]="(estatusId == 8 || !element) ? 'disabled' : 'btn-outline-primary'" matTooltip="Editar" (click)="editRequi()">
+        <em class="icon-pencil"></em></button>
       <btn-return matTooltip="Regresar" [routerLink]="['/ventas/requisicion']"></btn-return>
     </div>
   </div>
