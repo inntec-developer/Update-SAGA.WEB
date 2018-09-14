@@ -1,4 +1,3 @@
-import { AsignarRequisicionComponent } from './../../../../../../../components/asignar-requisicion/asignar-requisicion.component';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -6,8 +5,8 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { AsignarRequis } from '../../../../../../../models/models';
+import { AsignarRequisicionComponent } from './../../../../../../../components/asignar-requisicion/asignar-requisicion.component';
 import { RequisicionesService } from '../../../../../../../service/requisiciones/requisiciones.service';
-
 
 @Component({
   selector: 'app-dialog-assing-requi',
@@ -96,15 +95,15 @@ export class DialogAssingRequiComponent implements OnInit {
     this.errorDE = false;
     if(this.formAsignaciones.get('diasEnvio').value > 0 && this.formAsignaciones.get('diasEnvio').value <= 20 ){
       this.loading = true;
-      this.asignadosRequi.push(localStorage.getItem('id'));
+      this.asignadosRequi.push(sessionStorage.getItem('id'));
       let asg = [];
       for(let a of this.asignadosRequi){
         asg.push({
           RequisicionId: this.RequiId,
           GrpUsrId: a,
           CRUD: '',
-          UsuarioAlta : localStorage.getItem('usuario'),
-          UsuarioMod : localStorage.getItem('usuario'),
+          UsuarioAlta : sessionStorage.getItem('usuario'),
+          UsuarioMod : sessionStorage.getItem('usuario'),
           fch_Modificacion : new Date()        
         });
       }
@@ -113,7 +112,7 @@ export class DialogAssingRequiComponent implements OnInit {
         id: this.data.id,
         fch_Cumplimiento : this.formAsignaciones.get('fch_Cumplimiento').value,
         diasEnvio: this.formAsignaciones.get('diasEnvio').value,
-        usuario: localStorage.getItem('usuario'),
+        usuario: sessionStorage.getItem('usuario'),
         asignacionRequi: asg
       }
       this.asignarRequi = assing;

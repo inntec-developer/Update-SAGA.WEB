@@ -14,7 +14,7 @@ export class ButtonDislikeComponent implements OnInit {
   
 
   constructor() {
-    this.Usuario = localStorage.getItem('nombre');
+    this.Usuario = sessionStorage.getItem('nombre');
     console.log("Dis-Like", this.vacantesId,this.Status, this.requisicionId, this.Reclutador)
    }
 

@@ -44,7 +44,7 @@ export class RequisicionNuevaComponent implements OnInit {
         let datas: CreateRequisicion = new CreateRequisicion();
         datas.IdDamfo = this.damfoId;
         datas.IdAddress = this.direccionId;
-        datas.Usuario = localStorage.getItem('usuario');
+        datas.Usuario = sessionStorage.getItem('usuario');
         this.serviceRequisiciones.createNewRequi(datas).subscribe(data => {
           this.requisicionId = data.id;
           this.folio = data.folio;

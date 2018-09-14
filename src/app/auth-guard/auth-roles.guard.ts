@@ -1,8 +1,8 @@
-import { Injectable, HostListener, ElementRef } from '@angular/core';
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { ElementRef, HostListener, Injectable } from '@angular/core';
+
 import { Observable } from 'rxjs/Observable';
 import { SettingsService } from '../core/settings/settings.service';
-
 
 @Injectable()
 export class AuthRolesGuard implements CanActivate {
@@ -21,7 +21,7 @@ export class AuthRolesGuard implements CanActivate {
   }
   @HostListener('click', ['$event']) onclick(btn){
 
-    let privilegios = JSON.parse(localStorage.getItem('privilegios'))
+    let privilegios = JSON.parse(sessionStorage.getItem('privilegios'))
     let part = this.el.nativeElement.querySelector('btn-delete');
     console.log(privilegios)
     console.log(btn)

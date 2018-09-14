@@ -19,10 +19,10 @@ export class ChkButtonsDirective implements AfterViewInit {
     var btnupdate = document.querySelectorAll("#update");
     var btndelete = document.querySelectorAll("#delete");
     var btnspecial = document.querySelectorAll("#special");
-    let privilegios = JSON.parse(localStorage.getItem('privilegios'))
+    let privilegios = JSON.parse(sessionStorage.getItem('privilegios'))
      ruta = this.activeRoute.snapshot.routeConfig ? 
      this.activeRoute.routeConfig.data.componente : 
-     localStorage.getItem('ruta')
+     sessionStorage.getItem('ruta')
 
     var campos = privilegios.filter(function(row){
       return row.tipoEstructuraId === 4 && row.nombre == ruta

@@ -27,7 +27,7 @@ export class AuthService {
   logout() {
     // remove user from local storage to log user out
   
-    localStorage.removeItem('currentUser');
+    sessionStorage.removeItem('currentUser');
 }
 
 public isUserActive(email: string) : Observable<any>
@@ -48,7 +48,7 @@ public isUserDAL(dal: string) : Observable<any>
 
 public isAuthenticated() : boolean
 {
-  if( localStorage.getItem('usuario') != null)
+  if( sessionStorage.getItem('usuario') != null)
   {
     return true;
   }

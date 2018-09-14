@@ -13,7 +13,7 @@ export class Error404Component implements OnInit {
   constructor(public settings: SettingsService) { }
 
   ngOnInit() {
-    this.usuario = localStorage.getItem('usuario');
+    this.usuario = sessionStorage.getItem('usuario');
   }
 
 }

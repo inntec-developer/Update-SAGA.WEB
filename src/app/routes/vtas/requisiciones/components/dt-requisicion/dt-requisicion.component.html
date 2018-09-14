@@ -12,6 +12,8 @@
         </btn-add>
         <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones" [disabled]="!element"
           [ngClass]="(!element) ? 'disabled' : 'btn-outline-warning'" matTooltip="Visualizar"><em class="fa fa-eye"></em></button>
+          <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones" [disabled]="!element"
+          [ngClass]="(!element) ? 'disabled' : 'btn-outline-dark'" matTooltip="Comentarios"><em class="fa fa-comments-o"></em></button>
         <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones" [disabled]="estatusId == 8 || !element"
           [ngClass]="(estatusId == 8 || !element) ? 'disabled' : 'btn-outline-primary'" matTooltip="Editar" (click)="editRequi()"><em
             class="icon-pencil"></em></button>
@@ -119,3 +121,6 @@
   </div>
   <pre *ngIf="config.paging" class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
 </div>
+
+<!-- Modal para comentarios de la requisicion -->
+

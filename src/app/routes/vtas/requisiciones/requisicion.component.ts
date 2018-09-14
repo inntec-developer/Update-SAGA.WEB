@@ -18,7 +18,7 @@ export class RequisicionComponent implements OnInit {
         private activateRoute : ActivatedRoute
     ) {
         this.ruta = this.activateRoute.snapshot.routeConfig.data;
-        localStorage.setItem('ruta', this.ruta.componente);
+        sessionStorage.setItem('ruta', this.ruta.componente);
     }
     //Varaibales Globales
     ngOnInit() {

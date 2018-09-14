@@ -1,7 +1,7 @@
-import { forEach } from '@angular/router/src/utils/collection';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import { AfterViewInit, Directive } from '@angular/core';
 
-import { Directive, AfterViewInit } from '@angular/core';
-import { Router,ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Directive({
   selector: '[chkPrivilegiosMenu]'
@@ -19,7 +19,7 @@ export class ChkPrivilegiosMenuDirective implements AfterViewInit {
 
     console.log(btnupdate)
 
-    let privilegios = JSON.parse(localStorage.getItem('privilegios'))
+    let privilegios = JSON.parse(sessionStorage.getItem('privilegios'))
     let ruta = this.activeRoute.snapshot.routeConfig.data;
 
     var campos = privilegios.filter(function(row){

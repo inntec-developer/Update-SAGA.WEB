@@ -76,7 +76,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   getVacantes() {
-    this.service.getRequiReclutador(localStorage.getItem('id')).subscribe(data => {
+    this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;      
     });
   }

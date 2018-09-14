@@ -28,12 +28,12 @@ export class DtMisCandidatosComponent implements OnInit {
   ReclutadorId: string;
 
   constructor(private service: CandidatosService) {
-    this.ReclutadorId = localStorage.getItem('id');
+    this.ReclutadorId = sessionStorage.getItem('id');
     this.misCandidatos();
    }
 
   ngOnInit() {
-    // this.ReclutadorId = localStorage.getItem('id');
+    // this.ReclutadorId = sessionStorage.getItem('id');
     // this.onChangeTable(this.config);
   }
 

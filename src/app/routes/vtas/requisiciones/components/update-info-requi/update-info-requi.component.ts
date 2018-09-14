@@ -153,8 +153,8 @@ export class UpdateInfoRequiComponent implements OnInit, AfterContentChecked {
             RequisicionId: this.RequiId,
             GrpUsrId : a,
             CRUD : '',
-            UsuarioAlta : localStorage.getItem('usuario'),
-            UsuarioMod : localStorage.getItem('usuario'),
+            UsuarioAlta : sessionStorage.getItem('usuario'),
+            UsuarioMod : sessionStorage.getItem('usuario'),
             fch_Modificacion : new Date()
           });
         };
@@ -168,7 +168,7 @@ export class UpdateInfoRequiComponent implements OnInit, AfterContentChecked {
           fch_Cumplimiento : this.formRequi.get('fch_Cumplimiento').value,
           estatusId : this.formRequi.get('estatus').value,
           confidencial : this.formRequi.get('confidencial').value,
-          usuario : localStorage.getItem('usuario'),
+          usuario : sessionStorage.getItem('usuario'),
           asignacionRequi: asg
       }
       this.requiUpdate = update;

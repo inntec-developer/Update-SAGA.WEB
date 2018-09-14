@@ -51,7 +51,7 @@ export class DialogEditHorarioComponent implements OnInit {
     var vacante = {
       id : this.HorarioId,
       requisicionId : this.RequisicionId,
-      usuario : localStorage.getItem('usuario'),
+      usuario : sessionStorage.getItem('usuario'),
       numeroVacantes : this.vacanteN
     }
     this.Vacante = vacante;
