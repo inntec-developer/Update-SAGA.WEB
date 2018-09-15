@@ -58,12 +58,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
     private dialog: MatDialog,
     private _Router: Router,
     private spinner: NgxSpinnerService,
-<<<<<<< HEAD
     private toasterService: ToasterService
   ) { 
-=======
-  ) {
->>>>>>> 60e0e9a2acc362f4071017b2afbec568a92b0007
     this.enProceso = 0;
     this.postulados = 0;
   }
@@ -90,7 +86,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   //estatus vacantes
-<<<<<<< HEAD
   SetStatus( estatusId, estatus)
   {
     var datos = { estatusId: estatusId, requisicionId: this.requi.id };
@@ -110,10 +105,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
         this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');  
       }
     })
-=======
-  SetStatus(estatusId) {
-    console.log('entro')
->>>>>>> 60e0e9a2acc362f4071017b2afbec568a92b0007
   }
 
 
