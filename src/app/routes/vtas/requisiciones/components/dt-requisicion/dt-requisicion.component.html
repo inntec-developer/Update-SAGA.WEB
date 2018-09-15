@@ -14,7 +14,11 @@
         </btn-add>
         <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones margen" [disabled]="!element"
           [ngClass]="(!element) ? 'disabled' : 'btn-outline-warning'" matTooltip="Visualizar"><em class="fa fa-eye"></em></button>
+<<<<<<< HEAD
           <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones margen" [disabled]="!element"
+=======
+        <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones" [disabled]="!element"
+>>>>>>> 60e0e9a2acc362f4071017b2afbec568a92b0007
           [ngClass]="(!element) ? 'disabled' : 'btn-outline-dark'" matTooltip="Comentarios"><em class="fa fa-comments-o"></em></button>
         <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="estatusId == 8 || !element"
           [ngClass]="(estatusId == 8 || !element) ? 'disabled' : 'btn-outline-primary'" matTooltip="Editar" (click)="editRequi()"><em
@@ -141,4 +145,21 @@
 </div>
 
 <!-- Modal para comentarios de la requisicion -->
-
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="dialog-sizes-name1" class="modal-title pull-left">Requisici&oacute;n: {{Vacante}} {{Folio}}</h4>
+          <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <comentario-vacante [RequisicionId]="RequisicionId"></comentario-vacante>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>

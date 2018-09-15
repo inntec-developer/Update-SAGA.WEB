@@ -14,6 +14,7 @@ export class DialogShowRequiComponent implements OnInit {
   textBtnCerrar: string;
   folio: any;
   id: any;
+  vacante: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data : any, private servce: RequisicionesService,
@@ -21,6 +22,7 @@ export class DialogShowRequiComponent implements OnInit {
   ) { 
     this.folio = this.data.folio;
     this.id = this.data.id;
+    this.vacante = this.data.vacante;
     this.textBtnCerrar = 'Cerrar'
   }
 

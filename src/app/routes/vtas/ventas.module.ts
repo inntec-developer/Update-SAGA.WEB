@@ -98,7 +98,7 @@ const routes: Routes = [
     { path: 'crearRequisicion', component: DtCrearRequisicionComponent},
     { path: 'requisicionNueva/:IdDamfo/:IdDireccion', component: RequisicionNuevaComponent},
     { path: 'visualizarDamfo290/:IdDamfo', component: ViewdamfoComponent, data:{componente: 'Formato 290'} },
-    { path: 'visualizarRequisicion/:IdRequi/:Folio', component: ViewRequisicionComponent, data:{componente:'Requisiciones'} },
+    { path: 'visualizarRequisicion/:IdRequi/:Folio/:Vacante', component: ViewRequisicionComponent, data:{componente:'Requisiciones'} },
     { path: 'edicionRequisicion/:IdRequi/:Folio', component: UpdateRequisicionComponent },
 ];
 

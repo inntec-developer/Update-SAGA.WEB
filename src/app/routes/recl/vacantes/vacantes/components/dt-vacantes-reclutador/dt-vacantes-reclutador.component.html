@@ -8,17 +8,32 @@
     </mat-form-field>
     <div class="row justify-content-between">
       <div class="d-flex align-items-stretch">
-        <btn-view class="margen" (click)="openDialogShowRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view>
-        <btn-assign class="margen" id="update" chkPrivilegiosButtons (click)="openDialogAssingRequi(element)" matTooltip="Asignar"></btn-assign>
-         <button class="margen" type="button" id="special" chkPrivilegiosButtons (click)="openDesignVacante(element.id, element.folio, element.vBtra)"
+        <button id="view" class="margen" (click)="openDialogShowRequi(element.id, element.folio)" matTooltip="Ver Requisición"
+          class="margen" [disabled]="!element" [ngClass]="(!element) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-warning'">
+          <em class="fa fa-eye"></em></button>
+        <button id="view" class="margen" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones"
+          [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-outline-dark'" matTooltip="Comentarios"><em
+            class="fa fa-comments-o"></em></button>
+        <button class="margen" id="update" chkPrivilegiosButtons (click)="openDialogAssingRequi(element)" matTooltip="Asignar"
+          class="margen" [disabled]="!element" [ngClass]="(!element) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-purple'">
+          <em class="icon-user-follow"></em></button>
+        <button class="margen" type="button" id="special" chkPrivilegiosButtons (click)="openDesignVacante(element.id, element.folio, element.vBtra)"
           matTooltip="Diseñar Vacante" [disabled]="!element || element.estatusId === 4 || element.estatusId  === 5 || element.estatusId  === 8 || element.estatusId  === 9 || element.confidencial"
           [ngClass]="(!element || element.estatusId === 4 || element.estatusId  === 5 || element.estatusId  === 8 || element.estatusId  === 9 || element.confidencial) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
           <em class="icon-list"></em>
-        </button> 
+        </button>
       </div>
       <!-- estatus de la vacante -->
       <div>
+<<<<<<< HEAD
           <!--
+=======
+        <!-- <li><a>
+            <button [ngClass]="nbc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-primary'" [disabled] = "nbc"  type="button" (click)="SetStatus(12)" matTooltip="Nueva Busqueda de Candidatos"> 
+              <em class="fa fa-search-plus"></em>
+            </button>
+          </a></li>
+>>>>>>> 60e0e9a2acc362f4071017b2afbec568a92b0007
           <li><a><button [disabled]="contratado" [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" type="button" (click)="SetStatus(24)" matTooltip="Contratado">
             <em class="fa fa-handshake-o"></em>
           </button></a></li>
@@ -42,6 +57,7 @@
             <em class="fa fa-star-half-o"></em>
           </button></a></li>
           <li><a><em class="vl"></em></a></li> -->
+<<<<<<< HEAD
           <button class="margen" [disabled]="bc" [ngClass]="bc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetStatus(29, 'B&uacute;squeda de Candidatos')" matTooltip="B&uacute;squeda de Candidatos">
             <em class="fa fa-search"></em>
           </button>
@@ -63,9 +79,34 @@
             <em class="fa fa-pause-circle-o"></em>
           </button>
         
+=======
+        <button class="margen" [disabled]="bc" [ngClass]="bc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"
+          type="button" (click)="SetStatus(14)" matTooltip="B&uacute;squeda de Candidatos">
+          <em class="fa fa-search"></em>
+        </button>
+        <button class="margen" [disabled]="sc" [ngClass]="sc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"
+          type="button" (click)="SetStatus(15)" matTooltip="Socioeconómico">
+          <em class="fa fa-bar-chart"></em>
+        </button>
 
-        
-        </div>
+        <button class="margen" [disabled]="ecc" [ngClass]="ecc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"
+          type="button" (click)="SetStatus(21)" matTooltip="Env&iacute;o Candidato a Cliente">
+          <em class="fa fa-truck"></em>
+        </button>
+
+        <button class="margen" [disabled]="ec" [ngClass]="ec ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"
+          type="button" (click)="SetStatus(22)" matTooltip="En Espera de Contrataci&oacute;n">
+          <em class="fa fa-hourglass-half"></em>
+        </button>
+        <button class="margen" [disabled]="pausa" [ngClass]="pausa ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"
+          type="button" (click)="SetStatus(23)" matTooltip="En Pausa">
+          <em class="fa fa-pause-circle-o"></em>
+        </button>
+
+
+>>>>>>> 60e0e9a2acc362f4071017b2afbec568a92b0007
+
+      </div>
       <!-- estatus de la vacante -->
       <div>
         <button class="margen" [disabled]="postulados <= 0" (click)="openViewPostulados()" [ngClass]="(postulados <= 0 )? 'mb-1 btn disabled':'mb-1 btn btn-outline-warning'">
@@ -176,5 +217,26 @@
   <pre *ngIf="config.paging" class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
 </div>
 
+<<<<<<< HEAD
 <!--mensajes-->
 <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
+=======
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Vacante: {{vBtra}} {{folio}}</h4>
+        <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <comentario-vacante [RequisicionId]="id"></comentario-vacante>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+>>>>>>> 60e0e9a2acc362f4071017b2afbec568a92b0007
