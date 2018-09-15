@@ -8,6 +8,7 @@ import { DialogDeleteRequiComponent } from '../dialog-delete-requi/dialog-delete
 import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../service';
+import { PostulateService } from '../../../../../service/SeguimientoVacante/postulate.service';
 
 declare var $: any;
 
@@ -15,7 +16,7 @@ declare var $: any;
   selector: 'app-dt-requisicion',
   templateUrl: './dt-requisicion.component.html',
   styleUrls: ['./dt-requisicion.component.scss'],
-  providers: [RequisicionesService]
+  providers: [RequisicionesService, PostulateService]
 })
 
 export class DtRequisicionComponent implements OnInit {
@@ -38,12 +39,12 @@ export class DtRequisicionComponent implements OnInit {
   estatusId: any;
   enProceso: any;
 
+  requisicionId: any;
 
   // Estatus
   nbc = true; //nueva busqueda candidato
   contratado = true;
-  gbc = true //garantía busqueda candidato
-  cancelada = true;
+  gbc = true; //garantía busqueda candidato
   cc = true; //cubierta por el cliente
   crm = true; //cubierta reclutamiento medios
   cp = true; // cubierta parcialmente
@@ -51,6 +52,7 @@ export class DtRequisicionComponent implements OnInit {
 
   constructor(
     private service: RequisicionesService,
+    private postulacionservice: PostulateService,
     private dialog: MatDialog,
     private _Router: Router,
     private spinner: NgxSpinnerService,
@@ -91,6 +93,33 @@ export class DtRequisicionComponent implements OnInit {
     { title: 'Prioridad', className: 'text-info text-center', name: 'prioridad', filtering: { filterString: '', placeholder: 'Prioridad' } },
   ];
 
+  ValidarEstatus(estatusId)
+  {
+    console.log(estatusId)
+    if(estatusId == 8 )
+    {
+      this.gbc = true; //garantía busqueda candidato
+      this.cc = true; //cubierta por el cliente
+      this.crm = true; //cubierta reclutamiento medios
+      this.cp = true; // cubierta parcialmente
+    }
+    else if(estatusId >= 34 && estatusId <= 37 )
+    {
+      this.gbc = false; //garantía busqueda candidato
+      this.cc = true; //cubierta por el cliente
+      this.crm = true; //cubierta reclutamiento medios
+      this.cp = true; // cubierta parcialmente
+    }
+    else
+    {
+      this.gbc = false; //garantía busqueda candidato
+      this.cc = false; //cubierta por el cliente
+      this.crm = false; //cubierta reclutamiento medios
+      this.cp = false; // cubierta parcialmente
+
+    }
+
+  }
   public config: any = {
     paging: true,
     //sorting: { columns: this.columns },
@@ -199,6 +228,9 @@ export class DtRequisicionComponent implements OnInit {
     this.estatusId = data.estatusId;
     this.enProceso = data.enProceso;
     this.element = data;
+
+  
+    this.ValidarEstatus(data.estatusId)
     /* add an class 'active' on click */
     $('#resultDataTable').on('click', 'tr', function (event: any) {
       //noinspection TypeScriptUnresolvedFunction
@@ -227,6 +259,31 @@ export class DtRequisicionComponent implements OnInit {
 
   editRequi() {
     this._Router.navigate(['/ventas/edicionRequisicion/', this.element.id, this.element.folio], { skipLocationChange: true });
+  }
+
+  updataStatus(estatusId, estatus)
+  {
+    var datos = {estatusId: estatusId, requisicionId: this.element.id }
+    this.postulacionservice.SetProcesoVacante(datos).subscribe( data => {
+      if(data == 201)
+      {
+        var idx = this.rows.findIndex(x => x.id == this.element.id);
+        this.rows[idx]['estatus'] = estatus;
+        this.rows[idx]['estatusId'] = estatusId;
+
+        this.ValidarEstatus(estatusId);
+        
+        this.onChangeTable(this.config);
+        this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');    
+        
+      }
+      else
+      {
+        this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');  
+      }
+      
+    })
+
   }
 
   openDialogDelete() {

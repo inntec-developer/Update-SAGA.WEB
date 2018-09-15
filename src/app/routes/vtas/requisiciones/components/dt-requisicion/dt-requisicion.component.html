@@ -1,5 +1,7 @@
 <ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
 <!-- <toaster-container [toasterconfig]="toasterconfig"></toaster-container> -->
+<!--mensajes-->
+<toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
 <div class="dt-container mat-elevation-z8">
   <div class="dt-header">
     <mat-form-field>
@@ -8,53 +10,69 @@
     </mat-form-field>
     <div class="row justify-content-between">
       <div class="d-flex align-items-stretch ">
-        <btn-add id="create" chkPrivilegiosButtons class="btn-acciones" matTooltip="Nuevo" [routerLink]="['/ventas/crearRequisicion']">
+        <btn-add id="create" chkPrivilegiosButtons class="btn-acciones margen" matTooltip="Nuevo" [routerLink]="['/ventas/crearRequisicion']">
         </btn-add>
-        <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones" [disabled]="!element"
+        <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones margen" [disabled]="!element"
           [ngClass]="(!element) ? 'disabled' : 'btn-outline-warning'" matTooltip="Visualizar"><em class="fa fa-eye"></em></button>
-          <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones" [disabled]="!element"
+          <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones margen" [disabled]="!element"
           [ngClass]="(!element) ? 'disabled' : 'btn-outline-dark'" matTooltip="Comentarios"><em class="fa fa-comments-o"></em></button>
-        <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones" [disabled]="estatusId == 8 || !element"
+        <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="estatusId == 8 || !element"
           [ngClass]="(estatusId == 8 || !element) ? 'disabled' : 'btn-outline-primary'" matTooltip="Editar" (click)="editRequi()"><em
             class="icon-pencil"></em></button>
-        <button id='delete' chkPrivilegiosButtons class="mb-1 btn btn-acciones" [disabled]="estatusId == 7 && enProceso > 0 || !element || estatusId == 8 "
-          [ngClass]="(estatusId == 7 || !element || estatusId == 8) ? 'disabled' : 'btn-outline-green'"
-          matTooltip="Cancelar" (click)="openDialogCancel()"><em class="icon-ban"></em></button>
-        <button id='delete' chkPrivilegiosButtons class="mb-1 btn btn-acciones" [disabled]="enProceso > 0 && estatusId == 7 || !element "
+          
+      
+        <button id='delete' chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="enProceso > 0 && estatusId == 7 || !element "
           [ngClass]="(estatusId == 7 || !element ) ? 'disabled' : 'btn-outline-danger'" matTooltip="Eliminar"
           (click)="openDialogDelete()"><em class="icon-trash"></em></button>
-        <button id='update' chkPrivilegiosButtons class="mb-1 btn btn-acciones" [disabled]="estatusId != 8 || !element"
+        <button id='update' chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="estatusId != 8 || !element"
           matTooltip="Activar" [ngClass]="(estatusId != 8 || !element) ? 'disabled' : 'btn-outline-success'" (click)="openDialogReActivar()"><em
             class="icon-refresh"></em></button>
+        
+          <!--estatus melina-->
+          
+     <button class="margen" [disabled]="cc" [ngClass]="cc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'"  type="button" (click)="updataStatus(34, 'Cubierta')" matTooltip="Cubierta">
+      <em class="fa fa fa-shield"></em>
+    </button>
+  
+ 
+    <button class="margen" [disabled]="cp" [ngClass]="cp ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'"  type="button" (click)="updataStatus(35, 'Cubierta Parcialmente')" matTooltip="Cubierta Parcialmente">
+      <em class="fa fa-star-half-o"></em>
+    </button> 
+    <button class="margen" [ngClass]="crm ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'" [disabled]="crm"   type="button" (click)="updataStatus(36, 'Cubierta por Medios')" matTooltip="Cubierta por Reclutamiento Medios" >
+      <em class="fa fa-star"></em>
+    </button>
+    <button class="margen" [disabled]="cc" [ngClass]="cc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-info'"  type="button" (click)="updataStatus(37, 'Cubierta por Cliente')" matTooltip="Cubierta por Cliente">
+      <em class="fa fa fa-magic"></em>
+    </button>
+    <button id='delete' chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="estatusId == 7 && enProceso > 0 || !element || estatusId == 8 "
+      [ngClass]="(estatusId == 7 || !element || estatusId == 8) ? 'disabled' : 'btn-outline-danger'"
+      matTooltip="Cancelar" (click)="openDialogCancel()"><em class="icon-ban"></em></button>
+
+    <button class="margen" [ngClass]="gbc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'" [disabled]="gbc" type="button" (click)="updataStatus(38, 'Garant&iacute;a de B&uacute;squeda')" matTooltip="Garant&iacute;a B&uacute;squeda Candidatos"> 
+      <em class="fa fa-user-circle"></em>
+    </button>
+          
       </div>
       <div >
 
-          <button class="margen" [ngClass]="nbc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-primary'" [disabled] = "nbc"  type="button" (click)="SetStatus(12)" matTooltip="Nueva Busqueda de Candidatos"> 
+          <!-- <button class="margen" [ngClass]="nbc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-primary'" [disabled] = "nbc"  type="button" (click)="SetStatus(12)" matTooltip="Nueva Busqueda de Candidatos"> 
             <em class="fa fa-search-plus"></em>
           </button>
     
        <button class="margen" [disabled]="contratado" [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" type="button" (click)="SetStatus(24)" matTooltip="Contratado">
           <em class="fa fa-handshake-o"></em>
-        </button>
+        </button> -->
 
 
-          <button class="margen" [ngClass]="gbc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" [disabled]="gbc" type="button" (click)="SetStatus(27)" matTooltip="Garant&iacute;a B&uacute;squeda Candidatos"> 
+          <!-- <button class="margen" [ngClass]="gbc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" [disabled]="gbc" type="button" (click)="SetStatus(27)" matTooltip="Garant&iacute;a B&uacute;squeda Candidatos"> 
             <em class="fa fa-user-circle"></em>
           </button>
-     
+      
             <button class="margen" [ngClass]="cancelada ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" [disabled]="cancelada"  type="button" (click)="SetStatus(28)" matTooltip="Cancelada">
               <em class="fa fa-ban"></em>
-            </button>
+            </button>-->
 
-     <button class="margen" [disabled]="cc" [ngClass]="cc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"  type="button" (click)="SetStatus(17)" matTooltip="Cubierta por el Cliente">
-          <em class="fa fa fa-shield"></em>
-        </button>
-        <button class="margen" [ngClass]="crm ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'" [disabled]="crm"   type="button" (click)="SetStatus(18)" matTooltip="Cubierta por Reclutamiento Medios" >
-          <em class="fa fa-star"></em>
-        </button>
-        <button class="margen" [disabled]="cp" [ngClass]="cp ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"  type="button" (click)="SetStatus(13)" matTooltip="Cubierta Parcialmente">
-          <em class="fa fa-star-half-o"></em>
-        </button>
+
       </div>
     
       <div>
@@ -98,7 +116,7 @@
             <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">
               <small class="badge badge-pill" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
-                [class.badge-info]="row.estatusId  === 6" [class.badge-success]="row.estatusId  === 7"
+                [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 34" [class.badge-success]="row.estatusId  === 7"
                 [class.badge-danger]="row.estatusId  === 8">
                 {{row.estatus }}
               </small>

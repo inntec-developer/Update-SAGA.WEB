@@ -19,6 +19,7 @@ export class PostulateService {
   private UrlGetPostulados = ApiConection.ServiceUrl + ApiConection.getPostulados;
   private UrlGetProceso = ApiConection.ServiceUrl + ApiConection.getProcesoPostulados;
   private UrlSetProceso = ApiConection.ServiceUrl + ApiConection.setProcesoPostulado;
+  private UrlSetProcesoVacante = ApiConection.ServiceUrl + ApiConection.setProcesoVacante;
   private UrlSetStatusBolsa = ApiConection.ServiceUrl + ApiConection.setStatusBolsa;
   private UrlSendEmailCandidato = ApiConection.ServiceUrl + ApiConection.sendEmailCandidato;
 
@@ -32,6 +33,18 @@ export class PostulateService {
   GetProceso(VacanteId, ReclutadorId) : Observable<any>{
     let params = new HttpParams().set('VacanteId', VacanteId).set('ReclutadorId', ReclutadorId);
     return this._HttpClient.get(this.UrlGetProceso, { params: params })
+  }
+
+  SetProcesoVacante(data)
+  {
+    let params = new HttpParams().set('datos', data)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+
+    return this._HttpClient.post(this.UrlSetProcesoVacante, data, httpOptions )
   }
 
   SetProceso(data)

@@ -1,13 +1,14 @@
+import { PostulateService } from './../../../../../../service/SeguimientoVacante/postulate.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSort } from '@angular/material';
-
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { DialogAssingRequiComponent } from '../dialogs/dialog-assing-requi/dialog-assing-requi.component';
 import { DialogShowRequiComponent } from '../dialogs/dialog-show-requi/dialog-show-requi.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../../service';
-import { ToasterService } from 'angular2-toaster';
-import { debug } from 'util';
+
+
 
 declare var $: any;
 
@@ -15,7 +16,7 @@ declare var $: any;
   selector: 'app-dt-vacantes-reclutador',
   templateUrl: './dt-vacantes-reclutador.component.html',
   styleUrls: ['./dt-vacantes-reclutador.component.scss'],
-  providers: [RequisicionesService]
+  providers: [RequisicionesService, PostulateService]
 })
 export class DtVacantesReclutadorComponent implements OnInit {
   public dataSource: Array<any> = [];
@@ -48,13 +49,16 @@ export class DtVacantesReclutadorComponent implements OnInit {
   sc = true; //socieconomico
   ecc = true; //envío candidato cliente
   ec = true; //espera contratacion
+  nbc = true; //nueva busqueda candidato
   pausa = true;
 
   constructor(
     private service: RequisicionesService,
+    private postulateservice: PostulateService,
     private dialog: MatDialog,
     private _Router: Router,
     private spinner: NgxSpinnerService,
+    private toasterService: ToasterService
   ) { 
     this.enProceso = 0;
     this.postulados = 0;
@@ -82,9 +86,25 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   //estatus vacantes
-  SetStatus(estatusId)
+  SetStatus( estatusId, estatus)
   {
-    console.log('entro')
+    var datos = { estatusId: estatusId, requisicionId: this.requi.id };
+   
+    this.postulateservice.SetProcesoVacante(datos).subscribe( data => {
+      if(data == 201)
+      {
+        var idx = this.rows.findIndex(x => x.id == this.requi.id);
+        this.rows[idx]['estatus'] = estatus;
+        this.rows[idx]['estatusId'] = estatusId;
+        this.onChangeTable(this.config);
+        this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');    
+        
+      }
+      else
+      {
+        this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');  
+      }
+    })
   }
 
 
@@ -242,6 +262,16 @@ export class DtVacantesReclutadorComponent implements OnInit {
       folio: data.folio,
       id: data.id
     }
+
+
+    /*estatus vacante */
+    this.bc = false; //busqueda candidato
+    this.sc = false; //socieconomico
+    this.ecc = false; //envío candidato cliente
+    this.ec = false; //espera contratacion
+    this.nbc = false; //nueva busqueda candidato
+    this.pausa = false;
+
     /* add an class 'active' on click */
     $('#resultDataTable').on('click', 'tr', function (event: any) {
       //noinspection TypeScriptUnresolvedFunction
@@ -285,6 +315,31 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   seguimientoRequi(){
      this._Router.navigate(['/reclutamiento/gestionVacante', this.id, this.folio, this.vBtra, this.clienteId, this.enProceso], { skipLocationChange: true });
+  }
+
+   /**
+   * configuracion para mensajes de acciones.
+   */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+    preventDuplicates: true,
+  });
+  
+  popToast(type, title, body) {
+    var toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 4000,
+      body: body    
+    }
+    this.toasterService.pop(toast);
+
   }
 
 }

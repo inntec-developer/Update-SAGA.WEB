@@ -18,11 +18,7 @@
       </div>
       <!-- estatus de la vacante -->
       <div>
-          <!-- <li><a>
-            <button [ngClass]="nbc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-primary'" [disabled] = "nbc"  type="button" (click)="SetStatus(12)" matTooltip="Nueva Busqueda de Candidatos"> 
-              <em class="fa fa-search-plus"></em>
-            </button>
-          </a></li>
+          <!--
           <li><a><button [disabled]="contratado" [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" type="button" (click)="SetStatus(24)" matTooltip="Contratado">
             <em class="fa fa-handshake-o"></em>
           </button></a></li>
@@ -46,21 +42,24 @@
             <em class="fa fa-star-half-o"></em>
           </button></a></li>
           <li><a><em class="vl"></em></a></li> -->
-          <button class="margen" [disabled]="bc" [ngClass]="bc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetStatus(14)" matTooltip="B&uacute;squeda de Candidatos">
+          <button class="margen" [disabled]="bc" [ngClass]="bc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetStatus(29, 'B&uacute;squeda de Candidatos')" matTooltip="B&uacute;squeda de Candidatos">
             <em class="fa fa-search"></em>
           </button>
-          <button class="margen" [disabled]="sc" [ngClass]="sc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetStatus(15)" matTooltip="Socioeconómico">
-            <em class="fa fa-bar-chart"></em>
-          </button>             
-
-          <button class="margen" [disabled]="ecc" [ngClass]="ecc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetStatus(21)" matTooltip="Env&iacute;o Candidato a Cliente">
+          <button class="margen" [disabled]="ecc" [ngClass]="ecc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetStatus(30, 'Env&iacute;o Candidato a Cliente')" matTooltip="Env&iacute;o Candidato a Cliente">
             <em class="fa fa-truck"></em>
           </button>
-     
-          <button class="margen" [disabled]="ec" [ngClass]="ec ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetStatus(22)" matTooltip="En Espera de Contrataci&oacute;n" >
+          
+            <button class="margen" [ngClass]="nbc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-primary'" [disabled] = "nbc"  type="button" (click)="SetStatus(31, 'Nueva Busqueda de Candidatos')" matTooltip="Nueva Busqueda de Candidatos"> 
+              <em class="fa fa-search-plus"></em>
+            </button>
+          
+          <button class="margen" [disabled]="sc" [ngClass]="sc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetStatus(32, 'Socioeconómico')" matTooltip="Socioeconómico">
+            <em class="fa fa-bar-chart"></em>
+          </button> 
+          <button class="margen" [disabled]="ec" [ngClass]="ec ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetStatus(33, 'En Espera de Contrataci&oacute;n')" matTooltip="En Espera de Contrataci&oacute;n" >
             <em class="fa fa-hourglass-half"></em>
           </button>
-          <button class="margen" [disabled]="pausa" [ngClass]="pausa ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetStatus(23)" matTooltip="En Pausa">
+          <button class="margen" [disabled]="pausa" [ngClass]="pausa ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetStatus(39, 'En Pausa')" matTooltip="En Pausa">
             <em class="fa fa-pause-circle-o"></em>
           </button>
         
@@ -116,10 +115,10 @@
             <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">
-              <small class="badge badge-pill" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
-                [class.badge-info]="row.estatusId  === 6" [class.badge-success]="row.estatusId  === 7"
+              <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
+                [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20" [class.badge-success]="row.estatusId  === 7"
                 [class.badge-danger]="row.estatusId  === 8">
-                {{row.estatus }}
+               {{row.estatus }}
               </small>
             </td>
             <td class="text-center">
@@ -176,3 +175,6 @@
   </div>
   <pre *ngIf="config.paging" class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
 </div>
+
+<!--mensajes-->
+<toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
