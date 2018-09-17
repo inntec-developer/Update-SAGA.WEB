@@ -26,9 +26,9 @@
         <button id='delete' chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="enProceso > 0 && estatusId == 7 || !element "
           [ngClass]="(estatusId == 7 || !element ) ? 'disabled' : 'btn-outline-danger'" matTooltip="Eliminar"
           (click)="openDialogDelete()"><em class="icon-trash"></em></button>
-        <button id='update' chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="estatusId != 8 || !element"
+        <!-- <button id='update' chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="estatusId != 8 || !element"
           matTooltip="Activar" [ngClass]="(estatusId != 8 || !element) ? 'disabled' : 'btn-outline-success'" (click)="openDialogReActivar()"><em
-            class="icon-refresh"></em></button>
+            class="icon-refresh"></em></button> -->
         
           <!--estatus melina-->
           
