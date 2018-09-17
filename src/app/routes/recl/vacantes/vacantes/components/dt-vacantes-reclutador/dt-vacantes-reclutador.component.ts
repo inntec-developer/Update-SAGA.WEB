@@ -258,10 +258,11 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.folio = data.folio;
     this.postulados = data.postulados;
     this.enProceso = data.enProceso;
-    this.clienteId = data.clienteId,
-<<<<<<< HEAD
+    this.clienteId = data.clienteId;
+
     this.requi = {
       folio: data.folio,
+      vacante: data.cliente,
       id: data.id
     }
 
@@ -274,13 +275,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.nbc = false; //nueva busqueda candidato
     this.pausa = false;
 
-=======
-      this.requi = {
-        folio: data.folio,
-        id: data.id,
-        vacante: data.vBtra
-      }
->>>>>>> 60e0e9a2acc362f4071017b2afbec568a92b0007
     /* add an class 'active' on click */
     $('#resultDataTable').on('click', 'tr', function (event: any) {
       //noinspection TypeScriptUnresolvedFunction

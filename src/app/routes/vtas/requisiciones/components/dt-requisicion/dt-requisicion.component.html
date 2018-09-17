@@ -14,17 +14,15 @@
         </btn-add>
         <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones margen" [disabled]="!element"
           [ngClass]="(!element) ? 'disabled' : 'btn-outline-warning'" matTooltip="Visualizar"><em class="fa fa-eye"></em></button>
-<<<<<<< HEAD
-          <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones margen" [disabled]="!element"
-=======
-        <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones" [disabled]="!element"
->>>>>>> 60e0e9a2acc362f4071017b2afbec568a92b0007
+
+          <button id="view" chkPrivilegiosButtons (click)="lgModal.show()"  class="mb-1 btn btn-acciones margen" [disabled]="!element"
           [ngClass]="(!element) ? 'disabled' : 'btn-outline-dark'" matTooltip="Comentarios"><em class="fa fa-comments-o"></em></button>
+
         <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="estatusId == 8 || !element"
           [ngClass]="(estatusId == 8 || !element) ? 'disabled' : 'btn-outline-primary'" matTooltip="Editar" (click)="editRequi()"><em
             class="icon-pencil"></em></button>
           
-      
+              <!-- <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones" [disabled]="!element" -->
         <button id='delete' chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="enProceso > 0 && estatusId == 7 || !element "
           [ngClass]="(estatusId == 7 || !element ) ? 'disabled' : 'btn-outline-danger'" matTooltip="Eliminar"
           (click)="openDialogDelete()"><em class="icon-trash"></em></button>

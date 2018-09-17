@@ -25,15 +25,7 @@
       </div>
       <!-- estatus de la vacante -->
       <div>
-<<<<<<< HEAD
           <!--
-=======
-        <!-- <li><a>
-            <button [ngClass]="nbc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-primary'" [disabled] = "nbc"  type="button" (click)="SetStatus(12)" matTooltip="Nueva Busqueda de Candidatos"> 
-              <em class="fa fa-search-plus"></em>
-            </button>
-          </a></li>
->>>>>>> 60e0e9a2acc362f4071017b2afbec568a92b0007
           <li><a><button [disabled]="contratado" [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" type="button" (click)="SetStatus(24)" matTooltip="Contratado">
             <em class="fa fa-handshake-o"></em>
           </button></a></li>
@@ -57,7 +49,6 @@
             <em class="fa fa-star-half-o"></em>
           </button></a></li>
           <li><a><em class="vl"></em></a></li> -->
-<<<<<<< HEAD
           <button class="margen" [disabled]="bc" [ngClass]="bc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetStatus(29, 'B&uacute;squeda de Candidatos')" matTooltip="B&uacute;squeda de Candidatos">
             <em class="fa fa-search"></em>
           </button>
@@ -79,32 +70,6 @@
             <em class="fa fa-pause-circle-o"></em>
           </button>
         
-=======
-        <button class="margen" [disabled]="bc" [ngClass]="bc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"
-          type="button" (click)="SetStatus(14)" matTooltip="B&uacute;squeda de Candidatos">
-          <em class="fa fa-search"></em>
-        </button>
-        <button class="margen" [disabled]="sc" [ngClass]="sc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"
-          type="button" (click)="SetStatus(15)" matTooltip="Socioeconómico">
-          <em class="fa fa-bar-chart"></em>
-        </button>
-
-        <button class="margen" [disabled]="ecc" [ngClass]="ecc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"
-          type="button" (click)="SetStatus(21)" matTooltip="Env&iacute;o Candidato a Cliente">
-          <em class="fa fa-truck"></em>
-        </button>
-
-        <button class="margen" [disabled]="ec" [ngClass]="ec ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"
-          type="button" (click)="SetStatus(22)" matTooltip="En Espera de Contrataci&oacute;n">
-          <em class="fa fa-hourglass-half"></em>
-        </button>
-        <button class="margen" [disabled]="pausa" [ngClass]="pausa ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"
-          type="button" (click)="SetStatus(23)" matTooltip="En Pausa">
-          <em class="fa fa-pause-circle-o"></em>
-        </button>
-
-
->>>>>>> 60e0e9a2acc362f4071017b2afbec568a92b0007
 
       </div>
       <!-- estatus de la vacante -->
@@ -217,10 +182,9 @@
   <pre *ngIf="config.paging" class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
 </div>
 
-<<<<<<< HEAD
 <!--mensajes-->
 <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
-=======
+
 <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -239,4 +203,3 @@
     </div>
   </div>
 </div>
->>>>>>> 60e0e9a2acc362f4071017b2afbec568a92b0007
