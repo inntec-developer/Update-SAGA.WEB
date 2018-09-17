@@ -117,7 +117,7 @@
             <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">
-              <small class="badge badge-pill" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
+              <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
                 [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 34" [class.badge-success]="row.estatusId  === 7"
                 [class.badge-danger]="row.estatusId  === 8">
                 {{row.estatus }}
