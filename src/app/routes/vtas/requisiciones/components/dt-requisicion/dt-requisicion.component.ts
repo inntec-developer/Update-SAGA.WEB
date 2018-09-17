@@ -48,10 +48,11 @@ export class DtRequisicionComponent implements OnInit {
   cc = true; //cubierta por el cliente
   crm = true; //cubierta reclutamiento medios
   cp = true; // cubierta parcialmente
+  borrar = true; 
+  cancelar = true;
   RequisicionId: any;
   Folio: any;
   Vacante: any;
-
 
   constructor(
     private service: RequisicionesService,
@@ -98,28 +99,76 @@ export class DtRequisicionComponent implements OnInit {
 
   ValidarEstatus(estatusId)
   {
-    console.log(estatusId)
-    if(estatusId == 8 )
+    debugger;
+    if(estatusId == 34 && this.element.tipoReclutamientoId == 1)
+    {
+      this.gbc = false; //garantía busqueda candidato
+      this.cc = true; //cubierta por el cliente
+      this.crm = true; //cubierta reclutamiento medios
+      this.cp = true; // cubierta parcialmente
+      this.cancelar = true;
+      this.borrar = true;
+    }
+    else if(estatusId == 34 && this.element.tipoReclutamientoId > 1)
     {
       this.gbc = true; //garantía busqueda candidato
       this.cc = true; //cubierta por el cliente
       this.crm = true; //cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
+      this.cancelar = true;
+      this.borrar = true;
     }
-    else if(estatusId >= 34 && estatusId <= 37 )
+    else if(estatusId == 8)
     {
-      this.gbc = false; //garantía busqueda candidato
+      this.gbc = true; //garantía busqueda candidato
       this.cc = true; //cubierta por el cliente
       this.crm = true; //cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
+      this.cancelar = true;
+      this.borrar = false;
     }
-    else
+    else if( estatusId < 34 && this.element.enProceso > 0)
     {
-      this.gbc = false; //garantía busqueda candidato
+      this.gbc = true;
       this.cc = false; //cubierta por el cliente
       this.crm = false; //cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
-
+      this.cancelar = false;
+      this.borrar = true;
+    }
+    else if( estatusId < 34 && this.element.postulados > 0)
+    {
+      this.gbc = true;
+      this.cc = true; //cubierta por el cliente
+      this.crm = true; //cubierta reclutamiento medios
+      this.cp = true; // cubierta parcialmente
+      this.cancelar = false;
+      this.borrar = false;
+    }
+    else if( estatusId < 34 && (this.element.enProceso == 0 || this.element.postulados == 0))
+    {
+      this.gbc = true;
+      this.cc = true; //cubierta por el cliente
+      this.crm = true; //cubierta reclutamiento medios
+      this.cp = true; // cubierta parcialmente
+      this.cancelar = false;
+      this.borrar = false;
+    }
+    else if( estatusId > 34 && estatusId <= 37 && this.element.contratados > 0 )
+    {
+      this.gbc = true; //garantía busqueda candidato
+      this.cc = false; //cubierta por el cliente
+      this.crm = false; //cubierta reclutamiento medios
+      this.cp = false; // cubierta parcialmente
+      this.cancelar = true;
+    }
+    else
+    {
+      this.gbc = true; //garantía busqueda candidato
+      this.cc = false; //cubierta por el cliente
+      this.crm = false; //cubierta reclutamiento medios
+      this.cp = false; // cubierta parcialmente
+      this.cancelar = false;
     }
 
   }
@@ -234,8 +283,7 @@ export class DtRequisicionComponent implements OnInit {
     this.Folio = data.folio;
     this.Vacante = data.vBtra;
     this.element = data;
-
-  
+    
     this.ValidarEstatus(data.estatusId)
     /* add an class 'active' on click */
     $('#resultDataTable').on('click', 'tr', function (event: any) {
@@ -279,7 +327,7 @@ export class DtRequisicionComponent implements OnInit {
         this.rows[idx]['estatusId'] = estatusId;
 
         this.ValidarEstatus(estatusId);
-        
+
         this.onChangeTable(this.config);
         this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');    
         

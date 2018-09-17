@@ -290,7 +290,6 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.service.SetStatusBolsa(datos).subscribe(data => {
         if(data == 201)
         {
-       
           var aux = this.dataSource;
           var idx = aux.findIndex(x => x.candidatoId === this.candidatoId);
           this.ValidarEstatus(estatusId);
@@ -300,7 +299,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
           this.onChangeTable(this.config)
 
-          if(estatusId === 17 || estatusId === 21)
+          if(estatusId === 17 || estatusId === 21 || estatusId === 27)
           {
             var datos = {candidatoId: this.candidatoId, estatusId: estatusId, vacante: this.vacante, nombre: this.dataSource[idx]['nombre']};
 

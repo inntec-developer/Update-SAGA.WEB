@@ -137,7 +137,7 @@
             <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
             <td class="text-center"> {{row.curp}}</td>
             <td class="text-center"> {{row.rfc}}</td>
-            <td class="text-center"><span class="badge badge-info"> {{row.estatus}}</span></td>
+            <td class="text-center"><span class="badge badge-info"> {{row.estatus | uppercase }}</span></td>
           </tr>
         </tbody>
       </table>
