@@ -125,7 +125,7 @@ export class DtRequisicionComponent implements OnInit {
       this.crm = true; //cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = true;
-      this.borrar = false;
+      this.borrar = true;
     }
     else if( estatusId < 34 && this.element.enProceso > 0 && this.element.contratados == 0)
     {
@@ -134,7 +134,7 @@ export class DtRequisicionComponent implements OnInit {
       this.crm = false; //cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
       this.cancelar = false;
-      this.borrar = false;
+      this.borrar = true;
     }
     else if( estatusId < 34 && this.element.postulados > 0 && this.element.contratados == 0)
     {
@@ -143,7 +143,7 @@ export class DtRequisicionComponent implements OnInit {
       this.crm = true; //cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
-      this.borrar = false;
+      this.borrar = true;
     }
     else if(estatusId < 34 && this.element.contratados > 0 )
     {
@@ -161,7 +161,7 @@ export class DtRequisicionComponent implements OnInit {
       this.crm = true; //cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
-      this.borrar = false;
+      this.borrar = true;
     }
     else if( estatusId > 34 && estatusId <= 37 )
     {
@@ -172,8 +172,16 @@ export class DtRequisicionComponent implements OnInit {
       this.cancelar = true;
       this.borrar = true;
     }
+    else if(estatusId == 4)
+    {
+      this.gbc = true; //garantía busqueda candidato
+      this.cc = false; //cubierta por el cliente
+      this.crm = false; //cubierta reclutamiento medios
+      this.cp = false; // cubierta parcialmente
+      this.cancelar = false;
+      this.borrar = false;
 
-    
+    }
   }
   public config: any = {
     paging: true,

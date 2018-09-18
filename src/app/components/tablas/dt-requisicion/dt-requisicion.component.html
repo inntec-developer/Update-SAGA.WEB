@@ -25,10 +25,11 @@
         <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="borrar"
           [ngClass]="borrar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'" matTooltip="Eliminar"
           (click)="openDialogDelete()"><em class="icon-trash"></em></button>
-        <button id='update' chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" 
+          <em class="vl"></em>
+        <!-- <button id='update' chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" 
           matTooltip="Activar" [ngClass]="(estatusId != 8 || !element) ? 'disabled' : 'btn-outline-success'" (click)="openDialogReActivar()"><em
             class="icon-refresh"></em></button>
-        
+         -->
           <!--estatus melina-->
           
      <button class="margen" [disabled]="cc" [ngClass]="cc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'"  type="button" (click)="updataStatus(34, 'Cubierta')" matTooltip="Cubierta">
