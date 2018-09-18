@@ -39,12 +39,19 @@ export class ComentarioVacanteComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
-    if(changes.RequisicionId && !changes.RequisicionId.isFirstChange()){
+    if (changes.RequisicionId && !changes.RequisicionId.isFirstChange()) {
       this.getComentarios(this.RequisicionId);
+    }
+    let scroll = this.elem.nativeElement.querySelector('.container-coments');
+    if(scroll.scrollTop != 0){
+      let scrollHeight = scroll.scrollHeight;
+      scroll.scrollTop = scrollHeight;
+    }else{
+      scroll.scrollTop = 1000000000;
     }
   }
 
-  getComentarios(Id) : void {
+  getComentarios(Id): void {
     this._ComentariosService.getComentariosVacante(Id).subscribe(data => {
       this.Comentarios = data;
       this.CountComent = this.Comentarios.length;
@@ -52,21 +59,32 @@ export class ComentarioVacanteComponent implements OnInit {
         element.foto = ApiConection.ServiceUrlFoto + element.foto;
       });
       console.log(this.Comentarios);
-    }, err =>{
+      
+    }, err => {
       console.log(err)
     });
+    setTimeout(() => {
+        let scroll = this.elem.nativeElement.querySelector('.container-coments');
+        if(scroll.scrollTop != 0){
+          let scrollHeight = scroll.scrollHeight;
+          scroll.scrollTop = scrollHeight;
+        }else{
+          scroll.scrollTop = 1000000000;
+        }
+          console.log(scroll.scrollTop);
+      }, 1000);
   }
 
   addComentario(RequisicionId: string) {
-    if(this.comentario != null){
+    if (this.comentario != null) {
       this.Comentario = {
-        Comentario: this.comentario ,
+        Comentario: this.comentario,
         RequisicionId: this.RequisicionId,
         UsuarioAlta: sessionStorage.getItem('usuario'),
-        reclutadorId: sessionStorage.getItem('id')      
+        reclutadorId: sessionStorage.getItem('id')
       }
       this._ComentariosService.addComentarioVacante(this.Comentario).subscribe(data => {
-        if(data === 200){
+        if (data === 200) {
           this.getComentarios(this.RequisicionId);
           this.comentario = '';
           this.elem.nativeElement.querySelector('textarea').focus();
@@ -74,7 +92,18 @@ export class ComentarioVacanteComponent implements OnInit {
       }, err => {
         console.log(err);
       });
-      
+      setTimeout(() => {
+        let scroll = this.elem.nativeElement.querySelector('.container-coments');
+        if(scroll.scrolltop != 0){
+          let scrollHeight = scroll.scrollHeight;
+          scroll.scrollTop = scrollHeight;
+        }else{
+          scroll.scrollTop = 1000000000;
+        }
+        
+        console.log(scroll.scrollTop);
+      }, 1000);
+
     }
   }
 

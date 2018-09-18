@@ -12,31 +12,35 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <br>
-        <div class="card">
-          <div class="card-body" *ngFor="let coment of Comentarios">
-            <div class="media">
-              <img class="mr-3 rounded-circle thumb64" [src]="coment.usuario.foto" alt="Image">
-              <div class="media-body mb-3">
-                <strong class="text-primary">
-                  <!-- <span class="circle bg-success circle-lg text-left"></span> -->
-                  <span>{{coment.usuario.nombre}}</span>
-                  <p>
-                    <small *ngIf="coment?.requisicion?.vBtra" class="text-muted ml-2">Vacante: {{coment?.requisicion?.vBtra}}</small>
-                    <small *ngIf="coment?.requisicion?.folio" class="text-muted ml-2">Folio: {{coment?.requisicion?.folio}}</small>
-                  </p>
-                </strong>
-                <p class="text-muted md-2">{{coment.comentario}}</p>
+        <div class="container-coments" #container_coments>
+          <div class="card">
+            <div class="card-body" *ngFor="let coment of Comentarios">
+              <div class="media">
+                <img class="mr-3 rounded-circle thumb64" [src]="coment.usuario.foto" alt="Image">
+                <div class="media-body mb-3">
+                  <strong class="text-primary">
+                    <!-- <span class="circle bg-success circle-lg text-left"></span> -->
+                    <span>{{coment.usuario.nombre}}</span>
+                    <p>
+                      <small *ngIf="coment?.requisicion?.vBtra" class="text-muted ml-2">Vacante:
+                        {{coment?.requisicion?.vBtra}}</small>
+                      <small *ngIf="coment?.requisicion?.folio" class="text-muted ml-2">Folio:
+                        {{coment?.requisicion?.folio}}</small>
+                    </p>
+                  </strong>
+                  <p class="text-muted md-2">{{coment.comentario}}</p>
+                </div>
               </div>
+              <div class="ml-auto">
+                <small class="text-warning ml-2">{{coment.fchComentario | date:'hh:mm:ss'}}</small>
+                <small class="text-warning ml-2">{{coment.fchComentario | date:'dd/MM/yyyy'}}</small>
+                <!-- <div class="car-body">
+                      <button class="mb-1 btn btn-secondary" matTooltip="Responder Comentario" (click)="ShowMessage(coment)" type="button">
+                        <em class="icon icon-action-redo"></em></button>
+                    </div> -->
+              </div>
+              <hr />
             </div>
-            <div class="ml-auto">
-              <small class="text-warning ml-2">{{coment.fchComentario | date:'hh:mm:ss'}}</small>
-              <small class="text-warning ml-2">{{coment.fchComentario | date:'dd/MM/yyyy'}}</small>
-              <!-- <div class="car-body">
-                <button class="mb-1 btn btn-secondary" matTooltip="Responder Comentario" (click)="ShowMessage(coment)" type="button">
-                  <em class="icon icon-action-redo"></em></button>
-              </div> -->
-            </div>
-            <hr/>
           </div>
         </div>
         <div class="container">

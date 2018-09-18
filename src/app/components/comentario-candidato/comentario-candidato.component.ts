@@ -1,7 +1,9 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, SimpleChanges } from '@angular/core';
 
 import { ApiConection } from '../../service';
 import { ComentariosService } from './../../service/Comentarios/comentarios.service';
+
+declare var $: any;
 
 @Component({
   selector: 'app-comentario-candidato',
@@ -20,7 +22,8 @@ export class ComentarioCandidatoComponent implements OnInit {
   CountComent: any;
 
   constructor(
-    private _ComentariosService: ComentariosService
+    private _ComentariosService: ComentariosService,
+    public elem: ElementRef
   ) { 
     
     
@@ -52,7 +55,11 @@ export class ComentarioCandidatoComponent implements OnInit {
       console.log(this.Comentarios);
     }, err => {
       console.log(err)
-    })
+    });
+    setTimeout(() => {
+      let scroll = this.elem.nativeElement.querySelector('.container-coments');
+      scroll.scrollTop = scroll.scrollHeight*50;
+    }, 500);
   }
 
   addComentario() {
@@ -76,6 +83,10 @@ export class ComentarioCandidatoComponent implements OnInit {
         console.log(err);
       });
     }
+    // setTimeout(() => {
+    //   let scroll = this.elem.nativeElement.querySelector('.container-coments');
+    //   scroll.scrollTop = scroll.scrollHeight*50;
+    // }, 100);
 
   }
 }
