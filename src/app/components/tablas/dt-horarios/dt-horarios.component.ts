@@ -3,7 +3,7 @@ import { AfterContentChecked, Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DialogEditHorarioComponent } from './dialog-edit-horario/dialog-edit-horario.component';
 import { MatDialog } from '@angular/material';
-import { RequisicionesService } from '../../../../../service';
+import { RequisicionesService } from '../../../service/requisiciones/requisiciones.service';
 
 declare var $: any;
 

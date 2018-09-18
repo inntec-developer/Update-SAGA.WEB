@@ -1,9 +1,11 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { CatalogosService, RequisicionesService } from '../../service';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
 import { FormBuilder } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-info-vacante',
@@ -18,13 +20,19 @@ import { FormBuilder } from '@angular/forms';
 })
 export class InfoVacanteComponent implements OnInit {
   @Input('Folios') Folios: string;
+  @Input('Requisicion') Requisicion: string;
+  @Output() EstatusId: EventEmitter<number> = new EventEmitter();
   public RequiId: string;
-  public checked: boolean = false;
   public Prioridades: any[];
   public Estatus: any[];
   public msj: string;
-
-  @Output() EstatusId: EventEmitter<number> = new EventEmitter();
+  public requisicion: Array<any[]>;
+  sueldoMinimo: any;
+  sueldoSemanalMin: number;
+  sueldoDiarioMin: number;
+  sueldoMaximo: number;
+  sueldoDiarioMax: number;
+  sueldoSemanalMax: number;
   fch_Solicitud: any;
   folio: any;
   fch_Limite: any;
@@ -42,24 +50,28 @@ export class InfoVacanteComponent implements OnInit {
   constructor(
     public fb: FormBuilder,
     public serviceRequisicion: RequisicionesService,
-    public serviceCatalogos: CatalogosService
+    public serviceCatalogos: CatalogosService,
+    private _Router: Router,
+    private _Route: ActivatedRoute,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
-    if(this.Folios != null){
+    if (this.Folios != null) {
       this.getPrioridades();
-    this.getEstatus(2);
+      this.getEstatus(2);
     }
-    
+
   }
 
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
-    if(this.Folios != null){
+    if (this.Folios != null && this.Requisicion != null) {
       this.getInitialData();
+      this.GetDataRequi();
     }
-    
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -67,6 +79,9 @@ export class InfoVacanteComponent implements OnInit {
     //Add '${implements OnChanges}' to the class.
     if (changes.Folios && !changes.Folios.isFirstChange()) {
       this.getInitialData();
+    }
+    if (changes.Requisicion && !changes.Requisicion.isFirstChange()) {
+      this.GetDataRequi();
     }
   }
 
@@ -101,6 +116,14 @@ export class InfoVacanteComponent implements OnInit {
     this.serviceCatalogos.getEstatusRequi(tipoMov)
       .subscribe(data => {
         this.Estatus = data;
+      });
+  }
+
+  GetDataRequi() {
+    this.serviceRequisicion.getNewRequi(this.Requisicion)
+      .subscribe(data => {
+        this.requisicion = data;
+        this.spinner.hide();
       });
   }
 }

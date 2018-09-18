@@ -32,7 +32,7 @@ export class InfoCandidatoComponent implements OnInit {
   registros_v: number;
 
   requi: { folio: any; id: any; };
-  vacante: any;
+  vacante: any = null;
   usuario: string;
   usuarioId: string;
   Status: any = 0;
@@ -69,7 +69,7 @@ export class InfoCandidatoComponent implements OnInit {
     if (changes.CandidatoId && !changes.CandidatoId.isFirstChange()) {
       this.ngOnInit();
       this.getPostulaciones();
-      this.vacante = {};
+      this.vacante = null;
       this.procesoCandidatoId = 0;
       this.Status = '';
       this.RequisicionId = '';
@@ -247,7 +247,7 @@ export class InfoCandidatoComponent implements OnInit {
     setTimeout(() => {
       this.onChangeTable_v(this.config_v);
     }, 800);
-    this.vacante = {};
+    this.vacante = null;
   }
 
   public onCellClick_v(data: any): any {

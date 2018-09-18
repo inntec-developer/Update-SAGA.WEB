@@ -2,13 +2,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
-import { DialogActivarRequiComponent } from '../dialog-activar-requi/dialog-activar-requi.component';
-import { DialogCancelRequiComponent } from '../dialog-cancel-requi/dialog-cancel-requi.component';
-import { DialogDeleteRequiComponent } from '../dialog-delete-requi/dialog-delete-requi.component';
+import { DialogActivarRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-activar-requi/dialog-activar-requi.component';
+import { DialogCancelRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-cancel-requi/dialog-cancel-requi.component';
+import { DialogDeleteRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-delete-requi/dialog-delete-requi.component';
 import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { PostulateService } from '../../../../../service/SeguimientoVacante/postulate.service';
-import { RequisicionesService } from '../../../../../service';
+import { PostulateService } from '../../../service/SeguimientoVacante/postulate.service';
+import { RequisicionesService } from '../../../service';
 
 declare var $: any;
 

@@ -623,7 +623,8 @@
             </mat-form-field>
             <div class="row justify-content-between">
               <div class="d-flex align-items-stretch ">
-                <btn-view (click)="lgModal.show()" matTooltip="Ver Requisición"></btn-view>
+                  <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones margen" [disabled]="vacante === {}"
+                  [ngClass]="(vacante === {}) ? 'disabled' : 'btn-outline-warning'" matTooltip="Visualizar"><em class="fa fa-eye"></em></button>
                 <button [disabled]="procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === RequisicionId &&  reclutador != usuario || vacante.id === RequisicionId && procesoCandidatoId != 27 "
                   [ngClass]="( procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === RequisicionId &&  reclutador != usuario ||  vacante.id === RequisicionId && procesoCandidatoId != 27 ) 
                     ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
@@ -712,7 +713,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <app-info-vacante [Folios]=vacante.folio></app-info-vacante>
+        <app-info-vacante [Folios]="vacante.folio" [Requisicion]="vacante.id"></app-info-vacante>
       </div>
       <div class="modal-footer">
         <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide()">Cerrar</button>

@@ -1,8 +1,8 @@
 import { ActivatedRoute, CanDeactivate, Router } from '@angular/router';
 import { AfterContentChecked, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { CatalogosService, RequisicionesService } from '../../../../../service/index';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatTableDataSource, PageEvent} from '@angular/material';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatTableDataSource, PageEvent } from '@angular/material';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -14,8 +14,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class ViewCuerpoRequiComponent implements OnInit {
   @Input('Requisicion') Requisicion: string;
-  public requisicion:Array<any[]>;
-  public checked : boolean = false;
+  public requisicion: Array<any[]>;
+  public checked: boolean = false;
   sueldoMinimo: any;
   sueldoSemanalMin: number;
   sueldoDiarioMin: number;
@@ -31,13 +31,13 @@ export class ViewCuerpoRequiComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
+
   }
 
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
-    if(this.Requisicion != null){
+    if (this.Requisicion != null) {
       this.GetDataRequi();
     }
   }
@@ -50,12 +50,12 @@ export class ViewCuerpoRequiComponent implements OnInit {
     }
   }
 
-  GetDataRequi(){
+  GetDataRequi() {
     this.spinner.show();
     this.serviceRequisiciones.getNewRequi(this.Requisicion)
       .subscribe(data => {
         this.requisicion = data;
         this.spinner.hide();
       });
-    }
+  }
 }

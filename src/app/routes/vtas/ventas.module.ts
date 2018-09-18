@@ -40,7 +40,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
 
-import { ActividadesComponent } from './requisiciones/components/actividades/actividades.component';
 import { ClientesComponent } from './directorio-empresarial/clientes/clientes.component';
 import { ColorPickerService } from 'ngx-color-picker';
 import { CommonModule } from '@angular/common';
@@ -48,35 +47,17 @@ import { ComponentsModule } from '../../components/components.module';
 import { DialogActivarRequiComponent } from './requisiciones/components/dialog-activar-requi/dialog-activar-requi.component';
 import { DialogCancelRequiComponent } from './requisiciones/components/dialog-cancel-requi/dialog-cancel-requi.component';
 import { DialogDeleteRequiComponent } from './requisiciones/components/dialog-delete-requi/dialog-delete-requi.component';
-import { DialogEditHorarioComponent } from './requisiciones/components/dt-horarios/dialog-edit-horario/dialog-edit-horario.component';
+import { DialogEditHorarioComponent } from '../../components/tablas/dt-horarios/dialog-edit-horario/dialog-edit-horario.component';
 import { DialogdamfoComponent } from './requisiciones/components/dialogdamfo/dialogdamfo.component';
 import { DireccionautoComponent } from './requisiciones/components/direccionauto/direccionauto.component';
 import { DirectorioEmpresarialComponent } from './directorio-empresarial/directorio-empresarial.component';
-import { DocumentosClienteComponent } from './requisiciones/components/documentos-cliente/documentos-cliente.component';
-import { DocumentosDamsaComponent } from './requisiciones/components/documentos-damsa/documentos-damsa.component';
-import { DtBeneficiosComponent } from './requisiciones/components/dt-beneficios/dt-beneficios.component';
-import { DtCompetenciaAreaComponent } from './requisiciones/components/competencias/dt-competencia-area/dt-competencia-area.component';
-import { DtCompetenciaCardinalComponent } from './requisiciones/components/competencias/dt-competencia-cardinal/dt-competencia-cardinal.component';
-import { DtCompetenciaGerencialComponent } from './requisiciones/components/competencias/dt-competencia-gerencial/dt-competencia-gerencial.component';
-import { DtContactosComponent } from './requisiciones/components/dt-contactos/dt-contactos.component';
 import { DtCrearRequisicionComponent } from './requisiciones/components/dt-crear-requisicion/dt-crear-requisicion.component';
 import { DtDamfoComponent } from './requisiciones/components/dt-damfo/dt-damfo.component';
-import { DtDireccionComponent } from './requisiciones/components/dt-direccion/dt-direccion.component';
-import { DtDirecionRequiComponent } from './requisiciones/components/dt-direcion-requi/dt-direcion-requi.component'
-import { DtHorariosComponent } from './requisiciones/components/dt-horarios/dt-horarios.component';
-import { DtPsicometriasClienteComponent } from './requisiciones/components/dt-psicometrias-cliente/dt-psicometrias-cliente.component';
-import { DtPsicometriasDamsaComponent } from './requisiciones/components/dt-psicometrias-damsa/dt-psicometrias-damsa.component';
-import { DtRequisicionComponent } from './requisiciones/components/dt-requisicion/dt-requisicion.component';
-import { DtTelefonosComponent } from './requisiciones/components/dt-telefonos/dt-telefonos.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { ObservacionesComponent } from './requisiciones/components/observaciones/observaciones.component';
-import { PrestacionesClienteComponent } from './requisiciones/components/prestaciones-cliente/prestaciones-cliente.component';
-import { PrestacionesLeyComponent } from './requisiciones/components/prestaciones-ley/prestaciones-ley.component';
-import { ProcesosComponent } from './requisiciones/components/procesos/procesos.component';
 import { ProspectoComponent } from './directorio-empresarial/prospectos/prospecto.component';
 import { RequisicionComponent } from './requisiciones/requisicion.component';
 import { RequisicionNuevaComponent } from './requisiciones/components/requisicion-nueva/requisicion-nueva.component';
@@ -134,26 +115,8 @@ const routes: Routes = [
         DialogdamfoComponent,
         DireccionautoComponent,
         ViewdamfoComponent,
-        DtDireccionComponent,
-        DtTelefonosComponent,
         DtDamfoComponent,
-        DtContactosComponent,
-        DtHorariosComponent,
-        DtPsicometriasDamsaComponent,
-        DtPsicometriasClienteComponent,
-        DtBeneficiosComponent,
-        DtCompetenciaCardinalComponent,
-        DtCompetenciaAreaComponent,
-        DtCompetenciaGerencialComponent,
         DtCrearRequisicionComponent,
-        DtRequisicionComponent,
-        DocumentosDamsaComponent,
-        DocumentosClienteComponent,
-        PrestacionesLeyComponent,
-        PrestacionesClienteComponent,
-        ActividadesComponent,
-        ObservacionesComponent,
-        ProcesosComponent,
         ViewRequisicionComponent,
         ViewInforRequiComponent,
         UpdateRequisicionComponent,
@@ -162,8 +125,6 @@ const routes: Routes = [
         DialogDeleteRequiComponent,
         DialogCancelRequiComponent,
         DialogActivarRequiComponent,
-        DtDirecionRequiComponent,
-        DialogEditHorarioComponent,
         DirectorioEmpresarialComponent,
         ClientesComponent,
     ],

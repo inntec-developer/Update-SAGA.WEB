@@ -42,6 +42,7 @@ import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../core/translator/config-paginator/config-paginator.component';
 
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { ActividadesComponent } from './tablas/actividades/actividades.component';
 import { AlertModule } from 'ngx-bootstrap';
 import { AsignarRequisicionComponent } from './asignar-requisicion/asignar-requisicion.component';
 import { AsignarRequisicionLiderComponent } from './asignar-requisicion-lider/asignar-requisicion-lider.component';
@@ -66,7 +67,7 @@ import { ButtonReturnComponent } from './buttons/button-return/button-return.com
 import { ButtonSaveComponent } from './buttons/button-save/button-save.component';
 import { ButtonSendComponent } from './buttons/button-send/button-send.component';
 import { ButtonViewComponent } from './buttons/button-view/button-view.component';
-import {ButtonsPostulacionesComponent} from './buttons-postulaciones/buttons-postulaciones.component';
+import { ButtonsPostulacionesComponent } from './buttons-postulaciones/buttons-postulaciones.component';
 import { CardVacanteComponent } from './card-vacantes/card-vacante.component';
 import { ClockComponent } from './clock/clock.component';
 import { ColorPickerService } from 'ngx-color-picker';
@@ -74,13 +75,33 @@ import { ComentarioCandidatoComponent } from './comentario-candidato/comentario-
 import { ComentarioVacanteComponent } from './comentario-vacante/comentario-vacante.component';
 import { CommonModule } from '@angular/common';
 import { DetailVacantesComponent } from './detail-vacantes/detail-vacantes.component';
+import { DialogEditHorarioComponent } from './tablas/dt-horarios/dialog-edit-horario/dialog-edit-horario.component';
+import { DocumentosClienteComponent } from './tablas/documentos-cliente/documentos-cliente.component';
+import { DocumentosDamsaComponent } from './tablas/documentos-damsa/documentos-damsa.component';
+import { DtBeneficiosComponent } from './tablas/dt-beneficios/dt-beneficios.component';
 import { DtBusquedaCandidatosComponent } from './dt-busqueda-candidatos/dt-busqueda-candidatos.component';
+import { DtCompetenciaAreaComponent } from './tablas/competencias/dt-competencia-area/dt-competencia-area.component';
+import { DtCompetenciaCardinalComponent } from './tablas/competencias/dt-competencia-cardinal/dt-competencia-cardinal.component';
+import { DtCompetenciaGerencialComponent } from './tablas/competencias/dt-competencia-gerencial/dt-competencia-gerencial.component';
+import { DtContactosComponent } from './tablas/dt-contactos/dt-contactos.component';
+import { DtDireccionComponent } from './tablas/dt-direccion/dt-direccion.component';
+import { DtDirecionRequiComponent } from './tablas/dt-direcion-requi/dt-direcion-requi.component';
+import { DtHorariosComponent } from './tablas/dt-horarios/dt-horarios.component';
 import { DtMisCandidatosComponent } from './dt-mis-candidatos/dt-mis-candidatos.component';
+import { DtPsicometriasClienteComponent } from './tablas/dt-psicometrias-cliente/dt-psicometrias-cliente.component';
+import { DtPsicometriasDamsaComponent } from './tablas/dt-psicometrias-damsa/dt-psicometrias-damsa.component';
+import { DtRequisicionComponent } from './tablas/dt-requisicion/dt-requisicion.component';
+import { DtTelefonosComponent } from './tablas/dt-telefonos/dt-telefonos.component';
 import { InfoCandidatoComponent } from './info-candidato/info-candidato.component';
 import { InfoVacanteComponent } from './info-vacante/info-vacante.component';
 import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import { NgxSpinnerModule } from '../../../node_modules/ngx-spinner';
+import { ObservacionesComponent } from './tablas/observaciones/observaciones.component';
+import { PrestacionesClienteComponent } from './tablas/prestaciones-cliente/prestaciones-cliente.component';
+import { PrestacionesLeyComponent } from './tablas/prestaciones-ley/prestaciones-ley.component';
+import { ProcesosComponent } from './tablas/procesos/procesos.component';
+import { SharedModule } from '../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
@@ -90,6 +111,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
 
 @NgModule({
   imports: [
+    SharedModule,
     CommonModule,
     NgxSelectModule.forRoot(CustomSelectOptions),
     FormsModule,
@@ -136,9 +158,29 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     AccordionModule.forRoot(),
     ToasterModule,
     AlertModule,
-    ModalModule.forRoot(),    
+    ModalModule.forRoot(),
   ],
   declarations: [
+    DtDireccionComponent,
+    DtTelefonosComponent,
+    DtContactosComponent,
+    DtHorariosComponent,
+    DtPsicometriasDamsaComponent,
+    DtPsicometriasClienteComponent,
+    DtBeneficiosComponent,
+    DtCompetenciaCardinalComponent,
+    DtCompetenciaAreaComponent,
+    DtCompetenciaGerencialComponent,
+    DtRequisicionComponent,
+    DocumentosDamsaComponent,
+    DocumentosClienteComponent,
+    PrestacionesLeyComponent,
+    PrestacionesClienteComponent,
+    ActividadesComponent,
+    ObservacionesComponent,
+    ProcesosComponent,
+    DtDirecionRequiComponent,
+    DialogEditHorarioComponent,
     AsignarRequisicionComponent,
     ButtonSaveComponent,
     ButtonEditComponent,
@@ -175,6 +217,26 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
 
   ],
   exports: [
+    DtDireccionComponent,
+    DtTelefonosComponent,
+    DtContactosComponent,
+    DtHorariosComponent,
+    DtPsicometriasDamsaComponent,
+    DtPsicometriasClienteComponent,
+    DtBeneficiosComponent,
+    DtCompetenciaCardinalComponent,
+    DtCompetenciaAreaComponent,
+    DtCompetenciaGerencialComponent,
+    DtRequisicionComponent,
+    DocumentosDamsaComponent,
+    DocumentosClienteComponent,
+    PrestacionesLeyComponent,
+    PrestacionesClienteComponent,
+    ActividadesComponent,
+    ObservacionesComponent,
+    ProcesosComponent,
+    DtDirecionRequiComponent,
+    DialogEditHorarioComponent,
     AsignarRequisicionComponent,
     ButtonSaveComponent,
     ButtonEditComponent,
@@ -211,8 +273,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
-    { provide: PaginationConfig, useValue: getSpanishPaginatorBtp()},
+    { provide: PaginationConfig, useValue: getSpanishPaginatorBtp() },
     ToasterService
-    ],
+  ],
 })
 export class ComponentsModule { }

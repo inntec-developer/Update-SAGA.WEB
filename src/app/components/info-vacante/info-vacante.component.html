@@ -76,3 +76,270 @@
   </div>
 </div>
 <br>
+<div class="dt-container  mat-elevation-z8">
+  <div class="card-header">
+    <em class="fa fa-user"></em> Informaci&oacute;n General
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title">Datos del cliente</h5>
+        <mat-divider></mat-divider>
+        <p>
+          <strong>Nombre Comercial: </strong>
+          <label id="nombre" class="card-text"> {{requisicion?.cliente?.nombrecomercial}}</label>
+        </p>
+        <p>
+          <strong>Raz&oacute;n Social: </strong>
+          <label class="card-text"> {{requisicion?.cliente?.razonSocial}}</label>
+        </p>
+        <p>
+          <strong>RFC: </strong>
+          <label class="card-text"> {{requisicion?.cliente?.rfc}}</label>
+        </p>
+        <p>
+          <strong>Giro Empresa: </strong>
+          <label class="card-text"> {{requisicion?.cliente?.giroEmpresas?.giroEmpresa}}</label>
+        </p>
+        <p>
+          <strong>Actividad Empresa: </strong>
+          <label class="card-text"> {{requisicion?.cliente?.actividadEmpresas?.actividadEmpresa}}</label>
+        </p>
+      </div>
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title">Reclutamiento</h5>
+        <mat-divider></mat-divider>
+        <p>
+          <strong>Tipo: </strong>
+          <label class="card-text"> {{requisicion?.tipoReclutamiento?.tipoReclutamiento}}</label>
+        </p>
+        <p>
+          <strong>Clase: </strong>
+          <label class="card-text"> {{requisicion?.claseReclutamiento?.clasesReclutamiento}}</label>
+        </p>
+        <h5 class="card-title">Contrato</h5>
+        <mat-divider></mat-divider>
+        <p>
+          <strong>Tipo: </strong>
+          <label class="card-text"> {{requisicion?.contratoInicial?.tipoContrato}}</label>
+        </p>
+        <p *ngIf="requisicion?.contratoInicial?.periodoPrueba == true">
+          <strong>D&iacute;as de Prueba: </strong>
+          <label class="card-text"> {{requisicion?.tiempoContrato?.tiempo}}</label>
+        </p>
+      </div>
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title">Puesto a Reclutar</h5>
+        <mat-divider></mat-divider>
+        <p>
+          <strong>Nombre del Perfil: </strong>
+          <label class="card-text"> {{requisicion?.vBtra}}</label>
+        </p>
+        <p>
+          <strong>&Aacute;rea: </strong>
+          <label class="card-text"> {{requisicion?.area?.areaExperiencia}}</label>
+        </p>
+        <p>
+          <strong>G&eacute;nero: </strong>
+          <label class="card-text"> {{requisicion?.genero?.genero}}</label>
+        </p>
+        <p>
+          <strong>Edad: </strong>
+          <label class="card-text"> {{requisicion?.edadMinima}} años a {{requisicion?.edadMaxima}} años </label>
+        </p>
+        <p>
+          <strong>Estado Civil: </strong>
+          <label class="card-text"> {{requisicion?.estadoCivil?.estadoCivil}}</label>
+        </p>
+      </div>
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title">Sueldos</h5>
+        <mat-divider></mat-divider>
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <h5 class="card-title">M&iacute;nimo</h5>
+            <p>
+              <strong>Mensual: </strong>
+              <label class="card-text"> {{requisicion?.sueldoMinimo | currency:"$"}}</label>
+            </p>
+            <p>
+              <strong>Semanal: </strong>
+              <label class="card-text"> {{(requisicion?.sueldoMinimo / 30) * 7 | currency:"$"}}</label>
+            </p>
+            <p>
+              <strong>Diario: </strong>
+              <label class="card-text"> {{requisicion?.sueldoMinimo / 30 | currency:"$"}}</label>
+            </p>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <h5 class="card-title">M&aacute;ximo</h5>
+            <p>
+              <strong>Mensual: </strong>
+              <label class="card-text"> {{requisicion?.sueldoMaximo | currency:"$"}}</label>
+            </p>
+            <p>
+              <strong>Semanal: </strong>
+              <label class="card-text"> {{(requisicion?.sueldoMaximo / 30) * 7 | currency:"$"}}</label>
+            </p>
+            <p>
+              <strong>Diario: </strong>
+              <label class="card-text"> {{requisicion?.sueldoMaximo / 30 | currency:"$"}}</label>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="dt-container  mat-elevation-z8">
+  <div class="card-header">
+    <em class="fa fa-id-badge"></em> Informaci&oacute;n Adicional del Perfil
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title">Estudios / Escolaridades</h5>
+        <mat-divider></mat-divider>
+        <ol>
+          <li *ngFor="let x of requisicion?.escolaridadesRequi">
+            <label class="card-text"> {{x.escolaridad?.gradoEstudio}} - {{x.estadoEstudio?.estadoEstudio}}</label>
+          </li>
+        </ol>
+      </div>
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title">Aptitudes</h5>
+        <mat-divider></mat-divider>
+        <ol>
+          <li *ngFor="let x of requisicion?.aptitudesRequi">
+            <label class="card-text"> {{x.aptitud?.aptitud}}</label>
+          </li>
+        </ol>
+      </div>
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title">Experiencia</h5>
+        <mat-divider></mat-divider>
+        <label class="card-text">{{requisicion?.experiencia}}</label>
+      </div>
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title">Informaci&oacute;n de Pagos</h5>
+        <mat-divider></mat-divider>
+        <p>
+          <strong>D&iacute;as Corte: </strong>
+          <label class="card-text"> {{requisicion?.diaCorte?.diaSemana}}</label>
+        </p>
+        <p>
+          <strong>Tipo Nomina: </strong>
+          <label class="card-text"> {{requisicion?.tipoNomina?.tipoDeNomina}}</label>
+        </p>
+        <p>
+          <strong>D&iacute;as Pago: </strong>
+          <label class="card-text"> {{requisicion?.diaPago?.diaSemana}}</label>
+        </p>
+        <p>
+          <strong>Periodo de Pago: </strong>
+          <label class="card-text"> {{requisicion?.periodoPago?.periodoPago}}</label>
+        </p>
+        <p *ngIf="requisicion?.periodoPago?.id == 0">
+          <strong>Especifique: </strong>
+          <label class="card-text"> {{requisicion?.especifique}}</label>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="col-md-12">
+    <!-- HORARIOS -->
+    <app-dt-horarios [Horarios]="requisicion?.horariosRequi"></app-dt-horarios>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="col-md-12">
+    <!-- DIRECCIONES -->
+    <app-dt-direcion-requi [DireccionId]="requisicion?.direccionId"></app-dt-direcion-requi>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="col-md-6">
+    <!-- TELEFONOS -->
+    <app-dt-telefonos [Telefonos]="requisicion?.cliente?.telefonos"></app-dt-telefonos>
+  </div>
+</div>
+<br/>
+<!-- CONTACTOS -->
+<div class="row">
+  <div class="col-md-10">
+    <app-dt-contactos [Contactos]="requisicion?.cliente?.contactos"></app-dt-contactos>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="col-md-12">
+    <!-- BENEFICIOS -->
+    <app-dt-beneficios [Beneficios]="requisicion?.beneficiosRequi"></app-dt-beneficios>
+  </div>
+</div>
+<br/>
+<!-- ACTIVIDADES OBSERVACIONES PROCESO-->
+<div class="row">
+  <div class="col-md-4">
+    <app-actividades [Actividades]="requisicion?.actividadesRequi"></app-actividades>
+  </div>
+  <div class="col-md-4">
+    <app-observaciones [Observaciones]="requisicion?.observacionesRequi"></app-observaciones>
+  </div>
+  <div class="col-md-4">
+    <app-procesos [Proceso]="requisicion?.procesoRequi"></app-procesos>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="col-md-3">
+    <!-- DOCUMENTOS dAMSA -->
+    <app-documentos-damsa></app-documentos-damsa>
+  </div>
+  <div class="col-md-3">
+    <!-- DOCUMENTOS CLIENTE -->
+    <app-documentos-cliente [Documentos]="requisicion?.documentosClienteRequi"></app-documentos-cliente>
+  </div>
+  <div class="col-md-3">
+    <!-- PRESTACIONES LEY -->
+    <app-prestaciones-ley></app-prestaciones-ley>
+  </div>
+  <div class="col-md-3">
+    <!-- PRESTACIONES SUPERIORES -->
+    <app-prestaciones-cliente [Prestaciones]="requisicion?.prestacionesClienteRequi"></app-prestaciones-cliente>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="col-md-6">
+    <!-- PSICOMETRIAS DAMSA -->
+    <app-dt-psicometrias-damsa [Psicometrias]="requisicion?.psicometriasDamsaRequi"></app-dt-psicometrias-damsa>
+  </div>
+  <div class="col-md-6">
+    <!-- PSICOMETRIA CLIENTE -->
+    <app-dt-psicometrias-cliente [Psicometrias]="requisicion?.psicometriasClienteRequi"></app-dt-psicometrias-cliente>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="col-md-4 col-lg-4">
+    <!-- COMPTENCIAS CARDINALES -->
+    <app-dt-competencia-cardinal [Competencias]="requisicion?.competenciasCardinalRequi"></app-dt-competencia-cardinal>
+  </div>
+  <div class="col-md-4 col-lg-4">
+    <!-- COMPETENCIAS POR AREA -->
+    <app-dt-competencia-area [Competencias]="requisicion?.competenciasAreaRequi"></app-dt-competencia-area>
+  </div>
+  <div class="col-md-4 col-lg-4">
+    <!-- COMPETENCIAS GERENCIALES -->
+    <app-dt-competencia-gerencial [Competencias]="requisicion?.competetenciasGerencialRequi"></app-dt-competencia-gerencial>
+  </div>
+</div>
+
