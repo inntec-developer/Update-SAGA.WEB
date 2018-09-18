@@ -81,7 +81,6 @@ export class ViewInforRequiComponent implements OnInit {
         this.vacantes = DataRequisicion.vacantes;
         this.asignados = DataRequisicion.asignadosN;
         this.vBtra = DataRequisicion.vBtra;
-        console.log(this.asignados);
         this.EstatusId.emit(this.estatusId);
       });
   }

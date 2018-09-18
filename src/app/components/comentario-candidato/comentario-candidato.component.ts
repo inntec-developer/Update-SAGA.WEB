@@ -52,7 +52,6 @@ export class ComentarioCandidatoComponent implements OnInit {
       this.Comentarios.forEach(element => {
         element.usuario.foto = ApiConection.ServiceUrlFoto + element.usuario.foto;
       });
-      console.log(this.Comentarios);
     }, err => {
       console.log(err)
     });

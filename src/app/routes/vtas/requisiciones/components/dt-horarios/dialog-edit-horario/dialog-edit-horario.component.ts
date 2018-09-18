@@ -37,7 +37,6 @@ export class DialogEditHorarioComponent implements OnInit {
   }
 
   getInformacion(){
-    console.log(this.data);
     this.RequisicionId = this.data.requisicionId;
     this.HorarioId = this.data.id;
   }

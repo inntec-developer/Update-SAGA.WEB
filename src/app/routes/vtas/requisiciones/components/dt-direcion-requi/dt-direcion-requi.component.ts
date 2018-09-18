@@ -32,7 +32,6 @@ export class DtDirecionRequiComponent implements OnInit {
       .subscribe(data => {
         this.rows = data;
         this.getAddress = true;
-        console.log(this.rows);
       })
       this.getAddress = true;
     }

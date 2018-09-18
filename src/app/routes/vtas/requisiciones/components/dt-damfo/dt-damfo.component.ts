@@ -63,7 +63,6 @@ export class DtDamfoComponent implements OnInit {
   getDamfo290() {
     this.service.getDamgo290().subscribe(data => {
       this.dataSource = data;
-      console.log(this.dataSource);
     }, error => this.errorMessage = <any>error);
   }
 

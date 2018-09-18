@@ -62,7 +62,6 @@ export class DialogCancelRequiComponent implements OnInit {
 
   ngOnInit() {
     this.requisicion = this.data;
-    console.log(this.requisicion);
     this.folio = this.data.folio;
     this.infoCancelRequi = {
       id : this.data.id,

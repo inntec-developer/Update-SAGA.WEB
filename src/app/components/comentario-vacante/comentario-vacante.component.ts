@@ -58,7 +58,6 @@ export class ComentarioVacanteComponent implements OnInit {
       this.Comentarios.forEach(element => {
         element.foto = ApiConection.ServiceUrlFoto + element.foto;
       });
-      console.log(this.Comentarios);
       
     }, err => {
       console.log(err)
@@ -71,7 +70,6 @@ export class ComentarioVacanteComponent implements OnInit {
         }else{
           scroll.scrollTop = 1000000000;
         }
-          console.log(scroll.scrollTop);
       }, 1000);
   }
 
@@ -100,8 +98,6 @@ export class ComentarioVacanteComponent implements OnInit {
         }else{
           scroll.scrollTop = 1000000000;
         }
-        
-        console.log(scroll.scrollTop);
       }, 1000);
 
     }

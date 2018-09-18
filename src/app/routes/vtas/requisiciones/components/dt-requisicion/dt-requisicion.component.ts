@@ -7,8 +7,8 @@ import { DialogCancelRequiComponent } from '../dialog-cancel-requi/dialog-cancel
 import { DialogDeleteRequiComponent } from '../dialog-delete-requi/dialog-delete-requi.component';
 import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { RequisicionesService } from '../../../../../service';
 import { PostulateService } from '../../../../../service/SeguimientoVacante/postulate.service';
+import { RequisicionesService } from '../../../../../service';
 
 declare var $: any;
 
@@ -81,7 +81,6 @@ export class DtRequisicionComponent implements OnInit {
   getRequisiciones() {
     this.service.getRequisiciones(sessionStorage.getItem('usuario')).subscribe(data => {
       this.dataSource = data;
-      console.log(this.dataSource)
     }, error => this.errorMessage = <any>error);
   }
 

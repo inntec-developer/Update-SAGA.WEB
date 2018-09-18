@@ -111,7 +111,6 @@ export class InfoCandidatoComponent implements OnInit {
         this.reclutador = this.candidato.estatus.reclutador;
       }
       this.spinner.hide();
-      console.log(this.candidato);
     });
   }
 
@@ -258,7 +257,6 @@ export class InfoCandidatoComponent implements OnInit {
       vBtra: data.vBtra,
       folio: data.folio
     }
-    console.log(this.vacante);
     /* add an class 'active' on click */
     $('#resultDataTableVacantes').on('click', 'tr', function (event: any) {
       //noinspection TypeScriptUnresolvedFunction

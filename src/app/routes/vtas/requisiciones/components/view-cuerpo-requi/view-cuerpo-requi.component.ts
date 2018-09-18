@@ -54,7 +54,6 @@ export class ViewCuerpoRequiComponent implements OnInit {
     this.spinner.show();
     this.serviceRequisiciones.getNewRequi(this.Requisicion)
       .subscribe(data => {
-        console.log('Data:  ', data)
         this.requisicion = data;
         this.spinner.hide();
       });
