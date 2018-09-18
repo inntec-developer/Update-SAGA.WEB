@@ -54,9 +54,9 @@ export class InfoCandidatoComponent implements OnInit {
     this.registros_v = 0;
     this.registros_p = 0;
     this.vacante = {
-      id: null,
-      vBtra: null,
-      folio: null
+      id: '',
+      vBtra: '',
+      folio: ''
     }
     this.usuario = sessionStorage.getItem('nombre');
     this.usuarioId = sessionStorage.getItem('id')
@@ -320,7 +320,6 @@ export class InfoCandidatoComponent implements OnInit {
    * Funcionalidades del componente
    */
   _apartarCandidato() {
-    debugger;
     // if (this.reclutador === this.usuario || !this.candidato.estatus) {
       this.procesoCandidato = {
         candidatoId: this.CandidatoId,

@@ -1,9 +1,9 @@
 import { ActivatedRoute, CanDeactivate, Router, } from '@angular/router';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { CatalogosService } from '../../../../../service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatTableDataSource, PageEvent} from '@angular/material';
 
+import { CatalogosService } from '../../../../../service';
 import { DialogdamfoComponent } from '../dialogdamfo/dialogdamfo.component'
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../service/index';
@@ -56,8 +56,7 @@ export class ViewdamfoComponent implements OnInit {
       if(params['IdDamfo'] != null){
         this.damfoId = params['IdDamfo'];
         this.serviceRequisiciones.getDamfoById(this.damfoId)
-            .subscribe(data => {
-              console.log(data);      
+            .subscribe(data => {   
               if(data.TipoContratoId == null)
               {
                 data.TipoContratoId = 0;

@@ -1,4 +1,4 @@
-import { CatalogosService, RequisicionesService } from '../../../../../service';
+import { CatalogosService, RequisicionesService } from '../../service';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -6,9 +6,9 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
 import { FormBuilder } from '@angular/forms';
 
 @Component({
-  selector: 'app-view-info-requi',
-  templateUrl: './view-info-requi.component.html',
-  styleUrls: ['./view-info-requi.component.scss'],
+  selector: 'app-info-vacante',
+  templateUrl: './info-vacante.component.html',
+  styleUrls: ['./info-vacante.component.scss'],
   providers: [RequisicionesService,
     CatalogosService,
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
@@ -16,7 +16,7 @@ import { FormBuilder } from '@angular/forms';
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
   ]
 })
-export class ViewInforRequiComponent implements OnInit {
+export class InfoVacanteComponent implements OnInit {
   @Input('Folios') Folios: string;
   public RequiId: string;
   public checked: boolean = false;
@@ -46,14 +46,20 @@ export class ViewInforRequiComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getPrioridades();
+    if(this.Folios != null){
+      this.getPrioridades();
     this.getEstatus(2);
+    }
+    
   }
 
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
-    this.getInitialData();
+    if(this.Folios != null){
+      this.getInitialData();
+    }
+    
   }
 
   ngOnChanges(changes: SimpleChanges): void {

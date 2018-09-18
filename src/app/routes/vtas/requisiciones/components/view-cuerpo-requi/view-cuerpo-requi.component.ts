@@ -1,5 +1,5 @@
 import { ActivatedRoute, CanDeactivate, Router } from '@angular/router';
-import { AfterContentChecked, Component, Input, OnInit } from '@angular/core';
+import { AfterContentChecked, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { CatalogosService, RequisicionesService } from '../../../../../service/index';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatTableDataSource, PageEvent} from '@angular/material';
@@ -12,9 +12,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./view-cuerpo-requi.component.scss'],
   providers: [RequisicionesService, CatalogosService]
 })
-export class ViewCuerpoRequiComponent implements OnInit, AfterContentChecked {
-  @Input() Requisicion: string;
-  public requiId: string;
+export class ViewCuerpoRequiComponent implements OnInit {
+  @Input('Requisicion') Requisicion: string;
   public requisicion:Array<any[]>;
   public checked : boolean = false;
   sueldoMinimo: any;
@@ -35,17 +34,25 @@ export class ViewCuerpoRequiComponent implements OnInit, AfterContentChecked {
     
   }
 
-  ngAfterContentChecked(){
-    if(this.Requisicion != null && this.checked == false ){
-      this.checked=true;
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    if(this.Requisicion != null){
+      this.GetDataRequi();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    if (changes.Requisicion && !changes.Requisicion.isFirstChange()) {
       this.GetDataRequi();
     }
   }
 
   GetDataRequi(){
     this.spinner.show();
-    this.requiId = this.Requisicion;
-    this.serviceRequisiciones.getNewRequi(this.requiId)
+    this.serviceRequisiciones.getNewRequi(this.Requisicion)
       .subscribe(data => {
         console.log('Data:  ', data)
         this.requisicion = data;

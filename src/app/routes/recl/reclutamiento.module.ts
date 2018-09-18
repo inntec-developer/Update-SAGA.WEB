@@ -41,6 +41,7 @@ import { PopoverModule, TooltipModule } from 'ngx-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 import {ToasterModule, ToasterService} from 'angular2-toaster';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
+
 import { AreaExpComponent } from './candidatos/busqueda/area-exp/area-exp.component';
 import { BusquedaComponent } from './candidatos/busqueda/busqueda.component';
 import { CandidatosComponent } from './candidatos/candidatos.component';

@@ -1,4 +1,3 @@
-
 <div class="row">
   <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12">
     <div *ngIf="candidato" class="dt-container mat-elevation-z8">
@@ -51,8 +50,8 @@
             <em *ngIf="procesoCandidatoId != 27 && candidato.estatus" class="fa fa-lock m-0 text-primary"></em>
           </div>
           <div class="col-md-10 text-right">
-            <h5 *ngIf="candidato.estatus" class="m-0"
-              [ngClass]="(procesoCandidatoId === 27) ? 'text-success':'text-primary'">{{Status}} por: {{reclutador}}</h5>
+            <h5 *ngIf="candidato.estatus" class="m-0" [ngClass]="(procesoCandidatoId === 27) ? 'text-success':'text-primary'">{{Status}}
+              por: {{reclutador}}</h5>
             <h5 *ngIf="!candidato.estatus" class="text-success">Candidato Disponible</h5>
           </div>
         </div>
@@ -172,8 +171,8 @@
                     </div>
                     <div>
                       <strong class="text-primary">Vehiculo Propio: </strong>
-                      <label  *ngIf="candidato.info.tieneVehiculoPropio" class="text-muted"> SI</label>
-                      <label  *ngIf="!candidato.info.tieneVehiculoPropio" class="text-muted"> SI</label>
+                      <label *ngIf="candidato.info.tieneVehiculoPropio" class="text-muted"> SI</label>
+                      <label *ngIf="!candidato.info.tieneVehiculoPropio" class="text-muted"> SI</label>
                     </div>
                     <div>
                       <strong class="text-primary">Puede Viajar: </strong>
@@ -342,7 +341,8 @@
                   </div>
                   <div>
                     <strong class="text-primary">Num. Ext / Int: </strong>
-                    <label class="text-muted" *ngIf="candidato.direccion.numeroExterior else NotExterior">{{candidato.direccion.numeroExterior}} - </label>
+                    <label class="text-muted" *ngIf="candidato.direccion.numeroExterior else NotExterior">{{candidato.direccion.numeroExterior}}
+                      - </label>
                     <ng-template #NotExterior>
                       <label class="text-muted"> S/N</label>
                     </ng-template>
@@ -623,7 +623,7 @@
             </mat-form-field>
             <div class="row justify-content-between">
               <div class="d-flex align-items-stretch ">
-                <!-- <btn-view (click)="openDialogShowRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view> -->
+                <btn-view (click)="lgModal.show()" matTooltip="Ver Requisición"></btn-view>
                 <button [disabled]="procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === RequisicionId &&  reclutador != usuario || vacante.id === RequisicionId && procesoCandidatoId != 27 "
                   [ngClass]="( procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === RequisicionId &&  reclutador != usuario ||  vacante.id === RequisicionId && procesoCandidatoId != 27 ) 
                     ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
@@ -664,7 +664,7 @@
                         (tableChanged)="onChangeTable_v(config_v)" class="form-control">
                     </td>
                   </tr>
-                  <tr (click)="onCellClick_v(row)" (dblclick)="openDialogShowRequi()" *ngFor="let row of rows"
+                  <tr (click)="onCellClick_v(row)" (dblclick)="lgModal.show()" *ngFor="let row of rows"
                     [class.confident]="row.confidencial" [class.enProceso]=" row.id === RequisicionId && procesoCandidatoId != 27 ">
                     <td class="text-center">
                       {{row.folio}}
@@ -677,9 +677,8 @@
                     <td class="text-center"> {{row.tipoReclutamiento}}</td>
                     <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
                     <td class="text-center">
-                      <small class="badge badge-pill" [class.badge-warning]="row.estatusId  === 4"
-                        [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6"
-                        [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
+                      <small class="badge badge-pill" [class.badge-warning]="row.estatusId  === 4" [class.badge-info]="row.estatusId  != 7 "
+                        [class.badge-success]="row.estatusId  === 7">
                         {{row.estatus }}
                       </small>
                     </td>
@@ -700,3 +699,24 @@
 </div>
 <br>
 <app-comentario-candidato [CandidatoId]="CandidatoId" [RequisicionId]="RequisicionId" [ProcesoCandidatoId]="procesoCandidatoId"></app-comentario-candidato>
+
+
+<!-- Modal para vista previa de la vacante -->
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Vacante: {{vacante.vBtra}} {{vacante.folio}}</h4>
+        <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-info-vacante [Folios]=vacante.folio></app-info-vacante>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

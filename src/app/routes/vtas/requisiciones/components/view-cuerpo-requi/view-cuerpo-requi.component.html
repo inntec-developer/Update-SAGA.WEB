@@ -9,23 +9,23 @@
         <mat-divider></mat-divider>
         <p>
           <strong>Nombre Comercial: </strong>
-          <label id="nombre" class="card-text"> {{requisicion.cliente.nombrecomercial}}</label>
+          <label id="nombre" class="card-text"> {{requisicion?.cliente?.nombrecomercial}}</label>
         </p>
         <p>
           <strong>Raz&oacute;n Social: </strong>
-          <label class="card-text"> {{requisicion.cliente.razonSocial}}</label>
+          <label class="card-text"> {{requisicion?.cliente?.razonSocial}}</label>
         </p>
         <p>
           <strong>RFC: </strong>
-          <label class="card-text"> {{requisicion.cliente.rfc}}</label>
+          <label class="card-text"> {{requisicion?.cliente?.rfc}}</label>
         </p>
         <p>
           <strong>Giro Empresa: </strong>
-          <label class="card-text"> {{requisicion.cliente.giroEmpresas.giroEmpresa}}</label>
+          <label class="card-text"> {{requisicion?.cliente?.giroEmpresas?.giroEmpresa}}</label>
         </p>
         <p>
           <strong>Actividad Empresa: </strong>
-          <label class="card-text"> {{requisicion.cliente.actividadEmpresas.actividadEmpresa}}</label>
+          <label class="card-text"> {{requisicion?.cliente?.actividadEmpresas?.actividadEmpresa}}</label>
         </p>
       </div>
       <div class="col-md-3 col-sm-12 col-xs-12">
@@ -33,21 +33,21 @@
         <mat-divider></mat-divider>
         <p>
           <strong>Tipo: </strong>
-          <label class="card-text"> {{requisicion.tipoReclutamiento.tipoReclutamiento}}</label>
+          <label class="card-text"> {{requisicion?.tipoReclutamiento?.tipoReclutamiento}}</label>
         </p>
         <p>
           <strong>Clase: </strong>
-          <label class="card-text"> {{requisicion.claseReclutamiento.clasesReclutamiento}}</label>
+          <label class="card-text"> {{requisicion?.claseReclutamiento?.clasesReclutamiento}}</label>
         </p>
         <h5 class="card-title">Contrato</h5>
         <mat-divider></mat-divider>
         <p>
           <strong>Tipo: </strong>
-          <label class="card-text"> {{requisicion.contratoInicial.tipoContrato}}</label>
+          <label class="card-text"> {{requisicion?.contratoInicial?.tipoContrato}}</label>
         </p>
         <p *ngIf="requisicion?.contratoInicial?.periodoPrueba == true">
           <strong>D&iacute;as de Prueba: </strong>
-          <label class="card-text"> {{requisicion.tiempoContrato.tiempo}}</label>
+          <label class="card-text"> {{requisicion?.tiempoContrato?.tiempo}}</label>
         </p>
       </div>
       <div class="col-md-3 col-sm-12 col-xs-12">
@@ -55,23 +55,23 @@
         <mat-divider></mat-divider>
         <p>
           <strong>Nombre del Perfil: </strong>
-          <label class="card-text"> {{requisicion.vBtra}}</label>
+          <label class="card-text"> {{requisicion?.vBtra}}</label>
         </p>
         <p>
           <strong>&Aacute;rea: </strong>
-          <label class="card-text"> {{requisicion.area.areaExperiencia}}</label>
+          <label class="card-text"> {{requisicion?.area?.areaExperiencia}}</label>
         </p>
         <p>
           <strong>G&eacute;nero: </strong>
-          <label class="card-text"> {{requisicion.genero.genero}}</label>
+          <label class="card-text"> {{requisicion?.genero?.genero}}</label>
         </p>
         <p>
           <strong>Edad: </strong>
-          <label class="card-text"> {{requisicion.edadMinima}} años a {{requisicion.edadMaxima}} años </label>
+          <label class="card-text"> {{requisicion?.edadMinima}} años a {{requisicion?.edadMaxima}} años </label>
         </p>
         <p>
           <strong>Estado Civil: </strong>
-          <label class="card-text"> {{requisicion.estadoCivil.estadoCivil}}</label>
+          <label class="card-text"> {{requisicion?.estadoCivil?.estadoCivil}}</label>
         </p>
       </div>
       <div class="col-md-3 col-sm-12 col-xs-12">
@@ -82,30 +82,30 @@
             <h5 class="card-title">M&iacute;nimo</h5>
             <p>
               <strong>Mensual: </strong>
-              <label class="card-text"> {{requisicion.sueldoMinimo | currency:"$"}}</label>
+              <label class="card-text"> {{requisicion?.sueldoMinimo | currency:"$"}}</label>
             </p>
             <p>
               <strong>Semanal: </strong>
-              <label class="card-text"> {{(requisicion.sueldoMinimo / 30) * 7 | currency:"$"}}</label>
+              <label class="card-text"> {{(requisicion?.sueldoMinimo / 30) * 7 | currency:"$"}}</label>
             </p>
             <p>
               <strong>Diario: </strong>
-              <label class="card-text"> {{requisicion.sueldoMinimo / 30 | currency:"$"}}</label>
+              <label class="card-text"> {{requisicion?.sueldoMinimo / 30 | currency:"$"}}</label>
             </p>
           </div>
           <div class="col-md-6 col-sm-6 col-xs-6">
             <h5 class="card-title">M&aacute;ximo</h5>
             <p>
               <strong>Mensual: </strong>
-              <label class="card-text"> {{requisicion.sueldoMaximo | currency:"$"}}</label>
+              <label class="card-text"> {{requisicion?.sueldoMaximo | currency:"$"}}</label>
             </p>
             <p>
               <strong>Semanal: </strong>
-              <label class="card-text"> {{(requisicion.sueldoMaximo / 30) * 7 | currency:"$"}}</label>
+              <label class="card-text"> {{(requisicion?.sueldoMaximo / 30) * 7 | currency:"$"}}</label>
             </p>
             <p>
               <strong>Diario: </strong>
-              <label class="card-text"> {{requisicion.sueldoMaximo / 30 | currency:"$"}}</label>
+              <label class="card-text"> {{requisicion?.sueldoMaximo / 30 | currency:"$"}}</label>
             </p>
           </div>
         </div>
@@ -126,7 +126,7 @@
         <mat-divider></mat-divider>
         <ol>
           <li *ngFor="let x of requisicion?.escolaridadesRequi">
-            <label class="card-text"> {{x.escolaridad.gradoEstudio}} - {{x.estadoEstudio.estadoEstudio}}</label>
+            <label class="card-text"> {{x.escolaridad?.gradoEstudio}} - {{x.estadoEstudio?.estadoEstudio}}</label>
           </li>
         </ol>
       </div>
@@ -135,37 +135,37 @@
         <mat-divider></mat-divider>
         <ol>
           <li *ngFor="let x of requisicion?.aptitudesRequi">
-            <label class="card-text"> {{x.aptitud.aptitud}}</label>
+            <label class="card-text"> {{x.aptitud?.aptitud}}</label>
           </li>
         </ol>
       </div>
       <div class="col-md-3 col-sm-12 col-xs-12">
         <h5 class="card-title">Experiencia</h5>
         <mat-divider></mat-divider>
-        <label class="card-text">{{requisicion.experiencia}}</label>
+        <label class="card-text">{{requisicion?.experiencia}}</label>
       </div>
       <div class="col-md-3 col-sm-12 col-xs-12">
         <h5 class="card-title">Informaci&oacute;n de Pagos</h5>
         <mat-divider></mat-divider>
         <p>
           <strong>D&iacute;as Corte: </strong>
-          <label class="card-text"> {{requisicion.diaCorte.diaSemana}}</label>
+          <label class="card-text"> {{requisicion?.diaCorte?.diaSemana}}</label>
         </p>
         <p>
           <strong>Tipo Nomina: </strong>
-          <label class="card-text"> {{requisicion.tipoNomina.tipoDeNomina}}</label>
+          <label class="card-text"> {{requisicion?.tipoNomina?.tipoDeNomina}}</label>
         </p>
         <p>
           <strong>D&iacute;as Pago: </strong>
-          <label class="card-text"> {{requisicion.diaPago.diaSemana}}</label>
+          <label class="card-text"> {{requisicion?.diaPago?.diaSemana}}</label>
         </p>
         <p>
           <strong>Periodo de Pago: </strong>
-          <label class="card-text"> {{requisicion.periodoPago.periodoPago}}</label>
+          <label class="card-text"> {{requisicion?.periodoPago?.periodoPago}}</label>
         </p>
-        <p *ngIf="requisicion.periodoPago.id == 0">
+        <p *ngIf="requisicion?.periodoPago?.id == 0">
           <strong>Especifique: </strong>
-          <label class="card-text"> {{requisicion.especifique}}</label>
+          <label class="card-text"> {{requisicion?.especifique}}</label>
         </p>
       </div>
     </div>

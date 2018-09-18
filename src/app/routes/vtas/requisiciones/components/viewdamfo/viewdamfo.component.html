@@ -77,11 +77,11 @@
           <mat-divider></mat-divider>
           <p>
             <strong>Tipo: </strong>
-            <label class="card-text"> {{damfo290.contratoInicial.tipoContrato}}</label>
+            <label class="card-text"> {{damfo290?.contratoInicial?.tipoContrato}}</label>
           </p>
           <p *ngIf="damfo290?.contratoInicial?.periodoPrueba == true">
             <strong>D&iacute;as de Prueba: </strong>
-            <label class="card-text"> {{damfo290.tiempoContrato.tiempo}}</label>
+            <label class="card-text"> {{damfo290?.tiempoContrato?.tiempo}}</label>
           </p>
         </div>
         <div class="col-md-3 col-sm-12 col-xs-12">
@@ -89,23 +89,23 @@
           <mat-divider></mat-divider>
           <p>
             <strong>Nombre del Perfil: </strong>
-            <label class="card-text"> {{damfo290.nombrePerfil}}</label>
+            <label class="card-text"> {{damfo290?.nombrePerfil}}</label>
           </p>
           <p>
             <strong>&Aacute;rea: </strong>
-            <label class="card-text"> {{damfo290.area.areaExperiencia}}</label>
+            <label class="card-text"> {{damfo290?.area?.areaExperiencia}}</label>
           </p>
           <p>
             <strong>G&eacute;nero: </strong>
-            <label class="card-text"> {{damfo290.genero.genero}}</label>
+            <label class="card-text"> {{damfo290?.genero?.genero}}</label>
           </p>
           <p>
             <strong>Edad: </strong>
-            <label class="card-text"> {{damfo290.edadMinima}} años a {{damfo290.edadMaxima}} años </label>
+            <label class="card-text"> {{damfo290?.edadMinima}} años a {{damfo290?.edadMaxima}} años </label>
           </p>
           <p>
             <strong>Estado Civil: </strong>
-            <label class="card-text"> {{damfo290.estadoCivil.estadoCivil}}</label>
+            <label class="card-text"> {{damfo290?.estadoCivil?.estadoCivil}}</label>
           </p>
         </div>
         <div class="col-md-3 col-sm-12 col-xs-12">
@@ -116,7 +116,7 @@
               <h5 class="card-title">M&iacute;nimo</h5>
               <p>
                 <strong>Mensual: </strong>
-                <label class="card-text"> {{damfo290.sueldoMinimo | currency:"$"}}</label>
+                <label class="card-text"> {{damfo290?.sueldoMinimo | currency:"$"}}</label>
               </p>
               <p>
                 <strong>Semanal: </strong>
@@ -124,14 +124,14 @@
               </p>
               <p>
                 <strong>Diario: </strong>
-                <label class="card-text"> {{damfo290.sueldoMinimo / 30 | currency:"$"}}</label>
+                <label class="card-text"> {{damfo290?.sueldoMinimo / 30 | currency:"$"}}</label>
               </p>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
               <h5 class="card-title">M&aacute;ximo</h5>
               <p>
                 <strong>Mensual: </strong>
-                <label class="card-text"> {{damfo290.sueldoMaximo | currency:"$"}}</label>
+                <label class="card-text"> {{damfo290?.sueldoMaximo | currency:"$"}}</label>
               </p>
               <p>
                 <strong>Semanal: </strong>
@@ -139,7 +139,7 @@
               </p>
               <p>
                 <strong>Diario: </strong>
-                <label class="card-text"> {{damfo290.sueldoMaximo / 30 | currency:"$"}}</label>
+                <label class="card-text"> {{damfo290?.sueldoMaximo / 30 | currency:"$"}}</label>
               </p>
             </div>
           </div>
@@ -160,7 +160,7 @@
           <mat-divider></mat-divider>
           <ol>
             <li *ngFor="let x of damfo290?.escolardadesPerfil">
-              <label class="card-text"> {{x.escolaridad.gradoEstudio}} - {{x.estadoEstudio.estadoEstudio}}</label>
+              <label class="card-text"> {{x?.escolaridad?.gradoEstudio}} - {{x?.estadoEstudio?.estadoEstudio}}</label>
             </li>
           </ol>
         </div>
@@ -169,37 +169,37 @@
           <mat-divider></mat-divider>
           <ol>
             <li *ngFor="let x of damfo290?.aptitudesPerfil">
-              <label class="card-text"> {{x.aptitud.aptitud}}</label>
+              <label class="card-text"> {{x?.aptitud?.aptitud}}</label>
             </li>
           </ol>
         </div>
         <div class="col-md-3 col-sm-12 col-xs-12">
           <h5 class="card-title">Experiencia</h5>
           <mat-divider></mat-divider>
-          <label class="card-text">{{damfo290.experiencia}}</label>
+          <label class="card-text">{{damfo290?.experiencia}}</label>
         </div>
         <div class="col-md-3 col-sm-12 col-xs-12">
           <h5 class="card-title">Informaci&oacute;n de Pagos</h5>
           <mat-divider></mat-divider>
           <p>
             <strong>D&iacute;as Corte: </strong>
-            <label class="card-text"> {{damfo290.diaCorte.diaSemana}}</label>
+            <label class="card-text"> {{damfo290?.diaCorte?.diaSemana}}</label>
           </p>
           <p>
             <strong>Tipo Nomina: </strong>
-            <label class="card-text"> {{damfo290.tipoNomina.tipoDeNomina}}</label>
+            <label class="card-text"> {{damfo290?.tipoNomina?.tipoDeNomina}}</label>
           </p>
           <p>
             <strong>D&iacute;as Pago: </strong>
-            <label class="card-text"> {{damfo290.diaPago.diaSemana}}</label>
+            <label class="card-text"> {{damfo290?.diaPago?.diaSemana}}</label>
           </p>
           <p>
             <strong>Periodo de Pago: </strong>
-            <label class="card-text"> {{damfo290.periodoPago.periodoPago}}</label>
+            <label class="card-text"> {{damfo290?.periodoPago?.periodoPago}}</label>
           </p>
           <p *ngIf="periodoPagoId == 0">
             <strong>Especifique: </strong>
-            <label class="card-text"> {{damfo290.especifique}}</label>
+            <label class="card-text"> {{damfo290?.especifique}}</label>
           </p>
         </div>
       </div>

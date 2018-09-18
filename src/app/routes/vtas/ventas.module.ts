@@ -1,5 +1,4 @@
-﻿import { Component, NgModule } from '@angular/core';
-import {
+﻿import {
          MAT_DATE_LOCALE,
          MatAutocompleteModule,
          MatButtonModule,
@@ -72,6 +71,7 @@ import { DtTelefonosComponent } from './requisiciones/components/dt-telefonos/dt
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { Ng2TableModule } from 'ng2-table';
+import { NgModule } from '@angular/core';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ObservacionesComponent } from './requisiciones/components/observaciones/observaciones.component';
 import { PrestacionesClienteComponent } from './requisiciones/components/prestaciones-cliente/prestaciones-cliente.component';

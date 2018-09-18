@@ -1,13 +1,11 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { BodyOutputType, Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { Component, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatTableDataSource, PageEvent } from '@angular/material';
 
 import { DialogdamfoComponent } from '../dialogdamfo/dialogdamfo.component'
+import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../service';
-import { element } from 'protractor';
-import { switchAll } from 'rxjs/operators';
 
 declare var $: any;
 const swal = require('sweetalert');
@@ -208,7 +206,7 @@ export class DtDamfoComponent implements OnInit {
   }
 
   showDamfo() {
-    //mandamos la información por medio de la URL sin que esta se muestre en la liga.
+    // Mandamos la información por medio de la URL sin que esta se muestre en la liga.
     if(this.element.horariosActivos === 0){
       swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. No es posible visualizarlo.', 'error');
     }else if (this.damfoId) {
@@ -225,6 +223,7 @@ export class DtDamfoComponent implements OnInit {
           data: this.element
         });
       }else{
+        // Mensaje de Error, en caso de que el damfo no cuente con horarios activos.
         swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. No es posible generar la requisición', 'error');
       }
     }

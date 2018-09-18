@@ -1,15 +1,15 @@
-import { PostulateService } from './../../../../../../service/SeguimientoVacante/postulate.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatSort } from '@angular/material';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+
 import { DialogAssingRequiComponent } from '../dialogs/dialog-assing-requi/dialog-assing-requi.component';
 import { DialogShowRequiComponent } from '../dialogs/dialog-show-requi/dialog-show-requi.component';
+import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { PostulateService } from './../../../../../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../../../../../service';
+import { Router } from '@angular/router';
 
-
-
+const swal = require('sweetalert');
 declare var $: any;
 
 @Component({
@@ -51,6 +51,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   ec = true; //espera contratacion
   nbc = true; //nueva busqueda candidato
   pausa = true;
+  aprobador: any;
 
   constructor(
     private service: RequisicionesService,
@@ -259,7 +260,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.postulados = data.postulados;
     this.enProceso = data.enProceso;
     this.clienteId = data.clienteId;
-
+    this.aprobador = data.aprobador;
     this.requi = {
       folio: data.folio,
       vacante: data.cliente,
@@ -308,7 +309,12 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   openDesignVacante() {
-    this._Router.navigate(['/reclutamiento/configuracionVacante/', this.id, this.folio, this.vBtra], { skipLocationChange: true });
+    if(this.aprobador === sessionStorage.getItem('usuario')){
+      this._Router.navigate(['/reclutamiento/configuracionVacante/', this.id, this.folio, this.vBtra], { skipLocationChange: true });
+    }else{
+      swal('Ops...!', 'Esta vacante solo puede ser diseñada por el aprobador ('+ this.aprobador +').' , 'error');
+    }
+    
   }
   openViewPostulados() {
     if (this.id != null) {
@@ -344,6 +350,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.toasterService.pop(toast);
 
   }
+
+
+   // Mensaje de Error, en caso de que el damfo no cuente con horarios activos.
+  //  swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. No es posible generar la requisición', 'error');
 
 }
 

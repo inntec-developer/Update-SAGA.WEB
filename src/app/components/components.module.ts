@@ -77,6 +77,7 @@ import { DetailVacantesComponent } from './detail-vacantes/detail-vacantes.compo
 import { DtBusquedaCandidatosComponent } from './dt-busqueda-candidatos/dt-busqueda-candidatos.component';
 import { DtMisCandidatosComponent } from './dt-mis-candidatos/dt-mis-candidatos.component';
 import { InfoCandidatoComponent } from './info-candidato/info-candidato.component';
+import { InfoVacanteComponent } from './info-vacante/info-vacante.component';
 import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import { NgxSpinnerModule } from '../../../node_modules/ngx-spinner';
@@ -135,8 +136,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     AccordionModule.forRoot(),
     ToasterModule,
     AlertModule,
-    ModalModule.forRoot()
-    
+    ModalModule.forRoot(),    
   ],
   declarations: [
     AsignarRequisicionComponent,
@@ -171,6 +171,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DtBusquedaCandidatosComponent,
     DtMisCandidatosComponent,
     ComentarioCandidatoComponent,
+    InfoVacanteComponent,
 
   ],
   exports: [
@@ -205,7 +206,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     InfoCandidatoComponent,
     DtBusquedaCandidatosComponent,
     DtMisCandidatosComponent,
-    ComentarioCandidatoComponent
+    ComentarioCandidatoComponent,
+    InfoVacanteComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
