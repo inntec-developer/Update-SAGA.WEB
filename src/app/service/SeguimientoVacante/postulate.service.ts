@@ -22,6 +22,7 @@ export class PostulateService {
   private UrlSetProcesoVacante = ApiConection.ServiceUrl + ApiConection.setProcesoVacante;
   private UrlSetStatusBolsa = ApiConection.ServiceUrl + ApiConection.setStatusBolsa;
   private UrlSendEmailCandidato = ApiConection.ServiceUrl + ApiConection.sendEmailCandidato;
+  private UrlSendEmailsNoContrado = ApiConection.ServiceUrl + ApiConection.sendEmailNoContratado;
 
   constructor(private _HttpClient: HttpClient) { }
 
@@ -81,6 +82,19 @@ export class PostulateService {
     };
 
     return this._HttpClient.post(this.UrlSendEmailCandidato, data, httpOptions )
+
+  }
+
+  SendEmailsNoContratado(data)
+  {
+    let params = new HttpParams().set('datos', data)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+
+    return this._HttpClient.post(this.UrlSendEmailsNoContrado, data, httpOptions )
 
   }
 

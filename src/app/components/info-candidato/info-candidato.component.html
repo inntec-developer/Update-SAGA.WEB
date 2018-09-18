@@ -417,7 +417,7 @@
                 </span>
               </button>
               <div class="container" *ngFor="let x of candidato.formaciones">
-                <h4 class="text-success ">{{x.carrera.carrera}}
+                <h4 class="text-success ">{{x.carrera?.carrera}}
                   <span *ngIf="!x.actual" class="pull-right">
                     {{x.documentoValidador.documentoValidador}}
                   </span>

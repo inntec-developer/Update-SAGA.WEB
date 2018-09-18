@@ -68,6 +68,7 @@ export class DtRequisicionComponent implements OnInit {
     /** spinner starts on init */
     this.spinner.show();
     this.getRequisiciones();
+
   }
 
   ngAfterViewInit() {
@@ -80,6 +81,7 @@ export class DtRequisicionComponent implements OnInit {
   getRequisiciones() {
     this.service.getRequisiciones(sessionStorage.getItem('usuario')).subscribe(data => {
       this.dataSource = data;
+      console.log(this.dataSource)
     }, error => this.errorMessage = <any>error);
   }
 
@@ -99,7 +101,6 @@ export class DtRequisicionComponent implements OnInit {
 
   ValidarEstatus(estatusId)
   {
-    debugger;
     if(estatusId == 34 && this.element.tipoReclutamientoId == 1)
     {
       this.gbc = false; //garantía busqueda candidato
@@ -154,13 +155,23 @@ export class DtRequisicionComponent implements OnInit {
       this.cancelar = false;
       this.borrar = false;
     }
-    else if( estatusId > 34 && estatusId <= 37 && this.element.contratados > 0 )
+    else if( estatusId > 34 && estatusId <= 37 )
+    {
+      this.gbc = true; //garantía busqueda candidato
+      this.cc = true; //cubierta por el cliente
+      this.crm = true; //cubierta reclutamiento medios
+      this.cp = true; // cubierta parcialmente
+      this.cancelar = true;
+      this.borrar = true;
+    }
+    else if( estatusId == 6 || estatusId == 7 && this.element.contratados > 0 )
     {
       this.gbc = true; //garantía busqueda candidato
       this.cc = false; //cubierta por el cliente
       this.crm = false; //cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
       this.cancelar = true;
+      this.borrar = true;
     }
     else
     {
@@ -169,6 +180,8 @@ export class DtRequisicionComponent implements OnInit {
       this.crm = false; //cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
       this.cancelar = false;
+      this.borrar = false;
+
     }
 
   }
@@ -325,6 +338,21 @@ export class DtRequisicionComponent implements OnInit {
         var idx = this.rows.findIndex(x => x.id == this.element.id);
         this.rows[idx]['estatus'] = estatus;
         this.rows[idx]['estatusId'] = estatusId;
+        var emails = [];
+
+        debugger;
+
+        if(this.rows[idx]['enProcesoN'].length > 0 && estatusId == 35)
+        {
+          this.rows[idx]['enProcesoN'].forEach(element => {
+            emails.push({vacante: this.Vacante, email: element.email, nombre:element.nombre})
+          });
+
+          this.postulacionservice.SendEmailsNoContratado(emails).subscribe( data => 
+          {
+            console.log(data)
+          });
+        }
 
         this.ValidarEstatus(estatusId);
 
