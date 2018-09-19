@@ -51,6 +51,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
   ec = true; //espera contratacion
   nbc = true; //nueva busqueda candidato
   pausa = true;
+  asignar = true;
+  disenador = true;
   aprobador: any;
 
   constructor(
@@ -268,19 +270,63 @@ export class DtVacantesReclutadorComponent implements OnInit {
     }
 
 
-    /*estatus vacante */
-    this.bc = false; //busqueda candidato
-    this.sc = false; //socieconomico
-    this.ecc = false; //envío candidato cliente
-    this.ec = false; //espera contratacion
-    this.nbc = false; //nueva busqueda candidato
-    this.pausa = false;
+   this.ValidarEstatus(data.estatusId);
 
     /* add an class 'active' on click */
     $('#resultDataTable').on('click', 'tr', function (event: any) {
       //noinspection TypeScriptUnresolvedFunction
       $(this).addClass('selected').siblings().removeClass('selected');
     });
+  }
+
+  ValidarEstatus(estatusId)
+  {
+    if(estatusId == 38)
+    {
+       /*estatus vacante */
+    this.bc = false; //busqueda candidato
+    this.sc = false; //socieconomico
+    this.ecc = false; //envío candidato cliente
+    this.ec = false; //espera contratacion
+    this.nbc = false; //nueva busqueda candidato
+    this.pausa = false;
+    this.asignar = true;
+    this.disenador = true;
+    }
+    else if(estatusId >= 34 && estatusId <= 37 )
+    {
+       /*estatus vacante */
+    this.bc = true; //busqueda candidato
+    this.sc = true; //socieconomico
+    this.ecc = true; //envío candidato cliente
+    this.ec = true; //espera contratacion
+    this.nbc = true; //nueva busqueda candidato
+    this.pausa = true;
+    this.asignar = true;
+    this.disenador = true;
+    }
+    else if(estatusId == 4)
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = false;
+      this.disenador = false;
+    }
+    else
+    {
+      this.bc = false; //busqueda candidato
+      this.sc = false; //socieconomico
+      this.ecc = false; //envío candidato cliente
+      this.ec = false; //espera contratacion
+      this.nbc = false; //nueva busqueda candidato
+      this.pausa = false;
+      this.asignar = false;
+      this.disenador = false;
+    }
   }
 
   /*

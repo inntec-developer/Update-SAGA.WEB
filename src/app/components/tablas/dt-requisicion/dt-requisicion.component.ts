@@ -1,3 +1,4 @@
+import { forEach } from '@angular/router/src/utils/collection';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
@@ -50,6 +51,7 @@ export class DtRequisicionComponent implements OnInit {
   cp = true; // cubierta parcialmente
   borrar = true; 
   cancelar = true;
+  editar = true;
   RequisicionId: any;
   Folio: any;
   Vacante: any;
@@ -100,16 +102,27 @@ export class DtRequisicionComponent implements OnInit {
 
   ValidarEstatus(estatusId)
   {
-    if(estatusId == 34 && this.element.tipoReclutamientoId == 1)
+    if(estatusId == 4)
     {
-      this.gbc = false; //garantía busqueda candidato
-      this.cc = true; //cubierta por el cliente
-      this.crm = true; //cubierta reclutamiento medios
-      this.cp = true; // cubierta parcialmente
-      this.cancelar = true;
-      this.borrar = true;
+      this.gbc = true; //garantía busqueda candidato
+      this.cc = false; //cubierta por el cliente
+      this.crm = false; //cubierta reclutamiento medios
+      this.cp = false; // cubierta parcialmente
+      this.cancelar = false;
+      this.borrar = false;
+      this.editar = false;
     }
-    else if(estatusId == 34 && this.element.tipoReclutamientoId > 1)
+    else if(estatusId == 7) //publicada
+    {
+      this.gbc = true; //garantía busqueda candidato
+      this.cc = false; //cubierta por el cliente
+      this.crm = false; //cubierta reclutamiento medios
+      this.cp = false; // cubierta parcialmente
+      this.cancelar = false;
+      this.borrar = true;
+      this.editar = false;
+    }
+    else if(estatusId == 8) //cancelada
     {
       this.gbc = true; //garantía busqueda candidato
       this.cc = true; //cubierta por el cliente
@@ -117,15 +130,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cp = true; // cubierta parcialmente
       this.cancelar = true;
       this.borrar = true;
-    }
-    else if(estatusId == 8)
-    {
-      this.gbc = true; //garantía busqueda candidato
-      this.cc = true; //cubierta por el cliente
-      this.crm = true; //cubierta reclutamiento medios
-      this.cp = true; // cubierta parcialmente
-      this.cancelar = true;
-      this.borrar = true;
+      this.editar = true;
     }
     else if( estatusId < 34 && this.element.enProceso > 0 && this.element.contratados == 0)
     {
@@ -135,6 +140,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cp = false; // cubierta parcialmente
       this.cancelar = false;
       this.borrar = true;
+      this.editar = false;
     }
     else if( estatusId < 34 && this.element.postulados > 0 && this.element.contratados == 0)
     {
@@ -144,6 +150,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
       this.borrar = true;
+      this.editar = false
     }
     else if(estatusId < 34 && this.element.contratados > 0 )
     {
@@ -153,6 +160,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cp = false; // cubierta parcialmente
       this.cancelar = true;
       this.borrar = true;
+      this.editar = false;
     }
     else if( estatusId < 34 && (this.element.enProceso == 0 || this.element.postulados == 0))
     {
@@ -162,6 +170,27 @@ export class DtRequisicionComponent implements OnInit {
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
       this.borrar = true;
+      this.editar = false;
+    }
+    if(estatusId == 34 && this.element.tipoReclutamientoId == 1)
+    {
+      this.gbc = false; //garantía busqueda candidato
+      this.cc = true; //cubierta por el cliente
+      this.crm = true; //cubierta reclutamiento medios
+      this.cp = true; // cubierta parcialmente
+      this.cancelar = true;
+      this.borrar = true;
+      this.editar = true;
+    }
+    else if(estatusId == 34 && this.element.tipoReclutamientoId > 1)
+    {
+      this.gbc = true; //garantía busqueda candidato
+      this.cc = true; //cubierta por el cliente
+      this.crm = true; //cubierta reclutamiento medios
+      this.cp = true; // cubierta parcialmente
+      this.cancelar = true;
+      this.borrar = true;
+      this.editar = true;
     }
     else if( estatusId > 34 && estatusId <= 37 )
     {
@@ -171,16 +200,17 @@ export class DtRequisicionComponent implements OnInit {
       this.cp = true; // cubierta parcialmente
       this.cancelar = true;
       this.borrar = true;
+      this.editar = true;
     }
-    else if(estatusId == 4)
+    else if(estatusId == 0)
     {
       this.gbc = true; //garantía busqueda candidato
-      this.cc = false; //cubierta por el cliente
-      this.crm = false; //cubierta reclutamiento medios
-      this.cp = false; // cubierta parcialmente
-      this.cancelar = false;
-      this.borrar = false;
-
+      this.cc = true; //cubierta por el cliente
+      this.crm = true; //cubierta reclutamiento medios
+      this.cp = true; // cubierta parcialmente
+      this.cancelar = true;
+      this.borrar = true;
+      this.editar = true;
     }
   }
   public config: any = {
@@ -330,39 +360,61 @@ export class DtRequisicionComponent implements OnInit {
   updataStatus(estatusId, estatus)
   {
     var datos = {estatusId: estatusId, requisicionId: this.element.id }
-    this.postulacionservice.SetProcesoVacante(datos).subscribe( data => {
-      if(data == 201)
-      {
-        var idx = this.rows.findIndex(x => x.id == this.element.id);
-        this.rows[idx]['estatus'] = estatus;
-        this.rows[idx]['estatusId'] = estatusId;
-        var emails = [];
+    var emails = [];
+    if(estatusId == 8)
+    {
+      var idx = this.rows.findIndex(x => x.id == this.element.id);
+      if (this.rows[idx]['enProceso'] > 0 || this.rows[idx]['Postulados'] > 0) {
+        this.rows[idx]['enProcesoN'].forEach(element => {
+          emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre })
+        });
 
-        if(this.rows[idx]['enProcesoN'].length > 0 && estatusId == 35)
-        {
-          this.rows[idx]['enProcesoN'].forEach(element => {
-            emails.push({vacante: this.Vacante, email: element.email, nombre:element.nombre})
-          });
+        this.rows[idx]['postuladosN'].forEach(element => {
+          emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre })
+        })
 
-          this.postulacionservice.SendEmailsNoContratado(emails).subscribe( data => 
-          {
-            console.log(data)
-          });
+        this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
+          console.log(data)
+        });
+      }
+
+      
+    }
+    else
+    {
+      this.postulacionservice.SetProcesoVacante(datos).subscribe(data => {
+        if (data == 201) {
+          var idx = this.rows.findIndex(x => x.id == this.element.id);
+          this.rows[idx]['estatus'] = estatus;
+          this.rows[idx]['estatusId'] = estatusId;
+
+          if (this.rows[idx]['enProceso'] > 0 || this.rows[idx]['Postulados'] > 0 && (estatusId == 35 || estatusId == 8)) {
+            this.rows[idx]['enProcesoN'].forEach(element => {
+              emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre })
+            });
+
+            this.rows[idx]['postuladosN'].forEach(element => {
+              emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre })
+            })
+
+            this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
+              console.log(data)
+            });
+          }
+
+          this.ValidarEstatus(estatusId);
+
+          this.onChangeTable(this.config);
+          this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+
+        }
+        else {
+          this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
         }
 
-        this.ValidarEstatus(estatusId);
-
-        this.onChangeTable(this.config);
-        this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');    
-        
-      }
-      else
-      {
-        this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');  
-      }
-      
-    })
-
+      })
+  }
+  
   }
 
   openDialogDelete() {
@@ -385,6 +437,10 @@ export class DtRequisicionComponent implements OnInit {
     });
     var window: Window
     dialogCnc.afterClosed().subscribe(result => {
+      if(result == 1)
+      {
+        this.updataStatus(8, 'Cancelar')
+      }
       this.refreshTable();
     })
   }

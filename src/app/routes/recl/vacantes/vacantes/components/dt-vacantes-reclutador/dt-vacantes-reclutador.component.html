@@ -15,11 +15,11 @@
           [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-outline-dark'" matTooltip="Comentarios"><em
             class="fa fa-comments-o"></em></button>
         <button class="margen" id="update" chkPrivilegiosButtons (click)="openDialogAssingRequi(element)" matTooltip="Asignar"
-          class="margen" [disabled]="!element" [ngClass]="(!element) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-purple'">
+          class="margen" [disabled]="asignar" [ngClass]="asignar ? 'mb-1 btn disabled':'mb-1 btn btn-outline-purple'">
           <em class="icon-user-follow"></em></button>
         <button class="margen" type="button" id="special" chkPrivilegiosButtons (click)="openDesignVacante(element.id, element.folio, element.vBtra)"
-          matTooltip="Diseñar Vacante" [disabled]="!element || element.estatusId === 4 || element.estatusId  === 5 || element.estatusId  === 8 || element.estatusId  === 9 || element.confidencial"
-          [ngClass]="(!element || element.estatusId === 4 || element.estatusId  === 5 || element.estatusId  === 8 || element.estatusId  === 9 || element.confidencial) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
+          matTooltip="Diseñar Vacante" [disabled]="disenador || element.confidencial"
+          [ngClass]="(disenador || element.confidencial) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
           <em class="icon-list"></em>
         </button>
       <!-- estatus de la vacante -->
