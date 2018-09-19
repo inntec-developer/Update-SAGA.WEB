@@ -10,6 +10,7 @@
 
 /*Estilos paraa las Tablas dt-Material*/
 .dt-container {
+  padding: 10px 10px 20px !important;
   display: flex !important;
   flex-direction: column !important;
   min-width: 100% !important;

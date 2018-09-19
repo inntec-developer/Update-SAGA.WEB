@@ -1,7 +1,10 @@
 <div class="dt-container mat-elevation-z8">
     <div class="title-headre-view d-flex justify-content-between">
       <h4>Horarios</h4>
-      <btn-edit id="update" [xs]="true" *ngIf="ruta != 'Formato 290'"  (click)="openDialogEdit()" chkPrivilegiosButtons  matTooltip="Editar Horario"></btn-edit>
+      <button id="update" class="mb-1 btn btn-xs" [disabled]="!horario"  (click)="openDialogEdit()" chkPrivilegiosButtons  matTooltip="Editar Horario"
+      [ngClass]="(!horario) ? 'disabled' : 'btn-outline-info'">
+          <em class="icon-pencil"></em>
+      </button>
     </div>
     <!-- <div class="card card-default"> -->
       <div class="table-responsive" #tableContainer>
@@ -13,7 +16,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr (click)="onCellClick(row)" *ngFor="let row of rows">
+            <tr (click)="onCellClick(row)" *ngFor="let row of rows" [class.selected]="row.selected">
               <td class="text-center"> {{row.nombre}} </td>
               <td class="text-center"> {{row.deDia?.diaSemana}}</td>
               <td class="text-center"> {{row.aDia.diaSemana}}</td>

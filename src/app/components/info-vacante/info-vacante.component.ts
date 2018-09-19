@@ -77,11 +77,11 @@ export class InfoVacanteComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
-    if (changes.Folios && !changes.Folios.isFirstChange()) {
-      this.getInitialData();
-    }
-    if (changes.Requisicion && !changes.Requisicion.isFirstChange()) {
-      this.GetDataRequi();
+    if (changes.Folios && !changes.Folios.isFirstChange() || changes.Requisicion && !changes.Requisicion.isFirstChange()) {
+      if (this.Folios != null && this.Requisicion != null) {
+        this.getInitialData();
+        this.GetDataRequi();
+      }
     }
   }
 

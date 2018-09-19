@@ -11,8 +11,12 @@ import { debug } from 'util';
 })
 export class HomeComponent implements OnInit {
     usuario: string;
+    direccionId : string;
     constructor(
-    ) { }
+    ) {
+        this.direccionId  =  '6d177620-7c54-e811-80e0-9e274155325e'
+     }
+
     ngOnInit() {
     }
     getIdCandidato(event){

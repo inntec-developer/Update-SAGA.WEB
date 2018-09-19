@@ -43,6 +43,8 @@ export class InfoCandidatoComponent implements OnInit {
   procesoCandidatoId: any; // Recuperar el estatus en el que se encuetra el candidato.
   Estatus: any; // Toma el Id del procesoCandidato para realizar las afectaciones correspondientes.
   Emiter: { estatusId: number; estatus: string; candidatoId: string };
+  infoRequiId : any = null;
+  infoFolio : any = null;
   /*********************************************************/
 
 
@@ -54,9 +56,9 @@ export class InfoCandidatoComponent implements OnInit {
     this.registros_v = 0;
     this.registros_p = 0;
     this.vacante = {
-      id: '',
-      vBtra: '',
-      folio: ''
+      id: null,
+      vBtra: null,
+      folio: null
     }
     this.usuario = sessionStorage.getItem('nombre');
     this.usuarioId = sessionStorage.getItem('id')
@@ -69,7 +71,7 @@ export class InfoCandidatoComponent implements OnInit {
     if (changes.CandidatoId && !changes.CandidatoId.isFirstChange()) {
       this.ngOnInit();
       this.getPostulaciones();
-      this.vacante = null;
+      this.vacante = {};
       this.procesoCandidatoId = 0;
       this.Status = '';
       this.RequisicionId = '';
@@ -247,7 +249,7 @@ export class InfoCandidatoComponent implements OnInit {
     setTimeout(() => {
       this.onChangeTable_v(this.config_v);
     }, 800);
-    this.vacante = null;
+    this.vacante = {};
   }
 
   public onCellClick_v(data: any): any {
@@ -257,6 +259,8 @@ export class InfoCandidatoComponent implements OnInit {
       vBtra: data.vBtra,
       folio: data.folio
     }
+    this.infoFolio = data.folio;
+    this.infoRequiId = data.id;
     /* add an class 'active' on click */
     $('#resultDataTableVacantes').on('click', 'tr', function (event: any) {
       //noinspection TypeScriptUnresolvedFunction

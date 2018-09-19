@@ -49,11 +49,12 @@ export class DtDireccionComponent implements OnInit {
   };
 
   public onCellClick(data: any): any {
+    data.selected ? data.selected = false : data.selected = true;
     /* add an class 'active' on click */
-    $('#resultDataTable').on('click', 'tr', function (event: any) {
-        //noinspection TypeScriptUnresolvedFunction
-        $(this).addClass('selected').siblings().removeClass('selected');
-    });
+    // $('#resultDataTable').on('click', 'tr', function (event: any) {
+    //     //noinspection TypeScriptUnresolvedFunction
+    //     $(this).addClass('selected').siblings().removeClass('selected');
+    // });
   }
 
 }

@@ -13,12 +13,14 @@ declare var $: any;
   styleUrls: ['./dt-horarios.component.scss'],
   providers: [RequisicionesService]
 })
-export class DtHorariosComponent implements  AfterContentChecked {
+export class DtHorariosComponent implements AfterContentChecked {
   @Input() Horarios: any[];
   public rows: Array<any> = [];
   getHorarios: boolean = false;
   ruta: string;
-  horario: any;
+  horario: any = null; 
+  rowAux = [];
+  ;
   constructor(
     private dialog: MatDialog,
     private service: RequisicionesService,
@@ -27,48 +29,48 @@ export class DtHorariosComponent implements  AfterContentChecked {
     // this.ruta = this.activeRoute.snapshot.routeConfig ? 
     // this.activeRoute.routeConfig.data.componente : 
     // sessionStorage.getItem('ruta')
-   }
+  }
 
-  ngAfterContentChecked(){
-    if(this.Horarios != null){
+  ngAfterContentChecked() {
+    if (this.Horarios != null) {
       this.cargarHorarios(this.Horarios);
     }
   }
 
-  cargarHorarios(data){
-    if(!this.getHorarios){
+  cargarHorarios(data) {
+    if (!this.getHorarios) {
       this.rows = data;
-      this.getHorarios =  true;
+      this.getHorarios = true;
     }
   }
 
-  openDialogEdit(){
-    if(this.horario){
+  openDialogEdit() {
+    if (this.horario) {
       let dialogEditH = this.dialog.open(DialogEditHorarioComponent, {
         width: '25%',
         height: 'auto',
         data: this.horario
       });
       dialogEditH.afterClosed().subscribe(result => {
-        if(result){
+        if (result) {
           this.rows = result;
         }
-      //   this.service.getRequiHorarios(this.horario.requisicionId).subscribe(data =>{
-      //     this.getHorarios = false;
-      //     this.cargarHorarios(data);
-      //   });
+        //   this.service.getRequiHorarios(this.horario.requisicionId).subscribe(data =>{
+        //     this.getHorarios = false;
+        //     this.cargarHorarios(data);
+        //   });
       });
     }
   }
 
   public columns: Array<any> = [
-    {title: 'Nombre', className: 'text-info text-center'},
-    {title: 'De Día', className: 'text-info text-center'},
-    {title: 'A Día', className: 'text-info text-center'},
-    {title: 'De Hora', className: 'text-info text-center'},
-    {title: 'A Hora', className: 'text-info text-center'},
-    {title: 'Vacantes', className: 'text-info text-center'},
-    {title: 'Espec.', className: 'text-info text-center'},
+    { title: 'Nombre', className: 'text-info text-center' },
+    { title: 'De Día', className: 'text-info text-center' },
+    { title: 'A Día', className: 'text-info text-center' },
+    { title: 'De Hora', className: 'text-info text-center' },
+    { title: 'A Hora', className: 'text-info text-center' },
+    { title: 'Vacantes', className: 'text-info text-center' },
+    { title: 'Espec.', className: 'text-info text-center' },
   ];
 
   public config: any = {
@@ -76,14 +78,24 @@ export class DtHorariosComponent implements  AfterContentChecked {
   };
 
   public onCellClick(data: any): any {
-    if(this.ruta != 'Formato 290'){
+    if (this.ruta != 'Formato 290') {
       let index = this.rows.indexOf(data.row);
       this.horario = data;
-      /* add an class 'active' on click */
-      $('#tablaHorarios').on('click', 'tr', function (event: any) {
-          //noinspection TypeScriptUnresolvedFunction
-          $(this).addClass('selected').siblings().removeClass('selected');
-      });
+      data.selected ? data.selected = false : data.selected = true;
+      if (!data.selected) {
+        this.horario = null;
+      }
+
+      if (this.rowAux.length == 0) {
+        this.rowAux = data;
+      }
+      else if (data.selected && this.rowAux != []) {
+        var aux = data;
+        data = this.rowAux;
+        data.selected = false;
+        aux.selected = true;
+        this.rowAux = aux;
+      }
     }
   }
 }

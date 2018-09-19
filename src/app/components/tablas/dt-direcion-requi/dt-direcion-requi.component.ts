@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 
 import { MatTableDataSource } from '@angular/material';
+import { ModalDirective } from 'ngx-bootstrap';
 import { RequisicionesService } from '../../../service/requisiciones/requisiciones.service';
 
 declare var $: any;
@@ -13,42 +14,56 @@ declare var $: any;
 })
 export class DtDirecionRequiComponent implements OnInit {
   @Input() DireccionId: string;
-  getAddress : boolean;
+  @ViewChild('RutasModal') ShownModal: ModalDirective;
+  getAddress: boolean;
   public rows: Array<any> = [];
+  isModalRutasShown: boolean = false;
+  rutasCamion: any;
+  rowAux = [];
   constructor(private service: RequisicionesService) { }
 
   ngOnInit() {
   }
 
-  ngAfterContentChecked() {
-    if(this.DireccionId != null){
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    if (this.DireccionId != null) {
       this.getDireccion(this.DireccionId);
     }
   }
 
-  getDireccion(id){
-    if(!this.getAddress){
-      this.service.getRequiDireccion(id)
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    if (changes.DireccionId && !changes.DireccionId.isFirstChange()) {
+      if (this.DireccionId != null) {
+        this.getDireccion(this.DireccionId);
+      }
+    }
+
+  }
+
+  getDireccion(id) {
+    this.service.getRequiDireccion(id)
       .subscribe(data => {
         this.rows = data;
-        this.getAddress = true;
+        console.log(this.rows);
       })
-      this.getAddress = true;
-    }
   }
 
   public columns: Array<any> = [
-    {title: 'Tipo Dirección', className: 'text-info text-center'},
-    {title: 'País', className: 'text-info text-center'},
-    {title: 'Estado', className: 'text-info text-center'},
-    {title: 'Municipio', className: 'text-info text-center'},
-    {title: 'Colonia', className: 'text-info text-center'},
-    {title: 'Calle', className: 'text-info text-center'},
-    {title: 'Número Ext.', className: 'text-info text-center'},
-    {title: 'Número Int.', className: 'text-info text-center'},
-    {title: 'Código Postal', className: 'text-info text-center'},
-    {title: 'Activo', className: 'text-info text-center'},
-    {title: 'Principal', className: 'text-info text-center'},
+    { title: 'Tipo Dirección', className: 'text-info text-center' },
+    { title: 'País', className: 'text-info text-center' },
+    { title: 'Estado', className: 'text-info text-center' },
+    { title: 'Municipio', className: 'text-info text-center' },
+    { title: 'Colonia', className: 'text-info text-center' },
+    { title: 'Calle', className: 'text-info text-center' },
+    { title: 'Número Ext.', className: 'text-info text-center' },
+    { title: 'Número Int.', className: 'text-info text-center' },
+    { title: 'Código Postal', className: 'text-info text-center' },
+    { title: 'Activo', className: 'text-info text-center' },
+    { title: 'Principal', className: 'text-info text-center' },
   ];
 
   public config: any = {
@@ -56,11 +71,30 @@ export class DtDirecionRequiComponent implements OnInit {
   };
 
   public onCellClick(data: any): any {
-    /* add an class 'active' on click */
-    $('#resultDataTable').on('click', 'tr', function (event: any) {
-        //noinspection TypeScriptUnresolvedFunction
-        $(this).addClass('selected').siblings().removeClass('selected');
-    });
+    data.selected ? data.selected = false : data.selected = true;
+
+    if(this.rowAux.length == 0)
+    {
+      this.rowAux = data;
+    }
+    else if(data.selected && this.rowAux != [])
+    {
+      var aux = data;
+      data = this.rowAux;
+      data.selected = false;
+      aux.selected = true;
+      this.rowAux = aux;
+    }
+  }
+
+  verRutasCamion($row){
+    this.isModalRutasShown = true;
+    this.rutasCamion = $row;
+  }
+  closeModalRutasCamion()
+  {
+    this.ShownModal.hide();
+    this.isModalRutasShown = false;
   }
 
 }

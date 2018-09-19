@@ -30,7 +30,6 @@ export class ComentarioVacanteComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    debugger;
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
     //this.RequisicionId = 'CC9A3F79-C9B5-E811-80E9-9E274155325E'

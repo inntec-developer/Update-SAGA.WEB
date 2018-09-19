@@ -1,48 +1,82 @@
 <div class="dt-container mat-elevation-z8">
-    <div class="title-headre-view">
-      <h4>Direcci&oacute;n</h4>
-    </div>
-    <!-- <div class="card card-default"> -->
-      <div class="table-responsive" #tableContainer>
-        <table id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+  <div class="title-headre-view">
+    <h4>Direcci&oacute;n</h4>
+  </div>
+  <!-- <div class="card card-default"> -->
+  <div class="table-responsive" #tableContainer>
+    <table id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+      <thead>
+        <tr>
+          <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr (click)="onCellClick(row)" *ngFor="let row of rows" (dblclick)="verRutasCamion(row.rutasCamion)"  [class.selected]="row.selected">
+          <td class="text-center">
+            {{row.tipoDireccion}}
+          </td>
+          <td class="text-center"> {{row.pais}}</td>
+          <td class="text-center"> {{row.estado}}</td>
+          <td class="text-center"> {{row.municipio}}</td>
+          <td class="text-center"> {{row.colonia}}</td>
+          <td class="text-center"> {{row.calle}}</td>
+          <td class="text-center"> {{row.numeroExterior}}</td>
+          <td class="text-center"> {{row.numeroInterior}}</td>
+          <td class="text-center"> {{row.codigoPostal}}</td>
+          <td class="text-center">
+            <span *ngIf="row.activo">
+              <em class="fa fa-check-square-o"></em>
+            </span>
+            <span *ngIf="!row.activo">
+              <em class="fa fa-square-o"></em>
+            </span>
+          </td>
+          <td class="text-center">
+            <span *ngIf="row.esPrincipal">
+              <em class="fa fa-check-square-o"></em>
+            </span>
+            <span *ngIf="!row.esPrincipal">
+              <em class="fa fa-square-o"></em>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- </div> -->
+</div>
+
+<!-- Modal para vista previa de la vacante -->
+<div *ngIf="isModalRutasShown" [config]="{show: true, ignoreBackdropClick: true}" (onHidden)="onHidden()" bsModal
+  #RutasModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Rutas de Camiones</h4>
+        <button type="button" class="close pull-right" (click)="closeModalRutasCamion()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover">
           <thead>
             <tr>
-              <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
-              </th>
+              <th class="text-center text-success">Ruta</th>
+              <th class="text-center text success">Via</th>
             </tr>
           </thead>
           <tbody>
-            <tr (click)="onCellClick(row)" *ngFor="let row of rows">
-              <td class="text-center">
-                {{row.tipoDireccion?.tipoDireccion}}
-              </td>
-              <td class="text-center"> {{row.pais?.pais}}</td>
-              <td class="text-center"> {{row.estado?.estado}}</td>
-              <td class="text-center"> {{row.municipio?.municipio}}</td>
-              <td class="text-center"> {{row.colonia?.colonia}}</td>
-              <td class="text-center"> {{row.calle}}</td>
-              <td class="text-center"> {{row.numeroExterior}}</td>
-              <td class="text-center"> {{row.numeroInterior}}</td>
-              <td class="text-center"> {{row.codigoPostal}}</td>
-              <td class="text-center">
-                <span *ngIf="row.activo">
-                  <em class="fa fa-check-square-o"></em>
-                </span>
-                <span *ngIf="!row.activo">
-                  <em class="fa fa-square-o"></em>
-                </span>
-              </td>
-              <td class="text-center">
-                <span *ngIf="row.esPrincipal">
-                  <em class="fa fa-check-square-o"></em>
-                </span>
-                <span *ngIf="!row.esPrincipal">
-                  <em class="fa fa-square-o"></em>
-                </span>
-              </td>
+            <tr *ngFor="let x of rutasCamion">
+              <td class="text-center">{{x.ruta}}</td>
+              <td class="text-center">{{x.via}}</td>
             </tr>
           </tbody>
         </table>
       </div>
-    <!-- </div> -->
+      <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-outline-success" (click)="closeModalRutasCamion()">Cerrar</button>
+      </div>
+    </div>
   </div>
+</div>
