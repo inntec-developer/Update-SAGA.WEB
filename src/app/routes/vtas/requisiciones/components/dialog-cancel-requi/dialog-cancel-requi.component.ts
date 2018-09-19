@@ -74,7 +74,7 @@ export class DialogCancelRequiComponent implements OnInit {
     this.service.cancelRequisicion(this.infoCancelRequi)
     .subscribe(data => {
       if(data == 200){
-        this.dialogCancel.close();
+        this.dialogCancel.close(1);
       }
       else{
         this.popToast('warning', 'Requisición','Oops!! No se puedo cancelar la requisición ' + this.folio);
@@ -84,7 +84,7 @@ export class DialogCancelRequiComponent implements OnInit {
   }
 
   onCloseDialog(){
-    this.dialogCancel.close();
+    this.dialogCancel.close(0);
   }
 
 }
