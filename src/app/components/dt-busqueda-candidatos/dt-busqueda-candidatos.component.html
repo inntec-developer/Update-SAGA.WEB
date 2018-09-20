@@ -1,9 +1,17 @@
 <div class="dt-container">
   <div class="dt-header">
     <mat-form-field>
-      <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)">
+      <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
+        (tableChanged)="onChangeTable(config)">
     </mat-form-field>
-    <div class="d-flex align-items-stretch ">
+    <div class="row justify-content-between">
+      <div class="d-flex align-items-stretch ">
+      </div>
+      <div>
+        <button (click)="clearfilters()" matTooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary">
+          <em class="fa fa-eraser"></em>
+        </button>
+      </div>
     </div>
   </div>
   <div class="card card-default">
@@ -19,13 +27,14 @@
           </tr>
           <tr *ngIf="showFilterRow" class="filter-colum">
             <td *ngFor="let column of columns">
-              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
-                class="form-control">
+              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
+                (tableChanged)="onChangeTable(config)" class="form-control" id="{{column.name}}">
             </td>
           </tr>
         </thead>
         <tbody>
-          <tr (click)="onCellClick(row)" (dblclick)="getCandidato(row.candidatoId)" *ngFor="let row of rows" [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8">
+          <tr (click)="onCellClick(row)" (dblclick)="getCandidato(row.candidatoId)" *ngFor="let row of rows"
+            [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8">
             <td>
               {{row.nombre}}
             </td>
@@ -43,9 +52,9 @@
   </div>
   <div class="text-right">
     <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
-      [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+      [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
+      (numPages)="numPages = $event">
     </pagination>
   </div>
   <pre *ngIf="config.paging" class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
 </div>
-

@@ -247,10 +247,27 @@ export class InfoCandidatoComponent implements OnInit {
   public refreshTable_v() {
     this.getMisVacates();
     setTimeout(() => {
+      this.columns.forEach(element => {
+        element.filtering.filterString = '';
+       (<HTMLInputElement>document.getElementById(element.name)).value = '';
+      });
+      this.infoRequiId = null;
+      this.infoFolio = null;
       this.onChangeTable_v(this.config_v);
     }, 800);
     this.vacante = {};
   }
+  public clearfilters(){
+    this.columns.forEach(element => {
+      element.filtering.filterString = '';
+     (<HTMLInputElement>document.getElementById(element.name)).value = '';
+    });
+    this.onChangeTable_v(this.config_v);
+    this.vacante = {};
+    this.infoRequiId = null;
+      this.infoFolio = null;
+  }
+
 
   public onCellClick_v(data: any): any {
     let index = this.dataSource_v.indexOf(data.row);

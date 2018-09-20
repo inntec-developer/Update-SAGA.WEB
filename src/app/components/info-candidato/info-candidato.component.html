@@ -615,7 +615,7 @@
             </accordion-group>
           </accordion>
         </tab>
-        <tab heading="Mis Vacantes ({{registros_v}})" id="vacantes">
+        <tab heading="Mis Vacantes ({{registros_v}})" id="misVacantes">
           <div class="dt-header">
             <mat-form-field>
               <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config_v.filtering"
@@ -623,8 +623,9 @@
             </mat-form-field>
             <div class="row justify-content-between">
               <div class="d-flex align-items-stretch ">
-                  <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones margen" [disabled]="!infoRequiId && !infoFolio"
-                  [ngClass]="(!infoRequiId && !infoFolio) ? 'disabled' : 'btn-outline-warning'" matTooltip="Visualizar"><em class="fa fa-eye"></em></button>
+                <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones margen"
+                  [disabled]="!infoRequiId && !infoFolio" [ngClass]="(!infoRequiId && !infoFolio) ? 'disabled' : 'btn-outline-warning'"
+                  matTooltip="Visualizar"><em class="fa fa-eye"></em></button>
                 <button [disabled]="procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === RequisicionId &&  reclutador != usuario || vacante.id === RequisicionId && procesoCandidatoId != 27 "
                   [ngClass]="( procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === RequisicionId &&  reclutador != usuario ||  vacante.id === RequisicionId && procesoCandidatoId != 27 ) 
                     ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
@@ -639,7 +640,9 @@
                 </button>
               </div>
               <div>
-                <!-- <button class="mb-1 btn btn-outline-primary" *ngIf="enProceso > 0">En Proceso</button> -->
+                <button (click)="clearfilters()" matTooltip="Limpiar Filtros" class=" margen mb-1 btn btn-outline-primary">
+                  <em class="fa fa-eraser"></em> 
+                </button>
                 <btn-refresh (click)="refreshTable_v()" matTooltip="Actualizar"></btn-refresh>
               </div>
             </div>
@@ -662,7 +665,7 @@
                   <tr *ngIf="showFilterRow_v">
                     <td *ngFor="let column of columns">
                       <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                        (tableChanged)="onChangeTable_v(config_v)" class="form-control">
+                        (tableChanged)="onChangeTable_v(config_v)" class="form-control" id="{{column.name}}">
                     </td>
                   </tr>
                   <tr (click)="onCellClick_v(row)" (dblclick)="lgModal.show()" *ngFor="let row of rows"

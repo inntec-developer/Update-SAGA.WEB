@@ -348,8 +348,6 @@ export class DtRequisicionComponent implements OnInit {
       this.estatusId = null;
       this.enProceso = null;
       this.element = null;
-      
-      
     }, 300);
   }
 

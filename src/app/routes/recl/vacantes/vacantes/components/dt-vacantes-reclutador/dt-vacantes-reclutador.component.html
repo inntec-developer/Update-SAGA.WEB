@@ -21,8 +21,9 @@
           matTooltip="Diseñar Vacante" [disabled]="disenador || element.confidencial" [ngClass]="(disenador || element.confidencial) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
           <em class="icon-list"></em>
         </button>
-        <!-- estatus de la vacante -->
         <em class="vl"></em>
+        <!-- estatus de la vacante -->
+        
         <button class="margen" [disabled]="bc" [ngClass]="bc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-green'" type="button"
           (click)="SetStatus(29, 'B&uacute;squeda Candidatos')" matTooltip="B&uacute;squeda de Candidatos">
           <em class="fa fa-search"></em>
@@ -57,10 +58,10 @@
         <button class="margen" [disabled]="postulados <= 0" (click)="openViewPostulados()" [ngClass]="(postulados <= 0 )? 'mb-1 btn disabled':'mb-1 btn btn-outline-warning'">
           Postulados
         </button>
-        <button [disabled]="enProceso <= 0" (click)="seguimientoRequi()" [ngClass]="(enProceso <= 0) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
+        <button class="margen" [disabled]="enProceso <= 0" (click)="seguimientoRequi()" [ngClass]="(enProceso <= 0) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
           En Proceso
         </button>
-        <button (click)="clearfilters()" matTooltip="Limpiar Filtros" class="margen btn btn-outline-primary" style="margin-top: -3px;">
+        <button  (click)="clearfilters()" matTooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary" >
           <em class="fa fa-eraser"></em>
         </button>
         <btn-refresh class="margen" (click)="refreshTable()" matTooltip="Actualizar"></btn-refresh>

@@ -32,7 +32,7 @@ export class DtCandidatosPostComponent implements OnInit {
   idCandidato: any;
 
   loading: boolean = true;
-  
+
   constructor(
     private service: PostulateService,
     private dialog: MatDialog,
@@ -52,7 +52,7 @@ export class DtCandidatosPostComponent implements OnInit {
   getpostulados() {
     this.service.getPostulados(this.RequisicionId).subscribe(data => {
       this.dataSource = data;
-      
+
     }, error => this.errorMessage = <any>error);
   }
 
@@ -174,7 +174,6 @@ export class DtCandidatosPostComponent implements OnInit {
   public onCellClick(data: any): any {
     let index = this.dataSource.indexOf(data.row);
     this.element = data;
-    console.log(data);
     this.idCandidato = data.candidatoId;
     /* add an class 'active' on click */
     $('#resultDataTable').on('click', 'tr', function (event: any) {
@@ -186,12 +185,24 @@ export class DtCandidatosPostComponent implements OnInit {
   /*
   * Funciones propias del componente.
   * */
- public refreshTable() {
-  this.getpostulados()
+  public refreshTable() {
+    this.getpostulados()
     setTimeout(() => {
+      this.columns.forEach(element => {
+        element.filtering.filterString = '';
+        (<HTMLInputElement>document.getElementById(element.name)).value = '';
+      });
       this.onChangeTable(this.config);
     }, 1500);
-}
+  }
+
+  public clearfilters(){
+    this.columns.forEach(element => {
+      element.filtering.filterString = '';
+     (<HTMLInputElement>document.getElementById(element.name)).value = '';
+    });
+    this.onChangeTable(this.config);
+  }
 
   /*
  * Creacion de mensajes
