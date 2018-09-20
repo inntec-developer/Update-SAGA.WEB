@@ -1,6 +1,5 @@
-import { forEach } from '@angular/router/src/utils/collection';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { DialogActivarRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-activar-requi/dialog-activar-requi.component';
@@ -10,6 +9,7 @@ import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from '../../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../../service';
+import { forEach } from '@angular/router/src/utils/collection';
 
 declare var $: any;
 
@@ -340,13 +340,28 @@ export class DtRequisicionComponent implements OnInit {
   public refreshTable() {
     this.getRequisiciones();
     setTimeout(() => {
+      this.columns.forEach(element => {
+        element.filtering.filterString = '';
+       (<HTMLInputElement>document.getElementById(element.name)).value = '';
+      });
       this.onChangeTable(this.config);
       this.estatusId = null;
       this.enProceso = null;
       this.element = null;
+      
+      
     }, 300);
+  }
 
-
+  public clearfilters(){
+    this.columns.forEach(element => {
+      element.filtering.filterString = '';
+     (<HTMLInputElement>document.getElementById(element.name)).value = '';
+    });
+    this.onChangeTable(this.config);
+    this.estatusId = null;
+    this.enProceso = null;
+    this.element = null;
   }
 
   showRequi() {

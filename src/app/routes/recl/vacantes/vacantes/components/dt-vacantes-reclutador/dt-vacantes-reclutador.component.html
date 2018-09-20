@@ -18,35 +18,40 @@
           class="margen" [disabled]="asignar" [ngClass]="asignar ? 'mb-1 btn disabled':'mb-1 btn btn-outline-purple'">
           <em class="icon-user-follow"></em></button>
         <button class="margen" type="button" id="special" chkPrivilegiosButtons (click)="openDesignVacante(element.id, element.folio, element.vBtra)"
-          matTooltip="Diseñar Vacante" [disabled]="disenador || element.confidencial"
-          [ngClass]="(disenador || element.confidencial) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
+          matTooltip="Diseñar Vacante" [disabled]="disenador || element.confidencial" [ngClass]="(disenador || element.confidencial) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
           <em class="icon-list"></em>
         </button>
-      <!-- estatus de la vacante -->
-         <em class="vl"></em>
-          <button class="margen" [disabled]="bc" [ngClass]="bc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-green'"  type="button" (click)="SetStatus(29, 'B&uacute;squeda Candidatos')" matTooltip="B&uacute;squeda de Candidatos">
-            <em class="fa fa-search"></em>
-          </button>
-          <button class="margen" [disabled]="sc" [ngClass]="sc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-green'"  type="button" (click)="SetStatus(32, 'Socioeconómico')" matTooltip="Socioeconómico">
-            <em class="fa fa-bar-chart"></em>
-          </button> 
-          <button class="margen" [disabled]="ecc" [ngClass]="ecc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-green'"  type="button" (click)="SetStatus(30, 'Env&iacute;o a Cliente')" matTooltip="Env&iacute;o Candidato a Cliente">
-            <em class="fa fa-truck"></em>
-          </button>
+        <!-- estatus de la vacante -->
+        <em class="vl"></em>
+        <button class="margen" [disabled]="bc" [ngClass]="bc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-green'" type="button"
+          (click)="SetStatus(29, 'B&uacute;squeda Candidatos')" matTooltip="B&uacute;squeda de Candidatos">
+          <em class="fa fa-search"></em>
+        </button>
+        <button class="margen" [disabled]="sc" [ngClass]="sc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-green'" type="button"
+          (click)="SetStatus(32, 'Socioeconómico')" matTooltip="Socioeconómico">
+          <em class="fa fa-bar-chart"></em>
+        </button>
+        <button class="margen" [disabled]="ecc" [ngClass]="ecc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-green'"
+          type="button" (click)="SetStatus(30, 'Env&iacute;o a Cliente')" matTooltip="Env&iacute;o Candidato a Cliente">
+          <em class="fa fa-truck"></em>
+        </button>
 
-          <button class="margen" [disabled]="ec" [ngClass]="ec ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-info'"  type="button" (click)="SetStatus(33, 'Espera de Ctns')" matTooltip="En Espera de Contrataci&oacute;n" >
-            <em class="fa fa-hourglass-half"></em>
-          </button>
-          
-          <button class="margen" [disabled]="pausa" [ngClass]="pausa ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-info'"  type="button" (click)="SetStatus(39, 'En Pausa')" matTooltip="En Pausa">
-            <em class="fa fa-pause-circle-o"></em>
-          </button>
+        <button class="margen" [disabled]="ec" [ngClass]="ec ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-info'" type="button"
+          (click)="SetStatus(33, 'Espera de Ctns')" matTooltip="En Espera de Contrataci&oacute;n">
+          <em class="fa fa-hourglass-half"></em>
+        </button>
 
-            <button class="margen" [ngClass]="nbc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-primary'" [disabled] = "nbc"  type="button" (click)="SetStatus(31, 'Nueva Busqueda')" matTooltip="Nueva Busqueda de Candidatos"> 
-              <em class="fa fa-search-plus"></em>
-            </button>
+        <button class="margen" [disabled]="pausa" [ngClass]="pausa ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-info'"
+          type="button" (click)="SetStatus(39, 'En Pausa')" matTooltip="En Pausa">
+          <em class="fa fa-pause-circle-o"></em>
+        </button>
 
-          </div>
+        <button class="margen" [ngClass]="nbc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-primary'" [disabled]="nbc"
+          type="button" (click)="SetStatus(31, 'Nueva Busqueda')" matTooltip="Nueva Busqueda de Candidatos">
+          <em class="fa fa-search-plus"></em>
+        </button>
+
+      </div>
       <!-- estatus de la vacante -->
       <div>
         <button class="margen" [disabled]="postulados <= 0" (click)="openViewPostulados()" [ngClass]="(postulados <= 0 )? 'mb-1 btn disabled':'mb-1 btn btn-outline-warning'">
@@ -54,6 +59,9 @@
         </button>
         <button [disabled]="enProceso <= 0" (click)="seguimientoRequi()" [ngClass]="(enProceso <= 0) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
           En Proceso
+        </button>
+        <button (click)="clearfilters()" matTooltip="Limpiar Filtros" class="margen btn btn-outline-primary" style="margin-top: -3px;">
+          <em class="fa fa-eraser"></em>
         </button>
         <btn-refresh class="margen" (click)="refreshTable()" matTooltip="Actualizar"></btn-refresh>
       </div>
@@ -73,7 +81,7 @@
           <tr *ngIf="showFilterRow" class="filter-colum">
             <td *ngFor="let column of columns">
               <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                (tableChanged)="onChangeTable(config)" class="form-control">
+                (tableChanged)="onChangeTable(config)" class="form-control"  id="{{column.name}}">
             </td>
           </tr>
         </thead>
@@ -96,10 +104,10 @@
             <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">
-              <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
-                [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20" [class.badge-success]="row.estatusId  === 7"
-                [class.badge-danger]="row.estatusId  === 8">
-               {{row.estatus | uppercase}}
+              <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
+                [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20"
+                [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
+                {{row.estatus | uppercase}}
               </small>
             </td>
             <td class="text-center">

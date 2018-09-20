@@ -241,6 +241,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
   public refreshTable() {
     this.getVacantes();
     setTimeout(() => {
+      this.columns.forEach(element => {
+        element.filtering.filterString = '';
+       (<HTMLInputElement>document.getElementById(element.name)).value = '';
+      });
       this.onChangeTable(this.config);
       this.element = null;
       this.vBtra = null;
@@ -249,7 +253,20 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.postulados = null;
       this.enProceso = null;
     }, 800);
+  }
 
+  public clearfilters(){
+    this.columns.forEach(element => {
+      element.filtering.filterString = '';
+     (<HTMLInputElement>document.getElementById(element.name)).value = '';
+    });
+    this.onChangeTable(this.config);
+    this.element = null;
+    this.vBtra = null;
+    this.id = null;
+    this.folio = null;
+    this.postulados = null;
+    this.enProceso = null;
   }
 
   public onCellClick(data: any): any {

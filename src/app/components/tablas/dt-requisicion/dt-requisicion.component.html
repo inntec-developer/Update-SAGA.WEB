@@ -6,7 +6,7 @@
   <div class="dt-header">
     <mat-form-field>
       <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
-        (tableChanged)="onChangeTable(config)">
+        (tableChanged)="onChangeTable(config)" id="filterGeneral">
     </mat-form-field>
     <div class="row justify-content-between">
       <div class="d-flex align-items-stretch ">
@@ -15,48 +15,52 @@
         <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones margen" [disabled]="!element"
           [ngClass]="(!element) ? 'disabled' : 'btn-outline-warning'" matTooltip="Visualizar"><em class="fa fa-eye"></em></button>
 
-          <button id="view" chkPrivilegiosButtons (click)="lgModal.show()"  class="mb-1 btn btn-acciones margen" [disabled]="!element"
-          [ngClass]="(!element) ? 'disabled' : 'btn-outline-dark'" matTooltip="Comentarios"><em class="fa fa-comments-o"></em></button>
+        <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones margen"
+          [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-outline-dark'" matTooltip="Comentarios"><em
+            class="fa fa-comments-o"></em></button>
 
-        <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="editar"
-          [ngClass]="editar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-primary'" matTooltip="Editar" (click)="editRequi()"><em
-            class="icon-pencil"></em></button>
-  
-        <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="borrar"
-          [ngClass]="borrar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'" matTooltip="Eliminar"
-          (click)="openDialogDelete()"><em class="icon-trash"></em></button>
-          <em class="vl"></em>
+        <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="editar" [ngClass]="editar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-primary'"
+          matTooltip="Editar" (click)="editRequi()"><em class="icon-pencil"></em></button>
+
+        <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="borrar" [ngClass]="borrar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
+          matTooltip="Eliminar" (click)="openDialogDelete()"><em class="icon-trash"></em></button>
+        <em class="vl"></em>
         <!-- <button id='update' chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" 
           matTooltip="Activar" [ngClass]="(estatusId != 8 || !element) ? 'disabled' : 'btn-outline-success'" (click)="openDialogReActivar()"><em
             class="icon-refresh"></em></button> -->
-        
-          <!--estatus melina-->
-          
-     <button class="margen" [disabled]="cc" [ngClass]="cc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'"  type="button" (click)="updataStatus(34, 'Cubierta')" matTooltip="Cubierta">
-      <em class="fa fa fa-shield"></em>
-    </button>
-  
- 
-    <button class="margen" [disabled]="cp" [ngClass]="cp ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'"  type="button" (click)="updataStatus(35, 'Cubierta Parcialmente')" matTooltip="Cubierta Parcialmente">
-      <em class="fa fa-star-half-o"></em>
-    </button> 
-    <button class="margen" [ngClass]="crm ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'" [disabled]="crm"   type="button" (click)="updataStatus(36, 'Cubierta por Medios')" matTooltip="Cubierta por Reclutamiento Medios" >
-      <em class="fa fa-star"></em>
-    </button>
-    <button class="margen" [disabled]="cc" [ngClass]="cc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-info'"  type="button" (click)="updataStatus(37, 'Cubierta por Cliente')" matTooltip="Cubierta por Cliente">
-      <em class="fa fa fa-magic"></em>
-    </button>
-    <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="cancelar" [ngClass]="cancelar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
-      matTooltip="Cancelar" (click)="openDialogCancel();"><em class="icon-ban"></em></button>
 
-    <button class="margen" [ngClass]="gbc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'" [disabled]="gbc" type="button" (click)="updataStatus(38, 'Garant&iacute;a de B&uacute;squeda')" matTooltip="Garant&iacute;a B&uacute;squeda Candidatos"> 
-      <em class="fa fa-user-circle"></em>
-    </button>
-          
+        <!--estatus melina-->
+
+        <button class="margen" [disabled]="cc" [ngClass]="cc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'"
+          type="button" (click)="updataStatus(34, 'Cubierta')" matTooltip="Cubierta">
+          <em class="fa fa fa-shield"></em>
+        </button>
+
+
+        <button class="margen" [disabled]="cp" [ngClass]="cp ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'"
+          type="button" (click)="updataStatus(35, 'Cubierta Parcialmente')" matTooltip="Cubierta Parcialmente">
+          <em class="fa fa-star-half-o"></em>
+        </button>
+        <button class="margen" [ngClass]="crm ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'" [disabled]="crm"
+          type="button" (click)="updataStatus(36, 'Cubierta por Medios')" matTooltip="Cubierta por Reclutamiento Medios">
+          <em class="fa fa-star"></em>
+        </button>
+        <button class="margen" [disabled]="cc" [ngClass]="cc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-info'" type="button"
+          (click)="updataStatus(37, 'Cubierta por Cliente')" matTooltip="Cubierta por Cliente">
+          <em class="fa fa fa-magic"></em>
+        </button>
+        <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="cancelar" [ngClass]="cancelar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
+          matTooltip="Cancelar" (click)="openDialogCancel();"><em class="icon-ban"></em></button>
+
+        <button class="margen" [ngClass]="gbc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'" [disabled]="gbc"
+          type="button" (click)="updataStatus(38, 'Garant&iacute;a de B&uacute;squeda')" matTooltip="Garant&iacute;a B&uacute;squeda Candidatos">
+          <em class="fa fa-user-circle"></em>
+        </button>
+
       </div>
-      <div >
+      <div>
 
-          <!-- <button class="margen" [ngClass]="nbc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-primary'" [disabled] = "nbc"  type="button" (click)="SetStatus(12)" matTooltip="Nueva Busqueda de Candidatos"> 
+        <!-- <button class="margen" [ngClass]="nbc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-primary'" [disabled] = "nbc"  type="button" (click)="SetStatus(12)" matTooltip="Nueva Busqueda de Candidatos"> 
             <em class="fa fa-search-plus"></em>
           </button>
     
@@ -65,19 +69,19 @@
         </button> -->
 
 
-          <!-- <button class="margen" [ngClass]="gbc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" [disabled]="gbc" type="button" (click)="SetStatus(27)" matTooltip="Garant&iacute;a B&uacute;squeda Candidatos"> 
+        <!-- <button class="margen" [ngClass]="gbc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" [disabled]="gbc" type="button" (click)="SetStatus(27)" matTooltip="Garant&iacute;a B&uacute;squeda Candidatos"> 
             <em class="fa fa-user-circle"></em>
           </button>
       
             <button class="margen" [ngClass]="cancelada ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" [disabled]="cancelada"  type="button" (click)="SetStatus(28)" matTooltip="Cancelada">
               <em class="fa fa-ban"></em>
             </button>-->
-
-
       </div>
-    
       <div>
-        <btn-refresh (click)="refreshTable()" matTooltip="Actualizar"></btn-refresh>
+        <button (click)="clearfilters()" matTooltip="Limpiar Filtros" class="margen btn btn-outline-primary" style="margin-top: -3px;">
+          <em class="fa fa-eraser"></em>
+        </button>
+        <btn-refresh (click)="refreshTable()" matTooltip="Actualizar" class="margen"></btn-refresh>
 
       </div>
     </div>
@@ -96,7 +100,7 @@
           <tr *ngIf="showFilterRow" class="filter-colum">
             <td *ngFor="let column of columns">
               <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                (tableChanged)="onChangeTable(config)" class="form-control">
+                (tableChanged)="onChangeTable(config)" class="form-control" id="{{column.name}}">
             </td>
           </tr>
         </thead>
@@ -116,9 +120,9 @@
             <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">
-              <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
-                [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 34" [class.badge-success]="row.estatusId  === 7"
-                [class.badge-danger]="row.estatusId  === 8">
+              <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
+                [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
+                [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
                 {{row.estatus | uppercase}}
               </small>
             </td>
@@ -143,20 +147,20 @@
 
 <!-- Modal para comentarios de la requisicion -->
 <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 id="dialog-sizes-name1" class="modal-title pull-left">Requisici&oacute;n: {{Vacante}} {{Folio}}</h4>
-          <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <comentario-vacante [RequisicionId]="RequisicionId"></comentario-vacante>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide()">Cerrar</button>
-        </div>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Requisici&oacute;n: {{Vacante}} {{Folio}}</h4>
+        <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <comentario-vacante [RequisicionId]="RequisicionId"></comentario-vacante>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide()">Cerrar</button>
       </div>
     </div>
   </div>
+</div>
