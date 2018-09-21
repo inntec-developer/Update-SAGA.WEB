@@ -58,7 +58,9 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   rowAux = [];
   selected: boolean = false;
-  clearFilter: boolean = false;;
+  clearFilter: boolean = false;
+  pds: boolean = true;
+;
 
   constructor(
     private service: RequisicionesService,
@@ -282,6 +284,11 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.clienteId = data.clienteId;
     this.aprobador = data.aprobador;
     this.confidencial = data.confidencial
+    if(this.enProceso > 0){
+      this.pds = false;
+    }else{
+      this.pds = true;
+    }
     this.requi = {
       folio: data.folio,
       vacante: data.cliente,
@@ -309,11 +316,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   private _reinciar() {
     this.element = null;
-    this.vBtra = null;
-    this.id = null;
-    this.folio = null;
     this.postulados = null;
-    this.enProceso = null;
     this.bc = true; //busqueda candidato
     this.sc = true; //socieconomico
     this.ecc = true; //envío candidato cliente
@@ -322,6 +325,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.pausa = true;
     this.asignar = true;
     this.disenador = true;
+    this.pds = true;
   }
 
   ValidarEstatus(estatusId) {

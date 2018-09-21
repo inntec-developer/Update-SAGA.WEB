@@ -58,7 +58,7 @@
         <button class="margen" [disabled]="postulados <= 0" (click)="openViewPostulados()" [ngClass]="(postulados <= 0 )? 'mb-1 btn disabled':'mb-1 btn btn-outline-warning'">
           Postulados
         </button>
-        <button class="margen" [disabled]="enProceso <= 0" (click)="seguimientoRequi()" [ngClass]="(enProceso <= 0) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
+        <button class="margen" [disabled]="pds" (click)="seguimientoRequi()" [ngClass]="(pds) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
           En Proceso
         </button>
         <button  (click)="clearfilters()" matTooltip="Limpiar Filtros" [disabled]="!clearFilter" class="margen"[ngClass]="(!clearFilter) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'" >
