@@ -16,9 +16,9 @@
 
 <form [formGroup]="formGrupos" novalidate >
   <div>
-      <div *ngIf="verMsj">
+      <!-- <div *ngIf="verMsj">
           <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
-        </div>
+        </div> -->
 
     <div class="panel mat-elevation-z8">
      <div class="panel-body">
@@ -145,20 +145,20 @@
        <section>
          <mat-checkbox class="checkbox" formControlName="Activo"></mat-checkbox>
        </section>
-       <section>
-        <div class="col-md-6">
+        <section>
+        <!-- <div class="col-md-6">
           <div *ngIf="verMsj">
             <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
           </div>
-        </div>
+        </div> -->
         <button [disabled]="!formGrupos.valid" (click)="saveData()" class="btn btn-primary example-label pull-right">Guardar</button>
-       </section>
+       </section> 
     </div>
     <br/><br/><br/>
   </div>
 </form>
 
-
+<toaster-container toaster-options="{'toaster-id': 2 }" [toasterconfig]="toasterconfig"></toaster-container>
 
   <!-- popover-->
 

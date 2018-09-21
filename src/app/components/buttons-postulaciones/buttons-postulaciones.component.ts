@@ -253,17 +253,23 @@ export class ButtonsPostulacionesComponent implements OnInit {
           this.evm = true;
           this.pst = true;
           this.liberado = true;
-
-          
-         // 
+        }
+        else if(data == 300)
+        {
+          this.popToast('info', 'Apartado', 'El candidato ya esta apartado o en proceso');
+        }
+        else
+        {
+          this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos')
         }
       })
     }
 
   }
-
+ 
   SetStatusBolsa(candidatoId, estatusId, estatus)
   {
+    debugger;
     if(this.candidatoId != null)
     {
       if( estatusId === 10 || estatusId === 12)
