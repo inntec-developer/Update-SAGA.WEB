@@ -31,7 +31,7 @@ export class DtDamfoComponent implements OnInit {
   showFilterRow: boolean;
   registros: number;
   errorMessage: any;
-  element: any;
+  element: any = [];
   damfoId: any;
 
   constructor(
@@ -201,7 +201,15 @@ export class DtDamfoComponent implements OnInit {
     setTimeout(() => {
       this.onChangeTable(this.config);
     }, 300);
-    this.element = [];
+    this.element = null;
+  }
+
+  public clearfilters(){
+    this.columns.forEach(element => {
+      element.filtering.filterString = '';
+     (<HTMLInputElement>document.getElementById(element.name)).value = '';
+    });
+    this.onChangeTable(this.config);
   }
 
   showDamfo() {

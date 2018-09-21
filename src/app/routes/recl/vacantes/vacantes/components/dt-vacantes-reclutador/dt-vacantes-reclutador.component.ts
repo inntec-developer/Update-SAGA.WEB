@@ -32,6 +32,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   registros: number;
   errorMessage: any;
   element: any = null;
+  confidencial: boolean = true;
 
   estatusId: any;
   enProceso: any;
@@ -55,6 +56,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
   disenador = true;
   aprobador: any;
 
+  rowAux = [];
+  selected: boolean = false;
+  clearFilter: boolean = false;;
+
   constructor(
     private service: RequisicionesService,
     private postulateservice: PostulateService,
@@ -62,7 +67,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     private _Router: Router,
     private spinner: NgxSpinnerService,
     private toasterService: ToasterService
-  ) { 
+  ) {
     this.enProceso = 0;
     this.postulados = 0;
   }
@@ -89,23 +94,20 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   //estatus vacantes
-  SetStatus( estatusId, estatus)
-  {
+  SetStatus(estatusId, estatus) {
     var datos = { estatusId: estatusId, requisicionId: this.requi.id };
-   
-    this.postulateservice.SetProcesoVacante(datos).subscribe( data => {
-      if(data == 201)
-      {
+
+    this.postulateservice.SetProcesoVacante(datos).subscribe(data => {
+      if (data == 201) {
         var idx = this.rows.findIndex(x => x.id == this.requi.id);
         this.rows[idx]['estatus'] = estatus;
         this.rows[idx]['estatusId'] = estatusId;
         this.onChangeTable(this.config);
-        this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');    
-        
+        this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+
       }
-      else
-      {
-        this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');  
+      else {
+        this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
       }
     })
   }
@@ -177,6 +179,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
     this.columns.forEach((column: any) => {
+      this.clearFilter = true;
       if (column.filtering) {
         this.showFilterRow = true;
         filteredData = filteredData.filter((item: any) => {
@@ -208,6 +211,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
         }
       });
       if (flag) {
+
         tempArray.push(item);
       }
     });
@@ -243,35 +247,32 @@ export class DtVacantesReclutadorComponent implements OnInit {
     setTimeout(() => {
       this.columns.forEach(element => {
         element.filtering.filterString = '';
-       (<HTMLInputElement>document.getElementById(element.name)).value = '';
+        (<HTMLInputElement>document.getElementById(element.name)).value = '';
       });
       this.onChangeTable(this.config);
-      this.element = null;
-      this.vBtra = null;
-      this.id = null;
-      this.folio = null;
-      this.postulados = null;
-      this.enProceso = null;
+      this._reinciar();
     }, 800);
   }
 
-  public clearfilters(){
+  public clearfilters() {
+    this.clearFilter = false;
     this.columns.forEach(element => {
       element.filtering.filterString = '';
-     (<HTMLInputElement>document.getElementById(element.name)).value = '';
+      (<HTMLInputElement>document.getElementById(element.name)).value = '';
     });
     this.onChangeTable(this.config);
-    this.element = null;
-    this.vBtra = null;
-    this.id = null;
-    this.folio = null;
-    this.postulados = null;
-    this.enProceso = null;
+    if (!this.selected) {
+      this._reinciar();
+    }
+
   }
 
+
+
   public onCellClick(data: any): any {
-    let index = this.dataSource.indexOf(data.row);
+    data.selected ? data.selected = false : data.selected = true;
     this.estatusId = data.estatusId;
+    this.ValidarEstatus(this.estatusId)
     this.element = data;
     this.vBtra = data.vBtra;
     this.id = data.id;
@@ -280,39 +281,39 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.enProceso = data.enProceso;
     this.clienteId = data.clienteId;
     this.aprobador = data.aprobador;
+    this.confidencial = data.confidencial
     this.requi = {
       folio: data.folio,
       vacante: data.cliente,
       id: data.id
     }
 
+    if (!data.selected) {
+      this._reinciar();
+      this.selected = false;
+    } else {
+      this.selected = true;
+    }
 
-   this.ValidarEstatus(data.estatusId);
-
-    /* add an class 'active' on click */
-    $('#resultDataTable').on('click', 'tr', function (event: any) {
-      //noinspection TypeScriptUnresolvedFunction
-      $(this).addClass('selected').siblings().removeClass('selected');
-    });
+    if (this.rowAux.length == 0) {
+      this.rowAux = data;
+    }
+    else if (data.selected && this.rowAux != []) {
+      var aux = data;
+      data = this.rowAux;
+      data.selected = false;
+      aux.selected = true;
+      this.rowAux = aux;
+    }
   }
 
-  ValidarEstatus(estatusId)
-  {
-    if(estatusId == 38)
-    {
-       /*estatus vacante */
-    this.bc = false; //busqueda candidato
-    this.sc = false; //socieconomico
-    this.ecc = false; //envío candidato cliente
-    this.ec = false; //espera contratacion
-    this.nbc = false; //nueva busqueda candidato
-    this.pausa = false;
-    this.asignar = true;
-    this.disenador = true;
-    }
-    else if(estatusId >= 34 && estatusId <= 37 )
-    {
-       /*estatus vacante */
+  private _reinciar() {
+    this.element = null;
+    this.vBtra = null;
+    this.id = null;
+    this.folio = null;
+    this.postulados = null;
+    this.enProceso = null;
     this.bc = true; //busqueda candidato
     this.sc = true; //socieconomico
     this.ecc = true; //envío candidato cliente
@@ -321,9 +322,32 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.pausa = true;
     this.asignar = true;
     this.disenador = true;
+  }
+
+  ValidarEstatus(estatusId) {
+    if (estatusId == 38) {
+      /*estatus vacante */
+      this.bc = false; //busqueda candidato
+      this.sc = false; //socieconomico
+      this.ecc = false; //envío candidato cliente
+      this.ec = false; //espera contratacion
+      this.nbc = false; //nueva busqueda candidato
+      this.pausa = false;
+      this.asignar = true;
+      this.disenador = true;
     }
-    else if(estatusId == 4)
-    {
+    else if (estatusId >= 34 && estatusId <= 37) {
+      /*estatus vacante */
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = true;
+      this.disenador = true;
+    }
+    else if (estatusId == 4) {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
       this.ecc = true; //envío candidato cliente
@@ -333,8 +357,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.asignar = false;
       this.disenador = false;
     }
-    else
-    {
+    else {
       this.bc = false; //busqueda candidato
       this.sc = false; //socieconomico
       this.ecc = false; //envío candidato cliente
@@ -372,12 +395,12 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   openDesignVacante() {
-    if(this.aprobador === sessionStorage.getItem('usuario')){
+    if (this.aprobador === sessionStorage.getItem('usuario')) {
       this._Router.navigate(['/reclutamiento/configuracionVacante/', this.id, this.folio, this.vBtra], { skipLocationChange: true });
-    }else{
-      swal('Ops...!', 'Esta vacante solo puede ser diseñada por el aprobador ('+ this.aprobador +').' , 'error');
+    } else {
+      swal('Ops...!', 'Esta vacante solo puede ser diseñada por el aprobador (' + this.aprobador + ').', 'error');
     }
-    
+
   }
   openViewPostulados() {
     if (this.id != null) {
@@ -389,9 +412,9 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this._Router.navigate(['/reclutamiento/gestionVacante', this.id, this.folio, this.vBtra, this.clienteId, this.enProceso], { skipLocationChange: true });
   }
 
-   /**
-   * configuracion para mensajes de acciones.
-   */
+  /**
+  * configuracion para mensajes de acciones.
+  */
   toaster: any;
   toasterConfig: any;
   toasterconfig: ToasterConfig = new ToasterConfig({
@@ -402,20 +425,20 @@ export class DtVacantesReclutadorComponent implements OnInit {
     mouseoverTimerStop: true,
     preventDuplicates: true,
   });
-  
+
   popToast(type, title, body) {
     var toast: Toast = {
       type: type,
       title: title,
       timeout: 4000,
-      body: body    
+      body: body
     }
     this.toasterService.pop(toast);
 
   }
 
 
-   // Mensaje de Error, en caso de que el damfo no cuente con horarios activos.
+  // Mensaje de Error, en caso de que el damfo no cuente con horarios activos.
   //  swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. No es posible generar la requisición', 'error');
 
 }

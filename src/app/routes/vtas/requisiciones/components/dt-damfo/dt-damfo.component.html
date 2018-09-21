@@ -8,12 +8,17 @@
     </mat-form-field>
     <div class="d-flex justify-content-between">
       <div class="d-flex align-items-stretch ">
-        <btn-docs (click)="openDialog()" matTooltip="Crear Requisición"></btn-docs>
-        <btn-view (click)="showDamfo()" matTooltip="Ver DAM-FO-290"></btn-view>
+          <button id="view" chkPrivilegiosButtons (click)="showDamfo()" class="mb-1 btn btn-acciones margen" [disabled]="!element"
+          [ngClass]="(!element) ? 'disabled' : 'btn-outline-warning'" matTooltip="Visualizar"><em class="fa fa-eye"></em></button>
+        <button id="view" chkPrivilegiosButtons (click)="openDialog()" class="mb-1 btn btn-acciones margen" [disabled]="!element"
+          [ngClass]="(!element) ? 'disabled' : 'btn-outline-success'" matTooltip="Crear Requisición"><em class="icon-docs"></em></button>
       </div>
       <div>
-        <btn-return matTooltip="Regresar" [routerLink]="['/ventas/requisicion']"></btn-return>
-        <btn-refresh (click)="refreshTable()" matTooltip="Actualizar"></btn-refresh>
+        <btn-return matTooltip="Regresar" class="margen" [routerLink]="['/ventas/requisicion']"></btn-return>
+        <button (click)="clearfilters()" matTooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary">
+            <em class="fa fa-eraser"></em>
+          </button>
+        <btn-refresh (click)="refreshTable()" class="margen" matTooltip="Actualizar"></btn-refresh>
       </div>
     </div>
 
@@ -32,7 +37,7 @@
           <tr *ngIf="showFilterRow" class="filter-colum">
             <td *ngFor="let column of columns">
               <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                (tableChanged)="onChangeTable(config)" class="form-control">
+                (tableChanged)="onChangeTable(config)" class="form-control" id="{{column.name}}">
             </td>
           </tr>
         </thead>
@@ -64,6 +69,3 @@
   </div>
   <pre *ngIf="config.paging" class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
 </div>
-
-
-

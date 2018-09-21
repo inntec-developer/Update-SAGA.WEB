@@ -9,6 +9,9 @@
         <!-- <btn-view (click)="openDialogShowRequi(element.id, element.folio)" matTooltip="Ver Requisición"></btn-view> -->
       </div>
       <div>
+        <button (click)="clearfilters()" matTooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary">
+          <em class="fa fa-eraser"></em>
+        </button>
         <btn-refresh (click)="refreshTable()" matTooltip="Actualizar"></btn-refresh>
       </div>
     </div>
@@ -27,7 +30,7 @@
           <tr *ngIf="showFilterRow" class="filter-colum">
             <td *ngFor="let column of columns">
               <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                (tableChanged)="onChangeTable(config)" class="form-control">
+                (tableChanged)="onChangeTable(config)" class="form-control" id="{{column.name}}v">
             </td>
           </tr>
         </thead>
@@ -67,12 +70,12 @@
 <ng-template #NotCandidatos>
   <div class="row">
     <div class="col-lg-11 col-md-11 col-sm-12">
-        <alert type="info">
-            <strong>Oops!</strong> A&uacute;n no cuentas con candidatos en proceso / apartados.
-          </alert>
+      <alert type="info">
+        <strong>Oops!</strong> A&uacute;n no cuentas con candidatos en proceso / apartados.
+      </alert>
     </div>
     <div class="col-lg-1 col-md-1 col-sm-12">
-        <btn-refresh (click)="refreshTable()" matTooltip="Actualizar"></btn-refresh>
-      </div>
+      <btn-refresh (click)="refreshTable()" matTooltip="Actualizar"></btn-refresh>
+    </div>
   </div>
 </ng-template>

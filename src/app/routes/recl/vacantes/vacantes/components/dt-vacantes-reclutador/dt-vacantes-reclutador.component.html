@@ -18,7 +18,7 @@
           class="margen" [disabled]="asignar" [ngClass]="asignar ? 'mb-1 btn disabled':'mb-1 btn btn-outline-purple'">
           <em class="icon-user-follow"></em></button>
         <button class="margen" type="button" id="special" chkPrivilegiosButtons (click)="openDesignVacante(element.id, element.folio, element.vBtra)"
-          matTooltip="Diseñar Vacante" [disabled]="disenador || element.confidencial" [ngClass]="(disenador || element.confidencial) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
+          matTooltip="Diseñar Vacante" [disabled]="disenador || confidencial" [ngClass]="(disenador || confidencial) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
           <em class="icon-list"></em>
         </button>
         <em class="vl"></em>
@@ -61,7 +61,7 @@
         <button class="margen" [disabled]="enProceso <= 0" (click)="seguimientoRequi()" [ngClass]="(enProceso <= 0) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
           En Proceso
         </button>
-        <button  (click)="clearfilters()" matTooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary" >
+        <button  (click)="clearfilters()" matTooltip="Limpiar Filtros" [disabled]="!clearFilter" class="margen"[ngClass]="(!clearFilter) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'" >
           <em class="fa fa-eraser"></em>
         </button>
         <btn-refresh class="margen" (click)="refreshTable()" matTooltip="Actualizar"></btn-refresh>
@@ -87,8 +87,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr (click)="onCellClick(row)" (dblclick)="seguimientoRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial"
-            [class.cancel]="row.estatusId == 8">
+          <tr (click)="onCellClick(row)" (dblclick)="seguimientoRequi()" *ngFor="let row of rows" 
+            [class.confident]="row.confidencial"
+            [class.cancel]="row.estatusId == 8"
+            [class.selected]="row.selected">
             <td class="text-center">
               {{row.folio}}
             </td>
