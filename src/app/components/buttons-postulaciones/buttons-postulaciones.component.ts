@@ -269,7 +269,6 @@ export class ButtonsPostulacionesComponent implements OnInit {
  
   SetStatusBolsa(candidatoId, estatusId, estatus)
   {
-    debugger;
     if(this.candidatoId != null)
     {
       if( estatusId === 10 || estatusId === 12)
