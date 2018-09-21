@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ApiConection } from '../../../service';
-
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'app-add-grupo',
@@ -29,23 +29,23 @@ export class AddGrupoComponent implements OnInit {
   ListTipos = [];
   filteredData = [];
 
-  alerts: any[] = [
-    {
-      type: 'success',
-      msg: '',
-      timeout: 4000
-    },
-    {
-      type: 'danger',
-      msg: '',
-      timeout: 4000
-    }
-  ];
-alert = this.alerts;
-onClosed(): void {
-  this.verMsj = false;
-}
-  constructor( public fb: FormBuilder, private service: AdminServiceService )
+//   alerts: any[] = [
+//     {
+//       type: 'success',
+//       msg: '',
+//       timeout: 4000
+//     },
+//     {
+//       type: 'danger',
+//       msg: '',
+//       timeout: 4000
+//     }
+//   ];
+// alert = this.alerts;
+// onClosed(): void {
+//   this.verMsj = false;
+// }
+  constructor( public fb: FormBuilder, private service: AdminServiceService, private toasterService: ToasterService )
   {
     this.formGrupos = this.fb.group({
       Nombre: ['', [Validators.required]],
@@ -122,15 +122,17 @@ onClosed(): void {
     this.service.UpdateActivo(cell).subscribe(data =>{
       if(data == 201)
       {
-        this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
-        this.alert = this.alerts[0];
-        this.verMsj = true;
+        // this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
+        // this.alert = this.alerts[0];
+        // this.verMsj = true;
+        this.popToast('success', 'Actualizar Datos', 'Los datos se actualizaron con éxito'); 
       }
       else
       {
-        this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
-        this.alert = this.alerts[1];
-        this.verMsj = true;
+        this.popToast('error', 'Actualizar Datos', 'Ocurrió un error al intentar actualizar datos'); 
+        // this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
+        // this.alert = this.alerts[1];
+        // this.verMsj = true;
       }
     })
 
@@ -138,8 +140,6 @@ onClosed(): void {
 
   UpdateTipo(event, cell, rowIndex) 
   {
-    console.log(event.target.value)
-
     var aux;
 
     aux = this.ListTipos.find(nt => nt.id == event.target.value);
@@ -201,16 +201,18 @@ onClosed(): void {
       console.log(data)
       if(data == 201)
       {
-        this.alerts[0]['msg'] = 'Los datos se agregaron con éxito';
-        this.alert = this.alerts[0];
-        this.verMsj = true;
+        this.popToast('success', 'Actualizar Datos', 'Los datos se agregaron con éxito'); 
+        // this.alerts[0]['msg'] = 'Los datos se agregaron con éxito';
+        // this.alert = this.alerts[0];
+        // this.verMsj = true;
         this.ngOnInit();
       }
       else
       {
-        this.alerts[1]['msg'] = 'Ocurrio un error al intentar agregar datos';
-        this.alert = this.alerts[1];
-        this.verMsj = true;
+        this.popToast('error', 'Actualizar Datos', 'Ocurrió un error al intentar agregar datos'); 
+        // this.alerts[1]['msg'] = 'Ocurrio un error al intentar agregar datos';
+        // this.alert = this.alerts[1];
+        // this.verMsj = true;
       }
     });
   }
@@ -234,15 +236,17 @@ onClosed(): void {
         .subscribe( data => {
           if(data == 201)
           {
-            this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
-            this.alert = this.alerts[0];
-            this.verMsj = true;
+            this.popToast('success', 'Actualizar Datos', 'Los datos se actualizaron con éxito'); 
+            // this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
+            // this.alert = this.alerts[0];
+            // this.verMsj = true;
           }
           else
           {
-            this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
-            this.alert = this.alerts[1];
-            this.verMsj = true;
+            this.popToast('error', 'Actualizar Datos', 'Ocurrió un error al intentar actualizar datos'); 
+            // this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
+            // this.alert = this.alerts[1];
+            // this.verMsj = true;
           }
       });
   
@@ -256,18 +260,20 @@ onClosed(): void {
       .subscribe( data => {
         if(data == 201)
         {
-          this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
-          this.alert = this.alerts[0];
-          this.verMsj = true;
+          this.popToast('success', 'Actualizar Datos', 'Los datos se actualizaron con éxito'); 
+          // this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
+          // this.alert = this.alerts[0];
+          // this.verMsj = true;
 
           this.Grupos.splice(rowIndex, 1);
           this.Grupos = [...this.Grupos];
         }
         else
         {
-          this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
-          this.alert = this.alerts[1];
-          this.verMsj = true;
+          this.popToast('error', 'Actualizar Datos', 'Ocurrió un error al intentar actualizar datos'); 
+          // this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
+          // this.alert = this.alerts[1];
+          // this.verMsj = true;
         }
     });
    
@@ -289,5 +295,29 @@ onClosed(): void {
     this.formGrupos.controls['Descripcion'].reset();
   }
 
+  /**
+   * configuracion para mensajes de acciones.
+   */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+    preventDuplicates: true,
+  });
+  
+  popToast(type, title, body) {
+    var toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 4000,
+      body: body    
+    }
+    this.toasterService.pop(toast);
+
+  }
 
 }
