@@ -69,8 +69,8 @@
     </div>
   </div>
   <div class="card card-default">
-    <div #tableContainer>
-      <table class="table-responsive" id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+    <div #tableContainer >
+      <table  id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
         <thead>
           <tr>
             <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
