@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
@@ -103,29 +104,19 @@ export class DtRequisicionComponent implements OnInit {
 
   ValidarEstatus(estatusId)
   {
-  debugger;
-    if(estatusId == 4)
+
+    if(estatusId == 1 || estatusId == 4)
     {
       this.gbc = true; //garantía busqueda candidato
-      this.cubierta = false;
-      this.cc = false; //cubierta por el cliente
-      this.crm = false; //cubierta reclutamiento medios
-      this.cp = false; // cubierta parcialmente
+      this.cubierta = true;
+      this.cc = true; //cubierta por el cliente
+      this.crm = true; //cubierta reclutamiento medios
+      this.cp = true; // cubierta parcialmente
       this.cancelar = false;
       this.borrar = false;
       this.editar = false;
+
     }
-    // else if(estatusId == 7) //publicada
-    // {
-    //   this.gbc = true; //garantía busqueda candidato
-    //   this.cubierta = false;
-    //   this.cc = false; //cubierta por el cliente
-    //   this.crm = false; //cubierta reclutamiento medios
-    //   this.cp = false; // cubierta parcialmente
-    //   this.cancelar = false;
-    //   this.borrar = true;
-    //   this.editar = false;
-    // }
     else if(estatusId == 8) //cancelada
     {
       this.gbc = true; //garantía busqueda candidato
@@ -403,7 +394,7 @@ export class DtRequisicionComponent implements OnInit {
       var idx = this.rows.findIndex(x => x.id == this.element.id);
       if (this.rows[idx]['enProceso'] > 0 || this.rows[idx]['Postulados'] > 0) {
         this.rows[idx]['enProcesoN'].forEach(element => {
-          emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre })
+            emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre })
         });
 
         this.rows[idx]['postuladosN'].forEach(element => {
@@ -427,11 +418,17 @@ export class DtRequisicionComponent implements OnInit {
 
           if (this.rows[idx]['enProceso'] > 0 || this.rows[idx]['Postulados'] > 0 && (estatusId == 35 || estatusId == 8)) {
             this.rows[idx]['enProcesoN'].forEach(element => {
-              emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre })
+              if(element.estatusId != 24)
+              {
+                emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre })
+              }
             });
 
             this.rows[idx]['postuladosN'].forEach(element => {
-              emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre })
+              if(element.statusId != 5 && element.statusId != 6)
+              {
+                emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre })
+              }
             })
 
             this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
