@@ -57,6 +57,7 @@ export class DtRequisicionComponent implements OnInit {
   RequisicionId: any;
   Folio: any;
   Vacante: any;
+  comentario: string;
 
   constructor(
     private service: RequisicionesService,

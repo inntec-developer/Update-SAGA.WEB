@@ -66,23 +66,47 @@
   </div>
 </div>
 <mat-divider></mat-divider>
-<div mat-dialog-actions>
-  <div class="alert alert-warning" role="alert">
-    <h4 class="alert-heading">Advertencia!</h4>
-    <p>Todos los usuarios o células que se encuentren asignadas a esta requisición serán eliminados de la misma.</p>
+<br>
+<form [formGroup]="formComentario" (ngSubmit)='cancelRequisicion()'>
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <mat-form-field>
+        <textarea #message matInput minlength="30" maxlength="500" placeholder="Motivo de cancelación" rows="3"
+          formControlName="comentario" required></textarea>
+        <mat-hint align="start">
+          <strong>Ingresar el motivo de la cancelaci&oacute;n de requisici&oacute;n.</strong>
+        </mat-hint>
+        <mat-hint align="end">{{message.value.length}} / 500</mat-hint>
+      </mat-form-field>
+    </div>
   </div>
   <mat-divider></mat-divider>
   <div mat-dialog-actions>
-    <div class="row">
-      <div class="col-md-5 col-sm-5 col-xs-5">
-        <btn-closed [xs]="true" [text]="textBtnCerrar" (click)="onCloseDialog()"></btn-closed>
-      </div>
-      <div class="col-md-5 col-sm-5 col-xs-5">
-        <btn-accept [xs]="true" [text]="textBtnAceptar" (click)="cancelRequisicion()"></btn-accept>
-      </div>
-      <div class="col-md-2 col-sm-2 col-xs-2">
-        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+    <div class="alert alert-warning" role="alert">
+      <h4 class="alert-heading">Advertencia!</h4>
+      <p>Todos los usuarios o células que se encuentren asignadas a esta requisición serán eliminados de la misma.</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div mat-dialog-actions>
+      <div class="row">
+        <div class="col-md-5 col-sm-5 col-xs-5">
+          <button type="button" class="btn btn-xs btn-labeled btn-outline-danger mb-2" (click)="onCloseDialog()">
+            <span class="btn-label">
+              <i class="fa fa-times"></i>
+            </span> Cancelar
+          </button>
+        </div>
+        <div class="col-md-5 col-sm-5 col-xs-5">
+          <button type="button" [disabled]="!formComentario.valid" class="btn btn-xs btn-labeled btn-outline-success mb-2" type="submit">
+            <span class="btn-label">
+              <i class="fa fa-check"></i>
+            </span> Aceptar
+          </button>
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-2">
+          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+        </div>
       </div>
     </div>
   </div>
-</div>
+</form>
