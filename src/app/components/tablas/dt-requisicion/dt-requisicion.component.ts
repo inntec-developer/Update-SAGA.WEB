@@ -395,11 +395,11 @@ export class DtRequisicionComponent implements OnInit {
       var idx = this.rows.findIndex(x => x.id == this.element.id);
       if (this.rows[idx]['enProceso'] > 0 || this.rows[idx]['Postulados'] > 0) {
         this.rows[idx]['enProcesoN'].forEach(element => {
-            emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre })
+            emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId })
         });
 
         this.rows[idx]['postuladosN'].forEach(element => {
-          emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre })
+          emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId })
         })
 
         this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
