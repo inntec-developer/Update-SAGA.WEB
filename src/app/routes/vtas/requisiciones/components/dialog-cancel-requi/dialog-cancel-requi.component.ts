@@ -38,7 +38,7 @@ export class DialogCancelRequiComponent implements OnInit {
   ) {
 
     this.formComentario = new FormGroup({
-      comentario: new FormControl('', [Validators.required, Validators.maxLength(500), Validators.minLength(15)])
+      comentario: new FormControl('', [Validators.required, Validators.maxLength(500), Validators.minLength(30)])
     });
   }
 
