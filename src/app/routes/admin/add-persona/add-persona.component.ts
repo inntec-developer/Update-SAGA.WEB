@@ -4,7 +4,7 @@ import {FormBuilder } from '@angular/forms';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import {MatDialog } from '@angular/material';
 import { UploadImgsComponent } from '../upload-imgs/upload-imgs.component';
-import { AlertComponent } from 'ngx-bootstrap/alert/alert.component';
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'app-add-persona',
@@ -23,34 +23,14 @@ export class AddPersonaComponent implements OnInit {
   rowAux: any;
   name: string;
   filteredData: Array<any> = [];
-  paginacion = [];
-  pagIndex = 0;
-  verMsj = false;
   dataRowIndex: any = 0;
   dataRow: any;
 
   @ViewChild('uploadImg') someInput: UploadImgsComponent;
   @ViewChild('staticModal') modal;
 
-  alerts: any[] = [
-    {
-      type: 'success',
-      msg: '',
-      timeout: 4000
-    },
-    {
-      type: 'danger',
-      msg: '',
-      timeout: 4000
-    }
-  ];
-alert = this.alerts;
-
- 
-  onClosed(): void {
-    this.verMsj = false;
-  }
-  constructor(private service: AdminServiceService ,public fb: FormBuilder, public dialog: MatDialog){}
+  
+  constructor(private service: AdminServiceService ,public fb: FormBuilder, public dialog: MatDialog, private toasterService: ToasterService){}
   
   CrearURL(idP: any)
   {
@@ -79,17 +59,20 @@ alert = this.alerts;
     this.service.SendEmailRegister(data).subscribe( res => {
       if(res == 201)
         {
-          this.alerts[0]['msg'] = 'El correo se envió con éxito';
-          this.alert = this.alerts[0];
-          this.verMsj = true;
+          this.popToast('success', 'Envío de correo', 'El correo se envió con éxito');
+
+          // this.alerts[0]['msg'] = 'El correo se envió con éxito';
+          // this.alert = this.alerts[0];
+          // this.verMsj = true;
           // this.success = true;
           // this.haserror = false;
         }
         else
         {
-          this.alerts[1]['msg'] = 'Ocurrio un error al intentar enviar correo';
-          this.alert = this.alerts[1];
-          this.verMsj = true;
+          this.popToast('error', 'Envío de correo', 'Ocurrio un error al intentar enviar correo');
+          // this.alerts[1]['msg'] = 'Ocurrio un error al intentar enviar correo';
+          // this.alert = this.alerts[1];
+          // this.verMsj = true;
           // this.success = false;
           // this.haserror = true;
         }
@@ -186,25 +169,37 @@ alert = this.alerts;
     this.Users = [...this.Users];
   }
 
-  updateUser($even, rowIndex) 
+  updateUser(user, rowIndex) 
   {
-    let u = this.Users[rowIndex];
+    let u = {
+      EntidadId: user.entidadId,
+      Clave: user.clave,
+      Usuario: user.usuario,
+      Nombre: user.nombre,
+      ApellidoPaterno: user.apellidoPaterno,
+      ApellidoMaterno: user.apellidoMaterno,
+      DepartamentoId: user.departamentoId, 
+      TipoUsuarioId: user.tipoUsuarioId,
+      Foto: user.foto
+
+    }
     this.service.UpdateUsuario(u)
       .subscribe(data => {
         if(data == 201)
         {
-          
-          this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
-          this.alert = this.alerts[0];
-          this.verMsj = true;
+          this.popToast('success', 'Actualizar Datos', 'Los datos se actualizaron con éxito');
+          // this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
+          // this.alert = this.alerts[0];
+          // this.verMsj = true;
           // this.success = true;
           // this.haserror = false;
         }
         else
         {
-          this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
-          this.alert = this.alerts[1];
-          this.verMsj = true;
+          this.popToast('error', 'Actualizar Datos', 'Ocurrio un error al intentar actualizar datos');
+          // this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
+          // this.alert = this.alerts[1];
+          // this.verMsj = true;
           // this.success = false;
           // this.haserror = true;
         }
@@ -218,17 +213,19 @@ alert = this.alerts;
         .subscribe( data => {
           if(data == 201)
           {
-            this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
-            this.alert = this.alerts[0];
-            this.verMsj = true;
+            this.popToast('success', 'Actualizar Datos', 'Los datos se actualizaron con éxito');
+            // this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
+            // this.alert = this.alerts[0];
+            // this.verMsj = true;
             // this.success = true;
             // this.haserror = false;
           }
           else
           {
-            this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
-            this.alert = this.alerts[1];
-            this.verMsj = true;
+            this.popToast('error', 'Actualizar Datos', 'Ocurrió un error al intentar actualizar datos');
+            // this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
+            // this.alert = this.alerts[1];
+            // this.verMsj = true;
             // this.success = false;
             // this.haserror = true;
           }
@@ -249,15 +246,6 @@ alert = this.alerts;
         })
 
         this.filteredData = this.Users;
-        console.log(this.Users)
-        //this.Users = this.Users.slice(0, 10)
-
-        // for(var c = 0; c <= this.Users.length / 5; c++)
-        // {
-        //   this.paginacion.push(c);
-
-        // }
-
       })
   }
   
@@ -287,6 +275,30 @@ alert = this.alerts;
     
   }
   
+   /**
+   * configuracion para mensajes de acciones.
+   */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+    preventDuplicates: true,
+  });
+  
+  popToast(type, title, body) {
+    var toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 4000,
+      body: body    
+    }
+    this.toasterService.pop(toast);
+
+  }
 }
 
 
