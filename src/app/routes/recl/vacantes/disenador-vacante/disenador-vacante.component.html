@@ -1,4 +1,4 @@
-<ngx-spinner bdColor = "rgba(198,195,195,0.8)" size = "medium" color = "#90daff" type = "square-jelly-box"></ngx-spinner>
+<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
 <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
 
 <div class="content-heading">
@@ -8,30 +8,29 @@
   </div>
   <!-- Breadcrumb right aligned-->
   <ol class="breadcrumb ml-auto">
-      <li class="breadcrumb-item"><a [routerLink]="['/home']" >Inicio</a></li>
-      <li class="breadcrumb-item"><a [routerLink]="['/reclutamiento/vacantesReclutador']" >Vacantes</a></li>
-      <li class="breadcrumb-item active"><a [routerLink]="['/reclutamiento/vacantesReclutador']" >Diseñador de Vacante</a></li>
+    <li class="breadcrumb-item"><a [routerLink]="['/home']">Inicio</a></li>
+    <li class="breadcrumb-item"><a [routerLink]="['/reclutamiento/vacantesReclutador']">Vacantes</a></li>
+    <li class="breadcrumb-item active"><a [routerLink]="['/reclutamiento/vacantesReclutador']">Diseñador de Vacante</a></li>
   </ol>
 </div>
 
-<div class="row">
-  <div class="col-xs-12 right">
-    <div class="col-xs-2 margen ">
-        <button   class="mb-sm btn-md btn btn-primary btn-outline" (click)="PrevResumen()">Previsualizar Resumen</button>
-        <button style="margin-left: 10px;margin-right: 10px"  class="mb-sm btn-md btn btn-primary btn-outline" (click)="PrevDetalle()">Previsualizar Detalle</button>
-      <button (click)="Publicar()" _ngcontent-c40="" class="mb-sm btn-md btn btn-success btn-outline" mattooltip="Publicar"   >
-          <em _ngcontent-c40="" class="fa fa-download"></em> Publicar vacante
-        </button>
-        
-        <!-- <button (click)="Publicar()" _ngcontent-c40="" class="mb-sm btn-md btn btn-success btn-outline " mattooltip="Publicar" type="button" tabindex="0" ng-reflect-router-link="/ventas/crearRequisicion" aria-describedby="cdk-describedby-message-2" cdk-describedby-host="" ng-reflect-message="Nueva Requisición">
-            <em _ngcontent-c40="" class="fa fa-download"></em> Publicar vacante
-          </button> -->
-    </div>
+<div class="d-flex justify-content-between">
+  <div class="d-flex align-items-stretch ">
+    <button class="mb-1 btn-md btn btn-primary btn-outline" (click)="PrevResumen()">Previsualizar Resumen</button>
+    <button style="margin-left: 10px;margin-right: 10px" class="mb-1 btn-md btn btn-primary btn-outline" (click)="PrevDetalle()">Previsualizar
+      Detalle</button>
+    <button (click)="Publicar()" _ngcontent-c40="" class="mb-1 btn-md btn btn-success btn-outline" mattooltip="Publicar">
+      <em _ngcontent-c40="" class="fa fa-download"></em> Publicar vacante
+    </button>
+  </div>
+  <div>
+    <btn-return matTooltip="Regresar" [routerLink]="['/reclutamiento/vacantesReclutador']"></btn-return>
   </div>
 </div>
 
 <mat-accordion class="example-headers-align">
-  <mat-expansion-panel *ngFor="let item of Clasifica" [expanded]="step === item.id" (opened)="setStep(item.id)" hideToggle="true" class="{{item.publica?'':'hidden'}}">
+  <mat-expansion-panel *ngFor="let item of Clasifica" [expanded]="step === item.id" (opened)="setStep(item.id)"
+    hideToggle="true" class="{{item.publica?'':'hidden'}}">
     <mat-expansion-panel-header>
       <mat-panel-title style="font-weight: bold;">
         {{item.nombre}}
@@ -44,51 +43,53 @@
 
     <div class="row">
       <div *ngFor="let item2 of General">
-        <div class="col-md-12   Column width {{item2.publica?'':'d-none'}}" *ngIf="item.id == item2.idPadre;" >
-              <div class="panel panel-default sombra"  >
+        <div class="col-md-12   Column width {{item2.publica?'':'d-none'}}" *ngIf="item.id == item2.idPadre;">
+          <div class="panel panel-default sombra">
 
-                  <div class="panel-body">
-                      <div class="table-responsive">
-                          <table class="table table-hover"  >
-                              <thead>
-                                  <tr>
-                                      <th colspan="2">{{item2.nombre}}</th>
-                                  </tr>
-                              </thead>
-                              <tbody>
-                                  <tr>
-                                      <td><p >Resumen</p> </td>
-                                      <td>
-                                        <label   class="switch  switch-lg danger">
-                                          <div *ngIf="item2.resumen; then pintaSI else pintaNo"></div>
-                                            <ng-template #pintaSI>
-                                              <input  checked id="Resumen_{{item2.id}}" (click)="SetResumen(item2.id,item2.nombre)" type="checkbox"  />
-                                            </ng-template>
-                                            <ng-template #pintaNo>
-                                              <input   id="Resumen_{{item2.id}}" (click)="SetResumen(item2.id,item2.nombre)" type="checkbox"  />
-                                            </ng-template>
-                                            <span></span>
-                                        </label>
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                      <td>Detalle</td>
-                                      <td>
-                                          <label class="switch switch-lg">
-                                            <div *ngIf="item2.detalle; then pintaSId else pintaNod"></div>
-                                              <ng-template #pintaSId>
-                                                <input checked  id="Detalle_{{item2.id}}" (click)="SetDetalle(item2.id,item2.nombre)" type="checkbox"  />
-                                              </ng-template>
-                                              <ng-template #pintaNod>
-                                              <input  id="Detalle_{{item2.id}}" (click)="SetDetalle(item2.id,item2.nombre)" type="checkbox"  />
-                                              </ng-template>
-                                            <span></span>
-                                          </label>
-                                      </td>
-                                  </tr>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th colspan="2">{{item2.nombre}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>Resumen</p>
+                      </td>
+                      <td>
+                        <label class="switch  switch-lg danger">
+                          <div *ngIf="item2.resumen; then pintaSI else pintaNo"></div>
+                          <ng-template #pintaSI>
+                            <input checked id="Resumen_{{item2.id}}" (click)="SetResumen(item2.id,item2.nombre)" type="checkbox" />
+                          </ng-template>
+                          <ng-template #pintaNo>
+                            <input id="Resumen_{{item2.id}}" (click)="SetResumen(item2.id,item2.nombre)" type="checkbox" />
+                          </ng-template>
+                          <span></span>
+                        </label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Detalle</td>
+                      <td>
+                        <label class="switch switch-lg">
+                          <div *ngIf="item2.detalle; then pintaSId else pintaNod"></div>
+                          <ng-template #pintaSId>
+                            <input checked id="Detalle_{{item2.id}}" (click)="SetDetalle(item2.id,item2.nombre)" type="checkbox" />
+                          </ng-template>
+                          <ng-template #pintaNod>
+                            <input id="Detalle_{{item2.id}}" (click)="SetDetalle(item2.id,item2.nombre)" type="checkbox" />
+                          </ng-template>
+                          <span></span>
+                        </label>
+                      </td>
+                    </tr>
 
-                                  <tr>
-                                      <!-- <td colspan="1">
+                    <tr>
+                      <!-- <td colspan="1">
                                         <form class="example-form">
                                               <mat-form-field class="example-full-width">
                                                 <textarea matInput placeholder="Descripcion"></textarea>
@@ -99,12 +100,12 @@
                                           <button (click)="Descripcion()" class="mb-sm btn btn-success btn-outline" type="button">Guardar</button>
 
                                         </td> -->
-                                  </tr>
-                              </tbody>
-                          </table>
-                      </div>
-                  </div>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -38,7 +38,7 @@ export class DialogCancelRequiComponent implements OnInit {
   ) {
 
     this.formComentario = new FormGroup({
-      comentario: new FormControl('', [Validators.required, Validators.maxLength(500), Validators.minLength(30)])
+      comentario: new FormControl('', [Validators.required, Validators.maxLength(500), Validators.minLength(50)])
     });
   }
 
@@ -79,9 +79,10 @@ export class DialogCancelRequiComponent implements OnInit {
 
   cancelRequisicion() {
     debugger;
-    var comentarioReclutador = this.formComentario.get('comentario').value;
+    var comentarioReclutador = this.formComentario.get('comentario').value.trim();
     this.loading = true;
-    this.service.cancelRequisicion(this.infoCancelRequi)
+    if(comentarioReclutador.length >= 50){
+      this.service.cancelRequisicion(this.infoCancelRequi)
       .subscribe(data => {
         if (data == 200) {
           let comentario = {
@@ -106,6 +107,12 @@ export class DialogCancelRequiComponent implements OnInit {
       }, err => {
         console.log(err);
       });
+    }
+    else{
+      this.popToast('warning', 'Requisición', 'Los caracteres mínimos del motivo de cancelacion son 50 sin espacios en blanco al final.');
+      this.loading = false;
+    }
+   
   }
 
   onCloseDialog() {
