@@ -214,7 +214,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = true;
     }
-    else if(estatusId == 0)
+    else if(estatusId == 9999)
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
@@ -458,8 +458,9 @@ export class DtRequisicionComponent implements OnInit {
     });
     var window: Window
     dialogDlt.afterClosed().subscribe(result => {
-      this.ValidarEstatus(0);
+      
       this.refreshTable();
+      this.ValidarEstatus(8);
     });
   }
 
