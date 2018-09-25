@@ -385,7 +385,6 @@ export class DtRequisicionComponent implements OnInit {
 
   updataStatus(estatusId, estatus)
   {
-    debugger;
     var datos = {estatusId: estatusId, requisicionId: this.element.id }
     var emails = [];
     if(estatusId == 8)
@@ -459,6 +458,7 @@ export class DtRequisicionComponent implements OnInit {
     });
     var window: Window
     dialogDlt.afterClosed().subscribe(result => {
+      this.ValidarEstatus(0);
       this.refreshTable();
     });
   }
