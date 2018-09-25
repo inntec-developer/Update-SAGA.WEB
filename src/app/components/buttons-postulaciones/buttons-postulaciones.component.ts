@@ -78,7 +78,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
       this.pst = true;
-      this.liberado = true;
+      this.liberado = false;
       this.contratado = true;
     }
     else if(estatus === 17) //cita reclutamiento
@@ -304,7 +304,6 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
           this.onChangeTable(this.config)
 
-          debugger;
           if(estatusId === 17 || estatusId === 21 || estatusId === 27 || estatusId === 24)
           {
             var datos = {candidatoId: this.candidatoId, estatusId: estatusId, vacante: this.vacante, nombre: this.dataSource[idx]['nombre']};

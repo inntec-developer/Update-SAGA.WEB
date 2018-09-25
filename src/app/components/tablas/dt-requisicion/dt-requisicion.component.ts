@@ -388,6 +388,7 @@ export class DtRequisicionComponent implements OnInit {
 
   updataStatus(estatusId, estatus)
   {
+    debugger;
     var datos = {estatusId: estatusId, requisicionId: this.element.id }
     var emails = [];
     if(estatusId == 8)
@@ -395,11 +396,11 @@ export class DtRequisicionComponent implements OnInit {
       var idx = this.rows.findIndex(x => x.id == this.element.id);
       if (this.rows[idx]['enProceso'] > 0 || this.rows[idx]['Postulados'] > 0) {
         this.rows[idx]['enProcesoN'].forEach(element => {
-            emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId })
+            emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
         });
 
         this.rows[idx]['postuladosN'].forEach(element => {
-          emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId })
+          emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
         })
 
         this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
@@ -418,18 +419,18 @@ export class DtRequisicionComponent implements OnInit {
           this.rows[idx]['estatus'] = estatus;
           this.rows[idx]['estatusId'] = estatusId;
 
-          if (this.rows[idx]['enProceso'] > 0 || this.rows[idx]['Postulados'] > 0 && (estatusId == 35 || estatusId == 8)) {
+          if (this.rows[idx]['enProceso'] > 0 || this.rows[idx]['Postulados'] > 0 && (estatusId >= 34 && estatusId <=37 || estatusId == 8)) {
             this.rows[idx]['enProcesoN'].forEach(element => {
               if(element.estatusId != 24)
               {
-                emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre })
+                emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
               }
             });
 
             this.rows[idx]['postuladosN'].forEach(element => {
               if(element.statusId != 5 && element.statusId != 6)
               {
-                emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre })
+                emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
               }
             })
 
