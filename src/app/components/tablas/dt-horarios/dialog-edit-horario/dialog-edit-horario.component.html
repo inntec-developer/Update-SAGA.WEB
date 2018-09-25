@@ -6,20 +6,35 @@
   <div class="col-md-12">
     <mat-form-field>
       <input type="number" class="form-control" matInput placeholder="Numero de Vacantes" [(ngModel)]="vacanteN" max="999"
-        min="1" required>
+        value="0" min="0" required>
       <mat-hint align="start">
         <strong>El registro de vacantes es de 1 a 999.</strong>
       </mat-hint>
     </mat-form-field>
   </div>
 </div>
-<br>
+<div class="row" *ngIf="msWarning || msgDanger ">
+  <div class="col-md-12">
+    <alert type="danger" *ngIf="msgDanger">
+      <strong>Oops...!</strong> Ocurrio un error al intentar modificar la vacante
+    </alert>
+    <alert type="warning" *ngIf="msWarning">
+      <strong>Oops...!</strong> Por lo menos un horario debe contar con 1 vacante.
+    </alert>
+  </div>
+</div>
 <mat-divider></mat-divider>
-<div class="modal-footer">
-  <btn-closed class="float-right pull-right" [text]="textBtnCerrar" (click)="onCloseDialog()"></btn-closed>
-  <btn-accept class="float-right pull-right" [text]="textBtnAceptar" (click)="updateVacante()" *ngIf="vacanteN > 0 && vacanteN <= 999"> </btn-accept>
+<div class="modal-footer float-right">
   <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
-  
+  <button type="button" class="btn btn-xs btn-labeled btn-outline-danger mb-1" (click)="onCloseDialog()">
+    <span class="btn-label">
+      <i class="fa fa-times"></i>
+    </span> Cancelar
+  </button>
+  <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-1" (click)="updateVacante()" [disabled]="vacanteN < 0 || vacanteN > 999">
+    <span class="btn-label">
+      <i class="fa fa-check"></i>
+    </span> Aceptar
+  </button>
   <hr>
-  <p *ngIf="msgDanger" class="alert alert-danger text-center" role="alert"> Error al actualizar las vacantes.</p>
 </div>

@@ -48,8 +48,6 @@ export class RequisicionNuevaComponent implements OnInit {
         this.serviceRequisiciones.createNewRequi(datas).subscribe(data => {
           this.requisicionId = data.id;
           this.folio = data.folio;
-          // this.updateRequi.getInformacionRequisicio(this.folio);
-          this.updateRequi.getInformacionRequisicio(this.folio);
         });
       }
     });

@@ -106,13 +106,7 @@ export class RequisicionesService {
 
   getVacantesDamfo(damfoId: string): Observable<any> {
     let params = new HttpParams().set('Id', damfoId);
-    return this._httpClient.get(this.urleGetVacantesDamgfo, { params: params })
-      .pipe(
-        tap( // Log the result or error
-          data => this.log(this.urleGetVacantesDamgfo, data),
-          error => this.logError(this.urleGetVacantesDamgfo, error)
-        )
-      );
+    return this._httpClient.get(this.urleGetVacantesDamgfo, { params: params });
   }
   logError(urleGetVacantesDamgfo: string, error: any): any {
     throw new Error("Method not implemented.");

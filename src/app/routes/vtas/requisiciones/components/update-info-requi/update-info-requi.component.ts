@@ -1,4 +1,4 @@
-import { AfterContentChecked, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterContentChecked, Component, Input, OnInit, ViewChild, SimpleChanges } from '@angular/core';
 import { CatalogosService, RequisicionesService } from '../../../../../service';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -98,10 +98,20 @@ export class UpdateInfoRequiComponent implements OnInit {
     }
 
     ngAfterViewInit(): void {
+      if(this.Folios != null){
         this.getInformacionRequisicio(this.Folios)
+      }
     }
     getAsignacion(event){
       this.asignadosRequi = event;
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+      //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+      //Add '${implements OnChanges}' to the class.
+      if (changes.Folios && !changes.Folios.isFirstChange()) {
+        this.getInformacionRequisicio(this.Folios);
+      }
     }
 
     public getInformacionRequisicio(folio){
