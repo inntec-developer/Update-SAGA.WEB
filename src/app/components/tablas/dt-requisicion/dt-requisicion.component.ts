@@ -404,10 +404,11 @@ export class DtRequisicionComponent implements OnInit {
 
         this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
           console.log(data)
+  
+
+          //this.onChangeTable(this.config);
         });
       }
-
-      
     }
     else
     {
@@ -474,9 +475,9 @@ export class DtRequisicionComponent implements OnInit {
     dialogCnc.afterClosed().subscribe(result => {
       if(result == 1)
       {
-
         this.updataStatus(8, 'Cancelar')
       }
+      this.ValidarEstatus(8);
       this.refreshTable();
     })
   }

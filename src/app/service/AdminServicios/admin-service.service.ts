@@ -332,11 +332,20 @@ export class AdminServiceService {
   UpdateUsuario(data: any) : Observable<any>
   {
     console.log(data)
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    return this.http.post(this.UrlUpdateUsuario, JSON.stringify(data), options)
-            .map(result => result.json())
-            .catch(this.handleError);
+    let params = new HttpParams().set('datos', data)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+
+    return this._httpClient.post(this.UrlUpdateUsuario, JSON.stringify(data), httpOptions )
+
+    // let headers = new Headers({'Content-Type': 'application/json'});
+    // let options = new RequestOptions({headers: headers});
+    // return this.http.post(this.UrlUpdateUsuario, JSON.stringify(data), options)
+    //         .map(result => result.json())
+    //         .catch(this.handleError);
 
   }
 
