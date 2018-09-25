@@ -21,6 +21,7 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
   IdDireccion: string;
   textBtnCancel: string;
   textBtnAccept: string;
+  DisabledButton: boolean = false;
   constructor(
     public dialogRef: MatDialogRef<DialogdamfoComponent>,
     private _Router: Router,
@@ -74,12 +75,16 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
   }
 
   createRequisicion(){
-    if(this.IdDireccion != null){
-      this._Router.navigate(['/ventas/requisicionNueva', this.IdDamfo, this.IdDireccion], {skipLocationChange:true});
-      this.onNoClick();
-    }else{
-      this.popToast('error', 'Oops!!','Seleccione una dirección para continuar' );
-    }
+    this.DisabledButton = true;
+    setTimeout(() => {
+      this.DisabledButton = false;
+    }, 5000);
+    // if(this.IdDireccion != null){
+    //   this._Router.navigate(['/ventas/requisicionNueva', this.IdDamfo, this.IdDireccion], {skipLocationChange:true});
+    //   this.onNoClick();
+    // }else{
+    //   this.popToast('error', 'Oops!!','Seleccione una dirección para continuar' );
+    // }
 
   }
 

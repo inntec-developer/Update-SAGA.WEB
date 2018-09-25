@@ -21,7 +21,7 @@ import { UpdateRequisicion } from '../../../../../models/vtas/Requisicion'
               {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
             ]
 })
-export class UpdateInfoRequiComponent implements OnInit, AfterContentChecked {
+export class UpdateInfoRequiComponent implements OnInit {
   @Input() Folios: any;
   @ViewChild('asginaciones') asignaciones: AsignarRequisicionComponent;
   public RequiId :string;
@@ -97,10 +97,8 @@ export class UpdateInfoRequiComponent implements OnInit, AfterContentChecked {
       });
     }
 
-    ngAfterContentChecked() {
-      if(!this.checked){
+    ngAfterViewInit(): void {
         this.getInformacionRequisicio(this.Folios)
-      }
     }
     getAsignacion(event){
       this.asignadosRequi = event;
@@ -123,7 +121,6 @@ export class UpdateInfoRequiComponent implements OnInit, AfterContentChecked {
               fch_Cumplimiento: data.fch_Cumplimiento,
               confidencial: data.confidencial,
           });
-            this.checked = true;
             this.minLimitDate = data.fch_Creacion;
         });
       }

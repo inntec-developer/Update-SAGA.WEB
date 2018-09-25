@@ -28,6 +28,7 @@ export class ApiConection {
   /* Reclutamiento */
   public static Damfo290GetById = 'Damfo290/getById?id=';
   public static GetViewDamfos = "Damfo290/getViewDamfos";
+  public static GetVacantesDamfo = "Damfo290/getVacantesDamfo";
 
   /* Ventas */
   public static AddressCliente = "Requisiciones/getAddress?Id=";

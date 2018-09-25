@@ -37,5 +37,9 @@
 <br>
 <div class="modal-footer">
   <btn-closed [text]="textBtnCancel" (click)="onNoClick()"></btn-closed>
-  <btn-accept [text]="textBtnAccept" (click)="createRequisicion()"></btn-accept>
+  <button type="button" class="btn btn-labeled btn-outline-success mb-2" (click)="createRequisicion()" [disabled]="DisabledButton">
+    <span class="btn-label">
+      <i class="fa fa-check"></i>
+    </span> Aceptar
+  </button>
 </div>
