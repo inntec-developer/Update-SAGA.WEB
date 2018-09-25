@@ -1,6 +1,5 @@
-import { element } from 'protractor';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { DialogActivarRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-activar-requi/dialog-activar-requi.component';
@@ -10,7 +9,6 @@ import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from '../../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../../service';
-import { forEach } from '@angular/router/src/utils/collection';
 
 declare var $: any;
 
@@ -333,7 +331,6 @@ export class DtRequisicionComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
-    let index = this.dataSource.indexOf(data.row);
     this.RequisicionId = data.id
     this.estatusId = data.estatusId;
     this.enProceso = data.enProceso;

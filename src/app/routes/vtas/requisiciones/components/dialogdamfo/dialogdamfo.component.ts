@@ -6,6 +6,9 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material'
 
 import { RequisicionesService } from '../../../../../service/index';
 
+
+const swal = require('sweetalert');
+
 //Services
 
 
@@ -22,6 +25,8 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
   textBtnCancel: string;
   textBtnAccept: string;
   DisabledButton: boolean = false;
+  HorariosVacantes: any;
+  
   constructor(
     public dialogRef: MatDialogRef<DialogdamfoComponent>,
     private _Router: Router,
@@ -76,15 +81,25 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
 
   createRequisicion(){
     this.DisabledButton = true;
-    setTimeout(() => {
+    var horarios = '';
+    if(this.IdDireccion != null){
+      this.service.getVacantesDamfo(this.IdDamfo).subscribe(data => {
+        this.HorariosVacantes = data;
+        console.log(this.HorariosVacantes);
+        this.DisabledButton = false;
+        this.HorariosVacantes.forEach(element => {
+          horarios = horarios + element.nombre + ' (' + element.vacantes + ') \n';
+        });
+        swal('Requisición Generada.!', 'Vacante(s) registrada(s) del DAM-FO-290: \n' + horarios + '\n El número de vacante(s) en la requisición van en 0 (cero), realice los cambios correspondientes.', 'success');
+      }, err => {
+        console.log(err);
+      });
+      this._Router.navigate(['/ventas/requisicionNueva', this.IdDamfo, this.IdDireccion], {skipLocationChange:true});
+      this.onNoClick();
+    }else{
+      this.popToast('error', 'Oops!!','Seleccione una dirección para continuar' );
       this.DisabledButton = false;
-    }, 5000);
-    // if(this.IdDireccion != null){
-    //   this._Router.navigate(['/ventas/requisicionNueva', this.IdDamfo, this.IdDireccion], {skipLocationChange:true});
-    //   this.onNoClick();
-    // }else{
-    //   this.popToast('error', 'Oops!!','Seleccione una dirección para continuar' );
-    // }
+    }
 
   }
 

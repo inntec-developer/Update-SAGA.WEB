@@ -14,11 +14,10 @@ import { Vacante } from '../../../../models/models';
 export class DialogEditHorarioComponent implements OnInit {
   RequisicionId: any;
   HorarioId: any;
-  vacanteN: any;
+  vacanteN: any = 0;
   result: any;
   msgDanger: boolean;
-  textBtnCerrar: string;
-  textBtnAceptar: string;
+  msWarning: boolean;
   loading: boolean;
   public formVacantes : FormGroup;
 
@@ -28,8 +27,6 @@ export class DialogEditHorarioComponent implements OnInit {
     private dialogVacantes : MatDialogRef<DialogEditHorarioComponent>,
     public Vacante : Vacante,
   ) {
-    this.textBtnCerrar = 'Cancelar';
-    this.textBtnAceptar = 'Guardar';
    }
 
   ngOnInit() {
@@ -64,12 +61,19 @@ export class DialogEditHorarioComponent implements OnInit {
             });
         },2000);
       }
-      else{
+      if(this.result == 204){
+        this.loading = false;
+        this.msWarning = true;
+        // setTimeout(() =>{
+        //   this.msWarning = false;
+        // },7000);
+      }
+      if(this.result == 404){
+        this.loading = false;
         this.msgDanger = true;
-        setTimeout(() =>{
-          this.msgDanger = false;
-          this.loading = false;
-        },2000);
+        // setTimeout(() =>{
+        //   this.msgDanger = false;
+        // },7000);
       }
     });
   }
