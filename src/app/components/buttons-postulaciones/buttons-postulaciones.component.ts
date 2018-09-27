@@ -271,11 +271,11 @@ export class ButtonsPostulacionesComponent implements OnInit {
   {
     if(this.candidatoId != null)
     {
-      if( estatusId === 10 || estatusId === 12)
+      if( estatusId === 10 )
       {
         var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 1};
       }
-      else if( estatusId == 13 || estatusId == 14 || estatusId == 15)
+      else if( estatusId >= 12 && estatusId <= 15)
       {
         var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 2};
       }

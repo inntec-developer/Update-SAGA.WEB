@@ -103,7 +103,7 @@ export class DtRequisicionComponent implements OnInit {
 
   ValidarEstatus(estatusId)
   {
-
+    debugger;
     if(estatusId == 1 || estatusId == 4)
     {
       this.gbc = true; //garantía busqueda candidato
@@ -164,7 +164,7 @@ export class DtRequisicionComponent implements OnInit {
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
-      this.cc = true; //cubierta por el cliente
+      this.cc = false; //cubierta por el cliente
       this.crm = true; //cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
       this.cancelar = true;
@@ -181,7 +181,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = false;
     }
-    else if(estatusId == 34 && this.element.tipoReclutamientoId == 1)
+    else if(estatusId == 34 || estatusId == 36 && this.element.tipoReclutamientoId == 1)
     {
       this.gbc = false; //garantía busqueda candidato
       this.cubierta = true;
@@ -385,6 +385,7 @@ export class DtRequisicionComponent implements OnInit {
 
   updataStatus(estatusId, estatus)
   {
+    debugger;
     var datos = {estatusId: estatusId, requisicionId: this.element.id }
     var emails = [];
     if(estatusId == 8)
@@ -392,11 +393,11 @@ export class DtRequisicionComponent implements OnInit {
       var idx = this.rows.findIndex(x => x.id == this.element.id);
       if (this.rows[idx]['enProceso'] > 0 || this.rows[idx]['Postulados'] > 0) {
         this.rows[idx]['enProcesoN'].forEach(element => {
-            emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
+            emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
         });
 
         this.rows[idx]['postuladosN'].forEach(element => {
-          emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
+          emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
         })
 
         this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
@@ -419,14 +420,14 @@ export class DtRequisicionComponent implements OnInit {
             this.rows[idx]['enProcesoN'].forEach(element => {
               if(element.estatusId != 24)
               {
-                emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
+                emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
               }
             });
 
             this.rows[idx]['postuladosN'].forEach(element => {
               if(element.statusId != 5 && element.statusId != 6)
               {
-                emails.push({ vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
+                emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
               }
             })
 
