@@ -8,18 +8,39 @@
         <label class="text-primary">Filtrado de Candidatos</label>
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <form class="find-form">
+    <mat-divider></mat-divider>
+    <br>
+    <form id="PalabraClave">
+      <div class="row">
+        <div class="col-md-4 col-lg-4 col-sm-8">
+          <mat-form-field>
+            <input matInput placeholder="Palabra Clave" [(ngModel)]="palabraClave" [ngModelOptions]="{standalone: true}"
+              (keyup.enter)="buscarPalabraClave(palabraClave)" matTooltip="{{toolTipePC}}">
+            <button matSuffix mat-icon-button aria-label="Clear" matTooltip="Buscar por palabra clave" (click)="buscarPalabraClave(palabraClave)">
+              <em class="fa fa-search "></em>
+            </button>
+            <button mat-button *ngIf="palabraClave" matSuffix mat-icon-button aria-label="Clear" (click)="palabraClave=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <img *ngIf="loadingPC" style="margin-left: 10px; margin-right: 10px;" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+        </div>
+      </div>
+    </form>
+    <form class="find-form" (keyup.enter)="Buscar()">
       <hr>
       <div class="row">
         <!-- Inicio de filtros. Filtro de Paises. -->
         <div class="col-md-2">
           <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="País" aria-label="Country" [matAutocomplete]="cn" [formControl]="countryCtrl" (blur)="cargarEstados()">
+            <input matInput placeholder="País" aria-label="Country" [matAutocomplete]="cn" [formControl]="countryCtrl"
+              (blur)="cargarEstados()">
             <mat-autocomplete #cn="matAutocomplete">
               <mat-option *ngFor="let country of filteredCountry | async" [value]="country.pais">
                 <div class="row">
                   <div class="col-md-2">
-                    <img style="vertical-align:middle;" aria-hidden src="assets/img/flags-mini/{{country.pais}}.png" height="12" />
+                    <img style="vertical-align:middle;" aria-hidden src="assets/img/flags-mini/{{country.pais}}.png"
+                      height="12" />
                   </div>
                   <div class="col-md-4">
                     <small>{{ country.pais }}</small>
@@ -32,7 +53,8 @@
         <!-- Filtro de Estados -->
         <div class="col-md-2">
           <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="Estado" aria-label="State" [matAutocomplete]="st" [formControl]="StatesCtrl" (blur)="cargarMunicipios()">
+            <input matInput placeholder="Estado" aria-label="State" [matAutocomplete]="st" [formControl]="StatesCtrl"
+              (blur)="cargarMunicipios()">
             <mat-autocomplete #st="matAutocomplete">
               <mat-option *ngFor="let state of filteredStates | async" [value]="state.estado">
                 <div class="row">
@@ -47,7 +69,8 @@
         <!-- Filtro de Municipios -->
         <div class="col-md-2">
           <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="Municipio" aria-label="Municipio" [matAutocomplete]="mn" [formControl]="MunicipioCtrl" (blur)="cargarColonias()">
+            <input matInput placeholder="Municipio" aria-label="Municipio" [matAutocomplete]="mn" [formControl]="MunicipioCtrl"
+              (blur)="cargarColonias()">
             <mat-autocomplete #mn="matAutocomplete">
               <mat-option *ngFor="let municipio of filteredMunicipio | async" [value]="municipio.municipio">
                 <div class="row">
@@ -119,7 +142,8 @@
         <!-- Filtro de Salario -->
         <div class="col-md-2">
           <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="Salario" [formControl]="salarioCtrl" [(ngModel)]="salario" type="number" #Salario>
+            <input matInput placeholder="Salario" [formControl]="salarioCtrl" [(ngModel)]="salario" type="number"
+              #Salario>
             <span matPrefix>$&nbsp;</span>
             <span matSuffix>.00</span>
           </mat-form-field>
@@ -142,7 +166,8 @@
         <!-- Filtro de Edad -->
         <div class="col-md-2 ">
           <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput type="number" placeholder="Edad" min="18" max="60" [formControl]="edadCtrl" [(ngModel)]="edad" #Edad>
+            <input matInput type="number" placeholder="Edad" min="18" max="60" [formControl]="edadCtrl" [(ngModel)]="edad"
+              #Edad>
           </mat-form-field>
         </div>
         <!-- Filtro de Reubicacion -->
@@ -154,7 +179,8 @@
         <!-- Filtro de Persona con discapasidad -->
         <div class="col-md-2 ">
           <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="Persona con discapacidad" aria-label="Personadiscapacidad" [matAutocomplete]="pcd" [formControl]="pdiscapacidadCtrl">
+            <input matInput placeholder="Persona con discapacidad" aria-label="Personadiscapacidad" [matAutocomplete]="pcd"
+              [formControl]="pdiscapacidadCtrl">
             <mat-autocomplete #pcd="matAutocomplete">
               <mat-option *ngFor="let pdiscapacidad of filteredpdiscapacidad| async" [value]="pdiscapacidad.tipoDiscapacidad">
                 <div class="row">
@@ -192,7 +218,8 @@
         <!-- Filtro de Nivel de estudios -->
         <div class="col-md-2 ">
           <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="Nivel de estudios" aria-label="Nivelestudio" [matAutocomplete]="ne" [formControl]="nvestudiosCtrl">
+            <input matInput placeholder="Nivel de estudios" aria-label="Nivelestudio" [matAutocomplete]="ne"
+              [formControl]="nvestudiosCtrl">
             <mat-autocomplete #ne="matAutocomplete">
               <mat-option *ngFor="let nvestudio of filterednvestudios | async" [value]="nvestudio.gradoEstudio">
                 <div class="row">
@@ -223,26 +250,28 @@
       <hr>
     </form>
     <!-- <div class="container"> -->
-      <div class="row">
-        <div class="col-12">
-          <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="Buscar()" matTooltip="Busca candidatos">
-            <span class="btn-label ">
-              <i class="fa fa-search "></i>
-            </span>Buscar
-          </button>
-          <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-green mb-1" type="button" (click)="LimpiarFiltro()" matTooltip="Limpia todo los filtros">
-            <span class="btn-label ">
-              <i class="fa fa-eraser "></i>
-            </span>Limpiar filtros
-          </button>
-          <!-- <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="BuscarMisCandidatos()" matTooltip="Mis Apartados">
+    <div class="row">
+      <div class="col-12">
+        <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="Buscar()"
+          matTooltip="Busca candidatos">
+          <span class="btn-label ">
+            <i class="fa fa-search "></i>
+          </span>Buscar
+        </button>
+        <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-green mb-1" type="button" (click)="LimpiarFiltro()"
+          matTooltip="Limpia todo los filtros">
+          <span class="btn-label ">
+            <i class="fa fa-eraser "></i>
+          </span>Limpiar filtros
+        </button>
+        <!-- <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="BuscarMisCandidatos()" matTooltip="Mis Apartados">
             <span class="btn-label ">
               <i class="fa fa-users"></i>
             </span>Mis Candidatos
           </button> -->
-          <img *ngIf="loading" style="margin-left: 10px; margin-right: 10px;"  src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
-        </div>
+        <img *ngIf="loading" style="margin-left: 10px; margin-right: 10px;" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
       </div>
+    </div>
     <!-- </div> -->
   </mat-expansion-panel>
 </mat-accordion>

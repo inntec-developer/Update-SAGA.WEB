@@ -71,6 +71,7 @@ export class ApiConection {
   public static VacantesDtl = 'Candidatos/getvacantesdtl';
   public static ComentariosCandidato = 'Candidatos/getComentarios';
   public static AddComentariosCandidato = 'Candidatos/addComentarios';
+  public static GetCandidatoPalabraClave = 'Candidatos/getCandidatoPalabraClave';
 
   /* Vacantes */
   public static getRequis = '/dvacante/get';

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 
 import { CandidatosService } from '../../service/Candidatos/candidatos.service';
@@ -12,7 +12,8 @@ import { startWith } from 'rxjs/operators';
   selector: 'app-busqueda-candidatos',
   templateUrl: './busqueda-candidatos.component.html',
   styleUrls: ['./busqueda-candidatos.component.scss'],
-  providers: [CandidatosService]
+  providers: [CandidatosService],
+  encapsulation: ViewEncapsulation.None
 })
 export class BusquedaCandidatosComponent implements OnInit {
   @Output('filtro') filtro: EventEmitter<any> = new EventEmitter<any>();
@@ -89,6 +90,10 @@ export class BusquedaCandidatosComponent implements OnInit {
   filtroidioma: any;
   loading: boolean;
 
+  toolTipePC: string;
+  alerts: any;
+  loadingPC: boolean;
+
 
   constructor(
     private service: CandidatosService
@@ -109,6 +114,7 @@ export class BusquedaCandidatosComponent implements OnInit {
     this.checkedVCtrl = new FormControl();
     this.nvestudiosCtrl = new FormControl();
     this.idiomasCtrl = new FormControl();
+    this.toolTipePC = 'Este campo realizara la busqueda en las secciones acerca de mí y funciones de acuerdo a su experiencia profesional.'
   }
 
   ngOnInit() {
@@ -315,6 +321,15 @@ export class BusquedaCandidatosComponent implements OnInit {
     })
   }
 
+  buscarPalabraClave(palabraclave: string){
+    this.loadingPC = true;
+    this.service.getcandidatosPalabraClave(palabraclave).subscribe(data => {
+      this.Candidatos = data;
+      this.filtro.emit(this.Candidatos);
+      this.loadingPC = false;
+    })
+  }
+
   LimpiarFiltro() {
     this.countryCtrl.reset();
     this.filtropais = null
@@ -343,5 +358,9 @@ export class BusquedaCandidatosComponent implements OnInit {
     this.filtronv = null
     this.idiomasCtrl.reset();
     this.filtroidioma = null
+  }
+
+  onClosed(dismissedAlert: any): void {
+    this.alerts = this.alerts.filter(alert => alert !== dismissedAlert);
   }
 }
