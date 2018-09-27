@@ -103,7 +103,6 @@ export class DtRequisicionComponent implements OnInit {
 
   ValidarEstatus(estatusId)
   {
-    debugger;
     if(estatusId == 1 || estatusId == 4)
     {
       this.gbc = true; //garantía busqueda candidato

@@ -28,14 +28,16 @@
           (click)="SetStatus(29, 'B&uacute;squeda Candidatos')" matTooltip="B&uacute;squeda de Candidatos">
           <em class="fa fa-search"></em>
         </button>
+        <button class="margen" [disabled]="ecc" [ngClass]="ecc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-green'"
+        type="button" (click)="SetStatus(30, 'Env&iacute;o a Cliente')" matTooltip="Env&iacute;o Candidato a Cliente">
+        <em class="fa fa-truck"></em>
+      </button>
+      
         <button class="margen" [disabled]="sc" [ngClass]="sc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-green'" type="button"
           (click)="SetStatus(32, 'Socioeconómico')" matTooltip="Socioeconómico">
           <em class="fa fa-bar-chart"></em>
         </button>
-        <button class="margen" [disabled]="ecc" [ngClass]="ecc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-green'"
-          type="button" (click)="SetStatus(30, 'Env&iacute;o a Cliente')" matTooltip="Env&iacute;o Candidato a Cliente">
-          <em class="fa fa-truck"></em>
-        </button>
+       
 
         <button class="margen" [disabled]="ec" [ngClass]="ec ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-info'" type="button"
           (click)="SetStatus(33, 'Espera de Ctns')" matTooltip="En Espera de Contrataci&oacute;n">

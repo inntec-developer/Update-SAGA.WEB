@@ -92,6 +92,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   getVacantes() {
     this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
+      console.log(data)
     });
   }
 
@@ -104,6 +105,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
         var idx = this.rows.findIndex(x => x.id == this.requi.id);
         this.rows[idx]['estatus'] = estatus;
         this.rows[idx]['estatusId'] = estatusId;
+        this.ValidarEstatus(estatusId)
         this.onChangeTable(this.config);
         this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
 
@@ -274,7 +276,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
   public onCellClick(data: any): any {
     data.selected ? data.selected = false : data.selected = true;
     this.estatusId = data.estatusId;
-    this.ValidarEstatus(this.estatusId)
     this.element = data;
     this.vBtra = data.vBtra;
     this.id = data.id;
@@ -284,6 +285,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.clienteId = data.clienteId;
     this.aprobador = data.aprobador;
     this.confidencial = data.confidencial
+    this.ValidarEstatus(this.estatusId)
+
     if(this.enProceso > 0){
       this.pds = false;
     }else{
@@ -360,6 +363,75 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.pausa = true;
       this.asignar = false;
       this.disenador = false;
+    }
+    else if(estatusId == 30)
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = false; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = false; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = false;
+      this.asignar = false;
+      this.disenador = false;
+    }
+    else if(estatusId == 32)
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = false; //espera contratacion
+      this.nbc = false; //nueva busqueda candidato
+      this.pausa = false;
+      this.asignar = false;
+      this.disenador = false;
+
+    }
+    else if(estatusId == 33)
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = false; //nueva busqueda candidato
+      this.pausa = false;
+      this.asignar = false;
+      this.disenador = false;
+
+    }
+    else if(estatusId == 39)
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = false; //espera contratacion
+      this.nbc = false; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = false;
+      this.disenador = false;
+
+    }
+    else if(estatusId == 31)
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = false; //socieconomico
+      this.ecc = false; //envío candidato cliente
+      this.ec = false; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = false;
+      this.asignar = false;
+      this.disenador = false;
+
+    }
+    else if(this.element.vacantes == this.element.contratados) {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = false; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = true;
+      this.disenador = true;
     }
     else {
       this.bc = false; //busqueda candidato
