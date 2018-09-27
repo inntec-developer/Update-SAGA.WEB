@@ -626,8 +626,9 @@
                 <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones margen"
                   [disabled]="!infoRequiId && !infoFolio" [ngClass]="(!infoRequiId && !infoFolio) ? 'disabled' : 'btn-outline-warning'"
                   matTooltip="Visualizar"><em class="fa fa-eye"></em></button>
-                <button [disabled]="procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === RequisicionId &&  reclutador != usuario || vacante.id === RequisicionId && procesoCandidatoId != 27 "
-                  [ngClass]="( procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === RequisicionId &&  reclutador != usuario ||  vacante.id === RequisicionId && procesoCandidatoId != 27 ) 
+
+                <button [disabled]="!contratados || procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === RequisicionId &&  reclutador != usuario || vacante.id === RequisicionId && procesoCandidatoId != 27 "
+                  [ngClass]="(!contratados || procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === RequisicionId &&  reclutador != usuario ||  vacante.id === RequisicionId && procesoCandidatoId != 27 ) 
                     ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
                   matTooltip="Apartar" (click)="_apartarCandidato()">
                   <em class="fa fa-thumbs-o-up"></em>

@@ -47,6 +47,7 @@ export class InfoCandidatoComponent implements OnInit {
   infoFolio : any = null;
   /*********************************************************/
 
+  contratados = false;
 
   constructor(
     private _serviceCandidato: InfoCandidatoService,
@@ -278,6 +279,9 @@ export class InfoCandidatoComponent implements OnInit {
     }
     this.infoFolio = data.folio;
     this.infoRequiId = data.id;
+
+    data.vacantes == data.contratados ? this.contratados = false : this.contratados = true;
+   
     /* add an class 'active' on click */
     $('#resultDataTableVacantes').on('click', 'tr', function (event: any) {
       //noinspection TypeScriptUnresolvedFunction
