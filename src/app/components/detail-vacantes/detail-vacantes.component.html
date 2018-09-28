@@ -127,7 +127,7 @@
     </mat-expansion-panel-header>
 
     <div class="row">
-      <div class="col-md-4 text-muted">
+      <div class="col-md-6 text-muted">
         <strong class="text-primary">Actividades: </strong>
         <div *ngFor="let actividad of Datos?.requisicion.actividadesRequi;let indice=index" class="row">
           <div class="col-md-12 text-muted">
@@ -136,16 +136,7 @@
         </div>
       </div>
 
-      <div class="col-md-4 text-muted">
-        <strong class="text-primary">Observaciones: </strong>
-        <div *ngFor="let observaciones of Datos?.requisicion.observacionesRequi;let indice=index" class="row">
-          <div class="col-md-12 text-muted">
-            <strong>{{indice+1}}.</strong> {{observaciones.observaciones}}
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4 text-muted">
+      <div class="col-md-6 text-muted">
         <strong class="text-primary">Proceso: </strong>
         <div *ngFor="let proceso of Datos?.requisicion.procesoRequi;let indice=index" class="row">
           <div class="col-md-12 text-muted">
@@ -392,7 +383,11 @@
               <strong class="text-info">Observaciones Confidenciales</strong>
             </mat-panel-description>
           </mat-expansion-panel-header>
-          
+          <div *ngFor="let observaciones of Datos?.requisicion?.observacionesRequi;let indice=index" class="row">
+              <div class="col-md-12 text-muted">
+                <strong>{{indice+1}}.</strong> {{observaciones.observaciones}}
+              </div>
+            </div>
         </mat-expansion-panel>
       </mat-accordion>
     </div>
