@@ -64,7 +64,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
       this.pst = true;
-      this.liberado = false;
+      this.liberado = true;
       this.contratado = true;
     }
     else if(estatus === 24) //contratado
