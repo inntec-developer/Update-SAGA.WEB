@@ -9,7 +9,6 @@ import 'rxjs/add/observable/throw';
 import { Headers, Http, HttpModule, RequestOptions, Response } from '@angular/http';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-import { ApiConection } from './../api-conection.service';
 import { ApiConection } from '../api-conection.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
