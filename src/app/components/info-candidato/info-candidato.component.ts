@@ -72,6 +72,7 @@ export class InfoCandidatoComponent implements OnInit {
     if (changes.CandidatoId && !changes.CandidatoId.isFirstChange()) {
       this.ngOnInit();
       this.getPostulaciones();
+      this.refreshTable_v()
       this.vacante = {};
       this.procesoCandidatoId = 0;
       this.Status = '';
@@ -246,6 +247,7 @@ export class InfoCandidatoComponent implements OnInit {
   }
 
   public refreshTable_v() {
+    debugger;
     this.getMisVacates();
     setTimeout(() => {
       this.columns.forEach(element => {

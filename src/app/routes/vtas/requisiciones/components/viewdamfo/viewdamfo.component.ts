@@ -28,11 +28,13 @@ export class ViewdamfoComponent implements OnInit {
   tipoReclutamiento: any;
   nombrePerfil: any;
   sueldoMinimo: any;
+  sueldoMaximo: any;
   nombreComercial: any;
   razonSocial: any;
   rfc: any;
   giroEmpresa: any;
   actividadEmpresa: any;
+
 
 
 
@@ -70,7 +72,7 @@ export class ViewdamfoComponent implements OnInit {
               this.actividadEmpresa = data.cliente.actividadEmpresas.actividadEmpresa;
               this.nombrePerfil = data.nombrePerfil;
               this.sueldoMinimo = data.sueldoMinimo;
-              this.sueldoMinimo = data.sueldoMaximo;
+              this.sueldoMaximo = data.sueldoMaximo;
               this.claseReclutamiento = data.claseReclutamiento.clasesReclutamiento;
               this.tipoReclutamiento = data.tipoReclutamiento.tipoReclutamiento;
               this.spinner.hide();
@@ -88,7 +90,7 @@ export class ViewdamfoComponent implements OnInit {
       claseReclutamiento: this.claseReclutamiento,
       tipoReclutamiento: this.tipoReclutamiento,
       sueldoMinimo: this.sueldoMinimo,
-      sueldoMaximo: this.sueldoMinimo,
+      sueldoMaximo: this.sueldoMaximo,
       nombrePerfil: this.nombrePerfil,
       id: this.damfoId
     }

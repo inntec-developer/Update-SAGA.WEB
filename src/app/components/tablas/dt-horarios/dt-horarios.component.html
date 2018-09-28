@@ -24,6 +24,10 @@
               <td class="text-center"> {{row.aHora | date:"HH:mm"}}</td>
               <td class="text-center"> {{row.numeroVacantes}}</td>
               <td class="text-center"> {{row.especificaciones}}</td>
+              <td class="text-center">
+                <span *ngIf="row.activo" class="badge badge-pill badge-success"> Activo</span>
+                <span *ngIf="!row.activo" class="badge badge-pill badge-danger"> Inactivo</span>
+              </td>
             </tr>
           </tbody>
         </table>

@@ -1,4 +1,4 @@
-import { AfterContentChecked, Component, Input } from '@angular/core';
+import { AfterContentChecked, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { DialogEditHorarioComponent } from './dialog-edit-horario/dialog-edit-horario.component';
@@ -13,12 +13,12 @@ declare var $: any;
   styleUrls: ['./dt-horarios.component.scss'],
   providers: [RequisicionesService]
 })
-export class DtHorariosComponent implements AfterContentChecked {
+export class DtHorariosComponent implements OnInit {
   @Input() Horarios: any[];
   public rows: Array<any> = [];
   getHorarios: boolean = false;
   ruta: string;
-  horario: any = null; 
+  horario: any = null;
   rowAux = [];
   ;
   constructor(
@@ -31,8 +31,20 @@ export class DtHorariosComponent implements AfterContentChecked {
     // sessionStorage.getItem('ruta')
   }
 
-  ngAfterContentChecked() {
-    if (this.Horarios != null) {
+  ngOnInit(){
+    
+  }
+
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    this.cargarHorarios(this.Horarios);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    if (changes.Horarios && !changes.Horarios.isFirstChange()) {
       this.cargarHorarios(this.Horarios);
     }
   }
@@ -40,7 +52,7 @@ export class DtHorariosComponent implements AfterContentChecked {
   cargarHorarios(data) {
     if (!this.getHorarios) {
       this.rows = data;
-      this.getHorarios = true;
+      console.log(this.Horarios)
     }
   }
 
@@ -71,6 +83,7 @@ export class DtHorariosComponent implements AfterContentChecked {
     { title: 'A Hora', className: 'text-info text-center' },
     { title: 'Vacantes', className: 'text-info text-center' },
     { title: 'Espec.', className: 'text-info text-center' },
+    { title: 'Estado', className: 'text-info text-center' }
   ];
 
   public config: any = {
