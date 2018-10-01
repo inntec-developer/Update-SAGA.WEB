@@ -172,6 +172,7 @@ export class DtCandidatosPostComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
+    console.log(data)
     let index = this.dataSource.indexOf(data.row);
     this.element = data;
     this.idCandidato = data.candidatoId;

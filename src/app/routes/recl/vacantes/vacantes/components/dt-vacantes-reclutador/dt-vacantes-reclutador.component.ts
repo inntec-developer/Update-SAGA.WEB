@@ -274,6 +274,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
 
   public onCellClick(data: any): any {
+    console.log(data)
     data.selected ? data.selected = false : data.selected = true;
     this.estatusId = data.estatusId;
     this.element = data;

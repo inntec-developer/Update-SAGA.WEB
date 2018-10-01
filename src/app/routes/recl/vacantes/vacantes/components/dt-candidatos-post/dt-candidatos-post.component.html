@@ -37,7 +37,7 @@
         </thead>
         <tbody *ngIf="!loading else Loading">
           <tr (click)="onCellClick(row)" (dblclick)="lgModal.show()" *ngFor="let row of rows" [class.confident]="row.confidencial"
-            [class.cancel]="row.estatusId == 8" [ngStyle]="{'background-color': row.estatusId != 27 ? 'orange' : '', 'color': row.estatusId != 27 ? 'white' : ''}">
+            [class.cancel]="row.estatusId == 8" [ngClass]="{'bg-warning' : row.estatusId != 27 && row.estatusId != 0}">
             <td>
               {{row.nombre}}
             </td>
