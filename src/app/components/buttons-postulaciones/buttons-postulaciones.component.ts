@@ -43,6 +43,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   evm = true; //evaluacion medica
   pst = true; //postulado
   liberado = true; //liberado
+  rechazado = true;
   rowAux = [];
 
   constructor(private service: PostulateService, private toasterService: ToasterService, private spinner: NgxSpinnerService) { }
@@ -66,6 +67,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.pst = true;
       this.liberado = true;
       this.contratado = true;
+      this.rechazado = true;
     }
     else if(estatus === 24) //contratado
     {
@@ -80,6 +82,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.pst = true;
       this.liberado = false;
       this.contratado = true;
+      this.rechazado = true;
     }
     else if(estatus === 17) //cita reclutamiento
     {
@@ -94,6 +97,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evm = true;
       this.pst = true;
       this.liberado = false;
+      this.rechazado = true;
     }
     else if(estatus === 18) //entrevista reclutamiento
     {
@@ -108,6 +112,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evm = true;
       this.pst = true;
       this.liberado = false;
+      this.rechazado = true;
     }
     else if(estatus === 21) //finalista reclutamiento
     {
@@ -122,6 +127,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evm = true;
       this.pst = true;
       this.liberado = false;
+      this.rechazado = false;
     }
     else if(estatus === 22) //entrevista cliente
     {
@@ -136,6 +142,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evm = true;
       this.pst = true;
       this.liberado = false;
+      this.rechazado = true;
     }
     else if(estatus === 23) //finalista cliente
     {
@@ -150,6 +157,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evm = true;
       this.pst = true;
       this.liberado = false;
+      this.rechazado = true;
     }
     else if(estatus === 13) // evalución técnica, psicométrica, médica
     {
@@ -164,6 +172,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evm = false;
       this.pst = true;
       this.liberado = false;
+      this.rechazado = true;
     }
     else if( estatus === 14)
     {
@@ -178,6 +187,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evm = false;
       this.pst = true;
       this.liberado = false;
+      this.rechazado = true;
     }
     else if( estatus === 15)
     {
@@ -192,6 +202,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evm = true;
       this.pst = true;
       this.liberado = false;
+      this.rechazado = true;
     }
     else if( estatus === 27) //liberado
     {
@@ -206,6 +217,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evm = true;
       this.pst = false;
       this.liberado = true;
+      this.rechazado = true;
     }
  
   }

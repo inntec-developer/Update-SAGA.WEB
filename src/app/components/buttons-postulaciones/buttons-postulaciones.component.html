@@ -54,10 +54,10 @@
               <li><a><button [disabled]="contratado" [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" type="button" (click)="SetProceso(24, 'Contratado')" matTooltip="Contratado">
                 <em class="fa fa-user-plus"></em>
               </button></a></li>
-              <!-- <li><a><em class="vl"></em></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(28)" matTooltip="Cancelada">
+  
+              <li><a><button [disabled]="contratado" [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'"  type="button" (click)="SetProceso(40, 'Rechazado por Cliente')" matTooltip="Rechazado por Cliente">
                 <em class="fa fa-user-times"></em>
-              </button></a></li> -->
+              </button></a></li> 
 <!--              
               <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(29)" matTooltip="Abandonó Proceso">
                 <em class="fa fa-flag"></em>
