@@ -63,25 +63,25 @@
 
                        <tr *ngFor="let g of Grupos; let rowIndex = index; let value = index" [class.selected]="g.selected" (click)="onSelect(g, rowIndex)">
                           <td class="text-center">
-                            <btn-view [xs]="true" (click)="grupo=g.nombre; GetUsuarios(g.id);" data-toggle="popover" [popover]="popTemplate" placement="right" [outsideClick]="true" matTooltip="Ver integrantes del grupo"></btn-view>
+                            <btn-view [xs]="true" (click)="grupo=g.nombre; GetUsuarios(g.id);" data-toggle="popover" [popover]="popTemplate" placement="right" [outsideClick]="true"  placement="bottom" tooltip="Ver integrantes del grupo"></btn-view>
                           </td>
                           <td class="align-middle text-center">
-                            <a matTooltip="Click para editar" (click)="rowAux=rowIndex; CrearURL(g.id); staticModal.show()"><img class="img-fluid circle thumb48" src={{g.fotoAux}} alt="Image" /></a>
+                            <a  placement="bottom" tooltip="Click para editar" (click)="rowAux=rowIndex; CrearURL(g.id); staticModal.show()"><img class="img-fluid circle thumb48" src={{g.fotoAux}} alt="Image" /></a>
                           </td>
                            <td class="text-center">
-                              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
+                              <span  placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
                                   {{g.nombre}}
                               </span>
                               <input class="form-control-sm" autofocus (blur)="updateValue($event, 'nombre', rowIndex, g)" *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=g.nombre />
                            </td>
                            <td class="text-center">
-                              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-descripcion'] = true" *ngIf="!editing[rowIndex + '-descripcion']">
+                              <span  placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-descripcion'] = true" *ngIf="!editing[rowIndex + '-descripcion']">
                                   {{g.descripcion}}
                               </span>
                               <textarea class="form-control-sm" class="form-control" autofocus (blur)="updateValue($event, 'descripcion', rowIndex, g)" *ngIf="editing[rowIndex + '-descripcion']" [value]=g.descripcion maxlength="200" rows="1"></textarea>
                            </td>
                            <td class="text-center">
-                            <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-tipoGrupo'] = true" *ngIf="!editing[rowIndex + '-tipoGrupo']">
+                            <span  placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-tipoGrupo'] = true" *ngIf="!editing[rowIndex + '-tipoGrupo']">
                               {{g.tipoGrupo}}
                             </span>
                             <select class="form-control-sm" (change)="UpdateTipo($event, 'tipoGrupoId', rowIndex, g)" *ngIf="editing[rowIndex + '-tipoGrupo']">
@@ -96,9 +96,9 @@
                              <mat-checkbox class="checkbox" (change)="updateValue($event, 'activo', rowIndex, g); UpdateActivo(g, $event)" [checked]="g.activo"></mat-checkbox>
                            </td>
                            <td class="text-center">
-                              <btn-check id='update' chkPrivilegiosButtons [xs]="true" (click)="updateGrupo($event, rowIndex)" matTooltip="Guardar Cambios"></btn-check>
+                              <btn-check id='update' chkPrivilegiosButtons [xs]="true" (click)="updateGrupo($event, rowIndex)"  placement="bottom" tooltip="Guardar Cambios"></btn-check>
                               <span style="margin-left: 5px;"></span>
-                              <btn-delete id='delete' chkPrivilegiosButtons [xs]="true" matTooltip="Eliminar Grupo" (click)="DeleteGrupo($event,rowIndex)"></btn-delete>
+                              <btn-delete id='delete' chkPrivilegiosButtons [xs]="true"  placement="bottom" tooltip="Eliminar Grupo" (click)="DeleteGrupo($event,rowIndex)"></btn-delete>
                            </td>
                        </tr>
                    </tbody>

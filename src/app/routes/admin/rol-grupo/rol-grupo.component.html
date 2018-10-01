@@ -42,7 +42,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="empty-row" matTooltip="Doble click para seleccionar" *ngFor="let g of Grupos; let i = index" (dblclick)="onSelect(g)"
+              <tr class="empty-row"  placement="bottom" tooltip="Doble click para seleccionar" *ngFor="let g of Grupos; let i = index" (dblclick)="onSelect(g)"
                 [class.selected]="g.selected">
                 <td>
                   <img class="center-block media img-responsive img-fluid circle thumb32" src="{{g.fotoAux}}" alt="" />
@@ -53,7 +53,7 @@
                   <tr *ngFor="let r of g.roles"> <!--  roles como usuario -->
                     <div class="text-left">
                       {{r.rol}}
-                      <button type="button" class="close float-right" aria-label="Close" (click)="DeleteUserRoles(g.entidadId, r.id)" matTooltip="Borrar rol de usuario">
+                      <button type="button" class="close float-right" aria-label="Close" (click)="DeleteUserRoles(g.entidadId, r.id)"  placement="bottom" tooltip="Borrar rol de usuario">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
@@ -91,10 +91,10 @@
           </div>
         
           <!-- <div class="col-md-4">
-            <btn-view class="pull-left" (click)="staticModal.show()" matTooltip="Visualizar Rol"></btn-view>
+            <btn-view class="pull-left" (click)="staticModal.show()"  placement="bottom" tooltip="Visualizar Rol"></btn-view>
           </div> -->
           <div class="col-md-2">
-            <btn-check class="pull-right" id='create' [xs]="true" chkPrivilegiosButtons matTooltip="Guardar Cambios" (click)="saveData(slcRol.value)"></btn-check>
+            <btn-check class="pull-right" id='create' [xs]="true" chkPrivilegiosButtons  placement="bottom" tooltip="Guardar Cambios" (click)="saveData(slcRol.value)"></btn-check>
           </div>
         </div>
         </div>

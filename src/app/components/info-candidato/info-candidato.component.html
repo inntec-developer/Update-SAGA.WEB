@@ -625,26 +625,26 @@
               <div class="d-flex align-items-stretch ">
                 <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones margen"
                   [disabled]="!infoRequiId && !infoFolio" [ngClass]="(!infoRequiId && !infoFolio) ? 'disabled' : 'btn-outline-warning'"
-                  matTooltip="Visualizar"><em class="fa fa-eye"></em></button>
+                   placement="bottom" tooltip="Visualizar"><em class="fa fa-eye"></em></button>
 
                 <button [disabled]="!contratados || procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === RequisicionId &&  reclutador != usuario || vacante.id === RequisicionId && procesoCandidatoId != 27 "
                   [ngClass]="(!contratados || procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === RequisicionId &&  reclutador != usuario ||  vacante.id === RequisicionId && procesoCandidatoId != 27 ) 
                     ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
-                  matTooltip="Apartar" (click)="_apartarCandidato()">
+                   placement="bottom" tooltip="Apartar" (click)="_apartarCandidato()">
                   <em class="fa fa-thumbs-o-up"></em>
                 </button>
                 <button [disabled]="vacante.id != RequisicionId && procesoCandidatoId != 27 || vacante.id === RequisicionId &&  reclutador != usuario || vacante.id === RequisicionId && procesoCandidatoId === 24 || procesoCandidatoId === 27  || !candidato.estatus"
                   [ngClass]="( vacante.id != RequisicionId && procesoCandidatoId != 27 || vacante.id === RequisicionId &&  reclutador != usuario || vacante.id === RequisicionId && procesoCandidatoId === 24 || procesoCandidatoId === 27 || !candidato.estatus  ) 
                     ? 'mb-1 btn disabled':'mb-1 btn btn-outline-danger'"
-                  matTooltip="Desapartar" (click)="_liberarCandidato()">
+                   placement="bottom" tooltip="Desapartar" (click)="_liberarCandidato()">
                   <em class="fa fa-thumbs-o-down"></em>
                 </button>
               </div>
               <div>
-                <button (click)="clearfilters()" matTooltip="Limpiar Filtros" class=" margen mb-1 btn btn-outline-primary">
+                <button (click)="clearfilters()"  placement="bottom" tooltip="Limpiar Filtros" class=" margen mb-1 btn btn-outline-primary">
                   <em class="fa fa-eraser"></em> 
                 </button>
-                <btn-refresh (click)="refreshTable_v()" matTooltip="Actualizar"></btn-refresh>
+                <btn-refresh (click)="refreshTable_v()"  placement="bottom" tooltip="Actualizar"></btn-refresh>
               </div>
             </div>
           </div>

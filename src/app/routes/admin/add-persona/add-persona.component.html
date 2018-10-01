@@ -27,10 +27,10 @@
       </div>
          <!-- <div class="col-md-4 float-right">
         
-                <btn-check class="float-right margin-button" id='update' chkPrivilegiosButtons [xs]="true" (click)="updateUser($event, rowIndex)" matTooltip="Guardar Cambios"></btn-check>
+                <btn-check class="float-right margin-button" id='update' chkPrivilegiosButtons [xs]="true" (click)="updateUser($event, rowIndex)"  placement="bottom" tooltip="Guardar Cambios"></btn-check>
    
 
-                <btn-email class="float-right" id='create' chkPrivilegiosButtons [xs]="true" matTooltip="Enviar Correo"></btn-email>
+                <btn-email class="float-right" id='create' chkPrivilegiosButtons [xs]="true"  placement="bottom" tooltip="Enviar Correo"></btn-email>
          
             </div> -->
       <br/>
@@ -54,41 +54,41 @@
           <tr *ngFor="let p of Users; let rowIndex = index" [class.selected]="p.selected" (click)="onSelect(p, rowIndex)">
             <td class="text-center">
               <div class="media">
-                <a matTooltip="Click para editar" data-toggle="modal" data-target="#staticModal" (click)="rowAux = rowIndex; CrearURL(p.entidadId); staticModal.show();">
+                <a  placement="bottom" tooltip="Click para editar" data-toggle="modal" data-target="#staticModal" (click)="rowAux = rowIndex; CrearURL(p.entidadId); staticModal.show();">
                   <img class="img-fluid circle thumb32" src="{{p.fotoAux}}" alt="Image" />
                 </a>
               </div>
             </td>
             <td class="text-center">
-              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-clave'] = true" *ngIf="!editing[rowIndex + '-clave']">
+              <span  placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-clave'] = true" *ngIf="!editing[rowIndex + '-clave']">
                 {{p.clave}}
               </span>
               <input class="form-control-sm" autofocus (blur)="updateValue($event, 'clave', rowIndex)" *ngIf="editing[rowIndex + '-clave']" type="text" [value]=p.clave
               />
             </td>
             <td class="text-center">
-              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-usuario'] = true" *ngIf="!editing[rowIndex + '-usuario']">
+              <span  placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-usuario'] = true" *ngIf="!editing[rowIndex + '-usuario']">
                 {{p.usuario}}
               </span>
               <input class="form-control-sm" autofocus (blur)="updateValue($event, 'usuario', rowIndex)" *ngIf="editing[rowIndex + '-usuario']" type="text" [value]=p.usuario
               />
             </td>
             <td class="text-center">
-              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
+              <span  placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
                 {{p.nombre}}
               </span>
               <input class="form-control-sm" autofocus (blur)="updateValue($event, 'nombre', rowIndex)" *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=p.nombre
               />
             </td>
             <td class="text-center">
-              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoPaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoPaterno']">
+              <span  placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoPaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoPaterno']">
                 {{p.apellidoPaterno}}
               </span>
               <input class="form-control-sm" autofocus (blur)="updateValue($event, 'apellidoPaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoPaterno']"
                 type="text" [value]=p.apellidoPaterno />
             </td>
             <td class="text-center">
-              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoMaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoMaterno']">
+              <span  placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoMaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoMaterno']">
                 {{p.apellidoMaterno}}
               </span>
               <input class="form-control-sm" autofocus (blur)="updateValue($event, 'apellidoMaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoMaterno']"
@@ -98,7 +98,7 @@
               <!-- <tr *ngFor="let e of p.email" class="text-center" >{{e.email}}</tr> -->
             </td>
             <td class="text-center">
-              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-departamento'] = true" *ngIf="!editing[rowIndex + '-departamento']">
+              <span  placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-departamento'] = true" *ngIf="!editing[rowIndex + '-departamento']">
                 {{p.departamento}}
               </span>
               <select class="form-control-sm" (change)="updateValue($event, 'departamentoId', rowIndex)" *ngIf="editing[rowIndex + '-departamento']">
@@ -107,7 +107,7 @@
               </select>
             </td>
             <td class="text-center">
-              <span matTooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-tipoUsuario'] = true" *ngIf="!editing[rowIndex + '-tipoUsuario']">
+              <span  placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-tipoUsuario'] = true" *ngIf="!editing[rowIndex + '-tipoUsuario']">
                 {{p.tipoUsuario}}
               </span>
               <select class="form-control-sm" (change)="updateValue($event, 'tipoUsuarioId', rowIndex)" *ngIf="editing[rowIndex + '-tipoUsuario']">
@@ -122,8 +122,8 @@
               </label>
             </td>
             <td class="text-center">
-                <btn-check id='update' chkPrivilegiosButtons [xs]="true" (click)="updateUser(p, rowIndex)" matTooltip="Guardar Cambios"></btn-check>
-                <btn-email id='create' chkPrivilegiosButtons class="float-right margin-button" (click)="SendEmail(p)"  [xs]="true" matTooltip="Enviar Correo"></btn-email>
+                <btn-check id='update' chkPrivilegiosButtons [xs]="true" (click)="updateUser(p, rowIndex)"  placement="bottom" tooltip="Guardar Cambios"></btn-check>
+                <btn-email id='create' chkPrivilegiosButtons class="float-right margin-button" (click)="SendEmail(p)"  [xs]="true"  placement="bottom" tooltip="Enviar Correo"></btn-email>
               </td>
           </tr>
         </tbody>

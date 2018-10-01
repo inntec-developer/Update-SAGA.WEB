@@ -17,11 +17,11 @@
 </div>
 <div class="d-flex justify-content-between">
   <div class="d-flex align-items-stretch ">
-    <!-- <btn-docs (click)="openDialog()" matTooltip="Crear Requisición"></btn-docs>
-    <btn-view (click)="showDamfo()" matTooltip="Ver DAM-FO-290"></btn-view> -->
+    <!-- <btn-docs (click)="openDialog()"  placement="bottom" tooltip="Crear Requisición"></btn-docs>
+    <btn-view (click)="showDamfo()"  placement="bottom" tooltip="Ver DAM-FO-290"></btn-view> -->
   </div>
   <div>
-    <btn-return matTooltip="Regresar" [routerLink]="['/reclutamiento/vacantesReclutador']"></btn-return>
+    <btn-return  placement="bottom" tooltip="Regresar" [routerLink]="['/reclutamiento/vacantesReclutador']"></btn-return>
   </div>
 </div>
 <dt-candidatos-post [RequisicionId]="RequisicionId" [Vacante]="Vacante" [Folio]="Folio"></dt-candidatos-post>

@@ -19,12 +19,12 @@
     <button class="mb-1 btn-md btn btn-primary btn-outline" (click)="PrevResumen()">Previsualizar Resumen</button>
     <button style="margin-left: 10px;margin-right: 10px" class="mb-1 btn-md btn btn-primary btn-outline" (click)="PrevDetalle()">Previsualizar
       Detalle</button>
-    <button (click)="Publicar()" _ngcontent-c40="" class="mb-1 btn-md btn btn-success btn-outline" mattooltip="Publicar">
+    <button (click)="Publicar()" _ngcontent-c40="" class="mb-1 btn-md btn btn-success btn-outline"  placement="bottom" tooltip="Publicar">
       <em _ngcontent-c40="" class="fa fa-download"></em> Publicar vacante
     </button>
   </div>
   <div>
-    <btn-return matTooltip="Regresar" [routerLink]="['/reclutamiento/vacantesReclutador']"></btn-return>
+    <btn-return  placement="bottom" tooltip="Regresar" [routerLink]="['/reclutamiento/vacantesReclutador']"></btn-return>
   </div>
 </div>
 
@@ -120,7 +120,7 @@
 
   <!-- <div class="col-xs-12" style="margin:20px">
       <div class="col-xs-2  pull-right">
-        <button _ngcontent-c40="" class="mb-sm btn-md btn btn-success btn-outline " mattooltip="Publicar" type="button" tabindex="0" ng-reflect-router-link="/ventas/crearRequisicion" aria-describedby="cdk-describedby-message-2" cdk-describedby-host="" ng-reflect-message="Nueva Requisición">
+        <button _ngcontent-c40="" class="mb-sm btn-md btn btn-success btn-outline "  placement="bottom" tooltip="Publicar" type="button" tabindex="0" ng-reflect-router-link="/ventas/crearRequisicion" aria-describedby="cdk-describedby-message-2" cdk-describedby-host="" ng-reflect-message="Nueva Requisición">
             <em _ngcontent-c40="" class="fa fa-download"></em> Publicar vacante
           </button>
       </div>
