@@ -91,6 +91,7 @@ import { DtMisCandidatosComponent } from './dt-mis-candidatos/dt-mis-candidatos.
 import { DtPsicometriasClienteComponent } from './tablas/dt-psicometrias-cliente/dt-psicometrias-cliente.component';
 import { DtPsicometriasDamsaComponent } from './tablas/dt-psicometrias-damsa/dt-psicometrias-damsa.component';
 import { DtRequisicionComponent } from './tablas/dt-requisicion/dt-requisicion.component';
+import { DtRutasCamionRequiComponent } from './tablas/dt-rutas-camion-requi/dt-rutas-camion-requi.component';
 import { DtTelefonosComponent } from './tablas/dt-telefonos/dt-telefonos.component';
 import { InfoCandidatoComponent } from './info-candidato/info-candidato.component';
 import { InfoVacanteComponent } from './info-vacante/info-vacante.component';
@@ -103,6 +104,7 @@ import { PrestacionesLeyComponent } from './tablas/prestaciones-ley/prestaciones
 import { ProcesosComponent } from './tablas/procesos/procesos.component';
 import { SharedModule } from '../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { DialogRutasComponent } from './tablas/dt-rutas-camion-requi/dialog-rutas/dialog-rutas.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -214,6 +216,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DtMisCandidatosComponent,
     ComentarioCandidatoComponent,
     InfoVacanteComponent,
+    DtRutasCamionRequiComponent,
+    DialogRutasComponent,
 
   ],
   exports: [
@@ -269,7 +273,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DtBusquedaCandidatosComponent,
     DtMisCandidatosComponent,
     ComentarioCandidatoComponent,
-    InfoVacanteComponent
+    InfoVacanteComponent,
+    DtRutasCamionRequiComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

@@ -12,7 +12,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr (click)="onCellClick(row)" *ngFor="let row of rows" (dblclick)="verRutasCamion(row.rutasCamion)"  [class.selected]="row.selected">
+        <tr (click)="onCellClick(row)" *ngFor="let row of rows" (dblclick)="verRutasCamion(row.rutasCamion)"
+          [class.selected]="row.selected">
           <td class="text-center">
             {{row.tipoDireccion}}
           </td>
@@ -59,20 +60,27 @@
         </button>
       </div>
       <div class="modal-body">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th class="text-center text-success">Ruta</th>
-              <th class="text-center text success">Via</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let x of rutasCamion">
-              <td class="text-center">{{x.ruta}}</td>
-              <td class="text-center">{{x.via}}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-responsive" #tableContainer *ngIf="rutasCamion.length > 0 else NotResult">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th class="text-center text-success">Ruta</th>
+                <th class="text-center text success">Via</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let x of rutasCamion">
+                <td class="text-center">{{x.ruta}}</td>
+                <td class="text-center">{{x.via}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ng-template #NotResult>
+          <alert type="info">
+            <strong>Oops!</strong> Esta direcci&oacute;n no cuenta con rutas registradas...
+          </alert>
+        </ng-template>
       </div>
       <div class="modal-footer">
         <button type="button" class="md-1 btn btn-outline-success" (click)="closeModalRutasCamion()">Cerrar</button>

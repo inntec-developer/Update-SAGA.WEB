@@ -171,42 +171,46 @@
     </div>
   </div>
 </div>
-<br/>
+<br />
 <div class="row">
   <div class="col-md-12">
     <!-- HORARIOS -->
-    <app-dt-horarios [Horarios]="requisicion?.horariosRequi"></app-dt-horarios>
+    <app-dt-horarios [Horarios]="requisicion?.horariosRequi" [Requi]="true"></app-dt-horarios>
   </div>
 </div>
-<br/>
+<br />
 <div class="row">
   <div class="col-md-12">
     <!-- DIRECCIONES -->
     <app-dt-direcion-requi [DireccionId]="requisicion?.direccionId"></app-dt-direcion-requi>
   </div>
 </div>
-<br/>
+<br />
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
     <!-- TELEFONOS -->
     <app-dt-telefonos [Telefonos]="requisicion?.cliente?.telefonos"></app-dt-telefonos>
   </div>
+  <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+    <!-- TELEFONOS -->
+    <app-dt-rutas-camion-requi [DireccionId]='requisicion?.direccionId'></app-dt-rutas-camion-requi>
+  </div>
 </div>
-<br/>
+<br />
 <!-- CONTACTOS -->
 <div class="row">
   <div class="col-md-10">
     <app-dt-contactos [Contactos]="requisicion?.cliente?.contactos"></app-dt-contactos>
   </div>
 </div>
-<br/>
+<br />
 <div class="row">
   <div class="col-md-12">
     <!-- BENEFICIOS -->
     <app-dt-beneficios [Beneficios]="requisicion?.beneficiosRequi"></app-dt-beneficios>
   </div>
 </div>
-<br/>
+<br />
 <!-- ACTIVIDADES OBSERVACIONES PROCESO-->
 <div class="row">
   <div class="col-md-4">
@@ -219,7 +223,7 @@
     <app-procesos [Proceso]="requisicion?.procesoRequi"></app-procesos>
   </div>
 </div>
-<br/>
+<br />
 <div class="row">
   <div class="col-md-3">
     <!-- DOCUMENTOS dAMSA -->
@@ -238,7 +242,7 @@
     <app-prestaciones-cliente [Prestaciones]="requisicion?.prestacionesClienteRequi"></app-prestaciones-cliente>
   </div>
 </div>
-<br/>
+<br />
 <div class="row">
   <div class="col-md-6">
     <!-- PSICOMETRIAS DAMSA -->
@@ -249,7 +253,7 @@
     <app-dt-psicometrias-cliente [Psicometrias]="requisicion?.psicometriasClienteRequi"></app-dt-psicometrias-cliente>
   </div>
 </div>
-<br/>
+<br />
 <div class="row">
   <div class="col-md-4 col-lg-4">
     <!-- COMPTENCIAS CARDINALES -->

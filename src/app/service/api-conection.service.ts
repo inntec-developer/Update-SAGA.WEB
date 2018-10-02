@@ -27,6 +27,7 @@ export class ApiConection {
 
   /* Reclutamiento */
   public static Damfo290GetById = 'Damfo290/getById?id=';
+  public static GetDamfoRutasCamion = 'Damfo290/getDamfoRutasCamion';
   public static GetViewDamfos = "Damfo290/getViewDamfos";
   public static GetVacantesDamfo = "Damfo290/getVacantesDamfo";
 
@@ -43,7 +44,11 @@ export class ApiConection {
   public static GetUserGroups = 'Requisiciones/getUserGroups'
   public static GetRequiReclutador = 'Requisiciones/getRequiReclutador?IdUsuario=';
   public static AsignarRequisicion = 'Requisiciones/asignacionRequisiciones'
-  public static GetDireccionRequisicion = 'Requisiciones/getDireccionRequisicon?id=';
+  public static GetDireccionRequisicion = 'Requisiciones/getDireccionRequisicon';
+  public static GetRutasCamionRequisicion = 'Requisiciones/getRutasCamion'
+  public static AddRutaCamion = 'Requisiciones/addRutaCamion';
+  public static UpdateRutaCamion = 'Requisiciones/updateRutaCamion';
+  public static DeleteRutaCamion = 'Requisiciones/deleteRutaCamion';
   public static UpdateVacantes = 'Requisiciones/upadateVacantes';
   public static GetHorariosRequi = 'Requisiciones/getHorariosRequisicion?id=';
 

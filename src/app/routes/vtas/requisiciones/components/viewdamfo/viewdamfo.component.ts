@@ -76,7 +76,9 @@ export class ViewdamfoComponent implements OnInit {
               this.claseReclutamiento = data.claseReclutamiento.clasesReclutamiento;
               this.tipoReclutamiento = data.tipoReclutamiento.tipoReclutamiento;
               this.spinner.hide();
+              console.log('DAMFO-290',data);
             });
+            
       }else{
           console.log('Error al cargar información');
       }

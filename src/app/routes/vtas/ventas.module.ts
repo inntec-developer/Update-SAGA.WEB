@@ -48,6 +48,7 @@ import { DialogActivarRequiComponent } from './requisiciones/components/dialog-a
 import { DialogCancelRequiComponent } from './requisiciones/components/dialog-cancel-requi/dialog-cancel-requi.component';
 import { DialogDeleteRequiComponent } from './requisiciones/components/dialog-delete-requi/dialog-delete-requi.component';
 import { DialogEditHorarioComponent } from '../../components/tablas/dt-horarios/dialog-edit-horario/dialog-edit-horario.component';
+import { DialogRutasComponent } from '../../components/tablas/dt-rutas-camion-requi/dialog-rutas/dialog-rutas.component';
 import { DialogdamfoComponent } from './requisiciones/components/dialogdamfo/dialogdamfo.component';
 import { DireccionautoComponent } from './requisiciones/components/direccionauto/direccionauto.component';
 import { DirectorioEmpresarialComponent } from './directorio-empresarial/directorio-empresarial.component';
@@ -128,7 +129,7 @@ const routes: Routes = [
         DirectorioEmpresarialComponent,
         ClientesComponent,
     ],
-    entryComponents: [DialogdamfoComponent, DialogDeleteRequiComponent, DialogCancelRequiComponent, DialogActivarRequiComponent, DialogEditHorarioComponent],
+    entryComponents: [DialogdamfoComponent, DialogDeleteRequiComponent, DialogCancelRequiComponent, DialogActivarRequiComponent, DialogEditHorarioComponent, DialogRutasComponent],
     exports: [
         RouterModule, ViewCuerpoRequiComponent, ViewInforRequiComponent
     ]

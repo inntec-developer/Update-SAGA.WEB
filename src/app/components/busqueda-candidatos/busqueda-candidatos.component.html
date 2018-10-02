@@ -15,8 +15,8 @@
         <div class="col-md-4 col-lg-4 col-sm-8">
           <mat-form-field>
             <input matInput placeholder="Palabra Clave" [(ngModel)]="palabraClave" [ngModelOptions]="{standalone: true}"
-              (keyup.enter)="buscarPalabraClave(palabraClave)" matTooltip="{{toolTipePC}}">
-            <button matSuffix mat-icon-button aria-label="Clear" matTooltip="Buscar por palabra clave" (click)="buscarPalabraClave(palabraClave)">
+              (keyup.enter)="buscarPalabraClave(palabraClave)"  placement="bottom" tooltip="{{toolTipePC}}">
+            <button matSuffix mat-icon-button aria-label="Clear" placement="bottom" tooltip="Buscar por palabra clave" placement="bottom" (click)="buscarPalabraClave(palabraClave)">
               <em class="fa fa-search "></em>
             </button>
             <button mat-button *ngIf="palabraClave" matSuffix mat-icon-button aria-label="Clear" (click)="palabraClave=''">
@@ -253,18 +253,18 @@
     <div class="row">
       <div class="col-12">
         <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="Buscar()"
-          matTooltip="Busca candidatos">
+        placement="bottom" tooltip="Busca candidatos">
           <span class="btn-label ">
             <i class="fa fa-search "></i>
           </span>Buscar
         </button>
         <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-green mb-1" type="button" (click)="LimpiarFiltro()"
-          matTooltip="Limpia todo los filtros">
+        placement="bottom" tooltip="Limpia todo los filtros">
           <span class="btn-label ">
             <i class="fa fa-eraser "></i>
           </span>Limpiar filtros
         </button>
-        <!-- <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="BuscarMisCandidatos()" matTooltip="Mis Apartados">
+        <!-- <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="BuscarMisCandidatos()"  placement="bottom" tooltip="Mis Apartados">
             <span class="btn-label ">
               <i class="fa fa-users"></i>
             </span>Mis Candidatos

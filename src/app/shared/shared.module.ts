@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { DatepickerModule } from 'ngx-bootstrap/datepicker';
 import { EasypiechartDirective } from './directives/easypiechart/easypiechart.directive';
 import { FlotDirective } from './directives/flot/flot.directive';
+import { FocusDirective } from './directives//focus/focus.directive';
 import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NowDirective } from './directives/now/now.directive';
@@ -71,7 +72,8 @@ import { VectormapDirective } from './directives/vectormap/vectormap.directive';
         ScrollableDirective,
         JqcloudDirective,
         ChkButtonsDirective,
-        TreeGridDirective
+        TreeGridDirective,
+        FocusDirective
     ],
     exports: [
         CommonModule,
@@ -105,7 +107,8 @@ import { VectormapDirective } from './directives/vectormap/vectormap.directive';
         ScrollableDirective,
         JqcloudDirective,
         ChkButtonsDirective,
-        TreeGridDirective
+        TreeGridDirective,
+        FocusDirective
     ]
 })
 

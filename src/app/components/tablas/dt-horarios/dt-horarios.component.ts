@@ -15,6 +15,7 @@ declare var $: any;
 })
 export class DtHorariosComponent implements OnInit {
   @Input() Horarios: any[];
+  @Input('Requi') Requi: boolean;
   public rows: Array<any> = [];
   getHorarios: boolean = false;
   ruta: string;
@@ -31,8 +32,8 @@ export class DtHorariosComponent implements OnInit {
     // sessionStorage.getItem('ruta')
   }
 
-  ngOnInit(){
-    
+  ngOnInit() {
+
   }
 
   ngAfterViewInit(): void {
@@ -50,10 +51,7 @@ export class DtHorariosComponent implements OnInit {
   }
 
   cargarHorarios(data) {
-    if (!this.getHorarios) {
-      this.rows = data;
-      console.log(this.Horarios)
-    }
+    this.rows = data;
   }
 
   openDialogEdit() {
@@ -67,10 +65,6 @@ export class DtHorariosComponent implements OnInit {
         if (result) {
           this.rows = result;
         }
-        //   this.service.getRequiHorarios(this.horario.requisicionId).subscribe(data =>{
-        //     this.getHorarios = false;
-        //     this.cargarHorarios(data);
-        //   });
       });
     }
   }

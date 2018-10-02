@@ -1,0 +1,22 @@
+<div>
+  <h3>{{Accion}}</h3>
+</div>
+<br>
+<div class="row form-group">
+  <div class="col-md-12">
+    <mat-form-field>
+      <input autofocus class="form-control" #inputRuta matInput placeholder="Ruta de camión" [(ngModel)]="RutaCamion" maxlength="50"
+        required="">
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" class="form-control" matInput placeholder="Vía" [(ngModel)]="ViaCamion" maxlength="50">
+    </mat-form-field>
+  </div>
+</div>
+<mat-divider></mat-divider>
+<div class="modal-footer float-right">
+  <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+  <button type="button" class="md-1 btn btn-xs btn-outline-danger" (click)="onCloseDialog()">Cancelar</button>
+  <button type="button" class="md-1 btn btn-xs btn-outline-success" [disabled]='!RutaCamion || loading' (click)="_guardarRutas()">Guardar</button>
+  <hr>
+</div>

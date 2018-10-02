@@ -39,7 +39,7 @@
         </div>
         <span>
             <ul *ngFor="let dir of Datos[0]['direccion']">
-              <li><a matTooltip="{{dir.tipo}}">{{dir.calle}} {{dir.noExt}} Col. {{dir.colonia}} {{dir.municipio}} {{dir.estado}} {{dir.pais}} {{dir.cp}}</a></li>
+              <li><a  placement="bottom" tooltip="{{dir.tipo}}">{{dir.calle}} {{dir.noExt}} Col. {{dir.colonia}} {{dir.municipio}} {{dir.estado}} {{dir.pais}} {{dir.cp}}</a></li>
             </ul>
         </span>
       </div>
@@ -129,7 +129,7 @@
 <!-- <h2>Prakash Prajapati<br><span>Web Graphic Designer</span></h2>
 <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
         tempor incididunt ut labore et.</p>
-<span>matTooltip="Puesto {{contacto.puesto}} (Ext. {{contacto.telefonos[0]['ext']}})-{{contacto.telefonos[0]['telefono']}} / {{contacto.emails[0]['email']}}"
+<span> placement="bottom" tooltip="Puesto {{contacto.puesto}} (Ext. {{contacto.telefonos[0]['ext']}})-{{contacto.telefonos[0]['telefono']}} / {{contacto.emails[0]['email']}}"
     <ul>
         <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
         <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>

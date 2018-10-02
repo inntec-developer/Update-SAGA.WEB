@@ -25,8 +25,8 @@
   <!-- <button (click)="print()">Imprimir</button> -->
   <div class="col-md-12">
     <div class="d-flex justify-content-between">
-      <btn-docs (click)="openDialog()" matTooltip="Generar Requisición"></btn-docs>
-      <btn-return [routerLink]="['/ventas/crearRequisicion']" matTooltip="Regresar"></btn-return>
+      <btn-docs (click)="openDialog()"  placement="bottom" tooltip="Generar Requisición"></btn-docs>
+      <btn-return [routerLink]="['/ventas/crearRequisicion']"  placement="bottom" tooltip="Regresar"></btn-return>
     </div>
   </div>
 </div>
@@ -209,7 +209,7 @@
   <div class="row">
     <div class="col-md-12">
       <!-- HORARIOS -->
-      <app-dt-horarios [Horarios]="damfo290?.horariosPerfil"></app-dt-horarios>
+      <app-dt-horarios [Horarios]="damfo290?.horariosPerfil" [Requi]='false'></app-dt-horarios>
     </div>
   </div>
   <br>
@@ -221,10 +221,14 @@
   </div>
   <br />
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
       <!-- TELEFONOS -->
       <app-dt-telefonos [Telefonos]="damfo290?.cliente?.telefonos"></app-dt-telefonos>
     </div>
+    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <!-- TELEFONOS -->
+        <app-dt-rutas-camion-requi [DAMFO290Id]='damfo290?.clienteId'></app-dt-rutas-camion-requi>
+      </div>
   </div>
   <br />
   <div class="row">

@@ -1,4 +1,3 @@
-import { catchError, tap } from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -8,17 +7,18 @@ import 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
 
 import { Headers, Http, RequestOptions, Response } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
+import { catchError, tap } from 'rxjs/operators';
 
 import { ApiConection } from '../api-conection.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 
-// API Conection
-
-
-// MODELS
-
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
 
 @Injectable()
 export class RequisicionesService {
@@ -28,6 +28,7 @@ export class RequisicionesService {
   private urlGetRequisicionById = ApiConection.ServiceUrl + ApiConection.GetRequisicionById;
   private urlGetRequisicionByFolio = ApiConection.ServiceUrl + ApiConection.GetRequisicionByFolio;
   private urlGetDamfoById = ApiConection.ServiceUrl + ApiConection.Damfo290GetById;
+  private urlGetDamfoRutasCamion = ApiConection.ServiceUrl + ApiConection.GetDamfoRutasCamion;
   private urlGetRequisicionesAll = ApiConection.ServiceUrl + ApiConection.GetRequisicionesAll;
   private urlGetRequiReclutador = ApiConection.ServiceUrl + ApiConection.GetRequiReclutador;
   private urlUpdateRequisicion = ApiConection.ServiceUrl + ApiConection.UpdateRequisicion;
@@ -36,6 +37,10 @@ export class RequisicionesService {
   private urlReActivarRequisicion = ApiConection.ServiceUrl + ApiConection.ReActivarRequisicion;
   private urlAsignarRequisicion = ApiConection.ServiceUrl + ApiConection.AsignarRequisicion;
   private urlGetDireccionRequisicion = ApiConection.ServiceUrl + ApiConection.GetDireccionRequisicion;
+  private urlGetRutasCamionRequi = ApiConection.ServiceUrl + ApiConection.GetRutasCamionRequisicion;
+  private urlAddRutaCamion = ApiConection.ServiceUrl + ApiConection.AddRutaCamion;
+  private urlUpdateRutaCamion = ApiConection.ServiceUrl + ApiConection.UpdateRutaCamion;
+  private urlDeleteRutaCamion = ApiConection.ServiceUrl + ApiConection.DeleteRutaCamion;
   private urlUpdateVacantes = ApiConection.ServiceUrl + ApiConection.UpdateVacantes;
   private urlGetHorariosReequisicion = ApiConection.ServiceUrl + ApiConection.GetHorariosRequi;
   private urleGetVacantesDamgfo = ApiConection.ServiceUrl + ApiConection.GetVacantesDamfo;
@@ -62,12 +67,12 @@ export class RequisicionesService {
       .catch(this.handleError);
   }
   // Recupera la informacion completa de la requisicion que se requiera
-  getNewRequi(requisicionId: string) {
+  getNewRequi(requisicionId: string): Observable<any> {
     return this.http.get(this.urlGetRequisicionById + requisicionId)
       .map(result => result.json())
       .catch(this.handleError);
   }
-  getRequiFolio(folio: string) {
+  getRequiFolio(folio: string): Observable<any> {
     return this.http.get(this.urlGetRequisicionByFolio + folio)
       .map(result => result.json())
       .catch(this.handleError);
@@ -78,6 +83,12 @@ export class RequisicionesService {
       .map(result => result.json())
       .catch(this.handleError);
   }
+  // Recuperar las rutas de camiones de las direccionaes relacionadas con el damfo - cliente
+  getDamfoRutasCamion(clienteId: string): Observable<any> {
+    let params = new HttpParams().set('Id', clienteId);
+    return this._httpClient.get(this.urlGetDamfoRutasCamion, { params: params });
+  }
+
   // Recupera la información de las requisiciones que se han generado.
   getRequisiciones(user: string): Observable<any> {
     return this.http.get(this.urlGetRequisicionesAll + user)
@@ -93,11 +104,28 @@ export class RequisicionesService {
 
   // Recuperar la direccion que se registro en la requisicion.
   getRequiDireccion(id: string): Observable<any> {
-    return this.http.get(this.urlGetDireccionRequisicion + id)
-      .map(result => result.json())
-      .catch(this.handleError);
+    let params = new HttpParams().set('id', id)
+    return this._httpClient.get(this.urlGetDireccionRequisicion, { params: params });
+  }
+  // ---------------------------------------------------------------------------------------------------------------
+  // Crud para rutas de Camiones dentro de la requisición.
+  getRequiRutasCamion(id: string): Observable<any> {
+    let params = new HttpParams().set('Id', id);
+    return this._httpClient.get(this.urlGetRutasCamionRequi, { params: params });
   }
 
+  addRutaCamion(data: any): Observable<any> {
+    return this._httpClient.post(this.urlAddRutaCamion, data, httpOptions);
+  }
+
+  updateRutaCamion(data: any): Observable<any> {
+    return this._httpClient.post(this.urlUpdateRutaCamion, data, httpOptions);
+  }
+
+  deleteRutaCamion(data: any): Observable<any> {
+    return this._httpClient.post(this.urlDeleteRutaCamion, data, httpOptions);
+  }
+  // ---------------------------------------------------------------------------------------------------------------
   getRequiHorarios(requisicionId: string) {
     return this.http.get(this.urlGetHorariosReequisicion + requisicionId)
       .map(result => result.json())
