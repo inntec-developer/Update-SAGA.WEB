@@ -156,8 +156,8 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
       this.pst = true;
-      this.liberado = false;
-      this.rechazado = true;
+      this.liberado = true;
+      this.rechazado = false;
     }
     else if(estatus === 13) // evalución técnica, psicométrica, médica
     {
@@ -216,6 +216,21 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
       this.pst = false;
+      this.liberado = true;
+      this.rechazado = true;
+    }
+    else if( estatus === 40) //liberado
+    {
+      this.cr = true;
+      this.enr = true;
+      this.fr = true;
+      this.enc = true;
+      this.fc = true;
+      this.contratado = true;
+      this.evt = true;
+      this.evps = true;
+      this.evm = true;
+      this.pst = true;
       this.liberado = true;
       this.rechazado = true;
     }

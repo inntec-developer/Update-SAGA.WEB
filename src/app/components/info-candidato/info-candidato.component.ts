@@ -38,6 +38,7 @@ export class InfoCandidatoComponent implements OnInit {
   Status: any = 0;
   RequisicionId: any = '';
   reclutador: any = '';
+  reclutadorId;
   procesoCandidato: any = {};
   msg: string;
   procesoCandidatoId: any; // Recuperar el estatus en el que se encuetra el candidato.
@@ -47,8 +48,9 @@ export class InfoCandidatoComponent implements OnInit {
   infoFolio : any = null;
   /*********************************************************/
 
-  contratados = false;
-
+  contratados = true;
+  auxestatus = true;
+  desapartar = true;
   constructor(
     private _serviceCandidato: InfoCandidatoService,
     private toasterService: ToasterService,
@@ -83,6 +85,7 @@ export class InfoCandidatoComponent implements OnInit {
   }
 
   ngOnInit() {
+    
     this.spinner.show();
     // this.CandidatoId = '4F65DAC1-C6A0-E811-80E8-9E274155325E'
     this._serviceCandidato.getInfoCandidato(this.CandidatoId).subscribe(data => {
@@ -113,6 +116,7 @@ export class InfoCandidatoComponent implements OnInit {
         this.Status = this.candidato.estatus.estatus.descripcion;
         this.RequisicionId = this.candidato.estatus.requisicionId;
         this.reclutador = this.candidato.estatus.reclutador;
+        this.reclutadorId = this.candidato.estatus.reclutadorId;
       }
       this.spinner.hide();
     });
@@ -282,8 +286,9 @@ export class InfoCandidatoComponent implements OnInit {
     this.infoFolio = data.folio;
     this.infoRequiId = data.id;
 
-    data.vacantes == data.contratados ? this.contratados = false : this.contratados = true;
-   
+    data.vacantes == data.contratados ? this.contratados = true : this.contratados = false;
+    this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 40 ? this.auxestatus = true : this.auxestatus = false;
+    this.candidato.estatus.requisicionId == data.id && this.reclutadorId == this.usuarioId && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 40 && this.candidato.estatus.estatusId != 24 ? this.desapartar = false : this.desapartar = true;
     /* add an class 'active' on click */
     $('#resultDataTableVacantes').on('click', 'tr', function (event: any) {
       //noinspection TypeScriptUnresolvedFunction

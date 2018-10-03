@@ -627,18 +627,16 @@
                   [disabled]="!infoRequiId && !infoFolio" [ngClass]="(!infoRequiId && !infoFolio) ? 'disabled' : 'btn-outline-warning'"
                    placement="bottom" tooltip="Visualizar"><em class="fa fa-eye"></em></button>
 
-                <button [disabled]="!contratados || procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === RequisicionId &&  reclutador != usuario || vacante.id === RequisicionId && procesoCandidatoId != 27 "
-                  [ngClass]="(!contratados || procesoCandidatoId != 27 && procesoCandidatoId > 0 || vacante.id === RequisicionId &&  reclutador != usuario ||  vacante.id === RequisicionId && procesoCandidatoId != 27 ) 
+                <button [disabled]="auxestatus || contratados || procesoCandidatoId != 27 && procesoCandidatoId != 40"
+                  [ngClass]="auxestatus || contratados || procesoCandidatoId != 27 && procesoCandidatoId != 40
                     ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
                    placement="bottom" tooltip="Apartar" (click)="_apartarCandidato()">
                   <em class="fa fa-thumbs-o-up"></em>
                 </button>
-                <button [disabled]="vacante.id != RequisicionId && procesoCandidatoId != 27 || vacante.id === RequisicionId &&  reclutador != usuario || vacante.id === RequisicionId && procesoCandidatoId === 24 || procesoCandidatoId === 27  || !candidato.estatus"
-                  [ngClass]="( vacante.id != RequisicionId && procesoCandidatoId != 27 || vacante.id === RequisicionId &&  reclutador != usuario || vacante.id === RequisicionId && procesoCandidatoId === 24 || procesoCandidatoId === 27 || !candidato.estatus  ) 
-                    ? 'mb-1 btn disabled':'mb-1 btn btn-outline-danger'"
-                   placement="bottom" tooltip="Desapartar" (click)="_liberarCandidato()">
+                <button [disabled]="desapartar" [ngClass]="desapartar ? 'mb-1 btn disabled':'mb-1 btn btn-outline-danger'" placement="bottom" tooltip="Desapartar" (click)="_liberarCandidato()">
                   <em class="fa fa-thumbs-o-down"></em>
                 </button>
+      
               </div>
               <div>
                 <button (click)="clearfilters()"  placement="bottom" tooltip="Limpiar Filtros" class=" margen mb-1 btn btn-outline-primary">
@@ -670,7 +668,7 @@
                     </td>
                   </tr>
                   <tr (click)="onCellClick_v(row)" (dblclick)="lgModal.show()" *ngFor="let row of rows"
-                    [class.confident]="row.confidencial" [class.enProceso]=" row.id === RequisicionId && procesoCandidatoId != 27 ">
+                    [class.confident]="row.confidencial" [class.enProceso]="row.id === RequisicionId && procesoCandidatoId != 40 && procesoCandidatoId != 27">
                     <td class="text-center">
                       {{row.folio}}
                     </td>
@@ -682,10 +680,14 @@
                     <td class="text-center"> {{row.tipoReclutamiento}}</td>
                     <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
                     <td class="text-center">
-                      <small class="badge badge-pill" [class.badge-warning]="row.estatusId  === 4" [class.badge-info]="row.estatusId  != 7 "
+                      <small *ngIf="row.estatus.length <= 10 else toLength" class="badge badge-pill" [class.badge-warning]="row.estatusId  === 4" [class.badge-info]="row.estatusId  != 7 "
                         [class.badge-success]="row.estatusId  === 7">
-                        {{row.estatus }}
+                        {{row.estatus | uppercase }}
                       </small>
+
+                      <ng-template #toLength>
+                        <span class="badge badge-info"  placement="bottom" tooltip="{{row.estatus | uppercase}}">{{row.estatus | slice:0:6 | uppercase }} ... </span>
+                    </ng-template>
                     </td>
                 </tbody>
               </table>

@@ -333,72 +333,126 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   ValidarEstatus(estatusId) {
-    if (estatusId == 38) { //garantia de busqueda
-      /*estatus vacante */
-      this.bc = false; //busqueda candidato
-      this.sc = false; //socieconomico
-      this.ecc = false; //envío candidato cliente
-      this.ec = false; //espera contratacion
-      this.nbc = false; //nueva busqueda candidato
-      this.pausa = false;
-      this.asignar = true;
-      this.disenador = true;
-    }
-    else if(estatusId == 30) //envio al cliente
+
+    if( estatusId == 4 && this.element.vacantes > 0 ) //nueva
     {
       this.bc = true; //busqueda candidato
-      this.sc = false; //socieconomico
+      this.sc = true; //socieconomico
       this.ecc = true; //envío candidato cliente
-      this.ec = false; //espera contratacion
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = false;
+      this.disenador = true;
+
+    }
+    else if( estatusId == 6 && this.element.vacantes > 0)// aprobada
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = false;
+      this.disenador = false;
+    }
+    else if( estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso == 0 ) //publicada - busqueda de candidatos - garantia de busqueda - nueva busqueda
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = false;
       this.asignar = false;
       this.disenador = false;
     }
-    else if(estatusId == 32) //socioeconomico
+    else if( (estatusId == 5 || estatusId == 7 || estatusId == 38 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProceso == 0 &&  this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 ) //publicada - busqueda de candidatos - garantia de busqueda - nueva busqueda
+    {
+      this.bc = false; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = false;
+      this.disenador = false;
+    }
+    else if( (estatusId == 5 || estatusId == 7 || estatusId == 38 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR > 0 ) //publicada - busqueda de candidatos - garantia de busqueda - nueva busqueda
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = false; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = false;
+      this.disenador = false;
+    }
+    else if((estatusId == 5 || estatusId == 7 || estatusId == 38 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes ) //publicada - busqueda de candidatos - garantia de busqueda - nueva busqueda
     {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
       this.ecc = true; //envío candidato cliente
-      this.ec = false; //espera contratacion
-      this.nbc = false; //nueva busqueda candidato
-      this.pausa = false;
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = true;
       this.asignar = false;
       this.disenador = false;
-
     }
-    else if(estatusId == 33) //espera de contratacion
+    else if(estatusId == 30 && this.element.enProcesoFC == 0) //envio al cliente
     {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
       this.ecc = true; //envío candidato cliente
       this.ec = true; //espera contratacion
       this.nbc = false; //nueva busqueda candidato
-      this.pausa = false;
+      this.pausa = true;
       this.asignar = false;
       this.disenador = false;
-
     }
-    else if(estatusId == 39) //pausada
+    else if(estatusId == 30 && this.element.enProcesoFC > 0) //envio al cliente
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = false; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = false; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = false;
+      this.disenador = false;
+    }
+    else if(estatusId == 32 && this.element.enProcesoFC > 0) //socioeconomico
     {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
       this.ecc = true; //envío candidato cliente
       this.ec = false; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = false;
+      this.disenador = false;
+    }
+    else if(estatusId == 33 && this.element.contratados > 0 && this.element.contratados < this.element.vacantes) //espera de contratacion
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
       this.nbc = false; //nueva busqueda candidato
       this.pausa = true;
       this.asignar = false;
       this.disenador = false;
-
     }
-    else if(estatusId == 31 && this.element.vacantes > 0 && this.element.enProcesoFR > 0) //nueva busqueda
+    else if(estatusId == 39 && this.element.enProcesoFC > 0) //pausada
     {
       this.bc = true; //busqueda candidato
-      this.sc = false; //socieconomico
-      this.ecc = false; //envío candidato cliente
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
       this.ec = false; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
-      this.pausa = false;
+      this.pausa = true;
       this.asignar = false;
       this.disenador = false;
 
@@ -414,7 +468,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.asignar = true;
       this.disenador = true;
     }
-    else if (estatusId == 4 || estatusId == 6) { //nueva - aprobada
+    else{
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
       this.ecc = true; //envío candidato cliente
@@ -424,125 +478,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.asignar = false;
       this.disenador = false;
     }
-    else if( estatusId == 29 && this.element.vacantes > 0 && this.element.enProceso == 0 && this.element.enProcesoFR == 0 && this.element.contratados == 0 ) // busqueda candidato
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = false; //nueva busqueda candidato
-      this.pausa = true;
-      this.asignar = false;
-      this.disenador = false;
-    }
-    else if( estatusId == 29 && this.element.vacantes > 0 && this.element.enProceso > 0 && this.element.enProcesoFR == 0 && this.element.contratados == 0 ) //busqueda candidato
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = false; //nueva busqueda candidato
-      this.pausa = true;
-      this.asignar = false;
-      this.disenador = false;
-    }
-    else if( estatusId == 29 && this.element.vacantes > 0 && this.element.enProceso > 0 && this.element.enProcesoFR > 0 && this.element.contratados == 0 ) //busqueda candidato
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = false; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = false; //nueva busqueda candidato
-      this.pausa = true;
-      this.asignar = false;
-      this.disenador = false;
-    }
-    else if( estatusId == 31 && this.element.vacantes > 0 && this.element.enProceso == 0 && this.element.enProcesoFR == 0 && this.element.contratados == 0 ) // busqueda candidato
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
-      this.pausa = true;
-      this.asignar = false;
-      this.disenador = false;
-    }
-    else if( estatusId == 31 && this.element.vacantes > 0 && this.element.enProceso > 0 && this.element.enProcesoFR == 0 && this.element.contratados == 0 ) //busqueda candidato
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
-      this.pausa = true;
-      this.asignar = false;
-      this.disenador = false;
-    }
-    else if( estatusId == 31 && this.element.vacantes > 0 && this.element.enProceso > 0 && this.element.enProcesoFR > 0 && this.element.contratados == 0 ) //busqueda candidato
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = false; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
-      this.pausa = true;
-      this.asignar = false;
-      this.disenador = false;
-    }
-    else if( estatusId < 34 && this.element.vacantes > 0 && this.element.enProceso > 0 && this.element.enProcesoFR == 0 && this.element.contratados == 0 ) //publicada
-    {
-      this.bc = false; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = false; //nueva busqueda candidato
-      this.pausa = true;
-      this.asignar = false;
-      this.disenador = false;
-    }
-    else if(estatusId < 34 && this.element.vacantes > 0 && this.element.enProcesoFR > 0  && this.element.contratados < this.element.vacantes) //publicada
-    {
-      this.bc = false; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = false; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
-      this.pausa = true;
-      this.asignar = false;
-      this.disenador = false;
-    }
-    else if(estatusId < 34 && this.element.vacantes == this.element.contratados ) {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = false; //nueva busqueda candidato
-      this.pausa = true;
-      this.asignar = true;
-      this.disenador = true;
-    }
-    else if(estatusId < 34 && this.element.postulados > 0 && this.element.enProceso == 0) {
-      this.bc = false; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
-      this.pausa = false;
-      this.asignar = false;
-      this.disenador = false;
-    }
-    else if(estatusId < 34 && this.element.postulados == 0 && this.element.enProceso == 0 ) {
-      this.bc = false; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = false; //nueva busqueda candidato
-      this.pausa = true;
-      this.asignar = false;
-      this.disenador = false;
-    }
-   
+ 
   }
 
   /*

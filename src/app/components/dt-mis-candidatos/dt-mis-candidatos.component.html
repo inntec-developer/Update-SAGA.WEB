@@ -41,7 +41,10 @@
               {{row.folio}}
             </td>
             <td class="text-center">
-              <span class="px-1 mr-1  badge  badge-pill badge-info"> {{row.estatus}}</span>
+              <span *ngIf="row.estatus.length <= 10 else toLength" class="px-1 mr-1  badge  badge-pill badge-info"> {{row.estatus | uppercase }}</span>
+              <ng-template #toLength>
+                <span class="badge badge-info"  placement="bottom" tooltip="{{row.estatus | uppercase}}">{{row.estatus | slice:0:6 | uppercase }} ... </span>
+            </ng-template>
             </td>
             <td>{{row.vBtra}}</td>
             <td>
