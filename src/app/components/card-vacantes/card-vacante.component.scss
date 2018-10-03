@@ -9,13 +9,13 @@
 .card {
     min-height:350px;
    // background:#fff;
-   box-shadow:0 20px 50px rgba(0,0,0,.1);
+   box-shadow:0 5px 30px rgba(0,0,0,.3);
    // border-radius:10px;
    // transition:0.5s;
    border-right: 10px #aaa;
  }
 .card:hover {
-    box-shadow:0 30px 70px rgba(0,0,0,.2);
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
 }
 .card .box {
    // transform:translateY(-5%);

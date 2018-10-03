@@ -158,4 +158,5 @@ export class ApiConection {
   public static setStatusBolsa = 'reclutamiento/seguimientovacante/updateStatusBolsa';
   public static sendEmailCandidato = 'reclutamiento/seguimientovacante/sendEmailCandidato'; 
   public static sendEmailNoContratado = 'reclutamiento/seguimientovacante/sendEmailsNoContratado';  
+  public static getConteoVacante = 'Requisiciones/getConteoVacante';  
 }

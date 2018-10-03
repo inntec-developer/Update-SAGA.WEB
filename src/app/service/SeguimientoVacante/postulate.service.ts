@@ -1,3 +1,4 @@
+import { ApiConection } from './../api-conection.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -8,7 +9,6 @@ import 'rxjs/add/observable/throw';
 
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
-import { ApiConection } from '../api-conection.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -23,6 +23,7 @@ export class PostulateService {
   private UrlSetStatusBolsa = ApiConection.ServiceUrl + ApiConection.setStatusBolsa;
   private UrlSendEmailCandidato = ApiConection.ServiceUrl + ApiConection.sendEmailCandidato;
   private UrlSendEmailsNoContrado = ApiConection.ServiceUrl + ApiConection.sendEmailNoContratado;
+  private UrlGetConteoVacante = ApiConection.ServiceUrl + ApiConection.getConteoVacante;
 
   constructor(private _HttpClient: HttpClient) { }
 
@@ -34,6 +35,11 @@ export class PostulateService {
   GetProceso(VacanteId, ReclutadorId) : Observable<any>{
     let params = new HttpParams().set('VacanteId', VacanteId).set('ReclutadorId', ReclutadorId);
     return this._HttpClient.get(this.UrlGetProceso, { params: params })
+  }
+
+  GetConteoVacante(VacanteId, ClienteId) : Observable<any>{
+    let params = new HttpParams().set('RequisicionId', VacanteId).set('ClienteId', ClienteId);
+    return this._HttpClient.get(this.UrlGetConteoVacante, { params: params })
   }
 
   SetProcesoVacante(data)

@@ -1,6 +1,41 @@
+
 <div class="dt-container mat-elevation-z8">
-
-
+  <div class="table-responsive">
+    <table ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+      <thead>
+        <tr>
+          <th class="text-center">HORARIO</th>
+          <th class="text-center">No VACANTES</th>
+          <th class="text-center">% AVANCE</th>
+          <th class="text-center">POSTULADOS</th>
+          <th class="text-center">ENTREVISTA</th>
+          <th class="text-center">ABANDON&Oacute; PROCESO</th>
+          <th class="text-center">DESCARTADOS</th>
+          <th class="text-center">ENVIADO CLIENTE</th>
+          <th class="text-center">RECHAZADOS</th>
+          <th class="text-center">CONTRATADOS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of conteo">
+          <td class="text-center"> {{row.horario}}</td>
+          <td class="text-center"> {{row.vacantes}}</td>
+          <td class="text-center"> {{row.porcentaje}}</td>
+          <td class="text-center"> {{row.postulados}} </td>
+          <td class="text-center"> {{row.enProcesoEnt}} </td>
+          <td class="text-center"> {{row.abandono}} </td>
+          <td class="text-center"> {{row.descartados}}</td>
+          <td class="text-center"> {{row.enviados}}</td>
+          <td class="text-center"> {{row.rechazados}}</td>
+          <td class="text-center"> {{row.contratados}}</td>         
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br/>
+<br/>
+<div class="dt-container mat-elevation-z8">
   <div class="dt-header">
           <div class="box">
           <span>
@@ -111,7 +146,7 @@
     </div>
   </div>
   <div class="card card-default">
-    <div class="table-responsive" #tableContainer>
+    <div class="table-responsive pointer" #tableContainer>
       <table *ngIf="dataSource.length > 0 else NotCandidatos" id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
         <thead>
           <tr>

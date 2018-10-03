@@ -44,14 +44,14 @@
     height: 50px;
 }
 
-tr td {
-    cursor: pointer
-  }
-
-  
+div.pointer tr td
+{
+    cursor: pointer;
+}
 tr.selected td {
     background-color:  #5d9cec !important;
     color: white;
+
   }
 
 .btn-secondary

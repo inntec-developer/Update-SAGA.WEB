@@ -251,7 +251,6 @@ export class InfoCandidatoComponent implements OnInit {
   }
 
   public refreshTable_v() {
-    debugger;
     this.getMisVacates();
     setTimeout(() => {
       this.columns.forEach(element => {
@@ -287,9 +286,19 @@ export class InfoCandidatoComponent implements OnInit {
     this.infoRequiId = data.id;
 
     data.vacantes == data.contratados ? this.contratados = true : this.contratados = false;
-    this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 40 ? this.auxestatus = true : this.auxestatus = false;
-    this.candidato.estatus.requisicionId == data.id && this.reclutadorId == this.usuarioId && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 40 && this.candidato.estatus.estatusId != 24 ? this.desapartar = false : this.desapartar = true;
-    /* add an class 'active' on click */
+    if(this.candidato.estatus != null)
+    {
+      this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 40 ? this.auxestatus = true : this.auxestatus = false;
+      this.candidato.estatus.requisicionId == data.id && this.reclutadorId == this.usuarioId && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 40 && this.candidato.estatus.estatusId != 24 ? this.desapartar = false : this.desapartar = true;
+    }
+    else
+    {
+      this.desapartar = true;
+      this.auxestatus = false;
+      this.procesoCandidatoId = 27;
+    
+    }
+      /* add an class 'active' on click */
     $('#resultDataTableVacantes').on('click', 'tr', function (event: any) {
       //noinspection TypeScriptUnresolvedFunction
       $(this).addClass('selected').siblings().removeClass('selected');

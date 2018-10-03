@@ -28,13 +28,15 @@
   <div class="col-md-12">
     <div class="panel panel-default">
     <app-card-vacante [ClientId]="ClienteId" [RequisicionId]="RequisicionId" ></app-card-vacante>
+    <br/>
+    <br/>
   </div>
   </div>
 </div>
 <div class="row">
   <div class="col-md-12">
     <div class="panel panel-default">
-      <app-buttons-postulaciones [RequisicionId]="RequisicionId" [vacante]="Vacante"></app-buttons-postulaciones>
+      <app-buttons-postulaciones [RequisicionId]="RequisicionId" [vacante]="Vacante" [clienteId]="ClienteId"></app-buttons-postulaciones>
       <br/>
       <app-detail-vacantes [RequisicionId]="RequisicionId"></app-detail-vacantes>
     </div>

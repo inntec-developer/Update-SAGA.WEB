@@ -15,6 +15,8 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   @Input() RequisicionId;
   @Input() vacante;
+  @Input() clienteId;
+
   @ViewChild('MessageModal') ShownModal: ModalDirective;
  
   public dataSource: Array<any> = [];
@@ -45,11 +47,13 @@ export class ButtonsPostulacionesComponent implements OnInit {
   liberado = true; //liberado
   rechazado = true;
   rowAux = [];
+  conteo = [];
 
   constructor(private service: PostulateService, private toasterService: ToasterService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.getpostulados();
+    this.GetConteoVacante();
   }
 
   ValidarEstatus(estatus)
@@ -259,6 +263,15 @@ export class ButtonsPostulacionesComponent implements OnInit {
     }, error => this.errorMessage = <any>error);
   }
 
+  GetConteoVacante()
+  {
+    this.service.GetConteoVacante(this.RequisicionId, this.clienteId ).subscribe(data => {
+      console.log(data)
+      this.conteo = data;
+    })
+
+  }
+
   SetProceso(estatusId, estatus)
   {
     if(this.candidatoId != null)
@@ -280,6 +293,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
           this.evm = true;
           this.pst = true;
           this.liberado = true;
+          this.GetConteoVacante();
         }
         else if(data == 300)
         {
