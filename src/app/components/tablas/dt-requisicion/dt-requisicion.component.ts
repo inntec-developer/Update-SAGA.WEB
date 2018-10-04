@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -9,6 +8,7 @@ import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from '../../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../../service';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -82,7 +82,7 @@ export class DtRequisicionComponent implements OnInit {
   }
 
   getRequisiciones() {
-    this.service.getRequisiciones(sessionStorage.getItem('usuario')).subscribe(data => {
+    this.service.getRequisiciones(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
     }, error => this.errorMessage = <any>error);
   }

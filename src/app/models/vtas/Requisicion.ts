@@ -2,6 +2,7 @@ export class CreateRequisicion{
   IdDamfo: string;
   IdAddress: string;
   Usuario: string;
+  UsuarioId: string;
 }
 
 export class UpdateRequisicion{
