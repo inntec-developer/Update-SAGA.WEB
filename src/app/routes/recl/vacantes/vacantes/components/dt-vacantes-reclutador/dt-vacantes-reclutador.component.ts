@@ -468,7 +468,18 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.asignar = true;
       this.disenador = true;
     }
-    else{
+    else if(this.element.vacantes == 0){
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = true;
+      this.disenador = true;
+    }
+    else
+    {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
       this.ecc = true; //envío candidato cliente
@@ -477,6 +488,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.pausa = true;
       this.asignar = false;
       this.disenador = false;
+
     }
  
   }

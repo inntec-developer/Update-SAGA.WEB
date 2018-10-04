@@ -103,7 +103,7 @@ export class DtRequisicionComponent implements OnInit {
 
   ValidarEstatus(estatusId)
   {
-    if(estatusId == 1 || estatusId == 4)
+    if(estatusId == 1 || estatusId == 4 && this.element.vacantes > 0)
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
@@ -115,7 +115,7 @@ export class DtRequisicionComponent implements OnInit {
       this.editar = false;
 
     }
-    else if(estatusId == 8) //cancelada
+    else if(estatusId == 8 && this.element.vacantes > 0) //cancelada
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
@@ -126,7 +126,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = true;
     }
-    else if( estatusId < 34 && this.element.enProceso > 0 && this.element.contratados == 0)
+    else if( estatusId < 34 && this.element.vacantes > 0 && this.element.enProceso > 0 && this.element.contratados == 0)
     {
       this.gbc = true;
       this.cubierta = true;
@@ -137,7 +137,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = false;
     }
-    else if( estatusId < 34 && this.element.postulados > 0 && this.element.contratados == 0)
+    else if( estatusId < 34 && this.element.vacantes > 0 && this.element.postulados > 0 && this.element.contratados == 0)
     {
       this.gbc = true;
       this.cubierta = true;
@@ -148,7 +148,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = false
     }
-    else if(estatusId < 34 && this.element.contratados == this.element.vacantes )
+    else if(estatusId < 34 && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes )
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = false;
@@ -159,7 +159,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = false;
     }
-    else if(estatusId < 34 && ( this.element.contratados > 0  && this.element.contratados < this.element.vacantes ) )
+    else if(estatusId < 34 && this.element.vacantes > 0 && ( this.element.contratados > 0  && this.element.contratados < this.element.vacantes ) )
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
@@ -170,7 +170,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = false;
     }
-    else if( estatusId < 34 && (this.element.enProceso == 0 || this.element.postulados == 0))
+    else if( estatusId < 34 && this.element.vacantes > 0 && (this.element.enProceso == 0 || this.element.postulados == 0))
     {
       this.gbc = true;
       this.cc = true; //cubierta por el cliente
@@ -180,7 +180,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = false;
     }
-    else if(estatusId == 34 || estatusId == 36 && this.element.tipoReclutamientoId == 1)
+    else if(estatusId == 34 || estatusId == 36 && this.element.tipoReclutamientoId == 1 && this.element.vacantes > 0)
     {
       this.gbc = false; //garantía busqueda candidato
       this.cubierta = true;
@@ -191,7 +191,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = true;
     }
-    else if(estatusId == 34 && this.element.tipoReclutamientoId > 1)
+    else if(estatusId == 34 && this.element.tipoReclutamientoId > 1 && this.element.vacantes > 0)
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
@@ -202,7 +202,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = true;
     }
-    else if( estatusId > 34 && estatusId <= 37 )
+    else if( estatusId > 34 && estatusId <= 37 && this.element.vacantes > 0)
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
