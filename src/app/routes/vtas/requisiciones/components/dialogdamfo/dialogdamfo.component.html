@@ -1,7 +1,8 @@
 <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
 <div>
-  <h4>Generar Nueva Requisici&oacute;n</h4>
+  <h3>Generar Nueva Requisici&oacute;n</h3>
 </div>
+<br>
 <div mat-dialog-content>
   <div class="row">
     <div class="col-sm-12">
@@ -36,8 +37,12 @@
 </div>
 <br>
 <div class="modal-footer">
-  <btn-closed [text]="textBtnCancel" (click)="onNoClick()"></btn-closed>
-  <button type="button" class="btn btn-labeled btn-outline-success mb-2" (click)="createRequisicion()" [disabled]="DisabledButton">
+  <button type="button" (click)="onNoClick()" class="btn btn-xs btn-labeled btn-outline-danger mb-1">
+    <span class="btn-label">
+        <i class="fa fa-times"></i>
+    </span> Cancelar
+</button>
+  <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-1" (click)="createRequisicion()" [disabled]="DisabledButton">
     <span class="btn-label">
       <i class="fa fa-check"></i>
     </span> Aceptar

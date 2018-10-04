@@ -7,11 +7,11 @@
         (tableChanged)="onChangeTable(config)">
     </mat-form-field>
     <div class="d-flex justify-content-between">
-      <div class="d-flex align-items-stretch ">
-          <button id="view" chkPrivilegiosButtons (click)="showDamfo()" class="mb-1 btn btn-acciones margen" [disabled]="!element"
-          [ngClass]="(!element) ? 'disabled' : 'btn-outline-warning'"  placement="bottom" tooltip="Visualizar"><em class="fa fa-eye"></em></button>
-        <button id="view" chkPrivilegiosButtons (click)="openDialog()" class="mb-1 btn btn-acciones margen" [disabled]="!element"
-          [ngClass]="(!element) ? 'disabled' : 'btn-outline-success'"  placement="bottom" tooltip="Crear Requisición"><em class="icon-docs"></em></button>
+      <div class="d-flex align-items-stretch">
+          <button id="view" chkPrivilegiosButtons (click)="showDamfo()" class="mb-1 btn btn-acciones margen" [disabled]="!selected"
+          [ngClass]="(!selected) ? 'disabled' : 'btn-outline-warning'"  placement="bottom" tooltip="Visualizar"><em class="fa fa-eye"></em></button>
+        <button id="view" chkPrivilegiosButtons (click)="openDialog()" class="mb-1 btn btn-acciones margen" [disabled]="!selected"
+          [ngClass]="(!selected) ? 'disabled' : 'btn-outline-success'"  placement="bottom" tooltip="Crear Requisición"><em class="icon-docs"></em></button>
       </div>
       <div>
         <btn-return  placement="bottom" tooltip="Regresar" class="margen" [routerLink]="['/ventas/requisicion']"></btn-return>
@@ -42,8 +42,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr (click)="onCellClick(row)" (dblclick)="showDamfo()" *ngFor="let row of rows" [class.confident]="row.confidencial"
-            [class.cancel]="row.estatusId == 8">
+          <tr (click)="onCellClick(row)" (dblclick)="showDamfo()" *ngFor="let row of rows" 
+            [class.confident]="row.confidencial"
+            [class.cancel]="row.estatusId == 8"
+            [class.selected]="row.selected">
             <td>
               {{row.cliente}}
             </td>

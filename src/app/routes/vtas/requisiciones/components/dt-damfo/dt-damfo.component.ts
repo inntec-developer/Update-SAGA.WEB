@@ -34,6 +34,9 @@ export class DtDamfoComponent implements OnInit {
   element: any = [];
   damfoId: any;
 
+  rowAux = [];
+  selected: boolean = false;
+
   constructor(
     private service: RequisicionesService,
     private dialog: MatDialog,
@@ -186,11 +189,24 @@ export class DtDamfoComponent implements OnInit {
     let index = this.dataSource.indexOf(data.row);
     this.element = data;
     this.damfoId = data.id
-    /* add an class 'active' on click */
-    $('#resultDataTable').on('click', 'tr', function (event: any) {
-      //noinspection TypeScriptUnresolvedFunction
-      $(this).addClass('selected').siblings().removeClass('selected');
-    });
+    data.selected ? data.selected = false : data.selected = true;
+
+    if (!data.selected) {
+      this.selected = false;
+    } else {
+      this.selected = true;
+    }
+
+    if (this.rowAux.length == 0) {
+      this.rowAux = data;
+    }
+    else if (data.selected && this.rowAux != []) {
+      var aux = data;
+      data = this.rowAux;
+      data.selected = false;
+      aux.selected = true;
+      this.rowAux = aux;
+    }
   }
 
   /*
