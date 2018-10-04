@@ -360,6 +360,7 @@ export class DtRequisicionComponent implements OnInit {
       this.estatusId = null;
       this.enProceso = null;
       this.element = null;
+      this.ValidarEstatus(9999);
     }, 300);
   }
 
