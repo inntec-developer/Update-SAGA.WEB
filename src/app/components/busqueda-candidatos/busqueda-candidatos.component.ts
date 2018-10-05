@@ -88,11 +88,12 @@ export class BusquedaCandidatosComponent implements OnInit {
   idiomasCtrl: FormControl;
   filteredidiomas: Observable<any[]>;
   filtroidioma: any;
-  loading: boolean;
+  loading: boolean = false;
 
   toolTipePC: string;
   alerts: any;
   loadingPC: boolean;
+  palabraClave: string;
 
 
   constructor(
@@ -269,11 +270,11 @@ export class BusquedaCandidatosComponent implements OnInit {
   // Nivel Estudio
   cargarNivelEstudio() {
     this.service.getnivelestudio().subscribe(data => {
-        this.nvestuidios = data;
-        this.filterednvestudios = this.nvestudiosCtrl.valueChanges
-          .pipe(startWith(''),
-            map(nv => nv ? this.filternvestudio(nv) : this.nvestuidios.slice()));
-      })
+      this.nvestuidios = data;
+      this.filterednvestudios = this.nvestudiosCtrl.valueChanges
+        .pipe(startWith(''),
+          map(nv => nv ? this.filternvestudio(nv) : this.nvestuidios.slice()));
+    })
   }
   filternvestudio(nvest: string) {
     return this.filtronv = this.nvestuidios.filter(nv =>
@@ -286,7 +287,7 @@ export class BusquedaCandidatosComponent implements OnInit {
       this.idiomas = data;
       this.filteredidiomas = this.idiomasCtrl.valueChanges
         .pipe(startWith(''),
-        map(id => id ? this.filterIdioma(id) : this.idiomas.slice()));
+          map(id => id ? this.filterIdioma(id) : this.idiomas.slice()));
     })
   }
   filterIdioma(idiom: string) {
@@ -294,40 +295,48 @@ export class BusquedaCandidatosComponent implements OnInit {
       id.idioma.toLowerCase().indexOf(idiom.toLowerCase()) === 0);
   }
 
+  _Enter($event) {
+    // if ($event.keyCode == 10) {
+    // this.Buscar();
+    console.log($event);
+    // }
+  }
   Buscar() {
-    this.loading = true;
-    let filtroCandidatos: Filtros = new Filtros();
-    filtroCandidatos.IdPais = this.filtropais ? this.filtropais[0].id : null ,
-    filtroCandidatos.IdEstado = this.filtroestado ? this.filtroestado[0].id : null,
-    filtroCandidatos.IdMunicipio = this.filtromunicipio ? this.filtromunicipio[0].id : null,
-    filtroCandidatos.IdColonia = this.filtroColonia ? this.filtroColonia[0].id : null,
-    filtroCandidatos.Cp = this.cp,
-    filtroCandidatos.IdAreaExp = this.filtroareaexp ? this.filtroareaexp[0].id : null,
-    filtroCandidatos.IdPerfil =  this.filtroperfil ?  this.filtroperfil[0].id : null,
-    filtroCandidatos.Salario = this.salario  ,
-    filtroCandidatos.IdGenero = this.filtrogenero ? this.filtrogenero[0].id : null,
-    filtroCandidatos.Edad = this.edad,
-    filtroCandidatos.Reubicacion = this.checked,
-    filtroCandidatos.IdPDiscapacidad = this.filtropd ? this.filtropd[0].id : null,
-    filtroCandidatos.IdTpLicencia = this.filtrotplic ? this.filtrotplic[0].id : null,
-    filtroCandidatos.TpVehiculo = this.checkedV,
-    filtroCandidatos.IdIdiomas = this.filtroidioma ? this.filtroidioma[0].id : null;
-    filtroCandidatos.IdNvEstudios = this.filtronv ? this.filtronv[0].id : null
+    if (this.loading == false) {
+      this.loading = true;
+      let filtroCandidatos: Filtros = new Filtros();
+      filtroCandidatos.IdPais = this.filtropais ? this.filtropais[0].id : null,
+        filtroCandidatos.IdEstado = this.filtroestado ? this.filtroestado[0].id : null,
+        filtroCandidatos.IdMunicipio = this.filtromunicipio ? this.filtromunicipio[0].id : null,
+        filtroCandidatos.IdColonia = this.filtroColonia ? this.filtroColonia[0].id : null,
+        filtroCandidatos.Cp = this.cp,
+        filtroCandidatos.IdAreaExp = this.filtroareaexp ? this.filtroareaexp[0].id : null,
+        filtroCandidatos.IdPerfil = this.filtroperfil ? this.filtroperfil[0].id : null,
+        filtroCandidatos.Salario = this.salario,
+        filtroCandidatos.IdGenero = this.filtrogenero ? this.filtrogenero[0].id : null,
+        filtroCandidatos.Edad = this.edad,
+        filtroCandidatos.Reubicacion = this.checked,
+        filtroCandidatos.IdPDiscapacidad = this.filtropd ? this.filtropd[0].id : null,
+        filtroCandidatos.IdTpLicencia = this.filtrotplic ? this.filtrotplic[0].id : null,
+        filtroCandidatos.TpVehiculo = this.checkedV,
+        filtroCandidatos.IdIdiomas = this.filtroidioma ? this.filtroidioma[0].id : null;
+      filtroCandidatos.IdNvEstudios = this.filtronv ? this.filtronv[0].id : null
 
-    this.service.getcandidatos(filtroCandidatos).subscribe( data =>{
-      this.Candidatos = data;
-      this.filtro.emit(this.Candidatos);
-      this.loading = false;
-    })
+      this.service.getcandidatos(filtroCandidatos).subscribe(data => {
+        this.Candidatos = data;
+        this.filtro.emit(this.Candidatos);
+        this.loading = false;
+      })
+    }
   }
 
-  buscarPalabraClave(palabraclave: string){
-    this.loadingPC = true;
+  buscarPalabraClave(palabraclave: string) {
+    this.loading = true;
     this.service.getcandidatosPalabraClave(palabraclave).subscribe(data => {
       this.Candidatos = data;
       this.filtro.emit(this.Candidatos);
-      this.loadingPC = false;
-    })
+      this.loading = false;
+    });
   }
 
   LimpiarFiltro() {
@@ -358,6 +367,8 @@ export class BusquedaCandidatosComponent implements OnInit {
     this.filtronv = null
     this.idiomasCtrl.reset();
     this.filtroidioma = null
+    this.palabraClave = '';
+    this.loading = false;
   }
 
   onClosed(dismissedAlert: any): void {

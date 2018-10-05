@@ -310,21 +310,24 @@
                 <div class="col-md-6 col-sm-12">
                   <div>
                     <strong class="text-primary">Tipo de Direcci&oacute;n: </strong>
-                    <label *ngIf="candidato.direccion.tipodoreccion else NotTipoDirec" class="text-muted">{{candidato.direccion.tipoDireccion.tipoDireccion}}</label>
+                    <label *ngIf="candidato?.direccion?.tipoDireccion else NotTipoDirec" class="text-muted">{{candidato?.direccion?.tipoDireccion?.tipoDireccion}}</label>
                     <ng-template #NotTipoDirec>
                       <label class="text-muted"> Sin Registro</label>
                     </ng-template>
                   </div>
                   <div>
                     <strong class="text-primary">Localidad: </strong>
-                    <label class="text-muted">
-                      {{candidato.direccion?.municipio?.municipio}}, {{candidato.direccion?.estado?.estado}},
-                      {{candidato.direccion?.pais?.pais}}
+                    <label class="text-muted" *ngIf="candidato.direccion?.municipio?.municipio && candidato?.direccion?.estado?.estado && candidato.direccion?.pais?.pais else NotTipoLocalidad">
+                      {{candidato.direccion?.municipio?.municipio}},
+                      {{candidato?.direccion?.estado?.estado}}, {{candidato.direccion?.pais?.pais}}
                     </label>
+                    <ng-template #NotTipoLocalidad>
+                      <label class="text-muted"> Sin Registro</label>
+                    </ng-template>
                   </div>
                   <div>
                     <strong class="text-primary">Colonia: </strong>
-                    <label class="text-muted" *ngIf="candidato.direccion.colonia else NotColonia">{{candidato.direccion.colonia.tipoColonia}},
+                    <label class="text-muted" *ngIf="candidato?.direccion?.colonia else NotColonia">{{candidato?.direccion?.colonia?.tipoColonia}},
                       {{candidato.direccion.colonia.colonia}}</label>
                     <ng-template #NotColonia>
                       <label class="text-muted"> Sin Registro</label>
@@ -334,27 +337,30 @@
                 <div class="col-md-6 col-sm-12">
                   <div>
                     <strong class="text-primary">Calle: </strong>
-                    <label class="text-muted" *ngIf="candidato.direccion.calle else NotCalle">{{candidato.direccion.calle}}</label>
-                    <ng-template>
+                    <label class="text-muted" *ngIf="candidato?.direccion?.calle else NotCalle">{{candidato?.direccion?.calle}}</label>
+                    <ng-template #NotCalle>
                       <label class="text-muted">Sin Registro</label>
                     </ng-template>
                   </div>
                   <div>
                     <strong class="text-primary">Num. Ext / Int: </strong>
-                    <label class="text-muted" *ngIf="candidato.direccion.numeroExterior else NotExterior">{{candidato.direccion.numeroExterior}}
+                    <label class="text-muted" *ngIf="candidato?.direccion?.numeroExterior else NotExterior">{{candidato?.direccion?.numeroExterior}}
                       - </label>
                     <ng-template #NotExterior>
-                      <label class="text-muted"> S/N</label>
+                      <label class="text-muted"> S/N </label>
                     </ng-template>
-                    <label class="text-muted" *ngIf="candidato.direccion.numeroInterior else NotInterior">
-                      {{candidato.direccion.numeroInterior}}</label>
+                    <label *ngIf="candidato.direccion?.numeroInterior else NotInterior" class="text-muted" >
+                      {{candidato.direccion?.numeroInterior}}</label>
                     <ng-template #NotInterior>
                       <label class="text-muted"> S/N</label>
                     </ng-template>
                   </div>
                   <div>
                     <strong class="text-primary">C&oacute;digo Postal: </strong>
-                    <label class="text-muted">{{candidato.direccion.codigoPostal}}</label>
+                    <label *ngIf="candidato.direccion?.codigoPostal else NotCP" class="text-muted">{{candidato.direccion?.codigoPostal}}</label>
+                    <ng-template #NotCP>
+                      <label class="text-muted">Sin Registro</label>
+                    </ng-template>
                   </div>
                 </div>
               </div>
@@ -362,7 +368,7 @@
             <accordion-group *ngIf="candidato.experiencias">
               <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
                 <div class="pull-left float-left text-warning">
-                  <h5>Experiencia Profesional ({{candidato.experiencias.length}})</h5>
+                  <h5>Experiencia Profesional ({{candidato.experiencias?.length}})</h5>
                 </div>
                 <span class="float-right pull-right">
                   <em class="fa fa-briefcase"></em>
@@ -625,24 +631,25 @@
               <div class="d-flex align-items-stretch ">
                 <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones margen"
                   [disabled]="!infoRequiId && !infoFolio" [ngClass]="(!infoRequiId && !infoFolio) ? 'disabled' : 'btn-outline-warning'"
-                   placement="bottom" tooltip="Visualizar"><em class="fa fa-eye"></em></button>
+                  placement="bottom" tooltip="Visualizar"><em class="fa fa-eye"></em></button>
 
-                <button [disabled]="auxestatus || contratados || procesoCandidatoId != 27 && procesoCandidatoId != 40"
-                  [ngClass]="auxestatus || contratados || procesoCandidatoId != 27 && procesoCandidatoId != 40
+                <button [disabled]="loading || auxestatus || contratados || procesoCandidatoId != 27 && procesoCandidatoId != 40"
+                  [ngClass]="loading || auxestatus || contratados || procesoCandidatoId != 27 && procesoCandidatoId != 40
                     ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
-                   placement="bottom" tooltip="Apartar" (click)="_apartarCandidato()">
+                  placement="bottom" tooltip="Apartar" (click)="_apartarCandidato()">
                   <em class="fa fa-thumbs-o-up"></em>
                 </button>
-                <button [disabled]="desapartar" [ngClass]="desapartar ? 'mb-1 btn disabled':'mb-1 btn btn-outline-danger'" placement="bottom" tooltip="Desapartar" (click)="_liberarCandidato()">
+                <button [disabled]="desapartar || loading" [ngClass]="desapartar || loading ? 'mb-1 btn disabled':'mb-1 btn btn-outline-danger'"
+                  placement="bottom" tooltip="Desapartar" (click)="_liberarCandidato()">
                   <em class="fa fa-thumbs-o-down"></em>
                 </button>
-      
+
               </div>
               <div>
-                <button (click)="clearfilters()"  placement="bottom" tooltip="Limpiar Filtros" class=" margen mb-1 btn btn-outline-primary">
-                  <em class="fa fa-eraser"></em> 
+                <button (click)="clearfilters()" placement="bottom" tooltip="Limpiar Filtros" class=" margen mb-1 btn btn-outline-primary">
+                  <em class="fa fa-eraser"></em>
                 </button>
-                <btn-refresh (click)="refreshTable_v()"  placement="bottom" tooltip="Actualizar"></btn-refresh>
+                <btn-refresh (click)="refreshTable_v()" placement="bottom" tooltip="Actualizar"></btn-refresh>
               </div>
             </div>
           </div>
@@ -680,14 +687,16 @@
                     <td class="text-center"> {{row.tipoReclutamiento}}</td>
                     <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
                     <td class="text-center">
-                      <small *ngIf="row.estatus.length <= 10 else toLength" class="badge badge-pill" [class.badge-warning]="row.estatusId  === 4" [class.badge-info]="row.estatusId  != 7 "
+                      <small *ngIf="row.estatus.length <= 10 else toLength" class="badge badge-pill"
+                        [class.badge-warning]="row.estatusId  === 4" [class.badge-info]="row.estatusId  != 7 "
                         [class.badge-success]="row.estatusId  === 7">
                         {{row.estatus | uppercase }}
                       </small>
 
                       <ng-template #toLength>
-                        <span class="badge badge-info"  placement="bottom" tooltip="{{row.estatus | uppercase}}">{{row.estatus | slice:0:6 | uppercase }} ... </span>
-                    </ng-template>
+                        <span class="badge badge-info" placement="bottom" tooltip="{{row.estatus | uppercase}}">{{row.estatus
+                          | slice:0:6 | uppercase }} ... </span>
+                      </ng-template>
                     </td>
                 </tbody>
               </table>

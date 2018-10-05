@@ -23,11 +23,10 @@
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
-          <img *ngIf="loadingPC" style="margin-left: 10px; margin-right: 10px;" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
         </div>
       </div>
     </form>
-    <form class="find-form" (keyup.enter)="Buscar()">
+    <form class="find-form" (keyup.control.enter)="Buscar()">
       <hr>
       <div class="row">
         <!-- Inicio de filtros. Filtro de Paises. -->
@@ -252,7 +251,8 @@
     <!-- <div class="container"> -->
     <div class="row">
       <div class="col-12">
-        <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="Buscar()"
+        <button style="margin-left: 10px; " class="btn btn-labeled mb-1" type="button" (click)="Buscar()" [disabled]='loading'
+        [ngClass]="loading ? 'disabled' : 'btn-outline-info'"
         placement="bottom" tooltip="Busca candidatos">
           <span class="btn-label ">
             <i class="fa fa-search "></i>

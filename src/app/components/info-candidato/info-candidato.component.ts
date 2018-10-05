@@ -51,6 +51,7 @@ export class InfoCandidatoComponent implements OnInit {
   contratados = true;
   auxestatus = true;
   desapartar = true;
+  loading: boolean;
   constructor(
     private _serviceCandidato: InfoCandidatoService,
     private toasterService: ToasterService,
@@ -119,6 +120,7 @@ export class InfoCandidatoComponent implements OnInit {
         this.reclutadorId = this.candidato.estatus.reclutadorId;
       }
       this.spinner.hide();
+      console.log(this.candidato);
     });
   }
 
@@ -360,6 +362,7 @@ export class InfoCandidatoComponent implements OnInit {
    */
   _apartarCandidato() {
     // if (this.reclutador === this.usuario || !this.candidato.estatus) {
+      this.loading = true;
       this.procesoCandidato = {
         candidatoId: this.CandidatoId,
         requisicionId: this.vacante.id,
@@ -372,6 +375,7 @@ export class InfoCandidatoComponent implements OnInit {
         .subscribe(data => {
           switch (data) {
             case 200: {
+              this.loading = false;
               this.ngOnInit();
               this.ngAfterViewInit();
               var msg = 'El candidato se aparto correctamente.';
@@ -387,16 +391,19 @@ export class InfoCandidatoComponent implements OnInit {
             case 304: {
               msg = 'El candidato ya esta apartado o en proceso.';
               this.popToast('info', 'Apartado', msg); ''
+              this.loading = false;
               break;
             }
             case 404: {
               var msg = 'Error el intentar apartar el candidato. Consulte al departamento de soporte si el problema persiste.';
               this.popToast('error', 'Apartado', msg);
+              this.loading = false;
               break;
             }
             default: {
               var msg = 'Error inesperado y desconocido, reporte el problema el departamento de soporte.';
               this.popToast('error', 'Oops!!', msg);
+              this.loading = false;
               break;
             }
           }
@@ -411,12 +418,14 @@ export class InfoCandidatoComponent implements OnInit {
 
   _liberarCandidato() {
     if (this.reclutador == this.usuario || !this.candidato.estatus) {
+      this.loading = true;
       this._serviceCandidato.setLiberarCandidato(this.Estatus)
         .subscribe(data => {
           switch (data) {
             case 200: {
               this.ngOnInit();
               this.ngAfterViewInit();
+              this.loading = false;
               var msg = 'El candidato se libero correctamente.';
               this.popToast('warning', 'Liberado', msg);
               this.Emiter = {
@@ -430,6 +439,7 @@ export class InfoCandidatoComponent implements OnInit {
             case 404: {
               var msg = 'Error el intentar liberar el candidato. Consulte al departamento de soporte si el problema persiste.';
               this.popToast('error', 'Apartado', msg);
+              this.loading = false;
               break;
             }
           }
