@@ -1,6 +1,6 @@
 <div class="content-heading">
   <div>
-   Seguimiento Vacante {{Folio}} {{Vacante}}
+    Seguimiento Vacante {{Folio}} {{Vacante}}
     <span class="text-sm d-none d-sm-block">Gestion de Vacante</span>
   </div>
   <!-- Breadcrumb right aligned-->
@@ -20,24 +20,27 @@
     <btn-view (click)="showDamfo()"  placement="bottom" tooltip="Ver DAM-FO-290"></btn-view> -->
   </div>
   <div>
-    <btn-return  placement="bottom" tooltip="Regresar" [routerLink]="['/reclutamiento/vacantesReclutador']"></btn-return>
+    <button placement="bottom" tooltip="Regresar" class="mb-1 btn btn-outline-warning" type="button"
+      [routerLink]="['/reclutamiento/vacantesReclutador']">
+      <em class="icon-action-undo"></em>
+    </button>
   </div>
 </div>
 
-<div class="row" >
+<div class="row">
   <div class="col-md-12">
     <div class="panel panel-default">
-    <app-card-vacante [ClientId]="ClienteId" [RequisicionId]="RequisicionId" ></app-card-vacante>
-    <br/>
-    <br/>
-  </div>
+      <app-card-vacante [ClientId]="ClienteId" [RequisicionId]="RequisicionId"></app-card-vacante>
+      <br />
+      <br />
+    </div>
   </div>
 </div>
 <div class="row">
   <div class="col-md-12">
     <div class="panel panel-default">
       <app-buttons-postulaciones [RequisicionId]="RequisicionId" [vacante]="Vacante" [clienteId]="ClienteId"></app-buttons-postulaciones>
-      <br/>
+      <br />
       <app-detail-vacantes [RequisicionId]="RequisicionId"></app-detail-vacantes>
     </div>
   </div>

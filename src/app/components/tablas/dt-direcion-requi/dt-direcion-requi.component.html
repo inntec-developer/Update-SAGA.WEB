@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr (click)="onCellClick(row)" *ngFor="let row of rows" (dblclick)="verRutasCamion(row.rutasCamion)"
+        <tr (click)="onCellClick(row)" *ngFor="let row of rows"
           [class.selected]="row.selected">
           <td class="text-center">
             {{row.tipoDireccion}}

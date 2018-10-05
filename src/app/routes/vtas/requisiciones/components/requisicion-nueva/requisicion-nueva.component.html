@@ -1,14 +1,14 @@
 <div class="content-heading">
-    <div>
-        Nueva Requisici&oacute;n
-        <span class="text-sm d-none d-sm-block">Generador de Requisiciones.</span>
-    </div>
-    <!-- Breadcrumb right aligned-->
-    <ol class="breadcrumb ml-auto">
-        <li class="breadcrumb-item"><a [routerLink]="['/home']" >Inicio</a></li>
-        <li class="breadcrumb-item"><a [routerLink]="['/ventas/requisicion']" >Requisiciones</a></li>
-        <li class="breadcrumb-item active">Nueva Requisicion</li>
-    </ol>
+  <div>
+    Nueva Requisici&oacute;n
+    <span class="text-sm d-none d-sm-block">Generador de Requisiciones.</span>
+  </div>
+  <!-- Breadcrumb right aligned-->
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item"><a [routerLink]="['/home']">Inicio</a></li>
+    <li class="breadcrumb-item"><a [routerLink]="['/ventas/requisicion']">Requisiciones</a></li>
+    <li class="breadcrumb-item active">Nueva Requisicion</li>
+  </ol>
 </div>
 
 <div *ngIf="createRequi">
@@ -16,12 +16,13 @@
     <div class="col-md-4">
     </div>
     <div class="col-md-8 text-right">
-      <btn-return  placement="bottom" tooltip="Regresar" [routerLink]="['/ventas/requisicion']">
-      </btn-return>
+      <button placement="bottom" tooltip="Regresar" class="mb-1 btn btn-outline-warning" type="button" 
+        [routerLink]="['/ventas/requisicion']">
+        <em class="icon-action-undo"></em>
+      </button>
     </div>
   </div>
-  <br/>
+  <br />
   <app-update-info-requi [Folios]="folio"></app-update-info-requi>
-  <br/>
+  <br />
   <app-view-cuerpo-requi [Requisicion]="requisicionId"></app-view-cuerpo-requi>
-  

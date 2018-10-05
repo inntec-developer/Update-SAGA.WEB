@@ -87,10 +87,6 @@ export class DtDirecionRequiComponent implements OnInit {
     }
   }
 
-  verRutasCamion($row){
-    this.isModalRutasShown = true;
-    this.rutasCamion = $row;
-  }
   closeModalRutasCamion()
   {
     this.ShownModal.hide();

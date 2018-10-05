@@ -19,35 +19,38 @@
 <div class="row">
   <div class="col-md-12">
     <div class="d-flex justify-content-between">
-        <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones" [disabled]="estatusId == 8 || !element"
-        [ngClass]="(estatusId == 8 || !element) ? 'disabled' : 'btn-outline-primary'"  placement="bottom" tooltip="Editar" (click)="editRequi()">
+      <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones" [disabled]="estatusId == 8 || !element"
+        [ngClass]="(estatusId == 8 || !element) ? 'disabled' : 'btn-outline-primary'" placement="bottom" tooltip="Editar"
+        (click)="editRequi()">
         <em class="icon-pencil"></em></button>
-        <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones btn-outline-dark"
-           placement="bottom" tooltip="Comentarios"><em class="fa fa-comments-o"></em></button>
-      <btn-return  placement="bottom" tooltip="Regresar" [routerLink]="['/ventas/requisicion']"></btn-return>
+      <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones btn-outline-dark"
+        placement="bottom" tooltip="Comentarios"><em class="fa fa-comments-o"></em></button>
+      <button placement="bottom" tooltip="Regresar" class="mb-1 btn btn-outline-warning" type="button" [routerLink]="['/ventas/requisicion']">
+        <em class="icon-action-undo"></em>
+      </button>
     </div>
   </div>
 </div>
-<br/>
+<br />
 <app-view-info-requi [Folios]="Folio" (EstatusId)="getEstatusRequi($event)"></app-view-info-requi>
-<br/>
+<br />
 <app-view-cuerpo-requi [Requisicion]="RequisicionId"></app-view-cuerpo-requi>
 <!-- Modal para comentarios de la requisicion -->
 <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 id="dialog-sizes-name1" class="modal-title pull-left">Vacante: {{Vacante}} {{Folio}}</h4>
-          <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <comentario-vacante [RequisicionId]="RequisicionId"></comentario-vacante>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide()">Cerrar</button>
-        </div>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Vacante: {{Vacante}} {{Folio}}</h4>
+        <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <comentario-vacante [RequisicionId]="RequisicionId"></comentario-vacante>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide()">Cerrar</button>
       </div>
     </div>
   </div>
+</div>
