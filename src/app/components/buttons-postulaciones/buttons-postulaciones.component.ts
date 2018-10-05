@@ -69,7 +69,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
       this.pst = true;
-      this.liberado = true;
+      this.liberado = false;
       this.contratado = true;
       this.rechazado = true;
     }

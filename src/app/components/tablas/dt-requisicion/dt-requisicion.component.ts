@@ -103,7 +103,7 @@ export class DtRequisicionComponent implements OnInit {
 
   ValidarEstatus(estatusId)
   {
-    if(estatusId == 1 || estatusId == 4 && this.element.vacantes > 0)
+    if(estatusId == 1 || estatusId == 4)
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
@@ -115,7 +115,7 @@ export class DtRequisicionComponent implements OnInit {
       this.editar = false;
 
     }
-    else if(estatusId == 8 && this.element.vacantes > 0) //cancelada
+    else if(estatusId == 8) //cancelada
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
@@ -126,7 +126,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = true;
     }
-    else if( estatusId < 34 && this.element.vacantes > 0 && this.element.enProceso > 0 && this.element.contratados == 0)
+    else if( estatusId < 34 && this.element.enProceso > 0 && this.element.contratados == 0)
     {
       this.gbc = true;
       this.cubierta = true;
@@ -137,7 +137,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = false;
     }
-    else if( estatusId < 34 && this.element.vacantes > 0 && this.element.postulados > 0 && this.element.contratados == 0)
+    else if( estatusId < 34 && this.element.postulados > 0 && this.element.contratados == 0)
     {
       this.gbc = true;
       this.cubierta = true;
@@ -170,7 +170,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = false;
     }
-    else if( estatusId < 34 && this.element.vacantes > 0 && (this.element.enProceso == 0 || this.element.postulados == 0))
+    else if( estatusId < 34 && (this.element.enProceso == 0 || this.element.postulados == 0))
     {
       this.gbc = true;
       this.cc = true; //cubierta por el cliente
@@ -213,7 +213,18 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = true;
     }
-    else if(estatusId == 9999)
+    else if(estatusId == 38 && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes)
+    {
+      this.gbc = true; //garantía busqueda candidato
+      this.cubierta = false;
+      this.cc = true; //cubierta por el cliente
+      this.crm = false; //cubierta reclutamiento medios
+      this.cp = true; // cubierta parcialmente
+      this.cancelar = true;
+      this.borrar = true;
+      this.editar = true;
+    }
+    else
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
@@ -385,7 +396,6 @@ export class DtRequisicionComponent implements OnInit {
 
   updataStatus(estatusId, estatus)
   {
-    debugger;
     var datos = {estatusId: estatusId, requisicionId: this.element.id }
     var emails = [];
     if(estatusId == 8)
