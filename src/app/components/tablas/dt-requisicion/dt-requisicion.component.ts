@@ -135,7 +135,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
       this.borrar = true;
-      this.editar = false;
+      this.editar = true;
     }
     else if( estatusId < 34 && this.element.postulados > 0 && this.element.contratados == 0)
     {
@@ -146,7 +146,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
       this.borrar = true;
-      this.editar = false
+      this.editar = true
     }
     else if(estatusId < 34 && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes )
     {
@@ -157,7 +157,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cp = true; // cubierta parcialmente
       this.cancelar = true;
       this.borrar = true;
-      this.editar = false;
+      this.editar = true;
     }
     else if(estatusId < 34 && this.element.vacantes > 0 && ( this.element.contratados > 0  && this.element.contratados < this.element.vacantes ) )
     {
@@ -168,7 +168,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cp = false; // cubierta parcialmente
       this.cancelar = true;
       this.borrar = true;
-      this.editar = false;
+      this.editar = true;
     }
     else if( estatusId < 34 && (this.element.enProceso == 0 || this.element.postulados == 0))
     {
@@ -178,7 +178,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
       this.borrar = true;
-      this.editar = false;
+      this.editar = true;
     }
     else if(estatusId == 34 || estatusId == 36 && this.element.tipoReclutamientoId == 1 && this.element.vacantes > 0)
     {

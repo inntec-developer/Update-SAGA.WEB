@@ -633,9 +633,9 @@
                   [disabled]="!infoRequiId && !infoFolio" [ngClass]="(!infoRequiId && !infoFolio) ? 'disabled' : 'btn-outline-warning'"
                   placement="bottom" tooltip="Visualizar"><em class="fa fa-eye"></em></button>
 
-                <button [disabled]="loading || auxestatus || contratados || procesoCandidatoId != 27 && procesoCandidatoId != 40"
-                  [ngClass]="loading || auxestatus || contratados || procesoCandidatoId != 27 && procesoCandidatoId != 40
-                    ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
+                <button [disabled]="loading || auxestatus"
+                  [ngClass]="loading || auxestatus
+                                      ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
                   placement="bottom" tooltip="Apartar" (click)="_apartarCandidato()">
                   <em class="fa fa-thumbs-o-up"></em>
                 </button>

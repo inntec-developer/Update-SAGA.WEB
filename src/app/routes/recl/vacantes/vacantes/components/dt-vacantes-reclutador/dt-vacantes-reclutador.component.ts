@@ -1,4 +1,4 @@
-import { Vacante } from './../../../../../../models/vtas/Requisicion';
+
 import { Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -545,7 +545,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   seguimientoRequi() {
-    this._Router.navigate(['/reclutamiento/gestionVacante', this.id, this.folio, this.vBtra, this.clienteId, this.enProceso], { skipLocationChange: true });
+    this._Router.navigate(['/reclutamiento/gestionVacante', this.id, this.folio, this.vBtra, this.clienteId, this.enProceso, this.estatusId], { skipLocationChange: true });
   }
 
   /**

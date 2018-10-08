@@ -4,7 +4,6 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { ModalDirective } from 'ngx-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../service/SeguimientoVacante/postulate.service';
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-buttons-postulaciones',
@@ -16,6 +15,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   @Input() RequisicionId;
   @Input() vacante;
   @Input() clienteId;
+  @Input() estatusVacante;
 
   @ViewChild('MessageModal') ShownModal: ModalDirective;
  
@@ -146,7 +146,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evm = true;
       this.pst = true;
       this.liberado = false;
-      this.rechazado = true;
+      this.rechazado = false;
     }
     else if(estatus === 23) //finalista cliente
     {
@@ -258,6 +258,8 @@ export class ButtonsPostulacionesComponent implements OnInit {
           estatusId: element.estatusId
         }
         this.dataSource.push(perfil)
+        console.log('aqui')
+        console.log(this.dataSource)
         
       })
     }, error => this.errorMessage = <any>error);
@@ -266,8 +268,8 @@ export class ButtonsPostulacionesComponent implements OnInit {
   GetConteoVacante()
   {
     this.service.GetConteoVacante(this.RequisicionId, this.clienteId ).subscribe(data => {
-      console.log(data)
       this.conteo = data;
+      console.log(this.estatusVacante)
     })
 
   }
@@ -276,7 +278,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   {
     if(this.candidatoId != null)
     {
-      var datos = {candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: 0};
+      var datos = {candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId};
 
       this.service.SetProceso(datos).subscribe(data => {
         if(data == 201)
@@ -328,7 +330,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       {
         var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 4};
       }
-      else if(estatusId == 24 || estatusId == 25 || estatusId == 27)
+      else if(estatusId == 24 || estatusId == 25 || estatusId == 27 || estatusId == 40)
       {
         var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 5};
       }
@@ -354,6 +356,11 @@ export class ButtonsPostulacionesComponent implements OnInit {
           }
 
           this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');    
+
+          if(estatusId == 22 && this.estatusVacante != "30")
+          {
+            this.popToast('warning', 'Estatus', 'El estatus de la vacante es diferente a envio al cliente.');
+          }
         }
       })
     }
@@ -425,7 +432,6 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   EstatusModal($event)
   {
-    console.log($event)
     var idx = this.dataSource.findIndex(x => x.candidatoId === $event.candidatoId);
 
     this.dataSource[idx]['estatusId'] = $event.estatusId;

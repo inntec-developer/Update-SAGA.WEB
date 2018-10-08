@@ -98,7 +98,7 @@ const routes: Routes = [
     { path: 'configuracionVacante/:Requi/:Folio/:VBtra', component: DisenadorVacanteComponent },
     { path: 'vacantesReclutador', component: VacantesReclutadorComponent, data:{componente:'Vacantes'} },
     { path: 'postulados/:VacanteId/:Folio/:VBtra', component: VacantesPostulateComponent, data: {componente: 'Vacantes'} },
-    { path: 'gestionVacante/:VacanteId/:Folio/:VBtra/:ClienteId/:enProceso', component: SeguimientoVacanteComponent, data: {componente: 'Vacantes'} }
+    { path: 'gestionVacante/:VacanteId/:Folio/:VBtra/:ClienteId/:enProceso/:estatusId', component: SeguimientoVacanteComponent, data: {componente: 'Vacantes'} }
 ];
 
 @NgModule({

@@ -14,7 +14,7 @@ export class SeguimientoVacanteComponent implements OnInit {
   ClienteId: any;
   enProceso: any;
   enProcesoMostrar: boolean;
-
+  estatusVacante: any;
   constructor(
     private _Router : ActivatedRoute
   ) { 
@@ -25,6 +25,7 @@ export class SeguimientoVacanteComponent implements OnInit {
         this.Vacante = params['VBtra'];
         this.ClienteId = params['ClienteId'];
         this.enProceso = params['enProceso'];
+        this.estatusVacante = params['estatusId'];
       }
     });
   }

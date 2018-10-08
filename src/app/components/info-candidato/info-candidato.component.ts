@@ -276,8 +276,13 @@ export class InfoCandidatoComponent implements OnInit {
       this.infoFolio = null;
   }
 
+  ValidarEstatus(estatusId)
+  {
+
+  }
 
   public onCellClick_v(data: any): any {
+
     let index = this.dataSource_v.indexOf(data.row);
     this.vacante = {
       id: data.id,
@@ -287,16 +292,22 @@ export class InfoCandidatoComponent implements OnInit {
     this.infoFolio = data.folio;
     this.infoRequiId = data.id;
 
-    data.vacantes == data.contratados ? this.contratados = true : this.contratados = false;
     if(this.candidato.estatus != null)
     {
-      this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 40 ? this.auxestatus = true : this.auxestatus = false;
-      this.candidato.estatus.requisicionId == data.id && this.reclutadorId == this.usuarioId && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 40 && this.candidato.estatus.estatusId != 24 ? this.desapartar = false : this.desapartar = true;
+      data.vacantes == 0 || data.vacantes == data.contratados &&
+      (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 40 ) ||
+      (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 26 ) ||
+      (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId != 27 ) ||
+      (this.candidato.estatus.requisicionId != data.id && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 40 ) ? this.auxestatus = true : this.auxestatus = false;
+       
+      (this.candidato.estatus.requisicionId == data.id && this.reclutadorId == this.usuarioId && this.candidato.estatus.estatusId != 27 && 
+      this.candidato.estatus.estatusId != 40 && this.candidato.estatus.estatusId != 24 && this.candidato.estatus.estatusId != 26)  ? this.desapartar = false : this.desapartar = true;
     }
     else
     {
       this.desapartar = true;
-      this.auxestatus = false;
+
+      data.vacantes > 0 && data.vacantes > data.contratados ? this.auxestatus = false : this.auxestatus = true;
       this.procesoCandidatoId = 27;
     
     }
@@ -376,6 +387,8 @@ export class InfoCandidatoComponent implements OnInit {
           switch (data) {
             case 200: {
               this.loading = false;
+              this.auxestatus = true;
+              this.desapartar = false;
               this.ngOnInit();
               this.ngAfterViewInit();
               var msg = 'El candidato se aparto correctamente.';
@@ -392,18 +405,22 @@ export class InfoCandidatoComponent implements OnInit {
               msg = 'El candidato ya esta apartado o en proceso.';
               this.popToast('info', 'Apartado', msg); ''
               this.loading = false;
+              this.auxestatus = true;
+              this.desapartar = true;
               break;
             }
             case 404: {
               var msg = 'Error el intentar apartar el candidato. Consulte al departamento de soporte si el problema persiste.';
               this.popToast('error', 'Apartado', msg);
               this.loading = false;
+              this.auxestatus = false;
               break;
             }
             default: {
               var msg = 'Error inesperado y desconocido, reporte el problema el departamento de soporte.';
               this.popToast('error', 'Oops!!', msg);
               this.loading = false;
+              this.auxestatus = false;
               break;
             }
           }
@@ -426,6 +443,8 @@ export class InfoCandidatoComponent implements OnInit {
               this.ngOnInit();
               this.ngAfterViewInit();
               this.loading = false;
+              this.desapartar = true;
+              this.auxestatus = false;
               var msg = 'El candidato se libero correctamente.';
               this.popToast('warning', 'Liberado', msg);
               this.Emiter = {
@@ -438,6 +457,8 @@ export class InfoCandidatoComponent implements OnInit {
             }
             case 404: {
               var msg = 'Error el intentar liberar el candidato. Consulte al departamento de soporte si el problema persiste.';
+              this.desapartar = false;
+              this.auxestatus = true;
               this.popToast('error', 'Apartado', msg);
               this.loading = false;
               break;
