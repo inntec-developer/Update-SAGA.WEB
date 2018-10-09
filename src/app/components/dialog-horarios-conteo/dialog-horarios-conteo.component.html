@@ -1,0 +1,13 @@
+
+<h2 mat-dialog-title>Horarios Requisicion</h2>
+<mat-dialog-content *ngFor="let r of data">
+    <label class="form-check-inline">
+        <input class="form-check-input" type="radio" name="mode" [(ngModel)]="seleccion" [value]="r.nombre">{{r.nombre}}
+    </label>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+  <button mat-button [mat-dialog-close]="seleccion">Aceptar</button>
+</mat-dialog-actions>
+

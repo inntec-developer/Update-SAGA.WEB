@@ -51,6 +51,7 @@ export class ApiConection {
   public static DeleteRutaCamion = 'Requisiciones/deleteRutaCamion';
   public static UpdateVacantes = 'Requisiciones/upadateVacantes';
   public static GetHorariosRequi = 'Requisiciones/getHorariosRequisicion?id=';
+  public static GetHorariosRequiConteo = 'Requisiciones/getHorariosRequiConteo';
 
 
   /* Candidatos */

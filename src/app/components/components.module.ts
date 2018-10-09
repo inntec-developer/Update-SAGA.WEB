@@ -1,3 +1,4 @@
+import { DialogHorariosConteoComponent } from '../components/dialog-horarios-conteo/dialog-horarios-conteo.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { INgxSelectOptions, NgxSelectModule } from 'ngx-select-ex'
 import {
@@ -218,7 +219,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     InfoVacanteComponent,
     DtRutasCamionRequiComponent,
     DialogRutasComponent,
-
+    DialogHorariosConteoComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -281,5 +282,6 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     { provide: PaginationConfig, useValue: getSpanishPaginatorBtp() },
     ToasterService
   ],
+  entryComponents: [DialogHorariosConteoComponent]
 })
 export class ComponentsModule { }

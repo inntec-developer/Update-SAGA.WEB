@@ -488,7 +488,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
       this.asignar = true;
-      this.disenador = true;
+      this.disenador = false;
     }
     else
     {

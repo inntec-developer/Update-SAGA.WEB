@@ -44,6 +44,7 @@ export class RequisicionesService {
   private urlUpdateVacantes = ApiConection.ServiceUrl + ApiConection.UpdateVacantes;
   private urlGetHorariosReequisicion = ApiConection.ServiceUrl + ApiConection.GetHorariosRequi;
   private urleGetVacantesDamgfo = ApiConection.ServiceUrl + ApiConection.GetVacantesDamfo;
+  private urlGetHorariosRequiConteo = ApiConection.ServiceUrl + ApiConection.GetHorariosRequiConteo;
 
   constructor(private http: Http, private _httpClient: HttpClient) { }
   // Recupera todos los damfos que esten dados de alta y se encuentren activos
@@ -189,6 +190,11 @@ export class RequisicionesService {
     return this.http.post(this.urlAsignarRequisicion, JSON.stringify(asignar), options)
       .map(result => result.json())
       .catch(this.handleError);
+  }
+
+  GetHorariosRequiConteo(requisicionId: any): Observable<any> {
+    let params = new HttpParams().set('requisicionId', requisicionId);
+    return this._httpClient.get(this.urlGetHorariosRequiConteo, { params: params });
   }
 
   // Muestra un error en consola y regresa el mismo al Frond-End en caso de que se genere el mismo.

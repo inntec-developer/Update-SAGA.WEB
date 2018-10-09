@@ -89,7 +89,6 @@ const routes: Routes = [
       GridRolesComponent ,
       UploadImgsComponent,
       FileManagerComponent
-      
     ],
     exports: [
         RouterModule

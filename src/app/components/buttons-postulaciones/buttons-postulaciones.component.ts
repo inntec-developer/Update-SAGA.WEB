@@ -1,14 +1,21 @@
+
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+import { MatDialog } from '@angular/material';
+
 
 import { ModalDirective } from 'ngx-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../service/SeguimientoVacante/postulate.service';
+import { RequisicionesService } from '../../service';
+import { DialogHorariosConteoComponent } from '../../components/dialog-horarios-conteo/dialog-horarios-conteo.component'
+
 
 @Component({
   selector: 'app-buttons-postulaciones',
   templateUrl: './buttons-postulaciones.component.html',
-  styleUrls: ['./buttons-postulaciones.component.scss']
+  styleUrls: ['./buttons-postulaciones.component.scss'],
+  providers: [RequisicionesService, PostulateService]
 })
 export class ButtonsPostulacionesComponent implements OnInit {
 
@@ -49,7 +56,12 @@ export class ButtonsPostulacionesComponent implements OnInit {
   rowAux = [];
   conteo = [];
 
-  constructor(private service: PostulateService, private toasterService: ToasterService, private spinner: NgxSpinnerService) { }
+  constructor(
+    private serviceRequi: RequisicionesService,
+    private service: PostulateService,
+     private toasterService: ToasterService,
+      private spinner: NgxSpinnerService,
+      private dialog: MatDialog) { }
 
   ngOnInit() {
     this.getpostulados();
@@ -257,9 +269,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
           candidatoId: element.candidatoId,
           estatusId: element.estatusId
         }
-        this.dataSource.push(perfil)
-        console.log('aqui')
-        console.log(this.dataSource)
+        this.dataSource.push(perfil);
         
       })
     }, error => this.errorMessage = <any>error);
@@ -269,15 +279,44 @@ export class ButtonsPostulacionesComponent implements OnInit {
   {
     this.service.GetConteoVacante(this.RequisicionId, this.clienteId ).subscribe(data => {
       this.conteo = data;
-      console.log(this.estatusVacante)
+
     })
 
   }
 
+  GetHorarioRequis()
+  {
+    this.serviceRequi.GetHorariosRequiConteo(this.RequisicionId).subscribe( data => {
+console.log(data)
+      this.OpenDlgHorarios(data);
+    })
+  }
+
+  OpenDlgHorarios(data)
+  {
+    let dialogDlt = this.dialog.open(DialogHorariosConteoComponent, {
+      width: '25%',
+      height: 'auto',
+      data: data
+    });
+    var window: Window
+    dialogDlt.afterClosed().subscribe(result => {
+      
+console.log(result)
+    });
+  }
   SetProceso(estatusId, estatus)
   {
     if(this.candidatoId != null)
     {
+
+      if(estatusId == 18)
+      {
+        var horarios = this.GetHorarioRequis();
+        console.log(horarios)
+       
+
+      }
       var datos = {candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId};
 
       this.service.SetProceso(datos).subscribe(data => {
@@ -415,6 +454,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   VerCandidato(row)
   {
+
     this.candidatoId = row.candidatoId;
 
     this.isModalShown = true;
