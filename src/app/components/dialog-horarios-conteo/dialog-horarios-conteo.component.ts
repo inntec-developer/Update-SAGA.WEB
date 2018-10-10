@@ -13,10 +13,6 @@ export class DialogHorariosConteoComponent implements OnInit {
   ngOnInit() {
   }
 
-  SeleccionarHorario(value)
-  {
-    this.dialogHorarios.close(value);
-  }
   onCloseDialog() {
     this.dialogHorarios.close(0);
   }

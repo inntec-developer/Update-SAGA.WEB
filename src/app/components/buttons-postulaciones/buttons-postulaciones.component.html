@@ -169,9 +169,8 @@
             </td>
           </tr>
           <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of dataSource" [class.selected]="row.selected"  placement="bottom" tooltip="click para seleccionar - dblclick para visualizar">
-            <td class="text-center">
-              {{row.nombre}}
-            </td>
+            <td class="text-center"> {{row.horario}}</td>
+            <td class="text-center"> {{row.nombre}}</td>
             <td class="text-center"> {{row.areaExp}}</td>
             <td class="text-center"> {{row.areaInt}}</td>
             <td class="text-center"> {{row.localidad}} </td>

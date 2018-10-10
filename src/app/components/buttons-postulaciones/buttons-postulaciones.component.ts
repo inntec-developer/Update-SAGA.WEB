@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
@@ -55,7 +56,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   rechazado = true;
   rowAux = [];
   conteo = [];
-
+  horarioId : any;
   constructor(
     private serviceRequi: RequisicionesService,
     private service: PostulateService,
@@ -66,6 +67,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   ngOnInit() {
     this.getpostulados();
     this.GetConteoVacante();
+    
   }
 
   ValidarEstatus(estatus)
@@ -257,6 +259,8 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.dataSource = [];
       data.forEach(element => {
         var perfil = {
+          horarioId: element.horarioId,
+          horario: element.horario,
           nombre: element.perfil[0]['nombre'],
           areaExp: element.perfil[0]['areaExp'],
           areaInt: element.perfil[0]['areaInt'],
@@ -279,76 +283,100 @@ export class ButtonsPostulacionesComponent implements OnInit {
   {
     this.service.GetConteoVacante(this.RequisicionId, this.clienteId ).subscribe(data => {
       this.conteo = data;
-
     })
 
   }
 
-  GetHorarioRequis()
+  GetHorarioRequis(estatusId, estatus)
   {
     this.serviceRequi.GetHorariosRequiConteo(this.RequisicionId).subscribe( data => {
-console.log(data)
-      this.OpenDlgHorarios(data);
+      console.log(data)
+      if(data.length > 1 )
+      {
+        this.OpenDlgHorarios(data, estatusId, estatus);
+      }
+      else
+      {
+        var datos = {candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId};
+        this.SetApiProceso(datos, estatusId, estatus);
+      }
     })
   }
 
-  OpenDlgHorarios(data)
+  OpenDlgHorarios(data, estatusId, estatus)
   {
     let dialogDlt = this.dialog.open(DialogHorariosConteoComponent, {
       width: '25%',
       height: 'auto',
-      data: data
+      data: data,
+      disableClose: true
     });
     var window: Window
     dialogDlt.afterClosed().subscribe(result => {
-      
-console.log(result)
+
+      if(result)
+      { 
+        this.horarioId = result;
+
+        var nom = data.filter(x => x.id == this.horarioId);
+        var aux = this.dataSource;
+        var idx = aux.findIndex(x => x.candidatoId === this.candidatoId);
+        this.dataSource[idx]['horario'] = nom[0]['nombre'];
+        this.dataSource[idx]['horarioId'] = this.horarioId;
+
+        var datos = {candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId};
+        this.SetApiProceso(datos, estatusId, estatus);
+      }
     });
   }
   SetProceso(estatusId, estatus)
   {
     if(this.candidatoId != null)
     {
-
       if(estatusId == 18)
       {
-        var horarios = this.GetHorarioRequis();
-        console.log(horarios)
-       
-
+        this.GetHorarioRequis(estatusId, estatus);
+        console.log(this.horarioId);
       }
-      var datos = {candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId};
-
-      this.service.SetProceso(datos).subscribe(data => {
-        if(data == 201)
-        {
-          this.SetStatusBolsa(this.candidatoId, estatusId, estatus);
-          this.cr = true;
-          this.enr = true;
-          this.fr = true;
-          this.enc = true;
-          this.fc = true;
-          this.contratado = true;
-          this.evt = true;
-          this.evps = true;
-          this.evm = true;
-          this.pst = true;
-          this.liberado = true;
-          this.GetConteoVacante();
-        }
-        else if(data == 300)
-        {
-          this.popToast('info', 'Apartado', 'El candidato ya esta apartado o en proceso');
-        }
-        else
-        {
-          this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos')
-        }
-      })
+      else
+      {
+        var datos = {candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId};
+        this.SetApiProceso(datos, estatusId, estatus);
+      }   
     }
 
   }
  
+  SetApiProceso(datos, estatusId, estatus)
+  {
+    this.service.SetProceso(datos).subscribe(data => {
+      if(data == 201)
+      {
+        this.SetStatusBolsa(this.candidatoId, estatusId, estatus);
+        this.cr = true;
+        this.enr = true;
+        this.fr = true;
+        this.enc = true;
+        this.fc = true;
+        this.contratado = true;
+        this.evt = true;
+        this.evps = true;
+        this.evm = true;
+        this.pst = true;
+        this.liberado = true;
+        this.GetConteoVacante();
+      }
+      else if(data == 300)
+      {
+        this.popToast('info', 'Apartado', 'El candidato ya esta apartado o en proceso');
+      }
+      else
+      {
+        this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos')
+      }
+    })
+  }
+
   SetStatusBolsa(candidatoId, estatusId, estatus)
   {
     if(this.candidatoId != null)
@@ -410,6 +438,7 @@ console.log(result)
 
     data.selected ? data.selected = false : data.selected = true; //para poner el backgroun cuando seleccione
     data.selected ? this.candidatoId = data.candidatoId : this.candidatoId = null; //agrega y quita el row seleccionado
+    data.selected ? this.horarioId = data.horarioId : this.horarioId = null; //agrega y quita el row seleccionado
 
     if(!data.selected)
     {
@@ -508,6 +537,7 @@ refresh()
     
   public rows: Array<any> = []
   public columns: Array<any> = [
+    { title: 'Horario', className: 'text-primary', name: 'horario', filtering: { filterString: '', placeholder: 'Horario' } },
     { title: 'Nombre Candidato', className: 'text-primary', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'Área Experiencia', className: 'text-primary', name: 'areaExp', filtering: { filterString: '', placeholder: 'Experiencia' } },
     { title: 'Área Interes', className: 'text-primary', name: 'areaInt', filtering: { filterString: '', placeholder: 'Interes' } },
