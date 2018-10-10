@@ -344,7 +344,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.pausa = true;
       this.asignar = false;
       this.disenador = true;
-
     }
     else if( estatusId == 6 && this.element.vacantes > 0)// aprobada
     {
@@ -363,6 +362,17 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
       this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = false;
+      this.asignar = false;
+      this.disenador = true;
+    }
+    else if( estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso > 0 ) //publicada - busqueda de candidatos - garantia de busqueda - nueva busqueda
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = false; //envío candidato cliente
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = false;
@@ -389,9 +399,20 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
       this.asignar = false;
-      this.disenador = false;
+      this.disenador = true;
     }
-    else if( (estatusId == 5 || estatusId == 7 || estatusId == 38 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR > 0 ) //publicada - busqueda de candidatos - garantia de busqueda - nueva busqueda
+    else if( (estatusId == 5 || estatusId == 7 || estatusId == 38 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProceso > 0 ) //publicada - busqueda de candidatos - garantia de busqueda - nueva busqueda
+    {
+      this.bc = false; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = false;
+      this.disenador = true;
+    }
+    else if( (estatusId == 5 || estatusId == 7 || estatusId == 38 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProcesoFR > 0 ) //publicada - busqueda de candidatos - garantia de busqueda - nueva busqueda
     {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
@@ -488,7 +509,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
       this.asignar = true;
-      this.disenador = false;
+      this.disenador = true;
     }
     else
     {
@@ -499,7 +520,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
       this.asignar = false;
-      this.disenador = false;
+      this.disenador = true;
 
     }
  
