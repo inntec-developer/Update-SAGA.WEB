@@ -1,31 +1,29 @@
-<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
-<div>
-  <h3>Generar Nueva Requisici&oacute;n</h3>
-</div>
-<br>
-<div mat-dialog-content>
+<h3 class="text-primary text-center" mat-dialog-title> Generar Nueva Requisici&oacute;n</h3>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+  <br>
   <div class="row">
     <div class="col-sm-12">
-      <h5><strong>Cliente: </strong> {{data.cliente}}</h5>
+      <h5><strong class="text-primary">Cliente: </strong> {{data.cliente}}</h5>
     </div>
   </div>
   <div class="row">
     <div class="col-md-4 col-sm-4">
-      <h5><strong>Puesto: </strong>{{data.nombrePerfil}}</h5>
+      <h5><strong class="text-primary">Puesto: </strong>{{data.nombrePerfil}}</h5>
     </div>
     <div class="col-md-4 col-sm-4">
-      <h5><strong>Sueldo M&iacute;nimo: </strong>{{data.sueldoMinimo | currency: '$'}}</h5>
+      <h5><strong class="text-primary">Sueldo M&iacute;nimo: </strong>{{data.sueldoMinimo | currency: '$'}}</h5>
     </div>
     <div class="col-md-4 col-sm-4">
-      <h5><strong>Sueldo M&aacute;ximo: </strong>{{data.sueldoMaximo | currency: '$'}}</h5>
+      <h5><strong class="text-primary">Sueldo M&aacute;ximo: </strong>{{data.sueldoMaximo | currency: '$'}}</h5>
     </div>
   </div>
   <div class="row">
     <div class="col-md-4 col-sm-4">
-      <h5><strong>Clase Reclutamiento: </strong>{{data.claseReclutamiento}}</h5>
+      <h5><strong class="text-primary">Clase Reclutamiento: </strong>{{data.claseReclutamiento}}</h5>
     </div>
     <div class="col-md-4 col-sm-4">
-      <h5><strong>Tipo Reclutamiento: </strong>{{data.tipoReclutamiento}}</h5>
+      <h5><strong class="text-primary">Tipo Reclutamiento: </strong>{{data.tipoReclutamiento}}</h5>
     </div>
   </div>
   <br>
@@ -34,17 +32,20 @@
       <app-direccionauto [Damfo]='IdDamfo' [IdDireccion]='FDireccion' (change)='FiltroDireccion($event)'></app-direccionauto>
     </div>
   </div>
-</div>
+  <mat-divider></mat-divider>
+</mat-dialog-content>
 <br>
-<div class="modal-footer">
-  <button type="button" (click)="onNoClick()" class="btn btn-xs btn-labeled btn-outline-danger mb-1">
+<mat-dialog-actions>
+  <button type="button" (click)="onNoClick()" class="btn btn-xs btn-labeled btn-outline-danger mb-1 margin">
     <span class="btn-label">
-        <i class="fa fa-times"></i>
+      <i class="fa fa-times"></i>
     </span> Cancelar
-</button>
-  <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-1" (click)="createRequisicion()" [disabled]="DisabledButton">
+  </button>
+  <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-1 margin" 
+    (click)="createRequisicion()"
+    [disabled]="DisabledButton">
     <span class="btn-label">
       <i class="fa fa-check"></i>
     </span> Aceptar
   </button>
-</div>
+</mat-dialog-actions>
