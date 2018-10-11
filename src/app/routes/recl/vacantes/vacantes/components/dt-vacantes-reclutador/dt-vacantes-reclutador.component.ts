@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -61,6 +60,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   selected: boolean = false;
   clearFilter: boolean = false;
   pds: boolean = true;
+  numeroVacantes: any;
 ;
 
   constructor(
@@ -282,6 +282,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.id = data.id;
     this.folio = data.folio;
     this.postulados = data.postulados;
+    this.numeroVacantes = data.vacantes;
     this.enProceso = data.enProceso;
     this.clienteId = data.clienteId;
     this.aprobador = data.aprobador;
@@ -566,7 +567,12 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   seguimientoRequi() {
-    this._Router.navigate(['/reclutamiento/gestionVacante', this.id, this.folio, this.vBtra, this.clienteId, this.enProceso, this.estatusId], { skipLocationChange: true });
+    if(this.numeroVacantes != 0){
+      this._Router.navigate(['/reclutamiento/gestionVacante', this.id, this.folio, this.vBtra, this.clienteId, this.enProceso, this.estatusId], { skipLocationChange: true });
+    }else{
+      swal('Ops...!', 'Esta vacante no cuenta con posiciones disponibles esta en 0, cambie el número de vacantes disponibles.', 'error');
+    }
+    
   }
 
   /**
