@@ -1,4 +1,3 @@
-import { DialogHorariosConteoComponent } from '../components/dialog-horarios-conteo/dialog-horarios-conteo.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { INgxSelectOptions, NgxSelectModule } from 'ngx-select-ex'
 import {
@@ -77,6 +76,9 @@ import { ComentarioVacanteComponent } from './comentario-vacante/comentario-vaca
 import { CommonModule } from '@angular/common';
 import { DetailVacantesComponent } from './detail-vacantes/detail-vacantes.component';
 import { DialogEditHorarioComponent } from './tablas/dt-horarios/dialog-edit-horario/dialog-edit-horario.component';
+import { DialogHorariosConteoComponent } from '../components/dialog-horarios-conteo/dialog-horarios-conteo.component';
+import { DialogLiberarCandidatoComponent } from './dialog-liberar-candidato/dialog-liberar-candidato.component';
+import { DialogRutasComponent } from './tablas/dt-rutas-camion-requi/dialog-rutas/dialog-rutas.component';
 import { DocumentosClienteComponent } from './tablas/documentos-cliente/documentos-cliente.component';
 import { DocumentosDamsaComponent } from './tablas/documentos-damsa/documentos-damsa.component';
 import { DtBeneficiosComponent } from './tablas/dt-beneficios/dt-beneficios.component';
@@ -105,7 +107,6 @@ import { PrestacionesLeyComponent } from './tablas/prestaciones-ley/prestaciones
 import { ProcesosComponent } from './tablas/procesos/procesos.component';
 import { SharedModule } from '../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { DialogRutasComponent } from './tablas/dt-rutas-camion-requi/dialog-rutas/dialog-rutas.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -219,7 +220,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     InfoVacanteComponent,
     DtRutasCamionRequiComponent,
     DialogRutasComponent,
-    DialogHorariosConteoComponent
+    DialogHorariosConteoComponent,
+    DialogLiberarCandidatoComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -275,13 +277,15 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DtMisCandidatosComponent,
     ComentarioCandidatoComponent,
     InfoVacanteComponent,
-    DtRutasCamionRequiComponent
+    DtRutasCamionRequiComponent,
+    DialogHorariosConteoComponent,
+    DialogLiberarCandidatoComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
     { provide: PaginationConfig, useValue: getSpanishPaginatorBtp() },
     ToasterService
   ],
-  entryComponents: [DialogHorariosConteoComponent]
+  entryComponents: [DialogHorariosConteoComponent, DialogLiberarCandidatoComponent]
 })
 export class ComponentsModule { }

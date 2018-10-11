@@ -1,0 +1,46 @@
+<h3 class="text-primary text-center" mat-dialog-title> Liberaci&oacute;n de candidato</h3>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+  <br>
+  <p><strong class="text-warning text-center">Motivos de liberaci&oacute;n</strong></p>
+  <div *ngFor="let r of element; let indice=index">
+    <label for="elemntRadio">
+      <p></p><input class="form-check-inpur" type="radio" name="motivo" [(ngModel)]="liberar.motivo" [value]="r.id"
+        required><strong> {{indice+1}}.-</strong> {{r.descripcion}}
+      <br>
+    </label>
+  </div>
+  <mat-form-field>
+    <textarea matInput #message minlength="30" maxlength="500" placeholder="Comentario" rows="4" [(ngModel)]="liberar.comentario"></textarea>
+    <mat-hint align="start">
+      <strong>Ingrese el motivo de la liberaci&oacute;n del candidato.</strong>
+    </mat-hint>
+    <mat-hint align="end">{{message.value.length}} / 500</mat-hint>
+  </mat-form-field>
+  <p>
+    <span *ngIf="!liberar.motivo"><small class="text-danger"> <em class="fa fa-close"></em> Seleccione un motivo de
+        liberaci&oacute;n.</small></span>
+    <span *ngIf="liberar.motivo"><small class="text-success"> <em class="fa fa-check"></em> Seleccione un motivo de
+        liberaci&oacute;n.</small></span>
+  </p>
+  <p>
+    <span *ngIf="liberar.comentario.length <= 30"><small class="text-danger"><em class="fa fa-close"></em> Caracteres
+        m&iacute;nimos del comentario 30 </small></span>
+    <span *ngIf="liberar.comentario.length > 30"><small class="text-success"><em class="fa fa-check"></em> Caracteres
+        m&iacute;nimos del comentario 30 </small></span>
+  </p>
+  <mat-divider></mat-divider>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="btn btn-xs btn-labeled btn-outline-danger mb-1 margin" mat-dialog-close>
+    <span class="btn-label">
+      <i class="fa fa-times"></i>
+    </span> Cancelar
+  </button>
+  <button type="button" [disabled]="!liberar.motivo || liberar.comentario.length <= 30" class="btn btn-xs btn-labeled btn-outline-success mb-1 margin"
+    [mat-dialog-close]="liberar">
+    <span class="btn-label">
+      <i class="fa fa-check"></i>
+    </span> Aceptar
+  </button>
+</mat-dialog-actions>

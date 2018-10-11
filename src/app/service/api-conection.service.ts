@@ -21,9 +21,10 @@ export class ApiConection {
   public static getTiposUsuarios = 'Catalogos/getTipos';
   public static getDepartamentos = 'Catalogos/getDepa';
   public static GetPrioridades = 'Catalogos/getPrioridades';
-  public static GetEstatusRequi = 'Catalogos/getEstatus?tipoMov=';
+  public static GetEstatusRequi = 'Catalogos/getEstatus';
   public static GetGrupos = 'Catalogos/getGrupos';
   public static GetRoles = 'Catalogos/getRoles';
+  public static GetMotivosLiberacion = 'Catalogos/getMotivosLiberacion';
 
   /* Reclutamiento */
   public static Damfo290GetById = 'Damfo290/getById?id=';

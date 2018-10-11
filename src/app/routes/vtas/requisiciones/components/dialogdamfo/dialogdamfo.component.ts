@@ -6,7 +6,6 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material'
 
 import { RequisicionesService } from '../../../../../service/index';
 
-
 const swal = require('sweetalert');
 
 //Services
@@ -22,8 +21,6 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
   IdDamfo: string;
   formDireccion :  FormGroup;
   IdDireccion: string;
-  textBtnCancel: string;
-  textBtnAccept: string;
   DisabledButton: boolean = false;
   HorariosVacantes: any;
   
@@ -34,8 +31,8 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
     private toasterService: ToasterService,
     @Inject(MAT_DIALOG_DATA) public data: any, private service: RequisicionesService
   ) {
-    this.textBtnCancel = 'Cancelar';
-    this.textBtnAccept = 'Aceptar';
+    this.DisabledButton = true;
+    dialogRef.disableClose = true;
   }
 
   toaster: any;
@@ -66,7 +63,14 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
   }
 
   FiltroDireccion(event){
-    this.IdDireccion = event;
+    if(!event.returnValue){
+      this.DisabledButton = false;
+      this.IdDireccion = event;
+    }
+    else{
+      this.DisabledButton = true;
+      this.IdDireccion = null;
+    }
   }
 
   ngOnChanges(change: SimpleChanges){
@@ -98,7 +102,6 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
       this.onNoClick();
     }else{
       this.popToast('error', 'Oops!!','Seleccione una dirección para continuar' );
-      this.DisabledButton = false;
     }
 
   }
