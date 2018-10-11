@@ -1,3 +1,4 @@
+import { DirectorioEmpresarialComponent } from './../../routes/vtas/directorio-empresarial/directorio-empresarial.component';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -85,11 +86,12 @@ export class InfoCandidatoComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-    
+  GetInfoCandidato()
+  {
     this.spinner.show();
     // this.CandidatoId = '4F65DAC1-C6A0-E811-80E8-9E274155325E'
     this._serviceCandidato.getInfoCandidato(this.CandidatoId).subscribe(data => {
+      console.log(this.CandidatoId)
       this.candidato = {
         id: data.id,
         picture: sessionStorage.getItem('ConexionBolsa') + data.foto,
@@ -120,8 +122,13 @@ export class InfoCandidatoComponent implements OnInit {
         this.reclutadorId = this.candidato.estatus.reclutadorId;
       }
       this.spinner.hide();
-      console.log(this.candidato);
     });
+
+  }
+  ngOnInit() {
+    this.GetInfoCandidato();
+    this.desapartar = true;
+    this.auxestatus = true;
   }
 
   ngAfterViewInit() {
@@ -276,47 +283,45 @@ export class InfoCandidatoComponent implements OnInit {
       this.infoFolio = null;
   }
 
-  ValidarEstatus(estatusId)
-  {
-
-  }
-
   public onCellClick_v(data: any): any {
 
-    let index = this.dataSource_v.indexOf(data.row);
-    this.vacante = {
-      id: data.id,
-      vBtra: data.vBtra,
-      folio: data.folio
-    }
-    this.infoFolio = data.folio;
-    this.infoRequiId = data.id;
+      let index = this.dataSource_v.indexOf(data.row);
+      this.vacante = {
+        id: data.id,
+        vBtra: data.vBtra,
+        folio: data.folio
+      }
+      this.infoFolio = data.folio;
+      this.infoRequiId = data.id;
 
-    if(this.candidato.estatus != null)
-    {
-      data.vacantes == 0 || data.vacantes == data.contratados &&
-      (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 40 ) ||
-      (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 26 ) ||
-      (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId != 27 ) ||
-      (this.candidato.estatus.requisicionId != data.id && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 40 ) ? this.auxestatus = true : this.auxestatus = false;
-       
-      (this.candidato.estatus.requisicionId == data.id && this.reclutadorId == this.usuarioId && this.candidato.estatus.estatusId != 27 && 
-      this.candidato.estatus.estatusId != 40 && this.candidato.estatus.estatusId != 24 && this.candidato.estatus.estatusId != 26)  ? this.desapartar = false : this.desapartar = true;
-    }
-    else
-    {
-      this.desapartar = true;
+      if(this.candidato.estatus != null)
+      {
+        data.vacantes == 0 || data.vacantes == data.contratados &&
+        (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 40 ) ||
+        (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 26 ) ||
+        (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId != 27 ) ||
+        (this.candidato.estatus.requisicionId != data.id && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 40 ) ? this.auxestatus = true : this.auxestatus = false;
+        
+        (this.candidato.estatus.requisicionId == data.id && this.reclutadorId == this.usuarioId && this.candidato.estatus.estatusId != 27 && 
+        this.candidato.estatus.estatusId != 40 && this.candidato.estatus.estatusId != 24 && this.candidato.estatus.estatusId != 26)  ? this.desapartar = false : this.desapartar = true;
+      }
+      else
+      {
+        this.desapartar = true;
 
-      data.vacantes > 0 && data.vacantes > data.contratados ? this.auxestatus = false : this.auxestatus = true;
-      this.procesoCandidatoId = 27;
+        data.vacantes > 0 && data.vacantes > data.contratados ? this.auxestatus = false : this.auxestatus = true;
+        this.procesoCandidatoId = 27;
+      
+      }
+        /* add an class 'active' on click */
+      $('#resultDataTableVacantes').on('click', 'tr', function (event: any) {
+        //noinspection TypeScriptUnresolvedFunction
+        $(this).addClass('selected').siblings().removeClass('selected');
+      });
     
-    }
-      /* add an class 'active' on click */
-    $('#resultDataTableVacantes').on('click', 'tr', function (event: any) {
-      //noinspection TypeScriptUnresolvedFunction
-      $(this).addClass('selected').siblings().removeClass('selected');
-    });
+  
   }
+  
 
   /*
     Tabla de postulaciones del candidato visualizado.
@@ -387,10 +392,11 @@ export class InfoCandidatoComponent implements OnInit {
           switch (data) {
             case 200: {
               this.loading = false;
-              this.auxestatus = true;
-              this.desapartar = false;
-              this.ngOnInit();
-              this.ngAfterViewInit();
+               this.GetInfoCandidato();
+               this.auxestatus = true;
+               this.desapartar = false;
+               this.ngAfterViewInit();
+    
               var msg = 'El candidato se aparto correctamente.';
               this.popToast('success', 'Apartado', msg);
               this.Emiter = {
@@ -440,11 +446,14 @@ export class InfoCandidatoComponent implements OnInit {
         .subscribe(data => {
           switch (data) {
             case 200: {
-              this.ngOnInit();
-              this.ngAfterViewInit();
-              this.loading = false;
+              this.GetInfoCandidato();
               this.desapartar = true;
               this.auxestatus = false;
+
+              this.ngAfterViewInit();
+         
+              this.loading = false;
+    
               var msg = 'El candidato se libero correctamente.';
               this.popToast('warning', 'Liberado', msg);
               this.Emiter = {

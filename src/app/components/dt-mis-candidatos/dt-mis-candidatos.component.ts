@@ -185,10 +185,10 @@ export class DtMisCandidatosComponent implements OnInit {
   public refreshTable() {
     this.misCandidatos();
     setTimeout(() => {
-      this.columns.forEach(element => {
-        element.filtering.filterString = '';
-       (<HTMLInputElement>document.getElementById(element.name)).value = '';
-      });
+      // this.columns.forEach(element => {
+      //   element.filtering.filterString = '';
+      //  (<HTMLInputElement>document.getElementById(element.name)).value = '';
+      // });
       this.registros = 0;
       this.onChangeTable(this.config);
     }, 800);
