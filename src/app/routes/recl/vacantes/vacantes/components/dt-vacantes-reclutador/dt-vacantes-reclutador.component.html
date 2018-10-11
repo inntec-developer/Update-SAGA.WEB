@@ -3,7 +3,7 @@
 <div class="dt-container mat-elevation-z8">
   <div class="dt-header">
     <mat-form-field>
-      <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
+      <input id="filterInput" #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
         (tableChanged)="onChangeTable(config)">
     </mat-form-field>
     <div class="row justify-content-between">

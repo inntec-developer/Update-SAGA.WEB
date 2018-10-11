@@ -261,6 +261,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   public clearfilters() {
     this.clearFilter = false;
+    (<HTMLInputElement>document.getElementById('filterInput')).value = '';
     this.columns.forEach(element => {
       element.filtering.filterString = '';
       (<HTMLInputElement>document.getElementById(element.name)).value = '';
@@ -271,8 +272,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
     }
 
   }
-
-
 
   public onCellClick(data: any): any {
     data.selected ? data.selected = false : data.selected = true;
@@ -356,54 +355,98 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.asignar = false;
       this.disenador = false;
     }
-
-    else if( estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso == 0 ) //publicada - busqueda de candidatos - garantia de busqueda - nueva busqueda
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
-      this.pausa = false;
-      this.asignar = false;
-      this.disenador = true;
-    }
-    else if( estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso > 0 ) //publicada - busqueda de candidatos - garantia de busqueda - nueva busqueda
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = false; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
-      this.pausa = false;
-      this.asignar = false;
-      this.disenador = false;
-    }
-    else if( estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFR > 0 ) //publicada - busqueda de candidatos - garantia de busqueda - nueva busqueda
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = false; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
-      this.pausa = false;
-      this.asignar = false;
-      this.disenador = false;
-    }
-    else if( (estatusId == 5 || estatusId == 7 || estatusId == 38 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProceso == 0 &&  this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 ) //publicada - busqueda de candidatos - garantia de busqueda - nueva busqueda
+    else if( estatusId == 7 && this.element.vacantes > 0 && this.element.enProceso == 0)// publicada
     {
       this.bc = false; //busqueda candidato
       this.sc = true; //socieconomico
       this.ecc = true; //envío candidato cliente
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
+      this.pausa = false;
+      this.asignar = false;
+      this.disenador = true;
+    }
+    else if( estatusId == 7 && this.element.vacantes > 0 && this.element.enProceso > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0)// publicada
+    {
+      this.bc = false; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = false;
+      this.asignar = false;
+      this.disenador = true;
+    }
+    else if( estatusId == 7 && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR > 0)// publicada
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = false; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = false;
+      this.asignar = false;
+      this.disenador = true;
+    }
+    else if( estatusId == 7 && this.element.vacantes > 0 && this.element.enProcesoFC > 0)// publicada
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = false; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = false; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
       this.asignar = false;
       this.disenador = true;
     }
-    else if( (estatusId == 5 || estatusId == 7 || estatusId == 38 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProceso > 0 ) //publicada - busqueda de candidatos - garantia de busqueda - nueva busqueda
+    else if( estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso == 0 ) //busqueda de candidatos
     {
-      this.bc = false; //busqueda candidato
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = false;
+      this.asignar = false;
+      this.disenador = true;
+    }
+    else if( estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso > 0 ) // busqueda de candidatos 
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = false;
+      this.asignar = false;
+      this.disenador = true;
+    }
+    else if( estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFC > 0)// busqueda de candidatos
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = false; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = false; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = false;
+      this.disenador = true;
+    }
+    else if( estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFR > 0 ) //busqueda de candidatos
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = false; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = false;
+      this.asignar = false;
+      this.disenador = true;
+    }
+    else if( (estatusId == 5 || estatusId == 38 || estatusId == 31 || estatusId == 39) &&
+     this.element.vacantes > 0 && this.element.enProceso == 0 &&  this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 ) //reactivada  - garantia de busqueda - nueva busqueda - pausada
+    {
+      this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
       this.ecc = true; //envío candidato cliente
       this.ec = true; //espera contratacion
@@ -412,7 +455,18 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.asignar = false;
       this.disenador = true;
     }
-    else if( (estatusId == 5 || estatusId == 7 || estatusId == 38 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProcesoFR > 0 ) //publicada - busqueda de candidatos - garantia de busqueda - nueva busqueda
+    else if( (estatusId == 5 || estatusId == 38 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso > 0 ) //reactivada   - garantia de busqueda - nueva busqueda -pausada
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = false;
+      this.asignar = false;
+      this.disenador = true;
+    }
+    else if( (estatusId == 5 || estatusId == 38 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProcesoFR > 0 ) //reactivada - publicada  - garantia de busqueda - nueva busqueda -pausada
     {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
@@ -423,7 +477,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.asignar = false;
       this.disenador = false;
     }
-    else if((estatusId == 5 || estatusId == 7 || estatusId == 38 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes ) //publicada - busqueda de candidatos - garantia de busqueda - nueva busqueda
+    else if((estatusId == 5 || estatusId == 38 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes ) //reactivada - publicada - garantia de busqueda - nueva busqueda - pausada
     {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
@@ -432,7 +486,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
       this.asignar = false;
-      this.disenador = false;
+      this.disenador = true;
     }
     else if(estatusId == 30 && this.element.enProcesoFC == 0) //envio al cliente
     {
@@ -443,7 +497,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.nbc = false; //nueva busqueda candidato
       this.pausa = true;
       this.asignar = false;
-      this.disenador = false;
+      this.disenador = true;
     }
     else if(estatusId == 30 && this.element.enProcesoFC > 0) //envio al cliente
     {
@@ -454,7 +508,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
       this.asignar = false;
-      this.disenador = false;
+      this.disenador = true;
     }
     else if(estatusId == 32 && this.element.enProcesoFC > 0) //socioeconomico
     {
@@ -465,7 +519,29 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
       this.asignar = false;
-      this.disenador = false;
+      this.disenador = true;
+    }
+    else if(estatusId == 32 && this.enProceso > 0 && this.element.contratados > 0 && this.element.contratados < this.element.vacantes ) //socioeconomico
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = false; //espera contratacion
+      this.nbc = false; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = false;
+      this.disenador = true;
+    }
+    else if(estatusId == 33 && this.element.contratados == 0 ) //espera de contratacion
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = false; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = false;
+      this.disenador = true;
     }
     else if(estatusId == 33 && this.element.contratados > 0 && this.element.contratados < this.element.vacantes) //espera de contratacion
     {
@@ -476,7 +552,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.nbc = false; //nueva busqueda candidato
       this.pausa = true;
       this.asignar = false;
-      this.disenador = false;
+      this.disenador = true;
     }
     else if(estatusId == 39 && this.element.enProcesoFC > 0) //pausada
     {
@@ -487,7 +563,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
       this.asignar = false;
-      this.disenador = false;
+      this.disenador = true;
 
     }
     else if (estatusId >= 34 && estatusId <= 37) { //cubierta
