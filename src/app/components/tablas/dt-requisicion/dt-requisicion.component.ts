@@ -103,7 +103,18 @@ export class DtRequisicionComponent implements OnInit {
 
   ValidarEstatus(estatusId)
   {
-    if(estatusId == 1 || estatusId == 4)
+    if(this.element.vacantes == 0)
+    {
+      this.gbc = true; //garantía busqueda candidato
+      this.cubierta = true;
+      this.cc = true; //cubierta por el cliente
+      this.crm = true; //cubierta reclutamiento medios
+      this.cp = true; // cubierta parcialmente
+      this.cancelar = false;
+      this.borrar = false;
+      this.editar = false;
+    }
+    else if(estatusId == 1 || estatusId == 4)
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
