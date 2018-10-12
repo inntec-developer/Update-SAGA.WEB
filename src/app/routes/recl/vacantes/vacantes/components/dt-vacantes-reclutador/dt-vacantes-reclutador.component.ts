@@ -444,7 +444,18 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.asignar = false;
       this.disenador = true;
     }
-    else if( (estatusId == 5 || estatusId == 38 || estatusId == 31 || estatusId == 39) &&
+    else if(estatusId == 38 && this.element.vacantes > 0) //garantia de busqueda
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = false; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = false;
+      this.disenador = true;
+    }
+    else if( (estatusId == 5 || estatusId == 31 || estatusId == 39) &&
      this.element.vacantes > 0 && this.element.enProceso == 0 &&  this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 ) //reactivada  - garantia de busqueda - nueva busqueda - pausada
     {
       this.bc = true; //busqueda candidato
@@ -456,7 +467,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.asignar = false;
       this.disenador = true;
     }
-    else if( (estatusId == 5 || estatusId == 38 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso > 0 ) //reactivada   - garantia de busqueda - nueva busqueda -pausada
+    else if( (estatusId == 5 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso > 0 ) //reactivada   - garantia de busqueda - nueva busqueda -pausada
     {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
@@ -467,7 +478,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.asignar = false;
       this.disenador = true;
     }
-    else if( (estatusId == 5 || estatusId == 38 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProcesoFR > 0 ) //reactivada - publicada  - garantia de busqueda - nueva busqueda -pausada
+    else if( (estatusId == 5 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProcesoFR > 0 ) //reactivada - publicada  - garantia de busqueda - nueva busqueda -pausada
     {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
@@ -478,7 +489,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.asignar = false;
       this.disenador = false;
     }
-    else if((estatusId == 5 || estatusId == 38 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes ) //reactivada - publicada - garantia de busqueda - nueva busqueda - pausada
+    else if((estatusId == 5 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes ) //reactivada - publicada - garantia de busqueda - nueva busqueda - pausada
     {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico

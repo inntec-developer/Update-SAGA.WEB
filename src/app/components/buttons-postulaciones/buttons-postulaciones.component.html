@@ -169,7 +169,7 @@
             </td>
           </tr>
           <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of dataSource" [class.selected]="row.selected"  placement="bottom" tooltip="click para seleccionar - dblclick para visualizar" container="body">
-            <td class="text-center"><span *ngIf="row.estatusId != 12 else sinAsignar">{{row.horario}}</span></td>
+            <td class="text-center"><span *ngIf="row.estatusId != 12 || row.estatusId != 17 else sinAsignar">{{row.horario}}</span></td>
             <ng-template #sinAsignar>
               <span>SIN ASIGNAR</span>
             </ng-template> 
