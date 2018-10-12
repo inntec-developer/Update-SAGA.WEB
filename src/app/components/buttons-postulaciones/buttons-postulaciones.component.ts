@@ -427,6 +427,15 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
           }
 
+          if(estatusId === 22) // si es cita con cliente cambio automatico a envio al cliente 
+          {
+            var datosVacante = { estatusId: 30, requisicionId: this.RequisicionId};
+
+             this.service.SetProcesoVacante(datosVacante).subscribe(data => {
+               console.log(data)
+             })
+          }
+
           this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');    
 
           if(estatusId == 22 && this.estatusVacante != "30")
