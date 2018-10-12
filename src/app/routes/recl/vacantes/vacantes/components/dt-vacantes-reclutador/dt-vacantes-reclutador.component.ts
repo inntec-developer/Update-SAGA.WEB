@@ -536,7 +536,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     else if(estatusId == 33 && this.element.contratados == 0 ) //espera de contratacion
     {
       this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
+      this.sc = false; //socieconomico
       this.ecc = true; //envío candidato cliente
       this.ec = true; //espera contratacion
       this.nbc = false; //nueva busqueda candidato
@@ -547,7 +547,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     else if(estatusId == 33 && this.element.contratados > 0 && this.element.contratados < this.element.vacantes) //espera de contratacion
     {
       this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
+      this.sc = false; //socieconomico
       this.ecc = true; //envío candidato cliente
       this.ec = true; //espera contratacion
       this.nbc = false; //nueva busqueda candidato

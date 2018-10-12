@@ -98,7 +98,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
       this.pst = true;
-      this.liberado = false;
+      this.liberado = true;
       this.contratado = true;
       this.rechazado = true;
     }
@@ -435,6 +435,16 @@ export class ButtonsPostulacionesComponent implements OnInit {
                console.log(data)
              })
           }
+          else if(estatusId == 23)
+          {
+            var datosVacante = { estatusId: 33, requisicionId: this.RequisicionId};
+
+            this.service.SetProcesoVacante(datosVacante).subscribe(data => {
+              console.log(data)
+            })
+         }
+
+          
 
           this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');    
 
