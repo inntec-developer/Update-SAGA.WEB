@@ -61,7 +61,7 @@
     <ng-container matColumnDef="accion">
       <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button class=" mb-sm btn-sm btn btn-primary btn-outline" (click)="Onclick(element.id)" type="button" placement="bottom" tooltip="Configurar Vacante">
+          <button class=" mb-sm btn-sm btn btn-primary btn-outline" (click)="Onclick(element.id)" type="button" container="body" placement="bottom" tooltip="Configurar Vacante">
 
             <mat-icon>settings_input_component</mat-icon>
           </button>

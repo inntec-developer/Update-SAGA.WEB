@@ -53,7 +53,7 @@
                         {{alert}}
                     </div>
                     <div class="col-md-12">
-                        <btn-check id='create' chkPrivilegiosButtons class="pull-right" (click)="saveData()"  placement="bottom" tooltip="Guardar Cambios"></btn-check>
+                        <btn-check id='create' chkPrivilegiosButtons class="pull-right" (click)="saveData()"  container="body" placement="bottom" tooltip="Guardar Cambios"></btn-check>
                     </div>
             -->
 
@@ -79,11 +79,11 @@
                                     'esparbol4': node.id != node.idPadre && node.tipoEstructuraId == 8
                                     }">{{node.nombre }}</td>
                     
-                    <td class="center"><mat-checkbox id="{{ 'C-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Create')" [checked]="node.create"  placement="bottom" tooltip="Create"></mat-checkbox></td>
-                    <td class="center"> <mat-checkbox id="{{ 'R-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Read')" [checked]="node['read']"  placement="bottom" tooltip="Read"></mat-checkbox></td>
-                    <td class="center"><mat-checkbox id="{{ 'U-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Update')" [checked]="node['update']"  placement="bottom" tooltip="Update"></mat-checkbox></td>
-                    <td class="center"><mat-checkbox id="{{ 'D-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Delete')" [checked]="node['delete']"  placement="bottom" tooltip="Delete"></mat-checkbox></td>
-                    <td class="center"><mat-checkbox id="{{ 'E-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Especial')" [checked]="node['especial']"  placement="bottom" tooltip="Special"></mat-checkbox></td>
+                    <td class="center"><mat-checkbox id="{{ 'C-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Create')" [checked]="node.create"  container="body" placement="bottom" tooltip="Create"></mat-checkbox></td>
+                    <td class="center"> <mat-checkbox id="{{ 'R-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Read')" [checked]="node['read']"  container="body" placement="bottom" tooltip="Read"></mat-checkbox></td>
+                    <td class="center"><mat-checkbox id="{{ 'U-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Update')" [checked]="node['update']"  container="body" placement="bottom" tooltip="Update"></mat-checkbox></td>
+                    <td class="center"><mat-checkbox id="{{ 'D-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Delete')" [checked]="node['delete']"  container="body" placement="bottom" tooltip="Delete"></mat-checkbox></td>
+                    <td class="center"><mat-checkbox id="{{ 'E-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Especial')" [checked]="node['especial']"  container="body" placement="bottom" tooltip="Special"></mat-checkbox></td>
                     
                 </tr>
             </tbody>
@@ -94,7 +94,7 @@
            <span>{{alert}}</span>
         </div>
         <div class="col-md-12">
-            <btn-check id='create' chkPrivilegiosButtons class="pull-right" (click)="saveData()"  placement="bottom" tooltip="Guardar Cambios"></btn-check>
+            <btn-check id='create' chkPrivilegiosButtons class="pull-right" (click)="saveData()"  container="body" placement="bottom" tooltip="Guardar Cambios"></btn-check>
         </div>
     </div>
 </div> -->

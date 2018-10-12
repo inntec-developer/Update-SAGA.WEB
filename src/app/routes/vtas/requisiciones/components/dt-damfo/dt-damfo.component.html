@@ -9,18 +9,18 @@
     <div class="d-flex justify-content-between">
       <div class="d-flex align-items-stretch">
         <button id="view" chkPrivilegiosButtons (click)="showDamfo()" class="mb-1 btn btn-acciones margen" [disabled]="!selected"
-          [ngClass]="(!selected) ? 'disabled' : 'btn-outline-warning'" placement="bottom" tooltip="Visualizar"><em
+          [ngClass]="(!selected) ? 'disabled' : 'btn-outline-warning'" container="body" placement="bottom" tooltip="Visualizar"><em
             class="fa fa-eye"></em></button>
         <button id="view" chkPrivilegiosButtons (click)="openDialog()" class="mb-1 btn btn-acciones margen" [disabled]="!selected"
-          [ngClass]="(!selected) ? 'disabled' : 'btn-outline-success'" placement="bottom" tooltip="Crear Requisición"><em
+          [ngClass]="(!selected) ? 'disabled' : 'btn-outline-success'" container="body" placement="bottom" tooltip="Crear Requisición"><em
             class="icon-docs"></em></button>
       </div>
       <div>
-        <button placement="bottom" tooltip="Regresar" class="mb-1 btn btn-outline-warning" type="button"
+        <button container="body" placement="bottom" tooltip="Regresar" class="mb-1 btn btn-outline-warning" type="button"
           [routerLink]="['/ventas/requisicion']">
           <em class="icon-action-undo"></em>
         </button>
-        <button (click)="clearfilters()" placement="bottom" tooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary">
+        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary">
           <em class="fa fa-eraser"></em>
         </button>
       </div>

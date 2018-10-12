@@ -47,7 +47,7 @@
                   <span *ngFor="let g of p.grupos">
                     <div class="row">
                     <div class="col-md-2"><span class="text-center">{{g.grupo}}</span></div>
-                      <button type="button" class="close float-right" aria-label="Close" (click)="DeleteUsers(g.id, p.entidadId)"  placement="bottom" tooltip="Quitar Grupo">
+                      <button type="button" class="close float-right" aria-label="Close" (click)="DeleteUsers(g.id, p.entidadId)"  container="body" placement="bottom" tooltip="Quitar Grupo">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
@@ -69,9 +69,9 @@
           </select>
           <span class="text-danger" *ngIf="formAdmin.controls['slcGrupo'].hasError('required')">Debe seleccionar un Grupo</span>
           <div class="pull-right margin-mio">
-            <btn-check id='create' [xs]="true" [disabled]="!formAdmin.invalid" chkPrivilegiosButtons  placement="bottom" tooltip="Guardar Cambios" (click)="addUsuarioGrupo(IdGrupo)"></btn-check>
+            <btn-check id='create' [xs]="true" [disabled]="!formAdmin.invalid" chkPrivilegiosButtons  container="body" placement="bottom" tooltip="Guardar Cambios" (click)="addUsuarioGrupo(IdGrupo)"></btn-check>
             <span></span>
-            <!-- <btn-delete  placement="bottom" tooltip="Vaciar Lista" (click)="resetBasket()"></btn-delete> -->
+            <!-- <btn-delete  container="body" placement="bottom" tooltip="Vaciar Lista" (click)="resetBasket()"></btn-delete> -->
           </div>
         </div>
         <!--   -->
@@ -79,7 +79,7 @@
         <div class="panel-body" dnd-sortable-container [dropZones]="['demo1']" [sortableData]="ListaPG"> 
           <p [hidden]="ListaPG.length > 0">{{msj}}</p>
           <div *ngFor="let pg of ListaPG; let i = index" class="panel panel-default panel-flat" dnd-sortable [sortableIndex]="i" (onDropSuccess)="addToGroups($event, IdGrupo)">
-            <button type="button" class="close pull-right" aria-label="Close" (click)="PopUsers(pg.entidadId)"  placement="bottom" tooltip="Quitar de la lista">
+            <button type="button" class="close pull-right" aria-label="Close" (click)="PopUsers(pg.entidadId)"  container="body" placement="bottom" tooltip="Quitar de la lista">
               <span aria-hidden="true">&times;</span>
             </button>
             <div class="media">
@@ -102,7 +102,7 @@
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-heading">Grupo: {{grupo}}
-            <button class="mb-sm btn btn-sm btn-danger btn-outline pull-right"  placement="bottom" tooltip="Vaciar Lista" (click)="resetBasket()">
+            <button class="mb-sm btn btn-sm btn-danger btn-outline pull-right"  container="body" placement="bottom" tooltip="Vaciar Lista" (click)="resetBasket()">
               <em class="fa fa-trash-o"></em>
             </button>
           </div>

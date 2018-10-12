@@ -631,25 +631,25 @@
               <div class="d-flex align-items-stretch ">
                 <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones margen"
                   [disabled]="!infoRequiId && !infoFolio" [ngClass]="(!infoRequiId && !infoFolio) ? 'disabled' : 'btn-outline-warning'"
-                  placement="bottom" tooltip="Visualizar"><em class="fa fa-eye"></em></button>
+                  container="body" placement="bottom" tooltip="Visualizar"><em class="fa fa-eye"></em></button>
 
                 <button [disabled]="loading || auxestatus"
                   [ngClass]="loading || auxestatus
                                       ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
-                  placement="bottom" tooltip="Apartar" (click)="_apartarCandidato()">
+                  container="body" placement="bottom" tooltip="Apartar" (click)="_apartarCandidato()">
                   <em class="fa fa-thumbs-o-up"></em>
                 </button>
                 <button [disabled]="desapartar || loading" [ngClass]="desapartar || loading ? 'mb-1 btn disabled':'mb-1 btn btn-outline-danger'"
-                  placement="bottom" tooltip="Desapartar" (click)="openDialogLiberar()">
+                  container="body" placement="bottom" tooltip="Desapartar" (click)="openDialogLiberar()">
                   <em class="fa fa-thumbs-o-down"></em>
                 </button>
 
               </div>
               <div>
-                <button (click)="clearfilters()" placement="bottom" tooltip="Limpiar Filtros" class=" margen mb-1 btn btn-outline-primary">
+                <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class=" margen mb-1 btn btn-outline-primary">
                   <em class="fa fa-eraser"></em>
                 </button>
-                <btn-refresh (click)="refreshTable_v()" placement="bottom" tooltip="Actualizar"></btn-refresh>
+                <btn-refresh (click)="refreshTable_v()" container="body" placement="bottom" tooltip="Actualizar"></btn-refresh>
               </div>
             </div>
           </div>
@@ -694,7 +694,7 @@
                       </small>
 
                       <ng-template #toLength>
-                        <span class="badge badge-info" placement="bottom" tooltip="{{row.estatus | uppercase}}">{{row.estatus
+                        <span class="badge badge-info" container="body" placement="bottom" tooltip="{{row.estatus | uppercase}}">{{row.estatus
                           | slice:0:6 | uppercase }} ... </span>
                       </ng-template>
                     </td>

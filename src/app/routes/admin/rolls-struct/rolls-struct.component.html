@@ -27,18 +27,18 @@
             <div class="input-group-prepend">
                 <button class="btn btn-outline-secondary" (click)="GetTreeRoles();nuevoRol=false;" type="button"> <span aria-hidden="true">&times;</span></button>
             </div>
-            <btn-check id='create' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="GuardarCambios()"  placement="bottom" tooltip="Guardar Cambios"></btn-check>
+            <btn-check id='create' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="GuardarCambios()"  container="body" placement="bottom" tooltip="Guardar Cambios"></btn-check>
         </div>
       </div>
       <div *ngIf="!nuevoRol" class="col-md-4" >
-        <btn-view id='read' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="staticModal.show();GetEntidades(id)" data-toggle="modal" data-target="#staticModal"  placement="bottom" tooltip="Ver integrantes del rol"></btn-view>
+        <btn-view id='read' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="staticModal.show();GetEntidades(id)" data-toggle="modal" data-target="#staticModal"  container="body" placement="bottom" tooltip="Ver integrantes del rol"></btn-view>
 
         <btn-add id='create' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="nuevoRol=true;GetTreeRoles()" data-toggle="modal" data-target="#modalNodes"
-           placement="bottom" tooltip="Agregar Rol"></btn-add>
+           container="body" placement="bottom" tooltip="Agregar Rol"></btn-add>
 
-        <btn-check id='update' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="GuardarCambios()"  placement="bottom" tooltip="Guardar Cambios"></btn-check>
+        <btn-check id='update' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="GuardarCambios()"  container="body" placement="bottom" tooltip="Guardar Cambios"></btn-check>
 
-        <btn-delete id='delete' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="DeleteRoles(id)"  placement="bottom" tooltip="Eliminar Rol Seleccionado"></btn-delete>
+        <btn-delete id='delete' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="DeleteRoles(id)"  container="body" placement="bottom" tooltip="Eliminar Rol Seleccionado"></btn-delete>
 
       </div>
     </div>
@@ -56,7 +56,7 @@
           <div *ngIf="verMsj">
               <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
             </div>
-        <btn-check id='create' [xs]="true" chkPrivilegiosButtons class="btn-xs float-right marginButtonsFinal" (click)="GuardarCambios()"  placement="bottom" tooltip="Guardar Cambios"></btn-check>
+        <btn-check id='create' [xs]="true" chkPrivilegiosButtons class="btn-xs float-right marginButtonsFinal" (click)="GuardarCambios()"  container="body" placement="bottom" tooltip="Guardar Cambios"></btn-check>
           </div>
         </div>
         <br/>
@@ -90,7 +90,7 @@
                   <td><img class="center-block media img-responsive img-fluid circle thumb32" src="{{e.fotoAux}}" alt="" /></td>
                   <td class="text-center">{{e.nombre + ' ' + e.apellidoPaterno + ' ' + e.apellidoMaterno}}</td>
                   <td class="text-center">{{e.descripcion}}</td>
-                  <!-- <td><btn-delete id='delete' chkPrivilegiosButtons  placement="bottom" tooltip="Borrar Usuario de Grupo" class="pull-right" (click)="DeleteUserRoles(e.entidadId, id)"> 
+                  <!-- <td><btn-delete id='delete' chkPrivilegiosButtons  container="body" placement="bottom" tooltip="Borrar Usuario de Grupo" class="pull-right" (click)="DeleteUserRoles(e.entidadId, id)"> 
                     </btn-delete></td> -->
                 </tr>
               </tbody>
@@ -138,14 +138,14 @@
               
               <td class="text-center">
                   {{r['rol']}} -->
-                <!-- <span  placement="bottom" tooltip="Double click to edit" (dblclick)="editing[rowIndex + '-' + 'rol'] = true" *ngIf="!editing[rowIndex + '-' + 'rol']">
+                <!-- <span  container="body" placement="bottom" tooltip="Double click to edit" (dblclick)="editing[rowIndex + '-' + 'rol'] = true" *ngIf="!editing[rowIndex + '-' + 'rol']">
                   {{r['rol']}}
                 </span>
                 <input autofocus (blur)="updateValue($event, rol, rowIndex)" *ngIf="editing[rowIndex + '-' + 'rol']" type="text" [value] = "r['rol']" />  -->
               <!-- </td>
               <td class="text-center">
                   {{r['nombre']}} -->
-                  <!-- <span  placement="bottom" tooltip="Double click to edit" (dblclick)="editing[rowIndex + '-' + 'nombre' ] = true" *ngIf="!editing[rowIndex + '-' + 'nombre']">
+                  <!-- <span  container="body" placement="bottom" tooltip="Double click to edit" (dblclick)="editing[rowIndex + '-' + 'nombre' ] = true" *ngIf="!editing[rowIndex + '-' + 'nombre']">
                     {{r['nombre']}}
                   </span>
                   <input autofocus (blur)="updateValue($event, 'nombre', rowIndex)" *ngIf="editing[rowIndex + '-' + 'nombre']" type="text" [value] = "r['nombre']" />  -->
@@ -170,7 +170,7 @@
                 <span></span>
               </td>
               <td *ngIf="!hiddenSelect" class="center-block" >
-                <btn-check id='update' chkPrivilegiosButtons  placement="bottom" tooltip="Guardar Cambios" (click)="GuardarCambios(r)"></btn-check>
+                <btn-check id='update' chkPrivilegiosButtons  container="body" placement="bottom" tooltip="Guardar Cambios" (click)="GuardarCambios(r)"></btn-check>
               </td>
           </tr>
         </tbody>

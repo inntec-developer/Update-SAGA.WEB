@@ -6,13 +6,13 @@
     </mat-form-field>
     <div class="row justify-content-between">
       <div class="d-flex align-items-stretch ">
-        <!-- <btn-view (click)="openDialogShowRequi(element.id, element.folio)"  placement="bottom" tooltip="Ver Requisición"></btn-view> -->
+        <!-- <btn-view (click)="openDialogShowRequi(element.id, element.folio)"  container="body" placement="bottom" tooltip="Ver Requisición"></btn-view> -->
       </div>
       <div>
-        <button (click)="clearfilters()"  placement="bottom" tooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary">
+        <button (click)="clearfilters()"  container="body" placement="bottom" tooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary">
           <em class="fa fa-eraser"></em>
         </button>
-        <btn-refresh (click)="refreshTable()"  placement="bottom" tooltip="Actualizar"></btn-refresh>
+        <btn-refresh (click)="refreshTable()"  container="body" placement="bottom" tooltip="Actualizar"></btn-refresh>
       </div>
     </div>
   </div>
@@ -43,7 +43,7 @@
             <td class="text-center">
               <span *ngIf="row.estatus.length <= 10 else toLength" class="px-1 mr-1  badge  badge-pill badge-info"> {{row.estatus | uppercase }}</span>
               <ng-template #toLength>
-                <span class="badge badge-info"  placement="bottom" tooltip="{{row.estatus | uppercase}}">{{row.estatus | slice:0:6 | uppercase }} ... </span>
+                <span class="badge badge-info"  container="body" placement="bottom" tooltip="{{row.estatus | uppercase}}">{{row.estatus | slice:0:6 | uppercase }} ... </span>
             </ng-template>
             </td>
             <td>{{row.vBtra}}</td>
@@ -78,7 +78,7 @@
       </alert>
     </div>
     <div class="col-lg-1 col-md-1 col-sm-12">
-      <btn-refresh (click)="refreshTable()"  placement="bottom" tooltip="Actualizar"></btn-refresh>
+      <btn-refresh (click)="refreshTable()"  container="body" placement="bottom" tooltip="Actualizar"></btn-refresh>
     </div>
   </div>
 </ng-template>
