@@ -23,7 +23,9 @@ export class DialogRutasComponent implements OnInit {
     private rutasService : RequisicionesService,
     private dialogRutas : MatDialogRef<DialogRutasComponent>,
     private toasterService: ToasterService
-  ) { }
+  ) { 
+    dialogRutas.disableClose = true;
+  }
 
   ngOnInit() {
     if(!this.data.Edit){

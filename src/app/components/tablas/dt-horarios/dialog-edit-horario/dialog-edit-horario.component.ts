@@ -27,6 +27,7 @@ export class DialogEditHorarioComponent implements OnInit {
     private dialogVacantes : MatDialogRef<DialogEditHorarioComponent>,
     public Vacante : Vacante,
   ) {
+    dialogVacantes.disableClose = true;
    }
 
   ngOnInit() {
@@ -34,8 +35,6 @@ export class DialogEditHorarioComponent implements OnInit {
   }
 
   getInformacion(){
-    debugger;
-    console.log(this.data);
     this.RequisicionId = this.data.requisicionId;
     this.HorarioId = this.data.id;
     this.vacanteN = this.data.numeroVacantes;

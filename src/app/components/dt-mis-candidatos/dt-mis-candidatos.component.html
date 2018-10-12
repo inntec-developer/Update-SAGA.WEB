@@ -9,10 +9,13 @@
         <!-- <btn-view (click)="openDialogShowRequi(element.id, element.folio)"  container="body" placement="bottom" tooltip="Ver Requisición"></btn-view> -->
       </div>
       <div>
-        <button (click)="clearfilters()"  container="body" placement="bottom" tooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary">
+        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary">
           <em class="fa fa-eraser"></em>
         </button>
-        <btn-refresh (click)="refreshTable()"  container="body" placement="bottom" tooltip="Actualizar"></btn-refresh>
+        <button class="mb-1  btn btn-outline-success margen" type="button" (click)="refreshTable()" container="body"
+          placement="bottom" tooltip="Actualizar">
+          <em class="icon-refresh"></em>
+        </button>
       </div>
     </div>
   </div>
@@ -41,10 +44,12 @@
               {{row.folio}}
             </td>
             <td class="text-center">
-              <span *ngIf="row.estatus.length <= 10 else toLength" class="px-1 mr-1  badge  badge-pill badge-info"> {{row.estatus | uppercase }}</span>
+              <span *ngIf="row.estatus.length <= 10 else toLength" class="px-1 mr-1  badge  badge-pill badge-info">
+                {{row.estatus | uppercase }}</span>
               <ng-template #toLength>
-                <span class="badge badge-info"  container="body" placement="bottom" tooltip="{{row.estatus | uppercase}}">{{row.estatus | slice:0:6 | uppercase }} ... </span>
-            </ng-template>
+                <span class="badge badge-info" container="body" placement="bottom" tooltip="{{row.estatus | uppercase}}">{{row.estatus
+                  | slice:0:6 | uppercase }} ... </span>
+              </ng-template>
             </td>
             <td>{{row.vBtra}}</td>
             <td>
@@ -78,7 +83,10 @@
       </alert>
     </div>
     <div class="col-lg-1 col-md-1 col-sm-12">
-      <btn-refresh (click)="refreshTable()"  container="body" placement="bottom" tooltip="Actualizar"></btn-refresh>
+      <button class="mb-1 btn btn-outline-success" type="button" (click)="refreshTable()" container="body" placement="bottom"
+        tooltip="Actualizar">
+        <em class="icon-refresh"></em>
+      </button>
     </div>
   </div>
 </ng-template>

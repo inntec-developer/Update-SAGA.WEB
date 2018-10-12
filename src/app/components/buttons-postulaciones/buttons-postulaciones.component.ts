@@ -1,22 +1,21 @@
-import { element } from 'protractor';
-
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+
+import { DialogHorariosConteoComponent } from '../../components/dialog-horarios-conteo/dialog-horarios-conteo.component'
+import { DialogLiberarCandidatoComponent } from './../dialog-liberar-candidato/dialog-liberar-candidato.component';
+import { InfoCandidatoService } from '../../service/SeguimientoVacante/info-candidato.service';
 import { MatDialog } from '@angular/material';
-
-
 import { ModalDirective } from 'ngx-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../service';
-import { DialogHorariosConteoComponent } from '../../components/dialog-horarios-conteo/dialog-horarios-conteo.component'
-
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-buttons-postulaciones',
   templateUrl: './buttons-postulaciones.component.html',
   styleUrls: ['./buttons-postulaciones.component.scss'],
-  providers: [RequisicionesService, PostulateService]
+  providers: [RequisicionesService, PostulateService, InfoCandidatoService]
 })
 export class ButtonsPostulacionesComponent implements OnInit {
 
@@ -26,7 +25,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   @Input() estatusVacante;
 
   @ViewChild('MessageModal') ShownModal: ModalDirective;
- 
+
   public dataSource: Array<any> = [];
   // Varaibles del paginador
   public page: number = 1;
@@ -56,23 +55,24 @@ export class ButtonsPostulacionesComponent implements OnInit {
   rechazado = true;
   rowAux = [];
   conteo = [];
-  horarioId : any;
+  horarioId: any;
+  ProcesoCandidatoId: any;
   constructor(
     private serviceRequi: RequisicionesService,
     private service: PostulateService,
-     private toasterService: ToasterService,
-      private spinner: NgxSpinnerService,
-      private dialog: MatDialog) { }
+    private serviceLiberar: InfoCandidatoService,
+    private toasterService: ToasterService,
+    private spinner: NgxSpinnerService,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.getpostulados();
     this.GetConteoVacante();
-    
+
   }
 
-  ValidarEstatus(estatus)
-  {
-    if(estatus === 10 || estatus === 12) //postulado apartado
+  ValidarEstatus(estatus) {
+    if (estatus === 10 || estatus === 12) //postulado apartado
     {
       this.cr = false;
       this.enr = true;
@@ -87,7 +87,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.contratado = true;
       this.rechazado = true;
     }
-    else if(estatus === 24) //contratado
+    else if (estatus === 24) //contratado
     {
       this.cr = true;
       this.enr = true;
@@ -102,7 +102,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.contratado = true;
       this.rechazado = true;
     }
-    else if(estatus === 17) //cita reclutamiento
+    else if (estatus === 17) //cita reclutamiento
     {
       this.cr = true;
       this.enr = false;
@@ -117,7 +117,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.liberado = false;
       this.rechazado = true;
     }
-    else if(estatus === 18) //entrevista reclutamiento
+    else if (estatus === 18) //entrevista reclutamiento
     {
       this.cr = true;
       this.enr = true;
@@ -132,7 +132,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.liberado = false;
       this.rechazado = true;
     }
-    else if(estatus === 21) //finalista reclutamiento
+    else if (estatus === 21) //finalista reclutamiento
     {
       this.cr = true;
       this.enr = true;
@@ -147,7 +147,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.liberado = false;
       this.rechazado = false;
     }
-    else if(estatus === 22) //entrevista cliente
+    else if (estatus === 22) //entrevista cliente
     {
       this.cr = true;
       this.enr = true;
@@ -162,7 +162,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.liberado = false;
       this.rechazado = false;
     }
-    else if(estatus === 23) //finalista cliente
+    else if (estatus === 23) //finalista cliente
     {
       this.cr = true;
       this.enr = true;
@@ -177,7 +177,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.liberado = true;
       this.rechazado = false;
     }
-    else if(estatus === 13) // evalución técnica, psicométrica, médica
+    else if (estatus === 13) // evalución técnica, psicométrica, médica
     {
       this.cr = true;
       this.enr = true;
@@ -192,8 +192,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.liberado = false;
       this.rechazado = true;
     }
-    else if( estatus === 14)
-    {
+    else if (estatus === 14) {
       this.cr = true;
       this.enr = true;
       this.fr = false;
@@ -207,8 +206,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.liberado = false;
       this.rechazado = true;
     }
-    else if( estatus === 15)
-    {
+    else if (estatus === 15) {
       this.cr = true;
       this.enr = true;
       this.fr = false;
@@ -222,7 +220,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.liberado = false;
       this.rechazado = true;
     }
-    else if( estatus === 27) //liberado
+    else if (estatus === 27) //liberado
     {
       this.cr = true;
       this.enr = true;
@@ -237,7 +235,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.liberado = true;
       this.rechazado = true;
     }
-    else if( estatus === 40) //liberado
+    else if (estatus === 40) //liberado
     {
       this.cr = true;
       this.enr = true;
@@ -252,13 +250,14 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.liberado = true;
       this.rechazado = true;
     }
- 
+
   }
   getpostulados() {
-    this.service.GetProceso(this.RequisicionId, sessionStorage.getItem('id')).subscribe(data => { 
+    this.service.GetProceso(this.RequisicionId, sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = [];
       data.forEach(element => {
         var perfil = {
+          id: element.id,
           horarioId: element.horarioId,
           horario: element.horario,
           nombre: element.perfil[0]['nombre'],
@@ -274,39 +273,34 @@ export class ButtonsPostulacionesComponent implements OnInit {
           estatusId: element.estatusId
         }
         this.dataSource.push(perfil);
-        
+
       })
     }, error => this.errorMessage = <any>error);
   }
 
-  GetConteoVacante()
-  {
-    this.service.GetConteoVacante(this.RequisicionId, this.clienteId ).subscribe(data => {
+  GetConteoVacante() {
+    this.service.GetConteoVacante(this.RequisicionId, this.clienteId).subscribe(data => {
       this.conteo = data;
     })
 
   }
 
-  GetHorarioRequis(estatusId, estatus)
-  {
-    this.serviceRequi.GetHorariosRequiConteo(this.RequisicionId).subscribe( data => {
+  GetHorarioRequis(estatusId, estatus) {
+    this.serviceRequi.GetHorariosRequiConteo(this.RequisicionId).subscribe(data => {
       console.log(data)
-      if(data.length > 1 )
-      {
-        var aux = data.filter(element => !element.vacantes )
-        
+      if (data.length > 1) {
+        var aux = data.filter(element => !element.vacantes)
+
         this.OpenDlgHorarios(aux, estatusId, estatus);
       }
-      else
-      {
-        var datos = {candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId};
+      else {
+        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId };
         this.SetApiProceso(datos, estatusId, estatus);
       }
     })
   }
 
-  OpenDlgHorarios(data, estatusId, estatus)
-  {
+  OpenDlgHorarios(data, estatusId, estatus) {
     let dialogDlt = this.dialog.open(DialogHorariosConteoComponent, {
       width: '25%',
       height: 'auto',
@@ -315,8 +309,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
     });
     var window: Window
     dialogDlt.afterClosed().subscribe(result => {
-      if(result)
-      { 
+      if (result) {
         this.horarioId = result;
 
         var nom = data.filter(x => x.id == this.horarioId);
@@ -325,38 +318,74 @@ export class ButtonsPostulacionesComponent implements OnInit {
         this.dataSource[idx]['horario'] = nom[0]['nombre'];
         this.dataSource[idx]['horarioId'] = this.horarioId;
 
-        var datos = {candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId};
+        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId };
         this.SetApiProceso(datos, estatusId, estatus);
       }
-      else
-      {
+      else {
         this.onChangeTable(this.config)
       }
     });
   }
-  SetProceso(estatusId, estatus)
-  {
-    if(this.candidatoId != null)
-    {
-      if(estatusId == 18)
-      {
+
+  OpenDialogLiberacion(estatusId,estatus) {
+    let dialogLiberar = this.dialog.open(DialogLiberarCandidatoComponent, {
+      width: '25%',
+      height: 'auto',
+    });
+    dialogLiberar.afterClosed().subscribe(result => {
+      debugger;
+      if (result) {
+        var data = {
+          RequisicionId: this.RequisicionId,
+          CandidatoId: this.candidatoId,
+          ReclutadorId: sessionStorage.getItem('id'),
+          MotivoId: result.motivo,
+          ProcesoCandidatoId: this.ProcesoCandidatoId,
+          Comentario: result.comentario,
+        }
+      }
+      this.serviceLiberar.setLiberarCandidato(data).subscribe(result => {
+          switch(result){
+            case 200:{
+              var aux = this.dataSource;
+              var idx = aux.findIndex(x => x.candidatoId === this.candidatoId);
+              this.ValidarEstatus(estatusId);
+    
+              this.dataSource[idx]['estatusId'] = estatusId;
+              this.dataSource[idx]['estatus'] = estatus;
+    
+              this.onChangeTable(this.config)
+              this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+              break;
+            }
+            case 404: {
+              this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos');
+              break;
+            }
+          }
+      });
+    });
+  }
+
+  SetProceso(estatusId, estatus) {
+    if (this.candidatoId != null) {
+      if(estatusId == 27){
+        this.OpenDialogLiberacion(estatusId, estatus);
+      }else if (estatusId == 18) {
         this.GetHorarioRequis(estatusId, estatus);
         console.log(this.horarioId);
       }
-      else
-      {
-        var datos = {candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId};
+      else  {
+        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId };
         this.SetApiProceso(datos, estatusId, estatus);
-      }   
+      }
     }
 
   }
- 
-  SetApiProceso(datos, estatusId, estatus)
-  {
+
+  SetApiProceso(datos, estatusId, estatus) {
     this.service.SetProceso(datos).subscribe(data => {
-      if(data == 201)
-      {
+      if (data == 201) {
         this.SetStatusBolsa(this.candidatoId, estatusId, estatus);
         this.cr = true;
         this.enr = true;
@@ -371,85 +400,72 @@ export class ButtonsPostulacionesComponent implements OnInit {
         this.liberado = true;
         this.GetConteoVacante();
       }
-      else if(data == 300)
-      {
+      else if (data == 300) {
         this.popToast('info', 'Apartado', 'El candidato ya esta apartado o en proceso');
       }
-      else
-      {
+      else {
         this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos')
       }
     })
   }
 
-  SetStatusBolsa(candidatoId, estatusId, estatus)
-  {
-    if(this.candidatoId != null)
-    {
-      if( estatusId === 10 )
-      {
-        var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 1};
+  SetStatusBolsa(candidatoId, estatusId, estatus) {
+    if (this.candidatoId != null) {
+      if (estatusId === 10) {
+        var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 1 };
       }
-      else if( estatusId >= 12 && estatusId <= 15)
-      {
-        var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 2};
+      else if (estatusId >= 12 && estatusId <= 15) {
+        var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 2 };
       }
-      else if(estatusId == 16 || estatusId == 17 || estatusId == 18)
-      {
-        var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 3};
+      else if (estatusId == 16 || estatusId == 17 || estatusId == 18) {
+        var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 3 };
       }
-      else if(estatusId == 21 || estatusId == 22 || estatusId == 23)
-      {
-        var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 4};
+      else if (estatusId == 21 || estatusId == 22 || estatusId == 23) {
+        var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 4 };
       }
-      else if(estatusId == 24 || estatusId == 25 || estatusId == 27 || estatusId == 40)
-      {
-        var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 5};
+      else if (estatusId == 24 || estatusId == 25 || estatusId == 27 || estatusId == 40) {
+        var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 5 };
       }
 
       this.service.SetStatusBolsa(datos).subscribe(data => {
-        if(data == 201)
-        {
+        if (data == 201) {
           var aux = this.dataSource;
           var idx = aux.findIndex(x => x.candidatoId === this.candidatoId);
           this.ValidarEstatus(estatusId);
-     
+
           this.dataSource[idx]['estatusId'] = estatusId;
           this.dataSource[idx]['estatus'] = estatus;
 
           this.onChangeTable(this.config)
 
-          if(estatusId === 17 || estatusId === 21 || estatusId === 27 || estatusId === 24)
-          {
-            var datos = {candidatoId: this.candidatoId, estatusId: estatusId, vacante: this.vacante, nombre: this.dataSource[idx]['nombre']};
+          if (estatusId === 17 || estatusId === 21 || estatusId === 27 || estatusId === 24) {
+            var datos = { candidatoId: this.candidatoId, estatusId: estatusId, vacante: this.vacante, nombre: this.dataSource[idx]['nombre'] };
 
             this.service.SendEmailCandidato(datos).subscribe();
 
           }
 
-          if(estatusId === 22) // si es cita con cliente cambio automatico a envio al cliente 
+          if (estatusId === 22) // si es cita con cliente cambio automatico a envio al cliente 
           {
-            var datosVacante = { estatusId: 30, requisicionId: this.RequisicionId};
-
-             this.service.SetProcesoVacante(datosVacante).subscribe(data => {
-               console.log(data)
-             })
-          }
-          else if(estatusId == 23)
-          {
-            var datosVacante = { estatusId: 33, requisicionId: this.RequisicionId};
+            var datosVacante = { estatusId: 30, requisicionId: this.RequisicionId };
 
             this.service.SetProcesoVacante(datosVacante).subscribe(data => {
               console.log(data)
             })
-         }
+          }
+          else if (estatusId == 23) {
+            var datosVacante = { estatusId: 33, requisicionId: this.RequisicionId };
 
-          
+            this.service.SetProcesoVacante(datosVacante).subscribe(data => {
+              console.log(data)
+            })
+          }
 
-          this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');    
 
-          if(estatusId == 22 && this.estatusVacante != "30")
-          {
+
+          this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+
+          if (estatusId == 22 && this.estatusVacante != "30") {
             this.popToast('warning', 'Estatus', 'El estatus de la vacante es diferente a envio al cliente.');
           }
         }
@@ -463,9 +479,9 @@ export class ButtonsPostulacionesComponent implements OnInit {
     data.selected ? data.selected = false : data.selected = true; //para poner el backgroun cuando seleccione
     data.selected ? this.candidatoId = data.candidatoId : this.candidatoId = null; //agrega y quita el row seleccionado
     data.selected ? this.horarioId = data.horarioId : this.horarioId = null; //agrega y quita el row seleccionado
+    data.selected ? this.ProcesoCandidatoId = data.id : this.ProcesoCandidatoId = null;
 
-    if(!data.selected)
-    {
+    if (!data.selected) {
       this.cr = true;
       this.enr = true;
       this.fr = true;
@@ -477,24 +493,21 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evm = true;
       this.liberado = true;
     }
-    else
-    {
+    else {
       this.ValidarEstatus(data.estatusId)
     }
 
-    if(this.rowAux.length == 0)
-    {
+    if (this.rowAux.length == 0) {
       this.rowAux = data;
     }
-    else if(data.selected && this.rowAux != [])
-    {
+    else if (data.selected && this.rowAux != []) {
       var aux = data;
       data = this.rowAux;
       data.selected = false;
       aux.selected = true;
       this.rowAux = aux;
     }
-    
+
     // let index = this.dataSource.indexOf(data.row);
     // this.element = data;
     // /* add an class 'active' on click */
@@ -505,8 +518,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   }
 
 
-  VerCandidato(row)
-  {
+  VerCandidato(row) {
 
     this.candidatoId = row.candidatoId;
 
@@ -515,50 +527,47 @@ export class ButtonsPostulacionesComponent implements OnInit {
     // this.ValidarEstatus(row.estatusId);
     // row.selected = true;
     //this.spinner.show();
-  //   setTimeout(() => {
-  //     /** spinner ends after 5 seconds */
-  //     this.spinner.hide();
+    //   setTimeout(() => {
+    //     /** spinner ends after 5 seconds */
+    //     this.spinner.hide();
 
-  // }, 1000);
+    // }, 1000);
 
   }
 
-  EstatusModal($event)
-  {
+  EstatusModal($event) {
     var idx = this.dataSource.findIndex(x => x.candidatoId === $event.candidatoId);
 
     this.dataSource[idx]['estatusId'] = $event.estatusId;
     this.dataSource[idx]['estatus'] = $event.estatus;
 
-     this.ValidarEstatus($event.estatusId);
-     this.dataSource[idx]['selected'] = true;
+    this.ValidarEstatus($event.estatusId);
+    this.dataSource[idx]['selected'] = true;
 
     this.onChangeTable(this.config);
 
   }
 
-refresh()
-{
-  this.getpostulados();
-  this.cr = true;
-      this.enr = true;
-      this.fr = true;
-      this.enc = true;
-      this.fc = true;
-      this.contratado = true;
-      this.evt = true;
-      this.evps = true;
-      this.evm = true;
-      this.liberado = true;
-      this.pst = true;
-}
+  refresh() {
+    this.getpostulados();
+    this.cr = true;
+    this.enr = true;
+    this.fr = true;
+    this.enc = true;
+    this.fc = true;
+    this.contratado = true;
+    this.evt = true;
+    this.evps = true;
+    this.evm = true;
+    this.liberado = true;
+    this.pst = true;
+  }
 
-  closeModal()
-  {
+  closeModal() {
     this.ShownModal.hide();
     this.isModalShown = false;
   }
-    
+
   public rows: Array<any> = []
   public columns: Array<any> = [
     { title: 'Horario', className: 'text-primary', name: 'horario', filtering: { filterString: '', placeholder: 'Horario' } },
@@ -676,7 +685,7 @@ refresh()
     this.length = sortedData.length;
   }
 
- 
+
   /**
    * configuracion para mensajes de acciones.
    */
@@ -690,13 +699,13 @@ refresh()
     mouseoverTimerStop: true,
     preventDuplicates: true,
   });
-  
+
   popToast(type, title, body) {
     var toast: Toast = {
       type: type,
       title: title,
       timeout: 4000,
-      body: body    
+      body: body
     }
     this.toasterService.pop(toast);
 

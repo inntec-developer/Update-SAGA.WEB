@@ -1,36 +1,40 @@
 <div class="dt-container mat-elevation-z8">
-    <div class="title-headre-view d-flex justify-content-between">
-      <h4>Horarios</h4>
-      <button id="update" class="mb-1 btn btn-xs" [disabled]="!horario"  *ngIf="Requi" (click)="openDialogEdit()" chkPrivilegiosButtons   container="body" placement="bottom" tooltip="Editar Horario"
+  <div class="title-headre-view d-flex justify-content-between">
+    <h4>Horarios</h4>
+    <button id="update" class="mb-1 btn btn-xs" [disabled]="!horario" *ngIf="Requi" (click)="openDialogEdit()"
+      chkPrivilegiosButtons 
+      container="body" 
+      placement="bottom" 
+      tooltip="Editar Horario" 
       [ngClass]="(!horario) ? 'disabled' : 'btn-outline-info'">
-          <em class="icon-pencil"></em>
-      </button>
-    </div>
-    <!-- <div class="card card-default"> -->
-      <div class="table-responsive" #tableContainer>
-        <table id="tablaHorarios"  ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
-          <thead>
-            <tr>
-              <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr (click)="onCellClick(row)" *ngFor="let row of rows" [class.selected]="row.selected">
-              <td class="text-center"> {{row.nombre}} </td>
-              <td class="text-center"> {{row.deDia?.diaSemana}}</td>
-              <td class="text-center"> {{row.aDia.diaSemana}}</td>
-              <td class="text-center"> {{row.deHora | date:"HH:mm"}}</td>
-              <td class="text-center"> {{row.aHora | date:"HH:mm"}}</td>
-              <td class="text-center"> {{row.numeroVacantes}}</td>
-              <td class="text-center"> {{row.especificaciones}}</td>
-              <td class="text-center">
-                <span *ngIf="row.activo" class="badge badge-pill badge-success"> Activo</span>
-                <span *ngIf="!row.activo" class="badge badge-pill badge-danger"> Inactivo</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    <!-- </div> -->
+      <em class="icon-pencil"></em>
+    </button>
   </div>
+  <!-- <div class="card card-default"> -->
+  <div class="table-responsive" #tableContainer>
+    <table id="tablaHorarios" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+      <thead>
+        <tr>
+          <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr (click)="onCellClick(row)" *ngFor="let row of rows" [class.selected]="row.selected">
+          <td class="text-center"> {{row.nombre}} </td>
+          <td class="text-center"> {{row.deDia?.diaSemana}}</td>
+          <td class="text-center"> {{row.aDia.diaSemana}}</td>
+          <td class="text-center"> {{row.deHora | date:"HH:mm"}}</td>
+          <td class="text-center"> {{row.aHora | date:"HH:mm"}}</td>
+          <td class="text-center"> {{row.numeroVacantes}}</td>
+          <td class="text-center"> {{row.especificaciones}}</td>
+          <td class="text-center">
+            <span *ngIf="row.activo" class="badge badge-pill badge-success"> Activo</span>
+            <span *ngIf="!row.activo" class="badge badge-pill badge-danger"> Inactivo</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- </div> -->
+</div>

@@ -349,7 +349,7 @@
                     <ng-template #NotExterior>
                       <label class="text-muted"> S/N </label>
                     </ng-template>
-                    <label *ngIf="candidato.direccion?.numeroInterior else NotInterior" class="text-muted" >
+                    <label *ngIf="candidato.direccion?.numeroInterior else NotInterior" class="text-muted">
                       {{candidato.direccion?.numeroInterior}}</label>
                     <ng-template #NotInterior>
                       <label class="text-muted"> S/N</label>
@@ -633,8 +633,7 @@
                   [disabled]="!infoRequiId && !infoFolio" [ngClass]="(!infoRequiId && !infoFolio) ? 'disabled' : 'btn-outline-warning'"
                   container="body" placement="bottom" tooltip="Visualizar"><em class="fa fa-eye"></em></button>
 
-                <button [disabled]="loading || auxestatus"
-                  [ngClass]="loading || auxestatus
+                <button [disabled]="loading || auxestatus" [ngClass]="loading || auxestatus
                                       ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
                   container="body" placement="bottom" tooltip="Apartar" (click)="_apartarCandidato()">
                   <em class="fa fa-thumbs-o-up"></em>
@@ -649,7 +648,10 @@
                 <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class=" margen mb-1 btn btn-outline-primary">
                   <em class="fa fa-eraser"></em>
                 </button>
-                <btn-refresh (click)="refreshTable_v()" container="body" placement="bottom" tooltip="Actualizar"></btn-refresh>
+                <button class="mb-1  btn btn-outline-success" type="button" (click)="refreshTable_v()" container="body"
+                  placement="bottom" tooltip="Actualizar">
+                  <em class="icon-refresh"></em>
+                </button>
               </div>
             </div>
           </div>
