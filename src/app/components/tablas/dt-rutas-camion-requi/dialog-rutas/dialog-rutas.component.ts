@@ -65,7 +65,7 @@ export class DialogRutasComponent implements OnInit {
       if (data == 200) {
         this.rutasService.getRequiRutasCamion(this.DireccionId).subscribe(result => {
           this.dialogRutas.close(result);
-          let msg = 'La ruta de camión se registro corectamente.';
+          let msg = 'La ruta de camión se registro correctamente.';
           this.popToast('success', 'Ruta de Camión', msg);
         }, err => {
           console.error(err)
@@ -93,7 +93,7 @@ export class DialogRutasComponent implements OnInit {
       if (data == 200) {
         this.rutasService.getRequiRutasCamion(this.DireccionId).subscribe(result => {
           this.dialogRutas.close(result);
-          let msg = 'La ruta de camión se actualizo corectamente.';
+          let msg = 'La ruta de camión se actualizo correctamente.';
           this.popToast('success', 'Ruta de Camión', msg);
         }, err => {
           console.error(err)

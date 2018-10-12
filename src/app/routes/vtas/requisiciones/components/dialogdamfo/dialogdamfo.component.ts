@@ -31,7 +31,6 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
     private toasterService: ToasterService,
     @Inject(MAT_DIALOG_DATA) public data: any, private service: RequisicionesService
   ) {
-    this.DisabledButton = true;
     dialogRef.disableClose = true;
   }
 
@@ -64,11 +63,9 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
 
   FiltroDireccion(event){
     if(!event.returnValue){
-      this.DisabledButton = false;
       this.IdDireccion = event;
     }
     else{
-      this.DisabledButton = true;
       this.IdDireccion = null;
     }
   }
@@ -102,6 +99,7 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
       this.onNoClick();
     }else{
       this.popToast('error', 'Oops!!','Seleccione una dirección para continuar' );
+      this.DisabledButton = false;
     }
 
   }

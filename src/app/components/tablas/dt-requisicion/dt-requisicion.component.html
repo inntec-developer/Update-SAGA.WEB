@@ -10,20 +10,21 @@
     </mat-form-field>
     <div class="row justify-content-between">
       <div class="d-flex align-items-stretch ">
-        <btn-add id="create" chkPrivilegiosButtons class="btn-acciones margen"  placement="bottom" tooltip="Nuevo" [routerLink]="['/ventas/crearRequisicion']">
+        <btn-add id="create" chkPrivilegiosButtons class="btn-acciones margen" placement="bottom" tooltip="Nuevo"
+          [routerLink]="['/ventas/crearRequisicion']">
         </btn-add>
         <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones margen" [disabled]="!element"
-          [ngClass]="(!element) ? 'disabled' : 'btn-outline-warning'"  placement="bottom" tooltip="Visualizar"><em class="fa fa-eye"></em></button>
+          [ngClass]="(!element) ? 'disabled' : 'btn-outline-warning'" placement="bottom" tooltip="Visualizar"><em class="fa fa-eye"></em></button>
 
         <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones margen"
-          [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-outline-dark'"  placement="bottom" tooltip="Comentarios"><em
+          [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-outline-dark'" placement="bottom" tooltip="Comentarios"><em
             class="fa fa-comments-o"></em></button>
 
         <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="editar" [ngClass]="editar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-primary'"
-           placement="bottom" tooltip="Editar" (click)="editRequi()"><em class="icon-pencil"></em></button>
+          placement="bottom" tooltip="Editar" (click)="editRequi()"><em class="icon-pencil"></em></button>
 
         <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="borrar" [ngClass]="borrar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
-           placement="bottom" tooltip="Eliminar" (click)="openDialogDelete()"><em class="icon-trash"></em></button>
+          placement="bottom" tooltip="Eliminar" (click)="openDialogDelete()"><em class="icon-trash"></em></button>
         <em class="vl"></em>
         <!-- <button id='update' chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" 
            placement="bottom" tooltip="Activar" [ngClass]="(estatusId != 8 || !element) ? 'disabled' : 'btn-outline-success'" (click)="openDialogReActivar()"><em
@@ -32,28 +33,28 @@
         <!--estatus melina-->
 
         <button class="margen" [disabled]="cubierta" [ngClass]="cubierta ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'"
-          type="button" (click)="updataStatus(34, 'Cubierta')"  placement="bottom" tooltip="Cubierta">
+          type="button" (click)="updataStatus(34, 'Cubierta')" placement="bottom" tooltip="Cubierta">
           <em class="fa fa fa-shield"></em>
         </button>
 
 
         <button class="margen" [disabled]="cp" [ngClass]="cp ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'"
-          type="button" (click)="updataStatus(35, 'Cubierta Parcialmente')"  placement="bottom" tooltip="Cubierta Parcialmente">
+          type="button" (click)="updataStatus(35, 'Cubierta Parcialmente')" placement="bottom" tooltip="Cubierta Parcialmente">
           <em class="fa fa-star-half-o"></em>
         </button>
         <button class="margen" [ngClass]="crm ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'" [disabled]="crm"
-          type="button" (click)="updataStatus(36, 'Cubierta por Medios')"  placement="bottom" tooltip="Cubierta por Reclutamiento Medios">
+          type="button" (click)="updataStatus(36, 'Cubierta por Medios')" placement="bottom" tooltip="Cubierta por Reclutamiento Medios">
           <em class="fa fa-star"></em>
         </button>
         <button class="margen" [disabled]="cc" [ngClass]="cc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-info'" type="button"
-          (click)="updataStatus(37, 'Cubierta por Cliente')"  placement="bottom" tooltip="Cubierta por Cliente">
+          (click)="updataStatus(37, 'Cubierta por Cliente')" placement="bottom" tooltip="Cubierta por Cliente">
           <em class="fa fa fa-magic"></em>
         </button>
         <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="cancelar" [ngClass]="cancelar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
-           placement="bottom" tooltip="Cancelar" (click)="openDialogCancel();"><em class="icon-ban"></em></button>
+          placement="bottom" tooltip="Cancelar" (click)="openDialogCancel();"><em class="icon-ban"></em></button>
 
         <button class="margen" [ngClass]="gbc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'" [disabled]="gbc"
-          type="button" (click)="updataStatus(38, 'Garant&iacute;a de B&uacute;squeda')"  placement="bottom" tooltip="Garant&iacute;a B&uacute;squeda Candidatos">
+          type="button" (click)="updataStatus(38, 'Garant&iacute;a de B&uacute;squeda')" placement="bottom" tooltip="Garant&iacute;a B&uacute;squeda Candidatos">
           <em class="fa fa-user-circle"></em>
         </button>
 
@@ -78,11 +79,12 @@
             </button>-->
       </div>
       <div>
-        <button (click)="clearfilters()"  placement="bottom" tooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary">
+        <button (click)="clearfilters()" placement="bottom" tooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary">
           <em class="fa fa-eraser"></em>
         </button>
-        <btn-refresh (click)="refreshTable()"  placement="bottom" tooltip="Actualizar" class="margen"></btn-refresh>
-
+        <button class="mb-1  btn btn-outline-success margen" type="button"  (click)="refreshTable()" placement="bottom" tooltip="Actualizar">
+          <em class="icon-refresh"></em>
+        </button>
       </div>
     </div>
   </div>
@@ -120,18 +122,20 @@
             <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">
-              <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
-                [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
-                [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
+              <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info"
+                [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
+                [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29" [class.badge-success]="row.estatusId  === 7"
+                [class.badge-danger]="row.estatusId  === 8">
                 {{row.estatus | uppercase}}
               </small>
 
               <ng-template #toLength>
                 <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
-                [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
-                [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8"  placement="bottom" tooltip="{{row.estatus | uppercase}}"> {{row.estatus | slice:0:8 | uppercase }} ...
-              </small>
-            </ng-template>
+                  [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
+                  [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8" placement="bottom"
+                  tooltip="{{row.estatus | uppercase}}"> {{row.estatus | slice:0:8 | uppercase }} ...
+                </small>
+              </ng-template>
             </td>
             <td class="text-center">
               <small class="badge badge-pill" [class.badge-danger]="row.prioridadId  === 1" [class.badge-warning]="row.prioridadId  === 2">

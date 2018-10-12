@@ -298,7 +298,7 @@ export class BusquedaCandidatosComponent implements OnInit {
   _Enter($event) {
     // if ($event.keyCode == 10) {
     // this.Buscar();
-    console.log($event);
+    // console.log($event);
     // }
   }
   Buscar() {

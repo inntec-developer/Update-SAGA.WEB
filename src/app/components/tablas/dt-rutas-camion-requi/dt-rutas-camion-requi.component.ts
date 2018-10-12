@@ -158,7 +158,7 @@ export class DtRutasCamionRequiComponent implements OnInit {
         if (data == 200) {
           this.cargarRutas(this.DireccionId);
           setTimeout(() => {
-            let msg = 'La ruta de camión se elimino corectamente.';
+            let msg = 'La ruta de camión se elimino correctamente.';
             this.popToast('success', 'Ruta de Camión', msg);
             this.ruta = null;
             swal('Eliminada', '', 'success');

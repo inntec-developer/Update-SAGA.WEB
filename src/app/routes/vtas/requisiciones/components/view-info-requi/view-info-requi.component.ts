@@ -67,7 +67,6 @@ export class ViewInforRequiComponent implements OnInit {
   getInitialData() {
     this.serviceRequisicion.getRequiFolio(this.Folios)
       .subscribe(DataRequisicion => {
-        console.log(DataRequisicion);
         this.RequiId = DataRequisicion.id;
         this.folio = DataRequisicion.folio;
         this.fch_Solicitud = DataRequisicion.fch_Creacion;

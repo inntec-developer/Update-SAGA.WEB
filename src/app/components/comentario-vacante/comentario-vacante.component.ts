@@ -33,9 +33,7 @@ export class ComentarioVacanteComponent implements OnInit {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
     //this.RequisicionId = 'CC9A3F79-C9B5-E811-80E9-9E274155325E'
-    if(!this.RequisicionId){
-      console.log('Sin referencia de requisición.')
-    }else{
+    if(this.RequisicionId){
       this.getComentarios(this.RequisicionId);
     }
   }

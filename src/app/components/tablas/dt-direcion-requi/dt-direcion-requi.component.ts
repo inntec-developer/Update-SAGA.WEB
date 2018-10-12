@@ -48,7 +48,6 @@ export class DtDirecionRequiComponent implements OnInit {
     this.service.getRequiDireccion(id)
       .subscribe(data => {
         this.rows = data;
-        console.log(this.rows);
       })
   }
 
