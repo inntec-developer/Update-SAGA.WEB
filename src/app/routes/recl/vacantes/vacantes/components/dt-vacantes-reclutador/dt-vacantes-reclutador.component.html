@@ -12,45 +12,45 @@
           tooltip="Ver Requisición" class="margen" [disabled]="!element" [ngClass]="(!element) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-warning'">
           <em class="fa fa-eye"></em></button>
         <button id="view" class="margen" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones"
-          [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-outline-dark'" placement="bottom" tooltip="Comentarios"><em
+          [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-outline-dark'" placement="bottom" tooltip="Comentarios" container="body"><em
             class="fa fa-comments-o"></em></button>
         <button class="margen" id="update" chkPrivilegiosButtons (click)="openDialogAssingRequi(element)" placement="bottom"
-          tooltip="Asignar" class="margen" [disabled]="asignar" [ngClass]="asignar ? 'mb-1 btn disabled':'mb-1 btn btn-outline-purple'">
+          tooltip="Asignar" container="body" class="margen" [disabled]="asignar" [ngClass]="asignar ? 'mb-1 btn disabled':'mb-1 btn btn-outline-purple'">
           <em class="icon-user-follow"></em></button>
         <button class="margen" type="button" id="special" chkPrivilegiosButtons (click)="openDesignVacante(element.id, element.folio, element.vBtra)"
-          placement="bottom" tooltip="Diseñar Vacante" [disabled]="disenador || confidencial" [ngClass]="(disenador || confidencial) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
+          placement="bottom" tooltip="Diseñar Vacante" container="body" [disabled]="disenador || confidencial" [ngClass]="(disenador || confidencial) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
           <em class="icon-list"></em>
         </button>
         <em class="vl"></em>
         <!-- estatus de la vacante -->
 
         <button class="margen" [disabled]="bc" [ngClass]="bc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-green'" type="button"
-          (click)="SetStatus(29, 'B&uacute;squeda Candidatos')" placement="bottom" tooltip="B&uacute;squeda de Candidatos">
+          (click)="SetStatus(29, 'B&uacute;squeda Candidatos')" placement="bottom" tooltip="B&uacute;squeda de Candidatos" container="body">
           <em class="fa fa-search"></em>
         </button>
         <button class="margen" [disabled]="ecc" [ngClass]="ecc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-green'"
-          type="button" (click)="SetStatus(30, 'Env&iacute;o a Cliente')" placement="bottom" tooltip="Env&iacute;o Candidato a Cliente">
+          type="button" (click)="SetStatus(30, 'Env&iacute;o a Cliente')" placement="bottom" tooltip="Env&iacute;o Candidato a Cliente" container="body">
           <em class="fa fa-truck"></em>
         </button>
 
         <button class="margen" [disabled]="sc" [ngClass]="sc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-green'" type="button"
-          (click)="SetStatus(32, 'Socioeconómico')" placement="bottom" tooltip="Socioeconómico">
+          (click)="SetStatus(32, 'Socioeconómico')" placement="bottom" tooltip="Socioeconómico" container="body">
           <em class="fa fa-bar-chart"></em>
         </button>
 
 
         <button class="margen" [disabled]="ec" [ngClass]="ec ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-info'" type="button"
-          (click)="SetStatus(33, 'Espera de Ctns')" placement="bottom" tooltip="En Espera de Contrataci&oacute;n">
+          (click)="SetStatus(33, 'Espera de Ctns')" placement="bottom" tooltip="En Espera de Contrataci&oacute;n" container="body">
           <em class="fa fa-hourglass-half"></em>
         </button>
 
         <button class="margen" [disabled]="pausa" [ngClass]="pausa ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-info'"
-          type="button" (click)="SetStatus(39, 'En Pausa')" placement="bottom" tooltip="En Pausa">
+          type="button" (click)="SetStatus(39, 'En Pausa')" placement="bottom" tooltip="En Pausa" container="body">
           <em class="fa fa-pause-circle-o"></em>
         </button>
 
         <button class="margen" [ngClass]="nbc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-primary'" [disabled]="nbc"
-          type="button" (click)="SetStatus(31, 'Nueva Busqueda')" placement="bottom" tooltip="Nueva Busqueda de Candidatos">
+          type="button" (click)="SetStatus(31, 'Nueva Busqueda')" placement="bottom" tooltip="Nueva Busqueda de Candidatos" container="body">
           <em class="fa fa-search-plus"></em>
         </button>
 
@@ -63,11 +63,11 @@
         <button class="margen" [disabled]="pds" (click)="seguimientoRequi()" [ngClass]="(pds) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
           En Proceso
         </button>
-        <button (click)="clearfilters()" placement="bottom" tooltip="Limpiar Filtros" [disabled]="!clearFilter" class="margen"
+        <button (click)="clearfilters()" placement="bottom" tooltip="Limpiar Filtros" container="body" [disabled]="!clearFilter" class="margen"
           [ngClass]="(!clearFilter) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
           <em class="fa fa-eraser"></em>
         </button>
-        <button type="button" class="mb-1  btn btn-outline-success margen" (click)="refreshTable()" placement="bottom" tooltip="Actualizar">
+        <button type="button" class="mb-1  btn btn-outline-success margen" (click)="refreshTable()" placement="bottom" tooltip="Actualizar" container="body">
           <em class="icon-refresh"></em>
         </button>
       </div>
@@ -120,7 +120,7 @@
                 <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
                   [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20"
                   [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8" placement="bottom"
-                  tooltip="{{row.estatus | uppercase}}"> {{row.estatus | slice:0:8 | uppercase }} ...
+                  tooltip="{{row.estatus | uppercase}}" container='body'> {{row.estatus | slice:0:8 | uppercase }} ...
                 </small>
               </ng-template>
             </td>

@@ -293,7 +293,9 @@ export class ButtonsPostulacionesComponent implements OnInit {
       console.log(data)
       if(data.length > 1 )
       {
-        this.OpenDlgHorarios(data, estatusId, estatus);
+        var aux = data.filter(element => !element.vacantes )
+        
+        this.OpenDlgHorarios(aux, estatusId, estatus);
       }
       else
       {
@@ -313,7 +315,6 @@ export class ButtonsPostulacionesComponent implements OnInit {
     });
     var window: Window
     dialogDlt.afterClosed().subscribe(result => {
-
       if(result)
       { 
         this.horarioId = result;
@@ -326,6 +327,10 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
         var datos = {candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId};
         this.SetApiProceso(datos, estatusId, estatus);
+      }
+      else
+      {
+        this.onChangeTable(this.config)
       }
     });
   }

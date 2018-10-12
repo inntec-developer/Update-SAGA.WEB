@@ -7,13 +7,12 @@
           <th class="text-center">HORARIO</th>
           <th class="text-center">No VACANTES</th>
           <th class="text-center">% AVANCE</th>
-          <th class="text-center">POSTULADOS</th>
-          <th class="text-center">APARTADOS</th>
-          <th class="text-center">ENT. RECLUTAMIENTO</th>
+          <th class="text-center">ENTREVISTA RECLUTAMIENTO</th>
           <th class="text-center">ABANDON&Oacute; PROCESO</th>
           <th class="text-center">DESCARTADOS</th>
           <th class="text-center">ENVIADO CLIENTE</th>
-          <th class="text-center">ENT. CLIENTE</th>
+          <th class="text-center">ENTREVISTA CLIENTE</th>
+          <th class="text-center">FINALISTA CLIENTE</th>
           <th class="text-center">RECHAZADOS</th>
           <th class="text-center">CONTRATADOS</th>
         </tr>
@@ -23,13 +22,12 @@
           <td class="text-center"> {{row.horario}}</td>
           <td class="text-center"> {{row.vacantes}}</td>
           <td class="text-center"> {{row.porcentaje}}</td>
-          <td class="text-center"> {{row.postulados}} </td>
-          <td class="text-center"> {{row.apartados}} </td>
           <td class="text-center"> {{row.enProcesoEnt}} </td>
           <td class="text-center"> {{row.abandono}} </td>
           <td class="text-center"> {{row.descartados}}</td>
           <td class="text-center"> {{row.enProcesoFR}}</td>
           <td class="text-center"> {{row.entCliente}} </td>
+          <td class="text-center"> {{row.enProcesoFC}} </td>
           <td class="text-center"> {{row.rechazados}}</td>
           <td class="text-center"> {{row.contratados}}</td>         
         </tr>
@@ -51,7 +49,7 @@
                 </button>
               </a></li> -->
               <li><a>
-                <button [ngClass]="pst ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" [disabled] = "pst"  type="button" (click)="SetProceso(12, 'Apartado')"  placement="bottom" tooltip="Apartar"> 
+                <button [ngClass]="pst ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" [disabled] = "pst"  type="button" (click)="SetProceso(12, 'Apartado')"  placement="bottom" tooltip="Apartar" container="body"> 
                   <em class="fa fa-thumbs-o-up"></em>
                 </button>
               </a></li>
@@ -168,8 +166,11 @@
                 class="form-control">
             </td>
           </tr>
-          <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of dataSource" [class.selected]="row.selected"  placement="bottom" tooltip="click para seleccionar - dblclick para visualizar">
-            <td class="text-center"> {{row.horario}}</td>
+          <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of dataSource" [class.selected]="row.selected"  placement="bottom" tooltip="click para seleccionar - dblclick para visualizar" container="body">
+            <td class="text-center"><span *ngIf="row.estatusId != 12 else sinAsignar">{{row.horario}}</span></td>
+            <ng-template #sinAsignar>
+              <span>SIN ASIGNAR</span>
+            </ng-template> 
             <td class="text-center"> {{row.nombre}}</td>
             <td class="text-center"> {{row.areaExp}}</td>
             <td class="text-center"> {{row.areaInt}}</td>
@@ -180,7 +181,7 @@
             <td class="text-center"> {{row.rfc}}</td>
             <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength" class="badge badge-info">{{row.estatus | uppercase }}</span></td>
             <ng-template #toLength>
-              <span class="badge badge-info"  placement="bottom" tooltip="{{row.estatus | uppercase}}">{{row.estatus | slice:0:6 | uppercase }} ... </span>
+              <span class="badge badge-info"  placement="bottom" tooltip="{{row.estatus | uppercase}}" container="body">{{row.estatus | slice:0:6 | uppercase }} ... </span>
           </ng-template>
           </tr>
         </tbody>
