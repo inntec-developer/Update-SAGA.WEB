@@ -640,7 +640,7 @@
                   <em class="fa fa-thumbs-o-up"></em>
                 </button>
                 <button [disabled]="desapartar || loading" [ngClass]="desapartar || loading ? 'mb-1 btn disabled':'mb-1 btn btn-outline-danger'"
-                  placement="bottom" tooltip="Desapartar" (click)="_liberarCandidato()">
+                  placement="bottom" tooltip="Desapartar" (click)="openDialogLiberar()">
                   <em class="fa fa-thumbs-o-down"></em>
                 </button>
 

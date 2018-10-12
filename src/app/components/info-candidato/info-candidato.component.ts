@@ -1,8 +1,10 @@
-import { DirectorioEmpresarialComponent } from './../../routes/vtas/directorio-empresarial/directorio-empresarial.component';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
+import { DialogLiberarCandidatoComponent } from '../dialog-liberar-candidato/dialog-liberar-candidato.component';
+import { DirectorioEmpresarialComponent } from './../../routes/vtas/directorio-empresarial/directorio-empresarial.component';
 import { InfoCandidatoService } from '../../service/SeguimientoVacante/info-candidato.service';
+import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 declare var $: any;
@@ -57,6 +59,7 @@ export class InfoCandidatoComponent implements OnInit {
     private _serviceCandidato: InfoCandidatoService,
     private toasterService: ToasterService,
     private spinner: NgxSpinnerService,
+    private dialog: MatDialog
   ) {
     this.registros_v = 0;
     this.registros_p = 0;
@@ -439,10 +442,29 @@ export class InfoCandidatoComponent implements OnInit {
     // }
   }
 
-  _liberarCandidato() {
+  openDialogLiberar(){
+    let dialogLiberar = this.dialog.open(DialogLiberarCandidatoComponent, {
+      width: '25%',
+      height: 'auto'
+    });
+    dialogLiberar.afterClosed().subscribe(result =>{
+      if(result){
+        this._liberarCandidato(result);
+      }
+    });
+  }
+  _liberarCandidato(result) {
     if (this.reclutador == this.usuario || !this.candidato.estatus) {
       this.loading = true;
-      this._serviceCandidato.setLiberarCandidato(this.Estatus)
+      var data = {
+        RequisicionId: this.vacante.id,
+        CandidatoId: this.CandidatoId,
+        ReclutadorId: sessionStorage.getItem('id'),
+        MotivoId: result.motivo,
+        ProcesoCandidatoId: this.Estatus,
+        Comentario: result.comentario,
+      }
+      this._serviceCandidato.setLiberarCandidato(data)
         .subscribe(data => {
           switch (data) {
             case 200: {
@@ -473,7 +495,7 @@ export class InfoCandidatoComponent implements OnInit {
               break;
             }
           }
-        })
+        });
     }
     else {
       this.notAccess();

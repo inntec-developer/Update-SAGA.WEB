@@ -53,8 +53,7 @@ export class InfoCandidatoService {
   }
 
   setLiberarCandidato(data: any) : Observable<any>{
-    let params = new HttpParams().set('Id', data);
-    return this._httpClient.get(this.UrlLiberarCandidato,{ params: params});
+    return this._httpClient.post(this.UrlLiberarCandidato,data,httpOptions);
   }
 
 }
