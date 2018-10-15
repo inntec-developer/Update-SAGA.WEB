@@ -42,6 +42,7 @@ export class DtBusquedaCandidatosComponent implements OnInit {
 
   public rows: Array<any> = []
   public columns: Array<any> = [
+    { title: 'Estatus', className: 'text-success', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
     { title: 'Nombre Candidato', className: 'text-info', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'Área Experiencia', className: 'text-info', name: 'areaExp', filtering: { filterString: '', placeholder: 'Experiencia' } },
     { title: 'Área Interes', className: 'text-info', name: 'areaInt', filtering: { filterString: '', placeholder: 'Interes' } },
@@ -165,17 +166,16 @@ export class DtBusquedaCandidatosComponent implements OnInit {
     });
   }
 
-  public getCandidato(event){
+  public getCandidato(event) {
     this.CandidatoId.emit(event);
   }
 
-  public clearfilters(){
+  public clearfilters() {
     this.columns.forEach(element => {
       element.filtering.filterString = '';
-     (<HTMLInputElement>document.getElementById(element.name)).value = '';
+      (<HTMLInputElement>document.getElementById(element.name)).value = '';
     });
     this.onChangeTable(this.config);
   }
 
 }
-  

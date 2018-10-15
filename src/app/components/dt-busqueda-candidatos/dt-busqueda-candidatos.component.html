@@ -8,7 +8,7 @@
       <div class="d-flex align-items-stretch ">
       </div>
       <div>
-        <button (click)="clearfilters()"  container="body" placement="bottom" tooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary">
+        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary">
           <em class="fa fa-eraser"></em>
         </button>
       </div>
@@ -35,6 +35,12 @@
         <tbody>
           <tr (click)="onCellClick(row)" (dblclick)="getCandidato(row.candidatoId)" *ngFor="let row of rows"
             [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8">
+            <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength" class="badge badge-info">{{row.estatus
+                | uppercase }}</span></td>
+            <ng-template #toLength>
+              <span class="badge badge-info" container="body" placement="bottom" tooltip="{{row.estatus | uppercase}}"
+                container="body">{{row.estatus | slice:0:6 | uppercase }} ... </span>
+            </ng-template>
             <td>
               {{row.nombre}}
             </td>

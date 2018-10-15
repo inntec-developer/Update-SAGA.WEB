@@ -33,6 +33,7 @@ export class DialogDeleteRequiComponent implements OnInit {
     private service: RequisicionesService,
     private setings: SettingsService
   ) { 
+    dialogDelete.disableClose = true;
     this.textBtnCerrar = 'Cerrar';
     this.textBtnAceptar = 'Aceptar';
   }
