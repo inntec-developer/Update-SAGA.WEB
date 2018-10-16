@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { DialogLiberarCandidatoComponent } from '../dialog-liberar-candidato/dialog-liberar-candidato.component';
 import { DirectorioEmpresarialComponent } from './../../routes/vtas/directorio-empresarial/directorio-empresarial.component';
 import { InfoCandidatoService } from '../../service/SeguimientoVacante/info-candidato.service';
-import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { isAbsolute } from 'path';
 
 declare var $: any;
 
@@ -443,10 +444,12 @@ export class InfoCandidatoComponent implements OnInit {
   }
 
   openDialogLiberar(){
-    let dialogLiberar = this.dialog.open(DialogLiberarCandidatoComponent, {
-      width: '25%',
-      height: 'auto'
-    });
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.hasBackdrop = true; 
+    dialogConfig.position = {top: '100px'};
+    let dialogLiberar = this.dialog.open(DialogLiberarCandidatoComponent, dialogConfig);
     dialogLiberar.afterClosed().subscribe(result =>{
       if(result){
         this._liberarCandidato(result);

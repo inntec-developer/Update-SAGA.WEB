@@ -18,9 +18,9 @@ export class DialogLiberarCandidatoComponent implements OnInit {
 
   constructor(
     private service: CatalogosService,
-    private dialogHorarios: MatDialogRef<DialogLiberarCandidatoComponent>, 
+    private DialogLiberar: MatDialogRef<DialogLiberarCandidatoComponent>, 
      @Inject(MAT_DIALOG_DATA) public data: any,) { 
-      dialogHorarios.disableClose = true;
+      DialogLiberar.disableClose = true;  
      }
 
   ngOnInit() {
@@ -32,7 +32,7 @@ export class DialogLiberarCandidatoComponent implements OnInit {
     });
   }
   onCloseDialog() {
-    this.dialogHorarios.close(0);
+    this.DialogLiberar.close(0);
   }
 
 }
