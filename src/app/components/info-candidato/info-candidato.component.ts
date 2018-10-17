@@ -6,7 +6,6 @@ import { DialogLiberarCandidatoComponent } from '../dialog-liberar-candidato/dia
 import { DirectorioEmpresarialComponent } from './../../routes/vtas/directorio-empresarial/directorio-empresarial.component';
 import { InfoCandidatoService } from '../../service/SeguimientoVacante/info-candidato.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { isAbsolute } from 'path';
 
 declare var $: any;
 
@@ -19,7 +18,9 @@ declare var $: any;
 export class InfoCandidatoComponent implements OnInit {
   candidato: any;
   @Input('IdCandidato') CandidatoId: string;
+  @Input('VerVacantes') VerVacantes: boolean = true;
   @Output('Estatus') EstatusEmitter: EventEmitter<any> =  new EventEmitter();
+
   public dataSource_v: Array<any> = [];
   public dataSource_p: Array<any> = [];
 
@@ -300,7 +301,7 @@ export class InfoCandidatoComponent implements OnInit {
 
       if(this.candidato.estatus != null)
       {
-        data.vacantes == 0 || data.vacantes == data.contratados &&
+        data.vacantes == 0 || data.vacantes == data.contratados ||
         (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 40 ) ||
         (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 26 ) ||
         (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId != 27 ) ||
