@@ -448,7 +448,7 @@ export class InfoCandidatoComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.hasBackdrop = true; 
-    dialogConfig.position = {top: '100px'};
+    //dialogConfig.position = {top: '100px'};
     let dialogLiberar = this.dialog.open(DialogLiberarCandidatoComponent, dialogConfig);
     dialogLiberar.afterClosed().subscribe(result =>{
       if(result){

@@ -36,7 +36,7 @@ export class DialogCancelRequiComponent implements OnInit {
     private settings: SettingsService,
     public fb: FormBuilder
   ) {
-
+    dialogCancel.disableClose = true;
     this.formComentario = new FormGroup({
       comentario: new FormControl('', [Validators.required, Validators.maxLength(500), Validators.minLength(50)])
     });
@@ -78,7 +78,6 @@ export class DialogCancelRequiComponent implements OnInit {
   }
 
   cancelRequisicion() {
-    debugger;
     var comentarioReclutador = this.formComentario.get('comentario').value.trim();
     this.loading = true;
     if(comentarioReclutador.length >= 50){
@@ -93,7 +92,7 @@ export class DialogCancelRequiComponent implements OnInit {
           }
           this.serviceComent.addComentarioVacante(comentario).subscribe(data => {
             if (data == 200) {
-              this.dialogCancel.close(1);
+              this.dialogCancel.close(data);
             }
             console.log(data);
           }, err => {
@@ -101,7 +100,7 @@ export class DialogCancelRequiComponent implements OnInit {
           });
         }
         else {
-          this.popToast('warning', 'Requisición', 'Oops!! No se puedo cancelar la requisición ' + this.folio);
+          this.popToast('warning', 'Requisición', 'Oops!! No se pudo cancelar la requisición ' + this.folio);
           this.loading = false;
         }
       }, err => {

@@ -23,24 +23,5 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
     }
-    getIdCandidato(event){
-        console.log(event);
-    }
-
-    openDialogLiberar(){
-        let dialogLiberar = this.dialog.open(DialogLiberarCandidatoComponent, {
-            width: '25%',
-            height: 'auto',
-          });
-          dialogLiberar.afterClosed().subscribe(result => {
-            if (result) {
-              this.element = result;
-              console.log(this.element);
-            }
-            else{
-                console.log('No se regresaron registros.');
-            }
-          });
-    }
 }
     

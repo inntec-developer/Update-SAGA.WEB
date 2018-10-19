@@ -474,39 +474,40 @@ export class DtRequisicionComponent implements OnInit {
 
   openDialogDelete() {
     let dialogDlt = this.dialog.open(DialogDeleteRequiComponent, {
-      width: '25%',
-      height: 'auto',
       data: this.element
     });
     var window: Window
     dialogDlt.afterClosed().subscribe(result => {
-      
-      this.refreshTable();
-      this.ValidarEstatus(8);
+      debugger;
+      if(result == 200)
+      {
+        this.refreshTable();
+      }
     });
   }
 
   openDialogCancel() {
     let dialogCnc = this.dialog.open(DialogCancelRequiComponent, {
-      width: '25%',
-      height: 'auto',
       data: this.element
     });
     var window: Window
     dialogCnc.afterClosed().subscribe(result => {
-      if(result == 1)
+      debugger
+      if(result == 200)
       {
         this.updataStatus(8, 'Cancelar')
+        this.ValidarEstatus(8);
+        this.refreshTable();
       }
-      this.ValidarEstatus(8);
-      this.refreshTable();
+      
+      
     })
   }
 
   openDialogReActivar() {
     let dialogCnc = this.dialog.open(DialogActivarRequiComponent, {
       width: '25%',
-      height: 'auto',
+      height: '100%',
       data: this.element
     });
     var window: Window

@@ -73,7 +73,7 @@ export class DialogDeleteRequiComponent implements OnInit {
     this.service.deleteRequisicion(this.infoDeleteRequi)
     .subscribe(data => {
       if(data == 200){
-        this.dialogDelete.close();
+        this.dialogDelete.close(data);
       }
       else{
         this.popToast('danger', 'Requisición','Oops!! No se puedo eliminar la requisición ' + this.folio);

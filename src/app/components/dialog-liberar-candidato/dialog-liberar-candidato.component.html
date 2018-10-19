@@ -18,16 +18,22 @@
     <mat-hint align="end">{{message.value.length}} / 500</mat-hint>
   </mat-form-field>
   <p>
-    <span *ngIf="!liberar.motivo"><small class="text-danger"> <em class="fa fa-close"></em> Seleccione un motivo de
-        liberaci&oacute;n.</small></span>
-    <span *ngIf="liberar.motivo"><small class="text-success"> <em class="fa fa-check"></em> Seleccione un motivo de
-        liberaci&oacute;n.</small></span>
+    <span>
+      <small [ngClass]="!liberar.motivo ? 'text-danger': 'text-success'">
+        <em *ngIf="!liberar.motivo" class="fa fa-close"></em>
+        <em *ngIf="liberar.motivo" class="fa fa-check"></em>
+        Seleccione un motivo de liberaci&oacute;n.
+      </small>
+    </span>
   </p>
   <p>
-    <span *ngIf="liberar.comentario.length <= 30"><small class="text-danger"><em class="fa fa-close"></em> Caracteres
-        m&iacute;nimos del comentario 30 </small></span>
-    <span *ngIf="liberar.comentario.length > 30"><small class="text-success"><em class="fa fa-check"></em> Caracteres
-        m&iacute;nimos del comentario 30 </small></span>
+    <span>
+      <small [ngClass]="liberar.comentario.length < 30 ? 'text-danger' : 'text-success'">
+        <em *ngIf="liberar.comentario.length < 30 " class="fa fa-close"></em>
+        <em *ngIf="liberar.comentario.length > 30" class="fa fa-check"></em>
+        Caracteres m&iacute;nimos del comentario 30 
+      </small>
+    </span>
   </p>
   <mat-divider></mat-divider>
 </mat-dialog-content>
