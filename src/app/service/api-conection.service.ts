@@ -79,6 +79,8 @@ export class ApiConection {
   public static ComentariosCandidato = 'Candidatos/getComentarios';
   public static AddComentariosCandidato = 'Candidatos/addComentarios';
   public static GetCandidatoPalabraClave = 'Candidatos/getCandidatoPalabraClave';
+  public static GetAreasRecl = 'Candidatos/getAreasRecl';
+  public static GetMediosRecl = 'Candidatos/getMediosRecl'
 
   /* Vacantes */
   public static getRequis = '/dvacante/get';

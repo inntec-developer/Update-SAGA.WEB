@@ -136,9 +136,14 @@
             
             </ul>
           </span>
-          <button class="mb-1  btn btn-outline-success float-right margen" type="button" (click)="refresh()" container="body" placement="bottom" tooltip="Actualizar">
-            <em class="icon-refresh"></em>
-          </button>
+          
+              <button class="mb-1  btn btn-outline-success float-right margen" type="button" (click)="refresh()" container="body" placement="bottom" tooltip="Actualizar">
+                <em class="icon-refresh"></em>
+              </button>
+             
+              <button [ngClass]="flagContratados ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'" [disabled] = "flagContratados" class="float-right margen" type="button" (click)="OpenEditarComponent()" container="body" placement="bottom" tooltip="Editar Contratados">
+                <em class="fa fa-pencil"></em>
+              </button>
           </div>
           <br/>
 
@@ -155,7 +160,7 @@
         <thead>
           <tr>
             <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
-              {{column.title}}
+              {{column.title | uppercase}}
               <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
               </i>
             </th>
@@ -169,18 +174,18 @@
             </td>
           </tr>
           <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of dataSource" [class.selected]="row.selected"  placement="bottom" tooltip="click para seleccionar - dblclick para visualizar" container="body">
-            <td class="text-center"><span *ngIf="row.estatusId != 12 || row.estatusId != 17 else sinAsignar">{{row.horario}}</span></td>
+            <td class="text-center"><span *ngIf="row.estatusId != 12 || row.estatusId != 17 else sinAsignar">{{row.horario | uppercase }}</span></td>
             <ng-template #sinAsignar>
               <span>SIN ASIGNAR</span>
             </ng-template> 
-            <td class="text-center"> {{row.nombre}}</td>
-            <td class="text-center"> {{row.areaExp}}</td>
-            <td class="text-center"> {{row.areaInt}}</td>
-            <td class="text-center"> {{row.localidad}} </td>
+            <td class="text-center"> {{row.nombre | uppercase}} {{row.apellidoPaterno }} {{row.apellidoMaterno}}</td>
+            <td class="text-center"> {{row.areaExp | uppercase }}</td>
+            <td class="text-center"> {{row.areaInt | uppercase }}</td>
+            <td class="text-center"> {{row.localidad | uppercase }} </td>
             <td class="text-center"> {{row.sueldoMinimo | currency : '$'}} </td>
             <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
-            <td class="text-center"> {{row.curp}}</td>
-            <td class="text-center"> {{row.rfc}}</td>
+            <td class="text-center"> {{row.curp | uppercase }}</td>
+            <td class="text-center"> {{row.rfc | uppercase }}</td>
             <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength" class="badge badge-info">{{row.estatus | uppercase }}</span></td>
             <ng-template #toLength>
               <span class="badge badge-info"  container="body" placement="bottom" tooltip="{{row.estatus | uppercase}}" container="body">{{row.estatus | slice:0:6 | uppercase }} ... </span>

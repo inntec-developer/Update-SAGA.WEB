@@ -1,3 +1,4 @@
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -39,6 +40,8 @@ export class CandidatosService {
     private UrlLiberar = ApiConection.ServiceUrl + ApiConection.Liberar;
     private UrlVacantesDtl = ApiConection.ServiceUrl + ApiConection.VacantesDtl;
     private URLPalabraClave = ApiConection.ServiceUrl + ApiConection.GetCandidatoPalabraClave;
+    private URLGetAreasRecl = ApiConection.ServiceUrl + ApiConection.GetAreasRecl;
+    private URLGetMediosRecl = ApiConection.ServiceUrl + ApiConection.GetMediosRecl;
 
     // Error.
     private handleError(error: any) {
@@ -52,6 +55,14 @@ export class CandidatosService {
     constructor(private http: Http, private _httpClient: HttpClient) { }
 
     // Servicios de controller de candidatos.
+
+    GetAreasRecl(): Observable<any> {
+        return this._httpClient.get(this.URLGetAreasRecl);
+    }
+
+    GetMediosRecl(): Observable<any> { // Obtener el esatus del candidato para las banderas de mostrar la información.
+        return this._httpClient.get(this.URLGetMediosRecl);
+    }
 
     getpaises(): Observable<any> { // Obtener filtro de paises.
         return this.http.get(this.UrlPaises)
@@ -175,6 +186,7 @@ export class CandidatosService {
             .map(result => result.json())
             .catch(this.handleError);
     }
+
 
     // postLiberar(candidato: any): Observable<any> { // Eliminar el candidato por liberación.
     //   let headers = new Headers({ 'Content-Type': 'application/json' });

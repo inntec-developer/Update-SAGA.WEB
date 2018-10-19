@@ -1,6 +1,9 @@
+import { element } from 'protractor';
 import { ModalDirective } from 'ngx-bootstrap';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 import { DialogHorariosConteoComponent } from '../../components/dialog-horarios-conteo/dialog-horarios-conteo.component'
 import { DialogLiberarCandidatoComponent } from './../dialog-liberar-candidato/dialog-liberar-candidato.component';
@@ -9,7 +12,7 @@ import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../service';
-
+import {EditarContratadosComponent} from '../editar-contratados/editar-contratados.component';
 @Component({
   selector: 'app-buttons-postulaciones',
   templateUrl: './buttons-postulaciones.component.html',
@@ -53,10 +56,13 @@ export class ButtonsPostulacionesComponent implements OnInit {
   pst = true; //postulado
   liberado = true; //liberado
   rechazado = true;
+  flagContratados = true;
   rowAux = [];
   conteo = [];
   horarioId: any;
   ProcesoCandidatoId: any;
+
+  bsModalRef: BsModalRef;
 
   constructor(
     private serviceRequi: RequisicionesService,
@@ -64,7 +70,8 @@ export class ButtonsPostulacionesComponent implements OnInit {
     private serviceLiberar: InfoCandidatoService,
     private toasterService: ToasterService,
     private spinner: NgxSpinnerService,
-    private dialog: MatDialog ) {}
+    private dialog: MatDialog, 
+    private modalService: BsModalService ) {}
 
   ngOnInit() {
     this.getpostulados();
@@ -266,6 +273,8 @@ export class ButtonsPostulacionesComponent implements OnInit {
           horarioId: element.horarioId,
           horario: element.horario,
           nombre: element.perfil[0]['nombre'],
+          apellidoPaterno: element.perfil[0]['apellidoPaterno'],
+          apellidoMaterno: element.perfil[0]['apellidoMaterno'],
           areaExp: element.perfil[0]['areaExp'],
           areaInt: element.perfil[0]['areaInt'],
           curp: element.perfil[0]['curp'],
@@ -275,7 +284,10 @@ export class ButtonsPostulacionesComponent implements OnInit {
           sueldoMinimo: element.perfil[0]['sueldoMinimo'],
           estatus: element.estatus,
           candidatoId: element.candidatoId,
-          estatusId: element.estatusId
+          estatusId: element.estatusId,
+          folio: element.folio,
+          usuario: element.usuario,
+          fecha:element.fecha
         }
         this.dataSource.push(perfil);
 
@@ -286,6 +298,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   GetConteoVacante() {
     this.service.GetConteoVacante(this.RequisicionId, this.clienteId).subscribe(data => {
       this.conteo = data;
+      this.conteo[0]['contratados'] > 0 ? this.flagContratados = false : this.flagContratados = true;
     })
 
   }
@@ -338,7 +351,6 @@ export class ButtonsPostulacionesComponent implements OnInit {
       height: 'auto',
     });
     dialogLiberar.afterClosed().subscribe(result => {
-      debugger;
       if (result) {
         var data = {
           RequisicionId: this.RequisicionId,
@@ -538,6 +550,34 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
     // }, 1000);
 
+  }
+
+  OpenEditarComponent()
+  {
+    var aux = this.dataSource.filter( element => {
+     if( element.estatusId == 24 )
+      {
+        element.areaReclutamiento = 'SIN ASIGNAR';
+        element.areaReclutamientoId = -1;
+        element.fuenteReclutamiento = 'SIN ASIGNAR';
+        element.fuenteReclutamientoId = -1;
+
+        return element;
+      }
+    });
+
+    let dialogRef = this.dialog.open(EditarContratadosComponent, {
+      height: 'auto',
+      width: 'auto',
+      data: aux
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+    })
+
+    //this.bsModalRef = this.modalService.show(EditarContratadosComponent, {initialState, class:'modal-lg'});
+    //this.bsModalRef.content.closeBtnName = 'Close';
   }
 
   EstatusModal($event) {

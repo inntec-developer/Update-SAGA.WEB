@@ -107,6 +107,7 @@ import { PrestacionesLeyComponent } from './tablas/prestaciones-ley/prestaciones
 import { ProcesosComponent } from './tablas/procesos/procesos.component';
 import { SharedModule } from '../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { EditarContratadosComponent } from './editar-contratados/editar-contratados.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -162,7 +163,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     AccordionModule.forRoot(),
     ToasterModule,
     AlertModule,
-    ModalModule.forRoot(),
+    ModalModule.forRoot()
   ],
   declarations: [
     DtDireccionComponent,
@@ -221,7 +222,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DtRutasCamionRequiComponent,
     DialogRutasComponent,
     DialogHorariosConteoComponent,
-    DialogLiberarCandidatoComponent
+    DialogLiberarCandidatoComponent,
+    EditarContratadosComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -279,13 +281,14 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     InfoVacanteComponent,
     DtRutasCamionRequiComponent,
     DialogHorariosConteoComponent,
-    DialogLiberarCandidatoComponent
+    DialogLiberarCandidatoComponent, 
+    EditarContratadosComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
     { provide: PaginationConfig, useValue: getSpanishPaginatorBtp() },
     ToasterService
   ],
-  entryComponents: [DialogHorariosConteoComponent, DialogLiberarCandidatoComponent]
+  entryComponents: [DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, EditarContratadosComponent]
 })
 export class ComponentsModule { }
