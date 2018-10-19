@@ -200,9 +200,8 @@
 <toaster-container toaster-options="{'toaster-id': 2 }" [toasterconfig]="toasterconfig"></toaster-container>
 
 <!-- Modal -->
-
-<div *ngIf="isModalShown" [config]="{ show: true, ignoreBackdropClick: true }" (onHidden)="onHidden()" bsModal #MessageModal="bs-modal"
-     class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+ <div *ngIf="isModalShown" [config]="{ show: true, ignoreBackdropClick: true }" (onHidden)="onHidden()" bsModal #MessageModal="bs-modal"
+     class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
      <div class="modal-dialog modal-lg">
       <div class="modal-content">
 <div class="modal-header">
@@ -212,7 +211,7 @@
   </button>
 </div>
 <div class="modal-body">
-<app-info-candidato [IdCandidato] = 'candidatoId' (Estatus)="EstatusModal($event)"></app-info-candidato>
+<app-info-candidato [IdCandidato] = 'candidatoId' [VerVacantes]='false' (Estatus)="EstatusModal($event)"></app-info-candidato>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-outline-success" (click)="closeModal()">Cerrar</button>

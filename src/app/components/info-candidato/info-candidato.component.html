@@ -621,7 +621,7 @@
             </accordion-group>
           </accordion>
         </tab>
-        <tab heading="Mis Vacantes ({{registros_v}})" id="misVacantes">
+        <tab *ngIf="VerVacantes" heading="Mis Vacantes ({{registros_v}})" id="misVacantes">
           <div class="dt-header">
             <mat-form-field>
               <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config_v.filtering"
@@ -677,7 +677,7 @@
                     </td>
                   </tr>
                   <tr (click)="onCellClick_v(row)" (dblclick)="lgModal.show()" *ngFor="let row of rows"
-                    [class.confident]="row.confidencial" [class.enProceso]="row.id === RequisicionId && procesoCandidatoId != 40 && procesoCandidatoId != 27">
+                    [class.confident]="row.confidencial" [class.enProceso]="row.id === RequisicionId && procesoCandidatoId != 40 && procesoCandidatoId != 27" [class.cubierta]="row.vacantes == row.contratados">
                     <td class="text-center">
                       {{row.folio}}
                     </td>

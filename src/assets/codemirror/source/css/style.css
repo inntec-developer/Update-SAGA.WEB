@@ -32,6 +32,10 @@
 /*  Estados en Grid
 /* ---------------------------------------------------------------------- */
 
+tr td
+{
+  cursor: pointer;
+}
 tr.selected td {
   background-color:  #5d9cec !important;
   color: white !important;
@@ -52,10 +56,12 @@ tr.cancel td {
   color: black;  
 }
 tr.enProceso td{
-  background-color:  rgb(175, 245, 178);
+  background-color: rgb(247, 215, 145); 
   box-shadow:inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 7px 10px 0 rgba(60,64,67,.3), 0 2px 2px 1px rgb(60,64,67,.15) !important;
 }
-
+tr.cubierta td{
+  background-color: rgb(175, 245, 178);
+}
 
 /* ---------------------------------------------------------------------- */
 /*  Table response

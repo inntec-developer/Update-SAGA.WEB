@@ -1,3 +1,4 @@
+import { ModalDirective } from 'ngx-bootstrap';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -5,11 +6,9 @@ import { DialogHorariosConteoComponent } from '../../components/dialog-horarios-
 import { DialogLiberarCandidatoComponent } from './../dialog-liberar-candidato/dialog-liberar-candidato.component';
 import { InfoCandidatoService } from '../../service/SeguimientoVacante/info-candidato.service';
 import { MatDialog } from '@angular/material';
-import { ModalDirective } from 'ngx-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../service';
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-buttons-postulaciones',
@@ -39,6 +38,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   errorMessage: any;
   element: any = {};
   postulados: any;
+  //candidatoId = 'f66da23e-9d69-e811-80e1-9e274155325e';'621ede7a-2fbc-e811-80ea-9e274155325e'
   candidatoId;
   isModalShown: boolean = false;
   contratado = true;
@@ -57,19 +57,24 @@ export class ButtonsPostulacionesComponent implements OnInit {
   conteo = [];
   horarioId: any;
   ProcesoCandidatoId: any;
+
   constructor(
     private serviceRequi: RequisicionesService,
     private service: PostulateService,
     private serviceLiberar: InfoCandidatoService,
     private toasterService: ToasterService,
     private spinner: NgxSpinnerService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog ) {}
 
   ngOnInit() {
     this.getpostulados();
     this.GetConteoVacante();
 
   }
+
+  // openModal(templateModal: TemplateRef<any>) {
+  //   this.modalRef = this.modalService.show(templateModal, { class: 'atras' });
+  // }
 
   ValidarEstatus(estatus) {
     if (estatus === 10 || estatus === 12) //postulado apartado
