@@ -108,6 +108,7 @@ import { ProcesosComponent } from './tablas/procesos/procesos.component';
 import { SharedModule } from '../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { EditarContratadosComponent } from './editar-contratados/editar-contratados.component';
+import { ShowErrorsComponent } from './show-errors/show-errors.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -223,7 +224,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DialogRutasComponent,
     DialogHorariosConteoComponent,
     DialogLiberarCandidatoComponent,
-    EditarContratadosComponent
+    EditarContratadosComponent,
+    ShowErrorsComponent
   ],
   exports: [
     DtDireccionComponent,

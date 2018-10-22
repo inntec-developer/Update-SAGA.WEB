@@ -9,6 +9,7 @@
 <mat-divider></mat-divider><br/>
 <!-- <p><strong class="text-warning text-center">Horarios disponibles para la requisici&oacute;n</strong></p> -->
 <mat-dialog-content>
+  <form [formGroup]="form" (submit)="UpdateData(form.value)">
   <div class="table-responsive pointer">
     <table *ngIf="data else NotCandidatos" id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
       <thead>
@@ -34,7 +35,13 @@
               <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-curp'] = true" *ngIf="!editing[rowIndex + '-curp']">
                   {{row.curp | uppercase}}
               </span>
-              <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'curp', rowIndex)" *ngIf="editing[rowIndex + '-curp']" type="text" [value]=row.curp>
+              <input #curp formControlName="curp" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'curp', rowIndex)" *ngIf="editing[rowIndex + '-curp']" type="text" [value]=row.curp >
+              <div *ngIf="form.get('curp').errors && editing[rowIndex + '-curp'] ">
+                  <div *ngIf="form.get('curp').errors['minlength'] && editing[rowIndex + '-curp']">
+                    Password inseguro
+                  </div>
+                </div>
+
           </td>
           <td class="text-center">
               <span  container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
@@ -90,7 +97,7 @@
           <td class="text-center">{{row.usuario}}</td>
           <td class="text-center">{{row.fecha | date:'dd-MM-yyyy'}}</td>
           <td class="text-center">
-            <button class="mb-1 btn btn-xs btn-outline-success" type="button" (click)="UpdateData()" container="body" placement="bottom" tooltip="Actualizar">
+            <button class="mb-1 btn btn-xs btn-outline-success" type="submit" container="body" placement="bottom" tooltip="Actualizar" [disabled]="form.invalid">
               <em class="fa fa-check"></em>
             </button>
           </td>
@@ -98,6 +105,7 @@
       </tbody>
     </table>
   </div>
+  </form>
 </mat-dialog-content>
 <br/><br/>
 <mat-divider></mat-divider><br/>

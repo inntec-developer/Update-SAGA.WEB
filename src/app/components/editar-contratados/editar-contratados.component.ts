@@ -1,7 +1,10 @@
+
 import { CandidatosService } from './../../service/Candidatos/candidatos.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ExcelService } from '../../service/ExcelService/excel.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+
 
 @Component({
   selector: 'app-editar-contratados',
@@ -10,6 +13,8 @@ import { ExcelService } from '../../service/ExcelService/excel.service';
   providers: [CandidatosService]
 })
 export class EditarContratadosComponent implements OnInit {
+
+  form: FormGroup;
 
   public dataSource: Array<any> = [];
   editing = {};
@@ -51,7 +56,17 @@ export class EditarContratadosComponent implements OnInit {
   }
 
 
-  constructor( private service: CandidatosService,  private dialogEditar: MatDialogRef<EditarContratadosComponent>,  @Inject(MAT_DIALOG_DATA) public data: any, private excelService: ExcelService) { }
+  constructor( private service: CandidatosService,  
+               private dialogEditar: MatDialogRef<EditarContratadosComponent>,  
+               @Inject(MAT_DIALOG_DATA) public data: any, 
+               private excelService: ExcelService, 
+               private fb: FormBuilder ) { 
+
+                this.form = this.fb.group({
+                  curp: ['', Validators.compose([Validators.required, Validators.minLength(10)]) ]
+                });
+
+               }
 
   ngOnInit() {
     this.GetAreas();
@@ -175,7 +190,6 @@ GetMedios()
 }
 updateValue(event, cell, rowIndex)
 {
-  console.log(this.data)
   if (cell === "areaReclutamiento")
   {
     this.data[rowIndex]['areaReclutamiento'] = event.source.selected.viewValue;
@@ -198,10 +212,11 @@ updateValue(event, cell, rowIndex)
   this.editing[rowIndex + '-' + cell] = false;
   this.data = [...this.data];
 }
-UpdateData()
+UpdateData(form)
 {
-  console.log(this.areasId)
-  console.log(this.mediosId)
+
+  console.log(form.value)
+
 }
 
 exportAsXLSX():void {
@@ -209,6 +224,7 @@ exportAsXLSX():void {
   var aux = [];
 
   this.data.forEach(element => {
+    var d = new Date(element.fecha)
     aux.push( {
       FOLIO: element.folio,
       CURP: element.curp,
@@ -219,9 +235,11 @@ exportAsXLSX():void {
       AREA_RECLUTAMIENTO: element.areaReclutamiento,
       SUELDO: element.sueldoMinimo,
       USUARIO: element.usuario,
-      FECHA: element.fecha
+      FECHA: d.getDate() + '/' + ( d.getMonth() + 1) + '/' +  d.getFullYear()
     });
   });
+
+
   this.excelService.exportAsExcelFile(aux, 'sample');
 }
 
