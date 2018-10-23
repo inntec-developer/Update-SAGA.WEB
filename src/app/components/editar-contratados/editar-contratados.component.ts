@@ -63,7 +63,7 @@ export class EditarContratadosComponent implements OnInit {
                private fb: FormBuilder ) { 
 
                 this.form = this.fb.group({
-                  curp: ['', Validators.compose([Validators.required, Validators.minLength(10)]) ]
+                  curp: ['', Validators.compose([Validators.required, Validators.minLength(18)]) ]
                 });
 
                }

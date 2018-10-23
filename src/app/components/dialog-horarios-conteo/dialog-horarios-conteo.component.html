@@ -1,16 +1,27 @@
-<h3 class="text-info text-center"  mat-dialog-title>Horarios Requisici&oacute;n - Entrevista Reclutamiento</h3>
+<h3 class="text-info text-center"  mat-dialog-title>ENTREVISTA RECLUTAMIENTO</h3>
 <mat-divider></mat-divider>
-<p><strong class="text-warning text-center">Horarios disponibles para la requisici&oacute;n</strong></p>
-<mat-dialog-content *ngFor="let r of data">
-    <label class="form-check-inline">
+<p class="text-warning">FUENTE DE RECLUTAMIENTO</p>
+<mat-dialog-content >
+    <mat-form-field>
+        <mat-select placeholder="SELECCIONAR FUENTE DE RECL." [(ngModel)]="mediosId">
+          <mat-optgroup *ngFor="let m of medios" [label]="m.nombre | uppercase"
+                        [disabled]="m.disabled">
+            <mat-option *ngFor="let sub of m.medios" [value]="sub.tipoMediosId">
+              {{sub.tipoNombre | uppercase}}
+            </mat-option>
+          </mat-optgroup>
+        </mat-select>
+      </mat-form-field><br/><br/>
+      <mat-divider></mat-divider>
+      <p class="text-warning">HORARIOS DISPONIBLES PARA LA REQUSICION</p>
+    <label *ngFor="let r of data" class="form-check-inline">
         <input class="form-check-input" type="radio" name="mode" [(ngModel)]="seleccion" [value]="r.id">{{r.nombre}}
     </label>
 </mat-dialog-content>
 <div *ngIf="!seleccion" [ngStyle]="{'color':'red'}"> 
     Debe seleccionar un horario.
-</div> 
+</div> <br/>
 <mat-divider></mat-divider>
-<br/>
 <mat-dialog-actions>
   <button class="btn btn-xs btn-labeled btn-outline-danger mb-2 margin" mat-dialog-close>
     <span class="btn-label">
@@ -19,7 +30,7 @@
   </button>
   <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
   <!-- <button class="btn btn-xs btn-outline-success mb-1 float-right" [disabled]="!seleccion" mat-button [mat-dialog-close]="seleccion">Aceptar</button> -->
-  <button type="button" [disabled]="!seleccion" class="btn btn-xs btn-labeled btn-outline-success mb-2 margin" [mat-dialog-close]="seleccion">
+  <button type="button" [disabled]="!seleccion" class="btn btn-xs btn-labeled btn-outline-success mb-2 margin" (click)="UpdateValue()">
     <span class="btn-label">
       <i class="fa fa-check"></i>
     </span> Aceptar

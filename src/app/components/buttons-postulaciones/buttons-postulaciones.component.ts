@@ -13,6 +13,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../service';
 import {EditarContratadosComponent} from '../editar-contratados/editar-contratados.component';
+
 @Component({
   selector: 'app-buttons-postulaciones',
   templateUrl: './buttons-postulaciones.component.html',
@@ -110,7 +111,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
       this.pst = true;
-      this.liberado = true;
+      this.liberado = false;
       this.contratado = true;
       this.rechazado = true;
     }
@@ -304,9 +305,10 @@ export class ButtonsPostulacionesComponent implements OnInit {
   }
 
   GetHorarioRequis(estatusId, estatus) {
+    
     this.serviceRequi.GetHorariosRequiConteo(this.RequisicionId).subscribe(data => {
-      console.log(data)
-      if (data.length > 1) {
+
+      if (data.length > 0) {
         var aux = data.filter(element => !element.vacantes)
 
         this.OpenDlgHorarios(aux, estatusId, estatus);
@@ -329,6 +331,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
     dialogDlt.afterClosed().subscribe(result => {
       if (result) {
         this.horarioId = result;
+        console.log(this.horarioId)
 
         var nom = data.filter(x => x.id == this.horarioId);
         var aux = this.dataSource;
@@ -337,7 +340,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
         this.dataSource[idx]['horarioId'] = this.horarioId;
 
         var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId };
-        this.SetApiProceso(datos, estatusId, estatus);
+        //this.SetApiProceso(datos, estatusId, estatus);
       }
       else {
         this.onChangeTable(this.config)
