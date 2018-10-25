@@ -54,6 +54,9 @@ tr.selected td {
 
   }
 
+ .btn:active {
+    outline: none !important;
+  }
 .btn-secondary
   {
     background-color: transparent !important;

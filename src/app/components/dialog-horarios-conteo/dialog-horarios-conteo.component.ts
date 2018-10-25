@@ -17,6 +17,7 @@ export class DialogHorariosConteoComponent implements OnInit {
 
   ngOnInit() {
     this.GetMedios();
+    console.log(this.data)
     if(this.data.length == 1)
     {
       this.seleccion = this.data[0].id;
@@ -30,13 +31,8 @@ export class DialogHorariosConteoComponent implements OnInit {
       this.medios = result;
     })
   }
-  
-  UpdateValue()
-  {
-
-  }
 
   onCloseDialog() {
-    this.dialogHorarios.close(0);
+    this.dialogHorarios.close({mediosId: this.mediosId, horarioId: this.seleccion});
   }
 }

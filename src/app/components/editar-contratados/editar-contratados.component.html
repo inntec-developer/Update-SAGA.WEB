@@ -9,7 +9,7 @@
 <mat-divider></mat-divider><br/>
 <!-- <p><strong class="text-warning text-center">Horarios disponibles para la requisici&oacute;n</strong></p> -->
 <mat-dialog-content>
-  <form [formGroup]="form" (submit)="UpdateData(form.value)">
+ <!-- <form [formGroup]="formdata" role="form" name="formdata" novalidate>  -->
   <div class="table-responsive pointer">
     <table *ngIf="data else NotCandidatos" id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
       <thead>
@@ -25,41 +25,74 @@
       <tbody>
         <tr *ngIf="showFilterRow">
           <td *ngFor="let column of columns">
-            <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder | uppercase}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+            <input formControlName="filtro" *ngIf="column.filtering" placeholder="{{column.filtering.placeholder | uppercase}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
               class="form-control">
           </td>
         </tr>
         <tr *ngFor="let row of data; let rowIndex = index">
           <td class="text-center">{{row.folio}}</td>
-          <td class="text-center">
-              <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-curp'] = true" *ngIf="!editing[rowIndex + '-curp']">
+          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
+              <span (dblclick)="editing[rowIndex + '-curp'] = true" *ngIf="!editing[rowIndex + '-curp']">
                   {{row.curp | uppercase}}
               </span>
-              <input #curp formControlName="curp" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'curp', rowIndex)" *ngIf="editing[rowIndex + '-curp']" type="text" [value]=row.curp >
-              <div *ngIf="form.get('curp').errors && editing[rowIndex + '-curp'] ">
-                  <div *ngIf="form.get('curp').errors['minlength'] && editing[rowIndex + '-curp']">
-                    Password inseguro
-                  </div>
-                </div>
-
+       
+              <input [(ngModel)]="row.curp" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'curp', rowIndex)" *ngIf="editing[rowIndex + '-curp']" type="text" maxlength=18 [value]=row.curp >
+              <span *ngIf="editing[rowIndex + '-curp']">
+                <small [ngClass]="row.curp.length < 18 ? 'text-danger' : 'text-success'">
+                  <em *ngIf="row.curp.length < 18 " class="fa fa-close"></em>
+                  <em *ngIf="row.curp.length == 18" class="fa fa-check"></em>
+                 CURP debe tener 18 caracteres
+                </small>
+              </span>
           </td>
+          <td class="text-center">
+            <span  container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-edad'] = true" *ngIf="!editing[rowIndex + '-edad']">
+                {{row.edad | date:'dd-MM-yyyy'}}
+            </span>
+            <mat-form-field *ngIf="editing[rowIndex + '-edad']">
+              <input class="form-control form-control-sm" matInput [matDatepicker]="picker" placeholder="Seleccionar fecha" (dateChange)="updateValue($event, 'edad', rowIndex)">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </td>
           <td class="text-center">
               <span  container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
                   {{row.nombre | uppercase}}
               </span>
-              <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'nombre', rowIndex)" *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=row.nombre>
+              <input [(ngModel)]="row.nombre" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'nombre', rowIndex)" *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=row.nombre>
+              <span *ngIf="editing[rowIndex + '-nombre']">
+                <small [ngClass]="row.nombre.length <= 0 ? 'text-danger' : 'text-success'">
+                  <em *ngIf="row.nombre.length <= 0 " class="fa fa-close"></em>
+                  <em *ngIf="row.nombre.length > 1" class="fa fa-check"></em>
+                  EL campo Nombre debe contener al menos 1 caracter
+                </small>
+              </span>
           </td>
           <td class="text-center">
               <span  container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoPaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoPaterno']">
                   {{row.apellidoPaterno | uppercase}}
               </span>
-              <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'apellidoPaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoPaterno']" type="text" [value]=row.apellidoPaterno>
+              <input [(ngModel)]="row.apellidoPaterno" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'apellidoPaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoPaterno']" type="text" [value]=row.apellidoPaterno>
+              <span *ngIf="editing[rowIndex + '-apellidoPaterno']">
+                <small [ngClass]="row.apellidoPaterno.length <= 0 ? 'text-danger' : 'text-success'">
+                  <em *ngIf="row.apellidoPaterno.length <= 0 " class="fa fa-close"></em>
+                  <em *ngIf="row.apellidoPaterno.length > 1" class="fa fa-check"></em>
+                  El campo Apellido Paterno debe contener al menos un caracter
+                </small>
+              </span>
           </td>
           <td class="text-center">
               <span  container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoMaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoMaterno']">
                   {{row.apellidoMaterno | uppercase}}
               </span>
-              <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'apellidoMaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoMaterno']" type="text" [value]=row.apellidoMaterno>
+              <input [(ngModel)]="row.apellidoMaterno" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'apellidoMaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoMaterno']" type="text" [value]=row.apellidoMaterno>
+              <span *ngIf="editing[rowIndex + '-apellidoMaterno']">
+                <small [ngClass]="row.apellidoMaterno.length <= 0 ? 'text-danger' : 'text-success'">
+                  <em *ngIf="row.apellidoMaterno.length <= 0 " class="fa fa-close"></em>
+                  <em *ngIf="row.apellidoMaterno.length > 1" class="fa fa-check"></em>
+                  El campo Apellido Materno debe contener al menos un caracter
+                </small>
+              </span>
           </td>
           <td class="text-center">
             <span  container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-areaReclutamiento'] = true" *ngIf="!editing[rowIndex + '-areaReclutamiento']">
@@ -92,12 +125,19 @@
             <span  container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-sueldoMinimo'] = true" *ngIf="!editing[rowIndex + '-sueldoMinimo']">
                 {{row.sueldoMinimo | currency : '$'}}
             </span>
-            <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'sueldoMinimo', rowIndex)" *ngIf="editing[rowIndex + '-sueldoMinimo']" type="text" [value]=row.sueldoMinimo>
+            <input [(ngModel)]="row.sueldoMinimo" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'sueldoMinimo', rowIndex)" *ngIf="editing[rowIndex + '-sueldoMinimo']" type="text" [value]=row.sueldoMinimo>
+            <span *ngIf="editing[rowIndex + '-sueldoMinimo']">
+              <small [ngClass]="row.sueldoMinimo.length <= 0 ? 'text-danger' : 'text-success'">
+                <em *ngIf="row.sueldoMinimo.length <= 0 " class="fa fa-close"></em>
+                <em *ngIf="row.sueldoMinimo.length > 1" class="fa fa-check"></em>
+                El campo Sueldo debe contener al menos un caracter
+              </small>
+            </span>
           </td>
           <td class="text-center">{{row.usuario}}</td>
           <td class="text-center">{{row.fecha | date:'dd-MM-yyyy'}}</td>
           <td class="text-center">
-            <button class="mb-1 btn btn-xs btn-outline-success" type="submit" container="body" placement="bottom" tooltip="Actualizar" [disabled]="form.invalid">
+            <button [disabled]="row.curp.length < 18 || row.nombre.length < 1 || row.apellidoPaterno.length < 1 || row.apellidoMaterno < 1 || row.sueldoMinimo < 1" class="mb-1 btn btn-xs btn-outline-success" type="button" (click)="UpdateData(row)" container="body" placement="bottom" tooltip="Actualizar">
               <em class="fa fa-check"></em>
             </button>
           </td>
@@ -105,7 +145,7 @@
       </tbody>
     </table>
   </div>
-  </form>
+  <!-- </form>  -->
 </mat-dialog-content>
 <br/><br/>
 <mat-divider></mat-divider><br/>
@@ -116,6 +156,11 @@
         <i class="fa fa-times"></i>
       </span> Cancelar
   </button> -->
+  <a class="btn btn-xs btn-labeled btn-outline-warning mb-2 margen" href="https://www.gob.mx/curp/" target="_blank" >
+    <span class="btn-label">
+      <i class="fa fa-file-text-o"></i>
+    </span> Validar CURP
+  </a>
 
   <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-2 margen" (click)="exportAsXLSX()">
     <span class="btn-label">

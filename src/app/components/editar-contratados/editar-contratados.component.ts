@@ -3,8 +3,6 @@ import { CandidatosService } from './../../service/Candidatos/candidatos.service
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ExcelService } from '../../service/ExcelService/excel.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-
 
 @Component({
   selector: 'app-editar-contratados',
@@ -14,8 +12,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class EditarContratadosComponent implements OnInit {
 
-  form: FormGroup;
-
   public dataSource: Array<any> = [];
   editing = {};
   areas = [];
@@ -23,6 +19,8 @@ export class EditarContratadosComponent implements OnInit {
 
   areasId: any = 0;
   mediosId: any = 0;
+
+  validar = { curp: ''};
 
   // Varaibles del paginador
   public page: number = 1;
@@ -38,6 +36,7 @@ export class EditarContratadosComponent implements OnInit {
   public columns: Array<any> = [
     { title: 'Folio', className: 'text-primary', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
     { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
+    { title: 'edad', className: 'text-primary', name: 'edad', filtering: { filterString: '', placeholder: 'Edad' } },
     { title: 'Nombre', className: 'text-primary', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'Apellido Paterno', className: 'text-primary', name: 'apellidoPaterno', filtering: { filterString: '', placeholder: 'Apellido Paterno' } },
     { title: 'Apellido Materno', className: 'text-primary', name: 'apellidoMaterno', filtering: { filterString: '', placeholder: 'Apellido Materno' } },
@@ -59,16 +58,13 @@ export class EditarContratadosComponent implements OnInit {
   constructor( private service: CandidatosService,  
                private dialogEditar: MatDialogRef<EditarContratadosComponent>,  
                @Inject(MAT_DIALOG_DATA) public data: any, 
-               private excelService: ExcelService, 
-               private fb: FormBuilder ) { 
-
-                this.form = this.fb.group({
-                  curp: ['', Validators.compose([Validators.required, Validators.minLength(18)]) ]
-                });
-
+               private excelService: ExcelService ) { 
+             
                }
 
   ngOnInit() {
+    console.log(this.data)
+  
     this.GetAreas();
     this.GetMedios();
   }
@@ -200,22 +196,42 @@ updateValue(event, cell, rowIndex)
     this.data[rowIndex]['fuenteReclutamiento'] = event.source.selected.viewValue;
     this.data[rowIndex]['fuenteReclutamientoId'] = event.value;
   }
+  else if (cell === "edad")
+  {
+    var d = event.value;
+    this.data[rowIndex][cell] = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' +  d.getDate();
+  }
   else if(event.target.value !== '')
   {
     this.data[rowIndex][cell] = event.target.value;
   }
   else
   {
-    this.data[rowIndex][cell] = this.data[rowIndex][cell];
+    this.data[rowIndex][cell] = '-';
   }
 
   this.editing[rowIndex + '-' + cell] = false;
   this.data = [...this.data];
 }
-UpdateData(form)
+UpdateData(row)
 {
+console.log(row)
 
-  console.log(form.value)
+var data = { 
+     candidatoId: row.candidatoId,
+     curp: row.curp,
+     fechaNacimiento: row.edad,
+     nombreCandidato: row.nombre, 
+     apellidoPaterno: row.apellidoPaterno,
+     apellidoMaterno: row.apellidoMaterno, 
+     tipoMediosId: row.fuenteReclutamientoId, 
+     departamentoId: row.areaReclutamientoId,
+     requisicionId: row.requisicionId
+    }
+
+this.service.UpdateContratados(data).subscribe(result => {
+  console.log(result)
+})
 
 }
 
@@ -224,10 +240,12 @@ exportAsXLSX():void {
   var aux = [];
 
   this.data.forEach(element => {
-    var d = new Date(element.fecha)
+    var d = new Date(element.fecha);
+    var e = new Date(element.edad);
     aux.push( {
       FOLIO: element.folio,
       CURP: element.curp,
+      FECHA_DE_NACIMIENTO: new Date(e.getFullYear() + '-' + (e.getMonth() +1 ) + '-' + e.getDate()),
       NOMBRE: element.nombre,
       APELLIDO_PATERNO: element.apellidoPaterno,
       APELLIDO_MATERNO: element.apellidoMaterno,
@@ -235,7 +253,7 @@ exportAsXLSX():void {
       AREA_RECLUTAMIENTO: element.areaReclutamiento,
       SUELDO: element.sueldoMinimo,
       USUARIO: element.usuario,
-      FECHA: d.getDate() + '/' + ( d.getMonth() + 1) + '/' +  d.getFullYear()
+      FECHA: new Date(d.getFullYear() + '-' + (d.getMonth() +1 ) + '-' + d.getDate()),
     });
   });
 

@@ -2,7 +2,7 @@
 <mat-divider></mat-divider>
 <p class="text-warning">FUENTE DE RECLUTAMIENTO</p>
 <mat-dialog-content >
-    <mat-form-field>
+    <mat-form-field class="selectWidth">
         <mat-select placeholder="SELECCIONAR FUENTE DE RECL." [(ngModel)]="mediosId">
           <mat-optgroup *ngFor="let m of medios" [label]="m.nombre | uppercase"
                         [disabled]="m.disabled">
@@ -14,15 +14,15 @@
       </mat-form-field><br/><br/>
       <mat-divider></mat-divider>
       <p class="text-warning">HORARIOS DISPONIBLES PARA LA REQUSICION</p>
-    <label *ngFor="let r of data" class="form-check-inline">
+    <div *ngFor="let r of data" class="form-check">
         <input class="form-check-input" type="radio" name="mode" [(ngModel)]="seleccion" [value]="r.id">{{r.nombre}}
-    </label>
+    </div>
 </mat-dialog-content>
 <div *ngIf="!seleccion" [ngStyle]="{'color':'red'}"> 
     Debe seleccionar un horario.
 </div> <br/>
 <mat-divider></mat-divider>
-<mat-dialog-actions>
+<mat-dialog-actions class="pull-right">
   <button class="btn btn-xs btn-labeled btn-outline-danger mb-2 margin" mat-dialog-close>
     <span class="btn-label">
         <i class="fa fa-times"></i>
@@ -30,10 +30,12 @@
   </button>
   <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
   <!-- <button class="btn btn-xs btn-outline-success mb-1 float-right" [disabled]="!seleccion" mat-button [mat-dialog-close]="seleccion">Aceptar</button> -->
-  <button type="button" [disabled]="!seleccion" class="btn btn-xs btn-labeled btn-outline-success mb-2 margin" (click)="UpdateValue()">
+  <button type="button" [disabled]="!seleccion" class="btn btn-xs btn-labeled btn-outline-success mb-2 margin" (click)="onCloseDialog()">
     <span class="btn-label">
       <i class="fa fa-check"></i>
     </span> Aceptar
   </button>
+  <br/>
 </mat-dialog-actions>
 
+<br/>  <br/>

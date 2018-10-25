@@ -81,6 +81,8 @@ export class ApiConection {
   public static GetCandidatoPalabraClave = 'Candidatos/getCandidatoPalabraClave';
   public static GetAreasRecl = 'Candidatos/getAreasRecl';
   public static GetMediosRecl = 'Candidatos/getMediosRecl'
+  public static UpdateFuenteRecl = 'Candidatos/updateFuenteRecl'
+  public static UpdateCandidatoContratado = 'Candidatos/updateContratados'
 
   /* Vacantes */
   public static getRequis = '/dvacante/get';

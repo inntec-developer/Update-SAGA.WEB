@@ -141,7 +141,7 @@
                 <em class="icon-refresh"></em>
               </button>
              
-              <button [ngClass]="flagContratados ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'" [disabled] = "flagContratados" class="float-right margen" type="button" (click)="OpenEditarComponent()" container="body" placement="bottom" tooltip="Editar Contratados">
+              <button [ngClass]="flagContratados ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'" [disabled] = "flagContratados" class="float-right margen {{activeClass}}" type="button" (click)="OpenEditarComponent()" container="body" placement="bottom" tooltip="Editar Contratados">
                 <em class="fa fa-pencil"></em>
               </button>
           </div>

@@ -1,3 +1,4 @@
+import { CandidatosService } from './../../service/Candidatos/candidatos.service';
 import { element } from 'protractor';
 import { ModalDirective } from 'ngx-bootstrap';
 import { Component, Input, OnInit, ViewChild, TemplateRef } from '@angular/core';
@@ -14,11 +15,12 @@ import { PostulateService } from './../../service/SeguimientoVacante/postulate.s
 import { RequisicionesService } from '../../service';
 import {EditarContratadosComponent} from '../editar-contratados/editar-contratados.component';
 
+
 @Component({
   selector: 'app-buttons-postulaciones',
   templateUrl: './buttons-postulaciones.component.html',
   styleUrls: ['./buttons-postulaciones.component.scss'],
-  providers: [RequisicionesService, PostulateService, InfoCandidatoService]
+  providers: [RequisicionesService, PostulateService, InfoCandidatoService, CandidatosService]
 })
 export class ButtonsPostulacionesComponent implements OnInit {
 
@@ -26,6 +28,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   @Input() vacante;
   @Input() clienteId;
   @Input() estatusVacante;
+
 
   @ViewChild('MessageModal') ShownModal: ModalDirective;
 
@@ -69,6 +72,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
     private serviceRequi: RequisicionesService,
     private service: PostulateService,
     private serviceLiberar: InfoCandidatoService,
+    private serviceCandidato: CandidatosService,
     private toasterService: ToasterService,
     private spinner: NgxSpinnerService,
     private dialog: MatDialog, 
@@ -288,7 +292,10 @@ export class ButtonsPostulacionesComponent implements OnInit {
           estatusId: element.estatusId,
           folio: element.folio,
           usuario: element.usuario,
-          fecha:element.fecha
+          fecha:element.fecha, 
+          areaReclutamiento: element.areaReclutamiento, 
+          fuenteReclutamiento: element.fuenteReclutamiento,
+          requisicionId: this.RequisicionId
         }
         this.dataSource.push(perfil);
 
@@ -307,22 +314,32 @@ export class ButtonsPostulacionesComponent implements OnInit {
   GetHorarioRequis(estatusId, estatus) {
     
     this.serviceRequi.GetHorariosRequiConteo(this.RequisicionId).subscribe(data => {
-
-      if (data.length > 0) {
+  
+      // if (data.length > 0) {
         var aux = data.filter(element => !element.vacantes)
 
+        if(aux.length == 0)
+    {
+          aux = [{id: 0, nombre: "Los horarios ya están cubiertos"}]
+        }
+
         this.OpenDlgHorarios(aux, estatusId, estatus);
-      }
-      else {
-        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId };
-        this.SetApiProceso(datos, estatusId, estatus);
-      }
+      // }
+      // else {
+      //   var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId };
+      //   this.SetApiProceso(datos, estatusId, estatus);
+      // }
     })
+  }
+
+  UpdateFuenteReclutamiento(data)
+  {
+    this.serviceCandidato.UpdateFuenteRecl(data).subscribe(result =>{ console.log(result)});
   }
 
   OpenDlgHorarios(data, estatusId, estatus) {
     let dialogDlt = this.dialog.open(DialogHorariosConteoComponent, {
-      width: '25%',
+      width: '45%',
       height: 'auto',
       data: data,
       disableClose: true
@@ -330,8 +347,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
     var window: Window
     dialogDlt.afterClosed().subscribe(result => {
       if (result) {
-        this.horarioId = result;
-        console.log(this.horarioId)
+        this.horarioId = result.horarioId;
 
         var nom = data.filter(x => x.id == this.horarioId);
         var aux = this.dataSource;
@@ -339,7 +355,9 @@ export class ButtonsPostulacionesComponent implements OnInit {
         this.dataSource[idx]['horario'] = nom[0]['nombre'];
         this.dataSource[idx]['horarioId'] = this.horarioId;
 
-        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId };
+        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, tipoMediosId: result.mediosId };
+
+        this.UpdateFuenteReclutamiento(datos);
         //this.SetApiProceso(datos, estatusId, estatus);
       }
       else {
@@ -347,6 +365,8 @@ export class ButtonsPostulacionesComponent implements OnInit {
       }
     });
   }
+
+
 
   OpenDialogLiberacion(estatusId,estatus) {
     let dialogLiberar = this.dialog.open(DialogLiberarCandidatoComponent, {
@@ -393,7 +413,6 @@ export class ButtonsPostulacionesComponent implements OnInit {
         this.OpenDialogLiberacion(estatusId, estatus);
       }else if (estatusId == 18) {
         this.GetHorarioRequis(estatusId, estatus);
-        console.log(this.horarioId);
       }
       else  {
         var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId };
@@ -558,15 +577,16 @@ export class ButtonsPostulacionesComponent implements OnInit {
   OpenEditarComponent()
   {
     var aux = this.dataSource.filter( element => {
-     if( element.estatusId == 24 )
-      {
-        element.areaReclutamiento = 'SIN ASIGNAR';
-        element.areaReclutamientoId = -1;
-        element.fuenteReclutamiento = 'SIN ASIGNAR';
-        element.fuenteReclutamientoId = -1;
+      return element.estatusId === 24
+    //  if( element.estatusId == 24 )
+    //   {
+    //     element.areaReclutamiento = 'SIN ASIGNAR';
+    //     element.areaReclutamientoId = -1;
+    //     element.fuenteReclutamiento = 'SIN ASIGNAR';
+    //     element.fuenteReclutamientoId = -1;
 
-        return element;
-      }
+    //     return element;
+    //   }
     });
 
     let dialogRef = this.dialog.open(EditarContratadosComponent, {
@@ -576,7 +596,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      
+
     })
 
     //this.bsModalRef = this.modalService.show(EditarContratadosComponent, {initialState, class:'modal-lg'});

@@ -1,4 +1,5 @@
 
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -42,6 +43,8 @@ export class CandidatosService {
     private URLPalabraClave = ApiConection.ServiceUrl + ApiConection.GetCandidatoPalabraClave;
     private URLGetAreasRecl = ApiConection.ServiceUrl + ApiConection.GetAreasRecl;
     private URLGetMediosRecl = ApiConection.ServiceUrl + ApiConection.GetMediosRecl;
+    private URLUpdateFuenteRecl = ApiConection.ServiceUrl + ApiConection.UpdateFuenteRecl;
+    private URLUpdateCandidatoContratado = ApiConection.ServiceUrl + ApiConection.UpdateCandidatoContratado;
 
     // Error.
     private handleError(error: any) {
@@ -62,6 +65,30 @@ export class CandidatosService {
 
     GetMediosRecl(): Observable<any> { // Obtener el esatus del candidato para las banderas de mostrar la información.
         return this._httpClient.get(this.URLGetMediosRecl);
+    }
+
+    UpdateFuenteRecl(data: any): Observable<any> {
+
+        let params = new HttpParams().set('datos', data)
+        const httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type':  'application/json'
+            })
+          };
+
+        return this._httpClient.post(this.URLUpdateFuenteRecl, data, httpOptions)
+    }
+
+    UpdateContratados(data: any): Observable<any> {
+
+        let params = new HttpParams().set('datos', data)
+        const httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type':  'application/json'
+            })
+          };
+
+        return this._httpClient.post(this.URLUpdateCandidatoContratado, data, httpOptions)
     }
 
     getpaises(): Observable<any> { // Obtener filtro de paises.
