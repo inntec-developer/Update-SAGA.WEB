@@ -22,17 +22,15 @@ import { RequisicionesService } from '../../../../../../../service/requisiciones
 })
 export class DialogAssingRequiComponent implements OnInit {
   @ViewChild('asginaciones') asignaciones: AsignarRequisicionComponent;
-  textBtnCerrar: string;
-  textBtnAceptar: string;
   placeHolderSelect: string;
   loading: boolean;
   public return: any;
   public formAsignaciones : FormGroup;
   public asignadosRequi :  any[] = [];
   alertAssing: boolean;
-  errorDE: boolean;
   RequiId: string;
   checked: boolean;
+  today
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data : any, 
@@ -42,8 +40,7 @@ export class DialogAssingRequiComponent implements OnInit {
     public asignarRequi : AsignarRequis,
     private toasterService: ToasterService,
   ) {
-    this.textBtnCerrar = 'Cancelar';
-    this.textBtnAceptar = 'Aceptar'
+    dialogAssing.disableClose = true;
     this.placeHolderSelect = 'ASIGNAR RECLUTADORES / CELULAS / GRUPOS TRABAJO';
    }
 
@@ -70,6 +67,7 @@ export class DialogAssingRequiComponent implements OnInit {
 
   getInformacion(){
     if(this.data != null){
+      this.today = this.data.fch_Creacion;
       this.RequiId = this.data.id;
       this.formAsignaciones.patchValue({
         fch_Cumplimiento: this.data.fch_Cumplimiento,
@@ -87,12 +85,10 @@ export class DialogAssingRequiComponent implements OnInit {
     this.asignadosRequi = $event;
     if(this.asignadosRequi.length > 0)
       this.alertAssing = false;
-    console.log(this.asignadosRequi);
   }
 
    
   Save(){
-    this.errorDE = false;
     if(this.formAsignaciones.get('diasEnvio').value > 0 && this.formAsignaciones.get('diasEnvio').value <= 20 ){
       this.loading = true;
       this.asignadosRequi.push(sessionStorage.getItem('id'));
@@ -121,15 +117,14 @@ export class DialogAssingRequiComponent implements OnInit {
           this.return = data;
           if(this.return == 200){
             this.loading = false;
-            this.dialogAssing.close();
+            this.dialogAssing.close(true);
           }
           else{
-              this.loading = false;
+            this.dialogAssing.close(false)
           }
         });
     }
     else{
-      this.errorDE = true;
     }
   }
 }

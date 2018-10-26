@@ -93,7 +93,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
   getVacantes() {
     this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
-      console.log(data)
     });
   }
 
@@ -611,14 +610,12 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.disenador = true;
 
     }
- 
   }
 
   /*
    * Funciones para la administracion de las requisiciones.
    * */
   openDialogShowRequi() {
-
     let dialogShow = this.dialog.open(DialogShowRequiComponent, {
       width: '200%',
       height: '100%',
@@ -630,12 +627,12 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
   openDialogAssingRequi() {
     let dialogAssing = this.dialog.open(DialogAssingRequiComponent, {
-      width: '1200px',
-      height: 'auto',
       data: this.element
     });
     dialogAssing.afterClosed().subscribe(result => {
-      this.refreshTable();
+      if(result){
+        this.refreshTable();
+      }
     });
   }
 
