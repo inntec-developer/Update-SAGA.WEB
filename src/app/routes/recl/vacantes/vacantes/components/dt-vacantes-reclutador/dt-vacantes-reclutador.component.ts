@@ -662,6 +662,21 @@ export class DtVacantesReclutadorComponent implements OnInit {
     
   }
 
+  exportAsXLSX()
+  {
+    var aux = [];
+    // this.dataSource.forEach(row => {
+
+    //   aux.push({
+    //     FOLIO: row.folio,
+    //     'FECHA SOLICITUD': row.fch_Creacion,
+    //     SOLICITANTE: 
+
+
+    //   })
+    // })
+
+  }
   /**
   * configuracion para mensajes de acciones.
   */

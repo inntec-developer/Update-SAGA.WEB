@@ -174,14 +174,14 @@
             </td>
           </tr>
           <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of dataSource" [class.selected]="row.selected"  placement="bottom" tooltip="click para seleccionar - dblclick para visualizar" container="body">
-            <td class="text-center"><span *ngIf="row.estatusId != 12 || row.estatusId != 17 else sinAsignar">{{row.horario | uppercase }}</span></td>
+            <td class="text-center"><span *ngIf="row.estatusId != 12 || row.estatusId != 17 else sinAsignar">{{row.horario }}</span></td>
             <ng-template #sinAsignar>
               <span>SIN ASIGNAR</span>
             </ng-template> 
-            <td class="text-center"> {{row.nombre | uppercase}} {{row.apellidoPaterno }} {{row.apellidoMaterno}}</td>
-            <td class="text-center"> {{row.areaExp | uppercase }}</td>
-            <td class="text-center"> {{row.areaInt | uppercase }}</td>
-            <td class="text-center"> {{row.localidad | uppercase }} </td>
+            <td class="text-center"> {{row.nombre}} {{row.apellidoPaterno }} {{row.apellidoMaterno}}</td>
+            <td class="text-center"> {{row.areaExp }}</td>
+            <td class="text-center"> {{row.areaInt }}</td>
+            <td class="text-center"> {{row.localidad }} </td>
             <td class="text-center"> {{row.sueldoMinimo | currency : '$'}} </td>
             <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
             <td class="text-center"> {{row.curp | uppercase }}</td>
