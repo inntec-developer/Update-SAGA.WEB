@@ -358,7 +358,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
         var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, tipoMediosId: result.mediosId };
 
         this.UpdateFuenteReclutamiento(datos);
-        //this.SetApiProceso(datos, estatusId, estatus);
+        this.SetApiProceso(datos, estatusId, estatus);
       }
       else {
         this.onChangeTable(this.config)

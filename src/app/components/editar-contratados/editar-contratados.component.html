@@ -45,8 +45,8 @@
                 </small>
               </span>
           </td>
-          <td class="text-center">
-            <span  container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-edad'] = true" *ngIf="!editing[rowIndex + '-edad']">
+          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar" >
+            <span  (dblclick)="editing[rowIndex + '-edad'] = true" *ngIf="!editing[rowIndex + '-edad']">
                 {{row.edad | date:'dd-MM-yyyy'}}
             </span>
             <mat-form-field *ngIf="editing[rowIndex + '-edad']">
@@ -55,9 +55,9 @@
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
         </td>
-          <td class="text-center">
-              <span  container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
-                  {{row.nombre | uppercase}}
+          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar" >
+              <span (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
+                  {{row.nombre}}
               </span>
               <input [(ngModel)]="row.nombre" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'nombre', rowIndex)" *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=row.nombre>
               <span *ngIf="editing[rowIndex + '-nombre']">
@@ -68,9 +68,9 @@
                 </small>
               </span>
           </td>
-          <td class="text-center">
-              <span  container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoPaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoPaterno']">
-                  {{row.apellidoPaterno | uppercase}}
+          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar" >
+              <span  (dblclick)="editing[rowIndex + '-apellidoPaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoPaterno']">
+                  {{row.apellidoPaterno}}
               </span>
               <input [(ngModel)]="row.apellidoPaterno" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'apellidoPaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoPaterno']" type="text" [value]=row.apellidoPaterno>
               <span *ngIf="editing[rowIndex + '-apellidoPaterno']">
@@ -81,9 +81,9 @@
                 </small>
               </span>
           </td>
-          <td class="text-center">
-              <span  container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoMaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoMaterno']">
-                  {{row.apellidoMaterno | uppercase}}
+          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
+              <span (dblclick)="editing[rowIndex + '-apellidoMaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoMaterno']">
+                  {{row.apellidoMaterno}}
               </span>
               <input [(ngModel)]="row.apellidoMaterno" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'apellidoMaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoMaterno']" type="text" [value]=row.apellidoMaterno>
               <span *ngIf="editing[rowIndex + '-apellidoMaterno']">
@@ -94,20 +94,20 @@
                 </small>
               </span>
           </td>
-          <td class="text-center">
-            <span  container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-areaReclutamiento'] = true" *ngIf="!editing[rowIndex + '-areaReclutamiento']">
-              {{row.areaReclutamiento || uppercase}}
+          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
+            <span (dblclick)="editing[rowIndex + '-areaReclutamiento'] = true" *ngIf="!editing[rowIndex + '-areaReclutamiento']">
+              {{row.areaReclutamiento }}
             </span>
             <mat-form-field *ngIf="editing[rowIndex + '-areaReclutamiento']">
               <mat-select placeholder="SELECCIONAR AREA DE RECL." [(value)]="areasId" (selectionChange)="updateValue($event, 'areaReclutamiento', rowIndex)" >
                 <mat-option *ngFor="let a of areas" [value]="a.id">
-                    {{a.nombre | uppercase}}
+                    {{a.nombre}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
           </td>
-          <td class="text-center">
-            <span  container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-fuenteReclutamiento'] = true" *ngIf="!editing[rowIndex + '-fuenteReclutamiento']">
+          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
+            <span (dblclick)="editing[rowIndex + '-fuenteReclutamiento'] = true" *ngIf="!editing[rowIndex + '-fuenteReclutamiento']">
               {{row.fuenteReclutamiento | uppercase}}
             </span>
             <mat-form-field *ngIf="editing[rowIndex + '-fuenteReclutamiento']">
@@ -115,14 +115,14 @@
                 <mat-optgroup *ngFor="let m of medios" [label]="m.nombre | uppercase"
                               [disabled]="m.disabled">
                   <mat-option *ngFor="let sub of m.medios" [value]="sub.tipoMediosId">
-                    {{sub.tipoNombre | uppercase}}
+                    {{sub.tipoNombre}}
                   </mat-option>
                 </mat-optgroup>
               </mat-select>
             </mat-form-field>
           </td>
-          <td class="text-center">
-            <span  container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-sueldoMinimo'] = true" *ngIf="!editing[rowIndex + '-sueldoMinimo']">
+          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
+            <span (dblclick)="editing[rowIndex + '-sueldoMinimo'] = true" *ngIf="!editing[rowIndex + '-sueldoMinimo']">
                 {{row.sueldoMinimo | currency : '$'}}
             </span>
             <input [(ngModel)]="row.sueldoMinimo" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'sueldoMinimo', rowIndex)" *ngIf="editing[rowIndex + '-sueldoMinimo']" type="text" [value]=row.sueldoMinimo>

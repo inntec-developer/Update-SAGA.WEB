@@ -255,7 +255,7 @@ exportAsXLSX():void {
     });
   });
 
-  this.excelService.exportAsExcelFile(aux, 'sample');
+  this.excelService.exportAsExcelFile(aux, 'Personal_Contratado', 'Personal_Contratado');
 }
 
 }

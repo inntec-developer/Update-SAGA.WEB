@@ -14,7 +14,7 @@ export class ExcelService {
 
   constructor() { }
 
-  public exportAsExcelFile(json: any[], excelFileName: string): void {
+  public exportAsExcelFile(json: any[], excelFileName: string, excelSheetName: string): void {
     
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
     var wscols = [
@@ -34,7 +34,7 @@ export class ExcelService {
 
   worksheet['!cols'] = wscols;
   //  console.log('worksheet',worksheet);
-    const workbook: XLSX.WorkBook = { Sheets: { 'Personal_Contratado': worksheet }, SheetNames: ['Personal_Contratado'] };
+    const workbook: XLSX.WorkBook = { Sheets: { excelSheetName: worksheet }, SheetNames: [excelSheetName] };
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     //const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
 
