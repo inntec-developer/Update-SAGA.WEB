@@ -1,3 +1,4 @@
+import { ExcelService } from './../../../../../../service/ExcelService/excel.service';
 import { Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -8,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../../../../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../../../../../service';
 import { Router } from '@angular/router';
+
 
 const swal = require('sweetalert');
 declare var $: any;
@@ -69,7 +71,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
     private dialog: MatDialog,
     private _Router: Router,
     private spinner: NgxSpinnerService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private excelService: ExcelService
   ) {
     this.enProceso = 0;
     this.postulados = 0;
@@ -665,16 +668,29 @@ export class DtVacantesReclutadorComponent implements OnInit {
   exportAsXLSX()
   {
     var aux = [];
-    // this.dataSource.forEach(row => {
 
-    //   aux.push({
-    //     FOLIO: row.folio,
-    //     'FECHA SOLICITUD': row.fch_Creacion,
-    //     SOLICITANTE: 
+    this.dataSource.forEach(row => {
+      var d = new Date(row.fch_Creacion);
+      var e = new Date(row.fch_modificacion);
+      aux.push({
+        FOLIO: row.folio,
+        'FECHA SOLICITUD': new Date(d.getFullYear() + '-' + (d.getMonth() +1 ) + '-' + d.getDate()),
+        NOMBRE: row.nombre,
+        SOLICITANTE: row.solicita,
+        EMPRESA: row.cliente,
+        SUCURSAL: row.sucursal,
+        NO: row.vacantes,
+        PUESTO: row.vBtra,
+        SUELDO: row.sueldoMinimo,
+        ESTATUS: row.estatus,
+        'FECHA ESTATUS': new Date(e.getFullYear() + '-' + (e.getMonth() +1 ) + '-' + e.getDate()),
+        RECLUTADOR: sessionStorage.getItem('nombre'),
+        'COMENTARIO SOLICITANTE': '',
+        'COMENTARIO RECLUTADOR': row.comentarioReclutador == null ? "" : row.comentarioReclutador
+      })
+    });
 
-
-    //   })
-    // })
+    this.excelService.exportAsExcelFile(aux, 'mocos', 'mocos');
 
   }
   /**
