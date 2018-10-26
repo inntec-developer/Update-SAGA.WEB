@@ -251,7 +251,7 @@ exportAsXLSX():void {
       'AREA RECLUTAMIENTO': element.areaReclutamiento,
       SUELDO: element.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
       USUARIO: element.usuario,
-      FECHA: new Date(d.getFullYear() + '-' + (d.getMonth() +1 ) + '-' + d.getDate()),
+      FECHA: new Date(d.getFullYear() + '-' + (d.getMonth() +1 ) + '-' + d.getDate())
     });
   });
 

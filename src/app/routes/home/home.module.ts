@@ -2,6 +2,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule, ViewChild } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { BsDatepickerModule } from 'ngx-bootstrap';
 import { CommonModule } from '@angular/common';
 import { ComponentsModule } from '../../components/components.module';
 import { CustomFormsModule } from 'ng2-validation';
@@ -19,7 +20,8 @@ const routes: Routes = [
         ReactiveFormsModule,
         CustomFormsModule,
         CommonModule,
-        ComponentsModule
+        ComponentsModule,
+        BsDatepickerModule.forRoot()
     ],
     declarations: [
         HomeComponent

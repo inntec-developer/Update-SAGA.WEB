@@ -46,6 +46,7 @@ import { ActividadesComponent } from './tablas/actividades/actividades.component
 import { AlertModule } from 'ngx-bootstrap';
 import { AsignarRequisicionComponent } from './asignar-requisicion/asignar-requisicion.component';
 import { AsignarRequisicionLiderComponent } from './asignar-requisicion-lider/asignar-requisicion-lider.component';
+import { BsDatepickerModule } from 'ngx-bootstrap';
 import { BusquedaCandidatosComponent } from './busqueda-candidatos/busqueda-candidatos.component';
 import { ButtonAcceptComponent } from './buttons/button-accept/button-accept.component';
 import { ButtonAddComponent } from './buttons/button-add/button-add.component';
@@ -76,6 +77,7 @@ import { ComentarioVacanteComponent } from './comentario-vacante/comentario-vaca
 import { CommonModule } from '@angular/common';
 import { DetailVacantesComponent } from './detail-vacantes/detail-vacantes.component';
 import { DialogEditHorarioComponent } from './tablas/dt-horarios/dialog-edit-horario/dialog-edit-horario.component';
+import { DialogEventComponent } from './calendario/dialog-event/dialog-event.component';
 import { DialogHorariosConteoComponent } from '../components/dialog-horarios-conteo/dialog-horarios-conteo.component';
 import { DialogLiberarCandidatoComponent } from './dialog-liberar-candidato/dialog-liberar-candidato.component';
 import { DialogRutasComponent } from './tablas/dt-rutas-camion-requi/dialog-rutas/dialog-rutas.component';
@@ -96,6 +98,7 @@ import { DtPsicometriasDamsaComponent } from './tablas/dt-psicometrias-damsa/dt-
 import { DtRequisicionComponent } from './tablas/dt-requisicion/dt-requisicion.component';
 import { DtRutasCamionRequiComponent } from './tablas/dt-rutas-camion-requi/dt-rutas-camion-requi.component';
 import { DtTelefonosComponent } from './tablas/dt-telefonos/dt-telefonos.component';
+import { EditarContratadosComponent } from './editar-contratados/editar-contratados.component';
 import { InfoCandidatoComponent } from './info-candidato/info-candidato.component';
 import { InfoVacanteComponent } from './info-vacante/info-vacante.component';
 import { Ng2TableModule } from 'ng2-table';
@@ -107,8 +110,6 @@ import { PrestacionesLeyComponent } from './tablas/prestaciones-ley/prestaciones
 import { ProcesosComponent } from './tablas/procesos/procesos.component';
 import { SharedModule } from '../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { EditarContratadosComponent } from './editar-contratados/editar-contratados.component';
-
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -164,7 +165,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     AccordionModule.forRoot(),
     ToasterModule,
     AlertModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    BsDatepickerModule.forRoot()
   ],
   declarations: [
     DtDireccionComponent,
@@ -224,7 +226,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DialogRutasComponent,
     DialogHorariosConteoComponent,
     DialogLiberarCandidatoComponent,
-    EditarContratadosComponent
+    EditarContratadosComponent,
+    DialogEventComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -283,13 +286,14 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DtRutasCamionRequiComponent,
     DialogHorariosConteoComponent,
     DialogLiberarCandidatoComponent, 
-    EditarContratadosComponent
+    EditarContratadosComponent,
+    DialogEventComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
     { provide: PaginationConfig, useValue: getSpanishPaginatorBtp() },
     ToasterService
   ],
-  entryComponents: [DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, EditarContratadosComponent]
+  entryComponents: [DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, EditarContratadosComponent, DialogEventComponent]
 })
 export class ComponentsModule { }
