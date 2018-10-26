@@ -20,8 +20,6 @@ export class EditarContratadosComponent implements OnInit {
   areasId: any = 0;
   mediosId: any = 0;
 
-  validar = { curp: ''};
-
   // Varaibles del paginador
   public page: number = 1;
   public itemsPerPage: number = 20;
@@ -229,7 +227,7 @@ var data = {
      requisicionId: row.requisicionId
     }
 
-this.service.UpdateContratados(data).subscribe(result => {
+this.service.UpdateContratados(JSON.stringify(data)).subscribe(result => {
   console.log(result)
 })
 
@@ -243,20 +241,19 @@ exportAsXLSX():void {
     var d = new Date(element.fecha);
     var e = new Date(element.edad);
     aux.push( {
-      FOLIO: element.folio,
+      FOLIO: element.folio.toString(),
       CURP: element.curp,
-      FECHA_DE_NACIMIENTO: new Date(e.getFullYear() + '-' + (e.getMonth() +1 ) + '-' + e.getDate()),
+      'FECHA DE NACIMIENTO': new Date(e.getFullYear() + '-' + (e.getMonth() +1 ) + '-' + e.getDate()),
       NOMBRE: element.nombre,
-      APELLIDO_PATERNO: element.apellidoPaterno,
-      APELLIDO_MATERNO: element.apellidoMaterno,
-      FUENTE_DE_RECLUTAMIENTO: element.fuenteReclutamiento,
-      AREA_RECLUTAMIENTO: element.areaReclutamiento,
-      SUELDO: element.sueldoMinimo,
+      'APELLIDO PATERNO': element.apellidoPaterno,
+      'APELLIDO MATERNO': element.apellidoMaterno,
+      'FUENTE DE RECLUTAMIENTO': element.fuenteReclutamiento,
+      'AREA RECLUTAMIENTO': element.areaReclutamiento,
+      SUELDO: element.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
       USUARIO: element.usuario,
       FECHA: new Date(d.getFullYear() + '-' + (d.getMonth() +1 ) + '-' + d.getDate()),
     });
   });
-
 
   this.excelService.exportAsExcelFile(aux, 'sample');
 }

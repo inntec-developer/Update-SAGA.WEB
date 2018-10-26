@@ -49,21 +49,23 @@ export class ExcelService {
 //   worksheet[cell].z = '#.0';
 // }
 
-var C = XLSX.utils.decode_col("A"); // 1
-var fmt = "0"; // or '"$"#,##0.00_);[Red]\\("$"#,##0.00\\)' or any Excel number format
+// var C = XLSX.utils.decode_col("A"); // 1
+// var fmt = "0"; // or '"$"#,##0.00_);[Red]\\("$"#,##0.00\\)' or any Excel number format
 
-/* get worksheet range */
-var range = XLSX.utils.decode_range(worksheet['!ref']);
-for(var i = range.s.r + 1; i <= range.e.r; i++) {
-  /* find the data cell (range.s.r + 1 skips the header row of the worksheet) */
-  var ref = XLSX.utils.encode_cell({r:i, c:C});
-  // /* if the particular row did not contain data for the column, the cell will not be generated */
-  // if(!worksheet[ref]) continue;
-  // /* `.t == "n"` for number cells */
-  // if(worksheet[ref].t != 'n') continue;
-  // /* assign the `.z` number format */
-  worksheet[ref].z = fmt;
-}
+// /* get worksheet range */
+// var range = XLSX.utils.decode_range(worksheet['!ref']);
+
+// for(var i = range.s.r + 1; i <= range.e.r; i++) {
+//   /* find the data cell (range.s.r + 1 skips the header row of the worksheet) */
+//   var ref = XLSX.utils.encode_cell({r:i, c:C});
+//   // /* if the particular row did not contain data for the column, the cell will not be generated */
+//   // if(!worksheet[ref]) continue;
+//   // /* `.t == "n"` for number cells */
+//   // if(worksheet[ref].t != 'n') continue;
+//   // /* assign the `.z` number format */
+//   worksheet[ref].t = 'n';
+//   worksheet[ref].z = fmt;
+// }
 
     this.saveAsExcelFile(excelBuffer, excelFileName);
   }
