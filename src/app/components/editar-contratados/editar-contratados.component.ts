@@ -16,7 +16,7 @@ export class EditarContratadosComponent implements OnInit {
   editing = {};
   areas = [];
   medios = [];
-
+  editCURP: boolean = false;
   areasId: any = 0;
   mediosId: any = 0;
 
@@ -229,6 +229,10 @@ var data = {
 
 this.service.UpdateContratados(JSON.stringify(data)).subscribe(result => {
   console.log(result)
+  if(result == 201)
+  {
+    this.editCURP = true;
+  }
 })
 
 }
@@ -255,7 +259,7 @@ exportAsXLSX():void {
     });
   });
 
-  this.excelService.exportAsExcelFile(aux, 'Personal_Contratado', 'Personal_Contratado');
+  this.excelService.exportAsExcelFile(aux, 'Personal_Contratado');
 }
 
 }

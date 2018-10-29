@@ -8,6 +8,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../../../../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../../../../../service';
 import { Router } from '@angular/router';
+import { ExcelService } from '../../../../../../service/ExcelService/excel.service';
+
 
 const swal = require('sweetalert');
 declare var $: any;
@@ -69,7 +71,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
     private dialog: MatDialog,
     private _Router: Router,
     private spinner: NgxSpinnerService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private excelService: ExcelService
   ) {
     this.enProceso = 0;
     this.postulados = 0;
@@ -93,6 +96,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   getVacantes() {
     this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
+      console.log(this.dataSource)
     });
   }
 
@@ -662,16 +666,41 @@ export class DtVacantesReclutadorComponent implements OnInit {
   exportAsXLSX()
   {
     var aux = [];
-    // this.dataSource.forEach(row => {
-
-    //   aux.push({
-    //     FOLIO: row.folio,
-    //     'FECHA SOLICITUD': row.fch_Creacion,
-    //     SOLICITANTE: 
-
+    var comentarios = "";
+    this.dataSource.forEach(row => {
+      if(row.comentarioReclutador.length > 0)
+      {
+        row.comentarioReclutador.forEach(element => {
+          comentarios = comentarios +
+                        element + '\n'
+        });
+      }
+      else{
+        comentarios = "";
+      }
+      var d = new Date(row.fch_Creacion);
+      var e = new Date(row.fch_Modificacion);
+      aux.push({
+        FOLIO: row.folio.toString(),
+        'FECHA SOLICITUD': new Date(d.getFullYear() + '-' + (d.getMonth() +1 ) + '-' + d.getDate()),
+        SOLICITANTE: row.solicita,
+        EMPRESA: row.cliente,
+        SUCURSAL: row.sucursal,
+        NO: row.vacantes,
+        PUESTO: row.vBtra,
+        SUELDO:  row.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
+        ESTATUS: row.estatus,
+        'FECHA ESTATUS': new Date(e.getFullYear() + '-' + (e.getMonth() +1 ) + '-' + e.getDate()),
+        RECLUTADOR: sessionStorage.getItem('nombre'),
+        'COMENTARIO SOLICITANTE': '',
+        'COMENTARIO RECLUTADOR': comentarios
+      })
+      comentarios = "";
+    });
 
     //   })
     // })
+    this.excelService.exportAsExcelFile(aux, 'Solicitud_de_reporte_para_generar_estadisticos');
 
   }
   /**

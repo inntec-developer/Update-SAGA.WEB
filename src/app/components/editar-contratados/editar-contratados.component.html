@@ -125,19 +125,19 @@
             <span (dblclick)="editing[rowIndex + '-sueldoMinimo'] = true" *ngIf="!editing[rowIndex + '-sueldoMinimo']">
                 {{row.sueldoMinimo | currency : '$'}}
             </span>
-            <input [(ngModel)]="row.sueldoMinimo" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'sueldoMinimo', rowIndex)" *ngIf="editing[rowIndex + '-sueldoMinimo']" type="text" [value]=row.sueldoMinimo>
+            <!-- <input [(ngModel)]="row.sueldoMinimo" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'sueldoMinimo', rowIndex)" *ngIf="editing[rowIndex + '-sueldoMinimo']" type="text" [value]=row.sueldoMinimo>
             <span *ngIf="editing[rowIndex + '-sueldoMinimo']">
               <small [ngClass]="row.sueldoMinimo.length <= 0 ? 'text-danger' : 'text-success'">
                 <em *ngIf="row.sueldoMinimo.length <= 0 " class="fa fa-close"></em>
                 <em *ngIf="row.sueldoMinimo.length > 1" class="fa fa-check"></em>
                 El campo Sueldo debe contener al menos un caracter
               </small>
-            </span>
+            </span> -->
           </td>
           <td class="text-center">{{row.usuario}}</td>
           <td class="text-center">{{row.fecha | date:'dd-MM-yyyy'}}</td>
           <td class="text-center">
-            <button [disabled]="row.curp.length < 18 || row.nombre.length < 1 || row.apellidoPaterno.length < 1 || row.apellidoMaterno < 1 || row.sueldoMinimo < 1" class="mb-1 btn btn-xs btn-outline-success" type="button" (click)="UpdateData(row)" container="body" placement="bottom" tooltip="Actualizar">
+            <button [disabled]="row.curp.length < 18 || row.nombre.length < 1 || row.apellidoPaterno.length < 1 || row.apellidoMaterno < 1 || !editCURP" class="mb-1 btn btn-xs btn-outline-success" type="button" (click)="UpdateData(row)" container="body" placement="bottom" tooltip="Actualizar">
               <em class="fa fa-check"></em>
             </button>
           </td>
@@ -149,6 +149,8 @@
 </mat-dialog-content>
 <br/><br/>
 <mat-divider></mat-divider><br/>
+
+<p class="text-warning">Es necesario completar la CURP, con los 2 ultimos digitos validadores </p>
 <mat-dialog-actions class="float-right">
     
   <!-- <button class="btn btn-xs btn-labeled btn-outline-danger mb-2 margen" mat-dialog-close>
