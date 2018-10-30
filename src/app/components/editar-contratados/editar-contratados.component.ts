@@ -3,6 +3,7 @@ import { CandidatosService } from './../../service/Candidatos/candidatos.service
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ExcelService } from '../../service/ExcelService/excel.service';
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'app-editar-contratados',
@@ -16,7 +17,6 @@ export class EditarContratadosComponent implements OnInit {
   editing = {};
   areas = [];
   medios = [];
-  editCURP: boolean = false;
   areasId: any = 0;
   mediosId: any = 0;
 
@@ -56,7 +56,8 @@ export class EditarContratadosComponent implements OnInit {
   constructor( private service: CandidatosService,  
                private dialogEditar: MatDialogRef<EditarContratadosComponent>,  
                @Inject(MAT_DIALOG_DATA) public data: any, 
-               private excelService: ExcelService ) { 
+               private excelService: ExcelService,
+               private toasterService: ToasterService ) { 
              
                }
 
@@ -65,6 +66,7 @@ export class EditarContratadosComponent implements OnInit {
   
     this.GetAreas();
     this.GetMedios();
+
   }
 
   //configuraciones de la tabla
@@ -218,48 +220,103 @@ console.log(row)
 var data = { 
      candidatoId: row.candidatoId,
      curp: row.curp,
+     rfc: row.rfc,
+     nss: row.nss,
+     generoId: row.generoId,
      fechaNacimiento: row.edad,
      nombreCandidato: row.nombre, 
      apellidoPaterno: row.apellidoPaterno,
      apellidoMaterno: row.apellidoMaterno, 
      tipoMediosId: row.fuenteReclutamientoId, 
      departamentoId: row.areaReclutamientoId,
-     requisicionId: row.requisicionId
+     requisicionId: row.requisicionId, 
+     paisNacimiento: row.paisNacimiento, 
+     estadoNacimiento: row.estadoNacimiento,
+     municipioNacimiento: row.municipioNacimiento,
+     ReclutadorId: row.usuarioId
     }
 
 this.service.UpdateContratados(JSON.stringify(data)).subscribe(result => {
-  console.log(result)
+ 
   if(result == 201)
   {
-    this.editCURP = true;
+    row.editCURP = true;
+    row.classCURP = false;
+    this.popToast('success', 'Editar personal contratado', 'Los datos se actualizaron con éxito');
+
+  }
+  else
+  {
+    this.popToast('error', 'Editar personal contratado', 'Ocurrió un error al intentar actualizar');
+
   }
 })
 
 }
 
-exportAsXLSX():void {
-
+exportAsXLSX() {
   var aux = [];
+  var flag = true;
 
   this.data.forEach(element => {
-    var d = new Date(element.fecha);
-    var e = new Date(element.edad);
-    aux.push( {
-      FOLIO: element.folio.toString(),
-      CURP: element.curp,
-      'FECHA DE NACIMIENTO': new Date(e.getFullYear() + '-' + (e.getMonth() +1 ) + '-' + e.getDate()),
-      NOMBRE: element.nombre,
-      'APELLIDO PATERNO': element.apellidoPaterno,
-      'APELLIDO MATERNO': element.apellidoMaterno,
-      'FUENTE DE RECLUTAMIENTO': element.fuenteReclutamiento,
-      'AREA RECLUTAMIENTO': element.areaReclutamiento,
-      SUELDO: element.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
-      USUARIO: element.usuario,
-      FECHA: new Date(d.getFullYear() + '-' + (d.getMonth() +1 ) + '-' + d.getDate())
-    });
+    if(!element.editCURP)
+    {
+      element.classCURP = true;
+      this.popToast('error', 'Editar personal contratado', 'Debes editar CURP para poder descargar archivo');
+
+      return flag = false;
+    }
+    else
+    {
+      element.classCURP = false;
+      var d = new Date(element.fecha);
+      var e = new Date(element.edad);
+      aux.push( {
+        FOLIO: element.folio.toString(),
+        CURP: element.curp,
+        'FECHA DE NACIMIENTO': new Date(e.getFullYear() + '-' + (e.getMonth() +1 ) + '-' + e.getDate()),
+        NOMBRE: element.nombre,
+        'APELLIDO PATERNO': element.apellidoPaterno,
+        'APELLIDO MATERNO': element.apellidoMaterno,
+        'FUENTE DE RECLUTAMIENTO': element.fuenteReclutamiento,
+        'AREA RECLUTAMIENTO': element.areaReclutamiento,
+        SUELDO: element.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
+        USUARIO: element.usuario,
+        FECHA: new Date(d.getFullYear() + '-' + (d.getMonth() +1 ) + '-' + d.getDate())
+      });
+    }
   });
 
-  this.excelService.exportAsExcelFile(aux, 'Personal_Contratado');
+  if(flag)
+  {
+    this.excelService.exportAsExcelFile(aux, 'Personal_Contratado');
+  }
+ 
 }
 
+
+/**
+   * configuracion para mensajes de acciones.
+   */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+    preventDuplicates: true,
+  });
+
+  popToast(type, title, body) {
+    var toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 4000,
+      body: body
+    }
+    this.toasterService.pop(toast);
+
+  }
 }

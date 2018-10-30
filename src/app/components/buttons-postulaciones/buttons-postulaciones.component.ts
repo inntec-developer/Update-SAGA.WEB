@@ -270,6 +270,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   }
   getpostulados() {
+
     this.service.GetProceso(this.RequisicionId, sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = [];
       data.forEach(element => {
@@ -284,6 +285,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
           areaInt: element.perfil[0]['areaInt'],
           curp: element.perfil[0]['curp'],
           rfc: element.perfil[0]['rfc'],
+          nss: element.perfil[0]['nss'],
           edad: element.perfil[0]['edad'],
           localidad: element.perfil[0]['localidad'],
           sueldoMinimo: element.perfil[0]['sueldoMinimo'],
@@ -292,10 +294,19 @@ export class ButtonsPostulacionesComponent implements OnInit {
           estatusId: element.estatusId,
           folio: element.folio,
           usuario: element.usuario,
+          usuarioId: element.usuarioId,
           fecha:element.fecha, 
           areaReclutamiento: element.areaReclutamiento, 
+          areaReclutamientoId: element.areaReclutamientoId,
           fuenteReclutamiento: element.fuenteReclutamiento,
-          requisicionId: this.RequisicionId
+          fuenteReclutamientoId: element.fuenteReclutamientoId,
+          requisicionId: this.RequisicionId,
+          paisNacimiento: element.perfil[0]['paisNacimiento'] != null ? element.perfil[0]['paisNacimiento'] : 0, 
+          estadoNacimiento: element.perfil[0]['estadoNacimiento'] != null ? element.perfil[0]['estadoNacimiento'] : 0,
+          municipioNacimiento: element.perfil[0]['municipioNacimiento'] != null ? element.perfil[0]['municipioNacimiento'] : 0, 
+          generoId: element.perfil[0]['generoId'],
+          editarCURP: false
+
         }
         this.dataSource.push(perfil);
 

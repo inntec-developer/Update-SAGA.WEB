@@ -29,14 +29,14 @@
               class="form-control">
           </td>
         </tr>
-        <tr *ngFor="let row of data; let rowIndex = index">
-          <td class="text-center">{{row.folio}}</td>
+        <tr *ngFor="let row of data; let rowIndex = index" [class.classCURP]="row.classCURP">
+         <td class="text-center">{{row.folio}}</td>
           <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
               <span (dblclick)="editing[rowIndex + '-curp'] = true" *ngIf="!editing[rowIndex + '-curp']">
                   {{row.curp | uppercase}}
               </span>
        
-              <input [(ngModel)]="row.curp" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'curp', rowIndex)" *ngIf="editing[rowIndex + '-curp']" type="text" maxlength=18 [value]=row.curp >
+              <input [(ngModel)]="row.curp" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'curp', rowIndex); row.classCURP=false;" *ngIf="editing[rowIndex + '-curp']" type="text" maxlength=18 [value]=row.curp >
               <span *ngIf="editing[rowIndex + '-curp']">
                 <small [ngClass]="row.curp.length < 18 ? 'text-danger' : 'text-success'">
                   <em *ngIf="row.curp.length < 18 " class="fa fa-close"></em>
@@ -122,9 +122,8 @@
             </mat-form-field>
           </td>
           <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
-            <span (dblclick)="editing[rowIndex + '-sueldoMinimo'] = true" *ngIf="!editing[rowIndex + '-sueldoMinimo']">
                 {{row.sueldoMinimo | currency : '$'}}
-            </span>
+
             <!-- <input [(ngModel)]="row.sueldoMinimo" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'sueldoMinimo', rowIndex)" *ngIf="editing[rowIndex + '-sueldoMinimo']" type="text" [value]=row.sueldoMinimo>
             <span *ngIf="editing[rowIndex + '-sueldoMinimo']">
               <small [ngClass]="row.sueldoMinimo.length <= 0 ? 'text-danger' : 'text-success'">
@@ -137,7 +136,7 @@
           <td class="text-center">{{row.usuario}}</td>
           <td class="text-center">{{row.fecha | date:'dd-MM-yyyy'}}</td>
           <td class="text-center">
-            <button [disabled]="row.curp.length < 18 || row.nombre.length < 1 || row.apellidoPaterno.length < 1 || row.apellidoMaterno < 1 || !editCURP" class="mb-1 btn btn-xs btn-outline-success" type="button" (click)="UpdateData(row)" container="body" placement="bottom" tooltip="Actualizar">
+            <button [disabled]="row.curp.length < 18 || row.nombre.length < 1 || row.apellidoPaterno.length < 1 || row.apellidoMaterno < 1" class="mb-1 btn btn-xs btn-outline-success" type="button" (click)="UpdateData(row)" container="body" placement="bottom" tooltip="Actualizar">
               <em class="fa fa-check"></em>
             </button>
           </td>
@@ -179,7 +178,7 @@
 
 </mat-dialog-actions>
 
-
+<toaster-container toaster-options="{'toaster-id': 2 }" [toasterconfig]="toasterconfig"></toaster-container>
 <!-- 
   <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
       <span aria-hidden="true">×</span>
