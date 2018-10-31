@@ -1,5 +1,5 @@
 <form [formGroup]="AsignacionForm">
-  <div class="form-group">
+  <!-- <div class="form-group">
     <ngx-select
       autoClearSearch = true
       placeholder="Busqueda..."
@@ -18,9 +18,21 @@
         </ng-template>
         <ng-template ngx-select-option-not-found>
           No se encontraron resultados...
-          <!-- <app-button-save (click)="addItem()">(+) Add new item</app-button-save> -->
         </ng-template>
     </ngx-select>
     <label class="form-control-placeholder">{{placeHolder}}</label>
-  </div>
+  </div> -->
+  <mat-form-field>
+      <mat-select 
+        placeholder="ASIGNAR COORDINADOR DE CELULA" 
+        formControlName="selectControl" 
+        (selectionChange)="valueChange($event)"
+        multiple required="">
+        <mat-optgroup *ngFor="let g of items" [label]="g.nombre" [disabled]="g.disabled">
+          <mat-option *ngFor="let u of g.usuarios" [value]="u.id">
+            <span>{{u.nombre}}({{u.email}})</span>
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
 </form>

@@ -1,26 +1,74 @@
 <form [formGroup]="AsignacionForm">
-  <div class="form-group">
-    <ngx-select
-      autoClearSearch = true
-      placeholder="Busqueda..."
+  <!-- <div class="form-group">
+    <ngx-select 
+      [allowClear]="true" 
+      autoClearSearch=true 
+      placeholder="Busqueda..." 
       formControlName="selectControl"
-      (data)="value"
-      class="select-asig"
+      (data)="value" 
+      class="select-asig" 
       [multiple]="true" 
-      [items]="items"
-      (remove)="valueChange($event)"
+      [items]="items" 
+      (remove)="valueChange($event)" 
       (select)="valueChange($event)"
       optionValueField="id" 
-      optionTextField="nombre" >
-        <ng-template ngx-select-option-selected let-option let-text="descripcion">
-          <span *ngIf="option.data.tipoEntidadId != 1">{{option.data.nombre}}</span>
-          <span *ngIf="option.data.tipoEntidadId == 1">  {{option.data.descripcion}}({{option.data.email}})</span>
-        </ng-template>
-        <ng-template ngx-select-option-not-found>
-          No se encontraron resultados...
-          <!-- <app-button-save (click)="addItem()">(+) Add new item</app-button-save> -->
-        </ng-template>
+      optionTextField="nombre">
+      <ng-template ngx-select-option-selected let-option let-text="descripcion">
+        <span *ngIf="option.data.tipoEntidadId != 1">{{option.data.nombre}}</span>
+        <span *ngIf="option.data.tipoEntidadId == 1"> {{option.data.descripcion}}({{option.data.email}})</span>
+      </ng-template>
+      <ng-template ngx-select-option-not-found>
+        No se encontraron resultados...
+      </ng-template>
     </ngx-select>
     <label class="form-control-placeholder">{{placeHolder}}</label>
   </div>
+  <br> -->
+
+  <mat-form-field>
+
+    <mat-select placeholder="ASIGNAR COORDINADOR DE CELULA" formControlName="selectControl" (selectionChange)="valueChange($event)"
+      multiple autocomplete="" required="">
+      <!-- <mat-form-field class="position-filter">
+        <input matInput (input)="Search($event)" placeholder="BUSQUEDA DE COORDINADORES" [(ngModel)]="filtro"
+          [ngModelOptions]="{standalone: true}">
+        <button matSuffix mat-icon-button aria-label="Clear" container="body" placement="bottom" tooltip="Buscar por palabra clave"
+          placement="bottom" (click)="buscarPalabraClave(palabraClave)" [disabled]="true">
+          <em class="fa fa-search "></em>
+        </button>
+        <button mat-button *ngIf="filtro" matSuffix mat-icon-button aria-label="Clear" (click)="getGrpUser()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-hint align="start">
+          <strong class="text-warning">BUSCAR COORDINADORES / ADMINISTRADORES PARA ASIGNAR LA REQUISICI&Oacute;N</strong>
+        </mat-hint>
+      </mat-form-field> -->
+      <mat-optgroup *ngFor="let g of items" [label]="g.nombre" [disabled]="g.disabled">
+        <mat-option *ngFor="let u of g.usuarios" [value]="u.id">
+          <span>{{u.nombre | uppercase}}({{u.email | uppercase}})</span>
+        </mat-option>
+      </mat-optgroup>
+      <mat-divider></mat-divider>
+
+    </mat-select>
+  </mat-form-field>
+
+
 </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Seccion eliminada despues del texto "No se encotnraro resultados..." -->
+<!-- <app-button-save (click)="addItem()">(+) Add new item</app-button-save> -->
