@@ -53,8 +53,7 @@ export class EditarContratadosComponent implements OnInit {
   }
 
 
-  constructor( private service: CandidatosService,  
-               private dialogEditar: MatDialogRef<EditarContratadosComponent>,  
+  constructor( private service: CandidatosService,
                @Inject(MAT_DIALOG_DATA) public data: any, 
                private excelService: ExcelService,
                private toasterService: ToasterService ) { 

@@ -31,7 +31,7 @@
         </tr>
         <tr *ngFor="let row of data; let rowIndex = index" [class.classCURP]="row.classCURP">
          <td class="text-center">{{row.folio}}</td>
-          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
+         <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
               <span (dblclick)="editing[rowIndex + '-curp'] = true" *ngIf="!editing[rowIndex + '-curp']">
                   {{row.curp | uppercase}}
               </span>
@@ -121,7 +121,7 @@
               </mat-select>
             </mat-form-field>
           </td>
-          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
+          <td class="text-center">
                 {{row.sueldoMinimo | currency : '$'}}
 
             <!-- <input [(ngModel)]="row.sueldoMinimo" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'sueldoMinimo', rowIndex)" *ngIf="editing[rowIndex + '-sueldoMinimo']" type="text" [value]=row.sueldoMinimo>

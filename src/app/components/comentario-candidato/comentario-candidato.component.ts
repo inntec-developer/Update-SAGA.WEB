@@ -1,7 +1,8 @@
-import { Component, ElementRef, Input, OnInit, SimpleChanges } from '@angular/core';
-
+import { Component, ElementRef, Input, OnInit, SimpleChanges, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ApiConection } from '../../service';
 import { ComentariosService } from './../../service/Comentarios/comentarios.service';
+
 
 declare var $: any;
 
@@ -23,7 +24,8 @@ export class ComentarioCandidatoComponent implements OnInit {
 
   constructor(
     private _ComentariosService: ComentariosService,
-    public elem: ElementRef
+    public elem: ElementRef,
+    // @Inject(MAT_DIALOG_DATA) public dataNR: any, 
   ) { 
     
     
@@ -34,6 +36,10 @@ export class ComentarioCandidatoComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
+  //   console.log(this.dataNR)
+  //   this.CandidatoId = this.dataNR.CandidatoId;
+  //  this.RequisicionId = this.dataNR.requisicionId
+
     this.getComentarios(this.CandidatoId);
   }
   

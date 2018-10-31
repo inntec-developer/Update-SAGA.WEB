@@ -110,6 +110,7 @@ import { PrestacionesLeyComponent } from './tablas/prestaciones-ley/prestaciones
 import { ProcesosComponent } from './tablas/procesos/procesos.component';
 import { SharedModule } from '../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { DlgRequisicionPausaComponent } from './dlg-requisicion-pausa/dlg-requisicion-pausa.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -227,7 +228,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DialogHorariosConteoComponent,
     DialogLiberarCandidatoComponent,
     EditarContratadosComponent,
-    DialogEventComponent
+    DialogEventComponent,
+    DlgRequisicionPausaComponent
   ],
   exports: [
     DtDireccionComponent,

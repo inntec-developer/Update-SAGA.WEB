@@ -97,11 +97,10 @@
               <li><a><button [disabled]="rechazado" [ngClass]="rechazado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'"  type="button" (click)="SetProceso(40, 'Rechazado por Cliente')"  container="body" placement="bottom" tooltip="Rechazado por Cliente">
                 <em class="fa fa-user-times"></em>
               </button></a></li> 
-              
-              <!--        
-              <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(29)"  container="body" placement="bottom" tooltip="Abandonó Proceso">
+
+              <li><a><button [disabled]="nr" [ngClass]="nr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'"  type="button" (click)="SetProceso(28, 'NR')"  container="body" placement="bottom" tooltip="NR">
                 <em class="fa fa-flag"></em>
-              </button></a></li> -->
+              </button></a></li>
             
               <!-- <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
                 <em class="fa fa-phone"></em>

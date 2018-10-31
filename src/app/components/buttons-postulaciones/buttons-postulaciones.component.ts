@@ -1,3 +1,4 @@
+import { ComentarioCandidatoComponent } from './../comentario-candidato/comentario-candidato.component';
 import { CandidatosService } from './../../service/Candidatos/candidatos.service';
 import { element } from 'protractor';
 import { ModalDirective } from 'ngx-bootstrap';
@@ -14,7 +15,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../service';
 import {EditarContratadosComponent} from '../editar-contratados/editar-contratados.component';
-
 
 @Component({
   selector: 'app-buttons-postulaciones',
@@ -60,6 +60,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   pst = true; //postulado
   liberado = true; //liberado
   rechazado = true;
+  nr = true; //no recontatable
   flagContratados = true;
   rowAux = [];
   conteo = [];
@@ -103,6 +104,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.liberado = false;
       this.contratado = true;
       this.rechazado = true;
+      this.nr = false;
     }
     else if (estatus === 24) //contratado
     {
@@ -115,9 +117,10 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.evps = true;
       this.evm = true;
       this.pst = true;
-      this.liberado = false;
+      this.liberado = true;
       this.contratado = true;
       this.rechazado = true;
+      this.nr = true;
     }
     else if (estatus === 17) //cita reclutamiento
     {
@@ -133,6 +136,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.pst = true;
       this.liberado = false;
       this.rechazado = true;
+      this.nr = false;
     }
     else if (estatus === 18) //entrevista reclutamiento
     {
@@ -148,6 +152,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.pst = true;
       this.liberado = false;
       this.rechazado = true;
+      this.nr = false;
     }
     else if (estatus === 21) //finalista reclutamiento
     {
@@ -163,6 +168,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.pst = true;
       this.liberado = false;
       this.rechazado = false;
+      this.nr = false;
     }
     else if (estatus === 22) //entrevista cliente
     {
@@ -178,6 +184,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.pst = true;
       this.liberado = false;
       this.rechazado = false;
+      this.nr = false;
     }
     else if (estatus === 23) //finalista cliente
     {
@@ -193,6 +200,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.pst = true;
       this.liberado = true;
       this.rechazado = false;
+      this.nr = false;
     }
     else if (estatus === 13) // evalución técnica, psicométrica, médica
     {
@@ -208,6 +216,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.pst = true;
       this.liberado = false;
       this.rechazado = true;
+      this.nr = false;
     }
     else if (estatus === 14) {
       this.cr = true;
@@ -222,6 +231,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.pst = true;
       this.liberado = false;
       this.rechazado = true;
+      this.nr = false;
     }
     else if (estatus === 15) {
       this.cr = true;
@@ -236,6 +246,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.pst = true;
       this.liberado = false;
       this.rechazado = true;
+      this.nr = false;
     }
     else if (estatus === 27) //liberado
     {
@@ -251,8 +262,9 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.pst = false;
       this.liberado = true;
       this.rechazado = true;
+      this.nr = true;
     }
-    else if (estatus === 40) //liberado
+    else if (estatus === 40) //rechazado por cliente
     {
       this.cr = true;
       this.enr = true;
@@ -266,9 +278,27 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.pst = true;
       this.liberado = true;
       this.rechazado = true;
+      this.nr = false;
+    }
+    else if (estatus === 28) //nr
+    {
+      this.cr = true;
+      this.enr = true;
+      this.fr = true;
+      this.enc = true;
+      this.fc = true;
+      this.contratado = true;
+      this.evt = true;
+      this.evps = true;
+      this.evm = true;
+      this.pst = true;
+      this.liberado = true;
+      this.rechazado = true;
+      this.nr = true;
     }
 
   }
+
   getpostulados() {
 
     this.service.GetProceso(this.RequisicionId, sessionStorage.getItem('id')).subscribe(data => {
@@ -343,9 +373,12 @@ export class ButtonsPostulacionesComponent implements OnInit {
     })
   }
 
-  UpdateFuenteReclutamiento(data)
+  UpdateFuenteReclutamiento(data, estatusId, estatus)
   {
-    this.serviceCandidato.UpdateFuenteRecl(data).subscribe(result =>{ console.log(result)});
+    this.serviceCandidato.UpdateFuenteRecl(data).subscribe(result =>{ 
+      console.log(result)
+      this.SetApiProceso(data, estatusId, estatus);
+    });
   }
 
   OpenDlgHorarios(data, estatusId, estatus) {
@@ -355,7 +388,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       data: data,
       disableClose: true
     });
-    var window: Window
+
     dialogDlt.afterClosed().subscribe(result => {
       if (result) {
         this.horarioId = result.horarioId;
@@ -368,8 +401,8 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
         var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, tipoMediosId: result.mediosId };
 
-        this.UpdateFuenteReclutamiento(datos);
-        this.SetApiProceso(datos, estatusId, estatus);
+        this.UpdateFuenteReclutamiento(datos, estatusId, estatus);
+        
       }
       else {
         this.onChangeTable(this.config)
@@ -418,12 +451,61 @@ export class ButtonsPostulacionesComponent implements OnInit {
     });
   }
 
+  OpenEditarComponent()
+  {
+    var aux = this.dataSource.filter( element => {
+      return element.estatusId === 24
+    //  if( element.estatusId == 24 )
+    //   {
+    //     element.areaReclutamiento = 'SIN ASIGNAR';
+    //     element.areaReclutamientoId = -1;
+    //     element.fuenteReclutamiento = 'SIN ASIGNAR';
+    //     element.fuenteReclutamientoId = -1;
+
+    //     return element;
+    //   }
+    });
+
+    let dialogRef = this.dialog.open(EditarContratadosComponent, {
+      height: 'auto',
+      width: 'auto',
+      data: aux
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("entro")
+    })
+
+    //this.bsModalRef = this.modalService.show(EditarContratadosComponent, {initialState, class:'modal-lg'});
+    //this.bsModalRef.content.closeBtnName = 'Close';
+  }
+
+  OpenDialogComentariosNR()
+  {
+    var aux = { CandidatoId: this.candidatoId, requisicionId: this.RequisicionId};
+    let dialog = this.dialog.open(ComentarioCandidatoComponent, {
+      width: '25%',
+      height: 'auto',
+      data: aux
+    });
+    dialog.afterClosed().subscribe(result => {
+      console.log(result)
+      dialog.close();
+    })
+  }
+
   SetProceso(estatusId, estatus) {
+
     if (this.candidatoId != null) {
       if(estatusId == 27){
         this.OpenDialogLiberacion(estatusId, estatus);
       }else if (estatusId == 18) {
         this.GetHorarioRequis(estatusId, estatus);
+      }
+      else if(estatusId == 28 )
+      {
+        this.OpenDialogComentariosNR();
+
       }
       else  {
         var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId };
@@ -585,34 +667,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   }
 
-  OpenEditarComponent()
-  {
-    var aux = this.dataSource.filter( element => {
-      return element.estatusId === 24
-    //  if( element.estatusId == 24 )
-    //   {
-    //     element.areaReclutamiento = 'SIN ASIGNAR';
-    //     element.areaReclutamientoId = -1;
-    //     element.fuenteReclutamiento = 'SIN ASIGNAR';
-    //     element.fuenteReclutamientoId = -1;
-
-    //     return element;
-    //   }
-    });
-
-    let dialogRef = this.dialog.open(EditarContratadosComponent, {
-      height: 'auto',
-      width: 'auto',
-      data: aux
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-
-    })
-
-    //this.bsModalRef = this.modalService.show(EditarContratadosComponent, {initialState, class:'modal-lg'});
-    //this.bsModalRef.content.closeBtnName = 'Close';
-  }
+ 
 
   EstatusModal($event) {
     var idx = this.dataSource.findIndex(x => x.candidatoId === $event.candidatoId);

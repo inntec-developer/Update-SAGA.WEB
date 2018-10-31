@@ -692,8 +692,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
         ESTATUS: row.estatus,
         'FECHA ESTATUS': new Date(e.getFullYear() + '-' + (e.getMonth() +1 ) + '-' + e.getDate()),
         RECLUTADOR: sessionStorage.getItem('nombre'),
-        'COMENTARIO SOLICITANTE': '',
-        'COMENTARIO RECLUTADOR': comentarios
+        'COMENTARIOS': comentarios
       })
       comentarios = "";
     });
