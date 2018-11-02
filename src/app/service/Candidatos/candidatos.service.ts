@@ -1,3 +1,4 @@
+import { ApiConection } from './../api-conection.service';
 
 
 import 'rxjs/add/operator/map';
@@ -11,7 +12,6 @@ import 'rxjs/add/observable/throw';
 import { Headers, Http, HttpModule, RequestOptions, Response } from '@angular/http';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-import { ApiConection } from '../api-conection.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Injectable } from '@angular/core';
@@ -45,6 +45,8 @@ export class CandidatosService {
     private URLGetMediosRecl = ApiConection.ServiceUrl + ApiConection.GetMediosRecl;
     private URLUpdateFuenteRecl = ApiConection.ServiceUrl + ApiConection.UpdateFuenteRecl;
     private URLUpdateCandidatoContratado = ApiConection.ServiceUrl + ApiConection.UpdateCandidatoContratado;
+    private URLGetMotivos = ApiConection.ServiceUrl + ApiConection.GetMotivos;
+    
 
     // Error.
     private handleError(error: any) {
@@ -67,6 +69,16 @@ export class CandidatosService {
         return this._httpClient.get(this.URLGetMediosRecl);
     }
 
+    GetMotivos(estatus): Observable<any> { 
+        let params = new HttpParams().set('estatus', estatus)
+        const httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type':  'application/json'
+            })
+          };
+        return this._httpClient.get(this.URLGetMotivos, {params: params});
+    }
+
     UpdateFuenteRecl(data: any): Observable<any> {
 
         let params = new HttpParams().set('datos', data)
@@ -79,6 +91,7 @@ export class CandidatosService {
         return this._httpClient.post(this.URLUpdateFuenteRecl, data, httpOptions)
     }
 
+   
     UpdateContratados(data: any): Observable<any> {
 
         let params = new HttpParams().set('datos', data)

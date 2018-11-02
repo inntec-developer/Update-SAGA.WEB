@@ -111,6 +111,7 @@ import { ProcesosComponent } from './tablas/procesos/procesos.component';
 import { SharedModule } from '../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { DlgRequisicionPausaComponent } from './dlg-requisicion-pausa/dlg-requisicion-pausa.component';
+import { DlgComentariosNRComponent } from './dlg-comentarios-nr/dlg-comentarios-nr.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -229,7 +230,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DialogLiberarCandidatoComponent,
     EditarContratadosComponent,
     DialogEventComponent,
-    DlgRequisicionPausaComponent
+    DlgRequisicionPausaComponent,
+    DlgComentariosNRComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -296,6 +298,6 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     { provide: PaginationConfig, useValue: getSpanishPaginatorBtp() },
     ToasterService
   ],
-  entryComponents: [DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, EditarContratadosComponent, DialogEventComponent]
+  entryComponents: [DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, EditarContratadosComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent]
 })
 export class ComponentsModule { }

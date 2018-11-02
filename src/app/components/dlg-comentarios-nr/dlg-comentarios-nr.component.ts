@@ -1,58 +1,65 @@
-import { Component, OnInit, Inject } from '@angular/core';
 import { ComentariosService } from './../../service/Comentarios/comentarios.service';
 import { CandidatosService } from './../../service/Candidatos/candidatos.service';
+import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 @Component({
-  selector: 'app-dlg-requisicion-pausa',
-  templateUrl: './dlg-requisicion-pausa.component.html',
-  styleUrls: ['./dlg-requisicion-pausa.component.scss'],
-  providers: [CandidatosService, ComentariosService]
+  selector: 'app-dlg-comentarios-nr',
+  templateUrl: './dlg-comentarios-nr.component.html',
+  styleUrls: ['./dlg-comentarios-nr.component.scss'],
+  providers: [CandidatosService]
 })
-export class DlgRequisicionPausaComponent implements OnInit {
+export class DlgComentariosNRComponent implements OnInit, AfterViewInit {
 
   motivos;
   comentario: string;
   motivoId;
-
-  constructor(@Inject(MAT_DIALOG_DATA) public requi: any,
-  private serviceCandidato: CandidatosService, 
-  private serviceComentarios: ComentariosService, 
-  private toasterService: ToasterService,
-  private dialog: MatDialogRef<DlgRequisicionPausaComponent>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public usuario: any,
+   private serviceCandidato: CandidatosService, 
+   private serviceComentarios: ComentariosService, 
+   private toasterService: ToasterService,
+   private dialog: MatDialogRef<DlgComentariosNRComponent>) { }
 
   ngOnInit() {
+
+  }
+
+  ngAfterViewInit()
+  {
     this.GetMotivos();
+
   }
 
   GetMotivos()
   {
-    this.serviceCandidato.GetMotivos(39).subscribe(result =>{
+    this.serviceCandidato.GetMotivos(28).subscribe(result =>{
       this.motivos = result;
     })
   
   }
-
+  
   AddComentario()
   {
     let Comentario = {
         Comentario: this.comentario,
-        RequisicionId: this.requi.requisicionId,
+        CandidatoId: this.usuario.CandidatoId,
+        RequisicionId: this.usuario.requisicionId,
         MotivoId: this.motivoId,
-        UsuarioAlta: sessionStorage.getItem('usuario'),
-        ReclutadorId: sessionStorage.getItem('id')
+        Usuario: sessionStorage.getItem('usuario'),
+        UsuarioId: sessionStorage.getItem('id')
       }
-      this.serviceComentarios.addComentarioVacante(Comentario).subscribe(data => {
+
+      this.serviceComentarios.AddComentariosNR(Comentario).subscribe(data => {
         if (data == 200) {
           this.comentario = '';
           this.motivoId = 0;
 
-          this.popToast('success', 'Requisición en pausa', 'El comentario se agregó con éxito');
+          this.popToast('success', 'Candidato NR', 'El comentario se agregó con éxito');
           this.dialog.close(1);
         }
       }, err => {
-        this.popToast('error', 'Requisición en pausa', err);
+        this.popToast('error', 'Candidato NR', err);
         console.log(err);
       });
     }
@@ -82,5 +89,4 @@ export class DlgRequisicionPausaComponent implements OnInit {
     this.toasterService.pop(toast);
 
   }
-
 }

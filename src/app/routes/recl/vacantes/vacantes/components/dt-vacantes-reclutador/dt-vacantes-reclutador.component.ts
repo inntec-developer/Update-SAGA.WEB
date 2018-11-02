@@ -1,3 +1,4 @@
+import { DlgRequisicionPausaComponent } from './../../../../../../components/dlg-requisicion-pausa/dlg-requisicion-pausa.component';
 import { Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -104,20 +105,27 @@ export class DtVacantesReclutadorComponent implements OnInit {
   SetStatus(estatusId, estatus) {
     var datos = { estatusId: estatusId, requisicionId: this.requi.id };
 
-    this.postulateservice.SetProcesoVacante(datos).subscribe(data => {
-      if (data == 201) {
-        var idx = this.rows.findIndex(x => x.id == this.requi.id);
-        this.rows[idx]['estatus'] = estatus;
-        this.rows[idx]['estatusId'] = estatusId;
-        this.ValidarEstatus(estatusId)
-        this.onChangeTable(this.config);
-        this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+    if(estatusId == 39)
+    {
+      this.OpenDialogRequiPausa(estatusId, estatus);
+    }
+    else
+    {
+      this.postulateservice.SetProcesoVacante(datos).subscribe(data => {
+        if (data == 201) {
+          var idx = this.rows.findIndex(x => x.id == this.requi.id);
+          this.rows[idx]['estatus'] = estatus;
+          this.rows[idx]['estatusId'] = estatusId;
+          this.ValidarEstatus(estatusId)
+          this.onChangeTable(this.config);
+          this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
 
-      }
-      else {
-        this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
-      }
-    })
+        }
+        else {
+          this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
+        }
+      })
+    }
   }
 
 
@@ -336,7 +344,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   ValidarEstatus(estatusId) {
-
     if( estatusId == 4 && this.element.vacantes > 0 ) //nueva
     {
       this.bc = true; //busqueda candidato
@@ -468,7 +475,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
       this.asignar = false;
-      this.disenador = true;
+      this.disenador = false;
     }
     else if( (estatusId == 5 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso > 0 ) //reactivada   - garantia de busqueda - nueva busqueda -pausada
     {
@@ -477,9 +484,9 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ecc = true; //envío candidato cliente
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
-      this.pausa = false;
+      this.pausa = true;
       this.asignar = false;
-      this.disenador = true;
+      this.disenador = false;
     }
     else if( (estatusId == 5 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProcesoFR > 0 ) //reactivada - publicada  - garantia de busqueda - nueva busqueda -pausada
     {
@@ -490,7 +497,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
       this.asignar = false;
-      this.disenador = false;
+      this.disenador = true;
     }
     else if((estatusId == 5 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes ) //reactivada - publicada - garantia de busqueda - nueva busqueda - pausada
     {
@@ -638,6 +645,37 @@ export class DtVacantesReclutadorComponent implements OnInit {
         this.refreshTable();
       }
     });
+  }
+
+  OpenDialogRequiPausa(estatusId, estatus)
+  {
+    var aux = {requisicionId: this.requi.id, folio: this.requi.folio, cliente: this.requi.vacante, vacante: this.vBtra }
+    let dialog = this.dialog.open(DlgRequisicionPausaComponent, {
+      width: '50%',
+      height: 'auto',
+      data: aux
+    });
+    dialog.afterClosed().subscribe(result => {
+      if(result)
+      {
+        this.postulateservice.SetProcesoVacante({ estatusId: estatusId, requisicionId: this.requi.id }).subscribe(data => {
+          if (data == 201) {
+            var idx = this.rows.findIndex(x => x.id == this.requi.id);
+            this.rows[idx]['estatus'] = estatus;
+            this.rows[idx]['estatusId'] = estatusId;
+            this.ValidarEstatus(estatusId)
+            this.onChangeTable(this.config);
+            this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+  
+          }
+          else {
+            this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
+          }
+        });
+      }
+    })
+
+
   }
 
   openDesignVacante() {

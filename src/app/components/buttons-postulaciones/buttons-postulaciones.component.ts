@@ -1,6 +1,7 @@
-import { ComentarioCandidatoComponent } from './../comentario-candidato/comentario-candidato.component';
+import { ApiConection } from './../../service/api-conection.service';
+import { DlgComentariosNRComponent } from './../dlg-comentarios-nr/dlg-comentarios-nr.component';
+
 import { CandidatosService } from './../../service/Candidatos/candidatos.service';
-import { element } from 'protractor';
 import { ModalDirective } from 'ngx-bootstrap';
 import { Component, Input, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
@@ -62,7 +63,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   rechazado = true;
   nr = true; //no recontatable
   flagContratados = true;
-  rowAux = [];
+  rowAux : any = [];
   conteo = [];
   horarioId: any;
   ProcesoCandidatoId: any;
@@ -303,11 +304,13 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
     this.service.GetProceso(this.RequisicionId, sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = [];
+      console.log(data)
       data.forEach(element => {
         var perfil = {
           id: element.id,
           horarioId: element.horarioId,
           horario: element.horario,
+          foto: ApiConection.ServiceUrlFoto + element.perfil[0]['foto'],
           nombre: element.perfil[0]['nombre'],
           apellidoPaterno: element.perfil[0]['apellidoPaterno'],
           apellidoMaterno: element.perfil[0]['apellidoMaterno'],
@@ -480,17 +483,29 @@ export class ButtonsPostulacionesComponent implements OnInit {
     //this.bsModalRef.content.closeBtnName = 'Close';
   }
 
-  OpenDialogComentariosNR()
+  OpenDialogComentariosNR(data, estatusId, estatus)
   {
-    var aux = { CandidatoId: this.candidatoId, requisicionId: this.RequisicionId};
-    let dialog = this.dialog.open(ComentarioCandidatoComponent, {
-      width: '25%',
+    console.log(this.rowAux)
+    var aux = { 
+      CandidatoId: this.candidatoId, 
+      nombre: this.rowAux.nombre + ' ' + this.rowAux.apellidoPaterno + ' ' + this.rowAux.apellidoMaterno,
+      curp: this.rowAux.curp,
+      foto: this.rowAux.foto, 
+      requisicionId: this.RequisicionId
+    };
+
+    let dialog = this.dialog.open(DlgComentariosNRComponent, {
+      width: 'auto',
       height: 'auto',
       data: aux
     });
     dialog.afterClosed().subscribe(result => {
       console.log(result)
-      dialog.close();
+      if(result)
+      {
+        this.SetApiProceso(data, estatusId, estatus)
+
+      }
     })
   }
 
@@ -504,7 +519,8 @@ export class ButtonsPostulacionesComponent implements OnInit {
       }
       else if(estatusId == 28 )
       {
-        this.OpenDialogComentariosNR();
+        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId };
+        this.OpenDialogComentariosNR(datos, estatusId, estatus);
 
       }
       else  {
@@ -555,7 +571,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       else if (estatusId == 21 || estatusId == 22 || estatusId == 23) {
         var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 4 };
       }
-      else if (estatusId == 24 || estatusId == 25 || estatusId == 27 || estatusId == 40) {
+      else if (estatusId == 24 || estatusId == 25 || estatusId == 27 || estatusId == 40 || estatusId == 28) {
         var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 5 };
       }
 

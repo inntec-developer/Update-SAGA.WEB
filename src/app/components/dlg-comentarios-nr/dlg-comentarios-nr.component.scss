@@ -1,3 +1,8 @@
+.margin-top-nombre
+{
+    margin-top: 18px;
+
+}
 .example-radio-group {
     display: inline-flex;
     flex-direction: column;
@@ -11,7 +16,7 @@
     margin: 15px 0;
   }
 
-  .sizeletra
+  .card .card-body mat-dialog-content
   {
-    font-size: 20px;
+      overflow: hidden;
   }
