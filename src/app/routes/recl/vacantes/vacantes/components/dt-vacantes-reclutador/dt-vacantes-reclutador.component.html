@@ -175,6 +175,11 @@
       [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
       (numPages)="numPages = $event">
     </pagination>
+    <button id='special' chkPrivilegiosButtons type="button" class="btn btn-xs btn-labeled btn-outline-warning mb-2 margen" container="body" placement="bottom" tooltip="Visualizar vacantes en pausa">
+      <span class="btn-label">
+        <i class="fa fa-file-text-o"></i>
+      </span> Revisión de  Vacantes
+    </button>
     <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-2 margen" (click)="exportAsXLSX()"  container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
       <span class="btn-label">
         <i class="fa fa-download"></i>
@@ -197,7 +202,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <comentario-vacante [RequisicionId]="id"></comentario-vacante>
+        <comentario-vacante [RequisicionId]="id" [MotivoId]="7"></comentario-vacante>
       </div>
       <div class="modal-footer">
         <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide()">Cerrar</button>

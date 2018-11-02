@@ -474,8 +474,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = false;
-      this.disenador = false;
+      this.asignar = true;
+      this.disenador = true;
     }
     else if( (estatusId == 5 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso > 0 ) //reactivada   - garantia de busqueda - nueva busqueda -pausada
     {
@@ -485,8 +485,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = false;
-      this.disenador = false;
+      this.asignar = true;
+      this.disenador = true;
     }
     else if( (estatusId == 5 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProcesoFR > 0 ) //reactivada - publicada  - garantia de busqueda - nueva busqueda -pausada
     {
@@ -496,7 +496,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = false;
+      this.asignar = true;
       this.disenador = true;
     }
     else if((estatusId == 5 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes ) //reactivada - publicada - garantia de busqueda - nueva busqueda - pausada
@@ -507,7 +507,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = false;
+      this.asignar = true;
       this.disenador = true;
     }
     else if(estatusId == 30 && this.element.enProcesoFC == 0) //envio al cliente

@@ -85,11 +85,11 @@ export class DialogCancelRequiComponent implements OnInit {
       .subscribe(data => {
         if (data == 200) {
           let comentario = {
-            Comentario: 'CANCELADA: ' + comentarioReclutador,
+            Comentario: comentarioReclutador,
             RequisicionId: this.data.id,
             UsuarioAlta: sessionStorage.getItem('usuario'),
             ReclutadorId: sessionStorage.getItem('id'),
-            MotivoId: 17
+            MotivoId: this.data.motivoId
           }
           this.serviceComent.addComentarioVacante(comentario).subscribe(data => {
             if (data == 200) {
