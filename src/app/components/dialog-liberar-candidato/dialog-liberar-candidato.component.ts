@@ -1,3 +1,4 @@
+import { CandidatosService } from './../../service/Candidatos/candidatos.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
@@ -7,7 +8,7 @@ import { CatalogosService } from './../../service/catalogos/catalogos.service';
   selector: 'app-dialog-liberar-candidato',
   templateUrl: './dialog-liberar-candidato.component.html',
   styleUrls: ['./dialog-liberar-candidato.component.scss'],
-  providers: [CatalogosService]
+  providers: [CandidatosService]
 })
 export class DialogLiberarCandidatoComponent implements OnInit {
   element: any;
@@ -17,7 +18,7 @@ export class DialogLiberarCandidatoComponent implements OnInit {
   }
 
   constructor(
-    private service: CatalogosService,
+    private service: CandidatosService,
     private DialogLiberar: MatDialogRef<DialogLiberarCandidatoComponent>, 
      @Inject(MAT_DIALOG_DATA) public data: any,) { 
       DialogLiberar.disableClose = true;  
@@ -25,7 +26,7 @@ export class DialogLiberarCandidatoComponent implements OnInit {
 
   ngOnInit() {
     this.liberar.comentario = '';
-    this.service.getMotivosLiberacion().subscribe(data => {
+    this.service.GetMotivos(27).subscribe(data => {
       this.element = data;
     }, err => {
       console.log(err);

@@ -1,18 +1,29 @@
 <div class="row">
-  <div class="col-lg-8">    
-    <h3 class="text-success" mat-dialog-title>Folio {{requi.folio}} - {{requi.vacante}}</h3>
+  <div class="col-lg-8">
+    <h3 class="text-success" mat-dialog-title>Comentarios para candidato NR</h3>
   </div>
   <div class="col-lg-4">
-    <button type="button" class="btn btn-xs btn-danger btn-circle float-right" mat-dialog-close ><i class="fa fa-times"></i></button>
-</div>
+    <button type="button" class="btn btn-xs btn-danger btn-circle float-right" mat-dialog-close>
+      <i class="fa fa-times"></i>
+    </button>
+  </div>
 </div>
 <mat-divider></mat-divider>
-<!-- <br/><p class="sizeletra"><strong class="text-primary">Folio {{requi.folio}} - {{requi.vacante}}</strong></p>
-<br/>
-<mat-divider></mat-divider> -->
-<p><strong class="text-warning text-center">Selecciona y describe el motivo por el cual se reporta la vacante en pausa</strong></p>
-
-<mat-dialog-content>
+<div class="card">
+  <div class="card-body">
+      <mat-dialog-content>
+    <div class="media">
+      <img class="mr-3 center-block media img-responsive img-fluid circle thumb64" [src]="usuario.foto" alt="Image">
+      <div class="media-body mb-3 margin-top-nombre">
+        <strong class="text-primary">
+          <p>{{usuario.nombre}}</p>
+        </strong>
+      </div>
+    </div>
+    <br/>
+    <mat-divider></mat-divider>
+    
+    <p><strong class="text-warning text-center">Selecciona y describe el motivo por el cual se reporta al candidato como NR (No recomendable)</strong></p>
     <mat-radio-group class="example-radio-group" [(ngModel)]="motivoId">
         <mat-radio-button class="example-radio-button" *ngFor="let m of motivos" [value]="m.id">
           {{m.descripcion}}
@@ -24,7 +35,7 @@
             <small [ngClass]="!motivoId ? 'text-danger': 'text-success'">
               <em *ngIf="!motivoId" class="fa fa-close"></em>
               <em *ngIf="motivoId" class="fa fa-check"></em>
-              Seleccione un motivo de por el cual se reporta la vacante en pausa.
+              Seleccione un motivo de por el cual se reporta al candidato como NR.
             </small>
           </span>
         </p>
@@ -39,8 +50,8 @@
     <p>
         <span>
           <small [ngClass]="!comentario ? 'text-danger': 'text-success'">
-             <em *ngIf="!comentario" class="fa fa-close"></em>
-            <em *ngIf="comentario" class="fa fa-check"></em>
+            <!-- <em *ngIf="comentario.length < 30" class="fa fa-close"></em>
+            <em *ngIf="comentario.length > 29" class="fa fa-check"></em> -->
             Ingrese comentario de por el cual se reporta al candidato como NR.
           </small>
         </span>
@@ -56,4 +67,7 @@
     <div *ngIf="msgSuccess" role="alert" class="alert alert-success">
       <small>Comentario guardo con exito.</small>
     </div>
-</mat-dialog-content>
+  </mat-dialog-content>
+  </div>
+
+</div>

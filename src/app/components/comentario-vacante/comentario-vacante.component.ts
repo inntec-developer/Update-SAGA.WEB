@@ -15,7 +15,7 @@ declare var $: any;
 export class ComentarioVacanteComponent implements OnInit {
   @Input('RequisicionId') RequisicionId: string;
   @Input('EstatusId') EstatusId: string;
-
+  @Input('MotivoId') MotivoId;
   private Comentarios: any;
   private Comentario: any = {};
   private CountComent: any;
@@ -81,7 +81,8 @@ export class ComentarioVacanteComponent implements OnInit {
         Comentario: this.comentario,
         RequisicionId: this.RequisicionId,
         UsuarioAlta: sessionStorage.getItem('usuario'),
-        reclutadorId: sessionStorage.getItem('id')
+        reclutadorId: sessionStorage.getItem('id'),
+        MotivoId: this.MotivoId
       }
       this._ComentariosService.addComentarioVacante(this.Comentario).subscribe(data => {
         if (data === 200) {

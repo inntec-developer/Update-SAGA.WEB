@@ -486,6 +486,7 @@ export class DtRequisicionComponent implements OnInit {
   }
 
   openDialogCancel() {
+    this.element.motivoId = 17;
     let dialogCnc = this.dialog.open(DialogCancelRequiComponent, {
       data: this.element
     });

@@ -29,6 +29,7 @@ export class ComentariosService {
   private UrlAddComentarioCandidato = ApiConection.ServiceUrl + ApiConection.AddComentariosCandidato;
   private UrlComentariosVacante = ApiConection.ServiceUrl + ApiConection.ComentariosVacante;
   private UrlAddComentarioVacante = ApiConection.ServiceUrl + ApiConection.AddComentariosVacante;
+  private URLAddComentariosNR = ApiConection.ServiceUrl + ApiConection.AddComentarioNR;
 
   constructor(private _http: HttpClient) { }
 
@@ -51,4 +52,14 @@ export class ComentariosService {
   addComentarioVacante(data: any): Observable<any> {
     return this._http.post(this.UrlAddComentarioVacante, data, httpOptions);
   }
+
+  AddComentariosNR(data) : Observable<any> {
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json'
+        })
+      };
+
+    return this._http.post(this.URLAddComentariosNR, data, httpOptions );
+}
 }
