@@ -478,7 +478,6 @@ export class DtRequisicionComponent implements OnInit {
     });
     var window: Window
     dialogDlt.afterClosed().subscribe(result => {
-      debugger;
       if(result == 200)
       {
         this.refreshTable();
@@ -492,7 +491,6 @@ export class DtRequisicionComponent implements OnInit {
     });
     var window: Window
     dialogCnc.afterClosed().subscribe(result => {
-      debugger
       if(result == 200)
       {
         this.updataStatus(8, 'Cancelar')
