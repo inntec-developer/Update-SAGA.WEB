@@ -1,3 +1,4 @@
+import { ColorPickerModule, ColorPickerService } from 'ngx-color-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { INgxSelectOptions, NgxSelectModule } from 'ngx-select-ex'
 import {
@@ -69,9 +70,9 @@ import { ButtonSaveComponent } from './buttons/button-save/button-save.component
 import { ButtonSendComponent } from './buttons/button-send/button-send.component';
 import { ButtonViewComponent } from './buttons/button-view/button-view.component';
 import { ButtonsPostulacionesComponent } from './buttons-postulaciones/buttons-postulaciones.component';
+import { CalendarioCandidatoComponent } from './calendario/calendario-candidato/calendario-candidato.component';
 import { CardVacanteComponent } from './card-vacantes/card-vacante.component';
 import { ClockComponent } from './clock/clock.component';
-import { ColorPickerService } from 'ngx-color-picker';
 import { ComentarioCandidatoComponent } from './comentario-candidato/comentario-candidato.component';
 import { ComentarioVacanteComponent } from './comentario-vacante/comentario-vacante.component';
 import { CommonModule } from '@angular/common';
@@ -81,6 +82,8 @@ import { DialogEventComponent } from './calendario/dialog-event/dialog-event.com
 import { DialogHorariosConteoComponent } from '../components/dialog-horarios-conteo/dialog-horarios-conteo.component';
 import { DialogLiberarCandidatoComponent } from './dialog-liberar-candidato/dialog-liberar-candidato.component';
 import { DialogRutasComponent } from './tablas/dt-rutas-camion-requi/dialog-rutas/dialog-rutas.component';
+import { DlgComentariosNRComponent } from './dlg-comentarios-nr/dlg-comentarios-nr.component';
+import { DlgRequisicionPausaComponent } from './dlg-requisicion-pausa/dlg-requisicion-pausa.component';
 import { DocumentosClienteComponent } from './tablas/documentos-cliente/documentos-cliente.component';
 import { DocumentosDamsaComponent } from './tablas/documentos-damsa/documentos-damsa.component';
 import { DtBeneficiosComponent } from './tablas/dt-beneficios/dt-beneficios.component';
@@ -110,8 +113,6 @@ import { PrestacionesLeyComponent } from './tablas/prestaciones-ley/prestaciones
 import { ProcesosComponent } from './tablas/procesos/procesos.component';
 import { SharedModule } from '../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { DlgRequisicionPausaComponent } from './dlg-requisicion-pausa/dlg-requisicion-pausa.component';
-import { DlgComentariosNRComponent } from './dlg-comentarios-nr/dlg-comentarios-nr.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -168,7 +169,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ToasterModule,
     AlertModule,
     ModalModule.forRoot(),
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    ColorPickerModule
   ],
   declarations: [
     DtDireccionComponent,
@@ -231,7 +233,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     EditarContratadosComponent,
     DialogEventComponent,
     DlgRequisicionPausaComponent,
-    DlgComentariosNRComponent
+    DlgComentariosNRComponent,
+    CalendarioCandidatoComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -291,7 +294,9 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DialogHorariosConteoComponent,
     DialogLiberarCandidatoComponent, 
     EditarContratadosComponent,
-    DialogEventComponent
+    DialogEventComponent,
+    CalendarioCandidatoComponent,
+    
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

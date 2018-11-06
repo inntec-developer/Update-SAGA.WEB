@@ -16,7 +16,6 @@
       optionTextField="nombre"
       optGroupLabelField="nombre" optGroupOptionsField="usuarios">
       <ng-template ngx-select-option-selected let-option let-text="descripcion">
-          <button class="btn btn-cs btn-default">Select All</button>
         <span>{{option.data.nombre}}({{option.data.email}});</span>
       </ng-template>
       <ng-template ngx-select-option-not-found>

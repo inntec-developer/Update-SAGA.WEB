@@ -13,10 +13,14 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
   ]
 })
 export class DialogEventComponent implements OnInit {
+    color: string;
   public evnt = {
     titulo: '',
     inicio: null,
     final: null,
+    color: null,
+    horaInicio: null,
+    horaFinal: null,
   }
 
   constructor(
@@ -24,11 +28,17 @@ export class DialogEventComponent implements OnInit {
     private dialogEvent: MatDialogRef<DialogEventComponent>
   ) {
     dialogEvent.disableClose = true;
+    this.evnt.color = "#4290ff"
   }
 
   ngOnInit() {
     this.evnt.inicio = this.data;
     this.evnt.final = this.data;
+    debugger;
+    var date = new Date();
+    this.evnt.horaInicio = date.getTime;
+    this.evnt.horaFinal = date.getTime();
+    console.log(this.evnt.horaInicio);
   }
 
   onCloseDialog() {

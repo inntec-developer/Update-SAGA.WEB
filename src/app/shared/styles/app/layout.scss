@@ -100,14 +100,15 @@ body {
         margin-bottom: $footer-hg !important; // ensure a space for the footer
     } // Page Footer
     .footer-container {
-        position: absolute;
+        position: fixed;
         left: 0;
         right: 0;
         bottom: 0;
-        height: $footer-hg;
+        height: $footer-hg - 45;
         border-top: 1px solid $gray-light;
-        padding: $content-padding;
-        z-index: $z-index-main-section - 2;
+        padding: $content-padding $content-padding - 10;
+        z-index: $z-index-main-section + 1000;
+        background-color: $content-heading-bg;
         font-size: .875rem;
         p {
             margin: 0;

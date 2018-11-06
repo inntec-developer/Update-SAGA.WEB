@@ -25,13 +25,31 @@
       </mat-form-field>
     </div>
     <div class="col-md-4 col-sm-4">
-      <input matInput type="color" placeholder="Color" [(ngModel)]="evnt.color" value="#ff80ff">
-      <select name="select">
-        <option value="1" style="background-color: blue">Test</option>
-        <option value="2" style="background-color: green">Test</option>
-      </select>
-      {{evnt.color}}
+      <mat-form-field>
+        <input matInput [(colorPicker)]="evnt.color" [style.background]="evnt.color" placeholder="Selecciona un Color"
+          [value]="evnt.color" />
+      </mat-form-field>
     </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-sm-12">
+      <section>
+        <mat-checkbox [(ngModel)]="hora"> Agregar horario</mat-checkbox>
+      </section>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-sm-12">
+      <section *ngIf="hora">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Hora Inicio" type="time" [(ngModel)]="evnt.horaInicio" value="evnt.horaInicio">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Hora Final" type="time" [(ngModel)]="evnt.horaFinal" value="evnt.horaInicio">
+        </mat-form-field>
+        </section>
+    </div>
+
   </div>
 </mat-dialog-content>
 <br>
@@ -42,7 +60,7 @@
       <i class="fa fa-times"></i>
     </span> Cancelar
   </button>
-  <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-1 margen" type="submit">
+  <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-1 margen" [mat-dialog-close]="evnt">
     <span class="btn-label">
       <i class="fa fa-check"></i>
     </span> Aceptar

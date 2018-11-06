@@ -1,0 +1,36 @@
+<!-- Calendario -->
+<div #calendar>
+  <div class="calendar-app">
+    <div class="row">
+      <div class="col-xl-3 col-lg-4">
+        <clock></clock>
+        <div class="card card-default">
+          <div class="card-header">Full Calendar</div>
+          <div class="card-body">
+            <p>A JavaScript event calendar. Customizable and open source.</p>
+            <p>FullCalendar is a drag-n-drop jQuery plugin for displaying events on a full-sized calendar.</p>
+            <p>
+              <strong>A JavaScript event calendar. Customizable and open source.</strong>
+            </p>
+          </div>
+        </div>
+        <div *ngIf="selectedEvent">
+          <p>Selected:</p>
+          <div class="box-placeholder">{{selectedEvent | json}}</div>
+        </div>
+        <div *ngIf="!selectedEvent">
+          <p>Click calendar to show information</p>
+        </div>
+      </div>
+      <div class="col-xl-9 col-lg-8">
+        <div class="card card-default">
+
+          <div class="card-body">
+            <div #fullcalendar class="calendar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
