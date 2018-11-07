@@ -41,7 +41,8 @@ export class DlgRequisicionPausaComponent implements OnInit {
         RequisicionId: this.requi.requisicionId,
         MotivoId: this.motivoId,
         UsuarioAlta: sessionStorage.getItem('usuario'),
-        ReclutadorId: sessionStorage.getItem('id')
+        ReclutadorId: sessionStorage.getItem('id'),
+        EstatusId: 39
       }
       this.serviceComentarios.addComentarioVacante(Comentario).subscribe(data => {
         if (data == 200) {

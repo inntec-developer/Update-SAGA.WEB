@@ -1,6 +1,6 @@
 
 import { CandidatosService } from './../../service/Candidatos/candidatos.service';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ExcelService } from '../../service/ExcelService/excel.service';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
@@ -13,6 +13,8 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 })
 export class EditarContratadosComponent implements OnInit {
 
+  @Input('data') data;
+  
   public dataSource: Array<any> = [];
   editing = {};
   areas = [];
@@ -54,15 +56,13 @@ export class EditarContratadosComponent implements OnInit {
 
 
   constructor( private service: CandidatosService,
-               @Inject(MAT_DIALOG_DATA) public data: any, 
+             
                private excelService: ExcelService,
                private toasterService: ToasterService ) { 
              
                }
 
-  ngOnInit() {
-    console.log(this.data)
-  
+  ngOnInit() { 
     this.GetAreas();
     this.GetMedios();
 

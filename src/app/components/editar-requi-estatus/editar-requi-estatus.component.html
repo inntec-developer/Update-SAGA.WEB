@@ -1,0 +1,45 @@
+<div class="table-responsive">
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        
+        <th class="text-center text-info">FOLIO</th>
+        <th class="text-center text-info">VACANTE</th>
+        <th class="text-center text-info">RECLUTADOR</th>
+        <th class="text-center text-info">MOTIVO</th>
+        <th class="text-center text-info">FECHA REPORTE</th>
+        <th class="text-center text-info">ESTATUS</th>
+        <th class="text-center text-info">DESCRIPCI&Oacute;N REPORTE</th>
+        <th class="text-center text-info">RESULTADO REPORTE</th>
+        <th class="text-center text-info"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of requis; let rowIndex = index" [class.selected]="row.selected">
+        <td class="text-center"> {{row.comentarioReclutador.folio}}</td>
+        <td class="text-center"> {{row.vBtra}}</td>
+        <td class="text-center"> {{row.reclutador}}</td>
+        <td class="text-center">{{row.comentarioReclutador.motivo}}</td>
+        <td class="text-center"> {{row.comentarioReclutador.fecha | date:'dd/MM/yyyy'}}</td>
+        <td class="text-center">{{row.estatus}}</td>
+        <td class="text-center"> {{row.comentarioReclutador.comentario}}</td>
+<td class="text-center">
+
+  <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-respuesta'] = true;" *ngIf="!editing[rowIndex + '-respuesta']" >
+      {{row.comentarioReclutador.respuesta}}
+    </span>
+    <input [(ngModel)]="comentario" class="form-control-sm" autofocus (blur)="updateValue($event, 'respuesta', rowIndex);" *ngIf="editing[rowIndex + '-respuesta']" type="text" [value]="row.comentarioReclutador.respuesta"
+    />
+    
+        </td>
+        <td class="text-center">
+            <button [disabled]="!row.activar" [ngClass]="row.activar ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'"  type="button" (click)="AddComentario(row, rowIndex)"  container="body" placement="bottom" tooltip="Cambiar Estatus">
+                <em class="fa fa-check"></em>
+              </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container> -->

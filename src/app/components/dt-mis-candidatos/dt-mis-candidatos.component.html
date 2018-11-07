@@ -44,8 +44,10 @@
               {{row.folio}}
             </td>
             <td class="text-center">
-              <span *ngIf="row.estatus.length <= 10 else toLength" class="px-1 mr-1  badge  badge-pill badge-info">
-                {{row.estatus | uppercase }}</span>
+              <span *ngIf="row.estatus.length <= 10 else toLength" [ngClass]="(row.estatusId == 28) ? 'px-1 mr-1  badge  badge-pill badge-danger' : 'px-1 mr-1  badge  badge-pill badge-info'">
+                  <span *ngIf="row.estatusId != 28"> {{row.estatus | uppercase }}</span>
+                  <span *ngIf="row.estatusId == 28">POSTULADO</span>
+              </span>
               <ng-template #toLength>
                 <span class="badge badge-info" container="body" placement="bottom" tooltip="{{row.estatus | uppercase}}">{{row.estatus
                   | slice:0:6 | uppercase }} ... </span>

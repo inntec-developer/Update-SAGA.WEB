@@ -11,7 +11,7 @@
       <div class="card-body text-center">
         <img class="img-fluid img-thumbnail rounded-circle thumb96" [src]="candidato.picture" alt="Contact" />
         <h4>{{candidato.nombre}}</h4>
-        <div *ngIf="!candidato.estatus || procesoCandidatoId === 27 || reclutador === usuario">
+        <div *ngIf="candidato.estatus && procesoCandidatoId !== 28 && reclutador === usuario">
           <div *ngIf="candidato.aboutMe">
             <mat-divider></mat-divider>
             <span class="text-muted">{{candidato.aboutMe}}</span>
@@ -50,8 +50,10 @@
             <em *ngIf="procesoCandidatoId != 27 && candidato.estatus" class="fa fa-lock m-0 text-primary"></em>
           </div>
           <div class="col-md-10 text-right">
-            <h5 *ngIf="candidato.estatus" class="m-0" [ngClass]="(procesoCandidatoId === 27) ? 'text-success':'text-primary'">{{Status}}
-              por: {{reclutador}}</h5>
+            <h5 *ngIf="candidato.estatus" class="m-0" [ngClass]="(procesoCandidatoId === 27) ? 'text-success':'text-primary'">
+                <span *ngIf="candidato.estatus.estatusId != 28"> {{ Status }} por: {{reclutador}} </span>
+                <span *ngIf="candidato.estatus.estatusId == 28" class="text-danger">POSTULADO por: {{reclutador}} </span>
+            </h5>
             <h5 *ngIf="!candidato.estatus" class="text-success">Candidato Disponible</h5>
           </div>
         </div>

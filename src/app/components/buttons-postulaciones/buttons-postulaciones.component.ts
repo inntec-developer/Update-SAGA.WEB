@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { ApiConection } from './../../service/api-conection.service';
 import { DlgComentariosNRComponent } from './../dlg-comentarios-nr/dlg-comentarios-nr.component';
 
@@ -34,6 +35,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   @ViewChild('MessageModal') ShownModal: ModalDirective;
 
   public dataSource: Array<any> = [];
+
   // Varaibles del paginador
   public page: number = 1;
   public itemsPerPage: number = 20;
@@ -41,6 +43,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   public numPages: number = 1;
   public length: number = 0;
 
+  dataContratados: any = [];
   showFilterRow: boolean;
   registros: number;
   errorMessage: any;
@@ -49,6 +52,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   //candidatoId = 'f66da23e-9d69-e811-80e1-9e274155325e';'621ede7a-2fbc-e811-80ea-9e274155325e'
   candidatoId;
   isModalShown: boolean = false;
+  editarContratados: boolean = false;
   contratado = true;
   cr = true; //cita reclutamiento
   enr = true; //entrevista reclutamiento
@@ -121,7 +125,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.liberado = true;
       this.contratado = true;
       this.rechazado = true;
-      this.nr = true;
+      this.nr = false;
     }
     else if (estatus === 17) //cita reclutamiento
     {
@@ -350,7 +354,15 @@ export class ButtonsPostulacionesComponent implements OnInit {
   GetConteoVacante() {
     this.service.GetConteoVacante(this.RequisicionId, this.clienteId).subscribe(data => {
       this.conteo = data;
-      this.conteo[0]['contratados'] > 0 ? this.flagContratados = false : this.flagContratados = true;
+      debugger;
+///////// Esto es lo que tengo que modificar falla como loco............................................................... calineta el procesador y la memoria se desgorda.
+      var cc = this.conteo.filter(element => {
+        if( element.contratados > 0 )
+        {
+          return 1;
+        }
+      });
+     cc.length > 0 ? this.flagContratados = false : this.flagContratados = true;
     })
 
   }
@@ -456,7 +468,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   OpenEditarComponent()
   {
-    var aux = this.dataSource.filter( element => {
+    this.dataContratados = this.dataSource.filter( element => {
       return element.estatusId === 24
     //  if( element.estatusId == 24 )
     //   {
@@ -469,15 +481,17 @@ export class ButtonsPostulacionesComponent implements OnInit {
     //   }
     });
 
-    let dialogRef = this.dialog.open(EditarContratadosComponent, {
-      height: 'auto',
-      width: 'auto',
-      data: aux
-    });
+    this.editarContratados = true;
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log("entro")
-    })
+    // let dialogRef = this.dialog.open(EditarContratadosComponent, {
+    //   height: 'auto',
+    //   width: 'auto',
+    //   data: aux
+    // });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log("entro")
+    // })
 
     //this.bsModalRef = this.modalService.show(EditarContratadosComponent, {initialState, class:'modal-lg'});
     //this.bsModalRef.content.closeBtnName = 'Close';
@@ -547,6 +561,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
         this.pst = true;
         this.liberado = true;
         this.GetConteoVacante();
+
       }
       else if (data == 300) {
         this.popToast('info', 'Apartado', 'El candidato ya esta apartado o en proceso');
@@ -711,11 +726,23 @@ export class ButtonsPostulacionesComponent implements OnInit {
     this.evm = true;
     this.liberado = true;
     this.pst = true;
+
+    this.onChangeTable(this.config);
   }
 
-  closeModal() {
+  closeModal(modal) {
+    if(modal == 1)
+    {
     this.ShownModal.hide();
     this.isModalShown = false;
+    }
+    else
+    {
+      this.editarContratados = false;
+    }
+
+    this.refresh();
+
   }
 
   public rows: Array<any> = []

@@ -112,6 +112,7 @@ import { SharedModule } from '../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { DlgRequisicionPausaComponent } from './dlg-requisicion-pausa/dlg-requisicion-pausa.component';
 import { DlgComentariosNRComponent } from './dlg-comentarios-nr/dlg-comentarios-nr.component';
+import { EditarRequiEstatusComponent } from './editar-requi-estatus/editar-requi-estatus.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -231,7 +232,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     EditarContratadosComponent,
     DialogEventComponent,
     DlgRequisicionPausaComponent,
-    DlgComentariosNRComponent
+    DlgComentariosNRComponent,
+    EditarRequiEstatusComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -291,13 +293,14 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DialogHorariosConteoComponent,
     DialogLiberarCandidatoComponent, 
     EditarContratadosComponent,
-    DialogEventComponent
+    DialogEventComponent,
+    EditarRequiEstatusComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
     { provide: PaginationConfig, useValue: getSpanishPaginatorBtp() },
     ToasterService
   ],
-  entryComponents: [DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, EditarContratadosComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent]
+  entryComponents: [DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent]
 })
 export class ComponentsModule { }

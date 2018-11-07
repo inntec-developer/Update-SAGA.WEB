@@ -175,7 +175,7 @@
       [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
       (numPages)="numPages = $event">
     </pagination>
-    <button id='special' chkPrivilegiosButtons type="button" class="btn btn-xs btn-labeled btn-outline-warning mb-2 margen" container="body" placement="bottom" tooltip="Visualizar vacantes en pausa">
+    <button id='special' chkPrivilegiosButtons type="button" (click)="editarRequi=true" class="btn btn-xs btn-labeled btn-outline-warning mb-2 margen" container="body" placement="bottom" tooltip="Visualizar vacantes en pausa">
       <span class="btn-label">
         <i class="fa fa-file-text-o"></i>
       </span> Revisión de  Vacantes
@@ -205,8 +205,27 @@
         <comentario-vacante [RequisicionId]="id" [MotivoId]="7"></comentario-vacante>
       </div>
       <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide()">Cerrar</button>
+        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide(); closeModal();">Cerrar</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!--Editar estatus-->
+<div *ngIf="editarRequi" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal2="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left text-success">CAMBIAR ESTATUS REQUISICION</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal2.hide();closeModal()" ><i class="fa fa-times"></i></button>
+  
+      </div>
+      <div class="modal-body">
+        <app-editar-requi-estatus [estatusId]="39" [usuarioId]="usuarioId"></app-editar-requi-estatus>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal2.hide()">Cerrar</button>
+      </div> -->
     </div>
   </div>
 </div>

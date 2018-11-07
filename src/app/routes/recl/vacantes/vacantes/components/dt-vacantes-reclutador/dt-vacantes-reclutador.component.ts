@@ -1,3 +1,4 @@
+import { EditarRequiEstatusComponent } from './../../../../../../components/editar-requi-estatus/editar-requi-estatus.component';
 import { DlgRequisicionPausaComponent } from './../../../../../../components/dlg-requisicion-pausa/dlg-requisicion-pausa.component';
 import { Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
@@ -10,7 +11,6 @@ import { PostulateService } from './../../../../../../service/SeguimientoVacante
 import { RequisicionesService } from '../../../../../../service';
 import { Router } from '@angular/router';
 import { ExcelService } from '../../../../../../service/ExcelService/excel.service';
-
 
 const swal = require('sweetalert');
 declare var $: any;
@@ -46,7 +46,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
   postulados: any;
   ShowDV: boolean;
   clienteId: any;
-
+  editarRequi = false;
+  usuarioId: any = sessionStorage.getItem('id');
   //estatus vacantes
 
   bc = true; //busqueda candidato
@@ -665,6 +666,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
             this.rows[idx]['estatusId'] = estatusId;
             this.ValidarEstatus(estatusId)
             this.onChangeTable(this.config);
+
             this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
   
           }
@@ -678,6 +680,12 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   }
 
+  closeModal()
+  {
+    console.log("entro")
+    this.editarRequi=false;
+    this.refreshTable();
+  }
   openDesignVacante() {
     if (this.aprobador === sessionStorage.getItem('usuario')) {
       this._Router.navigate(['/reclutamiento/configuracionVacante/', this.id, this.folio, this.vBtra], { skipLocationChange: true });
@@ -738,6 +746,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     //   })
     // })
     this.excelService.exportAsExcelFile(aux, 'Solicitud_de_reporte_para_generar_estadisticos');
+    this.refreshTable();
 
   }
   /**

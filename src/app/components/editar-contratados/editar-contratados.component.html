@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
   <div class="col-lg-8">    
     <h3 class="text-success"  mat-dialog-title>EDITAR PERSONAL CONTRATADO</h3>
   </div>
@@ -6,9 +6,9 @@
     <button type="button" class="btn btn-xs btn-danger btn-circle float-right" mat-dialog-close ><i class="fa fa-times"></i></button>
 </div>
 </div>
-<mat-divider></mat-divider><br/>
+<mat-divider></mat-divider><br/> -->
 <!-- <p><strong class="text-warning text-center">Horarios disponibles para la requisici&oacute;n</strong></p> -->
-<mat-dialog-content>
+<!-- <mat-dialog-content> -->
  <!-- <form [formGroup]="formdata" role="form" name="formdata" novalidate>  -->
   <div class="table-responsive pointer">
     <table *ngIf="data else NotCandidatos" id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
@@ -145,12 +145,12 @@
     </table>
   </div>
   <!-- </form>  -->
-</mat-dialog-content>
+<!-- </mat-dialog-content> -->
 <br/><br/>
 <mat-divider></mat-divider><br/>
 
 <p class="text-warning">Es necesario completar la CURP, con los 2 ultimos digitos validadores </p>
-<mat-dialog-actions class="float-right">
+<div class="float-right">
     
   <!-- <button class="btn btn-xs btn-labeled btn-outline-danger mb-2 margen" mat-dialog-close>
     <span class="btn-label">
@@ -176,9 +176,9 @@
     </span> Aceptar
   </button> -->
 
-</mat-dialog-actions>
+</div>
 
-<toaster-container toaster-options="{'toaster-id': 2 }" [toasterconfig]="toasterconfig"></toaster-container>
+<!-- <toaster-container toaster-options="{'toaster-id': 2 }" [toasterconfig]="toasterconfig"></toaster-container> -->
 <!-- 
   <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
       <span aria-hidden="true">×</span>

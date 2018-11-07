@@ -82,7 +82,8 @@ export class ComentarioVacanteComponent implements OnInit {
         RequisicionId: this.RequisicionId,
         UsuarioAlta: sessionStorage.getItem('usuario'),
         reclutadorId: sessionStorage.getItem('id'),
-        MotivoId: this.MotivoId
+        MotivoId: this.MotivoId, 
+        EstatusId: 0
       }
       this._ComentariosService.addComentarioVacante(this.Comentario).subscribe(data => {
         if (data === 200) {

@@ -185,9 +185,12 @@
             <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
             <td class="text-center"> {{row.curp | uppercase }}</td>
             <td class="text-center"> {{row.rfc | uppercase }}</td>
-            <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength" class="badge badge-info">{{row.estatus | uppercase }}</span></td>
+            <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength" [ngClass]="(row.estatusId == 28) ? 'badge badge-danger': 'badge badge-info'">
+              <span *ngIf="row.estatusId != 28"> {{row.estatus | uppercase }}</span>
+              <span *ngIf="row.estatusId == 28">POSTULADO</span>
+            </span></td>
             <ng-template #toLength>
-              <span class="badge badge-info"  container="body" placement="bottom" tooltip="{{row.estatus | uppercase}}" container="body">{{row.estatus | slice:0:6 | uppercase }} ... </span>
+              <span [ngClass]="(row.estatusId == 28) ? 'badge badge-danger':  'badge badge-info'" placement="bottom" tooltip="{{row.estatus | uppercase}}" container="body">{{row.estatus | slice:0:6 | uppercase }} ... </span>
           </ng-template>
           </tr>
         </tbody>
@@ -210,7 +213,7 @@
       <div class="modal-content">
 <div class="modal-header">
   <h4 class="modal-title float-left">Información de Candidato</h4>
-  <button type="button" class="close float-right" aria-label="Close" (click)="closeModal()">
+  <button type="button" class="close float-right" aria-label="Close" (click)="closeModal(1)">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
@@ -218,7 +221,7 @@
 <app-info-candidato [IdCandidato] = 'candidatoId' [VerVacantes]='false' (Estatus)="EstatusModal($event)"></app-info-candidato>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-outline-success" (click)="closeModal()">Cerrar</button>
+  <button type="button" class="btn btn-outline-success" (click)="closeModal(1)">Cerrar</button>
 </div>
 </div>
 </div>
@@ -252,3 +255,23 @@
   </label>
   </div>
 </ng-template>
+
+
+<!--Editar contratados-->
+<div *ngIf="editarContratados" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="dialog-sizes-name1" class="modal-title pull-left text-success">EDITAR CANDIDATOS CONTRATADOS</h4>
+          <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal.hide();closeModal(2)" ><i class="fa fa-times"></i></button>
+    
+        </div>
+        <div class="modal-body">
+          <app-editar-contratados [data]="dataContratados"></app-editar-contratados>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal2.hide()">Cerrar</button>
+        </div> -->
+      </div>
+    </div>
+  </div>

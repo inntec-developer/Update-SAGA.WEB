@@ -35,12 +35,16 @@
         <tbody>
           <tr (click)="onCellClick(row)" (dblclick)="getCandidato(row.candidatoId)" *ngFor="let row of rows"
             [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8">
-            <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength" class="badge badge-info">{{row.estatus
-                | uppercase }}</span></td>
-            <ng-template #toLength>
-              <span class="badge badge-info" container="body" placement="bottom" tooltip="{{row.estatus | uppercase}}"
-                container="body">{{row.estatus | slice:0:6 | uppercase }} ... </span>
-            </ng-template>
+            <td class="text-center"> 
+              <span *ngIf="row.estatus.length <= 10 else toLength" [ngClass]="row.estatus == 'NR' ? 'badge badge-pill badge-danger' : 'badge badge-pill badge-info'">
+                <span *ngIf="row.estatus != 'NR'"> {{row.estatus | uppercase }}</span>
+                <span *ngIf="row.estatus == 'NR'">POSTULADO</span>
+              </span>
+              <ng-template #toLength>
+                <span class="badge badge-info" container="body" placement="bottom" tooltip="{{row.estatus | uppercase}}">{{row.estatus
+                  | slice:0:6 | uppercase }} ... </span>
+              </ng-template>
+            </td>
             <td>
               {{row.nombre}}
             </td>

@@ -53,6 +53,7 @@ export class ApiConection {
   public static UpdateVacantes = 'Requisiciones/upadateVacantes';
   public static GetHorariosRequi = 'Requisiciones/getHorariosRequisicion?id=';
   public static GetHorariosRequiConteo = 'Requisiciones/getHorariosRequiConteo';
+  public static GetRequisicioneEstatus = 'Requisiciones/getRequisicionesEstatus';
 
 
   /* Candidatos */
@@ -110,6 +111,7 @@ export class ApiConection {
   public static GuardarConfi = '/dvacante/GuardarVacante';
   public static getCampos = '/dvacante/getCampos';
   public static getClasificaciones = '/dvacante/getClasificaciones';
+  
 
   /* Admin */
   public static getDtosPersonal = '/admin/get';
