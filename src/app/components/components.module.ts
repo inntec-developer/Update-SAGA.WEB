@@ -113,12 +113,7 @@ import { PrestacionesLeyComponent } from './tablas/prestaciones-ley/prestaciones
 import { ProcesosComponent } from './tablas/procesos/procesos.component';
 import { SharedModule } from '../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-<<<<<<< HEAD
-import { DlgRequisicionPausaComponent } from './dlg-requisicion-pausa/dlg-requisicion-pausa.component';
-import { DlgComentariosNRComponent } from './dlg-comentarios-nr/dlg-comentarios-nr.component';
 import { EditarRequiEstatusComponent } from './editar-requi-estatus/editar-requi-estatus.component';
-=======
->>>>>>> 71dbb1b09fe5f6a0091b48807420d233d1975d66
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -240,11 +235,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DialogEventComponent,
     DlgRequisicionPausaComponent,
     DlgComentariosNRComponent,
-<<<<<<< HEAD
-    EditarRequiEstatusComponent
-=======
+    EditarRequiEstatusComponent,
     CalendarioCandidatoComponent
->>>>>>> 71dbb1b09fe5f6a0091b48807420d233d1975d66
   ],
   exports: [
     DtDireccionComponent,
@@ -306,7 +298,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     EditarContratadosComponent,
     DialogEventComponent,
     CalendarioCandidatoComponent,
-    
+    EditarRequiEstatusComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
