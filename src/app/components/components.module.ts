@@ -305,12 +305,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DialogLiberarCandidatoComponent, 
     EditarContratadosComponent,
     DialogEventComponent,
-<<<<<<< HEAD
-    EditarRequiEstatusComponent
-=======
     CalendarioCandidatoComponent,
     
->>>>>>> 71dbb1b09fe5f6a0091b48807420d233d1975d66
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
