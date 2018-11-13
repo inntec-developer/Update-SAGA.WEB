@@ -11,7 +11,7 @@
       <div class="card-body text-center">
         <img class="img-fluid img-thumbnail rounded-circle thumb96" [src]="candidato.picture" alt="Contact" />
         <h4>{{candidato.nombre}}</h4>
-        <div *ngIf="candidato.estatus && procesoCandidatoId !== 28 && reclutador === usuario">
+        <div *ngIf="(candidato.estatus && reclutador === usuario) || (procesoCandidatoId !== 28 && reclutador === usuario) || (candidato.estatus && procesoCandidatoId !== 28 )">
           <div *ngIf="candidato.aboutMe">
             <mat-divider></mat-divider>
             <span class="text-muted">{{candidato.aboutMe}}</span>
