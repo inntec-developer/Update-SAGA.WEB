@@ -14,12 +14,19 @@ export class CalendarioCandidatoComponent implements OnInit {
   modalRef: BsModalRef;
   $calendar: any;
 
+  month: [
+    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Jinio', 'Julio',
+    'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+  ]
   calendarOptions: any = {
     // isRTL: true,
+    locale: 'es',
+    lag:'es',
+    defaultView: 'month',
     header: {
       left: 'prev,next today',
       center: 'title',
-      right: 'month,agendaWeek,agendaDay'
+      right: 'month,agendaWeek,agendaDay,listWeek, basicWeek'
     },
     buttonIcons: { // note the space at the beginning
       prev: ' fa fa-caret-left',
@@ -31,11 +38,13 @@ export class CalendarioCandidatoComponent implements OnInit {
       today: 'Hoy',
       month: 'Mes',
       week: 'Semana',
-      day: 'Día'
+      day: 'Día',
+      list: 'Lista',
+      basicWeek: 'Basico'
     },
-    height: 700,
-    contentHeight: 600,
-    editable: true,
+    height: 300,
+    contentHeight: 450,
+    editable: false,
     droppable: true,
     eventClick: this.eventClick.bind(this),
     dayClick: this.dayClick.bind(this),
@@ -82,9 +91,7 @@ export class CalendarioCandidatoComponent implements OnInit {
       url: calEvent.url || ''
     };
 
-    console.log('Event: ' + calEvent.title);
-    console.log('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-    console.log('View: ' + view.name);
+    console.log(calEvent, jsEvent, view);
 
   }
 
@@ -129,7 +136,7 @@ export class CalendarioCandidatoComponent implements OnInit {
 
     return [{
       title: 'All Day Event',
-      start: new Date(y, m, 2),
+      start: new Date(y, m, 2, 17,30),
       backgroundColor: '#f56954', //red
       borderColor: '#f56954' //red
     }, {

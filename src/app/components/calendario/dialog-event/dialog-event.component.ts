@@ -34,7 +34,6 @@ export class DialogEventComponent implements OnInit {
   ngOnInit() {
     this.evnt.inicio = this.data;
     this.evnt.final = this.data;
-    debugger;
     var date = new Date();
     this.evnt.horaInicio = date.getTime;
     this.evnt.horaFinal = date.getTime();

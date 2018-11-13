@@ -106,3 +106,7 @@ div.card-header em{
   margin-right: 10px;
 } 
 
+#toast-container {
+  margin-bottom: 35px;
+}
+
