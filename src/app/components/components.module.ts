@@ -1,3 +1,5 @@
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 import { ColorPickerModule, ColorPickerService } from 'ngx-color-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { INgxSelectOptions, NgxSelectModule } from 'ngx-select-ex'
@@ -114,6 +116,8 @@ import { ProcesosComponent } from './tablas/procesos/procesos.component';
 import { SharedModule } from '../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { EditarRequiEstatusComponent } from './editar-requi-estatus/editar-requi-estatus.component';
+import { EditarCandidatoEstatusComponent } from './editar-candidato-estatus/editar-candidato-estatus.component';
+
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -171,7 +175,9 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     AlertModule,
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
-    ColorPickerModule
+    ColorPickerModule, 
+    NgbModule
+    
   ],
   declarations: [
     DtDireccionComponent,
@@ -236,7 +242,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DlgRequisicionPausaComponent,
     DlgComentariosNRComponent,
     EditarRequiEstatusComponent,
-    CalendarioCandidatoComponent
+    CalendarioCandidatoComponent,
+    EditarCandidatoEstatusComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -298,13 +305,14 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     EditarContratadosComponent,
     DialogEventComponent,
     CalendarioCandidatoComponent,
-    EditarRequiEstatusComponent
+    EditarRequiEstatusComponent,
+    EditarCandidatoEstatusComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
     { provide: PaginationConfig, useValue: getSpanishPaginatorBtp() },
     ToasterService
   ],
-  entryComponents: [DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent]
+  entryComponents: [DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent]
 })
 export class ComponentsModule { }

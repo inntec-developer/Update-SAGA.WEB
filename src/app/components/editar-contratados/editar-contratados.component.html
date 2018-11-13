@@ -1,4 +1,5 @@
-<!-- <div class="row">
+<!-- <mat-dialog-content class="my-class">
+<div class="row">
   <div class="col-lg-8">    
     <h3 class="text-success"  mat-dialog-title>EDITAR PERSONAL CONTRATADO</h3>
   </div>
@@ -8,27 +9,28 @@
 </div>
 <mat-divider></mat-divider><br/> -->
 <!-- <p><strong class="text-warning text-center">Horarios disponibles para la requisici&oacute;n</strong></p> -->
-<!-- <mat-dialog-content> -->
+
  <!-- <form [formGroup]="formdata" role="form" name="formdata" novalidate>  -->
-  <div class="table-responsive pointer">
-    <table *ngIf="data else NotCandidatos" id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+
+  <div class="table-responsive">
+    <table class="table table-hover table-striped">
       <thead>
         <tr>
           <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
             {{column.title | uppercase}}
-            <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
-            </i>
+            <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
+            </i> -->
           </th>
           <th class="text-center"></th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngIf="showFilterRow">
+        <!-- <tr *ngIf="showFilterRow">
           <td *ngFor="let column of columns">
             <input formControlName="filtro" *ngIf="column.filtering" placeholder="{{column.filtering.placeholder | uppercase}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
               class="form-control">
           </td>
-        </tr>
+        </tr> -->
         <tr *ngFor="let row of data; let rowIndex = index" [class.classCURP]="row.classCURP">
          <td class="text-center">{{row.folio}}</td>
          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
@@ -45,15 +47,47 @@
                 </small>
               </span>
           </td>
-          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar" >
-            <span  (dblclick)="editing[rowIndex + '-edad'] = true" *ngIf="!editing[rowIndex + '-edad']">
-                {{row.edad | date:'dd-MM-yyyy'}}
-            </span>
-            <mat-form-field *ngIf="editing[rowIndex + '-edad']">
-              <input class="form-control form-control-sm" matInput [matDatepicker]="picker" placeholder="Seleccionar fecha" (dateChange)="updateValue($event, 'edad', rowIndex)">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
+          <!-- <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
+              <span (dblclick)="editing[rowIndex + '-rfc'] = true" *ngIf="!editing[rowIndex + '-rfc']">
+                  {{row.rfc | uppercase}}
+              </span>
+       
+              <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'rfc', rowIndex);" *ngIf="editing[rowIndex + '-rfc']" type="text" [value]=row.rfc >
+             
+          </td>
+          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
+              <span (dblclick)="editing[rowIndex + '-nss'] = true" *ngIf="!editing[rowIndex + '-nss']">
+                  {{row.nss | uppercase}}
+              </span>
+       
+              <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'nss', rowIndex);" *ngIf="editing[rowIndex + '-nss']" type="text" [value]=row.nss >
+             
+          </td> -->
+          <td class="text-center">
+
+              <span (dblclick)="editing[rowIndex + '-edad'] = true" *ngIf="!editing[rowIndex + '-edad']">
+                  {{row.edad | date:'yyyy-MM-dd'}}
+              </span>
+         
+              <!-- <mat-form-field *ngIf="editing[rowIndex + '-edad']">
+                  <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateChange)="updateValue($event, 'edad', rowIndex)">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field> -->
+              <!-- <div class="form-group" *ngIf="editing[rowIndex + '-edad']">
+                  <div class="input-group">
+                    <input class="form-control form-control-sm" placeholder="Seleccionar fecha" [(ngModel)]="modelCalendar"
+                           ngbDatepicker #d="ngbDatepicker" (ngModelChange)="updateValue($event, 'edad', rowIndex)">
+                    <div class="input-group-append">
+                      <button class="btn btn-xs btn-info" (click)="d.toggle()" type="button">
+                          <i class="fa fa-calendar" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div> -->
+              <ngb-datepicker *ngIf="editing[rowIndex + '-edad']" [(ngModel)]="modelCalendar" class="custom-day" (select)="updateValue($event, 'edad', rowIndex)" ></ngb-datepicker>
+          <!-- <input *ngIf="editing[rowIndex + '-edad']" type="text" placeholder="Seleccionar fecha" class="form-control form-control-sm customDay"  #dpYMD="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" (change)="updateValue($event, 'edad', rowIndex)"> -->
+
         </td>
           <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar" >
               <span (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
@@ -94,23 +128,36 @@
                 </small>
               </span>
           </td>
-          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
+          <td class="text-center">
             <span (dblclick)="editing[rowIndex + '-areaReclutamiento'] = true" *ngIf="!editing[rowIndex + '-areaReclutamiento']">
-              {{row.areaReclutamiento }}
+              {{row.areaReclutamiento | uppercase}}
             </span>
-            <mat-form-field *ngIf="editing[rowIndex + '-areaReclutamiento']">
+
+            <select *ngIf="editing[rowIndex + '-areaReclutamiento']" class="selectpicker" (change)="updateValue($event, 'areaReclutamiento', rowIndex)" title="Choose one of the following...">
+                <option *ngFor="let a of areas" [value]="a.id">{{a.nombre | uppercase }}</option>
+            </select>
+
+             <!-- <mat-form-field *ngIf="editing[rowIndex + '-areaReclutamiento']">
               <mat-select placeholder="SELECCIONAR AREA DE RECL." [(value)]="areasId" (selectionChange)="updateValue($event, 'areaReclutamiento', rowIndex)" >
                 <mat-option *ngFor="let a of areas" [value]="a.id">
                     {{a.nombre}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
+               -->
           </td>
           <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
             <span (dblclick)="editing[rowIndex + '-fuenteReclutamiento'] = true" *ngIf="!editing[rowIndex + '-fuenteReclutamiento']">
               {{row.fuenteReclutamiento | uppercase}}
             </span>
-            <mat-form-field *ngIf="editing[rowIndex + '-fuenteReclutamiento']">
+
+            
+            <select *ngIf="editing[rowIndex + '-fuenteReclutamiento']" class="selectpicker" (change)="updateValue($event, 'fuenteReclutamiento', rowIndex)">
+              <optgroup *ngFor="let m of medios" label="{{m.nombre | uppercase}}">
+                <option *ngFor="let sub of m.medios" [value]="sub.tipoMediosId">{{sub.tipoNombre}}</option>
+              </optgroup>
+            </select>
+            <!-- <mat-form-field *ngIf="editing[rowIndex + '-fuenteReclutamiento']">
               <mat-select placeholder="SELECCIONAR FUENTE DE RECL." [(value)]="mediosId" (selectionChange)="updateValue($event, 'fuenteReclutamiento', rowIndex)">
                 <mat-optgroup *ngFor="let m of medios" [label]="m.nombre | uppercase"
                               [disabled]="m.disabled">
@@ -120,7 +167,7 @@
                 </mat-optgroup>
               </mat-select>
             </mat-form-field>
-          </td>
+          </td> -->
           <td class="text-center">
                 {{row.sueldoMinimo | currency : '$'}}
 
@@ -144,12 +191,13 @@
       </tbody>
     </table>
   </div>
+
   <!-- </form>  -->
-<!-- </mat-dialog-content> -->
+
 <br/><br/>
 <mat-divider></mat-divider><br/>
 
-<p class="text-warning">Es necesario completar la CURP, con los 2 ultimos digitos validadores </p>
+<p class="text-warning" *ngIf="etiqueta">Es necesario completar la CURP, con los 2 ultimos digitos validadores </p>
 <div class="float-right">
     
   <!-- <button class="btn btn-xs btn-labeled btn-outline-danger mb-2 margen" mat-dialog-close>
@@ -177,105 +225,4 @@
   </button> -->
 
 </div>
-
-<!-- <toaster-container toaster-options="{'toaster-id': 2 }" [toasterconfig]="toasterconfig"></toaster-container> -->
-<!-- 
-  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
-      <span aria-hidden="true">×</span>
-  </button> -->
-  <!-- <div class="modal-dialog modal-lg" role="document">
-
-          <div class="titulo">
-              <span class="pull-left margenTitulo">Editar Contratados</span>
-          </div>
-          <div class="modal-body">
-              <div class="table-responsive pointer">
-                  <table *ngIf="data else NotCandidatos" id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
-                    <thead>
-                      <tr>
-                        <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
-                          {{column.title}}
-                          <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
-                          </i>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngIf="showFilterRow">
-                        <td *ngFor="let column of columns">
-                          <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
-                            class="form-control">
-                        </td>
-                      </tr>
-                      <tr *ngFor="let row of data" [class.selected]="row.selected"  placement="bottom" tooltip="doble click para editar" container="body">
-                        <td class="text-center">SIN ASIGNAR</td>
-                        <td class="text-center">SIN ASIGNAR</td>
-                        <td class="text-center"> {{row.curp}}</td>
-                        <td class="text-center"> {{row.nombre}}</td>
-                        <td class="text-center"> {{row.sueldoMinimo | currency : '$'}} </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-          </div>
-          <div class="modal-footer justify-content-right">
-              <button class="mb-1 btn btn-outline-success" type="button" (click)="refresh()" container="body" placement="bottom" tooltip="Exportar Contratados">
-                  <em class="fa fa-download"></em>
-                </button>
-              <button type="button" class="mb-1 btn btn-outline-danger" (click)="bsModalRef.hide()"><span aria-hidden="true">&times;</span></button>
-          </div>
-
-  </div > -->
-
-
-
-    <!-- <span class="headerColor text-center">Editar informaci&oacute;n candidatos contratados
-    <button type="button" class="close float-right" aria-label="Close" (click)="bsModalRef.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </span>
-
-        <div class="table-responsive pointer">
-          <table *ngIf="data else NotCandidatos" id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
-            <thead>
-              <tr>
-                <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
-                  {{column.title}}
-                  <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
-                  </i>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngIf="showFilterRow">
-                <td *ngFor="let column of columns">
-                  <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
-                    class="form-control">
-                </td>
-              </tr>
-              <tr *ngFor="let row of data" [class.selected]="row.selected"  placement="bottom" tooltip="doble click para editar" container="body">
-                <td class="text-center">{{row.horario}}</td>
-                <td class="text-center"> {{row.nombre}}</td>
-                <td class="text-center"> {{row.areaExp}}</td>
-                <td class="text-center"> {{row.areaInt}}</td>
-                <td class="text-center"> {{row.localidad}} </td>
-                <td class="text-center"> {{row.sueldoMinimo | currency : '$'}} </td>
-                <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
-                <td class="text-center"> {{row.curp}}</td>
-                <td class="text-center"> {{row.rfc}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div> -->
-
-
-<!--mensaje cuando esta vacio la tabla-->
-<ng-template #NotCandidatos>
-  <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12">
-        <alert type="info">
-            <strong>Oops!</strong> A&uacute;n no cuentas con candidatos contratados.
-          </alert>
-    </div>
-  </div>
-</ng-template>
+<!-- </mat-dialog-content> -->

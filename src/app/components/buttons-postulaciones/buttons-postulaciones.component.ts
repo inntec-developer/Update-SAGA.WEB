@@ -95,6 +95,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   // }
 
   ValidarEstatus(estatus) {
+
     if (estatus === 10 || estatus === 12) //postulado apartado
     {
       this.cr = false;
@@ -315,16 +316,16 @@ export class ButtonsPostulacionesComponent implements OnInit {
           horarioId: element.horarioId,
           horario: element.horario,
           foto: ApiConection.ServiceUrlFoto + element.perfil[0]['foto'],
-          nombre: element.perfil[0]['nombre'],
-          apellidoPaterno: element.perfil[0]['apellidoPaterno'],
-          apellidoMaterno: element.perfil[0]['apellidoMaterno'],
+          nombre: element.personal[0]['nombre'],
+          apellidoPaterno: element.personal[0]['apellidoPaterno'],
+          apellidoMaterno: element.personal[0]['apellidoMaterno'],
           areaExp: element.perfil[0]['areaExp'],
           areaInt: element.perfil[0]['areaInt'],
-          curp: element.perfil[0]['curp'],
-          rfc: element.perfil[0]['rfc'],
-          nss: element.perfil[0]['nss'],
-          edad: element.perfil[0]['edad'],
-          localidad: element.perfil[0]['localidad'],
+          curp: element.personal[0]['curp'],
+          rfc: element.personal[0]['rfc'],
+          nss: element.personal[0]['nss'],
+          edad: element.personal[0]['edad'],
+          localidad: element.personal[0]['localidad'],
           sueldoMinimo: element.perfil[0]['sueldoMinimo'],
           estatus: element.estatus,
           candidatoId: element.candidatoId,
@@ -338,10 +339,10 @@ export class ButtonsPostulacionesComponent implements OnInit {
           fuenteReclutamiento: element.fuenteReclutamiento,
           fuenteReclutamientoId: element.fuenteReclutamientoId,
           requisicionId: this.RequisicionId,
-          paisNacimiento: element.perfil[0]['paisNacimiento'] != null ? element.perfil[0]['paisNacimiento'] : 0, 
-          estadoNacimiento: element.perfil[0]['estadoNacimiento'] != null ? element.perfil[0]['estadoNacimiento'] : 0,
-          municipioNacimiento: element.perfil[0]['municipioNacimiento'] != null ? element.perfil[0]['municipioNacimiento'] : 0, 
-          generoId: element.perfil[0]['generoId'],
+          paisNacimiento: element.personal[0]['paisNacimiento'] != null ? element.personal[0]['paisNacimiento'] : 0, 
+          estadoNacimiento: element.personal[0]['estadoNacimiento'] != null ? element.personal[0]['estadoNacimiento'] : 0,
+          municipioNacimiento: element.personal[0]['municipioNacimiento'] != null ? element.personal[0]['municipioNacimiento'] : 0, 
+          generoId: element.personal[0]['generoId'],
           editarCURP: false
 
         }
@@ -354,7 +355,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   GetConteoVacante() {
     this.service.GetConteoVacante(this.RequisicionId, this.clienteId).subscribe(data => {
       this.conteo = data;
-      debugger;
+
 ///////// Esto es lo que tengo que modificar falla como loco............................................................... calineta el procesador y la memoria se desgorda.
       var cc = this.conteo.filter(element => {
         if( element.contratados > 0 )
@@ -481,12 +482,12 @@ export class ButtonsPostulacionesComponent implements OnInit {
     //   }
     });
 
-    this.editarContratados = true;
+   this.editarContratados = true;
 
     // let dialogRef = this.dialog.open(EditarContratadosComponent, {
-    //   height: 'auto',
-    //   width: 'auto',
-    //   data: aux
+    //    width: '200%',
+    //    height: 'auto',
+    //   data: this.dataContratados
     // });
 
     // dialogRef.afterClosed().subscribe(result => {
@@ -499,18 +500,19 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   OpenDialogComentariosNR(data, estatusId, estatus)
   {
-    console.log(this.rowAux)
     var aux = { 
       CandidatoId: this.candidatoId, 
       nombre: this.rowAux.nombre + ' ' + this.rowAux.apellidoPaterno + ' ' + this.rowAux.apellidoMaterno,
       curp: this.rowAux.curp,
       foto: this.rowAux.foto, 
-      requisicionId: this.RequisicionId
+      requisicionId: this.RequisicionId, 
+      ReclutadorId: sessionStorage.getItem('id')
     };
 
     let dialog = this.dialog.open(DlgComentariosNRComponent, {
       width: 'auto',
       height: 'auto',
+      disableClose: true,
       data: aux
     });
     dialog.afterClosed().subscribe(result => {
@@ -533,12 +535,12 @@ export class ButtonsPostulacionesComponent implements OnInit {
       }
       else if(estatusId == 28 )
       {
-        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId };
+        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: sessionStorage.getItem('id') };
         this.OpenDialogComentariosNR(datos, estatusId, estatus);
 
       }
       else  {
-        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId };
+        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: sessionStorage.getItem('id') };
         this.SetApiProceso(datos, estatusId, estatus);
       }
     }

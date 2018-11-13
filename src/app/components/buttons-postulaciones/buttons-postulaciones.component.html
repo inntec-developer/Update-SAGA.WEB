@@ -258,7 +258,7 @@
 
 
 <!--Editar contratados-->
-<div *ngIf="editarContratados" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+<div *ngIf="editarContratados" [config]="{ show: true, ignoreBackdropClick: true, backdrop: 'static' }" bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -269,9 +269,7 @@
         <div class="modal-body">
           <app-editar-contratados [data]="dataContratados"></app-editar-contratados>
         </div>
-        <!-- <div class="modal-footer">
-          <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal2.hide()">Cerrar</button>
-        </div> -->
+
       </div>
     </div>
   </div>

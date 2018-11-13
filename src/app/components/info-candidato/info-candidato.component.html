@@ -11,10 +11,10 @@
       <div class="card-body text-center">
         <img class="img-fluid img-thumbnail rounded-circle thumb96" [src]="candidato.picture" alt="Contact" />
         <h4>{{candidato.nombre}}</h4>
-        <div *ngIf="candidato.estatus && procesoCandidatoId !== 28 && reclutador === usuario">
+        <div *ngIf="procesoCandidatoId === 27 || procesoCandidatoId === 0 || reclutador === usuario">
           <div *ngIf="candidato.aboutMe">
             <mat-divider></mat-divider>
-            <span class="text-muted">{{candidato.aboutMe}}</span>
+            <span class="text-muted">{{procesoCandidatoId}}{{candidato.aboutMe}}</span>
             <mat-divider></mat-divider>
           </div>
 

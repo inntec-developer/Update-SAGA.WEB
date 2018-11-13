@@ -85,7 +85,10 @@ export class ApiConection {
   public static UpdateFuenteRecl = 'Candidatos/updateFuenteRecl'
   public static UpdateCandidatoContratado = 'Candidatos/updateContratados'
   public static GetMotivos = 'Candidatos/getMotivos'
+  public static GetContratados = 'Candidatos/getContratados'
   public static AddComentarioNR = 'Candidatos/addComentariosNR'
+  public static GetCandidatosNR = 'Candidatos/getFoliosIncidencias'
+  public static AddRespuesta = 'Candidatos/addRespuesta'
 
   /* Vacantes */
   public static getRequis = '/dvacante/get';

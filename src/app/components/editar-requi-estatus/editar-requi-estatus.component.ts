@@ -1,9 +1,11 @@
-import { element } from 'protractor';
+
+import {NgbCalendar, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { ComentariosService } from './../../service/Comentarios/comentarios.service';
 import { RequisicionesService } from './../../service/requisiciones/requisiciones.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { PostulateService } from '../../service/SeguimientoVacante/postulate.service';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+
 
 @Component({
   selector: 'app-editar-requi-estatus',
@@ -18,7 +20,7 @@ export class EditarRequiEstatusComponent implements OnInit {
   requis;
   editing = {};
   comentario: string = "";
-
+  
   constructor(private service: RequisicionesService, private comentarioService: ComentariosService, private postulateService: PostulateService, private toasterService: ToasterService ) { }
 
   ngOnInit() {
@@ -45,6 +47,7 @@ export class EditarRequiEstatusComponent implements OnInit {
 
   updateValue(event, cell, rowIndex) 
   {
+
     var aux;
     if(event.target.value !== '')
     {

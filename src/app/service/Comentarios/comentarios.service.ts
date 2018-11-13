@@ -1,3 +1,4 @@
+import { ApiConection } from './../api-conection.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -30,6 +31,7 @@ export class ComentariosService {
   private UrlComentariosVacante = ApiConection.ServiceUrl + ApiConection.ComentariosVacante;
   private UrlAddComentarioVacante = ApiConection.ServiceUrl + ApiConection.AddComentariosVacante;
   private URLAddComentariosNR = ApiConection.ServiceUrl + ApiConection.AddComentarioNR;
+  private URLAddRespuesta = ApiConection.ServiceUrl + ApiConection.AddRespuesta;
 
   constructor(private _http: HttpClient) { }
 
@@ -62,4 +64,14 @@ export class ComentariosService {
 
     return this._http.post(this.URLAddComentariosNR, data, httpOptions );
 }
+
+  AddRespuesta(data) : Observable<any> {
+  const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+
+    return this._http.post(this.URLAddRespuesta, data, httpOptions );
+  }
 }

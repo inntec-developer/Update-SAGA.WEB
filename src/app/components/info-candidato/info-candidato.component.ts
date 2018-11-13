@@ -46,7 +46,7 @@ export class InfoCandidatoComponent implements OnInit {
   reclutadorId;
   procesoCandidato: any = {};
   msg: string;
-  procesoCandidatoId: any; // Recuperar el estatus en el que se encuetra el candidato.
+  procesoCandidatoId: any = 0; // Recuperar el estatus en el que se encuetra el candidato.
   Estatus: any; // Toma el Id del procesoCandidato para realizar las afectaciones correspondientes.
   Emiter: { estatusId: number; estatus: string; candidatoId: string };
   infoRequiId : any = null;
@@ -96,7 +96,7 @@ export class InfoCandidatoComponent implements OnInit {
     this.spinner.show();
     // this.CandidatoId = '4F65DAC1-C6A0-E811-80E8-9E274155325E'
     this._serviceCandidato.getInfoCandidato(this.CandidatoId).subscribe(data => {
-      console.log(this.CandidatoId)
+    
       this.candidato = {
         id: data.id,
         picture: sessionStorage.getItem('ConexionBolsa') + data.foto,

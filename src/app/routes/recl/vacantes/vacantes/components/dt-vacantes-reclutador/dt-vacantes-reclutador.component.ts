@@ -47,6 +47,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   ShowDV: boolean;
   clienteId: any;
   editarRequi = false;
+  editarNR = false;
   usuarioId: any = sessionStorage.getItem('id');
   //estatus vacantes
 
@@ -104,7 +105,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   //estatus vacantes
   SetStatus(estatusId, estatus) {
-    var datos = { estatusId: estatusId, requisicionId: this.requi.id };
+    var datos = { estatusId: estatusId, requisicionId: this.requi.id, ReclutadorId: sessionStorage.getItem('id') };
 
     if(estatusId == 39)
     {
@@ -634,7 +635,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
       data: this.requi
     });
     dialogShow.afterClosed().subscribe(result => {
-      this.refreshTable();
+      if(result)
+      {
+        this.refreshTable();
+      }
     });
   }
   openDialogAssingRequi() {
@@ -659,7 +663,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     dialog.afterClosed().subscribe(result => {
       if(result)
       {
-        this.postulateservice.SetProcesoVacante({ estatusId: estatusId, requisicionId: this.requi.id }).subscribe(data => {
+        this.postulateservice.SetProcesoVacante({ estatusId: estatusId, requisicionId: this.requi.id, ReclutadorId: sessionStorage.getItem('id') }).subscribe(data => {
           if (data == 201) {
             var idx = this.rows.findIndex(x => x.id == this.requi.id);
             this.rows[idx]['estatus'] = estatus;

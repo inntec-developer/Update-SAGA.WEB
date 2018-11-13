@@ -1,27 +1,30 @@
+import { element } from 'protractor';
+import {NgbCalendar, NgbDate, NgbDateStruct, NgbDatepickerConfig} from '@ng-bootstrap/ng-bootstrap';
 
 import { CandidatosService } from './../../service/Candidatos/candidatos.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ExcelService } from '../../service/ExcelService/excel.service';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+
 
 @Component({
   selector: 'app-editar-contratados',
   templateUrl: './editar-contratados.component.html',
   styleUrls: ['./editar-contratados.component.scss'],
-  providers: [CandidatosService]
+  providers: [CandidatosService, NgbDatepickerConfig]
 })
 export class EditarContratadosComponent implements OnInit {
 
   @Input('data') data;
-  
+
   public dataSource: Array<any> = [];
   editing = {};
   areas = [];
   medios = [];
   areasId: any = 0;
   mediosId: any = 0;
-
+  etiqueta = true;
   // Varaibles del paginador
   public page: number = 1;
   public itemsPerPage: number = 20;
@@ -29,6 +32,9 @@ export class EditarContratadosComponent implements OnInit {
   public numPages: number = 1;
   public length: number = 0;
 
+  modelCalendar: NgbDateStruct;
+  date: {year: number, month: number};
+  minDate: NgbDateStruct;
   // variables tabla
   showFilterRow: boolean;
   registros: number;
@@ -36,6 +42,8 @@ export class EditarContratadosComponent implements OnInit {
   public columns: Array<any> = [
     { title: 'Folio', className: 'text-primary', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
     { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
+    // { title: 'rfc', className: 'text-primary', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
+    // { title: 'nss', className: 'text-primary', name: 'nss', filtering: { filterString: '', placeholder: 'NSS' } },
     { title: 'edad', className: 'text-primary', name: 'edad', filtering: { filterString: '', placeholder: 'Edad' } },
     { title: 'Nombre', className: 'text-primary', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'Apellido Paterno', className: 'text-primary', name: 'apellidoPaterno', filtering: { filterString: '', placeholder: 'Apellido Paterno' } },
@@ -56,17 +64,23 @@ export class EditarContratadosComponent implements OnInit {
 
 
   constructor( private service: CandidatosService,
-             
+    private configCalendar: NgbDatepickerConfig,
                private excelService: ExcelService,
-               private toasterService: ToasterService ) { 
-             
+               private toasterService: ToasterService,
+              //  @Inject(MAT_DIALOG_DATA) public data: any,
+              ) { 
+
+                this.configCalendar.minDate = {year: 1960, month: 1, day: 1};
+                 // days that don't belong to current month are not visible
+                 this.configCalendar.outsideDays = 'hidden';
                }
 
   ngOnInit() { 
     this.GetAreas();
     this.GetMedios();
-
+this.GetContratadosInfo();
   }
+
 
   //configuraciones de la tabla
 
@@ -183,22 +197,72 @@ GetMedios()
     this.medios = result;
   })
 }
+
+GetContratadosInfo()
+{
+
+  var candidatos= [];
+  var contador = 0;
+   this.data.forEach(element => {
+    candidatos.push(element.candidatoId);
+  });
+
+  this.service.GetContratados(candidatos).subscribe(result =>{
+
+   var aux = result.filter(element => {
+     this.data.forEach(row => {
+       if( row.candidatoId === element.entidadId )
+       {
+          row.curp = element.curp;
+          row.rfc = element.rfc;
+          row.nss = element.nss;
+          row.edad = element.fechaNacimiento;
+          row.nombre = element.nombre;
+          row.apellidoPaterno = element.apellidoPaterno;
+          row.apellidoMaterno = element.apellidoMaterno;
+
+          row.editCURP = true;
+          contador++;
+      //  element.editCURP = true;
+      }
+      else
+      {
+        row.editCURP = false;
+      }
+    });
+
+  })
+  contador == this.data.length ? this.etiqueta = false : this.etiqueta = true;
+
+  })
+}
+
 updateValue(event, cell, rowIndex)
 {
   if (cell === "areaReclutamiento")
   {
-    this.data[rowIndex]['areaReclutamiento'] = event.source.selected.viewValue;
-    this.data[rowIndex]['areaReclutamientoId'] = event.value;
+    var nomslc = this.areas.find(x => x.id === event.target.value);
+
+    this.data[rowIndex]['areaReclutamiento'] = nomslc.nombre;
+    this.data[rowIndex]['areaReclutamientoId'] = event.target.value;
   }
   else if (cell === "fuenteReclutamiento")
   {
-    this.data[rowIndex]['fuenteReclutamiento'] = event.source.selected.viewValue;
-    this.data[rowIndex]['fuenteReclutamientoId'] = event.value;
+      this.medios.forEach( element => {
+      var idx = element.medios.findIndex(x => x.tipoMediosId == event.target.value)
+      if(idx > -1)
+      {
+        this.data[rowIndex]['fuenteReclutamiento'] = element.medios[idx]['tipoNombre'];
+        return true;
+      }
+    });
+
+    this.data[rowIndex]['fuenteReclutamientoId'] = event.target.value;
   }
   else if (cell === "edad")
   {
-    var d = event.value;
-    this.data[rowIndex][cell] = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' +  d.getDate();
+    var d = event;
+    this.data[rowIndex][cell] = d.year + '-' + d.month + '-' + d.day;
   }
   else if(event.target.value !== '')
   {
@@ -214,7 +278,6 @@ updateValue(event, cell, rowIndex)
 }
 UpdateData(row)
 {
-console.log(row)
 
 var data = { 
      candidatoId: row.candidatoId,
@@ -261,6 +324,7 @@ exportAsXLSX() {
     if(!element.editCURP)
     {
       element.classCURP = true;
+      this.etiqueta = true;
       this.popToast('error', 'Editar personal contratado', 'Debes editar CURP para poder descargar archivo');
 
       return flag = false;
@@ -268,6 +332,7 @@ exportAsXLSX() {
     else
     {
       element.classCURP = false;
+      this.etiqueta = false;
       var d = new Date(element.fecha);
       var e = new Date(element.edad);
       aux.push( {

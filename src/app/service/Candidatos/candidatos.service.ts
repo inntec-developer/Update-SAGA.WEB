@@ -16,6 +16,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { stringify } from 'querystring';
 
 @Injectable()
 export class CandidatosService {
@@ -46,7 +47,8 @@ export class CandidatosService {
     private URLUpdateFuenteRecl = ApiConection.ServiceUrl + ApiConection.UpdateFuenteRecl;
     private URLUpdateCandidatoContratado = ApiConection.ServiceUrl + ApiConection.UpdateCandidatoContratado;
     private URLGetMotivos = ApiConection.ServiceUrl + ApiConection.GetMotivos;
-    
+    private URLGetContratados = ApiConection.ServiceUrl + ApiConection.GetContratados;
+    private URLGetFoliosIncidencias = ApiConection.ServiceUrl + ApiConection.GetCandidatosNR;
 
     // Error.
     private handleError(error: any) {
@@ -78,6 +80,29 @@ export class CandidatosService {
           };
         return this._httpClient.get(this.URLGetMotivos, {params: params});
     }
+
+    GetContratados(candidatos): Observable<any> { // Obtener el esatus del candidato para las banderas de mostrar la información.
+
+        let params = new HttpParams().set('candidatos', candidatos)
+        const httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type':  'application/json'
+            })
+          };
+        return this._httpClient.post(this.URLGetContratados, candidatos, httpOptions);
+    }
+
+    GetFoliosIncidencias(estatus): Observable<any> { // Obtener el esatus del candidato para las banderas de mostrar la información.
+
+        let params = new HttpParams().set('estatus', estatus)
+        const httpOptions = {
+            headers: new HttpHeaders({
+              'Content-Type':  'application/json'
+            })
+          };
+        return this._httpClient.get(this.URLGetFoliosIncidencias, {params:params});
+    }
+
 
     UpdateFuenteRecl(data: any): Observable<any> {
 
