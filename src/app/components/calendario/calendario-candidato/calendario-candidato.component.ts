@@ -12,18 +12,28 @@ declare var $: any;
 })
 export class CalendarioCandidatoComponent implements OnInit {
   modalRef: BsModalRef;
+  EventSelected: boolean; 
   $calendar: any;
-
-  month: [
-    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Jinio', 'Julio',
-    'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-  ]
+  /* 
+  * 
+      Configuracion del de la vista del calendario
+  *
+  */
   calendarOptions: any = {
     // isRTL: true,
     locale: 'es',
-    lag:'es',
+    lag: 'es',
     defaultView: 'month',
-    header: {
+    eventLimit: 3,
+    eventLimitText: 'Más',
+    height: 300,
+    contentHeight: 450,
+    editable: true,
+    droppable: true,
+    eventClick: this.eventClick.bind(this),
+    dayClick: this.dayClick.bind(this),
+    getEventsById: this,
+    header: { // Información de encabezado del calendario
       left: 'prev,next today',
       center: 'title',
       right: 'month,agendaWeek,agendaDay,listWeek, basicWeek'
@@ -34,7 +44,7 @@ export class CalendarioCandidatoComponent implements OnInit {
       prevYear: 'fa-angle-double-left',
       nextYear: 'fa-angle-double-right'
     },
-    buttonText: {
+    buttonText: { //  Texto de botones para visualizacion de calendario
       today: 'Hoy',
       month: 'Mes',
       week: 'Semana',
@@ -42,14 +52,6 @@ export class CalendarioCandidatoComponent implements OnInit {
       list: 'Lista',
       basicWeek: 'Basico'
     },
-    height: 300,
-    contentHeight: 450,
-    editable: false,
-    droppable: true,
-    eventClick: this.eventClick.bind(this),
-    dayClick: this.dayClick.bind(this),
-    getEventsById: this,
-
   };
 
   calendarEvents: Array<any> = this.createDemoEvents();
@@ -66,6 +68,7 @@ export class CalendarioCandidatoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.EventSelected = false;
     this.$calendar = $(this.fullcalendar.nativeElement);
   }
 
@@ -85,10 +88,12 @@ export class CalendarioCandidatoComponent implements OnInit {
   }
 
   eventClick(calEvent, jsEvent, view) {
+    this.EventSelected = true;
     this.selectedEvent = {
       title: calEvent.title,
       start: calEvent.start,
-      url: calEvent.url || ''
+      end: calEvent.end,
+      message: calEvent.message
     };
 
     console.log(calEvent, jsEvent, view);
@@ -103,6 +108,7 @@ export class CalendarioCandidatoComponent implements OnInit {
   }
 
   addEvent(event) {
+    debugger;
     // store event
     this.calendarEvents.push(event);
     // display event in calendar
@@ -119,8 +125,11 @@ export class CalendarioCandidatoComponent implements OnInit {
       data: date
     })
     dialogEvent.afterClosed().subscribe(result => {
-      if(result != null){
+      if (result != false) {
         console.log(result)
+        this.addEvent(result);
+      }else{
+        console.log('No se agrego nada a la agenda');
       }
     });
 
@@ -136,9 +145,10 @@ export class CalendarioCandidatoComponent implements OnInit {
 
     return [{
       title: 'All Day Event',
-      start: new Date(y, m, 2, 17,30),
+      start: new Date(y, m, 2, 17, 30),
       backgroundColor: '#f56954', //red
-      borderColor: '#f56954' //red
+      borderColor: '#f56954', //red
+      message: 'Este es un mensaje de descripción.'
     }, {
       title: 'Long Event',
       start: new Date(2018, 10, 5),
@@ -148,9 +158,24 @@ export class CalendarioCandidatoComponent implements OnInit {
     }, {
       title: 'Meeting',
       start: new Date(y, m, d, 10, 30),
+      end: new Date(y, m, d, 12, 30),
       allDay: false,
       backgroundColor: '#0073b7', //Blue
       borderColor: '#0073b7' //Blue
+    }, {
+      title: 'Lunch',
+      start: new Date(y, m, d, 12, 0),
+      end: new Date(y, m, d, 14, 0),
+      allDay: false,
+      backgroundColor: '#00c0ef', //Info (aqua)
+      borderColor: '#00c0ef' //Info (aqua)
+    }, {
+      title: 'Lunch',
+      start: new Date(y, m, d, 12, 0),
+      end: new Date(y, m, d, 14, 0),
+      allDay: false,
+      backgroundColor: '#00c0ef', //Info (aqua)
+      borderColor: '#00c0ef' //Info (aqua)
     }, {
       title: 'Lunch',
       start: new Date(y, m, d, 12, 0),
