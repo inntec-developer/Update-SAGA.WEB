@@ -52,10 +52,10 @@ export class ExcelService {
       type: EXCEL_TYPE
     });
 
-var f = new Date();
+    var f = new Date();
+    var lon = f.getDate().toString().length;
 
-
-    FileSaver.saveAs(data, fileName + '_' + f.getFullYear() + '' + (f.getMonth() + 1) + '' + '0'.repeat(2 - (f.getDay().toString().length)) + f.getDay() + EXCEL_EXTENSION);
+    FileSaver.saveAs(data, fileName + '_' + f.getFullYear() + '' + (f.getMonth() + 1) + '' + '0'.repeat(2 - lon) + f.getDate() + EXCEL_EXTENSION);
   }
   
 }

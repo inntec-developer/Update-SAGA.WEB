@@ -87,7 +87,6 @@ export class ButtonsPostulacionesComponent implements OnInit {
   ngOnInit() {
     this.getpostulados();
     this.GetConteoVacante();
-
   }
 
   // openModal(templateModal: TemplateRef<any>) {
@@ -96,7 +95,24 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   ValidarEstatus(estatus) {
 
-    if (estatus === 10 || estatus === 12) //postulado apartado
+    if(this.estatusVacante == 39)
+    {
+      this.cr = true;
+      this.enr = true;
+      this.fr = true;
+      this.enc = true;
+      this.fc = true;
+      this.evt = true;
+      this.evps = true;
+      this.evm = true;
+      this.pst = true;
+      this.liberado = true;
+      this.contratado = true;
+      this.rechazado = true;
+      this.nr = true;
+
+    }
+    else if (estatus === 10 || estatus === 12) //postulado apartado
     {
       this.cr = false;
       this.enr = true;
@@ -302,6 +318,22 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.rechazado = true;
       this.nr = true;
     }
+    else if (estatus === 42) //EN REVISION
+    {
+      this.cr = true;
+      this.enr = true;
+      this.fr = true;
+      this.enc = true;
+      this.fc = true;
+      this.contratado = true;
+      this.evt = true;
+      this.evps = true;
+      this.evm = true;
+      this.pst = true;
+      this.liberado = true;
+      this.rechazado = true;
+      this.nr = true;
+    }
 
   }
 
@@ -309,23 +341,23 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
     this.service.GetProceso(this.RequisicionId, sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = [];
-      console.log(data)
+
       data.forEach(element => {
         var perfil = {
           id: element.id,
           horarioId: element.horarioId,
           horario: element.horario,
           foto: ApiConection.ServiceUrlFoto + element.perfil[0]['foto'],
-          nombre: element.personal[0]['nombre'],
-          apellidoPaterno: element.personal[0]['apellidoPaterno'],
-          apellidoMaterno: element.personal[0]['apellidoMaterno'],
+          nombre: element.perfil[0]['nombre'],
+          apellidoPaterno: element.perfil[0]['apellidoPaterno'],
+          apellidoMaterno: element.perfil[0]['apellidoMaterno'],
           areaExp: element.perfil[0]['areaExp'],
           areaInt: element.perfil[0]['areaInt'],
-          curp: element.personal[0]['curp'],
-          rfc: element.personal[0]['rfc'],
-          nss: element.personal[0]['nss'],
-          edad: element.personal[0]['edad'],
-          localidad: element.personal[0]['localidad'],
+          curp: element.perfil[0]['curp'],
+          rfc: element.perfil[0]['rfc'],
+          nss: element.perfil[0]['nss'],
+          edad: element.perfil[0]['edad'],
+          localidad: element.perfil[0]['localidad'],
           sueldoMinimo: element.perfil[0]['sueldoMinimo'],
           estatus: element.estatus,
           candidatoId: element.candidatoId,
@@ -339,14 +371,26 @@ export class ButtonsPostulacionesComponent implements OnInit {
           fuenteReclutamiento: element.fuenteReclutamiento,
           fuenteReclutamientoId: element.fuenteReclutamientoId,
           requisicionId: this.RequisicionId,
-          paisNacimiento: element.personal[0]['paisNacimiento'] != null ? element.personal[0]['paisNacimiento'] : 0, 
-          estadoNacimiento: element.personal[0]['estadoNacimiento'] != null ? element.personal[0]['estadoNacimiento'] : 0,
-          municipioNacimiento: element.personal[0]['municipioNacimiento'] != null ? element.personal[0]['municipioNacimiento'] : 0, 
-          generoId: element.personal[0]['generoId'],
+          paisNacimiento: element.perfil[0]['paisNacimiento'] != null ? element.perfil[0]['paisNacimiento'] : 0, 
+          estadoNacimiento: element.perfil[0]['estadoNacimiento'] != null ? element.perfil[0]['estadoNacimiento'] : 0,
+          municipioNacimiento: element.perfil[0]['municipioNacimiento'] != null ? element.perfil[0]['municipioNacimiento'] : 0, 
+          generoId: element.perfil[0]['generoId'],
           editarCURP: false
-
         }
+        if( element.contratados.length > 0)
+        {
+          perfil.nombre = element.contratados[0]['nombre'];
+          perfil.apellidoPaterno = element.contratados[0]['apellidoPaterno'];
+          perfil.apellidoMaterno = element.contratados[0]['apellidoMaterno'];
+          perfil.curp = element.contratados[0]['curp'];
+          perfil.rfc = element.contratados[0]['rfc'];
+          perfil.nss = element.contratados[0]['nss'];
+          perfil.edad = element.contratados[0]['edad'];
+          perfil.editarCURP = true;
+        }
+
         this.dataSource.push(perfil);
+        this.showFilterRow = true;
 
       })
     }, error => this.errorMessage = <any>error);
@@ -415,7 +459,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
         this.dataSource[idx]['horario'] = nom[0]['nombre'];
         this.dataSource[idx]['horarioId'] = this.horarioId;
 
-        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, tipoMediosId: result.mediosId };
+        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, tipoMediosId: result.mediosId, ReclutadorId: sessionStorage.getItem('id') };
 
         this.UpdateFuenteReclutamiento(datos, estatusId, estatus);
         
@@ -519,7 +563,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       console.log(result)
       if(result)
       {
-        this.SetApiProceso(data, estatusId, estatus)
+        this.SetApiProceso(data, 42, 'En Revision')
 
       }
     })
@@ -533,7 +577,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       }else if (estatusId == 18) {
         this.GetHorarioRequis(estatusId, estatus);
       }
-      else if(estatusId == 28 )
+      else if(estatusId == 42 )
       {
         var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: sessionStorage.getItem('id') };
         this.OpenDialogComentariosNR(datos, estatusId, estatus);
@@ -588,7 +632,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       else if (estatusId == 21 || estatusId == 22 || estatusId == 23) {
         var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 4 };
       }
-      else if (estatusId == 24 || estatusId == 25 || estatusId == 27 || estatusId == 40 || estatusId == 28) {
+      else if (estatusId == 24 || estatusId == 25 || estatusId == 27 || estatusId == 40 || estatusId == 42) {
         var datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 5 };
       }
 
@@ -610,7 +654,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
           }
 
-          if (estatusId === 22) // si es cita con cliente cambio automatico a envio al cliente 
+          if (estatusId === 22 && this.estatusVacante != "30"  && this.estatusVacante != "39") // si es cita con cliente cambio automatico a envio al cliente 
           {
             var datosVacante = { estatusId: 30, requisicionId: this.RequisicionId };
 
@@ -630,9 +674,9 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
           this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
 
-          if (estatusId == 22 && this.estatusVacante != "30") {
-            this.popToast('warning', 'Estatus', 'El estatus de la vacante es diferente a envio al cliente.');
-          }
+          // if (estatusId == 22 && this.estatusVacante != "30"  && this.estatusVacante != "39") {
+          //   this.popToast('warning', 'Estatus', 'El estatus de la vacante es diferente a envio al cliente.');
+          // }
         }
       })
     }
@@ -758,6 +802,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
     { title: 'Fecha Nacimiento', className: 'text-primary text-center', name: 'edad', filtering: { filterString: '', placeholder: 'Fecha Nacimiento' } },
     { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
     { title: 'RFC', className: 'text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
+    { title: 'NSS', className: 'text-success', name: 'nss', filtering: { filterString: '', placeholder: 'NSS' } },
     { title: 'Estatus', className: 'text-primary text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } }
   ]
 

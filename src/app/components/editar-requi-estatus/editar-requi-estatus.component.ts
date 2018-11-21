@@ -17,7 +17,7 @@ export class EditarRequiEstatusComponent implements OnInit {
   @Input('estatusId') estatusId;
   @Input('usuarioId') usuarioId;
 
-  requis;
+  requis: any = [];
   editing = {};
   comentario: string = "";
   
@@ -30,11 +30,12 @@ export class EditarRequiEstatusComponent implements OnInit {
   GetRequisiciones()
   {
     this.service.GetRequisicionesEstatus(this.estatusId, this.usuarioId).subscribe( result =>{
+
       this.requis = result;
       // this.requis.forEach(element => {
       //   element.activar = false;
       // });
-      console.log(result);
+  
     })
   }
 

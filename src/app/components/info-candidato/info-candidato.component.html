@@ -50,7 +50,7 @@
             <em *ngIf="procesoCandidatoId != 27 && candidato.estatus" class="fa fa-lock m-0 text-primary"></em>
           </div>
           <div class="col-md-10 text-right">
-            <h5 *ngIf="candidato.estatus" class="m-0" [ngClass]="(procesoCandidatoId === 27) ? 'text-success':'text-primary'">
+            <h5 *ngIf="candidato.estatus" class="m-0" [ngClass]="(procesoCandidatoId === 27) ? 'text-success':'text-primary'" [class.text-warning]="candidato.estatus.estatusId === 42">
                 <span *ngIf="candidato.estatus.estatusId != 28"> {{ Status }} por: {{reclutador}} </span>
                 <span *ngIf="candidato.estatus.estatusId == 28" class="text-danger">POSTULADO por: {{reclutador}} </span>
             </h5>

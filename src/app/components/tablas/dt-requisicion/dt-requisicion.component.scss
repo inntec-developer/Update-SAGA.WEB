@@ -23,6 +23,13 @@ table {
   width: 400px;
 }
 
+tr:hover
+{
+//   transform:scale(0.999,0.9);
+//   transform-origin:center;
+font-size: 14px;
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
 .margen {
 
   margin: 0 2px;

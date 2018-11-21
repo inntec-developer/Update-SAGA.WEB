@@ -412,7 +412,7 @@ export class DtRequisicionComponent implements OnInit {
     if(estatusId == 8)
     {
       var idx = this.rows.findIndex(x => x.id == this.element.id);
-      if (this.rows[idx]['enProceso'] > 0 || this.rows[idx]['Postulados'] > 0) {
+      
         this.rows[idx]['enProcesoN'].forEach(element => {
             emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
         });
@@ -421,13 +421,15 @@ export class DtRequisicionComponent implements OnInit {
           emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
         })
 
-        this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
-          console.log(data)
+        if(emails.length > 0)
+        {
+          this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
+            console.log(data)
   
 
           //this.onChangeTable(this.config);
-        });
-      }
+          });
+        }
     }
     else
     {
@@ -437,7 +439,7 @@ export class DtRequisicionComponent implements OnInit {
           this.rows[idx]['estatus'] = estatus;
           this.rows[idx]['estatusId'] = estatusId;
 
-          if (this.rows[idx]['enProceso'] > 0 || this.rows[idx]['Postulados'] > 0 && (estatusId >= 34 && estatusId <=37 || estatusId == 8)) {
+          if (estatusId >= 34 && estatusId <=37) {
             this.rows[idx]['enProcesoN'].forEach(element => {
               if(element.estatusId != 24)
               {
@@ -452,9 +454,12 @@ export class DtRequisicionComponent implements OnInit {
               }
             })
 
-            this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
-              console.log(data)
-            });
+            if(emails.length > 0)
+            {
+              this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
+                console.log(data)
+              });
+            }
           }
 
           this.ValidarEstatus(estatusId);

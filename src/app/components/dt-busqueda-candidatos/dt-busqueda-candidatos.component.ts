@@ -29,6 +29,7 @@ export class DtBusquedaCandidatosComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource = this.Candidatos;
+    console.log(this.dataSource)
     this.onChangeTable(this.config);
   }
 

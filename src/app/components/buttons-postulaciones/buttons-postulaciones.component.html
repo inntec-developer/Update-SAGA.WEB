@@ -98,7 +98,7 @@
                 <em class="fa fa-user-times"></em>
               </button></a></li> 
 
-              <li><a><button [disabled]="nr" [ngClass]="nr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'"  type="button" (click)="SetProceso(28, 'NR')"  container="body" placement="bottom" tooltip="NR">
+              <li><a><button [disabled]="nr" [ngClass]="nr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'"  type="button" (click)="SetProceso(42, 'NR')"  container="body" placement="bottom" tooltip="NR">
                 <em class="fa fa-flag"></em>
               </button></a></li>
             
@@ -185,12 +185,13 @@
             <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
             <td class="text-center"> {{row.curp | uppercase }}</td>
             <td class="text-center"> {{row.rfc | uppercase }}</td>
-            <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength" [ngClass]="(row.estatusId == 28) ? 'badge badge-danger': 'badge badge-info'">
+            <td class="text-center"> {{row.nss | uppercase }}</td>
+            <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength" class='px-1 mr-1 badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42" [class.badge-danger]="row.estatusId == 28">
               <span *ngIf="row.estatusId != 28"> {{row.estatus | uppercase }}</span>
               <span *ngIf="row.estatusId == 28">POSTULADO</span>
             </span></td>
             <ng-template #toLength>
-              <span [ngClass]="(row.estatusId == 28) ? 'badge badge-danger':  'badge badge-info'" placement="bottom" tooltip="{{row.estatus | uppercase}}" container="body">{{row.estatus | slice:0:6 | uppercase }} ... </span>
+              <span class='px-1 mr-1 badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42" [class.badge-danger]="row.estatusId == 28" placement="bottom" tooltip="{{row.estatus | uppercase}}" container="body">{{row.estatus | slice:0:6 | uppercase }} ... </span>
           </ng-template>
           </tr>
         </tbody>
@@ -258,7 +259,7 @@
 
 
 <!--Editar contratados-->
-<div *ngIf="editarContratados" [config]="{ show: true, ignoreBackdropClick: true, backdrop: 'static' }" bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+<div *ngIf="editarContratados" [config]="{ show: true, ignoreBackdropClick: true, backdrop: 'static', keyboard: false }" bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">

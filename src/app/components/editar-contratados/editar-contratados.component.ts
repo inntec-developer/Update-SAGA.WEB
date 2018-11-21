@@ -42,8 +42,8 @@ export class EditarContratadosComponent implements OnInit {
   public columns: Array<any> = [
     { title: 'Folio', className: 'text-primary', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
     { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
-    // { title: 'rfc', className: 'text-primary', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
-    // { title: 'nss', className: 'text-primary', name: 'nss', filtering: { filterString: '', placeholder: 'NSS' } },
+    { title: 'rfc', className: 'text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
+    { title: 'nss', className: 'text-success', name: 'nss', filtering: { filterString: '', placeholder: 'NSS' } },
     { title: 'edad', className: 'text-primary', name: 'edad', filtering: { filterString: '', placeholder: 'Edad' } },
     { title: 'Nombre', className: 'text-primary', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'Apellido Paterno', className: 'text-primary', name: 'apellidoPaterno', filtering: { filterString: '', placeholder: 'Apellido Paterno' } },
@@ -200,7 +200,6 @@ GetMedios()
 
 GetContratadosInfo()
 {
-
   var candidatos= [];
   var contador = 0;
    this.data.forEach(element => {
@@ -208,21 +207,27 @@ GetContratadosInfo()
   });
 
   this.service.GetContratados(candidatos).subscribe(result =>{
-
    var aux = result.filter(element => {
      this.data.forEach(row => {
-       if( row.candidatoId === element.entidadId )
+       if( row.candidatoId === element.candidatoId )
        {
           row.curp = element.curp;
           row.rfc = element.rfc;
           row.nss = element.nss;
-          row.edad = element.fechaNacimiento;
+          row.edad = element.edad;
           row.nombre = element.nombre;
           row.apellidoPaterno = element.apellidoPaterno;
           row.apellidoMaterno = element.apellidoMaterno;
 
-          row.editCURP = true;
-          contador++;
+          if(element.fch_Creacion == element.fch_Modificacion)
+          {
+            row.editCURP = false;
+          }
+          else
+          {
+            row.editCURP = true;
+            contador++;
+          }
       //  element.editCURP = true;
       }
       else
@@ -338,7 +343,9 @@ exportAsXLSX() {
       aux.push( {
         FOLIO: element.folio.toString(),
         CURP: element.curp,
-        'FECHA DE NACIMIENTO': new Date(e.getFullYear() + '-' + (e.getMonth() +1 ) + '-' + e.getDate()),
+        RFC: element.rfc,
+        NSS: element.nss,
+        'FECHA DE NACIMIENTO': new Date(e.getFullYear() + '-' + (e.getMonth() + 1 ) + '-' + e.getDate()),
         NOMBRE: element.nombre,
         'APELLIDO PATERNO': element.apellidoPaterno,
         'APELLIDO MATERNO': element.apellidoMaterno,
@@ -346,7 +353,7 @@ exportAsXLSX() {
         'AREA RECLUTAMIENTO': element.areaReclutamiento,
         SUELDO: element.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
         USUARIO: element.usuario,
-        FECHA: new Date(d.getFullYear() + '-' + (d.getMonth() +1 ) + '-' + d.getDate())
+        FECHA: new Date(d.getFullYear() + '-' + (d.getMonth() + 1 ) + '-' + d.getDate()) //revisar bien
       });
     }
   });

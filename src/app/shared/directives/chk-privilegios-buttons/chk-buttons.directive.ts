@@ -19,11 +19,12 @@ export class ChkButtonsDirective implements AfterViewInit {
     var btnupdate = document.querySelectorAll("#update");
     var btndelete = document.querySelectorAll("#delete");
     var btnspecial = document.querySelectorAll("#special");
-    let privilegios = JSON.parse(sessionStorage.getItem('privilegios'))
-     ruta = this.activeRoute.snapshot.routeConfig ? 
-     this.activeRoute.routeConfig.data.componente : 
-     sessionStorage.getItem('ruta')
+    let privilegios = JSON.parse(sessionStorage.getItem('privilegios'));
 
+     ruta = this.activeRoute.snapshot.routeConfig.data ? 
+     this.activeRoute.snapshot.routeConfig.data.componente : 
+      sessionStorage.getItem('ruta')
+    // this.activeRoute.snapshot.routeConfig.path
     var campos = privilegios.filter(function(row){
       return row.tipoEstructuraId === 4 && row.nombre == ruta
        });

@@ -519,7 +519,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ecc = true; //envío candidato cliente
       this.ec = true; //espera contratacion
       this.nbc = false; //nueva busqueda candidato
-      this.pausa = true;
+      this.pausa = false;
       this.asignar = false;
       this.disenador = true;
     }
@@ -530,7 +530,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ecc = true; //envío candidato cliente
       this.ec = false; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
-      this.pausa = true;
+      this.pausa = false;
       this.asignar = false;
       this.disenador = true;
     }
@@ -686,8 +686,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   closeModal()
   {
-    console.log("entro")
     this.editarRequi=false;
+    this.editarNR=false;
     this.refreshTable();
   }
   openDesignVacante() {
@@ -730,6 +730,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       }
       var d = new Date(row.fch_Creacion);
       var e = new Date(row.fch_Modificacion);
+    
       aux.push({
         FOLIO: row.folio.toString(),
         'FECHA SOLICITUD': new Date(d.getFullYear() + '-' + (d.getMonth() +1 ) + '-' + d.getDate()),
@@ -740,7 +741,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
         PUESTO: row.vBtra,
         SUELDO:  row.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
         ESTATUS: row.estatus,
-        'FECHA ESTATUS': new Date(e.getFullYear() + '-' + (e.getMonth() +1 ) + '-' + e.getDate()),
+        'FECHA ESTATUS': new Date(e.getFullYear() + '-' + (e.getMonth() + 1 ) + '-' + e.getDate()),
         RECLUTADOR: sessionStorage.getItem('nombre'),
         'COMENTARIOS': comentarios
       })

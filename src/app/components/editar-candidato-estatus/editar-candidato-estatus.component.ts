@@ -11,7 +11,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 })
 export class EditarCandidatoEstatusComponent implements OnInit {
 
-  @Input("estatusId") estatuId;
+  @Input("estatusId") estatusId;
   candidatos: any = [];
   editing = {};
   comentario = "";
@@ -23,8 +23,9 @@ export class EditarCandidatoEstatusComponent implements OnInit {
 
   GetCandidatosNR()
   {
-    this.service.GetFoliosIncidencias(this.estatuId).subscribe(result =>{
+    this.service.GetFoliosIncidencias(this.estatusId).subscribe(result =>{
       this.candidatos = result;
+      console.log(this.candidatos)
     })
 
   }
@@ -34,14 +35,17 @@ export class EditarCandidatoEstatusComponent implements OnInit {
     var aux;
     if(event.target.value !== '')
     {
+      // var aux = this.candidatos[rowIndex]['comentario'];
+      // aux.respuesta = event.target.value;
       this.candidatos[rowIndex]['respuesta'] = event.target.value;
+      
       this.candidatos[rowIndex]['activar'] = true;
       this.comentario = event.target.value;
     }
 
     this.editing[rowIndex + '-' + cell] = false;
     this.candidatos = [...this.candidatos];
-    console.log(this.candidatos)
+
   }
 
   AddComentario(row, estatus)

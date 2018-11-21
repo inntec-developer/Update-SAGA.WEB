@@ -13,7 +13,7 @@
  <!-- <form [formGroup]="formdata" role="form" name="formdata" novalidate>  -->
 
   <div class="table-responsive">
-    <table class="table table-hover table-striped">
+    <table *ngIf="data.length > 0 else NotCandidatos" class="table table-hover table-striped">
       <thead>
         <tr>
           <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
@@ -47,12 +47,19 @@
                 </small>
               </span>
           </td>
-          <!-- <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
+          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
               <span (dblclick)="editing[rowIndex + '-rfc'] = true" *ngIf="!editing[rowIndex + '-rfc']">
                   {{row.rfc | uppercase}}
               </span>
        
-              <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'rfc', rowIndex);" *ngIf="editing[rowIndex + '-rfc']" type="text" [value]=row.rfc >
+              <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'rfc', rowIndex);" *ngIf="editing[rowIndex + '-rfc']" type="text" maxlength=13 [value]=row.rfc >
+              <span *ngIf="editing[rowIndex + '-rfc']">
+                <small [ngClass]="row.rfc.length < 13 ? 'text-danger' : 'text-success'">
+                  <em *ngIf="row.rfc.length < 13 " class="fa fa-close"></em>
+                  <em *ngIf="row.rfc.length == 13" class="fa fa-check"></em>
+                 RFC debe tener 13 caracteres
+                </small>
+              </span>
              
           </td>
           <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
@@ -60,9 +67,16 @@
                   {{row.nss | uppercase}}
               </span>
        
-              <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'nss', rowIndex);" *ngIf="editing[rowIndex + '-nss']" type="text" [value]=row.nss >
+              <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'nss', rowIndex);" *ngIf="editing[rowIndex + '-nss']" type="text" maxlength=11 [value]=row.nss >
+              <span *ngIf="editing[rowIndex + '-nss']">
+                <small [ngClass]="row.nss.length < 11 ? 'text-danger' : 'text-success'">
+                  <em *ngIf="row.nss.length < 11" class="fa fa-close"></em>
+                  <em *ngIf="row.nss.length == 11" class="fa fa-check"></em>
+                 NSS debe tener 11 caracteres
+                </small>
+              </span>
              
-          </td> -->
+          </td>
           <td class="text-center">
 
               <span (dblclick)="editing[rowIndex + '-edad'] = true" *ngIf="!editing[rowIndex + '-edad']">
@@ -211,7 +225,7 @@
     </span> Validar CURP
   </a>
 
-  <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-2 margen" (click)="exportAsXLSX()">
+  <button [disabled]="data.length==0" type="button" class="btn btn-xs btn-labeled btn-outline-success mb-2 margen" (click)="exportAsXLSX()">
     <span class="btn-label">
       <i class="fa fa-download"></i>
     </span> Descargar
@@ -226,3 +240,14 @@
 
 </div>
 <!-- </mat-dialog-content> -->
+
+<!--mensaje cuando esta vacio la tabla-->
+<ng-template #NotCandidatos>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+          <alert type="info">
+              <strong>Oops!</strong> A&uacute;n no cuentas con candidatos contratados.
+            </alert>
+      </div>
+    </div>
+  </ng-template>
