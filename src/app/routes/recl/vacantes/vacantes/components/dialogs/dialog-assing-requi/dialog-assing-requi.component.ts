@@ -109,7 +109,7 @@ export class DialogAssingRequiComponent implements OnInit {
         fch_Cumplimiento : this.formAsignaciones.get('fch_Cumplimiento').value,
         diasEnvio: this.formAsignaciones.get('diasEnvio').value,
         usuario: sessionStorage.getItem('usuario'),
-        AprobadorId: sessionStorage.getItem('id'),
+        aprobadorId: sessionStorage.getItem('id'),
         asignacionRequi: asg
       }
       this.asignarRequi = assing;

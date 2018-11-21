@@ -27,7 +27,7 @@
     <div class="col-md-4 col-sm-4">
       <mat-form-field>
         <input matInput [(colorPicker)]="evnt.color" [style.background]="evnt.color" placeholder="Selecciona un Color"
-          [value]="evnt.color" />
+          />
       </mat-form-field>
     </div>
   </div>
@@ -41,13 +41,15 @@
   <div class="row">
     <div class="col-md-4 col-sm-12">
       <section *ngIf="hora">
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Hora Inicio" type="time" [(ngModel)]="evnt.horaInicio" value="evnt.horaInicio">
+        <mat-form-field>
+          <input matInput placeholder="Hora Inicio" type="time" [(ngModel)]="evnt.horaInicio" min="08:00" max="18:00" step="600" required="">
         </mat-form-field>
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Hora Final" type="time" [(ngModel)]="evnt.horaFinal" value="evnt.horaInicio">
+        {{evnt.horaInicio}}
+        <mat-form-field>
+          <input matInput placeholder="Hora Final" type="time" [(ngModel)]="evnt.horaFinal" min="08:00" max="18:00" step="600" required="">
         </mat-form-field>
-        </section>
+        {{evnt.horaFinal}}
+      </section>
     </div>
 
   </div>
@@ -60,7 +62,7 @@
       <i class="fa fa-times"></i>
     </span> Cancelar
   </button>
-  <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-1 margen" [mat-dialog-close]="evnt">
+  <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-1 margen" (click)="onCloseDialogInfo()">
     <span class="btn-label">
       <i class="fa fa-check"></i>
     </span> Aceptar
