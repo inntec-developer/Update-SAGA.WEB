@@ -15,6 +15,7 @@ export class DlgComentariosNRComponent implements OnInit, AfterViewInit {
   motivos;
   comentario: string;
   motivoId;
+  loading = false;
   constructor(@Inject(MAT_DIALOG_DATA) public usuario: any,
    private serviceCandidato: CandidatosService, 
    private serviceComentarios: ComentariosService, 
@@ -41,6 +42,7 @@ export class DlgComentariosNRComponent implements OnInit, AfterViewInit {
   
   AddComentario()
   {
+    this.loading = true;
     let Comentario = {
         Comentario: this.comentario,
         CandidatoId: this.usuario.CandidatoId,
@@ -51,16 +53,24 @@ export class DlgComentariosNRComponent implements OnInit, AfterViewInit {
       }
 
       this.serviceComentarios.AddComentariosNR(Comentario).subscribe(data => {
+
         if (data == 200) {
           this.comentario = '';
           this.motivoId = 0;
 
-          this.popToast('success', 'Candidato NR', 'El comentario se agregó con éxito');
-          this.dialog.close(1);
+          this.loading = false;
+        //  this.popToast('success', 'Candidato posible NR', 'El comentario se agregó con éxito');
+          this.dialog.close(true);
         }
-      }, err => {
-        this.popToast('error', 'Candidato NR', err);
-        console.log(err);
+        else
+        {
+          this.loading = false;
+       
+       //   this.popToast('error', 'Candidato posible NR', 'Ocurrio un error al intentar agregar comentario');
+        
+        this.dialog.close(false);
+
+        }
       });
     }
   

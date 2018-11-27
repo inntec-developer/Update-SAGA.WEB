@@ -228,11 +228,9 @@ GetContratadosInfo()
             row.editCURP = true;
             contador++;
           }
+         
+          return;
       //  element.editCURP = true;
-      }
-      else
-      {
-        row.editCURP = false;
       }
     });
 
@@ -345,7 +343,7 @@ exportAsXLSX() {
         CURP: element.curp,
         RFC: element.rfc,
         NSS: element.nss,
-        'FECHA DE NACIMIENTO': new Date(e.getFullYear() + '-' + (e.getMonth() + 1 ) + '-' + e.getDate()),
+        'FECHA DE NACIMIENTO': new Date(e.getFullYear() + '-' + (e.getMonth() + 1 ) + '-' + (e.getDate() + 1)),
         NOMBRE: element.nombre,
         'APELLIDO PATERNO': element.apellidoPaterno,
         'APELLIDO MATERNO': element.apellidoMaterno,
@@ -353,7 +351,7 @@ exportAsXLSX() {
         'AREA RECLUTAMIENTO': element.areaReclutamiento,
         SUELDO: element.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
         USUARIO: element.usuario,
-        FECHA: new Date(d.getFullYear() + '-' + (d.getMonth() + 1 ) + '-' + d.getDate()) //revisar bien
+        FECHA: new Date(d.getFullYear() + '-' + (d.getMonth() + 1 ) + '-' + (d.getDate() + 1)) //revisar bien
       });
     }
   });

@@ -54,7 +54,7 @@
                 </button>
               </a></li>
               <li><a>
-                <button [ngClass]="liberado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" [disabled]="liberado" type="button" (click)="SetProceso(27, 'Desapartado')"  container="body" placement="bottom" tooltip="Desapartar"> 
+                <button [ngClass]="liberado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" [disabled]="liberado" type="button" (click)="SetProceso(27, 'Liberado')"  container="body" placement="bottom" tooltip="Desapartar"> 
                   <em class="fa fa-thumbs-o-down"></em>
                 </button>
               </a></li>
@@ -153,7 +153,8 @@
     <div class="d-flex align-items-stretch ">
     </div>
   </div>
-  <div class="card card-default">
+  <div class="card">
+    <div class="card-body">
     <div class="table-responsive pointer" #tableContainer>
       <table *ngIf="dataSource.length > 0 else NotCandidatos" id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
         <thead>
@@ -173,7 +174,7 @@
             </td>
           </tr>
           <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of dataSource" [class.selected]="row.selected"  placement="bottom" tooltip="click para seleccionar - dblclick para visualizar" container="body">
-            <td class="text-center"><span *ngIf="row.estatusId != 12 && row.estatusId != 17 else sinAsignar">{{row.horario}}</span></td>
+            <td class="text-center"><span *ngIf="row.estatusId != 12 && row.estatusId != 17 && row.estatusId != 27 else sinAsignar">{{row.horario}}</span></td>
             <ng-template #sinAsignar>
               <span>SIN ASIGNAR</span>
             </ng-template> 
@@ -196,6 +197,7 @@
           </tr>
         </tbody>
       </table>
+    </div>
     </div>
   </div>
   <div class="text-right">

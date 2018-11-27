@@ -15,7 +15,7 @@ export class DlgRequisicionPausaComponent implements OnInit {
   motivos;
   comentario: string;
   motivoId;
-
+  loading = false;
   constructor(@Inject(MAT_DIALOG_DATA) public requi: any,
   private serviceCandidato: CandidatosService, 
   private serviceComentarios: ComentariosService, 
@@ -36,6 +36,7 @@ export class DlgRequisicionPausaComponent implements OnInit {
 
   AddComentario()
   {
+    this.loading = true;
     let Comentario = {
         Comentario: this.comentario,
         RequisicionId: this.requi.requisicionId,
@@ -49,10 +50,12 @@ export class DlgRequisicionPausaComponent implements OnInit {
           this.comentario = '';
           this.motivoId = 0;
 
+          this.loading = false;
           this.popToast('success', 'Requisición en pausa', 'El comentario se agregó con éxito');
           this.dialog.close(1);
         }
       }, err => {
+        this.loading = false;
         this.popToast('error', 'Requisición en pausa', err);
         console.log(err);
       });

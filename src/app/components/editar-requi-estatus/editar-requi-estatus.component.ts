@@ -20,7 +20,7 @@ export class EditarRequiEstatusComponent implements OnInit {
   requis: any = [];
   editing = {};
   comentario: string = "";
-  
+  loading = false;
   constructor(private service: RequisicionesService, private comentarioService: ComentariosService, private postulateService: PostulateService, private toasterService: ToasterService ) { }
 
   ngOnInit() {
@@ -65,18 +65,41 @@ export class EditarRequiEstatusComponent implements OnInit {
 
    //estatus vacantes
    SetStatus(row, rowIndex) {
-    var datos = { estatusId: 33, requisicionId: row.id };
+    this.loading = true;
+
+    var estatusId = 29;
+    var estatus = "BUSQUEDA DE CANDIDATOS"
+    if(row.enProceso > 0)
+    {
+      if(row.enProcesoFC > 0 || row.contratados > 0)
+      {
+        estatusId = 33;
+        estatus = "EN ESPERA DE CONTRATACIÓN";
+      }
+      else if(row.enProcesoEC > 0)
+      {
+        estatusId = 30;
+        estatus = "ENVÍO AL CLIENTE"
+      }
+      else
+      {
+        estatusId = 29;
+      }
+    }
+
+    var datos = { estatusId: estatusId, requisicionId: row.id };
 
     this.postulateService.SetProcesoVacante(datos).subscribe(data => {
         if (data == 201) {
           
-          this.requis[rowIndex]['estatus'] = "En espera de contratación";
-          this.requis[rowIndex]['estatusId'] = 33;
-        
-        //  this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+          this.requis[rowIndex]['estatus'] = estatus;
+          this.requis[rowIndex]['estatusId'] = estatusId;
+        this.loading = false;
+          this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
 
         }
         else {
+          this.loading = false;
           this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
         }
       })

@@ -399,7 +399,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   GetConteoVacante() {
     this.service.GetConteoVacante(this.RequisicionId, this.clienteId).subscribe(data => {
       this.conteo = data;
-
+      console.log(this.conteo)
 ///////// Esto es lo que tengo que modificar falla como loco............................................................... calineta el procesador y la memoria se desgorda.
       var cc = this.conteo.filter(element => {
         if( element.contratados > 0 )
@@ -415,7 +415,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   GetHorarioRequis(estatusId, estatus) {
     
     this.serviceRequi.GetHorariosRequiConteo(this.RequisicionId).subscribe(data => {
-  
+
       // if (data.length > 0) {
         var aux = data.filter(element => !element.vacantes)
 
@@ -451,6 +451,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
     dialogDlt.afterClosed().subscribe(result => {
       if (result) {
+
         this.horarioId = result.horarioId;
 
         var nom = data.filter(x => x.id == this.horarioId);
@@ -461,7 +462,14 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
         var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, tipoMediosId: result.mediosId, ReclutadorId: sessionStorage.getItem('id') };
 
-        this.UpdateFuenteReclutamiento(datos, estatusId, estatus);
+        if(estatusId == 24)
+        {
+          this.SetApiProceso(datos, estatusId, estatus)
+        }
+        else
+        {
+          this.UpdateFuenteReclutamiento(datos, estatusId, estatus);
+        }
         
       }
       else {
@@ -474,7 +482,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   OpenDialogLiberacion(estatusId,estatus) {
     let dialogLiberar = this.dialog.open(DialogLiberarCandidatoComponent, {
-      width: '25%',
+      width: '28%',
       height: 'auto',
     });
     dialogLiberar.afterClosed().subscribe(result => {
@@ -487,27 +495,32 @@ export class ButtonsPostulacionesComponent implements OnInit {
           ProcesoCandidatoId: this.ProcesoCandidatoId,
           Comentario: result.comentario,
         }
+      
+        this.serviceLiberar.setLiberarCandidato(data).subscribe(result => {
+            switch(result){
+              case 200:{
+                var aux = this.dataSource;
+                var idx = aux.findIndex(x => x.candidatoId === this.candidatoId);
+                this.ValidarEstatus(estatusId);
+    
+                this.dataSource[idx]['estatusId'] = estatusId;
+                this.dataSource[idx]['estatus'] = estatus;
+    
+                this.onChangeTable(this.config)
+                this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+                break;
+              }
+              case 404: {
+                this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos');
+                break;
+              }
+            }
+          });
       }
-      this.serviceLiberar.setLiberarCandidato(data).subscribe(result => {
-          switch(result){
-            case 200:{
-              var aux = this.dataSource;
-              var idx = aux.findIndex(x => x.candidatoId === this.candidatoId);
-              this.ValidarEstatus(estatusId);
-    
-              this.dataSource[idx]['estatusId'] = estatusId;
-              this.dataSource[idx]['estatus'] = estatus;
-    
-              this.onChangeTable(this.config)
-              this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
-              break;
-            }
-            case 404: {
-              this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos');
-              break;
-            }
-          }
-      });
+      else
+      {
+        this.onChangeTable(this.config)
+      }
     });
   }
 
@@ -560,10 +573,9 @@ export class ButtonsPostulacionesComponent implements OnInit {
       data: aux
     });
     dialog.afterClosed().subscribe(result => {
-      console.log(result)
       if(result)
       {
-        this.SetApiProceso(data, 42, 'En Revision')
+         this.SetApiProceso(data, 42, 'En Revision')
 
       }
     })
@@ -581,6 +593,23 @@ export class ButtonsPostulacionesComponent implements OnInit {
       {
         var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: sessionStorage.getItem('id') };
         this.OpenDialogComentariosNR(datos, estatusId, estatus);
+
+      }
+      else if(estatusId == 24)
+      {
+        var idx = this.conteo.findIndex(x => x.id === this.horarioId);
+        if(idx > -1)
+        {
+          if(this.conteo[idx]['contratados'] == this.conteo[idx]['vacantes'])
+          {
+            this.GetHorarioRequis(estatusId, estatus)
+          }
+          else
+          {
+            var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: sessionStorage.getItem('id') };
+            this.SetApiProceso(datos, estatusId, estatus);
+          }
+        }
 
       }
       else  {
@@ -654,7 +683,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
           }
 
-          if (estatusId === 22 && this.estatusVacante != "30"  && this.estatusVacante != "39") // si es cita con cliente cambio automatico a envio al cliente 
+          if (estatusId === 22 && this.estatusVacante != "33" && this.estatusVacante != "30"  && this.estatusVacante != "39" && this.estatusVacante != "38") // si es cita con cliente cambio automatico a envio al cliente 
           {
             var datosVacante = { estatusId: 30, requisicionId: this.RequisicionId };
 
@@ -662,8 +691,8 @@ export class ButtonsPostulacionesComponent implements OnInit {
               console.log(data)
             })
           }
-          else if (estatusId == 23) {
-            var datosVacante = { estatusId: 33, requisicionId: this.RequisicionId };
+          else if (estatusId == 23 && this.estatusVacante != "33"  && this.estatusVacante != "39" && this.estatusVacante != "38") {
+            var datosVacante = { estatusId: 33, requisicionId: this.RequisicionId }; //espera de contratacion
 
             this.service.SetProcesoVacante(datosVacante).subscribe(data => {
               console.log(data)

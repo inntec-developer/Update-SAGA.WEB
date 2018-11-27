@@ -103,6 +103,7 @@ export class DtRequisicionComponent implements OnInit {
 
   ValidarEstatus(estatusId)
   {
+    debugger;
     if(this.element.vacantes == 0)
     {
       this.gbc = true; //garantía busqueda candidato
@@ -231,6 +232,17 @@ export class DtRequisicionComponent implements OnInit {
       this.cc = true; //cubierta por el cliente
       this.crm = false; //cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
+      this.cancelar = true;
+      this.borrar = true;
+      this.editar = true;
+    }
+    else if(estatusId == 38 && this.element.vacantes > 0 && this.element.contratados > 0 && this.element.contratados <= this.element.vacantes)
+    {
+      this.gbc = true; //garantía busqueda candidato
+      this.cubierta = true;
+      this.cc = false; //cubierta por el cliente
+      this.crm = true; //cubierta reclutamiento medios
+      this.cp = false; // cubierta parcialmente
       this.cancelar = true;
       this.borrar = true;
       this.editar = true;
@@ -438,10 +450,10 @@ export class DtRequisicionComponent implements OnInit {
           var idx = this.rows.findIndex(x => x.id == this.element.id);
           this.rows[idx]['estatus'] = estatus;
           this.rows[idx]['estatusId'] = estatusId;
-
+debugger;
           if (estatusId >= 34 && estatusId <=37) {
             this.rows[idx]['enProcesoN'].forEach(element => {
-              if(element.estatusId != 24)
+              if(element.estatusId != 24 && element.estatusId != 42 && element.estatusId != 27 && element.estatusId != 28)
               {
                 emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
               }
