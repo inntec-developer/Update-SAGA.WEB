@@ -1,35 +1,98 @@
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDialog } from '@angular/material';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
+import { AutoComplete } from 'primeng/primeng';
 import { DialogEventComponent } from '../dialog-event/dialog-event.component';
-import { MatDialog } from '@angular/material';
+import { EventoCalendario } from './../../../models/vtas/Requisicion';
 
 declare var $: any;
 @Component({
   selector: 'app-calendario-candidato',
   templateUrl: './calendario-candidato.component.html',
-  styleUrls: ['./calendario-candidato.component.scss']
+  styleUrls: ['./calendario-candidato.component.scss'],
+  providers: [EventoCalendario,
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+  ]
 })
 export class CalendarioCandidatoComponent implements OnInit {
-  modalRef: BsModalRef;
-  EventSelected: boolean; 
-  $calendar: any;
-  /* 
-  * 
-      Configuracion del de la vista del calendario
-  *
-  */
+  //Formulario para edición del Evento en Calendario.
+
+  createDemoEvents : Array<any> = [
+    {
+      id: 1,
+      title: 'Firmas de Contratos',
+      start: new Date(2018, 11, 20),
+      backgroundColor: '#f39c12', //yellow
+      borderColor: '#f39c12', //yellow
+      allDay: true
+    }, {
+      id: 2,
+      title: 'Entrevistas',
+      start: new Date(2018, 11, 8 ),
+      backgroundColor: '#f39c12', //yellow
+      borderColor: '#f39c12', //yellow
+      allDay: true,
+    }, {
+      id: 3,
+      title: 'Contrataciones',
+      start: new Date(2018, 11, 15),
+      backgroundColor: '#f39c12', //yellow
+      borderColor: '#f39c12', //yellow
+      allDay: true
+    },{
+      id: 4,
+      title: 'Entrevita Candidatos DiDi',
+      start: new Date(2018, 11, 20),
+      end: new Date(2018, 11, 23, 23, 59),
+      message: 'Todo el dia',
+      backgroundColor: '#f39c12', //yellow
+      borderColor: '#f39c12', //yellow
+      allDay: true
+    },{
+      id: 5,
+      title: 'Firma de Contratos Unber',
+      start: new Date(2018, 11, 20),
+      backgroundColor: '#f39c12', //yellow
+      borderColor: '#f39c12', //yellow
+      allDay: true
+    },
+  ]
+
+  public formEvent: FormGroup;
+  public fb: FormBuilder;
+  /* * Variables * */
+  public modalRef: BsModalRef;
+  public EventSelected: boolean;
+  public EditEventAction: boolean;
+  public $calendar: any;
+  public calendarEvents: Array<any> = this.createDemoEvents;
+  public selectedEvent = null;
+  public minLimitDate: any;
+  public allDaySelected: any;
+  public hourStart: string = '12:00';
+  public hourEnd: string = '14:00';
+  /* * Reference to the calendar element * */
+  @ViewChild('fullcalendar') fullcalendar: ElementRef;
+
+
+  /* * Configuracion del de la vista del calendario * */
   calendarOptions: any = {
     // isRTL: true,
+    timezone: "America/Mexico_City",
+    timeZoneImpl: 'UTC-coercion',
     locale: 'es',
-    lag: 'es',
     defaultView: 'month',
     eventLimit: 3,
     eventLimitText: 'Más',
     height: 300,
     contentHeight: 450,
-    editable: true,
-    droppable: true,
+    //editable: true,
+    droppable: false,
     eventClick: this.eventClick.bind(this),
     dayClick: this.dayClick.bind(this),
     getEventsById: this,
@@ -53,23 +116,44 @@ export class CalendarioCandidatoComponent implements OnInit {
       basicWeek: 'Basico'
     },
   };
+  updateIndex: any;
+  loading: boolean;
+  ColorPicker: any;
+  IdEvent: any;
+  selectedDate: any;
 
-  calendarEvents: Array<any> = this.createDemoEvents();
-  selectedEvent = null;
 
-  // reference to the calendar element
-  @ViewChild('fullcalendar') fullcalendar: ElementRef;
+
 
   constructor(
     private modalService: BsModalService,
     private dialog: MatDialog,
+    private eventoCalendario: EventoCalendario
   ) {
     this.calendarOptions.events = this.calendarEvents;
+    this.formEvent = new FormGroup({
+      Titulo: new FormControl('', [Validators.required]),
+      Inicio: new FormControl('', [Validators.required]),
+      Fin: new FormControl('', [Validators.required]),
+      HoraInicio: new FormControl(''),
+      HoraFin: new FormControl(''),
+      AllDay: new FormControl(),
+      Descripcion: new FormControl(''),
+    });
   }
 
   ngOnInit() {
     this.EventSelected = false;
     this.$calendar = $(this.fullcalendar.nativeElement);
+    this.formEvent = this.fb.group({
+      Titulo: [{ value: '' }, Validators.required],
+      Inicio: [{ value: '' }, Validators.required],
+      Fin: [{ value: '' }, Validators.required],
+      HoraInicio: [{ value: '' }],
+      HoraFin: [{ value: '' }],
+      AllDay: [false],
+      Descripcion: [{ value: '' }],
+    });
   }
 
   ngAfterViewInit() {
@@ -79,40 +163,50 @@ export class CalendarioCandidatoComponent implements OnInit {
 
   addRandomEvent() {
     // add dynamically an event
+    var fecha = new Date((new Date).getFullYear(), (new Date).getMonth(), Math.random() * (30 - 1) + 1);
     this.addEvent({
       title: 'Random Event',
-      start: new Date((new Date).getFullYear(), (new Date).getMonth(), Math.random() * (30 - 1) + 1),
+      start: fecha,
+      allDay: true,
+      message: 'Sin mensaje de descripcion',
       backgroundColor: '#c594c5', //purple
       borderColor: '#c594c5' //purple
     });
   }
 
   eventClick(calEvent, jsEvent, view) {
+    debugger;
     this.EventSelected = true;
+    this.EditEventAction = false;
     this.selectedEvent = {
+      id: calEvent.id,
       title: calEvent.title,
-      start: calEvent.start,
-      end: calEvent.end,
-      message: calEvent.message
+      start: calEvent.start.toJSON()  ,
+      end: calEvent.end == null ? calEvent.start.toJSON() : calEvent.end.toJSON(),
+      message: calEvent.message || 'Sin Descripción',
+      allDay: calEvent.allDay,
+      backgroundColor: calEvent.backgroundColor,
+      borderColor: calEvent.borderColor
     };
 
-    console.log(calEvent, jsEvent, view);
+    console.log(calEvent/* , jsEvent, view*/);
 
   }
 
   dayClick(date, jsEvent, view) {
-    this.selectedEvent = {
-      date: date.format()
-    };
-    this.openDialogEvent(date);
+    debugger;
+    this.selectedDate = date.toJSON();
+    this.selectedEvent = null;
+    this.openDialogEvent(this.selectedDate);
   }
 
   addEvent(event) {
-    debugger;
     // store event
     this.calendarEvents.push(event);
     // display event in calendar
-    this.$calendar.fullCalendar('renderEvent', event, true);
+    // this.$calendar.fullCalendar('renderEvent', event, true);
+    this.$calendar.fullCalendar('removeEvents'); 
+    this.$calendar.fullCalendar('addEventSource',   this.calendarEvents); 
   }
 
   ngOnDestroy() {
@@ -122,81 +216,124 @@ export class CalendarioCandidatoComponent implements OnInit {
 
   openDialogEvent(date: any) {
     let dialogEvent = this.dialog.open(DialogEventComponent, {
+      width: 'auto',
+      height: 'auto',
       data: date
     })
     dialogEvent.afterClosed().subscribe(result => {
       if (result != false) {
         console.log(result)
         this.addEvent(result);
-      }else{
+      } else {
         console.log('No se agrego nada a la agenda');
       }
     });
-
-
   }
 
-  createDemoEvents() {
-    // Date for the calendar events (dummy data)
-    var date = new Date();
-    var d = date.getDate(),
-      m = date.getMonth(),
-      y = date.getFullYear();
+  public EditEvent(data) { debugger;
+    this.IdEvent = data.id;
+    this.minLimitDate = '';
+    this.EditEventAction = true;
+    this.ColorPicker = data.borderColor;
+    console.log(data);
 
-    return [{
-      title: 'All Day Event',
-      start: new Date(y, m, 2, 17, 30),
-      backgroundColor: '#f56954', //red
-      borderColor: '#f56954', //red
-      message: 'Este es un mensaje de descripción.'
-    }, {
-      title: 'Long Event',
-      start: new Date(2018, 10, 5),
-      end: new Date(2018, 10, 10 + 1),
-      backgroundColor: '#f39c12', //yellow
-      borderColor: '#f39c12' //yellow
-    }, {
-      title: 'Meeting',
-      start: new Date(y, m, d, 10, 30),
-      end: new Date(y, m, d, 12, 30),
-      allDay: false,
-      backgroundColor: '#0073b7', //Blue
-      borderColor: '#0073b7' //Blue
-    }, {
-      title: 'Lunch',
-      start: new Date(y, m, d, 12, 0),
-      end: new Date(y, m, d, 14, 0),
-      allDay: false,
-      backgroundColor: '#00c0ef', //Info (aqua)
-      borderColor: '#00c0ef' //Info (aqua)
-    }, {
-      title: 'Lunch',
-      start: new Date(y, m, d, 12, 0),
-      end: new Date(y, m, d, 14, 0),
-      allDay: false,
-      backgroundColor: '#00c0ef', //Info (aqua)
-      borderColor: '#00c0ef' //Info (aqua)
-    }, {
-      title: 'Lunch',
-      start: new Date(y, m, d, 12, 0),
-      end: new Date(y, m, d, 14, 0),
-      allDay: false,
-      backgroundColor: '#00c0ef', //Info (aqua)
-      borderColor: '#00c0ef' //Info (aqua)
-    }, {
-      title: 'Birthday Party',
-      start: new Date(y, m, d + 1, 19, 0),
-      end: new Date(y, m, d + 1, 22, 30),
-      allDay: false,
-      backgroundColor: '#00a65a', //Success (green)
-      borderColor: '#00a65a' //Success (green)
-    }, {
-      title: 'Open Google',
-      start: new Date(y, m, 28),
-      end: new Date(y, m, 29),
-      url: '//google.com/',
-      backgroundColor: '#3c8dbc', //Primary (light-blue)
-      borderColor: '#3c8dbc' //Primary (light-blue)
-    }];
+    let horasI = String(new Date(data.start).getHours());
+    if (horasI.length == 1)
+      horasI = '0' + horasI;
+    let minutosI = String(new Date(data.start).getMinutes());
+    if (minutosI.length == 1)
+      minutosI = '0' + minutosI;
+    this.hourStart = horasI + ':' + minutosI;
+
+    let horasF = String(new Date(data.end).getHours());
+    if (horasF.length == 1)
+      horasF = '0' + horasF
+    let minutosF = String(new Date(data.end).getMinutes());
+    if (minutosF.length == 1)
+      minutosF = '0' + minutosF
+    this.hourEnd = horasF + ':' + minutosF
+
+    this.formEvent.patchValue({
+      Titulo: data.title,
+      Inicio: new Date(data.start),
+      Fin: new Date(data.end),
+      AllDay: data.allDay,
+      Descripcion: data.message,
+      HoraInicio: this.hourStart,
+      HoraFin: this.hourEnd,
+    });
+    this.minLimitDate = this.formEvent.get('Inicio').value;
+    this.allDaySelected = this.formEvent.get('AllDay').value;
+    console.log(this.formEvent);
   }
+
+  private CancelareditEvent() {
+    this.EditEventAction = false;
+  }
+
+  private _CheckNuevaFecha() {
+    this.minLimitDate = this.formEvent.get('Inicio').value;
+  }
+
+  private _CheckAllDay() {
+    this.allDaySelected = this.formEvent.get('AllDay').value;
+    this.allDaySelected = this.allDaySelected.toISOString();
+  }
+
+  private DeleteEvent(data){
+    var deleteEvent = this.createDemoEvents.findIndex(x => x.id === data.id);
+    this.createDemoEvents.splice(deleteEvent, 1);
+    this.calendarEvents = this.createDemoEvents;
+    this.$calendar.fullCalendar('removeEvents'); 
+    this.$calendar.fullCalendar('addEventSource',   this.calendarEvents); 
+  }
+
+  private Save() {
+    this.loading = true;
+    this.updateIndex = this.createDemoEvents.findIndex(event => event.id === this.IdEvent)
+    var dateInicio = new Date(this.formEvent.get('Inicio').value);
+    var dateFinal = new Date(this.formEvent.get('Fin').value);
+
+    var ds = dateInicio.getUTCDate(),
+      ms = dateInicio.getMonth(),
+      ys = dateInicio.getFullYear();
+    var de = dateFinal.getUTCDate(),
+      me = dateFinal.getMonth(),
+      ye = dateFinal.getFullYear();
+
+    var Inicio = new Date(),
+      Final = new Date(),
+      hourStart: Array<any> = [],
+      hourEnd: Array<any> = [];
+
+    if (!this.allDaySelected) {
+      hourStart = this.formEvent.get('HoraInicio').value.split(":");
+      hourEnd = this.formEvent.get('HoraFin').value.split(":");
+      var hrs = hourStart[0];
+      var mns = hourStart[1];
+      var hre = hourEnd[0];
+      var mne = hourEnd[1];
+      Inicio = new Date(ys, ms, ds, Number(hrs), Number(mns));
+      Final = new Date(ye, me, de, Number(hre), Number(mne));
+    } else {
+      Inicio = new Date(ys, ms, ds, 0, 0);
+      Final = new Date(ye, me, de, 0, 0);
+    }
+    
+    this.createDemoEvents[this.updateIndex]['title'] = this.formEvent.get('Titulo').value;
+    this.createDemoEvents[this.updateIndex]['start'] = Inicio;
+    this.createDemoEvents[this.updateIndex]['end'] = Final;
+    this.createDemoEvents[this.updateIndex]['allDay'] = this.allDaySelected;
+    this.createDemoEvents[this.updateIndex]['message'] = this.formEvent.get('Descripcion').value || 'Sin Descripción';
+    this.createDemoEvents[this.updateIndex]['backgroundColor'] = this.ColorPicker;
+    this.createDemoEvents[this.updateIndex]['borderColor'] = this.ColorPicker;
+    this.calendarEvents = this.createDemoEvents;
+    console.log(this.calendarEvents)
+    this.$calendar.fullCalendar('removeEvents'); 
+    this.$calendar.fullCalendar('addEventSource',   this.calendarEvents); 
+    this.loading = false;
+  }
+
+  
 }
+  

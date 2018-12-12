@@ -22,6 +22,7 @@ export class ViewCuerpoRequiComponent implements OnInit {
   sueldoMaximo: number;
   sueldoDiarioMax: number;
   sueldoSemanalMax: number;
+  EstatusRequi: any;
 
   constructor(
     private serviceRequisiciones: RequisicionesService,
@@ -55,6 +56,7 @@ export class ViewCuerpoRequiComponent implements OnInit {
     this.serviceRequisiciones.getNewRequi(this.Requisicion)
       .subscribe(data => {
         this.requisicion = data;
+        this.EstatusRequi = data.estatusId;
         this.spinner.hide();
       });
   }

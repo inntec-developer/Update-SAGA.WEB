@@ -1,7 +1,8 @@
 <div class="dt-container mat-elevation-z8">
   <div class="title-headre-view d-flex justify-content-between">
     <h4>Horarios</h4>
-    <button id="update" class="mb-1 btn btn-xs" [disabled]="!horario" *ngIf="Requi" (click)="openDialogEdit()"
+    <button id="update" class="mb-1 btn btn-xs" 
+      [disabled]="!horario || !EditHorarios" *ngIf="Requi" (click)="openDialogEdit()"
       chkPrivilegiosButtons 
       container="body" 
       placement="bottom" 

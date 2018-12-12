@@ -16,11 +16,13 @@ declare var $: any;
 export class DtHorariosComponent implements OnInit {
   @Input() Horarios: any[];
   @Input('Requi') Requi: boolean;
+  @Input('EstatusRequi') EstatusRequi: any;
   public rows: Array<any> = [];
   getHorarios: boolean = false;
   ruta: string;
   horario: any = null;
   rowAux = [];
+  EditHorarios: boolean;
   ;
   constructor(
     private dialog: MatDialog,
@@ -47,6 +49,10 @@ export class DtHorariosComponent implements OnInit {
     //Add '${implements OnChanges}' to the class.
     if (changes.Horarios && !changes.Horarios.isFirstChange()) {
       this.cargarHorarios(this.Horarios);
+      if (this.EstatusRequi == 4)
+        this.EditHorarios = true
+      else
+        this.EditHorarios = false
     }
   }
 

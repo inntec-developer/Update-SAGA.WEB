@@ -1,16 +1,16 @@
-import { EditarRequiEstatusComponent } from './../../../../../../components/editar-requi-estatus/editar-requi-estatus.component';
-import { DlgRequisicionPausaComponent } from './../../../../../../components/dlg-requisicion-pausa/dlg-requisicion-pausa.component';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { DialogAssingRequiComponent } from '../dialogs/dialog-assing-requi/dialog-assing-requi.component';
 import { DialogShowRequiComponent } from '../dialogs/dialog-show-requi/dialog-show-requi.component';
+import { DlgRequisicionPausaComponent } from './../../../../../../components/dlg-requisicion-pausa/dlg-requisicion-pausa.component';
+import { EditarRequiEstatusComponent } from './../../../../../../components/editar-requi-estatus/editar-requi-estatus.component';
+import { ExcelService } from '../../../../../../service/ExcelService/excel.service';
 import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../../../../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../../../../../service';
 import { Router } from '@angular/router';
-import { ExcelService } from '../../../../../../service/ExcelService/excel.service';
 
 const swal = require('sweetalert');
 declare var $: any;
@@ -21,7 +21,7 @@ declare var $: any;
   styleUrls: ['./dt-vacantes-reclutador.component.scss'],
   providers: [RequisicionesService, PostulateService]
 })
-export class DtVacantesReclutadorComponent implements OnInit {
+export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   public dataSource: Array<any> = [];
 
   // Varaibles del paginador
@@ -86,7 +86,9 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.getVacantes();
 
   }
+  ngAfterViewChecked(){
 
+  }
   ngAfterViewInit() {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.

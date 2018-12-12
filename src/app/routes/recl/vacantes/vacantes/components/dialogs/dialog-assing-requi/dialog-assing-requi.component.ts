@@ -89,7 +89,6 @@ export class DialogAssingRequiComponent implements OnInit {
 
    
   Save(){
-    debugger;
     if(this.formAsignaciones.get('diasEnvio').value > 0 && this.formAsignaciones.get('diasEnvio').value <= 20 ){
       this.loading = true;
       this.asignadosRequi.push(sessionStorage.getItem('id'));
@@ -134,7 +133,7 @@ export class DialogAssingRequiComponent implements OnInit {
     else{
     }
   }
-
+  // Funcion para eliminar elementos repetidos de una lista.
   _eliminarObjetosDuplicados(arr, prop) {
     var nuevoArray = [];
     var lookup  = {};

@@ -28,3 +28,15 @@ export class Vacante {
   numeroVacantes: number;
   usuario: string;
 }
+
+
+export class EventoCalendario {
+  id: string;
+  titulo: string;
+  inicio: Date;
+  fin: Date;
+  allDay: boolean;
+  descripcion: string;
+  reclutadorId: string;
+  color: string;
+}
