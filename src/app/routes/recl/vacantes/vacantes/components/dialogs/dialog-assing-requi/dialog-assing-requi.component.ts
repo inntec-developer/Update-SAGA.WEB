@@ -89,14 +89,20 @@ export class DialogAssingRequiComponent implements OnInit {
 
    
   Save(){
+    debugger;
     if(this.formAsignaciones.get('diasEnvio').value > 0 && this.formAsignaciones.get('diasEnvio').value <= 20 ){
       this.loading = true;
       this.asignadosRequi.push(sessionStorage.getItem('id'));
-      let asg = [];
+      let List = [];
       for(let a of this.asignadosRequi){
+        List.push({id: a});
+      }
+      let list = this._eliminarObjetosDuplicados(List, 'id');
+      let asg = [];
+      for(let a of list){
         asg.push({
           RequisicionId: this.RequiId,
-          GrpUsrId: a,
+          GrpUsrId: a['id'],
           CRUD: '',
           UsuarioAlta : sessionStorage.getItem('usuario'),
           UsuarioMod : sessionStorage.getItem('usuario'),
@@ -128,5 +134,20 @@ export class DialogAssingRequiComponent implements OnInit {
     else{
     }
   }
+
+  _eliminarObjetosDuplicados(arr, prop) {
+    var nuevoArray = [];
+    var lookup  = {};
+
+    for (var i in arr) {
+        lookup[arr[i][prop]] = arr[i];
+    }
+
+    for (i in lookup) {
+        nuevoArray.push(lookup[i]);
+    }
+
+    return nuevoArray;
+}
 }
 
