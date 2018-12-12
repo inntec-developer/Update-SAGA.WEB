@@ -39,7 +39,7 @@
             </span>
           </ng-template>
         </ng-container>
-          <textarea [(ngModel)]="comentario" class="form-control-sm" autofocus (blur)="updateValue($event, 'respuesta', rowIndex);" *ngIf="editing[rowIndex + '-respuesta']" rows="4" cols="50" [value]="row.comentario.respuesta"></textarea>
+          <textarea [(ngModel)]="comentario" class="form-control-sm" autofocus (blur)="updateValue($event, 'respuesta', rowIndex);" *ngIf="editing[rowIndex + '-respuesta']" rows="4" cols="50" [value]="row.respuesta"></textarea>
     
         </td>
        

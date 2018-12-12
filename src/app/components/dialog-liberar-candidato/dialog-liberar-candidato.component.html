@@ -1,4 +1,4 @@
-<div>
+
 <h3 class="text-primary text-center" mat-dialog-title> Liberaci&oacute;n de candidato</h3>
 <mat-divider></mat-divider>
 <mat-dialog-content>
@@ -38,17 +38,16 @@
   </p>
   <mat-divider></mat-divider>
 </mat-dialog-content>
+<br/>
 <mat-dialog-actions>
-  <button class="btn btn-xs btn-labeled btn-outline-danger mb-1 margin" mat-dialog-close>
+  <button class="btn btn-xs btn-labeled btn-outline-danger mb-1 margin" (click)="onCloseDialog()">
     <span class="btn-label">
       <i class="fa fa-times"></i>
     </span> Cancelar
   </button>
-  <button type="button" [disabled]="!liberar.motivo || liberar.comentario.length <= 30" class="btn btn-xs btn-labeled btn-outline-success mb-1 margin"
-    [mat-dialog-close]="liberar">
+  <button type="button" [disabled]="!liberar.motivo || liberar.comentario.length <= 30" class="btn btn-xs btn-labeled btn-outline-success mb-1 margin" (click)="_liberarCandidato()">
     <span class="btn-label">
       <i class="fa fa-check"></i>
     </span> Aceptar
   </button>
 </mat-dialog-actions>
-</div>

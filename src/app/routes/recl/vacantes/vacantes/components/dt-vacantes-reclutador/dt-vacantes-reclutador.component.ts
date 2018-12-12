@@ -12,6 +12,8 @@ import { RequisicionesService } from '../../../../../../service';
 import { Router } from '@angular/router';
 import { ExcelService } from '../../../../../../service/ExcelService/excel.service';
 
+import { DatePipe } from '@angular/common';
+
 const swal = require('sweetalert');
 declare var $: any;
 
@@ -19,9 +21,10 @@ declare var $: any;
   selector: 'app-dt-vacantes-reclutador',
   templateUrl: './dt-vacantes-reclutador.component.html',
   styleUrls: ['./dt-vacantes-reclutador.component.scss'],
-  providers: [RequisicionesService, PostulateService]
+  providers: [RequisicionesService, PostulateService, DatePipe]
 })
-export class DtVacantesReclutadorComponent implements OnInit {
+export class DtVacantesReclutadorComponent implements OnInit  {
+
   public dataSource: Array<any> = [];
 
   // Varaibles del paginador
@@ -66,7 +69,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   clearFilter: boolean = false;
   pds: boolean = true;
   numeroVacantes: any;
-;
+
 
   constructor(
     private service: RequisicionesService,
@@ -75,7 +78,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
     private _Router: Router,
     private spinner: NgxSpinnerService,
     private toasterService: ToasterService,
-    private excelService: ExcelService
+    private excelService: ExcelService,
+    private pipe: DatePipe
   ) {
     this.enProceso = 0;
     this.postulados = 0;
@@ -346,9 +350,22 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   ValidarEstatus(estatusId) {
+    //revisar en pausa 
+
     if( estatusId == 4 && this.element.vacantes > 0 ) //nueva
     {
       this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = false;
+      this.disenador = true;
+    }
+    else if( estatusId == 6 && this.element.vacantes > 0 && this.element.confidencial)// aprobada
+    {
+      this.bc = false; //busqueda candidato
       this.sc = true; //socieconomico
       this.ecc = true; //envío candidato cliente
       this.ec = true; //espera contratacion
@@ -467,8 +484,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.asignar = false;
       this.disenador = true;
     }
-    else if( (estatusId == 5 || estatusId == 31 || estatusId == 39) &&
-     this.element.vacantes > 0 && this.element.enProceso == 0 &&  this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 ) //reactivada  - garantia de busqueda - nueva busqueda - pausada
+    else if( estatusId == 39 && this.element.vacantes > 0) //pausada
     {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
@@ -479,7 +495,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.asignar = true;
       this.disenador = true;
     }
-    else if( (estatusId == 5 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso > 0 ) //reactivada   - garantia de busqueda - nueva busqueda -pausada
+    else if( (estatusId == 5 || estatusId == 31) &&
+     this.element.vacantes > 0 && this.element.enProceso == 0 &&  this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 ) //reactivada  - garantia de busqueda - nueva busqueda 
     {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
@@ -490,7 +507,19 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.asignar = true;
       this.disenador = true;
     }
-    else if( (estatusId == 5 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProcesoFR > 0 ) //reactivada - publicada  - garantia de busqueda - nueva busqueda -pausada
+    else if( (estatusId == 5 || estatusId == 31) && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso > 0 ) //reactivada   - garantia de busqueda - nueva busqueda -pausada
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = true;
+      this.disenador = true;
+    }
+   
+    else if( (estatusId == 5 || estatusId == 31) && this.element.vacantes > 0 && this.element.enProcesoFR > 0 ) //reactivada - publicada  - garantia de busqueda - nueva busqueda -pausada
     {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
@@ -501,7 +530,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.asignar = true;
       this.disenador = true;
     }
-    else if((estatusId == 5 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes ) //reactivada - publicada - garantia de busqueda - nueva busqueda - pausada
+    else if((estatusId == 5 || estatusId == 31) && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes ) //reactivada - publicada - garantia de busqueda - nueva busqueda - pausada
     {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
@@ -577,18 +606,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.pausa = true;
       this.asignar = false;
       this.disenador = true;
-    }
-    else if(estatusId == 39 && this.element.enProcesoFC > 0) //pausada
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = false; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
-      this.pausa = true;
-      this.asignar = false;
-      this.disenador = true;
-
     }
     else if (estatusId >= 34 && estatusId <= 37) { //cubierta
       /*estatus vacante */
@@ -715,6 +732,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   exportAsXLSX()
   {
+ 
     var aux = [];
     var comentarios = "";
     this.dataSource.forEach(row => {
@@ -728,12 +746,13 @@ export class DtVacantesReclutadorComponent implements OnInit {
       else{
         comentarios = "";
       }
-      var d = new Date(row.fch_Creacion);
-      var e = new Date(row.fch_Modificacion);
-    
+      var d = this.pipe.transform(new Date(row.fch_Creacion), 'yyyy-MM-dd');
+      // var mocos = (d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString()
+      var e = this.pipe.transform( new Date(row.fch_Modificacion), 'yyyy-MM-dd');
+
       aux.push({
         FOLIO: row.folio.toString(),
-        'FECHA SOLICITUD': new Date(d.getFullYear() + '-' + (d.getMonth() +1 ) + '-' + d.getDate()),
+        'FECHA SOLICITUD': d,//new Date(d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString(),
         SOLICITANTE: row.solicita,
         EMPRESA: row.cliente,
         SUCURSAL: row.sucursal,
@@ -741,7 +760,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
         PUESTO: row.vBtra,
         SUELDO:  row.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
         ESTATUS: row.estatus,
-        'FECHA ESTATUS': new Date(e.getFullYear() + '-' + (e.getMonth() + 1 ) + '-' + e.getDate()),
+        'FECHA ESTATUS': e,
         RECLUTADOR: sessionStorage.getItem('nombre'),
         'COMENTARIOS': comentarios
       })

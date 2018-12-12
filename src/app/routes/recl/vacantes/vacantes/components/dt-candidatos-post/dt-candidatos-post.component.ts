@@ -1,8 +1,9 @@
+import { InfoCandidatoComponent } from './../../../../../../components/info-candidato/info-candidato.component';
 import { ActivatedRoute, CanDeactivate, Router, } from '@angular/router';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-
-import { MatDialog } from '@angular/material';
+import { ModalDirective } from 'ngx-bootstrap';
+import { MatDialog, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from '../../../../../../service/SeguimientoVacante/postulate.service';
 
@@ -17,6 +18,9 @@ export class DtCandidatosPostComponent implements OnInit {
   @Input('RequisicionId') RequisicionId: any;
   @Input('Folio') Folio: any;
   @Input('Vacante') Vacante: any;
+
+  @ViewChild('lgModal') modal;
+  
   public dataSource: Array<any> = [];
   // Varaibles del paginador
   public page: number = 1;
@@ -30,7 +34,7 @@ export class DtCandidatosPostComponent implements OnInit {
   errorMessage: any;
   element: any = {};
   idCandidato: any;
-
+modalPrincipal = false;
   loading: boolean = true;
 
   constructor(
@@ -41,19 +45,25 @@ export class DtCandidatosPostComponent implements OnInit {
     private spinner: NgxSpinnerService,
   ) { }
 
+  
   ngOnInit() {
     this.getpostulados()
     setTimeout(() => {
       this.onChangeTable(this.config);
     }, 1500);
-
   }
 
   getpostulados() {
     this.service.getPostulados(this.RequisicionId).subscribe(data => {
       this.dataSource = data;
-
+console.log(this.dataSource)
     }, error => this.errorMessage = <any>error);
+  }
+
+  closeModal()
+  {
+    this.modal.hide();
+    this.modalPrincipal = false;
   }
 
   public rows: Array<any> = []
@@ -172,7 +182,7 @@ export class DtCandidatosPostComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
-    console.log(data)
+
     let index = this.dataSource.indexOf(data.row);
     this.element = data;
     this.idCandidato = data.candidatoId;
@@ -182,6 +192,7 @@ export class DtCandidatosPostComponent implements OnInit {
       $(this).addClass('selected').siblings().removeClass('selected');
     });
   }
+
 
   /*
   * Funciones propias del componente.

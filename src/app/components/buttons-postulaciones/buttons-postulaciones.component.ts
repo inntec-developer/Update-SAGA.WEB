@@ -33,6 +33,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
 
   @ViewChild('MessageModal') ShownModal: ModalDirective;
+  @ViewChild('modallib') modal;
 
   public dataSource: Array<any> = [];
 
@@ -49,9 +50,10 @@ export class ButtonsPostulacionesComponent implements OnInit {
   errorMessage: any;
   element: any = {};
   postulados: any;
+  dlgLiberar = false;
   //candidatoId = 'f66da23e-9d69-e811-80e1-9e274155325e';'621ede7a-2fbc-e811-80ea-9e274155325e'
   candidatoId;
-  isModalShown: boolean = false;
+  isModalShow: boolean = false;
   editarContratados: boolean = false;
   contratado = true;
   cr = true; //cita reclutamiento
@@ -73,7 +75,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   ProcesoCandidatoId: any;
 
   bsModalRef: BsModalRef;
-
+objLiberar = [];
   constructor(
     private serviceRequi: RequisicionesService,
     private service: PostulateService,
@@ -450,7 +452,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
     });
 
     dialogDlt.afterClosed().subscribe(result => {
-      if (result) {
+      if (result != 0) {
 
         this.horarioId = result.horarioId;
 
@@ -478,51 +480,83 @@ export class ButtonsPostulacionesComponent implements OnInit {
     });
   }
 
+  onClose(value)
+  {
+    if(value == 200)
+    {
+      var aux = this.dataSource;
+      var idx = aux.findIndex(x => x.candidatoId === this.candidatoId);
+      this.ValidarEstatus(27);
 
+      this.dataSource[idx]['estatusId'] = 27;
+      this.dataSource[idx]['estatus'] = 'Liberado';
 
-  OpenDialogLiberacion(estatusId,estatus) {
-    let dialogLiberar = this.dialog.open(DialogLiberarCandidatoComponent, {
-      width: '28%',
-      height: 'auto',
-    });
-    dialogLiberar.afterClosed().subscribe(result => {
-      if (result) {
-        var data = {
-          RequisicionId: this.RequisicionId,
-          CandidatoId: this.candidatoId,
-          ReclutadorId: sessionStorage.getItem('id'),
-          MotivoId: result.motivo,
-          ProcesoCandidatoId: this.ProcesoCandidatoId,
-          Comentario: result.comentario,
-        }
-      
-        this.serviceLiberar.setLiberarCandidato(data).subscribe(result => {
-            switch(result){
-              case 200:{
-                var aux = this.dataSource;
-                var idx = aux.findIndex(x => x.candidatoId === this.candidatoId);
-                this.ValidarEstatus(estatusId);
-    
-                this.dataSource[idx]['estatusId'] = estatusId;
-                this.dataSource[idx]['estatus'] = estatus;
-    
-                this.onChangeTable(this.config)
-                this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
-                break;
-              }
-              case 404: {
-                this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos');
-                break;
-              }
-            }
-          });
-      }
-      else
-      {
-        this.onChangeTable(this.config)
-      }
-    });
+      this.onChangeTable(this.config)
+      this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+
+      this.modal.hide();
+      this.dlgLiberar = false;
+    }
+    else if(value == 404)
+    {
+      this.onChangeTable(this.config)
+      this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos');
+      this.modal.hide();
+      this.dlgLiberar = false;
+    }
+    else
+    {
+      this.modal.hide();
+      this.dlgLiberar = false;
+    }
+
   }
+  openDialogLiberar(){
+
+    this.objLiberar.push( {
+      RequisicionId: this.RequisicionId,
+      CandidatoId: this.candidatoId,
+      ReclutadorId: sessionStorage.getItem('id'),
+      ProcesoCandidatoId: this.ProcesoCandidatoId,
+    });
+
+    this.dlgLiberar = true;
+  }
+
+  // OpenDialogLiberacion(estatusId,estatus) {
+  //   let dialogLiberar = this.dialog.open(DialogLiberarCandidatoComponent, {
+  //     width: '28%',
+  //     height: 'auto',
+  //   });
+  //   dialogLiberar.afterClosed().subscribe(result => {
+  //     if (result) {
+  //       var data = {
+  //         RequisicionId: this.RequisicionId,
+  //         CandidatoId: this.candidatoId,
+  //         ReclutadorId: sessionStorage.getItem('id'),
+  //         MotivoId: result.motivo,
+  //         ProcesoCandidatoId: this.ProcesoCandidatoId,
+  //         Comentario: result.comentario,
+  //       }
+      
+  //       this.serviceLiberar.setLiberarCandidato(data).subscribe(result => {
+  //           switch(result){
+  //             case 200:{
+            
+  //             }
+  //             case 404: {
+  //               this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos');
+  //               break;
+  //             }
+  //           }
+  //         });
+  //     }
+  //     else
+  //     {
+  //       this.onChangeTable(this.config)
+  //     }
+  //   });
+  // }
 
   OpenEditarComponent()
   {
@@ -585,7 +619,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
     if (this.candidatoId != null) {
       if(estatusId == 27){
-        this.OpenDialogLiberacion(estatusId, estatus);
+        this.openDialogLiberar();
       }else if (estatusId == 18) {
         this.GetHorarioRequis(estatusId, estatus);
       }
@@ -760,7 +794,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
     this.candidatoId = row.candidatoId;
 
-    this.isModalShown = true;
+    this.isModalShow = true;
 
     // this.ValidarEstatus(row.estatusId);
     // row.selected = true;
@@ -809,7 +843,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
     if(modal == 1)
     {
     this.ShownModal.hide();
-    this.isModalShown = false;
+    this.isModalShow = false;
     }
     else
     {
@@ -819,6 +853,8 @@ export class ButtonsPostulacionesComponent implements OnInit {
     this.refresh();
 
   }
+
+ 
 
   public rows: Array<any> = []
   public columns: Array<any> = [
