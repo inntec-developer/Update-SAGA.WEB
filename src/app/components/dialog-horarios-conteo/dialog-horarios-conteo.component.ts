@@ -32,7 +32,12 @@ export class DialogHorariosConteoComponent implements OnInit {
     })
   }
 
-  onCloseDialog() {
+  EnviarDatos()
+  {
     this.dialogHorarios.close({mediosId: this.mediosId, horarioId: this.seleccion});
+  }
+
+  onCloseDialog() {
+    this.dialogHorarios.close(0);
   }
 }

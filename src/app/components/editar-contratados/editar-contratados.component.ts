@@ -7,12 +7,12 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ExcelService } from '../../service/ExcelService/excel.service';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
-
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-editar-contratados',
   templateUrl: './editar-contratados.component.html',
   styleUrls: ['./editar-contratados.component.scss'],
-  providers: [CandidatosService, NgbDatepickerConfig]
+  providers: [CandidatosService, NgbDatepickerConfig, DatePipe]
 })
 export class EditarContratadosComponent implements OnInit {
 
@@ -68,6 +68,7 @@ export class EditarContratadosComponent implements OnInit {
                private excelService: ExcelService,
                private toasterService: ToasterService,
               //  @Inject(MAT_DIALOG_DATA) public data: any,
+              private pipe: DatePipe
               ) { 
 
                 this.configCalendar.minDate = {year: 1960, month: 1, day: 1};
@@ -336,14 +337,14 @@ exportAsXLSX() {
     {
       element.classCURP = false;
       this.etiqueta = false;
-      var d = new Date(element.fecha);
-      var e = new Date(element.edad);
+      var d = this.pipe.transform(new Date(element.fecha), 'yyyy-MM-dd');
+      var e = this.pipe.transform(new Date(element.edad), 'yyyy-MM-dd');
       aux.push( {
         FOLIO: element.folio.toString(),
         CURP: element.curp,
         RFC: element.rfc,
         NSS: element.nss,
-        'FECHA DE NACIMIENTO': new Date(e.getFullYear() + '-' + (e.getMonth() + 1 ) + '-' + (e.getDate() + 1)),
+        'FECHA DE NACIMIENTO': e,
         NOMBRE: element.nombre,
         'APELLIDO PATERNO': element.apellidoPaterno,
         'APELLIDO MATERNO': element.apellidoMaterno,
@@ -351,7 +352,7 @@ exportAsXLSX() {
         'AREA RECLUTAMIENTO': element.areaReclutamiento,
         SUELDO: element.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
         USUARIO: element.usuario,
-        FECHA: new Date(d.getFullYear() + '-' + (d.getMonth() + 1 ) + '-' + (d.getDate() + 1)) //revisar bien
+        FECHA: d
       });
     }
   });

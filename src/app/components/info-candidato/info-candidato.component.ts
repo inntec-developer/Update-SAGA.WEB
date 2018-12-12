@@ -1,13 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { DtCandidatosPostComponent } from './../../routes/recl/vacantes/vacantes/components/dt-candidatos-post/dt-candidatos-post.component';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-
+import { ModalDirective } from 'ngx-bootstrap';
 import { DialogLiberarCandidatoComponent } from '../dialog-liberar-candidato/dialog-liberar-candidato.component';
 import { DirectorioEmpresarialComponent } from './../../routes/vtas/directorio-empresarial/directorio-empresarial.component';
 import { InfoCandidatoService } from '../../service/SeguimientoVacante/info-candidato.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 declare var $: any;
+
 
 @Component({
   selector: 'app-info-candidato',
@@ -21,9 +23,12 @@ export class InfoCandidatoComponent implements OnInit {
   @Input('VerVacantes') VerVacantes: boolean = true;
   @Output('Estatus') EstatusEmitter: EventEmitter<any> =  new EventEmitter();
 
+  @ViewChild('modallib') modal;
+
   public dataSource_v: Array<any> = [];
   public dataSource_p: Array<any> = [];
 
+  objLiberar: Array<any> = [];
   /*
     Variables y funcionamiento para Tabla de Mis Vacantes.
   */
@@ -35,7 +40,7 @@ export class InfoCandidatoComponent implements OnInit {
 
   showFilterRow_v: boolean;
   registros_v: number;
-
+  visible: boolean = true;
   requi: { folio: any; id: any; };
   vacante: any = null;
   usuario: string;
@@ -51,6 +56,7 @@ export class InfoCandidatoComponent implements OnInit {
   Emiter: { estatusId: number; estatus: string; candidatoId: string };
   infoRequiId : any = null;
   infoFolio : any = null;
+  dlgLiberar = false;
   /*********************************************************/
 
   contratados = true;
@@ -445,22 +451,76 @@ export class InfoCandidatoComponent implements OnInit {
     // }
   }
 
+
+
+  onClose(value)
+  {
+    if(value == 200)
+    {
+      this.GetInfoCandidato();
+      this.desapartar = true;
+      this.auxestatus = false;
+
+      this.ngAfterViewInit();
+
+      var msg = 'El candidato se libero correctamente.';
+      this.popToast('warning', 'Liberado', msg);
+      this.modal.hide();
+      this.dlgLiberar = false;
+    }
+    else if(value == 404)
+    {
+      var msg = 'Error el intentar liberar el candidato. Consulte al departamento de soporte si el problema persiste.';
+      this.desapartar = false;
+      this.auxestatus = true;
+      this.popToast('error', 'Apartado', msg);
+      this.modal.hide();
+      this.dlgLiberar = false;
+    }
+    else
+    {
+      this.modal.hide();
+      this.dlgLiberar = false;
+    }
+
+  }
   openDialogLiberar(){
 
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-    dialogConfig.hasBackdrop = true; 
-    dialogConfig.width = '28%';
-    dialogConfig.height = 'auto';
-    //dialogConfig.position = {top: '100px'};
-    let dialogLiberar = this.dialog.open(DialogLiberarCandidatoComponent, dialogConfig);
-    dialogLiberar.afterClosed().subscribe(result =>{
-      if(result){
-        this._liberarCandidato(result);
-      }
-    });
+    this.objLiberar.push( {
+      RequisicionId: this.vacante.id,
+      CandidatoId: this.CandidatoId,
+      ReclutadorId: sessionStorage.getItem('id'),
+      ProcesoCandidatoId: this.Estatus,
+
+    })
+
+    this.dlgLiberar = true;
+
+    // const dialogConfig = new MatDialogConfig();
+    // dialogConfig.autoFocus = true;
+    // dialogConfig.hasBackdrop = true; 
+    // dialogConfig.width = '28%';
+    // dialogConfig.height = 'auto';
+
+    // //dialogConfig.position = {top: '100px'};
+    
+    // let dialogLiberar = this.dialog.open(DialogLiberarCandidatoComponent, dialogConfig);
+
+    // dialogLiberar.afterClosed().subscribe(result =>{
+    //   if(result){
+    //     this._liberarCandidato(result);
+
+    //   }
+    //   else
+    //   {
+       
+    //   }
+
+    // });
+   
   }
   _liberarCandidato(result) {
+
     if (this.reclutador == this.usuario || !this.candidato.estatus) {
       this.loading = true;
       var data = {
@@ -491,6 +551,7 @@ export class InfoCandidatoComponent implements OnInit {
                 candidatoId: this.CandidatoId
               };
               this.EstatusEmitter.emit(this.Emiter);
+
               break;
             }
             case 404: {

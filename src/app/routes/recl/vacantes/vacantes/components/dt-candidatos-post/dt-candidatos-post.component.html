@@ -39,8 +39,8 @@
           </tr>
         </thead>
         <tbody *ngIf="!loading else Loading">
-          <tr (click)="onCellClick(row)" (dblclick)="lgModal.show()" *ngFor="let row of rows" [class.confident]="row.confidencial"
-            [class.cancel]="row.estatusId == 8" [ngClass]="{'bg-warning' : row.estatusId != 27 && row.estatusId != 0, 'bg-danger' : row.estatusId == 28  }" >
+          <tr (click)="onCellClick(row)" (dblclick)="modalPrincipal = true; lgModal.show()" *ngFor="let row of rows" [class.confident]="row.confidencial"
+            [class.cancel]="row.estatusId == 8" [ngClass]="{'bg-warning' : row.estatusId != 27 && row.estatusId != 0 && row.estatusId != 28, 'bg-danger' : row.estatusId == 28 }" >
             <td>
               {{row.nombre}}
             </td>
@@ -76,12 +76,12 @@
 <!-- <p>Small modal window have small width on screens only above 768px(boostrap3) and 576px(bootstrap4)</p>
 <button class="btn btn-primary" (click)="lgModal.show()">Large modal</button> -->
 
-<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+<div *ngIf="modalPrincipal" [config]="{show: true, ignoreBackdropClick: true, keyboard: false}" bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="document" aria-labelledby="..." aria-hidden="true" >
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h4 id="dialog-sizes-name1" class="modal-title pull-left">Postulado a {{Vacante}} {{Folio}}</h4>
-        <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
+        <button type="button" class="close pull-right" (click)="closeModal()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -89,7 +89,7 @@
         <app-info-candidato [IdCandidato]="idCandidato"></app-info-candidato>
       </div>
       <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide()">Cerrar</button>
+        <button type="button" class="md-1 btn btn-outline-success" (click)="closeModal()">Cerrar</button>
       </div>
     </div>
   </div>

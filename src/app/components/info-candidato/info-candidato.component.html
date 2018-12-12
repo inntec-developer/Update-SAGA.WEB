@@ -721,8 +721,8 @@
 <app-comentario-candidato [CandidatoId]="CandidatoId" [RequisicionId]="RequisicionId" [ProcesoCandidatoId]="procesoCandidatoId"></app-comentario-candidato>
 
 
-<!-- Modal para vista previa de la vacante -->
-<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+<!-- Modal para vista previa de la vacante  -->
+<div bsModal #lgModal="bs-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -737,6 +737,25 @@
       <div class="modal-footer">
         <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide()">Cerrar</button>
       </div>
+    </div>
+  </div>
+</div>
+<!-- Modal para dlgLiberar  -->
+<div *ngIf="dlgLiberar" [config]="{show: true, ignoreBackdropClick: true, keyboard: false}" bsModal #modallib="bs-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Informaci&oacute;n de la Vacante</h4>
+        <button type="button" class="close pull-right" (click)="modallib.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+      <div class="modal-body">
+        <app-dialog-liberar-candidato [objLiberar]="objLiberar" (close)="onClose($event)"></app-dialog-liberar-candidato>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-outline-success" (click)="modallib.hide()">Cerrar</button>
+      </div> -->
     </div>
   </div>
 </div>

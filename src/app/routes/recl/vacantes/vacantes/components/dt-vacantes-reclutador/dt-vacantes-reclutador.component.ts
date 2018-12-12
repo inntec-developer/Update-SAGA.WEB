@@ -12,6 +12,8 @@ import { PostulateService } from './../../../../../../service/SeguimientoVacante
 import { RequisicionesService } from '../../../../../../service';
 import { Router } from '@angular/router';
 
+import { DatePipe } from '@angular/common';
+
 const swal = require('sweetalert');
 declare var $: any;
 
@@ -19,7 +21,7 @@ declare var $: any;
   selector: 'app-dt-vacantes-reclutador',
   templateUrl: './dt-vacantes-reclutador.component.html',
   styleUrls: ['./dt-vacantes-reclutador.component.scss'],
-  providers: [RequisicionesService, PostulateService]
+  providers: [RequisicionesService, PostulateService, DatePipe]
 })
 export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   public dataSource: Array<any> = [];
@@ -66,7 +68,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   clearFilter: boolean = false;
   pds: boolean = true;
   numeroVacantes: any;
-;
+
 
   constructor(
     private service: RequisicionesService,
@@ -75,7 +77,8 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
     private _Router: Router,
     private spinner: NgxSpinnerService,
     private toasterService: ToasterService,
-    private excelService: ExcelService
+    private excelService: ExcelService,
+    private pipe: DatePipe
   ) {
     this.enProceso = 0;
     this.postulados = 0;
@@ -348,9 +351,22 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   }
 
   ValidarEstatus(estatusId) {
+    //revisar en pausa
+
     if( estatusId == 4 && this.element.vacantes > 0 ) //nueva
     {
       this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = false;
+      this.disenador = true;
+    }
+    else if( estatusId == 6 && this.element.vacantes > 0 && this.element.confidencial)// aprobada
+    {
+      this.bc = false; //busqueda candidato
       this.sc = true; //socieconomico
       this.ecc = true; //envío candidato cliente
       this.ec = true; //espera contratacion
@@ -425,7 +441,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
       this.asignar = false;
       this.disenador = true;
     }
-    else if( estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso > 0 ) // busqueda de candidatos 
+    else if( estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso > 0 ) // busqueda de candidatos
     {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
@@ -469,8 +485,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
       this.asignar = false;
       this.disenador = true;
     }
-    else if( (estatusId == 5 || estatusId == 31 || estatusId == 39) &&
-     this.element.vacantes > 0 && this.element.enProceso == 0 &&  this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 ) //reactivada  - garantia de busqueda - nueva busqueda - pausada
+    else if( estatusId == 39 && this.element.vacantes > 0) //pausada
     {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
@@ -481,7 +496,8 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
       this.asignar = true;
       this.disenador = true;
     }
-    else if( (estatusId == 5 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso > 0 ) //reactivada   - garantia de busqueda - nueva busqueda -pausada
+    else if( (estatusId == 5 || estatusId == 31) &&
+     this.element.vacantes > 0 && this.element.enProceso == 0 &&  this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 ) //reactivada  - garantia de busqueda - nueva busqueda
     {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
@@ -492,7 +508,19 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
       this.asignar = true;
       this.disenador = true;
     }
-    else if( (estatusId == 5 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.enProcesoFR > 0 ) //reactivada - publicada  - garantia de busqueda - nueva busqueda -pausada
+    else if( (estatusId == 5 || estatusId == 31) && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso > 0 ) //reactivada   - garantia de busqueda - nueva busqueda -pausada
+    {
+      this.bc = true; //busqueda candidato
+      this.sc = true; //socieconomico
+      this.ecc = true; //envío candidato cliente
+      this.ec = true; //espera contratacion
+      this.nbc = true; //nueva busqueda candidato
+      this.pausa = true;
+      this.asignar = true;
+      this.disenador = true;
+    }
+
+    else if( (estatusId == 5 || estatusId == 31) && this.element.vacantes > 0 && this.element.enProcesoFR > 0 ) //reactivada - publicada  - garantia de busqueda - nueva busqueda -pausada
     {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
@@ -503,7 +531,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
       this.asignar = true;
       this.disenador = true;
     }
-    else if((estatusId == 5 || estatusId == 31 || estatusId == 39) && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes ) //reactivada - publicada - garantia de busqueda - nueva busqueda - pausada
+    else if((estatusId == 5 || estatusId == 31) && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes ) //reactivada - publicada - garantia de busqueda - nueva busqueda - pausada
     {
       this.bc = true; //busqueda candidato
       this.sc = true; //socieconomico
@@ -579,18 +607,6 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
       this.pausa = true;
       this.asignar = false;
       this.disenador = true;
-    }
-    else if(estatusId == 39 && this.element.enProcesoFC > 0) //pausada
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = false; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
-      this.pausa = true;
-      this.asignar = false;
-      this.disenador = true;
-
     }
     else if (estatusId >= 34 && estatusId <= 37) { //cubierta
       /*estatus vacante */
@@ -674,7 +690,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
             this.onChangeTable(this.config);
 
             this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
-  
+
           }
           else {
             this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
@@ -712,11 +728,12 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
     }else{
       swal('Ops...!', 'Esta vacante no cuenta con posiciones disponibles esta en 0, cambie el número de vacantes disponibles.', 'error');
     }
-    
+
   }
 
   exportAsXLSX()
   {
+
     var aux = [];
     var comentarios = "";
     this.dataSource.forEach(row => {
@@ -730,12 +747,13 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
       else{
         comentarios = "";
       }
-      var d = new Date(row.fch_Creacion);
-      var e = new Date(row.fch_Modificacion);
-    
+      var d = this.pipe.transform(new Date(row.fch_Creacion), 'yyyy-MM-dd');
+      // var mocos = (d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString()
+      var e = this.pipe.transform( new Date(row.fch_Modificacion), 'yyyy-MM-dd');
+
       aux.push({
         FOLIO: row.folio.toString(),
-        'FECHA SOLICITUD': new Date(d.getFullYear() + '-' + (d.getMonth() +1 ) + '-' + d.getDate()),
+        'FECHA SOLICITUD': d,//new Date(d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString(),
         SOLICITANTE: row.solicita,
         EMPRESA: row.cliente,
         SUCURSAL: row.sucursal,
@@ -743,7 +761,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
         PUESTO: row.vBtra,
         SUELDO:  row.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
         ESTATUS: row.estatus,
-        'FECHA ESTATUS': new Date(e.getFullYear() + '-' + (e.getMonth() + 1 ) + '-' + e.getDate()),
+        'FECHA ESTATUS': e,
         RECLUTADOR: sessionStorage.getItem('nombre'),
         'COMENTARIOS': comentarios
       })
@@ -786,4 +804,3 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   //  swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. No es posible generar la requisición', 'error');
 
 }
-

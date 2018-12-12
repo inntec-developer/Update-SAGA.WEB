@@ -65,10 +65,19 @@ export class EditarCandidatoEstatusComponent implements OnInit {
       this.serviceComentarios.AddRespuesta(Comentario).subscribe(data => {
         if (data == 200) {
           this.comentario = '';
-          
           row.activar = false;
+          if(estatus == 27)
+          {
+           
 
-          row.estatus = 'Disponible';
+            row.estatus = 'Disponible';
+          }
+          else
+          {
+
+            row.estatus = 'NR';
+
+          }
           
           this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
    

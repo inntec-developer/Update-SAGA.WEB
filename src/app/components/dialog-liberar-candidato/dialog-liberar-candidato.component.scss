@@ -3,8 +3,11 @@
     margin-right: 10px;
 }
 
-// :host {
-//     /deep/.modal-dialog {
-//     width: 100% !important;
-//     }
-//   }
+:host {
+    /deep/.mocos {
+        position: relative;
+color: greenyellow;
+z-index: 99999 !important;
+    }
+  }
+

@@ -1,7 +1,10 @@
-<h3 class="text-info text-center"  mat-dialog-title>ENTREVISTA RECLUTAMIENTO</h3>
+<h3 class="text-info"  mat-dialog-title>ENTREVISTA RECLUTAMIENTO
+  <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="onCloseDialog()" ><i class="fa fa-times"></i></button>
+</h3>
 <mat-divider></mat-divider>
-<p class="text-warning">FUENTE DE RECLUTAMIENTO</p>
-<mat-dialog-content >
+<mat-dialog-content>
+  <div *ngIf="seleccion > 0 else NoHorarios">
+    <p class="text-warning">FUENTE DE RECLUTAMIENTO</p>
     <mat-form-field class="selectWidth">
         <mat-select placeholder="SELECCIONAR FUENTE DE RECL." [(ngModel)]="mediosId">
           <mat-optgroup *ngFor="let m of medios" [label]="m.nombre | uppercase"
@@ -17,10 +20,12 @@
     <div *ngFor="let r of data" class="form-check">
         <input class="form-check-input" type="radio" name="mode" [(ngModel)]="seleccion" [value]="r.id">{{r.nombre}}
     </div>
+    <div *ngIf="seleccion > 0" [ngStyle]="{'color':'red'}"> 
+      Debe seleccionar un horario.
+  </div>
+</div>
 </mat-dialog-content>
-<div *ngIf="!seleccion" [ngStyle]="{'color':'red'}"> 
-    Debe seleccionar un horario.
-</div> <br/>
+ <br/>
 <mat-divider></mat-divider>
 <mat-dialog-actions class="pull-right">
   <button class="btn btn-xs btn-labeled btn-outline-danger mb-2 margin" mat-dialog-close>
@@ -30,7 +35,7 @@
   </button>
   <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
   <!-- <button class="btn btn-xs btn-outline-success mb-1 float-right" [disabled]="!seleccion" mat-button [mat-dialog-close]="seleccion">Aceptar</button> -->
-  <button type="button" [disabled]="!seleccion" class="btn btn-xs btn-labeled btn-outline-success mb-2 margin" (click)="onCloseDialog()">
+  <button type="button" [disabled]="!seleccion" class="btn btn-xs btn-labeled btn-outline-success mb-2 margin" (click)="EnviarDatos()">
     <span class="btn-label">
       <i class="fa fa-check"></i>
     </span> Aceptar
@@ -39,3 +44,14 @@
 </mat-dialog-actions>
 
 <br/>  <br/>
+
+<!--mensaje cuando esta vacio la tabla-->
+<ng-template #NoHorarios>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <alert type="info">
+            <strong>Oops!</strong> No cuentas con horarios disponibles.
+          </alert>
+    </div>
+  </div>
+</ng-template>
