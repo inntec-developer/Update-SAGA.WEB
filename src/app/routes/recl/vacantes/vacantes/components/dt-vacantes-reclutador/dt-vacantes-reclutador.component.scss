@@ -32,7 +32,11 @@ tr:hover
 
 .modal-lg
 {
-    max-width: 90% !important;
+    max-width: 100% !important;
+}
+.modal-lg .long
+{
+    max-height: 100% !important;
 }
 // ul li {
 //     display:inline-block;

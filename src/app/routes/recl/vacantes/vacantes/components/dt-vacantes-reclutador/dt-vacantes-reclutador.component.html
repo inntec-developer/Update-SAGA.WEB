@@ -84,7 +84,7 @@
               </i>
             </th>
           </tr>
-          <tr *ngIf="showFilterRow" class="filter-colum">
+          <tr class="filter-colum">
             <td *ngFor="let column of columns">
               <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
                 (tableChanged)="onChangeTable(config)" class="form-control" id="{{column.name}}">
@@ -175,6 +175,12 @@
       [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
       (numPages)="numPages = $event">
     </pagination>
+    <button type="button" (click)="refreshTableInfo();informeVacante=true" class="btn btn-xs btn-labeled btn-outline-info mb-2 margen" container="body" placement="bottom" tooltip="Informe Vacantes">
+      <span class="btn-label">
+        <i class="fa fa-file-text-o"></i>
+      </span> Informe Vacantes
+    </button>
+
     <button id='special' chkPrivilegiosButtons type="button" (click)="editarNR=true" class="btn btn-xs btn-labeled btn-outline-danger mb-2 margen" container="body" placement="bottom" tooltip="Visualizar Incidencias">
       <span class="btn-label">
         <i class="fa fa-file-text-o"></i>
@@ -210,7 +216,7 @@
         <comentario-vacante [RequisicionId]="id" [MotivoId]="7"></comentario-vacante>
       </div>
       <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide(); closeModal();">Cerrar</button>
+        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide(); closeModal(0);">Cerrar</button>
       </div>
     </div>
   </div>
@@ -222,7 +228,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 id="dialog-sizes-name1" class="modal-title pull-left text-success">CAMBIAR ESTATUS REQUISICION</h4>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal2.hide();closeModal()" ><i class="fa fa-times"></i></button>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal2.hide();closeModal(0)" ><i class="fa fa-times"></i></button>
   
       </div>
       <div class="modal-body">
@@ -241,7 +247,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 id="dialog-sizes-name1" class="modal-title pull-left text-success">REPORTE DE INCIDENCIAS</h4>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal3.hide();closeModal()" ><i class="fa fa-times"></i></button>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal3.hide();closeModal(0)" ><i class="fa fa-times"></i></button>
   
       </div>
       <div class="modal-body">
@@ -253,3 +259,86 @@
     </div>
   </div>
 </div>
+
+
+<!--Informe vacantes-->
+<div *ngIf="informeVacante" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal4="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg long">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left text-success">INFORME VACANTES</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal4.hide(); closeModal(1);" ><i class="fa fa-times"></i></button>
+  
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="table-responsive">
+            <table style="width: 100%;">
+              <thead>
+                <tr>
+                    <th *ngFor="let column of columnsInfo" ngClass="{{column.className || ''}}">
+                        {{column.title}}
+                        <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
+                        </i> -->
+                      </th>
+                </tr>
+                <tr class="filter-colum">
+                    <td *ngFor="let column of columnsInfo">
+                      <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
+                        (tableChanged)="onChangeTableInfo(config)" class="form-control" id="{{column.name}}">
+                    </td>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of rowsInfo">
+                  <td class="text-center"> {{row.folio}}</td>
+                  <td class="text-center"> {{row.vBtra | uppercase}}</td>
+                  <td class="text-center"> {{row.cliente | uppercase}}</td>
+                  <td class="text-center"> {{row.fch_limite | date:'dd/MM/yyyy'}} </td>
+                  <td class="text-center">   <small *ngIf="row.estatus.length < 15 else toLength" class="badge badge-pill badge-primary"
+                    [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
+                    [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20" [class.badge-success]="row.estatusId  === 7"
+                    [class.badge-danger]="row.estatusId  === 8">
+                    {{row.estatus | uppercase}}
+                  </small>
+                  <ng-template #toLength>
+                      <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
+                        [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20"
+                        [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8" placement="bottom"
+                        tooltip="{{row.estatus | uppercase}}" container='body'> {{row.estatus | slice:0:8 | uppercase }} ...
+                      </small>
+                    </ng-template>
+                </td>
+                  <td class="text-center"> <span class="px-1 mr-1 badge badge-pill badge-primary" [class.badge-warning]="row.vacantes > 0"> {{row.vacantes}}</span> </td>
+                  <td class="text-center"> <span class="px-1 mr-1 badge badge-pill badge-primary" [class.badge-success]="row.porcentaje > 0"> {{row.porcentaje}} %</span></td>
+                  <td class="text-center"> <span class="px-1 mr-1 badge badge-pill badge-primary" [class.badge-warning]="row.postulados > 0">{{row.postulados}}</span></td>
+                  <td class="text-center"> <span class="px-1 mr-1 badge badge-pill badge-primary" [class.badge-warning]="row.entrevista > 0">{{row.entrevista}}</span> </td>
+                  <td class="text-center"> <span class="px-1 mr-1 badge badge-pill badge-primary" [class.badge-warning]="row.abandono > 0">{{row.abandono}}</span> </td>
+                  <td class="text-center"> <span class="px-1 mr-1 badge badge-pill badge-primary" [class.badge-warning]="row.descartados > 0">{{row.descartados}}</span></td>
+                  <td class="text-center"> <span class="px-1 mr-1 badge badge-pill badge-primary" [class.badge-warning]="row.enviados > 0">{{row.enviados}}</span></td>         
+                  <td class="text-center"> <span class="px-1 mr-1 badge badge-pill badge-primary" [class.badge-warning]="row.rechazados > 0">{{row.rechazados}}</span></td> 
+                  <td class="text-center"> <span class="px-1 mr-1 badge badge-pill badge-primary" [class.badge-success]="row.contratados > 0">{{row.contratados}}</span></td> 
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <br/>
+          <br/>
+          <div class="text-right">
+              <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="pageInfo" [totalItems]="lengthInfo" [itemsPerPage]="itemsPerPageInfo"
+                [maxSize]="maxSizeInfo" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTableInfo(config, $event)"
+                (numPages)="numPagesInfo = $event">
+              </pagination>
+              <br/>
+            <pre *ngIf="config.paging" class="card card-block card-header text-warning">P&aacute;gina: {{pageInfo}} / {{numPagesInfo}}  Total Registros: {{registrosInfo}}</pre>
+          </div>
+          
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal2.hide()">Cerrar</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+

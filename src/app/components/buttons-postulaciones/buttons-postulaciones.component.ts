@@ -96,8 +96,15 @@ objLiberar = [];
   // }
 
   ValidarEstatus(estatus) {
+    var auxc = this.dataSource.filter(element => {
+      return element.estatusId == 24
+    });
 
-    if(this.estatusVacante == 39)
+    if(auxc.length == this.conteo[0]['totalVacantes'] && estatus != 42 && estatus != 24)
+    {
+      this.GetHorarioRequis(estatus, estatus)
+    }
+    else if(this.estatusVacante == 39)
     {
       this.cr = true;
       this.enr = true;
@@ -394,6 +401,9 @@ objLiberar = [];
         this.dataSource.push(perfil);
         this.showFilterRow = true;
 
+        console.log(this.dataSource)
+        console.log(this.dataContratados)
+
       })
     }, error => this.errorMessage = <any>error);
   }
@@ -417,12 +427,11 @@ objLiberar = [];
   GetHorarioRequis(estatusId, estatus) {
     
     this.serviceRequi.GetHorariosRequiConteo(this.RequisicionId).subscribe(data => {
-
       // if (data.length > 0) {
         var aux = data.filter(element => !element.vacantes)
 
         if(aux.length == 0)
-    {
+        {
           aux = [{id: 0, nombre: "Los horarios ya están cubiertos"}]
         }
 

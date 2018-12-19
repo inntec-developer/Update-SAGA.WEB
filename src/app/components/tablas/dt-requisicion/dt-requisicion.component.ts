@@ -452,14 +452,12 @@ export class DtRequisicionComponent implements OnInit {
           this.rows[idx]['estatusId'] = estatusId;
 
           if (estatusId >= 34 && estatusId <=37) {
-
             this.rows[idx]['enProcesoN'].forEach(element => {
               if(element.estatusId != 24 && element.estatusId != 42 && element.estatusId != 27 && element.estatusId != 28)
               {
                 emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
               }
             });
-
             this.rows[idx]['postuladosN'].forEach(element => {
               if(element.statusId != 5 && element.statusId != 6 && element.estatusId > 0)
               {

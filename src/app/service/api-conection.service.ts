@@ -1,13 +1,13 @@
 export class ApiConection {
-  //  public static ServiceUrlWeb = 'http://192.168.8.124:444/'
-  public static ServiceUrlWeb = 'http://localhost:4200/'
+   public static ServiceUrlWeb = 'http://192.168.8.124:444/'
+  // public static ServiceUrlWeb = 'http://localhost:4200/'
 
   /*Servicio de purbeas locales*/
-  // public static ServiceUrl = 'http://192.168.8.124:333/api/';
-  public static ServiceUrl = 'http://localhost:33333/api/';
+  public static ServiceUrl = 'http://192.168.8.124:333/api/';
+  // public static ServiceUrl = 'http://localhost:33333/api/';
 
-  // public static ServiceUrlFileManager = 'http://192.168.8.124:33333/utilerias/';
-  public static ServiceUrlFileManager = 'http://localhost:333/utilerias/';
+  public static ServiceUrlFileManager = 'http://192.168.8.124:33333/utilerias/';
+  // public static ServiceUrlFileManager = 'http://localhost:333/utilerias/';
 
   // public static ServiceUrlFoto = 'http://192.168.8.124:333/';
   public static ServiceUrlFoto = 'http://localhost:333/';
@@ -15,8 +15,9 @@ export class ApiConection {
   // Conexiones a bolsa de trabajo.
   public static ServiceUrlBolsa = 'http://sagainn.com.mx:403';
   public static ServiceUrlLoginBolsa = 'http://sagainn.com.mx:402';
-  // Conexion a FORMATO 290 
-  public static ServicioUrl290 = 'http://192.168.8.139:222/Home/';
+  // Conexion a FORMATO 290
+
+   public static ServicioUrl290 = 'http://192.168.8.139:222/Home/';
 
   /* Calendario Event */
   public static GetCalendarioEvent = 'CalendarEvent/GetEvent';
@@ -67,6 +68,7 @@ export class ApiConection {
   public static GetHorariosRequi = 'Requisiciones/getHorariosRequisicion?id=';
   public static GetHorariosRequiConteo = 'Requisiciones/getHorariosRequiConteo';
   public static GetRequisicioneEstatus = 'Requisiciones/getRequisicionesEstatus';
+  public static GetInformeRequisiciones = 'Requisiciones/getInformeVacantes';
 
 
   /* Candidatos */
@@ -127,7 +129,7 @@ export class ApiConection {
   public static GuardarConfi = '/dvacante/GuardarVacante';
   public static getCampos = '/dvacante/getCampos';
   public static getClasificaciones = '/dvacante/getClasificaciones';
-  
+
 
   /* Admin */
   public static getDtosPersonal = '/admin/get';
@@ -182,7 +184,7 @@ export class ApiConection {
   public static ComentariosVacante = 'reclutamiento/seguimientovacante/getComentariosVacante';
   public static AddComentariosVacante = 'reclutamiento/seguimientovacante/addComentariosVacante';
   public static setStatusBolsa = 'reclutamiento/seguimientovacante/updateStatusBolsa';
-  public static sendEmailCandidato = 'reclutamiento/seguimientovacante/sendEmailCandidato'; 
-  public static sendEmailNoContratado = 'reclutamiento/seguimientovacante/sendEmailsNoContratado';  
-  public static getConteoVacante = 'Requisiciones/getConteoVacante';  
+  public static sendEmailCandidato = 'reclutamiento/seguimientovacante/sendEmailCandidato';
+  public static sendEmailNoContratado = 'reclutamiento/seguimientovacante/sendEmailsNoContratado';
+  public static getConteoVacante = 'Requisiciones/getConteoVacante';
 }
