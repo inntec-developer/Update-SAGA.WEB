@@ -1,9 +1,9 @@
-<h3 class="text-info"  mat-dialog-title>ENTREVISTA RECLUTAMIENTO
+<h3 class="text-info"  mat-dialog-title>HORARIOS REQUISICION
   <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="onCloseDialog()" ><i class="fa fa-times"></i></button>
 </h3>
 <mat-divider></mat-divider>
 <mat-dialog-content>
-  <div *ngIf="seleccion > 0 else NoHorarios">
+  <div *ngIf="seleccion != 0 else NoHorarios">
     <p class="text-warning">FUENTE DE RECLUTAMIENTO</p>
     <mat-form-field class="selectWidth">
         <mat-select placeholder="SELECCIONAR FUENTE DE RECL." [(ngModel)]="mediosId">

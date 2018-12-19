@@ -18,10 +18,18 @@ export class DialogHorariosConteoComponent implements OnInit {
   ngOnInit() {
     this.GetMedios();
     console.log(this.data)
+    debugger;
     if(this.data.length == 1)
     {
-      this.seleccion = this.data[0].id;
+      if(this.data[0].id != 0)
+      {
+        this.seleccion = this.data[0].id;
+      }
       console.log(this.seleccion)
+    }
+    else 
+    {
+      this.seleccion = 1;
     }
   }
 

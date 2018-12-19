@@ -25,16 +25,23 @@ declare var $: any;
 })
 export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   public dataSource: Array<any> = [];
-
+  public dataInfoRequi: Array<any> = [];
   // Varaibles del paginador
   public page: number = 1;
+  public pageInfo: number = 1;
   public itemsPerPage: number = 20;
+  public itemsPerPageInfo: number = 20;
   public maxSize: number = 5;
+  public maxSizeInfo: number = 5;
   public numPages: number = 1;
+  public numPagesInfo: number = 1;
   public length: number = 0;
+  public lengthInfo: number = 0;
 
-  showFilterRow: boolean;
+  showFilterRow: boolean = true;
+  showFilterRowInfo: boolean = true;
   registros: number;
+  registrosInfo: number;
   errorMessage: any;
   element: any = null;
   confidencial: boolean = true;
@@ -50,6 +57,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   clienteId: any;
   editarRequi = false;
   editarNR = false;
+  informeVacante = false;
   usuarioId: any = sessionStorage.getItem('id');
   //estatus vacantes
 
@@ -104,7 +112,13 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   getVacantes() {
     this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
-      console.log(this.dataSource)
+      //this.getInfoVacantes()
+    });
+  }
+
+  getInfoVacantes() {
+    this.service.GetInformeRequisiciones(sessionStorage.getItem('id')).subscribe(data => {
+      this.dataInfoRequi = data;
     });
   }
 
@@ -137,6 +151,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
 
 
   public rows: Array<any> = [];
+  public rowsInfo: Array<any> = [];
   public columns: Array<any> = [
     { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
     { title: 'Solicita', className: 'text-info text-center', name: 'solicita', filtering: { filterString: '', placeholder: 'Solicita' } },
@@ -155,6 +170,23 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
     { title: 'En Proceso', className: 'text-info text-center', name: 'enProceso', filtering: { filterString: '', placeholder: 'Proceso' } },
   ];
 
+  public columnsInfo: Array<any> = [
+    { title: 'FOLIO', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'FOLIO' } },
+    { title: 'VACANTE', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'VACANTE' } },
+    { title: 'CLIENTE', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'CLIENTE' } },
+    { title: 'FECHA LIMITE', className: 'text-info text-center', name: 'fch_limite', filtering: { filterString: '', placeholder: 'FECHA LIMITE' } },
+    { title: 'ESTATUS', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'ESTATUS' } },
+    { title: '# VACANTES', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: '# VACANTES' } },
+    { title: '% AVANCE', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: '% AVANCE' } },
+    { title: 'POSTULADOS', className: 'text-info text-center', name: 'postulados', filtering: { filterString: '', placeholder: 'POSTULADOS' } },
+    { title: 'ENTREVISTADOS', className: 'text-info text-center', name: 'entrevista', filtering: { filterString: '', placeholder: 'ENTREVISTADOS' } },
+    { title: 'ABANDONÓ PROCESO', className: 'text-info text-center', name: 'abandono', filtering: { filterString: '', placeholder: 'ABANDONÓ PROCESO' } },
+    { title: 'DESCARTADOS', className: 'text-info text-center', name: 'descartados', filtering: { filterString: '', placeholder: 'DESCARTADOS' } },
+    { title: 'ENVIADO CLIENTE', className: 'text-info text-center', name: 'enviados', filtering: { filterString: '', placeholder: 'ENVIADO CLIENTE' } },
+    { title: 'RECHAZADOS', className: 'text-info text-center', name: 'rechazados', filtering: { filterString: '', placeholder: 'RECHAZADOS' } },
+    { title: 'CONTRATADOS', className: 'text-info text-center', name: 'contratados', filtering: { filterString: '', placeholder: 'CONTRATADOS' } }
+  ];
+
   public config: any = {
     paging: true,
     //sorting: { columns: this.columns },
@@ -162,7 +194,20 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
     className: ['table-hover mb-0 ']
   };
 
+  // public configInfo: any = {
+  //   paging: true,
+  //   //sorting: { columns: this.columns },
+  //   filtering: { filterString: '' },
+  //   className: ['table-hover mb-0 ']
+  // };
+
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
+    let start = (page.page - 1) * page.itemsPerPage;
+    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    return data.slice(start, end);
+  }
+
+  public changePageInfo(page: any, data: Array<any> = this.dataInfoRequi): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
     let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
@@ -204,7 +249,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
     this.columns.forEach((column: any) => {
       this.clearFilter = true;
       if (column.filtering) {
-        this.showFilterRow = true;
+       // this.showFilterRow = true;
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
@@ -243,7 +288,49 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
     return filteredData;
   }
 
+  public changeFilterInfo(data: any, config: any): any {
+    let filteredData: Array<any> = data;
+    this.columnsInfo.forEach((column: any) => {
+      this.clearFilter = true;
+      if (column.filtering) {
+       // this.showFilterRowInfo = true;
+        filteredData = filteredData.filter((item: any) => {
+          if (item[column.name] != null)
+            return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+        });
+      }
+    });
 
+    if (!config.filtering) {
+      return filteredData;
+    }
+
+    if (config.filtering.columnName) {
+      return filteredData.filter((item: any) =>
+        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
+    }
+
+    let tempArray: Array<any> = [];
+    filteredData.forEach((item: any) => {
+      let flag = false;
+      this.columns.forEach((column: any) => {
+        if (item[column.name] == null) {
+          flag = true;
+        } else {
+          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
+            flag = true;
+          }
+        }
+      });
+      if (flag) {
+
+        tempArray.push(item);
+      }
+    });
+    filteredData = tempArray;
+
+    return filteredData;
+  }
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
     if (config.filtering) {
       (<any>Object).assign(this.config.filtering, config.filtering);
@@ -252,6 +339,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
     if (config.sorting) {
       (<any>Object).assign(this.config.sorting, config.sorting);
     }
+
     this.registros = this.dataSource.length;
     this.rows = this.dataSource;
     let filteredData = this.changeFilter(this.dataSource, this.config);
@@ -265,8 +353,31 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
 
   }
 
+  public onChangeTableInfo(config: any, page: any = { page: this.pageInfo, itemsPerPage: this.itemsPerPageInfo }): any {
+    if (config.filtering) {
+      (<any>Object).assign(this.config.filtering, config.filtering);
+    }
+
+    // if (config.sorting) {
+    //   (<any>Object).assign(this.config.sorting, config.sorting);
+    // }
+
+    this.registrosInfo = this.dataInfoRequi.length;
+    this.rowsInfo = this.dataInfoRequi;
+    let filteredData = this.changeFilterInfo(this.dataInfoRequi, this.config);
+    //let sortedData = this.changeSort(filteredData, this.config);
+    this.rowsInfo = page && config.paging ? this.changePageInfo(page, filteredData) : filteredData;
+    this.lengthInfo =  filteredData.length;
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 500);
+
+
+  }
+
   public refreshTable() {
     this.getVacantes();
+  
     setTimeout(() => {
       this.columns.forEach(element => {
         element.filtering.filterString = '';
@@ -275,6 +386,18 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
       this.onChangeTable(this.config);
       this._reinciar();
     }, 800);
+  }
+
+  public refreshTableInfo() {
+    this.getInfoVacantes();  
+    setTimeout(() => {
+      this.columnsInfo.forEach(element => {
+        element.filtering.filterString = '';
+        (<HTMLInputElement>document.getElementById(element.name)).value = '';
+      });
+     let page: any = { page: 1, itemsPerPage: this.itemsPerPageInfo }
+      this.onChangeTableInfo(this.config, page);
+    }, 400);
   }
 
   public clearfilters() {
@@ -702,11 +825,25 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
 
   }
 
-  closeModal()
+  closeModal(flag)
   {
-    this.editarRequi=false;
-    this.editarNR=false;
-    this.refreshTable();
+    
+    if(flag == 1)
+    {
+      this.informeVacante = false;
+      this.pageInfo = 1;
+      this.itemsPerPage = 20;
+      
+      let page: any = { page: 1, itemsPerPage: this.itemsPerPageInfo }
+      this.onChangeTableInfo(this.config, page)
+    }
+    else
+    {
+      this.editarRequi=false;
+      this.editarNR=false;
+      this.refreshTable();
+    }
+ 
   }
   openDesignVacante() {
     if (this.aprobador === sessionStorage.getItem('usuario')) {
