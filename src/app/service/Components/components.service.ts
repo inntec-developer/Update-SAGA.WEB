@@ -6,33 +6,54 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
 
-import { Headers, Http, RequestOptions, Response } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 
 import { ApiConection } from '../api-conection.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Response } from '@angular/http';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
 
 @Injectable()
 export class ComponentsService {
   private urlGetUserGroup = ApiConection.ServiceUrl + ApiConection.GetUserGroup;
   private urlGetUserGroupL = ApiConection.ServiceUrl + ApiConection.GetUserGroupL;
+  private urlGetCalendarEvent = ApiConection.ServiceUrl + ApiConection.GetCalendarioEvent;
+  private urlAddCalendarEvent = ApiConection.ServiceUrl + ApiConection.AddCalendarioEvent;
+  private urlUpdateCalendarEvent = ApiConection.ServiceUrl + ApiConection.UpdateCalendarioEvent;
+  private urlDeleteCalendarEvent = ApiConection.ServiceUrl + ApiConection.DeleteCalendarioEvent;
 
-  constructor(private http: Http) { }
+  constructor(private _httpClient : HttpClient) { }
 
   getUserGroup() : Observable<any>{
-    return this.http.get(this.urlGetUserGroup)
-    .map(result => result.json())
-    .catch(this.handleError);
+    return this._httpClient.get(this.urlGetUserGroup);
   }
 
   getUserGroupL() : Observable<any>{
-    return this.http.get(this.urlGetUserGroupL)
-    .map(result => result.json())
-    .catch(this.handleError);
+    return this._httpClient.get(this.urlGetUserGroupL);
   }
 
+  getCalendarEvent(data: any) : Observable<any>{
+    let params = new HttpParams().set('userId', data)
+    return this._httpClient.get(this.urlGetCalendarEvent, {params: params});
+  }
 
+  addCalendarEvent(data: any) : Observable<any>{
+    return this._httpClient.post(this.urlAddCalendarEvent, data, httpOptions);
+  }
 
+  updateCalendarEvent(data: any) : Observable<any>{
+    return this._httpClient.post(this.urlUpdateCalendarEvent, data, httpOptions);
+  }
+
+  deleteCalendarEvent(data: any) : Observable<any>{
+    return this._httpClient.post(this.urlDeleteCalendarEvent, data, httpOptions);
+  }
 
   //Muestra un error en consola y regresa el mismo al Frond-End en caso de que se genere el mismo.
   public handleError(error: any ){

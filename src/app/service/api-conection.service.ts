@@ -10,13 +10,19 @@ export class ApiConection {
   public static ServiceUrlFileManager = 'http://localhost:333/utilerias/';
 
   // public static ServiceUrlFoto = 'http://192.168.8.124:333/';
-  public static ServiceUrlFoto = 'http://localhost:333/utilerias/img/user';
+  public static ServiceUrlFoto = 'http://localhost:333/';
 
   // Conexiones a bolsa de trabajo.
   public static ServiceUrlBolsa = 'http://sagainn.com.mx:403';
   public static ServiceUrlLoginBolsa = 'http://sagainn.com.mx:402';
   // Conexion a FORMATO 290 
   public static ServicioUrl290 = 'http://192.168.8.139:222/Home/';
+
+  /* Calendario Event */
+  public static GetCalendarioEvent = 'CalendarEvent/GetEvent';
+  public static AddCalendarioEvent = 'CalendarEvent/AddEvent'
+  public static UpdateCalendarioEvent = 'CalendarEvent/UpdateEvent'
+  public static DeleteCalendarioEvent = 'CalendarEvent/DeleteEvent'
 
   /* Componentes */
   public static GetUserGroup = 'AsignacionRequi/getUserGroup';
