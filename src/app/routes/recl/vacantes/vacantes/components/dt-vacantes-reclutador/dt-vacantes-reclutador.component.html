@@ -175,23 +175,23 @@
       [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
       (numPages)="numPages = $event">
     </pagination>
-    <button type="button" (click)="refreshTableInfo();informeVacante=true" class="btn btn-xs btn-labeled btn-outline-info mb-2 margen" container="body" placement="bottom" tooltip="Informe Vacantes">
+    <button type="button" (click)="refreshTableInfo();informeVacante=true" [disabled]="dataSource.length == 0" [ngClass]="dataSource.length == 0 ? 'btn btn-xs disable mb-2 margen' : 'btn btn-xs btn-labeled btn-outline-info mb-2 margen'" container="body" placement="bottom" tooltip="Informe Vacantes">
       <span class="btn-label">
         <i class="fa fa-file-text-o"></i>
       </span> Informe Vacantes
     </button>
 
-    <button id='special' chkPrivilegiosButtons type="button" (click)="editarNR=true" class="btn btn-xs btn-labeled btn-outline-danger mb-2 margen" container="body" placement="bottom" tooltip="Visualizar Incidencias">
+    <button id='special' chkPrivilegiosButtons type="button" (click)="editarNR=true" [disabled]="dataSource.length == 0" [ngClass]="dataSource.length == 0 ? 'btn btn-xs disable mb-2 margen' : 'btn btn-xs btn-labeled btn-outline-danger mb-2 margen'" container="body" placement="bottom" tooltip="Visualizar Incidencias">
       <span class="btn-label">
         <i class="fa fa-file-text-o"></i>
       </span> Incidencias
     </button>
-    <button id='special' chkPrivilegiosButtons type="button" (click)="editarRequi=true" class="btn btn-xs btn-labeled btn-outline-warning mb-2 margen" container="body" placement="bottom" tooltip="Visualizar vacantes en pausa">
+    <button id='special' chkPrivilegiosButtons type="button" (click)="editarRequi=true" [disabled]="dataSource.length == 0" [ngClass]="dataSource.length == 0 ? 'btn btn-xs disable mb-2 margen' : 'btn btn-xs btn-labeled btn-outline-warning mb-2 margen'" container="body" placement="bottom" tooltip="Visualizar vacantes en pausa">
       <span class="btn-label">
         <i class="fa fa-file-text-o"></i>
       </span> Revisión de  Vacantes
     </button>
-    <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-2 margen" (click)="exportAsXLSX()"  container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
+    <button type="button" [disabled]="dataSource.length == 0"  [ngClass]="dataSource.length == 0 ? 'btn btn-xs disable mb-2 margen' : 'btn btn-xs btn-labeled btn-outline-success mb-2 margen'" (click)="exportAsXLSX()"  container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
       <span class="btn-label">
         <i class="fa fa-download"></i>
       </span> Descargar

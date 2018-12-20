@@ -871,45 +871,47 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   exportAsXLSX()
   {
 
-    var aux = [];
-    var comentarios = "";
-    this.dataSource.forEach(row => {
-      if(row.comentarioReclutador.length > 0)
-      {
-        row.comentarioReclutador.forEach(element => {
-          comentarios = comentarios +
-                        element + '\n'
-        });
-      }
-      else{
+    if(this.dataSource.length > 0)
+    {
+      var aux = [];
+      var comentarios = "";
+      this.dataSource.forEach(row => {
+        if(row.comentarioReclutador.length > 0)
+        {
+          row.comentarioReclutador.forEach(element => {
+            comentarios = comentarios +
+                          element + '\n'
+          });
+        }
+        else{
+          comentarios = "";
+        }
+        var d = this.pipe.transform(new Date(row.fch_Creacion), 'yyyy-MM-dd');
+        // var mocos = (d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString()
+        var e = this.pipe.transform( new Date(row.fch_Modificacion), 'yyyy-MM-dd');
+
+        aux.push({
+          FOLIO: row.folio.toString(),
+          'FECHA SOLICITUD': d,//new Date(d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString(),
+          SOLICITANTE: row.solicita,
+          EMPRESA: row.cliente,
+          SUCURSAL: row.sucursal,
+          NO: row.vacantes,
+          PUESTO: row.vBtra,
+          SUELDO:  row.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
+          ESTATUS: row.estatus,
+          'FECHA ESTATUS': e,
+          RECLUTADOR: sessionStorage.getItem('nombre'),
+          'COMENTARIOS': comentarios
+        })
         comentarios = "";
-      }
-      var d = this.pipe.transform(new Date(row.fch_Creacion), 'yyyy-MM-dd');
-      // var mocos = (d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString()
-      var e = this.pipe.transform( new Date(row.fch_Modificacion), 'yyyy-MM-dd');
+      });
 
-      aux.push({
-        FOLIO: row.folio.toString(),
-        'FECHA SOLICITUD': d,//new Date(d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString(),
-        SOLICITANTE: row.solicita,
-        EMPRESA: row.cliente,
-        SUCURSAL: row.sucursal,
-        NO: row.vacantes,
-        PUESTO: row.vBtra,
-        SUELDO:  row.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
-        ESTATUS: row.estatus,
-        'FECHA ESTATUS': e,
-        RECLUTADOR: sessionStorage.getItem('nombre'),
-        'COMENTARIOS': comentarios
-      })
-      comentarios = "";
-    });
-
-    //   })
-    // })
-    this.excelService.exportAsExcelFile(aux, 'Solicitud_de_reporte_para_generar_estadisticos');
-    this.refreshTable();
-
+      //   })
+      // })
+      this.excelService.exportAsExcelFile(aux, 'Solicitud_de_reporte_para_generar_estadisticos');
+      this.refreshTable();
+    }
   }
   /**
   * configuracion para mensajes de acciones.
