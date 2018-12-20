@@ -16,7 +16,7 @@ import { DatePipe } from '@angular/common';
     DatePipe
   ]
 })
-export class DialogEventComponent implements OnInit, AfterViewInit {
+export class DialogEventComponent implements OnInit {
   // Variables de Formulario  
   public formEvent: FormGroup;
   public fb: FormBuilder;
@@ -56,7 +56,6 @@ export class DialogEventComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    debugger;
     this.ColorPicker = '#4290ff'
     this.SeletedDayC = this.data;
     this.minLimitDate = this.SeletedDayC;
@@ -73,15 +72,14 @@ export class DialogEventComponent implements OnInit, AfterViewInit {
     // console.log(this.formEvent.value)
   }
 
-  ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
-    debugger;
-    this.formEvent = this.fb.group({
-      HoraInicio: [{ value: '6:00' }],
-      HoraFin: [{ value: '18:00' }]
-    });
-  }
+  // ngAfterViewInit(): void {
+  //   //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+  //   //Add 'implements AfterViewInit' to the class.
+  //   // this.formEvent = this.fb.group({
+  //   //   HoraInicio: [{ value: '6:00' }],
+  //   //   HoraFin: [{ value: '18:00' }]
+  //   // });
+  // }
   private _CheckNuevaFecha(){
     this.minLimitDate = this.formEvent.get('Inicio').value;
   }
@@ -93,7 +91,7 @@ export class DialogEventComponent implements OnInit, AfterViewInit {
   onCloseDialog() {
     this.dialogEvent.close(false);
   }
-  onCloseDialogInfo() {debugger;
+  onCloseDialogInfo() {
     this.loading = true;
     var dateInicio = new Date(this.minLimitDate);
     var dateFinal = this.formEvent.get('Fin').value;
@@ -125,6 +123,7 @@ export class DialogEventComponent implements OnInit, AfterViewInit {
       Final = new Date(ye, me, de , 23, 59);
     }
     var data = {
+      entidadId: sessionStorage.getItem('id'),
       title: this.formEvent.get('Titulo').value,  
       start: Inicio,
       end: Final,

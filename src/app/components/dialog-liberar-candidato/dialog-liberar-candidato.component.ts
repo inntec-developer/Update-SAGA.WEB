@@ -43,7 +43,7 @@ export class DialogLiberarCandidatoComponent implements OnInit {
   }
 
   _liberarCandidato() {
-
+debugger;
       this.loading = true;
      
       var data = {
