@@ -56,7 +56,7 @@ export class CalendarioCandidatoComponent implements OnInit {
     monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
     monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
     dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
-    dayNamesShort: ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb']
+    dayNamesShort: ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],
     locale: 'es',
     defaultView: 'month',
     eventLimit: 5,
@@ -216,7 +216,6 @@ export class CalendarioCandidatoComponent implements OnInit {
   }
 
   openDialogEventB() {
-    debugger;
     let dialogEvent = this.dialog.open(DialogEventComponent, {
       width: 'auto',
       height: 'auto',
