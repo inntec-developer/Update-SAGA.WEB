@@ -10,7 +10,7 @@ export class ApiConection {
   public static ServiceUrlFileManager = 'http://localhost:333/utilerias/';
 
   // public static ServiceUrlFoto = 'http://192.168.8.124:333/';
-  public static ServiceUrlFoto = 'http://localhost:333/';
+  public static ServiceUrlFoto = 'http://localhost:333/utilerias/img/user';
 
   // Conexiones a bolsa de trabajo.
   public static ServiceUrlBolsa = 'http://sagainn.com.mx:403';
