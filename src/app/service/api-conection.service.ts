@@ -1,13 +1,13 @@
 export class ApiConection {
-   public static ServiceUrlWeb = 'http://192.168.8.124:444/'
-  // public static ServiceUrlWeb = 'http://localhost:4200/'
+  // public static ServiceUrlWeb = 'http://192.168.8.124:444/'
+  public static ServiceUrlWeb = 'http://localhost:4200/'
 
   /*Servicio de purbeas locales*/
-  public static ServiceUrl = 'http://192.168.8.124:333/api/';
-  // public static ServiceUrl = 'http://localhost:33333/api/';
+  //public static ServiceUrl = 'http://192.168.8.124:333/api/';
+  public static ServiceUrl = 'http://localhost:33333/api/';
 
-  public static ServiceUrlFileManager = 'http://192.168.8.124:33333/utilerias/';
-  // public static ServiceUrlFileManager = 'http://localhost:333/utilerias/';
+  //public static ServiceUrlFileManager = 'http://192.168.8.124:33333/utilerias/';
+  public static ServiceUrlFileManager = 'http://localhost:333/utilerias/';
 
   // public static ServiceUrlFoto = 'http://192.168.8.124:333/';
   public static ServiceUrlFoto = 'http://localhost:333/';
