@@ -9,8 +9,8 @@ export class ApiConection {
   //public static ServiceUrlFileManager = 'http://192.168.8.124:33333/utilerias/';
   public static ServiceUrlFileManager = 'http://localhost:333/utilerias/';
 
-  public static ServiceUrlFoto = 'http://192.168.8.124:333/';
-  // public static ServiceUrlFoto = 'http://localhost:3333';
+  // public static ServiceUrlFoto = 'http://192.168.8.124:333/';
+  public static ServiceUrlFoto = 'http://localhost:3333';
 
   // Conexiones a bolsa de trabajo.
   public static ServiceUrlBolsa = 'http://sagainn.com.mx:403';
@@ -69,6 +69,7 @@ export class ApiConection {
   public static GetHorariosRequiConteo = 'Requisiciones/getHorariosRequiConteo';
   public static GetRequisicioneEstatus = 'Requisiciones/getRequisicionesEstatus';
   public static GetInformeRequisiciones = 'Requisiciones/getInformeVacantes';
+  public static getRequiEstadisticos = 'Requisiciones/getRequiEstadisticos';
 
 
   /* Candidatos */
@@ -129,6 +130,7 @@ export class ApiConection {
   public static GuardarConfi = '/dvacante/GuardarVacante';
   public static getCampos = '/dvacante/getCampos';
   public static getClasificaciones = '/dvacante/getClasificaciones';
+
 
 
   /* Admin */
