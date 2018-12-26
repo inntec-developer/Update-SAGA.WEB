@@ -17,8 +17,7 @@ export class DialogHorariosConteoComponent implements OnInit {
 
   ngOnInit() {
     this.GetMedios();
-    console.log(this.data)
-    debugger;
+
     if(this.data.length == 1)
     {
       if(this.data[0].id != 0)

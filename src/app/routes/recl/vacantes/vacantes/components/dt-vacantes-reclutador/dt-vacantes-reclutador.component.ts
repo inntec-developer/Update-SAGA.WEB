@@ -95,6 +95,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.spinner.show();
     this.getVacantes();
+    
 
   }
   ngAfterViewChecked(){
@@ -112,9 +113,16 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   getVacantes() {
     this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
-      //this.getInfoVacantes()
+      this.getRequiEstadisticos()
     });
   }
+
+  getRequiEstadisticos() {
+    this.service.GetRequiEstadisticos(sessionStorage.getItem('id')).subscribe(data => {
+      console.log(data)
+    });
+  }
+
 
   getInfoVacantes() {
     this.service.GetInformeRequisiciones(sessionStorage.getItem('id')).subscribe(data => {

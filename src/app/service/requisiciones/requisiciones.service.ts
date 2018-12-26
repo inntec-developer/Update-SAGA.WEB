@@ -1,3 +1,4 @@
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -47,6 +48,7 @@ export class RequisicionesService {
   private urlGetHorariosRequiConteo = ApiConection.ServiceUrl + ApiConection.GetHorariosRequiConteo;
   private URLGetRequisicionesEstatus = ApiConection.ServiceUrl + ApiConection.GetRequisicioneEstatus;
   private URLGetInformeRequisiciones = ApiConection.ServiceUrl + ApiConection.GetInformeRequisiciones;
+  private URLGetRequiEstadisticos = ApiConection.ServiceUrl + ApiConection.getRequiEstadisticos;
 
   constructor(private http: Http, private _httpClient: HttpClient) { }
   // Recupera todos los damfos que esten dados de alta y se encuentren activos
@@ -114,6 +116,11 @@ export class RequisicionesService {
   GetRequisicionesEstatus(estatus, usuario): Observable<any> {
     let params = new HttpParams().set('estatus', estatus).set('ReclutadorId', usuario);
     return this._httpClient.get(this.URLGetRequisicionesEstatus, { params: params });
+  }
+
+  GetRequiEstadisticos(usuario): Observable<any> {
+    let params = new HttpParams().set('IdUsuario', usuario);
+    return this._httpClient.get(this.URLGetRequiEstadisticos, { params: params });
   }
 
   // ---------------------------------------------------------------------------------------------------------------
