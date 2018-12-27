@@ -51,9 +51,9 @@ export class DialogEventComponent implements OnInit {
       Titulo: new FormControl('', [Validators.required]),
       Inicio: new FormControl('', [Validators.required]),
       Fin: new FormControl('', [Validators.required]),
-      HoraInicio: new FormControl(''),
-      HoraFin: new FormControl(''),
-      AllDay: new FormControl(),
+      HoraInicio: new FormControl('', [Validators.required]),
+      HoraFin: new FormControl('', [Validators.required]),
+      // AllDay: new FormControl(),
       Descripcion: new FormControl(''),
       Color: new FormControl('')
     });

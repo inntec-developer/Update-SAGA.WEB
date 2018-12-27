@@ -387,6 +387,9 @@ export class CalendarioCandidatoComponent implements OnInit {
       Inicio = new Date(ys, ms, ds, 0, 0);
       Final = new Date(ye, me, de, 0, 0);
     }
+    if(Inicio > Final){
+      Final = Inicio;
+    }
     this.getEventoCalendar[this.updateIndex]['actividad'] = this.textValueActividad;
     this.getEventoCalendar[this.updateIndex]['tipoActividadId'] = this.formEvent.get('Actividad').value;
     this.getEventoCalendar[this.updateIndex]['title'] = this.formEvent.get('Titulo').value;
