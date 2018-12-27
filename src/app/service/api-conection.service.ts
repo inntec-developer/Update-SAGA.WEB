@@ -21,9 +21,10 @@ export class ApiConection {
 
   /* Calendario Event */
   public static GetCalendarioEvent = 'CalendarEvent/GetEvent';
-  public static AddCalendarioEvent = 'CalendarEvent/AddEvent'
-  public static UpdateCalendarioEvent = 'CalendarEvent/UpdateEvent'
-  public static DeleteCalendarioEvent = 'CalendarEvent/DeleteEvent'
+  public static AddCalendarioEvent = 'CalendarEvent/AddEvent';
+  public static UpdateCalendarioEvent = 'CalendarEvent/UpdateEvent';
+  public static DeleteCalendarioEvent = 'CalendarEvent/DeleteEvent';
+  public static CulminarEvent = 'CalendarEvent/CulminarEvent';
 
   /* Componentes */
   public static GetUserGroup = 'AsignacionRequi/getUserGroup';
@@ -39,6 +40,7 @@ export class ApiConection {
   public static GetGrupos = 'Catalogos/getGrupos';
   public static GetRoles = 'Catalogos/getRoles';
   public static GetMotivosLiberacion = 'Catalogos/getMotivosLiberacion';
+  public static GetTiposActividadesRecl = 'Catalogos/getTiposActividadesRecl';
 
   /* Reclutamiento */
   public static Damfo290GetById = 'Damfo290/getById?id=';

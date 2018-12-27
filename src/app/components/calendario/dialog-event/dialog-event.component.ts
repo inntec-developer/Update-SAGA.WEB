@@ -3,13 +3,14 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_DIALOG_DATA, MatDia
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
+import { CatalogosService } from './../../../service/index';
 import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-dialog-event',
   templateUrl: './dialog-event.component.html',
   styleUrls: ['./dialog-event.component.scss'],
-  providers: [
+  providers: [ CatalogosService,
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
@@ -27,6 +28,7 @@ export class DialogEventComponent implements OnInit {
   public allDaySelected: boolean;
   public minLimitDate: any;
   public SeletedDayC: any;
+  public Actividades: any;
   // public evnt = {
   //   titulo: '',
   //   inicio: null,
@@ -39,11 +41,13 @@ export class DialogEventComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private _catalogotService: CatalogosService,
     private dialogEvent: MatDialogRef<DialogEventComponent>,
     private dateParse : DatePipe
   ) {
     dialogEvent.disableClose = true;
     this.formEvent = new FormGroup({
+      Actividad: new FormControl('', [Validators.required]),
       Titulo: new FormControl('', [Validators.required]),
       Inicio: new FormControl('', [Validators.required]),
       Fin: new FormControl('', [Validators.required]),
@@ -53,6 +57,7 @@ export class DialogEventComponent implements OnInit {
       Descripcion: new FormControl(''),
       Color: new FormControl('')
     });
+    
   }
 
   ngOnInit() {
@@ -60,6 +65,7 @@ export class DialogEventComponent implements OnInit {
     this.SeletedDayC = this.data;
     this.minLimitDate = this.SeletedDayC;
     this.loading = false;
+    this._GetActivdadesReclutador();
     // this.formEvent = this.fb.group({
     //   Titulo: [{ value: '' }, Validators.required],
     //   Inicio: [{ value: this.SeletedDayC }, Validators.required],
@@ -104,8 +110,8 @@ export class DialogEventComponent implements OnInit {
     me = dateFinal.getMonth(),
     ye = dateFinal.getFullYear();
 
-    var Inicio ,
-        Final,
+    var Inicio: any ,
+        Final: any,
         hourStart: Array<any> = [],
         hourEnd: Array<any> =[];
 
@@ -124,6 +130,7 @@ export class DialogEventComponent implements OnInit {
     }
     var data = {
       entidadId: sessionStorage.getItem('id'),
+      TipoActividadId: this.formEvent.get('Actividad').value,
       title: this.formEvent.get('Titulo').value,  
       start: Inicio,
       end: Final,
@@ -136,6 +143,11 @@ export class DialogEventComponent implements OnInit {
     this.dialogEvent.close(data);
   }
 
-  
+  private _GetActivdadesReclutador(){
+    this._catalogotService.getActividadesReclutador().subscribe(result => {
+      this.Actividades = result;
+      console.log(this.Actividades);
+    })
+  }
 
 }

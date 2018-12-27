@@ -14,17 +14,20 @@
                   </h3>
                 </div>
                 <div *ngIf="NotDateCalendar">
-                    <em  class="fa fa-plus fa-2x fa-fw fa-spin" container="body" placement="bottom" tooltip="Agregar" (click)="openDialogEventB()"></em>
+                  <em class="fa fa-plus fa-2x fa-fw fa-spin" container="body" placement="bottom" tooltip="Agregar"
+                    (click)="openDialogEventB()"></em>
                 </div>
                 <div *ngIf="selectedEvent">
-                  <em class="icon-pencil" container="body" placement="bottom" tooltip="Editar" (click)="EditEvent(selectedEvent)"></em>
-                  <em class="icon-trash" container="body" placement="bottom" tooltip="Eliminar" (click)="sweetalertDeleteEvent(selectedEvent)"></em>
+                  <em *ngIf="selectedEvent.activo && Pendiente" class="fa fa-check culminar"  container="body" placement="bottom" tooltip="Culminar" (click)="sweetalertCulminarEvent(selectedEvent)"></em>
+                  <em class="fa fa-pencil editar" container="body" placement="bottom" tooltip="Editar" (click)="EditEvent(selectedEvent)"></em>
+                  <em class="fa fa-trash-o eliminar" container="body" placement="bottom" tooltip="Eliminar" (click)="sweetalertDeleteEvent(selectedEvent)"></em>
                 </div>
               </div>
               <mat-divider></mat-divider>
             </div>
             <div class="card-body">
               <div *ngIf="selectedEvent && !EditEventAction">
+                  <p><strong>Actividad: </strong><span class="text-primary">{{textValueActividad}}</span></p>
                 <p><strong>Titulo: </strong><span class="text-primary">{{selectedEvent?.title}}</span></p>
                 <p><strong>Inicio: </strong><span class="text-primary">{{selectedEvent?.start | date:'dd/MM/yyyy'}}</span>
                   <strong> a las </strong><span class="text-primary"> {{selectedEvent?.start | date:'hh:mm a'}}</span></p>
@@ -41,6 +44,13 @@
                 <form [formGroup]="formEvent" (ngSubmit)="Save()">
                   <mat-form-field>
                     <input matInput formControlName="Titulo" name="titulo" placeholder="Titlulo" required>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <mat-select (selectionChange)="selected($event.value)" placeholder="Actividad" formControlName="Actividad"  required>
+                      <mat-option *ngFor="let x of Actividades"  [value]="x.id">
+                        {{x.actividad}}
+                      </mat-option>
+                    </mat-select>
                   </mat-form-field>
                   <mat-form-field>
                     <input matInput [matDatepicker]="fchInicio" (dateChange)="EditLimitDate()" placeholder="Inicio"

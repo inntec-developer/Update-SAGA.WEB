@@ -27,6 +27,7 @@ export class ComponentsService {
   private urlAddCalendarEvent = ApiConection.ServiceUrl + ApiConection.AddCalendarioEvent;
   private urlUpdateCalendarEvent = ApiConection.ServiceUrl + ApiConection.UpdateCalendarioEvent;
   private urlDeleteCalendarEvent = ApiConection.ServiceUrl + ApiConection.DeleteCalendarioEvent;
+  private UrlCulminarEvent = ApiConection.ServiceUrl + ApiConection.CulminarEvent;
 
   constructor(private _httpClient : HttpClient) { }
 
@@ -39,7 +40,7 @@ export class ComponentsService {
   }
 
   getCalendarEvent(data: any) : Observable<any>{
-    let params = new HttpParams().set('userId', data)
+    let params = new HttpParams().set('userId', data);
     return this._httpClient.get(this.urlGetCalendarEvent, {params: params});
   }
 
@@ -53,6 +54,11 @@ export class ComponentsService {
 
   deleteCalendarEvent(data: any) : Observable<any>{
     return this._httpClient.post(this.urlDeleteCalendarEvent, data, httpOptions);
+  }
+
+  culminarElement(data: any) : Observable<any>{
+    let params = new HttpParams().set('Id', data);
+    return this._httpClient.get(this.UrlCulminarEvent, {params: params});
   }
 
   //Muestra un error en consola y regresa el mismo al Frond-End en caso de que se genere el mismo.

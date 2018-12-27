@@ -1,4 +1,4 @@
-import { AfterContentChecked, Component, Input, OnInit, ViewChild, SimpleChanges } from '@angular/core';
+import { AfterContentChecked, Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { CatalogosService, RequisicionesService } from '../../../../../service';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -102,7 +102,7 @@ export class UpdateInfoRequiComponent implements OnInit {
         this.getInformacionRequisicio(this.Folios)
       }
     }
-    getAsignacion(event){
+    getAsignacion(event: any){
       this.asignadosRequi = event;
     }
 

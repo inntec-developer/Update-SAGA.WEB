@@ -1,15 +1,16 @@
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { CatalogosService, ComponentsService } from './../../../service/index';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
-import { ComponentsService } from './../../../service/Components/components.service';
 import { DatePipe } from '@angular/common';
 import { DialogEventComponent } from '../dialog-event/dialog-event.component';
 import { EventoCalendario } from './../../../models/vtas/Requisicion';
 import { MatDialog } from '@angular/material';
+import { toDate } from '@angular/common/src/i18n/format_date';
 
 declare var $: any;
 const swal = require('sweetalert');
@@ -17,7 +18,7 @@ const swal = require('sweetalert');
   selector: 'app-calendario-candidato',
   templateUrl: './calendario-candidato.component.html',
   styleUrls: ['./calendario-candidato.component.scss'],
-  providers: [ComponentsService, EventoCalendario,
+  providers: [ComponentsService, CatalogosService, EventoCalendario,
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS }, DatePipe
@@ -44,6 +45,7 @@ export class CalendarioCandidatoComponent implements OnInit {
   public hourEnd: string = '14:00';
   public ReclutadorId: string;
   public touch: boolean = true;
+  public toDay: Date;
   /* * Reference to the calendar element * */
   @ViewChild('fullcalendar') fullcalendar: ElementRef;
 
@@ -57,6 +59,7 @@ export class CalendarioCandidatoComponent implements OnInit {
     monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
     dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
     dayNamesShort: ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],
+    noEventsMessage: "No hay eventos para mostrar",
     locale: 'es',
     defaultView: 'month',
     eventLimit: 5,
@@ -94,6 +97,9 @@ export class CalendarioCandidatoComponent implements OnInit {
   IdEvent: any;
   selectedDate: any;
   NotDateCalendar: boolean;
+  Actividades: any;
+  textValueActividad: string = '';
+  Pendiente: boolean;
 
 
 
@@ -103,6 +109,7 @@ export class CalendarioCandidatoComponent implements OnInit {
     private dialog: MatDialog,
     private eventoCalendario: EventoCalendario,
     private componenteService: ComponentsService,
+    private _catalogotService: CatalogosService,
     private toasterService: ToasterService,
     private dateParse: DatePipe
   ) {
@@ -110,6 +117,7 @@ export class CalendarioCandidatoComponent implements OnInit {
     this.getEvent();
     setTimeout(() => {
       this.formEvent = new FormGroup({
+        Actividad: new FormControl('', [Validators.required]),
         Titulo: new FormControl('', Validators.required),
         Inicio: new FormControl('', Validators.required),
         Fin: new FormControl(''),
@@ -122,7 +130,9 @@ export class CalendarioCandidatoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.toDay = new Date();
     this.EventSelected = false;
+    this._GetActivdadesReclutador();
   }
 
   // ngAfterViewInit() {
@@ -130,19 +140,30 @@ export class CalendarioCandidatoComponent implements OnInit {
   // }
 
   eventClick(calEvent: any, jsEvent: any, view: any) {
+
     this.EventSelected = true;
     this.EditEventAction = false;
+    this.textValueActividad = calEvent.actividad;
     this.selectedEvent = {
       id: calEvent.id,
       entidadId: calEvent.entidadId,
+      actividad: calEvent.actividad,
+      tipoActividadId: calEvent.tipoActividadId,
       title: calEvent.title,
       start: calEvent.start.toJSON(),
       end: calEvent.end == null ? calEvent.start.toJSON() : calEvent.end.toJSON(),
       message: calEvent.message || 'Sin Descripción',
       allDay: calEvent.allDay,
       backgroundColor: calEvent.backgroundColor,
-      borderColor: calEvent.borderColor
+      borderColor: calEvent.borderColor,
+      activo: calEvent.activo
     };
+    if(new Date(this.selectedEvent.start) > this.toDay){
+      this.Pendiente = false;
+    }
+    else{
+      this.Pendiente = true;
+    }
     this.StartDate = this.dateParse.transform(calEvent.start.toJSON(), 'yyyy/MM/dd');
   }
 
@@ -170,7 +191,6 @@ export class CalendarioCandidatoComponent implements OnInit {
   }
 
   addEvent(event: any) {
-    // store event
     this.componenteService
       .addCalendarEvent(event)
       .subscribe(result => {
@@ -254,10 +274,6 @@ export class CalendarioCandidatoComponent implements OnInit {
 
   public EditEvent(data: any) {
     this.IdEvent = data.id;
-    // let inicio = this.dateParse.transform( new Date(data.start), 'yyyy-MM-dd');
-    // this.minLimitDate =inicio;
-    // var limitDate = new Date(data.start);
-    // this.minLimitDate = new Date(limitDate.getFullYear(), limitDate.getMonth(), limitDate.getDate())
     this.EditEventAction = true;
     this.ColorPicker = data.borderColor;
 
@@ -278,6 +294,7 @@ export class CalendarioCandidatoComponent implements OnInit {
     this.hourEnd = horasF + ':' + minutosF
 
     this.formEvent.patchValue({
+      Actividad: data.tipoActividadId,
       Titulo: data.title,
       Inicio: new Date(data.start),
       Fin: new Date(data.end),
@@ -297,15 +314,10 @@ export class CalendarioCandidatoComponent implements OnInit {
     this.EditEventAction = false;
   }
 
-  private _CheckNuevaFecha() {
-    // var limitDate = new Date(this.formEvent.get('Inicio').value);
-    // this.minLimitDate = new Date(limitDate.getFullYear(), limitDate.getMonth(), limitDate.getDate())
-  }
-
-  private _CheckAllDay() {
-    this.allDaySelected = this.formEvent.get('AllDay').value;
-    this.allDaySelected = this.allDaySelected.toISOString();
-  }
+  // private _CheckAllDay() {
+  //   this.allDaySelected = this.formEvent.get('AllDay').value;
+  //   this.allDaySelected = this.allDaySelected.toISOString();
+  // }
 
   private DeleteEvent(data: any) {
     this.componenteService.deleteCalendarEvent(data)
@@ -324,6 +336,24 @@ export class CalendarioCandidatoComponent implements OnInit {
           this.popToast('error', 'Calenario', 'Ups!! No se puedo Eliminar el evento intanta de nuevo.');
         }
       });
+  }
+
+  private CulminarEvent(data: any){
+    this.componenteService.culminarElement(data.id)
+    .subscribe(result => {
+      if(result == 200){
+        this.updateIndex = this.getEventoCalendar.findIndex(event => event.id === data.id)
+        this.getEventoCalendar[this.updateIndex]['activo'] = false;
+        this.calendarEvents == this.getEventoCalendar;
+        this.$calendar.fullCalendar('removeEvents');
+        // Agrega la información actualizada al calendario sin la necesaridad de llamar el servicio Get. 
+        this.$calendar.fullCalendar('addEventSource', this.calendarEvents);
+        this.popToast('success', 'Calendario', 'Se actualizo correctamente el evento en el calendario.');
+        this.selectedEvent = this.getEventoCalendar[this.updateIndex];
+        swal('Culminado', '', 'success');
+
+      }
+    });
   }
 
   private Save() {
@@ -357,7 +387,8 @@ export class CalendarioCandidatoComponent implements OnInit {
       Inicio = new Date(ys, ms, ds, 0, 0);
       Final = new Date(ye, me, de, 0, 0);
     }
-
+    this.getEventoCalendar[this.updateIndex]['actividad'] = this.textValueActividad;
+    this.getEventoCalendar[this.updateIndex]['tipoActividadId'] = this.formEvent.get('Actividad').value;
     this.getEventoCalendar[this.updateIndex]['title'] = this.formEvent.get('Titulo').value;
     this.getEventoCalendar[this.updateIndex]['start'] = Inicio;
     this.getEventoCalendar[this.updateIndex]['end'] = Final;
@@ -376,7 +407,6 @@ export class CalendarioCandidatoComponent implements OnInit {
         this.loading = false;
         this.EditEventAction = false;
         this.selectedEvent = this.getEventoCalendar[this.updateIndex];
-        this.StartDate = '';
       }
       if (result == 404) {
         this.popToast('error', 'Calendario', 'Ocurrió un error al actualizar el evento. Si el problema persiste favor de notificarlo a sistemas.');
@@ -389,6 +419,16 @@ export class CalendarioCandidatoComponent implements OnInit {
   */
   public EditLimitDate() {
     this.StartDate = this.formEvent.get('Inicio').value;
+  }
+
+  private _GetActivdadesReclutador(){
+    this._catalogotService.getActividadesReclutador().subscribe(result => {
+      this.Actividades = result;
+    })
+  }
+
+  private selected(event: any){
+    this.textValueActividad = this.Actividades[event-1].actividad;
   }
 
   /*
@@ -429,7 +469,28 @@ export class CalendarioCandidatoComponent implements OnInit {
       if (isConfirm) {
         this.DeleteEvent(data);
       } else {
-        swal('Cancelado', 'La ruta de camión no sufrio cambios.', 'error');
+        swal('Cancelado', 'El Evento no se elimino.', 'error');
+      }
+    });
+  }
+
+  // Confirmar para culminar Evento
+  sweetalertCulminarEvent(data: any) {
+    swal({
+      title: 'Culminar evento del calendario',
+      text: 'Esta seguro que desea culminar el Evento ' + data.title,
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Si, Culminar.',
+      cancelButtonText: 'No, Cancelar',
+      closeOnConfirm: false,
+      closeOnCancel: false,
+    }, (isConfirm: boolean) => {
+      if (isConfirm) {
+        this.CulminarEvent(data);
+      } else {
+        swal('Cancelado', 'El evento sigue activo.', 'success');
       }
     });
   }

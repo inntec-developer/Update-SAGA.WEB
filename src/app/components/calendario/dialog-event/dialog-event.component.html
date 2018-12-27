@@ -10,6 +10,13 @@
         <input matInput formControlName="Titulo" name="titulo" placeholder="Titlulo" focus required>
       </mat-form-field>
       <mat-form-field>
+        <mat-select placeholder="Actividad" formControlName="Actividad" required>
+          <mat-option *ngFor="let x of Actividades" [value]="x.id">
+            {{x.actividad}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
         <input matInput [matDatepicker]="fchInicio" placeholder="Inicio" formControlName="Inicio" (dateChange)="_CheckNuevaFecha()"
           [(ngModel)]="SeletedDayC" required="">
         <mat-datepicker-toggle matSuffix [for]="fchInicio"></mat-datepicker-toggle>
@@ -28,12 +35,11 @@
       </section> -->
       <section *ngIf="!allDaySelected">
         <mat-form-field>
-          <input matInput placeholder="Hora Inicio" type="time" min="08:00" max="18:00" 
-            formControlName="HoraInicio" step="600">
+          <input matInput placeholder="Hora Inicio" type="time" min="08:00" max="18:00" formControlName="HoraInicio"
+            step="600">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Hora Final" type="time" min="08:00" max="18:00" 
-            formControlName="HoraFin" step="600">
+          <input matInput placeholder="Hora Final" type="time" min="08:00" max="18:00" formControlName="HoraFin" step="600">
         </mat-form-field>
       </section>
       <section>
@@ -45,8 +51,8 @@
       </section>
       <section>
         <mat-form-field>
-          <input matInput [(colorPicker)]="ColorPicker" [style.background]="ColorPicker" [(ngModel)]="ColorPicker"  [ngModelOptions]="{standalone: true}"
-            placeholder="Selecciona un Color" />
+          <input matInput [(colorPicker)]="ColorPicker" [style.background]="ColorPicker" [(ngModel)]="ColorPicker"
+            [ngModelOptions]="{standalone: true}" placeholder="Selecciona un Color" />
         </mat-form-field>
       </section>
       <mat-dialog-actions>
@@ -55,10 +61,8 @@
             <i class="fa fa-times"></i>
           </span> Cancelar
         </button>
-        <button [disabled]= "!formEvent.valid" type="button" 
-          [ngClass]="!formEvent.valid ? 'disabled' : 'btn-outline-success '" 
-          class="mb-1 btn btn-xs btn-labeled margen"
-          (click)="onCloseDialogInfo()">
+        <button [disabled]="!formEvent.valid" type="button" [ngClass]="!formEvent.valid ? 'disabled' : 'btn-outline-success '"
+          class="mb-1 btn btn-xs btn-labeled margen" (click)="onCloseDialogInfo()">
           <span class="btn-label">
             <i class="fa fa-check"></i>
           </span> Aceptar
