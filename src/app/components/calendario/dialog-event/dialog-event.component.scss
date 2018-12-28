@@ -1,7 +1,9 @@
 .margen {
    
-    margin:0 2px;
+    margin-right: 10px;
+    margin-top: 15px;
 }
+
 .loading-position{
     width: 15px;
     height: 15px;
@@ -12,5 +14,16 @@
 input[type=color].form-control {
     padding: 0px;
     border-radius: 15%;
+}
+
+.culminar{
+    color: #0ff608;
+}
+.editar{
+    color: #0e75fb;
+}
+
+.eliminar {
+    color: #eb1d02
 }
 

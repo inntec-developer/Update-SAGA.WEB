@@ -19,7 +19,7 @@
           <mat-divider></mat-divider>
         </div>
         <div class="card-body">
-          <div *ngIf="Pendientes.length > 0 else NotPendientes">
+          <div *ngIf="Pendientes?.length > 0 else NotPendientes">
             <!-- {{ Pendientes | json }} -->
             <div class="table-responsive" #tableContainer>
               <table id="tablaHorarios" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
@@ -67,7 +67,7 @@
           <mat-divider></mat-divider>
         </div>
         <div class="card-body">
-          <div *ngIf="Hoy.length > 0 else NotHoy">
+          <div *ngIf="Hoy?.length > 0 else NotHoy">
             <!-- {{ Hoy | json }} -->
             <table id="tablaHorarios" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
               <thead>
@@ -112,7 +112,7 @@
           <mat-divider></mat-divider>
         </div>
         <div class="card-body">
-          <div *ngIf="Siguientes.length > 0 else NotSiguientes">
+          <div *ngIf="Siguientes?.length > 0 else NotSiguientes">
             <!-- {{ Siguientes | json }} -->
             <table id="tablaHorarios" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
               <thead>
@@ -132,7 +132,7 @@
             </table>
           </div>
           <ng-template #NotSiguientes>
-            <p> <span class="text-warning">No se tiene eventos fituros</span></p>
+            <p> <span class="text-warning">No se tiene eventos futuros</span></p>
           </ng-template>
         </div>
       </div>
