@@ -97,10 +97,9 @@ export class EditarRequiEstatusComponent implements OnInit {
             this.loading = false;
             this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
           }
-        })
+        });
       }
-    }
-
+    });
   }
 
 
