@@ -13,14 +13,11 @@
                     <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Evento
                   </h3>
                 </div>
-                <div *ngIf="NotDateCalendar">
-                  <em class="fa fa-plus fa-2x fa-fw fa-spin" container="body" placement="bottom" tooltip="Agregar"
-                    (click)="openDialogEventB()"></em>
-                </div>
-                <div *ngIf="selectedEvent">
-                  <em *ngIf="selectedEvent.activo && Pendiente" class="fa fa-check culminar"  container="body" placement="bottom" tooltip="Culminar" (click)="sweetalertCulminarEvent(selectedEvent)"></em>
-                  <em class="fa fa-pencil editar" container="body" placement="bottom" tooltip="Editar" (click)="EditEvent(selectedEvent)"></em>
-                  <em class="fa fa-trash-o eliminar" container="body" placement="bottom" tooltip="Eliminar" (click)="sweetalertDeleteEvent(selectedEvent)"></em>
+                <div>
+                  <em *ngIf="selectedEvent?.activo && Pendiente" class="fa fa-check culminar"  container="body" placement="bottom" tooltip="Culminar" (click)="sweetalertCulminarEvent(selectedEvent)"></em>
+                  <em *ngIf="selectedEvent" class="fa fa-pencil editar" container="body" placement="bottom" tooltip="Editar" (click)="EditEvent(selectedEvent)"></em>
+                  <em *ngIf="selectedEvent" class="fa fa-trash-o eliminar" container="body" placement="bottom" tooltip="Eliminar" (click)="sweetalertDeleteEvent(selectedEvent)"></em>
+                  <em class="fa fa-plus editar" container="body" placement="bottom" tooltip="Agregar" (click)="openDialogEventB()"></em>
                 </div>
               </div>
               <mat-divider></mat-divider>

@@ -36,7 +36,7 @@ export class CalendarioCandidatoComponent implements OnInit {
   private StartDate: any;
   public modalRef: BsModalRef;
   public EventSelected: boolean;
-  public EditEventAction: boolean;
+  public EditEventAction: boolean = false;
   public $calendar: any;
   public calendarEvents: Array<any> = this.getEventoCalendar;
   public selectedEvent = null;
