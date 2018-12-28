@@ -49,6 +49,7 @@ export class RequisicionesService {
   private URLGetRequisicionesEstatus = ApiConection.ServiceUrl + ApiConection.GetRequisicioneEstatus;
   private URLGetInformeRequisiciones = ApiConection.ServiceUrl + ApiConection.GetInformeRequisiciones;
   private URLGetRequiEstadisticos = ApiConection.ServiceUrl + ApiConection.getRequiEstadisticos;
+  private URLGetUltimoEstatusRequi = ApiConection.ServiceUrl + ApiConection.GetUltimoEstatusRequi;
 
   constructor(private http: Http, private _httpClient: HttpClient) { }
   // Recupera todos los damfos que esten dados de alta y se encuentren activos
@@ -117,6 +118,12 @@ export class RequisicionesService {
     let params = new HttpParams().set('estatus', estatus).set('ReclutadorId', usuario);
     return this._httpClient.get(this.URLGetRequisicionesEstatus, { params: params });
   }
+
+  GetUltimoEstatusRequi(RequisicionId): Observable<any> {
+    let params = new HttpParams().set('RequisicionId', RequisicionId);
+    return this._httpClient.get(this.URLGetUltimoEstatusRequi, { params: params });
+  }
+
 
   GetRequiEstadisticos(usuario): Observable<any> {
     let params = new HttpParams().set('IdUsuario', usuario);

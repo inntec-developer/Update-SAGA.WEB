@@ -72,6 +72,7 @@ export class ApiConection {
   public static GetRequisicioneEstatus = 'Requisiciones/getRequisicionesEstatus';
   public static GetInformeRequisiciones = 'Requisiciones/getInformeVacantes';
   public static getRequiEstadisticos = 'Requisiciones/getRequiEstadisticos';
+  public static GetUltimoEstatusRequi = 'Requisiciones/getUltimoEstatus';
 
 
   /* Candidatos */
