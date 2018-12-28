@@ -1,5 +1,3 @@
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
 import { ColorPickerModule, ColorPickerService } from 'ngx-color-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { INgxSelectOptions, NgxSelectModule } from 'ngx-select-ex'
@@ -46,6 +44,7 @@ import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../core/transla
 
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { ActividadesComponent } from './tablas/actividades/actividades.component';
+import { ActividadesReclutadorComponent } from './calendario/actividades-reclutador/actividades-reclutador.component';
 import { AlertModule } from 'ngx-bootstrap';
 import { AsignarRequisicionComponent } from './asignar-requisicion/asignar-requisicion.component';
 import { AsignarRequisicionLiderComponent } from './asignar-requisicion-lider/asignar-requisicion-lider.component';
@@ -103,11 +102,14 @@ import { DtPsicometriasDamsaComponent } from './tablas/dt-psicometrias-damsa/dt-
 import { DtRequisicionComponent } from './tablas/dt-requisicion/dt-requisicion.component';
 import { DtRutasCamionRequiComponent } from './tablas/dt-rutas-camion-requi/dt-rutas-camion-requi.component';
 import { DtTelefonosComponent } from './tablas/dt-telefonos/dt-telefonos.component';
+import { EditarCandidatoEstatusComponent } from './editar-candidato-estatus/editar-candidato-estatus.component';
 import { EditarContratadosComponent } from './editar-contratados/editar-contratados.component';
+import { EditarRequiEstatusComponent } from './editar-requi-estatus/editar-requi-estatus.component';
 import { InfoCandidatoComponent } from './info-candidato/info-candidato.component';
 import { InfoVacanteComponent } from './info-vacante/info-vacante.component';
 import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from '../../../node_modules/ngx-spinner';
 import { ObservacionesComponent } from './tablas/observaciones/observaciones.component';
 import { PrestacionesClienteComponent } from './tablas/prestaciones-cliente/prestaciones-cliente.component';
@@ -115,9 +117,6 @@ import { PrestacionesLeyComponent } from './tablas/prestaciones-ley/prestaciones
 import { ProcesosComponent } from './tablas/procesos/procesos.component';
 import { SharedModule } from '../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { EditarRequiEstatusComponent } from './editar-requi-estatus/editar-requi-estatus.component';
-import { EditarCandidatoEstatusComponent } from './editar-candidato-estatus/editar-candidato-estatus.component';
-
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -243,7 +242,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DlgComentariosNRComponent,
     EditarRequiEstatusComponent,
     CalendarioCandidatoComponent,
-    EditarCandidatoEstatusComponent
+    EditarCandidatoEstatusComponent,
+    ActividadesReclutadorComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -306,7 +306,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DialogEventComponent,
     CalendarioCandidatoComponent,
     EditarRequiEstatusComponent,
-    EditarCandidatoEstatusComponent
+    EditarCandidatoEstatusComponent,
+    ActividadesReclutadorComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

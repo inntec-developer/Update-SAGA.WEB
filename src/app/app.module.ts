@@ -4,16 +4,15 @@ import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-transla
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 import { BrowserModule } from '@angular/platform-browser';
+import {CardService} from './service/SeguimientoVacante/CardService.service';
 import { CoreModule } from './core/core.module';
+import { DetailService } from './service/SeguimientoVacante/DetailService.service';
 import { HttpModule } from '@angular/http';
 import { LayoutModule } from './layout/layout.module';
 import { NgModule } from '@angular/core';
 import { RoutesModule } from './routes/routes.module';
 import { SharedModule } from './shared/shared.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import {CardService} from './service/SeguimientoVacante/CardService.service';
-import { DetailService } from './service/SeguimientoVacante/DetailService.service';
-
 
 // https://github.com/ocombe/ng2-translate/issues/218
 export function createTranslateLoader(http: HttpClient) {

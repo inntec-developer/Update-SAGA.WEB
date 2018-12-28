@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import { DialogEventComponent } from '../dialog-event/dialog-event.component';
 import { EventoCalendario } from './../../../models/vtas/Requisicion';
 import { MatDialog } from '@angular/material';
+import { getMonth } from 'ngx-bootstrap/chronos';
 import { toDate } from '@angular/common/src/i18n/format_date';
 
 declare var $: any;
@@ -57,8 +58,8 @@ export class CalendarioCandidatoComponent implements OnInit {
     timeZoneImpl: 'UTC-coercion',
     monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
     monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-    dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
-    dayNamesShort: ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],
+    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
     noEventsMessage: "No hay eventos para mostrar",
     locale: 'es',
     defaultView: 'month',
@@ -100,6 +101,9 @@ export class CalendarioCandidatoComponent implements OnInit {
   Actividades: any;
   textValueActividad: string = '';
   Pendiente: boolean;
+  Pendientes: any[];
+  Hoy: any[];
+  Siguientes: any[];
 
 
 
@@ -158,10 +162,10 @@ export class CalendarioCandidatoComponent implements OnInit {
       borderColor: calEvent.borderColor,
       activo: calEvent.activo
     };
-    if(new Date(this.selectedEvent.start) > this.toDay){
+    if (new Date(this.selectedEvent.start) > this.toDay) {
       this.Pendiente = false;
     }
-    else{
+    else {
       this.Pendiente = true;
     }
     this.StartDate = this.dateParse.transform(calEvent.start.toJSON(), 'yyyy/MM/dd');
@@ -182,6 +186,7 @@ export class CalendarioCandidatoComponent implements OnInit {
         this.$calendar = $(this.fullcalendar.nativeElement);
         this.$calendar.fullCalendar(this.calendarOptions);
         this.NotDateCalendar = false;
+        this._Actividades();
       }
       else {
         this.popToast('warning', 'Calendario', 'No cuenta con evento para mostrar en el calendario.');
@@ -203,6 +208,7 @@ export class CalendarioCandidatoComponent implements OnInit {
               this.$calendar.fullCalendar('removeEvents');
               this.$calendar.fullCalendar('addEventSource', this.calendarEvents);
               this.popToast('success', 'Calendario', 'Se agrego correctamente el evento en el calendario.');
+              this._Actividades();
             }
             else {
               this.popToast('error', 'Calendario', 'Se produjo en error al recuparar la información de los eventos.');
@@ -307,7 +313,6 @@ export class CalendarioCandidatoComponent implements OnInit {
       this.StartDate = this.formEvent.get('Inicio').value;
     }, 500);
     this.allDaySelected = false;
-    console.log(this.formEvent.value);
   }
 
   private CancelareditEvent() {
@@ -331,6 +336,7 @@ export class CalendarioCandidatoComponent implements OnInit {
           this.popToast('success', 'Calendario', 'Se elimino corectamente el Evento.');
           swal('Eliminada', '', 'success');
           this.selectedEvent = null;
+          this._Actividades();
         }
         if (result == 404) {
           this.popToast('error', 'Calenario', 'Ups!! No se puedo Eliminar el evento intanta de nuevo.');
@@ -338,22 +344,34 @@ export class CalendarioCandidatoComponent implements OnInit {
       });
   }
 
-  private CulminarEvent(data: any){
+  private CulminarEvent(data: any) {
     this.componenteService.culminarElement(data.id)
-    .subscribe(result => {
-      if(result == 200){
-        this.updateIndex = this.getEventoCalendar.findIndex(event => event.id === data.id)
-        this.getEventoCalendar[this.updateIndex]['activo'] = false;
-        this.calendarEvents == this.getEventoCalendar;
-        this.$calendar.fullCalendar('removeEvents');
-        // Agrega la información actualizada al calendario sin la necesaridad de llamar el servicio Get. 
-        this.$calendar.fullCalendar('addEventSource', this.calendarEvents);
-        this.popToast('success', 'Calendario', 'Se actualizo correctamente el evento en el calendario.');
-        this.selectedEvent = this.getEventoCalendar[this.updateIndex];
-        swal('Culminado', '', 'success');
+      .subscribe(result => {
+        if (result == 200) {
+          this.updateIndex = this.getEventoCalendar.findIndex(event => event.id === data.id)
+          this.getEventoCalendar[this.updateIndex]['activo'] = false;
+          this.calendarEvents == this.getEventoCalendar;
+          this.$calendar.fullCalendar('removeEvents');
+          // Agrega la información actualizada al calendario sin la necesaridad de llamar el servicio Get. 
+          this.$calendar.fullCalendar('addEventSource', this.calendarEvents);
+          this.popToast('success', 'Calendario', 'Se actualizo correctamente el evento en el calendario.');
+          this.selectedEvent = this.getEventoCalendar[this.updateIndex];
+          swal('Culminado', '', 'success');
+          this._Actividades();
 
-      }
-    });
+        }
+      });
+  }
+
+  private _Actividades() {
+    let toDay = new Date();
+    let compare = new Date(toDay.getFullYear(), toDay.getMonth(), toDay.getUTCDate(), 0, 0)
+    this.Pendientes = this.calendarEvents.filter(event => 
+      new Date(new Date(event.start).getFullYear(), new Date(event.start).getMonth(), new Date(event.start).getUTCDate(), 0, 0) < compare && event.activo === true);
+    this.Hoy = this.calendarEvents.filter(event => 
+     String(new Date(new Date(event.start).getFullYear(), new Date(event.start).getMonth(), new Date(event.start).getUTCDate(), 0, 0)) == String(compare) && event.activo === true);
+    this.Siguientes = this.calendarEvents.filter(event => 
+      new Date(new Date(event.start).getFullYear(), new Date(event.start).getMonth(), new Date(event.start).getUTCDate(), 0, 0) > compare && event.activo === true);
   }
 
   private Save() {
@@ -387,7 +405,7 @@ export class CalendarioCandidatoComponent implements OnInit {
       Inicio = new Date(ys, ms, ds, 0, 0);
       Final = new Date(ye, me, de, 0, 0);
     }
-    if(Inicio > Final){
+    if (Inicio > Final) {
       Final = Inicio;
     }
     this.getEventoCalendar[this.updateIndex]['actividad'] = this.textValueActividad;
@@ -410,6 +428,7 @@ export class CalendarioCandidatoComponent implements OnInit {
         this.loading = false;
         this.EditEventAction = false;
         this.selectedEvent = this.getEventoCalendar[this.updateIndex];
+        this._Actividades();
       }
       if (result == 404) {
         this.popToast('error', 'Calendario', 'Ocurrió un error al actualizar el evento. Si el problema persiste favor de notificarlo a sistemas.');
@@ -424,14 +443,14 @@ export class CalendarioCandidatoComponent implements OnInit {
     this.StartDate = this.formEvent.get('Inicio').value;
   }
 
-  private _GetActivdadesReclutador(){
+  private _GetActivdadesReclutador() {
     this._catalogotService.getActividadesReclutador().subscribe(result => {
       this.Actividades = result;
     })
   }
 
-  private selected(event: any){
-    this.textValueActividad = this.Actividades[event-1].actividad;
+  private selected(event: any) {
+    this.textValueActividad = this.Actividades[event - 1].actividad;
   }
 
   /*
@@ -493,7 +512,7 @@ export class CalendarioCandidatoComponent implements OnInit {
       if (isConfirm) {
         this.CulminarEvent(data);
       } else {
-        swal('Cancelado', 'El evento sigue activo.', 'success');
+        swal('Cancelado', 'El evento sigue activo.', 'error');
       }
     });
   }

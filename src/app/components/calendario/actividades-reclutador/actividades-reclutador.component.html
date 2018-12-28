@@ -1,0 +1,141 @@
+<br>
+<div class="row">
+  <div class="col-md-4 col-lg-4 col-sm-12  ">
+    <div class="dt-container mat-elevation-z8" #EventosPendientes>
+      <div class="card">
+        <div class="card-header ">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h3>
+                <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Pendientes
+              </h3>
+            </div>
+            <!-- <div>
+              <em class="fa fa-check culminar" container="body" placement="bottom" tooltip="Culminar"></em>
+              <em class="fa fa-pencil editar" container="body" placement="bottom" tooltip="Editar"></em>
+              <em class="fa fa-trash-o eliminar" container="body" placement="bottom" tooltip="Eliminar"></em>
+            </div> -->
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+        <div class="card-body">
+          <div *ngIf="Pendientes.length > 0 else NotPendientes">
+            <!-- {{ Pendientes | json }} -->
+            <div class="table-responsive" #tableContainer>
+              <table id="tablaHorarios" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr (click)="onCellClick(row)" *ngFor="let row of Pendientes">
+                    <td class="text-center"> {{row.actividad}} </td>
+                    <td class="text-center"> {{row.title}}</td>
+                    <td class="text-center"> {{row.start | date:"dd/MM/yyy HH:mm"}}</td>
+                    <td class="text-center"> {{row.end | date:"dd/MM/yyy HH:mm"}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <ng-template #NotPendientes>
+            <p> <span class="text-warning">No se tiene eventos pendientes</span></p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-lg-4 col-sm-12  ">
+    <div class="dt-container mat-elevation-z8" #EventosdeHoy>
+      <div class="card">
+        <div class="card-header ">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h3>
+                <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Hoy
+              </h3>
+            </div>
+            <!-- <div>
+              <em class="fa fa-plus editar" container="body" placement="bottom" tooltip="Agregar"></em>
+              <em class="fa fa-check culminar" container="body" placement="bottom" tooltip="Culminar"></em>
+              <em class="fa fa-pencil editar" container="body" placement="bottom" tooltip="Editar"></em>
+              <em class="fa fa-trash-o eliminar" container="body" placement="bottom" tooltip="Eliminar"></em>
+            </div> -->
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+        <div class="card-body">
+          <div *ngIf="Hoy.length > 0 else NotHoy">
+            <!-- {{ Hoy | json }} -->
+            <table id="tablaHorarios" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+              <thead>
+                <tr>
+                  <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr (click)="onCellClick(row)" *ngFor="let row of Hoy">
+                  <td class="text-center"> {{row.actividad}} </td>
+                  <td class="text-center"> {{row.title}}</td>
+                  <td class="text-center"> {{row.start | date:"dd/MM/yyy HH:mm"}}</td>
+                  <td class="text-center"> {{row.end | date:"dd/MM/yyy HH:mm"}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #NotHoy>
+            <p> <span class="text-warning">No se tiene eventos de hoy</span></p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-lg-4 col-sm-12  ">
+    <div class="dt-container mat-elevation-z8" #EventosSiguientes>
+      <div class="card">
+        <div class="card-header ">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h3>
+                <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Siguientes
+              </h3>
+            </div>
+            <!-- <div>
+              <em class="fa fa-plus editar" container="body" placement="bottom" tooltip="Agregar"></em>
+              <em class="fa fa-pencil editar" container="body" placement="bottom" tooltip="Editar"></em>
+              <em class="fa fa-trash-o eliminar" container="body" placement="bottom" tooltip="Eliminar"></em>
+            </div> -->
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+        <div class="card-body">
+          <div *ngIf="Siguientes.length > 0 else NotSiguientes">
+            <!-- {{ Siguientes | json }} -->
+            <table id="tablaHorarios" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+              <thead>
+                <tr>
+                  <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr (click)="onCellClick(row)" *ngFor="let row of Siguientes">
+                  <td class="text-center"> {{row.actividad}} </td>
+                  <td class="text-center"> {{row.title}}</td>
+                  <td class="text-center"> {{row.start | date:"dd/MM/yyy HH:mm"}}</td>
+                  <td class="text-center"> {{row.end | date:"dd/MM/yyy HH:mm"}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #NotSiguientes>
+            <p> <span class="text-warning">No se tiene eventos fituros</span></p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
