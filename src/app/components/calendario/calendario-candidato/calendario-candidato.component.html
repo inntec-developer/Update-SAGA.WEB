@@ -131,7 +131,9 @@
     </div>
   </div>
   <div #actividadesReclutador *ngIf="!EditEventAction">
-    <app-actividades-reclutador [Pendientes]='Pendientes' [Hoy]='Hoy' [Siguientes]='Siguientes'></app-actividades-reclutador>
+    <div *ngIf="!NotDateCalendar">
+        <app-actividades-reclutador [Pendientes]='Pendientes' [Hoy]='Hoy' [Siguientes]='Siguientes'></app-actividades-reclutador>
+    </div>
   </div>
 </div>
 
