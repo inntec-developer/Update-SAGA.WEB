@@ -62,7 +62,7 @@ export class EditarRequiEstatusComponent implements OnInit {
   //estatus vacantes
   SetStatus(row, rowIndex) {
     this.loading = true;
-    debugger;
+  
     this.service.GetUltimoEstatusRequi(row.id).subscribe(estatus => {
 
       if (estatus != 404) {
