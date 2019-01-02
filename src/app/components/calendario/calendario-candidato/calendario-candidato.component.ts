@@ -144,7 +144,6 @@ export class CalendarioCandidatoComponent implements OnInit {
   // }
 
   eventClick(calEvent: any, jsEvent: any, view: any) {
-
     this.EventSelected = true;
     this.EditEventAction = false;
     this.textValueActividad = calEvent.actividad;
@@ -154,8 +153,8 @@ export class CalendarioCandidatoComponent implements OnInit {
       actividad: calEvent.actividad,
       tipoActividadId: calEvent.tipoActividadId,
       title: calEvent.title,
-      start: calEvent.start.toJSON(),
-      end: calEvent.end == null ? calEvent.start.toJSON() : calEvent.end.toJSON(),
+      start: calEvent.start,
+      end: calEvent.end == null ? calEvent.start : calEvent.end,
       message: calEvent.message || 'Sin Descripción',
       allDay: calEvent.allDay,
       backgroundColor: calEvent.backgroundColor,

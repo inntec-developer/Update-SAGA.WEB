@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 
 import { log } from 'util';
 
@@ -11,6 +11,7 @@ export class ActividadesReclutadorComponent implements OnInit {
   @Input('Pendientes') Pendientes: any = [];
   @Input('Hoy') Hoy: any = [];
   @Input('Siguientes') Siguientes: any = [];
+  @Output('Selected') Selected: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
@@ -48,7 +49,7 @@ export class ActividadesReclutadorComponent implements OnInit {
   };
 
   public onCellClick(data: any): any {
-    console.log(data);
+    this.Selected.emit(data);
   }
 
 }
