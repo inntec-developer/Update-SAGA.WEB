@@ -82,21 +82,21 @@ export class AdminServiceService {
     return this.http.post(this.UrlUploadImage, formData ).map(result => result.json());
   }
 
-  GetFiles(): Observable<any>
+  GetFiles(candidatoId): Observable<any>
   {
 
     let httpHeaders = new HttpHeaders({
       'Access-Control-Allow-Origin': 'http://localhost:4200'
      })
 
-     let params = new HttpParams().set('entidadId', sessionStorage.getItem('id'))
+     let params = new HttpParams().set('entidadId', candidatoId)
  
      return this._httpClient.get(this.UrlGetFiles, {params: params});
   }
  
   GetImage(ruta): string
   {
-    return ApiConection.ServiceUrlFileManager + '/Files/users/' + sessionStorage.getItem('id') + ruta;
+    return ApiConection.ServiceUrlFileManager + 'Files/users/' + ruta;
   }
 
   GetPdf(ruta): Observable<any>
@@ -112,10 +112,10 @@ export class AdminServiceService {
     return this._httpClient.get(this.UrlDownloadFiles, {params: params, responseType: 'blob'});
   }
 
-  UploadFile( file: File ) : Observable<any>
+  UploadFile( file: File, candidatoId ) : Observable<any>
   {
     let formData = new FormData();
-    formData.append('file', file, file.name + '_' + sessionStorage.getItem('id')  );
+    formData.append('file', file, file.name + '_' + candidatoId );
 
     return this.http.post(this.UrlUploadFile, formData ).map(result => result.json());
   }

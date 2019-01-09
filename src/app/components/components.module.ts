@@ -1,3 +1,4 @@
+import { FileManagerComponent } from './file-manager/file-manager.component';
 import { ColorPickerModule, ColorPickerService } from 'ngx-color-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { INgxSelectOptions, NgxSelectModule } from 'ngx-select-ex'
@@ -243,7 +244,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     EditarRequiEstatusComponent,
     CalendarioCandidatoComponent,
     EditarCandidatoEstatusComponent,
-    ActividadesReclutadorComponent
+    ActividadesReclutadorComponent,
+    FileManagerComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -307,7 +309,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     CalendarioCandidatoComponent,
     EditarRequiEstatusComponent,
     EditarCandidatoEstatusComponent,
-    ActividadesReclutadorComponent
+    ActividadesReclutadorComponent,
+    FileManagerComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

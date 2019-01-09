@@ -12,7 +12,6 @@ import { CommonModule } from '@angular/common';
 import { ComponentsModule } from '../../components/components.module';
 import { CustomFormsModule } from 'ng2-validation';
 import { DndModule } from 'ng2-dnd';
-import { FileManagerComponent } from './file-manager/file-manager.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { GridRolesComponent } from './add-roles/grid-roles/grid-roles.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -42,7 +41,6 @@ const routes: Routes = [
     { path: 'rol', component: RolGrupoComponent, data: {'componente':'Grupos a roles'} },
     { path: 'privilegios', component: RollsStructComponent, data: {'componente':'Privilegios'}},
     { path: 'registro', component: RegistroComponent},
-    { path: 'filemanager', component: FileManagerComponent },
     { path: 'filesContratados', component: FilesContratadosComponent}
 ];
 
@@ -91,7 +89,6 @@ const routes: Routes = [
       RegistroComponent,
       GridRolesComponent ,
       UploadImgsComponent,
-      FileManagerComponent,
       FilesContratadosComponent
     ],
     exports: [

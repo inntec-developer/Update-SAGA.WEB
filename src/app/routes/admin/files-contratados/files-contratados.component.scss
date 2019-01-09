@@ -1,7 +1,12 @@
-tr:hover
+tr.rowHover:hover
 {
 //   transform:scale(0.999,0.9);
 //   transform-origin:center;
 font-size: 16px;
   box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+.modal-lg
+{
+    max-width: 100% !important;
 }

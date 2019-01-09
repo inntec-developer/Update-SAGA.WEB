@@ -1,7 +1,7 @@
 import { saveAs } from 'file-saver';
 
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
+import { AdminServiceService } from '../../service/AdminServicios/admin-service.service';
 
 
 
@@ -14,6 +14,8 @@ import { AdminServiceService } from '../../../service/AdminServicios/admin-servi
 export class FileManagerComponent implements OnInit {
 
   @Input() public accept: Array<string> = [];
+  @Input() public candidatoId: any;
+
   @ViewChild('staticModal') modal;
 
   selectedFile: File;
@@ -61,7 +63,7 @@ onClosed(): void {
   {
     let file: File = $event.target.files[0];
 
-    this.service.UploadFile(file).subscribe(result => {
+    this.service.UploadFile(file, this.candidatoId).subscribe(result => {
       if(result === 201)
       {
         this.ngOnInit();
@@ -86,7 +88,7 @@ onClosed(): void {
       
         this.imgShow = true;
         this.pdfShow = false;
-        this.image = this.service.GetImage(datos.nom);
+        this.image = this.service.GetImage( '/' + this.candidatoId + datos.nom);
         this.nomImg = datos.nom;
         this.modal.show();
   
@@ -95,7 +97,7 @@ onClosed(): void {
     {
         this.imgShow = false;
         this.pdfShow = true;
-        this.pdfSrc = this.service.GetPdf('utilerias/Files/users/' + sessionStorage.getItem('id') + '/' + datos.nom).subscribe( data=>{
+        this.pdfSrc = this.service.GetPdf('utilerias/Files/users/' + this.candidatoId + '/' + datos.nom).subscribe( data=>{
         var fileurl = window.URL.createObjectURL(data);
         window.open(fileurl)
           // this.pdfSrc = fileurl;
@@ -108,7 +110,7 @@ onClosed(): void {
 
   downloadFile(datos)
   {
-    var ruta = '/utilerias/Files/users/' + sessionStorage.getItem('id') + '/';
+    var ruta = '/utilerias/Files/users/' + this.candidatoId + '/';
 
     this.service.DownloadFiles(ruta + datos.nom).subscribe( res =>{
       saveAs(res, datos.nom)
@@ -170,11 +172,13 @@ onClosed(): void {
 
   GetFiles()
   {
+    if(this.candidatoId)
+    {
    
-    this.service.GetFiles()
-    .subscribe( data => {
-       this.getTypes(data)
-    });
-    
+      this.service.GetFiles(this.candidatoId)
+      .subscribe( data => {
+        this.getTypes(data)
+      });
+  }
   }
 }

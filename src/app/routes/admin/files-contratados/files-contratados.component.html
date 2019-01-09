@@ -13,7 +13,7 @@
 </div>
 <br/>
 <div class="table-responsive mat-elevation-z8">
-  <table *ngIf="rows.length > 0 else NotCandidatos" class="table table-hover table-striped">
+  <table *ngIf="dataInfoRequi.length > 0 else NotCandidatos" class="table table-hover table-striped">
     <thead>
       <tr>
         <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
@@ -21,7 +21,12 @@
           <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
           </i> -->
         </th>
-        <th class="text-center"></th>
+      </tr>
+      <tr >
+        <td *ngFor="let column of columns">
+          <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
+            (tableChanged)="onChangeTableInfo(config, column.name)" class="form-control" id="{{column.name}}">
+        </td>
       </tr>
     </thead>
     <tbody>
@@ -31,7 +36,7 @@
             class="form-control">
         </td>
       </tr> -->
-      <tr *ngFor="let row of rows; let rowIndex = index" [class.classCURP]="row.classCURP">
+      <tr class="rowHover" *ngFor="let row of rowsInfo; let rowIndex = index" [class.classCURP]="row.classCURP">
        <td class="text-center">{{row.folio}}</td>
        <td class="text-center">{{row.vbtra}}</td>
        <td class="text-center">{{row.curp | uppercase}}</td>
@@ -46,7 +51,7 @@
         <td class="text-center">{{row.usuario}}</td> -->
         <td class="text-center">{{row.fch_Creacion | date:'dd-MM-yyyy'}}</td>
         <td class="text-center">
-          <button class="mb-1 btn btn-xs btn-outline-success" type="button" container="body" placement="bottom" tooltip="Cargar Archivos">
+          <button class="mb-1 btn btn-xs btn-outline-success" type="button" container="body" placement="bottom" tooltip="Cargar Archivos" (click)="candidatoId = row.candidatoId; nom = row.nombre + ' ' + row.apellidoPaterno + ' ' + row.apellidoPaterno; filemanager=true;">
             <em class="fa fa-upload"></em>
           </button>
         </td>
@@ -54,8 +59,36 @@
     </tbody>
   </table>
 </div>
+<br/>
+<br/>
+<div class="text-right">
+    <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="pageInfo" [totalItems]="lengthInfo" [itemsPerPage]="itemsPerPageInfo"
+      [maxSize]="maxSizeInfo" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTableInfo(config, $event)"
+      (numPages)="numPagesInfo = $event">
+    </pagination>
+    <br/>
+  <pre *ngIf="config.paging" class="card card-block card-header text-warning">P&aacute;gina: {{pageInfo}} / {{numPagesInfo}}  Total Registros: {{registrosInfo}}</pre>
+</div>
 
 
+<!--filemanager-->
+<div *ngIf="filemanager" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal2="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left text-success">{{nom}}</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal2.hide();closeModal()" ><i class="fa fa-times"></i></button>
+  
+      </div>
+      <div class="modal-body">
+        <app-file-manager [candidatoId]="candidatoId"></app-file-manager>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal2.hide()">Cerrar</button>
+      </div> -->
+    </div>
+  </div>
+</div>
 
 <!--mensaje cuando esta vacio la tabla-->
 <ng-template #NotCandidatos>
