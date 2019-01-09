@@ -49,6 +49,7 @@ export class CandidatosService {
     private URLGetMotivos = ApiConection.ServiceUrl + ApiConection.GetMotivos;
     private URLGetContratados = ApiConection.ServiceUrl + ApiConection.GetContratados;
     private URLGetFoliosIncidencias = ApiConection.ServiceUrl + ApiConection.GetCandidatosNR;
+    private URLGetInfoContratados = ApiConection.ServiceUrl + ApiConection.GetInfoContratados;
 
     // Error.
     private handleError(error: any) {
@@ -90,6 +91,10 @@ export class CandidatosService {
             })
           };
         return this._httpClient.post(this.URLGetContratados, candidatos, httpOptions);
+    }
+
+    GetInfoContratados(): Observable<any> { 
+        return this._httpClient.get(this.URLGetInfoContratados);
     }
 
     GetFoliosIncidencias(estatus): Observable<any> { // Obtener el esatus del candidato para las banderas de mostrar la información.

@@ -457,6 +457,7 @@ export class DtRequisicionComponent implements OnInit {
                 emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
               }
             });
+            
             this.rows[idx]['postuladosN'].forEach(element => {
               if(element.statusId == 1)
               {

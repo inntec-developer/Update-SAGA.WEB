@@ -1,0 +1,69 @@
+<div class="content-heading">
+  <div>
+    Candidatos
+    <span class="text-sm d-none d-sm-block">Administraci&oacute;n de Candidatos.</span>
+  </div>
+  <!-- Breadcrumb right aligned-->
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item">
+      <a [routerLink]="['/home']">Inicio</a>
+    </li>
+    <li class="breadcrumb-item active">Reclutamiento</li>
+  </ol>
+</div>
+<br/>
+<div class="table-responsive mat-elevation-z8">
+  <table *ngIf="rows.length > 0 else NotCandidatos" class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+          {{column.title | uppercase}}
+          <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
+          </i> -->
+        </th>
+        <th class="text-center"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <tr *ngIf="showFilterRow">
+        <td *ngFor="let column of columns">
+          <input formControlName="filtro" *ngIf="column.filtering" placeholder="{{column.filtering.placeholder | uppercase}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+            class="form-control">
+        </td>
+      </tr> -->
+      <tr *ngFor="let row of rows; let rowIndex = index" [class.classCURP]="row.classCURP">
+       <td class="text-center">{{row.folio}}</td>
+       <td class="text-center">{{row.vbtra}}</td>
+       <td class="text-center">{{row.curp | uppercase}}</td>
+        <td class="text-center">{{row.rfc | uppercase}}</td>
+        <td class="text-center">{{row.nss | uppercase}}</td>
+        <td class="text-center">{{row.edad | date:'yyyy-MM-dd'}}</td>
+        <td class="text-center">{{row.nombre}}</td>
+        <td class="text-center">{{row.apellidoPaterno}}</td>
+        <td class="text-center">{{row.apellidoMaterno}}</td>
+        <!-- <td class="text-center">{{row.areaReclutamiento | uppercase}}</td>
+        <td class="text-center">{{row.fuenteReclutamiento | uppercase}}</td>
+        <td class="text-center">{{row.usuario}}</td> -->
+        <td class="text-center">{{row.fch_Creacion | date:'dd-MM-yyyy'}}</td>
+        <td class="text-center">
+          <button class="mb-1 btn btn-xs btn-outline-success" type="button" container="body" placement="bottom" tooltip="Cargar Archivos">
+            <em class="fa fa-upload"></em>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+<!--mensaje cuando esta vacio la tabla-->
+<ng-template #NotCandidatos>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <alert type="info">
+            <strong>Oops!</strong> A&uacute;n no cuentas con candidatos contratados.
+          </alert>
+    </div>
+  </div>
+</ng-template>

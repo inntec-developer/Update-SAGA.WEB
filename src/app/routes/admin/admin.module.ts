@@ -31,6 +31,8 @@ import { RollsStructComponent } from './rolls-struct/rolls-struct.component';
 import { SelectModule } from 'ng2-select';
 import { UploadImgsComponent } from './upload-imgs/upload-imgs.component';
 import { SharedModule } from '../../shared/shared.module';
+import { FilesContratadosComponent } from './files-contratados/files-contratados.component';
+
 
 const routes: Routes = [
     { path: 'roles', component: RollsStructComponent, data: {'componente':'Roles'} },
@@ -40,7 +42,8 @@ const routes: Routes = [
     { path: 'rol', component: RolGrupoComponent, data: {'componente':'Grupos a roles'} },
     { path: 'privilegios', component: RollsStructComponent, data: {'componente':'Privilegios'}},
     { path: 'registro', component: RegistroComponent},
-    { path: 'filemanager', component: FileManagerComponent }
+    { path: 'filemanager', component: FileManagerComponent },
+    { path: 'filesContratados', component: FilesContratadosComponent}
 ];
 
 
@@ -88,7 +91,8 @@ const routes: Routes = [
       RegistroComponent,
       GridRolesComponent ,
       UploadImgsComponent,
-      FileManagerComponent
+      FileManagerComponent,
+      FilesContratadosComponent
     ],
     exports: [
         RouterModule

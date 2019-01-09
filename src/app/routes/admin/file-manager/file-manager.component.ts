@@ -95,7 +95,7 @@ onClosed(): void {
     {
         this.imgShow = false;
         this.pdfShow = true;
-        this.pdfSrc = this.service.GetPdf('utilerias/Files/users/83569bac-0d68-e811-80e1-9e274155325e/' + datos.nom).subscribe( data=>{
+        this.pdfSrc = this.service.GetPdf('utilerias/Files/users/' + sessionStorage.getItem('id') + '/' + datos.nom).subscribe( data=>{
         var fileurl = window.URL.createObjectURL(data);
         window.open(fileurl)
           // this.pdfSrc = fileurl;
@@ -108,7 +108,7 @@ onClosed(): void {
 
   downloadFile(datos)
   {
-    var ruta = '/utilerias/Files/users/83569bac-0d68-e811-80e1-9e274155325e/'
+    var ruta = '/utilerias/Files/users/' + sessionStorage.getItem('id') + '/';
 
     this.service.DownloadFiles(ruta + datos.nom).subscribe( res =>{
       saveAs(res, datos.nom)

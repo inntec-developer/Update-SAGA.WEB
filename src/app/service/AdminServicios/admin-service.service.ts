@@ -89,14 +89,14 @@ export class AdminServiceService {
       'Access-Control-Allow-Origin': 'http://localhost:4200'
      })
 
-     let params = new HttpParams().set('entidadId', '83569bac-0d68-e811-80e1-9e274155325e')
+     let params = new HttpParams().set('entidadId', sessionStorage.getItem('id'))
  
      return this._httpClient.get(this.UrlGetFiles, {params: params});
   }
  
   GetImage(ruta): string
   {
-    return ApiConection.ServiceUrlFileManager + 'Files/users/83569bac-0d68-e811-80e1-9e274155325e/' + ruta;
+    return ApiConection.ServiceUrlFileManager + '/Files/users/' + sessionStorage.getItem('id') + ruta;
   }
 
   GetPdf(ruta): Observable<any>
@@ -115,7 +115,7 @@ export class AdminServiceService {
   UploadFile( file: File ) : Observable<any>
   {
     let formData = new FormData();
-    formData.append('file', file, file.name );
+    formData.append('file', file, file.name + '_' + sessionStorage.getItem('id')  );
 
     return this.http.post(this.UrlUploadFile, formData ).map(result => result.json());
   }

@@ -6,8 +6,8 @@ export class ApiConection {
   //public static ServiceUrl = 'http://192.168.8.124:333/api/';
   public static ServiceUrl = 'http://localhost:33333/api/';
 
-  public static ServiceUrlFileManager = 'http://192.168.8.124:33333/utilerias/';
-  // public static ServiceUrlFileManager = 'http://localhost:333/utilerias/';
+  // public static ServiceUrlFileManager = 'http://192.168.8.124:33333/utilerias/';
+  public static ServiceUrlFileManager = 'http://localhost:33333/utilerias/';
 
   // public static ServiceUrlFoto = 'http://192.168.8.124:333/';
   public static ServiceUrlFoto = 'http://localhost:33333/';
@@ -108,6 +108,7 @@ export class ApiConection {
   public static AddComentarioNR = 'Candidatos/addComentariosNR'
   public static GetCandidatosNR = 'Candidatos/getFoliosIncidencias'
   public static AddRespuesta = 'Candidatos/addRespuesta'
+  public static GetInfoContratados = 'Candidatos/getInfoContratados'
 
   /* Vacantes */
   public static getRequis = '/dvacante/get';
