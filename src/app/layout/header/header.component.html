@@ -51,7 +51,7 @@
         </li> -->
     <!-- START Alert menu-->
     <li class="nav-item dropdown dropdown-list" dropdown>
-      <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" [disabled]="alertMessage.length == 0"  dropdownToggle>
+      <a class="nav-link dropdown-toggle dropdown-toggle-nocaret"  dropdownToggle>
         <em class="icon-bell alertPosition"></em>
         <span *ngIf="NotRead.length > 0 else AlertOk" class="badge badge-danger alertPosition">{{NotRead.length}}</span>
         <ng-template #AlertOk>
