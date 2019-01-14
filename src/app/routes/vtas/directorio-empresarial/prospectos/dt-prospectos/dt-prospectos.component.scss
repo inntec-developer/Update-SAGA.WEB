@@ -1,0 +1,42 @@
+.actions {
+    margin-left: 10px;
+  }
+  
+  tbody {
+    display: block;
+    height: 450px;
+    overflow: auto;
+  }
+  
+  thead,
+  tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  thead {
+    width: calc(100% - 1em)
+  }
+  
+  table {
+    width: 400px;
+  }
+  
+  tbody tr:hover
+  {
+  //   transform:scale(0.999,0.9);
+  //   transform-origin:center;
+    font-size: 14px;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+  }
+  .margen {
+  
+    margin: 0 2px;
+  }
+  
+  .vl {
+    border-left: 1px solid #aaa;
+    height: 31px;
+    margin: 0 2px;
+  }

@@ -1,29 +1,78 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+
+import { ComponentsService } from './../../service/Components/components.service';
+import { MenuService } from '../../core/menu/menu.service';
+import { SettingsService } from '../../core/settings/settings.service';
+import { UserblockService } from '../sidebar/userblock/userblock.service';
+
 const screenfull = require('screenfull');
 const browser = require('jquery.browser');
 declare var $: any;
 
-import { UserblockService } from '../sidebar/userblock/userblock.service';
-import { SettingsService } from '../../core/settings/settings.service';
-import { MenuService } from '../../core/menu/menu.service';
+
+
+
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss']
+    styleUrls: ['./header.component.scss'],
+    providers: [ComponentsService]
 })
 export class HeaderComponent implements OnInit {
 
     navCollapsed = true; // for horizontal layout
     menuItems = []; // for horizontal layout
+    alertMessage: Array<any> = [
+        // {
+        //     id: 1,
+        //     icon: 'fa fa-handshake-o',
+        //     candidatoId: 123,
+        //     alert: 'La vacante 20190111 se modifico al estatus de Pausada.',
+        //     activo: true,
+        //     creacion: new Date()
+        // },
+        // {
+        //     id: 2,
+        //     icon: 'fa fa-handshake-o',
+        //     candidatoId: 123,
+        //     alert: 'La vacante 20190111 se modifico al estatus de Busqueda de Candidatos. La vacante 20190111 se modifico al estatus de Busqueda de Candidatos. La vacante 20190111 se modifico al estatus de Busqueda de Candidatos.',
+        //     activo: true,
+        //     creacion: new Date()
+        // },
+        // {
+        //     id: 3,
+        //     icon: 'fa fa-handshake-o',
+        //     candidatoId: 123,
+        //     alert: 'La vacante 20190111 se modifico al estatus de Pausada',
+        //     activo: true,
+        //     creacion: new Date()
+        // },
+        // {
+        //     id: 4,
+        //     icon: 'fa fa-handshake-o',
+        //     candidatoId: 123,
+        //     alert: 'La vacante 20190111 se modifico al estatus de Cerrada por el Cliente.',
+        //     activo: true,
+        //     creacion: new Date()
+        // },
+    ]
 
     isNavSearchVisible: boolean;
     @ViewChild('fsbutton') fsbutton;  // the fullscreen button
+    NotRead: Array<any> = [];
+    alertIndex: number;
+    private subscription: Subscription;
 
-    constructor(public menu: MenuService, public userblockService: UserblockService, public settings: SettingsService) {
+    constructor(
+        public menu: MenuService,
+        public userblockService: UserblockService,
+        public settings: SettingsService,
+        public _service: ComponentsService) {
 
         // show only a few items on demo
-        this.menuItems = menu.setEstructuraMenu().slice(0,4); // for horizontal layout
+        this.menuItems = menu.setEstructuraMenu().slice(0, 4); // for horizontal layout
 
     }
 
@@ -32,6 +81,14 @@ export class HeaderComponent implements OnInit {
         if (browser.msie) { // Not supported under IE
             this.fsbutton.nativeElement.style.display = 'none';
         }
+
+        let timer = Observable.timer(2000, 100000);
+        this.subscription = timer.subscribe(x => {
+            this._service.getAlertStm(sessionStorage.getItem('id')).subscribe(elemnt => {
+                this.alertMessage = elemnt;
+                this.NotRead = this.alertMessage.filter(alert => alert.activo == true);
+            });
+        });
     }
 
     toggleUserBlock(event) {
@@ -80,4 +137,27 @@ export class HeaderComponent implements OnInit {
             el.children('em').removeClass('fa-compress').addClass('fa-expand');
         }
     }
+
+    leido(data: any) {
+        this._service.deleteAlertStm(data.id, false).subscribe(element => {
+            if (element === 200) {
+                this.alertIndex = this.alertMessage.findIndex(item => item.id === data.id);
+                this.alertMessage[this.alertIndex]['activo'] = false;
+                this.NotRead = this.alertMessage.filter(alert => alert.activo == true);
+            }
+        });
+
+    }
+    leidoTodo() {
+        this._service.deleteAlertStm(sessionStorage.getItem('id'), true).subscribe(element => {
+            if (element === 200) {
+                for (let objeto in this.alertMessage) {
+                    this.alertMessage[objeto]['activo'] = false;
+                }
+                this.NotRead = this.alertMessage.filter(alert => alert.activo == true);
+            }
+        })
+
+    }
+
 }

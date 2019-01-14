@@ -61,6 +61,7 @@ export class DialogEventComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger;
     this.ColorPicker = '#4290ff'
     this.SeletedDayC = this.data;
     this.minLimitDate = this.SeletedDayC;
@@ -99,10 +100,9 @@ export class DialogEventComponent implements OnInit {
   }
   onCloseDialogInfo() {
     this.loading = true;
-    var dateInicio = new Date(this.minLimitDate);
-    var dateFinal = this.formEvent.get('Fin').value;
-    dateInicio = new Date(dateInicio);
-    dateFinal = new Date(dateFinal);
+    var dateInicio = new Date(this.formEvent.get('Inicio').value);
+    var dateFinal = new Date(this.formEvent.get('Fin').value);
+    
     var ds = dateInicio.getUTCDate(),
     ms = dateInicio.getMonth(),
     ys = dateInicio.getFullYear();
@@ -110,8 +110,8 @@ export class DialogEventComponent implements OnInit {
     me = dateFinal.getMonth(),
     ye = dateFinal.getFullYear();
 
-    var Inicio: any ,
-        Final: any,
+    var Inicio: String,
+        Final: string,
         hourStart: Array<any> = [],
         hourEnd: Array<any> =[];
 
@@ -122,11 +122,11 @@ export class DialogEventComponent implements OnInit {
       var mns = hourStart[1];
       var hre = hourEnd[0];
       var mne = hourEnd[1];
-      Inicio = new Date(ys, ms, ds , Number(hrs), Number(mns));
-      Final = new Date(ye, me, de , Number(hre), Number(mne));
+      Inicio = new Date(ys, ms, ds , Number(hrs), Number(mns)).toJSON();
+      Final = new Date(ye, me, de , Number(hre), Number(mne)).toJSON();
     } else {
-      Inicio = new Date(ys, ms, ds , 8, 30);
-      Final = new Date(ye, me, de , 23, 59);
+      Inicio = new Date(ys, ms, ds, 0, 0).toJSON();
+      Final = new Date(ye, me, de, 0, 0).toJSON();
     }
     var data = {
       entidadId: sessionStorage.getItem('id'),

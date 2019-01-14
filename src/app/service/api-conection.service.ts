@@ -29,6 +29,8 @@ export class ApiConection {
   /* Componentes */
   public static GetUserGroup = 'AsignacionRequi/getUserGroup';
   public static GetUserGroupL = 'AsignacionRequi/getUserGroupL';
+  public static GetAlertStm = 'AlertSTM/getAlert';
+  public static DeleteAlertStm = 'AlertSTM/deleteAlert'
 
   /* Catalogos */
   public static GetDocumentosDamsa = 'Catalogos/getDocDamsa';
@@ -74,6 +76,9 @@ export class ApiConection {
   public static getRequiEstadisticos = 'Requisiciones/getRequiEstadisticos';
   public static GetUltimoEstatusRequi = 'Requisiciones/getUltimoEstatus';
 
+  /* Clientes / Prospectos */
+  public static GetProspectos = "Directorio/getProspectos";
+  public static GetClientes = "Directorio/getClientes";
 
   /* Candidatos */
   public static filtropaises = 'Candidatos/get';

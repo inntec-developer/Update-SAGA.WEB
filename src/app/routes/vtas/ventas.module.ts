@@ -54,6 +54,7 @@ import { DireccionautoComponent } from './requisiciones/components/direccionauto
 import { DirectorioEmpresarialComponent } from './directorio-empresarial/directorio-empresarial.component';
 import { DtCrearRequisicionComponent } from './requisiciones/components/dt-crear-requisicion/dt-crear-requisicion.component';
 import { DtDamfoComponent } from './requisiciones/components/dt-damfo/dt-damfo.component';
+import { DtProspectosComponent } from './directorio-empresarial/prospectos/dt-prospectos/dt-prospectos.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { Ng2TableModule } from 'ng2-table';
@@ -128,6 +129,7 @@ const routes: Routes = [
         DialogActivarRequiComponent,
         DirectorioEmpresarialComponent,
         ClientesComponent,
+        DtProspectosComponent
     ],
     entryComponents: [DialogdamfoComponent, DialogDeleteRequiComponent, DialogCancelRequiComponent, DialogActivarRequiComponent, DialogEditHorarioComponent, DialogRutasComponent],
     exports: [

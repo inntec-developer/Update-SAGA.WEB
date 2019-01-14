@@ -1,126 +1,111 @@
 <!-- START Top Navbar-->
 <nav class="navbar topnavbar" role="navigation">
-    <!-- START navbar header-->
-    <div class="navbar-header">
-        <a class="navbar-brand" href="#/">
-            <div class="brand-logo">
-                <img class="img-responsive" src="assets/img/damsa/logo.png" alt="App Logo" />
-            </div>
-            <div class="brand-logo-collapsed">
-                <img class="img-fluid" style="width:50px; height:50px;" src="assets/img/damsa/logo-single.png" alt="App Logo" />
-            </div>
-        </a>
-    </div>
-    <!-- END navbar header-->
-    <!-- START Left navbar-->
-    <ul class="navbar-nav mr-auto flex-row">
-        <!-- <li class="nav-item">
-             Button used to collapse the left sidebar. Only visible on tablet and desktops
-            <a class="nav-link d-none d-md-block d-lg-block d-xl-block" trigger-resize="" (click)="toggleCollapsedSideabar()" *ngIf="!isCollapsedText()">
+  <!-- START navbar header-->
+  <div class="navbar-header">
+    <a class="navbar-brand" href="#/">
+      <div class="brand-logo">
+        <img class="img-responsive" src="assets/img/damsa/logo.png" alt="App Logo" />
+      </div>
+      <div class="brand-logo-collapsed">
+        <img class="img-fluid" style="width:50px; height:50px;" src="assets/img/damsa/logo-single.png" alt="App Logo" />
+      </div>
+    </a>
+  </div>
+  <!-- END navbar header-->
+  <!-- START Left navbar-->
+  <ul class="navbar-nav mr-auto flex-row">
+    <li class="nav-item">
+      <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops -->
+      <!-- <a class="nav-link d-none d-md-block d-lg-block d-xl-block" trigger-resize="" (click)="toggleCollapsedSideabar()" *ngIf="!isCollapsedText()">
                 <em class="fa fa-navicon"></em>
-            </a>
-             Button to show/hide the sidebar on mobile. Visible on mobile only.
-            <a class="nav-link sidebar-toggle d-md-none" (click)="settings.layout.asideToggled =! settings.layout.asideToggled; $event.stopPropagation()">
+            </a> -->
+      <!-- Button to show/hide the sidebar on mobile. Visible on mobile only. -->
+      <!-- <a class="nav-link sidebar-toggle d-md-none" (click)="settings.layout.asideToggled =! settings.layout.asideToggled; $event.stopPropagation()">
                 <em class="fa fa-navicon"></em>
-            </a>
-        </li> -->
-        <!-- START User avatar toggle-->
-        <li class="nav-item d-none d-md-block">
-            <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
-            <a  class="nav-link" (click)="toggleUserBlock($event)">
-                <em class="icon-user"></em>
-            </a>
-        </li>
-        <!-- END User avatar toggle-->
-        <!-- START lock screen-->
-        <li class="nav-item d-none d-md-block">
-            <a class="nav-link"  title="Lock screen" [routerLink]="'/login'">
-                <em class="icon-lock"></em>
-            </a>
-        </li>
-        <!-- END lock screen-->
-    </ul>
-    <!-- END Left navbar-->
-    <!-- START Right Navbar-->
-    <ul class="navbar-nav flex-row">
-        <!-- Search icon-->
-        <!-- <li class="nav-item">
+            </a> -->
+    </li>
+    <!-- START User avatar toggle-->
+    <li class="nav-item d-none d-md-block">
+      <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+      <a class="nav-link" (click)="toggleUserBlock($event)">
+        <em class="icon-user"></em>
+      </a>
+    </li>
+    <!-- END User avatar toggle-->
+    <!-- START lock screen-->
+    <li class="nav-item d-none d-md-block">
+      <a class="nav-link" title="Lock screen" [routerLink]="'/login'">
+        <em class="icon-lock"></em>
+      </a>
+    </li>
+    <!-- END lock screen-->
+  </ul>
+  <!-- END Left navbar-->
+  <!-- START Right Navbar-->
+  <ul class="navbar-nav flex-row">
+    <!-- Search icon-->
+    <!-- <li class="nav-item">
             <a class="nav-link" (click)="openNavSearch($event)">
                 <em class="icon-magnifier"></em>
             </a>
         </li> -->
-        <!-- START Alert menu-->
-        <!-- <li class="nav-item dropdown dropdown-list" dropdown>
-            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" dropdownToggle>
-                <em class="icon-bell"></em>
-                <span class="badge badge-danger">11</span>
-            </a> -->
-            <!-- START Dropdown menu-->
-            <!-- <div *dropdownMenu class="dropdown-menu dropdown-menu-right animated flipInX">
-                <div class="dropdown-item">
-                    <div class="list-group">
-                       <div class="list-group-item list-group-item-action">
-                          <div class="media">
-                             <div class="align-self-start mr-2">
-                                <em class="fa fa-twitter fa-2x text-info"></em>
-                             </div>
-                             <div class="media-body">
-                                <p class="m-0">New followers</p>
-                                <p class="m-0 text-muted text-sm">1 new follower</p>
-                             </div>
-                          </div>
-                       </div>
-                       <div class="list-group-item list-group-item-action">
-                          <div class="media">
-                             <div class="align-self-start mr-2">
-                                <em class="fa fa-envelope fa-2x text-warning"></em>
-                             </div>
-                             <div class="media-body">
-                                <p class="m-0">New e-mails</p>
-                                <p class="m-0 text-muted text-sm">You have 10 new emails</p>
-                             </div>
-                          </div>
-                       </div>
-                       <div class="list-group-item list-group-item-action">
-                          <div class="media">
-                             <div class="align-self-start mr-2">
-                                <em class="fa fa-tasks fa-2x text-success"></em>
-                             </div>
-                             <div class="media-body">
-                                <p class="m-0">Pending Tasks</p>
-                                <p class="m-0 text-muted text-sm">11 pending task</p>
-                             </div>
-                          </div>
-                       </div>
-                       <div class="list-group-item list-group-item-action">
-                          <span class="d-flex align-items-center">
-                             <span class="text-sm">More notifications</span>
-                             <span class="badge badge-danger ml-auto">14</span>
-                          </span>
-                       </div>
-                    </div>
+    <!-- START Alert menu-->
+    <li class="nav-item dropdown dropdown-list" dropdown>
+      <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" [disabled]="alertMessage.length == 0"  dropdownToggle>
+        <em class="icon-bell alertPosition"></em>
+        <span *ngIf="NotRead.length > 0 else AlertOk" class="badge badge-danger alertPosition">{{NotRead.length}}</span>
+        <ng-template #AlertOk>
+            <span class="badge alertOk"><em class="fa fa-check alertPosition"></em></span>
+        </ng-template>
+      </a>
+      <!-- START Dropdown menu-->
+      <div *dropdownMenu class="dropdown-menu dropdown-menu-right animated flipInX" style="max-width: 435px;">
+        <div class="dropdown-item">
+            <a href="#" (click)="leidoTodo()" *ngIf="NotRead.length > 0"><p class="text-info text-right action">Marcar todo como leido</p></a>
+          <div class="list-group">
+            <div class="list-group-item list-group-item-action" *ngFor="let item of alertMessage">
+              <div class="media">
+                <div class="align-self-start mr-2">
+                  <em class="{{item.icon}} text-info"></em>
+                  <p class="m-0 text-muted text-sm float-rigth">
+                    <em (click)="leido(item)" *ngIf="item.activo" class="fa fa-envelope-o envelope action" placement="bottom"
+                      tooltip="Marcar como leido"></em>
+                    <em *ngIf="!item.activo" class="fa fa-envelope-open-o envelope-open "></em>
+                  </p>
                 </div>
-            </div> 
-        </li>-->
-        <!-- Fullscreen (only desktops)-->
-        <li class="nav-item d-none d-md-block">
+                <div class="media-body">
+                  <!-- <p class="text-justify">{{item.alert}}</p> -->
+                  <p *ngIf="item.alert.length <= 60 else toLength" class="m-0">{{item.alert}}</p>
+                  <ng-template #toLength>
+                    <p clas="m-0" placement="bottom" tooltip="{{item.alert}}"> {{item.alert | slice:0:60 }}...</p>
+                  </ng-template>
+                  <p class="m-0 text-muted text-sm">{{item.creacion | date: 'dd/MM/yyyy hh:mm'}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+    <!-- Fullscreen (only desktops)-->
+    <!-- <li class="nav-item d-none d-md-block">
             <a class="nav-link" #fsbutton (click)="toggleFullScreen($event)">
                 <em class="fa fa-expand"></em>
             </a>
-        </li>
-        <!-- END Alert menu-->
-        <!-- START Offsidebar button-->
-        <!-- <li class="nav-item">
+        </li> -->
+    <!-- END Alert menu-->
+    <!-- START Offsidebar button-->
+    <!-- <li class="nav-item">
             <a class="nav-link" (click)="toggleOffsidebar(); $event.stopPropagation()">
                 <em class="icon-notebook"></em>
             </a>
         </li> -->
-        <!-- END Offsidebar menu-->
-    </ul>
+    <!-- END Offsidebar menu-->
+  </ul>
 
-    <!-- END Right Navbar-->
+  <!-- END Right Navbar-->
 
-    <!-- <app-navsearch [visible]="getNavSearchVisible()" (onclose)="setNavSearchVisible(false)"></app-navsearch> -->
+  <!-- <app-navsearch [visible]="getNavSearchVisible()" (onclose)="setNavSearchVisible(false)"></app-navsearch> -->
 
 </nav>
 <!-- END Top Navbar-->

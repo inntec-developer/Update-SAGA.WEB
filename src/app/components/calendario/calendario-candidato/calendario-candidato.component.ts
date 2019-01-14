@@ -63,7 +63,7 @@ export class CalendarioCandidatoComponent implements OnInit {
     noEventsMessage: "No hay eventos para mostrar",
     locale: 'es',
     defaultView: 'month',
-    eventLimit: 5,
+    eventLimit: 7,
     eventLimitText: 'Más',
     height: 300,
     contentHeight: 400,
@@ -153,8 +153,8 @@ export class CalendarioCandidatoComponent implements OnInit {
       actividad: calEvent.actividad,
       tipoActividadId: calEvent.tipoActividadId,
       title: calEvent.title,
-      start: calEvent.start,
-      end: calEvent.end == null ? calEvent.start : calEvent.end,
+      start: calEvent.start.toJSON(),
+      end: calEvent.end == null ? calEvent.start.toJSON() : calEvent.end.toJSON(),
       message: calEvent.message || 'Sin Descripción',
       allDay: calEvent.allDay,
       backgroundColor: calEvent.backgroundColor,
@@ -167,7 +167,6 @@ export class CalendarioCandidatoComponent implements OnInit {
     else {
       this.Pendiente = true;
     }
-    this.StartDate = this.dateParse.transform(calEvent.start.toJSON(), 'yyyy/MM/dd');
   }
 
   dayClick(date, jsEvent, view) {
@@ -254,18 +253,30 @@ export class CalendarioCandidatoComponent implements OnInit {
             if (result == 200) {
               this.componenteService.getCalendarEvent(this.ReclutadorId).subscribe(result => {
                 if (result.length > 0) {
-                  this.getEventoCalendar = result;
-                  this.calendarEvents = result;
-                  this.calendarOptions.events = this.calendarEvents;
-                  this.$calendar = $(this.fullcalendar.nativeElement);
-                  this.$calendar.fullCalendar(this.calendarOptions);
-                  this.NotDateCalendar = false;
-                  this.popToast('success', 'Calendario', 'Se agrego correctamente el evento en el calendario.');
+                  if (this.calendarEvents.length === 0) {
+                    this.getEventoCalendar = result;
+                    this.calendarEvents = result;
+                    this.calendarOptions.events = this.calendarEvents;
+                    this.$calendar = $(this.fullcalendar.nativeElement);
+                    this.$calendar.fullCalendar(this.calendarOptions);
+                    this.NotDateCalendar = false;
+                    this.popToast('success', 'Calendario', 'Se agrego correctamente el evento en el calendario.');
+                  }
+                  else {
+                    this.EventSelected = false;
+                    this.getEventoCalendar = result;
+                    this.calendarEvents = result;
+                    this.$calendar.fullCalendar('removeEvents');
+                    this.$calendar.fullCalendar('addEventSource', this.calendarEvents);
+                    this.popToast('success', 'Calendario', 'Se agrego correctamente el evento en el calendario.');
+                    this._Actividades();
+                  }
+
                 }
                 else {
                   this.popToast('error', 'Calendario', 'Se produjo en error al recuparar la información de los eventos.');
                 }
-              })
+              });
             }
             if (result == 404) {
               this.popToast('error', 'Calendario', 'Ocurrio un error al intentar agregar el nuevo evento en el calendario.');
@@ -365,11 +376,11 @@ export class CalendarioCandidatoComponent implements OnInit {
   private _Actividades() {
     let toDay = new Date();
     let compare = new Date(toDay.getFullYear(), toDay.getMonth(), toDay.getUTCDate(), 0, 0)
-    this.Pendientes = this.calendarEvents.filter(event => 
+    this.Pendientes = this.calendarEvents.filter(event =>
       new Date(new Date(event.start).getFullYear(), new Date(event.start).getMonth(), new Date(event.start).getUTCDate(), 0, 0) < compare && event.activo === true);
-    this.Hoy = this.calendarEvents.filter(event => 
-     String(new Date(new Date(event.start).getFullYear(), new Date(event.start).getMonth(), new Date(event.start).getUTCDate(), 0, 0)) == String(compare) && event.activo === true);
-    this.Siguientes = this.calendarEvents.filter(event => 
+    this.Hoy = this.calendarEvents.filter(event =>
+      String(new Date(new Date(event.start).getFullYear(), new Date(event.start).getMonth(), new Date(event.start).getUTCDate(), 0, 0)) == String(compare) && event.activo === true);
+    this.Siguientes = this.calendarEvents.filter(event =>
       new Date(new Date(event.start).getFullYear(), new Date(event.start).getMonth(), new Date(event.start).getUTCDate(), 0, 0) > compare && event.activo === true);
   }
 
@@ -405,7 +416,9 @@ export class CalendarioCandidatoComponent implements OnInit {
       Final = new Date(ye, me, de, 0, 0);
     }
     if (Inicio > Final) {
-      Final = Inicio;
+      this.popToast('error', 'Calendario', 'La Fecha Final no debe ser mayor a la Fecha Inicio.');
+      this.loading = false;
+      return;
     }
     this.getEventoCalendar[this.updateIndex]['actividad'] = this.textValueActividad;
     this.getEventoCalendar[this.updateIndex]['tipoActividadId'] = this.formEvent.get('Actividad').value;
@@ -450,6 +463,32 @@ export class CalendarioCandidatoComponent implements OnInit {
 
   private selected(event: any) {
     this.textValueActividad = this.Actividades[event - 1].actividad;
+  }
+
+  selectedClick(data) {
+    this.EventSelected = true;
+    this.EditEventAction = false;
+    this.textValueActividad = data.actividad;
+    this.selectedEvent = {
+      id: data.id,
+      entidadId: data.entidadId,
+      actividad: data.actividad,
+      tipoActividadId: data.tipoActividadId,
+      title: data.title,
+      start: data.start,
+      end: data.end,
+      message: data.message || 'Sin Descripción',
+      allDay: data.allDay,
+      backgroundColor: data.backgroundColor,
+      borderColor: data.borderColor,
+      activo: data.activo
+    };
+    if (new Date(this.selectedEvent.start) > this.toDay) {
+      this.Pendiente = false;
+    }
+    else {
+      this.Pendiente = true;
+    }
   }
 
   /*

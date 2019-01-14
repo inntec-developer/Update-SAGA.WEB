@@ -1,9 +1,18 @@
 ﻿<div class="content-heading">
-    <ul class="breadcrumb pull-right">
-        <li><a [routerLink]="['/home']" >Inicio</a></li>
-        <li><a [routerLink]="['/ventas/directorio']" >Directorio Empresarial</a></li>
-        <li class="active">Prospectos</li>
-    </ul>
-    Prospectos
-    <small> Administraci&oacute; de Prospectos.</small>
-</div>
+    <div>
+     Prospectos
+      <span class="text-sm d-none d-sm-block">Administraci&oacute;n Prospectos</span>
+    </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/home']">Inicio</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/ventas/directorio']">Directorio Empresarial</a>
+      </li>
+      <li class="breadcrumb-item active">Prospectos</li>
+    </ol>
+  </div>
+
+  <app-dt-prospectos></app-dt-prospectos>
