@@ -13,7 +13,7 @@
 </div>
 <br/>
 <div class="table-responsive mat-elevation-z8">
-  <table *ngIf="dataInfoRequi.length > 0 else NotCandidatos" class="table table-hover table-striped">
+  <table *ngIf="dataInfoRequi.length > 0 else NotCandidatos" class="table">
     <thead>
       <tr>
         <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
