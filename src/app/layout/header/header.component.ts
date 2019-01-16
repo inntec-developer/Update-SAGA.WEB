@@ -82,7 +82,7 @@ export class HeaderComponent implements OnInit {
             this.fsbutton.nativeElement.style.display = 'none';
         }
 
-        let timer = Observable.timer(2000, 100000);
+        let timer = Observable.timer(2000, 10000);
         this.subscription = timer.subscribe(x => {
             this._service.getAlertStm(sessionStorage.getItem('id')).subscribe(elemnt => {
                 this.alertMessage = elemnt;

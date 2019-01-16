@@ -15,7 +15,7 @@
                 </div>
                 <div>
                   <em *ngIf="selectedEvent?.activo && Pendiente" class="fa fa-check culminar"  container="body" placement="bottom" tooltip="Culminar" (click)="sweetalertCulminarEvent(selectedEvent)"></em>
-                  <em *ngIf="selectedEvent" class="fa fa-pencil editar" container="body" placement="bottom" tooltip="Editar" (click)="EditEvent(selectedEvent)"></em>
+                  <em *ngIf="selectedEvent && !Pendiente" class="fa fa-pencil editar" container="body" placement="bottom" tooltip="Editar" (click)="EditEvent(selectedEvent)"></em>
                   <em *ngIf="selectedEvent" class="fa fa-trash-o eliminar" container="body" placement="bottom" tooltip="Eliminar" (click)="sweetalertDeleteEvent(selectedEvent)"></em>
                   <em class="fa fa-plus editar" container="body" placement="bottom" tooltip="Agregar" (click)="openDialogEventB()"></em>
                 </div>

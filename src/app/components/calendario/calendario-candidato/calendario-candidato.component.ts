@@ -519,18 +519,19 @@ export class CalendarioCandidatoComponent implements OnInit {
       title: 'Eliminar evento del calendario',
       text: 'Esta seguro que desea eliminar el Evento ' + data.title,
       type: 'warning',
+      html: true,
       showCancelButton: true,
       confirmButtonColor: '#DD6B55',
       confirmButtonText: 'Si, Eliminar.',
       cancelButtonText: 'No, Cancelar',
-      closeOnConfirm: false,
-      closeOnCancel: false,
-    }, (isConfirm: boolean) => {
-      if (isConfirm) {
-        this.DeleteEvent(data);
-      } else {
-        swal('Cancelado', 'El Evento no se elimino.', 'error');
-      }
+      closeOnConfirm: true,
+      closeOnCancel: true,
+    // }, (isConfirm: boolean) => {
+    //   if (isConfirm) {
+    //     this.DeleteEvent(data);
+    //   } else {
+    //     swal('Cancelado', 'El Evento no se elimino.', 'error');
+    //   }
     });
   }
 
@@ -540,18 +541,19 @@ export class CalendarioCandidatoComponent implements OnInit {
       title: 'Culminar evento del calendario',
       text: 'Esta seguro que desea culminar el Evento ' + data.title,
       type: 'warning',
+      html: true,
       showCancelButton: true,
       confirmButtonColor: '#DD6B55',
       confirmButtonText: 'Si, Culminar.',
       cancelButtonText: 'No, Cancelar',
-      closeOnConfirm: false,
-      closeOnCancel: false,
-    }, (isConfirm: boolean) => {
-      if (isConfirm) {
-        this.CulminarEvent(data);
-      } else {
-        swal('Cancelado', 'El evento sigue activo.', 'error');
-      }
+      closeOnConfirm: true,
+      closeOnCancel: true,
+    // }, (isConfirm: boolean) => {
+    //   if (isConfirm) {
+    //     this.CulminarEvent(data);
+    //   } else {
+    //     swal('Cancelado', 'El evento sigue activo.', 'error');
+    //   }
     });
   }
 }
