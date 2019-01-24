@@ -1,6 +1,7 @@
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
+import { DatePipe } from '@angular/common';
 import { DialogAssingRequiComponent } from '../dialogs/dialog-assing-requi/dialog-assing-requi.component';
 import { DialogShowRequiComponent } from '../dialogs/dialog-show-requi/dialog-show-requi.component';
 import { DlgRequisicionPausaComponent } from './../../../../../../components/dlg-requisicion-pausa/dlg-requisicion-pausa.component';
@@ -11,8 +12,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../../../../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../../../../../service';
 import { Router } from '@angular/router';
-
-import { DatePipe } from '@angular/common';
 
 const swal = require('sweetalert');
 declare var $: any;
@@ -257,7 +256,6 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
     this.columns.forEach((column: any) => {
       this.clearFilter = true;
       if (column.filtering) {
-       // this.showFilterRow = true;
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());

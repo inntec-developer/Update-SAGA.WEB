@@ -14,94 +14,82 @@
 
 
 <div class="row">
-  <div class="col-xl-3 col-lg-6">
-    <!-- START card-->
-    <div class="card bg-primary border-0">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col-3">
-            <em class="fa fa-users fa-5x"></em>
-          </div>
-          <div class="col-9 text-right">
-            <div class="text-lg">{{CountProspectos}}</div>
-            <p class="m-0">Prospectos</p>
-          </div>
-        </div>
+  <div class="col-md-6 col-sm-6">
+    <button type="button" class="btn btn-lg btn-block" [ngClass]="viewProspectos ? 'btn-primary mat-elevation-z8' : 'btn-secondary'" (click)="selectProspectos()">
+      <div class="row">
+        <div class="col-md-4"><em class=" fa fa-users fa-3x"></em></div>
+        <div class="col-md-4"><h3 class="text-button">Prospectos</h3></div>
+        <div class="col-md-4"><strong class="text-button float-right">No. {{CountProspectos}}</strong></div>
       </div>
-      <a class="card-footer bg-gray-dark bt0 clearfix btn-block d-flex" [routerLink]="['/ventas/prospectos']">
-        <span>Ver Prospectos</span>
-        <span class="ml-auto">
-          <em class="fa fa-chevron-circle-right"></em>
-        </span>
-      </a>
-      <!-- END card-->
-    </div>
+    </button>
   </div>
-  <div class="col-xl-3 col-lg-6">
-    <!-- START card-->
-    <div class="card bg-green border-0">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col-3">
-            <em class="fa fa-handshake-o fa-5x"></em>
+  <div class="col.md-6 col-sm-6">
+    <button type="button" class="btn btn-lg btn-block" [ngClass]="!viewProspectos ? 'btn-success mat-elevation-z8' : 'btn-secondary'" (click)="selectClientes()">
+        <div class="row">
+            <div class="col-md-4"><em class=" fa fa-handshake-o fa-3x "></em></div>
+            <div class="col-md-4"><h3 class="text-button">Clientes</h3></div>
+            <div class="col-md-4"><strong class="text-button float-right">No. {{CountClientes}}</strong></div>
           </div>
-          <div class="col-9 text-right">
-            <div class="text-lg">{{CountClientes}}</div>
-            <p class="m-0">Clientes</p>
-          </div>
-        </div>
-      </div>
-      <a class="card-footer bg-gray-dark bt0 clearfix btn-block d-flex" [routerLink]="['/ventas/clientes']">
-        <span>Ver Clientes</span>
-        <span class="ml-auto">
-          <em class="fa fa-chevron-circle-right"></em>
-        </span>
-      </a>
-    </div>
+    </button>
   </div>
-
-  <!-- <div class="col-xl-3 col-lg-6">
-    <div class="card bg-warning border-0">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col-3">
-            <em class="fa fa-shopping-cart fa-5x"></em>
-          </div>
-          <div class="col-9 text-right">
-            <div class="text-lg">124</div>
-            <p class="m-0">New Orders!</p>
-          </div>
-        </div>
-      </div>
-      <a class="card-footer bg-gray-dark bt0 clearfix btn-block d-flex" href="#">
-        <span>View Details</span>
-        <span class="ml-auto">
-          <em class="fa fa-chevron-circle-right"></em>
-        </span>
-      </a>
-    </div>
-  </div>
-
-  <div class="col-xl-3 col-lg-6">
-    <div class="card bg-danger border-0">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="col-3">
-            <em class="fa fa-support fa-5x"></em>
-          </div>
-          <div class="col-9 text-right">
-            <div class="text-lg">13</div>
-            <p class="m-0">Support Tickets!</p>
-          </div>
-        </div>
-      </div>
-      <a class="card-footer bg-gray-dark bt0 clearfix btn-block d-flex" href="#">
-        <span>View Details</span>
-        <span class="ml-auto">
-          <em class="fa fa-chevron-circle-right"></em>
-        </span>
-      </a>
-    </div>
-  </div> -->
+  <br>
 </div>
-<!-- END row-->
+<br>
+<mat-divider></mat-divider>
+
+<div class="row">
+  <div *ngIf="viewProspectos">
+    <app-dt-prospectos></app-dt-prospectos>
+  </div>
+  <div *ngIf="!viewProspectos else Cliente">
+      <app-dt-clientes></app-dt-clientes>
+  </div>
+</div>
+<!-- <tabset [justified]="true">
+  <tab class="fa fa-users bg-primary" heading="Prospectos" id="prospectos">
+    <div class="row">
+      <div class="card border-0">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col-3">
+              <em class="fa fa-users fa-5x"></em>
+            </div>
+            <div class="col-9 text-right">
+              <div class="text-lg">{{CountProspectos}}</div>
+              <p class="m-0">Prospectos</p>
+            </div>
+          </div>
+        </div>
+        <a class="card-footer bg-gray-dark bt0 clearfix btn-block d-flex" [routerLink]="['/ventas/prospectos']">
+          <span>Ver Prospectos</span>
+          <span class="ml-auto">
+            <em class="fa fa-chevron-circle-right"></em>
+          </span>
+        </a>
+      </div>
+    </div>
+  </tab>
+  <tab heading="Clientes" id="clientes">
+    <div class="row">
+      <div class="card bg-green border-0">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col-3">
+              <em class="fa fa-handshake-o fa-5x"></em>
+            </div>
+            <div class="col-9 text-right">
+              <div class="text-lg">{{CountClientes}}</div>
+              <p class="m-0">Clientes</p>
+            </div>
+          </div>
+        </div>
+        <a class="card-footer bg-gray-dark bt0 clearfix btn-block d-flex" [routerLink]="['/ventas/clientes']">
+          <span>Ver Clientes</span>
+          <span class="ml-auto">
+            <em class="fa fa-chevron-circle-right"></em>
+          </span>
+        </a>
+      </div>
+    </div>
+  </tab>
+</tabset> -->

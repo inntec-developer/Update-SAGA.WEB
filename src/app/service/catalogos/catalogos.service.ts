@@ -31,6 +31,23 @@ export class CatalogosService {
   private UrlGetMotivosLiberacion = ApiConection.ServiceUrl + ApiConection.GetMotivosLiberacion;
   private UrlActividadesReclutador = ApiConection.ServiceUrl + ApiConection.GetTiposActividadesRecl;
 
+  private UrlGetTipoTelefono = ApiConection.ServiceUrl + ApiConection.GetTipoTelefono;
+  private UrlGetTipoDireccion = ApiConection.ServiceUrl + ApiConection.GetTipoDireccion;
+
+  /* Catalogos para Prospectos / Clientes */
+  private UrlGetActividadEmpresa = ApiConection.ServiceUrl + ApiConection.GetActividadesEmp;
+  private UrlGetGiroEmpresa = ApiConection.ServiceUrl + ApiConection.GetGiroEmp;
+  private UrlGetTamanioEmpresa = ApiConection.ServiceUrl + ApiConection.GetTamanioEmp;
+  private UrlGetTipoEmpresa = ApiConection.ServiceUrl + ApiConection.GetTipoEmp;
+  private UrlGetTipoBase = ApiConection.ServiceUrl + ApiConection.GetTipoBase;
+
+  /* Catalogo de locaciones */
+  private UrlGetPais = ApiConection.ServiceUrl + ApiConection.GetPais;
+  private UrlGetEstado = ApiConection.ServiceUrl + ApiConection.GetEstado;
+  private UrlGetMunicipio = ApiConection.ServiceUrl + ApiConection.GetMunicipio;
+  private UrlGetColonia = ApiConection.ServiceUrl + ApiConection.GetColonia;
+
+   
   constructor(private _httpClient: HttpClient) { }
 
   getDocumentosDamsa() : Observable<any>{
@@ -57,6 +74,58 @@ export class CatalogosService {
   getActividadesReclutador() : Observable<any>{
     return this._httpClient.get(this.UrlActividadesReclutador);
   }
+
+  getTipoTelefono() : Observable<any>{
+    return this._httpClient.get(this.UrlGetTipoTelefono);
+  }
+
+  getTipoDireccion() : Observable<any>{
+return this._httpClient.get(this.UrlGetTipoDireccion);
+  }
+
+  /* Catalogos para Prospectos / Clientes */
+
+  getGiroEmp(): Observable<any>{
+    return this._httpClient.get(this.UrlGetGiroEmpresa);
+  }
+
+  getActividadEmp(giroId: any) : Observable<any>{
+    let params= new HttpParams().set('GiroId', giroId);
+    return this._httpClient.get(this.UrlGetActividadEmpresa, {params: params});
+  }
+
+  getTamanioEmp() : Observable<any>{
+    return this._httpClient.get(this.UrlGetTamanioEmpresa);
+  }
+
+  getTipoEmp() : Observable<any>{
+    return this._httpClient.get(this.UrlGetTipoEmpresa);
+  }
+
+  getTipoBase() : Observable<any>{
+    return this._httpClient.get(this.UrlGetTipoBase);
+  }
+
+  /* Catalogos de locasiones */
+  getPais(): Observable<any>{
+    return this._httpClient.get(this.UrlGetPais);
+  }
+
+  getEstado(PaisId: any): Observable<any>{
+    let params= new HttpParams().set('PaisId', PaisId);
+    return this._httpClient.get(this.UrlGetEstado, {params: params});
+  }
+  getMunicipio(EstadoId: any): Observable<any>{
+    let params= new HttpParams().set('EstadoId', EstadoId);
+    return this._httpClient.get(this.UrlGetMunicipio, {params: params});
+  }
+
+  getColonias(MunicipioId: any): Observable<any>{
+    let params= new HttpParams().set('MunicipioId', MunicipioId);
+    return this._httpClient.get(this.UrlGetColonia, {params: params});
+  }
+
+
 
   
 

@@ -3,7 +3,7 @@
   <div class="calendar-app">
     <div class="row">
       <div class="col-xl-3 col-lg-4">
-        <clock></clock> 
+        <clock></clock>
         <div class="dt-container mat-elevation-z8">
           <div class="card">
             <div class="card-header ">
@@ -14,9 +14,12 @@
                   </h3>
                 </div>
                 <div>
-                  <em *ngIf="selectedEvent?.activo && Pendiente" class="fa fa-check culminar"  container="body" placement="bottom" tooltip="Culminar" (click)="sweetalertCulminarEvent(selectedEvent)"></em>
-                  <em *ngIf="selectedEvent && !Pendiente" class="fa fa-pencil editar" container="body" placement="bottom" tooltip="Editar" (click)="EditEvent(selectedEvent)"></em>
-                  <em *ngIf="selectedEvent" class="fa fa-trash-o eliminar" container="body" placement="bottom" tooltip="Eliminar" (click)="sweetalertDeleteEvent(selectedEvent)"></em>
+                  <em *ngIf="selectedEvent?.activo && Pendiente" class="fa fa-check culminar" container="body"
+                    placement="bottom" tooltip="Culminar" (click)="CulminarEventModal.show()"></em>
+                  <em *ngIf="selectedEvent && !Pendiente" class="fa fa-pencil editar" container="body" placement="bottom"
+                    tooltip="Editar" (click)="EditEvent(selectedEvent)"></em>
+                  <em *ngIf="selectedEvent" class="fa fa-trash-o eliminar" container="body" placement="bottom" tooltip="Eliminar"
+                    (click)="EliminarEventModal.show()"></em>
                   <em class="fa fa-plus editar" container="body" placement="bottom" tooltip="Agregar" (click)="openDialogEventB()"></em>
                 </div>
               </div>
@@ -24,7 +27,7 @@
             </div>
             <div class="card-body">
               <div *ngIf="selectedEvent && !EditEventAction">
-                  <p><strong>Actividad: </strong><span class="text-primary">{{textValueActividad}}</span></p>
+                <p><strong>Actividad: </strong><span class="text-primary">{{textValueActividad}}</span></p>
                 <p><strong>Titulo: </strong><span class="text-primary">{{selectedEvent?.title}}</span></p>
                 <p><strong>Inicio: </strong><span class="text-primary">{{selectedEvent?.start | date:'dd/MM/yyyy'}}</span>
                   <strong> a las </strong><span class="text-primary"> {{selectedEvent?.start | date:'hh:mm a'}}</span></p>
@@ -39,12 +42,19 @@
               </div>
               <div *ngIf="EditEventAction">
                 <form [formGroup]="formEvent" (ngSubmit)="Save()">
+                  <section>
+                    <mat-form-field>
+                      <input matInput [(colorPicker)]="ColorPicker" [style.background]="ColorPicker" [(ngModel)]="ColorPicker"
+                        [ngModelOptions]="{standalone: true}" placeholder="Selecciona un Color" />
+                    </mat-form-field>
+                  </section>
                   <mat-form-field>
                     <input matInput formControlName="Titulo" name="titulo" placeholder="Titlulo" required>
                   </mat-form-field>
                   <mat-form-field>
-                    <mat-select (selectionChange)="selected($event.value)" placeholder="Actividad" formControlName="Actividad"  required>
-                      <mat-option *ngFor="let x of Actividades"  [value]="x.id">
+                    <mat-select (selectionChange)="selected($event.value)" placeholder="Actividad" formControlName="Actividad"
+                      required>
+                      <mat-option *ngFor="let x of Actividades" [value]="x.id">
                         {{x.actividad}}
                       </mat-option>
                     </mat-select>
@@ -81,12 +91,6 @@
                         formControlName="Descripcion"></textarea>
                       <mat-hint align="start"><strong>Redacte una descripci&oacute; del Evento</strong></mat-hint>
                       <mat-hint align="end">{{message.value.length}} / 500</mat-hint>
-                    </mat-form-field>
-                  </section>
-                  <section>
-                    <mat-form-field>
-                      <input matInput [(colorPicker)]="ColorPicker" [style.background]="ColorPicker" [(ngModel)]="ColorPicker"
-                        [ngModelOptions]="{standalone: true}" placeholder="Selecciona un Color" />
                     </mat-form-field>
                   </section>
                   <mat-dialog-actions>
@@ -129,10 +133,73 @@
   </div>
   <div #actividadesReclutador *ngIf="!EditEventAction">
     <div *ngIf="!NotDateCalendar">
-        <app-actividades-reclutador [Pendientes]='Pendientes' [Hoy]='Hoy' [Siguientes]='Siguientes' (Selected)="selectedClick($event)"></app-actividades-reclutador>
+      <app-actividades-reclutador [Pendientes]='Pendientes' [Hoy]='Hoy' [Siguientes]='Siguientes' (Selected)="selectedClick($event)"></app-actividades-reclutador>
     </div>
   </div>
 </div>
 
 <!-- Mensajes Toast -->
 <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
+
+<!-- Modal confirmacion de eliminacion -->
+<div bsModal #EliminarEventModal="bs-modal" [config]="{ignoreBackdropClick: true }" class="modal" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Confirmaci&oacute;n de Eliminaci&oacute;n de Evento</h4>
+        <em class="fa fa-times eliminar float-right" container="body" placement="bottom" tooltip="Cerrar" (click)="EliminarEventModal.hide()"></em>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6 col-lg-6 col-ms-12">
+            <p><strong>Actividad: </strong><span class="text-primary">{{textValueActividad}}</span></p>
+            <p><strong>Titulo: </strong><span class="text-primary">{{selectedEvent?.title}}</span></p>
+          </div>
+          <div class="col-md-6 col-lg-6 col-ms-12">
+            <p><strong>Inicio: </strong><span class="text-primary">{{selectedEvent?.start | date:'dd/MM/yyyy'}}</span>
+              <strong> a las </strong><span class="text-primary"> {{selectedEvent?.start | date:'hh:mm a'}}</span></p>
+            <p><strong>Fin: </strong><span class="text-primary">{{selectedEvent?.end | date:'dd/MM/yyyy'}}</span>
+              <strong> a las </strong><span class="text-primary"> {{selectedEvent?.end | date:'hh:mm a'}}</span></p>
+          </div>
+        </div>
+        <p><strong>Comentario: </strong><span class="text-primary">{{selectedEvent?.message}}</span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-xs btn-outline-danger" (click)="EliminarEventModal.hide()">Cancelar</button>
+        <button type="button" class="md-1 btn btn-xs btn-outline-success" (click)="EliminarEventModal.hide();DeleteEvent(selectedEvent)">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal confirmacion de Culminacion -->
+<div bsModal #CulminarEventModal="bs-modal" [config]="{ignoreBackdropClick: true }" class="modal" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Confirmaci&oacute;n de Culminaci&oacute;n de Evento</h4>
+        <em class="fa fa-times eliminar float-right" container="body" placement="bottom" tooltip="Cerrar" (click)="CulminarEventModal.hide()"></em>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6 col-lg-6 col-ms-12">
+            <p><strong>Actividad: </strong><span class="text-primary">{{textValueActividad}}</span></p>
+            <p><strong>Titulo: </strong><span class="text-primary">{{selectedEvent?.title}}</span></p>
+          </div>
+          <div class="col-md-6 col-lg-6 col-ms-12">
+            <p><strong>Inicio: </strong><span class="text-primary">{{selectedEvent?.start | date:'dd/MM/yyyy'}}</span>
+              <strong> a las </strong><span class="text-primary"> {{selectedEvent?.start | date:'hh:mm a'}}</span></p>
+            <p><strong>Fin: </strong><span class="text-primary">{{selectedEvent?.end | date:'dd/MM/yyyy'}}</span>
+              <strong> a las </strong><span class="text-primary"> {{selectedEvent?.end | date:'hh:mm a'}}</span></p>
+          </div>
+        </div>
+        <p><strong>Comentario: </strong><span class="text-primary">{{selectedEvent?.message}}</span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-xs btn-outline-danger" (click)="CulminarEventModal.hide()">Cancelar</button>
+        <button type="button" class="md-1 btn btn-xs btn-outline-success" (click)="CulminarEventModal.hide();CulminarEvent(selectedEvent)">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>

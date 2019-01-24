@@ -52,6 +52,7 @@ import { DialogRutasComponent } from '../../components/tablas/dt-rutas-camion-re
 import { DialogdamfoComponent } from './requisiciones/components/dialogdamfo/dialogdamfo.component';
 import { DireccionautoComponent } from './requisiciones/components/direccionauto/direccionauto.component';
 import { DirectorioEmpresarialComponent } from './directorio-empresarial/directorio-empresarial.component';
+import { DtClientesComponent } from './directorio-empresarial/clientes/dt-clientes/dt-clientes.component';
 import { DtCrearRequisicionComponent } from './requisiciones/components/dt-crear-requisicion/dt-crear-requisicion.component';
 import { DtDamfoComponent } from './requisiciones/components/dt-damfo/dt-damfo.component';
 import { DtProspectosComponent } from './directorio-empresarial/prospectos/dt-prospectos/dt-prospectos.component';
@@ -60,6 +61,7 @@ import { HttpModule } from '@angular/http';
 import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NuevoProspectoComponent } from './directorio-empresarial/prospectos/nuevo-prospecto/nuevo-prospecto.component';
 import { ProspectoComponent } from './directorio-empresarial/prospectos/prospecto.component';
 import { RequisicionComponent } from './requisiciones/requisicion.component';
 import { RequisicionNuevaComponent } from './requisiciones/components/requisicion-nueva/requisicion-nueva.component';
@@ -74,9 +76,9 @@ import { ViewdamfoComponent } from './requisiciones/components/viewdamfo/viewdam
 
 const routes: Routes = [
     { path: 'directorio', component: DirectorioEmpresarialComponent, data: {componente: 'Directorio Empresarial'}},
+    { path: 'nuevoProspecto', component: NuevoProspectoComponent},
     { path: 'prospectos', component: ProspectoComponent },
     { path: 'clientes', component: ClientesComponent},
-    { path: 'prospecto/:user', component: ProspectoComponent },
     { path: 'requisicion', component: RequisicionComponent, data:{componente:'Requisiciones'}},
     { path: 'crearRequisicion', component: DtCrearRequisicionComponent},
     { path: 'requisicionNueva/:IdDamfo/:IdDireccion', component: RequisicionNuevaComponent},
@@ -129,7 +131,9 @@ const routes: Routes = [
         DialogActivarRequiComponent,
         DirectorioEmpresarialComponent,
         ClientesComponent,
-        DtProspectosComponent
+        DtProspectosComponent,
+        DtClientesComponent,
+        NuevoProspectoComponent
     ],
     entryComponents: [DialogdamfoComponent, DialogDeleteRequiComponent, DialogCancelRequiComponent, DialogActivarRequiComponent, DialogEditHorarioComponent, DialogRutasComponent],
     exports: [

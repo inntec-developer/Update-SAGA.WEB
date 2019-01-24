@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ClientesService } from '../../../../../service/clientes/clientes.service';
+import { ClientesService } from './../../../../../service/clientes/clientes.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 declare var $: any;
 
 @Component({
-  selector: 'app-dt-prospectos',
-  templateUrl: './dt-prospectos.component.html',
-  styleUrls: ['./dt-prospectos.component.scss'],
-  providers: [ClientesService]
+  selector: 'app-dt-clientes',
+  templateUrl: './dt-clientes.component.html',
+  styleUrls: ['./dt-clientes.component.scss'],
+  providers: [ClientesService],
 })
-export class DtProspectosComponent implements OnInit {
+export class DtClientesComponent implements OnInit {
+
   public dataSource: Array<any> = [];
-  errorMessage: any;
-  showFilterRow: boolean;
+  public errorMessage: any;
+  public showFilterRow: boolean;
   public clearFilter: boolean = false;
   selected: boolean = false;
 
@@ -27,36 +28,39 @@ export class DtProspectosComponent implements OnInit {
 
   public registros: number;
   public mouseEvent: boolean;
-  public ProspectoId: any;
+  public ClienteId: any;
 
   public rowAux = [];
   public element: any = null;
+
 
   constructor(
     private _service: ClientesService,
     private spinner: NgxSpinnerService
   ) { }
+
   ngOnInit() {
     this.spinner.show();
-    this.getProspectos();
+    this.getClientes();
   }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.onChangeTable(this.config);
+      this.onChangeTable(this.config)
     }, 1500);
   }
 
-  getProspectos() {
-    this._service.getProspectos().subscribe(data => {
-      
+  getClientes() {
+    this._service.getClientes().subscribe(data => {
       this.dataSource = data;
     }, error => this.errorMessage = <any>error);
-  };
+  }
 
-  /* Configuración de tabla */
+  /* Configuración de Tabla */
   public rows: Array<any> = [];
   public columns: Array<any> = [
+    { title: 'RFC', sorting: 'desc', className: 'text-success text-center', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
+    { title: 'Razón Social', sorting: 'desc', className: 'text-success text-center', name: 'razonSocial', filtering: { filterString: '', placeholder: 'Razon Social' } },
     { title: 'Nombre Comercial', sorting: 'desc', className: 'text-success text-center', name: 'nombrecomercial', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'Giro', className: 'text-info text-center', name: 'giroEmpresa', filtering: { filterString: '', placeholder: 'Giro' } },
     { title: 'Actividad', className: 'text-info text-center', name: 'actividadEmpresa', filtering: { filterString: '', placeholder: 'Actividad' } },
@@ -68,10 +72,9 @@ export class DtProspectosComponent implements OnInit {
 
   public config: any = {
     paging: true,
-    //sorting: { columns: this.columns },
-    filtering: { filterString: '' },
-    className: ['table-hover  mb-0']
-  };
+    filtering: {filterString: ''},
+    className: ['table-hover mb-0']
+  }
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
@@ -111,7 +114,6 @@ export class DtProspectosComponent implements OnInit {
   }
 
   public changeFilter(data: any, config: any): any {
-    
     let filteredData: Array<any> = data;
     this.columns.forEach((column: any) => {
       this.clearFilter = true;
@@ -170,7 +172,6 @@ export class DtProspectosComponent implements OnInit {
     this.spinner.hide();
   }
 
-  /* Funciones secundarias */
   onCellClick(data: any){
     data.selected ? data.selected = false : data.selected = true;
     this.element = data;
@@ -194,7 +195,7 @@ export class DtProspectosComponent implements OnInit {
   }
 
   refreshTable(){
-    this.getProspectos();
+    this.getClientes();
     setTimeout(() => {
       this.columns.forEach(element => {
         element.filtering.filterString = '';
