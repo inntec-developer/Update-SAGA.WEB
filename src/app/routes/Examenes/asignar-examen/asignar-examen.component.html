@@ -1,0 +1,169 @@
+<div class="content-heading">
+  <div>
+    <span class="text-sm d-none d-sm-block">Administraci&oacute;n de ex&aacute;menes.</span>
+  </div>
+  <!-- Breadcrumb right aligned-->
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item">
+      <a [routerLink]="['/home']">Inicio</a>
+    </li>
+    <li class="breadcrumb-item active">Examenes</li>
+  </ol>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title text-info"><em class="fa fa-pencil"></em> EXAMENES DISPONIBLES</h5>
+        <hr>
+        <mat-form-field class="longSelect">
+          <mat-select placeholder="Seleccionar tipo de examen" [(value)]="tipoId" [formControl]="se" required>
+            <mat-option *ngFor="let c of catalogo" [value]="c.id" (click)="GetExamenes(c.id); nom=c.nombre">
+              {{c.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+       <mat-form-field class="longSelect">
+          <mat-select placeholder="Seleccionar examen" [(value)]="examenId" [formControl]="ste" required>
+            <mat-option *ngFor="let e of examenes" [value]="e.id" (click)="GetExamen(e.id); nomExamen = e.nombre">
+              {{e.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+      <br/>
+
+    </div>
+
+      <div *ngIf="examen.length > 0" class="card">
+        <div class="card-body mat-elevation-z8">
+          <h5 class="card-title text-info">VISUALIZAR <span *ngIf="nomExamen">- Examen de {{nom}} / {{nomExamen}}</span></h5>
+          <hr>
+          <ng-container *ngFor="let p of examen; let ind = index">
+          <p class="list-group text-primary" >{{( ind + 1)  + '.- ' + p.pregunta}}</p>
+          <ul class="respStyle">
+            <li [ngClass]="r.value == 1 ? 'text-success' : 'text-warning'" *ngFor="let r of p.respuestas">{{r.resp}}</li>
+          </ul>
+        </ng-container>
+
+        
+      
+        <!-- <button [disabled]="examen.length == 0 && !nomExamen" type="button" (click)="AgregarExamen()" class="btn btn-outline-success float-right">
+            <em class="fa fa-file-text-o"></em>
+        </button>
+        <button [disabled]="examen.length == 0" type="button" (click)="Borrar()" class="btn btn-outline-danger float-right margen">
+            <em class="fa fa-trash"></em>
+        </button> -->
+
+
+        </div>
+    </div>
+</div>
+
+<div class="col-md-8">
+  <div class="card">
+    <div class="card-body">
+    <h5 class="card-title text-info"><em class="fa fa-file-text-o"></em> REQUISICIONES DISPONIBLES</h5>
+    <hr>
+    <br/>
+    <div class="input-group">
+        <input (input)="Search($event)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
+        <div class="input-group-append">
+            <span class="input-group-text text-info"><em class="fa fa-search"></em></span>
+          </div>
+      </div>
+      <br/>
+    <div class="mat-elevation-z8">
+      <table class="table" container="body" placement="bottom" tooltip="click para seleccionar">
+        <thead>
+          <tr>
+            <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+              {{column.title | uppercase}}
+            </th>
+            <th></th>
+          </tr>
+          <!-- <tr class="filter-colum">
+            <td *ngFor="let column of columns">
+              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
+                (tableChanged)="onChangeTable(config)" class="form-control" id="{{column.name}}">
+            </td>
+          </tr> -->
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of requisiciones" [class.unselectable] = "row.examen" [class.select]="row.selected" (click)="onSelect(row)">
+            <td class="text-center">
+              {{row.folio}}
+            </td>
+            <td class="text-center"> {{row.solicita}}</td>
+            <td class="text-center"> {{row.cliente}}</td>
+            <td class="text-center"> {{row.vBtra}}</td>
+            <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
+            <td class="text-center">
+                <button [disabled]="!row.examen" type="button" [ngClass]="!row.examen ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'" container="body" placement="bottom" tooltip="Ver examen" (click)="GetExamenRequi(row.id)">
+                    <em class="fa fa-file-text-o"></em>
+                </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br/>
+      <div class="text-right">
+           
+          <pre class="card card-block card-header text-muted">Total Registros: {{requisiciones.length}}</pre>
+          </div>
+
+    </div>
+
+    <hr>
+    <br/>
+    <div class="lon">
+      <ul *ngIf="requiselect.length > 0" class="list-group">
+        <li *ngFor="let item of requiselect" class="list-group-item">{{item.folio + ' - ' + item.vBtra}}</li>
+    </ul>
+    </div>
+    <small *ngIf="examenId == 0" class="form-text text-muted text-danger">Debe seleccionar examen</small>
+    <button [disabled]="requiselect.length == 0 || examenId == 0" type="button" class="btn btn-outline-success float-right" container="body" placement="bottom" tooltip="Asignar Examen" (click)="AgregarRelacion()">
+      <em class="fa fa-check"></em>
+  </button>
+
+    </div>
+  
+  </div>
+</div>
+
+</div>
+<toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
+
+<div *ngIf="verExamen" [config]="{ show: true, ignoreBackdropClick: true, backdrop: 'static', keyboard: false }"
+  bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left text-success">{{examenRequi[0].nombre | uppercase}}</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal.hide();closeModal()">
+          <i class="fa fa-times"></i>
+        </button>
+
+      </div>
+      <div class="modal-body">
+        <div class="card">
+          <div class="card-body">
+            <!-- <h5 class="card-title text-info">VISUALIZAR
+              <span *ngIf="nomExamen">- Examen de {{nom}} / {{nomExamen}}</span>
+            </h5>
+            <hr> -->
+            <ng-container *ngFor="let p of examenRequi; let ind = index">
+              <p class="list-group text-primary">{{( ind + 1) + '.- ' + p.pregunta}}</p>
+              <ul class="respStyle">
+                <li [ngClass]="r.value == 1 ? 'text-success' : 'text-warning'" *ngFor="let r of p.respuestas">{{r.resp}}</li>
+              </ul>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+tr.select {
+    background-color:  #5d9cec !important;
+    color: white;
+  }
+  tr.unselectable,
+  tr.unselectable td {
+    cursor: not-allowed;
+}
+
+  .lon{
+    width: 80%;
+  }
+
+  table {
+    width: 100%;
+  }
+  
+  thead, tbody, tr, td, th { display: block; }
+  
+  tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+  }
+  
+  thead th {
+    height: 50px;
+  
+    /*text-align: left;*/
+  }
+  
+  tbody {
+    height: 400px;
+    overflow-y: auto;
+  }
+  
+  thead {
+    /* fallback */
+  }
+  
+  
+  tbody td, thead th {
+    width: 16.5%;
+    float: left;
+  }
+
+  tr:hover
+{
+//   transform:scale(0.999,0.9);
+//   transform-origin:center;
+    font-size: 15px;
+  box-shadow:1px 2px 6px rgba(0,0,0,.23);
+}

@@ -1,0 +1,181 @@
+<div class="content-heading">
+    <div>
+      Examenes
+      <span class="text-sm d-none d-sm-block">Administraci&oacute;n Examenes Psicom&eacute;tricos.</span>
+    </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/home']">Inicio</a>
+      </li>
+      <li class="breadcrumb-item active">Examenes</li>
+    </ol>
+  </div>
+  
+<div class="row">
+  <div class="col-lg-6">
+      <div class="card">
+          <div class="card-header justify-content-between text-info">
+              <h5><em class="fa fa-file-text-o"></em>PERFILES DISPONIBLES</h5>
+              <hr>
+          </div>
+          <div class="card-body">
+              <div class="input-group">
+                  <input (input)="Search($event)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
+                  <div class="input-group-append">
+                      <span class="input-group-text text-info"><em class="fa fa-search"></em></span>
+                    </div>
+                </div>
+                <br/>
+              <div class="mat-elevation-z8">
+               <table class="table scroll">
+                <thead>
+                    <tr class="text-primary">
+                      <th class="text-center">FOLIO</th>
+                      <th class="text-center">PERFIL</th>
+                      <th class="text-center">PSICOM&Eacute;TRICO</th>
+                      <th class="text-center">CLAVES DISPONIBLES</th>
+                    </tr>
+                  </thead>
+                <tbody>
+                  <tr *ngFor="let row of requisiciones;" container="body" placement="bottom" tooltip="click para seleccionar" [class.selected]="row.selected" (click)="onSelect(row)">
+                    <td class="text-center text-success">{{row.folio}}</td>
+                    <td class="text-center text-muted">{{row.vBtra | uppercase}}</td>
+                    <td class="text-muted">
+                      <ul>
+                        <li class="estilo text-muted" *ngFor="let r of row.psicometricos">{{r.nombre | uppercase}}</li>
+                      </ul></td>
+                    <td class="text-center">
+                        <button [disabled]="row.claves == 0" [ngClass]="(row.claves === 0) ? 'btn btn-xs enabled' : 'btn btn-xs btn-outline-warning'" type="button"  (click)="GetClaves(row);verClaves=true;requi = row.vBtra">
+                            {{row.claves}}
+                        </button>
+                    </td>
+                  </tr>
+                </tbody>
+             </table>
+             </div>
+           </div>
+           <div class="text-right">
+           
+              <pre class="card card-block card-header text-muted">Total Registros: {{registros}}</pre>
+              </div>
+
+        </div>
+    
+  </div>
+
+  <div class="col-lg-6">
+      <div class="card">
+          <div class="card-header justify-content-between text-info">
+              <h5><em class="fa fa-key"></em>GENERAR CLAVES</h5>
+              <hr>
+          </div>
+          <div class="card-body">
+              <small *ngIf="seleccionados.length == 0" class="form-text text-muted text-danger">Debe seleccionar perfil</small>
+              <h5 class="text-success" *ngIf="seleccionados.length > 0"><em class="fa fa-file-text-o"></em> {{seleccionados[0].folio}} {{seleccionados[0].vBtra | uppercase}}
+            </h5>
+            <hr>
+              <label class="text-warning">CLAVE</label>
+              <div class="input-group">
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="clave" name="claves" (keydown.enter)="AgregarClave(clave)">
+                <div class="input-group-append">
+                  <button [disabled]="!clave" class="btn btn-xs btn-outline-success" type="button"  (click)="AgregarClave(clave)">
+                    <em class="fa fa-plus"></em>
+                  </button>
+                </div>
+              </div>
+              <br/>
+              <div class="justify-content-between">
+              <ul class="list-group long">
+                  <li *ngFor="let item of listClaves; let ind = index;" class="list-group-item">
+                      <span class="text-success">{{ind + 1}}. {{item}}
+                          <button class="btn btn-xs btn-outline-danger float-right" type="button" (click)="PopClave(item)">
+                              <em class="fa fa-times"></em>
+                          </button>
+
+                        </span>
+                  </li>
+              </ul>
+
+
+                    <button *ngIf="listClaves.length > 0" [disabled]="seleccionados.length == 0 && spinner" class="btn btn-xs btn-outline-success float-right" type="button"  (click)="Agregar()" container="body" placement="bottom" tooltip="Asignar Claves">
+                      <em *ngIf="!spinner" class="fa fa-check"></em>
+                      <span *ngIf="spinner">
+                          <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+                      </span>
+                    </button>
+                  
+            </div>
+            <br/>
+        
+              <!-- <div class="margin">
+                  <p class="list-group text-warning" *ngFor="let r of seleccionados"><em class="fa fa-file-text-o">  {{r.folio}} - {{r.vBtra | uppercase}}</em></p>
+                </div>
+              -->
+           </div>
+        </div>
+  </div>
+
+</div>
+
+<!--modal ver claves-->
+<div *ngIf="verClaves" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal3="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="pull-left text-warning"><em class="fa fa-key"></em> CLAVES GENERADAS - {{ requi | uppercase}}</h5>
+          <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal3.hide();CloseModal()" ><i class="fa fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+          <ul class="scroll">
+            <li [ngClass]="(c.activo === 0) ? 'text-success' : 'text-muted'" class="text-muted list-group-item" *ngFor="let c of clavesRequi; let ind = index;">{{c.clave | uppercase}}</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+            <div class="text-right">
+           
+                <pre class="card card-block card-header text-muted">Total Claves: {{clavesRequi.length}}</pre>
+                </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+<!-- <ng-container *ngFor="let row of requisiciones; let ind = index">
+      
+    <div class="margin">
+      <p *ngIf="requisiciones.length > 0 else NotRequi" class="list-group text-warning"><em class="fa fa-file-text-o">  {{row.folio}} - {{row.vBtra | uppercase}}</em></p>
+    </div>
+
+      <ul *ngIf="row.postulados.length > 0 else NotCandidatos" class="list-group">
+        <li container="body" placement="bottom" tooltip="click para seleccionar" [class.selected]="r.selected" class="list-group-item rowHover text-muted long" *ngFor="let r of row.postulados; let rowIndex = index" (click)="onSelect(r)">
+          <em class="fa fa-user-circle-o text-success"></em> {{r.curp | uppercase}} {{r.nombre | uppercase}} {{r.apellidoPaterno | uppercase}} {{r.apellidoMaterno | uppercase}} </li>
+      </ul>
+      <hr>
+    </ng-container> -->
+
+  <!--mensaje cuando esta vacio la tabla-->
+<ng-template #NotCandidatos>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+
+              <strong>Oops!</strong> A&uacute;n no cuentas con candidatos postulados.
+
+      </div>
+    </div>
+  </ng-template>
+
+    <!--mensaje cuando esta vacio la tabla-->
+<ng-template #NotRequi>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+          <alert type="info">
+              <strong>Oops!</strong> A&uacute;n no cuentas con requisiciones nuevas.
+            </alert>
+      </div>
+    </div>
+  </ng-template>
+
+  <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>

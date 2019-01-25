@@ -7,6 +7,7 @@ import { DialogLiberarCandidatoComponent } from '../dialog-liberar-candidato/dia
 import { DirectorioEmpresarialComponent } from './../../routes/vtas/directorio-empresarial/directorio-empresarial.component';
 import { InfoCandidatoService } from '../../service/SeguimientoVacante/info-candidato.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ExamenesService } from '../../service/Examenes/examenes.service';
 
 declare var $: any;
 
@@ -63,11 +64,17 @@ export class InfoCandidatoComponent implements OnInit {
   auxestatus = true;
   desapartar = true;
   loading: boolean;
+
+  //examenes
+examen = [];
+modalExamen = false;
+
   constructor(
     private _serviceCandidato: InfoCandidatoService,
     private toasterService: ToasterService,
     private spinner: NgxSpinnerService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private _serviceExamen: ExamenesService
   ) {
     this.registros_v = 0;
     this.registros_p = 0;
@@ -79,6 +86,11 @@ export class InfoCandidatoComponent implements OnInit {
     this.usuario = sessionStorage.getItem('nombre');
     this.usuarioId = sessionStorage.getItem('id')
     this.getMisVacates();
+  }
+
+  closeModal()
+  {
+    this.modalExamen =false;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -132,7 +144,15 @@ export class InfoCandidatoComponent implements OnInit {
         this.reclutador = this.candidato.estatus.reclutador;
         this.reclutadorId = this.candidato.estatus.reclutadorId;
       }
-      this.spinner.hide();
+
+      this._serviceExamen.GetExamenCandidato(this.candidato.id).subscribe(exa => {
+        this.examen = exa;
+        console.log(exa)
+        this.spinner.hide();
+
+      })
+
+
     });
 
   }

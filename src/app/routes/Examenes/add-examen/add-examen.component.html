@@ -1,6 +1,5 @@
 <div class="content-heading">
   <div>
-    EXAMENES
     <span class="text-sm d-none d-sm-block">Administraci&oacute;n de examenes.</span>
   </div>
   <!-- Breadcrumb right aligned-->
@@ -11,9 +10,120 @@
     <li class="breadcrumb-item active">Examenes</li>
   </ol>
 </div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title text-info">CONFIGURACI&Oacute;N</h5>
+        <hr>
+        <div class="form-group longSelect">
+          <label>Nombre Examen</label>
+          <input name="ne" class="form-control form-control-sm" type="text" placeholder="Nombre Examen" ngModel required #ne="ngModel"
+            [(ngModel)]="nomExamen">
+          <small *ngIf="!ne.valid" class="form-text text-muted text-danger">Debe agregar nombre de examen</small>
+        </div>
+        <mat-form-field class="longSelect">
+          <mat-select placeholder="Seleccionar tipo de examen" [(value)]="tipoexamenId" [formControl]="se" required>
+            <mat-option *ngFor="let c of catalogo" [value]="c.id" (click)="nom=c.nombre">
+              {{c.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-<div class="card">
-  <div class="card-header">
-    Agregar Examen
+      </div>
+      <br/>
+    </div>
+
+      <div class="card">
+        
+        <div class="card-body">
+            <h5 class="card-title text-info"> AGREGAR PREGUNTA - RESPUESTAS </h5>
+            <hr>
+          <form>
+            <div class="form-group">
+              <label>Pregunta</label>
+              <div class="input-group">
+              <input name="pregunta" class="form-control form-control-sm" type="text" placeholder="Pregunta" ngModel required #pregunta="ngModel" [(ngModel)]="preguntas">
+              <div class="input-group-append">
+              <button [disabled]="!resp1 && !pa" type="button" class="btn btn-xs btn-outline-success float-right" (click)="AgregarPregunta()" container="body" placement="bottom" tooltip="Agregar nueva pregunta">
+                  <em class="fa fa-plus"></em>
+              </button>
+            </div>
+              </div>
+              <small *ngIf="!pregunta.valid" class="form-text text-muted text-danger">Debe agregar pregunta</small>
+            </div>
+            <div *ngIf="!pa" class="form-group">
+              <label>Respuesta Correcta</label> 
+              <div class="input-group">
+              <input ngModel required #respCorr="ngModel" name="respCorr" type="text" class="form-control form-control-sm" placeholder="Respuesta correcta" (keydown.enter)="AgregarRespuesta(resp1, 1)" [(ngModel)]="resp1">
+              <div class="input-group-append">
+                  <button [disabled]="!resp1 && !pa" type="button" class="btn btn-xs btn-outline-success float-right" (click)="AgregarRespuesta(resp1, 1)" container="body" placement="bottom" tooltip="Agregar nueva pregunta">
+                      <em class="fa fa-plus"></em>
+                  </button>
+                </div>
+                </div>
+              <small *ngIf="!respCorr.valid" class="form-text text-muted text-danger">Debe agregar respuesta</small>
+            </div>
+            <div class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" [(ngModel)]="pa" name="pa" value="" id="defaultCheck1" (change)="AgregarRespuesta('Pregunta abierta', 3)" >
+                <label class="form-check-label">
+                 Es pregunta abierta
+                </label>
+              </div>
+            </div>
+            <hr>
+            <div *ngIf="!pa" class="form-group">
+              <label>Respuesta Incorrecta</label>
+              <div class="input-group">
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="respInc" name="respInc" (keydown.enter)="AgregarRespuesta(respInc, 0)">
+                <div class="input-group-append">
+                  <button [disabled]="!respInc" class="btn btn-xs btn-outline-success" type="button" (click)="AgregarRespuesta(respInc, 0)">
+                    <em class="fa fa-plus"></em>
+                  </button>
+                </div>
+              </div>
+              <br/>
+              <ul class="list-group">
+                  <li *ngFor="let item of respuestas" class="list-group-item" [ngClass]="item.value == 1 ? 'text-success' : 'text-warning'">{{item.resp}}</li>
+              </ul>
+      
+            </div>
+          
+      
+            
+          </form>
+        </div>
+      </div>
+      
+
   </div>
-<div>
+  <div class="col-md-6">
+      <div class="card">
+        <div class="card-body mat-elevation-z8">
+          <h5 class="card-title text-info">VISUALIZAR <span *ngIf="nom">- Examen de {{nom}} / {{nomExamen}}</span></h5>
+          <hr>
+          <ng-container *ngFor="let p of examen; let ind = index">
+          <p class="list-group text-primary" >{{( ind + 1)  + '.- ' + p.Pregunta}}</p>
+          <ul class="respStyle">
+            <li [ngClass]="r.value == 1 ? 'text-success' : 'text-warning'" *ngFor="let r of p.Respuestas">{{r.resp}}</li>
+          </ul>
+        </ng-container>
+
+        
+      
+        <button [disabled]="examen.length == 0 || nomExamen.length == 0 || tipoexamenId=='0'" type="button" (click)="AgregarExamen()" class="btn btn-outline-success float-right">
+            <em class="fa fa-file-text-o"></em>
+        </button>
+        <button [disabled]="examen.length == 0" type="button" (click)="Borrar()" class="btn btn-outline-danger float-right margen">
+            <em class="fa fa-trash"></em>
+        </button>
+
+
+        </div>
+      </div>
+    </div>
+</div>
+
+<toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
+

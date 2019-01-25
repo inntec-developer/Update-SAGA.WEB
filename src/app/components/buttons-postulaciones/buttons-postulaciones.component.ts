@@ -447,7 +447,6 @@ objLiberar = [];
   UpdateFuenteReclutamiento(data, estatusId, estatus)
   {
     this.serviceCandidato.UpdateFuenteRecl(data).subscribe(result =>{ 
-      console.log(result)
       this.SetApiProceso(data, estatusId, estatus);
     });
   }

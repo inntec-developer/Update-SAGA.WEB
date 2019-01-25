@@ -118,6 +118,8 @@ import { PrestacionesLeyComponent } from './tablas/prestaciones-ley/prestaciones
 import { ProcesosComponent } from './tablas/procesos/procesos.component';
 import { SharedModule } from '../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { DlgRevisarExamenesComponent } from './dlg-revisar-examenes/dlg-revisar-examenes.component';
+import { DlgAsignarPerfilComponent } from './dlg-asignar-perfil/dlg-asignar-perfil.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -245,7 +247,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     CalendarioCandidatoComponent,
     EditarCandidatoEstatusComponent,
     ActividadesReclutadorComponent,
-    FileManagerComponent
+    FileManagerComponent,
+    DlgAsignarPerfilComponent
   ],
   exports: [
     DtDireccionComponent,

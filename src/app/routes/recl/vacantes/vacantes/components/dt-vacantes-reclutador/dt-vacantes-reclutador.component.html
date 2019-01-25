@@ -92,7 +92,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr (click)="onCellClick(row)" (dblclick)="seguimientoRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial"
+          <tr class="rowHover" (click)="onCellClick(row)" (dblclick)="seguimientoRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial"
             [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
             <td class="text-center">
               {{row.folio}}

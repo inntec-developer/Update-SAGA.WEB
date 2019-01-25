@@ -173,7 +173,7 @@
                 class="form-control">
             </td>
           </tr>
-          <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of dataSource" [class.selected]="row.selected"  placement="bottom" tooltip="click para seleccionar - dblclick para visualizar" container="body">
+          <tr class="rowHover" (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of dataSource" [class.selected]="row.selected"  placement="bottom" tooltip="click para seleccionar - dblclick para visualizar" container="body">
             <td class="text-center"><span *ngIf="row.estatusId != 12 && row.estatusId != 17 && row.estatusId != 27 else sinAsignar">{{row.horario}}</span></td>
             <ng-template #sinAsignar>
               <span>SIN ASIGNAR</span>

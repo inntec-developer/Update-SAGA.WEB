@@ -198,4 +198,23 @@ export class ApiConection {
   public static sendEmailCandidato = 'reclutamiento/seguimientovacante/sendEmailCandidato';
   public static sendEmailNoContratado = 'reclutamiento/seguimientovacante/sendEmailsNoContratado';
   public static getConteoVacante = 'Requisiciones/getConteoVacante';
+
+  /*Examenes */
+  public static InsertExamen = 'examenes/insertExamen'
+  public static GetCatalogo = 'examenes/getCatalogo'
+  public static GetExamenes = 'examenes/getExamenes'
+  public static GetExamen = 'examenes/getExamen'
+  public static InsertRelacion = 'examenes/insertRelacion'
+  public static InsertRespCandidato = 'examenes/insertRespCandidato'
+  public static GetCandidatosExamen = 'examenes/getCandidatos'
+  public static GetRespuestasCandidato = 'examenes/getRespCandidatos'
+  public static ActualizarResultado = 'examenes/actualizarResultado'
+  public static GetExamenRequi = 'examenes/getExamenRequi'
+  public static GetRequiEstatus = 'examenes/getRequiEstatus'
+  public static GetExamenCandidato = 'examenes/getExamenCandidato'
+  public static GetRequisicionesPsico = 'examenes/getRequisiciones'
+  public static InsertClaves = 'examenes/insertClaves'
+  public static AgregarResultado = 'examenes/agregarResultado'
+  public static GetClaves = 'examenes/getClaves'
+  public static GetClaveCandidatos = 'examenes/getClaveCandidatos'
 }

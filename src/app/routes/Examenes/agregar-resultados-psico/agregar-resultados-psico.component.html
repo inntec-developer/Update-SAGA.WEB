@@ -1,0 +1,77 @@
+<div class="content-heading">
+    <div>
+      Examenes
+      <span class="text-sm d-none d-sm-block">Administraci&oacute;n Examenes Psicom&eacute;tricos.</span>
+    </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/home']">Inicio</a>
+      </li>
+      <li class="breadcrumb-item active">Examenes</li>
+    </ol>
+  </div>
+
+
+<div class="card">
+    <div class="card-header justify-content-between text-warning">
+        <h5><em class="fa fa-key"></em>RESULTADOS DE CLAVES PSICOM&Eacute;TRICAS</h5>
+        <hr>
+    </div>
+    <div class="card-body">
+
+       <div class="input-group longInput">
+        <input (input)="Search($event)" class="form-control form-control-sm" type="text" placeholder="Filtrar por clave" />
+        <div class="input-group-append">
+            <span class="input-group-text text-info"><em class="fa fa-search"></em></span>
+          </div>
+      </div>
+      <br/>
+        <div class="table-responsive mat-elevation-z8">
+         <table class="table scroll">
+          <thead>
+              <tr class="text-primary">
+                <th class="text-center text-success">CLAVE</th>
+                <th class="text-center">NOMBRE</th>
+                <th class="text-center">PSICOM&Eacute;TRICO</th>
+                <th class="text-center">RESULTADO</th>
+                <th class="text-center">GUARDAR</th>
+              </tr>
+            </thead>
+          <tbody>
+            <tr *ngFor="let row of candidatos;">
+              <td class="text-center text-success">{{row.clave | uppercase}}</td>
+              <td class="text-center text-muted">{{row.nombre | uppercase}} {{row.apellidoPaterno | uppercase}} {{row.apellidoMaterno | uppercase}}</td>
+              <td class="text-center text-muted">
+                <ul>
+                  <li class="estilo text-muted" *ngFor="let r of row.psicometricos">{{r.nombre | uppercase}}</li>
+                </ul></td>
+              <td class="text-center">
+                  <span *ngIf="row.resultado != 'SIN RESULTADO'" class="text-muted">
+                      {{row.resultado | uppercase}}
+                  </span>
+                  <mat-form-field class="longSelect" *ngIf="row.resultado == 'SIN RESULTADO'">
+                      <mat-select placeholder="Seleccionar Resultado" [(value)]="c" [formControl]="se" required>
+                        <mat-option *ngFor="let c of catalogo" [value]="c">
+                          {{c}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+              </td>
+              <td class="text-center">
+                  <button [disabled]="!c || row.resultado != 'SIN RESULTADO'" [ngClass]="!c || row.resultado != 'SIN RESULTADO' ? 'btn btn-xs enabled' : 'btn btn-xs btn-outline-success'" type="button" (click)="AgregarResultado(row, c)">
+                      <em class="fa fa-check"></em>
+                  </button>
+              </td>
+            </tr>
+          </tbody>
+       </table>
+       </div>
+     </div>
+     <div class="text-right">
+     
+        <pre class="card card-block card-header text-muted">Total Registros: {{candidatos.length}}</pre>
+        </div>
+
+  </div>
+  <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>

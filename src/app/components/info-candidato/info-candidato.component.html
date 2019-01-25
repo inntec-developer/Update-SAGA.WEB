@@ -4,10 +4,12 @@
       <div class="card-header justify-content-between">
         <em class="fa fa-user-circle-o"></em>
         <label> Informaci&oacute;n Principal</label>
+        <button *ngIf = "examen.length > 0" [class.badge-warning] = "examen.resultado == 0" class="btn btn-success round float-right" (click)="modalExamen=true;">Examenes</button>
         <!-- <a class="float-right text-muted" (click)="favContact1=!favContact1">
           <em class="fa" [ngClass]="favContact1 ? 'fa-star text-warning' : 'fa-star-o'"></em>
         </a> -->
       </div>
+     
       <div class="card-body text-center">
         <img class="img-fluid img-thumbnail rounded-circle thumb96" [src]="candidato.picture" alt="Contact" />
         <h4>{{candidato.nombre}}</h4>
@@ -756,6 +758,30 @@
       <!-- <div class="modal-footer">
         <button type="button" class="md-1 btn btn-outline-success" (click)="modallib.hide()">Cerrar</button>
       </div> -->
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal examenes -->
+<div *ngIf="modalExamen" [config]="{ show: true, ignoreBackdropClick: true, backdrop: 'static', keyboard: false }" bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left text-success">EXAMENES REALIZADOS</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal.hide();closeModal(2)" ><i class="fa fa-times"></i></button>
+  
+      </div>
+      <div class="modal-body">
+        <p class="text-warning">Examenes T&eacute;cnicos</p>
+        <hr>
+        <ul>
+          <li *ngFor="let r of examen" class="text-primary">Examen: <span class="text-muted">{{r.examen}}</span> - Calificaci&oacute;n: <span class="text-muted">{{r.resultado}}</span></li>
+        </ul>
+      </div>
+  
     </div>
   </div>
 </div>

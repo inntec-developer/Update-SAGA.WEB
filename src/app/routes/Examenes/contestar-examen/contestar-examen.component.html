@@ -1,0 +1,32 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title text-info">VISUALIZAR
+            <span *ngIf="nomExamen">- Examen de {{nom}} / {{nomExamen}}</span>
+        </h5>
+        <hr>
+        <ng-container *ngFor="let p of examen; let ind = index">
+            <p class="list-group text-primary">{{( ind + 1) + '.- ' + p.pregunta }}</p>
+            <div *ngIf="p.respuestas.length == 0" class="input-group">
+                <input type="text" [(ngModel)]="respText" class="form-control form-control-sm" (blur)="AddRespuestas(p.preguntaId,respText);">
+            </div>
+            <div *ngIf="p.respuestas.length > 0" class="form-group">
+                <div class="form-check" *ngFor="let r of p.respuestas; let inde = index">
+                    <label class="form-check-label">
+                        <input type="radio" name="enums" value="r.value" (click)="AddRespuestas(p.preguntaId, r.value);"> {{r.resp}}
+                    </label>
+                </div>
+            </div>
+        </ng-container>
+
+        <!-- id="enum_answer_{{(ind + 1) + (inde + 1) * 4}}"  -->
+
+        <!-- <button [disabled]="examen.length == 0 && !nomExamen" type="button" (click)="AgregarExamen()" class="btn btn-outline-success float-right">
+        <em class="fa fa-file-text-o"></em>
+    </button> -->
+    <button type="button" (click)="Agregar()" class="btn btn-outline-danger float-right">
+        <em class="fa fa-trash"></em>
+    </button>
+
+
+    </div>
+</div>
