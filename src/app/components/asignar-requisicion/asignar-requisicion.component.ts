@@ -66,7 +66,6 @@ export class AsignarRequisicionComponent implements OnInit {
   }
 
   valueChange(obj) {
-    console.log(this.AsignacionForm.get('selectControl').value);
     
     this.Asignacion.emit(this.AsignacionForm.get('selectControl').value);
 
@@ -78,7 +77,6 @@ export class AsignarRequisicionComponent implements OnInit {
       .subscribe(data => {
         this.items = data;
         this.filteredData = this.items;
-        console.log(this.items);
       });
 
   }
