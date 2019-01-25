@@ -14,6 +14,7 @@ export class DirectorioEmpresarialComponent implements OnInit {
   Clientes: Array<any> = [];
   CountProspectos: number = 0;
   CountClientes: number = 0;
+  viewProspectos: boolean = null;
   
 
   constructor(
@@ -36,8 +37,14 @@ export class DirectorioEmpresarialComponent implements OnInit {
   }
 
   clicProspectos(){
-    debugger;
     this._Router.navigate(['/ventas/prospectos',this.Prospectos], { skipLocationChange: true });
   }
 
+  selectClientes(){
+    this.viewProspectos = false;
+  }
+
+  selectProspectos(){
+    this.viewProspectos = true;
+  }
 }

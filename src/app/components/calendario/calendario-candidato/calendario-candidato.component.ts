@@ -38,7 +38,7 @@ export class CalendarioCandidatoComponent implements OnInit {
   public EventSelected: boolean;
   public EditEventAction: boolean = false;
   public $calendar: any;
-  public calendarEvents: Array<any> = this.getEventoCalendar;
+  public calendarEvents: Array<any> = null;
   public selectedEvent = null;
   public minLimitDate: any;
   public allDaySelected: any;
@@ -47,10 +47,9 @@ export class CalendarioCandidatoComponent implements OnInit {
   public ReclutadorId: string;
   public touch: boolean = true;
   public toDay: Date;
+  public start = new  Date();
   /* * Reference to the calendar element * */
   @ViewChild('fullcalendar') fullcalendar: ElementRef;
-
-
   /* * Configuracion del de la vista del calendario * */
   calendarOptions: any = {
     // isRTL: true,
@@ -63,6 +62,7 @@ export class CalendarioCandidatoComponent implements OnInit {
     noEventsMessage: "No hay eventos para mostrar",
     locale: 'es',
     defaultView: 'month',
+    visibleRange:{start: new Date(this.start.getFullYear(),this.start.getMonth(),this.start.getDate(),0,0 )},
     eventLimit: 7,
     eventLimitText: 'Más',
     height: 300,
@@ -194,19 +194,45 @@ export class CalendarioCandidatoComponent implements OnInit {
   }
 
   addEvent(event: any) {
+    let VerificarFechaInicio = new Date(event.start);
+    let d = VerificarFechaInicio.getUTCDate();
+    if (d === 1) {
+      let m = VerificarFechaInicio.getUTCMonth();
+      if (m === 11) {
+        let y = VerificarFechaInicio.getUTCFullYear();
+        VerificarFechaInicio.setUTCMonth(0);
+        VerificarFechaInicio.setUTCFullYear(y + 1);
+      } else {
+        VerificarFechaInicio.setUTCMonth(m + 1);
+      }
+      event.start = VerificarFechaInicio;
+    }
+    console.log(VerificarFechaInicio);
     this.componenteService
       .addCalendarEvent(event)
       .subscribe(result => {
         if (result == 200) {
           this.componenteService.getCalendarEvent(this.ReclutadorId).subscribe(result => {
             if (result.length > 0) {
-              this.EventSelected = false;
-              this.getEventoCalendar = result;
-              this.calendarEvents = result;
-              this.$calendar.fullCalendar('removeEvents');
-              this.$calendar.fullCalendar('addEventSource', this.calendarEvents);
-              this.popToast('success', 'Calendario', 'Se agrego correctamente el evento en el calendario.');
-              this._Actividades();
+              if (this.calendarEvents === null) {
+                this.getEventoCalendar = result;
+                this.calendarEvents = result;
+                this.calendarOptions.events = this.calendarEvents;
+                this.$calendar = $(this.fullcalendar.nativeElement);
+                this.$calendar.fullCalendar(this.calendarOptions);
+                this.NotDateCalendar = false;
+                this.popToast('success', 'Calendario', 'Se agrego correctamente el evento en el calendario.');
+                this._Actividades();
+              }
+              else {
+                this.EventSelected = false;
+                this.getEventoCalendar = result;
+                this.calendarEvents = result;
+                this.$calendar.fullCalendar('removeEvents');
+                this.$calendar.fullCalendar('addEventSource', this.calendarEvents);
+                this.popToast('success', 'Calendario', 'Se agrego correctamente el evento en el calendario.');
+                this._Actividades();
+              }
             }
             else {
               this.popToast('error', 'Calendario', 'Se produjo en error al recuparar la información de los eventos.');
@@ -253,7 +279,7 @@ export class CalendarioCandidatoComponent implements OnInit {
             if (result == 200) {
               this.componenteService.getCalendarEvent(this.ReclutadorId).subscribe(result => {
                 if (result.length > 0) {
-                  if (this.calendarEvents.length === 0) {
+                  if (this.calendarEvents == null) {
                     this.getEventoCalendar = result;
                     this.calendarEvents = result;
                     this.calendarOptions.events = this.calendarEvents;
@@ -261,6 +287,7 @@ export class CalendarioCandidatoComponent implements OnInit {
                     this.$calendar.fullCalendar(this.calendarOptions);
                     this.NotDateCalendar = false;
                     this.popToast('success', 'Calendario', 'Se agrego correctamente el evento en el calendario.');
+                    this._Actividades();
                   }
                   else {
                     this.EventSelected = false;
@@ -271,7 +298,6 @@ export class CalendarioCandidatoComponent implements OnInit {
                     this.popToast('success', 'Calendario', 'Se agrego correctamente el evento en el calendario.');
                     this._Actividades();
                   }
-
                 }
                 else {
                   this.popToast('error', 'Calendario', 'Se produjo en error al recuparar la información de los eventos.');
@@ -343,7 +369,7 @@ export class CalendarioCandidatoComponent implements OnInit {
           this.calendarEvents = this.getEventoCalendar;
           this.$calendar.fullCalendar('removeEvents');
           this.$calendar.fullCalendar('addEventSource', this.calendarEvents);
-          this.popToast('success', 'Calendario', 'Se elimino corectamente el Evento.');
+          this.popToast('success', 'Calendario', 'Se elimino correctamente el Evento.');
           swal('Eliminada', '', 'success');
           this.selectedEvent = null;
           this._Actividades();
@@ -377,49 +403,70 @@ export class CalendarioCandidatoComponent implements OnInit {
     let toDay = new Date();
     let compare = new Date(toDay.getFullYear(), toDay.getMonth(), toDay.getUTCDate(), 0, 0)
     this.Pendientes = this.calendarEvents.filter(event =>
-      new Date(new Date(event.start).getFullYear(), new Date(event.start).getMonth(), new Date(event.start).getUTCDate(), 0, 0) < compare && event.activo === true);
-    this.Hoy = this.calendarEvents.filter(event =>
-      String(new Date(new Date(event.start).getFullYear(), new Date(event.start).getMonth(), new Date(event.start).getUTCDate(), 0, 0)) == String(compare) && event.activo === true);
+      new Date(new Date(event.start).getFullYear(), new Date(event.start).getMonth(), new Date(event.start).getDate(), 0, 0) < compare && event.activo === true);
+    this.Hoy = this.calendarEvents.filter(event => {
+      var DateCompare = new Date(new Date(event.start).getFullYear(), new Date(event.start).getMonth(), new Date(event.start).getDate(), 0, 0);
+      if(String(DateCompare) == String(compare) && event.activo == true)
+      return event;
+    });
     this.Siguientes = this.calendarEvents.filter(event =>
-      new Date(new Date(event.start).getFullYear(), new Date(event.start).getMonth(), new Date(event.start).getUTCDate(), 0, 0) > compare && event.activo === true);
+      new Date(new Date(event.start).getFullYear(), new Date(event.start).getMonth(), new Date(event.start).getDate(), 0, 0) > compare && event.activo === true);
   }
 
   private Save() {
     this.loading = true;
     this.updateIndex = this.getEventoCalendar.findIndex(event => event.id === this.IdEvent)
-    var dateInicio = new Date(this.formEvent.get('Inicio').value);
-    var dateFinal = new Date(this.formEvent.get('Fin').value) || dateInicio;
+    let dateInicio  = this.formEvent.get('Inicio').value as Date;
+    let dateFinal = this.formEvent.get('Fin').value as Date || dateInicio;
+    dateInicio = new Date(dateInicio as Date);
+    dateFinal = new Date(dateFinal as Date);
 
-    var ds = dateInicio.getUTCDate(),
+    var ds = dateInicio.getDate(),
       ms = dateInicio.getMonth(),
       ys = dateInicio.getFullYear();
-    var de = dateFinal.getUTCDate(),
+    var de = dateFinal.getDate(),
       me = dateFinal.getMonth(),
       ye = dateFinal.getFullYear();
 
     var Inicio = new Date(),
       Final = new Date(),
-      hourStart: Array<any> = [],
-      hourEnd: Array<any> = [];
+      InicioD: string,
+      FinalD: string,
+      hourStart: Array<string> = [],
+      hourEnd: Array<string> = [];
 
     if (!this.allDaySelected) {
       hourStart = this.formEvent.get('HoraInicio').value.split(":");
       hourEnd = this.formEvent.get('HoraFin').value.split(":");
-      var hrs = hourStart[0];
-      var mns = hourStart[1];
-      var hre = hourEnd[0];
-      var mne = hourEnd[1];
-      Inicio = new Date(ys, ms, ds, Number(hrs), Number(mns));
-      Final = new Date(ye, me, de, Number(hre), Number(mne));
+      var hrs = parseInt(hourStart[0]);
+      var mns = parseInt(hourStart[1]);
+      var hre = parseInt(hourEnd[0]);
+      var mne = parseInt(hourEnd[1]);
+      let DInicio = new Date(ys, ms, ds).setUTCHours(hrs);
+      DInicio = new Date(DInicio).setMinutes(mns);
+      InicioD = new Date(DInicio).toJSON();
+      let DFinal = new Date(ye, me, de).setUTCHours(hre);
+      DFinal = new Date(DFinal).setUTCMinutes(mne);
+      FinalD = new Date(DFinal).toJSON();
+      Inicio = new Date(ys, ms, ds, hrs, mns);
+      Final = new Date(ye, me, de, hre, mne);
+
+
     } else {
-      Inicio = new Date(ys, ms, ds, 0, 0);
-      Final = new Date(ye, me, de, 0, 0);
+      // Inicio = new Date(ys, ms, ds, 0, 0);
+      // Final = new Date(ye, me, de, 0, 0);
     }
     if (Inicio > Final) {
-      this.popToast('error', 'Calendario', 'La Fecha Final no debe ser mayor a la Fecha Inicio.');
+      this.popToast('warning', 'Calendario', 'La fecha Final no debe ser mayor a la fecha Inicio.');
       this.loading = false;
       return;
     }
+    if(hre < hrs){
+      this.popToast('warning', 'Calendario', 'La hora Final no debe ser menor a la hora Inicio.');
+      this.loading = false;
+      return;
+    }
+          
     this.getEventoCalendar[this.updateIndex]['actividad'] = this.textValueActividad;
     this.getEventoCalendar[this.updateIndex]['tipoActividadId'] = this.formEvent.get('Actividad').value;
     this.getEventoCalendar[this.updateIndex]['title'] = this.formEvent.get('Titulo').value;
@@ -430,7 +477,19 @@ export class CalendarioCandidatoComponent implements OnInit {
     this.getEventoCalendar[this.updateIndex]['backgroundColor'] = this.ColorPicker;
     this.getEventoCalendar[this.updateIndex]['borderColor'] = this.ColorPicker;
     this.calendarEvents = this.getEventoCalendar;
-    this.componenteService.updateCalendarEvent(this.getEventoCalendar[this.updateIndex]).subscribe(result => {
+    var newDate = {
+      id: this.getEventoCalendar[this.updateIndex]['id'],
+      entidadId: this.getEventoCalendar[this.updateIndex]['entidadId'],
+      tipoActividadId: this.formEvent.get('Actividad').value,
+      title: this.formEvent.get('Titulo').value,
+      start: InicioD,
+      end: FinalD,
+      allDay: this.allDaySelected,
+      message: this.formEvent.get('Descripcion').value || 'Sin Descripción',
+      backgroundColor: this.ColorPicker,
+      borderColor: this.ColorPicker
+    }
+    this.componenteService.updateCalendarEvent(newDate).subscribe(result => {
       if (result == 200) {
         // Elimina la informacion del calnedario para posterioemente cargarlo con la nueva información
         this.$calendar.fullCalendar('removeEvents');
@@ -512,46 +571,4 @@ export class CalendarioCandidatoComponent implements OnInit {
     this.toasterService.pop(toast);
   }
 
-
-  // Confirmacion para eliminar Evento
-  sweetalertDeleteEvent(data: any) {
-    swal({
-      title: 'Eliminar evento del calendario',
-      text: 'Esta seguro que desea eliminar el Evento ' + data.title,
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#DD6B55',
-      confirmButtonText: 'Si, Eliminar.',
-      cancelButtonText: 'No, Cancelar',
-      closeOnConfirm: false,
-      closeOnCancel: false,
-    }, (isConfirm: boolean) => {
-      if (isConfirm) {
-        this.DeleteEvent(data);
-      } else {
-        swal('Cancelado', 'El Evento no se elimino.', 'error');
-      }
-    });
-  }
-
-  // Confirmar para culminar Evento
-  sweetalertCulminarEvent(data: any) {
-    swal({
-      title: 'Culminar evento del calendario',
-      text: 'Esta seguro que desea culminar el Evento ' + data.title,
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#DD6B55',
-      confirmButtonText: 'Si, Culminar.',
-      cancelButtonText: 'No, Cancelar',
-      closeOnConfirm: false,
-      closeOnCancel: false,
-    }, (isConfirm: boolean) => {
-      if (isConfirm) {
-        this.CulminarEvent(data);
-      } else {
-        swal('Cancelado', 'El evento sigue activo.', 'error');
-      }
-    });
-  }
 }

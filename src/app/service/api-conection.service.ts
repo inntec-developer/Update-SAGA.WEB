@@ -17,7 +17,7 @@ export class ApiConection {
   public static ServiceUrlLoginBolsa = 'http://sagainn.com.mx:402';
   // Conexion a FORMATO 290
 
-   public static ServicioUrl290 = 'http://192.168.8.139:222/Home/';
+  public static ServicioUrl290 = 'http://192.168.8.139:222/Home/';
 
   /* Calendario Event */
   public static GetCalendarioEvent = 'CalendarEvent/GetEvent';
@@ -43,6 +43,19 @@ export class ApiConection {
   public static GetRoles = 'Catalogos/getRoles';
   public static GetMotivosLiberacion = 'Catalogos/getMotivosLiberacion';
   public static GetTiposActividadesRecl = 'Catalogos/getTiposActividadesRecl';
+  public static GetTipoTelefono = 'Catalogos/getTipoTelefono';
+  public static GetTipoDireccion = 'Catalogos/getTipoDireccion';
+  public static GetPais = 'Catalogos/getPais';
+  public static GetEstado = 'Catalogos/getEstado';
+  public static GetMunicipio ='Catalogos/getMunicipio';
+  public static GetColonia ='Catalogos/getColonia';
+
+  /* Catalogos para clientes */
+  public static GetGiroEmp = 'Catalogos/getGiroEmp';
+  public static GetActividadesEmp = 'Catalogos/getActividadEmp';
+  public static GetTamanioEmp = 'Catalogos/getTamanioEmp';
+  public static GetTipoEmp = 'Catalogos/getTipoEmp';
+  public static GetTipoBase = 'Catalogos/getTipoBase';
 
   /* Reclutamiento */
   public static Damfo290GetById = 'Damfo290/getById?id=';

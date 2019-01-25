@@ -8,8 +8,7 @@
       <div class="d-flex align-items-stretch">
         <button id="add" #add class="margen mb-1 btn" [disabled]="bc" [ngClass]="bc ? 'disabled' : 'btn-outline-primary'"
           type="button" [routerLink]="['/ventas/nuevoProspecto']" container="body" placement="bottom" tooltip="Agregar Prospecto">
-          <em class="fa fa-plus"></em>
-        </button>
+          <em class="fa fa-plus"></em></button>
         <em class="vl"></em>
         <button id="view" #view class="margen mb-1 btn" (click)="openDialogShowRequi(element.id, element.folio)"
           placement="bottom" tooltip="Ver Cliente" [disabled]="!element" [ngClass]="(!element) ? 'disabled':'btn-outline-warning'">
@@ -17,11 +16,6 @@
         <button id="edit" #edit class="margen mb-1 btn" chkPrivilegiosButtons (click)="lgModal.show()" [disabled]="!element"
           [ngClass]="(!element) ? 'disabled' : 'btn-outline-info'" container="body" placement="bottom" tooltip="Editar"><em
             class="fa fa-pencil"></em></button>
-        <em class="vl"></em>
-        <button id="hacerCliente" #hacerCliente class="margen mb-1 btn" chkPrivilegiosButtons (click)="lgModal.show()"
-          [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-outline-success'" container="body" placement="bottom"
-          tooltip="Hacer Cliente">
-          <em class="fa  fa fa-handshake-o"></em></button>
       </div>
       <div>
         <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body"
@@ -55,11 +49,22 @@
         </thead>
         <tbody>
           <tr *ngFor="let row of rows; let i=index" (click)="onCellClick(row)" [class.selected]="row.selected">
+            <td class="text-center">{{row.rfc}}</td>
             <td class="text-center">
-              <small *ngIf="row.nombrecomercial.length < 50 else toLength">
+              <small *ngIf="row.razonSocial.length < 30 else toLengthRS">
+                {{row.razonSocial}}
+              </small>
+              <ng-template #toLengthRS>
+                <small placement="bottom" tooltip="{{row.nombrecomercial}}"> {{row.razonSocial | slice:0:15 | uppercase
+                  }} ...
+                </small>
+              </ng-template>
+            </td>
+            <td class="text-center">
+              <small *ngIf="row.nombrecomercial.length < 30 else toLengthNC">
                 {{row.nombrecomercial}}
               </small>
-              <ng-template #toLength>
+              <ng-template #toLengthNC>
                 <small placement="bottom" tooltip="{{row.nombrecomercial}}"> {{row.nombrecomercial | slice:0:15 |
                   uppercase }} ...
                 </small>
@@ -70,14 +75,14 @@
             <td>{{row.tamanoEmpresa}}</td>
             <td class="text-right"> {{row.numeroEmpleados}}</td>
             <td class="text-center">
-              <small *ngIf="row.clasificacion == 1">
+              <small *ngIf="row.clasificacion == 1" class="text-success">
                 <i class="fa fa-star-o" aria-hidden="true"></i>
               </small>
-              <small *ngIf="row.clasificacion == 2">
+              <small *ngIf="row.clasificacion == 2" class="text-success">
                 <i class="fa fa-star-o" aria-hidden="true"></i>
                 <i class="fa fa-star-o" aria-hidden="true"></i>
               </small>
-              <small *ngIf="row.clasificacion == 3">
+              <small *ngIf="row.clasificacion == 3" class="text-success">
                 <i class="fa fa-star-o" aria-hidden="true"> </i>
                 <i class="fa fa-star-o" aria-hidden="true"> </i>
                 <i class="fa fa-star-o" aria-hidden="true"> </i>

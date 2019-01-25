@@ -64,15 +64,16 @@ export class HeaderComponent implements OnInit {
     NotRead: Array<any> = [];
     alertIndex: number;
     private subscription: Subscription;
+    UserId: string;
 
     constructor(
         public menu: MenuService,
         public userblockService: UserblockService,
         public settings: SettingsService,
         public _service: ComponentsService) {
-
         // show only a few items on demo
         this.menuItems = menu.setEstructuraMenu().slice(0, 4); // for horizontal layout
+        this.UserId = sessionStorage.getItem('id');
 
     }
 
@@ -82,9 +83,9 @@ export class HeaderComponent implements OnInit {
             this.fsbutton.nativeElement.style.display = 'none';
         }
 
-        let timer = Observable.timer(2000, 100000);
+        let timer = Observable.timer(2000, 10000);
         this.subscription = timer.subscribe(x => {
-            this._service.getAlertStm(sessionStorage.getItem('id')).subscribe(elemnt => {
+            this._service.getAlertStm(this.UserId).subscribe(elemnt => {
                 this.alertMessage = elemnt;
                 this.NotRead = this.alertMessage.filter(alert => alert.activo == true);
             });

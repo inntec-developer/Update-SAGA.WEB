@@ -10,6 +10,9 @@
                 <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Pendientes
               </h3>
             </div>
+            <div>
+              <span class="badge badge-danger">{{registros_p}}</span>
+            </div>
             <!-- <div>
               <em class="fa fa-check culminar" container="body" placement="bottom" tooltip="Culminar"></em>
               <em class="fa fa-pencil editar" container="body" placement="bottom" tooltip="Editar"></em>
@@ -30,7 +33,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr (click)="onCellClick(row)" *ngFor="let row of Pendientes">
+                  <tr (click)="onCellClick(row)" *ngFor="let row of rows_p" style="background-color: row\.backgroundColor">
                     <td class="text-center"> {{row.actividad}} </td>
                     <td class="text-center"> {{row.title}}</td>
                     <td class="text-center"> {{row.start | date:"dd/MM/yyy HH:mm"}}</td>
@@ -43,6 +46,12 @@
           <ng-template #NotPendientes>
             <p> <span class="text-warning">No se tiene eventos pendientes</span></p>
           </ng-template>
+          <div class="text-right" *ngIf="Pendientes?.length > 5">
+            <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page_p" [totalItems]="length_p" [itemsPerPage]="itemsPerPage"
+              [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTablePendientes(config, $event)"
+              (numPages)="numPages_p = $event">
+            </pagination>
+          </div>
         </div>
       </div>
     </div>
@@ -56,6 +65,9 @@
               <h3>
                 <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Hoy
               </h3>
+            </div>
+            <div>
+              <span class="badge badge-success">{{registros_h}}</span>
             </div>
             <!-- <div>
               <em class="fa fa-plus editar" container="body" placement="bottom" tooltip="Agregar"></em>
@@ -77,7 +89,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr (click)="onCellClick(row)" *ngFor="let row of Hoy">
+                <tr (click)="onCellClick(row)" *ngFor="let row of rows_h">
                   <td class="text-center"> {{row.actividad}} </td>
                   <td class="text-center"> {{row.title}}</td>
                   <td class="text-center"> {{row.start | date:"dd/MM/yyy HH:mm"}}</td>
@@ -89,6 +101,12 @@
           <ng-template #NotHoy>
             <p> <span class="text-warning">No se tiene eventos de hoy</span></p>
           </ng-template>
+          <div class="text-right" *ngIf="Hoy?.length > 5">
+            <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page_h" [totalItems]="length_h" [itemsPerPage]="itemsPerPage"
+              [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTableHoy(config, $event)"
+              (numPages)="numPages_h = $event">
+            </pagination>
+          </div>
         </div>
       </div>
     </div>
@@ -102,6 +120,9 @@
               <h3>
                 <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Siguientes
               </h3>
+            </div>
+            <div>
+              <span class="badge badge-warning">{{registros_s}}</span>
             </div>
             <!-- <div>
               <em class="fa fa-plus editar" container="body" placement="bottom" tooltip="Agregar"></em>
@@ -122,7 +143,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr (click)="onCellClick(row)" *ngFor="let row of Siguientes">
+                <tr (click)="onCellClick(row)" *ngFor="let row of rows_s">
                   <td class="text-center"> {{row.actividad}} </td>
                   <td class="text-center"> {{row.title}}</td>
                   <td class="text-center"> {{row.start | date:"dd/MM/yyy HH:mm"}}</td>
@@ -134,6 +155,12 @@
           <ng-template #NotSiguientes>
             <p> <span class="text-warning">No se tiene eventos futuros</span></p>
           </ng-template>
+          <div class="text-right" *ngIf="Siguientes?.length > 5">
+            <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page_s" [totalItems]="length_s" [itemsPerPage]="itemsPerPage"
+              [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTableSiguientes(config, $event)"
+              (numPages)="numPages_s = $event">
+            </pagination>
+          </div>
         </div>
       </div>
     </div>
