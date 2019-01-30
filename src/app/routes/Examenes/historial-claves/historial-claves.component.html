@@ -1,0 +1,79 @@
+<div class="content-heading">
+    <div>
+      <span class="text-sm d-none d-sm-block">Administraci&oacute;n de ex&aacute;menes psicom&eacute;tricos.</span>
+    </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/home']">Inicio</a>
+      </li>
+      <li class="breadcrumb-item active">Examenes</li>
+    </ol>
+  </div>
+  
+  <div class="card">
+    <div class="card-body">
+     <h5 class="card-title text-warning"><em class="fa fa-key"></em> HISTORIAL DE CLAVES PSICOM&Eacute;TRICAS</h5>
+     <hr>
+  
+     <div id="accordion">
+        <div class="card" *ngFor="let row of candidatos; let rowIndex = index">
+          <a class="card-header" [class.collapsed]="row.verRow"  (click)="row.verRow = !row.verRow">
+            <h5>
+                  <span class="text-primary float-left "><em class="fa fa-user"></em> {{ row.nombre }}<span class="text-warning"> ({{row.claves.length}})</span></span>
+          
+              <i *ngIf="!row.verRow" class="fa fa-caret-down float-right text-muted" aria-hidden="true"></i>
+              <i *ngIf="row.verRow" class="fa fa-caret-up float-right text-muted" aria-hidden="true"></i>
+            </h5>
+           
+          </a>
+      
+          <div *ngIf="row.verRow" id="collapseOne" class="collapse show">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th class="text-center">FOLIO</th>
+                        <th class="text-center">PERFIL</th>
+                        <th class="text-center">CLAVE</th>
+                        <th class="text-center">PSICOMETR&Iacute;A</th>
+                        <th class="text-center">FECHA CREACI&Oacute;N</th>
+                        <th class="text-center">RESULTADO</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="rowHover" *ngFor="let r of row.claves; let rowIndex = index">
+                        <td class="text-center text-success">
+                            <em class="fa fa-file-text-o"></em> {{ r.folio }}</td>
+  
+                        <td class="text-center text-muted">{{r.vBtra | uppercase}}</td>
+                        <td class="text-center text-success">{{r.clave | uppercase }}</td>
+                        <td>
+                          <ul>
+                            <li class="estilo text-muted text-center" *ngFor="let rr of r.psicometricos">{{rr.nombre | uppercase}}</li>
+                          </ul>
+                        </td>
+                        <td class="text-center text-muted">{{r.fecha | date:'dd-MM-yyyy'}}</td>
+                        <td class="text-center text-muted">{{r.resultado | uppercase}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+          </div>
+        </div>
+        </div>
+      
+    </div>
+  </div>
+    <!--mensaje cuando esta vacio la tabla-->
+  <ng-template #NotCandidatos>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <alert type="info">
+                <strong>Oops!</strong> El candidato no cuenta con claves asignadas.
+              </alert>
+        </div>
+      </div>
+    </ng-template>
+  
+  

@@ -9,7 +9,20 @@ ul.respStyle
     width: 70%;
 }
 
+.card-body.scroll
+{
+    height: 638px !important;
+    overflow-y: auto;
+}
 .margen
 {
     margin-right: 10px;
+}
+
+.card.elev
+{
+    box-shadow:0 3px 10px rgba(0,0,0,.4);
+     border-radius:0px;
+    // transition:0.5s;
+    border-right: 5px #aaa;
 }

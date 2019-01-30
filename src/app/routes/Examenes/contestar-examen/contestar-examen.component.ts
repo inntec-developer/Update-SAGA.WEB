@@ -21,13 +21,13 @@ export class ContestarExamenComponent implements OnInit {
 
   GetExamen()
   {
-    this.service.GetExamen(3).subscribe(data => {
+    this.service.GetExamen(6).subscribe(data => {
       this.examen = data;
       console.log(this.examen)
     })
   }
 
-  AddRespuestas(preguntaId, resp)
+  AddRespuestas(preguntaId, respuestaId, resp)
   {
     if(this.Resp.length > 0)
     {
@@ -46,12 +46,12 @@ export class ContestarExamenComponent implements OnInit {
 
       if(!flag)
       {
-        this.Resp.push({CandidatoId:this.candidatoId, PreguntaId: preguntaId, Value: resp})
+        this.Resp.push({CandidatoId:this.candidatoId, PreguntaId: preguntaId, RespuestaId: respuestaId, Value: resp})
       }
     }
     else
     {
-      this.Resp.push({CandidatoId:this.candidatoId, preguntaId: preguntaId, Value: resp});
+      this.Resp.push({CandidatoId:this.candidatoId, PreguntaId: preguntaId, RespuestaId: respuestaId, Value: resp});
     }
 
   }

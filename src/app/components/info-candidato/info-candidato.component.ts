@@ -1,3 +1,4 @@
+import { log } from 'util';
 import { DtCandidatosPostComponent } from './../../routes/recl/vacantes/vacantes/components/dt-candidatos-post/dt-candidatos-post.component';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
@@ -66,7 +67,7 @@ export class InfoCandidatoComponent implements OnInit {
   loading: boolean;
 
   //examenes
-examen = [];
+examen = {'tecnicos': [], 'psicometricos': []};
 modalExamen = false;
 
   constructor(
@@ -146,11 +147,14 @@ modalExamen = false;
       }
 
       this._serviceExamen.GetExamenCandidato(this.candidato.id).subscribe(exa => {
-        this.examen = exa;
-        console.log(exa)
+
+        this.examen.tecnicos = exa[0];
+        this.examen.psicometricos = exa[1];
+
+        console.log(this.examen)
         this.spinner.hide();
 
-      })
+      });
 
 
     });

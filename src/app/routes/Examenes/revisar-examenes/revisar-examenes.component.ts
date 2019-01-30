@@ -36,7 +36,7 @@ export class RevisarExamenesComponent implements OnInit {
     })
   }
   OpenDialogRevisar(row)
-  {
+  {        
     this.service.GetResultadosCandidato(row.candidatoId, row.requisicionId).subscribe(data => {
       console.log(data)
       let aux = data;

@@ -52,9 +52,25 @@ export class AsignarPsicometricosComponent implements OnInit {
 
   AgregarClave(clave)
   {
-    
-    this.listClaves.push(clave)
-    this.clave = "";
+    if(clave.length == 16)
+    {
+      if(this.listClaves.length > 0)
+      {
+        var idx = this.listClaves.indexOf(clave);
+
+        if(idx == -1)
+        {
+          this.listClaves.push(clave)
+        }
+      }
+      else
+      {
+        this.listClaves.push(clave)
+  
+      }
+
+      this.clave = "";
+    }
 
   }
 

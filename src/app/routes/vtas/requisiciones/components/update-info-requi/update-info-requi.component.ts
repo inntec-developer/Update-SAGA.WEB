@@ -1,3 +1,4 @@
+import { ExamenesService } from './../../../../../service/Examenes/examenes.service';
 import { AfterContentChecked, Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { CatalogosService, RequisicionesService } from '../../../../../service';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -38,14 +39,23 @@ export class UpdateInfoRequiComponent implements OnInit {
   public formRequi : FormGroup;
   public minLimitDate: any;
 
-
+  catalogo = [];
+  examenes = [];
+  examen = [];
+  examenRequi = [];
+  verExamen = false;
+  examenId = 0;
+  tipoId = 0;
+  se = new FormControl('', [Validators.required]);
+  ste = new FormControl('', [Validators.required]);
     constructor(
       private settings : SettingsService,
       public fb: FormBuilder,
       public serviceRequisicion: RequisicionesService,
       public serviceCatalogos: CatalogosService,
       private toasterService: ToasterService,
-      private spinner: NgxSpinnerService
+      private spinner: NgxSpinnerService,
+      private service: ExamenesService
     ) {
         this.formRequi = new FormGroup({
           folio: new FormControl('',[Validators.required]),
@@ -95,6 +105,8 @@ export class UpdateInfoRequiComponent implements OnInit {
         confidencial: [false],
         estatus: [{value:'',  disabled:true}]
       });
+      this.GetCatalogoExamenes();
+
     }
 
     ngAfterViewInit(): void {
@@ -114,6 +126,71 @@ export class UpdateInfoRequiComponent implements OnInit {
       }
     }
 
+    GetCatalogoExamenes()
+    {
+      this.service.GetCatalogo().subscribe(data =>{
+        this.catalogo = data;
+        console.log(data)
+      })
+    }
+
+    GetExamenes()
+    {
+      this.service.GetExamenes(this.tipoId).subscribe(data => {
+        this.examenes = data;
+      })
+    }
+
+    GetExamen(ExamenId)
+    {
+      this.service.GetExamen(ExamenId).subscribe(data => {
+        this.examen = data;
+        console.log(data)
+      })
+    }
+
+    GetExamenRequi()
+    {
+      this.service.GetExamenRequi(this.RequiId).subscribe(data => {
+        this.examenRequi = data;
+        this.examen = data;
+        console.log(data)
+      })
+    }
+
+    AgregarExamen()
+    {
+    
+      var relacion = [{ExamenId: this.examenId, RequisicionId: this.RequiId}];
+        this.service.InsertRelacion(relacion).subscribe(data => {
+          if(data == 200)
+          {
+            this.popToast('success', 'Asignar Exámen', 'La relación requisición exámen se generó con éxito');
+            this.examenId = 0;
+            this.tipoId = 0;
+            this.examen = [];
+            this.examenes = [];
+            this.CloseModal();
+           
+          }
+          else
+          {
+            this.popToast('error', 'Asignar Exámen', 'Ocurrio un error');
+          }
+        })
+      
+        
+    }
+
+    CloseModal()
+    {
+      this.verExamen = false;
+      this.catalogo = [];
+      this.examenId = 0;
+      this.tipoId = 0;
+      this.GetExamenRequi();
+    }
+    
     public getInformacionRequisicio(folio){
       if(folio != null){
         this.serviceRequisicion.getRequiFolio(this.Folios)
@@ -132,6 +209,7 @@ export class UpdateInfoRequiComponent implements OnInit {
               confidencial: data.confidencial,
           });
             this.minLimitDate = data.fch_Creacion;
+            this.GetExamenRequi();
         });
       }
     }

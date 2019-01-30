@@ -234,4 +234,5 @@ export class ApiConection {
   public static AgregarResultado = 'examenes/agregarResultado'
   public static GetClaves = 'examenes/getClaves'
   public static GetClaveCandidatos = 'examenes/getClaveCandidatos'
+  public static GetClavesCandidatos = 'examenes/getClavesCandidatos'
 }
