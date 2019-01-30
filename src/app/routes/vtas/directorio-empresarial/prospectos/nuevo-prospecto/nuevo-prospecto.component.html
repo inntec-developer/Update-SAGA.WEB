@@ -113,24 +113,30 @@
       </div>
 
       <div class="card-body">
-        <form [formGroup]="formDirecciones">
-          <em *ngIf="!addDireccion" class="fa fa-plus text-primary" container="body" placement="bottom" tooltip="Agregar"
-            (click)="addDireccion = true"></em>
-          <div *ngIf="addDireccion">
+
+
+        <div *ngIf="addDireccion">
+          <form [formGroup]="formDirecciones">
             <div class="row">
               <div class="col-md-2 col-lg-2 col-sm-12">
                 <mat-form-field>
                   <mat-select placeholder="Tipo Direccion" formControlName="TipoDireccion">
-                    <mat-option *ngFor="let x of tipoDireccion" [value]="x.id">
+                    <mat-option *ngFor="let x of tipoDireccion" [value]="x.id" (onSelectionChange)="auxTipoDireccion = x.tipoDireccion">
                       {{x.tipoDireccion}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
+              <div class="col-md-2 col-lg-2 col-sm-12">
+                <mat-form-field>
+                  <input matInput formControlName="CodigoPostal" name="CodigoPostal" placeholder="Codigo Postal"
+                    (keyup)="showForCP($event)" />
+                </mat-form-field>
+              </div>
               <div class="col-md-2">
                 <mat-form-field>
                   <mat-select placeholder="Paises" formControlName="Paises" (selectionChange)="getEstados()">
-                    <mat-option *ngFor="let x of paises" [value]="x.id">
+                    <mat-option *ngFor="let x of paises" [value]="x.id" (onSelectionChange)="auxPais = x.pais">
                       {{x.pais}}
                     </mat-option>
                   </mat-select>
@@ -139,7 +145,7 @@
               <div class="col-md-2">
                 <mat-form-field>
                   <mat-select placeholder="Estados" formControlName="Estados" (selectionChange)="getMunicipio()">
-                    <mat-option *ngFor="let x of estados" [value]="x.id">
+                    <mat-option *ngFor="let x of estados" [value]="x.id" (onSelectionChange)="auxEstado = x.estado">
                       {{x.estado}}
                     </mat-option>
                   </mat-select>
@@ -148,7 +154,7 @@
               <div class="col-md-2">
                 <mat-form-field>
                   <mat-select placeholder="Municipios" formControlName="Municipios" (selectionChange)="getColonias()">
-                    <mat-option *ngFor="let x of municipios" [value]="x.id">
+                    <mat-option *ngFor="let x of municipios" [value]="x.id" (onSelectionChange)="auxMunicipio = x.municipio">
                       {{x.municipio}}
                     </mat-option>
                   </mat-select>
@@ -157,20 +163,136 @@
               <div class="col-md-2">
                 <mat-form-field>
                   <mat-select placeholder="Colonias" formControlName="Colonias">
-                    <mat-option *ngFor="let x of colonias" [value]="x.id">
+                    <mat-option *ngFor="let x of colonias" [value]="x.id" (onSelectionChange)="auxColonia = x.colonia ; getCodigoPostal(x.cp)">
                       {{x.colonia}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-2">
+                <mat-form-field>
+                  <input matInput formControlName="Calle" name="Calle" placeholder="Calle" />
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field>
+                  <input matInput formControlName="Exterior" name="Exterior" placeholder="No. Exterior" />
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field>
+                  <input matInput formControlName="Interior" name="Interior" placeholder="No. Interior" />
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-form-field>
+                  <textarea #message matInput maxlength="500" placeholder="Referencia / Comentario" rows="3"
+                    formControlName="Referencia"></textarea>
+                  <mat-hint align="start"><strong>Caracteres</strong></mat-hint>
+                  <mat-hint align="end">{{message.value.length}} / 500</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2">
+                <mat-slide-toggle class="text-success" [color]="warn" formControlName="Principal" [disabled]="Principal">
+                  Principal
+                </mat-slide-toggle>
+                <p></p>
+                <mat-slide-toggle class="text-success" [color]="warn" formControlName="Activo">
+                  Activo
+                </mat-slide-toggle>
+              </div>
+            </div>
+
             <!-- Botones de funcion sobre Direcciones -->
             <div class="modal-footer">
-              <button type="button" class="md-1 btn btn-xs btn-outline-danger" (click)="addDireccion = ! addDireccion">Cancelar</button>
-              <button type="button" class="md-1 btn btn-xs btn-outline-success">Aceptar</button>
+              <button type="button" class="md-1 btn btn-xs btn-outline-danger" (click)="(addDireccion = ! addDireccion) ; cancelarDireccion()">Cancelar</button>
+              <button type="button" [disabled]="!formDirecciones.valid" class="md-1 btn btn-xs btn-outline-success"
+                (click)="AddDireccion()">Aceptar</button>
+            </div>
+
+          </form>
+          <br>
+        </div>
+        <!-- Tabla de Direcciones -->
+
+        <div class="butoonAction">
+          <button class="mb-1 btn btn-xs btn-outline-primary margen" *ngIf="!addDireccion" container="body" placement="bottom"
+            tooltip="Agregar" (click)="addDireccion = true">
+            <em class="fa fa-plus"></em>
+          </button>
+          <button *ngIf="DireccionesNew.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
+            tooltip="Editar" [disabled]="!elementD" [ngClass]="(!elementD) ? 'disabled' : 'btn-outline-primary'"
+            (click)="UpDireccion()">
+            <em class="fa fa-pencil"></em>
+          </button>
+          <button *ngIf="DireccionesNew.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
+            tooltip="Eliminar" [disabled]="!elementD" [ngClass]="(!elementD) ? 'disabled' : 'btn-outline-danger'"
+            (click)="DtDireccion()">
+            <em class="fa fa-trash"></em>
+          </button>
+        </div>
+        <div *ngIf="DireccionesNew.length > 0">
+          <div class="card card-default">
+            <div #tableContainer>
+              <table id="direccionesNuevas" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th *ngFor="let column of columnsD" ngClass="{{column.className || ''}}">
+                      {{column.title}}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let rowd of rowsD; let i=index" (click)="onCellClickD(rowd, i)" [class.selected]="rowd.selectedD">
+                    <td class="text-center">{{rowd.tipoDireccion}}</td>
+                    <td class="text-center">{{rowd.pais}}</td>
+                    <td class="text-center">{{rowd.estado}}</td>
+                    <td>{{rowd.municipio}}</td>
+                    <td>{{rowd.colonia}}</td>
+                    <td>{{rowd.calle}}</td>
+                    <td class="text-right"> {{rowd.exterior}}</td>
+                    <td class="text-right"> {{rowd.interior}}</td>
+                    <td class="text-right">
+                      <small *ngIf="rowd?.referencia?.length < 30 else toLengthRF">
+                        {{rowd.referencia}}
+                      </small>
+                      <ng-template #toLengthRF>
+                        <small placement="bottom" tooltip="{{rowd.referencia}}"> {{row.referencia | slice:0:15 }}
+                          ...
+                        </small>
+                      </ng-template>
+                    </td>
+                    <td class="text-center">
+                      <small *ngIf="rowd.esPrincipal else Inactivo">
+                        SI
+                      </small>
+                      <ng-template #Inactivo>
+                        <small>NO</small>
+                      </ng-template>
+                    </td>
+                    <td class="text-center">
+                      <small *ngIf="rowd.activo else IsActivo">
+                        SI
+                      </small>
+                      <ng-template #IsActivo>
+                        <small>NO</small>
+                      </ng-template>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
-        </form>
+          <div class="text-right" *ngIf="DireccionesNew.length > 10">
+            <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="pageD" [totalItems]="lengthD"
+              [itemsPerPage]="itemsPerPageD" [maxSize]="maxSizeD" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTableD(config, $event)"
+              (numPages)="numPagesD = $event">
+            </pagination>
+          </div>
+          <pre *ngIf="config.paging" class="float-right">Total Registros: {{registrosD}}</pre>
+        </div>
       </div>
     </div>
   </tab>
@@ -212,3 +334,7 @@
     </div>
   </div>
 </div>
+
+
+<!-- Mensajes informativos -->
+<toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
