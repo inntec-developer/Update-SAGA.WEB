@@ -15,6 +15,7 @@ import { RevisarExamenesComponent } from './revisar-examenes/revisar-examenes.co
 import { AsignarPsicometricosComponent } from './asignar-psicometricos/asignar-psicometricos.component';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
 import { AgregarResultadosPsicoComponent } from './agregar-resultados-psico/agregar-resultados-psico.component';
+import { HistorialClavesComponent } from './historial-claves/historial-claves.component';
 
 
 
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: 'contestar', component: ContestarExamenComponent},
   { path: 'revisar', component: RevisarExamenesComponent},
   { path: 'asignarClaves', component: AsignarPsicometricosComponent},
-  { path: 'agregarResultPsico', component: AgregarResultadosPsicoComponent}
+  { path: 'agregarResultPsico', component: AgregarResultadosPsicoComponent},
+  { path: 'historialClaves', component: HistorialClavesComponent}
   
 ];
 
@@ -48,7 +50,8 @@ const routes: Routes = [
     RevisarExamenesComponent,
     DlgRevisarExamenesComponent,
     AsignarPsicometricosComponent,
-    AgregarResultadosPsicoComponent
+    AgregarResultadosPsicoComponent,
+    HistorialClavesComponent
   ],
   exports: [
     RouterModule

@@ -26,7 +26,8 @@ export class ExamenesService {
   URLInsertClaves = ApiConection.ServiceUrl + ApiConection.InsertClaves;
   URLAgregarResultado = ApiConection.ServiceUrl + ApiConection.AgregarResultado;
   URLGetClaves = ApiConection.ServiceUrl + ApiConection.GetClaves;
-  URLGetClavesCandidatos = ApiConection.ServiceUrl + ApiConection.GetClaveCandidatos;
+  URLGetClaveCandidatos = ApiConection.ServiceUrl + ApiConection.GetClaveCandidatos;
+  URLGetClavesCandidatos = ApiConection.ServiceUrl + ApiConection.GetClavesCandidatos;
 
   constructor(private _httpClient: HttpClient) { }
 
@@ -164,6 +165,10 @@ export class ExamenesService {
 
   }
   GetClavesCandidatos(): Observable<any>
+  {
+    return this._httpClient.get(this.URLGetClaveCandidatos);
+  }
+  GetClavesByCandidatos(): Observable<any>
   {
     return this._httpClient.get(this.URLGetClavesCandidatos);
   }

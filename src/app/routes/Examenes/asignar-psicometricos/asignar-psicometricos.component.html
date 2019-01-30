@@ -77,13 +77,14 @@
             <hr>
               <label class="text-warning">CLAVE</label>
               <div class="input-group">
-                <input type="text" class="form-control form-control-sm" [(ngModel)]="clave" name="claves" (keydown.enter)="AgregarClave(clave)">
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="clave" name="claves" (keydown.enter)="AgregarClave(clave)" minlength="16" maxlength="16"> 
                 <div class="input-group-append">
-                  <button [disabled]="!clave" class="btn btn-xs btn-outline-success" type="button"  (click)="AgregarClave(clave)">
+                  <button [disabled]="clave.length < 16" class="btn btn-xs btn-outline-success" type="button"  (click)="AgregarClave(clave)">
                     <em class="fa fa-plus"></em>
                   </button>
                 </div>
               </div>
+              <small class="form-text text-muted text-danger" *ngIf="clave.length < 16">clave debe contener 16 caracteres ser alfanum&eacute;ricos y las claves no deben repetirse</small>
               <br/>
               <div class="justify-content-between">
               <ul class="list-group long">
@@ -98,7 +99,7 @@
               </ul>
 
 
-                    <button *ngIf="listClaves.length > 0" [disabled]="seleccionados.length == 0 && spinner" class="btn btn-xs btn-outline-success float-right" type="button"  (click)="Agregar()" container="body" placement="bottom" tooltip="Asignar Claves">
+                    <button *ngIf="seleccionados.length > 0" [disabled]="spinner" class="btn btn-xs btn-outline-success float-right" type="button"  (click)="Agregar()" container="body" placement="bottom" tooltip="Asignar Claves">
                       <em *ngIf="!spinner" class="fa fa-check"></em>
                       <span *ngIf="spinner">
                           <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">

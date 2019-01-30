@@ -12,7 +12,7 @@
             <div *ngIf="p.respuestas.length > 0" class="form-group">
                 <div class="form-check" *ngFor="let r of p.respuestas; let inde = index">
                     <label class="form-check-label">
-                        <input type="radio" name="enums" value="r.value" (click)="AddRespuestas(p.preguntaId, r.value);"> {{r.resp}}
+                        <input type="radio" name="enums" value="r.value" (click)="AddRespuestas(p.preguntaId, r.respuestaId, r.value);"> {{r.resp}}
                     </label>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-8">
-      <h3 class="text-success" mat-dialog-title>{{examen[0].tipo}} - {{examen[0].nombre}}</h3>
+      <span class="text-info" mat-dialog-title> <em class="fa fa-pencil"></em> {{examen[0].tipo | uppercase}} - {{examen[0].nombre | uppercase}}</span>
     </div>
     <div class="col-lg-4">
       <button type="button" class="btn btn-xs btn-danger btn-circle float-right" mat-dialog-close>
@@ -12,20 +12,20 @@
   <div class="card">
       <div class="card-body">
           <mat-dialog-content>
-              <ng-container *ngFor="let p of examen[0].resultado; let ind = index">
-                  <p class="list-group text-primary" >{{( ind + 1)  + '.- ' + p.pregunta}}</p>
+              <ng-container *ngFor="let p of examen[0].respuestas; let ind = index" >
+                <em>{{( ind + 1)  + '.- ' + p.pregunta}}</em> <span class="text-success"> Respuesta correcta: {{p.respCorrecta}}</span>
                   <ul class="respStyle">
-                    <li [ngClass]="p.respuesta == 1 ? 'text-success' : 'text-warning'" >{{p.respuesta}}</li>
+                    <li [ngClass]="p.value == 1 ? 'text-success' : 'text-warning'" >Respuesta Candidato: {{p.respuesta}}</li>
                   </ul>
               </ng-container>
       </mat-dialog-content>
       <mat-divider></mat-divider>
       <br/>
-          <div class="input-group">
+          <div class="input-group" *ngIf="examen[0].resultado == 0">
               <div class="input-group-prepend">
-                  <span class="input-group-text" id="">Resultado</span>
+                  <span class="input-group-text" id="">CALIFICACI&Oacute;N</span>
                 </div>
-              <input type="text" class="form-control long" placeholder="{{resultado}}" ngModel required #pregunta="ngModel" [(ngModel)]="resultado">
+              <input type="text" class="form-control long" placeholder="{{examen[0].resultado}}" ngModel required #pregunta="ngModel" [(ngModel)]="resultado">
               <div class="input-group-append">
               <button type="button" [disabled]="resultado==0" [ngClass]="resultado == 0 ? 'btn btn-xs enabled float-right' : 'btn btn-xs btn-outline-success float-right'" container="body" placement="bottom" tooltip="Actualizar Resultado" (click)="ActualizarResultado()">
                   <em class="fa fa-check"></em>
@@ -33,15 +33,13 @@
             </div>
           </div>
             
-    
-      <!-- <mat-dialog-actions class="pull-right">
-      <button type="button" [disabled]="!seleccion" class="btn btn-xs btn-labeled btn-outline-success mb-2 margin" (click)="EnviarDatos()">
-        <span class="btn-label">
-          <i class="fa fa-check"></i>
-        </span> Aceptar
-      </button>
-  <br/>
-</mat-dialog-actions> -->
+          <div class="input-group" *ngIf="examen[0].resultado > 0">
+
+                  <span class="input-group-text" id="">CALIFICACI&Oacute;N: {{examen[0].resultado}}</span>
+
+             
+            </div>
+
       </div>
   </div>
   <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
