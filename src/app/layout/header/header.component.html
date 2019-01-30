@@ -51,17 +51,24 @@
         </li> -->
     <!-- START Alert menu-->
     <li class="nav-item dropdown dropdown-list" dropdown>
-      <a class="nav-link dropdown-toggle dropdown-toggle-nocaret"  dropdownToggle>
+      <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" dropdownToggle>
         <em class="icon-bell alertPosition"></em>
         <span *ngIf="NotRead.length > 0 else AlertOk" class="badge badge-danger alertPosition">{{NotRead.length}}</span>
         <ng-template #AlertOk>
-            <span class="badge alertOk"><em class="fa fa-check alertPosition"></em></span>
+          <span class="badge alertOk"><em class="fa fa-check alertPosition"></em></span>
         </ng-template>
       </a>
       <!-- START Dropdown menu-->
       <div *dropdownMenu class="dropdown-menu dropdown-menu-right animated flipInX" style="max-width: 435px;">
         <div class="dropdown-item">
-            <a href="#" (click)="leidoTodo()" *ngIf="NotRead.length > 0"><p class="text-info text-right action">Marcar todo como leido</p></a>
+          <div class=" d-flex justify-content-between">
+            <a href="#" (click)="openModal(template)">
+              <p class="text-info text-left action">Mostrar todo</p>
+            </a>
+            <a href="#" (click)="leidoTodo()" *ngIf="NotRead.length > 0">
+              <p class="text-info text-right action">Marcar todo como leido</p>
+            </a>
+          </div>
           <div class="list-group">
             <div class="list-group-item list-group-item-action" *ngFor="let item of alertMessage">
               <div class="media">
@@ -109,3 +116,39 @@
 
 </nav>
 <!-- END Top Navbar-->
+<!-- Modal Para ver todas las Alertas  -->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-center">Mis alertar</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true" class="text-danger">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <div class="list-group">
+          <div class="list-group-item list-group-item-action" *ngFor="let item of allAlertMessage">
+            <div class="media">
+              <div class="align-self-start mr-2">
+                <em class="{{item.icon}} text-info"></em>
+                <p class="m-0 text-muted text-sm float-rigth">
+                  <em (click)="leido(item)" *ngIf="item.activo" class="fa fa-envelope-o envelope action" placement="bottom"
+                    tooltip="Marcar como leido"></em>
+                  <em *ngIf="!item.activo" class="fa fa-envelope-open-o envelope-open "></em>
+                </p>
+              </div>
+              <div class="media-body">
+                <!-- <p class="text-justify">{{item.alert}}</p> -->
+                <p *ngIf="item.alert.length <= 60 else toLength" class="m-0">{{item.alert}}</p>
+                <ng-template #toLength>
+                  <p clas="m-0" placement="bottom" tooltip="{{item.alert}}"> {{item.alert | slice:0:60 }}...</p>
+                </ng-template>
+                <p class="m-0 text-muted text-sm">{{item.creacion | date: 'dd/MM/yyyy hh:mm'}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="md-1 btn btn-xs btn-outline-danger" (click)="modalRef.hide()">Cerrar</button>
+    </div>
+</ng-template>

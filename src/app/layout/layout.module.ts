@@ -1,19 +1,22 @@
-import { NgModule } from '@angular/core';
+import { ModalModule, PopoverModule, TooltipModule } from 'ngx-bootstrap';
 
-import { LayoutComponent } from './layout.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
+import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
+import { LayoutComponent } from './layout.component';
 import { NavsearchComponent } from './header/navsearch/navsearch.component';
+import { NgModule } from '@angular/core';
 import { OffsidebarComponent } from './offsidebar/offsidebar.component';
+import { SharedModule } from '../shared/shared.module';
+import { SidebarComponent } from './sidebar/sidebar.component';
 import { UserblockComponent } from './sidebar/userblock/userblock.component';
 import { UserblockService } from './sidebar/userblock/userblock.service';
-import { FooterComponent } from './footer/footer.component';
-
-import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
     imports: [
-        SharedModule
+        SharedModule,
+        PopoverModule.forRoot(),
+        TooltipModule.forRoot(),
+        ModalModule.forRoot(),
     ],
     providers: [
         UserblockService

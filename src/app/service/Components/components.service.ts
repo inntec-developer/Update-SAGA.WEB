@@ -31,6 +31,7 @@ export class ComponentsService {
 
   // Alertas del Sistema General
   private UrlGetAlertStm = ApiConection.ServiceUrl + ApiConection.GetAlertStm;
+  private UrlGetAllAletStm = ApiConection.ServiceUrl + ApiConection.GetAllAlertStm;
   private UrlDeleteAlertStm = ApiConection.ServiceUrl +ApiConection.DeleteAlertStm;
 
   constructor(private _httpClient : HttpClient) { }
@@ -68,6 +69,11 @@ export class ComponentsService {
   getAlertStm(data: string) : Observable<any>{
     let params =  new HttpParams().set('Id', data);
     return this._httpClient.get(this.UrlGetAlertStm, {params: params});
+  }
+
+  getAllAlertStm(data: string) : Observable<any>{
+    let params =  new HttpParams().set('Id', data);
+    return this._httpClient.get(this.UrlGetAllAletStm, {params: params});
   }
 
   deleteAlertStm(Id: any,  all: any) : Observable<any>{
