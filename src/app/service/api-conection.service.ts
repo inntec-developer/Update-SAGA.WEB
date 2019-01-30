@@ -49,6 +49,7 @@ export class ApiConection {
   public static GetEstado = 'Catalogos/getEstado';
   public static GetMunicipio ='Catalogos/getMunicipio';
   public static GetColonia ='Catalogos/getColonia';
+  public static GetForCP = 'Catalogos/getInfoCP';
 
   /* Catalogos para clientes */
   public static GetGiroEmp = 'Catalogos/getGiroEmp';

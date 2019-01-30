@@ -46,6 +46,7 @@ export class CatalogosService {
   private UrlGetEstado = ApiConection.ServiceUrl + ApiConection.GetEstado;
   private UrlGetMunicipio = ApiConection.ServiceUrl + ApiConection.GetMunicipio;
   private UrlGetColonia = ApiConection.ServiceUrl + ApiConection.GetColonia;
+  private UrlGetForCP = ApiConection.ServiceUrl + ApiConection.GetForCP;
 
    
   constructor(private _httpClient: HttpClient) { }
@@ -123,6 +124,10 @@ return this._httpClient.get(this.UrlGetTipoDireccion);
   getColonias(MunicipioId: any): Observable<any>{
     let params= new HttpParams().set('MunicipioId', MunicipioId);
     return this._httpClient.get(this.UrlGetColonia, {params: params});
+  }
+  getForCP(cp: any): Observable<any>{
+    let params = new HttpParams().set('CP', cp);
+    return this._httpClient.get(this.UrlGetForCP, {params: params});
   }
 
 
