@@ -1,20 +1,47 @@
 <!doctype html>
 <html lang="es">
+
 <head>
-    <meta charset="utf-8">
-    <title>DAMSA® SAGA</title>
-    <base href="/">
-    <meta name="viewport" content="width=device-width, initial-scale=0.1, maximum-scale=1">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta charset="utf-8">
+  <title>DAMSA® SAGA</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=0.1, maximum-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 
 <body>
-    <app-root></app-root>
-    <div class="preloader">
-        <div class="preloader-progress">
-            <div class="preloader-progress-bar"></div>
-        </div>
+  <app-root></app-root>
+  <div class="preloader">
+    <div class="preloader-progress">
+      <div class="preloader-progress-bar"></div>
     </div>
+  </div>
 </body>
+<!-- <script language="Javascript">
+  document.oncontextmenu = function () {
+    return false
+  }
+
+</script> -->
+
+<script language="Javascript">
+    document.oncontextmenu = function() {
+       return false
+    }
+    function right(e) {
+       var msg = "aaah!!. aaah!! aaaah!! no dijiste la palabra magica ";
+       if (navigator.appName == 'Netscape' && e.which == 3) {
+          alert(msg); //- Si no quieres asustar a tu usuario entonces quita esta linea...
+          return false;
+       }
+       else if (navigator.appName == 'Microsoft Internet Explorer' && event.button==2) {
+          alert(msg); //- Si no quieres asustar al usuario que utiliza IE,  entonces quita esta linea...
+                         //- Aunque realmente se lo merezca...
+       return false;
+       }
+    return true;
+ }
+ document.onmousedown = right;
+ </script>
 
 </html>

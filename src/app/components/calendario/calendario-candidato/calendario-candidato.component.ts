@@ -400,8 +400,9 @@ export class CalendarioCandidatoComponent implements OnInit {
   }
 
   private _Actividades() {
+    debugger;
     let toDay = new Date();
-    let compare = new Date(toDay.getFullYear(), toDay.getMonth(), toDay.getUTCDate(), 0, 0)
+    let compare = new Date(toDay.getFullYear(), toDay.getMonth(), toDay.getDate(), 0, 0)
     this.Pendientes = this.calendarEvents.filter(event =>
       new Date(new Date(event.start).getFullYear(), new Date(event.start).getMonth(), new Date(event.start).getDate(), 0, 0) < compare && event.activo === true);
     this.Hoy = this.calendarEvents.filter(event => {
