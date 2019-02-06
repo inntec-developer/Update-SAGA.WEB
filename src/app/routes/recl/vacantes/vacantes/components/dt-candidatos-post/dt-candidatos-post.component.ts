@@ -1,9 +1,10 @@
-import { InfoCandidatoComponent } from './../../../../../../components/info-candidato/info-candidato.component';
 import { ActivatedRoute, CanDeactivate, Router, } from '@angular/router';
-import { Component, Input, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
+import { AfterViewChecked, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog } from '@angular/material';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+
+import { InfoCandidatoComponent } from './../../../../../../components/info-candidato/info-candidato.component';
 import { ModalDirective } from 'ngx-bootstrap';
-import { MatDialog, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from '../../../../../../service/SeguimientoVacante/postulate.service';
 
@@ -209,6 +210,7 @@ console.log(this.dataSource)
   }
 
   public clearfilters(){
+    (<HTMLInputElement>document.getElementById('filterInput')).value = '';
     this.columns.forEach(element => {
       element.filtering.filterString = '';
      (<HTMLInputElement>document.getElementById(element.name)).value = '';

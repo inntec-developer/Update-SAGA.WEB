@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { ComponentsService } from './../../service/Components/components.service';
 import { MenuService } from '../../core/menu/menu.service';
 import { SettingsService } from '../../core/settings/settings.service';
@@ -21,56 +23,26 @@ declare var $: any;
     providers: [ComponentsService]
 })
 export class HeaderComponent implements OnInit {
+    modalRef: BsModalRef;
 
     navCollapsed = true; // for horizontal layout
     menuItems = []; // for horizontal layout
-    alertMessage: Array<any> = [
-        // {
-        //     id: 1,
-        //     icon: 'fa fa-handshake-o',
-        //     candidatoId: 123,
-        //     alert: 'La vacante 20190111 se modifico al estatus de Pausada.',
-        //     activo: true,
-        //     creacion: new Date()
-        // },
-        // {
-        //     id: 2,
-        //     icon: 'fa fa-handshake-o',
-        //     candidatoId: 123,
-        //     alert: 'La vacante 20190111 se modifico al estatus de Busqueda de Candidatos. La vacante 20190111 se modifico al estatus de Busqueda de Candidatos. La vacante 20190111 se modifico al estatus de Busqueda de Candidatos.',
-        //     activo: true,
-        //     creacion: new Date()
-        // },
-        // {
-        //     id: 3,
-        //     icon: 'fa fa-handshake-o',
-        //     candidatoId: 123,
-        //     alert: 'La vacante 20190111 se modifico al estatus de Pausada',
-        //     activo: true,
-        //     creacion: new Date()
-        // },
-        // {
-        //     id: 4,
-        //     icon: 'fa fa-handshake-o',
-        //     candidatoId: 123,
-        //     alert: 'La vacante 20190111 se modifico al estatus de Cerrada por el Cliente.',
-        //     activo: true,
-        //     creacion: new Date()
-        // },
-    ]
-
+    alertMessage: Array<any> = []
+    allAlertMessage:  Array<any> = []
     isNavSearchVisible: boolean;
     @ViewChild('fsbutton') fsbutton;  // the fullscreen button
     NotRead: Array<any> = [];
     alertIndex: number;
+    alertAllIndex: number;
     private subscription: Subscription;
     UserId: string;
-
+    
     constructor(
         public menu: MenuService,
         public userblockService: UserblockService,
         public settings: SettingsService,
-        public _service: ComponentsService) {
+        public _service: ComponentsService,
+        private modalService: BsModalService) {
         // show only a few items on demo
         this.menuItems = menu.setEstructuraMenu().slice(0, 4); // for horizontal layout
         this.UserId = sessionStorage.getItem('id');
@@ -87,8 +59,8 @@ export class HeaderComponent implements OnInit {
         this.subscription = timer.subscribe(x => {
             this._service.getAlertStm(this.UserId).subscribe(elemnt => {
                 this.alertMessage = elemnt;
-                this.NotRead = this.alertMessage.filter(alert => alert.activo == true);
             });
+            this.getAllAlertStm();
         });
     }
 
@@ -144,7 +116,10 @@ export class HeaderComponent implements OnInit {
             if (element === 200) {
                 this.alertIndex = this.alertMessage.findIndex(item => item.id === data.id);
                 this.alertMessage[this.alertIndex]['activo'] = false;
-                this.NotRead = this.alertMessage.filter(alert => alert.activo == true);
+
+                this.alertAllIndex = this.allAlertMessage.findIndex(item =>item.id === data.id);
+                this.allAlertMessage[this.alertAllIndex]['activo'] = false;
+                this.NotRead = this.allAlertMessage.filter(alert => alert.activo == true);
             }
         });
 
@@ -158,7 +133,28 @@ export class HeaderComponent implements OnInit {
                 this.NotRead = this.alertMessage.filter(alert => alert.activo == true);
             }
         })
-
     }
+
+    getAllAlertStm(){
+        this._service.getAllAlertStm(this.UserId).subscribe(result => {
+            if(result != 400){
+                this.allAlertMessage = result;
+                this.NotRead = this.allAlertMessage.filter(alert => alert.activo == true);
+            }
+        })
+    }
+
+
+    config = {
+        backdrop: true,
+        ignoreBackdropClick: true,
+        class: 'second'
+      };
+
+    openModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template, this.config);
+      }
+
+
 
 }

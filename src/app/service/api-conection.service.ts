@@ -26,11 +26,14 @@ export class ApiConection {
   public static DeleteCalendarioEvent = 'CalendarEvent/DeleteEvent';
   public static CulminarEvent = 'CalendarEvent/CulminarEvent';
 
-  /* Componentes */
+  /* Compoentes de Asignacion de Requisiciones */
   public static GetUserGroup = 'AsignacionRequi/getUserGroup';
   public static GetUserGroupL = 'AsignacionRequi/getUserGroupL';
+
+  /* Alertas STM  */
   public static GetAlertStm = 'AlertSTM/getAlert';
-  public static DeleteAlertStm = 'AlertSTM/deleteAlert'
+  public static GetAllAlertStm = 'AlertSTM/getAllAlert';
+  public static DeleteAlertStm = 'AlertSTM/deleteAlert';
 
   /* Catalogos */
   public static GetDocumentosDamsa = 'Catalogos/getDocDamsa';

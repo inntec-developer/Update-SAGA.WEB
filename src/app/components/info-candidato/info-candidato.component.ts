@@ -1,14 +1,15 @@
-import { log } from 'util';
-import { DtCandidatosPostComponent } from './../../routes/recl/vacantes/vacantes/components/dt-candidatos-post/dt-candidatos-post.component';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-import { ModalDirective } from 'ngx-bootstrap';
+
 import { DialogLiberarCandidatoComponent } from '../dialog-liberar-candidato/dialog-liberar-candidato.component';
 import { DirectorioEmpresarialComponent } from './../../routes/vtas/directorio-empresarial/directorio-empresarial.component';
-import { InfoCandidatoService } from '../../service/SeguimientoVacante/info-candidato.service';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { DtCandidatosPostComponent } from './../../routes/recl/vacantes/vacantes/components/dt-candidatos-post/dt-candidatos-post.component';
 import { ExamenesService } from '../../service/Examenes/examenes.service';
+import { InfoCandidatoService } from '../../service/SeguimientoVacante/info-candidato.service';
+import { ModalDirective } from 'ngx-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { log } from 'util';
 
 declare var $: any;
 
@@ -113,6 +114,7 @@ modalExamen = false;
   GetInfoCandidato()
   {
     this.spinner.show();
+    debugger;
     // this.CandidatoId = '4F65DAC1-C6A0-E811-80E8-9E274155325E'
     this._serviceCandidato.getInfoCandidato(this.CandidatoId).subscribe(data => {
     

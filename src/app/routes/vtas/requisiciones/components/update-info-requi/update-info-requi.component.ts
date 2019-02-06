@@ -1,4 +1,3 @@
-import { ExamenesService } from './../../../../../service/Examenes/examenes.service';
 import { AfterContentChecked, Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { CatalogosService, RequisicionesService } from '../../../../../service';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -7,6 +6,7 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { AsignarRequisicionComponent } from '../../../../../components/asignar-requisicion/asignar-requisicion.component';
+import { ExamenesService } from './../../../../../service/Examenes/examenes.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SettingsService } from '../../../../../core/settings/settings.service';
 import { UpdateRequisicion } from '../../../../../models/vtas/Requisicion'
@@ -261,7 +261,7 @@ export class UpdateInfoRequiComponent implements OnInit {
         .subscribe(data => {
           this.return = data;
           if(this.return == 200){
-            this.popToast('success', 'Requisicion','La requisición se actualizo correctamente ');
+            this.popToast('success', 'Requisición','La requisición se actualizó correctamente ');
             this.loading = false;
             this.spinner.hide();
           }
