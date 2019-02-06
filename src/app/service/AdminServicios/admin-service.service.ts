@@ -57,7 +57,7 @@ export class AdminServiceService {
   private UrlDownloadFiles = ApiConection.ServiceUrl+ApiConection.downloadFiles;
   private UrlViewFile = ApiConection.ServiceUrl + ApiConection.viewFile;
   private UrlUploadFile = ApiConection.ServiceUrl + ApiConection.uploadFile;
-
+  private UrlGetLideres = ApiConection.ServiceUrl + ApiConection.getLideres;
   // Error.
   private handleError(error: any) {
          console.log('sever error:', error);
@@ -159,6 +159,7 @@ export class AdminServiceService {
   }
 
   SendEmailRegister(data: any): Observable<any>{
+    debugger;
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
     return this.http.post(this.UrlSendEmailRegister, JSON.stringify(data), options)
@@ -410,6 +411,11 @@ export class AdminServiceService {
             .map(result => result.json())
             .catch(this.handleError);
 
+  }
+
+  GetLideres() : Observable<any>
+  {
+    return this._httpClient.get(this.UrlGetLideres);
   }
 
 

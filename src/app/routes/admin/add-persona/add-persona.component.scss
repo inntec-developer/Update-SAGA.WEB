@@ -9,6 +9,13 @@ tr.selected td {
     color: white;
   }
   
+  tbody tr:hover
+{
+//   transform:scale(0.999,0.9);
+//   transform-origin:center;
+font-size: 16px;
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
 // .panel
 // {
 //     max-width: 1110px;
