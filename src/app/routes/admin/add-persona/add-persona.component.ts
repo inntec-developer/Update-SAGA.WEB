@@ -175,13 +175,13 @@ export class AddPersonaComponent implements OnInit {
       this.Users[rowIndex]['departamentoId'] = event.target.value;
       this.editing[rowIndex + '-' + 'departamento'] = false;
     }
-    else if (cell === "lider") 
-    {
-      aux = this.Lideres.find(nd => nd.id == event.target.value);
-      this.Users[rowIndex]['lider'] = aux.nombre;
-      this.Users[rowIndex]['idLider'] = event.target.value;
-      this.editing[rowIndex + '-' + 'lider'] = false;
-    }
+    // else if (cell === "lider") 
+    // {
+    //   aux = this.Lideres.find(nd => nd.id == event.target.value);
+    //   this.Users[rowIndex]['lider'] = aux.nombre;
+    //   this.Users[rowIndex]['idLider'] = event.target.value;
+    //   this.editing[rowIndex + '-' + 'lider'] = false;
+    // }
     else if(event.target.value !== '')
     {
       this.Users[rowIndex][cell] = event.target.value;
@@ -303,7 +303,7 @@ export class AddPersonaComponent implements OnInit {
     this.getUsuarios();
     this.getDepartamentos();
     this.getTipos();
-    this.GetLideres();
+    // this.GetLideres();
   }
   
    /**

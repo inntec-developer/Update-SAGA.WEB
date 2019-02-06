@@ -47,7 +47,7 @@
             <th class="text-center">EMAIL</th>
             <th class="text-center">DEPARTAMENTO</th>
             <th class="text-center">TIPO USUARIO</th>
-            <th class="text-center">ASIGNADO A</th>
+            <!-- <th class="text-center">ASIGNADO A</th> -->
             <th class="text-center">ACTIVAR</th>
           </tr>
         </thead>
@@ -116,7 +116,7 @@
                 <option *ngFor="let t of ListTipos" [value]='t.id'>{{t.tipo}}</option>
               </select>
             </td>
-            <td class="text-center">
+            <!-- <td class="text-center">
               <span  container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-lider'] = true" *ngIf="!editing[rowIndex + '-lider']">
                 {{p.nombre}}
               </span>
@@ -124,7 +124,7 @@
                 <option [value]=0>Seleccionar Lider</option>
                 <option *ngFor="let t of Lideres" [value]='t.entidadId'>{{t.nombre | uppercase}}</option>
               </select>
-            </td>
+            </td> -->
             <td class="text-center">
               <label class="switch">
                 <input type="checkbox" [checked]="p.activo" (change)="Actualizar($event, p.entidadId)" />
