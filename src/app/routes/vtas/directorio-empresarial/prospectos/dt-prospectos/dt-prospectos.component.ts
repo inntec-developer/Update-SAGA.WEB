@@ -206,7 +206,6 @@ export class DtProspectosComponent implements OnInit {
 
   public clearfilters() {
     this.clearFilter = false;
-    (<HTMLInputElement>document.getElementById('filterInput')).value = '';
     this.columns.forEach(element => {
       element.filtering.filterString = '';
       (<HTMLInputElement>document.getElementById(element.name)).value = '';

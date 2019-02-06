@@ -39,7 +39,6 @@ export class ActividadesReclutadorComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    debugger;
     if (changes.Pendientes != null) {
       setTimeout(() => {
         this.onChangeTablePendientes(this.config);

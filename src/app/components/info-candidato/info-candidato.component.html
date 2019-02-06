@@ -123,12 +123,18 @@
                     <mat-divider></mat-divider>
                     <div>
                       <strong class="text-primary">Fecha Nacimiento: </strong>
-                      <label class="text-muted">{{candidaro?.info?.fechaNacimiento | date: 'dd/MM/yy'}}</label>
+                      <label *ngIf="candidato?.info?.fechaNacimiento else NotBirthDate" class="text-muted">{{candidato?.info?.fechaNacimiento | date: 'dd/MM/yy'}}</label>
+                      <ng-template #NotBirthDate>
+                        <label class="text-muted">Sin Registro</label>
+                      </ng-template>
                     </div>
                     <div>
                       <strong class="text-primary">Lugar Nacimiento: </strong>
-                      <label class="text-muted"> {{candidaro?.info?.estadoNacimiento?.estado}},
-                        {{candidaro?.info?.paisNacimiento?.pais}}</label>
+                      <label *ngIf="candidato?.info?.estadoNacimiento?.estado && andidato?.info?.paisNacimiento?.pais else NotBirthPlace" class="text-muted"> {{candidato?.info?.estadoNacimiento?.estado}},
+                        {{candidato?.info?.paisNacimiento?.pais}}</label>
+                        <ng-template #NotBirthPlace>
+                          <label class="text-muted">Sin Registro</label>
+                        </ng-template>
                     </div>
                   </div>
                   <div id="discapacidad" *ngIf="candidato?.info?.esDiscapacitado">
