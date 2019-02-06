@@ -31,6 +31,7 @@ import { SelectModule } from 'ng2-select';
 import { UploadImgsComponent } from './upload-imgs/upload-imgs.component';
 import { SharedModule } from '../../shared/shared.module';
 import { FilesContratadosComponent } from './files-contratados/files-contratados.component';
+import { JobRequiPauseComponent } from './job-requi-pause/job-requi-pause.component';
 
 
 const routes: Routes = [
@@ -41,7 +42,8 @@ const routes: Routes = [
     { path: 'rol', component: RolGrupoComponent, data: {'componente':'Grupos a roles'} },
     { path: 'privilegios', component: RollsStructComponent, data: {'componente':'Privilegios'}},
     { path: 'registro', component: RegistroComponent},
-    { path: 'filesContratados', component: FilesContratadosComponent}
+    { path: 'filesContratados', component: FilesContratadosComponent},
+    {path: 'jobPause', component:JobRequiPauseComponent}
 ];
 
 
@@ -89,7 +91,8 @@ const routes: Routes = [
       RegistroComponent,
       GridRolesComponent ,
       UploadImgsComponent,
-      FilesContratadosComponent
+      FilesContratadosComponent,
+      JobRequiPauseComponent
     ],
     exports: [
         RouterModule
