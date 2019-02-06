@@ -159,7 +159,7 @@ export class AdminServiceService {
   }
 
   SendEmailRegister(data: any): Observable<any>{
-    debugger;
+
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
     return this.http.post(this.UrlSendEmailRegister, JSON.stringify(data), options)

@@ -67,7 +67,8 @@ export class AddPersonaComponent implements OnInit {
       ApellidoMaterno: user.apellidoMaterno,
       DepartamentoId: user.departamentoId, 
       TipoUsuarioId: user.tipoUsuarioId,
-      Foto: user.foto
+      Foto: user.foto,
+      email: user.email
     }
 
     this.service.SendEmailRegister(u).subscribe( res => {
@@ -266,6 +267,8 @@ export class AddPersonaComponent implements OnInit {
           item.fotoAux = ApiConection.ServiceUrlFoto + item.foto
           item.selected = false;
         })
+
+      
 
         this.filteredData = this.Users;
       })
