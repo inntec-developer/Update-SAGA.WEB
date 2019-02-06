@@ -34,20 +34,21 @@
          
             </div> -->
       <br/>
-    <div class="table-responsive">
-      <table #tableU class="table table-hover table-striped">
+    <div class="card table-responsive">
+      <table #tableU>
         <thead>
           <tr>
             <th class="text-center"></th>
-            <th class="text-center">Clave</th>
-            <th class="text-center">Alias</th>
-            <th class="text-center">Nombre</th>
-            <th class="text-center">Apellido Paterno</th>
-            <th class="text-center">Apellido Materno</th>
-            <th class="text-center">Email</th>
-            <th class="text-center">Departamento</th>
-            <th class="text-center">Tipo Usuario</th>
-            <th class="text-center">Activar</th>
+            <th class="text-center">CLAVE</th>
+            <th class="text-center">ALIAS</th>
+            <th class="text-center">NOMBRE</th>
+            <th class="text-center">APELLIDO PATERNO</th>
+            <th class="text-center">APELLIDO MATERNO</th>
+            <th class="text-center">EMAIL</th>
+            <th class="text-center">DEPARTAMENTO</th>
+            <th class="text-center">TIPO USUARIO</th>
+            <!-- <th class="text-center">ASIGNADO A</th> -->
+            <th class="text-center">ACTIVAR</th>
           </tr>
         </thead>
         <tbody>
@@ -115,6 +116,15 @@
                 <option *ngFor="let t of ListTipos" [value]='t.id'>{{t.tipo}}</option>
               </select>
             </td>
+            <!-- <td class="text-center">
+              <span  container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-lider'] = true" *ngIf="!editing[rowIndex + '-lider']">
+                {{p.nombre}}
+              </span>
+              <select class="form-control-sm" (change)="updateValue($event, 'lider', rowIndex)" *ngIf="editing[rowIndex + '-lider']">
+                <option [value]=0>Seleccionar Lider</option>
+                <option *ngFor="let t of Lideres" [value]='t.entidadId'>{{t.nombre | uppercase}}</option>
+              </select>
+            </td> -->
             <td class="text-center">
               <label class="switch">
                 <input type="checkbox" [checked]="p.activo" (change)="Actualizar($event, p.entidadId)" />

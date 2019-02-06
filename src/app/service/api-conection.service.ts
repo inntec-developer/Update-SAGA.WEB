@@ -196,6 +196,7 @@ export class ApiConection {
   public static viewFile = 'admin/viewFile';
   public static uploadFile = 'admin/uploadFile';
   public static updateActivo = 'admin/updateActivo';
+  public static getLideres = 'admin/getLideres';
 
   /*Seguimiento Vacantes*/
   public static getDtosCard = 'reclutamiento/seguimientovacante/getCard';
@@ -215,6 +216,7 @@ export class ApiConection {
   public static sendEmailCandidato = 'reclutamiento/seguimientovacante/sendEmailCandidato';
   public static sendEmailNoContratado = 'reclutamiento/seguimientovacante/sendEmailsNoContratado';
   public static getConteoVacante = 'Requisiciones/getConteoVacante';
+  public static execProcedurePause = 'Requisiciones/execProcedurePause'
 
   /*Examenes */
   public static InsertExamen = 'examenes/insertExamen'

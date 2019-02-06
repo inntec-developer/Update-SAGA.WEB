@@ -74,13 +74,13 @@
         (tableChanged)="onChangeTable(config)" id="filterGeneral">
     </mat-form-field>
   </div>
-  <div class="card card-default">
+  <div class="card">
     <div #tableContainer>
-      <table id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+      <table id="resultDataTable" ngClass="{{config.className || ''}}" style="width: 100%;">
         <thead>
           <tr>
             <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
-              {{column.title}}
+              {{column.title | uppercase}}
               <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
               </i>
             </th>
@@ -98,8 +98,8 @@
             <td class="text-center">
               {{row.folio}}
             </td>
-            <td> {{row.cliente}}</td>
-            <td> {{row.vBtra}}</td>
+            <td> {{row.cliente | uppercase}}</td>
+            <td class="text-center"> {{row.vBtra | uppercase}}</td>
             <td class="text-center">
               <span class="px-1 mr-1  badge  badge-pill badge-info"> {{row.vacantes}}</span>
             </td>
@@ -128,6 +128,7 @@
                 {{row.prioridad}}
               </small>
             </td>
+            <td> {{row.propietario }}</td>
           </tr>
         </tbody>
       </table>

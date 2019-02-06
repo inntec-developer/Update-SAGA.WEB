@@ -84,7 +84,10 @@ export class NuevoProspectoComponent implements OnInit {
       Referencia: new FormControl(''),
       Principal: new FormControl(false),
       Activo: new FormControl(true)
-    })
+    });
+    this.formTelefonos =  new FormGroup({
+      TelDireccion: new FormControl('', [Validators.required])
+    });
 
   }
 
@@ -117,6 +120,9 @@ export class NuevoProspectoComponent implements OnInit {
       Principal: [false],
       Activo: [true]
     })
+    this.formTelefonos = this.fb.group({
+      TelDireccion: ['', [Validators.required]]
+    });
   }
 
   getCatalogos() {
@@ -298,7 +304,7 @@ export class NuevoProspectoComponent implements OnInit {
   public config: any = {
     paging: true,
     filtering: { filterString: '' },
-    className: ['table-hover mb-0']
+    className: ['table table-sm table-hover table-striped mb-0']
   }
 
   /* Configuracion / Acciones para la tabla de Direcciones  */

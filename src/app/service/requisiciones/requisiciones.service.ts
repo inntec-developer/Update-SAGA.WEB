@@ -50,6 +50,7 @@ export class RequisicionesService {
   private URLGetInformeRequisiciones = ApiConection.ServiceUrl + ApiConection.GetInformeRequisiciones;
   private URLGetRequiEstadisticos = ApiConection.ServiceUrl + ApiConection.getRequiEstadisticos;
   private URLGetUltimoEstatusRequi = ApiConection.ServiceUrl + ApiConection.GetUltimoEstatusRequi;
+  private URLExecProcedurePause = ApiConection.ServiceUrl + ApiConection.execProcedurePause;
 
   constructor(private http: Http, private _httpClient: HttpClient) { }
   // Recupera todos los damfos que esten dados de alta y se encuentren activos
@@ -223,6 +224,12 @@ export class RequisicionesService {
     let params = new HttpParams().set('reclutadorId', reclutadorId);
     return this._httpClient.get(this.URLGetInformeRequisiciones, { params: params });
   }
+
+  ExecProcedurePause(): Observable<any> {
+   
+    return this._httpClient.get(this.URLExecProcedurePause);
+  }
+
   // Muestra un error en consola y regresa el mismo al Frond-End en caso de que se genere el mismo.
   public handleError(error: any) {
     console.log('Error Internar Server', error);

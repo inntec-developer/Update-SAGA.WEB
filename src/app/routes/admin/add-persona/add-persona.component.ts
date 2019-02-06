@@ -19,6 +19,7 @@ export class AddPersonaComponent implements OnInit {
   Users: Array<any> = [];
   ListDepas: Array<any> = [];
   ListTipos: Array<any> = [];
+  Lideres = [];
   editing = {};
   bandera = false;
   rowAux: any;
@@ -55,9 +56,22 @@ export class AddPersonaComponent implements OnInit {
     
   }
 
-  SendEmail(data)
+  SendEmail(user)
   {
-    this.service.SendEmailRegister(data).subscribe( res => {
+    let u = {
+      EntidadId: user.entidadId,
+      Clave: user.clave,
+      Usuario: user.usuario,
+      Nombre: user.nombre,
+      ApellidoPaterno: user.apellidoPaterno,
+      ApellidoMaterno: user.apellidoMaterno,
+      DepartamentoId: user.departamentoId, 
+      TipoUsuarioId: user.tipoUsuarioId,
+      Foto: user.foto,
+      email: user.email
+    }
+
+    this.service.SendEmailRegister(u).subscribe( res => {
       if(res == 201)
         {
           this.popToast('success', 'Envío de correo', 'El correo se envió con éxito');
@@ -161,6 +175,13 @@ export class AddPersonaComponent implements OnInit {
       this.Users[rowIndex]['departamentoId'] = event.target.value;
       this.editing[rowIndex + '-' + 'departamento'] = false;
     }
+    // else if (cell === "lider") 
+    // {
+    //   aux = this.Lideres.find(nd => nd.id == event.target.value);
+    //   this.Users[rowIndex]['lider'] = aux.nombre;
+    //   this.Users[rowIndex]['idLider'] = event.target.value;
+    //   this.editing[rowIndex + '-' + 'lider'] = false;
+    // }
     else if(event.target.value !== '')
     {
       this.Users[rowIndex][cell] = event.target.value;
@@ -247,6 +268,8 @@ export class AddPersonaComponent implements OnInit {
           item.selected = false;
         })
 
+      
+
         this.filteredData = this.Users;
       })
   }
@@ -269,12 +292,18 @@ export class AddPersonaComponent implements OnInit {
         })
   }
 
+  GetLideres()
+  {
+    this.service.GetLideres().subscribe( data => {
+      this.Lideres = data;
+    })
+  }
   ngOnInit() 
   {
     this.getUsuarios();
     this.getDepartamentos();
     this.getTipos();
-    
+    // this.GetLideres();
   }
   
    /**
