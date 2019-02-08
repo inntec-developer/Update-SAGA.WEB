@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
     ListDepas: Array<any> = [];
     user: string = '';
     verMsj = false;
-
+    loading = false;
     @ViewChild('pop') epopover;
     @ViewChild('MessageModal') ShownModal: ModalDirective;
 
@@ -78,6 +78,7 @@ export class RegisterComponent implements OnInit {
 
     submitForm($ev, value: any)
     {
+        
         $ev.preventDefault();
         for (let c in this.valForm.controls) {
            this.valForm.controls[c].markAsTouched();
@@ -90,6 +91,9 @@ export class RegisterComponent implements OnInit {
         {
             if(this.disabledE)
             {
+                this.disabledE = false;
+                this.loading = true;
+
                 this.user = this.valForm.controls['email'].value.trim();
                 var idx =  this.user.indexOf( "@" ); 
                 this.user = "DAMSA." + this.user.substring(0, idx);
@@ -145,18 +149,21 @@ export class RegisterComponent implements OnInit {
                             this.alert = this.alerts[0];
                             this.verMsj = false;
 
+                            this.loading = false;
                             this.showModal();
                             //this.valForm = null;
                         }
                         else {
                             this.alerts[1]['msg'] = 'Ocurrio un error al intentar agregar usuario: ' + persona.Usuario;
                             this.alert = this.alerts[1];
+                            this.loading = false;
                             this.verMsj = true;
                             this.ngOnInit();
                         }
                     });
             }
             else {
+                this.loading = false;
                 this.alerts[1]['msg'] = 'El email: ' + this.valForm.controls['email'].value + ' ya se encuentra registrado';
                 this.alert = this.alerts[1];
                 this.epopover.show();

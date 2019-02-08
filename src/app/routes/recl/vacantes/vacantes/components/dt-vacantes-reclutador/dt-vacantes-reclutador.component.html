@@ -53,9 +53,27 @@
           type="button" (click)="SetStatus(31, 'Nueva Busqueda')" container="body" placement="bottom" tooltip="Nueva Busqueda de Candidatos" >
           <em class="fa fa-search-plus"></em>
         </button>
-
+           <!-- estatus de la vacante -->
+        <em class="vl"></em>
+   <!-- informes -->
+        <button class="margen" type="button" class="margen" (click)="refreshTableInfo();informeVacante=true;" [disabled]="dataSource.length == 0" 
+          [ngClass]="dataSource.length == 0 ? 'mb-1 btn disable' : 'mb-1 btn btn-outline-info'" container="body" placement="bottom" tooltip="Informe Vacantes">
+            <i class="fa fa-file-text-o"></i>
+        </button>
+    
+        <button class="margen" id='special' chkPrivilegiosButtons type="button" (click)="editarNR=true" [disabled]="dataSource.length == 0"
+           [ngClass]="dataSource.length == 0 ? 'mb-1 btn disable' : 'mb-1 btn btn-outline-danger'" container="body" placement="bottom" tooltip="Visualizar Incidente">
+            <i class="fa fa-male"></i>
+        </button>
+        <button class="margen" id='special' chkPrivilegiosButtons type="button" (click)="editarRequi=true" [disabled]="dataSource.length == 0"
+           [ngClass]="dataSource.length == 0 ? 'mb-1 btn disable' : 'mb-1 btn btn-outline-warning'" container="body" placement="bottom" tooltip="Visualizar vacantes en pausa">
+            <i class="fa fa-clock-o"></i>
+        </button>
+        <button class="margen" type="button" [disabled]="dataSource.length == 0"  [ngClass]="dataSource.length == 0 ? 'mb-1 btn disable' : 'mb-1 btn btn-outline-success'" (click)="exportAsXLSX()"  container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
+            <i class="fa fa-download"></i>
+        </button>
       </div>
-      <!-- estatus de la vacante -->
+      <!-- informes -->
       <div>
         <button class="margen" [disabled]="postulados <= 0" (click)="openViewPostulados()" [ngClass]="(postulados <= 0 )? 'mb-1 btn disabled':'mb-1 btn btn-outline-warning'">
           Postulados
@@ -99,11 +117,11 @@
               {{row.folio}}
             </td>
             <td> {{row.solicita}}</td>
-            <td>
+            <td class="text-center">
                 <span *ngIf="row.cliente.length <= 10 else toLengthCliente">{{row.cliente}}</span>
                 <ng-template #toLengthCliente>
-                    <small placement="bottom" tooltip="{{row.cliente}}" container='body'> {{row.cliente | slice:0:10 }} ...
-                    </small>
+                    <span placement="bottom" tooltip="{{row.cliente}}" container='body'> {{row.cliente | slice:0:10 }} ...
+                    </span>
                   </ng-template>
             </td>
             <td> {{row.vBtra}}</td>
@@ -183,27 +201,7 @@
       [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
       (numPages)="numPages = $event">
     </pagination>
-    <button type="button" (click)="refreshTableInfo();informeVacante=true" [disabled]="dataSource.length == 0" [ngClass]="dataSource.length == 0 ? 'btn btn-xs disable mb-2 margen' : 'btn btn-xs btn-labeled btn-outline-info mb-2 margen'" container="body" placement="bottom" tooltip="Informe Vacantes">
-      <span class="btn-label">
-        <i class="fa fa-file-text-o"></i>
-      </span> Informe Vacantes
-    </button>
-
-    <button id='special' chkPrivilegiosButtons type="button" (click)="editarNR=true" [disabled]="dataSource.length == 0" [ngClass]="dataSource.length == 0 ? 'btn btn-xs disable mb-2 margen' : 'btn btn-xs btn-labeled btn-outline-danger mb-2 margen'" container="body" placement="bottom" tooltip="Visualizar Incidencias">
-      <span class="btn-label">
-        <i class="fa fa-file-text-o"></i>
-      </span> Incidencias
-    </button>
-    <button id='special' chkPrivilegiosButtons type="button" (click)="editarRequi=true" [disabled]="dataSource.length == 0" [ngClass]="dataSource.length == 0 ? 'btn btn-xs disable mb-2 margen' : 'btn btn-xs btn-labeled btn-outline-warning mb-2 margen'" container="body" placement="bottom" tooltip="Visualizar vacantes en pausa">
-      <span class="btn-label">
-        <i class="fa fa-file-text-o"></i>
-      </span> Revisión de  Vacantes
-    </button>
-    <button type="button" [disabled]="dataSource.length == 0"  [ngClass]="dataSource.length == 0 ? 'btn btn-xs disable mb-2 margen' : 'btn btn-xs btn-labeled btn-outline-success mb-2 margen'" (click)="exportAsXLSX()"  container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
-      <span class="btn-label">
-        <i class="fa fa-download"></i>
-      </span> Descargar
-    </button>
+   
   </div>
   <pre *ngIf="config.paging" class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
 </div>
@@ -285,19 +283,20 @@
               <thead>
                 <tr>
                     <th *ngFor="let column of columnsInfo" ngClass="{{column.className || ''}}">
-                        {{column.title}}
+                        {{column.title | uppercase}}
                         <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
                         </i> -->
                       </th>
                 </tr>
-                <tr class="filter-colum">
-                    <td *ngFor="let column of columnsInfo">
-                      <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                        (tableChanged)="onChangeTableInfo(config)" class="form-control" id="{{column.name}}">
-                    </td>
-                  </tr>
+             
               </thead>
               <tbody>
+                  <tr>
+                      <td *ngFor="let column of columnsInfo">
+                        <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
+                          (tableChanged)="onChangeTableInfo(config)" class="form-control form-control-sm" id="{{column.name}}">
+                      </td>
+                    </tr>
                 <tr *ngFor="let row of rowsInfo">
                   <td class="text-center"> {{row.folio}}</td>
                   <td class="text-center"> {{row.vBtra | uppercase}}</td>

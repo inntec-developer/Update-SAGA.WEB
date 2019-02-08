@@ -96,7 +96,6 @@ export class AddExamenComponent implements OnInit {
 
   AgregarExamen()
   {
-    console.log(this.examen)
     this.service.InsertExamenes(this.examen).subscribe( data => {
 
       if(data == 200)
