@@ -154,7 +154,7 @@
   </div>
   <div class="card">
     <div class="card-body">
-    <div class="table-responsive pointer" #tableContainer>
+    <div class="table-responsive" #tableContainer>
       <table *ngIf="dataSource.length > 0 else NotCandidatos" id="resultDataTable" ngClass="{{config.className || ''}}" class="table">
         <thead>
           <tr>
@@ -164,14 +164,15 @@
               </i>
             </th>
           </tr>
+          <tr *ngIf="showFilterRow">
+              <td *ngFor="let column of columns">
+                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                  class="form-control form-control-sm">
+              </td>
+            </tr>
         </thead>
         <tbody>
-          <tr *ngIf="showFilterRow">
-            <td *ngFor="let column of columns">
-              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
-                class="form-control form-control-sm">
-            </td>
-          </tr>
+         
           <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of dataSource" [class.selected]="row.selected"  placement="bottom" tooltip="click para seleccionar - dblclick para visualizar" container="body">
             <td class="text-center"><span *ngIf="row.estatusId != 12 && row.estatusId != 17 && row.estatusId != 27 else sinAsignar">{{row.horario}}</span></td>
             <ng-template #sinAsignar>

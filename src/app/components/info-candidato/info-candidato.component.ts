@@ -341,14 +341,13 @@ export class InfoCandidatoComponent implements OnInit {
 
       if (this.candidato.estatus != null) {
         data.vacantes == 0 || data.vacantes == data.contratados || data.estatusId == 39 || this.candidato.estatusId == 28 ||
-          (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 40) ||
           (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 26) ||
-          (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId != 27) ||
-          (this.candidato.estatus.requisicionId != data.id && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 40 && this.candidato.estatus.estatusId != 26) ? this.auxestatus = true : this.auxestatus = false;
-
-        data.estatusId != 39 && (this.candidato.estatus.requisicionId == data.id && this.reclutadorId == this.usuarioId && this.candidato.estatus.estatusId != 27 &&
-          this.candidato.estatus.estatusId != 40 && this.candidato.estatus.estatusId != 24 && this.candidato.estatus.estatusId != 26 && this.candidato.estatus.estatusId != 28 && this.candidato.estatus.estatusId != 42) ? this.desapartar = false : this.desapartar = true;
-      }
+          (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 40) ||
+          (this.candidato.estatus.requisicionId != data.id && this.candidato.estatus.estatusId != 27  && this.candidato.estatus.estatusId != 26 && this.candidato.estatus.estatusId != 40) ? this.auxestatus = true : this.auxestatus = false;
+       
+          data.estatusId != 39 && (this.candidato.estatus.requisicionId == data.id && this.reclutadorId == this.usuarioId && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 40 &&
+          this.candidato.estatus.estatusId != 24 && this.candidato.estatus.estatusId != 26 && this.candidato.estatus.estatusId != 28 && this.candidato.estatus.estatusId != 42) ? this.desapartar = false : this.desapartar = true;
+        }
       else {
         this.desapartar = true;
 
