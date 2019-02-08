@@ -1,3 +1,4 @@
+import { ButtonsPostulacionesComponent } from './../buttons-postulaciones/buttons-postulaciones.component';
 
 import {NgbCalendar, NgbDate, NgbDateStruct, NgbDatepickerConfig} from '@ng-bootstrap/ng-bootstrap';
 
@@ -17,6 +18,7 @@ import { DatePipe } from '@angular/common';
 export class EditarContratadosComponent implements OnInit {
 
   @Input('data') data;
+
 
   public dataSource: Array<any> = [];
   editing = {};
@@ -41,7 +43,7 @@ export class EditarContratadosComponent implements OnInit {
   public rows: Array<any> = []
   public columns: Array<any> = [
     { title: 'Folio', className: 'text-primary', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
-    { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
+    {  title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
     { title: 'rfc', className: 'text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
     { title: 'nss', className: 'text-success', name: 'nss', filtering: { filterString: '', placeholder: 'NSS' } },
     { title: 'edad', className: 'text-primary', name: 'edad', filtering: { filterString: '', placeholder: 'Edad' } },
@@ -68,7 +70,8 @@ export class EditarContratadosComponent implements OnInit {
                private excelService: ExcelService,
                private toasterService: ToasterService,
               //  @Inject(MAT_DIALOG_DATA) public data: any,
-              private pipe: DatePipe
+              private pipe: DatePipe,
+              private btpostulaciones: ButtonsPostulacionesComponent 
               ) { 
 
                 this.configCalendar.minDate = {year: 1960, month: 1, day: 1};
@@ -308,11 +311,15 @@ this.service.UpdateContratados(JSON.stringify(data)).subscribe(result => {
   {
     row.editCURP = true;
     row.classCURP = false;
+    this.btpostulaciones.dataContratados = data;
+    this.btpostulaciones.actualizoContratados = true;
+    this.btpostulaciones.closeModal(2)
     this.popToast('success', 'Editar personal contratado', 'Los datos se actualizaron con éxito');
 
   }
   else
   {
+    this.btpostulaciones.actualizoContratados = false;
     this.popToast('error', 'Editar personal contratado', 'Ocurrió un error al intentar actualizar');
 
   }

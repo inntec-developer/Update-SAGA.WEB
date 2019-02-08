@@ -13,7 +13,7 @@
  <!-- <form [formGroup]="formdata" role="form" name="formdata" novalidate>  -->
 
   <div class="table-responsive">
-    <table *ngIf="data.length > 0 else NotCandidatos" class="table table-hover table-striped">
+    <table *ngIf="data.length > 0 else NotCandidatos" class="table table-hover">
       <thead>
         <tr>
           <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
@@ -25,6 +25,7 @@
         </tr>
       </thead>
       <tbody>
+
         <!-- <tr *ngIf="showFilterRow">
           <td *ngFor="let column of columns">
             <input formControlName="filtro" *ngIf="column.filtering" placeholder="{{column.filtering.placeholder | uppercase}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
@@ -38,7 +39,7 @@
                   {{row.curp | uppercase}}
               </span>
        
-              <input [(ngModel)]="row.curp" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'curp', rowIndex); row.classCURP=false;" *ngIf="editing[rowIndex + '-curp']" type="text" maxlength=18 [value]=row.curp >
+              <input [(ngModel)]="row.curp" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'curp', rowIndex); row.classCURP=false;" *ngIf="editing[rowIndex + '-curp']" type="text" minlength="18" maxlength=18 [value]=row.curp >
               <span *ngIf="editing[rowIndex + '-curp']">
                 <small [ngClass]="row.curp.length < 18 ? 'text-danger' : 'text-success'">
                   <em *ngIf="row.curp.length < 18 " class="fa fa-close"></em>
@@ -147,7 +148,7 @@
               {{row.areaReclutamiento | uppercase}}
             </span>
 
-            <select *ngIf="editing[rowIndex + '-areaReclutamiento']" class="selectpicker" (change)="updateValue($event, 'areaReclutamiento', rowIndex)" title="Choose one of the following...">
+            <select *ngIf="editing[rowIndex + '-areaReclutamiento']" class="selectpicker form-control form-control-sm" (change)="updateValue($event, 'areaReclutamiento', rowIndex)" title="Choose one of the following...">
                 <option *ngFor="let a of areas" [value]="a.id">{{a.nombre | uppercase }}</option>
             </select>
 
@@ -166,7 +167,7 @@
             </span>
 
             
-            <select *ngIf="editing[rowIndex + '-fuenteReclutamiento']" class="selectpicker" (change)="updateValue($event, 'fuenteReclutamiento', rowIndex)">
+            <select *ngIf="editing[rowIndex + '-fuenteReclutamiento']" class="selectpicker form-control form-control-sm" (change)="updateValue($event, 'fuenteReclutamiento', rowIndex)">
               <optgroup *ngFor="let m of medios" label="{{m.nombre | uppercase}}">
                 <option *ngFor="let sub of m.medios" [value]="sub.tipoMediosId">{{sub.tipoNombre}}</option>
               </optgroup>
@@ -202,10 +203,11 @@
             </button>
           </td>
         </tr>
+
       </tbody>
     </table>
   </div>
-
+  <!-- <pre class="card card-block card-header"><span class="card-text">Total Registros: {{data.length}}</span></pre> -->
   <!-- </form>  -->
 
 <br/><br/>

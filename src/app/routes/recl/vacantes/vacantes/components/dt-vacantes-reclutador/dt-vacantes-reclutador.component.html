@@ -74,39 +74,48 @@
     </div>
   </div>
   <div class="card">
-    <div #tableContainer>
-      <table id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+    <div class="card-body">
+    <div class="table-responsive" #tableContainer>
+      <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
         <thead>
           <tr>
             <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
-              {{column.title}}
+              {{column.title | uppercase}}
               <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
               </i>
             </th>
           </tr>
-          <tr class="filter-colum">
-            <td *ngFor="let column of columns">
-              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                (tableChanged)="onChangeTable(config)" class="form-control" id="{{column.name}}">
-            </td>
-          </tr>
+       
         </thead>
         <tbody>
+         
+            <tr *ngIf="showFilterRow">
+                <td *ngFor="let column of columns">
+                  <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                    class="form-control form-control-sm">
+                </td>
+              </tr>
           <tr class="rowHover" (click)="onCellClick(row)" (dblclick)="seguimientoRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial"
             [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
             <td class="text-center">
               {{row.folio}}
             </td>
             <td> {{row.solicita}}</td>
-            <td> {{row.cliente}}</td>
+            <td>
+                <span *ngIf="row.cliente.length <= 10 else toLengthCliente">{{row.cliente}}</span>
+                <ng-template #toLengthCliente>
+                    <small placement="bottom" tooltip="{{row.cliente}}" container='body'> {{row.cliente | slice:0:10 }} ...
+                    </small>
+                  </ng-template>
+            </td>
             <td> {{row.vBtra}}</td>
             <td class="text-center">
               <span class="px-1 mr-1  badge  badge-pill badge-info"> {{row.vacantes}}</span>
             </td>
             <td class="text-center"> {{row.tipoReclutamiento}}</td>
             <td class="text-center"> {{row.claseReclutamiento}}</td>
-            <td class="text-right"> {{row.sueldoMinimo | currency: $}}</td>
-            <td class="text-right"> {{row.sueldoMaximo | currency: $}}</td>
+            <!-- <td class="text-right"> {{row.sueldoMinimo | currency: $}}</td>
+            <td class="text-right"> {{row.sueldoMaximo | currency: $}}</td> -->
             <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
             <td class="text-center">
@@ -169,6 +178,7 @@
         </tbody>
       </table>
     </div>
+  </div>
   </div>
   <div class="text-right">
     <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"

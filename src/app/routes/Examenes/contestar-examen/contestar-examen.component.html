@@ -7,7 +7,7 @@
         <ng-container *ngFor="let p of examen; let ind = index">
             <p class="list-group text-primary">{{( ind + 1) + '.- ' + p.pregunta }}</p>
             <div *ngIf="p.respuestas.length == 0" class="input-group">
-                <input type="text" [(ngModel)]="respText" class="form-control form-control-sm" (blur)="AddRespuestas(p.preguntaId,respText);">
+                <input type="text" [(ngModel)]="respText" class="form-control form-control-sm" (blur)="AddRespuestas(p.preguntaId,0, respText);">
             </div>
             <div *ngIf="p.respuestas.length > 0" class="form-group">
                 <div class="form-check" *ngFor="let r of p.respuestas; let inde = index">

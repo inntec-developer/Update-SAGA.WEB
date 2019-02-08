@@ -1,124 +1,132 @@
 
-<div  *ngIf="Datos.length > 0"  class="card">
-        <div class="box">
+<div  *ngIf="Datos.length > 0">
+  <div class="card box">
+    <div class="card-body mat-elevation-z8">
         <div class="row">
-   
-
-<div class="col-md-4">
-
-<div class="panel panel-default">
-
-      <div class="panel-heading">
-            <em class="fa fa-phone"></em>
-            <span><strong>TELEFONOS</strong></span>
-    </div>
-      <span>
-          <ng-template #popTemplateTelefonos>
-              <h3 class="popover-header text-center">Ext. - Telefono</h3>
-              <div class = "row">
-              <div class="col-md-12">
-              <div class="popover-body bodymio">
-                <ng-container *ngFor="let tel of Datos[0]['telefonos']">
-                <p *ngIf="!tel.principal">{{tel.tipo}} [ <span *ngFor="let e of tel.exts">{{e.ext}} - </span> ]  {{tel.telefono}} </p>
-              </ng-container>
-              </div>
+            <div class="col-md-4 text-center">
+            
+                <div class="panel-heading text-warning text-center ">
+                    <em class="fa fa-address-card-o"></em>
+                    <span>
+                        <strong> CONTACTOS</strong>
+                    </span>
+                </div>
+                <div class="card-text text-center margen">
+                    <ul *ngFor="let contacto of Datos[0]['contactos']">
+                        <ng-template #popTemplate>
+                            <h3 class="popover-header text-center">{{contacto.puesto}}</h3>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="popover-body bodymio">
+                                        (Ext. {{contacto.telefonos[0]['ext']}})-{{contacto.telefonos[0]['telefono']}}
+                                        <span>{{contacto.emails[0]['email']}}</span>
+            
+            
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+            
+                        <li>
+                            <a [popover]="popTemplate" placement="right" container="body" triggers="mouseenter:mouseleave">{{contacto.nombre}} {{contacto.apellidoParterno}} {{contacto.apellidoMaterno}}</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            </div>
-            </ng-template>
-          <ul *ngFor="let tel of Datos[0]['telefonos']">
-            <li *ngIf="tel.principal"><a [popover]="popTemplateTelefonos" container="body" placement="right" triggers="mouseenter:mouseleave">{{tel.tipo}} {{tel.telefono}} Ext. [ <span *ngFor="let e of tel.exts">{{e.ext}} - </span> ]</a></li>
-          </ul>
-      </span>
-    </div>   
+            <div class="col-md-4 text-center">
 
-    <div class="panel panel-default">
-        <br/>
-        <div class="panel-heading">
-            <em class="fa fa-map-marker"></em>
-            <span><strong>DIRECCIONES</strong></span>
-        </div>
-        <span>
-            <ul *ngFor="let dir of Datos[0]['direccion']">
-              <li><a  container="body" placement="bottom" tooltip="{{dir.tipo}}">{{dir.calle}} {{dir.noExt}} Col. {{dir.colonia}} {{dir.municipio}} {{dir.estado}} {{dir.pais}} {{dir.cp}}</a></li>
-            </ul>
-        </span>
-      </div>
-    </div>
 
-    <div class="col-md-4">
             <div class="img">
                 <img src="{{logo}}">
             </div>
             <h2>{{Datos[0]['nombreComercial']}}</h2>
             <p>{{Datos[0]['razonSocial']}}</p>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <em class="fa fa-address-card-o"></em>  
-                <span><strong>CONTACTOS</strong></span>
-            </div>
-              <span>
-                <ul *ngFor="let contacto of Datos[0]['contactos']">
-                    <ng-template #popTemplate>
-                        <h3 class="popover-header text-center">{{contacto.puesto}}</h3>
-                        <div class = "row">
-                        <div class="col-md-12">
-                        <div class="popover-body bodymio">
-                          (Ext. {{contacto.telefonos[0]['ext']}})-{{contacto.telefonos[0]['telefono']}}
-                              <span>{{contacto.emails[0]['email']}}</span>
-                          
-                          
+
+                    <div class="panel-heading text-warning">
+                            <em class="fa fa-map-marker"></em>
+                            <span><strong> DIRECCI&Oacute;N</strong></span>
                         </div>
-                      </div>
-                      </div>
-                      </ng-template>
-      
-                  <li><a [popover]="popTemplate" placement="right" container="body" triggers="mouseenter:mouseleave">{{contacto.nombre}} {{contacto.apellidoParterno}} {{contacto.apellidoMaterno}}</a></li>
-                </ul>
-            </span>
-          </div>
-           
-      </div>
-   
-            <div class="col-md-4">
-      <div class="panel panel-default">
-          <div class="panel-heading">
-              <em class="fa fa-user-plus"></em>
-              <span><strong>ASIGNADOS</strong></span>
-        </div>
-          <span>
-              <ul *ngFor="let asig of Datos[0]['asignados']">
-                    <ng-template #popTemplateUsers >
-                            <h3 class="popover-header text-center">Grupo</h3>
+                        <span>
+                            <ul>
+                              <li><a  container="body" placement="bottom" tooltip="{{Datos[0]['direccion'].tipo}}">{{Datos[0]['direccion'].calle}} {{Datos[0]['direccion'].noExt}} Col. {{Datos[0]['direccion'].colonia}} {{Datos[0]['direccion'].municipio}} {{Datos[0]['direccion'].estado}} {{Datos[0]['direccion'].pais}} {{Datos[0]['direccion'].cp}}</a></li>
+                            </ul>
+                        </span>
+            
+            <div class="card-text">
+
+                    <div class="panel-heading text-warning">
+                          <em class="fa fa-phone"></em>
+                          <span><strong> TELEFONOS</strong></span>
+                  </div>
+                    <span>
+                        <ng-template #popTemplateTelefonos>
+                            <h3 class="popover-header text-center">Ext. - Telefono</h3>
                             <div class = "row">
                             <div class="col-md-12">
-                            <div class="popover-body bodymio" *ngFor="let r of asig.data">
-                                <img class="float-left img-fluid circle thumb32" src={{r.foto}} alt="" /> 
-                                <span>{{r.nombre}} {{r.apellidoPaterno}} {{r.apellidoMaterno}}</span> 
+                            <div class="popover-body bodymio">
+                              <ng-container *ngFor="let tel of Datos[0]['telefonos']">
+                              <p *ngIf="!tel.principal">{{tel.tipo}} [ {{tel.exts}} ]  {{tel.telefono}} </p>
+                            </ng-container>
                             </div>
                           </div>
                           </div>
-                   </ng-template>
-                   <ng-template #popTemplateUsers2 >
-                    <h3  class="popover-header text-center">Usuario</h3>
-                    <div class = "row">
-                    <div class="col-md-12">
-                    <div class="popover-body bodymio" >
-                        <img class="float-left img-fluid circle thumb32" src={{asig.foto}} alt="" /> 
-                        <span>{{asig.nombre}} {{asig.apellidoPaterno}} {{asig.apellidoMaterno}}</span> 
-                    </div>
+                          </ng-template>
+                        <span *ngFor="let tel of Datos[0]['telefonos']">
+                          <p *ngIf="tel.principal"><a [popover]="popTemplateTelefonos" container="body" placement="right" triggers="mouseenter:mouseleave">{{tel.tipo}} {{tel.telefono}} Ext. [ {{tel.exts}} ]</a></p>
+                        </span>
+                    </span>
                   </div>
-                  </div>
-           </ng-template>
+   
 
-                <li *ngIf="asig.data.length > 0"><a [popover]="popTemplateUsers" container="body" placement="left" triggers="mouseenter:mouseleave">{{asig.nombre}} {{asig.apellidoPaterno}} {{asig.apellidoMaterno}}</a></li>
-                <li *ngIf="asig.data.length === 0"><a [popover]="popTemplateUsers2" container="body" placement="left" triggers="mouseenter:mouseleave">{{asig.nombre}} {{asig.apellidoPaterno}} {{asig.apellidoMaterno}}</a></li>
-              </ul>
-
-          </span>
+   
+            <!-- <div class="col-md-4">
+      <div class="panel panel-default">
+         
         </div> 
+    </div> -->
+</div>
+<div class="col-md-4 text-center">
+        <div class="panel-heading text-warning text-center ">
+                <em class="fa fa-user-plus"></em>
+                <span>
+                    <strong> ASIGNADOS</strong>
+                </span>
+            </div>
+            <span class="card-text">
+                <ul *ngFor="let asig of Datos[0]['asignados']">
+                      <!-- <ng-template #popTemplateUsers >
+                              <h3 class="popover-header text-center">Grupo</h3>
+                              <div class = "row">
+                              <div class="col-md-12">
+                              <div class="popover-body bodymio" *ngFor="let r of asig.data">
+                                  <img class="float-left img-fluid circle thumb32" src={{r.foto}} alt="" /> 
+                                  <span>{{r.nombre}} {{r.apellidoPaterno}} {{r.apellidoMaterno}}</span> 
+                              </div>
+                            </div>
+                            </div>
+                     </ng-template>
+                     <ng-template #popTemplateUsers2 >
+                      <h3  class="popover-header text-center">Usuario</h3>
+                      <div class = "row">
+                      <div class="col-md-12">
+                      <div class="popover-body bodymio" >
+                          <img class="float-left img-fluid circle thumb32" src={{asig.foto}} alt="" /> 
+                          <span>{{asig.nombre}} {{asig.apellidoPaterno}} {{asig.apellidoMaterno}}</span> 
+                      </div>
+                    </div>
+                    </div>
+             </ng-template> -->
+             <!-- <li *ngIf="asig.data.length > 0"><a [popover]="popTemplateUsers" container="body" placement="left" triggers="mouseenter:mouseleave">{{asig.nombre}} {{asig.apellidoPaterno}} {{asig.apellidoMaterno}}</a></li>
+             <li *ngIf="asig.data.length === 0"><a [popover]="popTemplateUsers2" container="body" placement="left" triggers="mouseenter:mouseleave">{{asig.nombre}} {{asig.apellidoPaterno}} {{asig.apellidoMaterno}}</a></li> -->
+  
+                  <li *ngIf="asig.data.length > 0"><a>{{asig.nombre}} {{asig.apellidoPaterno}} {{asig.apellidoMaterno}}</a></li>
+                  <li *ngIf="asig.data.length === 0"><a>{{asig.nombre}} {{asig.apellidoPaterno}} {{asig.apellidoMaterno}}</a></li>
+                </ul>
+  
+            </span>
+</div>
     </div>
 </div>
-    
 </div>
 </div>
 

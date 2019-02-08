@@ -54,7 +54,7 @@ tr.selected td {
 
   }
 
-tr.rowHover:hover
+tbody tr:hover
 {
 //   transform:scale(0.999,0.9);
 //   transform-origin:center;
@@ -85,7 +85,7 @@ tr.rowHover:hover
 .modal-lg
 {
     max-width: 100% !important;
-    margin-top: 10px !important;
+    margin-top: 50px !important;
 }
 
 .card

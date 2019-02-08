@@ -93,10 +93,11 @@ export class DtRequisicionComponent implements OnInit {
     { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
     { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
     { title: 'No. Vacantes', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' } },
-    { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
-    { title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
+    { title: 'Tipo Recl.', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo' } },
+    // { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
+    // { title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
     { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
-    { title: 'Cumplimiento', className: 'text-info text-center', name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
     { title: 'Prioridad', className: 'text-info text-center', name: 'prioridad', filtering: { filterString: '', placeholder: 'Prioridad' } },
     { title: 'Propietario', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Propietario' } },
@@ -104,6 +105,7 @@ export class DtRequisicionComponent implements OnInit {
 
   ValidarEstatus(estatusId)
   {
+    debugger;
     if(this.element.vacantes == 0)
     {
       this.gbc = true; //garantía busqueda candidato
@@ -119,7 +121,7 @@ export class DtRequisicionComponent implements OnInit {
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
-      this.cc = true; //cubierta por el cliente
+      this.cc = false; //cubierta por el cliente
       this.crm = true; //cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
@@ -142,7 +144,7 @@ export class DtRequisicionComponent implements OnInit {
     {
       this.gbc = true;
       this.cubierta = true;
-      this.cc = true; //cubierta por el cliente
+      this.cc = false; //cubierta por el cliente
       this.crm = true; //cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
@@ -153,7 +155,7 @@ export class DtRequisicionComponent implements OnInit {
     {
       this.gbc = true;
       this.cubierta = true;
-      this.cc = true; //cubierta por el cliente
+      this.cc = false; //cubierta por el cliente
       this.crm = true; //cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
@@ -175,7 +177,7 @@ export class DtRequisicionComponent implements OnInit {
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
-      this.cc = false; //cubierta por el cliente
+      this.cc = true; //cubierta por el cliente
       this.crm = true; //cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
       this.cancelar = true;
@@ -185,14 +187,15 @@ export class DtRequisicionComponent implements OnInit {
     else if( estatusId < 34 && (this.element.enProceso == 0 || this.element.postulados == 0))
     {
       this.gbc = true;
-      this.cc = true; //cubierta por el cliente
+      this.cubierta = true;
+      this.cc = false; //cubierta por el cliente
       this.crm = true; //cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
       this.borrar = true;
       this.editar = true;
     }
-    else if(estatusId == 34 || estatusId == 36 && this.element.tipoReclutamientoId == 1 && this.element.vacantes > 0)
+    else if(estatusId <= 34 && estatusId <= 37 && this.element.tipoReclutamientoId == 1 && this.element.vacantes > 0)
     {
       this.gbc = false; //garantía busqueda candidato
       this.cubierta = true;
@@ -203,7 +206,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = true;
     }
-    else if(estatusId == 34 || estatusId == 36 && this.element.tipoReclutamientoId > 1 && this.element.vacantes > 0)
+    else if(estatusId >= 34 && estatusId <= 37 && this.element.tipoReclutamientoId > 1 && this.element.vacantes > 0)
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
@@ -214,17 +217,17 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = true;
     }
-    else if( estatusId > 34 && estatusId <= 37 && this.element.vacantes > 0)
-    {
-      this.gbc = true; //garantía busqueda candidato
-      this.cubierta = true;
-      this.cc = true; //cubierta por el cliente
-      this.crm = true; //cubierta reclutamiento medios
-      this.cp = true; // cubierta parcialmente
-      this.cancelar = true;
-      this.borrar = true;
-      this.editar = true;
-    }
+    // else if( estatusId > 34 && estatusId <= 37 && this.element.vacantes > 0)
+    // {
+    //   this.gbc = true; //garantía busqueda candidato
+    //   this.cubierta = true;
+    //   this.cc = true; //cubierta por el cliente
+    //   this.crm = true; //cubierta reclutamiento medios
+    //   this.cp = true; // cubierta parcialmente
+    //   this.cancelar = true;
+    //   this.borrar = true;
+    //   this.editar = true;
+    // }
     else if(estatusId == 38 && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes)
     {
       this.gbc = true; //garantía busqueda candidato
@@ -243,7 +246,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cc = false; //cubierta por el cliente
       this.crm = true; //cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
-      this.cancelar = true;
+      this.cancelar = false;
       this.borrar = true;
       this.editar = true;
     }

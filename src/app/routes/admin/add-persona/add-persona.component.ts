@@ -97,23 +97,23 @@ export class AddPersonaComponent implements OnInit {
 
   onSelect(row, rowIndex)
   {
-    if(this.dataRowIndex != rowIndex)
-    {
-      if(this.dataRow)
-      {
-        this.dataRow.selected = false;
-      }
+    // if(this.dataRowIndex != rowIndex)
+    // {
+    //   if(this.dataRow)
+    //   {
+    //     this.dataRow.selected = false;
+    //   }
       
-      this.dataRowIndex = rowIndex;
-      this.dataRow = row;
-      row.selected = true;
-    }
-    else
-    {
-      this.dataRow = row;
-      this.dataRowIndex = rowIndex;
-      row.selected = true; //para poner el backgroun cuando seleccione
-    }
+    //   this.dataRowIndex = rowIndex;
+    //   this.dataRow = row;
+    //   row.selected = true;
+    // }
+    // else
+    // {
+    //   this.dataRow = row;
+    //   this.dataRowIndex = rowIndex;
+    //   row.selected = true; //para poner el backgroun cuando seleccione
+    // }
   }
   closeModal()
   {
@@ -175,13 +175,13 @@ export class AddPersonaComponent implements OnInit {
       this.Users[rowIndex]['departamentoId'] = event.target.value;
       this.editing[rowIndex + '-' + 'departamento'] = false;
     }
-    // else if (cell === "lider") 
-    // {
-    //   aux = this.Lideres.find(nd => nd.id == event.target.value);
-    //   this.Users[rowIndex]['lider'] = aux.nombre;
-    //   this.Users[rowIndex]['idLider'] = event.target.value;
-    //   this.editing[rowIndex + '-' + 'lider'] = false;
-    // }
+    else if (cell === "lider") 
+    {
+      aux = this.Lideres.find(nd => nd.liderId == event.target.value);
+      this.Users[rowIndex]['nombreLider'] = aux.nombreLider;
+      this.Users[rowIndex]['liderId'] = event.target.value;
+      this.editing[rowIndex + '-' + 'lider'] = false;
+    }
     else if(event.target.value !== '')
     {
       this.Users[rowIndex][cell] = event.target.value;
@@ -202,7 +202,8 @@ export class AddPersonaComponent implements OnInit {
       ApellidoMaterno: user.apellidoMaterno,
       DepartamentoId: user.departamentoId, 
       TipoUsuarioId: user.tipoUsuarioId,
-      Foto: user.foto
+      Foto: user.foto,
+      liderId: user.liderId
 
     }
     sessionStorage.setItem('usuario', user.usuario);
@@ -262,14 +263,11 @@ export class AddPersonaComponent implements OnInit {
     .subscribe(
       e=>{
         this.Users = e;
-        
+
         this.Users.forEach(item => {
           item.fotoAux = ApiConection.ServiceUrlFoto + item.foto
           item.selected = false;
         })
-
-      
-
         this.filteredData = this.Users;
       })
   }
@@ -303,7 +301,7 @@ export class AddPersonaComponent implements OnInit {
     this.getUsuarios();
     this.getDepartamentos();
     this.getTipos();
-    // this.GetLideres();
+    this.GetLideres();
   }
   
    /**

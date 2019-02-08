@@ -24,6 +24,7 @@ export class CardVacanteComponent implements OnInit {
     this._service.GetDtosCard(this.ClientId, this.RequisicionId).subscribe( data =>
       {
         this.Datos = data;
+        console.log(this.Datos)
         this.Datos[0]['asignados'].forEach(element =>{
           var aux = element.data;
           element.foto = ApiConection.ServiceUrlFoto + element.foto;

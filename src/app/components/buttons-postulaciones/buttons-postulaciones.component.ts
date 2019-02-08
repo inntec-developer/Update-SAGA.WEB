@@ -45,6 +45,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   public length: number = 0;
 
   dataContratados: any = [];
+  public actualizoContratados = false;
   showFilterRow: boolean;
   registros: number;
   errorMessage: any;
@@ -566,10 +567,10 @@ objLiberar = [];
   //   });
   // }
 
-  OpenEditarComponent()
+  OpenEditarComponent(datos)
   {
     this.dataContratados = this.dataSource.filter( element => {
-      return element.estatusId === 24
+      return element.candidatoId === datos.candidatoId
     //  if( element.estatusId == 24 )
     //   {
     //     element.areaReclutamiento = 'SIN ASIGNAR';
@@ -649,7 +650,8 @@ objLiberar = [];
           else
           {
             var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: sessionStorage.getItem('id') };
-            this.SetApiProceso(datos, estatusId, estatus);
+            this.OpenEditarComponent(datos);
+            //this.SetApiProceso(datos, estatusId, estatus);
           }
         }
 
@@ -657,6 +659,7 @@ objLiberar = [];
       else  {
         var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: sessionStorage.getItem('id') };
         this.SetApiProceso(datos, estatusId, estatus);
+    
       }
     }
 
@@ -855,7 +858,16 @@ objLiberar = [];
     }
     else
     {
-      this.editarContratados = false;
+      if(this.actualizoContratados)
+      {
+        var datos = { candidatoId: this.candidatoId, estatusId: 24, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: sessionStorage.getItem('id') };
+        this.SetApiProceso(datos, 24, 'Contratado')
+        this.editarContratados = false;
+      }
+      else
+      {
+        this.editarContratados = false;
+      }
     }
 
     this.refresh();
@@ -866,17 +878,17 @@ objLiberar = [];
 
   public rows: Array<any> = []
   public columns: Array<any> = [
-    { title: 'Horario', className: 'text-primary', name: 'horario', filtering: { filterString: '', placeholder: 'Horario' } },
-    { title: 'Nombre Candidato', className: 'text-primary', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
-    { title: 'Área Experiencia', className: 'text-primary', name: 'areaExp', filtering: { filterString: '', placeholder: 'Experiencia' } },
-    { title: 'Área Interes', className: 'text-primary', name: 'areaInt', filtering: { filterString: '', placeholder: 'Interes' } },
-    { title: 'Localidad', className: 'text-primary', name: 'localidad', filtering: { filterString: '', placeholder: 'Localidad' } },
-    { title: 'Sueldo Aceptable', className: 'text-primary text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo aceptable' } },
-    { title: 'Fecha Nacimiento', className: 'text-primary text-center', name: 'edad', filtering: { filterString: '', placeholder: 'Fecha Nacimiento' } },
+    { title: 'Horario', className: 'text-info', name: 'horario', filtering: { filterString: '', placeholder: 'Horario' } },
+    { title: 'Nombre Candidato', className: 'text-info', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
+    { title: 'Área Experiencia', className: 'text-info', name: 'areaExp', filtering: { filterString: '', placeholder: 'Experiencia' } },
+    { title: 'Área Interes', className: 'text-info', name: 'areaInt', filtering: { filterString: '', placeholder: 'Interes' } },
+    { title: 'Localidad', className: 'text-info', name: 'localidad', filtering: { filterString: '', placeholder: 'Localidad' } },
+    { title: 'Sueldo Aceptable', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo aceptable' } },
+    { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad', filtering: { filterString: '', placeholder: 'Fecha Nacimiento' } },
     { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
     { title: 'RFC', className: 'text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
     { title: 'NSS', className: 'text-success', name: 'nss', filtering: { filterString: '', placeholder: 'NSS' } },
-    { title: 'Estatus', className: 'text-primary text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } }
+    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } }
   ]
 
   public config: any = {
