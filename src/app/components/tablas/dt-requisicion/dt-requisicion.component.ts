@@ -202,7 +202,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = true;
     }
-    else if(estatusId <= 34 && estatusId <= 37 && this.element.tipoReclutamientoId == 1 && this.element.vacantes > 0)
+    else if(estatusId >= 34 && estatusId < 37 && this.element.tipoReclutamientoId == 1 && this.element.vacantes > 0)
     {
       this.gbc = false; //garantía busqueda candidato
       this.cubierta = true;
