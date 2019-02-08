@@ -13,7 +13,7 @@
       <div class="card-body">
           <mat-dialog-content>
               <ng-container *ngFor="let p of examen[0].respuestas; let ind = index" >
-                <em>{{( ind + 1)  + '.- ' + p.pregunta}}</em> <span class="text-success"> Respuesta correcta: {{p.respCorrecta}}</span>
+                <em>{{( ind + 1)  + '.- ' + p.pregunta}}</em> <span *ngIf="p.tipop > 1" class="text-success"> Respuesta correcta: {{p.respCorrecta}}</span>
                   <ul class="respStyle">
                     <li [ngClass]="p.value == 1 ? 'text-success' : 'text-warning'" >Respuesta Candidato: {{p.respuesta}}</li>
                   </ul>

@@ -395,7 +395,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   }
 
   public refreshTableInfo() {
-    this.getInfoVacantes();  
+    this.getInfoVacantes();
     setTimeout(() => {
       this.columnsInfo.forEach(element => {
         element.filtering.filterString = '';
@@ -907,7 +907,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
           SUELDO:  row.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
           ESTATUS: row.estatus,
           'FECHA ESTATUS': e,
-          RECLUTADOR: sessionStorage.getItem('nombre'),
+          RECLUTADOR: row.reclutador,
           'COMENTARIOS': comentarios
         })
         comentarios = "";

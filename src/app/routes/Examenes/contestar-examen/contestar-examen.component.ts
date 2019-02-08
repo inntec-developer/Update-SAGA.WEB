@@ -21,7 +21,7 @@ export class ContestarExamenComponent implements OnInit {
 
   GetExamen()
   {
-    this.service.GetExamen(6).subscribe(data => {
+    this.service.GetExamen(1004).subscribe(data => {
       this.examen = data;
       console.log(this.examen)
     })
@@ -29,6 +29,7 @@ export class ContestarExamenComponent implements OnInit {
 
   AddRespuestas(preguntaId, respuestaId, resp)
   {
+    debugger;
     if(this.Resp.length > 0)
     {
       let flag = false;
