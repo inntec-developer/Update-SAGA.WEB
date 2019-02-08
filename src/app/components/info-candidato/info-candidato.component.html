@@ -4,13 +4,14 @@
       <div class="card-header justify-content-between">
         <em class="fa fa-user-circle-o"></em>
         <label> Informaci&oacute;n Principal</label>
-        <button *ngIf = "examen.tecnicos.length > 0 || examen.psicometricos.length > 0" class="btn btn-xs btn-success round float-right" (click)="modalExamen=true;" container="body" placement="bottom" tooltip="Examenes Realizados">
+        <button *ngIf="examen.tecnicos.length > 0 || examen.psicometricos.length > 0" class="btn btn-xs btn-success round float-right"
+          (click)="modalExamen=true;" container="body" placement="bottom" tooltip="Examenes Realizados">
           <i class="fa fa-pencil"></i></button>
         <!-- <a class="float-right text-muted" (click)="favContact1=!favContact1">
           <em class="fa" [ngClass]="favContact1 ? 'fa-star text-warning' : 'fa-star-o'"></em>
         </a> -->
       </div>
-     
+
       <div class="card-body text-center">
         <img class="img-fluid img-thumbnail rounded-circle thumb96" [src]="candidato.picture" alt="Contact" />
         <h4>{{candidato?.nombre}}</h4>
@@ -53,9 +54,10 @@
             <em *ngIf="procesoCandidatoId != 27 && candidato.estatus" class="fa fa-lock m-0 text-primary"></em>
           </div>
           <div class="col-md-10 text-right">
-            <h5 *ngIf="candidato.estatus" class="m-0" [ngClass]="(procesoCandidatoId === 27) ? 'text-success':'text-primary'" [class.text-warning]="candidato.estatus.estatusId === 42">
-                <span *ngIf="candidato.estatus.estatusId != 28"> {{ Status }} por: {{reclutador}} </span>
-                <span *ngIf="candidato.estatus.estatusId == 28" class="text-danger">POSTULADO por: {{reclutador}} </span>
+            <h5 *ngIf="candidato.estatus" class="m-0" [ngClass]="(procesoCandidatoId === 27) ? 'text-success':'text-primary'"
+              [class.text-warning]="candidato.estatus.estatusId === 42">
+              <span *ngIf="candidato.estatus.estatusId != 28"> {{ Status }} por: {{reclutador}} </span>
+              <span *ngIf="candidato.estatus.estatusId == 28" class="text-danger">POSTULADO por: {{reclutador}} </span>
             </h5>
             <h5 *ngIf="!candidato.estatus" class="text-success">Candidato Disponible</h5>
           </div>
@@ -123,18 +125,20 @@
                     <mat-divider></mat-divider>
                     <div>
                       <strong class="text-primary">Fecha Nacimiento: </strong>
-                      <label *ngIf="candidato?.info?.fechaNacimiento else NotBirthDate" class="text-muted">{{candidato?.info?.fechaNacimiento | date: 'dd/MM/yy'}}</label>
+                      <label *ngIf="candidato?.info?.fechaNacimiento else NotBirthDate" class="text-muted">{{candidato?.info?.fechaNacimiento
+                        | date: 'dd/MM/yy'}}</label>
                       <ng-template #NotBirthDate>
                         <label class="text-muted">Sin Registro</label>
                       </ng-template>
                     </div>
                     <div>
                       <strong class="text-primary">Lugar Nacimiento: </strong>
-                      <label *ngIf="candidato?.info?.estadoNacimiento?.estado && andidato?.info?.paisNacimiento?.pais else NotBirthPlace" class="text-muted"> {{candidato?.info?.estadoNacimiento?.estado}},
+                      <label *ngIf="candidato?.info?.estadoNacimiento?.estado && andidato?.info?.paisNacimiento?.pais else NotBirthPlace"
+                        class="text-muted"> {{candidato?.info?.estadoNacimiento?.estado}},
                         {{candidato?.info?.paisNacimiento?.pais}}</label>
-                        <ng-template #NotBirthPlace>
-                          <label class="text-muted">Sin Registro</label>
-                        </ng-template>
+                      <ng-template #NotBirthPlace>
+                        <label class="text-muted">Sin Registro</label>
+                      </ng-template>
                     </div>
                   </div>
                   <div id="discapacidad" *ngIf="candidato?.info?.esDiscapacitado">
@@ -668,15 +672,14 @@
           </div>
           <div class="card">
             <div #tableContainer>
-              <table id="resultDataTableVacantes" class="table-responsive" ngClass="{{config_v.className || ''}}" role="grid"
+              <table id="resultDataTableVacantes" class="table" ngClass="{{config_v.className || ''}}" role="grid"
                 style="width: 100%;">
                 <thead>
                   <tr>
                     <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
-                      {{column.title}}
-                      <i *ngIf="config_v && column.sort" class="pull-right fa" (click)="changeSort($event, config_v)"
-                        [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
-                      </i>
+                      {{column.title | uppercase}}
+                      <!-- <i *ngIf="config_v && column.sort" class="pull-right fa" (click)="changeSort($event, config_v)"
+                        [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}"> </i>-->
                     </th>
                   </tr>
                 </thead>
@@ -684,11 +687,12 @@
                   <tr *ngIf="showFilterRow_v">
                     <td *ngFor="let column of columns">
                       <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                        (tableChanged)="onChangeTable_v(config_v)" class="form-control" id="{{column.name}}">
+                        (tableChanged)="onChangeTable(config_v)" class="form-control form-control-sm" id="{{column.name}}">
                     </td>
                   </tr>
                   <tr (click)="onCellClick_v(row)" (dblclick)="lgModal.show()" *ngFor="let row of rows"
-                    [class.confident]="row.confidencial" [class.enProceso]="row.id === RequisicionId && procesoCandidatoId != 40 && procesoCandidatoId != 27" [class.cubierta]="row.vacantes == row.contratados">
+                    [class.confident]="row.confidencial" [class.enProceso]="row.id === RequisicionId && procesoCandidatoId != 40 && procesoCandidatoId != 27"
+                    [class.cubierta]="row.vacantes == row.contratados" [class.selected]="row.selected">
                     <td class="text-center">
                       {{row.folio}}
                     </td>
@@ -750,7 +754,8 @@
   </div>
 </div>
 <!-- Modal para dlgLiberar  -->
-<div *ngIf="dlgLiberar" [config]="{show: true, ignoreBackdropClick: true, keyboard: false}" bsModal #modallib="bs-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+<div *ngIf="dlgLiberar" [config]="{show: true, ignoreBackdropClick: true, keyboard: false}" bsModal #modallib="bs-modal"
+  class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog">
     <div class="modal-content">
       <!-- <div class="modal-header">
@@ -773,32 +778,39 @@
 
 
 <!-- Modal examenes -->
-<div *ngIf="modalExamen" [config]="{ show: true, ignoreBackdropClick: true, backdrop: 'static', keyboard: false }" bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+<div *ngIf="modalExamen" [config]="{ show: true, ignoreBackdropClick: true, backdrop: 'static', keyboard: false }"
+  bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-size">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 id="dialog-sizes-name1" class="modal-title pull-left text-success"><em class="fa fa-pencil"></em> EXAMENES REALIZADOS</h5>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal.hide();closeModal(2)" ><i class="fa fa-times"></i></button>
-  
+        <h5 id="dialog-sizes-name1" class="modal-title pull-left text-success"><em class="fa fa-pencil"></em> EXAMENES
+          REALIZADOS</h5>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal.hide();closeModal(2)"><i
+            class="fa fa-times"></i></button>
+
       </div>
       <div class="modal-body">
         <div *ngIf="examen.tecnicos.length > 0">
-        <p class="text-warning">Examenes T&eacute;cnicos</p>
-       
-        <ul>
-          <li *ngFor="let r of examen.tecnicos" class="text-primary"><i class="fa fa-file-text-o"></i> Folio: <em class="text-muted">{{r.folio }}</em> Perfil: <em class="text-muted">{{r.vBtra}}</em> Examen: <em class="text-muted">{{r.examen}}</em>  Calificaci&oacute;n: <em class="text-muted">{{r.resultado}}</em></li>
-        </ul>
-      </div>
-      <hr>
-      <div *ngIf="examen.psicometricos.length > 0">
-          <p class="text-warning">Examenes Psicom&eacute;tricos</p>
-    
+          <p class="text-warning">Examenes T&eacute;cnicos</p>
+
           <ul>
-            <li *ngFor="let p of examen.psicometricos" class="text-primary"><i class="fa fa-file-text-o"></i> Folio: <em class="text-muted">{{p.folio }}</em> Perfil: <em class="text-muted">{{p.vBtra }} </em> Clave: <em class="text-muted">{{p.clave}}</em>  Calificaci&oacute;n: <em class="text-muted">{{p.resultado}}</em></li>
+            <li *ngFor="let r of examen.tecnicos" class="text-primary"><i class="fa fa-file-text-o"></i> Folio: <em
+                class="text-muted">{{r.folio }}</em> Perfil: <em class="text-muted">{{r.vBtra}}</em> Examen: <em class="text-muted">{{r.examen}}</em>
+              Calificaci&oacute;n: <em class="text-muted">{{r.resultado}}</em></li>
           </ul>
+        </div>
+        <hr>
+        <div *ngIf="examen.psicometricos.length > 0">
+          <p class="text-warning">Examenes Psicom&eacute;tricos</p>
+
+          <ul>
+            <li *ngFor="let p of examen.psicometricos" class="text-primary"><i class="fa fa-file-text-o"></i> Folio:
+              <em class="text-muted">{{p.folio }}</em> Perfil: <em class="text-muted">{{p.vBtra }} </em> Clave: <em
+                class="text-muted">{{p.clave}}</em> Calificaci&oacute;n: <em class="text-muted">{{p.resultado}}</em></li>
+          </ul>
+        </div>
       </div>
-      </div>
-  
+
     </div>
   </div>
 </div>

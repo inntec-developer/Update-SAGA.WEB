@@ -24,9 +24,12 @@ export class InfoCandidatoComponent implements OnInit {
   candidato: any;
   @Input('IdCandidato') CandidatoId: string;
   @Input('VerVacantes') VerVacantes: boolean = true;
-  @Output('Estatus') EstatusEmitter: EventEmitter<any> =  new EventEmitter();
+  @Output('Estatus') EstatusEmitter: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('modallib') modal;
+
+  selected: boolean = false;
+  rowAux = [];
 
   public dataSource_v: Array<any> = [];
   public dataSource_p: Array<any> = [];
@@ -57,8 +60,8 @@ export class InfoCandidatoComponent implements OnInit {
   procesoCandidatoId: any = 0; // Recuperar el estatus en el que se encuetra el candidato.
   Estatus: any; // Toma el Id del procesoCandidato para realizar las afectaciones correspondientes.
   Emiter: { estatusId: number; estatus: string; candidatoId: string };
-  infoRequiId : any = null;
-  infoFolio : any = null;
+  infoRequiId: any = null;
+  infoFolio: any = null;
   dlgLiberar = false;
   /*********************************************************/
 
@@ -68,8 +71,8 @@ export class InfoCandidatoComponent implements OnInit {
   loading: boolean;
 
   //examenes
-examen = {'tecnicos': [], 'psicometricos': []};
-modalExamen = false;
+  examen = { 'tecnicos': [], 'psicometricos': [] };
+  modalExamen = false;
 
   constructor(
     private _serviceCandidato: InfoCandidatoService,
@@ -90,9 +93,8 @@ modalExamen = false;
     this.getMisVacates();
   }
 
-  closeModal()
-  {
-    this.modalExamen =false;
+  closeModal() {
+    this.modalExamen = false;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -111,12 +113,11 @@ modalExamen = false;
 
   }
 
-  GetInfoCandidato()
-  {
+  GetInfoCandidato() {
     this.spinner.show();
     // this.CandidatoId = '4F65DAC1-C6A0-E811-80E8-9E274155325E'
     this._serviceCandidato.getInfoCandidato(this.CandidatoId).subscribe(data => {
-    
+
       this.candidato = {
         id: data.id,
         picture: sessionStorage.getItem('ConexionBolsa') + data.foto,
@@ -293,7 +294,7 @@ modalExamen = false;
     let sortedData = this.changeSort_v(filteredData, this.config_v);
     this.rows = page && config.paging ? this.changePage_v(page, sortedData) : sortedData;
     this.length_v = sortedData.length;
-    
+
   }
 
   public refreshTable_v() {
@@ -301,7 +302,7 @@ modalExamen = false;
     setTimeout(() => {
       this.columns.forEach(element => {
         element.filtering.filterString = '';
-       (<HTMLInputElement>document.getElementById(element.name)).value = '';
+        (<HTMLInputElement>document.getElementById(element.name)).value = '';
       });
       this.infoRequiId = null;
       this.infoFolio = null;
@@ -309,19 +310,26 @@ modalExamen = false;
     }, 800);
     this.vacante = {};
   }
-  public clearfilters(){
+  public clearfilters() {
     this.columns.forEach(element => {
       element.filtering.filterString = '';
-     (<HTMLInputElement>document.getElementById(element.name)).value = '';
+      (<HTMLInputElement>document.getElementById(element.name)).value = '';
     });
     this.onChangeTable_v(this.config_v);
     this.vacante = {};
     this.infoRequiId = null;
-      this.infoFolio = null;
+    this.infoFolio = null;
   }
 
   public onCellClick_v(data: any): any {
+    data.selected ? data.selected = false : data.selected = true;
 
+    if (!data.selected) {
+      this.selected = false;
+      this.auxestatus = true;
+      this.desapartar = true;
+    } else {
+      this.selected = true;
       let index = this.dataSource_v.indexOf(data.row);
       this.vacante = {
         id: data.id,
@@ -331,34 +339,39 @@ modalExamen = false;
       this.infoFolio = data.folio;
       this.infoRequiId = data.id;
 
-      if(this.candidato.estatus != null)
-      {
+      if (this.candidato.estatus != null) {
         data.vacantes == 0 || data.vacantes == data.contratados || data.estatusId == 39 || this.candidato.estatusId == 28 ||
-        (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 40 ) ||
-        (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 26 ) ||
-        (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId != 27 ) ||
-        (this.candidato.estatus.requisicionId != data.id && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 40 && this.candidato.estatus.estatusId != 26 ) ? this.auxestatus = true : this.auxestatus = false;
-        
-        data.estatusId != 39 && (this.candidato.estatus.requisicionId == data.id && this.reclutadorId == this.usuarioId && this.candidato.estatus.estatusId != 27 && 
-        this.candidato.estatus.estatusId != 40 && this.candidato.estatus.estatusId != 24 && this.candidato.estatus.estatusId != 26 && this.candidato.estatus.estatusId != 28  && this.candidato.estatus.estatusId != 42)  ? this.desapartar = false : this.desapartar = true;
+          (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 40) ||
+          (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 26) ||
+          (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId != 27) ||
+          (this.candidato.estatus.requisicionId != data.id && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 40 && this.candidato.estatus.estatusId != 26) ? this.auxestatus = true : this.auxestatus = false;
+
+        data.estatusId != 39 && (this.candidato.estatus.requisicionId == data.id && this.reclutadorId == this.usuarioId && this.candidato.estatus.estatusId != 27 &&
+          this.candidato.estatus.estatusId != 40 && this.candidato.estatus.estatusId != 24 && this.candidato.estatus.estatusId != 26 && this.candidato.estatus.estatusId != 28 && this.candidato.estatus.estatusId != 42) ? this.desapartar = false : this.desapartar = true;
       }
-      else
-      {
+      else {
         this.desapartar = true;
 
         data.vacantes > 0 && data.vacantes > data.contratados ? this.auxestatus = false : this.auxestatus = true;
         this.procesoCandidatoId = 27;
-      
+
       }
-        /* add an class 'active' on click */
-      $('#resultDataTableVacantes').on('click', 'tr', function (event: any) {
-        //noinspection TypeScriptUnresolvedFunction
-        $(this).addClass('selected').siblings().removeClass('selected');
-      });
-    
-  
+    }
+
+    if (this.rowAux.length == 0) {
+      this.rowAux = data;
+    }
+    else if (data.selected && this.rowAux != []) {
+      var aux = data;
+      data = this.rowAux;
+      data.selected = false;
+      aux.selected = true;
+      this.rowAux = aux;
+    }
+
+
   }
-  
+
 
   /*
     Tabla de postulaciones del candidato visualizado.
@@ -394,7 +407,7 @@ modalExamen = false;
   /**
    * configuracion para mensajes de acciones.
    */
-  
+
   popToast(type, title, body) {
     var toast: Toast = {
       type: type,
@@ -415,61 +428,61 @@ modalExamen = false;
    */
   _apartarCandidato() {
     // if (this.reclutador === this.usuario || !this.candidato.estatus) {
-      this.loading = true;
-      this.procesoCandidato = {
-        candidatoId: this.CandidatoId,
-        requisicionId: this.vacante.id,
-        folio: this.vacante.folio,
-        reclutador: this.usuario,
-        reclutadorId: this.usuarioId,
-        estatusId: 12
-      }
-      this._serviceCandidato.setApartarCandidato(this.procesoCandidato)
-        .subscribe(data => {
-          switch (data) {
-            case 200: {
-              this.loading = false;
-               this.GetInfoCandidato();
-               this.auxestatus = true;
-               this.desapartar = false;
-               this.ngAfterViewInit();
-    
-              var msg = 'El candidato se aparto correctamente.';
-              this.popToast('success', 'Apartado', msg);
-              this.Emiter = {
-                estatusId: 12,
-                estatus: 'Apartado',
-                candidatoId: this.CandidatoId
-              };
-              this.EstatusEmitter.emit(this.Emiter);
-              break;
-            }
-            case 304: {
-              msg = 'El candidato ya esta apartado o en proceso.';
-              this.popToast('info', 'Apartado', msg); ''
-              this.loading = false;
-              this.auxestatus = true;
-              this.desapartar = true;
-              break;
-            }
-            case 404: {
-              var msg = 'Error el intentar apartar el candidato. Consulte al departamento de soporte si el problema persiste.';
-              this.popToast('error', 'Apartado', msg);
-              this.loading = false;
-              this.auxestatus = false;
-              break;
-            }
-            default: {
-              var msg = 'Error inesperado y desconocido, reporte el problema el departamento de soporte.';
-              this.popToast('error', 'Oops!!', msg);
-              this.loading = false;
-              this.auxestatus = false;
-              break;
-            }
+    this.loading = true;
+    this.procesoCandidato = {
+      candidatoId: this.CandidatoId,
+      requisicionId: this.vacante.id,
+      folio: this.vacante.folio,
+      reclutador: this.usuario,
+      reclutadorId: this.usuarioId,
+      estatusId: 12
+    }
+    this._serviceCandidato.setApartarCandidato(this.procesoCandidato)
+      .subscribe(data => {
+        switch (data) {
+          case 200: {
+            this.loading = false;
+            this.GetInfoCandidato();
+            this.auxestatus = true;
+            this.desapartar = false;
+            this.ngAfterViewInit();
+
+            var msg = 'El candidato se aparto correctamente.';
+            this.popToast('success', 'Apartado', msg);
+            this.Emiter = {
+              estatusId: 12,
+              estatus: 'Apartado',
+              candidatoId: this.CandidatoId
+            };
+            this.EstatusEmitter.emit(this.Emiter);
+            break;
           }
-        }, err => {
-          console.log(err);
-        });
+          case 304: {
+            msg = 'El candidato ya esta apartado o en proceso.';
+            this.popToast('info', 'Apartado', msg); ''
+            this.loading = false;
+            this.auxestatus = true;
+            this.desapartar = true;
+            break;
+          }
+          case 404: {
+            var msg = 'Error el intentar apartar el candidato. Consulte al departamento de soporte si el problema persiste.';
+            this.popToast('error', 'Apartado', msg);
+            this.loading = false;
+            this.auxestatus = false;
+            break;
+          }
+          default: {
+            var msg = 'Error inesperado y desconocido, reporte el problema el departamento de soporte.';
+            this.popToast('error', 'Oops!!', msg);
+            this.loading = false;
+            this.auxestatus = false;
+            break;
+          }
+        }
+      }, err => {
+        console.log(err);
+      });
     // }
     // else {
     //   this.notAccess();
@@ -478,10 +491,8 @@ modalExamen = false;
 
 
 
-  onClose(value)
-  {
-    if(value == 200)
-    {
+  onClose(value) {
+    if (value == 200) {
       this.GetInfoCandidato();
       this.desapartar = true;
       this.auxestatus = false;
@@ -493,8 +504,7 @@ modalExamen = false;
       this.modal.hide();
       this.dlgLiberar = false;
     }
-    else if(value == 404)
-    {
+    else if (value == 404) {
       var msg = 'Error el intentar liberar el candidato. Consulte al departamento de soporte si el problema persiste.';
       this.desapartar = false;
       this.auxestatus = true;
@@ -502,16 +512,15 @@ modalExamen = false;
       this.modal.hide();
       this.dlgLiberar = false;
     }
-    else
-    {
+    else {
       this.modal.hide();
       this.dlgLiberar = false;
     }
 
   }
-  openDialogLiberar(){
+  openDialogLiberar() {
 
-    this.objLiberar.push( {
+    this.objLiberar.push({
       RequisicionId: this.vacante.id,
       CandidatoId: this.CandidatoId,
       ReclutadorId: sessionStorage.getItem('id'),
@@ -528,7 +537,7 @@ modalExamen = false;
     // dialogConfig.height = 'auto';
 
     // //dialogConfig.position = {top: '100px'};
-    
+
     // let dialogLiberar = this.dialog.open(DialogLiberarCandidatoComponent, dialogConfig);
 
     // dialogLiberar.afterClosed().subscribe(result =>{
@@ -538,11 +547,11 @@ modalExamen = false;
     //   }
     //   else
     //   {
-       
+
     //   }
 
     // });
-   
+
   }
   _liberarCandidato(result) {
 
@@ -565,9 +574,9 @@ modalExamen = false;
               this.auxestatus = false;
 
               this.ngAfterViewInit();
-         
+
               this.loading = false;
-    
+
               var msg = 'El candidato se libero correctamente.';
               this.popToast('warning', 'Liberado', msg);
               this.Emiter = {

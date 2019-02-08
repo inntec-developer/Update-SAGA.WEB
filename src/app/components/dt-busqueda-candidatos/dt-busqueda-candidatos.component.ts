@@ -21,6 +21,9 @@ export class DtBusquedaCandidatosComponent implements OnInit {
   public numPages: number = 1;
   public length: number = 0;
 
+  selected: boolean = false;
+  rowAux = [];
+
   showFilterRow: boolean;
   registros: number;
   errorMessage: any;
@@ -158,13 +161,26 @@ export class DtBusquedaCandidatosComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
+    data.selected ? data.selected = false : data.selected = true;
     let index = this.dataSource.indexOf(data.row);
     this.element = data;
-    /* add an class 'active' on click */
-    $('#resultBusqueda').on('click', 'tr', function (event: any) {
-      //noinspection TypeScriptUnresolvedFunction
-      $(this).addClass('selected').siblings().removeClass('selected');
-    });
+
+    if (!data.selected) {
+      this.selected = false;
+    } else {
+      this.selected = true;
+    }
+
+    if (this.rowAux.length == 0) {
+      this.rowAux = data;
+    }
+    else if (data.selected && this.rowAux != []) {
+      var aux = data;
+      data = this.rowAux;
+      data.selected = false;
+      aux.selected = true;
+      this.rowAux = aux;
+    }
   }
 
   public getCandidato(event) {

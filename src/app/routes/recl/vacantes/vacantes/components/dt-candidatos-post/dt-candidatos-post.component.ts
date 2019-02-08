@@ -21,6 +21,9 @@ export class DtCandidatosPostComponent implements OnInit {
   @Input('Vacante') Vacante: any;
 
   @ViewChild('lgModal') modal;
+
+  selected: boolean = false;
+  rowAux = [];
   
   public dataSource: Array<any> = [];
   // Varaibles del paginador
@@ -183,15 +186,27 @@ console.log(this.dataSource)
   }
 
   public onCellClick(data: any): any {
-
+    data.selected ? data.selected = false : data.selected = true;
     let index = this.dataSource.indexOf(data.row);
     this.element = data;
     this.idCandidato = data.candidatoId;
     /* add an class 'active' on click */
-    $('#resultDataTable').on('click', 'tr', function (event: any) {
-      //noinspection TypeScriptUnresolvedFunction
-      $(this).addClass('selected').siblings().removeClass('selected');
-    });
+    if (!data.selected) {
+      this.selected = false;
+    } else {
+      this.selected = true;
+    }
+
+    if (this.rowAux.length == 0) {
+      this.rowAux = data;
+    }
+    else if (data.selected && this.rowAux != []) {
+      var aux = data;
+      data = this.rowAux;
+      data.selected = false;
+      aux.selected = true;
+      this.rowAux = aux;
+    }
   }
 
 
