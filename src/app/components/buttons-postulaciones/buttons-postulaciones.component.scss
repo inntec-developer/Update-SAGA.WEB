@@ -44,7 +44,7 @@
     height: 50px;
 }
 
-div.pointer tr td
+.pointer tr td
 {
     cursor: pointer;
 }
@@ -54,13 +54,6 @@ tr.selected td {
 
   }
 
-tbody tr:hover
-{
-//   transform:scale(0.999,0.9);
-//   transform-origin:center;
-    font-size: 15px;
-  box-shadow:1px 2px 6px rgba(0,0,0,.25);
-}
 
  .btn:active {
     outline: none !important;
@@ -88,7 +81,3 @@ tbody tr:hover
     margin-top: 50px !important;
 }
 
-.card
-{
-    box-shadow: 1px 2px 6px rgba(0, 0, 0, .2);
-}

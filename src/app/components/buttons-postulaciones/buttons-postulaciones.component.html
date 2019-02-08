@@ -155,7 +155,7 @@
   <div class="card">
     <div class="card-body">
     <div class="table-responsive pointer" #tableContainer>
-      <table *ngIf="dataSource.length > 0 else NotCandidatos" id="resultDataTable" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
+      <table *ngIf="dataSource.length > 0 else NotCandidatos" id="resultDataTable" ngClass="{{config.className || ''}}" class="table">
         <thead>
           <tr>
             <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
