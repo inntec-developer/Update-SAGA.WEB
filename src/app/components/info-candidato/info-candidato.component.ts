@@ -114,7 +114,6 @@ modalExamen = false;
   GetInfoCandidato()
   {
     this.spinner.show();
-    debugger;
     // this.CandidatoId = '4F65DAC1-C6A0-E811-80E8-9E274155325E'
     this._serviceCandidato.getInfoCandidato(this.CandidatoId).subscribe(data => {
     

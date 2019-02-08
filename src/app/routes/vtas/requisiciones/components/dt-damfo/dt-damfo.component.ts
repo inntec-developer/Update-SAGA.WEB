@@ -71,7 +71,7 @@ export class DtDamfoComponent implements OnInit {
 
   public rows: Array<any> = [];
   public columns: Array<any> = [
-    { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
+    { title: 'Cliente', className: 'text-success text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
     { title: 'Perfil', className: 'text-info text-center', name: 'nombrePerfil', filtering: { filterString: '', placeholder: 'Perfil' } },
     { title: 'No. Vacantes', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' } },
     { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
@@ -83,7 +83,7 @@ export class DtDamfoComponent implements OnInit {
 
   public config: any = {
     paging: true,
-    sorting: { columns: this.columns },
+    // sorting: { columns: this.columns },
     filtering: { filterString: '' },
     className: ['table-hover mb-0']
   };

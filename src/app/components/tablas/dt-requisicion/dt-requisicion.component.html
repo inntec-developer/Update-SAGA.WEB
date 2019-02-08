@@ -9,12 +9,12 @@
       <btn-add id="create" chkPrivilegiosButtons class="btn-acciones margen" container="body" placement="bottom"
         tooltip="Nuevo" [routerLink]="['/ventas/crearRequisicion']">
       </btn-add>
-      <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones margen" [disabled]="!element"
-        [ngClass]="(!element) ? 'disabled' : 'btn-outline-warning'" container="body" placement="bottom" tooltip="Visualizar"><em
+      <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones margen" [disabled]="!view"
+        [ngClass]="(!view) ? 'disabled' : 'btn-outline-warning'" container="body" placement="bottom" tooltip="Visualizar"><em
           class="fa fa-eye"></em></button>
 
-      <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones margen" [disabled]="!element"
-        [ngClass]="(!element) ? 'disabled' : 'btn-outline-dark'" container="body" placement="bottom" tooltip="Comentarios"><em
+      <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones margen" [disabled]="!coment"
+        [ngClass]="(!coment) ? 'disabled' : 'btn-outline-dark'" container="body" placement="bottom" tooltip="Comentarios"><em
           class="fa fa-comments-o"></em></button>
 
       <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="editar" [ngClass]="editar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-primary'"
@@ -81,8 +81,8 @@
           <tr>
             <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
               {{column.title | uppercase}}
-              <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
-              </i> -->
+              <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
+              </i>
             </th>
           </tr>
           <tr *ngIf="showFilterRow">
@@ -94,7 +94,7 @@
         </thead>
         <tbody>
           <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial"
-            [class.cancel]="row.estatusId == 8">
+            [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
             <td class="text-center">
               {{row.folio}}
             </td>

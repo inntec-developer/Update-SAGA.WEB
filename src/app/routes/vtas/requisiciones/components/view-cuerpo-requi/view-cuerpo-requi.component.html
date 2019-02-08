@@ -1,4 +1,18 @@
 <div class="dt-container  mat-elevation-z8">
+    <div class="card-header">
+      <em class="fa fa-user"></em> Vacantes por Horarios
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- HORARIOS -->
+          <app-dt-horarios [Horarios]="requisicion?.horariosRequi" [Requi]="true" [EstatusRequi]="requisicion?.estatusId"></app-dt-horarios>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+<div class="dt-container  mat-elevation-z8">
   <div class="card-header">
     <em class="fa fa-user"></em> Informaci&oacute;n General
   </div>
@@ -169,13 +183,6 @@
         </p>
       </div>
     </div>
-  </div>
-</div>
-<br />
-<div class="row">
-  <div class="col-md-12">
-    <!-- HORARIOS -->
-    <app-dt-horarios [Horarios]="requisicion?.horariosRequi" [Requi]="true" [EstatusRequi]="requisicion?.estatusId" ></app-dt-horarios>
   </div>
 </div>
 <br />

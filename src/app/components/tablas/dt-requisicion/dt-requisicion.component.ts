@@ -31,15 +31,23 @@ export class DtRequisicionComponent implements OnInit {
   public numPages: number = 1;
   public length: number = 0;
 
+  selected: boolean = false;
+  rowAux = [];
+
+
   showFilterRow: boolean;
   registros: number;
   errorMessage: any;
-  element: any = null;
+  element: any = [];
 
   estatusId: any;
   enProceso: any;
 
   requisicionId: any;
+
+  //
+  view: boolean = false;
+  coment: boolean = false;
 
   // Estatus
   nbc = true; //nueva busqueda candidato
@@ -105,7 +113,6 @@ export class DtRequisicionComponent implements OnInit {
 
   ValidarEstatus(estatusId)
   {
-    debugger;
     if(this.element.vacantes == 0)
     {
       this.gbc = true; //garantía busqueda candidato
@@ -367,6 +374,7 @@ export class DtRequisicionComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
+    data.selected ? data.selected = false : data.selected = true;
     this.RequisicionId = data.id
     this.estatusId = data.estatusId;
     this.enProceso = data.enProceso;
@@ -375,11 +383,41 @@ export class DtRequisicionComponent implements OnInit {
     this.element = data;
     
     this.ValidarEstatus(data.estatusId)
-    /* add an class 'active' on click */
-    $('#resultDataTable').on('click', 'tr', function (event: any) {
-      //noinspection TypeScriptUnresolvedFunction
-      $(this).addClass('selected').siblings().removeClass('selected');
-    });
+    if (!data.selected) {
+      this.selected = false;
+      this.element = [];
+      this._reinciar();
+    } else {
+      this.selected = true;
+      this.view = true;
+      this.coment = true;
+    }
+
+    if (this.rowAux.length == 0) {
+      this.rowAux = data;
+    }
+    else if (data.selected && this.rowAux != []) {
+      var aux = data;
+      data = this.rowAux;
+      data.selected = false;
+      aux.selected = true;
+      this.rowAux = aux;
+    }
+  }
+
+  private _reinciar() {
+    this.nbc = true; //nueva busqueda candidato
+    this.contratado = true;
+    this.cubierta = true;
+    this.gbc = true; //garantía busqueda candidato
+    this.cc = true; //cubierta por el cliente
+    this.crm = true; //cubierta reclutamiento medios
+    this.cp = true; // cubierta parcialmente
+    this.borrar = true; 
+    this.cancelar = true;
+    this.editar = true;
+    this.view = false;
+    this.coment = false;
   }
 
 

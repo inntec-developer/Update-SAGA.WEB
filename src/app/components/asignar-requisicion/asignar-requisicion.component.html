@@ -2,8 +2,7 @@
   <div class="form-group">
     <ngx-select 
       [allowClear]="true" 
-      autoClearSearch=true
-      autoSelectSingleOption=true
+      autoClearSearch="true"
       placeholder="Busqueda..." 
       formControlName="selectControl"
       (data)="value" 
@@ -12,6 +11,7 @@
       [items]="items" 
       (remove)="valueChange($event)" 
       (select)="valueChange($event)"
+      (navigated)="valueChange($event)"
       optionValueField="id" 
       optionTextField="nombre"
       optGroupLabelField="nombre" optGroupOptionsField="usuarios">

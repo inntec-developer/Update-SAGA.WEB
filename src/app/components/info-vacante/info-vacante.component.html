@@ -21,7 +21,8 @@
       <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
         <h5>
           <strong>Fecha Solicitud: </strong>
-          <label class="card-text"> {{fch_Solicitud | date: 'dd/MM/yyyy'}} a las {{fch_Solicitud | date: 'hh:mm'}} </label>
+          <label class="card-text"> {{fch_Solicitud | date: 'dd/MM/yyyy'}} a las {{fch_Solicitud | date: 'hh:mm'}}
+          </label>
           <small>{{fch_Solicitud | date: 'a'}}</small>
         </h5>
       </div>
@@ -34,7 +35,8 @@
       <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
         <h5>
           <strong>Prioridad: </strong>
-          <label class="badge badge-pill" [class.badge-danger]="prioridadId  === 1" [class.badge-warning]="prioridadId  === 2"> {{prioridad}} </label>
+          <label class="badge badge-pill" [class.badge-danger]="prioridadId  === 1" [class.badge-warning]="prioridadId  === 2">
+            {{prioridad}} </label>
         </h5>
       </div>
       <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
@@ -46,8 +48,9 @@
       <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
         <h5>
           <strong>Estatus: </strong>
-          <label class="badge badge-pill" [class.badge-warning]="estatusId  === 4" [class.badge-primary]="estatusId  === 5" [class.badge-info]="estatusId  === 6"
-            [class.badge-success]="estatusId  === 7" [class.badge-danger]="estatusId  === 8"> {{estatus | uppercase}} </label>
+          <label class="badge badge-pill" [class.badge-warning]="estatusId  === 4" [class.badge-primary]="estatusId  === 5"
+            [class.badge-info]="estatusId  === 6" [class.badge-success]="estatusId  === 7" [class.badge-danger]="estatusId  === 8">
+            {{estatus | uppercase}} </label>
         </h5>
       </div>
       <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
@@ -67,10 +70,24 @@
           <strong> Asignados </strong>
         </h4>
         <ol class="list-inline">
-          <li  class="list-inline-item" *ngFor="let x of asignados">
+          <li class="list-inline-item" *ngFor="let x of asignados">
             <h5>{{x.nombre | uppercase}} {{x.apellidoPaterno | uppercase}} {{x.apellidoMaterno | uppercase}} / </h5>
           </li>
         </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="dt-container  mat-elevation-z8">
+  <div class="card-header">
+    <em class="fa fa-user"></em> Vacantes por Horarios
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- HORARIOS -->
+        <app-dt-horarios [Horarios]="requisicion?.horariosRequi" [Requi]="false" [EstatusRequi]="requisicion?.estatusId"></app-dt-horarios>
       </div>
     </div>
   </div>
@@ -187,7 +204,6 @@
             </p>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -249,42 +265,36 @@
     </div>
   </div>
 </div>
-<br/>
-<div class="row">
-  <div class="col-md-12">
-    <!-- HORARIOS -->
-    <app-dt-horarios [Horarios]="requisicion?.horariosRequi" [EstatusRequi]="requisicion?.estatusId"></app-dt-horarios>
-  </div>
-</div>
-<br/>
+
+<br />
 <div class="row">
   <div class="col-md-12">
     <!-- DIRECCIONES -->
     <app-dt-direcion-requi [DireccionId]="requisicion?.direccionId"></app-dt-direcion-requi>
   </div>
 </div>
-<br/>
+<br />
 <div class="row">
   <div class="col-md-6">
     <!-- TELEFONOS -->
     <app-dt-telefonos [Telefonos]="requisicion?.cliente?.telefonos"></app-dt-telefonos>
   </div>
 </div>
-<br/>
+<br />
 <!-- CONTACTOS -->
 <div class="row">
   <div class="col-md-10">
     <app-dt-contactos [Contactos]="requisicion?.cliente?.contactos"></app-dt-contactos>
   </div>
 </div>
-<br/>
+<br />
 <div class="row">
   <div class="col-md-12">
     <!-- BENEFICIOS -->
     <app-dt-beneficios [Beneficios]="requisicion?.beneficiosRequi"></app-dt-beneficios>
   </div>
 </div>
-<br/>
+<br />
 <!-- ACTIVIDADES OBSERVACIONES PROCESO-->
 <div class="row">
   <div class="col-md-4">
@@ -297,7 +307,7 @@
     <app-procesos [Proceso]="requisicion?.procesoRequi"></app-procesos>
   </div>
 </div>
-<br/>
+<br />
 <div class="row">
   <div class="col-md-3">
     <!-- DOCUMENTOS dAMSA -->
@@ -316,7 +326,7 @@
     <app-prestaciones-cliente [Prestaciones]="requisicion?.prestacionesClienteRequi"></app-prestaciones-cliente>
   </div>
 </div>
-<br/>
+<br />
 <div class="row">
   <div class="col-md-6">
     <!-- PSICOMETRIAS DAMSA -->
@@ -327,7 +337,7 @@
     <app-dt-psicometrias-cliente [Psicometrias]="requisicion?.psicometriasClienteRequi"></app-dt-psicometrias-cliente>
   </div>
 </div>
-<br/>
+<br />
 <div class="row">
   <div class="col-md-4 col-lg-4">
     <!-- COMPTENCIAS CARDINALES -->
@@ -342,6 +352,3 @@
     <app-dt-competencia-gerencial [Competencias]="requisicion?.competetenciasGerencialRequi"></app-dt-competencia-gerencial>
   </div>
 </div>
-
-
-

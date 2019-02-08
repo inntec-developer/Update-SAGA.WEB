@@ -33,6 +33,14 @@ export class NuevoProspectoComponent implements OnInit {
   public DireccionesNew: Array<any> = [];
   public indexDireccion: any;
   public EditDireccion: boolean;
+  public textbtnDirecciones: string;
+
+  public addTelefono: boolean;
+  public TelefonosNew: Array<any> = [];
+  public indexTelefonos: any;
+  public EditTelefono: boolean;
+  public textbtnTelefono: string;
+  public esOficina: any;
 
   public giros: any;
   public actividades: any;
@@ -40,6 +48,7 @@ export class NuevoProspectoComponent implements OnInit {
   public tipo: any;
   public tipoBase: any;
   public tipoDireccion: any;
+  public tipoTelefonos: any;
 
   public paises: any;
   public estados: any;
@@ -53,6 +62,8 @@ export class NuevoProspectoComponent implements OnInit {
   public clf: number = 1;
   public overStar: number;
   public percent: number;
+
+  public ladaPais: any = 52;
 
 
   constructor(
@@ -73,7 +84,7 @@ export class NuevoProspectoComponent implements OnInit {
     });
     this.formDirecciones = new FormGroup({
       TipoDireccion: new FormControl('', [Validators.required]),
-      CodigoPostal: new FormControl('', [Validators.required]),
+      CodigoPostal: new FormControl('', [Validators.required, Validators.maxLength(5)]),
       Paises: new FormControl('', Validators.required),
       Estados: new FormControl('', Validators.required),
       Municipios: new FormControl('', Validators.required),
@@ -86,7 +97,14 @@ export class NuevoProspectoComponent implements OnInit {
       Activo: new FormControl(true)
     });
     this.formTelefonos =  new FormGroup({
-      TelDireccion: new FormControl('', [Validators.required])
+      TelDireccion: new FormControl('', [Validators.required]),
+      TipoTelefono: new FormControl('', [Validators.required]),
+      LadaPais: new FormControl('52', [Validators.required, Validators.maxLength(3)]),
+      Lada: new FormControl('',[Validators.required, Validators.maxLength(3)]),
+      Numero: new FormControl('',[Validators.required, Validators.maxLength(10)]),
+      Extencion: new FormControl(''),
+      Principal: new FormControl(false),
+      Activo: new FormControl(true)
     });
 
   }
@@ -108,7 +126,7 @@ export class NuevoProspectoComponent implements OnInit {
 
     this.formDirecciones = this.fb.group({
       TipoDireccion: ['', [Validators.required]],
-      CodigoPostal: ['', [Validators.required]],
+      CodigoPostal: ['', [Validators.required, Validators.maxLength(5)]],
       Paises: ['', [Validators.required]],
       Estados: ['', [Validators.required]],
       Municipios: ['', [Validators.required]],
@@ -121,7 +139,14 @@ export class NuevoProspectoComponent implements OnInit {
       Activo: [true]
     })
     this.formTelefonos = this.fb.group({
-      TelDireccion: ['', [Validators.required]]
+      TelDireccion: ['', [Validators.required]],
+      TipoTelefono: ['', [Validators.required]],
+      LadaPais: ['52', [Validators.required, Validators.maxLength(3)]],
+      Lada: ['',[Validators.required, Validators.maxLength(3)]],
+      Numero: ['',[Validators.required, Validators.maxLength(10)]],
+      Extencion: [''],
+      Principal: [false],
+      Activo: [true]
     });
   }
 
@@ -140,11 +165,17 @@ export class NuevoProspectoComponent implements OnInit {
     });
     this._CatalogoService.getTipoDireccion().subscribe(result => {
       this.tipoDireccion = result;
-    })
+    });
     this._CatalogoService.getPais().subscribe(result => {
       this.paises = result;
-    })
+    });
+    this._CatalogoService.getTipoTelefono().subscribe(result => {
+      this.tipoTelefonos = result;
+    });
+  }
 
+  getTipoTeledono(){
+    this.esOficina = this.formTelefonos.get('TipoTelefono').value;
   }
 
   getActividades() {
@@ -193,6 +224,13 @@ export class NuevoProspectoComponent implements OnInit {
     this.municipios = null;
     this.colonias = null;
     this.formDirecciones.reset();
+    this.formDirecciones.controls['Activo'].setValue(true);
+  }
+
+  cancelarTelefono(){
+    this.formTelefonos.reset();
+    this.formTelefonos.controls['Activo'].setValue(true);
+    this.formTelefonos.controls['LadaPais'].setValue(52);
   }
 
   showForCP($event: any) {
@@ -247,7 +285,7 @@ export class NuevoProspectoComponent implements OnInit {
       calle: this.formDirecciones.get('Calle').value,
       exterior: this.formDirecciones.get('Exterior').value,
       interior: this.formDirecciones.get('Interior').value || '',
-      referencia: this.formDirecciones.get('Referencia').value || '',
+      referencia: this.formDirecciones.get('Referencia').value || 'SIN REFERENCIA',
       esPrincipal: this.formDirecciones.get('Principal').value,
       activo: this.formDirecciones.get('Activo').value
     }
@@ -291,7 +329,7 @@ export class NuevoProspectoComponent implements OnInit {
     this.onChangeTableD(this.config);
   }
 
-  /* funcion para Clasificación */
+  //#region  FUNCION PARA CLASIFICACION 
   public hoveringOver(value: number): void {
     this.overStar = value;
     this.percent = 100 * (value / this.maxRat);
@@ -299,20 +337,21 @@ export class NuevoProspectoComponent implements OnInit {
   public resetStar(): void {
     this.overStar = void 0;
   }
-  /******************************************************************************/
+  //#endregion
+
 
   public config: any = {
     paging: true,
     filtering: { filterString: '' },
     className: ['table table-sm table-hover table-striped mb-0']
   }
-
+  //#region CONFIGURACION Y ACCIONES TABLA DE DIRECCIONES
   /* Configuracion / Acciones para la tabla de Direcciones  */
   public selectedD: boolean = false;
   public registrosD: number;
   public rowAuxD = [];
   public elementD: any = null;
-  /* Variables de Paginador */
+  /* Variables de Paginador Direcciones */
   public pageD: number = 1;
   public itemsPerPageD: number = 10;
   public maxSizeD: number = 5;
@@ -333,8 +372,6 @@ export class NuevoProspectoComponent implements OnInit {
     { title: 'Principal', className: 'text-info text-center', name: 'esPrincipal' },
     { title: 'Activo', className: 'text-info text-center', name: 'activo' },
   ];
-
-
 
   public changePageD(page: any, data: Array<any> = this.DireccionesNew): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
@@ -450,11 +487,14 @@ export class NuevoProspectoComponent implements OnInit {
       this.rowAuxD = aux;
     }
   }
+  //#endregion
+ 
+  //#region CONFIGURACION Y ACCIONES TABLA DE TELEFONOS
 
 
-  /******************************************************************************/
+  //#endregion
 
-  /* Creacion de mensajes */
+  //#region  CREACION DE MENSAJES
   toaster: any;
   toasterConfig: any;
   toasterconfig: ToasterConfig = new ToasterConfig({
@@ -471,7 +511,8 @@ export class NuevoProspectoComponent implements OnInit {
       body: body
     }
     this.toasterService.pop(toast);
-  }/******************************************************************************/
+  }
+  //#endregion
 
 
 }
