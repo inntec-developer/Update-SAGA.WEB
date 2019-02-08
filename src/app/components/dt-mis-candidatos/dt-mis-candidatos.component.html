@@ -39,7 +39,7 @@
         </thead>
         <tbody>
           <tr (click)="onCellClick(row)" (dblclick)="getCandidato(row.candidatoId)" *ngFor="let row of rows"
-            [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8">
+            [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
             <td class="text-center">
               {{row.folio}}
             </td>

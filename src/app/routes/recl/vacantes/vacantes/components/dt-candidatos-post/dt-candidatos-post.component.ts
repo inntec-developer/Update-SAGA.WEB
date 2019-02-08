@@ -225,7 +225,6 @@ console.log(this.dataSource)
   }
 
   public clearfilters(){
-    (<HTMLInputElement>document.getElementById('filterInput')).value = '';
     this.columns.forEach(element => {
       element.filtering.filterString = '';
      (<HTMLInputElement>document.getElementById(element.name)).value = '';

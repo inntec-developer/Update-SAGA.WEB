@@ -80,7 +80,7 @@
         <thead>
           <tr>
             <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
-              {{column.title | uppercase}}
+              <small>{{column.title | uppercase}}</small>
               <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
               </i>
             </th>
