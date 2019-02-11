@@ -62,6 +62,11 @@
         placement="bottom" tooltip="Actualizar">
         <em class="icon-refresh"></em>
       </button>
+
+      <em class="vl"></em>
+      <button class="margen" type="button" [disabled]="rows.length == 0"  [ngClass]="rows.length == 0 ? 'mb-1 btn disable' : 'mb-1 btn btn-outline-success'" (click)="exportAsXLSX()"  container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
+        <i class="fa fa-download"></i>
+    </button>
     </div>
   </div>
 </div>
@@ -84,11 +89,15 @@
               <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
               </i>
             </th>
+            <th class="text-muted text-center">ASIGNADA A</th>
           </tr>
           <tr *ngIf="showFilterRow">
             <td *ngFor="let column of columns">
               <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
                 (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
+            </td>
+            <td>
+                <input class="form-control form-control-sm" placeholder="Asignada a" [disabled]="true">
             </td>
           </tr>
         </thead>
@@ -130,6 +139,25 @@
               </small>
             </td>
             <td> {{row.propietario }}</td>
+            <td class="text-center">
+                <ng-template #popTemplate>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="popover-body">
+                              <ul *ngFor="let r of row.reclutadores">
+                                <li class="text-muted">{{r.reclutador}}</li>
+                              </ul>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <span class="text-center" *ngIf="row.reclutadores.length == 0">{{row.propietario}}</span>
+                <a class="text-center" *ngIf="row.reclutadores.length > 1" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
+                <span class="text-center" *ngIf="row.reclutadores.length == 1">{{row.reclutadores[0].reclutador}}</span>
+
+            </td>
           </tr>
         </tbody>
       </table>

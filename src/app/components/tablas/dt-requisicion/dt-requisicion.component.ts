@@ -1,3 +1,5 @@
+import { DatePipe } from '@angular/common';
+import { ExcelService } from './../../../service/ExcelService/excel.service';
 import { Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -16,7 +18,7 @@ declare var $: any;
   selector: 'app-dt-requisicion',
   templateUrl: './dt-requisicion.component.html',
   styleUrls: ['./dt-requisicion.component.scss'],
-  providers: [RequisicionesService, PostulateService]
+  providers: [RequisicionesService, PostulateService, DatePipe]
 })
 
 export class DtRequisicionComponent implements OnInit {
@@ -71,7 +73,9 @@ export class DtRequisicionComponent implements OnInit {
     private dialog: MatDialog,
     private _Router: Router,
     private spinner: NgxSpinnerService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private excelService: ExcelService,
+    private pipe: DatePipe
 
   ) { }
 
@@ -108,7 +112,7 @@ export class DtRequisicionComponent implements OnInit {
     { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
     { title: 'Prioridad', className: 'text-info text-center', name: 'prioridad', filtering: { filterString: '', placeholder: 'Prioridad' } },
-    { title: 'Propietario', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Propietario' } },
+    { title: 'Propietario', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Propietario' } }
   ];
 
   ValidarEstatus(estatusId)
@@ -506,7 +510,6 @@ export class DtRequisicionComponent implements OnInit {
                 emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
               }
             })
-
             if(emails.length > 0)
             {
               this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
@@ -571,6 +574,67 @@ export class DtRequisicionComponent implements OnInit {
     dialogCnc.afterClosed().subscribe(result => {
       this.refreshTable();
     })
+  }
+
+  exportAsXLSX()
+  {
+
+    if(this.dataSource.length > 0)
+    {
+      var aux = [];
+      var comentarios = "";
+      var reclutador = "";
+      this.dataSource.forEach(row => {
+        if(row.comentarioReclutador.length > 0)
+        {
+          row.comentarioReclutador.forEach(element => {
+            comentarios = comentarios +
+                          element + '\n'
+          });
+        }
+        else{
+          comentarios = "";
+        }
+
+        if(row.reclutadores.length == 0)
+        {
+          reclutador = row.propietario;
+        }
+        else if(row.reclutadores.length > 1)
+        {
+          row.reclutadores.forEach(element => {
+            reclutador = reclutador + element.reclutador + '\n'
+          });
+        }
+        else
+        {
+          reclutador = row.reclutadores[0].reclutador;
+        }
+        var d = this.pipe.transform(new Date(row.fch_Creacion), 'yyyy-MM-dd');
+        var e = this.pipe.transform( new Date(row.fch_Modificacion), 'yyyy-MM-dd');
+
+        aux.push({
+          FOLIO: row.folio.toString(),
+          'FECHA SOLICITUD': d,//new Date(d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString(),
+          SOLICITANTE: row.propietario,
+          EMPRESA: row.cliente,
+          NO: row.vacantes,
+          PUESTO: row.vBtra,
+          SUELDO:  row.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
+          ESTATUS: row.estatus,
+          'FECHA ESTATUS': e,
+          RECLUTADOR: reclutador,
+          'COMENTARIOS': comentarios
+        })
+        comentarios = "";
+        reclutador = "";
+      });
+
+      //   })
+      // })
+      this.excelService.exportAsExcelFile(aux, 'Solicitud_de_reporte_para_generar_estadisticos');
+      this.refreshTable();
+    }
   }
 
   /*
