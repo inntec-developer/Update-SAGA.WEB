@@ -66,7 +66,7 @@ tr.cubierta td{
 tbody tr:hover
 {
 
-font-size: 14px;
+font-size: 14.5px;
   box-shadow:0 20px 60px rgba(0,0,0,.25);
 }
 
@@ -87,7 +87,7 @@ font-size: 14px;
   tr td:first-child {
       background: #f0f0f0 !important;
       font-weight:bold !important;
-      font-size:1.3em !important;
+      font-size:1.0em !important;
   }
   tbody td {
       display: block !important;

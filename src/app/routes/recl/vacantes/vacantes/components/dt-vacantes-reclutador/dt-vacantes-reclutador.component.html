@@ -1,13 +1,11 @@
 <ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
 <!-- <toaster-container [toasterconfig]="toasterconfig"></toaster-container> -->
+<div>
 <div class="dt-container mat-elevation-z8">
   <div class="dt-header">
-    <mat-form-field>
-      <input id="filterInput" #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
-        (tableChanged)="onChangeTable(config)">
-    </mat-form-field>
-    <div class="row justify-content-between">
-      <div class="d-flex align-items-stretch">
+   
+    <div class="row">
+        <div class="col-sm-6 col-md-6">
         <button id="view" class="margen" (click)="openDialogShowRequi(element.id, element.folio)" placement="bottom"
           tooltip="Ver Requisición" class="margen" [disabled]="!element" [ngClass]="(!element) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-warning'">
           <em class="fa fa-eye"></em></button>
@@ -21,6 +19,7 @@
           container="body" placement="bottom" tooltip="Diseñar Vacante" container="body" [disabled]="disenador || confidencial" [ngClass]="(disenador || confidencial) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
           <em class="icon-list"></em>
         </button>
+
         <em class="vl"></em>
         <!-- estatus de la vacante -->
 
@@ -53,9 +52,12 @@
           type="button" (click)="SetStatus(31, 'Nueva Busqueda')" container="body" placement="bottom" tooltip="Nueva Busqueda de Candidatos" >
           <em class="fa fa-search-plus"></em>
         </button>
+      </div>
            <!-- estatus de la vacante -->
-        <em class="vl"></em>
+  
    <!-- informes -->
+   <div class="col-sm-4 col-md-4">
+     <div class="align-items-stretch">
         <button class="margen" type="button" class="margen" (click)="refreshTableInfo();informeVacante=true;" [disabled]="dataSource.length == 0" 
           [ngClass]="dataSource.length == 0 ? 'mb-1 btn disable' : 'mb-1 btn btn-outline-info'" container="body" placement="bottom" tooltip="Informe Vacantes">
             <i class="fa fa-file-text-o"></i>
@@ -73,23 +75,34 @@
             <i class="fa fa-download"></i>
         </button>
       </div>
+    </div>
+
       <!-- informes -->
-      <div>
-        <button class="margen" [disabled]="postulados <= 0" (click)="openViewPostulados()" [ngClass]="(postulados <= 0 )? 'mb-1 btn disabled':'mb-1 btn btn-outline-warning'">
-          Postulados
-        </button>
-        <button class="margen" [disabled]="pds" (click)="seguimientoRequi()" [ngClass]="(pds) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
-          En Proceso
-        </button>
-        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" [disabled]="!clearFilter" class="margen"
-          [ngClass]="(!clearFilter) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
-          <em class="fa fa-eraser"></em>
-        </button>
-        <button type="button" class="mb-1  btn btn-outline-success margen" (click)="refreshTable()" container="body" placement="bottom" tooltip="Actualizar" container="body">
+      <div class="col-sm-2 col-md-2">
+        <button type="button" class="mb-1 btn btn-outline-success float-right margen" (click)="refreshTable()" container="body"
+          placement="bottom" tooltip="Actualizar" container="body">
           <em class="icon-refresh"></em>
         </button>
-      </div>
+        <button class="margen float-right" (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" [disabled]="!clearFilter"
+           [ngClass]="(!clearFilter) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'">
+          <em class="fa fa-eraser"></em>
+        </button>
+        <button class="margen float-right" [disabled]="pds" (click)="seguimientoRequi()" [ngClass]="(pds) ? 'mb-1 btn disabled':'mb-1 btn btn-outline-primary'"
+          container="body" placement="bottom" tooltip="En Proceso">
+          <i class="fa fa-cogs" aria-hidden="true"></i>
+        </button>
+        <button class="margen float-right" [disabled]="postulados <= 0" (click)="openViewPostulados()" [ngClass]="(postulados <= 0 )? 'mb-1 btn disabled':'mb-1 btn btn-outline-warning'"
+          container="body" placement="bottom" tooltip="Postulados">
+          <i class="fa fa-users" aria-hidden="true"></i>
+        </button>
+
     </div>
+    </div>
+    <br/>
+    <mat-form-field>
+        <input id="filterInput" #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
+          (tableChanged)="onChangeTable(config)">
+      </mat-form-field>
   </div>
   <div class="card">
     <div class="card-body">
@@ -205,7 +218,7 @@
   </div>
   <pre *ngIf="config.paging" class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
 </div>
-
+</div>
 <!--mensajes-->
 <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
 
