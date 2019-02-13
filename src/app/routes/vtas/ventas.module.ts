@@ -1,4 +1,5 @@
-﻿import {
+﻿import { DtRequisicionReclPuroComponent } from './../../components/tablas/dt-requisicion-recl-puro/dt-requisicion-recl-puro.component';
+import {
          MAT_DATE_LOCALE,
          MatAutocompleteModule,
          MatButtonModule,
@@ -85,6 +86,7 @@ const routes: Routes = [
     { path: 'visualizarDamfo290/:IdDamfo', component: ViewdamfoComponent, data:{componente: 'Formato 290'} },
     { path: 'visualizarRequisicion/:IdRequi/:Folio/:Vacante', component: ViewRequisicionComponent, data:{componente:'Requisiciones'} },
     { path: 'edicionRequisicion/:IdRequi/:Folio/:EstatusId', component: UpdateRequisicionComponent },
+    { path: 'requisicionPuro', component: DtRequisicionReclPuroComponent},
 ];
 
 @NgModule({
@@ -133,7 +135,8 @@ const routes: Routes = [
         ClientesComponent,
         DtProspectosComponent,
         DtClientesComponent,
-        NuevoProspectoComponent
+        NuevoProspectoComponent,
+        DtRequisicionReclPuroComponent
     ],
     entryComponents: [DialogdamfoComponent, DialogDeleteRequiComponent, DialogCancelRequiComponent, DialogActivarRequiComponent, DialogEditHorarioComponent, DialogRutasComponent],
     exports: [

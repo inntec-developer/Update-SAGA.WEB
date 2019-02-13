@@ -120,6 +120,7 @@ import { SharedModule } from '../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { DlgRevisarExamenesComponent } from './dlg-revisar-examenes/dlg-revisar-examenes.component';
 import { DlgAsignarPerfilComponent } from './dlg-asignar-perfil/dlg-asignar-perfil.component';
+import { DtRequisicionReclPuroComponent } from './tablas/dt-requisicion-recl-puro/dt-requisicion-recl-puro.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',

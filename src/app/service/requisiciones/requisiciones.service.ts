@@ -1,3 +1,4 @@
+import { ApiConection } from './../api-conection.service';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
@@ -11,7 +12,6 @@ import { Headers, Http, RequestOptions, Response } from '@angular/http';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 
-import { ApiConection } from '../api-conection.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -51,6 +51,7 @@ export class RequisicionesService {
   private URLGetRequiEstadisticos = ApiConection.ServiceUrl + ApiConection.getRequiEstadisticos;
   private URLGetUltimoEstatusRequi = ApiConection.ServiceUrl + ApiConection.GetUltimoEstatusRequi;
   private URLExecProcedurePause = ApiConection.ServiceUrl + ApiConection.execProcedurePause;
+  private URLGetRequiTipoRecl = ApiConection.ServiceUrl + ApiConection.GetRequiTipoRecl;
 
   constructor(private http: Http, private _httpClient: HttpClient) { }
   // Recupera todos los damfos que esten dados de alta y se encuentren activos
@@ -223,6 +224,12 @@ export class RequisicionesService {
   GetInformeRequisiciones(reclutadorId: any): Observable<any> {
     let params = new HttpParams().set('reclutadorId', reclutadorId);
     return this._httpClient.get(this.URLGetInformeRequisiciones, { params: params });
+  }
+
+  
+  GetRequiTipoRecl(propietarioId: any, tipo): Observable<any> {
+    let params = new HttpParams().set('propietario', propietarioId).set('tipo', tipo);
+    return this._httpClient.get(this.URLGetRequiTipoRecl, { params: params });
   }
 
   ExecProcedurePause(): Observable<any> {
