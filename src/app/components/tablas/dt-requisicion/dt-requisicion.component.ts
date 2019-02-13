@@ -1,11 +1,11 @@
-import { DatePipe } from '@angular/common';
-import { ExcelService } from './../../../service/ExcelService/excel.service';
 import { Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
+import { DatePipe } from '@angular/common';
 import { DialogActivarRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-activar-requi/dialog-activar-requi.component';
 import { DialogCancelRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-cancel-requi/dialog-cancel-requi.component';
 import { DialogDeleteRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-delete-requi/dialog-delete-requi.component';
+import { ExcelService } from './../../../service/ExcelService/excel.service';
 import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from '../../../service/SeguimientoVacante/postulate.service';
@@ -459,7 +459,7 @@ export class DtRequisicionComponent implements OnInit {
   }
 
   editRequi() {
-    this._Router.navigate(['/ventas/edicionRequisicion/', this.element.id, this.element.folio], { skipLocationChange: true });
+    this._Router.navigate(['/ventas/edicionRequisicion/', this.element.id, this.element.folio, this.element.estatusId], { skipLocationChange: true });
   }
 
   updataStatus(estatusId, estatus)

@@ -31,7 +31,7 @@ export class ViewRequisicionComponent implements OnInit {
   ngOnInit(){}
 
   editRequi(){
-    this._Router.navigate(['/ventas/edicionRequisicion', this.RequisicionId, this.Folio], {skipLocationChange:true});
+    this._Router.navigate(['/ventas/edicionRequisicion', this.RequisicionId, this.Folio,this.estatusId ], {skipLocationChange:true});
   }
 
   getEstatusRequi(event){

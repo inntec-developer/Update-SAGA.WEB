@@ -22,7 +22,19 @@
       </button>
     </div>
   </div>
-  <br />
-  <app-update-info-requi [Folios]="folio"></app-update-info-requi>
+  <div class="dt-container  mat-elevation-z8">
+    <div class="card-header">
+      <em class="fa fa-user"></em> Vacantes por Horarios
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          <app-dt-horarios [Horarios]="Horarios" [Requi]="true" [EstatusRequi]="EstatusRequi" (NumeroVacantes)="NumeroVacantes = $event"></app-dt-horarios>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <app-update-info-requi [Folios]="folio" [NumeroVacantes]="NumeroVacantes"></app-update-info-requi>
   <br />
   <app-view-cuerpo-requi [Requisicion]="requisicionId"></app-view-cuerpo-requi>

@@ -1,4 +1,4 @@
-<ngx-spinner bdColor = "rgba(198,195,195,0.8)" size = "medium" color = "#90daff" type = "square-jelly-box"></ngx-spinner>
+<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
 <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
 <form [formGroup]="formRequi">
   <mat-card>
@@ -11,10 +11,7 @@
     </div>
     <div class="row">
       <div class="col-md-12 text-right">
-        <mat-slide-toggle
-            class="example-margin"
-            [color]="warn"
-            formControlName="confidencial">
+        <mat-slide-toggle class="example-margin" [color]="warn" formControlName="confidencial">
           Vacante Confidencial
         </mat-slide-toggle>
       </div>
@@ -22,33 +19,31 @@
     <div class="row">
       <div class="col-md-2">
         <mat-form-field>
-          <input matInput [matDatepicker]="solicitud" placeholder="Fecha Solicitud"
-          formControlName="fch_Solicitud">
+          <input matInput [matDatepicker]="solicitud" placeholder="Fecha Solicitud" formControlName="fch_Solicitud">
           <mat-datepicker-toggle matSuffix [for]="solicitud"></mat-datepicker-toggle>
           <mat-datepicker touchUi="true" #solicitud></mat-datepicker>
         </mat-form-field>
       </div>
       <div class="col-md-2">
         <mat-form-field>
-          <input matInput [matDatepicker]="limite" placeholder="Fecha Limite"
-          formControlName="fch_Limite">
+          <input matInput [matDatepicker]="limite" placeholder="Fecha Limite" formControlName="fch_Limite">
           <mat-datepicker-toggle matSuffix [for]="limite"></mat-datepicker-toggle>
           <mat-datepicker touchUi="true" #limite></mat-datepicker>
         </mat-form-field>
       </div>
       <div class="col-md-2">
-          <mat-form-field>
-            <mat-select placeholder="Prioridad" formControlName="prioridad" required>
-              <mat-option *ngFor="let x of Prioridades" [value]="x.id">
-                {{x.descripcion}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Prioridad" formControlName="prioridad" required>
+            <mat-option *ngFor="let x of Prioridades" [value]="x.id">
+              {{x.descripcion}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
       <div class="col-md-2">
         <mat-form-field>
           <input matInput [min]="minLimitDate" [matDatepicker]="cumplimiento" placeholder="Fecha Cumplimiento"
-          formControlName="fch_Cumplimiento" required>
+            formControlName="fch_Cumplimiento" required>
           <mat-datepicker-toggle matSuffix [for]="cumplimiento"></mat-datepicker-toggle>
           <mat-datepicker touchUi="true" #cumplimiento></mat-datepicker>
         </mat-form-field>
@@ -63,17 +58,16 @@
         </mat-form-field>
       </div>
     </div>
-    <br>  
+    <br>
     <div class="col-mg-10 col-sm-9">
       <app-asignar-requisicion #asginaciones [placeHolder]='placeHolderSelect' (Asignacion)='getAsignacion($event)'></app-asignar-requisicion>
     </div>
     <div class="row">
-        <div class="col-md-12">
-      
-
+      <div class="col-md-12">
         <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
-        <button *ngIf="formRequi.valid" class="mb-1 btn btn-outline-success float-right margen" container="body" placement="bottom" tooltip="Actualizar"  (click)="Save()">
-            <em class="fa fa-save"></em>
+        <button *ngIf="formRequi.valid" [disabled]="DisabledButton"  class="mb-1 btn btn-outline-success float-right margen"
+          container="body" placement="bottom" tooltip="Actualizar" (click)="Save()">
+          <em class="fa fa-save"></em>
         </button>
         <!-- <button class="mb-1 btn btn-outline-warning float-right margen" container="body" placement="bottom" tooltip="Agregar Examen" (click)="GetCatalogoExamenes();verExamen=true;">
             <em class="fa fa-file-text-o"></em>
@@ -84,70 +78,72 @@
 </form>
 
 <!--modal asignar examen-->
-<div *ngIf="verExamen" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal3="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="card-title text-info"><em class="fa fa-pencil"></em> ASIGNAR EX&Aacute;MEN</h4>
-          <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal3.hide();CloseModal()" ><i class="fa fa-times"></i></button>
-        </div>
-        <div class="modal-body">
-          <div *ngIf="examenRequi.length == 0 else NotRequi">
-            <div class="form-group">
-              <label class="text-primary">TIPO DE EX&Aacute;MEN</label>
-              <div class="input-group">
-                <select class="form-control form-control-sm" [(ngModel)]="tipoId" (ngModelChange)="GetExamenes();">
-                  <option value = "0">SELECCIONAR TIPO DE EX&Aacute;MEN</option>
-                  <option *ngFor="let c of catalogo" value="{{c.id}}">{{c.nombre}}</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="text-primary">EX&Aacute;MEN</label>
-              <div class="input-group">
-                <select [(ngModel)]="examenId" class="form-control form-control-sm" (ngModelChange)="GetExamen(examenId);">
-                  <option value = "0">SELECCIONAR EX&Aacute;MEN</option>
-                  <option *ngFor="let e of examenes" value="{{e.id}}">{{e.nombre}}</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-                <button [disabled]="examenId == 0" type="button" (click)="AgregarExamen()" [ngClass]="examenId == 0 ? 'btn enabled float-right' : 'btn btn-outline-success float-right'">
-                  <em class="fa fa-check"></em>
-              </button>
+<div *ngIf="verExamen" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal3="bs-modal" class="modal fade"
+  tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="card-title text-info"><em class="fa fa-pencil"></em> ASIGNAR EX&Aacute;MEN</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal3.hide();CloseModal()"><i
+            class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="examenRequi.length == 0 else NotRequi">
+          <div class="form-group">
+            <label class="text-primary">TIPO DE EX&Aacute;MEN</label>
+            <div class="input-group">
+              <select class="form-control form-control-sm" [(ngModel)]="tipoId" (ngModelChange)="GetExamenes();">
+                <option value="0">SELECCIONAR TIPO DE EX&Aacute;MEN</option>
+                <option *ngFor="let c of catalogo" value="{{c.id}}">{{c.nombre}}</option>
+              </select>
             </div>
           </div>
-            <br/>
-            <br/>
-            <br/>
-            <div *ngIf="examen.length > 0" class="card">
-                <div class="card-body mat-elevation-z8">
-                  <h5 class="card-title text-muted">VISUALIZAR EX&Aacute;MEN {{examen[0].nombre | uppercase}}</h5>
-                  <hr>
-                  <ng-container *ngFor="let p of examen; let ind = index">
-                    <em class="list-group" >{{( ind + 1)  + '.- ' + p.pregunta}}</em>
-                    <ul class="respStyle">
-                      <li [ngClass]="r.value == 1 ? 'text-success' : 'text-warning'" *ngFor="let r of p.respuestas">{{r.resp}}</li>
-                    </ul>
-                  </ng-container>
 
-                </div>
+          <div class="form-group">
+            <label class="text-primary">EX&Aacute;MEN</label>
+            <div class="input-group">
+              <select [(ngModel)]="examenId" class="form-control form-control-sm" (ngModelChange)="GetExamen(examenId);">
+                <option value="0">SELECCIONAR EX&Aacute;MEN</option>
+                <option *ngFor="let e of examenes" value="{{e.id}}">{{e.nombre}}</option>
+              </select>
             </div>
-       
+          </div>
+          <div class="form-group">
+            <button [disabled]="examenId == 0" type="button" (click)="AgregarExamen()" [ngClass]="examenId == 0 ? 'btn enabled float-right' : 'btn btn-outline-success float-right'">
+              <em class="fa fa-check"></em>
+            </button>
           </div>
         </div>
-    
+        <br />
+        <br />
+        <br />
+        <div *ngIf="examen.length > 0" class="card">
+          <div class="card-body mat-elevation-z8">
+            <h5 class="card-title text-muted">VISUALIZAR EX&Aacute;MEN {{examen[0].nombre | uppercase}}</h5>
+            <hr>
+            <ng-container *ngFor="let p of examen; let ind = index">
+              <em class="list-group">{{( ind + 1) + '.- ' + p.pregunta}}</em>
+              <ul class="respStyle">
+                <li [ngClass]="r.value == 1 ? 'text-success' : 'text-warning'" *ngFor="let r of p.respuestas">{{r.resp}}</li>
+              </ul>
+            </ng-container>
+
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <!--mensaje cuando esta vacio la tabla-->
+  </div>
+</div>
+
+<!--mensaje cuando esta vacio la tabla-->
 <ng-template #NotRequi>
-    <div class="row">
-      <div class="col-lg-12 col-md-12 col-sm-12">
-          <alert type="info">
-              <strong>Oops!</strong> La requisición ya cuenta con un examen asignado.
-            </alert>
-      </div>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <alert type="info">
+        <strong>Oops!</strong> La requisición ya cuenta con un examen asignado.
+      </alert>
     </div>
-  </ng-template>
+  </div>
+</ng-template>

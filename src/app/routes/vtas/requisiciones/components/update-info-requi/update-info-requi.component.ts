@@ -15,28 +15,29 @@ import { UpdateRequisicion } from '../../../../../models/vtas/Requisicion'
   selector: 'app-update-info-requi',
   templateUrl: './update-info-requi.component.html',
   styleUrls: ['./update-info-requi.component.scss'],
-  providers:[RequisicionesService,
-              CatalogosService,
-              {provide: MAT_DATE_LOCALE, useValue: 'es-ES'},
-              {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-              {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
-            ]
+  providers: [RequisicionesService,
+    CatalogosService,
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+  ]
 })
 export class UpdateInfoRequiComponent implements OnInit {
   @Input() Folios: any;
+  @Input() NumeroVacantes: any;
   @ViewChild('asginaciones') asignaciones: AsignarRequisicionComponent;
-  public RequiId :string;
-  public checked : boolean = false;
-  public Prioridades : any[];
-  public Estatus : any[];
-  public requiUpdate : UpdateRequisicion;
+  public RequiId: string;
+  public checked: boolean = false;
+  public Prioridades: any[];
+  public Estatus: any[];
+  public requiUpdate: UpdateRequisicion;
   public return: any;
-  public placeHolderSelect : string;
-  public asignadosRequi :  any[] = [];
-  public infoRequi : any[];
+  public placeHolderSelect: string;
+  public asignadosRequi: any[] = [];
+  public infoRequi: any[];
   public loading: boolean;
 
-  public formRequi : FormGroup;
+  public formRequi: FormGroup;
   public minLimitDate: any;
 
   catalogo = [];
@@ -48,228 +49,236 @@ export class UpdateInfoRequiComponent implements OnInit {
   tipoId = 0;
   se = new FormControl('', [Validators.required]);
   ste = new FormControl('', [Validators.required]);
-    constructor(
-      private settings : SettingsService,
-      public fb: FormBuilder,
-      public serviceRequisicion: RequisicionesService,
-      public serviceCatalogos: CatalogosService,
-      private toasterService: ToasterService,
-      private spinner: NgxSpinnerService,
-      private service: ExamenesService
-    ) {
-        this.formRequi = new FormGroup({
-          folio: new FormControl('',[Validators.required]),
-          fch_Solicitud: new FormControl('',[Validators.required]),
-          fch_Limite: new FormControl('',[Validators.required]),
-          prioridad: new FormControl('',[Validators.required]),
-          fch_Cumplimiento: new FormControl('',[Validators.required]),
-          confidencial: new FormControl(),
-          estatus:  new FormControl('',[Validators.required]),
+  DisabledButton: boolean;
+  constructor(
+    private settings: SettingsService,
+    public fb: FormBuilder,
+    public serviceRequisicion: RequisicionesService,
+    public serviceCatalogos: CatalogosService,
+    private toasterService: ToasterService,
+    private spinner: NgxSpinnerService,
+    private service: ExamenesService
+  ) {
+    this.formRequi = new FormGroup({
+      folio: new FormControl('', [Validators.required]),
+      fch_Solicitud: new FormControl('', [Validators.required]),
+      fch_Limite: new FormControl('', [Validators.required]),
+      prioridad: new FormControl('', [Validators.required]),
+      fch_Cumplimiento: new FormControl('', [Validators.required]),
+      confidencial: new FormControl(),
+      estatus: new FormControl('', [Validators.required]),
+    });
+  }
+
+  //------------------------------------------------------------------------------------
+  // Toasts (Mensajes del sistema)
+  //------------------------------------------------------------------------------------
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
+
+  popToast(type, title, body) {
+
+    var toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 4000,
+      body: body
+    }
+    this.toasterService.pop(toast);
+  }
+
+  ngOnInit() {
+    debugger;
+    this.DisabledButton = true;
+    this.placeHolderSelect = 'ASIGNAR COORDINADOR DE CELULA'
+    this.getPrioridades();
+    this.getEstatus(2);
+    this.formRequi = this.fb.group({
+      folio: [{ value: '', disabled: true }],
+      fch_Solicitud: [{ value: '', disabled: true }],
+      fch_Limite: [{ value: '', disabled: true }],
+      prioridad: [{ value: '' }, Validators.required],
+      fch_Cumplimiento: [{ value: '' }, Validators.required],
+      confidencial: [false],
+      estatus: [{ value: '', disabled: true }]
+    });
+    this.GetCatalogoExamenes();
+
+  }
+
+  ngAfterViewInit(): void {
+    if (this.Folios != null) {
+      this.getInformacionRequisicio(this.Folios)
+      if (this.NumeroVacantes == 0) {
+        this.DisabledButton = true;
+      }
+    }
+  }
+  getAsignacion(event: any) {
+    this.asignadosRequi = event;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    debugger;
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    if (changes.Folios && !changes.Folios.isFirstChange()) {
+      this.getInformacionRequisicio(this.Folios);
+    }
+    if (changes.NumeroVacantes && !changes.NumeroVacantes.isFirstChange()) {
+      if (this.NumeroVacantes === 0 || this.NumeroVacantes == null) {
+        this.DisabledButton = true;
+      }
+      else {
+        this.DisabledButton = false;
+      }
+    }
+
+  }
+
+  GetCatalogoExamenes() {
+    this.service.GetCatalogo().subscribe(data => {
+      this.catalogo = data;
+      console.log(data)
+    })
+  }
+
+  GetExamenes() {
+    this.service.GetExamenes(this.tipoId).subscribe(data => {
+      this.examenes = data;
+    })
+  }
+
+  GetExamen(ExamenId) {
+    this.service.GetExamen(ExamenId).subscribe(data => {
+      this.examen = data;
+      console.log(data)
+    })
+  }
+
+  GetExamenRequi() {
+    this.service.GetExamenRequi(this.RequiId).subscribe(data => {
+      this.examenRequi = data;
+      this.examen = data;
+      console.log(data)
+    })
+  }
+
+  AgregarExamen() {
+
+    var relacion = [{ ExamenId: this.examenId, RequisicionId: this.RequiId }];
+    this.service.InsertRelacion(relacion).subscribe(data => {
+      if (data == 200) {
+        this.popToast('success', 'Asignar Exámen', 'La relación requisición exámen se generó con éxito');
+        this.examenId = 0;
+        this.tipoId = 0;
+        this.examen = [];
+        this.examenes = [];
+        this.CloseModal();
+
+      }
+      else {
+        this.popToast('error', 'Asignar Exámen', 'Ocurrio un error');
+      }
+    })
+
+
+  }
+
+  CloseModal() {
+    this.verExamen = false;
+    this.catalogo = [];
+    this.examenId = 0;
+    this.tipoId = 0;
+    this.GetExamenRequi();
+  }
+
+  public getInformacionRequisicio(folio) {
+    if (folio != null) {
+      this.serviceRequisicion.getRequiFolio(this.Folios)
+        .subscribe(data => {
+          this.asignadosRequi = data.asignados;
+          this.infoRequi = data;
+          this.asignaciones.getAsignados(this.asignadosRequi);
+          this.RequiId = data.id;
+          this.formRequi.patchValue({
+            folio: data.folio,
+            fch_Solicitud: data.fch_Creacion,
+            fch_Limite: data.fch_Limite,
+            prioridad: data.prioridad.id,
+            estatus: data.estatus.id,
+            fch_Cumplimiento: data.fch_Cumplimiento,
+            confidencial: data.confidencial,
+          });
+          this.minLimitDate = data.fch_Creacion;
+          this.GetExamenRequi();
         });
-     }
-
-     //------------------------------------------------------------------------------------
-     // Toasts (Mensajes del sistema)
-     //------------------------------------------------------------------------------------
-     toaster: any;
-     toasterConfig: any;
-     toasterconfig: ToasterConfig = new ToasterConfig({
-       positionClass: 'toast-bottom-right',
-       limit: 7,
-       tapToDismiss: false,
-       showCloseButton: true,
-       mouseoverTimerStop: true,
-     });
-
-     popToast(type, title, body ) {
-
-       var toast : Toast = {
-         type: type,
-         title: title,
-         timeout:4000,
-         body: body
-       }
-       this.toasterService.pop(toast);
-     }
-
-    ngOnInit() {
-      this.placeHolderSelect = 'ASIGNAR COORDINADOR DE CELULA'
-      this.getPrioridades();
-      this.getEstatus(2);
-      this.formRequi = this.fb.group({
-        folio : [{value: '', disabled: true}],
-        fch_Solicitud: [{value: '', disabled:true}],
-        fch_Limite: [{value: '', disabled:true}],
-        prioridad: [{value:''}, Validators.required ],
-        fch_Cumplimiento: [{value: ''}, Validators.required],
-        confidencial: [false],
-        estatus: [{value:'',  disabled:true}]
+    }
+  }
+  /*Cargar Formularios*/
+  getPrioridades() {
+    this.serviceCatalogos.getPrioridades()
+      .subscribe(data => {
+        this.Prioridades = data;
+      })
+  }
+  getEstatus(tipoMov: number) {
+    this.serviceCatalogos.getEstatusRequi(tipoMov)
+      .subscribe(data => {
+        this.Estatus = data;
       });
-      this.GetCatalogoExamenes();
+  }
+  /* Save Requisicion */
+  Save() {
+    this.loading = true;
+    this.spinner.show();
+    let asg = [];
+    if (this.asignadosRequi.length > 0) {
 
-    }
-
-    ngAfterViewInit(): void {
-      if(this.Folios != null){
-        this.getInformacionRequisicio(this.Folios)
-      }
-    }
-    getAsignacion(event: any){
-      this.asignadosRequi = event;
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-      //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-      //Add '${implements OnChanges}' to the class.
-      if (changes.Folios && !changes.Folios.isFirstChange()) {
-        this.getInformacionRequisicio(this.Folios);
-      }
-    }
-
-    GetCatalogoExamenes()
-    {
-      this.service.GetCatalogo().subscribe(data =>{
-        this.catalogo = data;
-        console.log(data)
-      })
-    }
-
-    GetExamenes()
-    {
-      this.service.GetExamenes(this.tipoId).subscribe(data => {
-        this.examenes = data;
-      })
-    }
-
-    GetExamen(ExamenId)
-    {
-      this.service.GetExamen(ExamenId).subscribe(data => {
-        this.examen = data;
-        console.log(data)
-      })
-    }
-
-    GetExamenRequi()
-    {
-      this.service.GetExamenRequi(this.RequiId).subscribe(data => {
-        this.examenRequi = data;
-        this.examen = data;
-        console.log(data)
-      })
-    }
-
-    AgregarExamen()
-    {
-    
-      var relacion = [{ExamenId: this.examenId, RequisicionId: this.RequiId}];
-        this.service.InsertRelacion(relacion).subscribe(data => {
-          if(data == 200)
-          {
-            this.popToast('success', 'Asignar Exámen', 'La relación requisición exámen se generó con éxito');
-            this.examenId = 0;
-            this.tipoId = 0;
-            this.examen = [];
-            this.examenes = [];
-            this.CloseModal();
-           
-          }
-          else
-          {
-            this.popToast('error', 'Asignar Exámen', 'Ocurrio un error');
-          }
-        })
-      
-        
-    }
-
-    CloseModal()
-    {
-      this.verExamen = false;
-      this.catalogo = [];
-      this.examenId = 0;
-      this.tipoId = 0;
-      this.GetExamenRequi();
-    }
-    
-    public getInformacionRequisicio(folio){
-      if(folio != null){
-        this.serviceRequisicion.getRequiFolio(this.Folios)
-          .subscribe(data => {
-            this.asignadosRequi = data.asignados;
-            this.infoRequi = data;
-            this.asignaciones.getAsignados(this.asignadosRequi);
-            this.RequiId = data.id;
-            this.formRequi.patchValue({
-              folio: data.folio,
-              fch_Solicitud: data.fch_Creacion,
-              fch_Limite: data.fch_Limite,
-              prioridad: data.prioridad.id,
-              estatus: data.estatus.id,
-              fch_Cumplimiento: data.fch_Cumplimiento,
-              confidencial: data.confidencial,
-          });
-            this.minLimitDate = data.fch_Creacion;
-            this.GetExamenRequi();
+      for (let a of this.asignadosRequi) {
+        asg.push({
+          RequisicionId: this.RequiId,
+          GrpUsrId: a,
+          CRUD: '',
+          UsuarioAlta: sessionStorage.getItem('usuario'),
+          UsuarioMod: sessionStorage.getItem('usuario'),
+          fch_Modificacion: new Date()
         });
-      }
+      };
     }
-    /*Cargar Formularios*/
-    getPrioridades(){
-      this.serviceCatalogos.getPrioridades()
-        .subscribe(data => {
-          this.Prioridades = data;
-        })
-    }
-    getEstatus(tipoMov: number){
-      this.serviceCatalogos.getEstatusRequi(tipoMov)
-        .subscribe(data => {
-          this.Estatus = data;
-        });
-    }
-    /* Save Requisicion */
-    Save(){
-      this.loading = true;
-      this.spinner.show();
-      let asg = [];
-      if(this.asignadosRequi.length > 0){
-
-        for(let a of this.asignadosRequi){
-          asg.push({
-            RequisicionId: this.RequiId,
-            GrpUsrId : a,
-            CRUD : '',
-            UsuarioAlta : sessionStorage.getItem('usuario'),
-            UsuarioMod : sessionStorage.getItem('usuario'),
-            fch_Modificacion : new Date()
-          });
-        };
-      }
 
 
-      var update = {
-          id: this.RequiId,
-          folio :  this.formRequi.get('folio').value,
-          prioridadId : this.formRequi.get('prioridad').value,
-          fch_Cumplimiento : this.formRequi.get('fch_Cumplimiento').value,
-          estatusId : this.formRequi.get('estatus').value,
-          confidencial : this.formRequi.get('confidencial').value,
-          usuario : sessionStorage.getItem('usuario'),
-          asignacionRequi: asg
-      }
-      this.requiUpdate = update;
-      this.serviceRequisicion.updateRequisicion(this.requiUpdate)
-        .subscribe(data => {
-          this.return = data;
-          if(this.return == 200){
-            this.popToast('success', 'Requisición','La requisición se actualizó correctamente ');
-            this.loading = false;
-            this.spinner.hide();
-          }
-          else{
-              this.popToast('error', 'Oops!!','Algo salio mal intente de nuevo' );
-              this.loading = false;
-              this.spinner.hide();
-          }
-        });
+    var update = {
+      id: this.RequiId,
+      folio: this.formRequi.get('folio').value,
+      prioridadId: this.formRequi.get('prioridad').value,
+      fch_Cumplimiento: this.formRequi.get('fch_Cumplimiento').value,
+      estatusId: this.formRequi.get('estatus').value,
+      confidencial: this.formRequi.get('confidencial').value,
+      usuario: sessionStorage.getItem('usuario'),
+      asignacionRequi: asg
     }
+    this.requiUpdate = update;
+    this.serviceRequisicion.updateRequisicion(this.requiUpdate)
+      .subscribe(data => {
+        this.return = data;
+        if (this.return == 200) {
+          this.popToast('success', 'Requisición', 'La requisición se actualizó correctamente ');
+          this.loading = false;
+          this.spinner.hide();
+        }
+        else {
+          this.popToast('error', 'Oops!!', 'Algo salio mal intente de nuevo');
+          this.loading = false;
+          this.spinner.hide();
+        }
+      });
+  }
 }

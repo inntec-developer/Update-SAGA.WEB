@@ -1,4 +1,4 @@
-import { AfterContentChecked, Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { AfterContentChecked, Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { DialogEditHorarioComponent } from './dialog-edit-horario/dialog-edit-horario.component';
@@ -17,6 +17,7 @@ export class DtHorariosComponent implements OnInit {
   @Input() Horarios: any[];
   @Input('Requi') Requi: boolean;
   @Input('EstatusRequi') EstatusRequi: any;
+  @Output('NumeroVacantes') NumeroVacantes: EventEmitter<any[]> = new EventEmitter();
   public rows: Array<any> = [];
   getHorarios: boolean = false;
   ruta: string;
@@ -58,6 +59,10 @@ export class DtHorariosComponent implements OnInit {
 
   cargarHorarios(data) {
     this.rows = data;
+    var SumaVacantes = this.rows
+      .map(r => r.numeroVacantes)
+      .reduce((sum, current) => sum + current)
+    this.NumeroVacantes.emit(SumaVacantes);
   }
 
   openDialogEdit() {
@@ -69,7 +74,12 @@ export class DtHorariosComponent implements OnInit {
       });
       dialogEditH.afterClosed().subscribe(result => {
         if (result) {
+          debugger;
           this.rows = result;
+          var SumaVacantes = this.rows
+            .map(r => r.numeroVacantes)
+            .reduce((sum, current) => sum + current)
+          this.NumeroVacantes.emit(SumaVacantes);
         }
       });
     }
