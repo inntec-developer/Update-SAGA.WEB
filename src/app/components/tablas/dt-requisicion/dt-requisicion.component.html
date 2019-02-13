@@ -2,11 +2,11 @@
 <!-- <toaster-container [toasterconfig]="toasterconfig"></toaster-container> -->
 <!--mensajes-->
 <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
-<div class="row">
+
     <div class="card">
         <div class="card-body mat-elevation-z8">
         <div class="row">
-            <div class="col-sm-12 col-md-12">
+            <div class="col-sm-12 col-md-12 clearfix p-3 mb-2 bg-light">
               <button id="create" chkPrivilegiosButtons class="mb-1 btn btn-acciones btn-outline-info margen" container="body" placement="bottom" tooltip="Nuevo"
                 [routerLink]="['/ventas/crearRequisicion']">
                 <em class="fa fa-plus"></em>
@@ -80,9 +80,6 @@
             </div>
         
           </div>
-
-
-            <hr>
     
             <!-- <div class="row">
         <div class="col-md-12">
@@ -92,10 +89,10 @@
           </mat-form-field>
         </div>
         </div> -->
-   
 
-      <div #tableContainer>
-        <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table">
+      <div class="row" #tableContainer>
+        <div class="col-sm-12 col-md-12 table-responsive clearfix">
+        <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
           <thead>
             <tr>
               <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
@@ -108,16 +105,18 @@
               </th>
             </tr>
             <tr *ngIf="showFilterRow">
-              <td *ngFor="let column of columns">
-                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
-                  class="form-control form-control-sm" id="{{column.name}}">
-              </td>
-              <td>
-                <input class="form-control form-control-sm" placeholder="Asignada a" [disabled]="true">
-              </td>
-            </tr>
+                <th *ngFor="let column of columns">
+                  <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                    class="form-control form-control-sm" id="{{column.name}}">
+                </th>
+                <th>
+                  <input class="form-control form-control-sm" placeholder="Asignada a" [disabled]="true">
+                </th>
+              </tr>
+         
           </thead>
           <tbody>
+           
             <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8"
               [class.selected]="row.selected">
               <td class="text-center">
@@ -176,17 +175,16 @@
           </tbody>
         </table>
       </div>
-      <br/>
+      </div>
+<br/>
       <div class="row">
-        <div class="col-md-12 ">
+        <div class="col-md-12 clearfix">
           <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
             [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
   
-          <pre *ngIf="config.paging" class="card card-block card-header float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre>
+          <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre>
         </div>
-
- 
-  </div>
+      </div>
 </div>
 </div>
   <!-- Modal para comentarios de la requisicion -->
@@ -208,4 +206,3 @@
       </div>
     </div>
   </div>
-</div>

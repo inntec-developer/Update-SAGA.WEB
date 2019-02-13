@@ -3,7 +3,7 @@
  }
 tbody {
     display:block;
-    height:450px;
+    height:350px;
     overflow:auto;
 }
 thead, tbody tr {
@@ -59,7 +59,41 @@ table {
     height: 51px !important;
     margin:0 2px;
 }
-// .card
-// {
-//     box-shadow: 1px 2px 6px rgba(0, 0, 0, .2);
+.row
+{
+  display: flex;
+  flex-wrap: wrap;
+}
+// @media screen and (max-width: 1600px) {
+//   .row {flex-direction: column;}
+//   .header-button {
+//    // margin-left: 12%;
+//     position: fixed;
+// // height: 60px;
+// // background: whitesmoke;
+//     // max-width: 85% !important;
+//     // height: 70%;
+//     // overflow: scroll;
+//       // top: 12%;
+//     // right: 18%;
+//     z-index: 1000;
+//     // border-bottom-left-radius: 10px;
+//     // border-bottom-right-radius: 10px;
+//   }
+
+//   // .dt-container {
+//   //   max-height: 800px !important;
+//   // }
+//   .card
+//   {
+//     max-height: 550px !important;
+
+//   }
+// table tbody
+//   {
+//     max-height: 250px !important;
+//   }
+//   tr td{
+//     font-size: 10px;
+//   }
 // }
