@@ -46,6 +46,7 @@ export class RequisicionNuevaComponent implements OnInit {
         let datas: CreateRequisicion = new CreateRequisicion();
         datas.IdDamfo = this.damfoId;
         datas.IdAddress = this.direccionId;
+        datas.IdEstatus = 4;
         datas.Usuario = sessionStorage.getItem('usuario');
         datas.UsuarioId = sessionStorage.getItem('id');
         this.serviceRequisiciones.createNewRequi(datas).subscribe(data => {

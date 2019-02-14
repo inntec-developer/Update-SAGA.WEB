@@ -3,6 +3,7 @@ export class CreateRequisicion{
   IdAddress: string;
   Usuario: string;
   UsuarioId: string;
+  IdEstatus: number;
 }
 
 export class UpdateRequisicion{
