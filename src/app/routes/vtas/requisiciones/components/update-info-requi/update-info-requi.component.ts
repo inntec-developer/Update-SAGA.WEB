@@ -25,6 +25,7 @@ import { UpdateRequisicion } from '../../../../../models/vtas/Requisicion'
 export class UpdateInfoRequiComponent implements OnInit {
   @Input() Folios: any;
   @Input() NumeroVacantes: any;
+
   @ViewChild('asginaciones') asignaciones: AsignarRequisicionComponent;
   public RequiId: string;
   public checked: boolean = false;
@@ -50,6 +51,7 @@ export class UpdateInfoRequiComponent implements OnInit {
   se = new FormControl('', [Validators.required]);
   ste = new FormControl('', [Validators.required]);
   DisabledButton: boolean;
+  estatusId: any;
   constructor(
     private settings: SettingsService,
     public fb: FormBuilder,
@@ -95,7 +97,7 @@ export class UpdateInfoRequiComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
+
     this.DisabledButton = true;
     this.placeHolderSelect = 'ASIGNAR COORDINADOR DE CELULA'
     this.getPrioridades();
@@ -126,7 +128,7 @@ export class UpdateInfoRequiComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    debugger;
+
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
     if (changes.Folios && !changes.Folios.isFirstChange()) {
@@ -217,6 +219,7 @@ export class UpdateInfoRequiComponent implements OnInit {
             fch_Cumplimiento: data.fch_Cumplimiento,
             confidencial: data.confidencial,
           });
+          this.estatusId = data.estatus.id;
           this.minLimitDate = data.fch_Creacion;
           this.GetExamenRequi();
         });

@@ -26,6 +26,7 @@ export class RequisicionNuevaComponent implements OnInit {
   public dataRequisicion : any[];
   public Horarios: any[];
   public EstatusRequi: any;
+  public estatusId: any;
 
   constructor(
     private setings : SettingsService,  private serviceCatalogo: CatalogosService, private serviceRequisiciones: RequisicionesService, private _Router: Router,
@@ -36,7 +37,8 @@ export class RequisicionNuevaComponent implements OnInit {
     this._Route.params.subscribe(params => {
       if(params['IdDamfo'] != null && params['IdDireccion'] != null){
         this.damfoId = params['IdDamfo'];
-        this.direccionId = params['IdDireccion']
+        this.direccionId = params['IdDireccion'];
+        this.estatusId = params['IdEstatus']
         this.createRequi = true;
       }else{
         this.createRequi = false;
@@ -46,11 +48,10 @@ export class RequisicionNuevaComponent implements OnInit {
         let datas: CreateRequisicion = new CreateRequisicion();
         datas.IdDamfo = this.damfoId;
         datas.IdAddress = this.direccionId;
-        datas.IdEstatus = 4;
+        datas.IdEstatus = this.estatusId;
         datas.Usuario = sessionStorage.getItem('usuario');
         datas.UsuarioId = sessionStorage.getItem('id');
         this.serviceRequisiciones.createNewRequi(datas).subscribe(data => {
-          debugger;
           this.requisicionId = data.id;
           this.folio = data.folio;
           this.Horarios = data.horariosRequi;

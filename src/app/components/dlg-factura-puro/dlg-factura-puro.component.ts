@@ -23,7 +23,6 @@ export class DlgFacturaPuroComponent implements OnInit {
 
   AddDtosFactura()
   {
-    debugger;
     this.loading = true;
     let estatus = 44;
     let dtos = {RequisicionId: this.data.id, Porcentaje: this.porcentaje,

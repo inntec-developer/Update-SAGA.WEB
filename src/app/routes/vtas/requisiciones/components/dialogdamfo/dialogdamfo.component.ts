@@ -24,6 +24,8 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
   IdDireccion: string;
   DisabledButton: boolean = false;
   HorariosVacantes: any;
+  requisicionId: any;
+  IdEstatus: number;
 
   constructor(
     public dialogRef: MatDialogRef<DialogdamfoComponent>,
@@ -95,38 +97,14 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
         console.log(err);
       });
       if (this.data.tipoReclutamiento === "Puro") {
-        let datas: CreateRequisicion = new CreateRequisicion();
-        datas.IdDamfo = this.IdDamfo;
-        datas.IdAddress = this.IdDireccion;
-        // datas.IdEstatus = 43;
-        datas.Usuario = sessionStorage.getItem('usuario');
-        datas.UsuarioId = sessionStorage.getItem('id');
-        this.service.createNewRequi(datas).subscribe(data => {
-          // this.requisicionId = data.id;
-          // this.folio = data.folio;
-          if (data == 417) {
-            this.popToast('error', 'Oops!!', 'Ocurrio un error al generar requisición');
-            this.DisabledButton = false;
-          }
-          else {
-            let tipousuarioid = sessionStorage.getItem('tipoUsuario');
-            if(tipousuarioid == '3')
-            {
-              this._Router.navigate(['/ventas/requisicionPuro']);
-            }
-            else
-            {
-            this._Router.navigate(['/ventas/requisicion']);
-            
-            }
-            this.onNoClick();
-          }
-        });
+        this.IdEstatus = 43;
       }
       else {
-        this._Router.navigate(['/ventas/requisicionNueva', this.IdDamfo, this.IdDireccion], { skipLocationChange: true });
+        this.IdEstatus = 4;
+        }
+        this._Router.navigate(['/ventas/requisicionNueva', this.IdDamfo, this.IdDireccion, this.IdEstatus], { skipLocationChange: true });
         this.onNoClick();
-      }
+      
 
 
     } else {

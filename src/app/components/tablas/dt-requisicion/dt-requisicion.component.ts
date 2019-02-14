@@ -128,7 +128,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = false;
       this.editar = false;
     }
-    else if(estatusId == 1 || estatusId == 4)
+    else if(estatusId == 1 || estatusId == 4 || estatusId == 46)
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
@@ -258,6 +258,28 @@ export class DtRequisicionComponent implements OnInit {
       this.crm = true; //cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
       this.cancelar = false;
+      this.borrar = true;
+      this.editar = true;
+    }
+    else if(estatusId == 45 && this.element.vacantes > 0 )
+    {
+      this.gbc = true; //garantía busqueda candidato
+      this.cubierta = true;
+      this.cc = true; //cubierta por el cliente
+      this.crm = true; //cubierta reclutamiento medios
+      this.cp = true; // cubierta parcialmente
+      this.cancelar = false;
+      this.borrar = true;
+      this.editar = false;
+    }
+    else if(estatusId == 44 )
+    {
+      this.gbc = true; //garantía busqueda candidato
+      this.cubierta = true;
+      this.cc = true; //cubierta por el cliente
+      this.crm = true; //cubierta reclutamiento medios
+      this.cp = true; // cubierta parcialmente
+      this.cancelar = true;
       this.borrar = true;
       this.editar = true;
     }

@@ -211,6 +211,15 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
   public onCellClick(data: any): any {
   
     data.selected ? data.selected = false : data.selected = true;
+    this.RequisicionId = data.id
+    this.estatusId = data.estatusId;
+    this.Folio = data.folio;
+    this.Vacante = data.vBtra;
+    this.element = data;
+    
+    this.row = data;
+
+    this.ValidarEstatus(data.estatusId);
 
     if (this.rowAux.length == 0) {
       this.rowAux = data;
@@ -222,37 +231,7 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
       aux.selected = true;
       this.rowAux = aux;
     }
-
-    this.RequisicionId = data.id
-    this.estatusId = data.estatusId;
-    this.Folio = data.folio;
-    this.Vacante = data.vBtra;
-    this.element = data;
-    
-    this.row = data;
-
-    this.ValidarEstatus(data.estatusId);
-    // this.ValidarEstatus(data.estatusId)
-    // if (!data.selected) {
-    //   this.selected = false;
-    //   this.element = [];
-    //   this._reinciar();
-    // } else {
-    //   this.selected = true;
-    //   this.view = true;
-    //   this.coment = true;
-    // }
-
-    // if (this.rowAux.length == 0) {
-    //   this.rowAux = data;
-    // }
-    // else if (data.selected && this.rowAux != []) {
-    //   var aux = data;
-    //   data = this.rowAux;
-    //   data.selected = false;
-    //   aux.selected = true;
-    //   this.rowAux = aux;
-    // }
+   
   }
 
   updataStatus(estatusId, estatus)
@@ -269,7 +248,7 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
 
           this.ValidarEstatus(estatusId);
 
-          this.onChangeTable(this.config);
+          this.refreshTable();
           this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
 
         }
@@ -377,7 +356,20 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
       if(result.Ok == 200)
       {
         this.postulacionservice.SetProcesoVacante({estatusId: result.estatus, requisicionId: this.RequisicionId}).subscribe(data =>{
-          this.refreshTable();
+
+          if(data == 201)
+          {
+            
+            this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+            this.refreshTable();
+
+
+          }
+          else
+          {
+            this.popToast('error', 'Estatus', 'Ocurrio un error al intentar actualizar datos');
+          }
+
         })
        
       }

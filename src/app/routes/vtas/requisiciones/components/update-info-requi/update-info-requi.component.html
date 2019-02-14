@@ -59,7 +59,7 @@
       </div>
     </div>
     <br>
-    <div class="col-mg-10 col-sm-9">
+    <div *ngIf="estatusId != 43" class="col-mg-10 col-sm-9">
       <app-asignar-requisicion #asginaciones [placeHolder]='placeHolderSelect' (Asignacion)='getAsignacion($event)'></app-asignar-requisicion>
     </div>
     <div class="row">

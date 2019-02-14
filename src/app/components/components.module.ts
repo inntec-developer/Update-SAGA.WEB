@@ -122,6 +122,7 @@ import { DlgRevisarExamenesComponent } from './dlg-revisar-examenes/dlg-revisar-
 import { DlgAsignarPerfilComponent } from './dlg-asignar-perfil/dlg-asignar-perfil.component';
 import { DtRequisicionReclPuroComponent } from './tablas/dt-requisicion-recl-puro/dt-requisicion-recl-puro.component';
 import { DlgFacturaPuroComponent } from './dlg-factura-puro/dlg-factura-puro.component';
+import { RequisicionNuevaPuroComponent } from './requisicion-nueva-puro/requisicion-nueva-puro.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -251,7 +252,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ActividadesReclutadorComponent,
     FileManagerComponent,
     DlgAsignarPerfilComponent,
-    DlgFacturaPuroComponent
+    DlgFacturaPuroComponent,
+    RequisicionNuevaPuroComponent
   ],
   exports: [
     DtDireccionComponent,
