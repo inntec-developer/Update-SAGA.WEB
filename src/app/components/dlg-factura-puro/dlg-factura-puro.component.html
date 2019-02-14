@@ -1,0 +1,94 @@
+<h3 class="text-warning text-left" mat-dialog-title> <em class="fa fa-file-text-o"></em> VACANTE FACTURA
+    <button type="button" class="btn btn-xs btn-danger btn-circle float-right" mat-dialog-close ><i class="fa fa-times"></i></button>
+</h3>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+  <div class="card">
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item text-muted">EMPRESA: <span class="text-primary">{{data.cliente}}</span></li>
+            <li class="list-group-item text-muted">PUESTO: <span class="text-primary">{{data.vBtra}} </span></li>
+            <li class="list-group-item text-muted">FOLIO: <span class="text-primary">{{data.folio }}</span> NO: <span class="text-primary">{{data.vacantes }}</span> SUELDO FINAL: <span class="text-primary">{{data.sueldoMaximo}}</span> TOTAL: <span class="text-primary"> {{data.sueldoMaximo}}</span></li>
+          </ul>
+          <mat-divider></mat-divider>
+          <br/>
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item text-muted">RAZON SOCIAL:<span class="text-primary">{{data.razon}}</span></li>
+              <li class="list-group-item text-muted">EMPRESA FACTURADORA:<span class="text-primary">{{data.factura}}</span> </li>
+            </ul>
+        <mat-divider></mat-divider>
+        <br/>
+       <table class="table">
+         <thead>
+           <tr>
+             <th>ESTATUS VACANTE</th>
+             <th>PORCENTAJE DE PAGO</th>
+             <th>MONTO A FACTURAR</th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr>
+             <td>ENVIO A FACTURAR</td>
+             <td>
+                <div class="input-group input-group-sm mb-3">
+                    <input type="text" class="form-control" [(ngModel)]="porcentaje">
+                    <div class="input-group-append">
+                      <span class="input-group-text">%</span>
+                    </div>
+                  </div>               
+             </td>
+             <td>
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                      </div>
+                    <input type="text" class="form-control" [(ngModel)]="monto">
+                 
+                  </div>               
+             </td>
+           </tr>
+           <tr>
+              <td>CONTRATADO</td>
+              <td>
+                 <div class="input-group input-group-sm mb-3">
+                     <input type="text" class="form-control" [(ngModel)]="perContratado">
+                     <div class="input-group-append">
+                       <span class="input-group-text">%</span>
+                     </div>
+                   </div>               
+              </td>
+              <td>
+                 <div class="input-group input-group-sm mb-3">
+                     <div class="input-group-prepend">
+                         <span class="input-group-text">$</span>
+                       </div>
+                     <input type="text" class="form-control" [(ngModel)]="montoContratado">
+                  
+                   </div>               
+              </td>
+            </tr>
+         </tbody>
+       </table>
+       <br/>
+       <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1" [(ngModel)]="asignar">
+          <label class="form-check-label" for="exampleCheck1">ENVIAR A RECLUTAMIENTO (ASIGNAR RECLUTADOR)</label>
+        </div>
+
+    </div>
+  </div>
+  <span></span>
+</mat-dialog-content>
+<mat-dialog-actions class="float-right">
+    <button type="button" class="btn btn-xs btn-labeled btn-outline-danger mb-1 margin float-right" mat-dialog-close>
+      <span class="btn-label">
+        <i class="fa fa-times"></i>
+      </span> Cancelar
+    </button>
+    <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-1 margin float-right" (click)="AddDtosFactura()" [disabled]="monto < 0 || montoContratados < 0">
+      <span class="btn-label">
+        <i class="fa fa-check"></i>
+      </span> Aceptar
+    </button>
+    <img class="loading-position" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+  </mat-dialog-actions>

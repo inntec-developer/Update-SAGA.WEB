@@ -52,6 +52,7 @@ export class RequisicionesService {
   private URLGetUltimoEstatusRequi = ApiConection.ServiceUrl + ApiConection.GetUltimoEstatusRequi;
   private URLExecProcedurePause = ApiConection.ServiceUrl + ApiConection.execProcedurePause;
   private URLGetRequiTipoRecl = ApiConection.ServiceUrl + ApiConection.GetRequiTipoRecl;
+  private URLAddDtosFactura = ApiConection.ServiceUrl + ApiConection.AddDatosFactura;
 
   constructor(private http: Http, private _httpClient: HttpClient) { }
   // Recupera todos los damfos que esten dados de alta y se encuentren activos
@@ -232,6 +233,11 @@ export class RequisicionesService {
     return this._httpClient.get(this.URLGetRequiTipoRecl, { params: params });
   }
 
+  AddDatosFactura(datos):Observable<any>
+  {
+    
+    return this._httpClient.post(this.URLAddDtosFactura, datos, httpOptions);
+  }
   ExecProcedurePause(): Observable<any> {
    
     return this._httpClient.get(this.URLExecProcedurePause);

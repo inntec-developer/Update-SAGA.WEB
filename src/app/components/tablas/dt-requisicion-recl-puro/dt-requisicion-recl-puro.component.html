@@ -29,16 +29,39 @@
               [ngClass]="(!coment) ? 'disabled' : 'btn-outline-dark'" container="body" placement="bottom" tooltip="Comentarios">
               <em class="fa fa-comments-o"></em>
             </button>
-
+<!-- 
             <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="editar" [ngClass]="editar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-primary'"
               container="body" placement="bottom" tooltip="Editar" (click)="editRequi()">
               <em class="icon-pencil"></em>
+            </button> -->
+
+            
+            <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="!facturar" [ngClass]="!facturar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
+              container="body" placement="bottom" tooltip="Enviar a factura" (click)="openDialogFactura()">
+              <em class="fa fa-file-text-o"></em>
             </button>
 
-            <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="borrar" [ngClass]="borrar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
+            <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="!autorizar" [ngClass]="!autorizar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
+            container="body" placement="bottom" tooltip="Autorizar" (click)="updataStatus(46, 'Autorizada')">
+            <em class="fa fa-check"></em>
+          </button>
+
+
+            <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="!cancelar" [ngClass]="!cancelar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
+            container="body" placement="bottom" tooltip="Cancelar" (click)="openDialogCancel();">
+            <em class="icon-ban"></em>
+          </button>
+
+
+            <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="!borrar" [ngClass]="!borrar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
               container="body" placement="bottom" tooltip="Eliminar" (click)="openDialogDelete()">
               <em class="icon-trash"></em>
             </button>
+            <button class="mb-1 btn btn-outline-success margen float-right" type="button" (click)="refreshTable()" container="body" placement="bottom"
+            tooltip="Actualizar">
+            <em class="icon-refresh"></em>
+          </button>
+
             </div>
         </div>
     <div class="row" #tableContainer>
@@ -78,7 +101,7 @@
               <td class="text-center">
                 <span class="px-1 mr-1  badge  badge-pill badge-info"> {{row.vacantes}}</span>
               </td>
-              <td class="text-center"> {{row.tipoReclutamiento}}</td>
+              <!-- <td class="text-center"> {{row.tipoReclutamiento}}</td> -->
               <!-- <td class="text-right"> {{row.sueldoMinimo | currency: $}}</td>
       <td class="text-right"> {{row.sueldoMaximo | currency: $}}</td> -->
               <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
@@ -129,3 +152,4 @@
     </div>
   </div>
 </div>
+<toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>

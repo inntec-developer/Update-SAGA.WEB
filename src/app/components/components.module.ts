@@ -121,6 +121,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { DlgRevisarExamenesComponent } from './dlg-revisar-examenes/dlg-revisar-examenes.component';
 import { DlgAsignarPerfilComponent } from './dlg-asignar-perfil/dlg-asignar-perfil.component';
 import { DtRequisicionReclPuroComponent } from './tablas/dt-requisicion-recl-puro/dt-requisicion-recl-puro.component';
+import { DlgFacturaPuroComponent } from './dlg-factura-puro/dlg-factura-puro.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -249,7 +250,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     EditarCandidatoEstatusComponent,
     ActividadesReclutadorComponent,
     FileManagerComponent,
-    DlgAsignarPerfilComponent
+    DlgAsignarPerfilComponent,
+    DlgFacturaPuroComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -321,6 +323,6 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     { provide: PaginationConfig, useValue: getSpanishPaginatorBtp() },
     ToasterService
   ],
-  entryComponents: [DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent]
+  entryComponents: [DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent]
 })
 export class ComponentsModule { }

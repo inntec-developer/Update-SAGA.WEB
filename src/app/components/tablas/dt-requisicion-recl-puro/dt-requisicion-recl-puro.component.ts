@@ -1,8 +1,13 @@
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { RequisicionesService } from './../../../service/requisiciones/requisiciones.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { DialogDeleteRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-delete-requi/dialog-delete-requi.component';
+import { MatDialog } from '@angular/material';
+import { DialogCancelRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-cancel-requi/dialog-cancel-requi.component';
+import { DlgFacturaPuroComponent } from '../../dlg-factura-puro/dlg-factura-puro.component';
+import { PostulateService } from '../../../service/SeguimientoVacante/postulate.service';
 
 @Component({
   selector: 'app-dt-requisicion-recl-puro',
@@ -28,8 +33,22 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
 
    requisicionId: any;
    Vacante: any;
+  RequisicionId: any;
+  estatusId: any;
+  Folio: any;
+  row = [];
+  rowAux: any = [];
 
-  constructor(private service: RequisicionesService, private spinner: NgxSpinnerService,  private _Router: Router) { }
+  facturar = false;
+  cancelar = false;
+  borrar = false;
+  autorizar = false;
+
+  constructor(private service: RequisicionesService, private spinner: NgxSpinnerService,
+     private _Router: Router,
+     private dialog: MatDialog,
+     private toasterService: ToasterService,
+     private postulacionservice: PostulateService) { }
 
   public rows: Array<any> = [];
   public columns: Array<any> = [
@@ -37,7 +56,7 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
     { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
     { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
     { title: 'No. Vacantes', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' } },
-    { title: 'Tipo Recl.', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo' } },
+    // { title: 'Tipo Recl.', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo' } },
     // { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
     // { title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
     { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
@@ -189,6 +208,125 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
 
   }
 
+  public onCellClick(data: any): any {
+  
+    data.selected ? data.selected = false : data.selected = true;
+
+    if (this.rowAux.length == 0) {
+      this.rowAux = data;
+    }
+    else if (data.selected && this.rowAux != []) {
+      var aux = data;
+      data = this.rowAux;
+      data.selected = false;
+      aux.selected = true;
+      this.rowAux = aux;
+    }
+
+    this.RequisicionId = data.id
+    this.estatusId = data.estatusId;
+    this.Folio = data.folio;
+    this.Vacante = data.vBtra;
+    this.element = data;
+    
+    this.row = data;
+
+    this.ValidarEstatus(data.estatusId);
+    // this.ValidarEstatus(data.estatusId)
+    // if (!data.selected) {
+    //   this.selected = false;
+    //   this.element = [];
+    //   this._reinciar();
+    // } else {
+    //   this.selected = true;
+    //   this.view = true;
+    //   this.coment = true;
+    // }
+
+    // if (this.rowAux.length == 0) {
+    //   this.rowAux = data;
+    // }
+    // else if (data.selected && this.rowAux != []) {
+    //   var aux = data;
+    //   data = this.rowAux;
+    //   data.selected = false;
+    //   aux.selected = true;
+    //   this.rowAux = aux;
+    // }
+  }
+
+  updataStatus(estatusId, estatus)
+  {
+    var datos = {estatusId: estatusId, requisicionId: this.RequisicionId }
+   
+      this.postulacionservice.SetProcesoVacante(datos).subscribe(data => {
+        if (data == 201) {
+          var idx = this.rows.findIndex(x => x.id == this.RequisicionId);
+          this.rows[idx]['estatus'] = estatus;
+          this.rows[idx]['estatusId'] = estatusId;
+          
+        
+
+          this.ValidarEstatus(estatusId);
+
+          this.onChangeTable(this.config);
+          this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+
+        }
+        else {
+          this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
+        }
+
+      })
+  }
+  
+
+  ValidarEstatus(estatusId)
+  {
+    if(estatusId == 43)
+    {
+      this.facturar = true;
+      this.cancelar = true;
+      this.borrar = true;
+      this.autorizar = false;
+    }
+    else if(estatusId == 44)
+    {
+      this.facturar = false;
+      this.cancelar = true;
+      this.borrar = false;
+      this.autorizar = true;
+    }
+    else if(estatusId == 45)
+    {
+      this.facturar = false;
+      this.cancelar = true;
+      this.borrar = false;
+      this.autorizar = true;
+    }
+    else if(estatusId == 8)
+    {
+      this.facturar = false;
+      this.cancelar = false;
+      this.borrar = true;
+      this.autorizar = false;
+    }
+    else if(estatusId == 46)
+    {
+      this.facturar = false;
+      this.cancelar = false;
+      this.borrar = false;
+      this.autorizar = false;
+    }
+    else if(estatusId == 4)
+    {
+      this.facturar = true;
+      this.cancelar = false;
+      this.borrar = false;
+      this.autorizar = false;
+
+    }
+  }
   showRequi() {
     this._Router.navigate(['/ventas/visualizarRequisicion/', this.element.id, this.element.folio, this.Vacante], { skipLocationChange: true });
   }
@@ -196,4 +334,75 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
   editRequi() {
     this._Router.navigate(['/ventas/edicionRequisicion/', this.element.id, this.element.folio], { skipLocationChange: true });
   }
+
+  openDialogDelete() {
+    let dialogDlt = this.dialog.open(DialogDeleteRequiComponent, {
+      data: this.element
+    });
+    var window: Window
+    dialogDlt.afterClosed().subscribe(result => {
+      if(result == 200)
+      {
+        this.refreshTable();
+      }
+    });
+  }
+
+  openDialogCancel() {
+    this.element.motivoId = 17;
+    let dialogCnc = this.dialog.open(DialogCancelRequiComponent, {
+      data: this.element
+    });
+    var window: Window
+    dialogCnc.afterClosed().subscribe(result => {
+      if(result == 200)
+      {
+        // this.updataStatus(8, 'Cancelar')
+        // this.ValidarEstatus(8);
+        this.refreshTable();
+      }
+      
+      
+    })
+  }
+
+  openDialogFactura() {
+    console.log(this.row)
+    let dialogDlt = this.dialog.open(DlgFacturaPuroComponent, {
+      disableClose: true,
+      data: this.row
+    });
+    var window: Window
+    dialogDlt.afterClosed().subscribe(result => {
+      if(result.Ok == 200)
+      {
+        this.postulacionservice.SetProcesoVacante({estatusId: result.estatus, requisicionId: this.RequisicionId}).subscribe(data =>{
+          this.refreshTable();
+        })
+       
+      }
+    });
+  }
+
+  /*
+  * Creacion de mensajes
+  * */
+ toaster: any;
+ toasterConfig: any;
+ toasterconfig: ToasterConfig = new ToasterConfig({
+   positionClass: 'toast-bottom-right',
+   limit: 7, tapToDismiss: false,
+   showCloseButton: true,
+   mouseoverTimerStop: true,
+ });
+ popToast(type, title, body) {
+   var toast: Toast = {
+     type: type,
+     title: title,
+     timeout: 5000,
+     body: body
+   }
+   this.toasterService.pop(toast);
+ }
+
 }

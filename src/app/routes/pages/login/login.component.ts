@@ -62,7 +62,8 @@ export class LoginComponent implements OnInit {
                         sessionStorage.setItem('email', data.email);
                         sessionStorage.setItem('clave', data.clave)
                         sessionStorage.setItem('foto', data.foto);
-                        sessionStorage.setItem('id', data.id)
+                        sessionStorage.setItem('id', data.id);
+                        sessionStorage.setItem('tipoUsuario', data.tipoUsuarioId);
                         
                         this.router.navigate(['/home']);
                     }
