@@ -1,5 +1,3 @@
-import { ApiConection } from './../api-conection.service';
-
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -8,11 +6,12 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
 
+import { ApplicationRef, Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions, Response } from '@angular/http';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 
-import { Injectable } from '@angular/core';
+import { ApiConection } from './../api-conection.service';
 import { Observable } from 'rxjs/Observable';
 
 const httpOptions = {
@@ -52,6 +51,7 @@ export class RequisicionesService {
   private URLGetUltimoEstatusRequi = ApiConection.ServiceUrl + ApiConection.GetUltimoEstatusRequi;
   private URLExecProcedurePause = ApiConection.ServiceUrl + ApiConection.execProcedurePause;
   private URLGetRequiTipoRecl = ApiConection.ServiceUrl + ApiConection.GetRequiTipoRecl;
+  private URLSendEmailRequiPuro = ApiConection.ServiceUrl + ApiConection.SendEmailRequiPuro;
   private URLAddDtosFactura = ApiConection.ServiceUrl + ApiConection.AddDatosFactura;
 
   constructor(private http: Http, private _httpClient: HttpClient) { }
@@ -233,9 +233,13 @@ export class RequisicionesService {
     return this._httpClient.get(this.URLGetRequiTipoRecl, { params: params });
   }
 
+  SendEmailRequiPuro(IdRequisicion: any): Observable<any>{
+    let params = new HttpParams().set('IdRequisicion', IdRequisicion);
+    return this._httpClient.get(this.URLSendEmailRequiPuro, {params: params});
+  }
+
   AddDatosFactura(datos):Observable<any>
   {
-    
     return this._httpClient.post(this.URLAddDtosFactura, datos, httpOptions);
   }
   ExecProcedurePause(): Observable<any> {
