@@ -451,18 +451,18 @@ export class DtRequisicionComponent implements OnInit {
   * Funciones para la administracion de las requisiciones.
   * */
   public refreshTable() {
+    debugger;
     this.getRequisiciones();
     setTimeout(() => {
       this.columns.forEach(element => {
-        element.filtering.filterString = '';
        (<HTMLInputElement>document.getElementById(element.name)).value = '';
       });
       this.onChangeTable(this.config);
       this.estatusId = null;
       this.enProceso = null;
-      this.element = null;
+      this.element = [];
       this.ValidarEstatus(9999);
-    }, 300);
+    }, 1000);
   }
 
   public clearfilters(){
@@ -473,7 +473,7 @@ export class DtRequisicionComponent implements OnInit {
     this.onChangeTable(this.config);
     this.estatusId = null;
     this.enProceso = null;
-    this.element = null;
+    this.element = [];
   }
 
   showRequi() {

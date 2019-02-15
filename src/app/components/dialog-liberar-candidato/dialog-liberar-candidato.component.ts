@@ -1,9 +1,9 @@
-import { InfoCandidatoService } from './../../service/SeguimientoVacante/info-candidato.service';
-import { CandidatosService } from './../../service/Candidatos/candidatos.service';
-import { Component, Inject, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
+import { CandidatosService } from './../../service/Candidatos/candidatos.service';
 import { CatalogosService } from './../../service/catalogos/catalogos.service';
+import { InfoCandidatoService } from './../../service/SeguimientoVacante/info-candidato.service';
 
 @Component({
   selector: 'app-dialog-liberar-candidato',
@@ -43,7 +43,6 @@ export class DialogLiberarCandidatoComponent implements OnInit {
   }
 
   _liberarCandidato() {
-debugger;
       this.loading = true;
      
       var data = {

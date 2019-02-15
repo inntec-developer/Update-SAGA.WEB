@@ -8,6 +8,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { AsignarRequisicionComponent } from '../../../../../components/asignar-requisicion/asignar-requisicion.component';
 import { ExamenesService } from './../../../../../service/Examenes/examenes.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 import { SettingsService } from '../../../../../core/settings/settings.service';
 import { UpdateRequisicion } from '../../../../../models/vtas/Requisicion'
 
@@ -59,7 +60,8 @@ export class UpdateInfoRequiComponent implements OnInit {
     public serviceCatalogos: CatalogosService,
     private toasterService: ToasterService,
     private spinner: NgxSpinnerService,
-    private service: ExamenesService
+    private service: ExamenesService,
+    private _Router: Router,
   ) {
     this.formRequi = new FormGroup({
       folio: new FormControl('', [Validators.required]),
@@ -276,6 +278,18 @@ export class UpdateInfoRequiComponent implements OnInit {
           this.popToast('success', 'Requisición', 'La requisición se actualizó correctamente ');
           this.loading = false;
           this.spinner.hide();
+          if(this.estatusId == 43){
+            this.serviceRequisicion.SendEmailRequiPuro(update.id).subscribe(email => {
+              if(email == 200){
+                this.popToast('success', 'Reclutamiento Puro', 'Se a notificado por correo electrónico al Gerente de Ventas, para revisión de la vacante.');
+                setTimeout(() => {
+                  this._Router.navigate(['/ventas/requisicion']);
+                }, 500);
+              } else{
+                this.popToast('error', 'Error', 'Error inesperado al intentar notificar al Gerente de Ventas sobre la vanate de Reclutamiento Puro.')
+              }
+            });
+          }
         }
         else {
           this.popToast('error', 'Oops!!', 'Algo salio mal intente de nuevo');
