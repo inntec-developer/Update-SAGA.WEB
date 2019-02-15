@@ -148,10 +148,10 @@ export class DtRequisicionComponent implements OnInit {
       this.crm = true; //cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = true;
-      this.borrar = true;
+      this.borrar = false;
       this.editar = true;
     }
-    else if( estatusId < 34 && this.element.enProceso > 0 && this.element.contratados == 0)
+    else if( estatusId < 34 && estatusId != 8 && this.element.enProceso > 0 && this.element.contratados == 0)
     {
       this.gbc = true;
       this.cubierta = true;
@@ -162,7 +162,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = true;
     }
-    else if( estatusId < 34 && this.element.postulados > 0 && this.element.contratados == 0)
+    else if( estatusId < 34 && estatusId != 8 && this.element.postulados > 0 && this.element.contratados == 0)
     {
       this.gbc = true;
       this.cubierta = true;
@@ -173,7 +173,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = true
     }
-    else if(estatusId < 34 && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes )
+    else if(estatusId < 34 && estatusId != 8 && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes )
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = false;
@@ -184,7 +184,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = true;
     }
-    else if(estatusId < 34 && this.element.vacantes > 0 && ( this.element.contratados > 0  && this.element.contratados < this.element.vacantes ) )
+    else if(estatusId < 34 && estatusId != 8 && this.element.vacantes > 0 && ( this.element.contratados > 0  && this.element.contratados < this.element.vacantes ) )
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
@@ -195,7 +195,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = true;
     }
-    else if( estatusId < 34 && (this.element.enProceso == 0 || this.element.postulados == 0))
+    else if( estatusId < 34 && estatusId != 8 && (this.element.enProceso == 0 || this.element.postulados == 0))
     {
       this.gbc = true;
       this.cubierta = true;
