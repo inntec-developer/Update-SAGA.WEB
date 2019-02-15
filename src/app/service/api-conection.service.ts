@@ -17,7 +17,7 @@ export class ApiConection {
   public static ServiceUrlLoginBolsa = 'http://sagainn.com.mx:402';
   // Conexion a FORMATO 290
 
-  public static ServicioUrl290 = 'http://192.168.8.139:222/Home/';
+  public static ServicioUrl290 = 'http://sagainn.com.mx:413/Home/';
 
   /* Calendario Event */
   public static GetCalendarioEvent = 'CalendarEvent/GetEvent';
