@@ -13,3 +13,21 @@
 {
     color:red;
 }
+
+.collapseButton
+{
+    position: fixed;
+    width: 100%;
+    top:25%;
+    margin-left: 15%;
+    z-index: 9999;
+
+}
+.collapsedMin
+{
+    position: fixed;
+    width: 100%;
+    top:25%;
+    margin-left: 4%;
+    z-index: 9999;
+}

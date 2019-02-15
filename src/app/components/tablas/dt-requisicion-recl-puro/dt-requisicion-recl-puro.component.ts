@@ -297,14 +297,7 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
       this.borrar = false;
       this.autorizar = false;
     }
-    else if(estatusId == 4)
-    {
-      this.facturar = true;
-      this.cancelar = false;
-      this.borrar = false;
-      this.autorizar = false;
-
-    }
+   
   }
   showRequi() {
     this._Router.navigate(['/ventas/visualizarRequisicion/', this.element.id, this.element.folio, this.Vacante], { skipLocationChange: true });
@@ -337,7 +330,7 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
       if(result == 200)
       {
         // this.updataStatus(8, 'Cancelar')
-        // this.ValidarEstatus(8);
+        this.ValidarEstatus(8);
         this.refreshTable();
       }
       
