@@ -1,13 +1,14 @@
-import { Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-import { RequisicionesService } from './../../../service/requisiciones/requisiciones.service';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { DialogDeleteRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-delete-requi/dialog-delete-requi.component';
-import { MatDialog } from '@angular/material';
+
 import { DialogCancelRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-cancel-requi/dialog-cancel-requi.component';
+import { DialogDeleteRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-delete-requi/dialog-delete-requi.component';
 import { DlgFacturaPuroComponent } from '../../dlg-factura-puro/dlg-factura-puro.component';
+import { MatDialog } from '@angular/material';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from '../../../service/SeguimientoVacante/postulate.service';
+import { RequisicionesService } from './../../../service/requisiciones/requisiciones.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dt-requisicion-recl-puro',
@@ -192,11 +193,10 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
     this.GetRequisicionesPuro();
     setTimeout(() => {
       this.columns.forEach(element => {
-        element.filtering.filterString = '';
        (<HTMLInputElement>document.getElementById(element.name)).value = '';
       });
       this.onChangeTable(this.config);
-    }, 300);
+    }, 1000);
   }
 
   public clearfilters(){

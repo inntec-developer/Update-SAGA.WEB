@@ -1,4 +1,5 @@
 import { AfterContentChecked, Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { ActivatedRoute } from '@angular/router';
 import { DialogEditHorarioComponent } from './dialog-edit-horario/dialog-edit-horario.component';
@@ -28,7 +29,8 @@ export class DtHorariosComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private service: RequisicionesService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private toasterService: ToasterService,
   ) {
     // this.ruta = this.activeRoute.snapshot.routeConfig ? 
     // this.activeRoute.routeConfig.data.componente : 
@@ -73,12 +75,14 @@ export class DtHorariosComponent implements OnInit {
         data: this.horario
       });
       dialogEditH.afterClosed().subscribe(result => {
+        debugger;
         if (result) {
           this.rows = result;
           var SumaVacantes = this.rows
             .map(r => r.numeroVacantes)
             .reduce((sum, current) => sum + current)
           this.NumeroVacantes.emit(SumaVacantes);
+          
         }
       });
     }
@@ -120,6 +124,27 @@ export class DtHorariosComponent implements OnInit {
       }
     }
   }
+
+  /*
+  * Creacion de mensajes
+  * */
+ toaster: any;
+ toasterConfig: any;
+ toasterconfig: ToasterConfig = new ToasterConfig({
+   positionClass: 'toast-bottom-right',
+   limit: 7, tapToDismiss: false,
+   showCloseButton: true,
+   mouseoverTimerStop: true,
+ });
+ popToast(type, title, body) {
+   var toast: Toast = {
+     type: type,
+     title: title,
+     timeout: 5000,
+     body: body
+   }
+   this.toasterService.pop(toast);
+ }
 }
 
 
