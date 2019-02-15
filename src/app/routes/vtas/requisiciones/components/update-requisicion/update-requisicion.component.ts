@@ -20,7 +20,6 @@ export class UpdateRequisicionComponent implements OnInit {
     
   }
   ngOnInit(){
-    debugger;
     this._Router.params.subscribe(params => {
       if(params['IdRequi'] != null){
         this.requiId = params['IdRequi'];

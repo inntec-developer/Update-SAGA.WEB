@@ -74,7 +74,6 @@ export class DtHorariosComponent implements OnInit {
       });
       dialogEditH.afterClosed().subscribe(result => {
         if (result) {
-          debugger;
           this.rows = result;
           var SumaVacantes = this.rows
             .map(r => r.numeroVacantes)
