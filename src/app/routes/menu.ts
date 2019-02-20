@@ -86,7 +86,7 @@ const headingMain = {
 };
 
 export const menu = [
-   // headingMain,
+    headingMain,
     Home,
     // Reclutamiento,
     // Ventas

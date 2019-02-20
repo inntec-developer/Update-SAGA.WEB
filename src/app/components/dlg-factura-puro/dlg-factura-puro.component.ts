@@ -9,7 +9,7 @@ import { RequisicionesService } from '../../service';
 })
 export class DlgFacturaPuroComponent implements OnInit {
 
-  porcentaje = 0;
+  porcentaje = 100;
   monto = 0;
   perContratado = 0;
   montoContratado = 0;
@@ -19,8 +19,8 @@ export class DlgFacturaPuroComponent implements OnInit {
    private dialog: MatDialogRef<DlgFacturaPuroComponent>) { }
 
   ngOnInit() {
+    
     this.monto = this.data.sueldoMaximo * this.data.vacantes;
-    this.montoContratado = this.data.sueldoMaximo * this.data.vacantes;
   }
 
   AddDtosFactura()
