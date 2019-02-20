@@ -35,6 +35,11 @@ table {
   margin: 0 2px;
 }
 
+tbody tr:hover{
+  font-size: 14.5px;
+  box-shadow:1px 20px 60px rgba(0,0,0,.23);
+}
+
 
 
 .header-button {
