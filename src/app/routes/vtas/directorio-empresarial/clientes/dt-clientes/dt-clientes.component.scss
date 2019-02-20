@@ -1,43 +1,43 @@
 tbody {
-    display:block;
-    height:450px;
-    overflow:auto;
+  display: block;
+  height: 450px;
+  overflow: auto;
 }
-thead, tbody tr {
-    display:table;
-    width:100%;
-    table-layout:fixed;
+
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }
+
 thead {
-    width: calc( 100% - 1em )
+  width: calc(100% - 1em)
 }
+
 table {
-    width:400px;
+  width: 400px;
 }
 
-tbody tr:hover
-{
-//   transform:scale(0.999,0.9);
-//   transform-origin:center;
-    font-size: 15px;
-  box-shadow:1px 2px 6px rgba(0,0,0,.23);
-}
-.margen 
-{
-    margin:0 2px;
+tbody tr:hover {
+  font-size: 14.5px;
+  box-shadow: 1px 20px 60px rgba(0, 0, 0, .23);
 }
 
-.modal-lg
-{
-    max-width: 100% !important;
+.margen {
+  margin: 0 2px;
 }
-.modal-lg .long
-{
-    max-height: 100% !important;
+
+.modal-lg {
+  max-width: 100% !important;
+}
+
+.modal-lg .long {
+  max-height: 100% !important;
 }
 
 .vl {
-    border-left: 1px solid #aaa;
-    height: 31px;
-    margin:0 2px;
+  border-left: 1px solid #aaa;
+  height: 31px;
+  margin: 0 2px;
 }
