@@ -24,6 +24,10 @@ export class NuevoProspectoComponent implements OnInit {
   public showFilterRowC: boolean;
   public showFilterRowCn: boolean;
 
+  /* DECLARACION DE OBJETOS */
+  public Telefonos: Array<any> = [];
+  public Emails: Array<any> = [];
+
   /* Variables Auxuliares */
   public auxPais: any;
   public auxEstado: any;
@@ -34,6 +38,7 @@ export class NuevoProspectoComponent implements OnInit {
   private idAuxD: number = 1;
   private idAuxT: number = 1;
   private idAuxC: number = 1;
+  private idAuxCn: number = 1;
   /***************************/
 
   public formGeneral: FormGroup;
@@ -210,12 +215,12 @@ export class NuevoProspectoComponent implements OnInit {
       Activo: new FormControl(true)
     });
     this.formContactos = new FormGroup({
-      ContactoDireccion: new FormControl('',[Validators.required]),
-      Nombre: new FormControl('',[Validators.required]),
-      ApellidoPaterno: new FormControl('',[Validators.required]),
+      ContactoDireccion: new FormControl('', [Validators.required]),
+      Nombre: new FormControl('', [Validators.required]),
+      ApellidoPaterno: new FormControl('', [Validators.required]),
       ApellidoMaterno: new FormControl(''),
-      Puesto: new FormControl('',[Validators.required]),
-      TipoTelefono: new FormControl('',[Validators.required]),
+      Puesto: new FormControl('', [Validators.required]),
+      TipoTelefono: new FormControl('', [Validators.required]),
       LadaPais: new FormControl('52', [Validators.required, Validators.maxLength(3)]),
       Lada: new FormControl('', [Validators.required, Validators.maxLength(3)]),
       Numero: new FormControl('', [Validators.required, Validators.maxLength(8)]),
@@ -284,7 +289,7 @@ export class NuevoProspectoComponent implements OnInit {
     this.formContactos = this.fb.group({
       Nombre: ['', [Validators.required]],
       ApellidoPaterno: ['', [Validators.required]],
-      ApellidoMaterno: ['', ],
+      ApellidoMaterno: ['',],
       Puesto: ['', [Validators.required]],
       ContactoDireccion: ['', [Validators.required]],
       TipoTelefono: ['', [Validators.required]],
@@ -371,7 +376,7 @@ export class NuevoProspectoComponent implements OnInit {
   }
 
   //#endregion
-  
+
   //#region Cancelar Acciones 
   cancelarDireccion() {
     this.estados = null;
@@ -400,7 +405,7 @@ export class NuevoProspectoComponent implements OnInit {
     this.elementC = null;
     this.formCorreos.controls['Activo'].setValue(true);
   }
-  cancelarContacto(){
+  cancelarContacto() {
     this.addContacto = false;
     // this.elementCn = null;
     this.formContactos.reset();
@@ -444,6 +449,7 @@ export class NuevoProspectoComponent implements OnInit {
       }
     })
   }
+
   //#region FUNCIONES PARA DIRECCION
   AddDireccion() {
     this.auxTipoDireccion = this.tipoDireccion.filter(x => {
@@ -512,13 +518,13 @@ export class NuevoProspectoComponent implements OnInit {
   //#region FUNCIONES PARA TELEFONOS
   AddTelefono() {
     let idxDireccion = this.formTelefonos.get('TelDireccion').value;
-    let tipoDireccionId = this.formTelefonos.get('TipoTelefono').value;
+    let tipoTelefonoId = this.formTelefonos.get('TipoTelefono').value;
     this.auxTipoTelefono = this.tipoTelefonos.filter(x => {
-      if (x.id == tipoDireccionId) {
+      if (x.id == tipoTelefonoId) {
         return x.tipo
       }
     });
-    if (tipoDireccionId != 4) {
+    if (tipoTelefonoId != 4) {
       this.formTelefonos.controls['Extencion'].setValue('');
     }
     let data = {
@@ -526,7 +532,7 @@ export class NuevoProspectoComponent implements OnInit {
       indexDireccion: idxDireccion,
       calle: this.DireccionesNew[idxDireccion]['calle'],
       tTelefono: this.auxTipoTelefono[0].tipo,
-      tipoTelefonoId: tipoDireccionId,
+      tipoTelefonoId: tipoTelefonoId,
       clavePais: this.formTelefonos.get('LadaPais').value,
       claveLada: this.formTelefonos.get('Lada').value || '',
       extencion: this.formTelefonos.get('Extencion').value || '',
@@ -573,7 +579,7 @@ export class NuevoProspectoComponent implements OnInit {
 
   //#endregion
 
-  //#region FUNCIONES PARA TELEFONOS
+  //#region FUNCIONES PARA EMAILS
   AddEmail() {
     let idxDireccion = this.formCorreos.get('EmailDireccion').value;
     let data = {
@@ -610,6 +616,90 @@ export class NuevoProspectoComponent implements OnInit {
     this.onChangeTableC(this.config);
   }
 
+  //#endregion
+
+  //#region FUNCIONES PARA CONTACTOS
+  AddContacto() {
+    this.Emails = [];
+    this.Telefonos = [];
+    let idxDireccion = this.formContactos.get('ContactoDireccion').value;
+    let tipoTelefonoId = this.formContactos.get('TipoTelefono').value;
+    this.auxTipoTelefono = this.tipoTelefonos.filter(x => {
+      if (x.id == tipoTelefonoId) {
+        return x.tipo;
+      }
+    });
+    if (tipoTelefonoId != 4) {
+      this.formContactos.controls['Extencion'].setValue('');
+    }
+
+    let email = {
+      email: this.formContactos.get('Email').value,
+      UsuarioAlta: sessionStorage.getItem('clave'),
+    }
+
+    let telefono = {
+      tipoTelefonos: this.auxTipoTelefono[0].tipo,
+      tippoTelefonoId: this.formContactos.get('TipoTelefono').value,
+      clavePais: this.formContactos.get('LadaPais').value,
+      claveLada: this.formContactos.get('Lada').value || '',
+      telefono: this.formContactos.get('Numero').value,
+      extencion: this.formContactos.get('Extencion').value || '',
+      UsuarioAlta: sessionStorage.getItem('clave'),
+    }
+
+    this.Telefonos.push(telefono);
+    this.Emails.push(email);
+
+    let data = {
+      idAux: this.idAuxCn,
+      indexDireccion: idxDireccion,
+      calle: this.DireccionesNew[idxDireccion]['calle'],
+      nombre: this.formContactos.get('Nombre').value,
+      apellidoPaterno: this.formContactos.get('ApellidoPaterno').value,
+      apellidoMaterno: this.formContactos.get('ApellidoMaterno').value || '',
+      nombreAux: this.formContactos.get('Nombre').value + ' ' + this.formContactos.get('ApellidoPaterno').value,
+      tipoTelefonoAux: this.auxTipoTelefono[0].tipo,
+      telefonoAux: this.formContactos.get('Numero').value,
+      puesto: this.formContactos.get('Puesto').value,
+      telefonos: this.Telefonos,
+      emailAux:  this.formContactos.get('Email').value,
+      emails: this.Emails
+    }
+    this.cancelarContacto();
+    if (!this.EditContacto) {
+      this.ContactosNew.push(data);
+      this.idAuxCn++;
+    } else {
+      this.ContactosNew[this.indexContacto] = data;
+      this.EditContacto = false;
+    }
+    this.onChangeTableCn(this.config);
+  }
+
+  UpContactos() {
+    this.addContacto = true;
+    this.EditContacto = true;
+    this.formContactos.controls['ContactoDireccion'].setValue(this.ContactosNew[this.indexContacto]['indexDireccion']);
+    this.formContactos.controls['Nombre'].setValue(this.ContactosNew[this.indexContacto]['nombre']);
+    this.formContactos.controls['ApellidoPaterno'].setValue(this.ContactosNew[this.indexContacto]['apellidoPaterno']);
+    this.formContactos.controls['ApellidoMaterno'].setValue(this.ContactosNew[this.indexContacto]['apellidoMaterno']);
+    this.formContactos.controls['Puesto'].setValue(this.ContactosNew[this.indexContacto]['puesto']);
+    this.formContactos.controls['TipoTelefono'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['tippoTelefonoId']);
+    this.formContactos.controls['LadaPais'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['clavePais']);
+    this.formContactos.controls['Lada'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['claveLada']);
+    this.formContactos.controls['Numero'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['telefono']);
+    this.formContactos.controls['Extencion'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['extencion']);
+    this.formContactos.controls['Email'].setValue(this.ContactosNew[this.indexContacto]['emails'][0]['email']);
+  }
+
+  DtContacto() {
+    this.ContactosNew.splice(this.indexContacto, 1);
+    this.elementCn = null;
+    this.onChangeTableCn(this.config);
+  }
+
+  //#endregion
 
   //#region  FUNCION PARA CLASIFICACION 
   public hoveringOver(value: number): void {
@@ -1035,6 +1125,144 @@ export class NuevoProspectoComponent implements OnInit {
       data.selectedC = false;
       aux.selectedC = true;
       this.rowAuxC = aux;
+    }
+  }
+
+  //#endregion
+
+  //#region CONFIGURACION Y ACCIONES TABLA CONTACTOS
+  public selectedCn: boolean = false;
+  public registrosCn: number;
+  public rowAuxCn = [];
+  public elementCn: any = null;
+  /* Variables de Paginador Telefonos */
+  public pageCn: number = 1;
+  public numPagesCn: number = 1;
+  public lengthCn: number = 0;
+
+  public rowsCn: Array<any> = [];
+  public columnsCn: Array<any> = [
+    { title: 'Direccion', sorting: 'desc', className: 'text-success text-center', name: 'calle', filtering: { filterString: '', placeholder: 'Dirección' } },
+    { title: 'Nombre', sorting: 'desc', className: 'text-success', name: 'nombreAux', filtering: { filterString: '', placeholder: 'Nombre' } },
+    { title: 'Puesto', className: 'text-info', name: 'puesto', filtering: { filterString: '', placeholder: 'Puesto' } },
+    { title: 'Tipo Telefóno', className: 'text-info', name: 'tipoTelefonoAux', filtering: { filterString: '', placeholder: 'Tipo Tel.' } },
+    { title: 'Número', className: 'text-info', name: 'telefonoAux', filtering: { filterString: '', placeholder: 'Número' } },
+    { title: 'Email / Correo', className: 'text-info', name: 'emailAux', filtering: { filterString: '', placeholder: 'Email / Correo' } },
+
+  ];
+
+  public changePageCn(page: any, data: Array<any> = this.ContactosNew): Array<any> {
+    let start = (page.page - 1) * page.itemsPerPage;
+    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    return data.slice(start, end);
+  }
+
+  public changeSortCn(data: any, config: any): any {
+    if (!config.sorting) {
+      return data;
+    }
+
+    let columns = this.config.sorting.columns || [];
+    let columnName: string = void 0;
+    let sort: string = void 0;
+
+    for (let i = 0; i < columns.length; i++) {
+      if (columns[i].sort !== '' && columns[i].sort !== false) {
+        columnName = columns[i].name;
+        sort = columns[i].sort;
+      }
+    }
+
+    if (!columnName) {
+      return data;
+    }
+
+    // simple sorting
+    return data.sort((previous: any, current: any) => {
+      if (previous[columnName] > current[columnName]) {
+        return sort === 'desc' ? -1 : 1;
+      } else if (previous[columnName] < current[columnName]) {
+        return sort === 'asc' ? -1 : 1;
+      }
+      return 0;
+    });
+  }
+
+  public changeFilterCn(data: any, config: any): any {
+    let filteredData: Array<any> = data;
+    this.columnsCn.forEach((column: any) => {
+      if (column.filtering) {
+        filteredData = filteredData.filter((item: any) => {
+          if (item[column.name] != null)
+            return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+        });
+      }
+    });
+    if (!config.filtering) {
+      return filteredData;
+    }
+
+    if (config.filtering.columnName) {
+      return filteredData.filter((item: any) =>
+        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
+    }
+
+    let tempArray: Array<any> = [];
+    filteredData.forEach((item: any) => {
+      let flag = false;
+      this.columnsCn.forEach((column: any) => {
+        if (item[column.name] == null) {
+          flag = true;
+        } else {
+          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
+            flag = true;
+          }
+        }
+      });
+      if (flag) {
+        tempArray.push(item);
+      }
+    });
+    filteredData = tempArray;
+    return filteredData;
+  }
+
+  public onChangeTableCn(config: any, page: any = { page: this.pageCn, itemsPerPage: this.itemsPerPage }): any {
+    if (config.filtering) {
+      (<any>Object).assign(this.config.filtering, config.filtering);
+    }
+
+    if (config.sorting) {
+      (<any>Object).assign(this.config.sorting, config.sorting);
+    }
+    this.registrosCn = this.ContactosNew.length;
+    this.rowsCn = this.ContactosNew;
+    let filteredData = this.changeFilterCn(this.ContactosNew, this.config);
+    let sortedData = this.changeSortCn(filteredData, this.config);
+    this.rowsCn = page && config.paging ? this.changePageCn(page, sortedData) : sortedData;
+    this.lengthCn = sortedData.length;
+  }
+
+  onCellClickCn(data: any, id: any) {
+    data.selectedCn ? data.selectedCn = false : data.selectedCn = true;
+    this.elementCn = data;
+    this.indexContacto = this.ContactosNew.findIndex(x => x.idAux === id);
+
+    if (!data.selectedCn) {
+      this.elementCn = null;
+      this.selectedCn = false;
+    } else {
+      this.selectedCn = true;
+    }
+    if (this.rowAuxCn.length == 0) {
+      this.rowAuxCn = data;
+    }
+    else if (data.selectedCn && this.rowAuxCn != []) {
+      let aux = data;
+      data = this.rowAuxCn;
+      data.selectedCn = false;
+      aux.selectedCn = true;
+      this.rowAuxCn = aux;
     }
   }
 

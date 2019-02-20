@@ -1,5 +1,3 @@
-import { saveAs } from 'file-saver';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -9,10 +7,12 @@ import 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
 
 import { Headers, Http, RequestOptions, Response, ResponseContentType } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { ApiConection } from './../api-conection.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { saveAs } from 'file-saver';
 
 @Injectable()
 export class AdminServiceService {
@@ -58,6 +58,7 @@ export class AdminServiceService {
   private UrlViewFile = ApiConection.ServiceUrl + ApiConection.viewFile;
   private UrlUploadFile = ApiConection.ServiceUrl + ApiConection.uploadFile;
   private UrlGetLideres = ApiConection.ServiceUrl + ApiConection.getLideres;
+  private UrlGetOficinas = ApiConection.ServiceUrl + ApiConection.getOficinas;
   // Error.
   private handleError(error: any) {
          console.log('sever error:', error);
@@ -416,6 +417,10 @@ export class AdminServiceService {
   GetLideres() : Observable<any>
   {
     return this._httpClient.get(this.UrlGetLideres);
+  }
+
+  GetOficinas(): Observable<any>{
+    return this._httpClient.get(this.UrlGetOficinas);
   }
 
 

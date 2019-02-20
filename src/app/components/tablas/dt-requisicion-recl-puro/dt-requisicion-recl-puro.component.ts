@@ -243,11 +243,7 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
           var idx = this.rows.findIndex(x => x.id == this.RequisicionId);
           this.rows[idx]['estatus'] = estatus;
           this.rows[idx]['estatusId'] = estatusId;
-          
-        
-
           this.ValidarEstatus(estatusId);
-
           this.refreshTable();
           this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
           this.service.SendEmailRequiPuro(datos.requisicionId).subscribe(email => {
@@ -262,8 +258,7 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
         else {
           this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
         }
-
-      })
+      });
   }
   
 

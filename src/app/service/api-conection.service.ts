@@ -200,6 +200,7 @@ export class ApiConection {
   public static uploadFile = 'admin/uploadFile';
   public static updateActivo = 'admin/updateActivo';
   public static getLideres = 'admin/getLideres';
+  public static getOficinas = 'admin/getOficinas';
 
   /*Seguimiento Vacantes*/
   public static getDtosCard = 'reclutamiento/seguimientovacante/getCard';

@@ -97,6 +97,12 @@
             <!-- not selected / blank option -->
             <option *ngFor="let d of ListDepas" [value]="d.id">{{d.nombre}}</option>
           </select>
+          <label class="text-muted">Oficina / Sucursal</label>
+          <select class="form-control" formControlName="OficinasId">
+            <option value="0">Seleccionar Oficina / Sucursal</option>
+            <!-- not selected / blank option -->
+            <option *ngFor="let d of Oficinas" [value]="d.id">{{d.nombre}}</option>
+          </select>
           <br/>
 
           <div *ngIf="verMsj">
