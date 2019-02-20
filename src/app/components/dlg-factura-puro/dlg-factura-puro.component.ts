@@ -19,6 +19,8 @@ export class DlgFacturaPuroComponent implements OnInit {
    private dialog: MatDialogRef<DlgFacturaPuroComponent>) { }
 
   ngOnInit() {
+    this.monto = this.data.sueldoMaximo * this.data.vacantes;
+    this.montoContratado = this.data.sueldoMaximo * this.data.vacantes;
   }
 
   AddDtosFactura()

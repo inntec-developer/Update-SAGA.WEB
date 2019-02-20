@@ -1,0 +1,18 @@
+<div *ngIf="!isCollapsedChevron()" > 
+  <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops -->
+  <a class="btn btn-info btn-circle" trigger-resize="" (click)="toggleCollapsedSideabar()" *ngIf="!isCollapsedText()">
+     <em class="fa fa-chevron-left"></em>
+ </a> 
+  
+</div> 
+
+<div *ngIf="isCollapsedChevron()">
+  <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops -->
+  <a class="btn btn-sm btn-info btn-circle" trigger-resize="" (click)="toggleCollapsedSideabar();" *ngIf="!isCollapsedText()">
+     <em class="fa fa-chevron-right"></em>
+ </a>
+ <!-- <a class="nav-link d-none d-md-block d-lg-block d-xl-block collapsedMin" trigger-resize="" (click)="toggleCollapsedSideabar(); cambiar = !cambiar" *ngIf="isCollapsedText()">
+
+     <em class="fa fa-chevron-left"></em>
+ </a> -->
+</div> 

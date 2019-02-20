@@ -12,6 +12,7 @@ import { menu } from './menu';
 import { routes } from './routes';
 
 
+
 @NgModule({
     imports: [
         SharedModule,
@@ -19,7 +20,7 @@ import { routes } from './routes';
         PagesModule       
     ],
     declarations: [
-    ],
+   ],
     exports: [RouterModule],
     providers: [LogInGuardGuard, AuthRolesGuard, AuthService]
 })

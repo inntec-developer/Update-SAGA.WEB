@@ -44,6 +44,8 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
   cancelar = false;
   borrar = false;
   autorizar = false;
+  view = false;
+  coment = false;
 
   constructor(private service: RequisicionesService, private spinner: NgxSpinnerService,
      private _Router: Router,
@@ -266,6 +268,8 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
   {
     if(estatusId == 43)
     {
+      this.view = true;
+      this.coment = true;
       this.facturar = true;
       this.cancelar = true;
       this.borrar = true;
@@ -273,6 +277,8 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
     }
     else if(estatusId == 44)
     {
+      this.view = true;
+      this.coment = true;
       this.facturar = false;
       this.cancelar = true;
       this.borrar = false;
@@ -280,6 +286,8 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
     }
     else if(estatusId == 45)
     {
+      this.view = true;
+      this.coment = true;
       this.facturar = false;
       this.cancelar = true;
       this.borrar = false;
@@ -287,6 +295,8 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
     }
     else if(estatusId == 8)
     {
+      this.view = true;
+      this.coment = true;
       this.facturar = false;
       this.cancelar = false;
       this.borrar = true;
@@ -294,6 +304,8 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
     }
     else if(estatusId == 46)
     {
+      this.view = true;
+      this.coment = true;
       this.facturar = false;
       this.cancelar = false;
       this.borrar = false;
