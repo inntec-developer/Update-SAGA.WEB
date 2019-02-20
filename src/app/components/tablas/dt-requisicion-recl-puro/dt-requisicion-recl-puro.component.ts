@@ -245,20 +245,22 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
           var idx = this.rows.findIndex(x => x.id == this.RequisicionId);
           this.rows[idx]['estatus'] = estatus;
           this.rows[idx]['estatusId'] = estatusId;
-          
-        
-
           this.ValidarEstatus(estatusId);
-
           this.refreshTable();
           this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+          this.service.SendEmailRequiPuro(datos.requisicionId).subscribe(email => {
+            if(email == 200){
+              this.popToast('success', 'Noticación', 'resiviras un correo con la información de la vacante, igualmente el propietario.');
+            }else{
+              this.popToast('error', 'Estatus', 'Ocurrió un error al intentar notificar por correo electrónico los cambios realizados.');
+            }
+          });
 
         }
         else {
           this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
         }
-
-      })
+      });
   }
   
 

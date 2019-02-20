@@ -6,6 +6,7 @@ import { ApiConection } from '../../../service/api-conection.service';
 import {FormBuilder} from '@angular/forms';
 import {MatDialog} from '@angular/material';
 import { UploadImgsComponent } from '../upload-imgs/upload-imgs.component';
+import { id } from '@swimlane/ngx-datatable/release/utils';
 
 @Component({
   selector: 'app-add-persona',
@@ -20,6 +21,7 @@ export class AddPersonaComponent implements OnInit {
   ListDepas: Array<any> = [];
   ListTipos: Array<any> = [];
   Lideres = [];
+  Oficina = [];
   editing = {};
   bandera = false;
   rowAux: any;
@@ -67,6 +69,7 @@ export class AddPersonaComponent implements OnInit {
       ApellidoMaterno: user.apellidoMaterno,
       DepartamentoId: user.departamentoId, 
       TipoUsuarioId: user.tipoUsuarioId,
+      OficinaId: user.oficinaId,
       Foto: user.foto,
       email: user.email
     }
@@ -182,6 +185,12 @@ export class AddPersonaComponent implements OnInit {
       this.Users[rowIndex]['liderId'] = event.target.value;
       this.editing[rowIndex + '-' + 'lider'] = false;
     }
+    else if(cell === 'oficina'){
+      aux = this.Oficina.find(nd => nd.id == event.target.value);
+      this.Users[rowIndex]['oficina'] = aux.nombre;
+      this.Users[rowIndex]['oficinaId'] = event.target.value;
+      this.editing[rowIndex + '-' + 'oficina'] = false;
+    }
     else if(event.target.value !== '')
     {
       this.Users[rowIndex][cell] = event.target.value;
@@ -201,6 +210,7 @@ export class AddPersonaComponent implements OnInit {
       ApellidoPaterno: user.apellidoPaterno,
       ApellidoMaterno: user.apellidoMaterno,
       DepartamentoId: user.departamentoId, 
+      OficinaId: user.oficinaId,
       TipoUsuarioId: user.tipoUsuarioId,
       Foto: user.foto,
       liderId: user.liderId
@@ -296,12 +306,19 @@ export class AddPersonaComponent implements OnInit {
       this.Lideres = data;
     })
   }
+
+  GetOficinas(){
+    this.service.GetOficinas().subscribe(data => {
+      this.Oficina = data;
+    });
+  }
   ngOnInit() 
   {
     this.getUsuarios();
     this.getDepartamentos();
     this.getTipos();
     this.GetLideres();
+    this.GetOficinas();
   }
   
    /**

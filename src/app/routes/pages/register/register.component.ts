@@ -1,26 +1,27 @@
-import { Router } from '@angular/router';
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
-import { CustomValidators } from 'ng2-validation';
-import { RequestOptions } from '@angular/http';
-import { SettingsService } from '../../../core/settings/settings.service';
 import { AuthService } from '../../../service/auth/auth.service';
+import { CustomValidators } from 'ng2-validation';
 import { ModalDirective } from 'ngx-bootstrap';
+import { RequestOptions } from '@angular/http';
+import { Router } from '@angular/router';
+import { SettingsService } from '../../../core/settings/settings.service';
 
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.scss'],
-    providers:[ AdminServiceService ]
+    providers: [AdminServiceService]
 })
 export class RegisterComponent implements OnInit {
 
     valForm: FormGroup;
     passwordForm: FormGroup;
-    email: Array<any>=[];
+    email: Array<any> = [];
     ListDepas: Array<any> = [];
+    Oficinas: Array<any> = [];
     user: string = '';
     verMsj = false;
     loading = false;
@@ -32,28 +33,27 @@ export class RegisterComponent implements OnInit {
     disabledE = false;
     alerts: any[] = [
         {
-          type: 'success',
-          msg: '',
-          timeout: 4000
+            type: 'success',
+            msg: '',
+            timeout: 4000
         },
         {
-          type: 'danger',
-          msg: '',
-          timeout: 4000
+            type: 'danger',
+            msg: '',
+            timeout: 4000
         }
-      ];
+    ];
     alert = this.alerts;
 
     onClosed(): void {
-      this.verMsj = false;
+        this.verMsj = false;
     }
 
     constructor(public settings: SettingsService,
-                fb: FormBuilder,
-                private service: AdminServiceService,
-                private authService: AuthService,
-                private router: Router )
-    {
+        fb: FormBuilder,
+        private service: AdminServiceService,
+        private authService: AuthService,
+        private router: Router) {
         let password = new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9]{6,10}$')]));
         let certainPassword = new FormControl('', CustomValidators.equalTo(password));
 
@@ -66,69 +66,61 @@ export class RegisterComponent implements OnInit {
             'email': [null, Validators.compose([Validators.required, CustomValidators.email])],
             // 'accountagreed': [null, Validators.required],
             'passwordGroup': this.passwordForm,
-            'Clave': ['',  [Validators.required]],
-            'Nombre': ['',  [Validators.required]],
-            'ApellidoPaterno': ['',  [Validators.required]],
-            'ApellidoMaterno': ['',  [Validators.required]],
-            'Usuario': [{value:'', disabled:true}],
-            'DepartamentoId': ['',  [Validators.required]]
+            'Clave': ['', [Validators.required]],
+            'Nombre': ['', [Validators.required]],
+            'ApellidoPaterno': ['', [Validators.required]],
+            'ApellidoMaterno': ['', [Validators.required]],
+            'Usuario': [{ value: '', disabled: true }],
+            'DepartamentoId': ['', [Validators.required]],
+            'OficinasId': ['', [Validators.required]]
         });
 
     }
 
-    submitForm($ev, value: any)
-    {
-        
+    submitForm($ev, value: any) {
+
         $ev.preventDefault();
         for (let c in this.valForm.controls) {
-           this.valForm.controls[c].markAsTouched();
+            this.valForm.controls[c].markAsTouched();
         }
         for (let c in this.passwordForm.controls) {
             this.passwordForm.controls[c].markAsTouched();
         }
 
-        if (this.valForm.valid)
-        {
-            if(this.disabledE)
-            {
+        if (this.valForm.valid) {
+            if (this.disabledE) {
                 this.disabledE = false;
                 this.loading = true;
 
                 this.user = this.valForm.controls['email'].value.trim();
-                var idx =  this.user.indexOf( "@" ); 
+                var idx = this.user.indexOf("@");
                 this.user = "DAMSA." + this.user.substring(0, idx);
 
                 var clave = this.valForm.controls['Clave'].value.trim();
                 var id = clave.indexOf(this.prefijo.substring(this.prefijo.length - 1, this.prefijo.length));
 
-                if(id >= 0 )
-                {
+                if (id >= 0) {
                     var lon = clave.substring(id + 1, clave.length);
-                    if(lon.length < 4)
-                    {
-                        clave = this.prefijo + "0".repeat(4-lon.length) + lon;
+                    if (lon.length < 4) {
+                        clave = this.prefijo + "0".repeat(4 - lon.length) + lon;
                     }
-                    else
-                    {
+                    else {
                         clave = this.prefijo + lon;
                     }
                 }
-                else
-                {
+                else {
                     var lon = clave;
-                    if(lon.length < 4)
-                    {
-                        clave = this.prefijo + "0".repeat(4-lon.length) + lon;
+                    if (lon.length < 4) {
+                        clave = this.prefijo + "0".repeat(4 - lon.length) + lon;
                     }
-                    else
-                    {
+                    else {
                         clave = this.prefijo + lon;
                     }
                 }
 
-            //this.user = ((this.valForm.controls['Usuario'].value == null || this.valForm.controls['Usuario'].value == '') ? "DAMSA." + this.valForm.controls['Nombre'].value : this.valForm.controls['Usuario'].value);
+                //this.user = ((this.valForm.controls['Usuario'].value == null || this.valForm.controls['Usuario'].value == '') ? "DAMSA." + this.valForm.controls['Nombre'].value : this.valForm.controls['Usuario'].value);
 
-                this.email.push({email: this.valForm.controls['email'].value.trim(), UsuarioAlta: 'INNTEC'});
+                this.email.push({ email: this.valForm.controls['email'].value.trim(), UsuarioAlta: 'INNTEC' });
 
                 let persona = {
                     Clave: clave,
@@ -137,11 +129,12 @@ export class RegisterComponent implements OnInit {
                     ApellidoMaterno: this.valForm.controls['ApellidoMaterno'].value,
                     Usuario: this.user.toUpperCase(),
                     DepartamentoId: this.valForm.controls['DepartamentoId'].value,
+                    OficinaId: this.valForm.controls['OficinasId'].value,
                     Email: this.email,
                     Password: this.passwordForm.controls['password'].value,
                     Foto: "/utilerias/img/user/default.jpg"
                 };
-           
+
                 this.service.AddUsers(persona)
                     .subscribe(data => {
                         if (data == 201) {
@@ -173,17 +166,20 @@ export class RegisterComponent implements OnInit {
         }
     }
 
-    getDepartamentos()
-    {
-      this.service.getDepas()
-      .subscribe(
-        e=>{
-          this.ListDepas = e;
-        })
+    getDepartamentos() {
+        this.service.getDepas()
+            .subscribe(
+                e => {
+                    this.ListDepas = e;
+                })
     }
-    
-    closeModal()
-    {
+    getOficinas() {
+        this.service.GetOficinas().subscribe(result => {
+            this.Oficinas = result;
+        });
+    }
+
+    closeModal() {
         this.ShownModal.hide();
         this.router.navigate(['/login']);
     }
@@ -193,45 +189,41 @@ export class RegisterComponent implements OnInit {
 
     onHidden(): void {
         this.isModalShown = false;
-      }
-    
-    showPop()
-    {
-    
-      this.epopover.show();
-
-      setTimeout(()=>{    //<<<---    using ()=> syntax
-            this.epopover.hide();
-       }, 3000);
     }
-    ValidarEmail(email: string)
-    {
+
+    showPop() {
+
+        this.epopover.show();
+
+        setTimeout(() => {    //<<<---    using ()=> syntax
+            this.epopover.hide();
+        }, 3000);
+    }
+    ValidarEmail(email: string) {
         this.user = this.valForm.controls['email'].value.trim();
-        var idx =  this.user.indexOf( "@" ); 
+        var idx = this.user.indexOf("@");
         this.user = "DAMSA." + this.user.substring(0, idx);
 
         this.authService.isUserActive(email)
             .subscribe(
                 data => {
-                    if( data != 404)
-                    {
+                    if (data != 404) {
                         this.alerts[1]['msg'] = 'El email: ' + email + ' ya se encuentra registrado';
                         this.alert = this.alerts[1];
                         this.disabledE = false;
                         this.verMsj = true;
                         this.showPop();
                     }
-                    else
-                    {
+                    else {
                         this.disabledE = true;
                         this.verMsj = false;
-                       this.epopover.hide();
+                        this.epopover.hide();
                     }
                 },
                 error => {
-                  this.alerts[1]['msg'] = error;
-                  this.alert = this.alerts[1];
-                  this.verMsj = true;
+                    this.alerts[1]['msg'] = error;
+                    this.alert = this.alerts[1];
+                    this.verMsj = true;
                 });
     }
 
@@ -268,23 +260,19 @@ export class RegisterComponent implements OnInit {
     // }
 
     ngOnInit() {
-   
-       this.valForm.controls['Clave'].reset();
-       this.valForm.controls['Nombre'].reset();
-       this.valForm.controls['ApellidoPaterno'].reset();
-       this.valForm.controls['email'].reset();
-       this.valForm.controls['Usuario'].reset();
-       this.valForm.controls['ApellidoMaterno'].reset();
-       this.valForm.controls['DepartamentoId'].reset();
-
-       this.passwordForm.controls['password'].reset();
-       this.passwordForm.controls['confirmPassword'].reset();
-
-       this.getDepartamentos();
-
-       this.disabledE = false;
-      // this.disabledC = false;
- 
+        this.valForm.controls['Clave'].reset();
+        this.valForm.controls['Nombre'].reset();
+        this.valForm.controls['ApellidoPaterno'].reset();
+        this.valForm.controls['email'].reset();
+        this.valForm.controls['Usuario'].reset();
+        this.valForm.controls['ApellidoMaterno'].reset();
+        this.valForm.controls['DepartamentoId'].reset();
+        this.valForm.controls['OficinasId'].reset();
+        this.passwordForm.controls['password'].reset();
+        this.passwordForm.controls['confirmPassword'].reset();
+        this.getDepartamentos();
+        this.getOficinas();
+        this.disabledE = false;
+        // this.disabledC = false;
     }
-
 }
