@@ -1,3 +1,4 @@
+import { DialogShowRequiComponent } from './../routes/recl/vacantes/vacantes/components/dialogs/dialog-show-requi/dialog-show-requi.component';
 import { FileManagerComponent } from './file-manager/file-manager.component';
 import { ColorPickerModule, ColorPickerService } from 'ngx-color-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

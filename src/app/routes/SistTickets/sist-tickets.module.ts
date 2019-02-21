@@ -1,3 +1,4 @@
+import { ReclutamientoModule } from './../recl/reclutamiento.module';
 import { VentaModule } from './../vtas/ventas.module';
 import { ComponentsModule } from './../../components/components.module';
 import { NgModule } from '@angular/core';
@@ -36,12 +37,10 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
-
 import { SeguimientoTicketComponent } from './seguimiento-ticket/seguimiento-ticket.component';
 
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
-import { DialogShowRequiComponent } from '../recl/vacantes/vacantes/components/dialogs/dialog-show-requi/dialog-show-requi.component';
 
 const routes: Routes = [
   { path: 'turno', component: SeguimientoTicketComponent},
@@ -88,13 +87,13 @@ const routes: Routes = [
     MatToolbarModule,
     MatTooltipModule,
     ComponentsModule,
-    VentaModule
+    VentaModule,
+    ReclutamientoModule
   ],
   declarations: [
     SeguimientoTicketComponent,
-    DialogShowRequiComponent
+    
   ],
-  entryComponents: [
-    DialogShowRequiComponent],
+  entryComponents: [],
 })
 export class SistTicketsModule { }
