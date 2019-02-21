@@ -14,56 +14,58 @@
 
 <div class="card">
   <div class="card-body mat-elevation-z8">
-      <div class="row">
-          <div class="col-sm-12 col-md-12 clearfix p-3 mb-2 bg-light">
-            <!-- <button id="create" chkPrivilegiosButtons class="mb-1 btn btn-acciones btn-outline-info margen" container="body" placement="bottom" tooltip="Nuevo"
+    <div class="row">
+      <div class="col-sm-12 col-md-12 clearfix p-3 mb-2 bg-light">
+        <!-- <button id="create" chkPrivilegiosButtons class="mb-1 btn btn-acciones btn-outline-info margen" container="body" placement="bottom" tooltip="Nuevo"
               [routerLink]="['/ventas/crearRequisicion']">
               <em class="fa fa-plus"></em>
             </button> -->
-            <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones margen" [disabled]="!view" [ngClass]="(!view) ? 'disabled' : 'btn-outline-warning'"
-              container="body" placement="bottom" tooltip="Visualizar">
-              <em class="fa fa-eye"></em>
-            </button>
+        <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones margen" [disabled]="!view"
+          [ngClass]="(!view) ? 'disabled' : 'btn-outline-warning'" container="body" placement="bottom" tooltip="Visualizar">
+          <em class="fa fa-eye"></em>
+        </button>
 
-            <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones margen" [disabled]="!coment"
-              [ngClass]="(!coment) ? 'disabled' : 'btn-outline-dark'" container="body" placement="bottom" tooltip="Comentarios">
-              <em class="fa fa-comments-o"></em>
-            </button>
-<!-- 
+        <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones margen"
+          [disabled]="!coment" [ngClass]="(!coment) ? 'disabled' : 'btn-outline-dark'" container="body" placement="bottom"
+          tooltip="Comentarios">
+          <em class="fa fa-comments-o"></em>
+        </button>
+        <!-- 
             <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="editar" [ngClass]="editar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-primary'"
               container="body" placement="bottom" tooltip="Editar" (click)="editRequi()">
               <em class="icon-pencil"></em>
             </button> -->
 
-            
-            <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="!facturar" [ngClass]="!facturar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
-              container="body" placement="bottom" tooltip="Enviar a factura" (click)="openDialogFactura()">
-              <em class="fa fa-file-text-o"></em>
-            </button>
 
-            <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="!autorizar" [ngClass]="!autorizar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
-            container="body" placement="bottom" tooltip="Autorizar" (click)="updataStatus(46, 'Autorizada')">
-            <em class="fa fa-check"></em>
-          </button>
+        <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="!facturar" [ngClass]="!facturar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
+          container="body" placement="bottom" tooltip="Enviar a factura" (click)="openDialogFactura()">
+          <em class="fa fa-file-text-o"></em>
+        </button>
 
-
-            <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="!cancelar" [ngClass]="!cancelar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
-            container="body" placement="bottom" tooltip="Cancelar" (click)="openDialogCancel();">
-            <em class="icon-ban"></em>
-          </button>
+        <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="!autorizar"
+          [ngClass]="!autorizar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'" container="body" placement="bottom"
+          tooltip="Autorizar" (click)="updataStatus(46, 'Autorizada')">
+          <em class="fa fa-check"></em>
+        </button>
 
 
-            <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="!borrar" [ngClass]="!borrar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
-              container="body" placement="bottom" tooltip="Eliminar" (click)="openDialogDelete()">
-              <em class="icon-trash"></em>
-            </button>
-            <button class="mb-1 btn btn-outline-success margen float-right" type="button" (click)="refreshTable()" container="body" placement="bottom"
-            tooltip="Actualizar">
-            <em class="icon-refresh"></em>
-          </button>
+        <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="!cancelar" [ngClass]="!cancelar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
+          container="body" placement="bottom" tooltip="Cancelar" (click)="openDialogCancel();">
+          <em class="icon-ban"></em>
+        </button>
 
-            </div>
-        </div>
+
+        <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="!borrar" [ngClass]="!borrar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
+          container="body" placement="bottom" tooltip="Eliminar" (click)="openDialogDelete()">
+          <em class="icon-trash"></em>
+        </button>
+        <button class="mb-1 btn btn-outline-success margen float-right" type="button" (click)="refreshTable()"
+          container="body" placement="bottom" tooltip="Actualizar">
+          <em class="icon-refresh"></em>
+        </button>
+
+      </div>
+    </div>
     <div class="row" #tableContainer>
       <div class="col-sm-12 col-md-12 clearfix">
         <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table">
@@ -80,8 +82,8 @@
             </tr>
             <tr *ngIf="showFilterRow">
               <th *ngFor="let column of columns">
-                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
-                  class="form-control form-control-sm" id="{{column.name}}">
+                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
+                  (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
               </th>
               <th>
                 <input class="form-control form-control-sm" placeholder="Asignada a" [disabled]="true">
@@ -91,8 +93,8 @@
           </thead>
           <tbody>
 
-            <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8"
-              [class.selected]="row.selected">
+            <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial"
+              [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
               <td class="text-center">
                 {{row.folio}}
               </td>
@@ -107,16 +109,18 @@
               <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
               <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
               <td class="text-center">
-                <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
-                  [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
-                  [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
+                <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info"
+                  [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
+                  [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29" [class.badge-success]="row.estatusId  === 7"
+                  [class.badge-danger]="row.estatusId  === 8">
                   {{row.estatus | uppercase}}
                 </small>
 
                 <ng-template #toLength>
-                  <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
-                    [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29" [class.badge-success]="row.estatusId  === 7"
-                    [class.badge-danger]="row.estatusId  === 8" placement="bottom" tooltip="{{row.estatus | uppercase}}"> {{row.estatus | slice:0:8 | uppercase }} ...
+                  <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
+                    [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
+                    [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8" placement="bottom"
+                    tooltip="{{row.estatus | uppercase}}"> {{row.estatus | slice:0:8 | uppercase }} ...
                   </small>
                 </ng-template>
               </td>
@@ -141,13 +145,22 @@
                 </ng-template>
 
                 <span class="text-center" *ngIf="row.reclutadores.length == 0">{{row.propietario}}</span>
-                <a class="text-center" *ngIf="row.reclutadores.length > 1" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
+                <a class="text-center" *ngIf="row.reclutadores.length > 1" [popover]="popTemplate" placement="left"
+                  container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
                 <span class="text-center" *ngIf="row.reclutadores.length == 1">{{row.reclutadores[0].reclutador}}</span>
 
               </td>
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 clearfix">
+        <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
+          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
+          (numPages)="numPages = $event"></pagination>
+        <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre>
       </div>
     </div>
   </div>

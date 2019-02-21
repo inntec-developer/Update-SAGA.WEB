@@ -366,9 +366,15 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
 
           if(data == 201)
           {
-            
             this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
             this.refreshTable();
+            this.service.SendEmailRequiPuro(this.RequisicionId).subscribe(email => {
+              if(email == 200){
+                this.popToast('success', 'Noticación', 'Se ha notificado al departamento de facturación por medio de correo electrónico.');
+              }else{
+                this.popToast('error', 'Estatus', 'Ocurrió un error al intentar notificar por correo electrónico los cambios realizados.');
+              }
+            });
 
 
           }
