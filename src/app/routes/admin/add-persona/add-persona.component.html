@@ -16,54 +16,44 @@
     <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
   </div>
 <br/> -->
-<div class="card">
-
-  <div class="card-body">
-    <br />
-    <div class="col-md-4">
-      <div class="input-group">
-        <input (input)="Search($event)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
-        <div class="input-group-append">
-          <span class="input-group-text text-info"><em class="fa fa-search"></em></span>
-        </div>
-      </div>
+<div class="dt-container mat-elevation-z8">
+  <div class="dt-header">
+    <div class="input-group">
+      <mat-form-field>
+        <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
+          (tableChanged)="onChangeTable(config)" id="filterGeneral">
+      </mat-form-field>
+      <!-- <input (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
+      <div class="input-group-append">
+        <span class="input-group-text text-info"><em class="fa fa-search"></em></span>
+      </div> -->
     </div>
-    <br />
-    <div class="mat-elevation-z8">
-
-
-      <!-- <div class="col-md-4 float-right">
-        
-                <btn-check class="float-right margin-button" id='update' chkPrivilegiosButtons [xs]="true" (click)="updateUser($event, rowIndex)"  container="body" container="body" placement="bottom" tooltip="Guardar Cambios"></btn-check>
-   
-
-                <btn-email class="float-right" id='create' chkPrivilegiosButtons [xs]="true"  container="body" container="body" placement="bottom" tooltip="Enviar Correo"></btn-email>
-         
-            </div> -->
-      <table class="table">
+    <pre class="card card-block float-right">Total Registros: {{rows.length}}</pre>
+  </div>
+  <div class="card card-default">
+    <div #TablaUsers>
+      <table id="UsersDataTable" ngClass={{config.className}} class="table" rol="grid" style="width:100%">
         <thead>
           <tr>
-            <th class="text-center"></th>
-            <th class="text-center">CLAVE</th>
-            <th class="text-center">ALIAS</th>
-            <th class="text-center">NOMBRE</th>
-            <th class="text-center">APELLIDO PATERNO</th>
-            <th class="text-center">APELLIDO MATERNO</th>
-            <th class="text-center">EMAIL</th>
-            <th class="text-center">DEPARTAMENTO</th>
-            <th class="text-center">TIPO USUARIO</th>
-            <th class="text-center">ASIGNADO A</th>
-            <th class="text-center">OFC / SUC</th>
-            <th class="text-center">ACTIVAR</th>
-            <th class="text-center"></th>
+            <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+              <small>{{column.title | uppercase}}</small>
+              <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}"> -->
+              <!-- </i> -->
+            </th>
+            <th class="action-width"></th>
           </tr>
-
+          <tr *ngIf="showFilterRow">
+            <td *ngFor="let column of columns">
+              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
+                (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
+            </td>
+          </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let p of Users; let rowIndex = index" (click)="onSelect(p, rowIndex)">
-            <td class="text-center">
+          <tr *ngFor="let p of rows; let rowIndex = index" (click)="onSelect(p, rowIndex)">
+            <td>
               <div class="media">
-                <a container="body" placement="bottom" tooltip="Click para editar" data-toggle="modal" data-target="#staticModal"
+                <a container="body" style="margin:auto;" placement="bottom" tooltip="Click para editar" data-toggle="modal" data-target="#staticModal"
                   (click)="rowAux = rowIndex; CrearURL(p.entidadId); staticModal.show();">
                   <img class="img-fluid circle thumb32" src="{{p.fotoAux}}" alt="Image" />
                 </a>
@@ -74,42 +64,43 @@
                 *ngIf="!editing[rowIndex + '-clave']">
                 {{p.clave}}
               </span>
-              <input class="form-control-sm form-control" autofocus (blur)="updateValue($event, 'clave', rowIndex)" *ngIf="editing[rowIndex + '-clave']"
-                type="text" [value]=p.clave />
+              <input class="form-control-sm form-control" autofocus (blur)="updateValue($event, 'clave', rowIndex)"
+                *ngIf="editing[rowIndex + '-clave']" type="text" [value]=p.clave />
             </td>
             <td>
               <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-usuario'] = true"
                 *ngIf="!editing[rowIndex + '-usuario']">
                 {{p.usuario}}
               </span>
-              <input class="form-control-sm form-control" autofocus (blur)="updateValue($event, 'usuario', rowIndex)" *ngIf="editing[rowIndex + '-usuario']"
-                type="text" [value]=p.usuario />
+              <input class="form-control-sm form-control" autofocus (blur)="updateValue($event, 'usuario', rowIndex)"
+                *ngIf="editing[rowIndex + '-usuario']" type="text" [value]=p.usuario />
             </td>
             <td>
               <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-nombre'] = true"
                 *ngIf="!editing[rowIndex + '-nombre']">
                 {{p.nombre}}
               </span>
-              <input class="form-control-sm form-control" autofocus (blur)="updateValue($event, 'nombre', rowIndex)" *ngIf="editing[rowIndex + '-nombre']"
-                type="text" [value]=p.nombre />
+              <input class="form-control-sm form-control" autofocus (blur)="updateValue($event, 'nombre', rowIndex)"
+                *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=p.nombre />
             </td>
             <td>
               <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoPaterno'] = true"
                 *ngIf="!editing[rowIndex + '-apellidoPaterno']">
                 {{p.apellidoPaterno}}
               </span>
-              <input class="form-control-sm form-control" autofocus (blur)="updateValue($event, 'apellidoPaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoPaterno']"
-                type="text" [value]=p.apellidoPaterno />
+              <input class="form-control-sm form-control" autofocus (blur)="updateValue($event, 'apellidoPaterno', rowIndex)"
+                *ngIf="editing[rowIndex + '-apellidoPaterno']" type="text" [value]=p.apellidoPaterno />
             </td>
             <td>
               <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoMaterno'] = true"
                 *ngIf="!editing[rowIndex + '-apellidoMaterno']">
                 {{p.apellidoMaterno}}
               </span>
-              <input class="form-control-sm form-control" autofocus (blur)="updateValue($event, 'apellidoMaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoMaterno']"
-                type="text" [value]=p.apellidoMaterno />
+              <input class="form-control-sm form-control" autofocus (blur)="updateValue($event, 'apellidoMaterno', rowIndex)"
+                *ngIf="editing[rowIndex + '-apellidoMaterno']" type="text" [value]=p.apellidoMaterno />
             </td>
-            <td *ngIf="p.email.length > 0">{{p.email[0].email}}
+            <td *ngIf="p.email.length > 0">
+              {{p.email}}
               <!-- <tr *ngFor="let e of p.email" class="text-center" >{{e.email}}</tr> -->
             </td>
             <td>
@@ -117,7 +108,8 @@
                 *ngIf="!editing[rowIndex + '-departamento']">
                 {{p.departamento}}
               </span>
-              <select class="form-control-sm form-control" (change)="updateValue($event, 'departamentoId', rowIndex)" *ngIf="editing[rowIndex + '-departamento']">
+              <select class="form-control-sm form-control" (change)="updateValue($event, 'departamentoId', rowIndex)"
+                *ngIf="editing[rowIndex + '-departamento']">
                 <option [value]=0>Seleccionar Departamento</option>
                 <option *ngFor="let d of ListDepas" [value]='d.id'>{{d.nombre}}</option>
               </select>
@@ -127,7 +119,8 @@
                 *ngIf="!editing[rowIndex + '-tipoUsuario']">
                 {{p.tipoUsuario}}
               </span>
-              <select class="form-control-sm form-control" (change)="updateValue($event, 'tipoUsuarioId', rowIndex)" *ngIf="editing[rowIndex + '-tipoUsuario']">
+              <select class="form-control-sm form-control" (change)="updateValue($event, 'tipoUsuarioId', rowIndex)"
+                *ngIf="editing[rowIndex + '-tipoUsuario']">
                 <option [value]=0>Seleccionar Tipo Usuario</option>
                 <option *ngFor="let t of ListTipos" [value]='t.id'>{{t.tipo}}</option>
               </select>
@@ -158,13 +151,15 @@
                 <span></span>
               </label>
             </td>
-            <td>
-              <button id='update' chkPrivilegiosButtons class="mb-1  btn btn-xs btn-outline-success" (click)="updateUser(p, rowIndex)"
-                container="body" placement="bottom" tooltip="Guardar Cambios">
+            <td class="action-width">
+              <button id='update' chkPrivilegiosButtons class="margin-butto
+                  mb-1 btn btn-xs btn-outline-success float-right"
+                (click)="updateUser(p, rowIndex)" container="body" placement="bottom" tooltip="Guardar Cambios">
                 <em class="fa fa-check"></em>
               </button>
-              <button id='create' chkPrivilegiosButtons class="margin-button" (click)="SendEmail(p)" class="ms-1 btn btn-xs btn-outline-warning"
-                container="body" placement="bottom" tooltip="Enviar Correo">
+              <button id='email' chkPrivilegiosButtons class="margin-butto 
+                  ms-1 btn btn-xs btn-outline-warning"
+                (click)="SendEmail(p)" container="body" placement="bottom" tooltip="Enviar Correo">
                 <em class="fa fa-envelope"></em>
               </button>
             </td>
@@ -172,7 +167,6 @@
         </tbody>
       </table>
     </div>
-    <pre class="card card-block card-header float-right">Total Registros: {{Users.length}}</pre>
   </div>
 </div>
 
