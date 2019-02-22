@@ -30,7 +30,7 @@
           tooltip="Comentarios">
           <em class="fa fa-comments-o"></em>
         </button>
-        <!-- 
+        <!--
             <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="editar" [ngClass]="editar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-primary'"
               container="body" placement="bottom" tooltip="Editar" (click)="editRequi()">
               <em class="icon-pencil"></em>
@@ -54,6 +54,14 @@
           <em class="icon-ban"></em>
         </button>
 
+            <!-- <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="!borrar" [ngClass]="!borrar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
+              container="body" placement="bottom" tooltip="Eliminar" (click)="openDialogDelete()">
+              <em class="icon-trash"></em>
+            </button> -->
+            <button class="mb-1 btn btn-outline-success margen float-right" type="button" (click)="refreshTable()" container="body" placement="bottom"
+            tooltip="Actualizar">
+            <em class="icon-refresh"></em>
+          </button>
 
         <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="!borrar" [ngClass]="!borrar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
           container="body" placement="bottom" tooltip="Eliminar" (click)="openDialogDelete()">

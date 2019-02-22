@@ -1,8 +1,7 @@
+import { ApiConection } from './../api-conection.service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-import { ApiConection } from '../api-conection.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +13,7 @@ export class SistTicketsService {
   private UrlGetTicketRecl = ApiConection.ServiceUrl + ApiConection.GetTicketRecl;
   private UrlGetTicketPrioridad = ApiConection.ServiceUrl + ApiConection.GetTicketPrioridad;
   private UrlGetPostulaciones = ApiConection.ServiceUrl + ApiConection.GetPostulaciones;
+  private UrlLiberarCandidato = ApiConection.ServiceUrl + ApiConection.LiberarCandidato;
 
   constructor(private _httpClient: HttpClient) { }
 
@@ -59,5 +59,10 @@ export class SistTicketsService {
   {
     let params = new HttpParams().set('candidatoId', candidatoId);
     return this._httpClient.get(this.UrlGetPostulaciones, {params: params})
+  }
+
+  LiberarCandidato(requi, candidato) : Observable<any>{
+    let params = new HttpParams().set('requisicionId', requi).set('candidatoId', candidato);
+    return this._httpClient.get(this.UrlLiberarCandidato, {params: params});
   }
 }

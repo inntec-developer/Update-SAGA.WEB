@@ -1,3 +1,25 @@
-<p>
-  dlg-asignar-perfil works!
-</p>
+<h3 class="text-info text-left" mat-dialog-title>
+  <em class="fa fa-user-circle-o"></em> PROPIETARIOS
+  <button type="button" class="btn btn-xs btn-danger btn-circle float-right" mat-dialog-close ><i class="fa fa-times"></i></button>
+</h3>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+  <div class="card">
+    <div class="card-body">
+        <div class="form-group">
+            <label class="text-sm text-warning">SELECCIONAR PROPIETARIO</label>
+            <select multiple class="form-control" id="exampleFormControlSelect2" [(ngModel)]="reclutadorId">
+              <option class="text-success" *ngFor="let r of data" (click)="enviarDatos(r)">{{r.nombre}}</option>
+            </select>
+          </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<!-- <mat-dialog-actions class="float-right">
+    <button type="button" class="btn btn-xs btn-labeled btn-outline-danger mb-1 float-right" mat-dialog-close>
+      <span class="btn-label">
+        <i class="fa fa-times"></i>
+      </span> Cancelar
+    </button>
+    <img class="loading-position" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+  </mat-dialog-actions> -->

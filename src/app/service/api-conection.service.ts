@@ -249,4 +249,6 @@ public static InsertTicket = 'SistTickets/InsertTicketRecl'
   public static GetTicketPrioridad = 'SistTickets/getTicketPrioridad'
   public static UpdateStatusTicket = 'SistTickets/updateStatus'
   public static GetPostulaciones = 'SistTickets/getPostulaciones'
+  public static LiberarCandidato = 'SistTickets/liberarCandidato'
+
 }

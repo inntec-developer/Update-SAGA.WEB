@@ -319,13 +319,14 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     EditarRequiEstatusComponent,
     EditarCandidatoEstatusComponent,
     ActividadesReclutadorComponent,
-    FileManagerComponent
+    FileManagerComponent,
+    DlgAsignarPerfilComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
     { provide: PaginationConfig, useValue: getSpanishPaginatorBtp() },
     ToasterService
   ],
-  entryComponents: [DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent]
+  entryComponents: [DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent]
 })
 export class ComponentsModule { }
