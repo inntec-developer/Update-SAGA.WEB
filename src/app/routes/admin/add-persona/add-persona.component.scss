@@ -1,7 +1,29 @@
 .margin-button
 {
     margin-left: 1px;
+}
 
+.action-width{
+    width: 80px;
+}
+
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+thead {
+  width: calc(100% - 1em)
+}
+
+table {
+  width: 400px;
+}
+
+.contentEmail{
+    width: 200px;
 }
 
 // tr.selected {
@@ -45,13 +67,13 @@
 //     float: left;
 //   }
 
-tbody tr:hover
-{
-//   transform:scale(0.999,0.9);
-//   transform-origin:center;
-font-size: 16px;
-  box-shadow:0 20px 60px rgba(0,0,0,.25);
-}
+// tbody tr:hover
+// {
+// //   transform:scale(0.999,0.9);
+// //   transform-origin:center;
+//     font-size: 16px;
+//     box-shadow:0 20px 60px rgba(0,0,0,.25);
+// }
 
 thead
 {
