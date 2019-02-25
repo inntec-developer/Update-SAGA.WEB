@@ -137,7 +137,8 @@ export class InfoCandidatoComponent implements OnInit {
         idiomas: data.idiomas,
         estatus: data.estatus,
         about: data.aboutMe[0],
-        info: data.candidato
+        info: data.candidato,
+        propietarioId: data.propietarioId
       }
       if (this.candidato.estatus) {
         this.Estatus = this.candidato.estatus.id;
@@ -148,6 +149,9 @@ export class InfoCandidatoComponent implements OnInit {
         this.reclutadorId = this.candidato.estatus.reclutadorId;
       }
 
+      console.log(this.RequisicionId)
+      console.log(this.candidato.propietarioId)
+      
       this._serviceExamen.GetExamenCandidato(this.candidato.id).subscribe(exa => {
 
         this.examen.tecnicos = exa[0];
