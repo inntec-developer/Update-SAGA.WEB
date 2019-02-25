@@ -20,20 +20,20 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
 
   dataSource = [];
   Vacantes: number = 0;
-   // Varaibles del paginador
-   public page: number = 1;
-   public itemsPerPage: number = 20;
-   public maxSize: number = 5;
-   public numPages: number = 1;
-   public length: number = 0;
- 
-   showFilterRow: boolean;
-   registros: number;
-   errorMessage: any;
-   element: any = [];
+  // Varaibles del paginador
+  public page: number = 1;
+  public itemsPerPage: number = 20;
+  public maxSize: number = 5;
+  public numPages: number = 1;
+  public length: number = 0;
 
-   requisicionId: any;
-   Vacante: any;
+  showFilterRow: boolean;
+  registros: number;
+  errorMessage: any;
+  element: any = [];
+
+  requisicionId: any;
+  Vacante: any;
   RequisicionId: any;
   estatusId: any;
   Folio: any;
@@ -48,10 +48,10 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
   coment = false;
 
   constructor(private service: RequisicionesService, private spinner: NgxSpinnerService,
-     private _Router: Router,
-     private dialog: MatDialog,
-     private toasterService: ToasterService,
-     private postulacionservice: PostulateService) { }
+    private _Router: Router,
+    private dialog: MatDialog,
+    private toasterService: ToasterService,
+    private postulacionservice: PostulateService) { }
 
   public rows: Array<any> = [];
   public columns: Array<any> = [
@@ -81,8 +81,7 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
 
   }
 
-  GetRequisicionesPuro()
-  {
+  GetRequisicionesPuro() {
     this.service.GetRequiTipoRecl(sessionStorage.getItem('id'), 1).subscribe(data => {
       this.dataSource = data;
     })
@@ -195,30 +194,31 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
     this.GetRequisicionesPuro();
     setTimeout(() => {
       this.columns.forEach(element => {
-       (<HTMLInputElement>document.getElementById(element.name)).value = '';
+        (<HTMLInputElement>document.getElementById(element.name)).value = '';
       });
       this.onChangeTable(this.config);
+      this.resetSelect();
     }, 1000);
   }
 
-  public clearfilters(){
+  public clearfilters() {
     this.columns.forEach(element => {
       element.filtering.filterString = '';
-     (<HTMLInputElement>document.getElementById(element.name)).value = '';
+      (<HTMLInputElement>document.getElementById(element.name)).value = '';
     });
     this.onChangeTable(this.config);
 
   }
 
   public onCellClick(data: any): any {
-  
+
     data.selected ? data.selected = false : data.selected = true;
     this.RequisicionId = data.id
     this.estatusId = data.estatusId;
     this.Folio = data.folio;
     this.Vacante = data.vBtra;
     this.element = data;
-    
+
     this.row = data;
 
     this.ValidarEstatus(data.estatusId);
@@ -233,41 +233,33 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
       aux.selected = true;
       this.rowAux = aux;
     }
-   
+
   }
 
-  updataStatus(estatusId, estatus)
-  {
-    var datos = {estatusId: estatusId, requisicionId: this.RequisicionId }
-   
-      this.postulacionservice.SetProcesoVacante(datos).subscribe(data => {
-        if (data == 201) {
-          var idx = this.rows.findIndex(x => x.id == this.RequisicionId);
-          this.rows[idx]['estatus'] = estatus;
-          this.rows[idx]['estatusId'] = estatusId;
-          this.ValidarEstatus(estatusId);
-          this.refreshTable();
-          this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
-          this.service.SendEmailRequiPuro(datos.requisicionId).subscribe(email => {
-            if(email == 200){
-              this.popToast('success', 'Noticación', 'resiviras un correo con la información de la vacante, igualmente el propietario.');
-            }else{
-              this.popToast('error', 'Estatus', 'Ocurrió un error al intentar notificar por correo electrónico los cambios realizados.');
-            }
-          });
+  updataStatus(estatusId, estatus) {
+    var datos = { estatusId: estatusId, requisicionId: this.RequisicionId }
 
-        }
-        else {
-          this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
-        }
-      });
+    this.postulacionservice.SetProcesoVacante(datos).subscribe(data => {
+      if (data == 201) {
+        var idx = this.rows.findIndex(x => x.id == this.RequisicionId);
+        this.rows[idx]['estatus'] = estatus;
+        this.rows[idx]['estatusId'] = estatusId;
+        this.ValidarEstatus(estatusId);
+        this.refreshTable();
+        this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+        this.SendEmail();
+        this.resetSelect();
+
+      }
+      else {
+        this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
+      }
+    });
   }
-  
 
-  ValidarEstatus(estatusId)
-  {
-    if(estatusId == 43)
-    {
+
+  ValidarEstatus(estatusId) {
+    if (estatusId == 43) {
       this.view = true;
       this.coment = true;
       this.facturar = true;
@@ -275,8 +267,7 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
       this.borrar = true;
       this.autorizar = false;
     }
-    else if(estatusId == 44)
-    {
+    else if (estatusId == 44) {
       this.view = true;
       this.coment = true;
       this.facturar = false;
@@ -284,8 +275,7 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
       this.borrar = false;
       this.autorizar = true;
     }
-    else if(estatusId == 45)
-    {
+    else if (estatusId == 45) {
       this.view = true;
       this.coment = true;
       this.facturar = false;
@@ -293,8 +283,7 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
       this.borrar = false;
       this.autorizar = true;
     }
-    else if(estatusId == 8)
-    {
+    else if (estatusId == 8) {
       this.view = true;
       this.coment = true;
       this.facturar = false;
@@ -302,8 +291,7 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
       this.borrar = true;
       this.autorizar = false;
     }
-    else if(estatusId == 46)
-    {
+    else if (estatusId == 46) {
       this.view = true;
       this.coment = true;
       this.facturar = false;
@@ -311,7 +299,7 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
       this.borrar = false;
       this.autorizar = false;
     }
-   
+
   }
   showRequi() {
     this._Router.navigate(['/ventas/visualizarRequisicion/', this.element.id, this.element.folio, this.Vacante], { skipLocationChange: true });
@@ -327,9 +315,10 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
     });
     var window: Window
     dialogDlt.afterClosed().subscribe(result => {
-      if(result == 200)
-      {
+      if (result == 200) {
         this.refreshTable();
+        this.SendEmail();
+        this.resetSelect();
       }
     });
   }
@@ -341,14 +330,15 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
     });
     var window: Window
     dialogCnc.afterClosed().subscribe(result => {
-      if(result == 200)
-      {
+      if (result == 200) {
         // this.updataStatus(8, 'Cancelar')
         this.ValidarEstatus(8);
         this.refreshTable();
+        this.SendEmail();
+        this.resetSelect();
       }
-      
-      
+
+
     })
   }
 
@@ -360,31 +350,39 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
     });
     var window: Window
     dialogDlt.afterClosed().subscribe(result => {
-      if(result.Ok == 200)
-      {
-        this.postulacionservice.SetProcesoVacante({estatusId: result.estatus, requisicionId: this.RequisicionId}).subscribe(data =>{
+      if (result.Ok == 200) {
+        this.postulacionservice.SetProcesoVacante({ estatusId: result.estatus, requisicionId: this.RequisicionId }).subscribe(data => {
 
-          if(data == 201)
-          {
+          if (data == 201) {
             this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
             this.refreshTable();
-            this.service.SendEmailRequiPuro(this.RequisicionId).subscribe(email => {
-              if(email == 200){
-                this.popToast('success', 'Noticación', 'Se ha notificado al departamento de facturación por medio de correo electrónico.');
-              }else{
-                this.popToast('error', 'Estatus', 'Ocurrió un error al intentar notificar por correo electrónico los cambios realizados.');
-              }
-            });
-
-
+            this.SendEmail();
           }
-          else
-          {
+          else {
             this.popToast('error', 'Estatus', 'Ocurrio un error al intentar actualizar datos');
           }
 
         })
-       
+
+      }
+    });
+  }
+
+  resetSelect() {
+    this.facturar = false;
+    this.cancelar = false;
+    this.borrar = false;
+    this.autorizar = false;
+    this.view = false;
+    this.coment = false;
+  }
+
+  SendEmail() {
+    this.service.SendEmailRequiPuro(this.RequisicionId).subscribe(email => {
+      if (email == 200) {
+        this.popToast('success', 'Noticación', 'Se ha notificado al departamento de facturación por medio de correo electrónico.');
+      } else {
+        this.popToast('error', 'Estatus', 'Ocurrió un error al intentar notificar por correo electrónico los cambios realizados.');
       }
     });
   }
@@ -392,22 +390,22 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
   /*
   * Creacion de mensajes
   * */
- toaster: any;
- toasterConfig: any;
- toasterconfig: ToasterConfig = new ToasterConfig({
-   positionClass: 'toast-bottom-right',
-   limit: 7, tapToDismiss: false,
-   showCloseButton: true,
-   mouseoverTimerStop: true,
- });
- popToast(type, title, body) {
-   var toast: Toast = {
-     type: type,
-     title: title,
-     timeout: 5000,
-     body: body
-   }
-   this.toasterService.pop(toast);
- }
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7, tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
+  popToast(type, title, body) {
+    var toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 5000,
+      body: body
+    }
+    this.toasterService.pop(toast);
+  }
 
 }

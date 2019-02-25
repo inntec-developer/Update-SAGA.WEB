@@ -47,24 +47,20 @@ export class AddPersonaComponent implements OnInit {
     private toasterService: ToasterService) {
   }
 
-  ngOnInit() 
-  {
+  ngOnInit() {
     this.getUsuarios();
-    this.getDepartamentos();
-    this.getTipos();
-    this.GetLideres();
-    this.GetOficinas();
+    this.GetCatalogos();
   }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.onChangeTable(this.config)
-    }, 1500);
-  }
+  // ngAfterViewInit(): void {
+  //   setTimeout(() => {
+  //     this.onChangeTable(this.config)
+  //   }, 1500);
+  // }
 
   public rows: Array<any> = [];
   public columns: Array<any> = [
-    { title: 'Foto', sorting: 'desc', className: 'text-success text-center', name: 'foto'},
+    { title: 'Foto', sorting: 'desc', className: 'text-success text-center', name: 'foto' },
     { title: 'Clave', sorting: 'desc', className: 'text-success text-center', name: 'clave', filtering: { filterString: '', placeholder: 'Clave' } },
     { title: 'Alias', sorting: 'desc', className: 'text-success text-center', name: 'usuario', filtering: { filterString: '', placeholder: 'Alias' } },
     { title: 'Nombre', sorting: 'desc', className: 'text-success text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
@@ -80,12 +76,12 @@ export class AddPersonaComponent implements OnInit {
 
   public config: any = {
     paging: true,
-    filtering: {filterString: ''},
+    filtering: { filterString: '' },
     className: ['table-hover mb-0']
   }
 
   public onChangeTable(config: any): any {
-    
+
     if (config.filtering) {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
@@ -171,6 +167,29 @@ export class AddPersonaComponent implements OnInit {
     });
   }
 
+  public clearfilters() {
+    this.columns.forEach(element => {
+      if (element.name != 'foto') {
+        element.filtering.filterString = '';
+        (<HTMLInputElement>document.getElementById(element.name)).value = '';
+      }
+    });
+    this.onChangeTable(this.config);
+    if (!this.selected) {
+      // this._reinciar();
+    }
+  }
+
+  refreshTable() {
+    this.columns.forEach(element => {
+      if (element.name != 'foto') {
+        element.filtering.filterString = '';
+        (<HTMLInputElement>document.getElementById(element.name)).value = '';
+      }
+    });
+    this.getUsuarios();
+  }
+
   CrearURL(idP: any) {
     this.name = idP;
   }
@@ -178,7 +197,6 @@ export class AddPersonaComponent implements OnInit {
 
   updateFoto() {
     //this.name = this.name + '.' + this.someInput.selectedFile.type.split('/')[1];
-
     if (this.someInput.StatusCode == 201 || this.someInput.StatusCode == 500) {
       this.closeModal();
 
@@ -190,7 +208,7 @@ export class AddPersonaComponent implements OnInit {
 
   }
 
-  SendEmail(user) {
+  SendEmail(user: any) {
     let u = {
       EntidadId: user.entidadId,
       Clave: user.clave,
@@ -208,44 +226,14 @@ export class AddPersonaComponent implements OnInit {
     this.service.SendEmailRegister(u).subscribe(res => {
       if (res == 201) {
         this.popToast('success', 'Envío de correo', 'El correo se envió con éxito');
-
-        // this.alerts[0]['msg'] = 'El correo se envió con éxito';
-        // this.alert = this.alerts[0];
-        // this.verMsj = true;
-        // this.success = true;
-        // this.haserror = false;
       }
       else {
         this.popToast('error', 'Envío de correo', 'Ocurrio un error al intentar enviar correo');
-        // this.alerts[1]['msg'] = 'Ocurrio un error al intentar enviar correo';
-        // this.alert = this.alerts[1];
-        // this.verMsj = true;
-        // this.success = false;
-        // this.haserror = true;
       }
     });
 
   }
 
-  onSelect(row, rowIndex) {
-    // if(this.dataRowIndex != rowIndex)
-    // {
-    //   if(this.dataRow)
-    //   {
-    //     this.dataRow.selected = false;
-    //   }
-
-    //   this.dataRowIndex = rowIndex;
-    //   this.dataRow = row;
-    //   row.selected = true;
-    // }
-    // else
-    // {
-    //   this.dataRow = row;
-    //   this.dataRowIndex = rowIndex;
-    //   row.selected = true; //para poner el backgroun cuando seleccione
-    // }
-  }
   closeModal() {
     this.someInput.removeItem();
     this.someInput.selectedFile = null;
@@ -253,34 +241,35 @@ export class AddPersonaComponent implements OnInit {
     this.modal.hide();
   }
 
-  updateValue(event: any, cell: any, rowIndex: any) {
+  updateValue(event: any, cell: any, rowIndex: any, entidadId: any) {
     var aux = null;
+    var ObjertIndex = this.Users.findIndex(u => u.entidadId === entidadId);
     if (cell === "tipoUsuarioId") {
       aux = this.ListTipos.find(nt => nt.id == event.target.value);
-      this.Users[rowIndex]['tipoUsuario'] = aux.tipo;
-      this.Users[rowIndex]['tipoUsuarioId'] = event.target.value;
+      this.Users[ObjertIndex]['tipoUsuario'] = aux.tipo;
+      this.Users[ObjertIndex]['tipoUsuarioId'] = event.target.value;
       this.editing[rowIndex + '-' + 'tipoUsuario'] = false;
     }
     else if (cell === "departamentoId") {
       aux = this.ListDepas.find(nd => nd.id == event.target.value);
-      this.Users[rowIndex]['departamento'] = aux.nombre;
-      this.Users[rowIndex]['departamentoId'] = event.target.value;
+      this.Users[ObjertIndex]['departamento'] = aux.nombre;
+      this.Users[ObjertIndex]['departamentoId'] = event.target.value;
       this.editing[rowIndex + '-' + 'departamento'] = false;
     }
     else if (cell === "lider") {
       aux = this.Lideres.find(nd => nd.liderId == event.target.value);
-      this.Users[rowIndex]['nombreLider'] = aux.nombreLider;
-      this.Users[rowIndex]['liderId'] = event.target.value;
+      this.Users[ObjertIndex]['nombreLider'] = aux.nombreLider;
+      this.Users[ObjertIndex]['liderId'] = event.target.value;
       this.editing[rowIndex + '-' + 'lider'] = false;
     }
     else if (cell === 'oficina') {
       aux = this.Oficina.find(nd => nd.id == event.target.value);
-      this.Users[rowIndex]['oficina'] = aux.nombre;
-      this.Users[rowIndex]['oficinaId'] = event.target.value;
+      this.Users[ObjertIndex]['oficina'] = aux.nombre;
+      this.Users[ObjertIndex]['oficinaId'] = event.target.value;
       this.editing[rowIndex + '-' + 'oficina'] = false;
     }
     else if (event.target.value !== '') {
-      this.Users[rowIndex][cell] = event.target.value;
+      this.Users[ObjertIndex][cell] = event.target.value;
     }
 
     this.editing[rowIndex + '-' + cell] = false;
@@ -330,65 +319,38 @@ export class AddPersonaComponent implements OnInit {
       .subscribe(data => {
         if (data == 201) {
           this.popToast('success', 'Actualizar Datos', 'Los datos se actualizaron con éxito');
-          // this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
-          // this.alert = this.alerts[0];
-          // this.verMsj = true;
-          // this.success = true;
-          // this.haserror = false;
         }
         else {
           this.popToast('error', 'Actualizar Datos', 'Ocurrió un error al intentar actualizar datos');
-          // this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
-          // this.alert = this.alerts[1];
-          // this.verMsj = true;
-          // this.success = false;
-          // this.haserror = true;
         }
-
       });
   }
 
   getUsuarios() {
-    this.service.getPersonas()
-      .subscribe(
-        e => {
-          this.Users = e;
-          this.Users.forEach(item => {
-            item.fotoAux = ApiConection.ServiceUrlFoto + item.foto
-            item.selected = false;
-          })
-          this.filteredData = this.Users;
-        })
-  }
-
-  getDepartamentos() {
-    this.service.getDepas()
-      .subscribe(
-        e => {
-          this.ListDepas = e;
-        })
-  }
-
-  getTipos() {
-    this.service.getTipos()
-      .subscribe(
-        e => {
-          this.ListTipos = e;
-        })
-  }
-
-  GetLideres() {
-    this.service.GetLideres().subscribe(data => {
-      this.Lideres = data;
+    this.service.getPersonas().subscribe(e => {
+      this.Users = e;
+      this.Users.forEach(item => {
+        item.fotoAux = ApiConection.ServiceUrlFoto + item.foto
+        item.selected = false;
+      });
+      this.onChangeTable(this.config)
     })
   }
 
-  GetOficinas() {
+  GetCatalogos() {
+    this.service.getDepas().subscribe(e => {
+      this.ListDepas = e;
+    })
+    this.service.getTipos().subscribe(e => {
+      this.ListTipos = e;
+    });
+    this.service.GetLideres().subscribe(data => {
+      this.Lideres = data;
+    });
     this.service.GetOficinas().subscribe(data => {
       this.Oficina = data;
     });
   }
-
 
   /**
   * configuracion para mensajes de acciones.
@@ -404,7 +366,7 @@ export class AddPersonaComponent implements OnInit {
     preventDuplicates: true,
   });
 
-  popToast(type, title, body) {
+  popToast(type: any, title: any, body: any) {
     var toast: Toast = {
       type: type,
       title: title,
