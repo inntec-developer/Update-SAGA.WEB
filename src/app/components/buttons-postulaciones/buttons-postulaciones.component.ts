@@ -493,25 +493,30 @@ objLiberar = [];
   {
     if(value == 200)
     {
+      this.modal.hide();
+      this.dlgLiberar = false;
+
       var aux = this.dataSource;
       var idx = aux.findIndex(x => x.candidatoId === this.candidatoId);
-      this.ValidarEstatus(27);
-
+     
       this.dataSource[idx]['estatusId'] = 27;
       this.dataSource[idx]['estatus'] = 'Liberado';
+
+      this.ValidarEstatus(27);
 
       this.onChangeTable(this.config)
       this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
 
-      this.modal.hide();
-      this.dlgLiberar = false;
+      
     }
     else if(value == 404)
     {
-      this.onChangeTable(this.config)
-      this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos');
       this.modal.hide();
       this.dlgLiberar = false;
+      
+      this.onChangeTable(this.config)
+      this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos');
+ 
     }
     else
     {

@@ -69,3 +69,25 @@
   </div>
   <pre *ngIf="config.paging" class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
 </div>
+
+<!-- Modal para dlgLiberar  -->
+<div *ngIf="dlgLiberar" [config]="{show: true, ignoreBackdropClick: true, keyboard: false}" bsModal #modallib="bs-modal"
+  class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Informaci&oacute;n de la Vacante</h4>
+        <button type="button" class="close pull-right" (click)="modallib.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+      <div class="modal-body">
+        <app-dialog-liberar-candidato [objLiberar]="objLiberar" (close)="onClose($event)"></app-dialog-liberar-candidato>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-outline-success" (click)="modallib.hide()">Cerrar</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
