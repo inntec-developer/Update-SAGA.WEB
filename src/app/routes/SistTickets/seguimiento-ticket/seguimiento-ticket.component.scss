@@ -12,3 +12,16 @@ margin-left: 10px;
 {
     height: 60px !important;
 }
+
+li 
+{
+    list-style: none;
+}
+a{
+ cursor: pointer;
+}
+a:hover
+{
+    background-color: orange;
+    font-size: 14px !important;
+}

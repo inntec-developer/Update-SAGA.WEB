@@ -517,6 +517,20 @@ export class InfoCandidatoComponent implements OnInit {
     }
 
   }
+
+  LiberarPermisoEjecutivo()
+  {
+    this.objLiberar.push({
+      RequisicionId: this.RequisicionId,
+      CandidatoId: this.CandidatoId,
+      ReclutadorId: sessionStorage.getItem('id'),
+      ProcesoCandidatoId: this.Estatus,
+
+    })
+
+    this.dlgLiberar = true;
+  }
+
   openDialogLiberar() {
 
     this.objLiberar.push({
@@ -585,6 +599,7 @@ export class InfoCandidatoComponent implements OnInit {
               };
               this.EstatusEmitter.emit(this.Emiter);
 
+              this.objLiberar = [];
               break;
             }
             case 404: {

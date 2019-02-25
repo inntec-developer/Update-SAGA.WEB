@@ -56,47 +56,57 @@
           <div class="col-md-10 text-right">
             <h5 *ngIf="candidato.estatus" class="m-0" [ngClass]="(procesoCandidatoId === 27) ? 'text-success':'text-primary'"
               [class.text-warning]="candidato.estatus.estatusId === 42">
-              <span *ngIf="candidato.estatus.estatusId != 28"> {{ Status }} por: {{reclutador}} </span>
-              <span *ngIf="candidato.estatus.estatusId == 28" class="text-danger">POSTULADO por: {{reclutador}} </span>
+              <small *ngIf="candidato.estatus.estatusId != 28">{{ Status }} por: {{reclutador}} </small>
+              <small *ngIf="candidato.estatus.estatusId == 28" class="text-danger">POSTULADO por: {{reclutador}} </small>
             </h5>
             <h5 *ngIf="!candidato.estatus" class="text-success">Candidato Disponible</h5>
           </div>
         </div>
+        <div *ngIf="candidato.estatus.estatusId == 24">
+            <button id="delete" chkPrivilegiosButtons class="btn btn-xs btn-outline-danger float-right" (click)="LiberarPermisoEjecutivo()"><i class="fa fa-thumbs-o-down"></i></button>
+        </div>
       </div>
     </div>
     <br>
-    <div *ngIf="candidato" class="dt-container mat-elevation-z8">
-      <div class="card-body">
-        <h5 class="text-primary">Postulaciones ({{registros_p}})
+    <div *ngIf="candidato" class="card">
+      <div class="card-body mat-elevation-z8">
+        <h5 class="text-primary p-3 bg-light">Postulaciones ({{registros_p}})
           <span class="pull-right">
             <em class="fa fa-bookmark-o"></em>
           </span>
         </h5>
-        <div class="card card-default">
+    
           <div class="table-responsive">
-            <table ngClass="{{config_p.className || ''}}" role="grid" style="width: 100%;">
+            <table ngClass="{{config_p.className || ''}}" class="table">
               <thead>
                 <tr>
-                  <th *ngFor="let column of columns_p" class="{{column.className || ''}}">{{column.title}}
+                  <th *ngFor="let column of columns_p" class="{{column.className || ''}}">{{column.title | uppercase}}
                   </th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let row of rows_p">
+                <tr *ngFor="let row of rows_p" class="text-muted">
                   <td class="text-center"> {{row.folio}} </td>
                   <td class="text-center"> {{row.vBtra}}</td>
                   <td class="text-center">
-                    <small class="badge badge-pill" [class.badge-warning]="row.estatusId  === 1 || row.estatusId  === 2 || row.estatusId  === 3 "
+                    <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill" [class.badge-warning]="row.estatusId  === 1 || row.estatusId  === 2 || row.estatusId  === 3 "
                       [class.badge-primary]="row.estatusId  === 4" [class.badge-danger]="row.estatusId  === 5"
                       [class.badge-success]="row.estatusId  === 6" [class.badge-success]="row.estatusId  === 7">
-                      {{row.estatus }}
+                      {{row.estatus | uppercase}}
                     </small>
+
+                  <ng-template #toLength>
+                    <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 1 || row.estatusId  === 2 || row.estatusId  === 3 "
+                    [class.badge-primary]="row.estatusId  === 4" [class.badge-danger]="row.estatusId  === 5"
+                    [class.badge-success]="row.estatusId  === 6" [class.badge-success]="row.estatusId  === 7" placement="bottom"
+                      tooltip="{{row.estatus | uppercase}}" container='body'> {{row.estatus | slice:0:8 | uppercase }} ...
+                    </small>
+                  </ng-template>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-        </div>
       </div>
     </div>
   </div>
@@ -637,94 +647,101 @@
           </accordion>
         </tab>
         <tab *ngIf="VerVacantes" heading="Mis Vacantes ({{registros_v}})" id="misVacantes">
-          <div class="dt-header">
-            <mat-form-field>
-              <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config_v.filtering"
-                (tableChanged)="onChangeTable_v(config_v)">
-            </mat-form-field>
-            <div class="row justify-content-between">
-              <div class="d-flex align-items-stretch ">
-                <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones margen"
-                  [disabled]="!infoRequiId && !infoFolio" [ngClass]="(!infoRequiId && !infoFolio) ? 'disabled' : 'btn-outline-warning'"
-                  container="body" placement="bottom" tooltip="Visualizar"><em class="fa fa-eye"></em></button>
+            <div class="card">
+              <div class="card-body">
+            
+                <!-- <mat-form-field>
+                          <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config_v.filtering"
+                            (tableChanged)="onChangeTable_v(config_v)">
+                        </mat-form-field> -->
+                <div class="row">
+                  <div class="col-sm-12 col-md-12 p-2 bg-light clearfix">
+                    <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-acciones" [disabled]="!infoRequiId && !infoFolio"
+                      [ngClass]="(!infoRequiId && !infoFolio) ? 'disabled' : 'btn-outline-warning'" container="body" placement="bottom"
+                      tooltip="Visualizar">
+                      <em class="fa fa-eye"></em>
+                    </button>
+            
+                    <button [disabled]="loading || auxestatus" [ngClass]="loading || auxestatus
+                                                  ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-success'" container="body" placement="bottom"
+                      tooltip="Apartar" (click)="_apartarCandidato()">
+                      <em class="fa fa-thumbs-o-up"></em>
+                    </button>
+                    <button [disabled]="desapartar || loading" [ngClass]="desapartar || loading ? 'mr-1 btn disabled':'mr-1 btn btn-outline-danger'"
+                      container="body" placement="bottom" tooltip="Desapartar" (click)="openDialogLiberar()">
+                      <em class="fa fa-thumbs-o-down"></em>
+                    </button>
+ 
 
-                <button [disabled]="loading || auxestatus" [ngClass]="loading || auxestatus
-                                      ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
-                  container="body" placement="bottom" tooltip="Apartar" (click)="_apartarCandidato()">
-                  <em class="fa fa-thumbs-o-up"></em>
-                </button>
-                <button [disabled]="desapartar || loading" [ngClass]="desapartar || loading ? 'mb-1 btn disabled':'mb-1 btn btn-outline-danger'"
-                  container="body" placement="bottom" tooltip="Desapartar" (click)="openDialogLiberar()">
-                  <em class="fa fa-thumbs-o-down"></em>
-                </button>
+                    <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="btn btn-outline-primary float-right">
+                      <em class="fa fa-eraser"></em>
+                    </button>
+                    <button class="mr-1 btn btn-outline-success float-right" type="button" (click)="refreshTable_v()" container="body" placement="bottom"
+                      tooltip="Actualizar">
+                      <em class="icon-refresh"></em>
+                    </button>
+                  </div>
 
-              </div>
-              <div>
-                <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class=" margen mb-1 btn btn-outline-primary">
-                  <em class="fa fa-eraser"></em>
-                </button>
-                <button class="mb-1  btn btn-outline-success" type="button" (click)="refreshTable_v()" container="body"
-                  placement="bottom" tooltip="Actualizar">
-                  <em class="icon-refresh"></em>
-                </button>
+          </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-12 table-responsive">
+                  <table id="resultDataTableVacantes" class="table" ngClass="{{config_v.className || ''}}">
+                    <thead>
+                      <tr>
+                        <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+                          {{column.title | uppercase}}
+                          <!-- <i *ngIf="config_v && column.sort" class="pull-right fa" (click)="changeSort($event, config_v)"
+                                    [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}"> </i>-->
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="showFilterRow_v">
+                        <td *ngFor="let column of columns">
+                          <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config_v)"
+                            class="form-control form-control-sm" id="{{column.name}}">
+                        </td>
+                      </tr>
+                      <tr (click)="onCellClick_v(row)" (dblclick)="lgModal.show()" *ngFor="let row of rows" [class.confident]="row.confidencial"
+                        [class.enProceso]="row.id === RequisicionId && procesoCandidatoId != 40 && procesoCandidatoId != 27" [class.cubierta]="row.vacantes == row.contratados"
+                        [class.selected]="row.selected">
+                        <td class="text-center">
+                          {{row.folio}}
+                        </td>
+                        <td> {{row.vBtra}}</td>
+                        <td>
+                          <span *ngIf="row.cliente.length <= 13 else toLengthCliente">{{row.cliente}}</span>
+                          <ng-template #toLengthCliente>
+                            <span placement="bottom" tooltip="{{row.cliente}}" container='body'> {{row.cliente | slice:0:13 }} ...
+                            </span>
+                          </ng-template>
+                        </td>
+                        <td class="text-center">
+                          <span class="px-1 mr-1  badge  badge-pill badge-info"> {{row.vacantes}}</span>
+                        </td>
+                        <td class="text-center"> {{row.tipoReclutamiento}}</td>
+                        <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
+                        <td class="text-center">
+                          <small *ngIf="row.estatus.length <= 10 else toLength" class="badge badge-pill" [class.badge-warning]="row.estatusId  === 4"
+                            [class.badge-info]="row.estatusId  != 7 " [class.badge-success]="row.estatusId  === 7">
+                            {{row.estatus | uppercase }}
+                          </small>
+            
+                          <ng-template #toLength>
+                            <span class="badge badge-info" container="body" placement="bottom" tooltip="{{row.estatus | uppercase}}">{{row.estatus | slice:0:6 | uppercase }} ... </span>
+                          </ng-template>
+                        </td>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="card">
-            <div #tableContainer>
-              <table id="resultDataTableVacantes" class="table" ngClass="{{config_v.className || ''}}" role="grid"
-                style="width: 100%;">
-                <thead>
-                  <tr>
-                    <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
-                      {{column.title | uppercase}}
-                      <!-- <i *ngIf="config_v && column.sort" class="pull-right fa" (click)="changeSort($event, config_v)"
-                        [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}"> </i>-->
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngIf="showFilterRow_v">
-                    <td *ngFor="let column of columns">
-                      <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                        (tableChanged)="onChangeTable(config_v)" class="form-control form-control-sm" id="{{column.name}}">
-                    </td>
-                  </tr>
-                  <tr (click)="onCellClick_v(row)" (dblclick)="lgModal.show()" *ngFor="let row of rows"
-                    [class.confident]="row.confidencial" [class.enProceso]="row.id === RequisicionId && procesoCandidatoId != 40 && procesoCandidatoId != 27"
-                    [class.cubierta]="row.vacantes == row.contratados" [class.selected]="row.selected">
-                    <td class="text-center">
-                      {{row.folio}}
-                    </td>
-                    <td> {{row.vBtra}}</td>
-                    <td> {{row.cliente}}</td>
-                    <td class="text-center">
-                      <span class="px-1 mr-1  badge  badge-pill badge-info"> {{row.vacantes}}</span>
-                    </td>
-                    <td class="text-center"> {{row.tipoReclutamiento}}</td>
-                    <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
-                    <td class="text-center">
-                      <small *ngIf="row.estatus.length <= 10 else toLength" class="badge badge-pill"
-                        [class.badge-warning]="row.estatusId  === 4" [class.badge-info]="row.estatusId  != 7 "
-                        [class.badge-success]="row.estatusId  === 7">
-                        {{row.estatus | uppercase }}
-                      </small>
-
-                      <ng-template #toLength>
-                        <span class="badge badge-info" container="body" placement="bottom" tooltip="{{row.estatus | uppercase}}">{{row.estatus
-                          | slice:0:6 | uppercase }} ... </span>
-                      </ng-template>
-                    </td>
-                </tbody>
-              </table>
+            <div class=" row text-right">
+              <pagination *ngIf="config_v.paging" class="pagination-sm" [(ngModel)]="page_v" [totalItems]="length_v" [itemsPerPage]="itemsPerPage_v"
+                [maxSize]="maxSize_v" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable_v(config_v, $event)" (numPages)="numPages_v = $event">
+              </pagination>
             </div>
-          </div>
-          <div class="text-right">
-            <pagination *ngIf="config_v.paging" class="pagination-sm" [(ngModel)]="page_v" [totalItems]="length_v"
-              [itemsPerPage]="itemsPerPage_v" [maxSize]="maxSize_v" [boundaryLinks]="true" [rotate]="false"
-              (pageChanged)="onChangeTable_v(config_v, $event)" (numPages)="numPages_v = $event">
-            </pagination>
-          </div>
+            </div>
         </tab>
       </tabset>
     </div>

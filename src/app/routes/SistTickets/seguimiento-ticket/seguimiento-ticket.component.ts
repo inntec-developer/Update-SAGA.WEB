@@ -25,7 +25,7 @@ date = new Date;
 timeW;
   postulaciones: any = [];
   loading: boolean;
-  procesoCandidato: { candidatoId: any; requisicionId: any; folio: any; reclutador: any; reclutadorId: any; estatusId: number; };
+  
   dataSource: any = [];
 apartar = true;
 
@@ -97,59 +97,13 @@ apartar = true;
     })
   }
 
-  _apartarCandidato(row, candidato) {
-    if(row.reclutadores.length > 1)
-    {
+  SetApartar(candidato, datos)
+  {
 
-      let dialogDlt = this.dialog.open(DlgAsignarPerfilComponent, {
-        width: '45%',
-        disableClose: true,
-        data: row.reclutadores
-      });
-
-      dialogDlt.afterClosed().subscribe(result => {
-        this.procesoCandidato = {
-          candidatoId: candidato.candidato.candidatoId,
-          requisicionId:row.id,
-          folio: row.folio,
-          reclutador: result.nombre,
-          reclutadorId: result.reclutadorId,
-          estatusId: 12
-        }
-        console.log(this.procesoCandidato)
-      });
-    }
-    else if(row.reclutadores.length == 1)
-    {
-      this.procesoCandidato = {
-        candidatoId: candidato.candidato.candidatoId,
-        requisicionId:row.id,
-        folio: row.folio,
-        reclutador: row.reclutadores[0].nombre,
-        reclutadorId: row.reclutadores[0].reclutadorId,
-        estatusId: 12
-      }
-      console.log(this.procesoCandidato)
-
-    }
-    else
-    {
-      
-      this.loading = true;
-      this.procesoCandidato = {
-      candidatoId: candidato.candidato.candidatoId,
-      requisicionId:row.id,
-      folio: row.folio,
-      reclutador: sessionStorage.getItem('nombre'),
-      reclutadorId: sessionStorage.getItem('id'),
-      estatusId: 12
-      }
-    }
-
-    this._serviceCandidato.setApartarCandidato(this.procesoCandidato)
+    this._serviceCandidato.setApartarCandidato(datos)
       .subscribe(data => {
         this.apartar = false;
-        
+
         switch (data) {
           case 200: {
             this.loading = false;
@@ -187,6 +141,57 @@ apartar = true;
         console.log(err);
       });
     
+  }
+
+  _apartarCandidato(row, candidato) {
+    if (row.reclutadores.length > 1) {
+      let dialogDlt = this.dialog.open(DlgAsignarPerfilComponent, {
+        width: '45%',
+        disableClose: true,
+        data: row.reclutadores
+      });
+
+      dialogDlt.afterClosed().subscribe(result => {
+
+        var procesoCandidato = {
+          candidatoId: candidato.candidato.candidatoId,
+          requisicionId: row.id,
+          folio: row.folio,
+          reclutador: result.nombre,
+          reclutadorId: result.reclutadorId,
+          estatusId: 12
+        }
+
+        this.SetApartar(candidato, procesoCandidato);
+
+      });
+    }
+    else if (row.reclutadores.length == 1) {
+       let procesoCandidato = {
+        candidatoId: candidato.candidato.candidatoId,
+        requisicionId: row.id,
+        folio: row.folio,
+        reclutador: row.reclutadores[0].nombre,
+        reclutadorId: row.reclutadores[0].reclutadorId,
+        estatusId: 12
+      }
+      console.log(procesoCandidato)
+
+      this.SetApartar(candidato, procesoCandidato);
+    }
+    else {
+
+      this.loading = true;
+      let procesoCandidato = { candidatoId: candidato.candidato.candidatoId,
+        requisicionId: row.id,
+        folio: row.folio,
+        reclutador: sessionStorage.getItem('nombre'),
+        reclutadorId: sessionStorage.getItem('id'),
+        estatusId: 12
+      }
+      this.SetApartar(candidato, procesoCandidato);
+    }
+
 
   }
 

@@ -90,8 +90,11 @@
                 <i class="fa fa-user-circle-o mr-1" aria-hidden="true"></i>POSTULACIONES</h5>
           <div class="justify-content-between">
             <ul class="list-group long mb-2">
-              <li *ngFor="let item of postulaciones; let ind = index;" class="list-group-item" (dblclick)="openDialogShowRequi(item)" container="body" placement="bottom" tooltip="Doble Click para visualizar">
+              <li *ngFor="let item of postulaciones; let ind = index;" class="list-group-item">
                 <span class="text-info">
+                    <button (click)="openDialogShowRequi(item)" class="btn btn-xs btn-outline-warning float-left mr-1" container="body" placement="bottom" tooltip="Visualizar">
+                        <em class="fa fa-eye"></em>
+                      </button>
                   <span class="text-sm font-weight-bold mr-1">FOLIO</span>
                   <span class="text-muted mr-2">{{item.folio}}</span>
                   <span class="text-sm font-weight-bold mr-1">PERFIL</span>
@@ -101,18 +104,18 @@
                   <span class="text-sm font-weight-bold mr-2">PROP.</span>
           
                   <small class="text-muted mr-2" *ngIf="item.reclutadores.length == 1" >{{item.reclutadores[0].nombre}}</small>
-                  <a class="text-white badge badge-info badge-pill mr-2" *ngIf="item.reclutadores.length > 1" [popover]="popTemplate" placement="right" container="body" triggers="mouseenter:mouseleave">{{item.reclutadores.length}}</a>
+                  <a class="text-white badge badge-info badge-pill mr-2" *ngIf="item.reclutadores.length > 1" [popover]="popTemplate" placement="bottom" container="body" >{{item.reclutadores.length}}</a>
                    <ng-template #popTemplate>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="popover-body">
-                          <ul *ngFor="let r of item.reclutadores">
-                            <li class="text-muted">{{r.nombre}}</li>
+
+                        <div class="card">
+                          <div class="card-body">
+                          <h5 class="text-center text-info p-2 bg-light">RECLUTADORES</h5>
+                          <ul class="list-group" *ngFor="let r of item.reclutadores">
+                            <li class="text-muted list-group-item"><small>{{r.nombre}}</small></li>
                           </ul>
-  
                         </div>
-                      </div>
-                    </div>
+                        </div>
+
                   </ng-template>
 
 
@@ -136,8 +139,11 @@
             <h5 class="text-left text-warning p-2 bg-light">
                 <i class="fa fa-file-text-o mr-1" aria-hidden="true"></i>MIS VACANTES</h5>
             <ul class="list-group long">
-                <li *ngFor="let item of dataSource; let ind = index;" class="list-group-item" (dblclick)="openDialogShowRequi(item)" container="body" placement="bottom" tooltip="Doble Click para visualizar">
+                <li *ngFor="let item of dataSource; let ind = index;" class="list-group-item">
                   <span class="text-info">
+                    <button (click)="openDialogShowRequi(item)" class="btn btn-xs btn-outline-warning float-left mr-1" container="body" placement="bottom" tooltip="Visualizar">
+                      <em class="fa fa-eye"></em>
+                    </button>
                     <span class="text-sm font-weight-bold mr-1">FOLIO</span>
                     <span class="text-muted mr-2">{{item.folio}}</span>
                     <span class="text-sm font-weight-bold mr-1">PERFIL</span>

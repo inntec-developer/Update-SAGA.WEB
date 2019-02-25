@@ -1,3 +1,4 @@
+
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 
 declare var $: any;
@@ -28,6 +29,8 @@ export class DtBusquedaCandidatosComponent implements OnInit {
   registros: number;
   errorMessage: any;
   element: any = {};
+  objLiberar: any;
+
   constructor() { }
 
   ngOnInit() {
