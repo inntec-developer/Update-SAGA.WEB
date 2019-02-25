@@ -62,7 +62,7 @@
             <h5 *ngIf="!candidato.estatus" class="text-success">Candidato Disponible</h5>
           </div>
         </div>
-        <div *ngIf="candidato.estatus.estatusId == 24 && candidato.propietarioId == usuarioId">
+        <div *ngIf="procesoCandidatoId == 24 && candidato.propietarioId == usuarioId">
             <button id="delete" chkPrivilegiosButtons class="btn btn-xs btn-outline-danger float-right" (click)="LiberarPermisoEjecutivo()"><i class="fa fa-thumbs-o-down"></i></button>
         </div>
       </div>

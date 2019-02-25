@@ -151,7 +151,8 @@ export class InfoCandidatoComponent implements OnInit {
 
       console.log(this.RequisicionId)
       console.log(this.candidato.propietarioId)
-      
+      console.log(sessionStorage.getItem('id'))
+
       this._serviceExamen.GetExamenCandidato(this.candidato.id).subscribe(exa => {
 
         this.examen.tecnicos = exa[0];
