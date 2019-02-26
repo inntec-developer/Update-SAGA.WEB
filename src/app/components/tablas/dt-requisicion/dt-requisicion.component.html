@@ -6,27 +6,27 @@
     <div class="card">
         <div class="card-body mat-elevation-z8">
         <div class="row">
-            <div class="col-sm-12 col-md-12 clearfix p-3 mb-2 bg-light">
-              <button id="create" chkPrivilegiosButtons class="mb-1 btn btn-acciones btn-outline-info margen" container="body" placement="bottom" tooltip="Nuevo"
+            <div class="col-sm-12 col-md-12 clearfix p-3 bg-light">
+              <button id="create" chkPrivilegiosButtons class="mr-1 btn btn-acciones btn-outline-info" container="body" placement="bottom" tooltip="Nuevo"
                 [routerLink]="['/ventas/crearRequisicion']">
                 <em class="fa fa-plus"></em>
               </button>
-              <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones margen" [disabled]="!view" [ngClass]="(!view) ? 'disabled' : 'btn-outline-warning'"
+              <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mr-1 btn btn-acciones" [disabled]="!view" [ngClass]="(!view) ? 'disabled' : 'btn-outline-warning'"
                 container="body" placement="bottom" tooltip="Visualizar">
                 <em class="fa fa-eye"></em>
               </button>
   
-              <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones margen" [disabled]="!coment"
+              <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-acciones" [disabled]="!coment"
                 [ngClass]="(!coment) ? 'disabled' : 'btn-outline-dark'" container="body" placement="bottom" tooltip="Comentarios">
                 <em class="fa fa-comments-o"></em>
               </button>
   
-              <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="editar" [ngClass]="editar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-primary'"
+              <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-acciones" [disabled]="editar" [ngClass]="editar ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-primary'"
                 container="body" placement="bottom" tooltip="Editar" (click)="editRequi()">
                 <em class="icon-pencil"></em>
               </button>
   
-              <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="borrar" [ngClass]="borrar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
+              <button id='delete' chkPrivilegiosButtons [disabled]="borrar" [ngClass]="borrar ? 'btn disabled' : 'btn btn-outline-danger'"
                 container="body" placement="bottom" tooltip="Eliminar" (click)="openDialogDelete()">
                 <em class="icon-trash"></em>
               </button>
@@ -37,43 +37,43 @@
   
               <!--estatus melina-->
   
-              <button class="margen" [disabled]="cubierta" [ngClass]="cubierta ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'"
+              <button [disabled]="cubierta" [ngClass]="cubierta ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-warning'"
                 type="button" (click)="updataStatus(34, 'Cubierta')" container="body" placement="bottom" tooltip="Cubierta">
                 <em class="fa fa fa-shield"></em>
               </button>
   
   
-              <button class="margen" [disabled]="cp" [ngClass]="cp ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'" type="button"
+              <button [disabled]="cp" [ngClass]="cp ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-warning'" type="button"
                 (click)="updataStatus(35, 'Cubierta Parcialmente')" container="body" placement="bottom" tooltip="Cubierta Parcialmente">
                 <em class="fa fa-star-half-o"></em>
               </button>
-              <button class="margen" [ngClass]="crm ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'" [disabled]="crm" type="button"
+              <button [ngClass]="crm ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-warning'" [disabled]="crm" type="button"
                 (click)="updataStatus(36, 'Cubierta por Medios')" container="body" placement="bottom" tooltip="Cubierta por Reclutamiento Medios">
                 <em class="fa fa-star"></em>
               </button>
-              <button class="margen" [disabled]="cc" [ngClass]="cc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-info'" type="button" (click)="updataStatus(37, 'Cubierta por Cliente')"
+              <button [disabled]="cc" [ngClass]="cc ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-info'" type="button" (click)="updataStatus(37, 'Cubierta por Cliente')"
                 container="body" placement="bottom" tooltip="Cubierta por Cliente">
                 <em class="fa fa fa-magic"></em>
               </button>
-              <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="cancelar" [ngClass]="cancelar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
+              <button id='delete' chkPrivilegiosButtons [disabled]="cancelar" [ngClass]="cancelar ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-danger'"
                 container="body" placement="bottom" tooltip="Cancelar" (click)="openDialogCancel();">
                 <em class="icon-ban"></em>
               </button>
   
-              <button class="margen" [ngClass]="gbc ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'" [disabled]="gbc" type="button"
+              <button [ngClass]="gbc ? 'btn disabled' : 'btn btn-outline-success'" [disabled]="gbc" type="button"
                 (click)="updataStatus(38, 'Garant&iacute;a de B&uacute;squeda')" container="body" placement="bottom" tooltip="Garant&iacute;a B&uacute;squeda Candidatos">
                 <em class="fa fa-user-circle"></em>
               </button>
               <em class="vl"></em>
-              <button class="margen" type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mb-1 btn disable' : 'mb-1 btn btn-outline-success'"
+              <button type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-success'"
                 (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
                 <i class="fa fa-download"></i>
               </button>
   
-              <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary float-right">
+              <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="mr-1 btn btn-outline-primary float-right">
                 <em class="fa fa-eraser"></em>
               </button>
-              <button class="mb-1 btn btn-outline-success margen float-right" type="button" (click)="refreshTable()" container="body" placement="bottom"
+              <button class="mr-1 btn btn-outline-success float-right" type="button" (click)="refreshTable()" container="body" placement="bottom"
                 tooltip="Actualizar">
                 <em class="icon-refresh"></em>
               </button>
