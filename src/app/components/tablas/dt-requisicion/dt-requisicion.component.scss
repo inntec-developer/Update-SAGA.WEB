@@ -2,31 +2,25 @@
   margin-left: 10px;
 }
 
-tbody {
+table tbody {
   display: block;
   height: 350px;
   overflow: auto;
 }
 
-thead,
+table thead,
 tbody tr {
   display: table;
   width: 100%;
   table-layout: fixed;
 }
 
-thead {
+table thead {
   width: calc(100% - 1em)
 }
 
 table {
   width: 400px;
-}
-
-
-.margen {
-
-  margin: 0 2px;
 }
 
 .vl {
@@ -35,12 +29,15 @@ table {
   margin: 0 2px;
 }
 
-tbody tr:hover{
+table tbody tr:hover{
   font-size: 14.5px;
   box-shadow:1px 20px 60px rgba(0,0,0,.23);
 }
 
-
+.modal-lg 
+{
+  max-width: 100% !important;
+}
 
 .header-button {
   // width: 82.5%;
@@ -85,11 +82,11 @@ tbody tr:hover{
     max-height: 550px !important;
 
   }
-table tbody
+  table tbody
   {
     max-height: 250px !important;
   }
-  tr td{
+  table tr td{
     font-size: 10px;
   }
 }

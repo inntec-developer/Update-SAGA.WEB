@@ -1,4 +1,6 @@
-import { DialogShowRequiComponent } from './../routes/recl/vacantes/vacantes/components/dialogs/dialog-show-requi/dialog-show-requi.component';
+import { NgScrollbarModule } from 'ngx-scrollbar';
+
+
 import { FileManagerComponent } from './file-manager/file-manager.component';
 import { ColorPickerModule, ColorPickerService } from 'ngx-color-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -43,11 +45,11 @@ import { ModalModule, PopoverModule, TooltipModule } from 'ngx-bootstrap';
 import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../core/translator/config-paginator/config-paginator.component';
-
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { ActividadesComponent } from './tablas/actividades/actividades.component';
 import { ActividadesReclutadorComponent } from './calendario/actividades-reclutador/actividades-reclutador.component';
 import { AlertModule } from 'ngx-bootstrap';
+
 import { AsignarRequisicionComponent } from './asignar-requisicion/asignar-requisicion.component';
 import { AsignarRequisicionLiderComponent } from './asignar-requisicion-lider/asignar-requisicion-lider.component';
 import { BsDatepickerModule } from 'ngx-bootstrap';
@@ -124,6 +126,9 @@ import { DlgAsignarPerfilComponent } from './dlg-asignar-perfil/dlg-asignar-perf
 import { DtRequisicionReclPuroComponent } from './tablas/dt-requisicion-recl-puro/dt-requisicion-recl-puro.component';
 import { DlgFacturaPuroComponent } from './dlg-factura-puro/dlg-factura-puro.component';
 import { RequisicionNuevaPuroComponent } from './requisicion-nueva-puro/requisicion-nueva-puro.component';
+import { Reporte70Component } from './reporte70/reporte70.component';
+
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -182,8 +187,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
     ColorPickerModule, 
-    NgbModule
-    
+    NgbModule,
+    // NgScrollbarModule
   ],
   declarations: [
     DtDireccionComponent,
@@ -254,7 +259,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     FileManagerComponent,
     DlgAsignarPerfilComponent,
     DlgFacturaPuroComponent,
-    RequisicionNuevaPuroComponent
+    RequisicionNuevaPuroComponent,
+    Reporte70Component
   ],
   exports: [
     DtDireccionComponent,
@@ -320,7 +326,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     EditarCandidatoEstatusComponent,
     ActividadesReclutadorComponent,
     FileManagerComponent,
-    DlgAsignarPerfilComponent
+    DlgAsignarPerfilComponent,
+    Reporte70Component
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

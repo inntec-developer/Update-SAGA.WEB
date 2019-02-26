@@ -3,7 +3,7 @@
 <!--mensajes-->
 <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
 
-    <div class="card">
+    <div class="card media">
         <div class="card-body mat-elevation-z8">
         <div class="row">
             <div class="col-sm-12 col-md-12 clearfix p-3 bg-light">
@@ -65,6 +65,11 @@
                 <em class="fa fa-user-circle"></em>
               </button>
               <em class="vl"></em>
+              <button type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-info'"
+              (click)="reporte70=true;" container="body" placement="bottom" tooltip="Reporte 70">
+              <i class="fa fa-newspaper-o"></i>
+            </button>
+
               <button type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-success'"
                 (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
                 <i class="fa fa-download"></i>
@@ -202,6 +207,22 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para reporte -->
+  <div *ngIf="reporte70" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #MessageModal="bs-modal"
+    class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+    <div class="modal-dialog modal-lg reporteMod">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title float-left">Reporte - Requisiciones</h4>
+          <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="reporte70=false; lgModal.hide();" ><i class="fa fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+          <app-reporte70></app-reporte70>
         </div>
       </div>
     </div>

@@ -95,6 +95,7 @@ export class ApiConection {
   public static GetRequiTipoRecl = 'Requisiciones/getRequisicionesTipo';
   public static SendEmailRequiPuro = 'Requisiciones/sendEmailRequiPura';
   public static AddDatosFactura = 'Requisiciones/insertDtosFactura';
+  public static GetReporte70 = 'Requisiciones/getReporte70';
 
   /* Clientes / Prospectos */
   public static GetProspectos = "Directorio/getProspectos";
@@ -159,6 +160,7 @@ export class ApiConection {
   public static GuardarConfi = '/dvacante/GuardarVacante';
   public static getCampos = '/dvacante/getCampos';
   public static getClasificaciones = '/dvacante/getClasificaciones';
+
 
 
 

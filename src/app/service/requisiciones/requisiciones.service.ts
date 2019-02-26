@@ -53,6 +53,7 @@ export class RequisicionesService {
   private URLGetRequiTipoRecl = ApiConection.ServiceUrl + ApiConection.GetRequiTipoRecl;
   private URLSendEmailRequiPuro = ApiConection.ServiceUrl + ApiConection.SendEmailRequiPuro;
   private URLAddDtosFactura = ApiConection.ServiceUrl + ApiConection.AddDatosFactura;
+  private URLGetReporte70 = ApiConection.ServiceUrl + ApiConection.GetReporte70;
 
   constructor(private http: Http, private _httpClient: HttpClient) { }
   // Recupera todos los damfos que esten dados de alta y se encuentren activos
@@ -246,7 +247,9 @@ export class RequisicionesService {
    
     return this._httpClient.get(this.URLExecProcedurePause);
   }
-
+  GetReporte70() : Observable<any> {
+    return this._httpClient.get(this.URLGetReporte70)
+  }
   // Muestra un error en consola y regresa el mismo al Frond-End en caso de que se genere el mismo.
   public handleError(error: any) {
     console.log('Error Internar Server', error);

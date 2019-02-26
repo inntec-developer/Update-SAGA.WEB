@@ -67,6 +67,7 @@ export class DtRequisicionComponent implements OnInit {
   Vacante: any;
   comentario: string;
 
+  reporte70 = false;
   constructor(
     private service: RequisicionesService,
     private postulacionservice: PostulateService,

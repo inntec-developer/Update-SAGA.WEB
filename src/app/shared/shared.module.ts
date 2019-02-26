@@ -33,6 +33,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import {TreeGridDirective} from './directives/treeGrid/treeGrid.directive';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { VectormapDirective } from './directives/vectormap/vectormap.directive';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 // https://angular.io/styleguide#!#04-10
 @NgModule({
@@ -57,7 +58,8 @@ import { VectormapDirective } from './directives/vectormap/vectormap.directive';
         TooltipModule.forRoot(),
         PopoverModule.forRoot(),
         TypeaheadModule.forRoot(),
-        ToasterModule
+        ToasterModule,
+        NgScrollbarModule
     ],
     providers: [
         ColorsService
@@ -108,7 +110,8 @@ import { VectormapDirective } from './directives/vectormap/vectormap.directive';
         JqcloudDirective,
         ChkButtonsDirective,
         TreeGridDirective,
-        FocusDirective
+        FocusDirective,
+        NgScrollbarModule
     ]
 })
 

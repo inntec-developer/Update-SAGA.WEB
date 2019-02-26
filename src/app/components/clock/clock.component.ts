@@ -18,7 +18,7 @@ export class ClockComponent implements OnInit {
     months = [ "Ene", "Febrero", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sept", "Oct", "Nov", "Dic"];
     days = [ "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado", "Domingo"];
     daymonth = this.months[this.month];
-    dayText = this.days[this.day]
+    dayText = this.days[this.day - 1]
 
 
   constructor() {
@@ -29,7 +29,8 @@ export class ClockComponent implements OnInit {
    }
 
   ngOnInit() {
-  
+    console.log(this.day)
+    console.log(this.month)
   }
 
   clock(){
