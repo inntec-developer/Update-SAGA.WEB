@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./dt-requisicion-recl-puro.component.scss'],
   providers: [RequisicionesService]
 })
-export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
+export class DtRequisicionReclPuroComponent implements OnInit {
 
   dataSource = [];
   Vacantes: number = 0;
