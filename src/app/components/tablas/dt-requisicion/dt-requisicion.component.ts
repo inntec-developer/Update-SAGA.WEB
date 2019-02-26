@@ -86,16 +86,17 @@ export class DtRequisicionComponent implements OnInit {
 
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.onChangeTable(this.config);
-    }, 1500);
+  // ngAfterViewInit() {
+  //   setTimeout(() => {
+  //     this.onChangeTable(this.config);
+  //   }, 1500);
 
-  }
+  // }
 
   getRequisiciones() {
     this.service.getRequisiciones(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
+      this.onChangeTable(this.config);
     }, error => this.errorMessage = <any>error);
   }
 
@@ -261,7 +262,7 @@ export class DtRequisicionComponent implements OnInit {
       this.borrar = true;
       this.editar = true;
     }
-    else if(estatusId == 45 && this.element.vacantes > 0 )
+    else if(estatusId == 46 || estatusId == 44 || estatusId == 43 )
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
@@ -269,19 +270,8 @@ export class DtRequisicionComponent implements OnInit {
       this.crm = true; //cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
-      this.borrar = true;
+      this.borrar = false;
       this.editar = false;
-    }
-    else if(estatusId == 44 )
-    {
-      this.gbc = true; //garantía busqueda candidato
-      this.cubierta = true;
-      this.cc = true; //cubierta por el cliente
-      this.crm = true; //cubierta reclutamiento medios
-      this.cp = true; // cubierta parcialmente
-      this.cancelar = true;
-      this.borrar = true;
-      this.editar = true;
     }
     else
     {
@@ -457,7 +447,6 @@ export class DtRequisicionComponent implements OnInit {
       this.columns.forEach(element => {
        (<HTMLInputElement>document.getElementById(element.name)).value = '';
       });
-      this.onChangeTable(this.config);
       this.estatusId = null;
       this.enProceso = null;
       this.element = [];
@@ -556,6 +545,7 @@ export class DtRequisicionComponent implements OnInit {
   }
 
   openDialogDelete() {
+    console.log(this.element);
     let dialogDlt = this.dialog.open(DialogDeleteRequiComponent, {
       data: this.element
     });
@@ -563,13 +553,18 @@ export class DtRequisicionComponent implements OnInit {
     dialogDlt.afterClosed().subscribe(result => {
       if(result == 200)
       {
+        debugger;
         this.refreshTable();
+        if(this.element.tipoReclutamientoId === 1){
+          this.SendEmail();
+        }
       }
     });
   }
 
   openDialogCancel() {
     this.element.motivoId = 17;
+    console.log(this.element);
     let dialogCnc = this.dialog.open(DialogCancelRequiComponent, {
       data: this.element
     });
@@ -577,9 +572,13 @@ export class DtRequisicionComponent implements OnInit {
     dialogCnc.afterClosed().subscribe(result => {
       if(result == 200)
       {
+        debugger;
         this.updataStatus(8, 'Cancelar')
         this.ValidarEstatus(8);
         this.refreshTable();
+        if(this.element.tipoReclutamientoId === 1){
+          this.SendEmail();
+        }
       }
       
       
@@ -596,6 +595,16 @@ export class DtRequisicionComponent implements OnInit {
     dialogCnc.afterClosed().subscribe(result => {
       this.refreshTable();
     })
+  }
+
+  SendEmail() {
+    this.service.SendEmailRequiPuro(this.RequisicionId).subscribe(email => {
+      if (email == 200) {
+        this.popToast('success', 'Noticación', 'Se ha notificado al departamento de facturación por medio de correo electrónico.');
+      } else {
+        this.popToast('error', 'Estatus', 'Ocurrió un error al intentar notificar por correo electrónico los cambios realizados.');
+      }
+    });
   }
 
   exportAsXLSX()

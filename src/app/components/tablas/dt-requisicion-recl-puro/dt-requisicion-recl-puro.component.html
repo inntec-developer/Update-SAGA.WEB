@@ -30,39 +30,20 @@
           tooltip="Comentarios">
           <em class="fa fa-comments-o"></em>
         </button>
-        <!--
-            <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="editar" [ngClass]="editar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-primary'"
-              container="body" placement="bottom" tooltip="Editar" (click)="editRequi()">
-              <em class="icon-pencil"></em>
-            </button> -->
-
-
-            <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="!autorizar" [ngClass]="!autorizar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
-            container="body" placement="bottom" tooltip="Autorizar" (click)="updataStatus(46, 'Pendiente asignar')">
-            <em class="fa fa-check"></em>
-          </button>
-
+        <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="!facturar" [ngClass]="!facturar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
+          container="body" placement="bottom" tooltip="Enviar a factura" (click)="openDialogFactura()">
+          <em class="fa fa-file-text-o"></em>
+        </button>
         <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="!autorizar"
           [ngClass]="!autorizar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'" container="body" placement="bottom"
-          tooltip="Autorizar" (click)="updataStatus(46, 'Autorizada')">
+          tooltip="Autorizar" (click)="updataStatus(46, 'Pendiente asignar')">
           <em class="fa fa-check"></em>
         </button>
-
 
         <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="!cancelar" [ngClass]="!cancelar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
           container="body" placement="bottom" tooltip="Cancelar" (click)="openDialogCancel();">
           <em class="icon-ban"></em>
         </button>
-
-            <!-- <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="!borrar" [ngClass]="!borrar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
-              container="body" placement="bottom" tooltip="Eliminar" (click)="openDialogDelete()">
-              <em class="icon-trash"></em>
-            </button> -->
-            <button class="mb-1 btn btn-outline-success margen float-right" type="button" (click)="refreshTable()" container="body" placement="bottom"
-            tooltip="Actualizar">
-            <em class="icon-refresh"></em>
-          </button>
-
         <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="!borrar" [ngClass]="!borrar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
           container="body" placement="bottom" tooltip="Eliminar" (click)="openDialogDelete()">
           <em class="icon-trash"></em>
@@ -71,7 +52,6 @@
           container="body" placement="bottom" tooltip="Actualizar">
           <em class="icon-refresh"></em>
         </button>
-
       </div>
     </div>
     <div class="row" #tableContainer>

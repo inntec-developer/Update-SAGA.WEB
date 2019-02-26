@@ -74,16 +74,17 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
     this.GetRequisicionesPuro();
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.onChangeTable(this.config);
-    }, 1500);
+  // ngAfterViewInit() {
+  //   setTimeout(() => {
+  //     this.onChangeTable(this.config);
+  //   }, 1500);
 
-  }
+  // }
 
   GetRequisicionesPuro() {
     this.service.GetRequiTipoRecl(sessionStorage.getItem('id'), 1).subscribe(data => {
       this.dataSource = data;
+      this.onChangeTable(this.config);
     })
   }
 
@@ -196,7 +197,6 @@ export class DtRequisicionReclPuroComponent implements OnInit, AfterViewInit {
       this.columns.forEach(element => {
         (<HTMLInputElement>document.getElementById(element.name)).value = '';
       });
-      this.onChangeTable(this.config);
       this.resetSelect();
     }, 1000);
   }

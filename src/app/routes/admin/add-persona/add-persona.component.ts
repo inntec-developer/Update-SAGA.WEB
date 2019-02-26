@@ -334,7 +334,7 @@ export class AddPersonaComponent implements OnInit {
         item.selected = false;
       });
       this.onChangeTable(this.config)
-    })
+    });
   }
 
   GetCatalogos() {
