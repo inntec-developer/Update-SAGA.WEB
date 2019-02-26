@@ -15,40 +15,40 @@
 <div class="card">
   <div class="card-body mat-elevation-z8">
     <div class="row">
-      <div class="col-sm-12 col-md-12 clearfix p-3 mb-2 bg-light">
+      <div class="col-sm-12 col-md-12 clearfix p-3 bg-light">
         <!-- <button id="create" chkPrivilegiosButtons class="mb-1 btn btn-acciones btn-outline-info margen" container="body" placement="bottom" tooltip="Nuevo"
               [routerLink]="['/ventas/crearRequisicion']">
               <em class="fa fa-plus"></em>
             </button> -->
-        <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mb-1 btn btn-acciones margen" [disabled]="!view"
+        <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mr-1 btn btn-acciones" [disabled]="!view"
           [ngClass]="(!view) ? 'disabled' : 'btn-outline-warning'" container="body" placement="bottom" tooltip="Visualizar">
           <em class="fa fa-eye"></em>
         </button>
 
-        <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones margen"
+        <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-acciones"
           [disabled]="!coment" [ngClass]="(!coment) ? 'disabled' : 'btn-outline-dark'" container="body" placement="bottom"
           tooltip="Comentarios">
           <em class="fa fa-comments-o"></em>
         </button>
-        <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="!facturar" [ngClass]="!facturar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'"
+        <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-acciones" [disabled]="!facturar" [ngClass]="!facturar ? 'btn disabled' : 'btn btn-outline-success'"
           container="body" placement="bottom" tooltip="Enviar a factura" (click)="openDialogFactura()">
           <em class="fa fa-file-text-o"></em>
         </button>
-        <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones margen" [disabled]="!autorizar"
-          [ngClass]="!autorizar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-success'" container="body" placement="bottom"
+        <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-acciones" [disabled]="!autorizar"
+          [ngClass]="!autorizar ? 'btn disabled' : 'btn btn-outline-success'" container="body" placement="bottom"
           tooltip="Autorizar" (click)="updataStatus(46, 'Pendiente asignar')">
           <em class="fa fa-check"></em>
         </button>
 
-        <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="!cancelar" [ngClass]="!cancelar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
+        <button id='delete' chkPrivilegiosButtons class="mr-1" [disabled]="!cancelar" [ngClass]="!cancelar ? 'btn disabled' : 'btn btn-outline-danger'"
           container="body" placement="bottom" tooltip="Cancelar" (click)="openDialogCancel();">
           <em class="icon-ban"></em>
         </button>
-        <button id='delete' chkPrivilegiosButtons class="margen" [disabled]="!borrar" [ngClass]="!borrar ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-danger'"
+        <button id='delete' chkPrivilegiosButtons class="mr-1" [disabled]="!borrar" [ngClass]="!borrar ? 'btn disabled' : 'btn btn-outline-danger'"
           container="body" placement="bottom" tooltip="Eliminar" (click)="openDialogDelete()">
           <em class="icon-trash"></em>
         </button>
-        <button class="mb-1 btn btn-outline-success margen float-right" type="button" (click)="refreshTable()"
+        <button class="btn btn-outline-success float-right" type="button" (click)="refreshTable()"
           container="body" placement="bottom" tooltip="Actualizar">
           <em class="icon-refresh"></em>
         </button>

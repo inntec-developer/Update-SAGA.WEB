@@ -213,6 +213,8 @@ export class DtRequisicionReclPuroComponent implements OnInit {
   public onCellClick(data: any): any {
 
     data.selected ? data.selected = false : data.selected = true;
+    data.selected ? this.ValidarEstatus(data.estatusId) : this.ValidarEstatus(0);
+
     this.RequisicionId = data.id
     this.estatusId = data.estatusId;
     this.Folio = data.folio;
@@ -221,8 +223,9 @@ export class DtRequisicionReclPuroComponent implements OnInit {
 
     this.row = data;
 
-    this.ValidarEstatus(data.estatusId);
+    // this.ValidarEstatus(data.estatusId);
 
+ 
     if (this.rowAux.length == 0) {
       this.rowAux = data;
     }
@@ -299,7 +302,16 @@ export class DtRequisicionReclPuroComponent implements OnInit {
       this.borrar = false;
       this.autorizar = false;
     }
+    else
+    {
+      this.view = false;
+      this.coment = false;
+      this.facturar = false;
+      this.cancelar = false;
+      this.borrar = false;
+      this.autorizar = false;
 
+    }
   }
   showRequi() {
     this._Router.navigate(['/ventas/visualizarRequisicion/', this.element.id, this.element.folio, this.Vacante], { skipLocationChange: true });
