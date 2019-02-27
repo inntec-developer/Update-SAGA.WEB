@@ -4,8 +4,7 @@
 
 table tbody {
   display: block;
-  height: 350px;
-  overflow: auto;
+
 }
 
 table thead,
@@ -34,9 +33,11 @@ table tbody tr:hover{
   box-shadow:1px 20px 60px rgba(0,0,0,.23);
 }
 
-.modal-lg 
+.reporteMod
 {
+  top: 0% !important;
   max-width: 100% !important;
+
 }
 
 .header-button {
@@ -51,6 +52,20 @@ table tbody tr:hover{
   // border-bottom-left-radius: 10px;
   // border-bottom-right-radius: 10px;
 }
+
+
+
+table tbody div
+{
+  height: 350px;
+}
+ng-scrollbar {
+  --scrollbar-size: 10px;
+  --scrollbar-thumb-color: rgb(94, 175, 255);
+  --scrollbar-thumb-hover-color: dodgerblue;
+  --scrollbar-border-radius: 4px;
+}
+
 
 .row
 {

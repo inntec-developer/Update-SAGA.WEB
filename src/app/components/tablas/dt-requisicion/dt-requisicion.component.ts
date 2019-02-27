@@ -22,6 +22,14 @@ declare var $: any;
 })
 
 export class DtRequisicionComponent implements OnInit {
+  //scroll
+  disabled = false;
+  compact = false;
+  invertX = false;
+  invertY = false;
+
+  shown = 'hover';
+
   // Variables Globales
   public dataSource: Array<any> = [];
   Vacantes: number = 0;

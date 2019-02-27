@@ -20,10 +20,10 @@
     width: 100%;
   }
 
-  table tbody div
+table tbody div
   {
-   width: 90%;
-    height: 500px;
+
+    height: 320px;
   }
 
   ng-scrollbar {
@@ -32,3 +32,4 @@
     --scrollbar-thumb-hover-color: dodgerblue;
     --scrollbar-border-radius: 4px;
   }
+

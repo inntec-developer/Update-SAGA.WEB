@@ -67,7 +67,7 @@
               <em class="vl"></em>
               <button type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-info'"
               (click)="reporte70=true;" container="body" placement="bottom" tooltip="Reporte 70">
-              <i class="fa fa-newspaper-o"></i>
+              <i class="fa fa-file-text-o"></i>
             </button>
 
               <button type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-success'"
@@ -120,7 +120,18 @@
               </tr>
          
           </thead>
+         
           <tbody>
+              <ng-scrollbar #scrollable
+              [invertX]="invertX"
+              [invertY]="invertY"
+              [trackX]="false"
+              [trackY]="true"
+              [compact]="compact"
+              [shown]="shown"
+              [disableOnBreakpoints]="false"
+              [disabled]="disabled"> 
+         <div>
            
             <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8"
               [class.selected]="row.selected">
@@ -177,7 +188,11 @@
 
               </td>
             </tr>
+          </div>
+        </ng-scrollbar>
+
           </tbody>
+       
         </table>
       </div>
       </div>
@@ -218,7 +233,7 @@
     <div class="modal-dialog modal-lg reporteMod">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title float-left">Reporte - Requisiciones</h4>
+          <h4 class="float-left text-warning"><em class="fa fa-file-text-o mr-2"></em>Reporte - Requisiciones</h4>
           <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="reporte70=false; lgModal.hide();" ><i class="fa fa-times"></i></button>
         </div>
         <div class="modal-body">

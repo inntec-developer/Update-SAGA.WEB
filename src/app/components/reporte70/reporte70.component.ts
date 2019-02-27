@@ -11,8 +11,8 @@ export class Reporte70Component implements OnInit {
 
   disabled = false;
   compact = false;
-  invertX = false;
-  invertY = false;
+  invertX = true;
+  invertY = true;
 
   shown = 'hover';
 
@@ -21,7 +21,7 @@ export class Reporte70Component implements OnInit {
   requisiciones = [];
 
   public page: number = 1;
-  public itemsPerPage: number = 20;
+  public itemsPerPage: number = 5;
   public maxSize: number = 5;
   public numPages: number = 1;
   length: number = 0;
@@ -52,7 +52,7 @@ export class Reporte70Component implements OnInit {
     { title: 'Sueldo Final', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
     { title: 'Fecha Estatus', className: 'text-info text-center', name: 'fch_Modificacion', filtering: { filterString: '', placeholder: 'dd-mm-yyyy' } },
-    { title: 'Reclutamiento', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo reclutamiento' } },
+    { title: 'Tipo Reclutamiento', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo reclutamiento' } },
     { title: 'Coordinación', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Coordinación' } },
     { title: 'Com. Sol.', className: 'text-info text-center', name: 'comentarios_solicitante' },
     { title: 'Com. Recl.', className: 'text-info text-center', name: 'comentarios_reclutador' }    
