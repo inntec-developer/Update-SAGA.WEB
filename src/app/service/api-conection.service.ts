@@ -95,6 +95,7 @@ export class ApiConection {
   public static GetRequiTipoRecl = 'Requisiciones/getRequisicionesTipo';
   public static SendEmailRequiPuro = 'Requisiciones/sendEmailRequiPura';
   public static AddDatosFactura = 'Requisiciones/insertDtosFactura';
+  public static GetReporte70 = 'Requisiciones/getReporte70';
 
   /* Clientes / Prospectos */
   public static GetProspectos = "Directorio/getProspectos";
@@ -162,6 +163,7 @@ export class ApiConection {
 
 
 
+
   /* Admin */
   public static getDtosPersonal = '/admin/get';
   public static getUsuariosByDepa = '/admin/getUsuarioByDepa';
@@ -200,6 +202,7 @@ export class ApiConection {
   public static uploadFile = 'admin/uploadFile';
   public static updateActivo = 'admin/updateActivo';
   public static getLideres = 'admin/getLideres';
+  public static getOficinas = 'admin/getOficinas';
 
   /*Seguimiento Vacantes*/
   public static getDtosCard = 'reclutamiento/seguimientovacante/getCard';
@@ -244,4 +247,13 @@ export class ApiConection {
 
     /*Reportes */
     public static GetInforme = 'reporte/Informe'
+  /*SistTickets */
+public static InsertTicket = 'SistTickets/InsertTicketRecl'
+  public static GetFilaTickets = 'SistTickets/getFilaTickets'
+  public static GetTicketRecl = 'SistTickets/getTicketsReclutador'
+  public static GetTicketPrioridad = 'SistTickets/getTicketPrioridad'
+  public static UpdateStatusTicket = 'SistTickets/updateStatus'
+  public static GetPostulaciones = 'SistTickets/getPostulaciones'
+  public static LiberarCandidato = 'SistTickets/liberarCandidato'
+
 }

@@ -23,7 +23,8 @@ export const routes = [
             { path: 'perfiles', loadChildren: './perfiles/perfiles.module#PerfilesModule'},
             { path: 'examenes', loadChildren: './Examenes/examenes.module#ExamenesModule'},
             { path: 'catalogos', loadChildren: './catalogos/catalogos.module#CatalogosModule'},
-            { path: 'reporte', loadChildren:'./reportes/reportes.module#ReportesModule'}
+            { path: 'reporte', loadChildren:'./reportes/reportes.module#ReportesModule'},
+           { path: 'tickets', loadChildren: './SistTickets/sist-tickets.module#SistTicketsModule'}
             
         ]},
 

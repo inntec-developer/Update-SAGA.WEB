@@ -5,16 +5,35 @@
 .envelope {
   color: rgb(253, 180, 84)
 }
-.action{
-    cursor: pointer;
+
+.action {
+  cursor: pointer;
 }
 
-.alertOk{
-    color: #0ff608;
+.alertOk {
+  color: #0ff608;
 }
 
-.alertPosition{
-    margin-right: 15px;
+.alertPosition {
+  margin-right: 15px;
 }
 
+.dropdown-list .dropdown-menu {
+  padding: 0;
+  min-width: fit-content;
+}
+
+.modal-lg {
+  max-width: 100% !important;
+  max-height: 50% !important;
+}
+.contenAcerDe{
+    width: 100%;
+    height: 400px; 
+}
+
+.content-acercaDe{
+  padding: 0;
+  min-width: fit-content;
+}
 

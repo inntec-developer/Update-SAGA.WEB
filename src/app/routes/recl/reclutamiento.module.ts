@@ -145,7 +145,7 @@ const routes: Routes = [
                      SeguimientoVacanteComponent],
     entryComponents: [
        DialogcandidatosComponent, DialogShowRequiComponent, DialogAssingRequiComponent],
-    exports: [ RouterModule ]
+    exports: [ RouterModule, DialogShowRequiComponent ]
 })
 
 export class ReclutamientoModule { }

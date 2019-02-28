@@ -10,6 +10,7 @@ import { SharedModule } from '../shared/shared.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { UserblockComponent } from './sidebar/userblock/userblock.component';
 import { UserblockService } from './sidebar/userblock/userblock.service';
+import { ButtonCollapsedComponent } from './sidebar/button-collapsed/button-collapsed.component';
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import { UserblockService } from './sidebar/userblock/userblock.service';
         HeaderComponent,
         NavsearchComponent,
         OffsidebarComponent,
-        FooterComponent
+        FooterComponent,
+        ButtonCollapsedComponent
     ],
     exports: [
         LayoutComponent,

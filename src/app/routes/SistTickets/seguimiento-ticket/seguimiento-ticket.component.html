@@ -1,0 +1,218 @@
+<div class="content-heading">
+  <div>
+     <h5 class="text-muted mb-2">TICKETS</h5>
+    <small class="text-muted">Sistema de Tickets.</small>
+  </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/home']">Inicio</a>
+      </li>
+      <li class="breadcrumb-item active text-muted">Tickets</li>
+    </ol>
+  </div>
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-sm-4 col-md-4">
+
+            <clock></clock>
+
+        </div>
+     <div class="col-sm-8 col-md-8">
+    <div class="card" *ngIf="ticket.length > 0">
+      <div class="card-body text-sm">
+        <div >
+          <h5 class="text-info p-2 bg-light"><i class="fa fa-ticket" aria-hidden="true"></i> TICKET</h5>
+            <span class="text-sm text-center font-weight-bold mr-1">TURNO ACTUAL:</span>
+            <span class="text-center text-muted mr-3">{{ticket[0].numero}}</span>
+            <span class="text-sm text-center font-weight-bold mr-1">ESTATUS DE TURNO:</span>
+           <span class="text-center text-muted mr-3">
+              <span *ngIf="ticket[0].estado == 2" class="text-success">ATENDIENDO</span>
+              <span *ngIf="ticket[0].estado == 3" class="text-warning">FINALIZADO</span>
+           </span>
+
+         
+            <span class="text-sm text-center font-weight-bold mr-1">TURNOS ATENDIDOS:</span>
+            <span class="text-center text-muted mr-3">{{ticket[0].atendidos}}</span>
+
+            <span class="text-sm text-center font-weight-bold mr-1">TIEMPO ENTRE TURNOS:</span>
+            <span class="text-center text-muted">{{ticket[0].tiempo}} min.</span>
+
+  
+
+        </div>
+      </div>
+    </div>
+  </div>
+  </div> 
+  <div class="row" *ngIf="ticket.length > 0 else NotTickets">
+    <div class="col-sm-4 col-md-4">
+      <div class="card candidatos">
+        <div class="card-body mat-elevation-z8">
+          <h5 class="text-left text-info p-2 bg-light">
+            <i class="fa fa-user-circle-o" aria-hidden="true"></i> DATOS CANDIDATO
+            <small *ngIf="ticket[0].candidato.estatus.length <= 10 else toLength" class='px-1 mr-1 badge badge-pill badge-success float-right' [class.badge-warning]="ticket[0].candidato.estatusId === 42" [class.badge-danger]="ticket[0].candidato.estatusId == 28">
+                <small *ngIf="ticket[0].candidato.estatusId != 28"> {{ticket[0].candidato.estatus | uppercase }}</small>
+                <small *ngIf="ticket[0].candidato.estatusId == 28">POSTULADO</small>
+            </small>
+              <ng-template #toLength>
+                <span class='px-1 mr-1 badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42" [class.badge-danger]="row.estatusId == 28" placement="bottom" tooltip="{{row.estatus | uppercase}}" container="body">{{row.estatus | slice:0:6 | uppercase }} ... </span>
+            </ng-template>
+          </h5>
+          <hr>
+          <div class="text-center">
+            <h3 class="text-center text-muted">{{ticket[0].candidato.nombre | uppercase}}</h3>
+            <p class="card-text font-weight-bold mr-1">CURP:
+              <span class="text-center text-success">{{ticket[0].candidato.curp | uppercase}}</span>
+            </p>
+           
+            <p class="card-text font-weight-bold mr-1">LUGAR NAC.:
+              <span class="text-center text-muted">{{ticket[0].candidato.dirNacimiento | uppercase}}</span>
+            </p>
+            <p class="card-text font-weight-bold mr-1">FECHA NAC.:
+              <span class="text-center text-muted mr-4">{{ticket[0].candidato.fechaNac | date:'dd/MM/yyyy' }}</span>EDAD:
+              <span class="text-center text-muted">{{ticket[0].candidato.edad}}</span>
+            </p>
+            <p class="card-text font-weight-bold mr-1">EMAIL:
+              <span class="text-center text-muted">{{ticket[0].candidato.email}}</span>
+            </p>
+          </div>
+          <div class="p-2 mb-2">
+            <app-comentario-candidato [CandidatoId]="ticket[0].candidato.candidatoId" [RequisicionId]="" [ProcesoCandidatoId]=""></app-comentario-candidato>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8 col-md-8">
+      <div class="card">
+        <div class="card-body mat-elevation-z8">
+            <h5 class="text-left text-success p-2 bg-light">
+                <i class="fa fa-user-circle-o mr-1" aria-hidden="true"></i>POSTULACIONES</h5>
+          <div class="justify-content-between">
+            <ul class="list-group long mb-2">
+              <li *ngFor="let item of postulaciones; let ind = index;" class="list-group-item">
+                <span class="text-info">
+                    <button (click)="openDialogShowRequi(item)" class="btn btn-xs btn-outline-warning float-left mr-1" container="body" placement="bottom" tooltip="Visualizar">
+                        <em class="fa fa-eye"></em>
+                      </button>
+                  <span class="text-sm font-weight-bold mr-1">FOLIO</span>
+                  <span class="text-muted mr-2">{{item.folio}}</span>
+                  <span class="text-sm font-weight-bold mr-1">PERFIL</span>
+                  <span class="text-muted mr-2">{{item.vBtra}}</span>
+                  <span class="text-sm font-weight-bold mr-1">CLIENTE</span>
+                  <span class="text-muted mr-2">{{item.cliente}}</span>
+                  <span class="text-sm font-weight-bold mr-2">PROP.</span>
+          
+                  <small class="text-muted mr-2" *ngIf="item.reclutadores.length == 1" >{{item.reclutadores[0].nombre}}</small>
+                  <a class="text-white badge badge-info badge-pill mr-2" *ngIf="item.reclutadores.length > 1" [popover]="popTemplate" placement="bottom" container="body" >{{item.reclutadores.length}}</a>
+                   <ng-template #popTemplate>
+
+                        <div class="card">
+                          <div class="card-body">
+                          <h5 class="text-center text-info p-2 bg-light">RECLUTADORES</h5>
+                          <ul class="list-group" *ngFor="let r of item.reclutadores">
+                            <li class="text-muted list-group-item"><small>{{r.nombre}}</small></li>
+                          </ul>
+                        </div>
+                        </div>
+
+                  </ng-template>
+
+
+                <button *ngIf="!apartar && item.id == ticket[0].candidato.requisicionId" (click)="_liberarCandidato(item, ticket[0])" class="btn btn-xs btn-outline-danger float-right" container="body" placement="bottom" tooltip="Liberar">
+                    <em class="fa fa-thumbs-o-down"></em>
+                  </button>
+
+                <button *ngIf="apartar" [disabled]="ticket[0].candidato.estatusId == 12" (click)="_apartarCandidato(item, ticket[0])" [ngClass]="apartar ? 'btn-outline-success' : 'btn-outline-danger'" class="btn btn-xs  float-right" container="body" placement="bottom" tooltip="Apartar">
+                    <em class="fa fa-thumbs-o-up"></em>
+                  </button>
+    
+                  <!-- <button (click)="openDialogShowRequi(item)" class="btn btn-xs btn-outline-warning float-right mr-1" container="body" placement="bottom" tooltip="Visualizar">
+                      <em class="fa fa-eye"></em>
+                    </button> -->
+        
+    
+                </span>
+              </li>
+            </ul>
+     
+            <h5 class="text-left text-warning p-2 bg-light">
+                <i class="fa fa-file-text-o mr-1" aria-hidden="true"></i>MIS VACANTES</h5>
+            <ul class="list-group long">
+                <li *ngFor="let item of dataSource; let ind = index;" class="list-group-item">
+                  <span class="text-info">
+                    <button (click)="openDialogShowRequi(item)" class="btn btn-xs btn-outline-warning float-left mr-1" container="body" placement="bottom" tooltip="Visualizar">
+                      <em class="fa fa-eye"></em>
+                    </button>
+                    <span class="text-sm font-weight-bold mr-1">FOLIO</span>
+                    <span class="text-muted mr-2">{{item.folio}}</span>
+                    <span class="text-sm font-weight-bold mr-1">PERFIL</span>
+                    <span class="text-muted mr-2">{{item.vBtra}}</span>
+                    <span class="text-sm font-weight-bold mr-1">CLIENTE</span>
+                    <span class="text-muted mr-2">{{item.cliente}}</span>
+                    <!-- <span class="text-sm font-weight-bold mr-1">PROPIETARIO</span>
+                    <span class="text-muted mr-2">{{item.reclutador}}</span>  -->
+                 
+                  <!-- <button (click)="openDialogShowRequi(item)" class="btn btn-xs btn-outline-danger float-right" container="body" placement="bottom" tooltip="Liberar">
+                      <em class="fa fa-thumbs-o-down"></em>
+                    </button> -->
+  
+                    <button *ngIf="!apartar && item.id == ticket[0].candidato.requisicionId" (click)="_liberarCandidato(item, ticket[0])" class="btn btn-xs btn-outline-danger float-right" container="body" placement="bottom" tooltip="Liberar">
+                        <em class="fa fa-thumbs-o-down"></em>
+                      </button>
+    
+                    <button *ngIf="apartar" [disabled]="ticket[0].candidato.estatusId == 12" (click)="item.reclutadores = [];_apartarCandidato(item, ticket[0])" [ngClass]="apartar ? 'btn-outline-success' : 'btn-outline-danger'" class="btn btn-xs  float-right" container="body" placement="bottom" tooltip="Apartar">
+                        <em class="fa fa-thumbs-o-up"></em>
+                      </button>
+      
+                    <!-- <button (click)="openDialogShowRequi(item)" class="btn btn-xs btn-outline-warning float-right mr-1" container="body" placement="bottom" tooltip="Visualizar">
+                        <em class="fa fa-eye"></em>
+                      </button> -->
+          
+      
+                  </span>
+                </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="row">
+  <div class="col">
+  <div class="card">
+    <div class="card-body mat-elevation-z8">
+      <h5 class="text-center text-info"><i class="fa fa-hourglass-half mr-1" aria-hidden="true"></i>EN ESPERA</h5>
+        <ul class="list-group" *ngFor="let t of fila">
+            <li class="list-group-item"><span>{{t.ticket}}</span><span class="text-warning float-right">{{t.te}} min</span>
+            </li>
+        </ul>
+    </div>
+  </div>
+</div>
+<div class="col">
+  <!-- <div class="card">
+    <div class="card-body"> -->
+        <button type="button" class="btn btn-labeled btn-success mat-elevation-z8 margen" [disabled]="fila.length == 0 || atender" (click)="Atender()"><span class="btn-label"><i class="fa fa-play"></i></span>ATENDER</button>
+        <button type="button" class="btn btn-labeled btn-danger mat-elevation-z8 margen" [disabled]="!finalizar" (click)="Finalizar(ticket[0].ticketId)" ><span class="btn-label"><i class="fa fa-stop"></i></span>FINALIZAR</button>
+    <!-- </div>
+
+  </div> -->
+</div>
+<div class="col">
+   
+</div>
+</div>
+</div>
+<!--mensaje cuando esta vacio la tabla-->
+<ng-template #NotTickets>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+          <alert type="info">
+              <strong>Oops!</strong> A&uacute;n no cuentas con tickets en proceso.
+            </alert>
+      </div>
+    </div>
+  </ng-template>
+
+  <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>

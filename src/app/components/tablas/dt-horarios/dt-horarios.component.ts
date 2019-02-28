@@ -52,11 +52,16 @@ export class DtHorariosComponent implements OnInit {
     //Add '${implements OnChanges}' to the class.
     if (changes.Horarios && !changes.Horarios.isFirstChange()) {
       this.cargarHorarios(this.Horarios);
-      if (this.EstatusRequi == 4 || this.EstatusRequi == 43)
+      if (this.EstatusRequi == 4 || this.EstatusRequi == 43){
         this.EditHorarios = true
-      else
+      }else {
         this.EditHorarios = false
+      }
+      if(this.EstatusRequi == 44|| this.EstatusRequi == 45|| this.EstatusRequi == 46){
+        this.EditHorarios = false;
+      }
     }
+    console.log(this.Requi);
   }
 
   cargarHorarios(data) {

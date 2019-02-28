@@ -1,29 +1,30 @@
-<h3 class="text-warning text-left" mat-dialog-title> <em class="fa fa-file-text-o"></em> VACANTE FACTURA
-    <button type="button" class="btn btn-xs btn-danger btn-circle float-right" mat-dialog-close ><i class="fa fa-times"></i></button>
-</h3>
+<h5 class="text-warning text-left" mat-dialog-title> <em class="fa fa-file-text-o"></em> VACANTE FACTURA
+    <!-- <button type="button" class="btn btn-xs btn-danger btn-circle float-right" mat-dialog-close ><i class="fa fa-times"></i></button> -->
+</h5>
 <mat-divider></mat-divider>
 <mat-dialog-content>
   <div class="card">
     <div class="card-body">
-        <ul class="list-group list-group-flush">
+        <ul class="list-group list-group-flush mb-2">
             <li class="list-group-item text-muted">EMPRESA: <span class="text-primary">{{data.cliente}}</span></li>
             <li class="list-group-item text-muted">PUESTO: <span class="text-primary">{{data.vBtra}} </span></li>
-            <li class="list-group-item text-muted">FOLIO: <span class="text-primary">{{data.folio }}</span> NO: <span class="text-primary">{{data.vacantes }}</span> SUELDO FINAL: <span class="text-primary">{{data.sueldoMaximo}}</span> TOTAL: <span class="text-primary"> {{data.sueldoMaximo}}</span></li>
+            <li class="list-group-item text-muted"><span class="mr-1">FOLIO:</span><span class="text-primary mr-3">{{data.folio }}</span> 
+              <span class="mr-1">NO:</span><span class="text-primary mr-3">{{data.vacantes }}</span>
+              <span class="mr-1">SUELDO FINAL:</span><span class="text-primary mr-3">{{data.sueldoMaximo}}</span>
+              <span class="mr-1">TOTAL:</span><span class="text-primary"> {{data.sueldoMaximo * data.vacantes}}</span></li>
           </ul>
-          <mat-divider></mat-divider>
-          <br/>
+          <div class="p-3 mb-2 bg-light">
           <ul class="list-group list-group-flush">
-              <li class="list-group-item text-muted">RAZON SOCIAL:<span class="text-primary">{{data.razon}}</span></li>
-              <li class="list-group-item text-muted">EMPRESA FACTURADORA:<span class="text-primary">{{data.factura}}</span> </li>
+              <li class="text-muted p-2 mb-1 bg-light">RAZON SOCIAL:<span class="text-primary ml-1">{{data.razon}}</span></li>
+              <li class="text-muted p-2 bg-light">EMPRESA FACTURADORA:<span class="text-primary ml-1">{{data.factura}}</span> </li>
             </ul>
-        <mat-divider></mat-divider>
-        <br/>
+          </div>
        <table class="table">
          <thead>
            <tr>
              <th>ESTATUS VACANTE</th>
-             <th>PORCENTAJE DE PAGO</th>
-             <th>MONTO A FACTURAR</th>
+             <th class="text-center">PORCENTAJE DE PAGO</th>
+             <th class="text-center">MONTO A FACTURAR</th>
            </tr>
          </thead>
          <tbody>
@@ -31,7 +32,7 @@
              <td>ENVIO A FACTURAR</td>
              <td>
                 <div class="input-group input-group-sm mb-3">
-                    <input type="text" class="form-control" [(ngModel)]="porcentaje">
+                    <input type="number" min="0" class="form-control" [(ngModel)]="porcentaje" (ngModelChange)="monto = porcentaje * (data.sueldoMaximo * data.vacantes) / 100; perContratado = 100 - porcentaje; montoContratado = (data.sueldoMaximo * data.vacantes) - monto">
                     <div class="input-group-append">
                       <span class="input-group-text">%</span>
                     </div>
@@ -42,7 +43,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                       </div>
-                    <input type="text" class="form-control" [(ngModel)]="monto">
+                    <input type="number" min="0" class="form-control" [(ngModel)]="monto" disabled>
                  
                   </div>               
              </td>
@@ -51,7 +52,7 @@
               <td>CONTRATADO</td>
               <td>
                  <div class="input-group input-group-sm mb-3">
-                     <input type="text" class="form-control" [(ngModel)]="perContratado">
+                     <input type="number" min="0" class="form-control" [(ngModel)]="perContratado" disabled>
                      <div class="input-group-append">
                        <span class="input-group-text">%</span>
                      </div>
@@ -62,18 +63,18 @@
                      <div class="input-group-prepend">
                          <span class="input-group-text">$</span>
                        </div>
-                     <input type="text" class="form-control" [(ngModel)]="montoContratado">
+                     <input type="number" min="0" class="form-control" [(ngModel)]="montoContratado" disabled>
                   
                    </div>               
               </td>
             </tr>
          </tbody>
        </table>
-       <br/>
+       <!-- <br/>
        <div class="form-check">
           <input type="checkbox" class="form-check-input" id="exampleCheck1" [(ngModel)]="asignar">
           <label class="form-check-label" for="exampleCheck1">ENVIAR A RECLUTAMIENTO (ASIGNAR RECLUTADOR)</label>
-        </div>
+        </div> -->
 
     </div>
   </div>
@@ -85,7 +86,7 @@
         <i class="fa fa-times"></i>
       </span> Cancelar
     </button>
-    <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-1 margin float-right" (click)="AddDtosFactura()" [disabled]="monto < 0 || montoContratados < 0">
+    <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-1 margin float-right" (click)="AddDtosFactura()" [disabled]="monto < 0">
       <span class="btn-label">
         <i class="fa fa-check"></i>
       </span> Aceptar

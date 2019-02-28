@@ -24,9 +24,19 @@ export class ChkButtonsDirective implements AfterViewInit {
      ruta = this.activeRoute.snapshot.routeConfig.data ? 
      this.activeRoute.snapshot.routeConfig.data.componente : 
       sessionStorage.getItem('ruta')
+
+      if(ruta == null)
+      {
+        ruta = this.activeRoute.snapshot.routeConfig.path;
+      }
     // this.activeRoute.snapshot.routeConfig.path
     var campos = privilegios.filter(function(row){
-      return row.tipoEstructuraId === 4 && row.nombre == ruta
+      // if(ruta == null)
+      // {
+      //   var idx = row.accion.lastIndexOf("/");
+      //   ruta = row.accion.substring(idx + 1, row.accion.length).toUpperCase();
+      // }
+      return row.tipoEstructuraId === 4 && row.nombre.toLowerCase() == ruta.toLowerCase()
        });
 
     campos.forEach(campo =>{

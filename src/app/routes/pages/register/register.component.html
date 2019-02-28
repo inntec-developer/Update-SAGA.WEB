@@ -92,11 +92,23 @@
           required="" />
           <!-- <p><span class="text-danger" *ngIf="valForm.controls['Usuario'].touched">Si no selecciona usuario se le asignará uno</span></p>                  -->
           <label class="text-muted">Departamentos</label>
-          <select class="form-control" formControlName="DepartamentoId">
+          <select class="form-control" formControlName="DepartamentoId" required="">
             <option value="0">Seleccionar departamento</option>
             <!-- not selected / blank option -->
             <option *ngFor="let d of ListDepas" [value]="d.id">{{d.nombre}}</option>
           </select>
+          <div class="text-danger" *ngIf="valForm.controls['DepartamentoId'].touched && !valForm.controls['DepartamentoId'].valid">
+            <small>Departamento es un campo requerido</small>
+          </div>
+          <label class="text-muted">Oficina / Sucursal</label>
+          <select class="form-control" formControlName="OficinasId" required="">
+            <option value="0">Seleccionar Oficina / Sucursal</option>
+            <!-- not selected / blank option -->
+            <option *ngFor="let d of Oficinas" [value]="d.id">{{d.nombre}}</option>
+          </select>
+          <div class="text-danger" *ngIf="valForm.controls['OficinasId'].touched && !valForm.controls['OficinasId'].valid">
+            <small>Oficina / Sucursal es un campo requerido</small>
+          </div>
           <br/>
 
           <div *ngIf="verMsj">
@@ -121,6 +133,8 @@
       <span>{{ settings.app.year }}</span>
       <span class="mx-2">-</span>
       <span>{{ settings.app.name }}</span>
+      <span class="mx-2">-</span>
+      <span>{{ settings.app.vertion }}</span>
       <br/>
       <span>{{ settings.app.description }}</span>
     </div>

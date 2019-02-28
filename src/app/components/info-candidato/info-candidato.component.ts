@@ -137,7 +137,8 @@ export class InfoCandidatoComponent implements OnInit {
         idiomas: data.idiomas,
         estatus: data.estatus,
         about: data.aboutMe[0],
-        info: data.candidato
+        info: data.candidato,
+        propietarioId: data.propietarioId
       }
       if (this.candidato.estatus) {
         this.Estatus = this.candidato.estatus.id;
@@ -147,6 +148,10 @@ export class InfoCandidatoComponent implements OnInit {
         this.reclutador = this.candidato.estatus.reclutador;
         this.reclutadorId = this.candidato.estatus.reclutadorId;
       }
+
+      console.log(this.RequisicionId)
+      console.log(this.candidato.propietarioId)
+      console.log(sessionStorage.getItem('id'))
 
       this._serviceExamen.GetExamenCandidato(this.candidato.id).subscribe(exa => {
 
@@ -517,6 +522,20 @@ export class InfoCandidatoComponent implements OnInit {
     }
 
   }
+
+  LiberarPermisoEjecutivo()
+  {
+    this.objLiberar.push({
+      RequisicionId: this.RequisicionId,
+      CandidatoId: this.CandidatoId,
+      ReclutadorId: sessionStorage.getItem('id'),
+      ProcesoCandidatoId: this.Estatus,
+
+    })
+
+    this.dlgLiberar = true;
+  }
+
   openDialogLiberar() {
 
     this.objLiberar.push({
@@ -585,6 +604,7 @@ export class InfoCandidatoComponent implements OnInit {
               };
               this.EstatusEmitter.emit(this.Emiter);
 
+              this.objLiberar = [];
               break;
             }
             case 404: {

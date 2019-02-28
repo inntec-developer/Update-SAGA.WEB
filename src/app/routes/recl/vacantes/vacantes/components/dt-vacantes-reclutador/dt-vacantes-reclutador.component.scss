@@ -1,99 +1,58 @@
-.confidencial{
- background-color: rgba(255, 163, 163, 0.767);
- }
+.confidencial {
+  background-color: rgba(255, 163, 163, 0.767);
+}
+
 tbody {
-    display:block;
-    height:350px;
-    overflow:auto;
+  display: block;
+  height: 350px;
 }
-thead, tbody tr {
-    display:table;
-    width:100%;
-    table-layout:fixed;
+
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }
-thead {
-    width: calc( 100% - 1em )
+
+table thead {
+  width: calc(100% - 1em)
 }
+
 table {
-    width:400px;
+  width: 400px;
 }
 
-.margen 
-{
-    margin:0 2px;
+tbody tr:hover {
+  font-size: 14.5px;
+  box-shadow: 1px 20px 60px rgba(0, 0, 0, .23);
 }
 
-.modal-lg
-{
-    max-width: 100% !important;
+.margen {
+  margin: 0 2px;
 }
-.modal-lg .long
-{
-    max-height: 100% !important;
-}
-// ul li {
-//     display:inline-block;
-//      list-style: none ;
 
-//  }
-// ul li a {
-//     display:block;
-//      color:#aaa;
-//      //color:#00b3ee;
-//      margin:0 2px;
-//      font-size:14px;
-//     // transition:0.5s;
-//      text-align:center;
-//     // transition: all .2s ease-in-out;
-//  }
-// li:hover a {
-//      color:#e91e63;
-//      //transform: scale(1.1); 
-//     //transform:rotateY(360deg);
-//  }
-// // .btn{
-// //     margin-left: 2px;
-// // }
+.modal-lg {
+  max-width: 100% !important;
+}
+
+.modal-lg .long {
+  max-height: 100% !important;
+}
+
 .vl {
-    border-left: 1px solid #aaa;
-    height: 51px !important;
-    margin:0 2px;
+  border-left: 1px solid #aaa;
+  height: 51px !important;
+  margin: 0 2px;
 }
-.row
-{
+
+.row {
   display: flex;
   flex-wrap: wrap;
 }
-// @media screen and (max-width: 1600px) {
-//   .row {flex-direction: column;}
-//   .header-button {
-//    // margin-left: 12%;
-//     position: fixed;
-// // height: 60px;
-// // background: whitesmoke;
-//     // max-width: 85% !important;
-//     // height: 70%;
-//     // overflow: scroll;
-//       // top: 12%;
-//     // right: 18%;
-//     z-index: 1000;
-//     // border-bottom-left-radius: 10px;
-//     // border-bottom-right-radius: 10px;
-//   }
 
-//   // .dt-container {
-//   //   max-height: 800px !important;
-//   // }
-//   .card
-//   {
-//     max-height: 550px !important;
-
-//   }
-// table tbody
-//   {
-//     max-height: 250px !important;
-//   }
-//   tr td{
-//     font-size: 10px;
-//   }
-// }
+ng-scrollbar {
+  --scrollbar-size: 4px;
+  --scrollbar-thumb-color: rgb(94, 175, 255);
+  --scrollbar-thumb-hover-color: dodgerblue;
+  --scrollbar-border-radius: 4px;
+}
