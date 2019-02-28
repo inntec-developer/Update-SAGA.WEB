@@ -126,7 +126,7 @@ export class DtRequisicionComponent implements OnInit {
 
   ValidarEstatus(estatusId)
   {
-    if(this.element.vacantes == 0 && estatusId != 8)
+    if(this.element.vacantes == 0 && estatusId != 8 && estatusId != 9 )
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;

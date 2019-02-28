@@ -1,6 +1,12 @@
 <div class="card">
 
   <div class="card-body mat-elevation-z8">  
+
+      <button type="button" class="float-right" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'btn btn-xs disable' : 'btn btn-xs btn-outline-success'"
+      (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Descargar Reporte">
+      <i class="fa fa-download"></i>
+    </button>
+
           <ng-scrollbar #scrollableP
           [trackX]="true"
           [trackY]="false"
@@ -49,22 +55,19 @@
               <td> {{row.fch_Solicitud | date:'dd/MM/yyyy'}}</td>
               <td>
                 <ng-template #popTemplate>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="popover-body">
-                        <ul *ngFor="let r of row.reclutadores">
-                          <li class="text-muted">{{r.reclutador}}</li>
-                        </ul>
-
-                      </div>
+                  <div class="card">
+                    <div class="card-body">
+                      <ul class="list-group list-group-flush">
+                        <li *ngFor="let r of row.reclutadores" class="list-group-item text-muted">{{r.reclutador}}</li>
+                      </ul>
                     </div>
                   </div>
                 </ng-template>
 
                 <span *ngIf="row.reclutadores.length == 0">{{row.propietario}}</span>
-                <a *ngIf="row.reclutadores.length > 1" [popover]="popTemplate" placement="left"
+                <a class="text-center" *ngIf="row.reclutadores.length > 1" [popover]="popTemplate" placement="left"
                   container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
-                <span *ngIf="row.reclutadores.length == 1">{{row.reclutadores[0].reclutador}}</span>
+                <span class="text-left" *ngIf="row.reclutadores.length == 1">{{row.reclutadores[0].reclutador}}</span>
 
               </td>
               <td> {{row.sucursal }}</td>
@@ -98,8 +101,40 @@
               <td>{{row.fch_Modificacion | date:'dd/MM/yyyy'}}</td>
               <td> {{row.tipoReclutamiento}}</td>    
               <td> {{row.claseReclutamiento}}</td>             
-              <td> {{row.comentarios_solicitante}}</td>  
-              <td> {{row.comentarios_reclutador}}</td>  
+              <td class="text-center"> 
+                <span *ngIf="row.comentarios_solicitante.length == 0">0</span>
+                <a *ngIf="row.comentarios_solicitante.length > 0" [popover]="popTemplateComenSol" #popS="bs-popover" [outsideClick]="true"
+                  placement="left" container="body">{{row.comentarios_solicitante.length}}</a>
+                <ng-template #popTemplateComenSol>
+                  <div class="card">
+                    <div class="card-body" *ngFor="let r of row.comentarios_solicitante">
+                      <h5 class="text-center text-info p-2 bg-light">{{r.fch_Creacion | date: 'dd/MM/yyyy'}}</h5>
+                      <p class="card-text">{{r.comentario}}</p>
+                    </div>
+                  </div>
+                </ng-template>
+              </td>  
+              <td class="text-center">
+                  <span *ngIf="row.comentarios_reclutador.length == 0">0</span>
+                  <a *ngIf="row.comentarios_reclutador.length > 0" [popover]="popTemplateComenRecl" #pop="bs-popover" [outsideClick]="true"
+                    placement="left" container="body">{{row.comentarios_reclutador.length}}</a>
+                  <ng-template #popTemplateComenRecl>
+                    <div class="card">
+                      <div class="card-body" *ngFor="let r of row.comentarios_reclutador">
+                          <ng-scrollbar #scrollableCom [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+                            [disabled]="disabled">
+                            <div style="height: 200px;">
+                              <h5 class="text-center text-warning p-2 bg-light">{{r.reclutador}}</h5>
+                              <p class="card-text" *ngFor="let c of r.comentario">
+                                <small class="text-muted mr-2">{{c.fch_Creacion | date: 'dd/MM/yyyy'}}</small>
+                                {{c.comentario}}
+                              </p>
+                            </div>
+                          </ng-scrollbar>
+                      </div>
+                    </div>
+                  </ng-template>
+              </td>  
             </tr>
          
        

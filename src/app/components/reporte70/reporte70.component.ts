@@ -1,5 +1,9 @@
+import { element } from 'protractor';
 import { RequisicionesService } from './../../service/requisiciones/requisiciones.service';
 import { Component, OnInit } from '@angular/core';
+
+import { DatePipe } from '@angular/common';
+import { ExcelService } from '../../service/ExcelService/excel.service';
 
 @Component({
   selector: 'app-reporte70',
@@ -27,7 +31,7 @@ export class Reporte70Component implements OnInit {
   length: number = 0;
   registros: any;
   showFilterRow: boolean;
-  constructor(private _service: RequisicionesService) { }
+  constructor(private _service: RequisicionesService, private pipe: DatePipe, private excelService: ExcelService) { }
 
   ngOnInit() {
     this.GetReporte70();
@@ -174,12 +178,12 @@ export class Reporte70Component implements OnInit {
 
   public refreshTable() {
     this.GetReporte70();
-    setTimeout(() => {
-      this.columns.forEach(element => {
-        (<HTMLInputElement>document.getElementById(element.name)).value = '';
-      });
+    // setTimeout(() => {
+    //   this.columns.forEach(element => {
+    //     (<HTMLInputElement>document.getElementById(element.name)).value = '';
+    //   });
     
-    }, 1000);
+    // }, 1000);
   }
 
   public clearfilters() {
@@ -189,6 +193,96 @@ export class Reporte70Component implements OnInit {
     });
     this.onChangeTable(this.config);
 
+  }
+
+  exportAsXLSX()
+  {
+    if(this.requisiciones.length > 0)
+    {
+      var aux = [];
+      var comentariosSol = "";
+      var comentariosRecl = "";
+      var reclutador = "";
+      this.requisiciones.forEach(row => {
+        if(row.comentarios_solicitante.length > 0)
+        {
+          row.comentarios_solicitante.forEach(element => {
+             let fecha =  this.pipe.transform(new Date(element.fch_Creacion), 'yyyy-MM-dd');
+              comentariosSol = comentariosSol + fecha + ' ' + element.comentario + '\n'
+            });
+          
+        }
+        else{
+          comentariosSol = "";
+        }
+
+        if(row.comentarios_reclutador.length > 0)
+        {
+          row.comentarios_reclutador.forEach(element => {
+            element.comentario.forEach(el => {
+              let fecha =  this.pipe.transform(new Date(el.fch_Creacion), 'yyyy-MM-dd');
+              comentariosRecl = comentariosRecl + fecha + ' ' + el.comentario + '\n'
+            });
+            comentariosRecl = element.reclutador + '\n' + comentariosRecl + '\n';
+          
+          });
+        }
+        else{
+          comentariosSol = "";
+        }
+
+        if(row.reclutadores.length == 0)
+        {
+          reclutador = row.propietario;
+        }
+        else if(row.reclutadores.length > 1)
+        {
+          row.reclutadores.forEach(element => {
+            reclutador = reclutador + element.reclutador + '\n'
+          });
+        }
+        else
+        {
+          reclutador = row.reclutadores[0].reclutador;
+        }
+        var d = this.pipe.transform(new Date(row.fch_Solicitud), 'yyyy-MM-dd');
+        var e = this.pipe.transform( new Date(row.fch_Modificacion), 'yyyy-MM-dd');
+
+
+
+        aux.push({
+          FOLIO: row.folio.toString(),
+          'FECHA SOLICITUD': d,//new Date(d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString(),
+          RECLUTADOR: reclutador,
+          SUCURSAL: row.sucursal,
+          EMPRESA: row.cliente,
+          ESTADO: row.estado,
+          'DOMICILIO TRABAJO': row.domicilio_trabajo,
+          SOLICITA: row.propietario,
+          NO: row.vacantes,
+          AVANCE: row.porcentaje,
+          ENVIADO: row.enProcesoEC,
+          ACEPTADO: row.enProcesoFC,
+          CONTRATADOS: row.contratados,
+          PUESTO: row.vBtra,
+          'SUELDO FINAL':  row.sueldoMaximo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
+          ESTATUS: row.estatus,
+          'FECHA ESTATUS': e,
+          'TIPO RECLUTAMIENTO': row.tipoReclutamiento,
+          'COORDINACION': row.claseReclutamiento,
+          'COMENTARIOS SOLICITANTE': comentariosSol,
+          'COMENTARIOS RECLUTADORES': comentariosRecl
+        })
+        comentariosSol = "";
+        comentariosRecl = "";
+        reclutador = "";
+      });
+
+      //   })
+      // })
+      this.excelService.exportAsExcelFile(aux, 'Reporte70');
+
+    }
   }
 
 }

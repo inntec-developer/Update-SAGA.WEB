@@ -16,7 +16,7 @@
 //   }
 
 
-  table {
+table {
     width: 100%;
   }
 
@@ -26,6 +26,12 @@ table tbody div
     height: 320px;
   }
 
+  td a:hover
+  {
+    color: orange;
+    font-weight: bold;
+    font-size: 20px;
+  }
   ng-scrollbar {
     --scrollbar-size: 10px;
     --scrollbar-thumb-color: rgb(94, 175, 255);
