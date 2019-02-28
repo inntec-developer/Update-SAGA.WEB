@@ -20,7 +20,6 @@ export class HistorialClavesComponent implements OnInit {
   {
     this._service.GetClavesByCandidatos().subscribe(data => {
       this.candidatos = data;
-      console.log(data)
-    })
+    });
   }
 }

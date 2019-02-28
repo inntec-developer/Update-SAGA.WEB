@@ -33,7 +33,6 @@ export class DetailVacantesComponent implements OnInit {
     this._service.GetDtosDetail(this.RequisicionId).subscribe(data => {
       this.Datos = data;
       this.Datos.length = 1;
-      console.log(this.Datos);
     }
     );
   }

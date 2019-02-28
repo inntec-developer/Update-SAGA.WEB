@@ -268,7 +268,6 @@ export class AddRolesComponent implements OnInit {
   //         this.StructList = e;
   //         this.filteredData = e;
   //         this.setData();
-  //         console.log(this.StructList)
   //       })
   // }
 
@@ -299,7 +298,6 @@ export class AddRolesComponent implements OnInit {
 
   DeleteRoles(id)
   {
-    console.log(id)
     this.service.DeleteRoles(id)
       .subscribe( data => {
         if(data == 201)
@@ -470,11 +468,9 @@ export class AddRolesComponent implements OnInit {
   // updateRol($event,rowIndex)
   // {
   //   let rol = this.nodes[rowIndex]
-  //   console.log(rol)
   //   this.service.UpdateRoles(rol)
   //     .subscribe( data => {
   //     this.msj = data;
-  //     console.log(this.msj)
   //     this.iniciarForm();
   //     this.GetTreeRoles();
   //   });
@@ -483,11 +479,9 @@ export class AddRolesComponent implements OnInit {
   // DeleteRoles( $even, rowIndex: any )
   // {
   //   let g = this.nodes[rowIndex]
-  //   console.log(g)
   //   this.service.DeleteRoles(g)
   //     .subscribe( data => {
   //     this.msj = data;
-  //     console.log(this.msj)
   //     this.iniciarForm();
   //     // this.getRoles();
   //       this.nodes.splice(rowIndex, 1);

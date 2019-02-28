@@ -22,7 +22,6 @@ export class ViewRequisicionComponent implements OnInit {
     private _Route: ActivatedRoute,
   ) {
     this._Route.params.subscribe( params => {
-      debugger;
       if(params['IdRequi'] != null  && params['Folio'] != null){
         this.RequisicionId = params['IdRequi'];
         this.Folio = params['Folio'];

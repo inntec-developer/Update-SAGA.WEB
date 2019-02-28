@@ -129,7 +129,6 @@ onClosed(): void {
 
   selected($event)
   {
-    console.log($event.target.value)
     this.verMsj = false;
     this.service.GetEntidadesUG($event.target.value)
         .subscribe( data => {
@@ -237,8 +236,6 @@ onClosed(): void {
 
             roles = [];
             this.ListaAux = [];
-             //this.GetEntidades();
-            console.log(e)
           })
         }
   

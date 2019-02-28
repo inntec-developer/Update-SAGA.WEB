@@ -25,8 +25,6 @@ export class RecoverComponent implements OnInit {
             this.valForm.controls[c].markAsTouched();
         }
         if (this.valForm.valid) {
-            console.log('Valid!');
-            console.log(value);
         }
     }
 

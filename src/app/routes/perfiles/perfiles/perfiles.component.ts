@@ -29,7 +29,6 @@ export class PerfilesComponent implements OnInit {
 
     // let userName = this._Route.snapshot.paramMap.get('user');
       // this.settings.user.name = userName;
-      // console.log(this.settings.user.name);
 
     // this._Route.params.forEach((params: Params) => {
     //   this.userName = params['user'];

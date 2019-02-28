@@ -29,8 +29,6 @@ export class ClockComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log(this.day)
-    console.log(this.month)
   }
 
   clock(){

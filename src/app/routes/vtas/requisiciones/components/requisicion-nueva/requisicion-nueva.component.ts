@@ -53,7 +53,6 @@ export class RequisicionNuevaComponent implements OnInit {
         datas.Usuario = sessionStorage.getItem('usuario');
         datas.UsuarioId = sessionStorage.getItem('id');
         this.serviceRequisiciones.createNewRequi(datas).subscribe(data => {
-          debugger;
           this.requisicionId = data.id;
           this.folio = data.folio;
           this.Horarios = data.horariosRequi;

@@ -71,7 +71,6 @@ export class Reporte70Component implements OnInit {
     this._service.GetReporte70().subscribe(result => {
       this.requisiciones = result;
       // this.rows = this.requisiciones;
-      console.log(this.requisiciones)
       this.onChangeTable(this.config);
     })
   }

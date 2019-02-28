@@ -26,14 +26,12 @@ export class DirectorioEmpresarialComponent implements OnInit {
     this._service.getProspectos().subscribe(element =>{
       this.Prospectos = element;
       this.CountProspectos = this.Prospectos.length;
-      console.log(this.Prospectos);
-    })
+    });
 
     this._service.getClientes().subscribe(elemet =>{
       this.Clientes = elemet;
       this.CountClientes = this.Clientes.length;
-      console.log(this.Clientes);
-    })
+    });
   }
 
   clicProspectos(){

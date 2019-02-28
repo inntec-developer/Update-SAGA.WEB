@@ -35,13 +35,11 @@ export class NavsearchComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
-        // console.log(changes['visible'].currentValue)
         if (changes['visible'].currentValue === true) {
             this.elem.nativeElement.querySelector('input').focus();
         }
     }
 
     handleForm() {
-        console.log('Form submit: ' + this.term);
     }
 }

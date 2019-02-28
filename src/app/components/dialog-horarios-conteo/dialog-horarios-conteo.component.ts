@@ -24,7 +24,6 @@ export class DialogHorariosConteoComponent implements OnInit {
       {
         this.seleccion = this.data[0].id;
       }
-      console.log(this.seleccion)
     }
     else 
     {

@@ -28,7 +28,6 @@ export class DialogcandidatosComponent implements OnInit {
         this.vacantesdtl = vacantesdtl;
         this.id = vacantesdtl[0].id;
         this.folio = vacantesdtl[0].folio;
-        console.log(this.vacantesdtl);
       });
     }
 

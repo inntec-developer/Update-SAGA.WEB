@@ -39,8 +39,6 @@ export class DtHorariosComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
-
   }
 
   ngAfterViewInit(): void {
@@ -66,7 +64,6 @@ export class DtHorariosComponent implements OnInit {
         this.EditHorarios = false
       }
     }
-    console.log(this.Requi);
   }
 
   cargarHorarios(data) {
@@ -85,7 +82,6 @@ export class DtHorariosComponent implements OnInit {
         data: this.horario
       });
       dialogEditH.afterClosed().subscribe(result => {
-        debugger;
         if (result) {
           this.rows = result;
           var SumaVacantes = this.rows

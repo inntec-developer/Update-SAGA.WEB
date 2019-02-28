@@ -126,7 +126,6 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
 
   getRequiEstadisticos() {
     this.service.GetRequiEstadisticos(sessionStorage.getItem('id')).subscribe(data => {
-      console.log(data)
     });
   }
 
@@ -352,7 +351,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
       (<any>Object).assign(this.config.sorting, config.sorting);
     }
 
-    
+
     this.rows = this.dataSource;
     let filteredData = this.changeFilter(this.dataSource, this.config);
     let sortedData = this.changeSort(filteredData, this.config);

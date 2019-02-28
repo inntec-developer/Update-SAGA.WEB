@@ -149,21 +149,11 @@ export class InfoCandidatoComponent implements OnInit {
         this.reclutadorId = this.candidato.estatus.reclutadorId;
       }
 
-      console.log(this.RequisicionId)
-      console.log(this.candidato.propietarioId)
-      console.log(sessionStorage.getItem('id'))
-
       this._serviceExamen.GetExamenCandidato(this.candidato.id).subscribe(exa => {
-
         this.examen.tecnicos = exa[0];
         this.examen.psicometricos = exa[1];
-
-        console.log(this.examen)
         this.spinner.hide();
-
       });
-
-
     });
 
   }
@@ -197,7 +187,6 @@ export class InfoCandidatoComponent implements OnInit {
   getMisVacates() {
     this._serviceCandidato.getMisVacantes(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource_v = data;
-      console.log(this.dataSource_v)
     });
   }
 

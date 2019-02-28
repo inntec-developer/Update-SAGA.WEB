@@ -150,8 +150,7 @@ export class UpdateInfoRequiComponent implements OnInit {
   GetCatalogoExamenes() {
     this.service.GetCatalogo().subscribe(data => {
       this.catalogo = data;
-      console.log(data)
-    })
+    });
   }
 
   GetExamenes() {
@@ -163,16 +162,14 @@ export class UpdateInfoRequiComponent implements OnInit {
   GetExamen(ExamenId) {
     this.service.GetExamen(ExamenId).subscribe(data => {
       this.examen = data;
-      console.log(data)
-    })
+    });
   }
 
   GetExamenRequi() {
     this.service.GetExamenRequi(this.RequiId).subscribe(data => {
       this.examenRequi = data;
       this.examen = data;
-      console.log(data)
-    })
+    });
   }
 
   AgregarExamen() {

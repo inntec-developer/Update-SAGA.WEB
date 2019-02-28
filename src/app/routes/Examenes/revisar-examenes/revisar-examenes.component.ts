@@ -32,13 +32,11 @@ export class RevisarExamenesComponent implements OnInit {
   {
     this.service.GetCandidatosExamenes().subscribe(data =>{
       this.resultados = data;
-      console.log(this.resultados)
-    })
+    });
   }
   OpenDialogRevisar(row)
   {        
     this.service.GetResultadosCandidato(row.candidatoId, row.requisicionId).subscribe(data => {
-      console.log(data)
       let aux = data;
       aux[0].candidatoId = row.candidatoId;
       aux[0].requisicionId = row.requisicionId;
@@ -50,9 +48,7 @@ export class RevisarExamenesComponent implements OnInit {
         data: aux
       });
       dialog.afterClosed().subscribe(result => {
-      })
-
+      });
     })
-
   }
 }

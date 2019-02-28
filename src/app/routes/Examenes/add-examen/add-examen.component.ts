@@ -29,7 +29,6 @@ export class AddExamenComponent implements OnInit {
   {
     this.service.GetCatalogo().subscribe(data =>{
       this.catalogo = data;
-      console.log(data)
     })
   }
 
@@ -91,7 +90,6 @@ export class AddExamenComponent implements OnInit {
 
   UpdateResp(row)
   {
-    console.log(row)
   }
 
   AgregarExamen()

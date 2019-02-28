@@ -450,7 +450,6 @@ export class DtRequisicionComponent implements OnInit {
   * Funciones para la administracion de las requisiciones.
   * */
   public refreshTable() {
-    debugger;
     this.getRequisiciones();
     setTimeout(() => {
       this.columns.forEach(element => {
@@ -479,7 +478,6 @@ export class DtRequisicionComponent implements OnInit {
   }
 
   editRequi() {
-    debugger;
     this._Router.navigate(['/ventas/edicionRequisicion/', this.element.id, this.element.folio, this.element.estatusId, this.element.tipoReclutamientoId], { skipLocationChange: true });
   }
 
@@ -501,10 +499,7 @@ export class DtRequisicionComponent implements OnInit {
 
         if(emails.length > 0)
         {
-          this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
-            console.log(data)
-  
-
+          this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => { 
           //this.onChangeTable(this.config);
           });
         }
@@ -534,7 +529,6 @@ export class DtRequisicionComponent implements OnInit {
             if(emails.length > 0)
             {
               this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
-                console.log(data)
               });
             }
           }
@@ -555,7 +549,6 @@ export class DtRequisicionComponent implements OnInit {
   }
 
   openDialogDelete() {
-    console.log(this.element);
     let dialogDlt = this.dialog.open(DialogDeleteRequiComponent, {
       data: this.element
     });
@@ -563,7 +556,6 @@ export class DtRequisicionComponent implements OnInit {
     dialogDlt.afterClosed().subscribe(result => {
       if(result == 200)
       {
-        debugger;
         this.refreshTable();
         if(this.element.tipoReclutamientoId === 1){
           this.SendEmail();
@@ -574,7 +566,6 @@ export class DtRequisicionComponent implements OnInit {
 
   openDialogCancel() {
     this.element.motivoId = 17;
-    console.log(this.element);
     let dialogCnc = this.dialog.open(DialogCancelRequiComponent, {
       data: this.element
     });
@@ -582,7 +573,6 @@ export class DtRequisicionComponent implements OnInit {
     dialogCnc.afterClosed().subscribe(result => {
       if(result == 200)
       {
-        debugger;
         this.updataStatus(8, 'Cancelar')
         this.ValidarEstatus(8);
         this.refreshTable();
