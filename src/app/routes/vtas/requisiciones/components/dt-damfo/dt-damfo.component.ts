@@ -17,6 +17,12 @@ const swal = require('sweetalert');
   providers: [RequisicionesService]
 })
 export class DtDamfoComponent implements OnInit {
+  //scroll
+  disabled = false;
+  compact = false;
+  invertX = false;
+  invertY = false;
+  shown = 'hover';
   //Varaibales Globales
   public dataSource: Array<any> = [];
   Vacantes: number = 0;
@@ -180,6 +186,7 @@ export class DtDamfoComponent implements OnInit {
     let filteredData = this.changeFilter(this.dataSource, this.config);
     let sortedData = this.changeSort(filteredData, this.config);
     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
+    this.registros = this.rows.length;
     this.length = sortedData.length;
     this.spinner.hide();
 

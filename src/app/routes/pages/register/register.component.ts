@@ -151,7 +151,6 @@ export class RegisterComponent implements OnInit {
                             this.alert = this.alerts[1];
                             this.loading = false;
                             this.verMsj = true;
-                            this.ngOnInit();
                         }
                     });
             }
