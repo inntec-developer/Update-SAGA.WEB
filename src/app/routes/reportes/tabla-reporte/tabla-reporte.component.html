@@ -1,0 +1,23 @@
+
+
+
+
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Folio</th>
+      <th scope="col">Aprobada</th>
+      <th scope="col">VBtra</th>
+      <th scope="col">Experiencia</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of General">
+      <th scope="row">{{item.folio}}</th>
+      <td>{{item.aprobada}}</td>
+      <td>{{item.vBtra}}</td>
+      <td>{{item.experiencia}}</td>
+    </tr>
+   
+  </tbody>
+</table>

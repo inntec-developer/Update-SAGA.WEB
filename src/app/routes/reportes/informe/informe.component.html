@@ -1,0 +1,138 @@
+<p>
+  Reportes
+</p>
+
+<div class="row">
+  <div class="col-xl-12">
+      <div class="form-group busqueda">
+          <label for="bus">Busqueda:</label>
+         <div class="input-group">
+              <input id="bus" type="text" placeholder="Palabra clave" class=" form-control"/>
+              <div  class="input-group-append">
+                  <span  class="input-group-text ">
+                    <em  class="fa fa-search"></em></span>
+                    </div>
+              
+         </div>
+         <!-- <div _ngcontent-c33="" class="input-group">
+           <input _ngcontent-c33="" class="form-control form-control-sm" placeholder="Filtrar" type="text">
+            <div _ngcontent-c33="" class="input-group-append">
+              <span _ngcontent-c33="" class="input-group-text text-info">
+                <em _ngcontent-c33="" class="fa fa-search"></em></span>
+                </div>
+          </div> -->
+          
+        </div>
+    
+  </div>
+</div>
+
+<div class="row">
+ 
+    <div class="col-xl-3">
+        <div class="col-xl-12">
+            <div class="form-group">
+              <label for="sel1">Sucursal:</label>
+              <select class="form-control" id="sel1">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+              </select>
+            </div>
+          </div>
+    </div>
+    <div class="col-xl-3">
+        <div class="col-xl-12">
+            <div class="form-group">
+              <label for="sel2">Tipo de Reporte:</label>
+              <select class="form-control" id="sel2">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+              </select>
+            </div>
+          </div>
+      </div>
+      <div class="col-xl-3">
+          <div class="col-xl-12">
+              <div class="form-group">
+                <label for="sel3">Fecha Inicio :</label>
+                <input class="form-control" type="date" name="fecha" min="2018-03-25"
+                max="2018-05-25" step="2">
+              </div>
+            </div>
+        </div>
+        <div class="col-xl-3">
+            <div class="col-xl-12">
+                <div class="form-group">
+                    <label for="sel3">Fecha Fin :</label>
+                    <input class="form-control" type="date" name="fecha" min="2018-03-25"
+                    max="2018-05-25" step="2">
+                </div>
+              </div>
+          </div>
+
+
+          <div class="col-xl-3">
+              <div class="col-xl-12">
+                  <div class="form-group">
+                    <label for="sel1">Sucursal:</label>
+                    <select class="form-control" id="sel1">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                    </select>
+                  </div>
+                </div>
+          </div>
+          <div class="col-xl-3">
+              <div class="col-xl-12">
+                  <div class="form-group">
+                    <label for="sel2">Select list:</label>
+                    <select class="form-control" id="sel2">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                    </select>
+                  </div>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="col-xl-12">
+                    <div class="form-group">
+                      <label for="sel3">Select list:</label>
+                      <select class="form-control" id="sel3">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                      </select>
+                    </div>
+                  </div>
+              </div>
+              <div class="col-xl-3">
+                  <div class="col-xl-12">
+                      <div class="form-group">
+                        <label for="sel3">Select list:</label>
+                        <select class="form-control" id="sel3">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                        </select>
+                      </div>
+                    </div>
+                </div>
+  </div>
+
+<button (click)="hijo.Generar()" class="btn btn-primary btnReport">
+  Generar Reporte
+</button>
+
+<div>
+  <app-tabla-reporte #hijo [data]='true'></app-tabla-reporte>
+</div>
