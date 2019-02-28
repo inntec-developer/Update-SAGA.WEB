@@ -674,7 +674,7 @@ export class DtRequisicionComponent implements OnInit {
       //   })
       // })
       this.excelService.exportAsExcelFile(aux, 'Solicitud_de_reporte_para_generar_estadisticos');
-      this.refreshTable();
+
     }
   }
 

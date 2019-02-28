@@ -244,6 +244,9 @@ export class ApiConection {
   public static GetClaveCandidatos = 'examenes/getClaveCandidatos'
   public static GetClavesCandidatos = 'examenes/getClavesCandidatos'
 
+
+    /*Reportes */
+    public static GetInforme = 'reporte/Informe'
   /*SistTickets */
 public static InsertTicket = 'SistTickets/InsertTicketRecl'
   public static GetFilaTickets = 'SistTickets/getFilaTickets'
