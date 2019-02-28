@@ -16,6 +16,7 @@ export class UpdateRequisicionComponent implements OnInit {
   public folio: number;
   public Horarios: any;
   public EstatusRequi: any;
+  public TipoReclutamiento: any;
   constructor( private _Router: ActivatedRoute, private _RequiService: RequisicionesService) {
     
   }
@@ -24,7 +25,8 @@ export class UpdateRequisicionComponent implements OnInit {
       if(params['IdRequi'] != null){
         this.requiId = params['IdRequi'];
         this.folio = params['Folio'];
-        this.EstatusRequi = params['EstatusId']
+        this.EstatusRequi = params['EstatusId'],
+        this.TipoReclutamiento = params['TipoReclutamientoId']
         this._RequiService.getRequiHorarios(this.requiId).subscribe(result => {
           this.Horarios = result;
         })

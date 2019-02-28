@@ -23,9 +23,6 @@ export class AuthRolesGuard implements CanActivate {
 
     let privilegios = JSON.parse(sessionStorage.getItem('privilegios'))
     let part = this.el.nativeElement.querySelector('btn-delete');
-    console.log(privilegios)
-    console.log(btn)
-    console.log(part)
 
     return true;
 }

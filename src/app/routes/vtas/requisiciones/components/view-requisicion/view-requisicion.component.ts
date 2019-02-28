@@ -14,7 +14,8 @@ export class ViewRequisicionComponent implements OnInit {
   public RequisicionId : string;
   public Folio: number;
   public estatusId: number;
-  Vacante: any;
+  public Vacante: any;
+  public TipoReclutamiento: any;
 
   constructor(
     private _Router: Router,
@@ -25,13 +26,14 @@ export class ViewRequisicionComponent implements OnInit {
         this.RequisicionId = params['IdRequi'];
         this.Folio = params['Folio'];
         this.Vacante = params['Vacante'];
+        this.TipoReclutamiento = params['TipoReclutamientoId']
       }
     });
   }
   ngOnInit(){}
 
   editRequi(){
-    this._Router.navigate(['/ventas/edicionRequisicion', this.RequisicionId, this.Folio,this.estatusId ], {skipLocationChange:true});
+    this._Router.navigate(['/ventas/edicionRequisicion', this.RequisicionId, this.Folio,this.estatusId, this.TipoReclutamiento ], {skipLocationChange:true});
   }
 
   getEstatusRequi(event){

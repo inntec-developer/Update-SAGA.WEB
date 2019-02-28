@@ -33,9 +33,6 @@ export class ActividadesReclutadorComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    // console.log('Pendientes', this.Pendientes)
-    // console.log('Hoy',this.Hoy);
-    // console.log('Siguientes',this.Siguientes);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -43,7 +40,6 @@ export class ActividadesReclutadorComponent implements OnInit {
       setTimeout(() => {
         this.onChangeTablePendientes(this.config);
       }, 500);
-      console.log('Pendientes', this.Pendientes)
     }
     if (changes.Hoy != null) {
       setTimeout(() => {

@@ -62,7 +62,6 @@ export class UploadImgsComponent implements OnInit {
 
     // this.service.makeRequest(endPoint, 'POST', img, this.name, headers).subscribe(
     //   response  => {
-    //     console.log(response)
     //   }
     // );
 

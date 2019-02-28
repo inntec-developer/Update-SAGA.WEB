@@ -51,7 +51,6 @@ export class AsignarExamenComponent implements OnInit {
   {
     this.service.GetCatalogo().subscribe(data =>{
       this.catalogo = data;
-      console.log(data)
     })
   }
 
@@ -66,7 +65,6 @@ export class AsignarExamenComponent implements OnInit {
   {
     this.service.GetExamen(ExamenId).subscribe(data => {
       this.examen = data;
-      console.log(this.examen)
     })
   }
 
@@ -75,7 +73,6 @@ export class AsignarExamenComponent implements OnInit {
     this.service.GetRequisicionesEstatus(4).subscribe(data => {
       this.requisiciones = data;
       this.filterData = data;
-      console.log(data)
     })
   }
 
@@ -83,7 +80,6 @@ export class AsignarExamenComponent implements OnInit {
   {
     this.service.GetExamenRequi(requisicionId).subscribe(data => {
       this.examenRequi = data;
-      console.log(data)
       this.verExamen = true;
     })
   }

@@ -21,7 +21,6 @@ export class JobRequiPauseComponent implements OnInit {
   {
     this.titulo = "Espera a que te salga el mensaje de confirmación \\m/"
     this._service.ExecProcedurePause().subscribe(data => {
-      console.log(data)
       if(data == 200)
       {
         this.titulo = 'Pincha aqui'

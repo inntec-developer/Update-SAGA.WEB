@@ -3,39 +3,37 @@
 //     height: 550px;
 //     overflow: auto;
 //   }
-  
-  table thead,
-  tbody tr {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-  }
-  
+
+table thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
 //   table thead {
 //     width: calc(100% - 1em)
 //   }
 
 
 table {
-    width: 100%;
-  }
+  width: 100%;
+}
 
-table tbody div
-  {
+table tbody div {
 
-    height: 320px;
-  }
+  height: 350px;
+}
 
-  td a:hover
-  {
-    color: orange;
-    font-weight: bold;
-    font-size: 20px;
-  }
-  ng-scrollbar {
-    --scrollbar-size: 10px;
-    --scrollbar-thumb-color: rgb(94, 175, 255);
-    --scrollbar-thumb-hover-color: dodgerblue;
-    --scrollbar-border-radius: 4px;
-  }
+td a:hover {
+  color: orange;
+  font-weight: bold;
+  font-size: 20px;
+}
 
+ng-scrollbar {
+  --scrollbar-size: 4px;
+  --scrollbar-thumb-color: rgb(94, 175, 255);
+  --scrollbar-thumb-hover-color: dodgerblue;
+  --scrollbar-border-radius: 4px;
+}

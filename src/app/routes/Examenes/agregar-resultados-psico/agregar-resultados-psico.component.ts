@@ -25,7 +25,6 @@ export class AgregarResultadosPsicoComponent implements OnInit {
     this._serviceExamen.GetClavesCandidatos().subscribe(data => {
       this.candidatos = data;
       this.filteredData = data;
-      console.log(data)
     })
   }
 

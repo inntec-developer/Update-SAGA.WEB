@@ -77,7 +77,6 @@ export class DialogEventComponent implements OnInit {
     //   AllDay: [false],
     //   Descripcion: [{ value: '' }],
     // });
-    // console.log(this.formEvent.value)
   }
 
   // ngAfterViewInit(): void {
@@ -151,14 +150,12 @@ export class DialogEventComponent implements OnInit {
       backgroundColor: this.ColorPicker,
       borderColor: this.ColorPicker,
     }
-    console.log(this.formEvent.value);
     this.dialogEvent.close(data);
   }
 
   private _GetActivdadesReclutador() {
     this._catalogotService.getActividadesReclutador().subscribe(result => {
       this.Actividades = result;
-      console.log(this.Actividades);
     })
   }
 

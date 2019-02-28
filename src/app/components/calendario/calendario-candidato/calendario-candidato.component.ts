@@ -207,7 +207,6 @@ export class CalendarioCandidatoComponent implements OnInit {
       }
       event.start = VerificarFechaInicio;
     }
-    console.log(VerificarFechaInicio);
     this.componenteService
       .addCalendarEvent(event)
       .subscribe(result => {

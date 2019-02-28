@@ -25,7 +25,6 @@ export class EditarCandidatoEstatusComponent implements OnInit {
   {
     this.service.GetFoliosIncidencias(this.estatusId).subscribe(result =>{
       this.candidatos = result;
-      console.log(this.candidatos)
     })
 
   }

@@ -27,6 +27,7 @@ export class RequisicionNuevaComponent implements OnInit {
   public Horarios: any[];
   public EstatusRequi: any;
   public estatusId: any;
+  public TipoReclutamiento: any;
 
   constructor(
     private setings : SettingsService,  private serviceCatalogo: CatalogosService, private serviceRequisiciones: RequisicionesService, private _Router: Router,
@@ -56,6 +57,7 @@ export class RequisicionNuevaComponent implements OnInit {
           this.folio = data.folio;
           this.Horarios = data.horariosRequi;
           this.EstatusRequi = data.estatusId
+          this.TipoReclutamiento = data.tipoReclutamientoId;
         });
       }
     });

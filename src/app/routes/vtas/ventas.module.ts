@@ -1,5 +1,4 @@
-﻿import { DtRequisicionReclPuroComponent } from './../../components/tablas/dt-requisicion-recl-puro/dt-requisicion-recl-puro.component';
-import {
+﻿import {
          MAT_DATE_LOCALE,
          MatAutocompleteModule,
          MatButtonModule,
@@ -57,6 +56,7 @@ import { DtClientesComponent } from './directorio-empresarial/clientes/dt-client
 import { DtCrearRequisicionComponent } from './requisiciones/components/dt-crear-requisicion/dt-crear-requisicion.component';
 import { DtDamfoComponent } from './requisiciones/components/dt-damfo/dt-damfo.component';
 import { DtProspectosComponent } from './directorio-empresarial/prospectos/dt-prospectos/dt-prospectos.component';
+import { DtRequisicionReclPuroComponent } from './../../components/tablas/dt-requisicion-recl-puro/dt-requisicion-recl-puro.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { Ng2TableModule } from 'ng2-table';
@@ -84,8 +84,8 @@ const routes: Routes = [
     { path: 'crearRequisicion', component: DtCrearRequisicionComponent},
     { path: 'requisicionNueva/:IdDamfo/:IdDireccion/:IdEstatus', component: RequisicionNuevaComponent},
     { path: 'visualizarDamfo290/:IdDamfo', component: ViewdamfoComponent, data:{componente: 'Formato 290'} },
-    { path: 'visualizarRequisicion/:IdRequi/:Folio/:Vacante', component: ViewRequisicionComponent, data:{componente:'Requisiciones'} },
-    { path: 'edicionRequisicion/:IdRequi/:Folio/:EstatusId', component: UpdateRequisicionComponent },
+    { path: 'visualizarRequisicion/:IdRequi/:Folio/:Vacante/:TipoReclutamientoId', component: ViewRequisicionComponent, data:{componente:'Requisiciones'} },
+    { path: 'edicionRequisicion/:IdRequi/:Folio/:EstatusId/:TipoReclutamientoId', component: UpdateRequisicionComponent },
     { path: 'requisicionPuro', component: DtRequisicionReclPuroComponent},
 ];
 

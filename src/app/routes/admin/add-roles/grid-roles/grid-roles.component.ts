@@ -98,7 +98,6 @@ children = [];
   
 
     //  Object.entries(node.children).forEach(([k, v]) => { 
-    //   console.log(k,v)
     //   this.CrearEstructura(v);
     
     // })
@@ -116,9 +115,6 @@ children = [];
   saveData() {
    
     if (this.privilegios.length > 0) {
-    
-        console.log(this.privilegios)
-
       this.service.AddSeccion(this.privilegios)
         .subscribe(data => {
           this.alert = data;

@@ -68,14 +68,12 @@ apartar = true;
     this._service.GetPostulaciones(candidatoId).subscribe(data => {
       this.postulaciones = data;
       this.GetMisVacantes();
-      console.log(this.postulaciones)
-    })
+    });
   }
 
   GetMisVacantes() {
     this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
-      console.log(this.dataSource)
     });
   }
 
@@ -84,7 +82,7 @@ apartar = true;
 
     this._service.GetTicketPrioridad(sessionStorage.getItem('id')).subscribe(data => {
      this.GetTicket(data);
-    })
+    });
    
   }
 
@@ -93,13 +91,11 @@ apartar = true;
     this._service.UpdateStatusTicket(ticketId).subscribe(data => {
       this.apartar = true;
       this.GetTicket(ticketId)
-
-    })
+    });
   }
 
   SetApartar(candidato, datos)
   {
-
     this._serviceCandidato.setApartarCandidato(datos)
       .subscribe(data => {
         this.apartar = false;
@@ -175,7 +171,6 @@ apartar = true;
         reclutadorId: row.reclutadores[0].reclutadorId,
         estatusId: 12
       }
-      console.log(procesoCandidato)
 
       this.SetApartar(candidato, procesoCandidato);
     }

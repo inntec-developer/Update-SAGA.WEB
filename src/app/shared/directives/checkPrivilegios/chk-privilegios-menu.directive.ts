@@ -17,17 +17,12 @@ export class ChkPrivilegiosMenuDirective implements AfterViewInit {
     var btnupdate = document.querySelectorAll("#update");
     var btndelete = document.querySelectorAll("#delete");
 
-    console.log(btnupdate)
-
     let privilegios = JSON.parse(sessionStorage.getItem('privilegios'))
     let ruta = this.activeRoute.snapshot.routeConfig.data;
 
     var campos = privilegios.filter(function(row){
       return row.tipoEstructuraId === 4 && row.nombre == ruta.componente
        });
-
-    console.log(ruta)
-    console.log(campos)
 
     campos.forEach(campo =>{
       if(btncreate != null && !campo.create)

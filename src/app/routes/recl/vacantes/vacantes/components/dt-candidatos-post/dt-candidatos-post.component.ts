@@ -60,7 +60,6 @@ modalPrincipal = false;
   getpostulados() {
     this.service.getPostulados(this.RequisicionId).subscribe(data => {
       this.dataSource = data;
-console.log(this.dataSource)
     }, error => this.errorMessage = <any>error);
   }
 

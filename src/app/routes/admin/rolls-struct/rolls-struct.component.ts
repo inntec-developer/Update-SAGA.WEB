@@ -280,7 +280,6 @@ onClosed(): void {
   //         this.StructList = e;
   //         this.filteredData = e;
   //         this.setData();
-  //         console.log(this.StructList)
   //       })
   // }
 

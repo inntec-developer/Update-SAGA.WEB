@@ -402,9 +402,6 @@ objLiberar = [];
         this.dataSource.push(perfil);
         this.showFilterRow = true;
 
-        console.log(this.dataSource)
-        console.log(this.dataContratados)
-
       })
     }, error => this.errorMessage = <any>error);
   }
@@ -412,7 +409,6 @@ objLiberar = [];
   GetConteoVacante() {
     this.service.GetConteoVacante(this.RequisicionId, this.clienteId).subscribe(data => {
       this.conteo = data;
-      console.log(this.conteo)
 ///////// Esto es lo que tengo que modificar falla como loco............................................................... calineta el procesador y la memoria se desgorda.
       var cc = this.conteo.filter(element => {
         if( element.contratados > 0 )
@@ -738,14 +734,12 @@ objLiberar = [];
             var datosVacante = { estatusId: 30, requisicionId: this.RequisicionId };
 
             this.service.SetProcesoVacante(datosVacante).subscribe(data => {
-              console.log(data)
             })
           }
           else if (estatusId == 23 && this.estatusVacante != "33"  && this.estatusVacante != "39" && this.estatusVacante != "38") {
             var datosVacante = { estatusId: 33, requisicionId: this.RequisicionId }; //espera de contratacion
 
             this.service.SetProcesoVacante(datosVacante).subscribe(data => {
-              console.log(data)
             })
           }
 

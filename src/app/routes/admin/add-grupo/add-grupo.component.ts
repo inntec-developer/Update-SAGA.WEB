@@ -198,7 +198,6 @@ export class AddGrupoComponent implements OnInit {
 
     this.service.addGrupos(grupo)
     .subscribe( data => {
-      console.log(data)
       if(data == 201)
       {
         this.popToast('success', 'Actualizar Datos', 'Los datos se agregaron con éxito'); 

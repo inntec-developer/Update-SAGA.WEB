@@ -232,7 +232,6 @@ export class RegisterComponent implements OnInit {
     //     this.authService.isUserDAL(dal)
     //         .subscribe(
     //             data => {
-    //                 console.log(dal)
     //                 if( data != 404)
     //                 {
     //                     this.msj = 'Clave: ' + dal + ' ya se encuentra registrado';

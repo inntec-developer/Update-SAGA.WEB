@@ -33,7 +33,6 @@ export class DialogLiberarCandidatoComponent implements OnInit {
     this.liberar.comentario = '';
     this.service.GetMotivos(27).subscribe(data => {
       this.element = data;
-      console.log(this.objLiberar)
     }, err => {
       console.log(err);
     });

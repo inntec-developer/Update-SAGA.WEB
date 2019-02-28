@@ -13,10 +13,7 @@ export class DlgRevisarExamenesComponent implements OnInit {
  resultado = 0;
   constructor(@Inject(MAT_DIALOG_DATA) public examen: any, private service: ExamenesService, private toasterService: ToasterService) { }
 
-  ngOnInit() {
-    console.log(this.examen)
-
-  }
+  ngOnInit() { }
 
 
   ActualizarResultado()

@@ -137,7 +137,6 @@ export class DisenadorVacanteComponent implements OnInit {
     let bol = e['checked'];
     // this.Config.SetDetalle(this.Requi,id,bol)
     // .subscribe( data => {
-    //   console.log(data.Mensaje)
        this.pop('',true,bol,titulo,'Detalle');
     // });
   }

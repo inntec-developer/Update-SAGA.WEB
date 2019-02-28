@@ -23,13 +23,11 @@ export class ContestarExamenComponent implements OnInit {
   {
     this.service.GetExamen(1004).subscribe(data => {
       this.examen = data;
-      console.log(this.examen)
-    })
+    });
   }
 
   AddRespuestas(preguntaId, respuestaId, resp)
   {
-    debugger;
     if(this.Resp.length > 0)
     {
       let flag = false;
@@ -60,7 +58,6 @@ export class ContestarExamenComponent implements OnInit {
   Agregar()
   {
     this.service.InsertRespCandidato(this.Resp).subscribe(data => {
-      console.log(data)
-    })
+    });
   }
 }
