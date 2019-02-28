@@ -24,8 +24,8 @@
             <tr>
               <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
                 <small>{{column.title | uppercase}}</small>
-                <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
-                </i>
+                <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
+                </i> -->
               </th>
             </tr>
             <tr *ngIf="showFilterRow">
@@ -58,16 +58,16 @@
                   <div class="card">
                     <div class="card-body">
                       <ul class="list-group list-group-flush">
-                        <li *ngFor="let r of row.reclutadores" class="list-group-item text-muted">{{r.reclutador}}</li>
+                        <li *ngFor="let r of row.reclutadores" class="list-group-item text-muted">{{r}}</li>
                       </ul>
                     </div>
                   </div>
                 </ng-template>
 
-                <span *ngIf="row.reclutadores.length == 0">{{row.propietario}}</span>
+                <span *ngIf="row.reclutadores.length == 0">SIN ASIGNAR</span>
                 <a class="text-center" *ngIf="row.reclutadores.length > 1" [popover]="popTemplate" placement="left"
                   container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
-                <span class="text-left" *ngIf="row.reclutadores.length == 1">{{row.reclutadores[0].reclutador}}</span>
+                <span class="text-left" *ngIf="row.reclutadores.length == 1">{{row.reclutadores[0]}}</span>
 
               </td>
               <td> {{row.sucursal }}</td>
@@ -108,8 +108,8 @@
                 <ng-template #popTemplateComenSol>
                   <div class="card">
                     <div class="card-body" *ngFor="let r of row.comentarios_solicitante">
-                      <h5 class="text-center text-info p-2 bg-light">{{r.fch_Creacion | date: 'dd/MM/yyyy'}}</h5>
-                      <p class="card-text">{{r.comentario}}</p>
+                      <!-- <h5 class="text-center text-info p-2 bg-light">{{r.fch_Creacion | date: 'dd/MM/yyyy'}}</h5> -->
+                      <p class="card-text">{{r}}</p>
                     </div>
                   </div>
                 </ng-template>
@@ -145,20 +145,20 @@
         </table>
  </div>
          </ng-scrollbar>
+
+         <br/>
+         <div class="row">
+             <div class="col-md-12 clearfix">
+               <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+                 [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
+       
+               <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre>
+             </div>
+           </div>
 </div>
 
-
-    <br>
-    <div class="row">
-      <div class="col-md-12 clearfix">
-        <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
-          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
-          (numPages)="numPages = $event"></pagination>
-        <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre>
-      </div>
-    </div>
-
 </div>
+<toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
 <!--mensaje cuando esta vacio la tabla-->
 <ng-template #NotCandidatos>
   <div class="row">

@@ -37,21 +37,21 @@
   
               <!--estatus melina-->
   
-              <button [disabled]="cubierta" [ngClass]="cubierta ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-warning'"
+              <button id="update" chkPrivilegiosButtons [disabled]="cubierta" [ngClass]="cubierta ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-warning'"
                 type="button" (click)="updataStatus(34, 'Cubierta')" container="body" placement="bottom" tooltip="Cubierta">
                 <em class="fa fa fa-shield"></em>
               </button>
   
   
-              <button [disabled]="cp" [ngClass]="cp ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-warning'" type="button"
+              <button id="update" chkPrivilegiosButtons [disabled]="cp" [ngClass]="cp ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-warning'" type="button"
                 (click)="updataStatus(35, 'Cubierta Parcialmente')" container="body" placement="bottom" tooltip="Cubierta Parcialmente">
                 <em class="fa fa-star-half-o"></em>
               </button>
-              <button [ngClass]="crm ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-warning'" [disabled]="crm" type="button"
+              <button id="update" chkPrivilegiosButtons [ngClass]="crm ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-warning'" [disabled]="crm" type="button"
                 (click)="updataStatus(36, 'Cubierta por Medios')" container="body" placement="bottom" tooltip="Cubierta por Reclutamiento Medios">
                 <em class="fa fa-star"></em>
               </button>
-              <button [disabled]="cc" [ngClass]="cc ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-info'" type="button" (click)="updataStatus(37, 'Cubierta por Cliente')"
+              <button id="update" chkPrivilegiosButtons [disabled]="cc" [ngClass]="cc ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-info'" type="button" (click)="updataStatus(37, 'Cubierta por Cliente')"
                 container="body" placement="bottom" tooltip="Cubierta por Cliente">
                 <em class="fa fa fa-magic"></em>
               </button>
@@ -60,7 +60,7 @@
                 <em class="icon-ban"></em>
               </button>
   
-              <button [ngClass]="gbc ? 'btn disabled' : 'btn btn-outline-success'" [disabled]="gbc" type="button"
+              <button id="update" chkPrivilegiosButtons [ngClass]="gbc ? 'btn disabled' : 'btn btn-outline-success'" [disabled]="gbc" type="button"
                 (click)="updataStatus(38, 'Garant&iacute;a de B&uacute;squeda')" container="body" placement="bottom" tooltip="Garant&iacute;a B&uacute;squeda Candidatos">
                 <em class="fa fa-user-circle"></em>
               </button>
@@ -70,7 +70,7 @@
               <i class="fa fa-file-text-o"></i>
             </button>
 
-              <button type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-success'"
+              <button id="special" chkPrivilegiosButtons type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-success'"
                 (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
                 <i class="fa fa-download"></i>
               </button>
