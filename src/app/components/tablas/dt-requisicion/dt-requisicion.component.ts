@@ -27,7 +27,6 @@ export class DtRequisicionComponent implements OnInit {
   compact = false;
   invertX = false;
   invertY = false;
-
   shown = 'hover';
 
   // Variables Globales
@@ -389,12 +388,13 @@ export class DtRequisicionComponent implements OnInit {
     if (config.sorting) {
       (<any>Object).assign(this.config.sorting, config.sorting);
     }
-    this.registros = this.dataSource.length;
+    
     this.rows = this.dataSource;
     let filteredData = this.changeFilter(this.dataSource, this.config);
     let sortedData = this.changeSort(filteredData, this.config);
     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
     this.length = sortedData.length;
+    this.registros = this.rows.length;
     this.spinner.hide();
   }
 

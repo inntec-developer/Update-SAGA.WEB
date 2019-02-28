@@ -1,4 +1,3 @@
-
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 
 declare var $: any;
@@ -12,6 +11,13 @@ declare var $: any;
 
 
 export class DtBusquedaCandidatosComponent implements OnInit {
+   //scroll
+   disabled = false;
+   compact = false;
+   invertX = false;
+   invertY = false;
+   shown = 'hover';
+   
   @Input('Candidatos') Candidatos: any;
   @Output('CandidatoId') CandidatoId: EventEmitter<any> = new EventEmitter<any>();
   public dataSource: Array<any> = [];

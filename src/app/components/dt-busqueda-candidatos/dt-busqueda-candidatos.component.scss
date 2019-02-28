@@ -1,7 +1,6 @@
 tbody {
   display: block;
   height: 450px;
-  overflow: auto;
 }
 
 thead,
@@ -28,4 +27,12 @@ tbody tr:hover {
   font-size: 14.5px;
   box-shadow: 1px 20px 60px rgba(0, 0, 0, .23);
 }
+
+ng-scrollbar {
+  --scrollbar-size: 4px;
+  --scrollbar-thumb-color: rgb(94, 175, 255);
+  --scrollbar-thumb-hover-color: dodgerblue;
+  --scrollbar-border-radius: 4px;
+}
+
 

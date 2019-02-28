@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
     navCollapsed = true; // for horizontal layout
     menuItems = []; // for horizontal layout
     alertMessage: Array<any> = []
-    allAlertMessage:  Array<any> = []
+    allAlertMessage: Array<any> = []
     isNavSearchVisible: boolean;
     @ViewChild('fsbutton') fsbutton;  // the fullscreen button
     NotRead: Array<any> = [];
@@ -36,7 +36,13 @@ export class HeaderComponent implements OnInit {
     alertAllIndex: number;
     private subscription: Subscription;
     UserId: string;
-    
+
+    text = renderActualizaciones;
+    disabled = false;
+    compact = false;
+    invertX = false;
+    invertY = false;
+
     constructor(
         public menu: MenuService,
         public userblockService: UserblockService,
@@ -110,14 +116,13 @@ export class HeaderComponent implements OnInit {
             el.children('em').removeClass('fa-compress').addClass('fa-expand');
         }
     }
-
     leido(data: any) {
         this._service.deleteAlertStm(data.id, false).subscribe(element => {
             if (element === 200) {
                 this.alertIndex = this.alertMessage.findIndex(item => item.id === data.id);
                 this.alertMessage[this.alertIndex]['activo'] = false;
 
-                this.alertAllIndex = this.allAlertMessage.findIndex(item =>item.id === data.id);
+                this.alertAllIndex = this.allAlertMessage.findIndex(item => item.id === data.id);
                 this.allAlertMessage[this.alertAllIndex]['activo'] = false;
                 this.NotRead = this.allAlertMessage.filter(alert => alert.activo == true);
             }
@@ -135,26 +140,61 @@ export class HeaderComponent implements OnInit {
         })
     }
 
-    getAllAlertStm(){
+    getAllAlertStm() {
         this._service.getAllAlertStm(this.UserId).subscribe(result => {
-            if(result != 400){
+            if (result != 400) {
                 this.allAlertMessage = result;
                 this.NotRead = this.allAlertMessage.filter(alert => alert.activo == true);
             }
         })
     }
 
-
     config = {
         backdrop: true,
         ignoreBackdropClick: true,
         class: 'second'
-      };
+    };
 
     openModal(template: TemplateRef<any>) {
         this.modalRef = this.modalService.show(template, this.config);
-      }
-
-
-
+    }
 }
+
+const renderActualizaciones = `
+<ul>
+    <li>Modificaciones visuales en Tablas de contenido de información.</li>
+    <li>El menú se puede ocultar o mostrar, presionando  el botón  <em class="fa fa-navicon"></em>  en la barra principal de opciones.</li>
+    <li>Cambio de estatus de candidatos de Contratado a Cubierto.</li>
+    <li>
+        El Ejecutivo de Cuenta (Vtas) podrá liberar candidatos con estatus Cubierto en la sección de:
+        <ol>
+            <li>Reclutamiento -> Candidatos -> Buscar -> Detalle Candidato -> Información Principal -> Se mostrara el botón donde se especifica con que reclutador esta llevando el proceso 
+            <a class="btn btn-xs btn-outline-danger"><i class="fa fa-thumbs-o-down"></i></a></li>
+        </ol>   
+        
+    </li>
+    <li>
+        Flujo de trabaja para Reclutamiento Puro. 
+        <ol>
+            <li>Creación de Reclutamiento Puro.</li>
+            <li>Notificar a Gerente correspondiente para solicitar factura.</li>
+            <li>Autorizar una vez realizada la factura (Gerente).</li>
+            <li>Asignar Coordinadores para dar el seguimiento a la Requisición (Ejecutivo Cuenta).</li>
+            <li>Asignar Reclutadores para iniciar búsqueda de candidatos(Coordinador).</li>
+        </ol>
+    </li>
+    <li>
+        Ventas -> Requisiciones: Botón para <strong>Coordinadores</strong> y <strong>Auditores</strong> 
+        <a class="btn btn-xs btn-outline-info"><i class="fa fa-file-text-o"></i></a> <strong>Reporte 70</strong>, 
+        el cual mostrara un reporte de requisiciones activas.
+    </li>
+    <li>
+        Reclutamiento -> Vacantes: Los Usuarios con Perfil <strong> AUDITOR </strong> podrán visualizar todas las vacantes activas. 
+        En el botón <a class="btn btn-xs btn-outline-success"><i class="fa fa-download"></i></a> <strong>Reporte para Generar Estadísticos </strong> y 
+        <a class="btn btn-xs btn-outline-info"><i class="fa fa-file-text-o"></i></a> <strong>Informe Vacantes</strong>, se mostraran todas las requisiciones o vacantes activas.
+        
+    </li>
+    <li>
+        Modificación en Estructura del Menú Principal.
+    </li>
+</ul>`;
