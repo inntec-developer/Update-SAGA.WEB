@@ -240,4 +240,8 @@ export class ApiConection {
   public static GetClaves = 'examenes/getClaves'
   public static GetClaveCandidatos = 'examenes/getClaveCandidatos'
   public static GetClavesCandidatos = 'examenes/getClavesCandidatos'
+
+
+    /*Reportes */
+    public static GetInforme = 'reporte/Informe'
 }
