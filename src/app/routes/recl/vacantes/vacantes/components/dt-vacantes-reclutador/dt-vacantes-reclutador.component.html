@@ -7,107 +7,113 @@
           (tableChanged)="onChangeTable(config)">
       </mat-form-field> -->
 
-  <div class="card">
-    <div class="card-body mat-elevation-z8">
-        <div class="row p-3 mb-2 bg-light clearfix">
-            <div class="col-sm-12 col-md-12">
-            <button id="view" (click)="openDialogShowRequi(element.id, element.folio)" placement="bottom"
-              tooltip="Ver Requisición" class="mr-1" [disabled]="!element" [ngClass]="(!element) ? 'btn disabled':'btn btn-outline-warning'">
-              <em class="fa fa-eye"></em></button>
-            <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-acciones"
-              [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-outline-dark'" container="body" placement="bottom" tooltip="Comentarios"><em
-                class="fa fa-comments-o"></em></button>
-            <button id="update" chkPrivilegiosButtons (click)="openDialogAssingRequi(element)" placement="bottom"
-              tooltip="Asignar" container="body" class="mr-1" [disabled]="asignar" [ngClass]="asignar ? 'btn disabled':'btn btn-outline-purple'">
-              <em class="icon-user-follow"></em></button>
-            <button type="button" id="special" chkPrivilegiosButtons (click)="openDesignVacante(element.id, element.folio, element.vBtra)"
-              container="body" placement="bottom" tooltip="Diseñar Vacante" container="body" [disabled]="disenador || confidencial" [ngClass]="(disenador || confidencial) ? 'btn disabled':'btn btn-outline-primary'">
-              <em class="icon-list"></em>
-            </button>
-    
-            <em class="vl"></em>
-            <!-- estatus de la vacante -->
-    
-            <button id="update" chkPrivilegiosButtons class="mr-1" [disabled]="bc" [ngClass]="bc ? 'btn disabled' : 'btn btn-outline-green'" type="button"
-              (click)="SetStatus(29, 'B&uacute;squeda Candidatos')" container="body" placement="bottom" tooltip="B&uacute;squeda de Candidatos">
-              <em class="fa fa-search"></em>
-            </button>
-            <button id="update" chkPrivilegiosButtons class="mr-1" [disabled]="ecc" [ngClass]="ecc ? 'btn disabled' : 'btn btn-outline-green'"
-              type="button" (click)="SetStatus(30, 'Env&iacute;o a Cliente')" container="body" placement="bottom" tooltip="Env&iacute;o Candidato a Cliente">
-              <em class="fa fa-truck"></em>
-            </button>
-    
-            <button id="update" chkPrivilegiosButtons class="mr-1" [disabled]="sc" [ngClass]="sc ? 'btn disabled' : 'btn btn-outline-green'" type="button"
-              (click)="SetStatus(32, 'Socioeconómico')" container="body" placement="bottom" tooltip="Socioeconómico" container="body">
-              <em class="fa fa-bar-chart"></em>
-            </button>
-    
-    
-            <button id="update" chkPrivilegiosButtons class="mr-1" [disabled]="ec" [ngClass]="ec ? 'btn disabled' : 'btn btn-outline-info'" type="button"
-              (click)="SetStatus(33, 'Espera de Ctns')" container="body" placement="bottom" tooltip="En Espera de Contrataci&oacute;n" >
-              <em class="fa fa-hourglass-half"></em>
-            </button>
-    
-            <button id="update" chkPrivilegiosButtons class="mr-1" [disabled]="pausa" [ngClass]="pausa ? 'btn disabled' : 'btn btn-outline-info'"
-              type="button" (click)="SetStatus(39, 'Pausada')" container="body" placement="bottom" tooltip="Pausada">
-              <em class="fa fa-pause-circle-o"></em>
-            </button>
-    
-            <button id="update" chkPrivilegiosButtons [ngClass]="nbc ? 'btn disabled' : 'btn btn-outline-primary'" [disabled]="nbc"
-              type="button" (click)="SetStatus(31, 'Nueva Busqueda')" container="body" placement="bottom" tooltip="Nueva Busqueda de Candidatos" >
-              <em class="fa fa-search-plus"></em>
-            </button>
-  
-               <!-- estatus de la vacante -->
+<div class="card">
+  <div class="card-body mat-elevation-z8">
+    <div class="row p-3 mb-2 bg-light clearfix">
+      <div class="col-sm-12 col-md-12">
+        <button id="view" (click)="openDialogShowRequi(element.id, element.folio)" placement="bottom" tooltip="Ver Requisición"
+          class="mr-1" [disabled]="!element" [ngClass]="(!element) ? 'btn disabled':'btn btn-outline-warning'">
+          <em class="fa fa-eye"></em></button>
+        <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-acciones" [disabled]="!element"
+          [ngClass]="(!element) ? 'disabled' : 'btn-outline-dark'" container="body" placement="bottom" tooltip="Comentarios"><em
+            class="fa fa-comments-o"></em></button>
+        <button id="update" chkPrivilegiosButtons (click)="openDialogAssingRequi(element)" placement="bottom" tooltip="Asignar"
+          container="body" class="mr-1" [disabled]="asignar" [ngClass]="asignar ? 'btn disabled':'btn btn-outline-purple'">
+          <em class="icon-user-follow"></em></button>
+        <button type="button" id="special" chkPrivilegiosButtons (click)="openDesignVacante(element.id, element.folio, element.vBtra)"
+          container="body" placement="bottom" tooltip="Diseñar Vacante" container="body" [disabled]="disenador || confidencial"
+          [ngClass]="(disenador || confidencial) ? 'btn disabled':'btn btn-outline-primary'">
+          <em class="icon-list"></em>
+        </button>
 
-       <!-- informes -->
-       <em class="vl"></em>
-            <button id="update" chkPrivilegiosButtons class="mr-1" type="button" (click)="refreshTableInfo();informeVacante=true;" [disabled]="dataSource.length == 0" 
-              [ngClass]="dataSource.length == 0 ? 'btn disable' : 'btn btn-outline-info'" container="body" placement="bottom" tooltip="Informe Vacantes">
-                <i class="fa fa-file-text-o"></i>
-            </button>
-        
-            <button class="mr-1" id='special' chkPrivilegiosButtons type="button" (click)="editarNR=true" [disabled]="dataSource.length == 0"
-               [ngClass]="dataSource.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-danger'" container="body" placement="bottom" tooltip="Visualizar Incidente">
-                <i class="fa fa-male"></i>
-            </button>
-            <button class="mr-1" id='special' chkPrivilegiosButtons type="button" (click)="editarRequi=true" [disabled]="dataSource.length == 0"
-               [ngClass]="dataSource.length == 0 ? 'btn disable' : 'btn btn-outline-warning'" container="body" placement="bottom" tooltip="Visualizar vacantes en pausa">
-                <i class="fa fa-clock-o"></i>
-            </button>
-            <button id='special' chkPrivilegiosButtons type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-warning'"
-            (click)="reporte70=true;" container="body" placement="bottom" tooltip="Reporte 70">
-            <i class="fa fa-file-text-o"></i>
-          </button>
-            <button class="mr-1" type="button" [disabled]="dataSource.length == 0"  [ngClass]="dataSource.length == 0 ? 'btn disable' : 'btn btn-outline-success'" (click)="exportAsXLSX()"  container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
-                <i class="fa fa-download"></i>
-            </button>
-    
-       
-          <!-- informes -->
+        <em class="vl"></em>
+        <!-- estatus de la vacante -->
 
-            <button type="button" class="mr-1 btn btn-outline-success float-right" (click)="refreshTable()" container="body"
-              placement="bottom" tooltip="Actualizar" container="body">
-              <em class="icon-refresh"></em>
-            </button>
-            <button class="mr-1 float-right" (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" [disabled]="!clearFilter"
-               [ngClass]="(!clearFilter) ? 'btn disabled':'btn btn-outline-primary'">
-              <em class="fa fa-eraser"></em>
-            </button>
-            <button class="mr-1 float-right" [disabled]="pds" (click)="seguimientoRequi()" [ngClass]="(pds) ? 'btn disabled':'btn btn-outline-primary'"
-              container="body" placement="bottom" tooltip="En Proceso">
-              <i class="fa fa-cogs" aria-hidden="true"></i>
-            </button>
-            <button class="mr-1 float-right" [disabled]="postulados <= 0" (click)="openViewPostulados()" [ngClass]="(postulados <= 0 )? 'btn disabled':'btn btn-outline-warning'"
-              container="body" placement="bottom" tooltip="Postulados">
-              <i class="fa fa-users" aria-hidden="true"></i>
-            </button>
-    
-   </div>
-    </div>
+        <button id="update" chkPrivilegiosButtons class="mr-1" [disabled]="bc" [ngClass]="bc ? 'btn disabled' : 'btn btn-outline-green'"
+          type="button" (click)="SetStatus(29, 'B&uacute;squeda Candidatos')" container="body" placement="bottom"
+          tooltip="B&uacute;squeda de Candidatos">
+          <em class="fa fa-search"></em>
+        </button>
+        <button id="update" chkPrivilegiosButtons class="mr-1" [disabled]="ecc" [ngClass]="ecc ? 'btn disabled' : 'btn btn-outline-green'"
+          type="button" (click)="SetStatus(30, 'Env&iacute;o a Cliente')" container="body" placement="bottom" tooltip="Env&iacute;o Candidato a Cliente">
+          <em class="fa fa-truck"></em>
+        </button>
+
+        <button id="update" chkPrivilegiosButtons class="mr-1" [disabled]="sc" [ngClass]="sc ? 'btn disabled' : 'btn btn-outline-green'"
+          type="button" (click)="SetStatus(32, 'Socioeconómico')" container="body" placement="bottom" tooltip="Socioeconómico"
+          container="body">
+          <em class="fa fa-bar-chart"></em>
+        </button>
+
+
+        <button id="update" chkPrivilegiosButtons class="mr-1" [disabled]="ec" [ngClass]="ec ? 'btn disabled' : 'btn btn-outline-info'"
+          type="button" (click)="SetStatus(33, 'Espera de Ctns')" container="body" placement="bottom" tooltip="En Espera de Contrataci&oacute;n">
+          <em class="fa fa-hourglass-half"></em>
+        </button>
+
+        <button id="update" chkPrivilegiosButtons class="mr-1" [disabled]="pausa" [ngClass]="pausa ? 'btn disabled' : 'btn btn-outline-info'"
+          type="button" (click)="SetStatus(39, 'Pausada')" container="body" placement="bottom" tooltip="Pausada">
+          <em class="fa fa-pause-circle-o"></em>
+        </button>
+
+        <button id="update" chkPrivilegiosButtons [ngClass]="nbc ? 'btn disabled' : 'btn btn-outline-primary'"
+          [disabled]="nbc" type="button" (click)="SetStatus(31, 'Nueva Busqueda')" container="body" placement="bottom"
+          tooltip="Nueva Busqueda de Candidatos">
+          <em class="fa fa-search-plus"></em>
+        </button>
+
+        <!-- estatus de la vacante -->
+
+        <!-- informes -->
+        <em class="vl"></em>
+        <button id="update" chkPrivilegiosButtons class="mr-1" type="button" (click)="refreshTableInfo();informeVacante=true;"
+          [disabled]="dataSource.length == 0" [ngClass]="dataSource.length == 0 ? 'btn disable' : 'btn btn-outline-info'"
+          container="body" placement="bottom" tooltip="Informe Vacantes">
+          <i class="fa fa-file-text-o"></i>
+        </button>
+
+        <button class="mr-1" id='special' chkPrivilegiosButtons type="button" (click)="editarNR=true" [disabled]="dataSource.length == 0"
+          [ngClass]="dataSource.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-danger'" container="body"
+          placement="bottom" tooltip="Visualizar Incidente">
+          <i class="fa fa-male"></i>
+        </button>
+        <button class="mr-1" id='special' chkPrivilegiosButtons type="button" (click)="editarRequi=true" [disabled]="dataSource.length == 0"
+          [ngClass]="dataSource.length == 0 ? 'btn disable' : 'btn btn-outline-warning'" container="body" placement="bottom"
+          tooltip="Visualizar vacantes en pausa">
+          <i class="fa fa-clock-o"></i>
+        </button>
+        <button id='special' chkPrivilegiosButtons type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-warning'"
+          (click)="reporte70=true;" container="body" placement="bottom" tooltip="Reporte 70">
+          <i class="fa fa-file-text-o"></i>
+        </button>
+        <button class="mr-1" type="button" [disabled]="dataSource.length == 0" [ngClass]="dataSource.length == 0 ? 'btn disable' : 'btn btn-outline-success'"
+          (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
+          <i class="fa fa-download"></i>
+        </button>
+
+
+        <!-- informes -->
+
+        <button type="button" class="mr-1 btn btn-outline-success float-right" (click)="refreshTable()" container="body"
+          placement="bottom" tooltip="Actualizar" container="body">
+          <em class="icon-refresh"></em>
+        </button>
+        <button class="mr-1 float-right" (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
+          container="body" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'btn disabled':'btn btn-outline-primary'">
+          <em class="fa fa-eraser"></em>
+        </button>
+        <button class="mr-1 float-right" [disabled]="pds" (click)="seguimientoRequi()" [ngClass]="(pds) ? 'btn disabled':'btn btn-outline-primary'"
+          container="body" placement="bottom" tooltip="En Proceso">
+          <i class="fa fa-cogs" aria-hidden="true"></i>
+        </button>
+        <button class="mr-1 float-right" [disabled]="postulados <= 0" (click)="openViewPostulados()" [ngClass]="(postulados <= 0 )? 'btn disabled':'btn btn-outline-warning'"
+          container="body" placement="bottom" tooltip="Postulados">
+          <i class="fa fa-users" aria-hidden="true"></i>
+        </button>
 
       </div>
     </div>
+
     <div class="row" #tableContainer>
       <div class="col-sm-12 col-md-12 table-responsive clearfix">
         <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
@@ -151,7 +157,7 @@
                   <td class="text-center"> {{row.tipoReclutamiento}}</td>
                   <td class="text-center"> {{row.claseReclutamiento}}</td>
                   <!-- <td class="text-right"> {{row.sueldoMinimo | currency: $}}</td>
-            <td class="text-right"> {{row.sueldoMaximo | currency: $}}</td> -->
+              <td class="text-right"> {{row.sueldoMaximo | currency: $}}</td> -->
                   <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
                   <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
                   <td class="text-center">
@@ -177,31 +183,31 @@
                   </td>
                   <td class="text-center">
                     <!-- <ng-template #popTemplatePostulados>
-                <div *ngIf="row.postulados > 0">
-                  <h5 class="popover-header">Postulados</h5>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="popover-body">
-                        <ng-container *ngFor="let p of row.postuladosN">
-                          <small>
-                            <ol>
-                              <li>
-                                <a href="">
-                                  {{p.nombre}} {{p.apellidoPaterno}} {{apellidoMAterno}} {{p.curp}}
-                                </a>
-                              </li>
-                            </ol>
-                          </small>
-                        </ng-container>
+                  <div *ngIf="row.postulados > 0">
+                    <h5 class="popover-header">Postulados</h5>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="popover-body">
+                          <ng-container *ngFor="let p of row.postuladosN">
+                            <small>
+                              <ol>
+                                <li>
+                                  <a href="">
+                                    {{p.nombre}} {{p.apellidoPaterno}} {{apellidoMAterno}} {{p.curp}}
+                                  </a>
+                                </li>
+                              </ol>
+                            </small>
+                          </ng-container>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div *ngIf="row.postulados == 0">
-                  <small>Sin Postulaciones...</small>
-                </div>
+                  <div *ngIf="row.postulados == 0">
+                    <small>Sin Postulaciones...</small>
+                  </div>
 
-              </ng-template> -->
+                </ng-template> -->
 
                     <span class="px-1 mr-1  badge  badge-pill badge-warning" [popover]="popTemplatePostulados"
                       container="body" placement="left" triggers="click">
@@ -384,17 +390,18 @@
 </div>
 
 <!-- Modal para reporte -->
-<div *ngIf="reporte70" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #MessageModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
-<div class="modal-dialog modal-lg reporteMod">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="float-left text-warning"><em class="fa fa-file-text-o mr-2"></em>Reporte - Requisiciones</h4>
-      <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="reporte70=false; lgModal.hide();" ><i class="fa fa-times"></i></button>
-    </div>
-    <div class="modal-body">
-      <app-reporte70></app-reporte70>
+<div *ngIf="reporte70" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #MessageModal="bs-modal" class="modal"
+  tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-lg reporteMod">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="float-left text-warning"><em class="fa fa-file-text-o mr-2"></em>Reporte - Requisiciones</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="reporte70=false; lgModal.hide();"><i
+            class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <app-reporte70></app-reporte70>
+      </div>
     </div>
   </div>
 </div>
-</div>
-
