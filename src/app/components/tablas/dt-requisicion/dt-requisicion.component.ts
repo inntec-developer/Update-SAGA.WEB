@@ -475,11 +475,12 @@ export class DtRequisicionComponent implements OnInit {
   }
 
   showRequi() {
-    this._Router.navigate(['/ventas/visualizarRequisicion/', this.element.id, this.element.folio, this.Vacante], { skipLocationChange: true });
+    this._Router.navigate(['/ventas/visualizarRequisicion/', this.element.id, this.element.folio, this.Vacante,this.element.tipoReclutamientoId], { skipLocationChange: true });
   }
 
   editRequi() {
-    this._Router.navigate(['/ventas/edicionRequisicion/', this.element.id, this.element.folio, this.element.estatusId], { skipLocationChange: true });
+    debugger;
+    this._Router.navigate(['/ventas/edicionRequisicion/', this.element.id, this.element.folio, this.element.estatusId, this.element.tipoReclutamientoId], { skipLocationChange: true });
   }
 
   updataStatus(estatusId, estatus)

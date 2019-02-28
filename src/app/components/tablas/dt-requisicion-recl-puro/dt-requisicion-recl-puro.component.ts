@@ -317,10 +317,6 @@ export class DtRequisicionReclPuroComponent implements OnInit {
     this._Router.navigate(['/ventas/visualizarRequisicion/', this.element.id, this.element.folio, this.Vacante], { skipLocationChange: true });
   }
 
-  editRequi() {
-    this._Router.navigate(['/ventas/edicionRequisicion/', this.element.id, this.element.folio], { skipLocationChange: true });
-  }
-
   openDialogDelete() {
     let dialogDlt = this.dialog.open(DialogDeleteRequiComponent, {
       data: this.element

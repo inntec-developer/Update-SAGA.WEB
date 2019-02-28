@@ -18,6 +18,7 @@ export class DtHorariosComponent implements OnInit {
   @Input() Horarios: any[];
   @Input('Requi') Requi: boolean;
   @Input('EstatusRequi') EstatusRequi: any;
+  @Input('TipoReclutamiento') TipoReclutamiento: any;
   @Output('NumeroVacantes') NumeroVacantes: EventEmitter<any[]> = new EventEmitter();
   public rows: Array<any> = [];
   getHorarios: boolean = false;
@@ -38,13 +39,15 @@ export class DtHorariosComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger;
 
   }
 
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
-    this.cargarHorarios(this.Horarios);
+    if(this,this.Horarios)
+      this.cargarHorarios(this.Horarios);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -52,13 +55,15 @@ export class DtHorariosComponent implements OnInit {
     //Add '${implements OnChanges}' to the class.
     if (changes.Horarios && !changes.Horarios.isFirstChange()) {
       this.cargarHorarios(this.Horarios);
-      if (this.EstatusRequi == 4 || this.EstatusRequi == 43){
+      if (this.EstatusRequi == 4 || this.EstatusRequi == 43) {
         this.EditHorarios = true
-      }else {
+      } else {
         this.EditHorarios = false
       }
-      if(this.EstatusRequi == 44|| this.EstatusRequi == 45|| this.EstatusRequi == 46){
+      if (this.EstatusRequi == 44 || this.EstatusRequi == 45 || this.EstatusRequi == 46) {
         this.EditHorarios = false;
+      }else if(this.EstatusRequi == 4 && this.TipoReclutamiento == 1){
+        this.EditHorarios = false
       }
     }
     console.log(this.Requi);
@@ -87,7 +92,7 @@ export class DtHorariosComponent implements OnInit {
             .map(r => r.numeroVacantes)
             .reduce((sum, current) => sum + current)
           this.NumeroVacantes.emit(SumaVacantes);
-          
+
         }
       });
     }
@@ -133,23 +138,23 @@ export class DtHorariosComponent implements OnInit {
   /*
   * Creacion de mensajes
   * */
- toaster: any;
- toasterConfig: any;
- toasterconfig: ToasterConfig = new ToasterConfig({
-   positionClass: 'toast-bottom-right',
-   limit: 7, tapToDismiss: false,
-   showCloseButton: true,
-   mouseoverTimerStop: true,
- });
- popToast(type, title, body) {
-   var toast: Toast = {
-     type: type,
-     title: title,
-     timeout: 5000,
-     body: body
-   }
-   this.toasterService.pop(toast);
- }
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7, tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
+  popToast(type, title, body) {
+    var toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 5000,
+      body: body
+    }
+    this.toasterService.pop(toast);
+  }
 }
 
 
