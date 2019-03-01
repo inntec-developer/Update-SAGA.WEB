@@ -9,7 +9,7 @@ import { SistTicketsService } from './../../../service/SistTickets/sist-tickets.
 export class FilaTicketsComponent implements OnInit {
 
   @Input() cita: any = 2;
-
+  @Input() verTiempo: boolean = false;
   fila = [];
 
   constructor(private _service: SistTicketsService) { }
