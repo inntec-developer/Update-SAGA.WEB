@@ -37,13 +37,20 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { SeguimientoTicketComponent } from './seguimiento-ticket/seguimiento-ticket.component';
 
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
+import { VerTurnosComponent } from './ver-turnos/ver-turnos.component';
+import { FilaTicketsComponent } from './fila-tickets/fila-tickets.component';
+import { EnAtencionComponent } from './en-atencion/en-atencion.component';
+import { CarruselVacantesComponent } from './carrusel-vacantes/carrusel-vacantes.component';
 
 const routes: Routes = [
   { path: 'turno', component: SeguimientoTicketComponent},
+  { path: 'verTurno', component: VerTurnosComponent},
 
 ];
 
@@ -88,10 +95,15 @@ const routes: Routes = [
     MatTooltipModule,
     ComponentsModule,
     VentaModule,
-    ReclutamientoModule
+    ReclutamientoModule,
+    NgbModule
   ],
   declarations: [
     SeguimientoTicketComponent,
+    VerTurnosComponent,
+    FilaTicketsComponent,
+    EnAtencionComponent,
+    CarruselVacantesComponent,
     
   ],
   entryComponents: [],

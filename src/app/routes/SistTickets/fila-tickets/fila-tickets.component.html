@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col">
+  <div class="card">
+    <div class="card-body">
+      <!-- <h5 class="text-center p-2 bg-light" [ngClass]="cita==1 ? 'text-warning' : 'text-info'"><i class="fa fa-hourglass-half mr-1" aria-hidden="true"></i>EN ESPERA</h5> -->
+      <small class="text-muted" *ngIf="cita==1">TURNOS CON CITA</small>
+      <small class="text-muted" *ngIf="cita==2">TURNOS SIN CITA</small>
+        <ul class="list-group" *ngFor="let t of fila">
+            <li class="list-group-item"><span class="font-weight-bold">{{t.ticket}}</span><span class="badge badge-warning badge-pill float-right">{{t.te}} min</span>
+            </li>
+        </ul>
+    </div>
+  </div>
+</div>
+</div>
