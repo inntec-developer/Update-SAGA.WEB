@@ -1,7 +1,3 @@
-import { NgScrollbarModule } from 'ngx-scrollbar';
-
-
-import { FileManagerComponent } from './file-manager/file-manager.component';
 import { ColorPickerModule, ColorPickerService } from 'ngx-color-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { INgxSelectOptions, NgxSelectModule } from 'ngx-select-ex'
@@ -45,11 +41,11 @@ import { ModalModule, PopoverModule, TooltipModule } from 'ngx-bootstrap';
 import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../core/translator/config-paginator/config-paginator.component';
+
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { ActividadesComponent } from './tablas/actividades/actividades.component';
 import { ActividadesReclutadorComponent } from './calendario/actividades-reclutador/actividades-reclutador.component';
 import { AlertModule } from 'ngx-bootstrap';
-
 import { AsignarRequisicionComponent } from './asignar-requisicion/asignar-requisicion.component';
 import { AsignarRequisicionLiderComponent } from './asignar-requisicion-lider/asignar-requisicion-lider.component';
 import { BsDatepickerModule } from 'ngx-bootstrap';
@@ -87,8 +83,11 @@ import { DialogEventComponent } from './calendario/dialog-event/dialog-event.com
 import { DialogHorariosConteoComponent } from '../components/dialog-horarios-conteo/dialog-horarios-conteo.component';
 import { DialogLiberarCandidatoComponent } from './dialog-liberar-candidato/dialog-liberar-candidato.component';
 import { DialogRutasComponent } from './tablas/dt-rutas-camion-requi/dialog-rutas/dialog-rutas.component';
+import { DlgAsignarPerfilComponent } from './dlg-asignar-perfil/dlg-asignar-perfil.component';
 import { DlgComentariosNRComponent } from './dlg-comentarios-nr/dlg-comentarios-nr.component';
+import { DlgFacturaPuroComponent } from './dlg-factura-puro/dlg-factura-puro.component';
 import { DlgRequisicionPausaComponent } from './dlg-requisicion-pausa/dlg-requisicion-pausa.component';
+import { DlgRevisarExamenesComponent } from './dlg-revisar-examenes/dlg-revisar-examenes.component';
 import { DocumentosClienteComponent } from './tablas/documentos-cliente/documentos-cliente.component';
 import { DocumentosDamsaComponent } from './tablas/documentos-damsa/documentos-damsa.component';
 import { DtBeneficiosComponent } from './tablas/dt-beneficios/dt-beneficios.component';
@@ -104,31 +103,31 @@ import { DtMisCandidatosComponent } from './dt-mis-candidatos/dt-mis-candidatos.
 import { DtPsicometriasClienteComponent } from './tablas/dt-psicometrias-cliente/dt-psicometrias-cliente.component';
 import { DtPsicometriasDamsaComponent } from './tablas/dt-psicometrias-damsa/dt-psicometrias-damsa.component';
 import { DtRequisicionComponent } from './tablas/dt-requisicion/dt-requisicion.component';
+import { DtRequisicionReclPuroComponent } from './tablas/dt-requisicion-recl-puro/dt-requisicion-recl-puro.component';
 import { DtRutasCamionRequiComponent } from './tablas/dt-rutas-camion-requi/dt-rutas-camion-requi.component';
 import { DtTelefonosComponent } from './tablas/dt-telefonos/dt-telefonos.component';
 import { EditarCandidatoEstatusComponent } from './editar-candidato-estatus/editar-candidato-estatus.component';
 import { EditarContratadosComponent } from './editar-contratados/editar-contratados.component';
 import { EditarRequiEstatusComponent } from './editar-requi-estatus/editar-requi-estatus.component';
+import { FileManagerComponent } from './file-manager/file-manager.component';
+import { GraficaVacantesPieComponent } from './Graficas/grafica-vacantes-pie/grafica-vacantes-pie.component';
 import { InfoCandidatoComponent } from './info-candidato/info-candidato.component';
 import { InfoVacanteComponent } from './info-vacante/info-vacante.component';
+import {ChartsModule as Ng2ChartsModule} from 'ng2-charts/ng2-charts'
 import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from '../../../node_modules/ngx-spinner';
 import { ObservacionesComponent } from './tablas/observaciones/observaciones.component';
 import { PrestacionesClienteComponent } from './tablas/prestaciones-cliente/prestaciones-cliente.component';
 import { PrestacionesLeyComponent } from './tablas/prestaciones-ley/prestaciones-ley.component';
 import { ProcesosComponent } from './tablas/procesos/procesos.component';
+import { Reporte70Component } from './reporte70/reporte70.component';
+import { RequisicionNuevaPuroComponent } from './requisicion-nueva-puro/requisicion-nueva-puro.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SharedModule } from '../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { DlgRevisarExamenesComponent } from './dlg-revisar-examenes/dlg-revisar-examenes.component';
-import { DlgAsignarPerfilComponent } from './dlg-asignar-perfil/dlg-asignar-perfil.component';
-import { DtRequisicionReclPuroComponent } from './tablas/dt-requisicion-recl-puro/dt-requisicion-recl-puro.component';
-import { DlgFacturaPuroComponent } from './dlg-factura-puro/dlg-factura-puro.component';
-import { RequisicionNuevaPuroComponent } from './requisicion-nueva-puro/requisicion-nueva-puro.component';
-import { Reporte70Component } from './reporte70/reporte70.component';
-
-import { ScrollingModule } from '@angular/cdk/scrolling';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -188,6 +187,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     BsDatepickerModule.forRoot(),
     ColorPickerModule, 
     NgbModule,
+    Ng2ChartsModule
     // NgScrollbarModule
   ],
   declarations: [
@@ -260,7 +260,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DlgAsignarPerfilComponent,
     DlgFacturaPuroComponent,
     RequisicionNuevaPuroComponent,
-    Reporte70Component
+    Reporte70Component,
+    GraficaVacantesPieComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -327,7 +328,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ActividadesReclutadorComponent,
     FileManagerComponent,
     DlgAsignarPerfilComponent,
-    Reporte70Component
+    Reporte70Component,
+    GraficaVacantesPieComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
