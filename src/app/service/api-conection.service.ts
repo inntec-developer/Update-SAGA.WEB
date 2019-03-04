@@ -253,13 +253,16 @@ export class ApiConection {
   public static GetOficinas = 'reporte/oficinas'
 
 
+
   /*SistTickets */
-public static InsertTicket = 'SistTickets/InsertTicketRecl'
+  public static InsertTicket = 'SistTickets/InsertTicketRecl'
   public static GetFilaTickets = 'SistTickets/getFilaTickets'
   public static GetTicketRecl = 'SistTickets/getTicketsReclutador'
   public static GetTicketPrioridad = 'SistTickets/getTicketPrioridad'
   public static UpdateStatusTicket = 'SistTickets/updateStatus'
   public static GetPostulaciones = 'SistTickets/getPostulaciones'
   public static LiberarCandidato = 'SistTickets/liberarCandidato'
+  public static GetTicketEnAtencion = 'SistTickets/getTicketEnAtencion'
+  public static GetVacantes = 'SistTickets/getVacantes'
 
 }

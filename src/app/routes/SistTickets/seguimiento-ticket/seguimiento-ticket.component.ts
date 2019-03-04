@@ -45,7 +45,7 @@ apartar = true;
 
   public GetFilaTickets()
   {
-    this._service.GetFilaTickets().subscribe( data => {
+    this._service.GetFilaTickets(2).subscribe( data => {
         this.fila = data;
     })
   }

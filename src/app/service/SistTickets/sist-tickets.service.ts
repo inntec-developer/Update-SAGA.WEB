@@ -1,3 +1,4 @@
+
 import { ApiConection } from './../api-conection.service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
@@ -14,7 +15,8 @@ export class SistTicketsService {
   private UrlGetTicketPrioridad = ApiConection.ServiceUrl + ApiConection.GetTicketPrioridad;
   private UrlGetPostulaciones = ApiConection.ServiceUrl + ApiConection.GetPostulaciones;
   private UrlLiberarCandidato = ApiConection.ServiceUrl + ApiConection.LiberarCandidato;
-
+  private UrlGetTicketEnAtencion = ApiConection.ServiceUrl + ApiConection.GetTicketEnAtencion;
+  private UrlGetVacantes = ApiConection.ServiceUrl + ApiConection.GetVacantes;
   constructor(private _httpClient: HttpClient) { }
 
   InsertTicket(ticketId, reclutadorId) : Observable<any>
@@ -34,13 +36,18 @@ export class SistTicketsService {
     let params = new HttpParams().set('ticketId', ticketId);
     return this._httpClient.get(this.UrlUpdateStatus, {params:params})
   }
-  GetFilaTickets() :Observable<any>
+  GetFilaTickets(cita) :Observable<any>
   {
-    // let params = new HttpParams().set('ClientId', ClientId).set('RequisicionId', RequisicionId);
-    return this._httpClient.get(this.UrlGetFilaTickets)
+    let params = new HttpParams().set('cita', cita);
+    return this._httpClient.get(this.UrlGetFilaTickets, {params:params})
   
   }
+  GetTicketEnAtencion() :Observable<any>
+  {
 
+    return this._httpClient.get(this.UrlGetTicketEnAtencion)
+  
+  }
   GetTicketPrioridad(reclutadorId) :Observable<any>
   {
     let params = new HttpParams().set('reclutadorId', reclutadorId);
@@ -64,5 +71,10 @@ export class SistTicketsService {
   LiberarCandidato(requi, candidato) : Observable<any>{
     let params = new HttpParams().set('requisicionId', requi).set('candidatoId', candidato);
     return this._httpClient.get(this.UrlLiberarCandidato, {params: params});
+  }
+
+  GetVacantes() : Observable<any>
+  {
+    return this._httpClient.get(this.UrlGetVacantes)
   }
 }

@@ -1,0 +1,16 @@
+<div class="text-center">
+  <!-- <div class="col">
+  <div class="card">
+    <div class="card-body">  -->
+      <!-- <h5 class="text-center p-2 bg-light" [ngClass]="cita==1 ? 'text-warning' : 'text-primary'"><i class="fa fa-hourglass-half mr-1" aria-hidden="true"></i>EN ESPERA</h5> -->
+      <small class="text-muted text-center" *ngIf="cita==1"><i class="fa fa-ticket mr-1" aria-hidden="true"></i>TURNOS CON CITA</small>
+      <small class="text-muted text-center" *ngIf="cita==2"><i class="fa fa-ticket mr-1" aria-hidden="true"></i>TURNOS SIN CITA</small>
+        <ul class="list-group">
+            <li *ngFor="let t of fila" class="list-group-item" [ngClass]="cita==1 ? 'list-group-item-warning' : 'list-group-item-primary'"><span class="font-weight-bold">{{t.ticket}}</span><small *ngIf="verTiempo" class="badge badge-warning badge-pill float-right">{{t.tiempo}} min</small>
+            </li>
+        </ul>
+ 
+      <!-- </div>
+  </div>
+</div> -->
+</div> 
