@@ -184,7 +184,7 @@
     <div class="card-body mat-elevation-z8">
       <h5 class="text-center text-info"><i class="fa fa-hourglass-half mr-1" aria-hidden="true"></i>EN ESPERA</h5>
         <ul class="list-group" *ngFor="let t of fila">
-            <li class="list-group-item"><span>{{t.ticket}}</span><span class="text-warning float-right">{{t.te}} min</span>
+            <li class="list-group-item" [ngClass]="t.movimientoId == 1 ? 'bg-warning', 'text-white' : ''"><span>{{t.ticket}}</span><span class="text-warning float-right">{{t.tiempo}} min</span>
             </li>
         </ul>
     </div>

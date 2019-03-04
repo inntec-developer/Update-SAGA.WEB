@@ -12,13 +12,13 @@
 <ngb-carousel *ngIf="vacantes.length > 0" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
     <ng-template ngbSlide *ngFor="let v of vacantes">
       <div class="card">
-        <div class="card-body mat-elevation-z8">
+        <div class="card-body bgMio mat-elevation-z8">
           <div class="row">
-            <!-- <div class="col-sm-2 col-md-2">
-         <img src="./../assets/img/users.png" alt="Random slide">
-        </div> -->
+
+         <!-- <img src="./../assets/img/fondo.png" alt="Random slide"> -->
+
       <div class="col-sm-12 col-md-12 clearfix text-center">
-          <h3 class="text-info text-center">{{v.folio}} - {{v.vBtra}}</h3>
+          <h3 class="text-center">{{v.folio}} - {{v.vBtra}}</h3>
           <h4 class="text-center">{{v.cliente}}</h4>
           <h5 class="text-center">{{v.domicilio_trabajo}}</h5>
           <h5 class="p-2 bg-light text-center text-muted">ACTIVIDADES</h5>
@@ -26,7 +26,7 @@
             <li class="list-group-item text-info" *ngFor="let a of v.actividades">{{a}}</li>
           </ul>
           <h5 class="p-2 bg-light text-center text-muted">EXPERIENCIA</h5>
-          <p class="text-justify text-warning">{{v.experiencia}}</p>
+          <p class="text-justify">{{v.experiencia}}</p>
           <h5 class="p-2 bg-light text-muted">APTITUDES</h5>
           <ul class="list-group list-group-flush">
               <li class="list-group-item text-info" *ngFor="let a of v.aptitudes">{{a}}</li>

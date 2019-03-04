@@ -1,5 +1,5 @@
+
 import { DlgAsignarPerfilComponent } from './../../../components/dlg-asignar-perfil/dlg-asignar-perfil.component';
-import { id } from '@swimlane/ngx-datatable/release/utils';
 import { SistTicketsService } from './../../../service/SistTickets/sist-tickets.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -45,7 +45,7 @@ apartar = true;
 
   public GetFilaTickets()
   {
-    this._service.GetFilaTickets(2).subscribe( data => {
+    this._service.GetFilaTickets(0).subscribe( data => {
         this.fila = data;
     })
   }

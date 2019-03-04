@@ -12,7 +12,9 @@ export class FilaTicketsComponent implements OnInit {
   @Input() verTiempo: boolean = false;
   fila = [];
 
-  constructor(private _service: SistTicketsService) { }
+  constructor(private _service: SistTicketsService) { 
+    setInterval(() => this.GetFilaTickets(), 1000);
+  }
 
   ngOnInit() {
     this.GetFilaTickets();

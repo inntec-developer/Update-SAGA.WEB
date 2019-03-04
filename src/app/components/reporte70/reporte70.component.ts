@@ -8,7 +8,8 @@ import { ExcelService } from '../../service/ExcelService/excel.service';
 @Component({
   selector: 'app-reporte70',
   templateUrl: './reporte70.component.html',
-  styleUrls: ['./reporte70.component.scss']
+  styleUrls: ['./reporte70.component.scss'],
+  providers:[RequisicionesService, DatePipe]
 })
 export class Reporte70Component implements OnInit {
 
@@ -44,7 +45,7 @@ export class Reporte70Component implements OnInit {
   public columns: Array<any> = [
     { title: 'Folio', sorting: 'desc', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
     { title: 'Fecha Solicitud', className: 'text-info text-center', name: 'fch_Solicitud', filtering: { filterString: '', placeholder: 'dd-mm-yyyy' } },
-    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores', filtering: { filterString: '', placeholder: 'dd-mm-yyyy' } },
+    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador' } },
     { title: 'Sucursal', className: 'text-info text-center', name: 'sucursal', filtering: { filterString: '', placeholder: 'Sucursal' } },
     { title: 'Empresa', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Empresa' } },
     { title: 'Estado', className: 'text-info text-center', name: 'estado', filtering: { filterString: '', placeholder: 'Estado' } },
@@ -251,11 +252,16 @@ export class Reporte70Component implements OnInit {
       var comentariosSol = "";
       var comentariosRecl = "";
       var reclutador = "";
+      var fecha = "";
       this.requisiciones.forEach(row => {
+        console.log(row)
         if(row.comentarios_solicitante.length > 0)
         {
           row.comentarios_solicitante.forEach(element => {
-             let fecha =  this.pipe.transform(new Date(element.fch_Creacion), 'yyyy-MM-dd');
+            if(element.fch_Creacion != null)
+            {
+              fecha =  this.pipe.transform(new Date(element.fch_Creacion), 'yyyy-MM-dd');
+            }          
               comentariosSol = comentariosSol + fecha + ' ' + element.comentario + '\n'
             });
           
@@ -268,7 +274,11 @@ export class Reporte70Component implements OnInit {
         {
           row.comentarios_reclutador.forEach(element => {
             element.comentario.forEach(el => {
-              let fecha =  this.pipe.transform(new Date(el.fch_Creacion), 'yyyy-MM-dd');
+              if(element.fch_Creacion != null)
+            {
+              fecha =  this.pipe.transform(new Date(element.fch_Creacion), 'yyyy-MM-dd');
+            }    
+
               comentariosRecl = comentariosRecl + fecha + ' ' + el.comentario + '\n'
             });
             comentariosRecl = element.reclutador + '\n' + comentariosRecl + '\n';
@@ -293,7 +303,15 @@ export class Reporte70Component implements OnInit {
         {
           reclutador = row.reclutadores[0].reclutador;
         }
+
+        if(row.fch_Solicitud != null)
+        {
         var d = this.pipe.transform(new Date(row.fch_Solicitud), 'yyyy-MM-dd');
+        }
+        else
+        {
+          var d = this.pipe.transform( new Date(), 'yyyy-MM-dd');
+        }
 
         if(row.fch_Modificacion != null)
         {
@@ -337,7 +355,7 @@ export class Reporte70Component implements OnInit {
 
       //   })
       // })
-      this.excelService.exportAsExcelFile(aux, 'Reporte70');
+      this.excelService.exportAsExcelFile(aux, 'ReporteGeneral');
 
     }
   }
