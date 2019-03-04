@@ -18,6 +18,10 @@ import { ApiConection } from '../api-conection.service';
 @Injectable()
 export class ReportesService {
   private UrlInforme = ApiConection.ServiceUrl+ApiConection.GetInforme;
+  private UrlEmpresa = ApiConection.ServiceUrl+ApiConection.GetEmpresas;
+  private UrlUsuario = ApiConection.ServiceUrl+ApiConection.GetUsuario;
+  private UrlEstatu = ApiConection.ServiceUrl+ApiConection.GetEstatusRep;
+  private UrlOficina = ApiConection.ServiceUrl+ApiConection.GetOficinas;
 
   constructor(private http: Http) {  }
   
@@ -31,9 +35,32 @@ export class ReportesService {
 
 
 
-GetInforme(): Observable<any> {
+GetInforme(clave:string,ofc:string,tipo:string,fini:string,ffin:string,emp:string,
+    sol:string,trcl:string,cor:string,stus:string,recl:string): Observable<any> {
     console.log('servicio')
-return this.http.get(this.UrlInforme)
+return this.http.get(this.UrlInforme + '?clave='+clave+'&ofc='+ofc+'&tipo='+tipo+'&fini='+fini
+    +'&ffin='+ffin+'&emp='+emp+'&sol='+sol+'&trcl='+trcl+'&cor='+cor+'&stus='+stus+'&recl='+recl)
+    .map(result => result.json())
+    .catch(this.handleError);
+}
+
+GetEmpresas(): Observable<any> {
+    console.log('servicio')
+return this.http.get(this.UrlEmpresa)
+    .map(result => result.json())
+    .catch(this.handleError);
+}
+
+GetUsuario(): Observable<any> {
+    console.log('servicio')
+return this.http.get(this.UrlUsuario)
+    .map(result => result.json())
+    .catch(this.handleError);
+}
+
+GetEstatusRep(): Observable<any> {
+    console.log('servicio')
+return this.http.get(this.UrlEstatu)
     .map(result => result.json())
     .catch(this.handleError);
 }

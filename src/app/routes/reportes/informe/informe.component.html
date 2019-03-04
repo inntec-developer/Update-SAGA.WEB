@@ -7,8 +7,8 @@
       <div class="form-group busqueda">
           <label for="bus">Busqueda:</label>
          <div class="input-group">
-              <input id="bus" type="text" placeholder="Palabra clave" class=" form-control"/>
-              <div  class="input-group-append">
+              <input id="palabra" type="text" #palabra (blur)="hijo.Guardar(palabra.value)" placeholder="Palabra clave" class=" form-control"/>
+              <div  class="input-group-append mano" (click)="hijo.Generar()">
                   <span  class="input-group-text ">
                     <em  class="fa fa-search"></em></span>
                     </div>
@@ -34,10 +34,9 @@
             <div class="form-group">
               <label for="sel1">Sucursal:</label>
               <select class="form-control" id="sel1">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
+                <option>Guadalajara</option>
+                <option>México</option>
+                <option>Monterrey</option>
               </select>
             </div>
           </div>
@@ -47,10 +46,11 @@
             <div class="form-group">
               <label for="sel2">Tipo de Reporte:</label>
               <select class="form-control" id="sel2">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
+                <option>Contratado vs Requerido</option>
+                <option>Estatus de Vacantes</option>
+                <option>Captación</option>
+                <option>Productividad</option>
+                <option>Fecha de Solicitud</option>
               </select>
             </div>
           </div>
@@ -59,8 +59,8 @@
           <div class="col-xl-12">
               <div class="form-group">
                 <label for="sel3">Fecha Inicio :</label>
-                <input class="form-control" type="date" name="fecha" min="2018-03-25"
-                max="2018-05-25" step="2">
+                <input class="form-control" type="date" id="fechaInicial" name="fecha" min="2019-01-20"
+                max="2019-03-04" >
               </div>
             </div>
         </div>
@@ -68,8 +68,8 @@
             <div class="col-xl-12">
                 <div class="form-group">
                     <label for="sel3">Fecha Fin :</label>
-                    <input class="form-control" type="date" name="fecha" min="2018-03-25"
-                    max="2018-05-25" step="2">
+                    <input class="form-control" type="date" id="fechaFinal" name="fecha" min="2019-01-20"
+                    max="2019-03-04" >
                 </div>
               </div>
           </div>
@@ -78,12 +78,10 @@
           <div class="col-xl-3">
               <div class="col-xl-12">
                   <div class="form-group">
-                    <label for="sel1">Sucursal:</label>
-                    <select class="form-control" id="sel1">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
+                    <label for="empresaR">Empresa:</label>
+                    <select  class="form-control" id="empresaR">
+                        <option selected value="0">Seleccione una empresa</option>
+                      <option value="{{item.id}}" *ngFor="let item of Empresas">{{item.razonSocial}}</option>
                     </select>
                   </div>
                 </div>
@@ -91,25 +89,21 @@
           <div class="col-xl-3">
               <div class="col-xl-12">
                   <div class="form-group">
-                    <label for="sel2">Select list:</label>
-                    <select class="form-control" id="sel2">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                    </select>
+                    <label for="solicitanteR">Solicitante:</label>
+                    <select  class="form-control" id="solicitanteR">
+                        <option value="0">Seleccione a quien solicita</option>
+                        <option value="{{item.usuario}}" *ngFor="let item of Usuario">{{item.nombre}}</option>
+                      </select>
                   </div>
                 </div>
             </div>
             <div class="col-xl-3">
                 <div class="col-xl-12">
                     <div class="form-group">
-                      <label for="sel3">Select list:</label>
-                      <select class="form-control" id="sel3">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
+                      <label for="tiporeclutaR">Tipo  Reclutamiento:</label>
+                      <select class="form-control" id="tiporeclutaR">
+                        <option value="1">Reclutamiento Puro</option>
+                        <option value="2">Subcontratación</option>
                       </select>
                     </div>
                   </div>
@@ -117,19 +111,48 @@
               <div class="col-xl-3">
                   <div class="col-xl-12">
                       <div class="form-group">
-                        <label for="sel3">Select list:</label>
-                        <select class="form-control" id="sel3">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
+                        <label for="condinacionR">Tipo Coordinación:</label>
+                        <select class="form-control" id="condinacionR">
+                          <option value="1">Especializado</option>
+                          <option value="2">Operativo</option>
+                          
                         </select>
                       </div>
                     </div>
                 </div>
+
+
+                <div class="col-xl-3">
+                    <div class="col-xl-12">
+                        <div class="form-group">
+                          <label for="sel1">Estatus:</label>
+                          <select  class="form-control" id="estatusR">
+                              <option value="0">Seleccione un estatus</option>
+                              <option value="{{item.id}}" *ngFor="let item of Estatus">{{item.descripcion}}</option>
+                            </select>
+                        </div>
+                      </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="col-xl-12">
+                        <div class="form-group">
+                          <label for="sel2">Reclutador:</label>
+                          <select class="form-control" id="reclutadorR">
+                              <option value="0">Seleccione al reclutador</option>
+                              <option value="{{item.Id}}" *ngFor="let item of Usuario">{{item.nombre}}</option>
+                          </select>
+                        </div>
+                      </div>
+                  </div>
+                 
+                   
   </div>
 
-<button (click)="hijo.Generar()" class="btn btn-primary btnReport">
+  <button (click)="hijo.Exportar()" class="btn btn-warning btnReport">
+      Exportar
+    </button>
+
+<button (click)="hijo.Generar()" class="btn btn-success btnReport">
   Generar Reporte
 </button>
 

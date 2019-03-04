@@ -15,7 +15,9 @@ import { ApiConection } from '../../../service/api-conection.service';
   providers:[ReportesService],
 })
 export class InformeComponent implements OnInit {
-
+  public Empresas : any[];
+  public Estatus : any[];
+  public Usuario : any[];
   constructor(
     private Rutas: ActivatedRoute,
     private Servicio: ReportesService,
@@ -29,16 +31,21 @@ export class InformeComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.Servicio.GetEmpresas().subscribe(item =>{
+      this.Empresas = item;
+    })
+
+    this.Servicio.GetEstatusRep().subscribe(item =>{
+      this.Estatus = item;
+    })
+
+    this.Servicio.GetUsuario().subscribe(item =>{
+      this.Usuario = item;
+    })
   }
 
-  Publicar(){
-  this.spinner.show();
-  this.Servicio.GetInforme()
-   .subscribe( data => {
-   // this.popGenerico(data.mensaje,data.bandera,'Publicacion');
-    this.spinner.hide();
-   });
-  }
+ 
+
 
 
 }
