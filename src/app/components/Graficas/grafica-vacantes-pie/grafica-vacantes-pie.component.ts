@@ -30,11 +30,8 @@ export class GraficaVacantesPieComponent implements OnInit {
   }
 
   ngOnInit() {
-    var contenido = document.getElementById('canvas');
-    console.log(contenido);
-    
     Chart.defaults.scale.ticks.beginAtZero = true;
-    this.Chart = new Chart(contenido, {
+    this.Chart = new Chart('canvas', {
       type: 'polarArea',
       data: this.data,
       options: {onClick: this.detectedClick.bind(this)}
