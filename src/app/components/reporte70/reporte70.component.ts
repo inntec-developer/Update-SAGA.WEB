@@ -20,7 +20,7 @@ export class Reporte70Component implements OnInit {
 
   shown = 'hover';
 
-
+  public rows: Array<any> = [];
         
   requisiciones = [];
 
@@ -39,12 +39,12 @@ export class Reporte70Component implements OnInit {
     this.GetReporte70();
   }
 
-  public rows: Array<any> = [];
+
   public columns: Array<any> = [
     { title: 'Folio', sorting: 'desc', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
     { title: 'Fecha Solicitud', className: 'text-info text-center', name: 'fch_Solicitud', filtering: { filterString: '', placeholder: 'dd-mm-yyyy' } },
     { title: 'Empresa', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Empresa' } },
-    { title: 'Puesto', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Puesto' } },
+    { width: '4%', title: 'Puesto', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Puesto' } },
     { title: 'Sueldo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo' } },
     { title: 'Estado', className: 'text-info text-center', name: 'estado', filtering: { filterString: '', placeholder: 'Estado' } },
     { title: 'Domicilio Trabajo', className: 'text-info text-center', name: 'domicilio_trabajo', filtering: { filterString: '', placeholder: 'Domicilio Trabajo' } },
@@ -73,7 +73,7 @@ export class Reporte70Component implements OnInit {
 
     this._service.GetReporte70().subscribe(result => {
       this.requisiciones = result;
-      // this.rows = this.requisiciones;
+console.log(this.requisiciones)
       this.onChangeTable(this.config);
     })
   }

@@ -15,7 +15,7 @@
         <table ngClass="{{config.className || ''}}" class="table">
           <thead>
             <tr>
-              <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+              <th *ngFor="let column of columns" ngClass="{{column.className || ''}}"  width="{{column.width}}">
                 <small>{{column.title | uppercase}}</small>
                 <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
                 </i> -->
@@ -37,11 +37,11 @@
                   <td class="text-left">
                     {{row.folio}}
                   </td>
-                  <td> {{row.fch_Solicitud | date:'dd/MM/yyyy'}}</td>
-                  <td> {{row.cliente }}</td>
-                  <td class="text-center"> {{row.vBtra}}</td>
-                  <td class="text-right"> {{row.sueldoMaximo | currency: $}}</td>
-                  <td> {{row.estado }}</td>
+                  <td width="3.2%"> {{row.fch_Solicitud | date:'dd/MM/yyyy'}}</td>
+                  <td class="text-left"> {{row.cliente }}</td>
+                  <td width="5%" class="text-left"> {{row.vBtra}}</td>
+                  <td class="text-left"> {{row.sueldoMaximo | currency: $}}</td>
+                  <td class="text-left"> {{row.estado }}</td>
                   <td> {{row.domicilio_trabajo}}</td>
                   <td>
                     <ng-template #popTemplate>
@@ -59,7 +59,7 @@
                     <span class="text-left" *ngIf="row.reclutadores.length == 1">{{row.reclutadores[0]}}</span>
 
                   </td>
-                  <td> {{row.sucursal }}</td>
+                  <td class="text-left"> {{row.sucursal }}</td>
                   <td class="text-center">
                     <span class="px-1 mr-1 badge badge-pill badge-primary">{{row.vacantes}}</span>
                   </td>
@@ -79,25 +79,35 @@
                     <span class="px-1 mr-1 badge badge-pill badge-warning"> {{row.porcentaje}} % </span>
                   </td>
                   <td class="text-center">
-                    <span class="px-1 mr-1 badge badge-pill badge-warning"> {{row.diasTrans}} % </span>
+                    <span class="px-1 mr-1 badge badge-pill badge-warning"> {{row.diasTrans}}</span>
                   </td>
                   <td>
-                    <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
+                    <small *ngIf="row.estatus.length < 10 else toLengthEstatus" class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
                       [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
                       [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
                       {{row.estatus}}
                     </small>
 
-                    <ng-template #toLength>
+                    <ng-template #toLengthEstatus>
                       <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
                         [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29" [class.badge-success]="row.estatusId  === 7"
-                        [class.badge-danger]="row.estatusId  === 8" placement="bottom" tooltip="{{row.estatus | uppercase}}">
-                      {{row.estatus | slice:0:8 | uppercase }} ...
+                        [class.badge-danger]="row.estatusId  === 8" placement="right" tooltip="{{row.estatus | uppercase}}">
+                      {{row.estatus | slice:0:10 | uppercase }} ...
                       </small>
                     </ng-template>
                   </td>
                   <td>{{row.fch_Modificacion | date:'dd/MM/yyyy'}}</td>
-                  <td> {{row.tipoReclutamiento}}</td>
+                  <td> 
+                    <small *ngIf="row.tipoReclutamiento.length < 10 else toLengthTipoRecl" class="badge badge-pill badge-info">
+                      {{row.tipoReclutamiento}}
+                  </small>
+
+                  <ng-template #toLengthTipoRecl>
+                    <small class="badge badge-pill badge-info" placement="right" tooltip="{{row.tipoReclutamiento | uppercase}}">
+                    {{row.tipoReclutamiento | slice:0:10 | uppercase }} ...
+                    </small>
+                  </ng-template>
+                  </td>
                   <td> {{row.claseReclutamiento}}</td>
                   <td class="text-center">
                     <span *ngIf="row.comentarios_solicitante.length == 0">0</span>
@@ -135,12 +145,11 @@
                   </td>
                   <td class="text-center">
                     <span *ngIf="row.comentarios_coord.length == 0">0</span>
-                    <a *ngIf="row.comentarios_coord.length > 0" [popover]="popTemplateComenSol" #popS="bs-popover" [outsideClick]="true" placement="left"
+                    <a *ngIf="row.comentarios_coord.length > 0" [popover]="popTemplateComenCoord" #popS="bs-popover" [outsideClick]="true" placement="left"
                       container="body">{{row.comentarios_coord.length}}</a>
-                    <ng-template #popTemplateComenSol>
+                    <ng-template #popTemplateComenCoord>
                       <div class="card">
                         <div class="card-body" *ngFor="let r of row.comentarios_coord">
-                          <!-- <h5 class="text-center text-info p-2 bg-light">{{r.fch_Creacion | date: 'dd/MM/yyyy'}}</h5> -->
                           <p class="card-text">{{r}}</p>
                         </div>
                       </div>
