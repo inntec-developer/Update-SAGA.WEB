@@ -32,6 +32,7 @@ export class GraficaVacantesPieComponent implements OnInit {
   ngOnInit() {
     var contenido = document.getElementById('canvas');
     console.log(contenido);
+    
     Chart.defaults.scale.ticks.beginAtZero = true;
     this.Chart = new Chart(contenido, {
       type: 'polarArea',
@@ -48,8 +49,6 @@ export class GraficaVacantesPieComponent implements OnInit {
 
       var label = chartData.labels[idx];
       var value = chartData.datasets[0].data[idx];
-
-      
       alert(value);
     }
   }
