@@ -16,6 +16,12 @@ import { RequisicionesService } from '../../../service';
   providers: [RequisicionesService]
 })
 export class SeguimientoTicketComponent implements OnInit {
+  disabled = false;
+  compact = false;
+  invertX = false;
+  invertY = false;
+
+  shown = 'hover';
 
   fila = [];
   ticket = [];

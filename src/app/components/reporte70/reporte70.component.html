@@ -1,24 +1,17 @@
 <div class="card">
 
-  <div class="card-body mat-elevation-z8">  
+  <div class="card-body mat-elevation-z8">
 
-      <button type="button" class="float-right" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'btn btn-xs disable' : 'btn btn-xs btn-outline-success'"
+    <button type="button" class="float-right" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'btn btn-xs disable' : 'btn btn-xs btn-outline-success'"
       (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Descargar Reporte">
       <i class="fa fa-download"></i>
     </button>
 
-          <ng-scrollbar #scrollableP
-          [trackX]="true"
-          [trackY]="false"
-          [invertX]="invertX"
-          [invertY]="invertY"
-          [compact]="compact"
-          [shown]="shown"
-          [disableOnBreakpoints]="false"
-          [disabled]="disabled"> 
-    
+    <ng-scrollbar #scrollableP [trackX]="true" [trackY]="false" [invertX]="invertX" [invertY]="invertY" [compact]="compact" [shown]="shown"
+      [disableOnBreakpoints]="false" [disabled]="disabled">
 
-            <div style="width: 3000px; height: 350px; overflow: hidden;"> 
+
+      <div style="width: 3000px; height: 350px; overflow: hidden;">
         <table ngClass="{{config.className || ''}}" class="table">
           <thead>
             <tr>
@@ -30,97 +23,102 @@
             </tr>
             <tr *ngIf="showFilterRow">
               <th *ngFor="let column of columns">
-                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                  (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
+                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                  class="form-control form-control-sm" id="{{column.name}}">
               </th>
             </tr>
 
           </thead>
           <tbody>
-              <ng-scrollbar #scrollable
-              [invertX]="invertX"
-              [invertY]="invertY"
-              [trackX]="false"
-              [trackY]="true"
-              [compact]="compact"
-              [shown]="shown"
-              [disableOnBreakpoints]="false"
-              [disabled]="disabled"> 
-         <div>
-            <tr *ngFor="let row of rows" [class.confident]="row.confidencial"
-              [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
-              <td class="text-left">
-                {{row.folio}}
-              </td>
-              <td> {{row.fch_Solicitud | date:'dd/MM/yyyy'}}</td>
-              <td>
-                <ng-template #popTemplate>
-                  <div class="card">
-                    <div class="card-body">
-                      <ul class="list-group list-group-flush">
-                        <li *ngFor="let r of row.reclutadores" class="list-group-item text-muted">{{r}}</li>
-                      </ul>
-                    </div>
-                  </div>
-                </ng-template>
+            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
+              [disableOnBreakpoints]="false" [disabled]="disabled">
+              <div>
+                <tr *ngFor="let row of rows" [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
+                  <td class="text-left">
+                    {{row.folio}}
+                  </td>
+                  <td> {{row.fch_Solicitud | date:'dd/MM/yyyy'}}</td>
+                  <td> {{row.cliente }}</td>
+                  <td class="text-center"> {{row.vBtra}}</td>
+                  <td class="text-right"> {{row.sueldoMaximo | currency: $}}</td>
+                  <td> {{row.estado }}</td>
+                  <td> {{row.domicilio_trabajo}}</td>
+                  <td>
+                    <ng-template #popTemplate>
+                      <div class="card">
+                        <div class="card-body">
+                          <ul class="list-group list-group-flush">
+                            <li *ngFor="let r of row.reclutadores" class="list-group-item text-muted">{{r}}</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </ng-template>
 
-                <span *ngIf="row.reclutadores.length == 0">SIN ASIGNAR</span>
-                <a class="text-center" *ngIf="row.reclutadores.length > 1" [popover]="popTemplate" placement="left"
-                  container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
-                <span class="text-left" *ngIf="row.reclutadores.length == 1">{{row.reclutadores[0]}}</span>
+                    <span *ngIf="row.reclutadores.length == 0">SIN ASIGNAR</span>
+                    <a class="text-center" *ngIf="row.reclutadores.length > 1" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
+                    <span class="text-left" *ngIf="row.reclutadores.length == 1">{{row.reclutadores[0]}}</span>
 
-              </td>
-              <td> {{row.sucursal }}</td>
-              <td> {{row.cliente }}</td>
-              <td> {{row.estado }}</td>
-              <td> {{row.domicilio_trabajo}}</td>
-              <td> {{row.solicita}}</td>
-              <td class="text-center"><span class="px-1 mr-1 badge badge-pill badge-primary">{{row.vacantes}}</span></td>
-              <td class="text-center"><span class="px-1 mr-1 badge badge-pill badge-warning"> {{row.porcentaje}} % </span></td>
-              <td class="text-center"><span class="px-1 mr-1 badge badge-pill badge-info"> {{row.enProcesoEC}}</span></td>
-              <td class="text-center"><span class="px-1 mr-1 badge badge-pill badge-info"> {{row.enProcesoFC}}</span></td>
-              <td class="text-center"><span class="px-1 mr-1 badge badge-pill badge-success"> {{row.contratados}}</span></td>
-              <td class="text-center"> {{row.vBtra}}</td>
-              <td class="text-right"> {{row.sueldoMaximo | currency: $}}</td>
-              <td>
-                <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info"
-                  [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
-                  [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29" [class.badge-success]="row.estatusId  === 7"
-                  [class.badge-danger]="row.estatusId  === 8">
-                  {{row.estatus}}
-                </small>
+                  </td>
+                  <td> {{row.sucursal }}</td>
+                  <td class="text-center">
+                    <span class="px-1 mr-1 badge badge-pill badge-primary">{{row.vacantes}}</span>
+                  </td>
+                  <td class="text-center">
+                    <span class="px-1 mr-1 badge badge-pill badge-info"> {{row.enProcesoEC}}</span>
+                  </td>
+                  <td class="text-center">
+                    <span class="px-1 mr-1 badge badge-pill badge-info"> {{row.enProcesoFC}}</span>
+                  </td>
+                  <td class="text-center">
+                    <span class="px-1 mr-1 badge badge-pill badge-success"> {{row.contratados}}</span>
+                  </td>
+                  <td class="text-center">
+                    <span class="px-1 mr-1 badge badge-pill badge-warning"> {{row.faltantes}}</span>
+                  </td>
+                  <td class="text-center">
+                    <span class="px-1 mr-1 badge badge-pill badge-warning"> {{row.porcentaje}} % </span>
+                  </td>
+                  <td class="text-center">
+                    <span class="px-1 mr-1 badge badge-pill badge-warning"> {{row.diasTrans}} % </span>
+                  </td>
+                  <td>
+                    <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
+                      [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
+                      [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
+                      {{row.estatus}}
+                    </small>
 
-                <ng-template #toLength>
-                  <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
-                    [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
-                    [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8" placement="bottom"
-                    tooltip="{{row.estatus | uppercase}}"> {{row.estatus | slice:0:8 | uppercase }} ...
-                  </small>
-                </ng-template>
-              </td>
-              <td>{{row.fch_Modificacion | date:'dd/MM/yyyy'}}</td>
-              <td> {{row.tipoReclutamiento}}</td>    
-              <td> {{row.claseReclutamiento}}</td>             
-              <td class="text-center"> 
-                <span *ngIf="row.comentarios_solicitante.length == 0">0</span>
-                <a *ngIf="row.comentarios_solicitante.length > 0" [popover]="popTemplateComenSol" #popS="bs-popover" [outsideClick]="true"
-                  placement="left" container="body">{{row.comentarios_solicitante.length}}</a>
-                <ng-template #popTemplateComenSol>
-                  <div class="card">
-                    <div class="card-body" *ngFor="let r of row.comentarios_solicitante">
-                      <!-- <h5 class="text-center text-info p-2 bg-light">{{r.fch_Creacion | date: 'dd/MM/yyyy'}}</h5> -->
-                      <p class="card-text">{{r}}</p>
-                    </div>
-                  </div>
-                </ng-template>
-              </td>  
-              <td class="text-center">
-                  <span *ngIf="row.comentarios_reclutador.length == 0">0</span>
-                  <a *ngIf="row.comentarios_reclutador.length > 0" [popover]="popTemplateComenRecl" #pop="bs-popover" [outsideClick]="true"
-                    placement="left" container="body">{{row.comentarios_reclutador.length}}</a>
-                  <ng-template #popTemplateComenRecl>
-                    <div class="card">
-                      <div class="card-body" *ngFor="let r of row.comentarios_reclutador">
+                    <ng-template #toLength>
+                      <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
+                        [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29" [class.badge-success]="row.estatusId  === 7"
+                        [class.badge-danger]="row.estatusId  === 8" placement="bottom" tooltip="{{row.estatus | uppercase}}">
+                      {{row.estatus | slice:0:8 | uppercase }} ...
+                      </small>
+                    </ng-template>
+                  </td>
+                  <td>{{row.fch_Modificacion | date:'dd/MM/yyyy'}}</td>
+                  <td> {{row.tipoReclutamiento}}</td>
+                  <td> {{row.claseReclutamiento}}</td>
+                  <td class="text-center">
+                    <span *ngIf="row.comentarios_solicitante.length == 0">0</span>
+                    <a *ngIf="row.comentarios_solicitante.length > 0" [popover]="popTemplateComenSol" #popS="bs-popover" [outsideClick]="true"
+                      placement="left" container="body">{{row.comentarios_solicitante.length}}</a>
+                    <ng-template #popTemplateComenSol>
+                      <div class="card">
+                        <div class="card-body" *ngFor="let r of row.comentarios_solicitante">
+                          <!-- <h5 class="text-center text-info p-2 bg-light">{{r.fch_Creacion | date: 'dd/MM/yyyy'}}</h5> -->
+                          <p class="card-text">{{r}}</p>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </td>
+                  <td class="text-center">
+                    <span *ngIf="row.comentarios_reclutador.length == 0">0</span>
+                    <a *ngIf="row.comentarios_reclutador.length > 0" [popover]="popTemplateComenRecl" #pop="bs-popover" [outsideClick]="true"
+                      placement="left" container="body">{{row.comentarios_reclutador.length}}</a>
+                    <ng-template #popTemplateComenRecl>
+                      <div class="card">
+                        <div class="card-body" *ngFor="let r of row.comentarios_reclutador">
                           <ng-scrollbar #scrollableCom [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
                             [disabled]="disabled">
                             <div style="height: 200px;">
@@ -131,31 +129,46 @@
                               </p>
                             </div>
                           </ng-scrollbar>
+                        </div>
                       </div>
-                    </div>
-                  </ng-template>
-              </td>  
-            </tr>
-         
-       
-          </div>
-              </ng-scrollbar>
+                    </ng-template>
+                  </td>
+                  <td class="text-center">
+                    <span *ngIf="row.comentarios_coord.length == 0">0</span>
+                    <a *ngIf="row.comentarios_coord.length > 0" [popover]="popTemplateComenSol" #popS="bs-popover" [outsideClick]="true" placement="left"
+                      container="body">{{row.comentarios_coord.length}}</a>
+                    <ng-template #popTemplateComenSol>
+                      <div class="card">
+                        <div class="card-body" *ngFor="let r of row.comentarios_coord">
+                          <!-- <h5 class="text-center text-info p-2 bg-light">{{r.fch_Creacion | date: 'dd/MM/yyyy'}}</h5> -->
+                          <p class="card-text">{{r}}</p>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </td>
+                  <td> {{row.coordinador}}</td>
+                  <td> {{row.solicita}}</td>
+                </tr>
+
+
+              </div>
+            </ng-scrollbar>
           </tbody>
 
         </table>
- </div>
-         </ng-scrollbar>
+      </div>
+    </ng-scrollbar>
 
-         <br/>
-         <div class="row">
-             <div class="col-md-12 clearfix">
-               <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
-                 [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
-       
-               <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre>
-             </div>
-           </div>
-</div>
+    <br/>
+    <div class="row">
+      <div class="col-md-12 clearfix">
+        <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+          [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
+
+        <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre>
+      </div>
+    </div>
+  </div>
 
 </div>
 <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
@@ -163,9 +176,9 @@
 <ng-template #NotCandidatos>
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12">
-        <alert type="info">
-            <strong>Oops!</strong> A&uacute;n no cuentas con candidatos en proceso / apartados.
-          </alert>
+      <alert type="info">
+        <strong>Oops!</strong> A&uacute;n no cuentas con candidatos en proceso / apartados.
+      </alert>
     </div>
   </div>
 </ng-template>
