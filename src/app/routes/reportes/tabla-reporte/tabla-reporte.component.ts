@@ -48,6 +48,7 @@ export class TablaReporteComponent implements OnInit {
     let coo = document.getElementById('condinacionR');
     let inc = document.getElementById('fechaInicial');
     let fin = document.getElementById('fechaFinal');
+    let ofc = document.getElementById('oficina');
 
 
     var palabra = pal['value'];
@@ -59,8 +60,9 @@ export class TablaReporteComponent implements OnInit {
     var tipocordina = coo['value'];
     var inicio = inc['value'];
     var final = fin['value'];
+    var oficina = ofc['value'];
     
-    this.Servicio.GetInforme(palabra,estatus,null,inicio,final,empresa,solicitante,tiporecluta,tipocordina,estatus,reclutado)
+    this.Servicio.GetInforme(palabra,oficina,null,inicio,final,empresa,solicitante,tiporecluta,tipocordina,estatus,reclutado)
     .subscribe( data => {
     // this.popGenerico(data.mensaje,data.bandera,'Publicacion');
     this.General = data;
