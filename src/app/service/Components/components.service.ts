@@ -34,6 +34,10 @@ export class ComponentsService {
   private UrlGetAllAletStm = ApiConection.ServiceUrl + ApiConection.GetAllAlertStm;
   private UrlDeleteAlertStm = ApiConection.ServiceUrl +ApiConection.DeleteAlertStm;
 
+  // Graficas
+  private UrlGetVacantesInicioPA = ApiConection.ServiceUrl + ApiConection.GraficPAVacantes;
+  private UrlGetRequisicionesGPA = ApiConection.ServiceUrl + ApiConection.GetRequisicionesGPA;
+
   constructor(private _httpClient : HttpClient) { }
 
   getUserGroup() : Observable<any>{
@@ -81,6 +85,17 @@ export class ComponentsService {
     return this._httpClient.get(this.UrlDeleteAlertStm, {params: params});
   }
 
+  getGraficaVPA(data: any) : Observable<any>{
+    let params = new HttpParams().set('UsuarioId', data);
+    return this._httpClient.get(this.UrlGetVacantesInicioPA, {params: params})
+    .map(result => result);
+  }
+
+  getRequiGraficaPA(estado:any, usuarioId: any) : Observable<any>{
+    let params = new HttpParams().set('estado', estado).set('usuarioId', usuarioId);
+    return this._httpClient.get(this.UrlGetRequisicionesGPA, {params: params})
+    .map(result => result);
+  }
   //Muestra un error en consola y regresa el mismo al Frond-End en caso de que se genere el mismo.
   public handleError(error: any ){
     console.log('Error Internar Server', error);
@@ -89,5 +104,7 @@ export class ComponentsService {
     }
     return Observable.throw(error || 'Back-End server error');
   }
+
+
 
 }

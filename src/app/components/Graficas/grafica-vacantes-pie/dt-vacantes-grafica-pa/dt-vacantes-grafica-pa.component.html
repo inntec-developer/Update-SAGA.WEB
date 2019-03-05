@@ -1,0 +1,105 @@
+<div class="card media">
+  <div class="card-body mat-elevation-z8">
+    <div class="row" #tableContainer>
+      <div class="col-sm-12 col-md-12 table-responsive clearfix">
+        <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
+          <thead>
+            <tr>
+              <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+                <small>{{column.title | uppercase}}</small>
+                <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
+                </i>
+              </th>
+              <th class="text-muted text-center">
+                <small>ASIGNADA A</small>
+              </th>
+            </tr>
+            <tr *ngIf="showFilterRow">
+              <th *ngFor="let column of columns">
+                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
+                  (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
+              </th>
+              <th>
+                <input class="form-control form-control-sm" placeholder="Asignada a" [disabled]="true">
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+              [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+              <div>
+                <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial"
+                  [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
+                  <td class="text-center">
+                    {{row.folio}}
+                  </td>
+                  <td> {{row.cliente | uppercase}}</td>
+                  <td class="text-center"> {{row.vBtra | uppercase}}</td>
+                  <td class="text-center">
+                    <span class="px-1 mr-1  badge  badge-pill badge-info"> {{row.vacantes}}</span>
+                  </td>
+                  <td class="text-center"> {{row.tipoReclutamiento}}</td>
+                  <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
+                  <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
+                  <td class="text-center">
+                    <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info"
+                      [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
+                      [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29" [class.badge-success]="row.estatusId  === 7"
+                      [class.badge-danger]="row.estatusId  === 8">
+                      {{row.estatus | uppercase}}
+                    </small>
+
+                    <ng-template #toLength>
+                      <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
+                        [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
+                        [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8"
+                        placement="bottom" tooltip="{{row.estatus | uppercase}}"> {{row.estatus | slice:0:8 | uppercase
+                        }} ...
+                      </small>
+                    </ng-template>
+                  </td>
+                  <td class="text-center">
+                    <small class="badge badge-pill" [class.badge-danger]="row.prioridadId  === 1" [class.badge-warning]="row.prioridadId  === 2">
+                      {{row.prioridad}}
+                    </small>
+                  </td>
+                  <td> {{row.propietario }}</td>
+                  <td class="text-center">
+                    <ng-template #popTemplate>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="popover-body">
+                            <ul *ngFor="let r of row.reclutadores">
+                              <li class="text-muted">{{r.reclutador}}</li>
+                            </ul>
+
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+
+                    <span class="text-center" *ngIf="row.reclutadores.length == 0">{{row.propietario}}</span>
+                    <a class="text-center" *ngIf="row.reclutadores.length > 1" [popover]="popTemplate" placement="left"
+                      container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
+                    <span class="text-center" *ngIf="row.reclutadores.length == 1">{{row.reclutadores[0].reclutador}}</span>
+
+                  </td>
+                </tr>
+              </div>
+            </ng-scrollbar>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12 clearfix">
+        <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
+          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
+          (numPages)="numPages = $event"></pagination>
+
+        <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre>
+      </div>
+    </div>
+  </div>
+</div>

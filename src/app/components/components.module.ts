@@ -106,6 +106,7 @@ import { DtRequisicionComponent } from './tablas/dt-requisicion/dt-requisicion.c
 import { DtRequisicionReclPuroComponent } from './tablas/dt-requisicion-recl-puro/dt-requisicion-recl-puro.component';
 import { DtRutasCamionRequiComponent } from './tablas/dt-rutas-camion-requi/dt-rutas-camion-requi.component';
 import { DtTelefonosComponent } from './tablas/dt-telefonos/dt-telefonos.component';
+import { DtVacantesGraficaPAComponent } from './Graficas/grafica-vacantes-pie/dt-vacantes-grafica-pa/dt-vacantes-grafica-pa.component';
 import { EditarCandidatoEstatusComponent } from './editar-candidato-estatus/editar-candidato-estatus.component';
 import { EditarContratadosComponent } from './editar-contratados/editar-contratados.component';
 import { EditarRequiEstatusComponent } from './editar-requi-estatus/editar-requi-estatus.component';
@@ -261,7 +262,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DlgFacturaPuroComponent,
     RequisicionNuevaPuroComponent,
     Reporte70Component,
-    GraficaVacantesPieComponent
+    GraficaVacantesPieComponent,
+    DtVacantesGraficaPAComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -329,7 +331,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     FileManagerComponent,
     DlgAsignarPerfilComponent,
     Reporte70Component,
-    GraficaVacantesPieComponent
+    GraficaVacantesPieComponent,
+    DtVacantesGraficaPAComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

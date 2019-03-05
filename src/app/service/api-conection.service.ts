@@ -265,4 +265,7 @@ export class ApiConection {
   public static GetTicketEnAtencion = 'SistTickets/getTicketEnAtencion'
   public static GetVacantes = 'SistTickets/getVacantes'
 
+  /* Componentes de Graficas */
+  public static GraficPAVacantes = 'Graficas/vacantesInicio';
+  public static GetRequisicionesGPA = 'Graficas/getRequisicionesGPA'
 }
