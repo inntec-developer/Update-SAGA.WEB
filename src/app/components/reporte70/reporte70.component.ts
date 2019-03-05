@@ -1,14 +1,14 @@
 
 import { RequisicionesService } from './../../service/requisiciones/requisiciones.service';
 import { Component, OnInit } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { DatePipe } from '@angular/common';
 import { ExcelService } from '../../service/ExcelService/excel.service';
 
 @Component({
   selector: 'app-reporte70',
   templateUrl: './reporte70.component.html',
-  styleUrls: ['./reporte70.component.scss']
+  styleUrls: ['./reporte70.component.scss'],
+  providers:[RequisicionesService, DatePipe]
 })
 export class Reporte70Component implements OnInit {
 
@@ -20,7 +20,7 @@ export class Reporte70Component implements OnInit {
 
   shown = 'hover';
 
-
+  public rows: Array<any> = [];
         
   requisiciones = [];
 
@@ -33,36 +33,39 @@ export class Reporte70Component implements OnInit {
 
   registros: any;
   showFilterRow: boolean;
-  constructor(private _service: RequisicionesService, private pipe: DatePipe, private excelService: ExcelService, private spinner: NgxSpinnerService) { }
+  constructor(private _service: RequisicionesService, private pipe: DatePipe, private excelService: ExcelService) { }
 
   ngOnInit() {
-    this.spinner.show();
     this.GetReporte70();
   }
 
-  public rows: Array<any> = [];
+
   public columns: Array<any> = [
     { title: 'Folio', sorting: 'desc', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
     { title: 'Fecha Solicitud', className: 'text-info text-center', name: 'fch_Solicitud', filtering: { filterString: '', placeholder: 'dd-mm-yyyy' } },
-    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores', filtering: { filterString: '', placeholder: 'dd-mm-yyyy' } },
-    { title: 'Sucursal', className: 'text-info text-center', name: 'sucursal', filtering: { filterString: '', placeholder: 'Sucursal' } },
     { title: 'Empresa', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Empresa' } },
+    { width: '4%', title: 'Puesto', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Puesto' } },
+    { title: 'Sueldo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo' } },
     { title: 'Estado', className: 'text-info text-center', name: 'estado', filtering: { filterString: '', placeholder: 'Estado' } },
     { title: 'Domicilio Trabajo', className: 'text-info text-center', name: 'domicilio_trabajo', filtering: { filterString: '', placeholder: 'Domicilio Trabajo' } },
-    { title: 'Solicita', className: 'text-info text-center', name: 'solicita', filtering: { filterString: '', placeholder: 'Solicita' } },
+    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador' } },
+    { title: 'Sucursal', className: 'text-info text-center', name: 'sucursal', filtering: { filterString: '', placeholder: 'Sucursal' } },
     { title: 'No.', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' } },
-    { title: 'Avance', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'Avance' } },
     { title: 'Enviado', className: 'text-info text-center', name: 'enProcesoEC', filtering: { filterString: '', placeholder: 'Enviado' } },
     { title: 'Aceptado', className: 'text-info text-center', name: 'enProcesoFC', filtering: { filterString: '', placeholder: 'Aceptado' } },
     { title: 'Contratados', className: 'text-info text-center', name: 'contratados', filtering: { filterString: '', placeholder: 'Contratados' } },
-    { title: 'Puesto', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Puesto' } },
-    { title: 'Sueldo Final', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo' } },
+    { title: 'Vacantes Faltantes', className: 'text-info text-center', name: 'faltantes', filtering: { filterString: '', placeholder: 'Vac. faltantes' } },
+    { title: 'Avance', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'Avance' } },
+    { title: 'Dias Transcurridos', className: 'text-info text-center', name: 'diasTrans', filtering: { filterString: '', placeholder: 'Dias' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
     { title: 'Fecha Estatus', className: 'text-info text-center', name: 'fch_Modificacion', filtering: { filterString: '', placeholder: 'dd-mm-yyyy' } },
     { title: 'Tipo Reclutamiento', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo reclutamiento' } },
     { title: 'Coordinación', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Coordinación' } },
     { title: 'Com. Sol.', className: 'text-info text-center', name: 'comentarios_solicitante' },
-    { title: 'Com. Recl.', className: 'text-info text-center', name: 'comentarios_reclutador' }     
+    { title: 'Com. Recl.', className: 'text-info text-center', name: 'comentarios_reclutador' },
+    { title: 'Com. Coord.', className: 'text-info text-center', name: 'comentarios_coord' },
+    { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador', filtering: { filterString: '', placeholder: 'Coordinador' } },
+    { title: 'Solicita', className: 'text-info text-center', name: 'solicita', filtering: { filterString: '', placeholder: 'Solicita' } }
   ];
 
   GetReporte70()
@@ -70,7 +73,7 @@ export class Reporte70Component implements OnInit {
 
     this._service.GetReporte70().subscribe(result => {
       this.requisiciones = result;
-      // this.rows = this.requisiciones;
+console.log(this.requisiciones)
       this.onChangeTable(this.config);
     })
   }
@@ -220,8 +223,6 @@ export class Reporte70Component implements OnInit {
     let sortedData = this.changeSort(filteredData, this.config);
     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
     this.length = sortedData.length;
-
-    this.spinner.hide();
   }
 
   public refreshTable() {
@@ -251,11 +252,16 @@ export class Reporte70Component implements OnInit {
       var comentariosSol = "";
       var comentariosRecl = "";
       var reclutador = "";
+      var fecha = "";
       this.requisiciones.forEach(row => {
+        console.log(row)
         if(row.comentarios_solicitante.length > 0)
         {
           row.comentarios_solicitante.forEach(element => {
-             let fecha =  this.pipe.transform(new Date(element.fch_Creacion), 'yyyy-MM-dd');
+            if(element.fch_Creacion != null)
+            {
+              fecha =  this.pipe.transform(new Date(element.fch_Creacion), 'yyyy-MM-dd');
+            }          
               comentariosSol = comentariosSol + fecha + ' ' + element.comentario + '\n'
             });
           
@@ -268,7 +274,11 @@ export class Reporte70Component implements OnInit {
         {
           row.comentarios_reclutador.forEach(element => {
             element.comentario.forEach(el => {
-              let fecha =  this.pipe.transform(new Date(el.fch_Creacion), 'yyyy-MM-dd');
+              if(element.fch_Creacion != null)
+            {
+              fecha =  this.pipe.transform(new Date(element.fch_Creacion), 'yyyy-MM-dd');
+            }    
+
               comentariosRecl = comentariosRecl + fecha + ' ' + el.comentario + '\n'
             });
             comentariosRecl = element.reclutador + '\n' + comentariosRecl + '\n';
@@ -293,7 +303,15 @@ export class Reporte70Component implements OnInit {
         {
           reclutador = row.reclutadores[0].reclutador;
         }
+
+        if(row.fch_Solicitud != null)
+        {
         var d = this.pipe.transform(new Date(row.fch_Solicitud), 'yyyy-MM-dd');
+        }
+        else
+        {
+          var d = this.pipe.transform( new Date(), 'yyyy-MM-dd');
+        }
 
         if(row.fch_Modificacion != null)
         {
@@ -337,7 +355,7 @@ export class Reporte70Component implements OnInit {
 
       //   })
       // })
-      this.excelService.exportAsExcelFile(aux, 'Reporte70');
+      this.excelService.exportAsExcelFile(aux, 'ReporteGeneral');
 
     }
   }

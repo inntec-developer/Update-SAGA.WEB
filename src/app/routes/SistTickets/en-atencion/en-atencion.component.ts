@@ -7,12 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./en-atencion.component.scss']
 })
 export class EnAtencionComponent implements OnInit {
-  turnos: any = [];
+ turnos: any = [];
 
-  constructor(private _service: SistTicketsService) { }
+  constructor(private _service: SistTicketsService) {
+    setInterval(() => this.GetTicketEnAtencion(), 2000);
+   }
 
   ngOnInit() {
     this.GetTicketEnAtencion();
+
   }
 
   GetTicketEnAtencion()
@@ -20,6 +23,7 @@ export class EnAtencionComponent implements OnInit {
     this._service.GetTicketEnAtencion().subscribe(data => {
       this.turnos = data;
       console.log(this.turnos)
+      
     })
 
   }
