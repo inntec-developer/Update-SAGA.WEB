@@ -23,6 +23,7 @@ export class TablaReporteComponent implements OnInit {
   constructor(
     private Servicio: ReportesService,
     private Exel: ExcelService,
+    private spinner: NgxSpinnerService
 //    private pipe:DatePipe
   ) { }
 
@@ -38,7 +39,7 @@ export class TablaReporteComponent implements OnInit {
 
   Generar(){
 
-    debugger
+    this.spinner.show();
     let pal = document.getElementById('palabra');
     let est = document.getElementById('estatusR');
     let rec = document.getElementById('reclutadorR');
@@ -66,6 +67,7 @@ export class TablaReporteComponent implements OnInit {
     .subscribe( data => {
     // this.popGenerico(data.mensaje,data.bandera,'Publicacion');
     this.General = data;
+    this.spinner.hide();
     console.log(this.General)
     });
   }

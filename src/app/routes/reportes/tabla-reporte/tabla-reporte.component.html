@@ -7,6 +7,7 @@
     <tr>
       <th scope="col">Folio</th>
       <th scope="col">Vacante</th>
+      <th scope="col">Porcentaje %</th>
       <th scope="col">Fecha alta</th>
       <th scope="col">Fecha limite</th>
       <th scope="col">Empresa</th>
@@ -20,6 +21,7 @@
     <tr *ngFor="let item of General">
       <th scope="row">{{item.folio}}</th>
       <td>{{item.vBtra}}</td>
+      <td>{{item.porcentaje}}%</td>
       <td>{{this.convertDateTime(item.fch_Creacion)}}</td>
       <td>{{this.convertDateTime(item.fch_Limite)}}</td>
       <td>{{item.empresa}}</td>
