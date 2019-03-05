@@ -1,0 +1,92 @@
+<div class="card-body mat-elevation-z8">
+  <div class="row" *ngIf="Liberar">
+    <div class="col-sm-12 col-md-12 clearfix p-3 bg-light">
+      <button [disabled]="!candidatos" [ngClass]="!candidatos ? 'mr-1 btn disabled':' btn-outline-danger'" container="body" class="mr-1 btn btn-xs"
+        placement="bottom" tooltip="Desapartar" (click)="openDialogLiberar()">
+        <em class="fa fa-thumbs-o-down"></em>
+      </button>
+    </div>
+  </div>
+  <div class="row" #tableContainer>
+    <div class="col-sm-12 col-md-12 table-responsive clearfix">
+      <div>
+        <pre class="card-block float-right">Registros: {{rows.length}}</pre>
+      </div>
+      <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
+        <thead>
+          <tr>
+            <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+              <small>{{column.title | uppercase}}</small>
+              <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
+              </i>
+            </th>
+          </tr>
+          <tr *ngIf="showFilterRow">
+            <th *ngFor="let column of columns">
+              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
+                (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact"
+            [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+            <div>
+              <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of dataSource"
+                [class.selected]="row.selected">
+                <td class="text-center"> {{row.nombre}} {{row.apellidoPaterno }} {{row.apellidoMaterno}}</td>
+                <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
+                <td class="text-center"> {{row.curp | uppercase }}</td>
+                <td class="text-center"> {{row.rfc | uppercase }}</td>
+                <td class="text-center"> {{row.nss | uppercase }}</td>
+                <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength" class='px-1 mr-1 badge badge-pill badge-info'
+                    [class.badge-warning]="row.estatusId === 42" [class.badge-danger]="row.estatusId == 28">
+                    <span *ngIf="row.estatusId != 28"> {{row.estatus | uppercase }}</span>
+                  </span></td>
+                <ng-template #toLength>
+                  <span class='px-1 mr-1 badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42"
+                    [class.badge-danger]="row.estatusId == 28" placement="bottom" tooltip="{{row.estatus | uppercase}}"
+                    container="body">{{row.estatus | slice:0:6 | uppercase }} ... </span>
+                </ng-template>
+              </tr>
+            </div>
+          </ng-scrollbar>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br />
+  <div class="row">
+    <div class="col-md-12 clearfix">
+      <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
+        [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
+        (numPages)="numPages = $event"></pagination>
+
+      <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}</small></pre>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div *ngIf="dlgLiberar" bsModal #modallib="bs-modal" [config]="{show: true, ignoreBackdropClick: true, keyboard: false}"
+  class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name2">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+      <h4 id="dialog-sizes-name1" class="modal-title pull-left">Informaci&oacute;n de la Vacante</h4>
+      <button type="button" class="close pull-right" (click)="modallib.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div> -->
+      <div class="modal-body">
+        <app-dialog-liberar-candidato [objLiberar]="objLiberar" (close)="onClose($event)"></app-dialog-liberar-candidato>
+      </div>
+      <!-- <div class="modal-footer">
+      <button type="button" class="md-1 btn btn-outline-success" (click)="modallib.hide()">Cerrar</button>
+    </div> -->
+    </div>
+  </div>
+</div>

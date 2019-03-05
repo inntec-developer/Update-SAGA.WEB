@@ -2,6 +2,9 @@
   <div class="card-body mat-elevation-z8">
     <div class="row" #tableContainer>
       <div class="col-sm-12 col-md-12 table-responsive clearfix">
+        <div>
+          <pre class="card-block float-right">Registros: {{rows.length}}</pre>
+        </div>
         <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
           <thead>
             <tr>
@@ -28,7 +31,7 @@
             <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
               [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
               <div>
-                <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial"
+                <tr *ngFor="let row of rows" [class.confident]="row.confidencial"
                   [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
                   <td class="text-center">
                     {{row.folio}}
@@ -98,7 +101,7 @@
           [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
           (numPages)="numPages = $event"></pagination>
 
-        <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre>
+        <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}</small></pre>
       </div>
     </div>
   </div>

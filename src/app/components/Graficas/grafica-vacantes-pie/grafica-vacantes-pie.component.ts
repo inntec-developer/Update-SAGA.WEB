@@ -57,27 +57,9 @@ export class GraficaVacantesPieComponent implements OnInit {
     if (ActivatEvent[0]) {
       var chartData = ActivatEvent[0]['_chart'].config.data;
       var idx = ActivatEvent[0]['_index'];
-
       this.EstadoVacante = chartData.labels[idx];
       this.NumeroVacantes = chartData.datasets[0].data[idx];
       this.ShowModal = true;
-      switch(this.EstadoVacante){
-        case 'Activas':{
-          console.log(this.EstadoVacante + ': '+ this.NumeroVacantes);
-          break;
-        }
-        case 'Por Vencer': {
-          console.log(this.EstadoVacante + ': '+ this.NumeroVacantes);
-          break;
-        }
-        case 'Vencidas':{
-          console.log(this.EstadoVacante + ': '+ this.NumeroVacantes);
-          break;
-        }
-        default:{
-          break;
-        }
-      }
     }
   }
 }

@@ -57,6 +57,7 @@ export class DtRequisicionComponent implements OnInit {
   //
   view: boolean = false;
   coment: boolean = false;
+  candidatos: boolean = true;
 
   // Estatus
   nbc = true; //nueva busqueda candidato
@@ -136,6 +137,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cancelar = false;
       this.borrar = false;
       this.editar = false;
+      this.candidatos = true;
     }
     else if(estatusId == 1 || estatusId == 4 || estatusId == 46)
     {
@@ -147,6 +149,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cancelar = false;
       this.borrar = false;
       this.editar = false;
+      this.candidatos = true;
 
     }
     else if(estatusId == 8) //cancelada
@@ -159,6 +162,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cancelar = true;
       this.borrar = false;
       this.editar = true;
+      this.candidatos = true;
     }
     else if( estatusId < 34 && estatusId != 8 && this.element.enProceso > 0 && this.element.contratados == 0)
     {
@@ -170,6 +174,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cancelar = false;
       this.borrar = true;
       this.editar = true;
+      this.candidatos = true;
     }
     else if( estatusId < 34 && estatusId != 8 && this.element.postulados > 0 && this.element.contratados == 0)
     {
@@ -181,6 +186,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cancelar = false;
       this.borrar = true;
       this.editar = true
+
     }
     else if(estatusId < 34 && estatusId != 8 && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes )
     {
@@ -192,6 +198,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cancelar = true;
       this.borrar = true;
       this.editar = true;
+      this.candidatos = false;
     }
     else if(estatusId < 34 && estatusId != 8 && this.element.vacantes > 0 && ( this.element.contratados > 0  && this.element.contratados < this.element.vacantes ) )
     {
@@ -203,6 +210,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cancelar = true;
       this.borrar = true;
       this.editar = true;
+      this.candidatos = false;
     }
     else if( estatusId < 34 && estatusId != 8 && (this.element.enProceso == 0 || this.element.postulados == 0))
     {
@@ -214,6 +222,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cancelar = false;
       this.borrar = true;
       this.editar = true;
+      this.candidatos = false;
     }
     else if(estatusId >= 34 && estatusId < 37 && this.element.tipoReclutamientoId == 1 && this.element.vacantes > 0)
     {
@@ -225,6 +234,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cancelar = true;
       this.borrar = true;
       this.editar = true;
+      this.candidatos = false;
     }
     else if(estatusId >= 34 && estatusId <= 37 && this.element.tipoReclutamientoId > 1 && this.element.vacantes > 0)
     {
@@ -236,6 +246,8 @@ export class DtRequisicionComponent implements OnInit {
       this.cancelar = true;
       this.borrar = true;
       this.editar = true;
+      this.candidatos = true;
+      this.candidatos = false;
     }
     // else if( estatusId > 34 && estatusId <= 37 && this.element.vacantes > 0)
     // {
@@ -258,6 +270,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cancelar = true;
       this.borrar = true;
       this.editar = true;
+      this.candidatos = false;
     }
     else if(estatusId == 38 && this.element.vacantes > 0 && this.element.contratados > 0 && this.element.contratados <= this.element.vacantes)
     {
@@ -269,6 +282,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cancelar = false;
       this.borrar = true;
       this.editar = true;
+      this.candidatos = false;
     }
     else if(estatusId == 46 || estatusId == 44 || estatusId == 43 )
     {
@@ -280,6 +294,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cancelar = false;
       this.borrar = false;
       this.editar = false;
+      this.candidatos = true;
     }
     else
     {
@@ -291,6 +306,7 @@ export class DtRequisicionComponent implements OnInit {
       this.cancelar = true;
       this.borrar = true;
       this.editar = true;
+      this.candidatos = true;
     }
    
   }
@@ -443,6 +459,7 @@ export class DtRequisicionComponent implements OnInit {
     this.editar = true;
     this.view = false;
     this.coment = false;
+    this.candidatos = true;
   }
 
 

@@ -38,6 +38,9 @@ export class ComponentsService {
   private UrlGetVacantesInicioPA = ApiConection.ServiceUrl + ApiConection.GraficPAVacantes;
   private UrlGetRequisicionesGPA = ApiConection.ServiceUrl + ApiConection.GetRequisicionesGPA;
 
+  //Candidatos
+  private UrlGetRPTCandidatoVacante = ApiConection.ServiceUrl + ApiConection.GetRepoteCandidatos;
+
   constructor(private _httpClient : HttpClient) { }
 
   getUserGroup() : Observable<any>{
@@ -94,6 +97,12 @@ export class ComponentsService {
   getRequiGraficaPA(estado:any, usuarioId: any) : Observable<any>{
     let params = new HttpParams().set('estado', estado).set('usuarioId', usuarioId);
     return this._httpClient.get(this.UrlGetRequisicionesGPA, {params: params})
+    .map(result => result);
+  }
+
+  getRPTCandVacante(vacateId: any) : Observable<any>{
+    let params = new HttpParams().set('VacanteId', vacateId);
+    return this._httpClient.get(this.UrlGetRPTCandidatoVacante, {params: params})
     .map(result => result);
   }
   //Muestra un error en consola y regresa el mismo al Frond-End en caso de que se genere el mismo.

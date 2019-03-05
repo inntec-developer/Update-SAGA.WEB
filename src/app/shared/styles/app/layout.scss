@@ -107,7 +107,7 @@ body {
         height: $footer-hg - 45;
         border-top: 1px solid $gray-light;
         padding: $content-padding $content-padding - 10;
-        z-index: $z-index-main-section + 1000;
+        z-index: $z-index-main-section;
         background-color: $content-heading-bg;
         font-size: .875rem;
         p {

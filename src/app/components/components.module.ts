@@ -125,6 +125,7 @@ import { PrestacionesClienteComponent } from './tablas/prestaciones-cliente/pres
 import { PrestacionesLeyComponent } from './tablas/prestaciones-ley/prestaciones-ley.component';
 import { ProcesosComponent } from './tablas/procesos/procesos.component';
 import { Reporte70Component } from './reporte70/reporte70.component';
+import { ReporteCandidatosComponent } from './tablas/reporte-candidatos/reporte-candidatos.component';
 import { RequisicionNuevaPuroComponent } from './requisicion-nueva-puro/requisicion-nueva-puro.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SharedModule } from '../shared/shared.module';
@@ -263,7 +264,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     RequisicionNuevaPuroComponent,
     Reporte70Component,
     GraficaVacantesPieComponent,
-    DtVacantesGraficaPAComponent
+    DtVacantesGraficaPAComponent,
+    ReporteCandidatosComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -332,7 +334,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DlgAsignarPerfilComponent,
     Reporte70Component,
     GraficaVacantesPieComponent,
-    DtVacantesGraficaPAComponent
+    DtVacantesGraficaPAComponent,
+    ReporteCandidatosComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

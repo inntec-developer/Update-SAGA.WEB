@@ -96,6 +96,7 @@ export class ApiConection {
   public static SendEmailRequiPuro = 'Requisiciones/sendEmailRequiPura';
   public static AddDatosFactura = 'Requisiciones/insertDtosFactura';
   public static GetReporte70 = 'Requisiciones/getReporte70';
+  public static GetRepoteCandidatos = 'Candidatos/getRPTCandidatosVacante'
 
   /* Clientes / Prospectos */
   public static GetProspectos = "Directorio/getProspectos";
