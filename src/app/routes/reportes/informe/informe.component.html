@@ -1,7 +1,7 @@
 <p>
   Reportes
 </p>
-
+<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
 <div class="row">
   <div class="col-xl-12">
       <div class="form-group busqueda">
@@ -33,10 +33,11 @@
         <div class="col-xl-12">
             <div class="form-group">
               <label for="sel1">Sucursal:</label>
-              <select class="form-control" id="sel1">
-                <option>Guadalajara</option>
-                <option>México</option>
-                <option>Monterrey</option>
+              <select class="form-control" id="oficina">
+                  <option value="0">Todas las sucursales</option>
+                <option value="1">Guadalajara</option>
+                <option value="2">México</option>
+                <option value="3">Monterrey</option>
               </select>
             </div>
           </div>
@@ -80,7 +81,7 @@
                   <div class="form-group">
                     <label for="empresaR">Empresa:</label>
                     <select  class="form-control" id="empresaR">
-                        <option selected value="0">Seleccione una empresa</option>
+                        <option selected value="0">Todas las empresas</option>
                       <option value="{{item.id}}" *ngFor="let item of Empresas">{{item.razonSocial}}</option>
                     </select>
                   </div>
@@ -91,7 +92,7 @@
                   <div class="form-group">
                     <label for="solicitanteR">Solicitante:</label>
                     <select  class="form-control" id="solicitanteR">
-                        <option value="0">Seleccione a quien solicita</option>
+                        <option value="0">Todos los solicitantes</option>
                         <option value="{{item.usuario}}" *ngFor="let item of Usuario">{{item.nombre}}</option>
                       </select>
                   </div>
@@ -102,6 +103,7 @@
                     <div class="form-group">
                       <label for="tiporeclutaR">Tipo  Reclutamiento:</label>
                       <select class="form-control" id="tiporeclutaR">
+                        <option value="0">Todos los reclutamientos</option>
                         <option value="1">Reclutamiento Puro</option>
                         <option value="2">Subcontratación</option>
                       </select>
@@ -113,6 +115,7 @@
                       <div class="form-group">
                         <label for="condinacionR">Tipo Coordinación:</label>
                         <select class="form-control" id="condinacionR">
+                            <option value="0">Todas las coordinaciones</option>
                           <option value="1">Especializado</option>
                           <option value="2">Operativo</option>
                           
@@ -127,7 +130,7 @@
                         <div class="form-group">
                           <label for="sel1">Estatus:</label>
                           <select  class="form-control" id="estatusR">
-                              <option value="0">Seleccione un estatus</option>
+                              <option value="0">Todos los estatus</option>
                               <option value="{{item.id}}" *ngFor="let item of Estatus">{{item.descripcion}}</option>
                             </select>
                         </div>
@@ -138,7 +141,7 @@
                         <div class="form-group">
                           <label for="sel2">Reclutador:</label>
                           <select class="form-control" id="reclutadorR">
-                              <option value="0">Seleccione al reclutador</option>
+                              <option value="0">Todos los reclutadores</option>
                               <option value="{{item.Id}}" *ngFor="let item of Usuario">{{item.nombre}}</option>
                           </select>
                         </div>
