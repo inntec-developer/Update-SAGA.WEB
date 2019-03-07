@@ -83,6 +83,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   clearFilter: boolean = false;
   pds: boolean = true;
   numeroVacantes: any;
+  procesoCandidato: boolean = false;
 
 
   constructor(
@@ -865,7 +866,12 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   }
 
   seguimientoRequi() {
-    if (this.numeroVacantes != 0) {
+
+    if (this.numeroVacantes != 0 && sessionStorage.getItem('tipoUsuario') == '4')
+    {
+      this.procesoCandidato = true;
+    }
+    else if(this.numeroVacantes != 0 ){
       this._Router.navigate(['/reclutamiento/gestionVacante', this.id, this.folio, this.vBtra, this.clienteId, this.enProceso, this.estatusId], { skipLocationChange: true });
     } else {
       swal('Ops...!', 'Esta vacante no cuenta con posiciones disponibles esta en 0, cambie el número de vacantes disponibles.', 'error');

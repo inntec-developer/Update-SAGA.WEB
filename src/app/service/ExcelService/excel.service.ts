@@ -16,29 +16,19 @@ export class ExcelService {
 
   public exportAsExcelFile(json: any, excelFileName: string): void {
 
-    
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+    let cols = Object.keys(json[0])
+    var wscols = [];
 
-    var wscols = [
-      {wch: 40},
-      {wch: 40}, // "characters"
-      {wch: 40}, // "characters"
-      {wch: 40}, // "characters"
-      {wch: 40}, // "characters"
-      {wch: 40}, // "characters"
-      {wch: 40}, // "characters"
-      {wch: 40}, // "characters"
-      {wch: 40}, // "characters"
-      {wch: 40}, // "characters"
-      {wch: 40}, // "characters"      
-      {wch: 40}, // "characters"
-      {wch: 40}, // "characters"      
-      {wch: 40} // "characters"      
+    cols.forEach(element => {
+      wscols.push({wch:50})
+    });
+   
 
-
-    ];
 
     worksheet['!cols'] = wscols;
+
+    
     var workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "hoja1");
     //const workbook: XLSX.WorkBook = { Sheets: { 'hoja1': worksheet }, SheetNames: ['hoja1'] };

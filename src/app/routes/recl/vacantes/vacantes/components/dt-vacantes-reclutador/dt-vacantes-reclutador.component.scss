@@ -12,6 +12,7 @@ tbody tr {
   display: table;
   width: 100%;
   table-layout: fixed;
+  font-size: 12px;
 }
 
 table thead {
@@ -23,12 +24,19 @@ table {
 }
 
 tbody tr:hover {
-  font-size: 14.5px;
+  font-size: 12.5px;
   box-shadow: 1px 20px 60px rgba(0, 0, 0, .23);
 }
 
-.margen {
-  margin: 0 2px;
+table tbody tr td .fontMio
+{
+    font-family: 'Lato', sans-serif;
+  font-size: 12px;
+}
+
+.badge
+{
+  font-size: 10px;
 }
 
 .modal-lg {

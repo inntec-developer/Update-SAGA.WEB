@@ -130,6 +130,7 @@ import { RequisicionNuevaPuroComponent } from './requisicion-nueva-puro/requisic
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SharedModule } from '../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { CandidatosEnProcesoComponent } from './candidatos-en-proceso/candidatos-en-proceso.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -265,7 +266,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     Reporte70Component,
     GraficaVacantesPieComponent,
     DtVacantesGraficaPAComponent,
-    ReporteCandidatosComponent
+    ReporteCandidatosComponent,
+    CandidatosEnProcesoComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -335,7 +337,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     Reporte70Component,
     GraficaVacantesPieComponent,
     DtVacantesGraficaPAComponent,
-    ReporteCandidatosComponent
+    ReporteCandidatosComponent,
+    CandidatosEnProcesoComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

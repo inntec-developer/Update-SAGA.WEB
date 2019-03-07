@@ -82,10 +82,10 @@
           tooltip="Visualizar vacantes en pausa">
           <i class="fa fa-clock-o"></i>
         </button>
-        <button id='special' chkPrivilegiosButtons type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-warning'"
+        <!-- <button id='special' chkPrivilegiosButtons type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-warning'"
           (click)="reporte70=true;" container="body" placement="bottom" tooltip="Reporte 70">
           <i class="fa fa-file-text-o"></i>
-        </button>
+        </button> -->
         <button class="mr-1" type="button" [disabled]="dataSource.length == 0" [ngClass]="dataSource.length == 0 ? 'btn disable' : 'btn btn-outline-success'"
           (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
           <i class="fa fa-download"></i>
@@ -127,17 +127,17 @@
             </tr>
             <tr *ngIf="showFilterRow">
               <th *ngFor="let column of columns">
-                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                  (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
+                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                  class="form-control form-control-sm" id="{{column.name}}">
               </th>
             </tr>
           </thead>
           <tbody>
-            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-              [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
+              [disableOnBreakpoints]="false" [disabled]="disabled">
               <div>
-                <tr (click)="onCellClick(row)" (dblclick)="seguimientoRequi()" *ngFor="let row of rows"
-                  [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
+                <tr (click)="onCellClick(row)" (dblclick)="seguimientoRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial"
+                  [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
                   <td class="text-center">
                     {{row.folio}}
                   </td>
@@ -145,8 +145,7 @@
                   <td class="text-center">
                     <span *ngIf="row.cliente.length <= 10 else toLengthCliente">{{row.cliente}}</span>
                     <ng-template #toLengthCliente>
-                      <span placement="bottom" tooltip="{{row.cliente}}" container='body'> {{row.cliente | slice:0:10
-                        }} ...
+                      <span placement="bottom" tooltip="{{row.cliente}}" container='body'> {{row.cliente | slice:0:10 }} ...
                       </span>
                     </ng-template>
                   </td>
@@ -157,22 +156,20 @@
                   <td class="text-center"> {{row.tipoReclutamiento}}</td>
                   <td class="text-center"> {{row.claseReclutamiento}}</td>
                   <!-- <td class="text-right"> {{row.sueldoMinimo | currency: $}}</td>
-              <td class="text-right"> {{row.sueldoMaximo | currency: $}}</td> -->
+                  <td class="text-right"> {{row.sueldoMaximo | currency: $}}</td> -->
                   <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
                   <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
                   <td class="text-center">
-                    <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info"
-                      [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
-                      [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20" [class.badge-success]="row.estatusId  === 7"
-                      [class.badge-danger]="row.estatusId  === 8">
+                    <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
+                      [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20"
+                      [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
                       {{row.estatus | uppercase}}
                     </small>
                     <ng-template #toLength>
-                      <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
-                        [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20"
-                        [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8"
-                        placement="bottom" tooltip="{{row.estatus | uppercase}}" container='body'> {{row.estatus |
-                        slice:0:8 | uppercase }} ...
+                      <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
+                        [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20" [class.badge-success]="row.estatusId  === 7"
+                        [class.badge-danger]="row.estatusId  === 8" placement="bottom" tooltip="{{row.estatus | uppercase}}" container='body'>
+                      {{row.estatus | slice:0:8 | uppercase }} ...
                       </small>
                     </ng-template>
                   </td>
@@ -182,40 +179,12 @@
                     </small>
                   </td>
                   <td class="text-center">
-                    <!-- <ng-template #popTemplatePostulados>
-                  <div *ngIf="row.postulados > 0">
-                    <h5 class="popover-header">Postulados</h5>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="popover-body">
-                          <ng-container *ngFor="let p of row.postuladosN">
-                            <small>
-                              <ol>
-                                <li>
-                                  <a href="">
-                                    {{p.nombre}} {{p.apellidoPaterno}} {{apellidoMAterno}} {{p.curp}}
-                                  </a>
-                                </li>
-                              </ol>
-                            </small>
-                          </ng-container>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div *ngIf="row.postulados == 0">
-                    <small>Sin Postulaciones...</small>
-                  </div>
-
-                </ng-template> -->
-
-                    <span class="px-1 mr-1  badge  badge-pill badge-warning" [popover]="popTemplatePostulados"
-                      container="body" placement="left" triggers="click">
+                    <small class="badge  badge-pill badge-warning" [popover]="popTemplatePostulados" container="body" placement="left" triggers="click">
                       {{row.postulados}}
-                    </span>
+                    </small>
                   </td>
                   <td class="text-center">
-                    <span class="px-1 mr-1  badge  badge-pill badge-primary"> {{row.enProceso}}</span>
+                    <span class="badge  badge-pill badge-primary"> {{row.enProceso}}</span>
                   </td>
                 </tr>
               </div>
@@ -224,7 +193,7 @@
         </table>
       </div>
     </div>
-    <div class="row">
+    <div class="row mt-2">
       <div class="col-md-12 col-sm-12 clearfix">
         <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
           [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
@@ -284,7 +253,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 id="dialog-sizes-name1" class="modal-title pull-left text-success">REPORTE INCIDENTES</h4>
+        <h4 class="modal-title pull-left text-success">REPORTE INCIDENTES</h4>
         <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal3.hide();closeModal(0)"><i
             class="fa fa-times"></i></button>
 
@@ -306,78 +275,95 @@
   <div class="modal-dialog modal-lg long">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 id="dialog-sizes-name1" class="modal-title pull-left text-success">INFORME VACANTES</h4>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal4.hide(); closeModal(1);"><i
-            class="fa fa-times"></i></button>
-
+        <h4 class="modal-title pull-left text-success">
+          <i class="fa fa-area-chart mr-1" aria-hidden="true"></i>INFORME VACANTES</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal4.hide(); closeModal(1);">
+          <i class="fa fa-times"></i>
+        </button>
       </div>
       <div class="modal-body">
-        <div>
-          <div class="table-responsive">
-            <table style="width: 100%;">
-              <thead>
-                <tr>
-                  <th *ngFor="let column of columnsInfo" ngClass="{{column.className || ''}}">
-                    {{column.title | uppercase}}
-                    <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
+        <div class="table-responsive">
+          <table class="table" style="width: 100%;">
+            <thead>
+              <tr>
+                <th *ngFor="let column of columnsInfo" ngClass="{{column.className || ''}}">
+                  <small>{{column.title | uppercase}}</small>
+                  <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
                         </i> -->
-                  </th>
-                </tr>
+                </th>
+              </tr>
+              <tr>
+                <th *ngFor="let column of columnsInfo">
+                  <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTableInfo(config)"
+                    class="form-control form-control-sm" id="{{column.name}}">
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
+                [disableOnBreakpoints]="false" [disabled]="disabled">
+                <div class="fontMio">
 
-              </thead>
-              <tbody>
-                <tr>
-                  <td *ngFor="let column of columnsInfo">
-                    <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                      (tableChanged)="onChangeTableInfo(config)" class="form-control form-control-sm" id="{{column.name}}">
-                  </td>
-                </tr>
-                <tr *ngFor="let row of rowsInfo">
-                  <td class="text-center"> {{row.folio}}</td>
-                  <td class="text-center"> {{row.vBtra | uppercase}}</td>
-                  <td class="text-center"> {{row.cliente | uppercase}}</td>
-                  <td class="text-center"> {{row.fch_limite | date:'dd/MM/yyyy'}} </td>
-                  <td class="text-center"> <small *ngIf="row.estatus.length < 15 else toLength" class="badge badge-pill badge-primary"
-                      [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
-                      [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20" [class.badge-success]="row.estatusId  === 7"
-                      [class.badge-danger]="row.estatusId  === 8">
-                      {{row.estatus | uppercase}}
-                    </small>
-                    <ng-template #toLength>
-                      <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
+                  <tr class="fontMio" *ngFor="let row of rowsInfo">
+                    <td class="text-center"> {{row.folio}}</td>
+                    <td class="text-center"> {{row.vBtra | uppercase}}</td>
+                    <td class="text-center"> {{row.cliente | uppercase}}</td>
+                    <td class="text-center"> {{row.fch_limite | date:'dd/MM/yyyy'}} </td>
+                    <td class="text-center">
+                      <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-primary" [class.badge-warning]="row.estatusId  === 4"
                         [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20"
-                        [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8"
-                        placement="bottom" tooltip="{{row.estatus | uppercase}}" container='body'> {{row.estatus |
-                        slice:0:8 | uppercase }} ...
+                        [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
+                        {{row.estatus | uppercase}}
                       </small>
-                    </ng-template>
-                  </td>
-                  <td class="text-center"> <span class="px-1 mr-1 badge badge-pill badge-primary" [class.badge-warning]="row.vacantes > 0">
-                      {{row.vacantes}}</span> </td>
-                  <td class="text-center"> <span class="px-1 mr-1 badge badge-pill badge-primary" [class.badge-success]="row.porcentaje > 0">
-                      {{row.porcentaje}} %</span></td>
-                  <td class="text-center"> <span class="px-1 mr-1 badge badge-pill badge-primary" [class.badge-warning]="row.postulados > 0">{{row.postulados}}</span></td>
-                  <td class="text-center"> <span class="px-1 mr-1 badge badge-pill badge-primary" [class.badge-warning]="row.entrevista > 0">{{row.entrevista}}</span>
-                  </td>
-                  <td class="text-center"> <span class="px-1 mr-1 badge badge-pill badge-primary" [class.badge-warning]="row.abandono > 0">{{row.abandono}}</span>
-                  </td>
-                  <td class="text-center"> <span class="px-1 mr-1 badge badge-pill badge-primary" [class.badge-warning]="row.descartados > 0">{{row.descartados}}</span></td>
-                  <td class="text-center"> <span class="px-1 mr-1 badge badge-pill badge-primary" [class.badge-warning]="row.enviados > 0">{{row.enviados}}</span></td>
-                  <td class="text-center"> <span class="px-1 mr-1 badge badge-pill badge-primary" [class.badge-warning]="row.rechazados > 0">{{row.rechazados}}</span></td>
-                  <td class="text-center"> <span class="px-1 mr-1 badge badge-pill badge-primary" [class.badge-success]="row.contratados > 0">{{row.contratados}}</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <br />
+                      <ng-template #toLength>
+                        <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
+                          [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20" [class.badge-success]="row.estatusId  === 7"
+                          [class.badge-danger]="row.estatusId  === 8" placement="bottom" tooltip="{{row.estatus | uppercase}}"
+                          container='body'> {{row.estatus | slice:0:8 | uppercase }} ...
+                        </small>
+                      </ng-template>
+                    </td>
+                    <td class="text-center">
+                      <small class="badge badge-pill badge-primary" [class.badge-warning]="row.vacantes > 0">
+                        {{row.vacantes}}</small>
+                    </td>
+                    <td class="text-center">
+                      <small class="badge badge-pill badge-primary" [class.badge-success]="row.porcentaje > 0">
+                        {{row.porcentaje}} %</small>
+                    </td>
+                    <td class="text-center">
+                      <small class="badge badge-pill badge-primary" [class.badge-warning]="row.postulados > 0">{{row.postulados}}</small>
+                    </td>
+                    <td class="text-center">
+                      <small class="badge badge-pill badge-primary" [class.badge-warning]="row.entrevista > 0">{{row.entrevista}}</small>
+                    </td>
+                    <td class="text-center">
+                      <small class="badge badge-pill badge-primary" [class.badge-warning]="row.abandono > 0">{{row.abandono}}</small>
+                    </td>
+                    <td class="text-center">
+                      <small class="badge badge-pill badge-primary" [class.badge-warning]="row.descartados > 0">{{row.descartados}}</small>
+                    </td>
+                    <td class="text-center">
+                      <small class="badge badge-pill badge-primary" [class.badge-warning]="row.enviados > 0">{{row.enviados}}</small>
+                    </td>
+                    <td class="text-center">
+                      <small class="badge badge-pill badge-primary" [class.badge-warning]="row.rechazados > 0">{{row.rechazados}}</small>
+                    </td>
+                    <td class="text-center">
+                      <small class="badge badge-pill badge-primary" [class.badge-success]="row.contratados > 0">{{row.contratados}}</small>
+                    </td>
+                  </tr>
+                </div>
+              </ng-scrollbar>
+            </tbody>
+          </table>
           <br />
           <div class="text-right">
-            <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="pageInfo" [totalItems]="lengthInfo"
-              [itemsPerPage]="itemsPerPageInfo" [maxSize]="maxSizeInfo" [boundaryLinks]="true" [rotate]="false"
-              (pageChanged)="onChangeTableInfo(config, $event)" (numPages)="numPagesInfo = $event">
+            <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="pageInfo" [totalItems]="lengthInfo" [itemsPerPage]="itemsPerPageInfo"
+              [maxSize]="maxSizeInfo" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTableInfo(config, $event)"
+              (numPages)="numPagesInfo = $event">
             </pagination>
-            <br />
-            <pre *ngIf="config.paging" class="card card-block card-header text-warning">P&aacute;gina: {{pageInfo}} / {{numPagesInfo}}  Total Registros: {{registrosInfo}}</pre>
+            <pre *ngIf="config.paging" class="text-muted">P&aacute;gina: {{pageInfo}} / {{numPagesInfo}}  Total Registros: {{registrosInfo}}</pre>
           </div>
 
         </div>
@@ -389,18 +375,20 @@
   </div>
 </div>
 
-<!-- Modal para reporte -->
-<div *ngIf="reporte70" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #MessageModal="bs-modal" class="modal"
+<!-- Modal para candidatos en proceso -->
+<div *ngIf="procesoCandidato" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #MessageModal="bs-modal" class="modal"
   tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
   <div class="modal-dialog modal-lg reporteMod">
     <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="float-left text-warning"><em class="fa fa-file-text-o mr-2"></em>Reporte - Requisiciones</h4>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="reporte70=false; lgModal.hide();"><i
+      <div class="mt-3 p-1 bg-light d-flex flex-row justify-content-between align-items-stretch">
+        <h4 class="float-left text-success mt-2 ml-1"><em class="fa fa-users mr-2"></em>CANDIDATOS EN PROCESO </h4>
+        <h5 class="text-warning font-weight-bold mt-2" >{{folio}} - {{vBtra | uppercase}}</h5>
+
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right mr-1" (click)="procesoCandidato=false; lgModal.hide();"><i
             class="fa fa-times"></i></button>
       </div>
       <div class="modal-body">
-        <app-reporte70></app-reporte70>
+        <app-candidatos-en-proceso [RequisicionId]="id"></app-candidatos-en-proceso>
       </div>
     </div>
   </div>

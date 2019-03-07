@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
+
 
 @Component({
   selector: 'app-reporte-general',
@@ -8,14 +8,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class ReporteGeneralComponent implements OnInit {
 
-  constructor(private spinner: NgxSpinnerService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.spinner.show();
-
-        setTimeout(() => {
-   this.spinner.hide()
-    }, 2000);
+  
+      
   }
 
 }

@@ -1,0 +1,6 @@
+
+<ngb-carousel *ngIf="images" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
+    <ng-template ngbSlide *ngFor="let v of images">
+         <img [src]="v" alt="Random slide" style="width: 540px; height: 427px;">
+    </ng-template>
+  </ngb-carousel>

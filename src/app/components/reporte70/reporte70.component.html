@@ -1,5 +1,6 @@
-<div class="card">
+<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
 
+<div class="card">
   <div class="card-body mat-elevation-z8">
 
     <button type="button" class="float-right" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'btn btn-xs disable' : 'btn btn-xs btn-outline-success'"
@@ -55,64 +56,119 @@
                     </ng-template>
 
                     <span *ngIf="row.reclutadores.length == 0">SIN ASIGNAR</span>
-                    <a class="text-center" *ngIf="row.reclutadores.length > 1" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
+                    <small class="text-center badge badge-pill badge-danger" *ngIf="row.reclutadores.length > 1" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</small>
                     <span class="text-left" *ngIf="row.reclutadores.length == 1">{{row.reclutadores[0]}}</span>
 
                   </td>
                   <td class="text-left"> {{row.sucursal }}</td>
                   <td class="text-center">
-                    <span class="px-1 mr-1 badge badge-pill badge-primary">{{row.vacantes}}</span>
+                    <span class="px-1 badge badge-pill badge-primary">{{row.vacantes}}</span>
                   </td>
                   <td class="text-center">
-                    <span class="px-1 mr-1 badge badge-pill badge-info"> {{row.enProcesoEC}}</span>
+                    <span class="px-1 badge badge-pill badge-info"> {{row.enProcesoEC}}</span>
                   </td>
                   <td class="text-center">
-                    <span class="px-1 mr-1 badge badge-pill badge-info"> {{row.enProcesoFC}}</span>
+                    <span class="px-1 badge badge-pill badge-info"> {{row.enProcesoFC}}</span>
                   </td>
                   <td class="text-center">
-                    <span class="px-1 mr-1 badge badge-pill badge-success"> {{row.contratados}}</span>
+                    <span class="px-1 badge badge-pill badge-success"> {{row.contratados}}</span>
                   </td>
                   <td class="text-center">
-                    <span class="px-1 mr-1 badge badge-pill badge-warning"> {{row.faltantes}}</span>
+                    <span class="px-1 badge badge-pill badge-warning"> {{row.faltantes}}</span>
                   </td>
                   <td class="text-center">
-                    <span class="px-1 mr-1 badge badge-pill badge-warning"> {{row.porcentaje}} % </span>
+                    <span class="px-1 badge badge-pill badge-warning"> {{row.porcentaje}} % </span>
                   </td>
                   <td class="text-center">
-                    <span class="px-1 mr-1 badge badge-pill badge-warning"> {{row.diasTrans}}</span>
+                    <small class="badge badge-pill badge-warning">                     
+                        {{row.estatus[0].diasTotal}}
+                      </small>
+                    <!-- <ng-template #popEstatusRequi>
+                        <div class="card">
+                          <div class="card-body">
+                            <ul class="list-group">
+                              <li *ngFor="let r of row.estatus" class="list-group-item text-muted"><small class="badge badge-pill"
+                                [class.badge-warning]="r.estatusId  === 4" [class.badge-primary]="r.estatusId  === 5"
+                                [class.badge-info]="r.estatusId  === 6 || r.estatusId >= 29" [class.badge-success]="r.estatusId  === 7"
+                                [class.badge-danger]="r.estatusId  === 8">{{r.estatus | uppercase}}</small> <small class="ml-3 float-right">{{r.diasTrans }}</small></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </ng-template> -->
+
                   </td>
                   <td>
-                    <small *ngIf="row.estatus.length < 10 else toLengthEstatus" class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
-                      [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
-                      [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
-                      {{row.estatus}}
+                    <span *ngIf="row.estatus.length == 0">SIN REGISTRO</span>
+
+                    <small class="badge badge-pill" [class.badge-warning]="row.estatus[row.estatus.length - 1].estatusId === 4 || row.estatus[row.estatus.length - 1].estatusId === 33"
+                      [class.badge-primary]="row.estatus[row.estatus.length - 1].estatusId  === 5" [class.badge-info]="row.estatus[row.estatus.length - 1].estatusId  === 6 || row.estatus[row.estatus.length - 1].estatusId >= 29"
+                      [class.badge-success]="row.estatus[row.estatus.length - 1].estatusId  === 7" [class.badge-danger]="row.estatus[row.estatus.length - 1].estatusId  === 8"  [popover]="popEstatus" #popE="bs-popover" [outsideClick]="true" placement="left" container="body">
+                      {{row.estatus[row.estatus.length - 1].estatus | slice: 0 : 10 | uppercase}}
                     </small>
 
-                    <ng-template #toLengthEstatus>
-                      <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
-                        [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29" [class.badge-success]="row.estatusId  === 7"
-                        [class.badge-danger]="row.estatusId  === 8" placement="right" tooltip="{{row.estatus | uppercase}}">
-                      {{row.estatus | slice:0:10 | uppercase }} ...
-                      </small>
+                    <ng-template #popEstatus>
+                      <div class="card">
+                        <div class="card-body">
+                    
+                          <ul class="list-group list-group-flush">
+                            <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+                              [disabled]="disabled">
+                              <div style="height: 200px;">
+                                <li class="list-group-item" *ngFor="let r of row.estatus">
+                    
+                                  <div class="d-flex flex-row justify-content-between align-items-stretch">
+                                    <div style="width: 80px;">
+                                      <small *ngIf="r.estatus.length <= 10 else toLengthEpop" class="badge badge-pill" [class.badge-warning]="r.estatusId === 4 || r.estatusId === 33"
+                                        [class.badge-primary]="r.estatusId  === 5" [class.badge-info]="r.estatusId  === 6 || r.estatusId >= 29"
+                                        [class.badge-success]="r.estatusId  === 7" [class.badge-danger]="r.estatusId  === 8">{{r.estatus | uppercase}}</small>
+                    
+                                      <ng-template #toLengthEpop>
+                                        <small class="badge badge-pill" [class.badge-warning]="r.estatusId  === 4" [class.badge-primary]="r.estatusId  === 5" [class.badge-info]="r.estatusId  === 6 || r.estatusId > 20"
+                                          [class.badge-success]="r.estatusId  === 7" [class.badge-danger]="r.estatusId  === 8" placement="bottom"
+                                          tooltip="{{r.estatus | uppercase}}" container='body'> {{r.estatus | slice:0:10 | uppercase }} ...
+                                        </small>
+                                      </ng-template>
+                                    </div>
+                                    <div>
+                                      <small class="text-muted mr-2">{{r.fch_Modificacion | date:'dd/MM/yyyy'}}</small>
+                                    </div>
+                    
+                                    <div>
+                                      <small class="badge badge-pill badge-warning mr-2">
+                                        {{r.diasTrans}}
+                                      </small>
+                                    </div>
+                                  </div>
+                                </li>
+                              </div>
+                            </ng-scrollbar>
+                          </ul>
+                        </div>
+                      </div>
                     </ng-template>
+
                   </td>
-                  <td>{{row.fch_Modificacion | date:'dd/MM/yyyy'}}</td>
+                  <!-- <td>{{row.fch_Modificacion | date:'dd/MM/yyyy'}}</td> -->
                   <td> 
                     <small *ngIf="row.tipoReclutamiento.length < 10 else toLengthTipoRecl" class="badge badge-pill badge-info">
-                      {{row.tipoReclutamiento}}
+                      {{row.tipoReclutamiento | uppercase}}
                   </small>
 
                   <ng-template #toLengthTipoRecl>
-                    <small class="badge badge-pill badge-info" placement="right" tooltip="{{row.tipoReclutamiento | uppercase}}">
+                    <small class="badge badge-pill badge-info" placement="bottom" tooltip="{{row.tipoReclutamiento | uppercase}}">
                     {{row.tipoReclutamiento | slice:0:10 | uppercase }} ...
                     </small>
                   </ng-template>
                   </td>
-                  <td> {{row.claseReclutamiento}}</td>
+                  <td>
+                      <small class="badge badge-pill badge-primary">
+                          {{row.claseReclutamiento | uppercase}}
+                      </small>
+                  </td>
                   <td class="text-center">
-                    <span *ngIf="row.comentarios_solicitante.length == 0">0</span>
-                    <a *ngIf="row.comentarios_solicitante.length > 0" [popover]="popTemplateComenSol" #popS="bs-popover" [outsideClick]="true"
-                      placement="left" container="body">{{row.comentarios_solicitante.length}}</a>
+                    <small class="badge badge-pill badge-info" *ngIf="row.comentarios_solicitante.length == 0">0</small>
+                    <small class="badge badge-pill badge-success" *ngIf="row.comentarios_solicitante.length > 0" [popover]="popTemplateComenSol" #popS="bs-popover" [outsideClick]="true"
+                      placement="left" container="body">{{row.comentarios_solicitante.length}}</small>
                     <ng-template #popTemplateComenSol>
                       <div class="card">
                         <div class="card-body" *ngFor="let r of row.comentarios_solicitante">
@@ -123,9 +179,9 @@
                     </ng-template>
                   </td>
                   <td class="text-center">
-                    <span *ngIf="row.comentarios_reclutador.length == 0">0</span>
-                    <a *ngIf="row.comentarios_reclutador.length > 0" [popover]="popTemplateComenRecl" #pop="bs-popover" [outsideClick]="true"
-                      placement="left" container="body">{{row.comentarios_reclutador.length}}</a>
+                    <span class="badge badge-pill badge-info" *ngIf="row.comentarios_reclutador.length == 0">0</span>
+                    <small class="badge badge-pill badge-success" *ngIf="row.comentarios_reclutador.length > 0" [popover]="popTemplateComenRecl" #pop="bs-popover" [outsideClick]="true"
+                      placement="left" container="body">{{row.comentarios_reclutador.length}}</small>
                     <ng-template #popTemplateComenRecl>
                       <div class="card">
                         <div class="card-body" *ngFor="let r of row.comentarios_reclutador">
@@ -144,15 +200,16 @@
                     </ng-template>
                   </td>
                   <td class="text-center">
-                    <span *ngIf="row.comentarios_coord.length == 0">0</span>
-                    <a *ngIf="row.comentarios_coord.length > 0" [popover]="popTemplateComenCoord" #popS="bs-popover" [outsideClick]="true" placement="left"
-                      container="body">{{row.comentarios_coord.length}}</a>
-                    <ng-template #popTemplateComenCoord>
-                      <div class="card">
-                        <div class="card-body" *ngFor="let r of row.comentarios_coord">
-                          <p class="card-text">{{r}}</p>
+                    <span class="badge badge-pill badge-info" *ngIf="row.comentarios_coord.length == 0">0</span>
+                    <small class="badge badge-pill badge-success" *ngIf="row.comentarios_coord.length > 0" [popover]="popTemplateComenCoord" #popC="bs-popover" [outsideClick]="true" placement="left"
+                      container="body">{{row.comentarios_coord.length}}</small>
+                    
+                      <ng-template #popTemplateComenCoord>
+                        <div class="card">
+                          <div class="card-body" *ngFor="let r of row.comentarios_coord">
+                            <p class="card-text">{{r}}</p>
+                          </div>
                         </div>
-                      </div>
                     </ng-template>
                   </td>
                   <td> {{row.coordinador}}</td>

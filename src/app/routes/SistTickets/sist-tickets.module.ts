@@ -47,6 +47,7 @@ import { VerTurnosComponent } from './ver-turnos/ver-turnos.component';
 import { FilaTicketsComponent } from './fila-tickets/fila-tickets.component';
 import { EnAtencionComponent } from './en-atencion/en-atencion.component';
 import { CarruselVacantesComponent } from './carrusel-vacantes/carrusel-vacantes.component';
+import { CarruselArteVacantesComponent } from './carrusel-arte-vacantes/carrusel-arte-vacantes.component';
 
 const routes: Routes = [
   { path: 'turno', component: SeguimientoTicketComponent},
@@ -104,6 +105,7 @@ const routes: Routes = [
     FilaTicketsComponent,
     EnAtencionComponent,
     CarruselVacantesComponent,
+    CarruselArteVacantesComponent,
     
   ],
   entryComponents: [],

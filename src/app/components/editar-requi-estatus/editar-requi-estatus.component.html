@@ -28,7 +28,7 @@
   <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-respuesta'] = true;" *ngIf="!editing[rowIndex + '-respuesta']" >
       {{row.comentarioReclutador.respuesta}}
     </span>
-    <input [(ngModel)]="comentario" class="form-control-sm" autofocus (blur)="updateValue($event, 'respuesta', rowIndex);" *ngIf="editing[rowIndex + '-respuesta']" type="text" [value]="row.comentarioReclutador.respuesta"
+    <input [(ngModel)]="comentario" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'respuesta', rowIndex);" *ngIf="editing[rowIndex + '-respuesta']" type="text" [value]="row.comentarioReclutador.respuesta"
     />
     
         </td>

@@ -9,15 +9,33 @@
     </ng-template>
   </ngb-carousel> -->
 
-<ngb-carousel *ngIf="vacantes.length > 0" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
+<!-- <ngb-carousel *ngIf="images & cr1 == true" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
+    <ng-template ngbSlide *ngFor="let v of images">
+         <img [src]="v" alt="Random slide" style="width: 570px; height: 427px;">
+    </ng-template>
+  </ngb-carousel> -->
+
+  
+<ngb-carousel *ngIf = "vacantes.length > 0" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
     <ng-template ngbSlide *ngFor="let v of vacantes">
       <div class="card">
-        <div class="card-body bgMio mat-elevation-z8">
-          <div class="row">
-
-         <!-- <img src="./../assets/img/fondo.png" alt="Random slide"> -->
-
-      <div class="col-sm-12 col-md-12 clearfix text-center">
+        <div class="card-body bg-light fontMio mat-elevation-z8">
+            <div class="d-flex flex-column justify-content-between fontMio"> 
+                <h4 class="text-info mt-2 ml-1"><i class="fa fa-chevron-right text-warning mr-1" aria-hidden="true"></i>{{v.vBtra}}</h4>
+    
+                <!-- <h5 class="p-2 bg-light text-center text-muted">ACTIVIDADES</h5>
+                <ul class="list-group list-group-flush mb-2">
+                  <li class="list-group-item text-info" *ngFor="let a of v.actividades">{{a}}</li>
+                </ul> -->
+                <h5 class="text-justify text-muted font-weight-bold ml-1">Escolaridad {{v.requisitos}}</h5>
+                <p class="text-justify ml-1">{{v.experiencia}}</p>
+            </div> 
+        </div>
+      </div>
+       
+    </ng-template>
+  </ngb-carousel>
+    <!-- <div class="col-sm-12 col-md-12 clearfix text-center">
           <h3 class="text-center">{{v.folio}} - {{v.vBtra}}</h3>
           <h4 class="text-center">{{v.cliente}}</h4>
           <h5 class="text-center">{{v.domicilio_trabajo}}</h5>
@@ -31,11 +49,5 @@
           <ul class="list-group list-group-flush">
               <li class="list-group-item text-info" *ngFor="let a of v.aptitudes">{{a}}</li>
           </ul>
-          <!-- <p>Sueldo Minimo: {{v.sueldoMinimo | currency: $}}</p>        -->
-      </div>
-    </div>
-    </div>
-    </div>
-    </ng-template>
 
-  </ngb-carousel>
+      </div> -->

@@ -1,0 +1,81 @@
+<div class="card">
+  <div class="card-body">
+      <button class="btn btn-xs float-right mb-3" (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
+      container="body" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'disabled':'btn-outline-primary'">
+      <em class="fa fa-eraser"></em>
+    </button>
+
+    <div class="table-responsive">
+      <table *ngIf="dataSource.length > 0 else NotCandidatos" id="resultDataTable" ngClass="{{config.className || ''}}" class="table">
+        <thead>
+          <tr>
+            <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+              <small>{{column.title | uppercase}}</small>
+            </th>
+          
+          </tr>
+          <tr *ngIf="showFilterRow">
+            <td *ngFor="let column of columns">
+              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                class="form-control form-control-sm">
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+            [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+            <div>
+          <tr *ngFor="let row of rows">
+            <td class="text-center">
+              <span *ngIf="row.estatusId != 12 && row.estatusId != 17 && row.estatusId != 27 else sinAsignar">{{row.horario}}</span>
+              <ng-template #sinAsignar>
+                <span>SIN ASIGNAR</span>
+              </ng-template>
+            </td>
+            <td class="text-center"> {{row.nombre | uppercase}} {{row.apellidoPaterno | uppercase }} {{row.apellidoMaterno | uppercase}}</td>
+            <td class="text-center"> {{row.areaExp | uppercase}}</td>
+            <td class="text-center"> {{row.areaInt | uppercase}}</td>
+            <td class="text-center"> {{row.localidad | uppercase}} </td>
+            <td class="text-center"> {{row.sueldoMinimo | currency : '$'}} </td>
+            <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
+            <td class="text-center"> {{row.curp | uppercase }}</td>
+            <td class="text-center"> {{row.rfc | uppercase }}</td>
+            <td class="text-center"> {{row.nss | uppercase }}</td>
+            <td class="text-center">
+              <small *ngIf="row.estatus.length <= 10 else toLength" class='badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42"
+                [class.badge-danger]="row.estatusId == 28">
+                <small *ngIf="row.estatusId != 28"> {{row.estatus | uppercase }}</small>
+                <small *ngIf="row.estatusId == 28">POSTULADO</small>
+              </small>
+            </td>
+            <ng-template #toLength>
+              <small class='badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42" [class.badge-danger]="row.estatusId == 28"
+                placement="bottom" tooltip="{{row.estatus | uppercase}}" container="body">{{row.estatus | slice:0:6 | uppercase }} ... </small>
+            </ng-template>
+          </tr>
+          </div>
+          </ng-scrollbar>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <hr>
+  <div class="text-right">
+    <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="pageInfo" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+      [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+    </pagination>
+    <pre *ngIf="config.paging" class="text-muted">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
+  </div>
+
+</div>
+
+<!--mensaje cuando esta vacio la tabla-->
+<ng-template #NotCandidatos>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+          <alert type="info">
+              <strong>Oops!</strong> A&uacute;n no cuentas con candidatos en proceso / apartados.
+            </alert>
+      </div>
+    </div>
+  </ng-template>

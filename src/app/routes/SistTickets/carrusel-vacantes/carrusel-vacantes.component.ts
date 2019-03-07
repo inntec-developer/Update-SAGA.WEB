@@ -14,8 +14,9 @@ export class CarruselVacantesComponent implements OnInit {
   showNavigationArrows = false;
   showNavigationIndicators = false;
 
+
   constructor(config: NgbCarouselConfig, private _service: SistTicketsService) { 
-    config.interval = 5000;
+    config.interval = 2000;
     config.wrap = true;
   }
 
@@ -28,11 +29,9 @@ export class CarruselVacantesComponent implements OnInit {
 
   GetVacantes()
   {
+
     this._service.GetVacantes().subscribe(data => {
       this.vacantes = data;
-      
- 
-
       console.log(this.vacantes)
     })
   }

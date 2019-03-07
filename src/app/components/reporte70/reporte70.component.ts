@@ -1,4 +1,4 @@
-
+import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from './../../service/requisiciones/requisiciones.service';
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
@@ -33,9 +33,10 @@ export class Reporte70Component implements OnInit {
 
   registros: any;
   showFilterRow: boolean;
-  constructor(private _service: RequisicionesService, private pipe: DatePipe, private excelService: ExcelService) { }
+  constructor(private _service: RequisicionesService, private pipe: DatePipe, private excelService: ExcelService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
+    this.spinner.show();
     this.GetReporte70();
   }
 
@@ -58,7 +59,7 @@ export class Reporte70Component implements OnInit {
     { title: 'Avance', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'Avance' } },
     { title: 'Dias Transcurridos', className: 'text-info text-center', name: 'diasTrans', filtering: { filterString: '', placeholder: 'Dias' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
-    { title: 'Fecha Estatus', className: 'text-info text-center', name: 'fch_Modificacion', filtering: { filterString: '', placeholder: 'dd-mm-yyyy' } },
+    // { title: 'Fecha Estatus', className: 'text-info text-center', name: 'fch_Modificacion', filtering: { filterString: '', placeholder: 'dd-mm-yyyy' } },
     { title: 'Tipo Reclutamiento', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo reclutamiento' } },
     { title: 'Coordinación', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Coordinación' } },
     { title: 'Com. Sol.', className: 'text-info text-center', name: 'comentarios_solicitante' },
@@ -73,11 +74,12 @@ export class Reporte70Component implements OnInit {
 
     this._service.GetReporte70().subscribe(result => {
       this.requisiciones = result;
-console.log(this.requisiciones)
       this.onChangeTable(this.config);
+
     })
   }
 
+  //#region filtros y paginador
   public config: any = {
     paging: true,
     //sorting: { columns: this.columns },
@@ -223,9 +225,12 @@ console.log(this.requisiciones)
     let sortedData = this.changeSort(filteredData, this.config);
     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
     this.length = sortedData.length;
-  }
 
-  public refreshTable() {
+    this.spinner.hide();
+  }
+//#endregion
+  
+public refreshTable() {
     this.GetReporte70();
     // setTimeout(() => {
     //   this.columns.forEach(element => {
@@ -251,19 +256,26 @@ console.log(this.requisiciones)
       var aux = [];
       var comentariosSol = "";
       var comentariosRecl = "";
+      var comentariosCoord = "";
       var reclutador = "";
       var fecha = "";
       this.requisiciones.forEach(row => {
-        console.log(row)
+        if(row.comentarios_coord.length > 0)
+        {
+          row.comentarios_coord.forEach(element => {
+            comentariosCoord = comentariosCoord + element + '\n'
+          });
+          
+        }
+        else{
+          comentariosCoord = "";
+        }
+
         if(row.comentarios_solicitante.length > 0)
         {
-          row.comentarios_solicitante.forEach(element => {
-            if(element.fch_Creacion != null)
-            {
-              fecha =  this.pipe.transform(new Date(element.fch_Creacion), 'yyyy-MM-dd');
-            }          
-              comentariosSol = comentariosSol + fecha + ' ' + element.comentario + '\n'
-            });
+          row.comentarios_solicitante.forEach(element => {    
+              comentariosSol = comentariosSol + element + '\n'
+          });
           
         }
         else{
@@ -286,7 +298,7 @@ console.log(this.requisiciones)
           });
         }
         else{
-          comentariosSol = "";
+          comentariosRecl = "";
         }
 
         if(row.reclutadores.length == 0)
@@ -296,13 +308,18 @@ console.log(this.requisiciones)
         else if(row.reclutadores.length > 1)
         {
           row.reclutadores.forEach(element => {
-            reclutador = reclutador + element.reclutador + '\n'
+            reclutador = reclutador + element + '\n'
           });
         }
         else
         {
           reclutador = row.reclutadores[0].reclutador;
         }
+        
+        var estatus = '';
+        row.estatus.forEach(element => {
+          estatus = estatus + element.estatus + ' ' + this.pipe.transform(new Date(element.fch_Modificacion), 'yyyy-MM-dd') + '\n';
+        });
 
         if(row.fch_Solicitud != null)
         {
@@ -323,30 +340,34 @@ console.log(this.requisiciones)
         }
         
 
+ 
 
 
         aux.push({
           FOLIO: row.folio.toString(),
           'FECHA SOLICITUD': d,//new Date(d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString(),
-          RECLUTADOR: reclutador,
-          SUCURSAL: row.sucursal,
           EMPRESA: row.cliente,
+          PUESTO: row.vBtra,
+          'SUELDO FINAL':  row.sueldoMaximo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
           ESTADO: row.estado,
           'DOMICILIO TRABAJO': row.domicilio_trabajo,
-          SOLICITA: row.propietario,
+          RECLUTADOR: reclutador,
+          SUCURSAL: row.sucursal,
           NO: row.vacantes,
-          AVANCE: row.porcentaje,
           ENVIADO: row.enProcesoEC,
           ACEPTADO: row.enProcesoFC,
           CONTRATADOS: row.contratados,
-          PUESTO: row.vBtra,
-          'SUELDO FINAL':  row.sueldoMaximo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
-          ESTATUS: row.estatus,
-          'FECHA ESTATUS': e,
+          FALTANTES: row.faltantes,
+          AVANCE: row.porcentaje,
+          'DIAS TRANSCURRIDOS': row.estatus[0].diasTotal,
+          ESTATUS: estatus,
           'TIPO RECLUTAMIENTO': row.tipoReclutamiento,
           'COORDINACION': row.claseReclutamiento,
           'COMENTARIOS SOLICITANTE': comentariosSol,
-          'COMENTARIOS RECLUTADORES': comentariosRecl
+          'COMENTARIOS RECLUTADORES': comentariosRecl,
+          COORDINADOR: row.coordinador,
+          'COMENTARIOS COORDINADOR': comentariosCoord,
+          SOLICITA: row.propietario,
         })
         comentariosSol = "";
         comentariosRecl = "";
