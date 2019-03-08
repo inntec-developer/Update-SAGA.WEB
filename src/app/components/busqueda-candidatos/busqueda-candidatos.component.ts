@@ -17,6 +17,7 @@ import { startWith } from 'rxjs/operators';
 })
 export class BusquedaCandidatosComponent implements OnInit {
   @Output('filtro') filtro: EventEmitter<any> = new EventEmitter<any>();
+  expanded: boolean;
   //**************************************************************************** */
   Candidatos: any;
   CodigoPostal: FormControl;
@@ -119,6 +120,7 @@ export class BusquedaCandidatosComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.expanded = true;
     this.getPais();
     this.cargarAreaExperiencia();
     this.getPerfil();
@@ -326,6 +328,7 @@ export class BusquedaCandidatosComponent implements OnInit {
         this.Candidatos = data;
         this.filtro.emit(this.Candidatos);
         this.loading = false;
+        this.expanded = false;
       })
     }
   }
@@ -336,6 +339,7 @@ export class BusquedaCandidatosComponent implements OnInit {
       this.Candidatos = data;
       this.filtro.emit(this.Candidatos);
       this.loading = false;
+      this.expanded = false;
     });
   }
 

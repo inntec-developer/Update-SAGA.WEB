@@ -1,8 +1,8 @@
-import {DataTableModule} from 'primeng/primeng';
+import { AlertModule, ModalModule, PopoverModule } from 'ngx-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule, MatInputModule, MatNativeDateModule, MatSelectModule, MatTooltipModule } from '@angular/material';
-import { ModalModule, PopoverModule, AlertModule } from 'ngx-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
+
 import { AddGrupoComponent } from './add-grupo/add-grupo.component';
 import { AddPersonaComponent } from './add-persona/add-persona.component';
 import { AddRolesComponent } from './add-roles/add-roles.component';
@@ -11,12 +11,15 @@ import { AgGridModule } from 'ag-grid-angular';
 import { CommonModule } from '@angular/common';
 import { ComponentsModule } from '../../components/components.module';
 import { CustomFormsModule } from 'ng2-validation';
+import {DataTableModule} from 'primeng/primeng';
 import { DndModule } from 'ng2-dnd';
 import { FileUploadModule } from 'ng2-file-upload';
+import { FilesContratadosComponent } from './files-contratados/files-contratados.component';
 import { GridRolesComponent } from './add-roles/grid-roles/grid-roles.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { ImageCropperModule } from 'ng2-img-cropper';
+import { JobRequiPauseComponent } from './job-requi-pause/job-requi-pause.component';
 import {MatCheckboxModule} from '@angular/material/checkbox'
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -24,15 +27,13 @@ import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable'
 import { PagesModule } from '../pages/pages.module';
+import { PopupModalComponent } from './popup-modal/popup-modal.component';
 import { RegistroComponent } from './registro/registro.component';
 import { RolGrupoComponent } from './rol-grupo/rol-grupo.component';
 import { RollsStructComponent } from './rolls-struct/rolls-struct.component';
 import { SelectModule } from 'ng2-select';
-import { UploadImgsComponent } from './upload-imgs/upload-imgs.component';
 import { SharedModule } from '../../shared/shared.module';
-import { FilesContratadosComponent } from './files-contratados/files-contratados.component';
-import { JobRequiPauseComponent } from './job-requi-pause/job-requi-pause.component';
-
+import { UploadImgsComponent } from './upload-imgs/upload-imgs.component';
 
 const routes: Routes = [
     { path: 'roles', component: RollsStructComponent, data: {'componente':'Roles'} },
@@ -92,7 +93,8 @@ const routes: Routes = [
       GridRolesComponent ,
       UploadImgsComponent,
       FilesContratadosComponent,
-      JobRequiPauseComponent
+      JobRequiPauseComponent,
+      PopupModalComponent
     ],
     exports: [
         RouterModule

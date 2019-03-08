@@ -1,6 +1,6 @@
 <mat-accordion class="example-headers-align">
-  <mat-expansion-panel [expanded]="true">
-    <mat-expansion-panel-header>
+  <mat-expansion-panel [expanded]="expanded" >
+    <mat-expansion-panel-header (click)="expanded ? expanded = fase : expanded = true">
       <mat-panel-title>
         <mat-icon class="text-primary">find_in_page</mat-icon>
       </mat-panel-title>

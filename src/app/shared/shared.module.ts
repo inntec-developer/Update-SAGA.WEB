@@ -8,6 +8,7 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { CheckallDirective } from './directives/checkall/checkall.directive';
 import { ChkButtonsDirective } from './directives/chk-privilegios-buttons/chk-buttons.directive';
+import { ChkPrivilegiosMenuDirective } from './directives/checkPrivilegios/chk-privilegios-menu.directive';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ColorsService } from './colors/colors.service';
 import { CommonModule } from '@angular/common';
@@ -17,6 +18,7 @@ import { FlotDirective } from './directives/flot/flot.directive';
 import { FocusDirective } from './directives//focus/focus.directive';
 import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NowDirective } from './directives/now/now.directive';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { PopoverModule } from 'ngx-bootstrap/popover';
@@ -33,7 +35,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import {TreeGridDirective} from './directives/treeGrid/treeGrid.directive';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { VectormapDirective } from './directives/vectormap/vectormap.directive';
-import { NgScrollbarModule } from 'ngx-scrollbar';
 
 // https://angular.io/styleguide#!#04-10
 @NgModule({
@@ -74,6 +75,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
         ScrollableDirective,
         JqcloudDirective,
         ChkButtonsDirective,
+        ChkPrivilegiosMenuDirective,
         TreeGridDirective,
         FocusDirective
     ],
