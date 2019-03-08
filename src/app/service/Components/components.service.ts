@@ -95,7 +95,7 @@ export class ComponentsService {
   }
 
   getRequiGraficaPA(estado:any, usuarioId: any) : Observable<any>{
-    let params = new HttpParams().set('estado', estado).set('usuarioId', usuarioId);
+    let params = new HttpParams().set('estado', estado).set('UsuarioId', usuarioId);
     return this._httpClient.get(this.UrlGetRequisicionesGPA, {params: params})
     .map(result => result);
   }

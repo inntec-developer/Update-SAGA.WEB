@@ -11,61 +11,71 @@
 <mat-divider></mat-divider>
 <div class="card">
   <div class="card-body">
-      <mat-dialog-content>
-    <div class="media">
-      <img class="mr-3 center-block media img-responsive img-fluid circle thumb64" [src]="usuario.foto" alt="Image">
-      <div class="media-body mb-3 margin-top-nombre">
-        <strong class="text-primary">
-          <p>{{usuario.nombre}}</p>
-        </strong>
+    <mat-dialog-content>
+      <div class="media">
+        <img class="mr-3 center-block media img-responsive img-fluid circle thumb64" [src]="usuario.foto" alt="Image">
+        <div class="media-body mb-3 margin-top-nombre">
+          <strong class="text-primary">
+            <p>{{usuario.nombre}}</p>
+          </strong>
+        </div>
       </div>
-    </div>
-    <br/>
-    <mat-divider></mat-divider>
-    
-    <p><strong class="text-warning text-center">Selecciona y describe el motivo por el cual se reporta al candidato como NR (No recomendable)</strong></p>
-    <mat-radio-group class="example-radio-group" [(ngModel)]="motivoId">
+      <br />
+      <mat-divider></mat-divider>
+
+      <p><strong class="text-warning text-center">Selecciona y describe el motivo por el cual se reporta al candidato
+          como NR (No recomendable)</strong></p>
+      <mat-radio-group class="example-radio-group" [(ngModel)]="motivoId">
         <mat-radio-button class="example-radio-button" *ngFor="let m of motivos" [value]="m.id">
           {{m.descripcion}}
         </mat-radio-button>
       </mat-radio-group>
 
       <p>
-          <span>
-            <small [ngClass]="!motivoId ? 'text-danger': 'text-success'">
-              <em *ngIf="!motivoId" class="fa fa-close"></em>
-              <em *ngIf="motivoId" class="fa fa-check"></em>
-              Seleccione un motivo por el cual se reporta al candidato como NR.
-            </small>
-          </span>
-        </p>
-    <mat-form-field>
-      <textarea matInput #message maxlength="500" placeholder="Comentario" rows="2" [(ngModel)]="comentario"></textarea>
-      <!-- <mat-hint align="start">
-        <strong>Ingrese el comentario.</strong>
-      </mat-hint> -->
-      <mat-hint align="end">{{message.value.length}} / 500</mat-hint>
-    <p>
         <span>
-          <small [ngClass]="!comentario ? 'text-danger': 'text-success'">
-            <!-- <em *ngIf="comentario.length < 30" class="fa fa-close"></em>
-            <em *ngIf="comentario.length > 29" class="fa fa-check"></em> -->
-            Ingrese comentario por el cual se reporta al candidato como NR.
+          <small [ngClass]="!motivoId ? 'text-danger': 'text-success'">
+            <em *ngIf="!motivoId" class="fa fa-close"></em>
+            <em *ngIf="motivoId" class="fa fa-check"></em>
+            Seleccione un motivo por el cual se reporta al candidato como NR.
           </small>
         </span>
       </p>
-    </mat-form-field>
-    <div class="text-right">
-      <btn-send (click)="AddComentario()" *ngIf="comentario && motivoId && !loading"></btn-send>
-      <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
-    </div>
-    <div *ngIf="msgError" role="alert" class="alert alert-danger">
-      <small>Error al guardar comentario intente de nuevo.</small>
-    </div>
-    <div *ngIf="msgSuccess" role="alert" class="alert alert-success">
-      <small>Comentario guardo con exito.</small>
-    </div>
-  </mat-dialog-content>
+      <div class="row">
+        <div class="col-xs-11 col-md-11 col-lg-11">
+          <mat-form-field>
+            <textarea matInput #message maxlength="500" placeholder="Comentario" rows="3" [(ngModel)]="comentario"></textarea>
+            <!-- <mat-hint align="start">
+          <strong>Ingrese el comentario.</strong>
+        </mat-hint> -->
+            <mat-hint align="end">{{message.value.length}} / 500</mat-hint>
+            <p>
+              <span>
+                <small [ngClass]="!comentario ? 'text-danger': 'text-success'">
+                  <!-- <em *ngIf="comentario.length < 30" class="fa fa-close"></em>
+              <em *ngIf="comentario.length > 29" class="fa fa-check"></em> -->
+                  Ingrese comentario por el cual se reporta al candidato como NR.
+                </small>
+              </span>
+            </p>
+          </mat-form-field>
+        </div>
+        <div class="col-xs-1 col-md-1 col-lg-1">
+          <div class="text-right align-text-bottom button-position">
+            <!-- <btn-send (click)="AddComentario()" class="position"></btn-send> -->
+            <button (click)="AddComentario()" *ngIf="comentario && motivoId && !loading" class="ms-1 btn btn-outline-success pull-xs-right btn-circle">
+              <em class="fa fa-send"></em>
+            </button>
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+          </div>
+        </div>
+      </div>
+      <div *ngIf="msgError" role="alert" class="alert alert-danger">
+        <small>Error al guardar comentario intente de nuevo.</small>
+      </div>
+      <div *ngIf="msgSuccess" role="alert" class="alert alert-success">
+        <small>Comentario guardo con exito.</small>
+      </div>
+    </mat-dialog-content>
   </div>
 
 </div>

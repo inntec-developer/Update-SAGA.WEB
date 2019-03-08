@@ -698,7 +698,7 @@
                     <tbody>
                       <tr *ngIf="showFilterRow_v">
                         <td *ngFor="let column of columns">
-                          <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config_v)"
+                          <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable_v(config_v)"
                             class="form-control form-control-sm" id="{{column.name}}">
                         </td>
                       </tr>

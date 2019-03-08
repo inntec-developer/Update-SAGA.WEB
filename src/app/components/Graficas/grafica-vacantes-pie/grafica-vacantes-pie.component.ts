@@ -26,14 +26,13 @@ export class GraficaVacantesPieComponent implements OnInit {
   ngOnInit() {
     this.UsuarioId = sessionStorage.getItem('id');
     Chart.defaults.scale.ticks.beginAtZero = true;
-    this._ServiceComponente.getGraficaVPA(this.UsuarioId).subscribe(result =>{
+    this._ServiceComponente.getGraficaVPA(this.UsuarioId).subscribe(result => {
       let activas = result['activas'];
       let porVecner = result['porVencer'];
       let vencidas = result['vencidas'];
-      
+
       this.Data = {
         datasets: [{
-          label: 'Vacantes',
           backgroundColor: ['#00FF00', '#FFCC00', '#FF3300'],
           data: [activas, porVecner, vencidas]
         }],
@@ -46,8 +45,25 @@ export class GraficaVacantesPieComponent implements OnInit {
       }
       this.Chart = new Chart('canvas', {
         type: 'polarArea',
+        title: { text: 'Seguimiento de Vacantes' },
         data: this.Data,
-        options: {onClick: this.detectedClick.bind(this)}
+        options: {
+          responsive: true,
+          onClick: this.detectedClick.bind(this),
+          scale: {
+            display: true
+          },
+          legend: {
+            position: 'right',
+            display: true,
+            labels:{
+              fontSize: 9,
+              boxWidth: 10,
+              usePointStyle: true,
+              padding: 3
+            }
+          },
+        }
       });
     });
   }

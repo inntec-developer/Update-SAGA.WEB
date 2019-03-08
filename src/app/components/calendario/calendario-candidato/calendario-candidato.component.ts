@@ -171,6 +171,13 @@ export class CalendarioCandidatoComponent implements OnInit {
 
   dayClick(date, jsEvent, view) {
     this.selectedDate = date.toJSON();
+    var DateNow = new Date();
+    DateNow.toLocaleDateString('es', {year: 'numeric', month: 'short'});
+    var selectDayCalendar = new Date(this.selectedDate)
+    if(selectDayCalendar < DateNow){
+      this.popToast('warning', 'Calendario', 'No se permirte agregar eventos con fechas menor del día actual');
+      return;
+    }
     this.selectedEvent = null;
     this.openDialogEvent(this.selectedDate);
   }

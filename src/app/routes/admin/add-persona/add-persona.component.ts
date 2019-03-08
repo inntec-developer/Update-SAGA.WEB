@@ -209,6 +209,7 @@ export class AddPersonaComponent implements OnInit {
   }
 
   SendEmail(user: any) {
+    debugger;
     let u = {
       EntidadId: user.entidadId,
       Clave: user.clave,
@@ -220,7 +221,7 @@ export class AddPersonaComponent implements OnInit {
       TipoUsuarioId: user.tipoUsuarioId,
       OficinaId: user.oficinaId,
       Foto: user.foto,
-      email: user.email
+      Email: user.email
     }
 
     this.service.SendEmailRegister(u).subscribe(res => {
