@@ -25,7 +25,7 @@ export class SistTicketsService {
     return this._httpClient.get(this.UrlInsertTicket, {params: params})
   }
 
-  UpdateStatusTicket(ticketId) : Observable<any>
+  UpdateStatusTicket(ticketId, estatus) : Observable<any>
   {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -33,7 +33,7 @@ export class SistTicketsService {
       })
     };
 
-    let params = new HttpParams().set('ticketId', ticketId);
+    let params = new HttpParams().set('ticketId', ticketId).set('estatus', estatus);
     return this._httpClient.get(this.UrlUpdateStatus, {params:params})
   }
   GetFilaTickets(cita) :Observable<any>

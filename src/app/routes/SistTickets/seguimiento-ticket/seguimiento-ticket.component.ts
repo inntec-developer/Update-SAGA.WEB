@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 
 import { DlgAsignarPerfilComponent } from './../../../components/dlg-asignar-perfil/dlg-asignar-perfil.component';
 import { SistTicketsService } from './../../../service/SistTickets/sist-tickets.service';
@@ -20,9 +21,9 @@ export class SeguimientoTicketComponent implements OnInit {
   compact = false;
   invertX = false;
   invertY = false;
-
   shown = 'hover';
 
+  modulo = sessionStorage.getItem('modulo');
   fila = [];
   ticket = [];
 finalizar = false;
@@ -60,6 +61,7 @@ apartar = true;
   {
     this._service.GetTicketRecl(ticketId, sessionStorage.getItem('id')).subscribe(data => {
       this.ticket = data;
+
       this.ticket[0].estado == 3 ? this.finalizar = false : this.finalizar = true;
       this.ticket[0].estado == 2 ? this.atender = true : this.atender = false;
 
@@ -92,9 +94,9 @@ apartar = true;
    
   }
 
-  public Finalizar(ticketId)
+  public Finalizar(ticketId, estatus)
   {
-    this._service.UpdateStatusTicket(ticketId).subscribe(data => {
+    this._service.UpdateStatusTicket(ticketId, estatus).subscribe(data => {
       this.apartar = true;
       this.GetTicket(ticketId)
     });
@@ -146,44 +148,58 @@ apartar = true;
   }
 
   _apartarCandidato(row, candidato) {
-    if (row.reclutadores.length > 1) {
-      let dialogDlt = this.dialog.open(DlgAsignarPerfilComponent, {
-        width: '45%',
-        disableClose: true,
-        data: row.reclutadores
-      });
+    console.log(row)
+    debugger;
+    let propietario = false;
+    this.dataSource.forEach(element => {
+      if (element.id == row.id) {
+        propietario = true;
+        return
+      }
+    });
 
-      dialogDlt.afterClosed().subscribe(result => {
+    if (!propietario) {
+      if (row.reclutadores.length > 1) {
+        let dialogDlt = this.dialog.open(DlgAsignarPerfilComponent, {
+          width: '45%',
+          disableClose: true,
+          data: row.reclutadores
+        });
 
-        var procesoCandidato = {
+
+        dialogDlt.afterClosed().subscribe(result => {
+
+          var procesoCandidato = {
+            candidatoId: candidato.candidato.candidatoId,
+            requisicionId: row.id,
+            folio: row.folio,
+            reclutador: result.nombre,
+            reclutadorId: result.reclutadorId,
+            estatusId: 12
+          }
+
+          this.SetApartar(candidato, procesoCandidato);
+
+        });
+      }
+      else if (row.reclutadores.length == 1) {
+        let procesoCandidato = {
           candidatoId: candidato.candidato.candidatoId,
           requisicionId: row.id,
           folio: row.folio,
-          reclutador: result.nombre,
-          reclutadorId: result.reclutadorId,
+          reclutador: row.reclutadores[0].nombre,
+          reclutadorId: row.reclutadores[0].reclutadorId,
           estatusId: 12
         }
 
         this.SetApartar(candidato, procesoCandidato);
-
-      });
-    }
-    else if (row.reclutadores.length == 1) {
-       let procesoCandidato = {
-        candidatoId: candidato.candidato.candidatoId,
-        requisicionId: row.id,
-        folio: row.folio,
-        reclutador: row.reclutadores[0].nombre,
-        reclutadorId: row.reclutadores[0].reclutadorId,
-        estatusId: 12
       }
-
-      this.SetApartar(candidato, procesoCandidato);
     }
     else {
 
       this.loading = true;
-      let procesoCandidato = { candidatoId: candidato.candidato.candidatoId,
+      let procesoCandidato = {
+        candidatoId: candidato.candidato.candidatoId,
         requisicionId: row.id,
         folio: row.folio,
         reclutador: sessionStorage.getItem('nombre'),
@@ -192,7 +208,6 @@ apartar = true;
       }
       this.SetApartar(candidato, procesoCandidato);
     }
-
 
   }
 

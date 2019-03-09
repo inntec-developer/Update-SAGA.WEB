@@ -1,0 +1,47 @@
+<div class="content-heading">
+  <div>
+    <h5 class="text-muted mb-2">TICKETS</h5>
+    <small class="text-muted">Sistema de Tickets.</small>
+  </div>
+  <!-- Breadcrumb right aligned-->
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item">
+      <a [routerLink]="['/home']">Inicio</a>
+    </li>
+    <li class="breadcrumb-item active text-muted">Tickets</li>
+  </ol>
+</div>
+<div class="card">
+  <div class="card-body mat-elevation-z8">
+    <div class="row">
+      <div class="col">
+        <h4 class="text-info p-2 bg-light text-center">
+          <i class="fa fa-thumb-tack mr-1" aria-hidden="true"></i>ASIGNAR MODULO</h4>
+      </div>
+    </div>
+    <br/>
+    <div class="row">
+      <div class="col-sm-6 col-md-6">
+        <div class="form-group">
+          <label class="text-sm text-warning">SELECCIONAR MODULO</label>
+          <select multiple class="form-control" id="exampleFormControlSelect2" [(ngModel)]="moduloId">
+            <option class="font-weight-bold" *ngFor="let r of modulos" [value]="r.id" (click)="mod = r.modulo; tipo = r.tipo;">{{r.modulo}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-4 col-md-4">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><span class="text-muted font-weight-bold">{{reclutador}}</span> - MODULO <span class="text-success font-weight-bold ml-1">{{mod}}</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button type="button" class="btn btn-labeled btn-success mat-elevation-z8 float-right" (click)="Iniciar(tipo, mod)">
+          <span class="btn-label">
+            <i class="fa fa-play"></i>
+          </span>INICIAR</button>
+      </div>
+    </div>
+  </div>
+</div>
