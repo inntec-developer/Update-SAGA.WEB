@@ -48,10 +48,12 @@ import { FilaTicketsComponent } from './fila-tickets/fila-tickets.component';
 import { EnAtencionComponent } from './en-atencion/en-atencion.component';
 import { CarruselVacantesComponent } from './carrusel-vacantes/carrusel-vacantes.component';
 import { CarruselArteVacantesComponent } from './carrusel-arte-vacantes/carrusel-arte-vacantes.component';
+import { DlgAsignarModuloComponent } from './dlg-asignar-modulo/dlg-asignar-modulo.component';
 
 const routes: Routes = [
   { path: 'turno', component: SeguimientoTicketComponent},
   { path: 'verTurno', component: VerTurnosComponent},
+  { path: 'Inicio', component: DlgAsignarModuloComponent},
 
 ];
 
@@ -106,6 +108,7 @@ const routes: Routes = [
     EnAtencionComponent,
     CarruselVacantesComponent,
     CarruselArteVacantesComponent,
+    DlgAsignarModuloComponent,
     
   ],
   entryComponents: [],
