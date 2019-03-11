@@ -3,7 +3,7 @@
     <div class="row" #tableContainer>
       <div class="col-sm-12 col-md-12 table-responsive clearfix">
         <div>
-          <pre class="card-block float-right">Registros: {{rows.length}}</pre>
+          <pre class="card-block float-right">Registros Totales: {{dataSource.length}}</pre>
         </div>
         <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
           <thead>
@@ -101,7 +101,7 @@
           [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
           (numPages)="numPages = $event"></pagination>
 
-        <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}</small></pre>
+        <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}} Registros: {{registros}}</small></pre>
       </div>
     </div>
   </div>

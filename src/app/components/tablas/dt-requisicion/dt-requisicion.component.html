@@ -84,14 +84,13 @@
           placement="bottom" tooltip="Actualizar">
           <em class="icon-refresh"></em>
         </button>
-        <button id="update" chkPrivilegiosButtons class="mr-1 float-right" [disabled]="candidatos" (click)="reporteCandidatos = true" 
-        [ngClass]="candidatos ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-warning'"  container="body" placement="bottom" tooltip="Candidatos">
+        <button id="update" chkPrivilegiosButtons class="mr-1 float-right" [disabled]="candidatos" (click)="reporteCandidatos = true"
+          [ngClass]="candidatos ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-warning'" container="body" placement="bottom"
+          tooltip="Candidatos">
           <i class="fa fa-users" aria-hidden="true"></i>
         </button>
       </div>
-
     </div>
-
     <!-- <div class="row">
         <div class="col-md-12">
           <mat-form-field>
@@ -103,6 +102,9 @@
 
     <div class="row" #tableContainer>
       <div class="col-sm-12 col-md-12 table-responsive clearfix">
+        <div>
+          <pre class="card-block float-right">Registros Totales: {{dataSource.length}}</pre>
+        </div>
         <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
           <thead>
             <tr>
@@ -203,7 +205,7 @@
           [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
           (numPages)="numPages = $event"></pagination>
 
-        <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre>
+        <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}} Registros: {{registros}}</small></pre>
       </div>
     </div>
   </div>
@@ -244,11 +246,13 @@
     </div>
   </div>
 </div> -->
-<div *ngIf="reporteCandidatos" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #candiModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+<div *ngIf="reporteCandidatos" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal
+  #candiModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
   <div class="modal-dialog modal-lg reporteMod">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="float-left text-success"><em class="fa fa-users mr-2"></em>Candidatos de Requisici&oacute;n {{Folio}} - {{Vacante}}</h4>
+        <h4 class="float-left text-success"><em class="fa fa-users mr-2"></em>Candidatos de Requisici&oacute;n
+          {{Folio}} - {{Vacante}}</h4>
         <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="reporteCandidatos=false;">
           <i class="fa fa-times"></i></button>
       </div>

@@ -27,6 +27,7 @@ export class DialogEventComponent implements OnInit {
   public color: string;
   public ColorPicker: string;
   public allDaySelected: boolean;
+  public minDate:any;
   public minLimitDate: any;
   public SeletedDayC: any;
   public Actividades: any;
@@ -63,6 +64,9 @@ export class DialogEventComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger;
+    var DateNow = new Date();
+    this.minDate = DateNow;
     this.ColorPicker = '#4290ff'
     this.SeletedDayC = this.data;
     this.minLimitDate = this.SeletedDayC;

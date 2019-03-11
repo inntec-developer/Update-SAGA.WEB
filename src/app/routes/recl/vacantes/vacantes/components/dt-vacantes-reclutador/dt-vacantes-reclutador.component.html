@@ -116,6 +116,9 @@
 
     <div class="row" #tableContainer>
       <div class="col-sm-12 col-md-12 table-responsive clearfix">
+        <div>
+          <pre class="card-block float-right">Registros Totales: {{dataSource.length}}</pre>
+        </div>
         <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
           <thead>
             <tr>
@@ -127,17 +130,17 @@
             </tr>
             <tr *ngIf="showFilterRow">
               <th *ngFor="let column of columns">
-                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
-                  class="form-control form-control-sm" id="{{column.name}}">
+                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
+                  (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
               </th>
             </tr>
           </thead>
           <tbody>
-            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
-              [disableOnBreakpoints]="false" [disabled]="disabled">
+            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+              [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
               <div>
-                <tr (click)="onCellClick(row)" (dblclick)="seguimientoRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial"
-                  [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
+                <tr (click)="onCellClick(row)" (dblclick)="seguimientoRequi()" *ngFor="let row of rows"
+                  [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
                   <td class="text-center">
                     {{row.folio}}
                   </td>
@@ -145,7 +148,8 @@
                   <td class="text-center">
                     <span *ngIf="row.cliente.length <= 10 else toLengthCliente">{{row.cliente}}</span>
                     <ng-template #toLengthCliente>
-                      <span placement="bottom" tooltip="{{row.cliente}}" container='body'> {{row.cliente | slice:0:10 }} ...
+                      <span placement="bottom" tooltip="{{row.cliente}}" container='body'> {{row.cliente | slice:0:10
+                        }} ...
                       </span>
                     </ng-template>
                   </td>
@@ -160,16 +164,18 @@
                   <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
                   <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
                   <td class="text-center">
-                    <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
-                      [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20"
-                      [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
+                    <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info"
+                      [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
+                      [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20" [class.badge-success]="row.estatusId  === 7"
+                      [class.badge-danger]="row.estatusId  === 8">
                       {{row.estatus | uppercase}}
                     </small>
                     <ng-template #toLength>
-                      <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
-                        [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20" [class.badge-success]="row.estatusId  === 7"
-                        [class.badge-danger]="row.estatusId  === 8" placement="bottom" tooltip="{{row.estatus | uppercase}}" container='body'>
-                      {{row.estatus | slice:0:8 | uppercase }} ...
+                      <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
+                        [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20"
+                        [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8"
+                        placement="bottom" tooltip="{{row.estatus | uppercase}}" container='body'>
+                        {{row.estatus | slice:0:8 | uppercase }} ...
                       </small>
                     </ng-template>
                   </td>
@@ -179,7 +185,8 @@
                     </small>
                   </td>
                   <td class="text-center">
-                    <small class="badge  badge-pill badge-warning" [popover]="popTemplatePostulados" container="body" placement="left" triggers="click">
+                    <small class="badge  badge-pill badge-warning" [popover]="popTemplatePostulados" container="body"
+                      placement="left" triggers="click">
                       {{row.postulados}}
                     </small>
                   </td>
@@ -294,14 +301,14 @@
               </tr>
               <tr>
                 <th *ngFor="let column of columnsInfo">
-                  <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTableInfo(config)"
-                    class="form-control form-control-sm" id="{{column.name}}">
+                  <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
+                    (tableChanged)="onChangeTableInfo(config)" class="form-control form-control-sm" id="{{column.name}}">
                 </th>
               </tr>
             </thead>
             <tbody>
-              <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
-                [disableOnBreakpoints]="false" [disabled]="disabled">
+              <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+                [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
                 <div class="fontMio">
 
                   <tr class="fontMio" *ngFor="let row of rowsInfo">
@@ -310,16 +317,18 @@
                     <td class="text-center"> {{row.cliente | uppercase}}</td>
                     <td class="text-center"> {{row.fch_limite | date:'dd/MM/yyyy'}} </td>
                     <td class="text-center">
-                      <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-primary" [class.badge-warning]="row.estatusId  === 4"
-                        [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20"
-                        [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
+                      <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-primary"
+                        [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
+                        [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20" [class.badge-success]="row.estatusId  === 7"
+                        [class.badge-danger]="row.estatusId  === 8">
                         {{row.estatus | uppercase}}
                       </small>
                       <ng-template #toLength>
-                        <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
-                          [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20" [class.badge-success]="row.estatusId  === 7"
-                          [class.badge-danger]="row.estatusId  === 8" placement="bottom" tooltip="{{row.estatus | uppercase}}"
-                          container='body'> {{row.estatus | slice:0:8 | uppercase }} ...
+                        <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
+                          [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20"
+                          [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8"
+                          placement="bottom" tooltip="{{row.estatus | uppercase}}" container='body'> {{row.estatus |
+                          slice:0:8 | uppercase }} ...
                         </small>
                       </ng-template>
                     </td>
@@ -359,9 +368,9 @@
           </table>
           <br />
           <div class="text-right">
-            <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="pageInfo" [totalItems]="lengthInfo" [itemsPerPage]="itemsPerPageInfo"
-              [maxSize]="maxSizeInfo" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTableInfo(config, $event)"
-              (numPages)="numPagesInfo = $event">
+            <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="pageInfo" [totalItems]="lengthInfo"
+              [itemsPerPage]="itemsPerPageInfo" [maxSize]="maxSizeInfo" [boundaryLinks]="true" [rotate]="false"
+              (pageChanged)="onChangeTableInfo(config, $event)" (numPages)="numPagesInfo = $event">
             </pagination>
             <pre *ngIf="config.paging" class="text-muted">P&aacute;gina: {{pageInfo}} / {{numPagesInfo}}  Total Registros: {{registrosInfo}}</pre>
           </div>
@@ -376,13 +385,13 @@
 </div>
 
 <!-- Modal para candidatos en proceso -->
-<div *ngIf="procesoCandidato" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #MessageModal="bs-modal" class="modal"
-  tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+<div *ngIf="procesoCandidato" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #MessageModal="bs-modal"
+  class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
   <div class="modal-dialog modal-lg reporteMod">
     <div class="modal-content">
       <div class="mt-3 p-1 bg-light d-flex flex-row justify-content-between align-items-stretch">
         <h4 class="float-left text-success mt-2 ml-1"><em class="fa fa-users mr-2"></em>CANDIDATOS EN PROCESO </h4>
-        <h5 class="text-warning font-weight-bold mt-2" >{{folio}} - {{vBtra | uppercase}}</h5>
+        <h5 class="text-warning font-weight-bold mt-2">{{folio}} - {{vBtra | uppercase}}</h5>
 
         <button type="button" class="btn btn-xs btn-danger btn-circle float-right mr-1" (click)="procesoCandidato=false; lgModal.hide();"><i
             class="fa fa-times"></i></button>
