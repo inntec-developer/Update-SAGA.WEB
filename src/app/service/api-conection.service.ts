@@ -269,4 +269,11 @@ export class ApiConection {
   /* Componentes de Graficas */
   public static GraficPAVacantes = 'Graficas/vacantesInicio';
   public static GetRequisicionesGPA = 'Graficas/getRequisicionesGPA'
+
+
+    /*Preguntas frecuentes */
+    public static GetPreguntasFrecuentes = 'PreguntasFrecuente/preguntas'
+    public static AddPreguntasFrecuentes = 'PreguntasFrecuente/add'
+    public static alterPreguntasFrecuentes = 'PreguntasFrecuente/alter'
+    public static deletePreguntasFrecuentes = 'PreguntasFrecuente/delete'
 }
