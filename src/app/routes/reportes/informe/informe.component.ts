@@ -7,6 +7,9 @@ import { ReportesService } from '../../../service/Reporte/reportes.service';
 import {Http} from '@angular/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiConection } from '../../../service/api-conection.service';
+import { FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-informe',
@@ -18,6 +21,24 @@ export class InformeComponent implements OnInit {
   public Empresas : any[];
   public Estatus : any[];
   public Usuario : any[];
+  public Oficina : any[];
+  public objsucursal : any[];
+  public objempresa : any[];
+  public objsolicit : any[];
+  public objrecluta : any[];
+  public objstatus : any[];
+
+  public FormEmpresas: FormGroup;
+  public FormSucursal: FormGroup;
+  public FormSolicitante: FormGroup;
+  public FormReclutador: FormGroup;
+  public FormEstatus: FormGroup;
+
+  public myDate: any = new Date();
+  public dia: any = this.myDate.getDate();
+  public mes: any = this.myDate.getMonth();
+  public ano: any = this.myDate.getFullYear();
+
   constructor(
     private Rutas: ActivatedRoute,
     private Servicio: ReportesService,
@@ -28,11 +49,29 @@ export class InformeComponent implements OnInit {
     private spinner: NgxSpinnerService
   ) {
   //  this.toasterService = toasterService;
+    this.FormEmpresas = new FormGroup({
+      ClientesControl: new FormControl({ value: '', disabled: false })
+    });
+    this.FormSucursal = new FormGroup({
+      SucursalControl: new FormControl({ value: '', disabled: false })
+    });
+    this.FormSolicitante = new FormGroup({
+      SolicitanteControl: new FormControl({ value: '', disabled: false })
+    });
+    this.FormReclutador = new FormGroup({
+      ReclutadorControl: new FormControl({ value: '', disabled: false })
+    });
+    this.FormEstatus = new FormGroup({
+      EstatusControl: new FormControl({ value: '', disabled: false })
+    });
+
    }
 
   ngOnInit() {
     this.Servicio.GetEmpresas().subscribe(item =>{
       this.Empresas = item;
+      this.Oficina = [{id:0,nombre:'Todas las Sucursales'},
+      {id:1,nombre:'Guadalajara'},{id:2,nombre:'México'},{id:3,nombre:'Monterrey'}]
     })
 
     this.Servicio.GetEstatusRep().subscribe(item =>{
@@ -42,6 +81,31 @@ export class InformeComponent implements OnInit {
     this.Servicio.GetUsuario().subscribe(item =>{
       this.Usuario = item;
     })
+  }
+
+  empresaChange(obj) {
+     this.objempresa = this.FormEmpresas.get('ClientesControl').value;
+    console.log(this.objempresa);
+  }
+
+  sucursalChange(){
+    this.objsucursal = this.FormSucursal.get('SucursalControl').value;
+    console.log(this.objsucursal);
+  }
+
+  solicitanteChange(){
+    this.objsolicit = this.FormSolicitante.get('SolicitanteControl').value;
+    console.log(this.objsolicit);
+  }
+
+  reclutadorChange(){
+    this.objrecluta = this.FormReclutador.get('ReclutadorControl').value;
+    console.log(this.objrecluta);
+  }
+
+  estatusChange(){
+    this.objstatus = this.FormEstatus.get('EstatusControl').value;
+    console.log(this.objstatus);
   }
 
  

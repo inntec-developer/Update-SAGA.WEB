@@ -1,164 +1,293 @@
 <p>
   Reportes
 </p>
-<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
+<ngx-spinner
+  bdColor="rgba(198,195,195,0.8)"
+  size="medium"
+  color="#90daff"
+  type="square-jelly-box"
+></ngx-spinner>
 <div class="row">
   <div class="col-xl-12">
-      <div class="form-group busqueda">
-          <label for="bus">Busqueda:</label>
-         <div class="input-group">
-              <input id="palabra" type="text" #palabra (blur)="hijo.Guardar(palabra.value)" placeholder="Palabra clave" class=" form-control"/>
-              <div  class="input-group-append mano" (click)="hijo.Generar()">
-                  <span  class="input-group-text ">
-                    <em  class="fa fa-search"></em></span>
-                    </div>
-              
-         </div>
-         <!-- <div _ngcontent-c33="" class="input-group">
+    <div class="form-group busqueda">
+      <label for="bus">Busqueda:</label>
+      <div class="input-group">
+        <input
+          id="palabra"
+          type="text"
+          #palabra
+          (blur)="hijo.Guardar(palabra.value)"
+          placeholder="Palabra clave"
+          class=" form-control"
+        />
+        <div class="input-group-append mano" (click)="hijo.Generar()">
+          <span class="input-group-text "> <em class="fa fa-search"></em></span>
+        </div>
+      </div>
+      <!-- <div _ngcontent-c33="" class="input-group">
            <input _ngcontent-c33="" class="form-control form-control-sm" placeholder="Filtrar" type="text">
             <div _ngcontent-c33="" class="input-group-append">
               <span _ngcontent-c33="" class="input-group-text text-info">
                 <em _ngcontent-c33="" class="fa fa-search"></em></span>
                 </div>
           </div> -->
-          
-        </div>
-    
+    </div>
   </div>
 </div>
 
+
 <div class="row">
- 
-    <div class="col-xl-3">
-        <div class="col-xl-12">
-            <div class="form-group">
-              <label for="sel1">Sucursal:</label>
-              <select class="form-control" id="oficina">
-                  <option value="0">Todas las sucursales</option>
-                <option value="1">Guadalajara</option>
-                <option value="2">México</option>
-                <option value="3">Monterrey</option>
-              </select>
-            </div>
-          </div>
+    <div class="col-xl-6">
+        <!-- (navigated)="valueChange($event)" -->
+     
     </div>
-    <div class="col-xl-3">
-        <div class="col-xl-12">
-            <div class="form-group">
-              <label for="sel2">Tipo de Reporte:</label>
-              <select class="form-control" id="sel2">
-                <option>Contratado vs Requerido</option>
-                <option>Estatus de Vacantes</option>
-                <option>Captación</option>
-                <option>Productividad</option>
-                <option>Fecha de Solicitud</option>
-              </select>
-            </div>
-          </div>
-      </div>
-      <div class="col-xl-3">
-          <div class="col-xl-12">
-              <div class="form-group">
-                <label for="sel3">Fecha Inicio :</label>
-                <input class="form-control" type="date" id="fechaInicial" name="fecha" min="2019-01-20"
-                max="2019-03-04" >
-              </div>
-            </div>
-        </div>
-        <div class="col-xl-3">
-            <div class="col-xl-12">
-                <div class="form-group">
-                    <label for="sel3">Fecha Fin :</label>
-                    <input class="form-control" type="date" id="fechaFinal" name="fecha" min="2019-01-20"
-                    max="2019-03-04" >
-                </div>
-              </div>
-          </div>
-
-
-          <div class="col-xl-3">
-              <div class="col-xl-12">
-                  <div class="form-group">
-                    <label for="empresaR">Empresa:</label>
-                    <select  class="form-control" id="empresaR">
-                        <option selected value="0">Todas las empresas</option>
-                      <option value="{{item.id}}" *ngFor="let item of Empresas">{{item.razonSocial}}</option>
-                    </select>
-                  </div>
-                </div>
-          </div>
-          <div class="col-xl-3">
-              <div class="col-xl-12">
-                  <div class="form-group">
-                    <label for="solicitanteR">Solicitante:</label>
-                    <select  class="form-control" id="solicitanteR">
-                        <option value="0">Todos los solicitantes</option>
-                        <option value="{{item.usuario}}" *ngFor="let item of Usuario">{{item.nombre}}</option>
-                      </select>
-                  </div>
-                </div>
-            </div>
-            <div class="col-xl-3">
-                <div class="col-xl-12">
-                    <div class="form-group">
-                      <label for="tiporeclutaR">Tipo  Reclutamiento:</label>
-                      <select class="form-control" id="tiporeclutaR">
-                        <option value="0">Todos los reclutamientos</option>
-                        <option value="1">Reclutamiento Puro</option>
-                        <option value="2">Subcontratación</option>
-                      </select>
-                    </div>
-                  </div>
-              </div>
-              <div class="col-xl-3">
-                  <div class="col-xl-12">
-                      <div class="form-group">
-                        <label for="condinacionR">Tipo Coordinación:</label>
-                        <select class="form-control" id="condinacionR">
-                            <option value="0">Todas las coordinaciones</option>
-                          <option value="1">Especializado</option>
-                          <option value="2">Operativo</option>
-                          
-                        </select>
-                      </div>
-                    </div>
-                </div>
-
-
-                <div class="col-xl-3">
-                    <div class="col-xl-12">
-                        <div class="form-group">
-                          <label for="sel1">Estatus:</label>
-                          <select  class="form-control" id="estatusR">
-                              <option value="0">Todos los estatus</option>
-                              <option value="{{item.id}}" *ngFor="let item of Estatus">{{item.descripcion}}</option>
-                            </select>
-                        </div>
-                      </div>
-                </div>
-                <div class="col-xl-3">
-                    <div class="col-xl-12">
-                        <div class="form-group">
-                          <label for="sel2">Reclutador:</label>
-                          <select class="form-control" id="reclutadorR">
-                              <option value="0">Todos los reclutadores</option>
-                              <option value="{{item.Id}}" *ngFor="let item of Usuario">{{item.nombre}}</option>
-                          </select>
-                        </div>
-                      </div>
-                  </div>
-                 
-                   
   </div>
 
-  <button (click)="hijo.Exportar()" class="btn btn-warning btnReport">
-      Exportar
-    </button>
 
-<button (click)="hijo.Generar()" class="btn btn-success btnReport">
+<div class="row">
+
+    <div class="col-xl-3">
+        <div class="col-xl-12">
+          <div class="form-group">
+            <label for="sel2">Sucursales:</label>
+            
+                <form [formGroup]="FormSucursal">
+                    <ngx-select
+                    [allowClear]="true"
+                    autoClearSearch="true"
+                   placeholder="Sucursales"
+                   formControlName = "SucursalControl"
+                   (data)="(value)"
+                   [multiple]="true"
+                   [items]="Oficina"
+                   optionValueField="id"
+                   optionTextField="nombre"
+                   (remove)="sucursalChange($event)"
+                   (select)="sucursalChange($event)"
+                 >
+                   <ng-template ngx-select-option-selected let-option >
+                     <span>{{ option.data.nombre }}</span>
+                   </ng-template>
+                 </ngx-select>
+                 </form>
+            
+          </div>
+        </div>
+      </div>
+
+  <div class="col-xl-3">
+    <div class="col-xl-12">
+      <div class="form-group">
+        <label for="sel2">Tipo de Reporte:</label>
+        <select class="form-control" id="sel2">
+          <option>Contratado vs Requerido</option>
+          <option>Estatus de Vacantes</option>
+          <option>Captación</option>
+          <option>Productividad</option>
+          <option>Fecha de Solicitud</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3">
+    <div class="col-xl-12">
+      <div class="form-group">
+        <label for="sel3">Fecha Inicio :</label>
+        <input
+          class="form-control"
+          type="date"
+          id="fechaInicial"
+          name="fecha"
+         
+          max="{{ano}}-{{mes}}-{{dia}}"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3">
+    <div class="col-xl-12">
+      <div class="form-group">
+        <label for="sel3">Fecha Fin :</label>
+        <input
+          class="form-control"
+          type="date"
+          id="fechaFinal"
+          name="fecha"
+         
+          max="{{ano}}-{{mes}}-{{dia}}"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-6">
+    <div class="col-xl-12">
+      <div class="form-group">
+        <label for="empresaR">Empresa:</label>
+
+        <form [formGroup]="FormEmpresas">
+            <ngx-select
+           [allowClear]="true"
+           autoClearSearch="true"
+           placeholder="Empresas..."
+           formControlName = "ClientesControl"
+           (data)="(value)"
+           class="select-asig"
+           [multiple]="true"
+           [items]="Empresas"
+           (remove)="empresaChange($event)"
+           (select)="empresaChange($event)"
+           
+           optionValueField="id"
+           optionTextField="razonSocial"
+         >
+           <ng-template ngx-select-option-selected let-option let-text="descripcion">
+             <span>{{ option.data.razonSocial }}</span>
+           </ng-template>
+           <ng-template ngx-select-option-not-found>
+             No se encontraron resultados...
+           </ng-template>
+         </ngx-select>
+         </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3">
+    <div class="col-xl-12">
+      <div class="form-group">
+        <label for="solicitanteR">Solicitante:</label>
+
+        <form [formGroup]="FormSolicitante">
+            <ngx-select
+            [allowClear]="true"
+            autoClearSearch="true"
+           placeholder="Solicitantes..."
+           formControlName = "SolicitanteControl"
+           (data)="(value)"
+           [multiple]="true"
+           [items]="Usuario"
+           optionValueField="usuario"
+           optionTextField="nombre"
+           (remove)="solicitanteChange($event)"
+           (select)="solicitanteChange($event)">
+           <ng-template ngx-select-option-selected let-option >
+             <span>{{ option.data.nombre }}</span>
+           </ng-template>
+         </ngx-select>
+         </form>
+
+        <!-- <select class="form-control" id="solicitanteR">
+          <option value="0">Todos los solicitantes</option>
+          <option value="{{ item.usuario }}" *ngFor="let item of Usuario">{{
+            item.nombre
+          }}</option>
+        </select> -->
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3">
+    <div class="col-xl-12">
+      <div class="form-group">
+        <label for="tiporeclutaR">Tipo Reclutamiento:</label>
+        <select class="form-control" id="tiporeclutaR">
+          <option value="0">Todos los reclutamientos</option>
+          <option value="1">Reclutamiento Puro</option>
+          <option value="2">Subcontratación</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3">
+    <div class="col-xl-12">
+      <div class="form-group">
+        <label for="condinacionR">Tipo Coordinación:</label>
+        <select class="form-control" id="condinacionR">
+          <option value="0">Todas las coordinaciones</option>
+          <option value="1">Especializado</option>
+          <option value="2">Operativo</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-3">
+    <div class="col-xl-12">
+      <div class="form-group">
+        <label for="sel1">Estatus:</label>
+
+        <form [formGroup]="FormEstatus">
+            <ngx-select
+           [allowClear]="true"
+           autoClearSearch="true"
+           placeholder="Estatus..."
+           formControlName = "EstatusControl"
+           (data)="(value)"
+           [multiple]="true"
+           [items]="Estatus"
+           optionValueField="id"
+           optionTextField="descripcion"
+           (remove)="estatusChange($event)"
+           (select)="estatusChange($event)">
+           <ng-template ngx-select-option-selected let-option >
+             <span>{{ option.data.descripcion }}</span>
+           </ng-template>
+         </ngx-select>
+         </form>
+
+        <!-- <select class="form-control" id="estatusR">
+          <option value="0">Todos los estatus</option>
+          <option value="{{ item.id }}" *ngFor="let item of Estatus">{{
+            item.descripcion
+          }}</option>
+        </select> -->
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-3">
+    <div class="col-xl-12">
+      <div class="form-group">
+        <label for="sel2">Reclutador:</label>
+
+        <form [formGroup]="FormReclutador">
+            <ngx-select
+           [allowClear]="true"
+           autoClearSearch="true"
+           placeholder="Reclutador..."
+           formControlName = "ReclutadorControl"
+           (data)="(value)"
+           [multiple]="true"
+           [items]="Usuario"
+           optionValueField="id"
+           optionTextField="nombre"
+           (remove)="reclutadorChange($event)"
+           (select)="reclutadorChange($event)">
+           <ng-template ngx-select-option-selected let-option >
+             <span>{{ option.data.nombre }}</span>
+           </ng-template>
+         </ngx-select>
+         </form>
+
+
+        <!-- <select class="form-control" id="reclutadorR">
+          <option value="0">Todos los reclutadores</option>
+          <option value="{{ item.Id }}" *ngFor="let item of Usuario">{{
+            item.nombre
+          }}</option>
+        </select> -->
+      </div>  
+    </div>
+  </div>
+</div>
+
+<button (click)="hijo.Exportar()" class="btn btn-warning btnReport">
+  Exportar
+</button>
+
+<button (click)="hijo.Generar(objsucursal,objsolicit,objrecluta,objempresa,objstatus)" class="btn btn-success btnReport">
   Generar Reporte
 </button>
 
+
 <div>
-  <app-tabla-reporte #hijo [data]='true'></app-tabla-reporte>
+  <app-tabla-reporte #hijo [data]="true"></app-tabla-reporte>
 </div>

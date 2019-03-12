@@ -64,7 +64,8 @@ export class LoginComponent implements OnInit {
                         sessionStorage.setItem('foto', data.foto);
                         sessionStorage.setItem('id', data.id);
                         sessionStorage.setItem('tipoUsuario', data.tipoUsuarioId);
-                        
+                        sessionStorage.setItem('tipo', data.tipo);
+                        sessionStorage.setItem('sucursal', data.sucursal);
                         this.router.navigate(['/home']);
                     }
                     if(data == 404){

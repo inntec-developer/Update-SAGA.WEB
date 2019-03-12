@@ -8,6 +8,7 @@ import { ExcelService } from '../../../service/ExcelService/excel.service';
 import {Http} from '@angular/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiConection } from '../../../service/api-conection.service';
+import { $ } from 'protractor';
 
 @Component({
   selector: 'app-tabla-reporte',
@@ -19,6 +20,11 @@ export class TablaReporteComponent implements OnInit {
   @Input('data') valor:any;
   public General : any[];
   public palabra :string;
+ 
+  // public objsucursal : any[];
+  // public objempresa : any[];
+  // public objsolicit : any[];
+  // public objrecluta : any[];
   
   constructor(
     private Servicio: ReportesService,
@@ -37,33 +43,90 @@ export class TablaReporteComponent implements OnInit {
     console.log(palabra)
   }
 
-  Generar(){
+  Prueba(lista){
+    console.log(lista);
+  }
 
+
+  Generar(oficina,solicitante,reclutador,empresa,estatus){
     this.spinner.show();
+
+  debugger;
+    
+  var ofc = '';
+  var sol = '';
+  var rec = '';
+  var emp = '';
+  var est = '';
+
+  if(oficina != undefined){
+    for (let item of oficina) {
+      ofc += item +',';
+      console.log(ofc); // 1, "string", false
+    }
+  }
+
+  if(solicitante != undefined){
+    for (let item of solicitante) {
+      sol += item +',';
+      console.log(sol); // 1, "string", false
+    }
+  }
+
+  if(reclutador != undefined){
+    for (let item of reclutador) {
+      rec += item +',';
+      console.log(rec); // 1, "string", false
+    }
+  }
+
+  if(empresa != undefined){
+    for (let item of empresa) {
+      emp += item +',';
+      console.log(emp); // 1, "string", false
+    }
+  }
+
+  if(estatus != undefined){
+    for (let item of estatus) {
+      est += item +',';
+      console.log(est); // 1, "string", false
+    }
+  }
+
+ofc = oficina == undefined?'0':ofc;
+sol = solicitante == undefined?'0':sol;
+rec = reclutador == undefined?'0':rec;
+emp = empresa == undefined?'0':emp;
+est = estatus == undefined?'0':est;
+
+
+    
     let pal = document.getElementById('palabra');
-    let est = document.getElementById('estatusR');
-    let rec = document.getElementById('reclutadorR');
-    let sol = document.getElementById('solicitanteR');
-    let emp = document.getElementById('empresaR');
+ //   let est = document.getElementById('estatusR');
+ //   let rec = document.getElementById('reclutadorR');
+ //   let sol = document.getElementById('solicitanteR');
+ //   let emp = document.getElementById('empresaR');
     let trcu = document.getElementById('tiporeclutaR');
     let coo = document.getElementById('condinacionR');
     let inc = document.getElementById('fechaInicial');
     let fin = document.getElementById('fechaFinal');
-    let ofc = document.getElementById('oficina');
+   // let ofc = document.getElementById('oficina');
+   
 
 
     var palabra = pal['value'];
-    var estatus = est['value'];
-    var reclutado = rec['value'];
-    var solicitante = sol['value'];
-    var empresa = emp['value'];
+ //   var estatus = est['value'];
+ //   var reclutado = rec['value'];
+ //   var solicitante = sol['value'];
+//    var empresa = emp['value'];
     var tiporecluta = trcu['value'];
     var tipocordina = coo['value'];
     var inicio = inc['value'];
     var final = fin['value'];
-    var oficina = ofc['value'];
+   
     
-    this.Servicio.GetInforme(palabra,oficina,null,inicio,final,empresa,solicitante,tiporecluta,tipocordina,estatus,reclutado)
+    this.Servicio.GetInforme(palabra,ofc,null,inicio,final,emp,sol,tiporecluta,tipocordina,est,rec)
     .subscribe( data => {
     // this.popGenerico(data.mensaje,data.bandera,'Publicacion');
     this.General = data;
