@@ -18,7 +18,9 @@ export class UserblockComponent implements OnInit {
         this.user = {
             picture: ApiConection.ServiceUrlFoto + sessionStorage.getItem('foto'),
             name: sessionStorage.getItem('nombre'),
-            clave: sessionStorage.getItem('clave')
+            clave: sessionStorage.getItem('clave'),
+            tipo: sessionStorage.getItem('tipo'),
+            sucursal: sessionStorage.getItem('sucursal')
         };
         if(this.user.picture == null || this.user.picture == '')
             this.user.picture = '/assets/img/user/default.jpg'

@@ -1,8 +1,9 @@
-import { NgxSpinnerService } from 'ngx-spinner';
-import { RequisicionesService } from './../../service/requisiciones/requisiciones.service';
 import { Component, OnInit } from '@angular/core';
+
 import { DatePipe } from '@angular/common';
 import { ExcelService } from '../../service/ExcelService/excel.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { RequisicionesService } from './../../service/requisiciones/requisiciones.service';
 
 @Component({
   selector: 'app-reporte70',
@@ -21,7 +22,7 @@ export class Reporte70Component implements OnInit {
   shown = 'hover';
 
   public rows: Array<any> = [];
-        
+
   requisiciones = [];
 
   // Varaibles del paginador
@@ -42,7 +43,7 @@ export class Reporte70Component implements OnInit {
 
 
   public columns: Array<any> = [
-    { title: 'Folio', sorting: 'desc', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+    { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
     { title: 'Fecha Solicitud', className: 'text-info text-center', name: 'fch_Solicitud', filtering: { filterString: '', placeholder: 'dd-mm-yyyy' } },
     { title: 'Empresa', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Empresa' } },
     { width: '4%', title: 'Puesto', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Puesto' } },
@@ -177,7 +178,7 @@ export class Reporte70Component implements OnInit {
           }
         });
       }
- 
+
     });
 
     if (!config.filtering) {
@@ -229,14 +230,14 @@ export class Reporte70Component implements OnInit {
     this.spinner.hide();
   }
 //#endregion
-  
+
 public refreshTable() {
     this.GetReporte70();
     // setTimeout(() => {
     //   this.columns.forEach(element => {
     //     (<HTMLInputElement>document.getElementById(element.name)).value = '';
     //   });
-    
+
     // }, 1000);
   }
 
@@ -265,7 +266,7 @@ public refreshTable() {
           row.comentarios_coord.forEach(element => {
             comentariosCoord = comentariosCoord + element + '\n'
           });
-          
+
         }
         else{
           comentariosCoord = "";
@@ -273,10 +274,10 @@ public refreshTable() {
 
         if(row.comentarios_solicitante.length > 0)
         {
-          row.comentarios_solicitante.forEach(element => {    
+          row.comentarios_solicitante.forEach(element => {
               comentariosSol = comentariosSol + element + '\n'
           });
-          
+
         }
         else{
           comentariosSol = "";
@@ -289,12 +290,12 @@ public refreshTable() {
               if(element.fch_Creacion != null)
             {
               fecha =  this.pipe.transform(new Date(element.fch_Creacion), 'yyyy-MM-dd');
-            }    
+            }
 
               comentariosRecl = comentariosRecl + fecha + ' ' + el.comentario + '\n'
             });
             comentariosRecl = element.reclutador + '\n' + comentariosRecl + '\n';
-          
+
           });
         }
         else{
@@ -315,7 +316,7 @@ public refreshTable() {
         {
           reclutador = row.reclutadores[0].reclutador;
         }
-        
+
         var estatus = '';
         row.estatus.forEach(element => {
           estatus = estatus + element.estatus + ' ' + this.pipe.transform(new Date(element.fch_Modificacion), 'yyyy-MM-dd') + '\n';
@@ -334,13 +335,13 @@ public refreshTable() {
         {
           var e = this.pipe.transform( new Date(row.fch_Modificacion), 'yyyy-MM-dd');
         }
-        else 
+        else
         {
            var e = this.pipe.transform( new Date(), 'yyyy-MM-dd');
         }
-        
 
- 
+
+
 
 
         aux.push({
