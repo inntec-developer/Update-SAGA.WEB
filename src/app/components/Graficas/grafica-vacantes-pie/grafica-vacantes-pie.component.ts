@@ -43,7 +43,6 @@ export class GraficaVacantesPieComponent implements OnInit {
           'Vencidas'
         ]
       }
-      
       this.Chart = new Chart('canvas', {
         type: 'polarArea',
         title: { text: 'Seguimiento de Vacantes' },
