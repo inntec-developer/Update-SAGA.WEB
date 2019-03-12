@@ -3,9 +3,19 @@ import { ApiConection } from './../api-conection.service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
+
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class SistTicketsService {
   // Url de servicios.
   private UrlInsertTicket = ApiConection.ServiceUrl + ApiConection.InsertTicket;
@@ -17,23 +27,20 @@ export class SistTicketsService {
   private UrlLiberarCandidato = ApiConection.ServiceUrl + ApiConection.LiberarCandidato;
   private UrlGetTicketEnAtencion = ApiConection.ServiceUrl + ApiConection.GetTicketEnAtencion;
   private UrlGetVacantes = ApiConection.ServiceUrl + ApiConection.GetVacantes;
+  private UrlSetExamen = ApiConection.ServiceUrl + ApiConection.SetExamen;
+  private UrlGetModulos = ApiConection.ServiceUrl + ApiConection.GetModulos;
+
   constructor(private _httpClient: HttpClient) { }
 
-  InsertTicket(ticketId, reclutadorId) : Observable<any>
+  InsertTicket(ticketId, reclutadorId, modulo) : Observable<any>
   {
-    let params = new HttpParams().set('Ticket', ticketId).set('ReclutadorId', reclutadorId);
+    let params = new HttpParams().set('Ticket', ticketId).set('ReclutadorId', reclutadorId).set('ModuloId', modulo);
     return this._httpClient.get(this.UrlInsertTicket, {params: params})
   }
 
-  UpdateStatusTicket(ticketId, estatus) : Observable<any>
+  UpdateStatusTicket(ticketId, estatus, modulo) : Observable<any>
   {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-
-    let params = new HttpParams().set('ticketId', ticketId).set('estatus', estatus);
+    let params = new HttpParams().set('ticketId', ticketId).set('estatus', estatus).set('moduloId', modulo);
     return this._httpClient.get(this.UrlUpdateStatus, {params:params})
   }
   GetFilaTickets(cita) :Observable<any>
@@ -48,9 +55,9 @@ export class SistTicketsService {
     return this._httpClient.get(this.UrlGetTicketEnAtencion)
   
   }
-  GetTicketPrioridad(reclutadorId) :Observable<any>
+  GetTicketPrioridad(reclutadorId, modulo) :Observable<any>
   {
-    let params = new HttpParams().set('reclutadorId', reclutadorId);
+    let params = new HttpParams().set('reclutadorId', reclutadorId).set('ModuloId', modulo);
     return this._httpClient.get(this.UrlGetTicketPrioridad, {params: params})
   
   }
@@ -76,5 +83,14 @@ export class SistTicketsService {
   GetVacantes() : Observable<any>
   {
     return this._httpClient.get(this.UrlGetVacantes)
+  }
+
+  GetModulos() :Observable<any>
+  {
+    return this._httpClient.get(this.UrlGetModulos);
+  }
+  SetExamen(objeto) : Observable<any>
+  {
+    return this._httpClient.post(this.UrlSetExamen, objeto, httpOptions);
   }
 }

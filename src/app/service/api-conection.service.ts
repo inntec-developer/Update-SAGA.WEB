@@ -265,6 +265,8 @@ export class ApiConection {
   public static LiberarCandidato = 'SistTickets/liberarCandidato'
   public static GetTicketEnAtencion = 'SistTickets/getTicketEnAtencion'
   public static GetVacantes = 'SistTickets/getVacantes'
+  public static SetExamen = 'SistTickets/setExamen'
+  public static GetModulos = 'SistTickets/getModulos'
 
   /* Componentes de Graficas */
   public static GraficPAVacantes = 'Graficas/vacantesInicio';

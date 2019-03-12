@@ -1,3 +1,4 @@
+import { SistTicketsService } from './../../../service/SistTickets/sist-tickets.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -11,7 +12,7 @@ export class DlgAsignarModuloComponent implements OnInit {
   modulos = [];
   reclutador = sessionStorage.getItem('nombre');
   moduloId
-  constructor(private _Router: Router) { }
+  constructor(private _Router: Router, private _service: SistTicketsService) { }
 
   ngOnInit() {
     this.GetModulos();
@@ -20,7 +21,9 @@ export class DlgAsignarModuloComponent implements OnInit {
 
   GetModulos()
   {
-    this.modulos.push({modulo: 'RECL01', tipo: 1, id: 1}, {modulo: 'EX01', tipo: 2, id: 2}, {modulo: 'EX02', tipo: 3, id: 3});
+    this._service.GetModulos().subscribe(data =>{
+      this.modulos = data;
+    })
   }
 
   Iniciar(tipo, mod)
@@ -28,6 +31,7 @@ export class DlgAsignarModuloComponent implements OnInit {
     console.log(this.moduloId)
     console.log(tipo)
     sessionStorage.setItem('modulo', mod); 
+    sessionStorage.setItem('moduloId', this.moduloId)
 
     if(tipo == 1)
     {

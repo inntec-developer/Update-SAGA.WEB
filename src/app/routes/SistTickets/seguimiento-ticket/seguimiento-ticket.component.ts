@@ -28,6 +28,7 @@ export class SeguimientoTicketComponent implements OnInit {
   ticket = [];
 finalizar = false;
 atender = false;
+examen = false;
 date = new Date;
 timeW;
   postulaciones: any = [];
@@ -35,6 +36,8 @@ timeW;
   
   dataSource: any = [];
 apartar = true;
+  requisicionId: any;
+  examenId: any = 0;
 
   constructor( private _service: SistTicketsService, 
       private _Router: Router, private dialog: MatDialog, 
@@ -75,6 +78,7 @@ apartar = true;
   {
     this._service.GetPostulaciones(candidatoId).subscribe(data => {
       this.postulaciones = data;
+      console.log(this.postulaciones)
       this.GetMisVacantes();
     });
   }
@@ -82,22 +86,37 @@ apartar = true;
   GetMisVacantes() {
     this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
+      console.log(this.dataSource)
     });
   }
 
   public Atender()
   {
 
-    this._service.GetTicketPrioridad(sessionStorage.getItem('id')).subscribe(data => {
+    this._service.GetTicketPrioridad(sessionStorage.getItem('id'), sessionStorage.getItem('moduloId')).subscribe(data => {
      this.GetTicket(data);
     });
    
   }
 
+  public SetExamen(candidato, ticket) {
+    if (this.examenId != 0) {
+      let objeto = { ExamenId: this.examenId, CandidatoId: candidato, RequisicionId: this.requisicionId, Resultado: 0 };
+      this._service.SetExamen(objeto).subscribe(data => {
+        if (data == 200) {
+          this.examenId = 0;
+          this.Finalizar(ticket, 3);
+        }
+      })
+    }
+  }
+
   public Finalizar(ticketId, estatus)
   {
-    this._service.UpdateStatusTicket(ticketId, estatus).subscribe(data => {
+    this._service.UpdateStatusTicket(ticketId, estatus, sessionStorage.getItem('moduloId')).subscribe(data => {
       this.apartar = true;
+      this.finalizar = false;
+      this.examen = false;
       this.GetTicket(ticketId)
     });
   }
@@ -107,11 +126,12 @@ apartar = true;
     this._serviceCandidato.setApartarCandidato(datos)
       .subscribe(data => {
         this.apartar = false;
-
+        this.examen = true;
         switch (data) {
           case 200: {
             this.loading = false;
-
+            this.requisicionId = datos.requisicionId;
+            
             var msg = 'El candidato se aparto correctamente.';
             this.popToast('success', 'Apartado', msg);
 
@@ -148,8 +168,8 @@ apartar = true;
   }
 
   _apartarCandidato(row, candidato) {
-    console.log(row)
-    debugger;
+
+    this.examenId = row.examenId;
     let propietario = false;
     this.dataSource.forEach(element => {
       if (element.id == row.id) {

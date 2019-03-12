@@ -81,15 +81,15 @@
         </div>
       </div>
       <div class="mt-2 d-flex flex-row justify-content-end">
-        <button type="button" class="btn btn-outline-success mat-elevation-z8" [disabled]="fila.length == 0 || atender" [ngClass]="fila.length == 0 || atender ? 'btn disable' : 'btn btn-outline-success'" (click)="Atender()" tooltip="ATENDER">
+        <button type="button" [disabled]="fila.length == 0 || atender" [ngClass]="fila.length == 0 || atender ? 'btn disable' : 'btn btn-outline-success mat-elevation-z8'" (click)="Atender()" tooltip="ATENDER">
 
             <i class="fa fa-play"></i>
         </button>
-          <button type="button" class="btn btn-outline-warning mat-elevation-z8 ml-2" [disabled]="fila.length == 0 || !finalizar" [ngClass]="fila.length == 0 || !finalizar ? 'btn disable' : 'btn btn-outline-warning'" (click)="Finalizar(ticket[0].ticketId, 3)" tooltip="EXAMENES">
+          <button type="button"  *ngIf="ticket.length > 0" [disabled]="ticket[0].candidato.estatusId != 12 && examenId == 0 || !examen" [ngClass]="ticket[0].candidato.estatusId != 12 || !examen ? 'btn disable ml-2' : 'btn btn-outline-warning mat-elevation-z8 ml-2'" (click)="SetExamen(ticket[0].candidato.candidatoId, ticket[0].ticketId)" tooltip="EXAMENES">
 
                 <i class="fa fa-file-text-o"></i>
 </button>
-        <button type="button" class="btn btn-outline-danger mat-elevation-z8 ml-2" [disabled]="fila.length == 0 || !finalizar" [ngClass]="fila.length == 0 || !finalizar ? 'btn disable' : 'btn btn-outline-danger'" (click)="Finalizar(ticket[0].ticketId, 4)" tooltip="FINALIZAR">
+        <button type="button"  *ngIf="ticket.length > 0" [disabled]="fila.length == 0 || !finalizar || ticket[0].estado == 4" [ngClass]="fila.length == 0 || !finalizar || ticket[0].estado == 4 ? 'btn disable ml-2' : 'btn btn-outline-danger mat-elevation-z8 ml-2'" (click)="Finalizar(ticket[0].ticketId, 4)" tooltip="FINALIZAR">
 
             <i class="fa fa-stop"></i>
 </button>

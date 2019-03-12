@@ -742,9 +742,7 @@ objLiberar = [];
             this.service.SetProcesoVacante(datosVacante).subscribe(data => {
             })
           }
-
-
-
+        
           this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
 
           // if (estatusId == 22 && this.estatusVacante != "30"  && this.estatusVacante != "39") {

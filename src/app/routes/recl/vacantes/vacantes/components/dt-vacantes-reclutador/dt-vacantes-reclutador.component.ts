@@ -121,7 +121,8 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   getVacantes() {
     this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
-      this.getRequiEstadisticos()
+     
+     // this.getRequiEstadisticos()
     });
   }
 
