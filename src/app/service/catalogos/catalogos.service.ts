@@ -48,8 +48,33 @@ export class CatalogosService {
   private UrlGetColonia = ApiConection.ServiceUrl + ApiConection.GetColonia;
   private UrlGetForCP = ApiConection.ServiceUrl + ApiConection.GetForCP;
 
+  /* Catalogo de preguntas frecuentes */
+  private UrlGetPreguntasFrecuentes = ApiConection.ServiceUrl + ApiConection.GetPreguntasFrecuentes;
+  private UrlAddPreguntasFrecuentes = ApiConection.ServiceUrl + ApiConection.AddPreguntasFrecuentes;
+  private UrlalterPreguntasFrecuentes = ApiConection.ServiceUrl + ApiConection.alterPreguntasFrecuentes;
+  private UrlDeletePreguntasFrecuentes = ApiConection.ServiceUrl + ApiConection.deletePreguntasFrecuentes;
+
    
   constructor(private _httpClient: HttpClient) { }
+
+  getPreguntasFrecuentes() : Observable<any>{
+    return this._httpClient.get(this.UrlGetPreguntasFrecuentes)
+  }
+
+  addPreguntasFrecuentes(pregunta:string,repuesta:string) : Observable<any>{
+    let params = new HttpParams().set('pregunta', pregunta).set('repuesta',repuesta);
+    return this._httpClient.get(this.UrlAddPreguntasFrecuentes, {params: params});
+  }
+
+  GuardarPreguntasFrecuentes(id:string,pregunta:string,repuesta:string,activo:string) : Observable<any>{
+    let params = new HttpParams().set('pregunta', pregunta).set('repuesta',repuesta).set('activo',activo).set('id',id);
+    return this._httpClient.get(this.UrlalterPreguntasFrecuentes, {params: params});
+  }
+
+  EliminarPreguntasFrecuentes(id:string) : Observable<any>{
+    let params = new HttpParams().set('id', id);
+    return this._httpClient.get(this.UrlDeletePreguntasFrecuentes, {params: params});
+  }
 
   getDocumentosDamsa() : Observable<any>{
     return this._httpClient.get(this.urlGetDocumentosDamsa)
