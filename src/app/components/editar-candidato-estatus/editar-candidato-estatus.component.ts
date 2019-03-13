@@ -2,6 +2,7 @@ import { ComentariosService } from './../../service/Comentarios/comentarios.serv
 import { CandidatosService } from './../../service/Candidatos/candidatos.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+const swal = require('sweetalert');
 
 @Component({
   selector: 'app-editar-candidato-estatus',
@@ -12,13 +13,18 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 export class EditarCandidatoEstatusComponent implements OnInit {
 
   @Input("estatusId") estatusId;
-  candidatos: any = [];
+  @Input("candidatosNR") candidatos = [];
+
   editing = {};
   comentario = "";
-  constructor(private service: CandidatosService, private serviceComentarios: ComentariosService, private toasterService: ToasterService) { }
+  confirmar: boolean = false;
+  confirmar2: boolean = false;
+  rowAux: any = [];
+  estatusAux: any = 0;
+  constructor(private service: CandidatosService, public serviceComentarios: ComentariosService, private toasterService: ToasterService) { }
 
   ngOnInit() {
-    this.GetCandidatosNR();
+    //this.GetCandidatosNR();
   }
 
   GetCandidatosNR()
@@ -47,8 +53,9 @@ export class EditarCandidatoEstatusComponent implements OnInit {
 
   }
 
-  AddComentario(row, estatus)
+  public AddComentario(row, estatus)
   {
+    
     let Comentario = {
         CandidatoId: row.candidatoId,
         Comentario: this.comentario,
@@ -59,33 +66,134 @@ export class EditarCandidatoEstatusComponent implements OnInit {
         RequisicionId: row.requisicionId,
         MotivoId: row.motivoId,
         estatusId: estatus
+      }
+
+      console.log(row)
+
+      swal("Deleted!", "Your imaginary file has been deleted.", "success");
+
+      this.rowAux = [];
+      this.estatusAux = 0;
+      this.confirmar = false;
+      this.confirmar2 = false;
+   
+    }
+
+
+    //#region modal confirmar
+    Confirmar(row, estatus, modal){
+   
+      var Comentario = {
+        CandidatoId: row.candidatoId,
+        Comentario: this.comentario,
+        ComentarioId: row.comentarioId,
+        Usuario: sessionStorage.getItem('usuario'),
+        UsuarioId: sessionStorage.getItem('id'), 
+        RespuestaId: row.comentarioId,
+        RequisicionId: row.requisicionId,
+        MotivoId: row.motivoId,
+        estatusId: estatus
+      }
+
+var conf = false;
+      console.log(row)
+
+      if(modal == 1)
+      {
+        swal({
+          title: "¿ESTAS SEGURO?",
+          text: "¡El candidato quedara como NR!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#ec2121",
+          confirmButtonText: "¡Si, validar como NR!",
+          cancelButtonText: "¡No, cancelar!",
+          closeOnConfirm: false,
+          closeOnCancel: false
+        }, (isConfirm) => {
+
+          if (isConfirm) {
+            this.serviceComentarios.AddRespuesta(Comentario).subscribe(data => {
+              if (data == 200) {
+                this.comentario = '';
+                row.activar = false;
+                if (estatus == 27) {
+
+
+                  row.estatus = 'Disponible';
+                }
+                else {
+
+                  row.estatus = 'NR';
+
+                }
+                swal("¡Candidato NR!", "Los datos se actualizaron con éxito.", "success");
+               
+              }
+            }, err => {
+
+              console.log(err);
+            });      
+          }
+          else {
+            swal("Cancelado", "No se realizó ningún cambio", "error");
+          }
+
+        });
+
 
       }
-      this.serviceComentarios.AddRespuesta(Comentario).subscribe(data => {
-        if (data == 200) {
-          this.comentario = '';
-          row.activar = false;
-          if(estatus == 27)
-          {
+      else
+      {
+        swal({
+          title: "¿ESTAS SEGURO?",
+          text: "¡El candidato quedara como liberado!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonClass: "btn btn-success",
+          confirmButtonColor: "#1e983b",
+          confirmButtonText: "¡Si, candidato liberado!",
+          cancelButtonText: "¡No, cancelar!",
+          closeOnConfirm: false,
+          closeOnCancel: false
+        },
+    
+       (isConfirm) => {
+          if (isConfirm) {
            
+            this.serviceComentarios.AddRespuesta(Comentario).subscribe(data => {
+              if (data == 200) {
+                this.comentario = '';
+                row.activar = false;
+                if (estatus == 27) {
 
-            row.estatus = 'Disponible';
+
+                  row.estatus = 'Disponible';
+                }
+                else {
+
+                  row.estatus = 'NR';
+
+                }
+
+                swal("¡Candidato Liberado!", "Los datos se actualizaron con éxito.", "success");
+
+              }
+            }, err => {
+              
+              console.log(err);
+            });
+
+          } else {
+            swal("Cancelado", "No se realizó ningún cambio", "error");
           }
-          else
-          {
-
-            row.estatus = 'NR';
-
-          }
-          
-          this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
-   
-        }
-      }, err => {
-        this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
-        console.log(err);
-      });
+        });
+      }
     }
+    //#endregion
+
+
+   
 
     /**
    * configuracion para mensajes de acciones.
