@@ -1,4 +1,4 @@
-import * as jsPDF from 'jspdf';
+// import * as jsPDF from 'jspdf';
 
 import { ActivatedRoute, CanDeactivate, Router, } from '@angular/router';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
@@ -125,26 +125,26 @@ export class ViewdamfoComponent implements OnInit {
     popupWin.document.close();
   }
 
-  public downloadPDF(){
-    debugger;
-    let doc = new jsPDF('p', 'pt', 'letter');
-    let margins = {
-      top: 80,
-      bottom: 60,
-      left: 40,
-      width: 522
-    };
-    let specialElementHandlers = {
-      '#editor': function(elemet: any, renderer: any){
-        return true;
-      }
-    }
-    doc.fromHTML(document.getElementById('content').innerHTML, 15, 15,{
-      'width': 190,
-      'elementHandlers': specialElementHandlers
-    });
+  // public downloadPDF(){
+  //   debugger;
+  //   let doc = new jsPDF('p', 'pt', 'letter');
+  //   let margins = {
+  //     top: 80,
+  //     bottom: 60,
+  //     left: 40,
+  //     width: 522
+  //   };
+  //   let specialElementHandlers = {
+  //     '#editor': function(elemet: any, renderer: any){
+  //       return true;
+  //     }
+  //   }
+  //   doc.fromHTML(document.getElementById('content').innerHTML, 15, 15,{
+  //     'width': 190,
+  //     'elementHandlers': specialElementHandlers
+  //   });
 
-    doc.save('test.pdf');
+  //   doc.save('test.pdf');
 
-  }
+  // }
 }
