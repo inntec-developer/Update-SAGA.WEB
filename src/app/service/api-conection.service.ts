@@ -278,4 +278,11 @@ export class ApiConection {
     public static AddPreguntasFrecuentes = 'PreguntasFrecuente/add'
     public static alterPreguntasFrecuentes = 'PreguntasFrecuente/alter'
     public static deletePreguntasFrecuentes = 'PreguntasFrecuente/delete'
+
+
+        /*Oficinas */
+        public static GetOficina = 'Oficina/oficina'
+        public static AddOficina = 'Oficina/add'
+        public static alterOficina = 'Oficina/alter'
+        public static deleteOficina = 'Oficina/delete'
 }

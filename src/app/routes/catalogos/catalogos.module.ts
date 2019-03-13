@@ -44,6 +44,7 @@ import {
   MatTooltipModule
 } from '@angular/material';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
+import { OficinasComponent } from './oficinas/oficinas.component';
 
 
 
@@ -91,7 +92,7 @@ const routes: Routes = [
   MatToolbarModule,
   MatTooltipModule
   ],
-  declarations: [PreguntasFrecuentesComponent,],
+  declarations: [PreguntasFrecuentesComponent, OficinasComponent,],
   providers:[CatalogosService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
           ]
