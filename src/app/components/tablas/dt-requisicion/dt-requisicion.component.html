@@ -6,27 +6,24 @@
 <div class="card media">
   <div class="card-body mat-elevation-z8">
     <div class="row">
-      <div class="col-sm-12 col-md-12 clearfix p-3 bg-light">
-        <button id="create" chkPrivilegiosButtons class="mr-1 btn btn-acciones btn-outline-info" container="body"
+      <div class="col-sm-12 col-md-12 clearfix p-2 bg-light">
+        <button id="create" chkPrivilegiosButtons class="mr-1 btn btn-xs btn-acciones btn-outline-info" container="body"
           placement="bottom" tooltip="Nuevo" [routerLink]="['/ventas/crearRequisicion']">
           <em class="fa fa-plus"></em>
         </button>
-        <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mr-1 btn btn-acciones" [disabled]="!view"
+        <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mr-1 btn btn-xs btn-acciones" [disabled]="!view"
           [ngClass]="(!view) ? 'disabled' : 'btn-outline-warning'" container="body" placement="bottom" tooltip="Visualizar">
           <em class="fa fa-eye"></em>
         </button>
-
-        <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-acciones" [disabled]="!coment"
+        <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-xs btn-acciones" [disabled]="!coment"
           [ngClass]="(!coment) ? 'disabled' : 'btn-outline-dark'" container="body" placement="bottom" tooltip="Comentarios">
           <em class="fa fa-comments-o"></em>
         </button>
-
-        <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-acciones" [disabled]="editar" [ngClass]="editar ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-primary'"
+        <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-xs btn-acciones" [disabled]="editar" [ngClass]="editar ? 'mr-1 disabled' : 'mr-1 btn-outline-primary'"
           container="body" placement="bottom" tooltip="Editar" (click)="editRequi()">
           <em class="icon-pencil"></em>
         </button>
-
-        <button id='delete' chkPrivilegiosButtons [disabled]="borrar" [ngClass]="borrar ? 'btn disabled' : 'btn btn-outline-danger'"
+        <button id='delete' chkPrivilegiosButtons [disabled]="borrar" class="mr-1 btn btn-xs" [ngClass]="borrar ? 'disabled' : 'btn-outline-danger'"
           container="body" placement="bottom" tooltip="Eliminar" (click)="openDialogDelete()">
           <em class="icon-trash"></em>
         </button>
@@ -36,32 +33,28 @@
                         class="icon-refresh"></em></button> -->
 
         <!--estatus melina-->
-
-        <button id="update" chkPrivilegiosButtons [disabled]="cubierta" [ngClass]="cubierta ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-warning'"
+        <button id="update" chkPrivilegiosButtons [disabled]="cubierta" class="mr-1 btn btn-xs" [ngClass]="cubierta ? 'disabled' : 'btn-outline-warning'"
           type="button" (click)="updataStatus(34, 'Cubierta')" container="body" placement="bottom" tooltip="Cubierta">
           <em class="fa fa fa-shield"></em>
         </button>
-
-
-        <button id="update" chkPrivilegiosButtons [disabled]="cp" [ngClass]="cp ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-warning'"
+        <button id="update" chkPrivilegiosButtons [disabled]="cp" class=",r-1 btn btn-xs" [ngClass]="cp ? 'disabled' : 'btn-outline-warning'"
           type="button" (click)="updataStatus(35, 'Cubierta Parcialmente')" container="body" placement="bottom" tooltip="Cubierta Parcialmente">
           <em class="fa fa-star-half-o"></em>
         </button>
-        <button id="update" chkPrivilegiosButtons [ngClass]="crm ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-warning'"
+        <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-xs" [ngClass]="crm ? 'disabled' : 'btn-outline-warning'"
           [disabled]="crm" type="button" (click)="updataStatus(36, 'Cubierta por Medios')" container="body" placement="bottom"
           tooltip="Cubierta por Reclutamiento Medios">
           <em class="fa fa-star"></em>
         </button>
-        <button id="update" chkPrivilegiosButtons [disabled]="cc" [ngClass]="cc ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-info'"
+        <button id="update" chkPrivilegiosButtons [disabled]="cc" class="mr-1 btn btn-xs" [ngClass]="cc ? 'disabled' : 'btn-outline-info'"
           type="button" (click)="updataStatus(37, 'Cubierta por Cliente')" container="body" placement="bottom" tooltip="Cubierta por Cliente">
           <em class="fa fa fa-magic"></em>
         </button>
-        <button id='delete' chkPrivilegiosButtons [disabled]="cancelar" [ngClass]="cancelar ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-danger'"
+        <button id='delete' chkPrivilegiosButtons [disabled]="cancelar" class="mr-1 btn btn-xs" [ngClass]="cancelar ? 'disabled' : 'btn-outline-danger'"
           container="body" placement="bottom" tooltip="Cancelar" (click)="openDialogCancel();">
           <em class="icon-ban"></em>
         </button>
-
-        <button id="update" chkPrivilegiosButtons [ngClass]="gbc ? 'btn disabled' : 'btn btn-outline-success'"
+        <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-xs" [ngClass]="gbc ? 'disabled' : 'btn-outline-success'"
           [disabled]="gbc" type="button" (click)="updataStatus(38, 'Garant&iacute;a de B&uacute;squeda')" container="body"
           placement="bottom" tooltip="Garant&iacute;a B&uacute;squeda Candidatos">
           <em class="fa fa-user-circle"></em>
@@ -72,20 +65,19 @@
               <i class="fa fa-file-text-o"></i>
             </button> -->
 
-        <button id="special" chkPrivilegiosButtons type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-success'"
+        <button id="special" chkPrivilegiosButtons type="button" [disabled]="rows.length == 0" class="mr-1 btn  btn-xs" [ngClass]="rows.length == 0 ? 'disable' : 'btn-outline-success'"
           (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
           <i class="fa fa-download"></i>
         </button>
-
-        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="mr-1 btn btn-outline-primary float-right">
+        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="mr-1 btn btn-xs btn-outline-primary float-right">
           <em class="fa fa-eraser"></em>
         </button>
-        <button class="mr-1 btn btn-outline-success float-right" type="button" (click)="refreshTable()" container="body"
+        <button class="mr-1 btn btn-xs btn-outline-success float-right" type="button" (click)="refreshTable()" container="body"
           placement="bottom" tooltip="Actualizar">
           <em class="icon-refresh"></em>
         </button>
-        <button id="update" chkPrivilegiosButtons class="mr-1 float-right" [disabled]="candidatos" (click)="reporteCandidatos = true"
-          [ngClass]="candidatos ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-warning'" container="body" placement="bottom"
+        <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-xs float-right" [disabled]="candidatos" (click)="reporteCandidatos = true"
+          [ngClass]="candidatos ? 'disabled' : 'btn-outline-warning'" container="body" placement="bottom"
           tooltip="Candidatos">
           <i class="fa fa-users" aria-hidden="true"></i>
         </button>
@@ -248,10 +240,10 @@
 </div> -->
 <div *ngIf="reporteCandidatos" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal
   #candiModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
-  <div class="modal-dialog modal-lg reporteMod">
+  <div class="modal-dialog modal-lg ">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="float-left text-success"><em class="fa fa-users mr-2"></em>Candidatos de Requisici&oacute;n
+        <h4 class="float-left text-success"><em class="fa fa-users mr-2"></em>Candidatos Cubiertos de Requisici&oacute;n
           {{Folio}} - {{Vacante}}</h4>
         <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="reporteCandidatos=false;">
           <i class="fa fa-times"></i></button>

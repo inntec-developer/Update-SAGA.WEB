@@ -22,7 +22,8 @@
 
 
 <div class="row">
-  <!-- <button (click)="print()">Imprimir</button> -->
+  <button (click)="print()">Imprimir</button>
+  <button (click)="downloadPDF()">Export to PDF</button>
   <div class="col-md-12">
     <div class="d-flex justify-content-between">
       <button placement="right" tooltip="Generar Requisición" class="mb-1  btn btn-outline-success" (click)="openDialog()">
@@ -36,7 +37,8 @@
   </div>
 </div>
 <br />
-<div id="print-section">
+
+<div id="content" >
   <div class="dt-container  mat-elevation-z8">
     <div class="card-header">
       <em class="fa fa-user"></em> Informaci&oacute;n General

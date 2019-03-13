@@ -12,6 +12,12 @@ declare var $: any;
   providers: [ClientesService],
 })
 export class DtClientesComponent implements OnInit {
+  //scroll
+  disabled = false;
+  compact = false;
+  invertX = false;
+  invertY = false;
+  shown = 'hover';
 
   public dataSource: Array<any> = [];
   public errorMessage: any;
@@ -155,7 +161,7 @@ export class DtClientesComponent implements OnInit {
   }
 
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
-    
+
     if (config.filtering) {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
@@ -163,11 +169,11 @@ export class DtClientesComponent implements OnInit {
     if (config.sorting) {
       (<any>Object).assign(this.config.sorting, config.sorting);
     }
-    this.registros = this.dataSource.length;
     this.rows = this.dataSource;
     let filteredData = this.changeFilter(this.dataSource, this.config);
     let sortedData = this.changeSort(filteredData, this.config);
     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
+    this.registros = this.rows.length;
     this.length = sortedData.length;
     this.spinner.hide();
   }
@@ -175,7 +181,7 @@ export class DtClientesComponent implements OnInit {
   onCellClick(data: any){
     data.selected ? data.selected = false : data.selected = true;
     this.element = data;
-    
+
     if (!data.selected) {
       this.element = null;
       this.selected = false;

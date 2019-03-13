@@ -1,5 +1,7 @@
+import * as jsPDF from 'jspdf';
+
 import { ActivatedRoute, CanDeactivate, Router, } from '@angular/router';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatTableDataSource, PageEvent} from '@angular/material';
 
@@ -15,6 +17,8 @@ import { RequisicionesService } from '../../../../../service/index';
   providers: [RequisicionesService]
 })
 export class ViewdamfoComponent implements OnInit {
+
+  @ViewChild('content') content: ElementRef;
   // Formularios
 
   //Variables
@@ -46,9 +50,9 @@ export class ViewdamfoComponent implements OnInit {
     private _Route: ActivatedRoute,
     private spinner:  NgxSpinnerService,
   ) {
-    
+
     }
-  ngOnInit() {  
+  ngOnInit() {
       this.GetDateDamfo();
   }
 
@@ -58,7 +62,7 @@ export class ViewdamfoComponent implements OnInit {
       if(params['IdDamfo'] != null){
         this.damfoId = params['IdDamfo'];
         this.serviceRequisiciones.getDamfoById(this.damfoId)
-            .subscribe(data => {   
+            .subscribe(data => {
               if(data.TipoContratoId == null)
               {
                 data.TipoContratoId = 0;
@@ -77,11 +81,11 @@ export class ViewdamfoComponent implements OnInit {
               this.tipoReclutamiento = data.tipoReclutamiento.tipoReclutamiento;
               this.spinner.hide();
             });
-            
+
       }else{
           console.log('Error al cargar información');
       }
-      
+
     });
   }
 
@@ -106,18 +110,41 @@ export class ViewdamfoComponent implements OnInit {
 
   print(): void {
     let printContents, popupWin;
-    printContents = document.getElementById('print-section').innerHTML;
+    printContents = document.getElementById('content').innerHTML;
     popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
     popupWin.document.open();
     popupWin.document.write(`
       <html>
         <head>
           <title>DAM-FO-290</title>
-          
+
         </head>
-    <body onload="window.print();window.close()">${printContents}</body>
+       <body onload="window.print();window.close()">${printContents}</body>
       </html>`
     );
     popupWin.document.close();
+  }
+
+  public downloadPDF(){
+    debugger;
+    let doc = new jsPDF('p', 'pt', 'letter');
+    let margins = {
+      top: 80,
+      bottom: 60,
+      left: 40,
+      width: 522
+    };
+    let specialElementHandlers = {
+      '#editor': function(elemet: any, renderer: any){
+        return true;
+      }
+    }
+    doc.fromHTML(document.getElementById('content').innerHTML, 15, 15,{
+      'width': 190,
+      'elementHandlers': specialElementHandlers
+    });
+
+    doc.save('test.pdf');
+
   }
 }

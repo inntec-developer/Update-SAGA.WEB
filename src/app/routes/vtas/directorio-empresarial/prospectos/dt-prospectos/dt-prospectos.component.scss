@@ -1,39 +1,58 @@
-.actions {
-    margin-left: 10px;
-  }
-  
-  tbody {
-    display: block;
-    height: 450px;
-    overflow: auto;
-  }
-  
-  thead,
-  tbody tr {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-  }
-  
-  thead {
-    width: calc(100% - 1em)
-  }
-  
-  table {
-    width: 400px;
-  }
-  
-  tbody tr:hover {
-    font-size: 14.5px;
-    box-shadow: 1px 20px 60px rgba(0, 0, 0, .23);
-  }
-  .margen {
-  
-    margin: 0 2px;
-  }
-  
-  .vl {
-    border-left: 1px solid #aaa;
-    height: 31px;
-    margin: 0 2px;
-  }
+table tbody {
+  display: block;
+}
+
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+thead {
+  width: calc(100% - 1em)
+}
+
+table {
+  width: 400px;
+}
+
+.vl {
+  border-left: 1px solid #aaa;
+  height: 31px;
+  margin: 0 2px;
+}
+
+tbody tr:hover {
+  font-size: 14.5px;
+  box-shadow: 1px 20px 60px rgba(0, 0, 0, .23);
+}
+
+.margen {
+  margin: 0 2px;
+}
+
+.modal-lg {
+  max-width: 100% !important;
+}
+
+.modal-lg .long {
+  max-height: 100% !important;
+}
+
+table tbody div
+{
+  height: 350px;
+}
+ng-scrollbar {
+  --scrollbar-size: 4px;
+  --scrollbar-thumb-color: rgb(94, 175, 255);
+  --scrollbar-thumb-hover-color: dodgerblue;
+  --scrollbar-border-radius: 4px;
+}
+
+.row
+{
+  display: flex;
+  flex-wrap: wrap;
+}

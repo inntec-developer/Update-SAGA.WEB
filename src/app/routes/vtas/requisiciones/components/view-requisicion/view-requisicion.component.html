@@ -19,18 +19,19 @@
 <div class="row">
   <div class="col-md-12">
     <div class="d-flex justify-content-between">
-      <button id="update" chkPrivilegiosButtons class="mb-1 btn btn-acciones" [disabled]="estatusId != 4"
+      <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-xs btn-acciones" [disabled]="estatusId != 4"
         [ngClass]="(estatusId != 4) ? 'disabled' : 'btn-outline-primary'" container="body" placement="bottom" tooltip="Editar"
         (click)="editRequi()">
         <em class="icon-pencil"></em></button>
       <!-- <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones btn-outline-dark"
         container="body" placement="bottom" tooltip="Comentarios"><em class="fa fa-comments-o"></em></button> -->
-      <button container="body" placement="bottom" tooltip="Regresar" class="mb-1 btn btn-outline-warning" type="button" [routerLink]="['/ventas/requisicion']">
+      <button container="body" placement="bottom" tooltip="Regresar" class="mr-1 btn btn-xs btn-outline-warning" type="button" [routerLink]="['/ventas/requisicion']">
         <em class="icon-action-undo"></em>
       </button>
     </div>
   </div>
 </div>
+<br />
 <app-view-info-requi [Folios]="Folio" (EstatusId)="getEstatusRequi($event)"></app-view-info-requi>
 <br />
 <app-view-cuerpo-requi [Requisicion]="RequisicionId" [ShowRequi]="true"></app-view-cuerpo-requi>

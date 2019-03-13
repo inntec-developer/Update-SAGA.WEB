@@ -51,7 +51,7 @@ export class ReporteCandidatosComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -59,9 +59,9 @@ export class ReporteCandidatosComponent implements OnInit {
       this.UsuarioId = sessionStorage.getItem('id');
       this.getCandidatos();
       this.candidatos = false;
-      if(this.EstatusId == 34 || this.EstatusId == 35 || this.EstatusId == 36 || this.EstatusId == 37 || this.EstatusId == 39){
+      if (this.EstatusId == 34 || this.EstatusId == 35 || this.EstatusId == 36 || this.EstatusId == 37 || this.EstatusId == 39) {
         this.Liberar = false;
-      }else{
+      } else {
         this.Liberar = true;
       }
     }
@@ -73,9 +73,7 @@ export class ReporteCandidatosComponent implements OnInit {
       data.forEach(element => {
         var perfil = {
           id: element.id,
-          nombre: element.contratados[0]['nombre'],
-          apellidoPaterno: element.contratados[0]['apellidoPaterno'],
-          apellidoMaterno: element.contratados[0]['apellidoMaterno'],
+          nombre: element.contratados[0]['nombre'] + ' ' + element.contratados[0]['apellidoPaterno'] + ' ' + element.contratados[0]['apellidoMaterno'],
           curp: element.contratados[0]['curp'],
           rfc: element.contratados[0]['rfc'],
           nss: element.contratados[0]['nss'], edad: element.contratados[0]['edad'],
@@ -88,6 +86,25 @@ export class ReporteCandidatosComponent implements OnInit {
         this.onChangeTable(this.config);
       }, error => this.errorMessage = <any>error)
     });
+  }
+
+  public refresh() {
+    this.getCandidatos();
+    setTimeout(() => {
+      this.columns.forEach(element => {
+        (<HTMLInputElement>document.getElementById(element.name)).value = '';
+      });
+    }, 1000);
+  }
+
+  public clearfilters() {
+    this.columns.forEach(element => {
+      element.filtering.filterString = '';
+      (<HTMLInputElement>document.getElementById(element.name)).value = '';
+    });
+    this.candidatos = false;
+    this.selected = false;
+    this.getCandidatos();
   }
 
   openDialogLiberar() {
@@ -126,16 +143,16 @@ export class ReporteCandidatosComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
-    
+
     data.selected ? data.selected = false : data.selected = true;
     this.CandidatoId = data.candidatoId;
     this.ProcesoCandidatoId = data.id;
     if (!data.selected) {
       this.selected = false;
-      this.candidatos = false ;
+      this.candidatos = false;
     } else {
       this.selected = true;
-      this.candidatos = true ;
+      this.candidatos = true;
     }
 
     if (this.rowAux.length == 0) {
@@ -167,14 +184,14 @@ export class ReporteCandidatosComponent implements OnInit {
     { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
     { title: 'RFC', className: 'text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
     { title: 'NSS', className: 'text-success', name: 'nss', filtering: { filterString: '', placeholder: 'NSS' } },
-    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } }
+    // { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } }
   ]
 
   public config: any = {
     paging: true,
     //sorting: { colums: this.columns },
     filtering: { filterString: '' },
-    className: ['table-striped mb-0 d-table-fixed']
+    className: ['table-hover  mb-0']
   }
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
@@ -218,7 +235,6 @@ export class ReporteCandidatosComponent implements OnInit {
     let filteredData: Array<any> = data;
     this.columns.forEach((column: any) => {
       if (column.filtering) {
-        this.showFilterRow = true;
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
@@ -257,7 +273,6 @@ export class ReporteCandidatosComponent implements OnInit {
   }
 
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
-
     if (config.filtering) {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
@@ -265,12 +280,13 @@ export class ReporteCandidatosComponent implements OnInit {
     if (config.sorting) {
       (<any>Object).assign(this.config.sorting, config.sorting);
     }
-    this.registros = this.dataSource.length;
+
     this.rows = this.dataSource;
     let filteredData = this.changeFilter(this.dataSource, this.config);
     let sortedData = this.changeSort(filteredData, this.config);
     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
     this.length = sortedData.length;
+    this.registros = this.rows.length;
   }
 
 }

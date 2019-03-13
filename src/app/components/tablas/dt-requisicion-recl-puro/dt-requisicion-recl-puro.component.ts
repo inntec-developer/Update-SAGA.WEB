@@ -225,7 +225,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
 
     // this.ValidarEstatus(data.estatusId);
 
- 
+
     if (this.rowAux.length == 0) {
       this.rowAux = data;
     }
@@ -387,7 +387,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
   SendEmail() {
     this.service.SendEmailRequiPuro(this.RequisicionId).subscribe(email => {
       if (email == 200) {
-        this.popToast('success', 'Noticación', 'Se ha notificado al departamento de facturación por medio de correo electrónico.');
+        this.popToast('success', 'Noticación', 'Se ha notificado por medio de correo electrónico a los usuarios correspondientes.');
       } else {
         this.popToast('error', 'Estatus', 'Ocurrió un error al intentar notificar por correo electrónico los cambios realizados.');
       }

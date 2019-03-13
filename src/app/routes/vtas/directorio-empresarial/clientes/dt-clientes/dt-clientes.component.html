@@ -1,106 +1,114 @@
-<div class="dt-container mat-elevation-z8">
-  <div class="dt-header">
-    <mat-form-field>
-      <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
-        (tableChanged)="onChangeTable(config)" id="filterGeneral">
-    </mat-form-field>
-    <div class="row justify-content-between">
-      <div class="d-flex align-items-stretch">
-        <button id="add" #add class="margen mb-1 btn" [disabled]="bc" [ngClass]="bc ? 'disabled' : 'btn-outline-primary'"
+<div class="card media">
+  <div class="card-body mat-elevation-z8">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 clearfix p-2 bg-light">
+        <button id="add" #add class="margen mr-1 btn btn-xs btn-acciones " [disabled]="bc" [ngClass]="bc ? 'disabled' : 'btn-outline-primary'"
           type="button" [routerLink]="['/ventas/nuevoProspecto']" container="body" placement="bottom" tooltip="Agregar Prospecto">
-          <em class="fa fa-plus"></em></button>
+          <em class="fa fa-plus"></em>
+        </button>
         <em class="vl"></em>
-        <button id="view" #view class="margen mb-1 btn" (click)="openDialogShowRequi(element.id, element.folio)"
+        <button id="view" #view class="margen mr-1 btn btn-xs btn-acciones" (click)="openDialogShowRequi(element.id, element.folio)"
           placement="bottom" tooltip="Ver Cliente" [disabled]="!element" [ngClass]="(!element) ? 'disabled':'btn-outline-warning'">
           <em class="fa fa-eye"></em></button>
-        <button id="edit" #edit class="margen mb-1 btn" chkPrivilegiosButtons (click)="lgModal.show()" [disabled]="!element"
-          [ngClass]="(!element) ? 'disabled' : 'btn-outline-info'" container="body" placement="bottom" tooltip="Editar"><em
-            class="fa fa-pencil"></em></button>
-      </div>
-      <div>
+        <button id="edit" #edit class="margen mr-1 btn btn-xs btn-acciones" chkPrivilegiosButtons (click)="lgModal.show()"
+          [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-outline-info'" container="body" placement="bottom"
+          tooltip="Editar"><em class="fa fa-pencil"></em></button>
         <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body"
-          class="margen mb-1 btn" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'disabled':'btn-outline-primary'">
+          class="margen mr-1 btn btn-xs btn-acciones float-right" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'disabled':'btn-outline-primary'">
           <em class="fa fa-eraser"></em>
         </button>
-        <button type="button" class="margen mb-1 btn btn-outline-success " (click)="refreshTable()" container="body"
-          placement="bottom" tooltip="Actualizar" container="body">
+        <button type="button" class="margen mr-1 btn btn-xs btn-acciones btn-outline-success float-right" (click)="refreshTable()"
+          container="body" placement="bottom" tooltip="Actualizar" container="body">
           <em class="icon-refresh"></em>
         </button>
       </div>
     </div>
-  </div>
-  <div class="card card-default">
-    <div #tableContainer>
-      <table id="prospectosDataTable" ngClass="{{config.className || ''}}" class="table" role="grid" style="width: 100%;">
-        <thead>
-          <tr>
-            <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
-              <small>{{column.title | uppercase}}</small>
-              <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}"> -->
-              <!-- </i> -->
-            </th>
-          </tr>
-          <tr *ngIf="showFilterRow">
-            <td *ngFor="let column of columns">
-              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
-            </td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let row of rows; let i=index" (click)="onCellClick(row)" [class.selected]="row.selected">
-            <td class="text-center">{{row.rfc}}</td>
-            <td class="text-center">
-              <small *ngIf="row.razonSocial.length < 30 else toLengthRS">
-                {{row.razonSocial}}
-              </small>
-              <ng-template #toLengthRS>
-                <small placement="bottom" tooltip="{{row.nombrecomercial}}"> {{row.razonSocial | slice:0:15 | uppercase
-                  }} ...
-                </small>
-              </ng-template>
-            </td>
-            <td class="text-center">
-              <small *ngIf="row.nombrecomercial.length < 30 else toLengthNC">
-                {{row.nombrecomercial}}
-              </small>
-              <ng-template #toLengthNC>
-                <small placement="bottom" tooltip="{{row.nombrecomercial}}"> {{row.nombrecomercial | slice:0:15 |
-                  uppercase }} ...
-                </small>
-              </ng-template>
-            </td>
-            <td>{{row.giroEmpresa}}</td>
-            <td>{{row.actividadEmpresa}}</td>
-            <td>{{row.tamanoEmpresa}}</td>
-            <td class="text-right"> {{row.numeroEmpleados}}</td>
-            <td class="text-center">
-              <small *ngIf="row.clasificacion == 1" class="text-success">
-                <i class="fa fa-star-o" aria-hidden="true"></i>
-              </small>
-              <small *ngIf="row.clasificacion == 2" class="text-success">
-                <i class="fa fa-star-o" aria-hidden="true"></i>
-                <i class="fa fa-star-o" aria-hidden="true"></i>
-              </small>
-              <small *ngIf="row.clasificacion == 3" class="text-success">
-                <i class="fa fa-star-o" aria-hidden="true"> </i>
-                <i class="fa fa-star-o" aria-hidden="true"> </i>
-                <i class="fa fa-star-o" aria-hidden="true"> </i>
-              </small>
-            </td>
-            <td class="text-center">{{row.tipoEmpresa}}</td>
-          </tr>
-        </tbody>
-      </table>
+
+    <div class="row" #tableContainer>
+      <div class="col-sm-12 col-md-12 table-responsive clearfix">
+        <div>
+          <pre class="card-block float-right">Registros Totales: {{dataSource.length}}</pre>
+        </div>
+        <table id="prospectosDataTable" ngClass="{{config.className || ''}}" class="table" role="grid" style="width: 100%;">
+          <thead>
+            <tr>
+              <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+                <span>{{column.title | uppercase}}</span>
+                <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}"> -->
+                <!-- </i> -->
+              </th>
+            </tr>
+            <tr *ngIf="showFilterRow">
+              <td *ngFor="let column of columns">
+                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
+                  (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+              [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+              <div>
+                <tr *ngFor="let row of rows; let i=index" (click)="onCellClick(row)" [class.selected]="row.selected">
+                  <td class="text-center">{{row.rfc}}</td>
+                  <td class="text-center">
+                    <small *ngIf="row.razonSocial.length < 30 else toLengthRS">
+                      {{row.razonSocial}}
+                    </small>
+                    <ng-template #toLengthRS>
+                      <small placement="bottom" tooltip="{{row.nombrecomercial}}"> {{row.razonSocial | slice:0:15 |
+                        uppercase
+                        }} ...
+                      </small>
+                    </ng-template>
+                  </td>
+                  <td class="text-center">
+                    <small *ngIf="row.nombrecomercial.length < 30 else toLengthNC">
+                      {{row.nombrecomercial}}
+                    </small>
+                    <ng-template #toLengthNC>
+                      <small placement="bottom" tooltip="{{row.nombrecomercial}}"> {{row.nombrecomercial | slice:0:15 |
+                        uppercase }} ...
+                      </small>
+                    </ng-template>
+                  </td>
+                  <td>{{row.giroEmpresa}}</td>
+                  <td>{{row.actividadEmpresa}}</td>
+                  <td>{{row.tamanoEmpresa}}</td>
+                  <td class="text-right"> {{row.numeroEmpleados}}</td>
+                  <td class="text-center">
+                    <small *ngIf="row.clasificacion == 1" class="text-success">
+                      <i class="fa fa-star-o" aria-hidden="true"></i>
+                    </small>
+                    <small *ngIf="row.clasificacion == 2" class="text-success">
+                      <i class="fa fa-star-o" aria-hidden="true"></i>
+                      <i class="fa fa-star-o" aria-hidden="true"></i>
+                    </small>
+                    <small *ngIf="row.clasificacion == 3" class="text-success">
+                      <i class="fa fa-star-o" aria-hidden="true"> </i>
+                      <i class="fa fa-star-o" aria-hidden="true"> </i>
+                      <i class="fa fa-star-o" aria-hidden="true"> </i>
+                    </small>
+                  </td>
+                  <td class="text-center">{{row.tipoEmpresa}}</td>
+                </tr>
+              </div>
+            </ng-scrollbar>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-md-12 clearfix">
+        <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
+          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
+          (numPages)="numPages = $event"></pagination>
+
+        <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}} Registros: {{registros}}</small></pre>
+      </div>
     </div>
   </div>
-  <div class="text-right">
-    <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
-      [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
-      (numPages)="numPages = $event">
-    </pagination>
-  </div>
-  <pre *ngIf="config.paging" class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
 </div>
 
 

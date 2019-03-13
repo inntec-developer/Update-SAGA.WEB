@@ -67,7 +67,7 @@ export class DtRequisicionComponent implements OnInit {
   cc = true; //cubierta por el cliente
   crm = true; //cubierta reclutamiento medios
   cp = true; // cubierta parcialmente
-  borrar = true; 
+  borrar = true;
   cancelar = true;
   editar = true;
   RequisicionId: any;
@@ -308,7 +308,7 @@ export class DtRequisicionComponent implements OnInit {
       this.editar = true;
       this.candidatos = true;
     }
-   
+
   }
   public config: any = {
     paging: true,
@@ -404,7 +404,7 @@ export class DtRequisicionComponent implements OnInit {
     if (config.sorting) {
       (<any>Object).assign(this.config.sorting, config.sorting);
     }
-    
+
     this.rows = this.dataSource;
     let filteredData = this.changeFilter(this.dataSource, this.config);
     let sortedData = this.changeSort(filteredData, this.config);
@@ -422,7 +422,7 @@ export class DtRequisicionComponent implements OnInit {
     this.Folio = data.folio;
     this.Vacante = data.vBtra;
     this.element = data;
-    
+
     this.ValidarEstatus(data.estatusId)
     if (!data.selected) {
       this.selected = false;
@@ -454,7 +454,7 @@ export class DtRequisicionComponent implements OnInit {
     this.cc = true; //cubierta por el cliente
     this.crm = true; //cubierta reclutamiento medios
     this.cp = true; // cubierta parcialmente
-    this.borrar = true; 
+    this.borrar = true;
     this.cancelar = true;
     this.editar = true;
     this.view = false;
@@ -505,7 +505,7 @@ export class DtRequisicionComponent implements OnInit {
     if(estatusId == 8)
     {
       var idx = this.rows.findIndex(x => x.id == this.element.id);
-      
+
         this.rows[idx]['enProcesoN'].forEach(element => {
             emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
         });
@@ -516,7 +516,7 @@ export class DtRequisicionComponent implements OnInit {
 
         if(emails.length > 0)
         {
-          this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => { 
+          this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
           //this.onChangeTable(this.config);
           });
         }
@@ -528,7 +528,7 @@ export class DtRequisicionComponent implements OnInit {
           var idx = this.rows.findIndex(x => x.id == this.element.id);
           this.rows[idx]['estatus'] = estatus;
           this.rows[idx]['estatusId'] = estatusId;
-          
+
           if (estatusId >= 34 && estatusId <=37) {
             this.rows[idx]['enProcesoN'].forEach(element => {
               if(element.estatusId != 24 && element.estatusId != 42 && element.estatusId != 27 && element.estatusId != 28)
@@ -536,7 +536,7 @@ export class DtRequisicionComponent implements OnInit {
                 emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
               }
             });
-            
+
             this.rows[idx]['postuladosN'].forEach(element => {
               if(element.statusId == 1)
               {
@@ -562,7 +562,7 @@ export class DtRequisicionComponent implements OnInit {
 
       })
   }
-  
+
   }
 
   openDialogDelete() {
@@ -597,8 +597,8 @@ export class DtRequisicionComponent implements OnInit {
           this.SendEmail();
         }
       }
-      
-      
+
+
     })
   }
 
@@ -617,7 +617,7 @@ export class DtRequisicionComponent implements OnInit {
   SendEmail() {
     this.service.SendEmailRequiPuro(this.RequisicionId).subscribe(email => {
       if (email == 200) {
-        this.popToast('success', 'Noticación', 'Se ha notificado al departamento de facturación por medio de correo electrónico.');
+        this.popToast('success', 'Noticación', 'Se ha notificado por medio de correo electrónico a los usuarios correspondientes.');
       } else {
         this.popToast('error', 'Estatus', 'Ocurrió un error al intentar notificar por correo electrónico los cambios realizados.');
       }

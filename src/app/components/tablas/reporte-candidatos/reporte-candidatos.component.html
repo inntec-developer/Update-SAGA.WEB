@@ -1,22 +1,28 @@
 <div class="card-body mat-elevation-z8">
-  <div class="row" *ngIf="Liberar">
-    <div class="col-sm-12 col-md-12 clearfix p-3 bg-light">
-      <button [disabled]="!candidatos" [ngClass]="!candidatos ? 'mr-1 btn disabled':' btn-outline-danger'" container="body" class="mr-1 btn btn-xs"
-        placement="bottom" tooltip="Desapartar" (click)="openDialogLiberar()">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 clearfix">
+      <button  *ngIf="Liberar"  [disabled]="!candidatos" [ngClass]="!candidatos ? 'disabled':' btn-outline-danger'" container="body"
+        class="mb-1 btn btn-xs" placement="bottom" tooltip="Desapartar" (click)="openDialogLiberar()">
         <em class="fa fa-thumbs-o-down"></em>
       </button>
+      <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="mb-1 btn btn-xs btn-outline-primary margen">
+        <em class="fa fa-eraser"></em>
+      </button>
+      <button class="mb-1 btn btn-xs btn-outline-success margen" type="button" (click)="refresh()" container="body"
+        placement="bottom" tooltip="Actualizar">
+        <em class="icon-refresh"></em>
+      </button>
+      <pre class="card-block float-right">Registros: {{dataSource.length}}</pre>
     </div>
   </div>
   <div class="row" #tableContainer>
     <div class="col-sm-12 col-md-12 table-responsive clearfix">
-      <div>
-        <pre class="card-block float-right">Registros: {{rows.length}}</pre>
-      </div>
+
       <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
         <thead>
           <tr>
             <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
-              <small>{{column.title | uppercase}}</small>
+              <span>{{column.title | uppercase}}</span>
               <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
               </i>
             </th>
@@ -32,22 +38,22 @@
           <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact"
             [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
             <div>
-              <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of dataSource"
-                [class.selected]="row.selected">
-                <td class="text-center"> {{row.nombre}} {{row.apellidoPaterno }} {{row.apellidoMaterno}}</td>
+              <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of rows" [class.selected]="row.selected">
+                <td class="text-center"> {{row.nombre}}</td>
                 <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
                 <td class="text-center"> {{row.curp | uppercase }}</td>
                 <td class="text-center"> {{row.rfc | uppercase }}</td>
                 <td class="text-center"> {{row.nss | uppercase }}</td>
-                <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength" class='px-1 mr-1 badge badge-pill badge-info'
+                <!-- <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength" class='px-1 mr-1 badge badge-pill badge-info'
                     [class.badge-warning]="row.estatusId === 42" [class.badge-danger]="row.estatusId == 28">
                     <span *ngIf="row.estatusId != 28"> {{row.estatus | uppercase }}</span>
-                  </span></td>
-                <ng-template #toLength>
-                  <span class='px-1 mr-1 badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42"
-                    [class.badge-danger]="row.estatusId == 28" placement="bottom" tooltip="{{row.estatus | uppercase}}"
-                    container="body">{{row.estatus | slice:0:6 | uppercase }} ... </span>
-                </ng-template>
+                  </span>
+                  <ng-template #toLength>
+                    <span class='px-1 mr-1 badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42"
+                      [class.badge-danger]="row.estatusId == 28" placement="bottom" tooltip="{{row.estatus | uppercase}}"
+                      container="body">{{row.estatus | slice:0:6 | uppercase }} ... </span>
+                  </ng-template>
+                </td> -->
               </tr>
             </div>
           </ng-scrollbar>
@@ -62,7 +68,7 @@
         [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
         (numPages)="numPages = $event"></pagination>
 
-      <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}</small></pre>
+      <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}} Registros: {{registros}}</small></pre>
     </div>
   </div>
 </div>

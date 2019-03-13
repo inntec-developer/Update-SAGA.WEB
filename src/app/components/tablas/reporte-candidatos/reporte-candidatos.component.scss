@@ -1,95 +1,101 @@
 .actions {
-    margin-left: 10px;
+  margin-left: 10px;
+}
+
+.margen {
+  margin-left: 5px;
+}
+
+table tbody {
+  display: block;
+
+}
+
+table thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table thead {
+  width: calc(100% - 1em)
+}
+
+table {
+  width: 400px;
+}
+
+.vl {
+  border-left: 1px solid #aaa;
+  height: 31px;
+  margin: 0 2px;
+}
+
+table tbody tr:hover {
+  font-size: 14.5px;
+  box-shadow: 1px 20px 60px rgba(0, 0, 0, .23);
+}
+
+.reporteMod {
+  top: 0% !important;
+  max-width: 100% !important;
+
+}
+
+.header-button {
+  // width: 82.5%;
+  //    padding: 3px 2px 0px 2px;
+  // position: fixed;
+
+  // background-color: whitesmoke;
+  margin-top: 10px;
+  // right: 30%;
+  z-index: 10;
+  // border-bottom-left-radius: 10px;
+  // border-bottom-right-radius: 10px;
+}
+
+
+
+table tbody div {
+  height: 350px;
+}
+
+ng-scrollbar {
+  --scrollbar-size: 4px;
+  --scrollbar-thumb-color: rgb(94, 175, 255);
+  --scrollbar-thumb-hover-color: dodgerblue;
+  --scrollbar-border-radius: 4px;
+}
+
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 1600px) {
+  .row {
+    flex-direction: column;
   }
-  
-  table tbody {
-    display: block;
-  
-  }
-  
-  table thead,
-  tbody tr {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-  }
-  
-  table thead {
-    width: calc(100% - 1em)
-  }
-  
-  table {
-    width: 400px;
-  }
-  
-  .vl {
-    border-left: 1px solid #aaa;
-    height: 31px;
-    margin: 0 2px;
-  }
-  
-  table tbody tr:hover{
-    font-size: 14.5px;
-    box-shadow:1px 20px 60px rgba(0,0,0,.23);
-  }
-  
-  .reporteMod
-  {
-    top: 0% !important;
-    max-width: 100% !important;
-  
-  }
-  
+
   .header-button {
-    // width: 82.5%;
-    //    padding: 3px 2px 0px 2px;
-    // position: fixed;
-  
-    // background-color: whitesmoke;
-    margin-top: 10px;
-    // right: 30%;
-    z-index: 10;
+    // margin-left: 12%;
+    position: fixed;
+    // height: 60px;
+    // background: whitesmoke;
+    // max-width: 85% !important;
+    // height: 70%;
+    // overflow: scroll;
+    // top: 12%;
+    // right: 18%;
+    z-index: 1000;
     // border-bottom-left-radius: 10px;
     // border-bottom-right-radius: 10px;
   }
-  
-  
-  
-  table tbody div
-  {
-    height: 350px;
-  }
-  ng-scrollbar {
-    --scrollbar-size: 4px;
-    --scrollbar-thumb-color: rgb(94, 175, 255);
-    --scrollbar-thumb-hover-color: dodgerblue;
-    --scrollbar-border-radius: 4px;
-  }
-  
-  
-  .row
-  {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  @media screen and (max-width: 1600px) {
-    .row {flex-direction: column;}
-    .header-button {
-     // margin-left: 12%;
-      position: fixed;
-  // height: 60px;
-  // background: whitesmoke;
-      // max-width: 85% !important;
-      // height: 70%;
-      // overflow: scroll;
-        // top: 12%;
-      // right: 18%;
-      z-index: 1000;
-      // border-bottom-left-radius: 10px;
-      // border-bottom-right-radius: 10px;
-    }
-  
-    // .dt-container {
-    //   max-height: 800px !important;
-    // }
-  }
+
+  // .dt-container {
+  //   max-height: 800px !important;
+  // }
+}
