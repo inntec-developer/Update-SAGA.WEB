@@ -281,7 +281,7 @@ export class ApiConection {
 
 
         /*Oficinas */
-        public static GetOficina = 'Oficina/oficina'
+        public static GetSucursal = 'Oficina/oficina'
         public static AddOficina = 'Oficina/add'
         public static alterOficina = 'Oficina/alter'
         public static deleteOficina = 'Oficina/delete'

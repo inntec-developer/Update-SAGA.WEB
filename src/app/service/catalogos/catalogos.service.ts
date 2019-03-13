@@ -54,6 +54,9 @@ export class CatalogosService {
   private UrlalterPreguntasFrecuentes = ApiConection.ServiceUrl + ApiConection.alterPreguntasFrecuentes;
   private UrlDeletePreguntasFrecuentes = ApiConection.ServiceUrl + ApiConection.deletePreguntasFrecuentes;
 
+  /* Catalogo de preguntas frecuentes */
+  private UrlGetSucursal = ApiConection.ServiceUrl + ApiConection.GetSucursal;
+
    
   constructor(private _httpClient: HttpClient) { }
 
@@ -75,6 +78,11 @@ export class CatalogosService {
     let params = new HttpParams().set('id', id);
     return this._httpClient.get(this.UrlDeletePreguntasFrecuentes, {params: params});
   }
+
+  getSucursales() : Observable<any>{
+    return this._httpClient.get(this.UrlGetSucursal)
+  }
+
 
   getDocumentosDamsa() : Observable<any>{
     return this._httpClient.get(this.urlGetDocumentosDamsa)
