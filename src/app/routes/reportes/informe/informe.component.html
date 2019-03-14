@@ -1,50 +1,55 @@
-<p>
-  Reportes
-</p>
+<div class="content-heading">
+    <div>
+       Sistema de Reportes
+        <span class="text-sm d-none d-sm-block">Administraci&oacute;n de Reportes.</span>
+    </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+        <li class="breadcrumb-item"><a [routerLink]="['/home']" >Inicio</a></li>
+        <li class="breadcrumb-item active">Reportes</li>
+    </ol>
+  </div>
+
+
+
 <ngx-spinner
   bdColor="rgba(198,195,195,0.8)"
   size="medium"
   color="#90daff"
   type="square-jelly-box"
 ></ngx-spinner>
+
+
+
+
+
 <div class="row">
-  <div class="col-xl-12">
-    <div class="form-group busqueda">
-      <label for="bus">Busqueda:</label>
-      <div class="input-group">
-        <input
-          id="palabra"
-          type="text"
-          #palabra
-          (blur)="hijo.Guardar(palabra.value)"
-          placeholder="Palabra clave"
-          class=" form-control"
-        />
-        <div class="input-group-append mano" (click)="hijo.Generar()">
-          <span class="input-group-text "> <em class="fa fa-search"></em></span>
+
+    <div class="col-xl-3">
+        <div class="form-group ">
+          <label for="bus">Busqueda:</label>
+          <div class="input-group">
+            <input
+              id="palabra"
+              type="text"
+              #palabra
+              (blur)="hijo.Guardar(palabra.value)"
+              placeholder="Palabra clave"
+              class=" form-control"
+            />
+            <div class="input-group-append mano" (click)="hijo.Generar()">
+              <span class="input-group-text "> <em class="fa fa-search"></em></span>
+            </div>
+          </div>
+          <!-- <div _ngcontent-c33="" class="input-group">
+               <input _ngcontent-c33="" class="form-control form-control-sm" placeholder="Filtrar" type="text">
+                <div _ngcontent-c33="" class="input-group-append">
+                  <span _ngcontent-c33="" class="input-group-text text-info">
+                    <em _ngcontent-c33="" class="fa fa-search"></em></span>
+                    </div>
+              </div> -->
         </div>
       </div>
-      <!-- <div _ngcontent-c33="" class="input-group">
-           <input _ngcontent-c33="" class="form-control form-control-sm" placeholder="Filtrar" type="text">
-            <div _ngcontent-c33="" class="input-group-append">
-              <span _ngcontent-c33="" class="input-group-text text-info">
-                <em _ngcontent-c33="" class="fa fa-search"></em></span>
-                </div>
-          </div> -->
-    </div>
-  </div>
-</div>
-
-
-<div class="row">
-    <div class="col-xl-6">
-        <!-- (navigated)="valueChange($event)" -->
-     
-    </div>
-  </div>
-
-
-<div class="row">
 
     <div class="col-xl-3">
         <div class="col-xl-12">
@@ -78,17 +83,23 @@
   <div class="col-xl-3">
     <div class="col-xl-12">
       <div class="form-group">
-        <label for="sel2">Tipo de Reporte:</label>
-        <select class="form-control" id="sel2">
-          <option>Contratado vs Requerido</option>
+        <label for="TipoReporte">Tipo de Reporte:</label>
+        <select (change)="Ocultar()" class="form-control" id="TipoReporte">
+            <option value="0">Fecha de Solicitud</option>
+            <option value="0">Fecha de Estatus</option>
+            <option value="0">Movimientos Vacantes </option>
+            <option value="1">Fecha Estatus Grupal</option>
+            <option value="1">Reporte General </option>
+          <!-- <option>Contratado vs Requerido</option>
           <option>Estatus de Vacantes</option>
           <option>Captación</option>
           <option>Productividad</option>
-          <option>Fecha de Solicitud</option>
+          <option>Fecha de Solicitud</option> -->
         </select>
       </div>
     </div>
   </div>
+
   <div class="col-xl-3">
     <div class="col-xl-12">
       <div class="form-group">
@@ -152,7 +163,7 @@
       </div>
     </div>
   </div>
-  <div class="col-xl-3">
+  <div class="col-xl-3" id="divSolicitante">
     <div class="col-xl-12">
       <div class="form-group">
         <label for="solicitanteR">Solicitante:</label>
@@ -197,7 +208,7 @@
       </div>
     </div>
   </div>
-  <div class="col-xl-3">
+  <div class="col-xl-3" id="divcordinacion">
     <div class="col-xl-12">
       <div class="form-group">
         <label for="condinacionR">Tipo Coordinación:</label>
@@ -210,7 +221,7 @@
     </div>
   </div>
 
-  <div class="col-xl-3">
+  <div class="col-xl-3" id="divestatus">
     <div class="col-xl-12">
       <div class="form-group">
         <label for="sel1">Estatus:</label>
@@ -243,7 +254,7 @@
       </div>
     </div>
   </div>
-  <div class="col-xl-3">
+  <div class="col-xl-3" id="divreclutador">
     <div class="col-xl-12">
       <div class="form-group">
         <label for="sel2">Reclutador:</label>
@@ -279,14 +290,15 @@
   </div>
 </div>
 
-<button (click)="hijo.Exportar()" class="btn btn-warning btnReport">
-  Exportar
+<button title="Exportar" (click)="hijo.Exportar()" class="btn btn-sm btn-outline-warning btnReport">
+  
+  <em _ngcontent-c34="" class="fa fa-download"></em>
 </button>
 
-<button (click)="hijo.Generar(objsucursal,objsolicit,objrecluta,objempresa,objstatus)" class="btn btn-success btnReport">
-  Generar Reporte
+<button title="Generar Reporte" (click)="hijo.Generar(objsucursal,objsolicit,objrecluta,objempresa,objstatus)" class="btn btn-sm btn-outline-success btnReport">
+ 
+  <em _ngcontent-c34="" class="fa fa-bar-chart"></em>
 </button>
-
 
 <div>
   <app-tabla-reporte #hijo [data]="true"></app-tabla-reporte>
