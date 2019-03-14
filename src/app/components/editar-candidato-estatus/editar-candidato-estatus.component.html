@@ -7,11 +7,11 @@
         <th class="text-center text-info">MOTIVO</th>
         <th class="text-center text-info">FECHA INCIDENCIA</th>
         <th class="text-center text-info">NOMBRE CANDIDATO</th>
-        <th class="text-center text-info">DATOS CANDIDATO</th>
+        <!-- <th class="text-center text-info">DATOS CANDIDATO</th> -->
         <th class="text-center text-info">ESTATUS</th>
         <th class="text-center text-info">DESCRIPCIÓN INCIDENCIA</th>
         <th class="text-center text-info">RESULTADO INCIDENCIA</th>
-        <th class="text-center text-info"></th>
+        <th width="10%" class="text-center text-info"></th>
       </tr>
     </thead>
     <tbody>
@@ -21,7 +21,7 @@
         <td class="text-center"> {{row.motivo}}</td>
         <td class="text-center">{{row.fecha | date:'dd/MM/yyyy'}}</td>
         <td class="text-center"> {{row.candidato}}</td>
-        <td class="text-center">{{row.direccion}}</td>
+        <!-- <td class="text-center">{{row.direccion}}</td> -->
         <td class="text-center"> 
           <span *ngIf="row.estatus === 'NR'">POSIBLE {{row.estatus}}</span>
           <span *ngIf="row.estatus !== 'NR'">{{row.estatus}}</span>
@@ -42,11 +42,11 @@
     
         </td>
        
-        <td class="text-center">
-            <button [disabled]="!row.activar" [ngClass]="!row.activar ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'"  (click)="AddComentario(row, 28)" type="button" container="body" placement="bottom" tooltip="Incidencia v&aacute;lida">
-                <em class="fa fa-check"></em>
+        <td width="10%" class="text-center">
+            <button [disabled]="!row.activar" [ngClass]="!row.activar ? 'btn btn-xs disabled' : 'btn btn-xs btn-outline-warning'"  (click)="Confirmar(row, 28, 1)" type="button" container="body" placement="bottom" tooltip="Incidencia v&aacute;lida">
+                <i class="fa fa-ban" aria-hidden="true"></i>
             </button>
-            <button [disabled]="!row.activar" [ngClass]="!row.activar ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" (click)="AddComentario(row, 27)"  type="button" container="body" placement="bottom" tooltip="Incidencia no v&aacute;lida">
+            <button [disabled]="!row.activar" [ngClass]="!row.activar ? 'ml-1 btn btn-xs disabled' : 'ml-1 btn btn-xs btn-outline-info'" (click)="Confirmar(row, 27, 2)"  type="button" container="body" placement="bottom" tooltip="Incidencia no v&aacute;lida">
               <em class="fa fa-times"></em>
           </button>
         </td>
@@ -66,3 +66,46 @@
     </div>
   </div>
 </ng-template>
+<!-- 
+
+
+<div *ngIf="confirmar" [config]="{ show: true, ignoreBackdropClick: true }" class="modal fade" bsModal #lgModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-warning text-left">CONFIRMAR</h4>
+        <span class="float-right text-warning"><i class="fa fa-question-circle-o fa-5x" aria-hidden="true"></i></span>
+      </div>
+      <div class="modal-body">
+        <span class="text-muted font-weight-bold">EL CANDIDATO QUEDARA COMO NR. ¿ESTAS SEGURO?</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" id="modal-btn-si" (click)="AddComentario(rowAux, estatusAux)">SI</button>
+        <button type="button" class="btn btn-primary" id="modal-btn-no" (click)="confirmar = false;">NO</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div *ngIf="confirmar2" [config]="{ show: true, ignoreBackdropClick: true }" class="modal fade" bsModal #lgModal2="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title text-warning text-left" id="myModalLabel">CONFIRMAR</h4>
+          <span class="float-right text-warning"><i class="fa fa-question-circle-o fa-5x" aria-hidden="true"></i></span>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted font-weight-bold">EL CANDIDATO QUEDARA COMO LIBERADO. ¿ESTAS SEGURO? </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" id="modal-btn-si" (click)="AddComentario(rowAux, estatusAux)">SI</button>
+          <button type="button" class="btn btn-primary" id="modal-btn-no" (click)="confirmar2 = false;">NO</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+<div class="alert" role="alert" id="result"></div>
+

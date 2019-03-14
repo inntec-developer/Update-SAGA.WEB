@@ -682,6 +682,7 @@ objLiberar = [];
         this.pst = true;
         this.liberado = true;
         this.GetConteoVacante();
+        this.onChangeTable(this.config)
 
       }
       else if (data == 300) {

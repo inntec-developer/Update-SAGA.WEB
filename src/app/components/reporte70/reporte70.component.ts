@@ -65,8 +65,8 @@ export class Reporte70Component implements OnInit {
     { title: 'Coordinación', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Coordinación' } },
     { title: 'Com. Sol.', className: 'text-info text-center', name: 'comentarios_solicitante' },
     { title: 'Com. Recl.', className: 'text-info text-center', name: 'comentarios_reclutador' },
-    { title: 'Com. Coord.', className: 'text-info text-center', name: 'comentarios_coord' },
     { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador', filtering: { filterString: '', placeholder: 'Coordinador' } },
+    { title: 'Com. Coord.', className: 'text-info text-center', name: 'comentarios_coord' },
     { title: 'Solicita', className: 'text-info text-center', name: 'solicita', filtering: { filterString: '', placeholder: 'Solicita' } }
   ];
 
