@@ -99,8 +99,9 @@ export class ApiConection {
   public static GetRepoteCandidatos = 'Candidatos/getRPTCandidatosVacante'
 
   /* Clientes / Prospectos */
-  public static GetProspectos = "Directorio/getProspectos";
-  public static GetClientes = "Directorio/getClientes";
+  public static GetProspectos = 'Directorio/getProspectos';
+  public static GetClientes = 'Directorio/getClientes';
+  public static AddProspectos= 'Directorio/addProspecto';
 
   /* Candidatos */
   public static filtropaises = 'Candidatos/get';

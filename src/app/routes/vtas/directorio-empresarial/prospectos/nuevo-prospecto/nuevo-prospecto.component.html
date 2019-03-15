@@ -352,7 +352,7 @@
                 </div>
                 <div class="col-md-2 col-lg-2 col-sm-12" *ngIf="esOficina === 4">
                   <mat-form-field>
-                    <input matInput type="phone" formControlName="Extencion" maxlength="5" name="Extencion" placeholder="Ext." />
+                    <input matInput type="phone" formControlName="Extension" maxlength="5" name="Extension" placeholder="Ext." />
                   </mat-form-field>
                 </div>
               </div>
@@ -414,7 +414,7 @@
                     <td class="text-center">{{rowt.tTelefono}}</td>
                     <td class="text-center"> +{{rowt.clavePais}} ({{rowt.claveLada}}) {{rowt.telefono |
                       slice:0:4}}-{{rowt.telefono | slice:4:8}}</td>
-                    <td class="text-center">{{rowt.extencion}}</td>
+                    <td class="text-center">{{rowt.extension}}</td>
                     <td class="text-center">
                       <small *ngIf="rowt.esPrincipal else InactivoT">
                         SI
@@ -528,14 +528,14 @@
                   <tr *ngFor="let rowc of rowsC; let i=index" (click)="onCellClickC(rowc, rowc.idAux)" [class.selected]="rowc.selectedC">
                     <td class="text-center">{{rowc.calle}}</td>
                     <td class="text-center">{{rowc.email}}</td>
-                    <td class="text-center">
+                    <!-- <td class="text-center">
                       <small *ngIf="rowc.activo else InactivoC">
                         SI
                       </small>
                       <ng-template #InactivoC>
                         <small>NO</small>
                       </ng-template>
-                    </td>
+                    </td> -->
                     <!-- <td class="text-center">
                       <small *ngIf="rowc.activo else IsActivoC">
                         SI
@@ -637,7 +637,7 @@
                 </div>
                 <div class="col-md-2 col-lg-2 col-sm-12" *ngIf="esOficinaContacto === 4">
                   <mat-form-field>
-                    <input matInput type="phone" formControlName="Extencion" maxlength="5" name="Extencion-Contacto"
+                    <input matInput type="phone" formControlName="Extension" maxlength="5" name="Extension-Contacto"
                       placeholder="Ext." />
                   </mat-form-field>
                 </div>
