@@ -199,6 +199,7 @@
                       </div>
                     </ng-template>
                   </td>
+                  <td> {{row.coordinador}}</td>
                   <td class="text-center">
                     <span class="badge badge-pill badge-info" *ngIf="row.comentarios_coord.length == 0">0</span>
                     <small class="badge badge-pill badge-success" *ngIf="row.comentarios_coord.length > 0" [popover]="popTemplateComenCoord" #popC="bs-popover" [outsideClick]="true" placement="left"
@@ -212,7 +213,7 @@
                         </div>
                     </ng-template>
                   </td>
-                  <td> {{row.coordinador}}</td>
+                 
                   <td> {{row.solicita}}</td>
                 </tr>
 

@@ -1,3 +1,4 @@
+import { CandidatosService } from './../../../../../../service/Candidatos/candidatos.service';
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -20,7 +21,7 @@ declare var $: any;
   selector: 'app-dt-vacantes-reclutador',
   templateUrl: './dt-vacantes-reclutador.component.html',
   styleUrls: ['./dt-vacantes-reclutador.component.scss'],
-  providers: [RequisicionesService, PostulateService, DatePipe]
+  providers: [RequisicionesService, PostulateService, DatePipe, CandidatosService]
 })
 export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   //scroll
@@ -84,11 +85,14 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   pds: boolean = true;
   numeroVacantes: any;
   procesoCandidato: boolean = false;
+  candidatosNR: any = [];
+  requisPausa: any = [];
 
 
   constructor(
     private service: RequisicionesService,
     private postulateservice: PostulateService,
+    private serviceCandidato: CandidatosService,
     private dialog: MatDialog,
     private _Router: Router,
     private spinner: NgxSpinnerService,
@@ -103,7 +107,8 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.spinner.show();
     this.getVacantes();
-
+    this.GetCandidatosNR();
+    this.GetRequisicionesPausa();
 
   }
   ngAfterViewChecked() {
@@ -136,6 +141,27 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
     this.service.GetInformeRequisiciones(sessionStorage.getItem('id')).subscribe(data => {
       this.dataInfoRequi = data;
     });
+  }
+
+  GetCandidatosNR()
+  {
+    this.serviceCandidato.GetFoliosIncidencias(28).subscribe(result =>{
+      this.candidatosNR = result;
+      console.log(this.candidatosNR)
+    })
+
+  }
+
+  GetRequisicionesPausa() {
+    this.service.GetRequisicionesEstatus(39, this.usuarioId).subscribe(result => {
+
+      this.requisPausa = result;
+      console.log(this.requisPausa)
+      // this.requis.forEach(element => {
+      //   element.activar = false;
+      // });
+
+    })
   }
 
   //estatus vacantes
@@ -848,6 +874,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
     else {
       this.editarRequi = false;
       this.editarNR = false;
+      this.GetCandidatosNR();
       this.refreshTable();
     }
 

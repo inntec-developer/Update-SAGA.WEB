@@ -49,8 +49,7 @@ table tbody tr td .fontMio
 
 .vl {
   border-left: 1px solid #aaa;
-  height: 51px !important;
-  margin: 0 2px;
+  height: 64px !important;
 }
 
 .row {
@@ -64,3 +63,12 @@ ng-scrollbar {
   --scrollbar-thumb-hover-color: dodgerblue;
   --scrollbar-border-radius: 4px;
 }
+
+
+button .badge {
+  position: absolute;
+  top: -6px;
+
+  font-size: .7em;
+}
+

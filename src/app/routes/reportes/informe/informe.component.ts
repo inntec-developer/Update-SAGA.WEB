@@ -108,7 +108,21 @@ export class InformeComponent implements OnInit {
     console.log(this.objstatus);
   }
 
- 
+ Ocultar(){
+  let tipo = document.getElementById('TipoReporte')['value'];
+  if(tipo == 1){
+    document.getElementById('divreclutador').classList.add('ocultar');
+    document.getElementById('divestatus').classList.add('ocultar');
+    document.getElementById('divcordinacion').classList.add('ocultar');
+    document.getElementById('divSolicitante').classList.add('ocultar');
+  }else{
+    document.getElementById('divreclutador').classList.remove('ocultar');
+    document.getElementById('divestatus').classList.remove('ocultar');
+    document.getElementById('divcordinacion').classList.remove('ocultar');
+    document.getElementById('divSolicitante').classList.remove('ocultar');
+  }
+
+ }
 
 
 

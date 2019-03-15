@@ -3,10 +3,10 @@
 <!--mensajes-->
 <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
 
-<div class="card media">
+<div class="card">
   <div class="card-body mat-elevation-z8">
-    <div class="row">
-      <div class="col-sm-12 col-md-12 clearfix p-2 bg-light">
+    <div class="row p-2 bg-light clearfix">
+      <div class="col-sm-12 col-md-12">
         <button id="create" chkPrivilegiosButtons class="mr-1 btn btn-xs btn-acciones btn-outline-info" container="body"
           placement="bottom" tooltip="Nuevo" [routerLink]="['/ventas/crearRequisicion']">
           <em class="fa fa-plus"></em>
@@ -27,7 +27,7 @@
           container="body" placement="bottom" tooltip="Eliminar" (click)="openDialogDelete()">
           <em class="icon-trash"></em>
         </button>
-        <em class="vl"></em>
+        <em class="vl mr-1"></em>
         <!-- <button id='update' chkPrivilegiosButtons class="mb-1 btn btn-acciones margen"
                        container="body" placement="bottom" tooltip="Activar" [ngClass]="(estatusId != 8 || !element) ? 'disabled' : 'btn-outline-success'" (click)="openDialogReActivar()"><em
                         class="icon-refresh"></em></button> -->
@@ -37,7 +37,7 @@
           type="button" (click)="updataStatus(34, 'Cubierta')" container="body" placement="bottom" tooltip="Cubierta">
           <em class="fa fa fa-shield"></em>
         </button>
-        <button id="update" chkPrivilegiosButtons [disabled]="cp" class=",r-1 btn btn-xs" [ngClass]="cp ? 'disabled' : 'btn-outline-warning'"
+        <button id="update" chkPrivilegiosButtons [disabled]="cp" class="mr-1 btn btn-xs" [ngClass]="cp ? 'disabled' : 'btn-outline-warning'"
           type="button" (click)="updataStatus(35, 'Cubierta Parcialmente')" container="body" placement="bottom" tooltip="Cubierta Parcialmente">
           <em class="fa fa-star-half-o"></em>
         </button>
@@ -59,7 +59,7 @@
           placement="bottom" tooltip="Garant&iacute;a B&uacute;squeda Candidatos">
           <em class="fa fa-user-circle"></em>
         </button>
-        <em class="vl"></em>
+        <em class="vl mr-1"></em>
         <!-- <button id='special' chkPrivilegiosButtons type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-info'"
               (click)="reporte70=true;" container="body" placement="bottom" tooltip="Reporte 70">
               <i class="fa fa-file-text-o"></i>

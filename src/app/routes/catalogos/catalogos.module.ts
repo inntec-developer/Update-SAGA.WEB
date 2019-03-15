@@ -49,7 +49,8 @@ import { OficinasComponent } from './oficinas/oficinas.component';
 
 
 const routes: Routes = [
-  { path: 'preguntas', component: PreguntasFrecuentesComponent}
+  { path: 'preguntas', component: PreguntasFrecuentesComponent},
+  { path: 'oficinas', component: OficinasComponent}
 
 ];
 

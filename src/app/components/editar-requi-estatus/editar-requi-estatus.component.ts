@@ -16,15 +16,15 @@ export class EditarRequiEstatusComponent implements OnInit {
 
   @Input('estatusId') estatusId;
   @Input('usuarioId') usuarioId;
+  @Input('requisPausa') requis = [];
 
-  requis: any = [];
   editing = {};
   comentario: string = "";
   loading = false;
   constructor(private service: RequisicionesService, private comentarioService: ComentariosService, private postulateService: PostulateService, private toasterService: ToasterService) { }
 
   ngOnInit() {
-    this.GetRequisiciones();
+    //this.GetRequisiciones();
   }
 
   GetRequisiciones() {

@@ -1,3 +1,231 @@
-<p>
-  oficinas works!
-</p>
+<div class="content-heading">
+    <div>
+       Sistema de Oficinas
+        <span class="text-sm d-none d-sm-block">Administraci&oacute;n de oficinas de reclutamiento.</span>
+    </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+        <li class="breadcrumb-item"><a [routerLink]="['/home']" >Inicio</a></li>
+        <li class="breadcrumb-item active">Oficina</li>
+    </ol>
+  </div>
+
+
+
+
+
+
+
+
+  <table _ngcontent-c12="" class="table table-hover ng-star-inserted">
+    <thead _ngcontent-c12="">
+      <tr _ngcontent-c12="">
+        <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> Nombre </th>
+        <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> municipio </th>
+        <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> Estado </th>
+        <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> calle y Numero </th>
+        <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> colonia </th>
+        <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> telefono </th>
+        <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> Correo </th>
+        <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> latitud </th>
+        <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> longitud </th>
+        <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> tipoOficina </th>
+        
+        <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> Accion </th></tr>
+      </thead><tbody _ngcontent-c12=""><!---->
+          <tr _ngcontent-c12="" class="rowHover ng-star-inserted" *ngFor="let item of datos">
+            <td _ngcontent-c12="" class="text-center">{{item.nombre}}</td>
+            <td _ngcontent-c12="" class="text-center">{{item.municipio}}</td>
+            <td _ngcontent-c12="" class="text-center">{{item.estado}}</td>
+            <td _ngcontent-c12="" class="text-center">{{item.calle}}, {{item.numeroExt}}</td>
+            <td _ngcontent-c12="" class="text-center">{{item.colonia}}</td>
+            <td _ngcontent-c12="" class="text-center">{{item.telefono}}</td>
+            <td _ngcontent-c12="" class="text-center">{{item.Correo}}</td>
+            <td _ngcontent-c12="" class="text-center">{{item.latitud}}</td>
+            <td _ngcontent-c12="" class="text-center">{{item.longitud}}</td>
+            <td _ngcontent-c12="" class="text-center">{{item.tipoOficina}}</td>
+          
+            <td _ngcontent-c12="" class="text-center">
+                <button title="Guardar pregunta"  class="mb-1 btn btn-sm btn-outline-success" (click)="Guardar(element.id,$event)" type="button"   >
+                    <em _ngcontent-c34="" class="fa fa-check"></em>
+                  </button>
+              <button title="Eliminar pregunta" class="mb-1 btn btn-sm btn-outline-danger" (click)="Eliminar(element.id)" type="button"  >
+                  <em _ngcontent-c34="" class="fa fa-trash"></em>
+              </button>
+            </td>
+        </tbody></table>
+
+
+
+
+
+
+
+
+<!-- 
+
+  <div class="dtDamfo-container mat-elevation-z8 " style="margin-top: 20px">
+    <div class="dtDamfo-header">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
+      </mat-form-field>
+    </div>
+    <div  class="table ng-star-inserted ">
+  
+    </div>
+    <mat-table #table [dataSource]="dataSource" >
+     
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef> nombre </mat-header-cell>
+        <mat-cell *matCellDef="let element" (click)="Ocultar(element?.id)"(click)="PEditar(element?.id)" >
+            <div id="Pres_{{element?.id}}"> {{element?.nombre}} </div>
+         </mat-cell>
+      </ng-container>
+  
+
+      <ng-container matColumnDef="tipoOficina">
+        <mat-header-cell *matHeaderCellDef> Tipo Oficina</mat-header-cell>
+        <mat-cell *matCellDef="let element"  (click)="POcultar(element?.id)" (click)="Editar(element?.id)">
+          <div id="res_{{element?.id}}"> {{element?.tipoOficina}} </div>
+         
+        </mat-cell>
+      </ng-container>
+  
+
+      <ng-container matColumnDef="Direccion">
+        <mat-header-cell *matHeaderCellDef> Direccion</mat-header-cell>
+        <mat-cell  *matCellDef="let element" (click)="Ocultar(element?.id)" (click)="POcultar(element?.id)">
+            <div id="res_{{element?.id}}"> {{element?.estado}} {{element.municipio}} {{element.colonia}} {{element.calle}} {{element.numeroExt}}</div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="latitud">
+          <mat-header-cell *matHeaderCellDef> latitud</mat-header-cell>
+          <mat-cell  *matCellDef="let element" (click)="Ocultar(element?.id)" (click)="POcultar(element?.id)">
+              <div id="res_{{element?.id}}"> {{element?.latitud}} </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="longitud">
+            <mat-header-cell *matHeaderCellDef> longitud</mat-header-cell>
+            <mat-cell  *matCellDef="let element" (click)="Ocultar(element?.id)" (click)="POcultar(element?.id)">
+                <div id="res_{{element?.id}}"> {{element?.longitud}} </div>
+            </mat-cell>
+          </ng-container>
+
+      <ng-container matColumnDef="telefono">
+          <mat-header-cell *matHeaderCellDef> telefono</mat-header-cell>
+          <mat-cell  *matCellDef="let element" (click)="Ocultar(element?.id)" (click)="POcultar(element?.id)">
+              <div id="res_{{element?.id}}"> {{element?.telefono}} </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="correo">
+            <mat-header-cell *matHeaderCellDef> correo</mat-header-cell>
+            <mat-cell  *matCellDef="let element" (click)="Ocultar(element?.id)" (click)="POcultar(element?.id)">
+                <div id="res_{{element?.id}}"> {{element?.correo}} </div>
+            </mat-cell>
+          </ng-container>
+
+      <ng-container matColumnDef="accion">
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+          <mat-cell *matCellDef="let element" (click)="Ocultar(element?.id)" (click)="POcultar(element?.id)">
+              
+              <button title="Guardar pregunta" style="margin-right: 20px" class="mb-1 btn btn-sm btn-outline-success" (click)="Guardar(element.id,$event)" type="button"   >
+                  <em _ngcontent-c34="" class="fa fa-save"></em>
+                </button>
+            <button title="Eliminar pregunta" class="mb-1 btn btn-sm btn-outline-danger" (click)="Eliminar(element.id)" type="button"  >
+                <em _ngcontent-c34="" class="fa fa-trash"></em>
+            </button>
+        </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div> -->
+
+
+
+
+
+
+
+  
+<!-- 
+  <div class="row" #tableContainer>
+      <div class="col-sm-12 col-md-12 table-responsive clearfix">
+        <div>
+          <pre class="card-block float-right">Registros Totales: {{dataSource.length}}</pre>
+        </div>
+        <table id="prospectosDataTable" ngClass="{{config.className || ''}}" class="table" role="grid" style="width: 100%;">
+          <thead>
+            <tr>
+              <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+                <span>{{column.title | uppercase}}</span>
+              
+              </th>
+            </tr>
+            <tr *ngIf="showFilterRow">
+              <td *ngFor="let column of columns">
+                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
+                  (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+              [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+              <div>
+                <tr *ngFor="let row of rows; let i=index" (click)="onCellClick(row)" [class.selected]="row.selected">
+                  <td class="text-center">{{row.rfc}}</td>
+                  <td class="text-center">
+                    <small *ngIf="row.razonSocial.length < 30 else toLengthRS">
+                      {{row.razonSocial}}
+                    </small>
+                    <ng-template #toLengthRS>
+                      <small placement="bottom" tooltip="{{row.nombrecomercial}}"> {{row.razonSocial | slice:0:15 |
+                        uppercase
+                        }} ...
+                      </small>
+                    </ng-template>
+                  </td>
+                  <td class="text-center">
+                    <small *ngIf="row.nombrecomercial.length < 30 else toLengthNC">
+                      {{row.nombrecomercial}}
+                    </small>
+                    <ng-template #toLengthNC>
+                      <small placement="bottom" tooltip="{{row.nombrecomercial}}"> {{row.nombrecomercial | slice:0:15 |
+                        uppercase }} ...
+                      </small>
+                    </ng-template>
+                  </td>
+                  <td>{{row.giroEmpresa}}</td>
+                  <td>{{row.actividadEmpresa}}</td>
+                  <td>{{row.tamanoEmpresa}}</td>
+                  <td class="text-right"> {{row.numeroEmpleados}}</td>
+                  <td class="text-center">
+                    <small *ngIf="row.clasificacion == 1" class="text-success">
+                      <i class="fa fa-star-o" aria-hidden="true"></i>
+                    </small>
+                    <small *ngIf="row.clasificacion == 2" class="text-success">
+                      <i class="fa fa-star-o" aria-hidden="true"></i>
+                      <i class="fa fa-star-o" aria-hidden="true"></i>
+                    </small>
+                    <small *ngIf="row.clasificacion == 3" class="text-success">
+                      <i class="fa fa-star-o" aria-hidden="true"> </i>
+                      <i class="fa fa-star-o" aria-hidden="true"> </i>
+                      <i class="fa fa-star-o" aria-hidden="true"> </i>
+                    </small>
+                  </td>
+                  <td class="text-center">{{row.tipoEmpresa}}</td>
+                </tr>
+              </div>
+            </ng-scrollbar>
+          </tbody>
+        </table>
+      </div>
+    </div> -->
+
+
+  
