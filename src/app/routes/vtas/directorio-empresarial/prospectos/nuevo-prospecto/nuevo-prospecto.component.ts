@@ -808,7 +808,6 @@ export class NuevoProspectoComponent implements OnInit {
 
   //#region FUNCIONES PARA EMAILS
   AddEmail() {
-    debugger;
     let idDireccion = this.formCorreos.get('EmailDireccion').value;
     let idxDireccion = this.DireccionesNew.findIndex(x => x.idAux == idDireccion)
     let data = {

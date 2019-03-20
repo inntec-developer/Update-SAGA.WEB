@@ -89,7 +89,7 @@ export class CalendarioCandidatoComponent implements OnInit {
       week: 'Semana',
       day: 'Día',
       list: 'Lista',
-      basicWeek: 'Basico'
+      basicWeek: 'Básico'
     },
   };
   updateIndex: any;
@@ -171,11 +171,21 @@ export class CalendarioCandidatoComponent implements OnInit {
 
   dayClick(date, jsEvent, view) {
     this.selectedDate = date.toJSON();
-    var DateNow = new Date();
-    DateNow.toLocaleDateString('es', {year: 'numeric', month: 'short'});
-    var selectDayCalendar = new Date(this.selectedDate)
-    if(selectDayCalendar < DateNow){
-      this.popToast('warning', 'Calendario', 'No se permirte agregar eventos con fechas menor del día actual');
+    var hoy = new Date();
+    var dia = hoy.getDate();
+    var mes = hoy.getMonth();
+    var anio= hoy.getFullYear();
+    var fecha_actual = String(anio+"-"+ (mes+1) +"-"+dia);
+    var DateNow = new Date(fecha_actual);
+    var select =  new Date(this.selectedDate);
+    var sdia = select.getDate();
+    var smes = select.getMonth();
+    var sanio = select.getFullYear();
+    var selected = String(sanio+"-"+ (smes+1) +"-"+(sdia+1));
+    var compare = new Date(selected);
+
+    if(compare < DateNow){
+      this.popToast('warning', 'Calendario', 'No se permite agregar eventos con fechas menor del día actual');
       return;
     }
     this.selectedEvent = null;
@@ -394,7 +404,7 @@ export class CalendarioCandidatoComponent implements OnInit {
           this.getEventoCalendar[this.updateIndex]['activo'] = false;
           this.calendarEvents == this.getEventoCalendar;
           this.$calendar.fullCalendar('removeEvents');
-          // Agrega la información actualizada al calendario sin la necesaridad de llamar el servicio Get. 
+          // Agrega la información actualizada al calendario sin la necesaridad de llamar el servicio Get.
           this.$calendar.fullCalendar('addEventSource', this.calendarEvents);
           this.popToast('success', 'Calendario', 'Se actualizó correctamente el evento en el calendario.');
           this.selectedEvent = this.getEventoCalendar[this.updateIndex];
@@ -496,19 +506,19 @@ export class CalendarioCandidatoComponent implements OnInit {
       borderColor: this.ColorPicker
     }
 
-    
-    
+
+
     this.componenteService.updateCalendarEvent(newDate).subscribe(result => {
       if (result == 200) {
         // Elimina la informacion del calnedario para posterioemente cargarlo con la nueva información
         this.$calendar.fullCalendar('removeEvents');
-        // Agrega la información actualizada al calendario sin la necesaridad de llamar el servicio Get. 
+        // Agrega la información actualizada al calendario sin la necesaridad de llamar el servicio Get.
         this.$calendar.fullCalendar('addEventSource', this.calendarEvents);
         this.popToast('success', 'Calendario', 'Se actualizó correctamente el evento en el calendario.');
         this.loading = false;
         this.EditEventAction = false;
         this.selectedClick(this.getEventoCalendar[this.updateIndex]);
-        this._Actividades(); 
+        this._Actividades();
       }
       if (result == 404) {
         this.popToast('error', 'Calendario', 'Ocurrió un error al actualizar el evento. Si el problema persiste favor de notificarlo a sistemas.');

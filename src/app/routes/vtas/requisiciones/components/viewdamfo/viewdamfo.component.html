@@ -1,5 +1,5 @@
 <ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
-<div class="content-heading">
+<div class="content-heading" *ngIf="!imprimir">
   <div>
     Visualizar DAM-FO-290
     <span class="text-sm d-none d-sm-block">Caracteristicas de DAM-FO-290</span>
@@ -18,27 +18,27 @@
     <li class="breadcrumb-item active">Visualizar DAM-FO-290</li>
   </ol>
 </div>
+<div class="row" *ngIf="!imprimir">
 
-
-
-<div class="row">
-  <button (click)="print()">Imprimir</button>
-  <button (click)="downloadPDF()">Export to PDF</button>
   <div class="col-md-12">
     <div class="d-flex justify-content-between">
-      <button placement="right" tooltip="Generar Requisición" class="mb-1  btn btn-outline-success" (click)="openDialog()">
+      <button placement="right" tooltip="Generar Requisición" class="mr-1 btn btn-xs btn-outline-success"
+        (click)="openDialog()">
         <em class="icon-docs"></em>
       </button>
-      <button container="body" placement="bottom" tooltip="Regresar" class="mb-1 btn btn-outline-warning" type="button"
-        [routerLink]="['/ventas/crearRequisicion']">
+      <button placement="right" tooltip="Imprimir Requisición" class="mr-1 btn btn-xs btn-outline-info"
+        (click)="print()">
+        <em class="fa fa-print"></em>
+      </button>
+      <button container="body" placement="bottom" tooltip="Regresar" class="mr-1 btn btn-xs btn-outline-warning"
+        type="button" [routerLink]="['/ventas/crearRequisicion']">
         <em class="icon-action-undo"></em>
       </button>
     </div>
   </div>
 </div>
-<br />
-
-<div id="content" >
+<br *ngIf="!imprimir" />
+<div id="content">
   <div class="dt-container  mat-elevation-z8">
     <div class="card-header">
       <em class="fa fa-user"></em> Informaci&oacute;n General
@@ -150,12 +150,11 @@
               </p>
             </div>
           </div>
-
         </div>
       </div>
     </div>
   </div>
-  <br>
+  <br *ngIf="!imprimir">
   <div class="dt-container  mat-elevation-z8">
     <div class="card-header">
       <em class="fa fa-user"></em> Vacantes por Horarios
@@ -169,7 +168,7 @@
       </div>
     </div>
   </div>
-  <br>
+  <br *ngIf="!imprimir">
   <div class="dt-container  mat-elevation-z8">
     <div class="card-header">
       <em class="fa fa-id-badge"></em> Informaci&oacute;n Adicional del Perfil
@@ -226,15 +225,14 @@
       </div>
     </div>
   </div>
-
-  <br>
+  <br *ngIf="!imprimir" />
   <div class="row">
     <div class="col-md-12">
       <!-- DIRECCIONES -->
       <app-dt-direccion [Direcciones]="damfo290?.cliente?.direcciones"></app-dt-direccion>
     </div>
   </div>
-  <br />
+  <br *ngIf="!imprimir" />
   <div class="row">
     <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
       <!-- TELEFONOS -->
@@ -252,15 +250,15 @@
       <app-dt-contactos [Contactos]="damfo290?.cliente?.contactos"></app-dt-contactos>
     </div>
   </div>
-  <br>
-  <br />
+  <br *ngIf="!imprimir">
+  <br *ngIf="!imprimir" />
   <div class="row">
     <div class="col-md-12">
       <!-- BENEFICIOS -->
       <app-dt-beneficios [Beneficios]="damfo290?.beneficiosPerfil"></app-dt-beneficios>
     </div>
   </div>
-  <br />
+  <br *ngIf="!imprimir" />
   <div class="row">
     <div class="col-md-4">
       <!-- ACTIVIDADES -->
@@ -276,7 +274,7 @@
       <app-procesos [Proceso]="damfo290?.procesoPerfil"></app-procesos>
     </div>
   </div>
-  <br />
+  <br *ngIf="!imprimir" />
   <div class="row">
     <div class="col-md-3">
       <!-- DOCUMENTOS dAMSA -->
@@ -295,7 +293,7 @@
       <app-prestaciones-cliente [Prestaciones]="damfo290?.prestacionesCliente"></app-prestaciones-cliente>
     </div>
   </div>
-  <br />
+  <br *ngIf="!imprimir" />
   <div class="row">
     <div class="col-md-6">
       <!-- PSICOMETRIAS DAMSA -->
@@ -306,7 +304,7 @@
       <app-dt-psicometrias-cliente [Psicometrias]="damfo290?.psicometriasCliente"></app-dt-psicometrias-cliente>
     </div>
   </div>
-  <br />
+  <br *ngIf="!imprimir" />
   <div class="row">
     <div class="col-md-4 col-lg-4">
       <!-- COMPTENCIAS CARDINALES -->
@@ -318,7 +316,8 @@
     </div>
     <div class="col-md-4 col-lg-4">
       <!-- COMPETENCIAS GERENCIALES -->
-      <app-dt-competencia-gerencial [Competencias]="damfo290?.competetenciasGerencialPerfil"></app-dt-competencia-gerencial>
+      <app-dt-competencia-gerencial [Competencias]="damfo290?.competetenciasGerencialPerfil">
+      </app-dt-competencia-gerencial>
     </div>
   </div>
 </div>

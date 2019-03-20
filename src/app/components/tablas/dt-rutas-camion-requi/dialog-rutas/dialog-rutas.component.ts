@@ -23,7 +23,7 @@ export class DialogRutasComponent implements OnInit {
     private rutasService : RequisicionesService,
     private dialogRutas : MatDialogRef<DialogRutasComponent>,
     private toasterService: ToasterService
-  ) { 
+  ) {
     dialogRutas.disableClose = true;
   }
 
@@ -95,7 +95,7 @@ export class DialogRutasComponent implements OnInit {
       if (data == 200) {
         this.rutasService.getRequiRutasCamion(this.DireccionId).subscribe(result => {
           this.dialogRutas.close(result);
-          let msg = 'La ruta de camión se actualizo correctamente.';
+          let msg = 'La ruta de camión se actualizó correctamente.';
           this.popToast('success', 'Ruta de Camión', msg);
         }, err => {
           console.error(err)

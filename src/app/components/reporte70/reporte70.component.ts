@@ -55,7 +55,7 @@ export class Reporte70Component implements OnInit {
     { title: 'No.', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' } },
     { title: 'Enviado', className: 'text-info text-center', name: 'enProcesoEC', filtering: { filterString: '', placeholder: 'Enviado' } },
     { title: 'Aceptado', className: 'text-info text-center', name: 'enProcesoFC', filtering: { filterString: '', placeholder: 'Aceptado' } },
-    { title: 'Contratados', className: 'text-info text-center', name: 'contratados', filtering: { filterString: '', placeholder: 'Contratados' } },
+    { title: 'Cubiertos', className: 'text-info text-center', name: 'contratados', filtering: { filterString: '', placeholder: 'Cubiertos' } },
     { title: 'Vacantes Faltantes', className: 'text-info text-center', name: 'faltantes', filtering: { filterString: '', placeholder: 'Vac. faltantes' } },
     { title: 'Avance', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'Avance' } },
     { title: 'Dias Transcurridos', className: 'text-info text-center', name: 'diasTrans', filtering: { filterString: '', placeholder: 'Dias' } },

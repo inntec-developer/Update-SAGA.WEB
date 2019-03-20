@@ -2,23 +2,26 @@
   <div class="card-body mat-elevation-z8">
     <div class="row">
       <div class="col-sm-12 col-md-12 clearfix p-2 bg-light">
-        <button id="add" #add class="margen mr-1 btn btn-xs btn-acciones " [disabled]="bc" [ngClass]="bc ? 'disabled' : 'btn-outline-primary'"
-          type="button" [routerLink]="['/ventas/nuevoProspecto']" container="body" placement="bottom" tooltip="Agregar Prospecto">
+        <button id="add" #add class="margen mr-1 btn btn-xs btn-acciones " [disabled]="bc"
+          [ngClass]="bc ? 'disabled' : 'btn-outline-primary'" type="button" [routerLink]="['/ventas/nuevoProspecto']"
+          container="body" placement="bottom" tooltip="Agregar Prospecto">
           <em class="fa fa-plus"></em>
         </button>
         <em class="vl"></em>
-        <button id="view" #view class="margen mr-1 btn btn-xs btn-acciones" (click)="openDialogShowRequi(element.id, element.folio)"
-          placement="bottom" tooltip="Ver Cliente" [disabled]="!element" [ngClass]="(!element) ? 'disabled':'btn-outline-warning'">
+        <button id="view" #view class="margen mr-1 btn btn-xs btn-acciones"
+          (click)="openDialogShowRequi(element.id, element.folio)" placement="bottom" tooltip="Ver Cliente"
+          [disabled]="!element" [ngClass]="(!element) ? 'disabled':'btn-outline-warning'">
           <em class="fa fa-eye"></em></button>
-        <button id="edit" #edit class="margen mr-1 btn btn-xs btn-acciones" chkPrivilegiosButtons (click)="lgModal.show()"
-          [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-outline-info'" container="body" placement="bottom"
-          tooltip="Editar"><em class="fa fa-pencil"></em></button>
+        <button id="edit" #edit class="margen mr-1 btn btn-xs btn-acciones" chkPrivilegiosButtons
+          (click)="lgModal.show()" [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-outline-info'"
+          container="body" placement="bottom" tooltip="Editar"><em class="fa fa-pencil"></em></button>
         <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body"
-          class="margen mr-1 btn btn-xs btn-acciones float-right" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'disabled':'btn-outline-primary'">
+          class="margen mr-1 btn btn-xs btn-acciones float-right" [disabled]="!clearFilter"
+          [ngClass]="(!clearFilter) ? 'disabled':'btn-outline-primary'">
           <em class="fa fa-eraser"></em>
         </button>
-        <button type="button" class="margen mr-1 btn btn-xs btn-acciones btn-outline-success float-right" (click)="refreshTable()"
-          container="body" placement="bottom" tooltip="Actualizar" container="body">
+        <button type="button" class="margen mr-1 btn btn-xs btn-acciones btn-outline-success float-right"
+          (click)="refreshTable()" container="body" placement="bottom" tooltip="Actualizar" container="body">
           <em class="icon-refresh"></em>
         </button>
       </div>
@@ -29,7 +32,8 @@
         <div>
           <pre class="card-block float-right">Registros Totales: {{dataSource.length}}</pre>
         </div>
-        <table id="prospectosDataTable" ngClass="{{config.className || ''}}" class="table" role="grid" style="width: 100%;">
+        <table id="prospectosDataTable" ngClass="{{config.className || ''}}" class="table" role="grid"
+          style="width: 100%;">
           <thead>
             <tr>
               <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
@@ -40,8 +44,9 @@
             </tr>
             <tr *ngIf="showFilterRow">
               <td *ngFor="let column of columns">
-                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                  (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
+                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
+                  [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                  class="form-control form-control-sm" id="{{column.name}}">
               </td>
             </tr>
           </thead>
@@ -102,8 +107,8 @@
     <div class="row">
       <div class="col-md-12 clearfix">
         <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
-          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
-          (numPages)="numPages = $event"></pagination>
+          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+          (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
 
         <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}} Registros: {{registros}}</small></pre>
       </div>
