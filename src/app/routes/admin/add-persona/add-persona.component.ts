@@ -209,7 +209,6 @@ export class AddPersonaComponent implements OnInit {
   }
 
   SendEmail(user: any) {
-    debugger;
     let u = {
       EntidadId: user.entidadId,
       Clave: user.clave,

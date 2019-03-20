@@ -22,7 +22,6 @@ export class ProcesosComponent implements OnInit {
   }
 
   Ordenar() {
-    debugger;
     if (this.Proceso != null) {
       for (var i = 1; i < this.Proceso.length; i++) {
         for (var j = 0; j < (this.Proceso.length - i); j++) {
