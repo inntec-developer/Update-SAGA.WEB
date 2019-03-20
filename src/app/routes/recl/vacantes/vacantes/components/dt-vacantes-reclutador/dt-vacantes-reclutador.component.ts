@@ -126,7 +126,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   getVacantes() {
     this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
-     
+
      // this.getRequiEstadisticos()
     });
   }
@@ -224,7 +224,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
     { title: 'DESCARTADOS', className: 'text-info text-center', name: 'descartados', filtering: { filterString: '', placeholder: 'DESCARTADOS' } },
     { title: 'ENVIADO CLIENTE', className: 'text-info text-center', name: 'enviados', filtering: { filterString: '', placeholder: 'ENVIADO CLIENTE' } },
     { title: 'RECHAZADOS', className: 'text-info text-center', name: 'rechazados', filtering: { filterString: '', placeholder: 'RECHAZADOS' } },
-    { title: 'CONTRATADOS', className: 'text-info text-center', name: 'contratados', filtering: { filterString: '', placeholder: 'CONTRATADOS' } }
+    { title: 'CUBIERTOS', className: 'text-info text-center', name: 'contratados', filtering: { filterString: '', placeholder: 'CUBIERTOS' } }
   ];
 
   public config: any = {

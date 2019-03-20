@@ -14,7 +14,7 @@
           <th class="text-center">ENTREVISTA CLIENTE</th>
           <th class="text-center">FINALISTA CLIENTE</th>
           <th class="text-center">RECHAZADOS</th>
-          <th class="text-center">CONTRATADOS</th>
+          <th class="text-center">CUBIERTO</th>
         </tr>
       </thead>
       <tbody>
@@ -29,7 +29,7 @@
           <td class="text-center"> {{row.entCliente}} </td>
           <td class="text-center"> {{row.enProcesoFC}} </td>
           <td class="text-center"> {{row.rechazados}}</td>
-          <td class="text-center"> {{row.contratados}}</td>         
+          <td class="text-center"> {{row.contratados}}</td>
         </tr>
       </tbody>
     </table>
@@ -42,19 +42,19 @@
           <div class="box">
           <span>
             <ul>
-             
+
             <!-- <li><a>
               <button class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="VerCandidato()"  container="body" placement="bottom" tooltip="Ver Candidato">
                   <em class="fa fa-eye"></em>
                 </button>
               </a></li> -->
               <li><a>
-                <button [ngClass]="pst ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" [disabled] = "pst"  type="button" (click)="SetProceso(12, 'Apartado')"  placement="bottom" tooltip="Apartar" container="body"> 
+                <button [ngClass]="pst ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" [disabled] = "pst"  type="button" (click)="SetProceso(12, 'Apartado')"  placement="bottom" tooltip="Apartar" container="body">
                   <em class="fa fa-thumbs-o-up"></em>
                 </button>
               </a></li>
               <li><a>
-                <button [ngClass]="liberado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" [disabled]="liberado" type="button" (click)="SetProceso(27, 'Liberado')"  container="body" placement="bottom" tooltip="Desapartar"> 
+                <button [ngClass]="liberado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" [disabled]="liberado" type="button" (click)="SetProceso(27, 'Liberado')"  container="body" placement="bottom" tooltip="Desapartar">
                   <em class="fa fa-thumbs-o-down"></em>
                 </button>
               </a></li>
@@ -77,7 +77,7 @@
               </button></a></li>
               <li><a><button [disabled]="evm" [ngClass]="evm ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetProceso(15, 'Evaluaci&oacute;n M&eacute;dica')"  container="body" placement="bottom" tooltip="Evaluaci&oacute;n M&eacute;dica">
                 <em class="fa fa-user-md"></em>
-              </button></a></li>             
+              </button></a></li>
               <li><a><em class="vl"></em></a></li>
               <li><a><button [disabled]="fr" [ngClass]="fr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"  type="button" (click)="SetProceso(21, 'Finalista Reclutamiento')"  container="body" placement="bottom" tooltip="Finalista Reclutamiento">
                 <em class="fa fa-user-circle-o"></em>
@@ -88,41 +88,41 @@
               <li><a><button [disabled]="fc" [ngClass]="fc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetProceso(23, 'Finalista Cliente')"  container="body" placement="bottom" tooltip="Finalista Cliente">
                 <em class="fa fa-user-circle-o"></em>
               </button></a></li>
-              <li><a><button [disabled]="contratado" [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" type="button" (click)="SetProceso(24, 'Contratado')"  container="body" placement="bottom" tooltip="Contratado">
+              <li><a><button [disabled]="contratado" [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" type="button" (click)="SetProceso(24, 'Cubierto')"  container="body" placement="bottom" tooltip="Cubierto">
                 <em class="fa fa-user-plus"></em>
               </button></a></li>
               <!-- <li><a><em class="vl"></em></a></li>
               <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(28)"  container="body" placement="bottom" tooltip="Cancelada">-->
-  
+
               <li><a><button [disabled]="rechazado" [ngClass]="rechazado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'"  type="button" (click)="SetProceso(40, 'Rechazado por Cliente')"  container="body" placement="bottom" tooltip="Rechazado por Cliente">
                 <em class="fa fa-user-times"></em>
-              </button></a></li> 
+              </button></a></li>
 
               <li><a><button [disabled]="nr" [ngClass]="nr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'"  type="button" (click)="SetProceso(42, 'NR')"  container="body" placement="bottom" tooltip="NR">
                 <em class="fa fa-flag"></em>
               </button></a></li>
-            
+
               <!-- <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
                 <em class="fa fa-phone"></em>
               </button></a></li>
               <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button">
                 <em class="fa fa-phone"></em>
               </button></a></li> -->
-           
+
 
               <!-- <li><a>
                 <button [disabled]="cv" class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="SetProceso(11)"  container="body" placement="bottom" tooltip="CV Visto">
                     <em class="fa fa-file-text-o"></em>
                   </button>
                 </a></li> -->
-            
-            
-          
-             
-            
-             
+
+
+
+
+
+
               <!-- <li><a><em class="vl"></em></a></li>
-            
+
               <li><a><button class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="SetProceso(23)"  container="body" placement="bottom" tooltip="Transferir">
                 <em class="fa fa-exchange"></em>
               </button></a></li>
@@ -132,14 +132,14 @@
               </button></a></li>
  -->
 
-            
+
             </ul>
           </span>
-          
+
               <button class="mb-1  btn btn-outline-success float-right margen" type="button" (click)="refresh()" container="body" placement="bottom" tooltip="Actualizar">
                 <em class="icon-refresh"></em>
               </button>
-             
+
               <!-- <button [ngClass]="flagContratados ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'" [disabled] = "flagContratados" class="float-right margen {{activeClass}}" type="button" (click)="OpenEditarComponent()" container="body" placement="bottom" tooltip="Editar Contratados">
                 <em class="fa fa-pencil"></em>
               </button> -->
@@ -172,12 +172,12 @@
             </tr>
         </thead>
         <tbody>
-         
+
           <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of dataSource" [class.selected]="row.selected"  placement="bottom" tooltip="click para seleccionar - dblclick para visualizar" container="body">
             <td class="text-center"><span *ngIf="row.estatusId != 12 && row.estatusId != 17 && row.estatusId != 27 else sinAsignar">{{row.horario}}</span></td>
             <ng-template #sinAsignar>
               <span>SIN ASIGNAR</span>
-            </ng-template> 
+            </ng-template>
             <td class="text-center"> {{row.nombre}} {{row.apellidoPaterno }} {{row.apellidoMaterno}}</td>
             <td class="text-center"> {{row.areaExp }}</td>
             <td class="text-center"> {{row.areaInt }}</td>
@@ -265,7 +265,7 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 id="dialog-sizes-name1" class="modal-title pull-left text-success">EDITAR CANDIDATO CONTRATADO</h4>
+          <h4 id="dialog-sizes-name1" class="modal-title pull-left text-success">EDITAR CANDIDATO CUBIERTO</h4>
           <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal.hide();closeModal(2)" ><i class="fa fa-times"></i></button>
         </div>
         <div class="modal-body">
