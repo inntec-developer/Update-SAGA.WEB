@@ -40,7 +40,7 @@ export class TablaReporteComponent implements OnInit {
     var dato = valor;
     var p = document.getElementById('palabra');
     var palabra = p['value'];
-    console.log(palabra)
+   
   }
 
   Prueba(lista){
@@ -50,8 +50,6 @@ export class TablaReporteComponent implements OnInit {
 
   Generar(oficina,solicitante,reclutador,empresa,estatus){
     this.spinner.show();
-
-  debugger;
     
   var ofc = '';
   var sol = '';
@@ -124,9 +122,9 @@ est = estatus == undefined?'0':est;
     var tipocordina = coo['value'];
     var inicio = inc['value'];
     var final = fin['value'];
-   
+    let tipo = document.getElementById('TipoReporte')['value'];
     
-    this.Servicio.GetInforme(palabra,ofc,null,inicio,final,emp,sol,tiporecluta,tipocordina,est,rec)
+    this.Servicio.GetInforme(palabra,ofc,tipo,inicio,final,emp,sol,tiporecluta,tipocordina,est,rec)
     .subscribe( data => {
     // this.popGenerico(data.mensaje,data.bandera,'Publicacion');
     this.General = data;
@@ -141,13 +139,16 @@ est = estatus == undefined?'0':est;
     this.General.forEach(item => {
       obj.push({
         Folio: item.folio.toString(),
-        Vacante: item.vBtra,
-        'Fecha alta': this.convertDateTime(item.fch_Creacion),
-        'Fecha limite': this.convertDateTime(item.fch_Limite),
+        'Fecha Solicitud': this.convertDateTime(item.fch_Creacion),
+        'Fecha Cumplimiento': this.convertDateTime(item.fch_Cumplimiento),
         Empresa: item.empresa,
+        Estado: item.estado,
         Solicita: item.propietario,
-        No	: item.numero,
+        'No. Vacante'	: item.numero,
+        'Avance%'	: item.numero + '%',
+        Vacante: item.vBtra,
         Estatus: item.estatus,
+        'Tipo Coordinación': item.tipoReclutamiento,
         'Fecha estatus': this.convertDateTime(item.fch_Modificacion)
       })
      });
@@ -179,15 +180,19 @@ est = estatus == undefined?'0':est;
   
 
   convertDateTime(dateTime){
-    var res = dateTime.substring(0, 10);
-    var result = Date.parse(res);
+    if(dateTime != undefined){
+      var res = dateTime.substring(0, 10);
+      var result = Date.parse(res);
+      return (res);
+    }
+    
    // var date = res.split("-");
    // var yyyy = date[0];
    // var mm = date[1];
    // var dd = date[2];
  // var fecha = yyyy+'-' + mm + dd
 //  return new Date(yyyy,mm,dd);
-   return (res);
+   return ('');
 }
 
 }

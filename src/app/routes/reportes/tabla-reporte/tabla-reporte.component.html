@@ -1,35 +1,51 @@
 
 
 
+    <div *ngIf="General.length == 0">
+        <h2 style="margin-top: 30px">
+           Oops! No se encontraron Resultados 
+        </h2>
+       </div>
+       
+       
+       <table style="font-size: 10px" *ngIf="General.length > 0" class="table table-striped table-hover ng-star-inserted sombra">
+         <thead >
+           <tr>
+             <th class="text-center text-success ng-star-inserted" scope="col">Folio</th>
+             <th class="text-center text-primary ng-star-inserted" scope="col">Fecha solicitud</th>
+             <th class="text-center text-primary ng-star-inserted" scope="col">Fecha Cumplimiento</th>
+             <th class="text-center text-success ng-star-inserted" scope="col">Empresa</th>
+             <th class="text-center text-success ng-star-inserted" scope="col">Estado</th>
+             <th class="text-center text-primary ng-star-inserted" scope="col">Solicita</th>
+             <th class="text-center text-primary ng-star-inserted" scope="col">No. vacante</th>
+             <th class="text-center text-primary ng-star-inserted" scope="col">Porcentaje %</th>
+             <th class="text-center text-success ng-star-inserted" scope="col">Vacante</th>
+             <th class="text-center text-primary ng-star-inserted" scope="col">Estatus</th>
+             <th class="text-center text-primary ng-star-inserted" scope="col">Fecha estatus</th>
+             <th class="text-center text-primary ng-star-inserted" scope="col">Tipo Coordinación</th>
+             <!-- <th class="text-center text-primary ng-star-inserted" scope="col">Reclutador</th> -->
 
-<table class="table table-striped table-hover ng-star-inserted">
-  <thead >
-    <tr>
-      <th class="text-center text-success ng-star-inserted" scope="col">Folio</th>
-      <th class="text-center text-success ng-star-inserted" scope="col">Vacante</th>
-      <th class="text-center text-primary ng-star-inserted" scope="col">Porcentaje %</th>
-      <th class="text-center text-primary ng-star-inserted" scope="col">Fecha alta</th>
-      <th class="text-center text-primary ng-star-inserted" scope="col">Fecha limite</th>
-      <th class="text-center text-success ng-star-inserted" scope="col">Empresa</th>
-      <th class="text-center text-primary ng-star-inserted" scope="col">Solicita</th>
-      <th class="text-center text-primary ng-star-inserted" scope="col">No.</th>
-      <th class="text-center text-primary ng-star-inserted" scope="col">Estatus</th>
-      <th class="text-center text-primary ng-star-inserted" scope="col">Fecha estatus</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of General">
-      <th class="text-center">{{item.folio}}</th>
-      <td class="text-center">{{item.vBtra}}</td>
-      <td class="text-center">{{item.porcentaje}}%</td>
-      <td class="text-center">{{this.convertDateTime(item.fch_Creacion)}}</td>
-      <td class="text-center">{{this.convertDateTime(item.fch_Limite)}}</td>
-      <td class="text-center">{{item.empresa}}</td>
-      <td class="text-center">{{item.propietario}}</td>
-      <td class="text-center">{{item.numero}}</td>
-      <td class="text-center">{{item.estatus}}</td>
-      <td class="text-center">{{this.convertDateTime(item.fch_Modificacion)}}</td>
-    </tr>
-   
-  </tbody>
-</table>
+           </tr>
+         </thead>
+         <tbody>
+           <tr *ngFor="let item of General">
+             <th class="text-center">{{item.folio}}</th>
+             <td class="text-center">{{this.convertDateTime(item.fch_Creacion)}}</td>
+             <td class="text-center">{{this.convertDateTime(item.fch_Cumplimiento)}}</td>
+             <td class="text-center">{{item.empresa}}</td>
+             <td class="text-center">{{item.estado}}</td>
+             <td class="text-center">{{item.propietario}}</td>
+             <td class="text-center">{{item.numero}}</td>
+             <td class="text-center">{{item.porcentaje}}%</td>
+             <td class="text-center">{{item.vBtra}}</td>
+             <td class="text-center">{{item.estatus}}</td>
+             <td class="text-center">{{this.convertDateTime(item.fch_Modificacion)}}</td>
+             <td class="text-center">{{item.tipoReclutamiento}}</td>
+           </tr>
+          
+         </tbody>
+       </table>
+       
+
+
+

@@ -18,6 +18,7 @@ import { FormControl } from '@angular/forms';
   providers:[ReportesService],
 })
 export class InformeComponent implements OnInit {
+ 
   public Empresas : any[];
   public Estatus : any[];
   public Usuario : any[];
@@ -81,6 +82,7 @@ export class InformeComponent implements OnInit {
     this.Servicio.GetUsuario().subscribe(item =>{
       this.Usuario = item;
     })
+    document.oncontextmenu=null
   }
 
   empresaChange(obj) {
@@ -110,7 +112,7 @@ export class InformeComponent implements OnInit {
 
  Ocultar(){
   let tipo = document.getElementById('TipoReporte')['value'];
-  if(tipo == 1){
+  if(tipo > 4){
     document.getElementById('divreclutador').classList.add('ocultar');
     document.getElementById('divestatus').classList.add('ocultar');
     document.getElementById('divcordinacion').classList.add('ocultar');

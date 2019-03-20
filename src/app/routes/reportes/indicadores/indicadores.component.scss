@@ -1,0 +1,14 @@
+.opa{
+    background-color:#1FACD7;
+    opacity: .9;
+  filter:  alpha(opacity=80);
+   
+    border: 5px;
+   // height:70px;
+ }
+
+ .sombra{
+  -webkit-box-shadow: 10px 10px 40px -8px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 40px -8px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 40px -8px rgba(0,0,0,0.75);
+ }
