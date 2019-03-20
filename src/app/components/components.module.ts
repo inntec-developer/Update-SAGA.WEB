@@ -131,6 +131,11 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SharedModule } from '../shared/shared.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { CandidatosEnProcesoComponent } from './candidatos-en-proceso/candidatos-en-proceso.component';
+import { GraficaVacanteCubiertaComponent } from './Graficas/grafica-vacante-cubierta/grafica-vacante-cubierta.component';
+import { GraficaVacanteActivaComponent } from './Graficas/grafica-vacante-activa/grafica-vacante-activa.component';
+import { GraficaVacantePorvencComponent } from './Graficas/grafica-vacante-porvenc/grafica-vacante-porvenc.component';
+import { GraficaVacanteVencidaComponent } from './Graficas/grafica-vacante-vencida/grafica-vacante-vencida.component';
+import { GraficaResumenComponent } from './Graficas/grafica-resumen/grafica-resumen.component';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -267,7 +272,12 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     GraficaVacantesPieComponent,
     DtVacantesGraficaPAComponent,
     ReporteCandidatosComponent,
-    CandidatosEnProcesoComponent
+    CandidatosEnProcesoComponent,
+    GraficaVacanteCubiertaComponent,
+    GraficaVacanteActivaComponent,
+    GraficaVacantePorvencComponent,
+    GraficaVacanteVencidaComponent,
+    GraficaResumenComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -338,7 +348,12 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     GraficaVacantesPieComponent,
     DtVacantesGraficaPAComponent,
     ReporteCandidatosComponent,
-    CandidatosEnProcesoComponent
+    CandidatosEnProcesoComponent,
+    GraficaVacanteCubiertaComponent,
+    GraficaVacanteActivaComponent,
+    GraficaVacantePorvencComponent,
+    GraficaVacanteVencidaComponent,
+    GraficaResumenComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

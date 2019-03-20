@@ -16,12 +16,15 @@ import { ReporteGeneralComponent } from './reporte-general/reporte-general.compo
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { INgxSelectOptions, NgxSelectModule } from 'ngx-select-ex';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IndicadoresComponent } from './indicadores/indicadores.component';
+import { ComponentsService } from '../../service/Components/components.service';
 
 //import { DatePipe } from '@angular/common';
 
 const routes:Routes =[
   {path: 'informe', component:InformeComponent},
-  {path: 'reporteGeneral', component: ReporteGeneralComponent}
+  {path: 'reporteGeneral', component: ReporteGeneralComponent},
+  {path: 'indicador', component: IndicadoresComponent}
 ]
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
@@ -43,7 +46,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ReactiveFormsModule
   //  DatePipe
   ],
-  declarations: [InformeComponent, TablaReporteComponent, ReporteGeneralComponent],
-  providers: [ReportesService,ExcelService]
+  declarations: [InformeComponent, TablaReporteComponent, ReporteGeneralComponent, IndicadoresComponent],
+  providers: [ReportesService,ExcelService,ComponentsService]
 })
 export class ReportesModule { }
