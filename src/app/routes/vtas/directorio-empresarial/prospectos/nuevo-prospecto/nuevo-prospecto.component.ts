@@ -8,6 +8,7 @@ import { ClientesService } from '../../../../../service/clientes/clientes.servic
 import { CompanyValidation } from './company-validation';
 import { CustomValidators } from 'ng2-validation';
 import { config } from 'rxjs';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-nuevo-prospecto',
@@ -96,6 +97,102 @@ export class NuevoProspectoComponent implements OnInit {
       telefonos: [],
       emails: [],
       contactos: []
+    },
+    {
+      idAux: 3,
+      activo: true,
+      calle: "Fuente de la Alianza",
+      codigoPostal: "45615",
+      colonia: "Villa Fontana",
+      coloniaId: 60595,
+      esPrincipal: false,
+      estado: "Jalisco",
+      estadoId: 14,
+      numeroExterior: "126",
+      numeroInterior: "",
+      municipio: "San Pedro Tlaquepaque",
+      municipioId: 611,
+      pais: "Mexico",
+      paisId: 42,
+      referencia: "SIN REFERENCIA",
+      tipoDireccion: "Sucursal",
+      tipoDireccionId: 3,
+      usuarioAlta: 'DAMSA.NINIGUEZ',
+      telefonos: [],
+      emails: [],
+      contactos: []
+    },
+    {
+      idAux: 4,
+      activo: true,
+      calle: "Fuente de la Alianza",
+      codigoPostal: "45615",
+      colonia: "Villa Fontana",
+      coloniaId: 60595,
+      esPrincipal: false,
+      estado: "Jalisco",
+      estadoId: 14,
+      numeroExterior: "128",
+      numeroInterior: "",
+      municipio: "San Pedro Tlaquepaque",
+      municipioId: 611,
+      pais: "Mexico",
+      paisId: 42,
+      referencia: "SIN REFERENCIA",
+      tipoDireccion: "Sucursal",
+      tipoDireccionId: 3,
+      usuarioAlta: 'DAMSA.NINIGUEZ',
+      telefonos: [],
+      emails: [],
+      contactos: []
+    },
+    {
+      idAux: 5,
+      activo: true,
+      calle: "Fuente de la Alianza",
+      codigoPostal: "45615",
+      colonia: "Villa Fontana",
+      coloniaId: 60595,
+      esPrincipal: false,
+      estado: "Jalisco",
+      estadoId: 14,
+      numeroExterior: "130",
+      numeroInterior: "",
+      municipio: "San Pedro Tlaquepaque",
+      municipioId: 611,
+      pais: "Mexico",
+      paisId: 42,
+      referencia: "SIN REFERENCIA",
+      tipoDireccion: "Sucursal",
+      tipoDireccionId: 3,
+      usuarioAlta: 'DAMSA.NINIGUEZ',
+      telefonos: [],
+      emails: [],
+      contactos: []
+    },
+    {
+      idAux: 6,
+      activo: true,
+      calle: "Fuente de la Alianza",
+      codigoPostal: "45615",
+      colonia: "Villa Fontana",
+      coloniaId: 60595,
+      esPrincipal: false,
+      estado: "Jalisco",
+      estadoId: 14,
+      numeroExterior: "132",
+      numeroInterior: "",
+      municipio: "San Pedro Tlaquepaque",
+      municipioId: 611,
+      pais: "Mexico",
+      paisId: 42,
+      referencia: "SIN REFERENCIA",
+      tipoDireccion: "Sucursal",
+      tipoDireccionId: 3,
+      usuarioAlta: 'DAMSA.NINIGUEZ',
+      telefonos: [],
+      emails: [],
+      contactos: []
     }
   ];
   public indexDireccion: any;
@@ -104,34 +201,34 @@ export class NuevoProspectoComponent implements OnInit {
 
   public addTelefono: boolean;
   public TelefonosNew: Array<any> = [
-    {
-      idAux: 1,
-      activo: true,
-      calle: "Ramon Alcorta",
-      claveLada: "33",
-      clavePais: "52",
-      esPrincipal: false,
-      extension: "",
-      idDireccion: 1,
-      tTelefono: "Recados",
-      telefono: "31441648",
-      tipoTelefonoId: 3,
-      usuarioAlta: "DAL2789",
-    },
-    {
-      idAux: 2,
-      activo: true,
-      calle: "Fuente de la Alianza",
-      claveLada: "33",
-      clavePais: "52",
-      esPrincipal: false,
-      extension: "",
-      idDireccion: 2,
-      tTelefono: "Recados",
-      telefono: "36011746",
-      tipoTelefonoId: 3,
-      usuarioAlta: "DAL2789",
-    }
+    // {
+    //   idAux: 1,
+    //   activo: true,
+    //   calle: "Ramon Alcorta",
+    //   claveLada: "33",
+    //   clavePais: "52",
+    //   esPrincipal: false,
+    //   extension: "",
+    //   idDireccion: 1,
+    //   tTelefono: "Recados",
+    //   telefono: "31441648",
+    //   tipoTelefonoId: 3,
+    //   usuarioAlta: "DAL2789",
+    // },
+    // {
+    //   idAux: 2,
+    //   activo: true,
+    //   calle: "Fuente de la Alianza",
+    //   claveLada: "33",
+    //   clavePais: "52",
+    //   esPrincipal: false,
+    //   extension: "",
+    //   idDireccion: 2,
+    //   tTelefono: "Recados",
+    //   telefono: "36011746",
+    //   tipoTelefonoId: 3,
+    //   usuarioAlta: "DAL2789",
+    // }
   ];
   public indexTelefonos: any;
   public EditTelefono: boolean;
@@ -506,14 +603,69 @@ export class NuevoProspectoComponent implements OnInit {
     if (data.esPrincipal) {
       this.Principal = data.esPrincipal;
     }
-    this.cancelarDireccion();
+
     if (!this.EditDireccion) {
-      this.DireccionesNew.push(data);
-      this.idAuxD++;
+      var exist = this.DireccionesNew.find(element => {
+        if (element.calle == data.calle
+          && element.numeroExterior == data.numeroExterior
+          && element.numeroInterior == data.numeroInterior
+          && element.codigoPostal == data.codigoPostal) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      });
+      if (!exist) {
+        this.DireccionesNew.push(data);
+        this.idAuxD++;
+      }
+      else {
+        this.popToast('info', 'Direcicones', 'La dirección que intenta registrar ya existe.');
+        return;
+      }
+
     } else {
-      this.DireccionesNew[this.indexDireccion] = data;
-      this.EditDireccion = false;
+      var idDireccion = this.DireccionesNew[this.indexDireccion]['idAux'];
+      data.idAux = idDireccion;
+      var exist = this.DireccionesNew.find(element => {
+        if (element.calle == data.calle
+          && element.numeroExterior == data.numeroExterior
+          && element.numeroInterior == data.numeroInterior
+          && element.codigoPostal == data.codigoPostal
+          && element.idAux != idDireccion) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      });
+      if (!exist) {
+        this.DireccionesNew[this.indexDireccion] = data;
+        if (this.CorreosNew.length > 0) {
+          var EmailIndexUpdate = this.CorreosNew.findIndex(x => x.idDireccion == idDireccion)
+          this.CorreosNew[EmailIndexUpdate]['calle'] = data.calle;
+          this.onChangeTableC(this.config);
+        }
+        if (this.TelefonosNew.length > 0) {
+          var TelefonoIndexUpdate = this.TelefonosNew.findIndex(x => x.idDireccion == idDireccion)
+          this.TelefonosNew[TelefonoIndexUpdate]['calle'] = data.calle;
+          this.onChangeTableC(this.config);
+        }
+        if (this.ContactosNew.length > 0) {
+          var ContactoIndexUpdate = this.ContactosNew.findIndex(x => x.idDireccion == idDireccion)
+          this.ContactosNew[ContactoIndexUpdate]['calle'] = data.calle;
+        }
+        this.EditDireccion = false;
+      }
+      else {
+        this.popToast('info', 'Direcicones', 'La dirección que intenta actualizar ya existe.');
+        return;
+      }
     }
+
+
+    this.cancelarDireccion();
     this.onChangeTableD(this.config);
   }
 
@@ -536,7 +688,20 @@ export class NuevoProspectoComponent implements OnInit {
   }
 
   DtDireccion() {
+    var idDireccion = this.DireccionesNew[this.indexDireccion]['idAux'];
     this.DireccionesNew.splice(this.indexDireccion, 1);
+    if (this.CorreosNew.length > 0) {
+      var EmailIndexDelete = this.CorreosNew.findIndex(x => x.idDireccion == idDireccion)
+      this.CorreosNew.splice(EmailIndexDelete, 1);
+    }
+    if (this.TelefonosNew.length > 0) {
+      var TelefonoIndexDelete = this.TelefonosNew.findIndex(x => x.idDireccion == idDireccion)
+      this.TelefonosNew.splice(TelefonoIndexDelete, 1);
+    }
+    if (this.ContactosNew.length > 0) {
+      var ContactoIndexDelete = this.ContactosNew.findIndex(x => x.idDireccion == idDireccion)
+      this.ContactosNew.splice(ContactoIndexDelete, 1);
+    }
     this.onChangeTableD(this.config);
   }
   //#endregion
@@ -571,14 +736,49 @@ export class NuevoProspectoComponent implements OnInit {
     if (data.esPrincipal) {
       this.PrincipalT = data.esPrincipal;
     }
-    this.cancelarTelefono();
+
     if (!this.EditTelefono) {
-      this.TelefonosNew.push(data);
-      this.idAuxT++;
+      var exist = this.TelefonosNew.find(element => {
+        if(element.telefono == data.telefono
+          && element.extension == data.extension){
+          return true;
+        }else{
+          return false;
+        }
+      });
+      if(!exist){
+        this.TelefonosNew.push(data);
+        this.idAuxT++;
+      }
+      else{
+        this.popToast('info', 'Teléfonos', 'El Teléfono que intenta registrar ya existe.');
+        return;
+      }
+
     } else {
-      this.TelefonosNew[this.indexTelefonos] = data;
-      this.EditTelefono = false;
+      var idTelefono = this.TelefonosNew[this.indexTelefonos]['idAux'];
+      data.idAux = idTelefono;
+      var exist = this.TelefonosNew.find(element => {
+        if(element.telefono == data.telefono
+          && element.extension == data.extension
+          && element.idAux != idTelefono){
+          return true;
+        }else{
+          return false;
+        }
+      });
+      if(!exist){
+        this.TelefonosNew[this.indexTelefonos] = data;
+        this.EditTelefono = false;
+      }
+      else{
+        this.popToast('info', 'Teléfonos', 'El Teléfono que intenta actualizar ya existe.');
+        return;
+      }
+
     }
+
+    this.cancelarTelefono();
     this.onChangeTableT(this.config);
   }
 
@@ -619,14 +819,49 @@ export class NuevoProspectoComponent implements OnInit {
       esPrincipal: false,
       usuarioAlta: this.Usuario,
     }
-    this.cancelarCorreo();
+
     if (!this.EditCorreo) {
-      this.CorreosNew.push(data);
-      this.idAuxC++;
+      var exist = this.CorreosNew.find(element => {
+        if (element.email == data.email) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      });
+      if (!exist) {
+        this.CorreosNew.push(data);
+        this.idAuxC++;
+      }
+      else {
+        this.popToast('info', 'Correo Electrónico', 'El correo electrónico que intenta registrar ya existe.');
+        return;
+      }
+
     } else {
-      this.CorreosNew[this.indexCorreos] = data;
-      this.EditCorreo = false;
+      var idEmail = this.CorreosNew[this.indexCorreos]['idAux'];
+      data.idAux = idEmail;
+      var exist = this.CorreosNew.find(element => {
+        if (element.email == data.email
+          && element.idAux != idEmail) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      });
+      if (!exist) {
+        this.CorreosNew[this.indexCorreos] = data;
+        this.EditCorreo = false;
+      }
+      else {
+        this.popToast('info', 'Correo Electrónico', 'El correo electrónico que intenta actualizar ya existe.');
+        return;
+      }
+
     }
+
+    this.cancelarCorreo();
     this.onChangeTableC(this.config);
   }
 
@@ -753,7 +988,7 @@ export class NuevoProspectoComponent implements OnInit {
   //#region CONFIGURACION Y ACCIONES TABLA DE DIRECCIONES
   /* Configuracion / Acciones para la tabla de Direcciones  */
   public selectedD: boolean = false;
-  public registrosD: number;
+  public registrosD: number = 0;
   public rowAuxD = [];
   public elementD: any = null;
   /* Variables de Paginador Direcciones */
@@ -894,7 +1129,7 @@ export class NuevoProspectoComponent implements OnInit {
 
   //#region CONFIGURACION Y ACCIONES TABLA DE TELEFONOS
   public selectedT: boolean = false;
-  public registrosT: number;
+  public registrosT: number = 0;
   public rowAuxT = [];
   public elementT: any = null;
   /* Variables de Paginador Telefonos */
@@ -1031,7 +1266,7 @@ export class NuevoProspectoComponent implements OnInit {
 
   //#region CONFIGURACION Y ACCIONES TABLA DE EMAIL / CORREO ELECTRONICO
   public selectedC: boolean = false;
-  public registrosC: number;
+  public registrosC: number = 0;
   public rowAuxC = [];
   public elementC: any = null;
   /* Variables de Paginador Telefonos */
@@ -1165,7 +1400,7 @@ export class NuevoProspectoComponent implements OnInit {
 
   //#region CONFIGURACION Y ACCIONES TABLA CONTACTOS
   public selectedCn: boolean = false;
-  public registrosCn: number;
+  public registrosCn: number = 0;
   public rowAuxCn = [];
   public elementCn: any = null;
   /* Variables de Paginador Telefonos */
@@ -1303,14 +1538,13 @@ export class NuevoProspectoComponent implements OnInit {
 
 
   private GuardarProspecto() {
-    debugger;
     var DireccionEmail = [];
     var DireccionTelefono = [];
     var DireccionContacto = [];
-    this.DireccionesNew.forEach(element =>{
+    this.DireccionesNew.forEach(element => {
       var idAux = element.idAux;
-      this.TelefonosNew.forEach(function(telefono: any){
-        if(idAux == telefono.idDireccion){
+      this.TelefonosNew.forEach(function (telefono: any) {
+        if (idAux == telefono.idDireccion) {
           let data = {
             calle: element.calle,
             numeroInterior: element.numeroInterior,
@@ -1323,8 +1557,8 @@ export class NuevoProspectoComponent implements OnInit {
           console.log(DireccionTelefono)
         }
       });
-      this.CorreosNew.forEach(function(correo: any){
-        if(idAux == correo.idDireccion){
+      this.CorreosNew.forEach(function (correo: any) {
+        if (idAux == correo.idDireccion) {
           let data = {
             calle: element.calle,
             numeroInterior: element.numeroInterior,
@@ -1336,8 +1570,8 @@ export class NuevoProspectoComponent implements OnInit {
           console.log(DireccionEmail)
         }
       });
-      this.ContactosNew.forEach(function(contacto: any){
-        if(idAux == contacto.idDireccion){
+      this.ContactosNew.forEach(function (contacto: any) {
+        if (idAux == contacto.idDireccion) {
           let data = {
             calle: element.calle,
             numeroInterior: element.numeroInterior,
@@ -1375,11 +1609,11 @@ export class NuevoProspectoComponent implements OnInit {
       DireccionContacto: DireccionContacto
     }
     this._ClienteService.addProspecto(prospecto).subscribe(element => {
-      if(element == 202){
+      if (element == 202) {
         let msg = 'Se a Registrado Correctamente el Prospecto' + this.cp;
         this.popToast('success', 'Prospectos', msg);
       }
-      else{
+      else {
         let msg = 'Error al intentar registrar Correctamente el Prospecto' + this.cp;
         this.popToast('error', 'Prospectos', msg);
       }

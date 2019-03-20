@@ -75,7 +75,7 @@
             <em class="fa fa-bookmark-o"></em>
           </span>
         </h5>
-    
+
           <div class="table-responsive">
             <table ngClass="{{config_p.className || ''}}" class="table">
               <thead>
@@ -276,7 +276,7 @@
                     <div>
                       <strong class="text-primary">&Aacute;rea Experiencia: </strong>
                       <label *ngIf="candidato?.about?.areaExperiencia else NotAreaE" class="text-muted">
-                        {{candidato?.about?.areaExperiencia?.areaExperiencia}}</label>
+                        {{candidato?.about?.areaExperiencia?.areaInteres}}</label>
                       <ng-template #NotAreaE>
                         <label class="text-muted"> Sin Registro</label>
                       </ng-template>
@@ -400,7 +400,7 @@
                 </span>
               </button>
               <div class="container" *ngFor="let x of candidato?.experiencias">
-                <h4 class="text-success ">{{x?.empresa}}
+                <h4 class="text-success ">{{x?.empresa | uppercase}}
                   <span *ngIf="x.trabajoActual" class="pull-right">
                     Actual
                     <em style="margin-left: 10px;" class="fa fa-street-view"></em>
@@ -411,7 +411,7 @@
                   <div class="col-md-6 col-sm-12">
                     <div>
                       <strong class="text-primary">&Aacute;rea: </strong>
-                      <label class="text-muted">{{x?.area?.areaExperiencia}}</label>
+                      <label class="text-muted">{{x?.area?.areaInteres}}</label>
                     </div>
                     <div>
                       <strong class="text-primary">Puesto: </strong>
@@ -494,7 +494,7 @@
                 </span>
               </button>
               <div class="container" *ngFor="let x of candidato?.certificaciones">
-                <h4 class="text-success ">{{x?.certificacion}}
+                <h4 class="text-success ">{{x?.certificacion | uppercase}}
                   <span *ngIf="x.actual" class="pull-right">
                     Actual
                   </span>
@@ -538,7 +538,7 @@
                 </span>
               </button>
               <div class="container" *ngFor="let x of candidato?.cursos">
-                <h4 class="text-success ">{{x?.curso}}
+                <h4 class="text-success ">{{x?.curso | uppercase}}
                   <span *ngIf="x.actual" class="pull-right">
                     Actual
                   </span>
@@ -577,7 +577,7 @@
                 </span>
               </button>
               <div class="container" *ngFor="let x of candidato?.conocimientos">
-                <h4 class="text-success ">{{x?.conocimiento}}
+                <h4 class="text-success ">{{x?.conocimiento | uppercase}}
                 </h4>
                 <mat-divider></mat-divider>
                 <div class="row">
@@ -649,7 +649,7 @@
         <tab *ngIf="VerVacantes" heading="Mis Vacantes ({{registros_v}})" id="misVacantes">
             <div class="card">
               <div class="card-body">
-            
+
                 <!-- <mat-form-field>
                           <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config_v.filtering"
                             (tableChanged)="onChangeTable_v(config_v)">
@@ -661,7 +661,7 @@
                       tooltip="Visualizar">
                       <em class="fa fa-eye"></em>
                     </button>
-            
+
                     <button [disabled]="loading || auxestatus" [ngClass]="loading || auxestatus
                                                   ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-success'" container="body" placement="bottom"
                       tooltip="Apartar" (click)="_apartarCandidato()">
@@ -671,7 +671,7 @@
                       container="body" placement="bottom" tooltip="Desapartar" (click)="openDialogLiberar()">
                       <em class="fa fa-thumbs-o-down"></em>
                     </button>
- 
+
 
                     <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="btn btn-outline-primary float-right">
                       <em class="fa fa-eraser"></em>
@@ -726,7 +726,7 @@
                             [class.badge-info]="row.estatusId  != 7 " [class.badge-success]="row.estatusId  === 7">
                             {{row.estatus | uppercase }}
                           </small>
-            
+
                           <ng-template #toLength>
                             <span class="badge badge-info" container="body" placement="bottom" tooltip="{{row.estatus | uppercase}}">{{row.estatus | slice:0:6 | uppercase }} ... </span>
                           </ng-template>

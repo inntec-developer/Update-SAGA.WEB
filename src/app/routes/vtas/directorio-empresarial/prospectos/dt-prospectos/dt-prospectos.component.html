@@ -65,22 +65,22 @@
                       </small>
                     </ng-template>
                   </td>
-                  <td>{{row.giroEmpresa}}</td>
-                  <td>{{row.actividadEmpresa}}</td>
-                  <td>{{row.tamanoEmpresa}}</td>
-                  <td class="text-right"> {{row.numeroEmpleados}}</td>
+                  <td class="text-center">{{row.giroEmpresa}}</td>
+                  <td class="text-center">{{row.actividadEmpresa}}</td>
+                  <td class="text-center">{{row.tamanoEmpresa}}</td>
+                  <td class="text-center"> {{row.numeroEmpleados}}</td>
                   <td class="text-center">
-                    <small *ngIf="row.clasificacion == 1">
-                      <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <small *ngIf="row.clasificacion == 1" class="color-star">
+                      <i class="fa fa-star fa-2x" aria-hidden="true"></i>
                     </small>
-                    <small *ngIf="row.clasificacion == 2">
-                      <i class="fa fa-star-o" aria-hidden="true"></i>
-                      <i class="fa fa-star-o" aria-hidden="true"></i>
+                    <small *ngIf="row.clasificacion == 2" class="color-star">
+                      <i class="fa fa-star fa-2x" aria-hidden="true"></i>
+                      <i class="fa fa-star fa-2x" aria-hidden="true"></i>
                     </small>
-                    <small *ngIf="row.clasificacion == 3">
-                      <i class="fa fa-star-o" aria-hidden="true"> </i>
-                      <i class="fa fa-star-o" aria-hidden="true"> </i>
-                      <i class="fa fa-star-o" aria-hidden="true"> </i>
+                    <small *ngIf="row.clasificacion == 3" class="color-star">
+                      <i class="fa fa-star fa-2x" aria-hidden="true"> </i>
+                      <i class="fa fa-star fa-2x" aria-hidden="true"> </i>
+                      <i class="fa fa-star fa-2x" aria-hidden="true"> </i>
                     </small>
                   </td>
                   <td class="text-center">{{row.tipoEmpresa}}</td>

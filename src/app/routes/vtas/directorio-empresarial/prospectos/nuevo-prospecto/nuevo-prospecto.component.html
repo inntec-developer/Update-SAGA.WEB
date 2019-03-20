@@ -93,9 +93,6 @@
               </mat-form-field>
             </div>
           </div>
-          <div class="row">
-
-          </div>
         </form>
       </div>
     </div>
@@ -210,7 +207,7 @@
         </div>
         <!-- Tabla de Direcciones -->
 
-        <div class="butoonAction">
+        <div class="butoonAction clearfix p-2 bg-light">
           <button class="mb-1 btn btn-xs btn-outline-primary margen" *ngIf="!addDireccion" container="body" placement="bottom"
             tooltip="Agregar" (click)="addDireccion = true; textbtnDirecciones = 'Agregar'">
             <em class="fa fa-plus"></em>
@@ -252,8 +249,8 @@
                     <td>{{rowd.municipio}}</td>
                     <td>{{rowd.colonia}}</td>
                     <td>{{rowd.calle}}</td>
-                    <td class="text-right"> {{rowd.exterior}}</td>
-                    <td class="text-right"> {{rowd.interior}}</td>
+                    <td class="text-right"> {{rowd.numeroExterior}}</td>
+                    <td class="text-right"> {{rowd.numeroInterior}}</td>
                     <td>
                       <!-- <small *ngIf="rowd.referencia?.length < 30 else toLengthRF">
                         {{rowd.referencia}}
@@ -310,7 +307,7 @@
               <div class="col-md-4 col-lg-4 col-sm-12">
                 <mat-form-field>
                   <mat-select placeholder="Dirección" formControlName="TelDireccion">
-                    <mat-option *ngFor="let x of DireccionesNew; let i=index " [value]="i">
+                    <mat-option *ngFor="let x of DireccionesNew; let i=index " [value]="x.idAux">
                       <span *ngIf="(x?.calle.length + x?.municipio.length + x?.codigoPostal.length) < 42 else toLengthDr">
                         {{x.calle}} - {{x.municipio}} - <strong>{{x.codigoPostal}}</strong>
                       </span>
@@ -374,17 +371,17 @@
             </div>
           </form>
         </div>
-        <div class="butoonAction">
+        <div class="butoonAction clearfix p-2 bg-light">
           <button class="mb-1 btn btn-xs btn-outline-primary margen" *ngIf="!addTelefono" container="body" placement="bottom"
             tooltip="Agregar" (click)="addTelefono = true; textbtnTelefono = 'Agregar'">
             <em class="fa fa-plus"></em>
           </button>
-          <button *ngIf="DireccionesNew.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
+          <button *ngIf="TelefonosNew.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
             tooltip="Editar" [disabled]="!elementT" [ngClass]="(!elementT) ? 'disabled' : 'btn-outline-primary'"
             (click)="UpTelefono(); textbtnTelefono = 'Editar'">
             <em class="fa fa-pencil"></em>
           </button>
-          <button *ngIf="DireccionesNew.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
+          <button *ngIf="TelefonosNew.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
             tooltip="Eliminar" [disabled]="!elementT" [ngClass]="(!elementT) ? 'disabled' : 'btn-outline-danger'"
             (click)="DtTelefono()">
             <em class="fa fa-trash"></em>
@@ -455,10 +452,10 @@
         <div *ngIf="addCorreo">
           <form [formGroup]="formCorreos">
             <div class="row">
-              <div class="col-md-12 col-lg-12 col-sm-12">
+              <div class="col-md-6 col-lg-6 col-sm-12">
                 <mat-form-field>
                   <mat-select placeholder="Dirección" formControlName="EmailDireccion">
-                    <mat-option *ngFor="let x of DireccionesNew; let i=index " [value]="i">
+                    <mat-option *ngFor="let x of DireccionesNew; " [value]="x.idAux">
                       <span *ngIf="(x?.calle.length + x?.municipio.length + x?.codigoPostal.length) < 42 else toLengthDr">
                         {{x.calle}} - {{x.municipio}} - <strong>{{x.codigoPostal}}</strong>
                       </span>
@@ -470,17 +467,10 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-8 col-lg-8 col-sm-12">
+              <div class="col-md-6 col-lg-6 col-sm-12">
                 <mat-form-field>
                   <input matInput type="email" formControlName="Email" maxlength="100" name="Email" placeholder="Correo Electronico" />
                 </mat-form-field>
-              </div>
-              <div class="col-md-4 col-lg-4 col-sm-12">
-                <mat-slide-toggle class="text-success" [color]="warn" formControlName="Activo">
-                  Activo
-                </mat-slide-toggle>
               </div>
             </div>
             <br>
@@ -490,7 +480,7 @@
             </div>
           </form>
         </div>
-        <div class="butoonAction">
+        <div class="butoonAction clearfix p-2 bg-light">
           <button class="mb-1 btn btn-xs btn-outline-primary margen" *ngIf="!addCorreo" container="body" placement="bottom"
             tooltip="Agregar" (click)="addCorreo = true; textbtnCorreo = 'Agregar'">
             <em class="fa fa-plus"></em>
@@ -571,7 +561,7 @@
               <div class="col-sm-6 col-ms-6 col-lg-6">
                 <mat-form-field>
                   <mat-select placeholder="Dirección" formControlName="ContactoDireccion">
-                    <mat-option *ngFor="let x of DireccionesNew; let i=index " [value]="i">
+                    <mat-option *ngFor="let x of DireccionesNew; let i=index " [value]="x.idAux">
                       <span *ngIf="(x?.calle.length + x?.municipio.length + x?.codigoPostal.length) < 42 else toLengthDr">
                         {{x.calle}} - {{x.municipio}} - <strong>{{x.codigoPostal}}</strong>
                       </span>
@@ -658,7 +648,7 @@
             </div>
           </form>
         </div>
-        <div class="butoonAction">
+        <div class="butoonAction clearfix p-2 bg-light">
           <button class="mb-1 btn btn-xs btn-outline-primary margen" *ngIf="!addContacto" container="body" placement="bottom"
             tooltip="Agregar" (click)="addContacto = true; textbtnContacto = 'Agregar'">
             <em class="fa fa-plus"></em>
@@ -670,7 +660,7 @@
           </button>
           <button *ngIf="ContactosNew.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
             tooltip="Eliminar" [disabled]="!elementCn" [ngClass]="(!elementCn) ? 'disabled' : 'btn-outline-danger'"
-            (click)="DtContactos()">
+            (click)="DtContacto()">
             <em class="fa fa-trash"></em>
           </button>
           <span *ngIf="config.paging" class="float-right">Total Registros: {{registrosCn}}</span>
@@ -693,14 +683,16 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let rowcn of rowsCn; let i=index" (click)="onCellClickCn(rowcn, rowcn.idAux)" [class.selected]="rowcn.selectedCn">
+                  <tr *ngFor="let rowcn of rowsCn; let i=index" (click)="onCellClickCn(rowcn, rowcn.idAux)"
+                    [class.selected]="rowcn.selectedCn">
                     <td class="text-center">{{rowcn.calle}}</td>
                     <td class="text-center">{{rowcn.nombre}} {{rowcn.apellidoPaterno}} {{rowcn.apellidoMaterno}}</td>
                     <td class="text-center">{{rowcn.puesto}}</td>
                     <td class="text-center">{{rowcn.tipoTelefonoAux}}</td>
-                    <td class="text-center"> +{{rowcn.telefonos[0].clavePais}} ({{rowcn.telefonos[0].claveLada}}) {{rowcn.telefonos[0].telefono |
+                    <td class="text-center"> +{{rowcn.telefonos[0].clavePais}} ({{rowcn.telefonos[0].claveLada}})
+                      {{rowcn.telefonos[0].telefono |
                       slice:0:4}}-{{rowcn.telefonos[0].telefono | slice:4:8}}</td>
-                      <td class="text-center">{{rowcn.emails[0].email}}</td>
+                    <td class="text-center">{{rowcn.emails[0].email}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -724,7 +716,8 @@
       <button type="reset" class="btn btn-outline-danger btn-block" [routerLink]="['/ventas/directorio']">Cancel</button>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-12">
-      <button type="submit" [disabled]="!formGeneral.valid" class="btn btn-outline-success btn-block">Guardar</button>
+      <button type="submit" [disabled]="!formGeneral.valid || DireccionesNew.length === 0 || TelefonosNew.length === 0 || CorreosNew.length === 0 || ContactosNew.length === 0"
+        class="btn btn-outline-success btn-block" (click)="GuardarProspecto()">Guardar</button>
     </div>
   </div>
 </div>
