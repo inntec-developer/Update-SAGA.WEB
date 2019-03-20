@@ -41,7 +41,31 @@ export class ComponentsService {
   //Candidatos
   private UrlGetRPTCandidatoVacante = ApiConection.ServiceUrl + ApiConection.GetRepoteCandidatos;
 
+  //Indicador Grafica
+  private UrlVacanteCubierta = ApiConection.ServiceUrl + ApiConection.getCubiertaG;
+  private UrlVacanteActiva = ApiConection.ServiceUrl + ApiConection.getActivaG;
+  private UrlVacantePorVencer = ApiConection.ServiceUrl + ApiConection.getPorvencerG;
+  private UrlVacanteVencida = ApiConection.ServiceUrl + ApiConection.getVencidasG;
+
   constructor(private _httpClient : HttpClient) { }
+
+
+  getVCubierta(data: any) : Observable<any>{
+    let params = new HttpParams().set('usuario', data);
+    return this._httpClient.get(this.urlGetCalendarEvent, {params: params});
+  }
+  getVActiva(data: any) : Observable<any>{
+    let params = new HttpParams().set('usuario', data);
+    return this._httpClient.get(this.urlGetCalendarEvent, {params: params});
+  }
+  getVPorVencer(data: any) : Observable<any>{
+    let params = new HttpParams().set('usuario', data);
+    return this._httpClient.get(this.urlGetCalendarEvent, {params: params});
+  }
+  getVVencida(data: any) : Observable<any>{
+    let params = new HttpParams().set('usuario', data);
+    return this._httpClient.get(this.urlGetCalendarEvent, {params: params});
+  }
 
   getUserGroup() : Observable<any>{
     return this._httpClient.get(this.urlGetUserGroup);
