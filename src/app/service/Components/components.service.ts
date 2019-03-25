@@ -46,9 +46,15 @@ export class ComponentsService {
   private UrlVacanteActiva = ApiConection.ServiceUrl + ApiConection.getActivaG;
   private UrlVacantePorVencer = ApiConection.ServiceUrl + ApiConection.getPorvencerG;
   private UrlVacanteVencida = ApiConection.ServiceUrl + ApiConection.getVencidasG;
+  private UrlVacanteResumen = ApiConection.ServiceUrl + ApiConection.getResumenG;
 
   constructor(private _httpClient : HttpClient) { }
 
+
+  getVResumen(data: any) : Observable<any>{
+    let params = new HttpParams().set('usuario', data);
+    return this._httpClient.get(this.UrlVacanteResumen, {params: params});
+  }
 
   getVCubierta(data: any) : Observable<any>{
     let params = new HttpParams().set('usuario', data);

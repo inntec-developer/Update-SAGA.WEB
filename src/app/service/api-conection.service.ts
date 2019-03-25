@@ -287,11 +287,12 @@ export class ApiConection {
     public static alterOficina = 'Oficina/alter'
     public static deleteOficina = 'Oficina/delete'
 
-    /*Oficinas */
+    /*Indicadores */
     public static getCubiertaG = 'indicador/vcubierta'
     public static getActivaG = 'indicador/vactiva'
     public static getPorvencerG = 'indicador/vporvencer'
     public static getVencidasG = 'indicador/vvencida'
+    public static getResumenG = 'indicador/resumen'
 
        
 }
