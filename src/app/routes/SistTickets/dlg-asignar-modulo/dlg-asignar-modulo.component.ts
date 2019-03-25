@@ -11,7 +11,7 @@ export class DlgAsignarModuloComponent implements OnInit {
 
   modulos = [];
   reclutador = sessionStorage.getItem('nombre');
-  moduloId
+  moduloId = '';
   constructor(private _Router: Router, private _service: SistTicketsService) { }
 
   ngOnInit() {
@@ -23,13 +23,14 @@ export class DlgAsignarModuloComponent implements OnInit {
   {
     this._service.GetModulos().subscribe(data =>{
       this.modulos = data;
+      console.log(this.modulos)
     })
   }
 
   Iniciar(tipo, mod)
   {
     console.log(this.moduloId)
-    console.log(tipo)
+
     sessionStorage.setItem('modulo', mod); 
     sessionStorage.setItem('moduloId', this.moduloId)
 

@@ -245,8 +245,7 @@ export class ApiConection {
   public static GetClaves = 'examenes/getClaves'
   public static GetClaveCandidatos = 'examenes/getClaveCandidatos'
   public static GetClavesCandidatos = 'examenes/getClavesCandidatos'
-
-
+  
   /*Reportes */
   public static GetInforme = 'reporte/Informe'
   public static GetEmpresas = 'reporte/empresas'
@@ -268,6 +267,15 @@ export class ApiConection {
   public static GetVacantes = 'SistTickets/getVacantes'
   public static SetExamen = 'SistTickets/setExamen'
   public static GetModulos = 'SistTickets/getModulos'
+  public static UpdateRequiTicket = 'SistTickets/updateRequiTicket'
+  public static GetTicketExamen = 'SistTickets/getTicketsExamen'
+  public static AsignarClaveCandidato = 'examenes/asignarClaveCandidato'
+  public static SetEstatusCandidato = 'SistTickets/setEstatusCandidato'
+  public static GetTicketConCita = 'SistTickets/ticketConCita'
+  public static GetTicketSinCita = 'SistTickets/ticketSinCita'
+  
+  /*TrackingVacantes*/
+  public static GetInformeTracking = 'Requisiciones/getInformeClientes';
 
   /* Componentes de Graficas */
   public static GraficPAVacantes = 'Graficas/vacantesInicio';
@@ -287,11 +295,12 @@ export class ApiConection {
     public static alterOficina = 'Oficina/alter'
     public static deleteOficina = 'Oficina/delete'
 
-    /*Oficinas */
+    /*Indicadores */
     public static getCubiertaG = 'indicador/vcubierta'
     public static getActivaG = 'indicador/vactiva'
     public static getPorvencerG = 'indicador/vporvencer'
     public static getVencidasG = 'indicador/vvencida'
+    public static getResumenG = 'indicador/resumen'
 
 
 }

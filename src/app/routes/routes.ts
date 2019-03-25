@@ -8,6 +8,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { MaintenanceComponent } from './pages/maintenance/maintenance.component';
 import { RecoverComponent } from './pages/recover/recover.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { TrackingVacantesComponent } from './pages/tracking-vacantes/tracking-vacantes.component';
+import { VacantesComponent } from './Tracking/vacantes/vacantes.component';
 
 export const routes = [
 
@@ -25,7 +27,6 @@ export const routes = [
             { path: 'catalogos', loadChildren: './catalogos/catalogos.module#CatalogosModule'},
             { path: 'reporte', loadChildren:'./reportes/reportes.module#ReportesModule'},
            { path: 'tickets', loadChildren: './SistTickets/sist-tickets.module#SistTicketsModule'}
-            
         ]},
 
 
@@ -38,6 +39,8 @@ export const routes = [
     { path: 'maintenance', component: MaintenanceComponent },
     { path: '404', component: Error404Component },
     { path: '500', component: Error500Component },
+    { path: 'TrackingVacantes', component: TrackingVacantesComponent },
+
 
     // Not found
     { path: '**', redirectTo: '404' }

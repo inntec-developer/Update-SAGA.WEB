@@ -1,0 +1,237 @@
+<div class="row">
+  <div class="col-sm-4 col-md-4">
+    <div class="card" *ngIf="ticket.length > 0 else NotTickets">
+      <div class="card-body mat-elevation-z8">
+        <h5 class="text-left text-info p-2 bg-light">
+          <i class="fa fa-user-circle-o" aria-hidden="true"></i> DATOS CANDIDATO
+          <small *ngIf="ticket[0].candidato.estatus.length <= 10 else toLength" class='badge badge-pill badge-success float-right'
+            [class.badge-warning]="ticket[0].candidato.estatusId === 42" [class.badge-danger]="ticket[0].candidato.estatusId == 28">
+            <small *ngIf="ticket[0].candidato.estatusId != 28"> {{ticket[0].candidato.estatus | uppercase }}</small>
+            <small *ngIf="ticket[0].candidato.estatusId == 28">POSTULADO</small>
+          </small>
+          <ng-template #toLength>
+            <span class='badge badge-pill badge-info float-right' [class.badge-warning]="ticket[0].candidato.estatusId === 42" [class.badge-danger]="ticket[0].candidato.estatusId == 28"
+              placement="bottom" tooltip="{{ticket[0].candidato.estatus | uppercase}}" container="body">{{ticket[0].candidato.estatus | slice:0:8 | uppercase }} ... </span>
+          </ng-template>
+        </h5>
+        <hr>
+        <div class="text-center">
+          <h3 class="text-center text-muted">{{ticket[0].candidato.nombre | uppercase}}</h3>
+          <p class="card-text font-weight-bold mr-1">CURP:
+            <span class="text-center text-success">{{ticket[0].candidato.curp | uppercase}}</span>
+          </p>
+
+          <p class="card-text font-weight-bold mr-1">LUGAR NAC.:
+            <span class="text-center text-muted">{{ticket[0].candidato.dirNacimiento | uppercase}}</span>
+          </p>
+          <p class="card-text font-weight-bold mr-1">FECHA NAC.:
+            <span class="text-center text-muted mr-4">{{ticket[0].candidato.fechaNac | date:'dd/MM/yyyy' }}</span>EDAD:
+            <span class="text-center text-muted">{{ticket[0].candidato.edad}}</span>
+          </p>
+          <p class="card-text font-weight-bold mr-1">EMAIL:
+            <span class="text-center text-muted">{{ticket[0].candidato.email}}</span>
+          </p>
+        </div>
+        <div class="p-2 mb-2">
+          <app-comentario-candidato [CandidatoId]="ticket[0].candidato.candidatoId" [RequisicionId]="" [ProcesoCandidatoId]=""></app-comentario-candidato>
+        </div>
+
+      </div>
+    </div>
+    <div class="mt-2 d-flex flex-row justify-content-end">
+      <button type="button" [disabled]="fila.length == 0 || atender" [ngClass]="fila.length == 0 || atender ? 'btn disable' : 'btn btn-outline-success mat-elevation-z8'"
+        (click)="GetTicket()" tooltip="ATENDER">
+
+        <i class="fa fa-play"></i>
+      </button>
+
+      <button type="button" *ngIf="ticket.length > 0" [disabled]="ticket[0].estado == 4" [ngClass]="ticket[0].estado == 4 ? 'btn disable ml-2' : 'btn btn-outline-danger mat-elevation-z8 ml-2'"
+        (click)="Finalizar(ticket[0].ticketId, 4)" tooltip="FINALIZAR">
+
+        <i class="fa fa-stop"></i>
+      </button>
+    </div>
+    <br/>
+    <hr>
+    <div class="card mt-4">
+      <div class="card-body mat-elevation-z8">
+        <h5 class="text-center text-warning">
+          <i class="fa fa-hourglass-half mr-1" aria-hidden="true"></i>EN ESPERA</h5>
+
+        <ul class="list-group">
+          <li *ngFor="let t of fila" class="list-group-item" [ngClass]="t.moduloId == moduloId ? 'bg-success' : t.movimientoId == 1 ? 'bg-warning' : 'bg-light'">
+            <div class="d-flex flex-row justify-content-between align-items-stretch">
+              <span>{{t.ticket}}</span>
+              <span *ngIf="t.movimientoId == 1">{{t.fch_cita | date:'dd-MMM-yyyy h:mm'}}</span>
+              <span class="float-right">{{t.tiempo}} min</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-6">
+    <div class="card" *ngIf="ticket.length > 0">
+      <div class="card-body mat-elevation-z8">
+        <ngb-tabset>
+          <ngb-tab class="bg-success" title="EX&Aacute;MEN T&Eacute;CNICO">
+            <ng-template ngbTabContent>
+
+              <div class="card">
+                <div class="card-body">
+                  <br/>
+                  <!--vacante sin examenes asignados-->
+                  <ng-container *ngIf="examen.length == 0">
+                    <h5 class="card-title text-warning">LA VACANTE
+                      <span> {{ticket[0].vBtra | uppercase}} CON FOLIO {{ticket[0].folio}} NO CUENTA CON EX&Aacute;MENES ASIGNADOS</span>
+                    </h5>
+                    <hr>
+                    <h5 class="card-title text-info">EXAMENES DISPONIBLES</h5>
+                    <br/>
+                    <mat-form-field>
+                      <mat-select placeholder="Seleccionar tipo de examen" [(value)]="tipoId">
+                        <mat-option *ngFor="let c of catalogo" [value]="c.id" (click)="GetExamenes(c.id); nom=c.nombre">
+                          {{c.nombre}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                      <mat-select placeholder="Seleccionar examen" [(value)]="examenId">
+                        <mat-option *ngFor="let e of examenes" [value]="e.id" (click)="VerExamen(e.id); nomExamen = e.nombre">
+                          {{e.nombre}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </ng-container>
+                  <!--examenes asignados sin contestar por el candidato-->
+                  <ng-container *ngIf="examen.length > 0 && ticket[0].candidato.tecnicos == 9999">
+                    <h4 class="card-title text-warning">VACANTE {{ticket[0].vBtra | uppercase}} FOLIO {{ticket[0].folio}}</h4>
+                    <h5 class="card-title text-info">EXAMEN ASIGNADO {{examen[0].nombre | uppercase}}</h5>
+                    <hr>
+                    <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
+                      [disableOnBreakpoints]="false" [disabled]="disabled">
+                      <div style="height: 330px;">
+                        <ng-container *ngFor="let p of examen; let ind = index">
+                          <p class="list-group text-primary">{{( ind + 1) + '.- ' + p.pregunta}}</p>
+                          <ul class="respStyle">
+                            <li [ngClass]="r.value == 1 ? 'text-success' : 'text-warning'" *ngFor="let r of p.respuestas">{{r.resp}}</li>
+                          </ul>
+                        </ng-container>
+                      </div>
+                    </ng-scrollbar>
+                    <hr>
+                    <div class="row">
+                      <div class="col">
+                        <ng-container *ngIf="!examenasignado">
+                          <button type="button" class="btn btn-labeled btn-success mat-elevation-z8 float-right" [disabled]="examenId == 0" (click)="AsignarExamen()">
+                            <span class="btn-label">
+                              <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                            </span>ASIGNAR</button>
+                          <button type="button" class="btn btn-labeled btn-warning mat-elevation-z8 float-right mr-1" [disabled]="examenId == 0" (click)="examen = [];">
+                            <span class="btn-label">
+                              <i class="fa fa-list-ul" aria-hidden="true"></i>
+                            </span>CAMBIAR</button>
+                        </ng-container>
+                        <button *ngIf="examenasignado" type="button" class="btn btn-labeled btn-success mat-elevation-z8 float-right" [disabled]="iniciarexamen"
+                          (click)="IniciarExamen()">
+                          <span class="btn-label">
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                          </span>INICIAR</button>
+                      </div>
+                    </div>
+                  </ng-container>
+    <!--examenes sin revisar-->
+                  <ng-container *ngIf="examen.length > 0 && ticket[0].candidato.tecnicos != 9999">
+                    <h4 class="card-title text-warning">VACANTE {{ticket[0].vBtra | uppercase}} FOLIO {{ticket[0].folio}}</h4>
+                    <hr>
+                    <h5 class="card-title text-info">EXAMEN -
+                      <span>{{examen[0].nombre | uppercase}}</span>
+                      <button type="button" class="mb-1 btn btn-xs btn-outline-warning float-right" container="body" placement="bottom" tooltip="Revisar examen"
+                        (click)="OpenDialogRevisar()">
+                        <em class="fa fa-pencil"></em>
+                      </button>
+                    </h5>
+                  </ng-container>
+
+                </div>
+              </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab title="EX&Aacute;MEN PSICOM&Eacute;TRICO">
+            <ng-template ngbTabContent>
+              <div class="card">
+                <div class="card-body">
+                  <h5 *ngIf="!ticket[0].psicometria" class="text-warning">LA VACANTE {{ticket[0].vBtra | uppercase}} CON FOLIO {{ticket[0].folio}} NO APLICA PARA EX&Aacute;MENES
+                    PSICOM&Eacute;TRICOS</h5>
+                  <ng-container *ngIf="ticket[0].psicometria">
+                    <h5 class="card-title text-info">CLAVES ASIGNADAS PARA VACANTE
+                      <span> {{clavesRequi[0].vBtra | uppercase}} CON FOLIO {{clavesRequi[0].folio}}</span>
+                    </h5>
+                    <hr>
+                    <ng-container *ngIf="!activas">
+                      <label class="text-success">CLAVE</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control form-control-sm" [(ngModel)]="clave" name="claves" (keydown.enter)="AgregarClave(clave)"
+                          minlength="16" maxlength="16">
+                        <div class="input-group-append">
+                          <button [disabled]="clave.length < 16" class="btn btn-xs btn-outline-success" type="button" (click)="AgregarClave(clave)">
+                            <em class="fa fa-plus"></em>
+                          </button>
+                        </div>
+                      </div>
+                      <small class="form-text text-muted text-danger" *ngIf="clave.length < 16">clave debe contener 16 caracteres ser alfanum&eacute;ricos y las claves no deben repetirse</small>
+                      <br/>
+                    </ng-container>
+                    <div class="justify-content-between">
+                      <p class="text-warning" *ngIf="clavesRequi[0].claves.length == 0">LA VACANTE NO CUENTA CON CLAVES ASIGNADAS</p>
+                      <ul *ngIf="clavesRequi[0].claves.length > 0" class="list-group">
+                        <li *ngFor="let item of clavesRequi[0].claves; let ind = index;" class="list-group-item">
+                          <span [ngClass]="(item.activo === 0) ? 'text-success' : 'text-muted'">{{ind + 1}}. {{item.clave}}
+                            <button *ngIf="item.nueva" class="btn btn-xs btn-outline-danger float-right ml-1" type="button" (click)="PopClave(item.clave)">
+                              <em class="fa fa-times"></em>
+                            </button>
+                            <button *ngIf="item.nueva" class="btn btn-xs btn-outline-success float-right" type="button" (click)="Agregar(item.clave)">
+                              <em class="fa fa-check"></em>
+                            </button>
+                            <div *ngIf="!item.nueva && item.activo == 0" class="radio float-right">
+                              <label>
+                                <input type="radio" name="optradio" checked [(ngModel)]="slcClave" [value]="item.id">
+                              </label>
+                            </div>
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col">
+                        <button type="button" class="btn btn-labeled btn-success mat-elevation-z8 float-right" [disabled]="!slcClave" (click)="AsignarClave()">
+                          <span class="btn-label">
+                            <i class="fa fa-key"></i>
+                          </span>ASIGNAR</button>
+                      </div>
+                    </div>
+                    <br/>
+                  </ng-container>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--mensaje cuando esta vacio la tabla-->
+<ng-template #NotTickets>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <alert type="info">
+        <strong>Oops!</strong> A&uacute;n no cuentas con tickets en proceso.
+      </alert>
+    </div>
+  </div>
+</ng-template>
+<toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>

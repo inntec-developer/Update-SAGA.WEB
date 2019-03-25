@@ -15,7 +15,9 @@
   <div class="card-body">
    <h5 class="card-title text-warning"><em class="fa fa-pencil"></em> EXAMENES DISPONIBLES</h5>
    <hr>
-
+   <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+   [disabled]="disabled">
+   <div style="height: 400px;">
    <div id="accordion">
       <div class="card" *ngFor="let row of resultados; let rowIndex = index">
         <a class="card-header" [class.collapsed]="row.verRow"  (click)="row.verRow = !row.verRow">
@@ -30,6 +32,9 @@
     
         <div *ngIf="row.verRow" id="collapseOne" class="collapse show">
           <div class="card-body">
+              <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+              [disabled]="disabled">
+              <div style="height: 300px;">
               <table class="table">
                   <tbody>
                       <ng-container *ngIf="row.candidatos.length > 0 else NotCandidatos">
@@ -52,11 +57,14 @@
                   </ng-container>
                   </tbody>
                 </table>
+              </div>
+              </ng-scrollbar>
           </div>
         </div>
       </div>
       </div>
-    
+    </div>
+    </ng-scrollbar>
   </div>
 </div>
   <!--mensaje cuando esta vacio la tabla-->

@@ -129,13 +129,13 @@
         </div>
         <div class="modal-body">
           <ul class="scroll">
-            <li [ngClass]="(c.activo === 0) ? 'text-success' : 'text-muted'" class="text-muted list-group-item" *ngFor="let c of clavesRequi; let ind = index;">{{c.clave | uppercase}}</li>
+            <li [ngClass]="(c.activo === 0) ? 'text-success' : 'text-muted'" class="text-muted list-group-item" *ngFor="let c of clavesRequi[0].claves; let ind = index;">{{c.clave | uppercase}}</li>
           </ul>
         </div>
         <div class="modal-footer">
             <div class="text-right">
            
-                <pre class="card card-block card-header text-muted">Total Claves: {{clavesRequi.length}}</pre>
+                <pre class="card card-block card-header text-muted">Total Claves: {{clavesRequi[0].claves.length}}</pre>
                 </div>
 
         </div>

@@ -28,6 +28,7 @@ export class ExamenesService {
   URLGetClaves = ApiConection.ServiceUrl + ApiConection.GetClaves;
   URLGetClaveCandidatos = ApiConection.ServiceUrl + ApiConection.GetClaveCandidatos;
   URLGetClavesCandidatos = ApiConection.ServiceUrl + ApiConection.GetClavesCandidatos;
+  URLAsignarClaveCandidato = ApiConection.ServiceUrl +ApiConection.AsignarClaveCandidato;
 
   constructor(private _httpClient: HttpClient) { }
 
@@ -85,6 +86,17 @@ export class ExamenesService {
     return this._httpClient.post(this.URLInsertClaves, claves, httpOptions)
   }
 
+  AsignarClaveCandidato(objeto): Observable<any>
+  {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+
+    return this._httpClient.post(this.URLAsignarClaveCandidato, objeto, httpOptions);
+  }
   AgregarResultadoPsico(resultado): Observable<any>
   {
     const httpOptions = {

@@ -1,3 +1,5 @@
+import { ExamenesService } from './../../../service/Examenes/examenes.service';
+import { CandidatosService } from './../../../service/Candidatos/candidatos.service';
 import { element } from 'protractor';
 
 import { DlgAsignarPerfilComponent } from './../../../components/dlg-asignar-perfil/dlg-asignar-perfil.component';
@@ -9,12 +11,14 @@ import { MatDialog } from '@angular/material';
 import { InfoCandidatoService } from '../../../service/SeguimientoVacante/info-candidato.service';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { RequisicionesService } from '../../../service';
+import { DialogHorariosConteoComponent } from '../../../components/dialog-horarios-conteo/dialog-horarios-conteo.component';
+import { PostulateService } from '../../../service/SeguimientoVacante/postulate.service';
 
 @Component({
   selector: 'app-seguimiento-ticket',
   templateUrl: './seguimiento-ticket.component.html',
   styleUrls: ['./seguimiento-ticket.component.scss'],
-  providers: [RequisicionesService]
+  providers: [RequisicionesService, CandidatosService]
 })
 export class SeguimientoTicketComponent implements OnInit {
   disabled = false;
@@ -24,6 +28,7 @@ export class SeguimientoTicketComponent implements OnInit {
   shown = 'hover';
 
   modulo = sessionStorage.getItem('modulo');
+moduloId;
   fila = [];
   ticket = [];
 finalizar = false;
@@ -39,15 +44,40 @@ apartar = true;
   requisicionId: any;
   examenId: any = 0;
 
+  examenesCandidato = { 'tecnicos': [], 'psicometricos': [] };
+  exaTecnico: boolean = false;
+  exaPsico: boolean = false;
+
   constructor( private _service: SistTicketsService, 
       private _Router: Router, private dialog: MatDialog, 
       private _serviceCandidato: InfoCandidatoService,  
+      private serviceCandidato: CandidatosService,
+      private servicePost: PostulateService,
       private toasterService: ToasterService,
-      private service: RequisicionesService) { 
-    setInterval(() => this.timeWait(), 1000);
+      private service: RequisicionesService, 
+    private _serviceExamen: ExamenesService) { 
+        setInterval(() => this.timeWait(), 1000);
+    
   }
+  
+  Reinciar()
+  {
+    this.ticket = [];
+    this.finalizar = false;
+    this.atender = false;
+    this.examen = false;
+    this.postulaciones = [];
+    this.dataSource = [];
+    this.apartar = true;
+    this.requisicionId = null;
+    this.examenId = 0;
+    
+    this.examenesCandidato = { 'tecnicos': [], 'psicometricos': [] };
 
+  }
   ngOnInit() {
+    // setInterval(() => this.timeWait(), 1000);
+    this.moduloId = sessionStorage.getItem('moduloId');
     this.GetFilaTickets();
     //this.GetTicket('6FD2758C-A533-E911-AF44-E4B31877AAB4');
 
@@ -55,7 +85,7 @@ apartar = true;
 
   public GetFilaTickets()
   {
-    this._service.GetFilaTickets(0).subscribe( data => {
+    this._service.GetFilaTickets(1, sessionStorage.getItem('id')).subscribe( data => {
         this.fila = data;
     })
   }
@@ -69,7 +99,10 @@ apartar = true;
       this.ticket[0].estado == 2 ? this.atender = true : this.atender = false;
 
       this.GetPostulaciones(this.ticket[0].candidato.candidatoId);
-      this.GetFilaTickets();
+      this.ExamenesCandidatos();
+     // this.GetFilaTickets();
+
+      console.log(this.ticket)
    
     })
 
@@ -99,43 +132,95 @@ apartar = true;
    
   }
 
-  public SetExamen(candidato, ticket) {
-    if (this.examenId != 0) {
-      let objeto = { ExamenId: this.examenId, CandidatoId: candidato, RequisicionId: this.requisicionId, Resultado: 0 };
-      this._service.SetExamen(objeto).subscribe(data => {
-        if (data == 200) {
-          this.examenId = 0;
-          this.Finalizar(ticket, 3);
-        }
-      })
-    }
-  }
-
   public Finalizar(ticketId, estatus)
   {
     this._service.UpdateStatusTicket(ticketId, estatus, sessionStorage.getItem('moduloId')).subscribe(data => {
-      this.apartar = true;
-      this.finalizar = false;
-      this.examen = false;
-      this.GetTicket(ticketId)
+      //this.GetTicket(ticketId)
+      this.Reinciar();
     });
   }
 
-  SetApartar(candidato, datos)
+  GetHorarioRequis(estatusTicket) {
+    this.service.GetHorariosRequiConteo(this.ticket[0].requisicionId).subscribe(data => {
+        var aux = data.filter(element => !element.vacantes)
+
+        if(aux.length == 0)
+        {
+          aux = [{id: 0, nombre: "Los horarios ya están cubiertos"}]
+        }
+
+        this.OpenDlgHorarios(aux, 18, 'ENTREVISTA RECLUTAMIENTO', this.ticket[0].requisicionId, estatusTicket);
+    })
+  }
+
+  OpenDlgHorarios(data, estatusId, estatus, requi, estatusTicket) {
+    let dialogDlt = this.dialog.open(DialogHorariosConteoComponent, {
+      width: '45%',
+      height: 'auto',
+      data: data,
+      disableClose: true
+    });
+
+    dialogDlt.afterClosed().subscribe(result => {
+      if (result != 0) {
+
+       let horarioId = result.horarioId;
+
+        var datos = { candidatoId: this.ticket[0].candidato.candidatoId, estatusId: estatusId, requisicionId: requi, horarioId: horarioId, tipoMediosId: result.mediosId, ReclutadorId: sessionStorage.getItem('id') };
+
+        this.serviceCandidato.UpdateFuenteRecl(datos).subscribe(result =>{ 
+          this.servicePost.SetProceso(datos).subscribe(data => {
+            if (data == 201) {
+              if(estatusTicket == 3)
+              {
+                this.popToast('success', 'Seguimiento', 'El candidato se encuentra en examenes');
+                this.Finalizar(this.ticket[0].ticketId, estatusTicket);
+              }
+              else
+              {
+                this.popToast('success', 'Seguimiento', 'El proceso termino correctamente');
+                this.Finalizar(this.ticket[0].ticketId, estatusTicket);
+              }
+            }
+            else if (data == 300) {
+              this.popToast('info', 'Apartado', 'El candidato ya esta apartado o en proceso');
+            }
+            else {
+              this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos')
+            }
+          })
+        });
+
+      }
+     
+    });
+  }
+
+  SetApartar(datos, ticket)
   {
+    debugger;
     this._serviceCandidato.setApartarCandidato(datos)
       .subscribe(data => {
-        this.apartar = false;
-        this.examen = true;
         switch (data) {
           case 200: {
-            this.loading = false;
-            this.requisicionId = datos.requisicionId;
-            
-            var msg = 'El candidato se aparto correctamente.';
-            this.popToast('success', 'Apartado', msg);
 
-            this.GetTicket(candidato.ticketId)
+            this._service.UpdateRequiTicket(ticket.ticketId, datos.requisicionId).subscribe(data =>{
+              if(data == 200)
+              {
+                this.loading = false;
+                       
+                var msg = 'El candidato se apartó correctamente.';
+                this.popToast('success', 'Apartado', msg);
+    
+                this.GetTicket(ticket.ticketId)
+              }
+              else
+              {
+                var msg = 'Error el intentar apartar el candidato. Consulte al departamento de soporte si el problema persiste.';
+                this.popToast('error', 'Apartado', msg);
+                this._liberarCandidato(datos, ticket)
+              }
+            })
           
             break;
           }
@@ -154,7 +239,7 @@ apartar = true;
             break;
           }
           default: {
-            var msg = 'Error inesperado y desconocido, reporte el problema el departamento de soporte.';
+            var msg = 'Error inesperado y desconocido, reporte el problema al departamento de soporte.';
             this.popToast('error', 'Oops!!', msg);
             this.loading = false;
 
@@ -168,7 +253,6 @@ apartar = true;
   }
 
   _apartarCandidato(row, candidato) {
-
     this.examenId = row.examenId;
     let propietario = false;
     this.dataSource.forEach(element => {
@@ -198,7 +282,7 @@ apartar = true;
             estatusId: 12
           }
 
-          this.SetApartar(candidato, procesoCandidato);
+          this.SetApartar(procesoCandidato, candidato);
 
         });
       }
@@ -212,7 +296,7 @@ apartar = true;
           estatusId: 12
         }
 
-        this.SetApartar(candidato, procesoCandidato);
+        this.SetApartar(procesoCandidato, candidato);
       }
     }
     else {
@@ -226,14 +310,13 @@ apartar = true;
         reclutadorId: sessionStorage.getItem('id'),
         estatusId: 12
       }
-      this.SetApartar(candidato, procesoCandidato);
+      this.SetApartar(procesoCandidato, candidato);
     }
 
   }
 
   _liberarCandidato(row, candidato)
   {
-    
     this._service.LiberarCandidato(row.id, candidato.candidato.candidatoId).subscribe(data =>{
       if(data == 201)
       {
@@ -265,9 +348,29 @@ apartar = true;
     });
   }
 
+  ExamenesCandidatos()
+  {
+    this._serviceExamen.GetExamenCandidato(this.ticket[0].candidato.candidatoId).subscribe(exa => {
+      this.examenesCandidato.tecnicos = exa[0];
+      this.examenesCandidato.psicometricos = exa[1];
+
+      if(this.examenesCandidato.tecnicos[0].resultado > 0)
+      {
+        this.exaTecnico = true;
+      }
+
+      if(this.examenesCandidato.psicometricos[0].resultado != "SIN RESULTADO")
+      {
+        this.exaPsico = true;
+      }
+ 
+      console.log(this.examenesCandidato)
+    });
+  }
 
   timeWait()
   {
+    this.GetFilaTickets();
     let d = new Date();
     let s = d.getSeconds() * 6;
     let m = d.getMinutes();

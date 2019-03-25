@@ -1,23 +1,27 @@
 <div class="row">
-    <div class="col-lg-8">
-      <span class="text-info" mat-dialog-title> <em class="fa fa-pencil"></em> {{examen[0].tipo | uppercase}} - {{examen[0].nombre | uppercase}}</span>
-    </div>
-    <div class="col-lg-4">
-      <button type="button" class="btn btn-xs btn-danger btn-circle float-right" mat-dialog-close>
+    <div class="col clearfix">
+      <h4 class="text-info float-left"> <em class="fa fa-pencil"></em> {{examen[0].tipo | uppercase}} - {{examen[0].nombre | uppercase}}</h4>
+      <button type="button" class="btn btn-xs btn-danger btn-circle float-right mb-2" mat-dialog-close>
         <i class="fa fa-times"></i>
       </button>
+
     </div>
   </div>
   <mat-divider></mat-divider>
   <div class="card">
       <div class="card-body">
           <mat-dialog-content>
+              <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
+              [disableOnBreakpoints]="false" [disabled]="disabled">
+              <div style="height: 400px;">
               <ng-container *ngFor="let p of examen[0].respuestas; let ind = index" >
-                <em>{{( ind + 1)  + '.- ' + p.pregunta}}</em> <span *ngIf="p.tipop > 1" class="text-success"> Respuesta correcta: {{p.respCorrecta}}</span>
+                <em class="text-muted">{{( ind + 1)  + '.- ' + p.pregunta}}</em> <span *ngIf="p.tipop > 1" class="text-success"> Respuesta correcta: {{p.respCorrecta}}</span>
                   <ul class="respStyle">
                     <li [ngClass]="p.value == 1 ? 'text-success' : 'text-warning'" >Respuesta Candidato: {{p.respuesta}}</li>
                   </ul>
               </ng-container>
+              </div>
+              </ng-scrollbar>
       </mat-dialog-content>
       <mat-divider></mat-divider>
       <br/>
@@ -27,7 +31,7 @@
                 </div>
               <input type="text" class="form-control long" placeholder="{{examen[0].resultado}}" ngModel required #pregunta="ngModel" [(ngModel)]="resultado">
               <div class="input-group-append">
-              <button type="button" [disabled]="resultado==0" [ngClass]="resultado == 0 ? 'btn btn-xs enabled float-right' : 'btn btn-xs btn-outline-success float-right'" container="body" placement="bottom" tooltip="Actualizar Resultado" (click)="ActualizarResultado()">
+              <button type="button" [disabled]="resultado == 0" [ngClass]="resultado == 0 ? 'btn btn-xs enabled float-right' : 'btn btn-xs btn-outline-success float-right'" container="body" placement="bottom" tooltip="Actualizar Resultado" (click)="ActualizarResultado()">
                   <em class="fa fa-check"></em>
               </button>
             </div>
