@@ -9,6 +9,12 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
   styleUrls: ['./dlg-revisar-examenes.component.scss']
 })
 export class DlgRevisarExamenesComponent implements OnInit {
+/* variables scroll */
+disabled = false;
+compact = false;
+invertX = false;
+invertY = false;
+shown = 'hover';
 
  resultado = 0;
   constructor(@Inject(MAT_DIALOG_DATA) public examen: any, private service: ExamenesService, private toasterService: ToasterService) { }
@@ -23,7 +29,8 @@ export class DlgRevisarExamenesComponent implements OnInit {
       if(data == 200)
       {
         this.popToast('success', 'Agregar Resultado', 'La actualización de datos se realizó con éxito');
-        this.resultado = 0;
+      //  this.resultado = 0;
+      this.examen[0].resultado = this.resultado;
       }
       else
       {

@@ -1,0 +1,48 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-8 col-md-8">
+      <label class="text-success">FOLIO</label>
+      <div class="input-group">
+        <input type="text" class="form-control form-control-sm" [(ngModel)]="folio" name="folios" (keydown.enter)="GenerarTicket()">
+        <div class="input-group-append">
+          <button class="btn btn-xs btn-outline-success" type="button" (click)="GenerarTicket()">
+            <em class="fa fa-plus"></em>
+          </button>
+        </div>
+      </div>
+      <hr>
+
+      <h5 class="text-left text-warning p-2 bg-light">
+          <i class="fa fa-file-text-o mr-1" aria-hidden="true"></i>MIS VACANTES</h5>
+          <ul class="list-group long">
+            <li *ngFor="let item of dataSource; let ind = index;" class="list-group-item">
+              <span class="text-info">
+                <span class="text-sm font-weight-bold mr-1">FOLIO</span>
+                <span class="text-muted mr-2">{{item.folio}}</span>
+                <span class="text-sm font-weight-bold mr-1">PERFIL</span>
+                <span class="text-muted mr-2">{{item.vBtra}}</span>
+                <span class="text-sm font-weight-bold mr-1">CLIENTE</span>
+                <span class="text-muted mr-2">{{item.cliente}}</span>
+
+                <button (click)="GenerarTicketSinCita(item.id)"
+                  class="btn btn-xs btn-outline-success float-right" container="body"
+                  placement="bottom" tooltip="Apartar">
+                  <em class="fa fa-thumbs-o-up"></em>
+                </button>
+
+              </span>
+            </li>
+          </ul>
+        </div>
+      <div class="col-sm-4 col-md-4">
+      <div class="card">
+        <div class="card-body mat-elevation-z8">
+          <h1>{{num}}</h1>
+        </div>
+
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

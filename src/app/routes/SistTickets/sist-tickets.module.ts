@@ -49,12 +49,17 @@ import { EnAtencionComponent } from './en-atencion/en-atencion.component';
 import { CarruselVacantesComponent } from './carrusel-vacantes/carrusel-vacantes.component';
 import { CarruselArteVacantesComponent } from './carrusel-arte-vacantes/carrusel-arte-vacantes.component';
 import { DlgAsignarModuloComponent } from './dlg-asignar-modulo/dlg-asignar-modulo.component';
+import { RevisionExamenesComponent } from './revision-examenes/revision-examenes.component';
+import { DlgRevisarExamenesComponent } from '../../components/dlg-revisar-examenes/dlg-revisar-examenes.component';
+import { TicketCitaPruebaComponent } from './ticket-cita-prueba/ticket-cita-prueba.component';
+
 
 const routes: Routes = [
   { path: 'turno', component: SeguimientoTicketComponent},
   { path: 'verTurno', component: VerTurnosComponent},
   { path: 'Inicio', component: DlgAsignarModuloComponent},
-
+  { path: 'Examenes', component: RevisionExamenesComponent},
+  { path: 'ticketConCita', component: TicketCitaPruebaComponent},
 ];
 
 
@@ -109,8 +114,10 @@ const routes: Routes = [
     CarruselVacantesComponent,
     CarruselArteVacantesComponent,
     DlgAsignarModuloComponent,
-    
+    RevisionExamenesComponent,
+    DlgRevisarExamenesComponent,
+    TicketCitaPruebaComponent,
   ],
-  entryComponents: [],
+  entryComponents: [DlgRevisarExamenesComponent]
 })
 export class SistTicketsModule { }

@@ -1,6 +1,6 @@
-import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
 import { DlgRevisarExamenesComponent } from './../../components/dlg-revisar-examenes/dlg-revisar-examenes.component';
 
+import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
 import { SharedModule } from './../../shared/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -16,6 +16,7 @@ import { AsignarPsicometricosComponent } from './asignar-psicometricos/asignar-p
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
 import { AgregarResultadosPsicoComponent } from './agregar-resultados-psico/agregar-resultados-psico.component';
 import { HistorialClavesComponent } from './historial-claves/historial-claves.component';
+
 
 
 
@@ -47,20 +48,22 @@ const routes: Routes = [
     AddExamenComponent,
     AsignarExamenComponent,
     ContestarExamenComponent,
-    RevisarExamenesComponent,
-    DlgRevisarExamenesComponent,
     AsignarPsicometricosComponent,
     AgregarResultadosPsicoComponent,
-    HistorialClavesComponent
+    HistorialClavesComponent,
+    RevisarExamenesComponent, 
+DlgRevisarExamenesComponent
   ],
   exports: [
     RouterModule
 ],
+
+
 providers:[ToasterService, RequisicionesService,
   {provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
   { provide: PaginationConfig, useValue: getSpanishPaginatorBtp()}],
-entryComponents:[DlgRevisarExamenesComponent]
 
+entryComponents: [DlgRevisarExamenesComponent]
 })
 export class ExamenesModule {
  }
