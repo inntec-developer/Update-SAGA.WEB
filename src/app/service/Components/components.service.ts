@@ -52,19 +52,19 @@ export class ComponentsService {
 
   getVCubierta(data: any) : Observable<any>{
     let params = new HttpParams().set('usuario', data);
-    return this._httpClient.get(this.urlGetCalendarEvent, {params: params});
+    return this._httpClient.get(this.UrlVacanteCubierta, {params: params});
   }
   getVActiva(data: any) : Observable<any>{
     let params = new HttpParams().set('usuario', data);
-    return this._httpClient.get(this.urlGetCalendarEvent, {params: params});
+    return this._httpClient.get(this.UrlVacanteActiva, {params: params});
   }
   getVPorVencer(data: any) : Observable<any>{
     let params = new HttpParams().set('usuario', data);
-    return this._httpClient.get(this.urlGetCalendarEvent, {params: params});
+    return this._httpClient.get(this.UrlVacantePorVencer, {params: params});
   }
   getVVencida(data: any) : Observable<any>{
     let params = new HttpParams().set('usuario', data);
-    return this._httpClient.get(this.urlGetCalendarEvent, {params: params});
+    return this._httpClient.get(this.UrlVacanteVencida, {params: params});
   }
 
   getUserGroup() : Observable<any>{
