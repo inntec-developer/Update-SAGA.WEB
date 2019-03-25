@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+import { emptyStringGetter, id } from '@swimlane/ngx-datatable/release/utils';
 
 import { CatalogosService } from './../../../../../service/catalogos/catalogos.service';
 import { ClientesService } from '../../../../../service/clientes/clientes.service';
 import { CompanyValidation } from './company-validation';
 import { CustomValidators } from 'ng2-validation';
 import { config } from 'rxjs';
-import { emptyStringGetter } from '@swimlane/ngx-datatable/release/utils';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-nuevo-prospecto',
@@ -59,8 +60,8 @@ export class NuevoProspectoComponent implements OnInit {
       esPrincipal: true,
       estado: "Jalisco",
       estadoId: 14,
-      exterior: "1492",
-      interior: "",
+      numeroExterior: "1492",
+      numeroInterior: "",
       municipio: "Guadalajara",
       municipioId: 571,
       pais: "Mexico",
@@ -68,6 +69,10 @@ export class NuevoProspectoComponent implements OnInit {
       referencia: "SIN REFERENCIA",
       tipoDireccion: "Fiscal",
       tipoDireccionId: 2,
+      usuarioAlta: 'DAMSA.NINIGUEZ',
+      telefonos: [],
+      emails: [],
+      contactos: []
     },
     {
       idAux: 2,
@@ -79,8 +84,8 @@ export class NuevoProspectoComponent implements OnInit {
       esPrincipal: false,
       estado: "Jalisco",
       estadoId: 14,
-      exterior: "124",
-      interior: "",
+      numeroExterior: "124",
+      numeroInterior: "",
       municipio: "San Pedro Tlaquepaque",
       municipioId: 611,
       pais: "Mexico",
@@ -88,6 +93,106 @@ export class NuevoProspectoComponent implements OnInit {
       referencia: "SIN REFERENCIA",
       tipoDireccion: "Sucursal",
       tipoDireccionId: 3,
+      usuarioAlta: 'DAMSA.NINIGUEZ',
+      telefonos: [],
+      emails: [],
+      contactos: []
+    },
+    {
+      idAux: 3,
+      activo: true,
+      calle: "Fuente de la Alianza",
+      codigoPostal: "45615",
+      colonia: "Villa Fontana",
+      coloniaId: 60595,
+      esPrincipal: false,
+      estado: "Jalisco",
+      estadoId: 14,
+      numeroExterior: "126",
+      numeroInterior: "",
+      municipio: "San Pedro Tlaquepaque",
+      municipioId: 611,
+      pais: "Mexico",
+      paisId: 42,
+      referencia: "SIN REFERENCIA",
+      tipoDireccion: "Sucursal",
+      tipoDireccionId: 3,
+      usuarioAlta: 'DAMSA.NINIGUEZ',
+      telefonos: [],
+      emails: [],
+      contactos: []
+    },
+    {
+      idAux: 4,
+      activo: true,
+      calle: "Fuente de la Alianza",
+      codigoPostal: "45615",
+      colonia: "Villa Fontana",
+      coloniaId: 60595,
+      esPrincipal: false,
+      estado: "Jalisco",
+      estadoId: 14,
+      numeroExterior: "128",
+      numeroInterior: "",
+      municipio: "San Pedro Tlaquepaque",
+      municipioId: 611,
+      pais: "Mexico",
+      paisId: 42,
+      referencia: "SIN REFERENCIA",
+      tipoDireccion: "Sucursal",
+      tipoDireccionId: 3,
+      usuarioAlta: 'DAMSA.NINIGUEZ',
+      telefonos: [],
+      emails: [],
+      contactos: []
+    },
+    {
+      idAux: 5,
+      activo: true,
+      calle: "Fuente de la Alianza",
+      codigoPostal: "45615",
+      colonia: "Villa Fontana",
+      coloniaId: 60595,
+      esPrincipal: false,
+      estado: "Jalisco",
+      estadoId: 14,
+      numeroExterior: "130",
+      numeroInterior: "",
+      municipio: "San Pedro Tlaquepaque",
+      municipioId: 611,
+      pais: "Mexico",
+      paisId: 42,
+      referencia: "SIN REFERENCIA",
+      tipoDireccion: "Sucursal",
+      tipoDireccionId: 3,
+      usuarioAlta: 'DAMSA.NINIGUEZ',
+      telefonos: [],
+      emails: [],
+      contactos: []
+    },
+    {
+      idAux: 6,
+      activo: true,
+      calle: "Fuente de la Alianza",
+      codigoPostal: "45615",
+      colonia: "Villa Fontana",
+      coloniaId: 60595,
+      esPrincipal: false,
+      estado: "Jalisco",
+      estadoId: 14,
+      numeroExterior: "132",
+      numeroInterior: "",
+      municipio: "San Pedro Tlaquepaque",
+      municipioId: 611,
+      pais: "Mexico",
+      paisId: 42,
+      referencia: "SIN REFERENCIA",
+      tipoDireccion: "Sucursal",
+      tipoDireccionId: 3,
+      usuarioAlta: 'DAMSA.NINIGUEZ',
+      telefonos: [],
+      emails: [],
+      contactos: []
     }
   ];
   public indexDireccion: any;
@@ -96,34 +201,34 @@ export class NuevoProspectoComponent implements OnInit {
 
   public addTelefono: boolean;
   public TelefonosNew: Array<any> = [
-    {
-      idAux: 1,
-      activo: true,
-      calle: "Fuente de la Alianza",
-      claveLada: "33",
-      clavePais: "52",
-      esPrincipal: false,
-      extencion: "",
-      indexDireccion: 1,
-      tTelefono: "Recados",
-      telefono: "31441648",
-      tipoTelefonoId: 3,
-      usuarioAlta: "DAL2789",
-    },
-    {
-      idAux: 2,
-      activo: true,
-      calle: "Fuente de la Alianza",
-      claveLada: "33",
-      clavePais: "52",
-      esPrincipal: false,
-      extencion: "",
-      indexDireccion: 1,
-      tTelefono: "Recados",
-      telefono: "31441648",
-      tipoTelefonoId: 3,
-      usuarioAlta: "DAL2789",
-    }
+    // {
+    //   idAux: 1,
+    //   activo: true,
+    //   calle: "Ramon Alcorta",
+    //   claveLada: "33",
+    //   clavePais: "52",
+    //   esPrincipal: false,
+    //   extension: "",
+    //   idDireccion: 1,
+    //   tTelefono: "Recados",
+    //   telefono: "31441648",
+    //   tipoTelefonoId: 3,
+    //   usuarioAlta: "DAL2789",
+    // },
+    // {
+    //   idAux: 2,
+    //   activo: true,
+    //   calle: "Fuente de la Alianza",
+    //   claveLada: "33",
+    //   clavePais: "52",
+    //   esPrincipal: false,
+    //   extension: "",
+    //   idDireccion: 2,
+    //   tTelefono: "Recados",
+    //   telefono: "36011746",
+    //   tipoTelefonoId: 3,
+    //   usuarioAlta: "DAL2789",
+    // }
   ];
   public indexTelefonos: any;
   public EditTelefono: boolean;
@@ -166,6 +271,7 @@ export class NuevoProspectoComponent implements OnInit {
 
   public ladaPais: any = 52;
   public PrincipalT: boolean = false;
+  public Usuario: string;
 
 
 
@@ -175,6 +281,7 @@ export class NuevoProspectoComponent implements OnInit {
     private _ClienteService: ClientesService,
     private toasterService: ToasterService
   ) {
+    // #region FORMULARIO DE DATOS GENERALES
     this.formGeneral = new FormGroup({
       Empresa: new FormControl('', [Validators.required]),
       ValidarEmpresa: new FormControl('', [Validators.required]),
@@ -185,6 +292,8 @@ export class NuevoProspectoComponent implements OnInit {
       Tipo: new FormControl('', Validators.required),
       TipoBase: new FormControl('', Validators.required)
     });
+    // #endregion
+    // #region FORMULARIO DE DATOS DIRECCIONES
     this.formDirecciones = new FormGroup({
       TipoDireccion: new FormControl('', [Validators.required]),
       CodigoPostal: new FormControl('', [Validators.required, Validators.maxLength(5)]),
@@ -199,21 +308,26 @@ export class NuevoProspectoComponent implements OnInit {
       Principal: new FormControl(false),
       Activo: new FormControl(true)
     });
+    // #endregion
+    // #region FORMULARIO DE DATOS TELEFONOS
     this.formTelefonos = new FormGroup({
       TelDireccion: new FormControl('', [Validators.required]),
       TipoTelefono: new FormControl('', [Validators.required]),
       LadaPais: new FormControl('52', [Validators.required, Validators.maxLength(3)]),
       Lada: new FormControl('', [Validators.required, Validators.maxLength(3)]),
       Numero: new FormControl('', [Validators.required, Validators.maxLength(8)]),
-      Extencion: new FormControl(''),
+      Extension: new FormControl(''),
       Principal: new FormControl(false),
       Activo: new FormControl(true)
     });
+    // #endregion
+    // #region FORMULARIO DE DATOS CORREO
     this.formCorreos = new FormGroup({
       EmailDireccion: new FormControl('', [Validators.required]),
       Email: new FormControl('', [Validators.required, Validators.email]),
-      Activo: new FormControl(true)
     });
+    // #endregion
+    // #region FORMULARIO DE DATOS CONTACTO
     this.formContactos = new FormGroup({
       ContactoDireccion: new FormControl('', [Validators.required]),
       Nombre: new FormControl('', [Validators.required]),
@@ -224,12 +338,14 @@ export class NuevoProspectoComponent implements OnInit {
       LadaPais: new FormControl('52', [Validators.required, Validators.maxLength(3)]),
       Lada: new FormControl('', [Validators.required, Validators.maxLength(3)]),
       Numero: new FormControl('', [Validators.required, Validators.maxLength(8)]),
-      Extencion: new FormControl(''),
+      Extension: new FormControl(''),
       Email: new FormControl('', [Validators.required, Validators.email]),
     });
+    // #endregion
   }
 
   ngOnInit() {
+    this.Usuario = sessionStorage.getItem('usuario');
     this.onChangeTableD(this.config);
     this.onChangeTableT(this.config);
     this.idAuxD = this.DireccionesNew.length + 1;
@@ -241,6 +357,7 @@ export class NuevoProspectoComponent implements OnInit {
 
     this.getCatalogos();
 
+    // #region INICIALIZACION DE FORMULARIOS
     this.formGeneral = this.fb.group({
       // RazonSocial: this.fb.group({
       Empresa: ['', [Validators.required]],
@@ -275,15 +392,14 @@ export class NuevoProspectoComponent implements OnInit {
       LadaPais: ['52', [Validators.required, Validators.maxLength(3)]],
       Lada: ['', [Validators.required, Validators.maxLength(3)]],
       Numero: ['', [Validators.required, Validators.maxLength(8)]],
-      Extencion: [''],
+      Extension: [''],
       Principal: [false],
       Activo: [true]
     });
 
     this.formCorreos = this.fb.group({
       EmailDireccion: ['', [Validators.required]],
-      Email: ['', [Validators.required, Validators.email]],
-      Activo: [true]
+      Email: ['', [Validators.required, Validators.email]]
     });
 
     this.formContactos = this.fb.group({
@@ -296,9 +412,10 @@ export class NuevoProspectoComponent implements OnInit {
       LadaPais: ['52', [Validators.required, Validators.maxLength(3)]],
       Lada: ['', [Validators.required, Validators.maxLength(3)]],
       Numero: ['', [Validators.required, Validators.maxLength(8)]],
-      Extencion: [''],
+      Extension: [''],
       Email: ['', [Validators.required, Validators.email]],
     })
+    // #endregion
   }
 
   //#region Servicios GET
@@ -377,7 +494,8 @@ export class NuevoProspectoComponent implements OnInit {
 
   //#endregion
 
-  //#region Cancelar Acciones 
+  //#region Cancelar Acciones
+
   cancelarDireccion() {
     this.estados = null;
     this.municipios = null;
@@ -403,7 +521,6 @@ export class NuevoProspectoComponent implements OnInit {
     this.formCorreos.reset();
     this.addCorreo = false;
     this.elementC = null;
-    this.formCorreos.controls['Activo'].setValue(true);
   }
   cancelarContacto() {
     this.addContacto = false;
@@ -415,6 +532,7 @@ export class NuevoProspectoComponent implements OnInit {
 
   //#endregion
 
+  // #region BUSCAR POR CODIGO POSTAL
   showForCP($event: any) {
     // this.cp = this.formDirecciones.get('CodigoPostal').value as String;
     this.cp = $event.target.value;
@@ -449,6 +567,7 @@ export class NuevoProspectoComponent implements OnInit {
       }
     })
   }
+  //#endregion
 
   //#region FUNCIONES PARA DIRECCION
   AddDireccion() {
@@ -471,23 +590,82 @@ export class NuevoProspectoComponent implements OnInit {
       colonia: this.auxColonia,
       codigoPostal: this.formDirecciones.get('CodigoPostal').value,
       calle: this.formDirecciones.get('Calle').value,
-      exterior: this.formDirecciones.get('Exterior').value,
-      interior: this.formDirecciones.get('Interior').value || '',
+      numeroExterior: this.formDirecciones.get('Exterior').value,
+      numeroInterior: this.formDirecciones.get('Interior').value || '',
       referencia: this.formDirecciones.get('Referencia').value || 'SIN REFERENCIA',
       esPrincipal: this.formDirecciones.get('Principal').value,
-      activo: this.formDirecciones.get('Activo').value
+      activo: this.formDirecciones.get('Activo').value,
+      usuarioAlta: this.Usuario,
+      telefonos: [],
+      emails: [],
+      contactos: []
     }
     if (data.esPrincipal) {
       this.Principal = data.esPrincipal;
     }
-    this.cancelarDireccion();
+
     if (!this.EditDireccion) {
-      this.DireccionesNew.push(data);
-      this.idAuxD++;
+      var exist = this.DireccionesNew.find(element => {
+        if (element.calle == data.calle
+          && element.numeroExterior == data.numeroExterior
+          && element.numeroInterior == data.numeroInterior
+          && element.codigoPostal == data.codigoPostal) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      });
+      if (!exist) {
+        this.DireccionesNew.push(data);
+        this.idAuxD++;
+      }
+      else {
+        this.popToast('info', 'Direcicones', 'La dirección que intenta registrar ya existe.');
+        return;
+      }
+
     } else {
-      this.DireccionesNew[this.indexDireccion] = data;
-      this.EditDireccion = false;
+      var idDireccion = this.DireccionesNew[this.indexDireccion]['idAux'];
+      data.idAux = idDireccion;
+      var exist = this.DireccionesNew.find(element => {
+        if (element.calle == data.calle
+          && element.numeroExterior == data.numeroExterior
+          && element.numeroInterior == data.numeroInterior
+          && element.codigoPostal == data.codigoPostal
+          && element.idAux != idDireccion) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      });
+      if (!exist) {
+        this.DireccionesNew[this.indexDireccion] = data;
+        if (this.CorreosNew.length > 0) {
+          var EmailIndexUpdate = this.CorreosNew.findIndex(x => x.idDireccion == idDireccion)
+          this.CorreosNew[EmailIndexUpdate]['calle'] = data.calle;
+          this.onChangeTableC(this.config);
+        }
+        if (this.TelefonosNew.length > 0) {
+          var TelefonoIndexUpdate = this.TelefonosNew.findIndex(x => x.idDireccion == idDireccion)
+          this.TelefonosNew[TelefonoIndexUpdate]['calle'] = data.calle;
+          this.onChangeTableC(this.config);
+        }
+        if (this.ContactosNew.length > 0) {
+          var ContactoIndexUpdate = this.ContactosNew.findIndex(x => x.idDireccion == idDireccion)
+          this.ContactosNew[ContactoIndexUpdate]['calle'] = data.calle;
+        }
+        this.EditDireccion = false;
+      }
+      else {
+        this.popToast('info', 'Direcicones', 'La dirección que intenta actualizar ya existe.');
+        return;
+      }
     }
+
+
+    this.cancelarDireccion();
     this.onChangeTableD(this.config);
   }
 
@@ -502,22 +680,36 @@ export class NuevoProspectoComponent implements OnInit {
     this.BuscarCP(cp);
     this.formDirecciones.controls['Colonias'].setValue(this.DireccionesNew[this.indexDireccion]['coloniaId']);
     this.formDirecciones.controls['Calle'].setValue(this.DireccionesNew[this.indexDireccion]['calle']);
-    this.formDirecciones.controls['Exterior'].setValue(this.DireccionesNew[this.indexDireccion]['exterior']);
-    this.formDirecciones.controls['Interior'].setValue(this.DireccionesNew[this.indexDireccion]['interior']);
+    this.formDirecciones.controls['Exterior'].setValue(this.DireccionesNew[this.indexDireccion]['numeroExterior']);
+    this.formDirecciones.controls['Interior'].setValue(this.DireccionesNew[this.indexDireccion]['numeroInterior']);
     this.formDirecciones.controls['Referencia'].setValue(this.DireccionesNew[this.indexDireccion]['referencia']);
     this.formDirecciones.controls['Principal'].setValue(this.DireccionesNew[this.indexDireccion]['esPrincipal']);
     this.formDirecciones.controls['Activo'].setValue(this.DireccionesNew[this.indexDireccion]['activo']);
   }
 
   DtDireccion() {
+    var idDireccion = this.DireccionesNew[this.indexDireccion]['idAux'];
     this.DireccionesNew.splice(this.indexDireccion, 1);
+    if (this.CorreosNew.length > 0) {
+      var EmailIndexDelete = this.CorreosNew.findIndex(x => x.idDireccion == idDireccion)
+      this.CorreosNew.splice(EmailIndexDelete, 1);
+    }
+    if (this.TelefonosNew.length > 0) {
+      var TelefonoIndexDelete = this.TelefonosNew.findIndex(x => x.idDireccion == idDireccion)
+      this.TelefonosNew.splice(TelefonoIndexDelete, 1);
+    }
+    if (this.ContactosNew.length > 0) {
+      var ContactoIndexDelete = this.ContactosNew.findIndex(x => x.idDireccion == idDireccion)
+      this.ContactosNew.splice(ContactoIndexDelete, 1);
+    }
     this.onChangeTableD(this.config);
   }
   //#endregion
 
   //#region FUNCIONES PARA TELEFONOS
   AddTelefono() {
-    let idxDireccion = this.formTelefonos.get('TelDireccion').value;
+    let idDireccion = this.formTelefonos.get('TelDireccion').value;
+    let idxDireccion = this.DireccionesNew.findIndex(x => x.idAux == idDireccion)
     let tipoTelefonoId = this.formTelefonos.get('TipoTelefono').value;
     this.auxTipoTelefono = this.tipoTelefonos.filter(x => {
       if (x.id == tipoTelefonoId) {
@@ -525,33 +717,68 @@ export class NuevoProspectoComponent implements OnInit {
       }
     });
     if (tipoTelefonoId != 4) {
-      this.formTelefonos.controls['Extencion'].setValue('');
+      this.formTelefonos.controls['Extension'].setValue('');
     }
     let data = {
       idAux: this.idAuxT,
-      indexDireccion: idxDireccion,
+      idDireccion: idDireccion,
       calle: this.DireccionesNew[idxDireccion]['calle'],
       tTelefono: this.auxTipoTelefono[0].tipo,
       tipoTelefonoId: tipoTelefonoId,
       clavePais: this.formTelefonos.get('LadaPais').value,
       claveLada: this.formTelefonos.get('Lada').value || '',
-      extencion: this.formTelefonos.get('Extencion').value || '',
+      extension: this.formTelefonos.get('Extension').value || '',
       telefono: this.formTelefonos.get('Numero').value,
       activo: this.formTelefonos.get('Activo').value,
       esPrincipal: this.formTelefonos.get('Principal').value,
-      usuarioAlta: sessionStorage.getItem('clave'),
+      usuarioAlta: this.Usuario,
     }
     if (data.esPrincipal) {
       this.PrincipalT = data.esPrincipal;
     }
-    this.cancelarTelefono();
+
     if (!this.EditTelefono) {
-      this.TelefonosNew.push(data);
-      this.idAuxT++;
+      var exist = this.TelefonosNew.find(element => {
+        if(element.telefono == data.telefono
+          && element.extension == data.extension){
+          return true;
+        }else{
+          return false;
+        }
+      });
+      if(!exist){
+        this.TelefonosNew.push(data);
+        this.idAuxT++;
+      }
+      else{
+        this.popToast('info', 'Teléfonos', 'El Teléfono que intenta registrar ya existe.');
+        return;
+      }
+
     } else {
-      this.TelefonosNew[this.indexTelefonos] = data;
-      this.EditTelefono = false;
+      var idTelefono = this.TelefonosNew[this.indexTelefonos]['idAux'];
+      data.idAux = idTelefono;
+      var exist = this.TelefonosNew.find(element => {
+        if(element.telefono == data.telefono
+          && element.extension == data.extension
+          && element.idAux != idTelefono){
+          return true;
+        }else{
+          return false;
+        }
+      });
+      if(!exist){
+        this.TelefonosNew[this.indexTelefonos] = data;
+        this.EditTelefono = false;
+      }
+      else{
+        this.popToast('info', 'Teléfonos', 'El Teléfono que intenta actualizar ya existe.');
+        return;
+      }
+
     }
+
+    this.cancelarTelefono();
     this.onChangeTableT(this.config);
   }
 
@@ -566,7 +793,7 @@ export class NuevoProspectoComponent implements OnInit {
     this.formTelefonos.controls['LadaPais'].setValue(this.TelefonosNew[this.indexTelefonos]['clavePais']);
     this.formTelefonos.controls['Lada'].setValue(this.TelefonosNew[this.indexTelefonos]['claveLada']);
     this.formTelefonos.controls['Numero'].setValue(this.TelefonosNew[this.indexTelefonos]['telefono']);
-    this.formTelefonos.controls['Extencion'].setValue(this.TelefonosNew[this.indexTelefonos]['extencion']);
+    this.formTelefonos.controls['Extension'].setValue(this.TelefonosNew[this.indexTelefonos]['extension']);
     this.formTelefonos.controls['Principal'].setValue(this.TelefonosNew[this.indexTelefonos]['esPrincipal']);
     this.formTelefonos.controls['Activo'].setValue(this.TelefonosNew[this.indexTelefonos]['activo']);
   }
@@ -581,24 +808,59 @@ export class NuevoProspectoComponent implements OnInit {
 
   //#region FUNCIONES PARA EMAILS
   AddEmail() {
-    let idxDireccion = this.formCorreos.get('EmailDireccion').value;
+    let idDireccion = this.formCorreos.get('EmailDireccion').value;
+    let idxDireccion = this.DireccionesNew.findIndex(x => x.idAux == idDireccion)
     let data = {
       idAux: this.idAuxC,
-      indexDireccion: idxDireccion,
+      idDireccion: idDireccion,
       calle: this.DireccionesNew[idxDireccion]['calle'],
       email: this.formCorreos.get('Email').value,
-      activo: this.formCorreos.get('Activo').value,
       esPrincipal: false,
-      usuarioAlta: sessionStorage.getItem('clave'),
+      usuarioAlta: this.Usuario,
     }
-    this.cancelarCorreo();
+
     if (!this.EditCorreo) {
-      this.CorreosNew.push(data);
-      this.idAuxC++;
+      var exist = this.CorreosNew.find(element => {
+        if (element.email == data.email) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      });
+      if (!exist) {
+        this.CorreosNew.push(data);
+        this.idAuxC++;
+      }
+      else {
+        this.popToast('info', 'Correo Electrónico', 'El correo electrónico que intenta registrar ya existe.');
+        return;
+      }
+
     } else {
-      this.CorreosNew[this.indexCorreos] = data;
-      this.EditCorreo = false;
+      var idEmail = this.CorreosNew[this.indexCorreos]['idAux'];
+      data.idAux = idEmail;
+      var exist = this.CorreosNew.find(element => {
+        if (element.email == data.email
+          && element.idAux != idEmail) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      });
+      if (!exist) {
+        this.CorreosNew[this.indexCorreos] = data;
+        this.EditCorreo = false;
+      }
+      else {
+        this.popToast('info', 'Correo Electrónico', 'El correo electrónico que intenta actualizar ya existe.');
+        return;
+      }
+
     }
+
+    this.cancelarCorreo();
     this.onChangeTableC(this.config);
   }
 
@@ -607,7 +869,6 @@ export class NuevoProspectoComponent implements OnInit {
     this.EditCorreo = true;
     this.formCorreos.controls['EmailDireccion'].setValue(this.CorreosNew[this.indexCorreos]['indexDireccion']);
     this.formCorreos.controls['Email'].setValue(this.CorreosNew[this.indexCorreos]['email']);
-    this.formCorreos.controls['Activo'].setValue(this.CorreosNew[this.indexCorreos]['activo']);
   }
 
   DtEmail() {
@@ -622,7 +883,8 @@ export class NuevoProspectoComponent implements OnInit {
   AddContacto() {
     this.Emails = [];
     this.Telefonos = [];
-    let idxDireccion = this.formContactos.get('ContactoDireccion').value;
+    let idDireccion = this.formContactos.get('ContactoDireccion').value;
+    let idxDireccion = this.DireccionesNew.findIndex(x => x.idAux == idDireccion)
     let tipoTelefonoId = this.formContactos.get('TipoTelefono').value;
     this.auxTipoTelefono = this.tipoTelefonos.filter(x => {
       if (x.id == tipoTelefonoId) {
@@ -630,22 +892,25 @@ export class NuevoProspectoComponent implements OnInit {
       }
     });
     if (tipoTelefonoId != 4) {
-      this.formContactos.controls['Extencion'].setValue('');
+      this.formContactos.controls['Extension'].setValue('');
     }
 
     let email = {
       email: this.formContactos.get('Email').value,
-      UsuarioAlta: sessionStorage.getItem('clave'),
+      esPrincila: false,
+      UsuarioAlta: this.Usuario,
     }
 
     let telefono = {
       tipoTelefonos: this.auxTipoTelefono[0].tipo,
-      tippoTelefonoId: this.formContactos.get('TipoTelefono').value,
+      tipoTelefonoId: this.formContactos.get('TipoTelefono').value,
       clavePais: this.formContactos.get('LadaPais').value,
       claveLada: this.formContactos.get('Lada').value || '',
       telefono: this.formContactos.get('Numero').value,
-      extencion: this.formContactos.get('Extencion').value || '',
-      UsuarioAlta: sessionStorage.getItem('clave'),
+      extension: this.formContactos.get('Extension').value || '',
+      activo: true,
+      esPrincipal: true,
+      UsuarioAlta: this.Usuario,
     }
 
     this.Telefonos.push(telefono);
@@ -653,17 +918,19 @@ export class NuevoProspectoComponent implements OnInit {
 
     let data = {
       idAux: this.idAuxCn,
-      indexDireccion: idxDireccion,
+      idDireccion: idDireccion,
       calle: this.DireccionesNew[idxDireccion]['calle'],
       nombre: this.formContactos.get('Nombre').value,
       apellidoPaterno: this.formContactos.get('ApellidoPaterno').value,
       apellidoMaterno: this.formContactos.get('ApellidoMaterno').value || '',
+      tipoEntidadId: 3,
       nombreAux: this.formContactos.get('Nombre').value + ' ' + this.formContactos.get('ApellidoPaterno').value,
       tipoTelefonoAux: this.auxTipoTelefono[0].tipo,
       telefonoAux: this.formContactos.get('Numero').value,
       puesto: this.formContactos.get('Puesto').value,
+      usuarioAlta: this.Usuario,
       telefonos: this.Telefonos,
-      emailAux:  this.formContactos.get('Email').value,
+      emailAux: this.formContactos.get('Email').value,
       emails: this.Emails
     }
     this.cancelarContacto();
@@ -689,7 +956,7 @@ export class NuevoProspectoComponent implements OnInit {
     this.formContactos.controls['LadaPais'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['clavePais']);
     this.formContactos.controls['Lada'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['claveLada']);
     this.formContactos.controls['Numero'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['telefono']);
-    this.formContactos.controls['Extencion'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['extencion']);
+    this.formContactos.controls['Extension'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['extension']);
     this.formContactos.controls['Email'].setValue(this.ContactosNew[this.indexContacto]['emails'][0]['email']);
   }
 
@@ -701,7 +968,7 @@ export class NuevoProspectoComponent implements OnInit {
 
   //#endregion
 
-  //#region  FUNCION PARA CLASIFICACION 
+  //#region  FUNCION PARA CLASIFICACION
   public hoveringOver(value: number): void {
     this.overStar = value;
     this.percent = 100 * (value / this.maxRat);
@@ -720,7 +987,7 @@ export class NuevoProspectoComponent implements OnInit {
   //#region CONFIGURACION Y ACCIONES TABLA DE DIRECCIONES
   /* Configuracion / Acciones para la tabla de Direcciones  */
   public selectedD: boolean = false;
-  public registrosD: number;
+  public registrosD: number = 0;
   public rowAuxD = [];
   public elementD: any = null;
   /* Variables de Paginador Direcciones */
@@ -736,8 +1003,8 @@ export class NuevoProspectoComponent implements OnInit {
     { title: 'Municipio', className: 'text-info text-center', name: 'municipio', filtering: { filterString: '', placeholder: 'Municipio' } },
     { title: 'Colonia', className: 'text-info text-center', name: 'colonia', filtering: { filterString: '', placeholder: 'Colonia' } },
     { title: 'Calle', className: 'text-info text-center', name: 'calle', filtering: { filterString: '', placeholder: 'Calle' } },
-    { title: 'Exterior', className: 'text-info text-center', name: 'exterior', filtering: { filterString: '', placeholder: 'Exterior' } },
-    { title: 'Interior', className: 'text-info text-center', name: 'interior', filtering: { filterString: '', placeholder: 'Interior' } },
+    { title: 'Exterior', className: 'text-info text-center', name: 'numeroExterior', filtering: { filterString: '', placeholder: 'Exterior' } },
+    { title: 'Interior', className: 'text-info text-center', name: 'numeroInterior', filtering: { filterString: '', placeholder: 'Interior' } },
     { title: 'Referencia', className: 'text-info text-center', name: 'referencia', filtering: { filterString: '', placeholder: 'Referencia' } },
     { title: 'Principal', className: 'text-info text-center', name: 'esPrincipal', filtering: { filterString: '', placeholder: 'Principal' } },
     { title: 'Activo', className: 'text-info text-center', name: 'activo', filtering: { filterString: '', placeholder: 'Activo' } },
@@ -861,7 +1128,7 @@ export class NuevoProspectoComponent implements OnInit {
 
   //#region CONFIGURACION Y ACCIONES TABLA DE TELEFONOS
   public selectedT: boolean = false;
-  public registrosT: number;
+  public registrosT: number = 0;
   public rowAuxT = [];
   public elementT: any = null;
   /* Variables de Paginador Telefonos */
@@ -874,7 +1141,7 @@ export class NuevoProspectoComponent implements OnInit {
     { title: 'Direccion', sorting: 'desc', className: 'text-success text-center', name: 'calle', filtering: { filterString: '', placeholder: 'Dirección' } },
     { title: 'Tipo', sorting: 'desc', className: 'text-success text-center', name: 'tTelefono', filtering: { filterString: '', placeholder: 'Tipo' } },
     { title: 'Número', sorting: 'desc', className: 'text-success text-center', name: 'telefono', filtering: { filterString: '', placeholder: 'Número' } },
-    { title: 'Extención', className: 'text-info text-center', name: 'extencion', filtering: { filterString: '', placeholder: 'Extención' } },
+    { title: 'Extención', className: 'text-info text-center', name: 'extension', filtering: { filterString: '', placeholder: 'Extención' } },
     { title: 'Principal', className: 'text-info text-center', name: 'esPrincipal', filtering: { filterString: '', placeholder: 'Principal' } },
     { title: 'Activo', className: 'text-info text-center', name: 'activo', filtering: { filterString: '', placeholder: 'Activo' } },
   ];
@@ -998,7 +1265,7 @@ export class NuevoProspectoComponent implements OnInit {
 
   //#region CONFIGURACION Y ACCIONES TABLA DE EMAIL / CORREO ELECTRONICO
   public selectedC: boolean = false;
-  public registrosC: number;
+  public registrosC: number = 0;
   public rowAuxC = [];
   public elementC: any = null;
   /* Variables de Paginador Telefonos */
@@ -1010,7 +1277,7 @@ export class NuevoProspectoComponent implements OnInit {
   public columnsC: Array<any> = [
     { title: 'Direccion', sorting: 'desc', className: 'text-success text-center', name: 'calle', filtering: { filterString: '', placeholder: 'Dirección' } },
     { title: 'Email / Correo', sorting: 'desc', className: 'text-success text-center', name: 'email', filtering: { filterString: '', placeholder: 'Email / Correo' } },
-    { title: 'Activo', className: 'text-info text-center', name: 'activo', filtering: { filterString: '', placeholder: 'Activo' } },
+    // { title: 'Activo', className: 'text-info text-center', name: 'activo', filtering: { filterString: '', placeholder: 'Activo' } },
   ];
 
   public changePageC(page: any, data: Array<any> = this.CorreosNew): Array<any> {
@@ -1132,7 +1399,7 @@ export class NuevoProspectoComponent implements OnInit {
 
   //#region CONFIGURACION Y ACCIONES TABLA CONTACTOS
   public selectedCn: boolean = false;
-  public registrosCn: number;
+  public registrosCn: number = 0;
   public rowAuxCn = [];
   public elementCn: any = null;
   /* Variables de Paginador Telefonos */
@@ -1267,6 +1534,91 @@ export class NuevoProspectoComponent implements OnInit {
   }
 
   //#endregion
+
+
+  private GuardarProspecto() {
+    var DireccionEmail = [];
+    var DireccionTelefono = [];
+    var DireccionContacto = [];
+    this.DireccionesNew.forEach(element => {
+      var idAux = element.idAux;
+      this.TelefonosNew.forEach(function (telefono: any) {
+        if (idAux == telefono.idDireccion) {
+          let data = {
+            calle: element.calle,
+            numeroInterior: element.numeroInterior,
+            numeroExterior: element.numeroExterior,
+            codigoPostal: element.codigoPostal,
+            telefono: telefono.telefono,
+            extension: telefono.extension
+          }
+          DireccionTelefono.push(data);
+          console.log(DireccionTelefono)
+        }
+      });
+      this.CorreosNew.forEach(function (correo: any) {
+        if (idAux == correo.idDireccion) {
+          let data = {
+            calle: element.calle,
+            numeroInterior: element.numeroInterior,
+            numeroExterior: element.numeroExterior,
+            codigoPostal: element.codigoPostal,
+            email: correo.email,
+          }
+          DireccionEmail.push(data);
+          console.log(DireccionEmail)
+        }
+      });
+      this.ContactosNew.forEach(function (contacto: any) {
+        if (idAux == contacto.idDireccion) {
+          let data = {
+            calle: element.calle,
+            numeroInterior: element.numeroInterior,
+            numeroExterior: element.numeroExterior,
+            codigoPostal: element.codigoPostal,
+            nombre: contacto.nombre,
+            apellidoPaterno: contacto.apellidoPaterno,
+            apellidoMaterno: contacto.apellidoMaterno,
+            puesto: contacto.puesto
+          }
+          DireccionContacto.push(data);
+          console.log(DireccionContacto)
+        }
+      });
+    });
+
+
+    var prospecto = {
+      NombreComercial: this.formGeneral.get('Empresa').value,
+      Clasificacion: this.clf,
+      esCliete: 0,
+      GiroEmpresaId: this.formGeneral.get('Giros').value,
+      ActividadEmpresaId: this.formGeneral.get('Actividades').value,
+      NumeroEmpleados: this.formGeneral.get('NoEmpleados').value,
+      TamanoEmpresaId: this.formGeneral.get('Tamanio').value,
+      TipoEmpresaId: this.formGeneral.get('Tipo').value,
+      TipoBaseId: this.formGeneral.get('TipoBase').value,
+      Direcciones: this.DireccionesNew,
+      Telefonos: this.TelefonosNew,
+      Emails: this.CorreosNew,
+      Contactos: this.ContactosNew,
+      Usuario: this.Usuario,
+      DireccionEmail: DireccionEmail,
+      DireccionTelefono: DireccionTelefono,
+      DireccionContacto: DireccionContacto
+    }
+    this._ClienteService.addProspecto(prospecto).subscribe(element => {
+      if (element == 202) {
+        let msg = 'Se a Registrado Correctamente el Prospecto' + this.cp;
+        this.popToast('success', 'Prospectos', msg);
+      }
+      else {
+        let msg = 'Error al intentar registrar Correctamente el Prospecto' + this.cp;
+        this.popToast('error', 'Prospectos', msg);
+      }
+
+    })
+  }
 
 
   //#region  CREACION DE MENSAJES

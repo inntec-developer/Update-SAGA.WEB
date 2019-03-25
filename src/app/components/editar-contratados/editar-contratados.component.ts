@@ -71,15 +71,15 @@ export class EditarContratadosComponent implements OnInit {
                private toasterService: ToasterService,
               //  @Inject(MAT_DIALOG_DATA) public data: any,
               private pipe: DatePipe,
-              private btpostulaciones: ButtonsPostulacionesComponent 
-              ) { 
+              private btpostulaciones: ButtonsPostulacionesComponent
+              ) {
 
                 this.configCalendar.minDate = {year: 1960, month: 1, day: 1};
                  // days that don't belong to current month are not visible
                  this.configCalendar.outsideDays = 'hidden';
                }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.GetAreas();
     this.GetMedios();
 this.GetContratadosInfo();
@@ -232,7 +232,7 @@ GetContratadosInfo()
             row.editCURP = true;
             contador++;
           }
-         
+
           return;
       //  element.editCURP = true;
       }
@@ -286,27 +286,27 @@ updateValue(event, cell, rowIndex)
 UpdateData(row)
 {
 
-var data = { 
+var data = {
      candidatoId: row.candidatoId,
      curp: row.curp,
      rfc: row.rfc,
      nss: row.nss,
      generoId: row.generoId,
      fechaNacimiento: row.edad,
-     nombreCandidato: row.nombre, 
+     nombreCandidato: row.nombre,
      apellidoPaterno: row.apellidoPaterno,
-     apellidoMaterno: row.apellidoMaterno, 
-     tipoMediosId: row.fuenteReclutamientoId, 
+     apellidoMaterno: row.apellidoMaterno,
+     tipoMediosId: row.fuenteReclutamientoId,
      departamentoId: row.areaReclutamientoId,
-     requisicionId: row.requisicionId, 
-     paisNacimiento: row.paisNacimiento, 
+     requisicionId: row.requisicionId,
+     paisNacimiento: row.paisNacimiento,
      estadoNacimiento: row.estadoNacimiento,
      municipioNacimiento: row.municipioNacimiento,
      ReclutadorId: row.usuarioId
     }
 
 this.service.UpdateContratados(JSON.stringify(data)).subscribe(result => {
- 
+
   if(result == 201)
   {
     row.editCURP = true;
@@ -314,13 +314,13 @@ this.service.UpdateContratados(JSON.stringify(data)).subscribe(result => {
     this.btpostulaciones.dataContratados = data;
     this.btpostulaciones.actualizoContratados = true;
     this.btpostulaciones.closeModal(2)
-    this.popToast('success', 'Editar personal contratado', 'Los datos se actualizaron con éxito');
+    this.popToast('success', 'Editar personal cubierto', 'Los datos se actualizaron con éxito');
 
   }
   else
   {
     this.btpostulaciones.actualizoContratados = false;
-    this.popToast('error', 'Editar personal contratado', 'Ocurrió un error al intentar actualizar');
+    this.popToast('error', 'Editar personal cubierto', 'Ocurrió un error al intentar actualizar');
 
   }
 })
@@ -336,7 +336,7 @@ exportAsXLSX() {
     {
       element.classCURP = true;
       this.etiqueta = true;
-      this.popToast('error', 'Editar personal contratado', 'Debes editar CURP para poder descargar archivo');
+      this.popToast('error', 'Editar personal cubierto', 'Debes editar CURP para poder descargar archivo');
 
       return flag = false;
     }
@@ -368,7 +368,7 @@ exportAsXLSX() {
   {
     this.excelService.exportAsExcelFile(aux, 'Personal_Contratado');
   }
- 
+
 }
 
 

@@ -99,8 +99,9 @@ export class ApiConection {
   public static GetRepoteCandidatos = 'Candidatos/getRPTCandidatosVacante'
 
   /* Clientes / Prospectos */
-  public static GetProspectos = "Directorio/getProspectos";
-  public static GetClientes = "Directorio/getClientes";
+  public static GetProspectos = 'Directorio/getProspectos';
+  public static GetClientes = 'Directorio/getClientes';
+  public static AddProspectos= 'Directorio/addProspecto';
 
   /* Candidatos */
   public static filtropaises = 'Candidatos/get';
@@ -288,9 +289,17 @@ export class ApiConection {
     public static deletePreguntasFrecuentes = 'PreguntasFrecuente/delete'
 
 
-        /*Oficinas */
-        public static GetSucursal = 'Oficina/oficina'
-        public static AddOficina = 'Oficina/add'
-        public static alterOficina = 'Oficina/alter'
-        public static deleteOficina = 'Oficina/delete'
+    /*Oficinas */
+    public static GetSucursal = 'Oficina/oficina'
+    public static AddOficina = 'Oficina/add'
+    public static alterOficina = 'Oficina/alter'
+    public static deleteOficina = 'Oficina/delete'
+
+    /*Oficinas */
+    public static getCubiertaG = 'indicador/vcubierta'
+    public static getActivaG = 'indicador/vactiva'
+    public static getPorvencerG = 'indicador/vporvencer'
+    public static getVencidasG = 'indicador/vvencida'
+
+       
 }

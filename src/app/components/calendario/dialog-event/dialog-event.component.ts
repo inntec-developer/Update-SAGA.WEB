@@ -19,7 +19,7 @@ import { DatePipe } from '@angular/common';
   ]
 })
 export class DialogEventComponent implements OnInit {
-  // Variables de Formulario  
+  // Variables de Formulario
   public formEvent: FormGroup;
   public fb: FormBuilder;
   // Variables Globales
@@ -39,7 +39,7 @@ export class DialogEventComponent implements OnInit {
   //   horaInicio: null,
   //   horaFinal: null,
   //   descripcion: '',
-  // } 
+  // }
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -64,7 +64,6 @@ export class DialogEventComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
     var DateNow = new Date();
     this.minDate = DateNow;
     this.ColorPicker = '#4290ff'

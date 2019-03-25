@@ -8,7 +8,7 @@
         <ul class="list-group list-group-flush mb-2">
             <li class="list-group-item text-muted">EMPRESA: <span class="text-primary">{{data.cliente}}</span></li>
             <li class="list-group-item text-muted">PUESTO: <span class="text-primary">{{data.vBtra}} </span></li>
-            <li class="list-group-item text-muted"><span class="mr-1">FOLIO:</span><span class="text-primary mr-3">{{data.folio }}</span> 
+            <li class="list-group-item text-muted"><span class="mr-1">FOLIO:</span><span class="text-primary mr-3">{{data.folio }}</span>
               <span class="mr-1">NO:</span><span class="text-primary mr-3">{{data.vacantes }}</span>
               <span class="mr-1">SUELDO FINAL:</span><span class="text-primary mr-3">{{data.sueldoMaximo}}</span>
               <span class="mr-1">TOTAL:</span><span class="text-primary"> {{data.sueldoMaximo * data.vacantes}}</span></li>
@@ -36,7 +36,7 @@
                     <div class="input-group-append">
                       <span class="input-group-text">%</span>
                     </div>
-                  </div>               
+                  </div>
              </td>
              <td>
                 <div class="input-group input-group-sm mb-3">
@@ -44,19 +44,19 @@
                         <span class="input-group-text">$</span>
                       </div>
                     <input type="number" min="0" class="form-control" [(ngModel)]="monto" disabled>
-                 
-                  </div>               
+
+                  </div>
              </td>
            </tr>
            <tr>
-              <td>CONTRATADO</td>
+              <td>CUBIERTO</td>
               <td>
                  <div class="input-group input-group-sm mb-3">
                      <input type="number" min="0" class="form-control" [(ngModel)]="perContratado" disabled>
                      <div class="input-group-append">
                        <span class="input-group-text">%</span>
                      </div>
-                   </div>               
+                   </div>
               </td>
               <td>
                  <div class="input-group input-group-sm mb-3">
@@ -64,8 +64,8 @@
                          <span class="input-group-text">$</span>
                        </div>
                      <input type="number" min="0" class="form-control" [(ngModel)]="montoContratado" disabled>
-                  
-                   </div>               
+
+                   </div>
               </td>
             </tr>
          </tbody>

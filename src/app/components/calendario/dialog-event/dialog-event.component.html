@@ -49,11 +49,10 @@
           </section> -->
       <section *ngIf="!allDaySelected">
         <mat-form-field>
-          <input matInput placeholder="Hora Inicio" type="time" min="08:00" max="18:00" formControlName="HoraInicio"
-            step="600">
+          <input matInput placeholder="Hora Inicio" type="time" min="08:00" max="18:00" formControlName="HoraInicio" step="600" required="">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Hora Final" type="time" min="08:00" max="18:00" formControlName="HoraFin" step="600">
+          <input matInput placeholder="Hora Final" type="time" min="08:00" max="18:00" formControlName="HoraFin" step="600" required="">
         </mat-form-field>
       </section>
       <section>

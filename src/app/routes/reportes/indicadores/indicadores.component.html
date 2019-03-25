@@ -1,0 +1,53 @@
+
+<div class="content-heading">
+    <div>
+       Indicadores
+        <span class="text-sm d-none d-sm-block">informe de indicadores.</span>
+    </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+        <li class="breadcrumb-item"><a [routerLink]="['/home']" >Inicio</a></li>
+        <li class="breadcrumb-item active">Indicadores</li>
+    </ol>
+  </div>
+
+
+
+<div class="row">
+    <div class="col-xl-12">
+            <div class="col-xl-3 sombra " style="float: left;">
+                   
+                    <div class="form-group ">
+                            <app-grafica-vacante-cubierta  ></app-grafica-vacante-cubierta>
+                    </div>
+                </div>
+                <div class="col-xl-3 sombra" style="float: left;">
+                      
+                        <div class="form-group ">
+                               <app-grafica-vacante-activa></app-grafica-vacante-activa>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 sombra" style="float: left;">
+                               
+                                <div class="form-group ">
+                                       <app-grafica-vacante-porvenc></app-grafica-vacante-porvenc>
+                                </div>
+                            </div>
+                          
+                           <div class="col-xl-3 sombra" style="float: left;">
+                                       
+                                        <div class="form-group ">
+                                              <app-grafica-vacante-vencida></app-grafica-vacante-vencida>
+                                        </div>
+                                    </div>
+                   
+    </div>
+
+    <div class="col-xl-12 sombra" style="margin-top: 30px">
+                <app-grafica-resumen></app-grafica-resumen>
+    </div>
+  
+    
+</div>
+

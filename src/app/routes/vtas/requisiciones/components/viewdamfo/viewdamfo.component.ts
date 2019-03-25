@@ -9,6 +9,7 @@ import { CatalogosService } from '../../../../../service';
 import { DialogdamfoComponent } from '../dialogdamfo/dialogdamfo.component'
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../service/index';
+import { SettingsService } from '../../../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-viewdamfo',
@@ -39,6 +40,8 @@ export class ViewdamfoComponent implements OnInit {
   giroEmpresa: any;
   actividadEmpresa: any;
 
+  imprimir: boolean;
+
 
 
 
@@ -49,6 +52,7 @@ export class ViewdamfoComponent implements OnInit {
     private _Router: Router,
     private _Route: ActivatedRoute,
     private spinner:  NgxSpinnerService,
+    public settings: SettingsService,
   ) {
 
     }
@@ -108,25 +112,61 @@ export class ViewdamfoComponent implements OnInit {
     });
   }
 
-  print(): void {
-    let printContents, popupWin;
-    printContents = document.getElementById('content').innerHTML;
-    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
-    popupWin.document.open();
-    popupWin.document.write(`
-      <html>
-        <head>
-          <title>DAM-FO-290</title>
 
-        </head>
-       <body onload="window.print();window.close()">${printContents}</body>
-      </html>`
-    );
-    popupWin.document.close();
+  print(){
+    this.imprimir = true;
+    if(!this.settings.layout.isCollapsed){
+        this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
+    }
+    setTimeout(() => {
+      document.getElementById('content').style.marginLeft = "60px";
+      document.getElementById('content').style.marginTop = "25px";
+      window.print();
+    }, 500);
+    setTimeout(() => {
+      this.imprimir = false;
+      document.getElementById('content').style.marginTop = "0";
+      document.getElementById('content').style.marginLeft = "0";
+    }, 500);
+
   }
 
+  // print(){
+  //   var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+  //   mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+  //   mywindow.document.write('</head><body >');
+  //   mywindow.document.write('<h1>' + document.title  + '</h1>');
+  //   mywindow.document.write(document.getElementById('content').innerHTML);
+  //   mywindow.document.write('</body></html>');
+
+  //   mywindow.document.close(); // necessary for IE >= 10
+  //   mywindow.focus(); // necessary for IE >= 10*/
+
+  //   mywindow.print();
+  //   mywindow.close();
+
+  //   return true;
+  // }
+
+  // print(): void {
+  //   let printContents, popupWin;
+  //   printContents = document.getElementById('content').innerHTML;
+  //   popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+  //   popupWin.document.open();
+  //   popupWin.document.write(`
+  //     <html>
+  //       <head>
+  //         <title>DAM-FO-290</title>
+
+  //       </head>
+  //      <body onload="window.print();window.close()">${printContents}</body>
+  //     </html>`
+  //   );
+  //   popupWin.document.close();
+  // }
+
   // public downloadPDF(){
-  //   debugger;
   //   let doc = new jsPDF('p', 'pt', 'letter');
   //   let margins = {
   //     top: 80,

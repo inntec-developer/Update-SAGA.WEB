@@ -25,6 +25,7 @@ const httpOptions = {
 export class ClientesService {
   private UrlGetProspectos = ApiConection.ServiceUrl + ApiConection.GetProspectos;
   private UrlGetClientes = ApiConection.ServiceUrl + ApiConection.GetClientes;
+  private UrlAddProspecto = ApiConection.ServiceUrl + ApiConection.AddProspectos;
   constructor(private _httpClient: HttpClient) { }
 
   getProspectos() : Observable<any>{
@@ -33,6 +34,10 @@ export class ClientesService {
 
   getClientes() : Observable <any>{
     return this._httpClient.get(this.UrlGetClientes);
+  }
+
+  addProspecto(data: any) : Observable<any>{
+    return this._httpClient.post(this.UrlAddProspecto, data, httpOptions);
   }
 
 }

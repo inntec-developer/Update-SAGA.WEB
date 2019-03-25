@@ -18,6 +18,7 @@ import { FormControl } from '@angular/forms';
   providers:[ReportesService],
 })
 export class InformeComponent implements OnInit {
+ 
   public Empresas : any[];
   public Estatus : any[];
   public Usuario : any[];
@@ -81,6 +82,7 @@ export class InformeComponent implements OnInit {
     this.Servicio.GetUsuario().subscribe(item =>{
       this.Usuario = item;
     })
+    document.oncontextmenu=null
   }
 
   empresaChange(obj) {
@@ -108,7 +110,21 @@ export class InformeComponent implements OnInit {
     console.log(this.objstatus);
   }
 
- 
+ Ocultar(){
+  let tipo = document.getElementById('TipoReporte')['value'];
+  if(tipo > 4){
+    document.getElementById('divreclutador').classList.add('ocultar');
+    document.getElementById('divestatus').classList.add('ocultar');
+    document.getElementById('divcordinacion').classList.add('ocultar');
+    document.getElementById('divSolicitante').classList.add('ocultar');
+  }else{
+    document.getElementById('divreclutador').classList.remove('ocultar');
+    document.getElementById('divestatus').classList.remove('ocultar');
+    document.getElementById('divcordinacion').classList.remove('ocultar');
+    document.getElementById('divSolicitante').classList.remove('ocultar');
+  }
+
+ }
 
 
 

@@ -1,6 +1,6 @@
 <!-- <mat-dialog-content class="my-class">
 <div class="row">
-  <div class="col-lg-8">    
+  <div class="col-lg-8">
     <h3 class="text-success"  mat-dialog-title>EDITAR PERSONAL CONTRATADO</h3>
   </div>
   <div class="col-lg-4">
@@ -38,7 +38,7 @@
               <span (dblclick)="editing[rowIndex + '-curp'] = true" *ngIf="!editing[rowIndex + '-curp']">
                   {{row.curp | uppercase}}
               </span>
-       
+
               <input [(ngModel)]="row.curp" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'curp', rowIndex); row.classCURP=false;" *ngIf="editing[rowIndex + '-curp']" type="text" minlength="18" maxlength=18 [value]=row.curp >
               <span *ngIf="editing[rowIndex + '-curp']">
                 <small [ngClass]="row.curp.length < 18 ? 'text-danger' : 'text-success'">
@@ -52,7 +52,7 @@
               <span (dblclick)="editing[rowIndex + '-rfc'] = true" *ngIf="!editing[rowIndex + '-rfc']">
                   {{row.rfc | uppercase}}
               </span>
-       
+
               <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'rfc', rowIndex);" *ngIf="editing[rowIndex + '-rfc']" type="text" maxlength=13 [value]=row.rfc >
               <span *ngIf="editing[rowIndex + '-rfc']">
                 <small [ngClass]="row.rfc.length < 13 ? 'text-danger' : 'text-success'">
@@ -61,13 +61,13 @@
                  RFC debe tener 13 caracteres
                 </small>
               </span>
-             
+
           </td>
           <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
               <span (dblclick)="editing[rowIndex + '-nss'] = true" *ngIf="!editing[rowIndex + '-nss']">
                   {{row.nss | uppercase}}
               </span>
-       
+
               <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'nss', rowIndex);" *ngIf="editing[rowIndex + '-nss']" type="text" maxlength=11 [value]=row.nss >
               <span *ngIf="editing[rowIndex + '-nss']">
                 <small [ngClass]="row.nss.length < 11 ? 'text-danger' : 'text-success'">
@@ -76,14 +76,14 @@
                  NSS debe tener 11 caracteres
                 </small>
               </span>
-             
+
           </td>
           <td class="text-center">
 
               <span (dblclick)="editing[rowIndex + '-edad'] = true" *ngIf="!editing[rowIndex + '-edad']">
                   {{row.edad | date:'yyyy-MM-dd'}}
               </span>
-         
+
               <!-- <mat-form-field *ngIf="editing[rowIndex + '-edad']">
                   <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateChange)="updateValue($event, 'edad', rowIndex)">
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -166,7 +166,7 @@
               {{row.fuenteReclutamiento | uppercase}}
             </span>
 
-            
+
             <select *ngIf="editing[rowIndex + '-fuenteReclutamiento']" class="selectpicker form-control form-control-sm" (change)="updateValue($event, 'fuenteReclutamiento', rowIndex)">
               <optgroup *ngFor="let m of medios" label="{{m.nombre | uppercase}}">
                 <option *ngFor="let sub of m.medios" [value]="sub.tipoMediosId">{{sub.tipoNombre}}</option>
@@ -215,7 +215,7 @@
 
 <p class="text-warning" *ngIf="etiqueta">Es necesario completar CURP (con los 2 ultimos digitos validadores), RFC y NSS, </p>
 <div class="float-right">
-    
+
   <!-- <button class="btn btn-xs btn-labeled btn-outline-danger mb-2 margen" mat-dialog-close>
     <span class="btn-label">
         <i class="fa fa-times"></i>
@@ -248,7 +248,7 @@
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12">
           <alert type="info">
-              <strong>Oops!</strong> A&uacute;n no cuentas con candidatos contratados.
+              <strong>Oops!</strong> A&uacute;n no cuentas con candidatos cubiertos.
             </alert>
       </div>
     </div>
