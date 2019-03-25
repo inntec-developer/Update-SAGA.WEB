@@ -68,7 +68,7 @@ ng-scrollbar {
 button .badge {
   position: absolute;
   top: -6px;
-
+z-index: 9;
   font-size: .7em;
 }
 

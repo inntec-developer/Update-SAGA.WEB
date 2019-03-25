@@ -845,7 +845,8 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
             var idx = this.rows.findIndex(x => x.id == this.requi.id);
             this.rows[idx]['estatus'] = estatus;
             this.rows[idx]['estatusId'] = estatusId;
-            this.ValidarEstatus(estatusId)
+            this.ValidarEstatus(estatusId);
+            this.GetRequisicionesPausa();
             this.onChangeTable(this.config);
 
             this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
@@ -875,6 +876,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
       this.editarRequi = false;
       this.editarNR = false;
       this.GetCandidatosNR();
+      this.GetRequisicionesPausa();
       this.refreshTable();
     }
 

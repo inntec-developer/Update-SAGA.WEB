@@ -81,7 +81,7 @@
           [ngClass]="requisPausa.length == 0 ? 'btn btn-xs disable' : 'btn btn-xs btn-outline-warning'" container="body" placement="bottom"
           tooltip="Visualizar vacantes en pausa">
           <i class="fa fa-clock-o"></i>
-          <span class="badge badge-pill badge-warning mr-2">{{requisPausa.length}}</span>
+          <span *ngIf="requisPausa.length > 0" class="badge badge-pill badge-warning mr-2">{{requisPausa.length}}</span>
         </button>
         <!-- <button id='special' chkPrivilegiosButtons type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-warning'"
           (click)="reporte70=true;" container="body" placement="bottom" tooltip="Reporte 70">
