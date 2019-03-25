@@ -10,6 +10,8 @@ export class FilaTicketsComponent implements OnInit {
 
   @Input() cita: any = 2;
   @Input() verTiempo: boolean = false;
+  @Input() moduloId;
+
   fila = [];
 
   constructor(private _service: SistTicketsService) { 
@@ -22,10 +24,12 @@ export class FilaTicketsComponent implements OnInit {
 
   public GetFilaTickets()
   {
-    this._service.GetFilaTickets(this.cita).subscribe( data => {
+    this._service.GetFilaTickets(1, sessionStorage.getItem('id')).subscribe( data => {
 
         this.fila = data;
     })
   }
+
+  
 
 }

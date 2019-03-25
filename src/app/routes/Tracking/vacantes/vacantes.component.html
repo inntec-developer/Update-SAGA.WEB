@@ -1,0 +1,96 @@
+<div class="container-fluid">
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <h1>mocos</h1>
+      <div class="col">
+        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" [disabled]="!clearFilter" class="btn btn-xs btn-outline-success float-right mb-1 mr-1">
+           <em class="fa fa-eraser"></em>
+        </button>
+      </div>
+    </div>
+    <table class="table table-responsive mat-elevation-z8">
+      <thead>
+        <tr>
+          <th *ngFor="let column of columnsInfo" ngClass="{{column.className || ''}}">
+            {{column.title}}
+          </th>
+        </tr>
+        <tr>
+          <td *ngFor="let column of columnsInfo">
+            <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTableInfo(config)"
+              class="form-control form-control-sm" id="{{column.name}}">
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+          [disabled]="disabled">
+          <div>
+            <tr *ngFor="let row of rowsInfo">
+              <td class="text-center"> {{row.folio}}</td>
+              <td class="text-center"><span *ngIf="row.vBtra.length < 10 else toLengthvBtra" >{{row.vBtra | uppercase}}</span>
+                  <ng-template #toLengthvBtra>
+                      <small placement="bottom" tooltip="{{row.vBtra | uppercase}}" container='body'>
+                      {{row.vBtra | slice:0:8 | uppercase }} ...
+                      </small>
+                    </ng-template>
+              </td>
+              <!-- <td class="text-center"> {{row.cliente | uppercase}}</td> -->
+              <td class="text-center"> {{row.fch_limite | date:'dd/MM/yyyy'}} </td>
+              <td class="text-center">
+                <small *ngIf="row.estatus.length < 15 else toLength" class="badge badge-pill badge-primary" [class.badge-warning]="row.estatusId  === 4"
+                  [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20"
+                  [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
+                  {{row.estatus | uppercase}}
+                </small>
+                <ng-template #toLength>
+                  <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
+                    [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20" [class.badge-success]="row.estatusId  === 7"
+                    [class.badge-danger]="row.estatusId  === 8" placement="bottom" tooltip="{{row.estatus | uppercase}}" container='body'>
+                  {{row.estatus | slice:0:9 | uppercase }} ...
+                  </small>
+                </ng-template>
+              </td>
+              <td class="text-center">
+                <small class="badge badge-pill badge-primary" [class.badge-warning]="row.vacantes > 0"> {{row.vacantes}}</small>
+              </td>
+              <td class="text-center">
+                <small class="badge badge-pill badge-primary" [class.badge-success]="row.porcentaje > 0"> {{row.porcentaje}} %</small>
+              </td>
+              <td class="text-center">
+                <small class="badge badge-pill badge-primary" [class.badge-warning]="row.postulados > 0">{{row.postulados}}</small>
+              </td>
+              <td class="text-center">
+                <small class="badge badge-pill badge-primary" [class.badge-warning]="row.entrevista > 0">{{row.entrevista}}</small>
+              </td>
+              <td class="text-center">
+                <small class="badge badge-pill badge-primary" [class.badge-warning]="row.abandono > 0">{{row.abandono}}</small>
+              </td>
+              <td class="text-center">
+                <small class="badge badge-pill badge-primary" [class.badge-warning]="row.descartados > 0">{{row.descartados}}</small>
+              </td>
+              <td class="text-center">
+                <small class="badge badge-pill badge-primary" [class.badge-warning]="row.enviados > 0">{{row.enviados}}</small>
+              </td>
+              <td class="text-center">
+                <small class="badge badge-pill badge-primary" [class.badge-warning]="row.rechazados > 0">{{row.rechazados}}</small>
+              </td>
+              <td class="text-center">
+                <small class="badge badge-pill badge-primary" [class.badge-success]="row.contratados > 0">{{row.contratados}}</small>
+              </td>
+            </tr>
+          </div>
+        </ng-scrollbar>
+      </tbody>
+    </table>
+    <div class="p-1 bg-light mt-2 clearfix">
+      <pagination *ngIf="config.paging" class="pagination-sm float-left mt-2" [(ngModel)]="pageInfo" [totalItems]="lengthInfo"
+        [itemsPerPage]="itemsPerPageInfo" [maxSize]="maxSizeInfo" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTableInfo(config, $event)"
+        (numPages)="numPagesInfo = $event">
+      </pagination>
+      <pre *ngIf="config.paging" class="text-muted font-weight-bold mt-3 float-right">P&aacute;gina: {{pageInfo}} / {{numPagesInfo}}  Total Registros: {{rowsInfo.length}}</pre>
+    </div>
+  </div>
+</div>
+</div>
