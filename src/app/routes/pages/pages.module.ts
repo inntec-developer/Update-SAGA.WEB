@@ -1,5 +1,5 @@
 import { VacantesComponent } from './../Tracking/vacantes/vacantes.component';
-
+import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MatPaginatorIntl, MatTableModule } from '@angular/material';
@@ -58,6 +58,10 @@ import { TrackingVacantesComponent } from './tracking-vacantes/tracking-vacantes
         VacantesComponent,
         TrackingVacantesComponent
     ],
+    providers: [
+        { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
+        { provide: PaginationConfig, useValue: getSpanishPaginatorBtp()}
+        ],
     exports: [
         RouterModule,
         LoginComponent,

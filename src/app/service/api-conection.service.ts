@@ -1,7 +1,7 @@
 export class ApiConection {
   // public static ServiceUrlWeb = 'http://192.168.8.124:444/'
-  public static ServiceUrlWeb = 'http://localhost:4200/'
-
+  public static ServiceUrlWeb = 'http://localhost:4200/';
+  public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
   /*Servicio de purbeas locales*/
   //public static ServiceUrl = 'http://192.168.8.124:333/api/';
   public static ServiceUrl = 'http://localhost:33333/api/';
@@ -303,4 +303,6 @@ export class ApiConection {
     public static getResumenG = 'indicador/resumen'
     public static getRadialG = 'indicador/radial'
        
+
+
 }
