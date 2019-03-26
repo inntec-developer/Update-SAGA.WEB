@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
+import { ComponentsService } from './../../../service/Components/components.service';
+
 
 @Component({
   selector: 'app-grafica-vacante-vencida',
@@ -12,23 +14,31 @@ export class GraficaVacanteVencidaComponent implements OnInit {
   Chart: Chart;
   Data: any;
   private UsuarioId: any;
+  private Vencidas:number;
 
-  constructor() { }
+  constructor(private service: ComponentsService) { }
 
   ngOnInit() {
 
     this.UsuarioId = sessionStorage.getItem('id');
     // Chart.defaults.scale.ticks.beginAtZero = true;
     document.oncontextmenu=null
+
+    this.service.getVVencida(this.UsuarioId).subscribe(item =>{
+
+   
+    this.Vencidas = item['vencidas'];
+      let total = item['total'];
+
     this.Data = {
       datasets: [{
-        backgroundColor: ['#0FFF3C', '#FF4B4B'],
-        data: [10, 3]
+        backgroundColor: ['#FF8F35', '#FF4B4B'],
+        data: [total, this.Vencidas]
       }],
       // These labels appear in the legend and in the tooltips when hovering different arcs
       labels: [
-        'Cubiertas',
-        'No Cubiertas',
+        'Total de vacantes',
+        'Vacantes Vencidas',
       ]
     }
     this.Chart = new Chart('canvas4', {
@@ -36,9 +46,19 @@ export class GraficaVacanteVencidaComponent implements OnInit {
       title: { text: 'Seguimiento de Vacantes' },
       data: this.Data,
       options: {
-       
+        legend: {
+          position: 'right',
+          display: true,
+          labels:{
+            fontSize: 9,
+            boxWidth: 10,
+            usePointStyle: true,
+            padding: 3
+          }
+        },
       }
     });
+  });
 
 
   }

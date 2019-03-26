@@ -19,37 +19,54 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
   Chart: Chart;
   Data: any;
   private UsuarioId: any;
-  private ShowModal: boolean;
-  private EstadoVacante: string;
+
   private NumeroVacantes: number;
   ngOnInit() {
     this.UsuarioId = sessionStorage.getItem('id');
+    this._ServiceComponente.getVCubierta(this.UsuarioId).subscribe(result => {
+      
+      let cubiertas = result['cubiertas'];
+      let parcialmente = result['parcialmente'];
+      let medios = result['medios'];
+    
     // Chart.defaults.scale.ticks.beginAtZero = true;
     document.oncontextmenu=null
-    this.Data = {
-      datasets: [{
-        backgroundColor: ['#00FF00', '#FF3300'],
-        data: [10, 3]
-      }],
-      // These labels appear in the legend and in the tooltips when hovering different arcs
-      labels: [
-        'Cubiertas',
-        'No Cubiertas',
-      ]
-    }
+  this.NumeroVacantes = result['total'];
+ 
+  this.Data = {
+    datasets: [{
+      backgroundColor: ['#3e95cd', '#8e5ea2','#e8c3b9'],
+      data: [cubiertas,parcialmente,medios]
+    }],
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+      'Cubiertas',
+      'Cubierta parcialmente',
+      'Cubierta por medios'
+    ]
+  }
+
     this.Chart = new Chart('canvas', {
       type: 'pie',
       title: { text: 'Seguimiento de Vacantes' },
       data: this.Data,
       options: {
-       
+        legend: {
+          position: 'right',
+          display: true,
+          labels:{
+            fontSize: 9,
+            boxWidth: 10,
+            usePointStyle: true,
+            padding: 3
+          }
+        },
       }
     });
 
-    
-   
+  });
+  
+
+
   }
-
-
-
 }

@@ -301,6 +301,6 @@ export class ApiConection {
     public static getPorvencerG = 'indicador/vporvencer'
     public static getVencidasG = 'indicador/vvencida'
     public static getResumenG = 'indicador/resumen'
-
+    public static getRadialG = 'indicador/radial'
        
 }

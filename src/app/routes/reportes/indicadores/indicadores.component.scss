@@ -12,3 +12,12 @@
   -moz-box-shadow: 10px 10px 40px -8px rgba(0,0,0,0.75);
   box-shadow: 10px 10px 40px -8px rgba(0,0,0,0.75);
  }
+
+
+ .centrar{
+  text-align: center;
+  position: relative;
+  display: grid;
+  z-index: 1000;
+  margin-top: 34%;
+ }
