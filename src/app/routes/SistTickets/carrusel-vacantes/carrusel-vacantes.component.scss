@@ -16,3 +16,27 @@
 {
     color:rgb(83,83,83) !important;
 }
+
+.card
+{
+    width: 600px !important;
+    height: 427px;
+    
+}
+.carousel-caption
+{
+    width: 600px;
+    right: 0%;
+    top: 90%;
+    bottom: 0px;
+    left: 0;
+    z-index: 10;
+    padding-top: 10px;
+    padding-bottom: 0px;
+
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+
+    background-color: black !important;
+}

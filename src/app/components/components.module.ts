@@ -277,7 +277,8 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     GraficaVacanteActivaComponent,
     GraficaVacantePorvencComponent,
     GraficaVacanteVencidaComponent,
-    GraficaResumenComponent
+    GraficaResumenComponent,
+    DlgRevisarExamenesComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -353,13 +354,14 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     GraficaVacanteActivaComponent,
     GraficaVacantePorvencComponent,
     GraficaVacanteVencidaComponent,
-    GraficaResumenComponent
+    GraficaResumenComponent,
+    DlgRevisarExamenesComponent
   ],
   providers: [ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
     { provide: PaginationConfig, useValue: getSpanishPaginatorBtp() },
     ToasterService
   ],
-  entryComponents: [DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent]
+  entryComponents: [DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent]
 })
 export class ComponentsModule { }

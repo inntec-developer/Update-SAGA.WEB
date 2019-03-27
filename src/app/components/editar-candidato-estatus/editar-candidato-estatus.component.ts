@@ -70,7 +70,7 @@ export class EditarCandidatoEstatusComponent implements OnInit {
 
       console.log(row)
 
-      swal("Deleted!", "Your imaginary file has been deleted.", "success");
+  
 
       this.rowAux = [];
       this.estatusAux = 0;

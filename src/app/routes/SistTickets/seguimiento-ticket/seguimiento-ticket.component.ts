@@ -47,7 +47,8 @@ apartar = true;
   examenesCandidato = { 'tecnicos': [], 'psicometricos': [] };
   exaTecnico: boolean = false;
   exaPsico: boolean = false;
-
+  minutosEnAtencion: number = 0;
+  minutosEnEspera: number = 0;
   constructor( private _service: SistTicketsService, 
       private _Router: Router, private dialog: MatDialog, 
       private _serviceCandidato: InfoCandidatoService,  
@@ -56,8 +57,7 @@ apartar = true;
       private toasterService: ToasterService,
       private service: RequisicionesService, 
     private _serviceExamen: ExamenesService) { 
-        setInterval(() => this.timeWait(), 1000);
-    
+        setInterval(() => this.timeWait(), 60000);    
   }
   
   Reinciar()
@@ -128,6 +128,8 @@ apartar = true;
 
     this._service.GetTicketPrioridad(sessionStorage.getItem('id'), sessionStorage.getItem('moduloId')).subscribe(data => {
      this.GetTicket(data);
+     setInterval(() => this.minutosEnAtencion+=1, 60000);
+     this.GetFilaTickets();
     });
    
   }
@@ -137,6 +139,7 @@ apartar = true;
     this._service.UpdateStatusTicket(ticketId, estatus, sessionStorage.getItem('moduloId')).subscribe(data => {
       //this.GetTicket(ticketId)
       this.Reinciar();
+      this.minutosEnAtencion = 0;
     });
   }
 
@@ -354,12 +357,12 @@ apartar = true;
       this.examenesCandidato.tecnicos = exa[0];
       this.examenesCandidato.psicometricos = exa[1];
 
-      if(this.examenesCandidato.tecnicos[0].resultado > 0)
+      if(this.examenesCandidato.tecnicos[0].resultado > 0 && this.examenesCandidato.tecnicos[0].requisicionId == this.ticket[0].requisicionId)
       {
         this.exaTecnico = true;
       }
 
-      if(this.examenesCandidato.psicometricos[0].resultado != "SIN RESULTADO")
+      if(this.examenesCandidato.psicometricos[0].resultado != "SIN RESULTADO" && this.examenesCandidato.psicometricos[0].requisicionId == this.ticket[0].requisicionId)
       {
         this.exaPsico = true;
       }
@@ -374,11 +377,17 @@ apartar = true;
     let d = new Date();
     let s = d.getSeconds() * 6;
     let m = d.getMinutes();
+  
+
+  }
+
+  MinutosEnEspera()
+  {
     if(this.fila.length > 0)
     {
+      this.minutosEnEspera += 1; 
       this.fila.forEach(e => {
-        var mocos = new Date(e.fch_Creacion);
-        e.te = m + mocos.getUTCMinutes()
+        e.te = this.minutosEnEspera;
       })
     }
 

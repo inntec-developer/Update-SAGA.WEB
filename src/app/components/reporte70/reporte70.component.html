@@ -40,10 +40,14 @@
                   </td>
                   <td width="3.2%"> {{row.fch_Solicitud | date:'dd/MM/yyyy'}}</td>
                   <td class="text-left"> {{row.cliente }}</td>
-                  <td width="5%" class="text-left"> {{row.vBtra}}</td>
+                  <td width="5%" class="text-left"> {{row.vBtra | uppercase}}</td>
                   <td class="text-left"> {{row.sueldoMaximo | currency: $}}</td>
-                  <td class="text-left"> {{row.estado }}</td>
-                  <td> {{row.domicilio_trabajo}}</td>
+                  <td class="text-left"> {{row.estado | uppercase}}</td>
+                  <td><small *ngIf="row.domicilio_trabajo.length < 10 else toLengthDir" >{{row.domicilio_trabajo}}</small>
+                    <ng-template #toLengthDir>
+                      <small placement="bottom" tooltip="{{row.domicilio_trabajo | uppercase}}" container='body'> {{row.domicilio_trabajo | slice:0:10 | uppercase }} ...</small>
+                    </ng-template>
+                  </td>
                   <td>
                     <ng-template #popTemplate>
                       <div class="card">
@@ -167,8 +171,8 @@
                   </td>
                   <td class="text-center">
                     <small class="badge badge-pill badge-info" *ngIf="row.comentarios_solicitante.length == 0">0</small>
-                    <small class="badge badge-pill badge-success" *ngIf="row.comentarios_solicitante.length > 0" [popover]="popTemplateComenSol" #popS="bs-popover" [outsideClick]="true"
-                      placement="left" container="body">{{row.comentarios_solicitante.length}}</small>
+                    <small class="badge badge-pill badge-warning" *ngIf="row.comentarios_solicitante.length > 0" [popover]="popTemplateComenSol" #popS="bs-popover" [outsideClick]="true"
+                      placement="left" container="body"><i class="fa fa-commenting-o" aria-hidden="true"></i></small>
                     <ng-template #popTemplateComenSol>
                       <div class="card">
                         <div class="card-body" *ngFor="let r of row.comentarios_solicitante">
@@ -180,8 +184,8 @@
                   </td>
                   <td class="text-center">
                     <span class="badge badge-pill badge-info" *ngIf="row.comentarios_reclutador.length == 0">0</span>
-                    <small class="badge badge-pill badge-success" *ngIf="row.comentarios_reclutador.length > 0" [popover]="popTemplateComenRecl" #pop="bs-popover" [outsideClick]="true"
-                      placement="left" container="body">{{row.comentarios_reclutador.length}}</small>
+                    <small class="badge badge-pill badge-warning" *ngIf="row.comentarios_reclutador.length > 0" [popover]="popTemplateComenRecl" #pop="bs-popover" [outsideClick]="true"
+                      placement="left" container="body"><i class="fa fa-commenting-o" aria-hidden="true"></i></small>
                     <ng-template #popTemplateComenRecl>
                       <div class="card">
                         <div class="card-body" *ngFor="let r of row.comentarios_reclutador">
@@ -202,8 +206,8 @@
                   <td> {{row.coordinador}}</td>
                   <td class="text-center">
                     <span class="badge badge-pill badge-info" *ngIf="row.comentarios_coord.length == 0">0</span>
-                    <small class="badge badge-pill badge-success" *ngIf="row.comentarios_coord.length > 0" [popover]="popTemplateComenCoord" #popC="bs-popover" [outsideClick]="true" placement="left"
-                      container="body">{{row.comentarios_coord.length}}</small>
+                    <small role="button" class="badge badge-pill badge-warning" *ngIf="row.comentarios_coord.length > 0" [popover]="popTemplateComenCoord" #popC="bs-popover" [outsideClick]="true" placement="left"
+                      container="body"><i class="fa fa-commenting-o" aria-hidden="true"></i></small>
                     
                       <ng-template #popTemplateComenCoord>
                         <div class="card">

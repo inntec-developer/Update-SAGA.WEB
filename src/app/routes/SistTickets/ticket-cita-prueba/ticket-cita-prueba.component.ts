@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
 import { RequisicionesService } from '../../../service';
-
+const swal = require('sweetalert');
 @Component({
   selector: 'app-ticket-cita-prueba',
   templateUrl: './ticket-cita-prueba.component.html',
@@ -22,6 +22,7 @@ num = '';
   {
     this._service.GetTicketConCita(this.folio).subscribe(data => {
       this.num = data;
+      swal("¡Ticket Impreso!", this.num, "success");
     })
 
   }

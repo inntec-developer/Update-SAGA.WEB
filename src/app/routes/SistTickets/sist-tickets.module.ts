@@ -115,9 +115,9 @@ const routes: Routes = [
     CarruselArteVacantesComponent,
     DlgAsignarModuloComponent,
     RevisionExamenesComponent,
-    DlgRevisarExamenesComponent,
+    // DlgRevisarExamenesComponent,
     TicketCitaPruebaComponent,
   ],
-  entryComponents: [DlgRevisarExamenesComponent]
+  // entryComponents: [DlgRevisarExamenesComponent]
 })
 export class SistTicketsModule { }
