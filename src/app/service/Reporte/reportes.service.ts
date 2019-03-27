@@ -22,8 +22,9 @@ export class ReportesService {
   private UrlUsuario = ApiConection.ServiceUrl+ApiConection.GetUsuario;
   private UrlEstatu = ApiConection.ServiceUrl+ApiConection.GetEstatusRep;
   private UrlOficina = ApiConection.ServiceUrl+ApiConection.GetOficinas;
+  private UrlRadial = ApiConection.ServiceUrl+ApiConection.getRadialG;
 
-  constructor(private http: Http) {  }
+  constructor(private http: Http,private _httpClient : HttpClient) {  }
   
   private handleError(error: any) {
     console.log('sever error:', error);
@@ -33,6 +34,10 @@ export class ReportesService {
     return Observable.throw(error || 'backend server error');
 }
 
+getVRadial(data: any) : Observable<any>{
+    let params = new HttpParams().set('usuario', data);
+    return this._httpClient.get(this.UrlRadial, {params: params});
+  }
 
 
 GetInforme(clave:string,ofc:string,tipo:string,fini:string,ffin:string,emp:string,
