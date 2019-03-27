@@ -1,54 +1,7 @@
-import { ColorPickerModule, ColorPickerService } from 'ngx-color-picker';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { INgxSelectOptions, NgxSelectModule } from 'ngx-select-ex'
-import {
-  MatAutocompleteModule,
-  MatButtonModule,
-  MatButtonToggleModule,
-  MatCardModule,
-  MatCheckboxModule,
-  MatChipsModule,
-  MatDatepickerModule,
-  MatDialogModule,
-  MatDividerModule,
-  MatExpansionModule,
-  MatGridListModule,
-  MatIconModule,
-  MatInputModule,
-  MatListModule,
-  MatMenuModule,
-  MatNativeDateModule,
-  MatOptionModule,
-  MatPaginatorIntl,
-  MatPaginatorModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatRadioModule,
-  MatRippleModule,
-  MatSelectModule,
-  MatSidenavModule,
-  MatSlideToggleModule,
-  MatSliderModule,
-  MatSnackBarModule,
-  MatSortModule,
-  MatStepperModule,
-  MatTableModule,
-  MatTabsModule,
-  MatToolbarModule,
-  MatTooltipModule
-} from '@angular/material';
-import { ModalModule, PopoverModule, TooltipModule } from 'ngx-bootstrap';
-import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
-import { ToasterModule, ToasterService } from 'angular2-toaster';
-import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../core/translator/config-paginator/config-paginator.component';
-
-import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { ActividadesComponent } from './tablas/actividades/actividades.component';
 import { ActividadesReclutadorComponent } from './calendario/actividades-reclutador/actividades-reclutador.component';
-import { AlertModule } from 'ngx-bootstrap';
 import { AsignarRequisicionComponent } from './asignar-requisicion/asignar-requisicion.component';
 import { AsignarRequisicionLiderComponent } from './asignar-requisicion-lider/asignar-requisicion-lider.component';
-import { BsDatepickerModule } from 'ngx-bootstrap';
 import { BusquedaCandidatosComponent } from './busqueda-candidatos/busqueda-candidatos.component';
 import { ButtonAcceptComponent } from './buttons/button-accept/button-accept.component';
 import { ButtonAddComponent } from './buttons/button-add/button-add.component';
@@ -72,11 +25,11 @@ import { ButtonSendComponent } from './buttons/button-send/button-send.component
 import { ButtonViewComponent } from './buttons/button-view/button-view.component';
 import { ButtonsPostulacionesComponent } from './buttons-postulaciones/buttons-postulaciones.component';
 import { CalendarioCandidatoComponent } from './calendario/calendario-candidato/calendario-candidato.component';
+import { CandidatosEnProcesoComponent } from './candidatos-en-proceso/candidatos-en-proceso.component';
 import { CardVacanteComponent } from './card-vacantes/card-vacante.component';
 import { ClockComponent } from './clock/clock.component';
 import { ComentarioCandidatoComponent } from './comentario-candidato/comentario-candidato.component';
 import { ComentarioVacanteComponent } from './comentario-vacante/comentario-vacante.component';
-import { CommonModule } from '@angular/common';
 import { DetailVacantesComponent } from './detail-vacantes/detail-vacantes.component';
 import { DialogEditHorarioComponent } from './tablas/dt-horarios/dialog-edit-horario/dialog-edit-horario.component';
 import { DialogEventComponent } from './calendario/dialog-event/dialog-event.component';
@@ -87,7 +40,6 @@ import { DlgAsignarPerfilComponent } from './dlg-asignar-perfil/dlg-asignar-perf
 import { DlgComentariosNRComponent } from './dlg-comentarios-nr/dlg-comentarios-nr.component';
 import { DlgFacturaPuroComponent } from './dlg-factura-puro/dlg-factura-puro.component';
 import { DlgRequisicionPausaComponent } from './dlg-requisicion-pausa/dlg-requisicion-pausa.component';
-import { DlgRevisarExamenesComponent } from './dlg-revisar-examenes/dlg-revisar-examenes.component';
 import { DocumentosClienteComponent } from './tablas/documentos-cliente/documentos-cliente.component';
 import { DocumentosDamsaComponent } from './tablas/documentos-damsa/documentos-damsa.component';
 import { DtBeneficiosComponent } from './tablas/dt-beneficios/dt-beneficios.component';
@@ -103,7 +55,6 @@ import { DtMisCandidatosComponent } from './dt-mis-candidatos/dt-mis-candidatos.
 import { DtPsicometriasClienteComponent } from './tablas/dt-psicometrias-cliente/dt-psicometrias-cliente.component';
 import { DtPsicometriasDamsaComponent } from './tablas/dt-psicometrias-damsa/dt-psicometrias-damsa.component';
 import { DtRequisicionComponent } from './tablas/dt-requisicion/dt-requisicion.component';
-import { DtRequisicionReclPuroComponent } from './tablas/dt-requisicion-recl-puro/dt-requisicion-recl-puro.component';
 import { DtRutasCamionRequiComponent } from './tablas/dt-rutas-camion-requi/dt-rutas-camion-requi.component';
 import { DtTelefonosComponent } from './tablas/dt-telefonos/dt-telefonos.component';
 import { DtVacantesGraficaPAComponent } from './Graficas/grafica-vacantes-pie/dt-vacantes-grafica-pa/dt-vacantes-grafica-pa.component';
@@ -111,15 +62,15 @@ import { EditarCandidatoEstatusComponent } from './editar-candidato-estatus/edit
 import { EditarContratadosComponent } from './editar-contratados/editar-contratados.component';
 import { EditarRequiEstatusComponent } from './editar-requi-estatus/editar-requi-estatus.component';
 import { FileManagerComponent } from './file-manager/file-manager.component';
+import { GraficaResumenComponent } from './Graficas/grafica-resumen/grafica-resumen.component';
+import { GraficaVacanteActivaComponent } from './Graficas/grafica-vacante-activa/grafica-vacante-activa.component';
+import { GraficaVacanteCubiertaComponent } from './Graficas/grafica-vacante-cubierta/grafica-vacante-cubierta.component';
+import { GraficaVacantePorvencComponent } from './Graficas/grafica-vacante-porvenc/grafica-vacante-porvenc.component';
+import { GraficaVacanteVencidaComponent } from './Graficas/grafica-vacante-vencida/grafica-vacante-vencida.component';
 import { GraficaVacantesPieComponent } from './Graficas/grafica-vacantes-pie/grafica-vacantes-pie.component';
 import { InfoCandidatoComponent } from './info-candidato/info-candidato.component';
 import { InfoVacanteComponent } from './info-vacante/info-vacante.component';
-import {ChartsModule as Ng2ChartsModule} from 'ng2-charts/ng2-charts'
-import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
-import { NgScrollbarModule } from 'ngx-scrollbar';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { NgxSpinnerModule } from '../../../node_modules/ngx-spinner';
 import { ObservacionesComponent } from './tablas/observaciones/observaciones.component';
 import { PrestacionesClienteComponent } from './tablas/prestaciones-cliente/prestaciones-cliente.component';
 import { PrestacionesLeyComponent } from './tablas/prestaciones-ley/prestaciones-ley.component';
@@ -127,76 +78,11 @@ import { ProcesosComponent } from './tablas/procesos/procesos.component';
 import { Reporte70Component } from './reporte70/reporte70.component';
 import { ReporteCandidatosComponent } from './tablas/reporte-candidatos/reporte-candidatos.component';
 import { RequisicionNuevaPuroComponent } from './requisicion-nueva-puro/requisicion-nueva-puro.component';
-import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SharedModule } from '../shared/shared.module';
-import { TabsModule } from 'ngx-bootstrap/tabs';
-import { CandidatosEnProcesoComponent } from './candidatos-en-proceso/candidatos-en-proceso.component';
-import { GraficaVacanteCubiertaComponent } from './Graficas/grafica-vacante-cubierta/grafica-vacante-cubierta.component';
-import { GraficaVacanteActivaComponent } from './Graficas/grafica-vacante-activa/grafica-vacante-activa.component';
-import { GraficaVacantePorvencComponent } from './Graficas/grafica-vacante-porvenc/grafica-vacante-porvenc.component';
-import { GraficaVacanteVencidaComponent } from './Graficas/grafica-vacante-vencida/grafica-vacante-vencida.component';
-import { GraficaResumenComponent } from './Graficas/grafica-resumen/grafica-resumen.component';
-
-const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
-  optionValueField: 'id',
-  optionTextField: 'name'
-};
 
 @NgModule({
   imports: [
     SharedModule,
-    CommonModule,
-    NgxSelectModule.forRoot(CustomSelectOptions),
-    FormsModule,
-    ReactiveFormsModule,
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatNativeDateModule,
-    MatOptionModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSlideToggleModule,
-    MatSliderModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatStepperModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    Ng2TableModule,
-    NgxSpinnerModule,
-    TabsModule.forRoot(),
-    PaginationModule.forRoot(),
-    PopoverModule.forRoot(),
-    TooltipModule.forRoot(),
-    AccordionModule.forRoot(),
-    ToasterModule,
-    AlertModule,
-    ModalModule.forRoot(),
-    BsDatepickerModule.forRoot(),
-    ColorPickerModule, 
-    NgbModule,
-    Ng2ChartsModule
-    // NgScrollbarModule
   ],
   declarations: [
     DtDireccionComponent,
@@ -335,7 +221,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     InfoVacanteComponent,
     DtRutasCamionRequiComponent,
     DialogHorariosConteoComponent,
-    DialogLiberarCandidatoComponent, 
+    DialogLiberarCandidatoComponent,
     EditarContratadosComponent,
     DialogEventComponent,
     CalendarioCandidatoComponent,
@@ -354,11 +240,6 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     GraficaVacantePorvencComponent,
     GraficaVacanteVencidaComponent,
     GraficaResumenComponent
-  ],
-  providers: [ColorPickerService,
-    { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
-    { provide: PaginationConfig, useValue: getSpanishPaginatorBtp() },
-    ToasterService
   ],
   entryComponents: [DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent]
 })
