@@ -1,3 +1,4 @@
+import { ComponentsModule } from './../../components/components.module';
 import { DlgRevisarExamenesComponent } from './../../components/dlg-revisar-examenes/dlg-revisar-examenes.component';
 
 import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
@@ -42,7 +43,8 @@ const routes: Routes = [
     MatRadioModule,
     MatDialogModule,
     MatDividerModule,
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    ComponentsModule
   ],
   declarations: [
     AddExamenComponent,
@@ -52,7 +54,7 @@ const routes: Routes = [
     AgregarResultadosPsicoComponent,
     HistorialClavesComponent,
     RevisarExamenesComponent, 
-DlgRevisarExamenesComponent
+// DlgRevisarExamenesComponent
   ],
   exports: [
     RouterModule
@@ -63,7 +65,7 @@ providers:[ToasterService, RequisicionesService,
   {provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
   { provide: PaginationConfig, useValue: getSpanishPaginatorBtp()}],
 
-entryComponents: [DlgRevisarExamenesComponent]
+// entryComponents: [DlgRevisarExamenesComponent]
 })
 export class ExamenesModule {
  }

@@ -2,18 +2,41 @@
   <div class="card-body">
     <div class="row">
       <div class="col-sm-8 col-md-8">
-      <label class="text-success">FOLIO</label>
-      <div class="input-group">
+        <div class="card">
+        <div class="card-body mat-elevation-z8">
+      <h3 class="p-1 bg-light text-warning">¿YA TIENES UNA CITA?</h3>
+      <h5 class="text-success">Genera tu ticket para entrevista con tu número de folio</h5>
+      <div class="input-group input-group-sm">
+          <div class="input-group-prepend">
+              <span class="input-group-text text-info">FOLIO CITA:</span>
+            </div>
         <input type="text" class="form-control form-control-sm" [(ngModel)]="folio" name="folios" (keydown.enter)="GenerarTicket()">
         <div class="input-group-append">
           <button class="btn btn-xs btn-outline-success" type="button" (click)="GenerarTicket()">
-            <em class="fa fa-plus"></em>
+            <em class="fa fa-check"></em>
           </button>
         </div>
       </div>
+    </div>
+  </div>
       <hr>
 
-      <h5 class="text-left text-warning p-2 bg-light">
+
+          <!-- <h3 class="p-1 bg-light text-success text-center">
+            <i class="fa fa-users mr-2" aria-hidden="true"></i>VACANTES DISPONIBLES</h3> -->
+            <!-- <div class="card carusel">
+              <div class="card-body mat-elevation-z8"> -->
+                <div class="d-flex justify-content-center">
+       
+                <app-carrusel-vacantes></app-carrusel-vacantes>
+
+              </div>
+              <!-- </div>
+            </div>
+           -->
+
+
+      <!-- <h5 class="text-left text-warning p-2 bg-light">
           <i class="fa fa-file-text-o mr-1" aria-hidden="true"></i>MIS VACANTES</h5>
           <ul class="list-group long">
             <li *ngFor="let item of dataSource; let ind = index;" class="list-group-item">
@@ -33,16 +56,9 @@
 
               </span>
             </li>
-          </ul>
+          </ul> -->
         </div>
-      <div class="col-sm-4 col-md-4">
-      <div class="card">
-        <div class="card-body mat-elevation-z8">
-          <h1>{{num}}</h1>
-        </div>
-
-      </div>
-      </div>
+   
     </div>
   </div>
 </div>

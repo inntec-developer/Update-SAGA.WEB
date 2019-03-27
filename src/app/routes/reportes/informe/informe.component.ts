@@ -71,7 +71,7 @@ export class InformeComponent implements OnInit {
   ngOnInit() {
     this.Servicio.GetEmpresas().subscribe(item =>{
       this.Empresas = item;
-      this.Oficina = [{id:0,nombre:'Todas las Sucursales'},
+      this.Oficina = [{id:0,nombre:'Todas'},
       {id:1,nombre:'Guadalajara'},{id:2,nombre:'México'},{id:3,nombre:'Monterrey'}]
     })
 

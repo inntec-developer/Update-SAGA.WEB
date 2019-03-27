@@ -163,7 +163,8 @@ import { SharedModule } from '../shared/shared.module';
     GraficaVacanteActivaComponent,
     GraficaVacantePorvencComponent,
     GraficaVacanteVencidaComponent,
-    GraficaResumenComponent
+    GraficaResumenComponent,
+    DlgRevisarExamenesComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -239,8 +240,9 @@ import { SharedModule } from '../shared/shared.module';
     GraficaVacanteActivaComponent,
     GraficaVacantePorvencComponent,
     GraficaVacanteVencidaComponent,
-    GraficaResumenComponent
+    GraficaResumenComponent,
+    DlgRevisarExamenesComponent
   ],
-  entryComponents: [DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent]
+  entryComponents: [DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent]
 })
 export class ComponentsModule { }

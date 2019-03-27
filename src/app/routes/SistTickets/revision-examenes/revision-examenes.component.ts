@@ -36,7 +36,7 @@ slcClave;
   constructor(config: NgbTabsetConfig, private _service: SistTicketsService, private _serviceExamen: ExamenesService, private toasterService: ToasterService, private dialog: MatDialog) {
     config.justify = 'center';
     config.type = 'pills';
-    setInterval(() => this.timeWait(), 1000);
+    setInterval(() => this.timeWait(), 60000);
    }
 
   ngOnInit() {
@@ -56,6 +56,7 @@ slcClave;
       this.ticket = data;
       this.GetExamen();
       this.GetClaves();
+      this.GetFilaTickets();
       this.atender = true;
     })
   }
@@ -232,11 +233,11 @@ slcClave;
           data: aux
         });
         dialog.afterClosed().subscribe(result => {
-          console.log(result)
+          
           this._service.SetEstatusCandidato(this.ticket[0].candidato.candidatoId, this.ticket[0].requisicionId, 13).subscribe(data => {
             this.ticket[0].candidato.estatus = 'EVALUACIÓN TÉCNICA';
             this.ticket[0].candidato.estatusId = 13;
-            console.log(data)
+
           })
         });
       })
@@ -244,7 +245,7 @@ slcClave;
 
     public Finalizar()
     {
-      this._service.UpdateStatusTicket(this.ticket[0].ticketId, 4, 2).subscribe(data => {
+      this._service.UpdateStatusTicket(this.ticket[0].ticketId, 4, 1).subscribe(data => {
         if(data == 200)
         {
           this.Reiniciar();
