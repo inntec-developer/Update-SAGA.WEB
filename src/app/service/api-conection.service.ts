@@ -101,7 +101,9 @@ export class ApiConection {
   /* Clientes / Prospectos */
   public static GetProspectos = 'Directorio/getProspectos';
   public static GetClientes = 'Directorio/getClientes';
-  public static AddProspectos= 'Directorio/addProspecto';
+  public static AddProspectos = 'Directorio/addProspecto';
+  public static HacerCliente = 'Directorio/hacerCliente';
+  public static GetCliente = 'Directorio/getCliente';
 
   /* Candidatos */
   public static filtropaises = 'Candidatos/get';
@@ -245,7 +247,7 @@ export class ApiConection {
   public static GetClaves = 'examenes/getClaves'
   public static GetClaveCandidatos = 'examenes/getClaveCandidatos'
   public static GetClavesCandidatos = 'examenes/getClavesCandidatos'
-  
+
   /*Reportes */
   public static GetInforme = 'reporte/Informe'
   public static GetEmpresas = 'reporte/empresas'
@@ -273,7 +275,7 @@ export class ApiConection {
   public static SetEstatusCandidato = 'SistTickets/setEstatusCandidato'
   public static GetTicketConCita = 'SistTickets/ticketConCita'
   public static GetTicketSinCita = 'SistTickets/ticketSinCita'
-  
+
   /*TrackingVacantes*/
   public static GetInformeTracking = 'Requisiciones/getInformeClientes';
 
