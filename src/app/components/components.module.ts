@@ -40,6 +40,7 @@ import { DlgAsignarPerfilComponent } from './dlg-asignar-perfil/dlg-asignar-perf
 import { DlgComentariosNRComponent } from './dlg-comentarios-nr/dlg-comentarios-nr.component';
 import { DlgFacturaPuroComponent } from './dlg-factura-puro/dlg-factura-puro.component';
 import { DlgRequisicionPausaComponent } from './dlg-requisicion-pausa/dlg-requisicion-pausa.component';
+import { DlgRevisarExamenesComponent } from './dlg-revisar-examenes/dlg-revisar-examenes.component';
 import { DocumentosClienteComponent } from './tablas/documentos-cliente/documentos-cliente.component';
 import { DocumentosDamsaComponent } from './tablas/documentos-damsa/documentos-damsa.component';
 import { DtBeneficiosComponent } from './tablas/dt-beneficios/dt-beneficios.component';
