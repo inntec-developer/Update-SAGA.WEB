@@ -58,9 +58,8 @@ export class ComentarioVacanteComponent implements OnInit {
       this.Comentarios = data;
       this.CountComent = this.Comentarios.length;
       this.Comentarios.forEach(element => {
-        element.foto = ApiConection.ServiceUrlFoto + element.foto;
+        element.foto = ApiConection.ServiceUrlFotoUser + element.clave + '.jpg';
       });
-      
     }, err => {
       console.log(err)
     });
@@ -82,7 +81,7 @@ export class ComentarioVacanteComponent implements OnInit {
         RequisicionId: this.RequisicionId,
         UsuarioAlta: sessionStorage.getItem('usuario'),
         reclutadorId: sessionStorage.getItem('id'),
-        MotivoId: this.MotivoId, 
+        MotivoId: this.MotivoId,
         EstatusId: 0
       }
       this._ComentariosService.addComentarioVacante(this.Comentario).subscribe(data => {
@@ -105,6 +104,11 @@ export class ComentarioVacanteComponent implements OnInit {
       }, 1000);
 
     }
+  }
+
+  ErrorImg(clave: any, comentario: any){
+    let index = this.Comentarios.findIndex(c => c.clave === clave && c.comentario === comentario);
+    this.Comentarios[index]['foto'] = '/assets/img/user/default.jpg'
   }
 
 }

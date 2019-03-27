@@ -9,11 +9,11 @@
         </button>
         <em class="vl"></em>
         <button id="view" #view class="margen mr-1 btn btn-xs btn-acciones"
-          (click)="openDialogShowRequi(element.id, element.folio)" placement="bottom" tooltip="Ver Cliente"
+          (click)="visualizarCliente()" placement="bottom" tooltip="Ver Cliente"
           [disabled]="!element" [ngClass]="(!element) ? 'disabled':'btn-outline-warning'">
           <em class="fa fa-eye"></em></button>
         <button id="edit" #edit class="margen mr-1 btn btn-xs btn-acciones" chkPrivilegiosButtons
-          (click)="lgModal.show()" [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-outline-info'"
+          (click)="editarCliente()" [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-outline-info'"
           container="body" placement="bottom" tooltip="Editar"><em class="fa fa-pencil"></em></button>
         <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body"
           class="margen mr-1 btn btn-xs btn-acciones float-right" [disabled]="!clearFilter"
@@ -57,24 +57,24 @@
                 <tr *ngFor="let row of rows; let i=index" (click)="onCellClick(row)" [class.selected]="row.selected">
                   <td class="text-center">{{row.rfc}}</td>
                   <td class="text-center">
-                    <small *ngIf="row.razonSocial.length < 30 else toLengthRS">
+                    <span *ngIf="row.razonSocial.length < 30 else toLengthRS">
                       {{row.razonSocial}}
-                    </small>
+                    </span>
                     <ng-template #toLengthRS>
-                      <small placement="bottom" tooltip="{{row.nombrecomercial}}"> {{row.razonSocial | slice:0:15 |
+                      <span placement="bottom" tooltip="{{row.razonSocial}}"> {{row.razonSocial | slice:0:15 |
                         uppercase
                         }} ...
-                      </small>
+                      </span>
                     </ng-template>
                   </td>
                   <td class="text-center">
-                    <small *ngIf="row.nombrecomercial.length < 30 else toLengthNC">
+                    <span *ngIf="row.nombrecomercial.length < 30 else toLengthNC">
                       {{row.nombrecomercial}}
-                    </small>
+                    </span>
                     <ng-template #toLengthNC>
-                      <small placement="bottom" tooltip="{{row.nombrecomercial}}"> {{row.nombrecomercial | slice:0:15 |
+                      <span placement="bottom" tooltip="{{row.nombrecomercial}}"> {{row.nombrecomercial | slice:0:15 |
                         uppercase }} ...
-                      </small>
+                      </span>
                     </ng-template>
                   </td>
                   <td>{{row.giroEmpresa}}</td>
@@ -82,18 +82,18 @@
                   <td>{{row.tamanoEmpresa}}</td>
                   <td class="text-right"> {{row.numeroEmpleados}}</td>
                   <td class="text-center">
-                    <small *ngIf="row.clasificacion == 1" class="color-star">
-                      <i class="fa fa-star fa-2x" aria-hidden="true"></i>
-                    </small>
-                    <small *ngIf="row.clasificacion == 2" class="color-star">
-                      <i class="fa fa-star fa-2x" aria-hidden="true"></i>
-                      <i class="fa fa-star fa-2x" aria-hidden="true"></i>
-                    </small>
-                    <small *ngIf="row.clasificacion == 3" class="color-star">
-                      <i class="fa fa-star fa-2x" aria-hidden="true"> </i>
-                      <i class="fa fa-star fa-2x" aria-hidden="true"> </i>
-                      <i class="fa fa-star fa-2x" aria-hidden="true"> </i>
-                    </small>
+                    <span *ngIf="row.clasificacion == 1" class="color-star">
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                    </span>
+                    <span *ngIf="row.clasificacion == 2" class="color-star">
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                    </span>
+                    <span *ngIf="row.clasificacion == 3" class="color-star">
+                      <i class="fa fa-star" aria-hidden="true"> </i>
+                      <i class="fa fa-star" aria-hidden="true"> </i>
+                      <i class="fa fa-star" aria-hidden="true"> </i>
+                    </span>
                   </td>
                   <td class="text-center">{{row.tipoEmpresa}}</td>
                 </tr>

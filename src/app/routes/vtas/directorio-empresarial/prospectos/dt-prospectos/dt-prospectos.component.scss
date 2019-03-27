@@ -7,9 +7,10 @@ tbody tr {
   display: table;
   width: 100%;
   table-layout: fixed;
+  font-size: 12px;
 }
 
-thead {
+table thead {
   width: calc(100% - 1em)
 }
 
@@ -19,11 +20,10 @@ table {
 
 .vl {
   border-left: 1px solid #aaa;
-  height: 31px;
-  margin: 0 2px;
+  height: 65px;
 }
 
-tbody tr:hover {
+table tbody tr:hover {
   font-size: 14.5px;
   box-shadow: 1px 20px 60px rgba(0, 0, 0, .23);
 }
@@ -59,4 +59,8 @@ ng-scrollbar {
 
 .color-star{
   color: rgb(206, 255, 46)
+}
+
+.close{
+  color: red;
 }

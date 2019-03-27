@@ -1,0 +1,37 @@
+<div class="dt-container  mat-elevation-z8">
+  <div class="card-header">
+    <em class="fa fa-user"></em> Informaci&oacute;n General del
+    <span *ngIf="esCliente else Prospecto">Cliente</span>
+    <ng-template #Prospecto><span>Prospecto</span></ng-template>
+
+  </div>
+
+  <tabset [justified]="true">
+    <accordion [closeOthers]="oneAtATime">
+      <accordion-group [isOpen]="isFirstOpen">
+        <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
+          <div class="pull-left float-left text-warning">
+            <h5>Acerca de M&iacute;</h5>
+          </div>
+          <span class="float-right pull-right">
+            <em class="fa fa-user-circle-o"></em>
+          </span>
+        </button>
+        <div class="row">
+        </div>
+      </accordion-group>
+      <accordion-group>
+        <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
+          <div class="pull-left float-left text-warning">
+            <h5>Direcci&oacute;n</h5>
+          </div>
+          <span class="float-right pull-right">
+            <em class="fa fa-home"></em>
+          </span>
+        </button>
+        <div class="row">
+        </div>
+      </accordion-group>
+    </accordion>
+  </tabset>
+</div>

@@ -1,8 +1,8 @@
-import { Component, ElementRef, Input, OnInit, SimpleChanges, Inject } from '@angular/core';
+import { Component, ElementRef, Inject, Input, OnInit, SimpleChanges } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+
 import { ApiConection } from '../../service';
 import { ComentariosService } from './../../service/Comentarios/comentarios.service';
-
 
 declare var $: any;
 
@@ -25,10 +25,10 @@ export class ComentarioCandidatoComponent implements OnInit {
   constructor(
     private _ComentariosService: ComentariosService,
     public elem: ElementRef,
-    // @Inject(MAT_DIALOG_DATA) public dataNR: any, 
-  ) { 
-    
-    
+    // @Inject(MAT_DIALOG_DATA) public dataNR: any,
+  ) {
+
+
   }
 
   ngOnInit() {
@@ -42,7 +42,7 @@ export class ComentarioCandidatoComponent implements OnInit {
 
     this.getComentarios(this.CandidatoId);
   }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
@@ -56,7 +56,7 @@ export class ComentarioCandidatoComponent implements OnInit {
       this.Comentarios = data;
       this.CountComent = this.Comentarios.length;
       this.Comentarios.forEach(element => {
-        element.usuario.foto = ApiConection.ServiceUrlFoto + element.usuario.foto;
+        element.usuario.foto = ApiConection.ServiceUrlFotoUser + element.usuario.clave + '.jpg';
       });
     }, err => {
       console.log(err)
@@ -88,11 +88,11 @@ export class ComentarioCandidatoComponent implements OnInit {
         console.log(err);
       });
     }
-    // setTimeout(() => {
-    //   let scroll = this.elem.nativeElement.querySelector('.container-coments');
-    //   scroll.scrollTop = scroll.scrollHeight*50;
-    // }, 100);
-
   }
+  ErrorImg(clave: any, comentario: any){
+    let index = this.Comentarios.findIndex(c => c.usuario.clave === clave && c.comentario === comentario);
+    this.Comentarios[index]['usuario']['foto'] = '/assets/img/user/default.jpg'
+  }
+
 }
 

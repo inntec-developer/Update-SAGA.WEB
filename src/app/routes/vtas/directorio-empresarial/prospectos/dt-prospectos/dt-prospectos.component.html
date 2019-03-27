@@ -2,28 +2,32 @@
   <div class="card-body mat-elevation-z8">
     <div class="row">
       <div class="col-sm-12 col-md-12 clearfix p-2 bg-light">
-        <button id="add" #add class="margen mr-1 btn btn-xs btn-acciones " [disabled]="bc" [ngClass]="bc ? 'disabled' : 'btn-outline-primary'"
-          type="button" [routerLink]="['/ventas/nuevoProspecto']" container="body" placement="bottom" tooltip="Agregar Prospecto">
+        <button id="add" #add class="margen mr-1 btn btn-xs btn-acciones " [disabled]="bc"
+          [ngClass]="bc ? 'disabled' : 'btn-outline-primary'" type="button" [routerLink]="['/ventas/nuevoProspecto']"
+          container="body" placement="bottom" tooltip="Agregar Prospecto">
           <em class="fa fa-plus"></em>
         </button>
         <em class="vl"></em>
-        <button id="view" #view class="margen mr-1 btn btn-xs btn-acciones" (click)="openDialogShowRequi(element.id, element.folio)"
-          placement="bottom" tooltip="Ver Cliente" [disabled]="!element" [ngClass]="(!element) ? 'disabled':'btn-outline-warning'">
+        <button id="view" #view class="margen mr-1 btn btn-xs btn-acciones"
+          (click)="visualizarProspecto()" placement="bottom" tooltip="Ver Cliente"
+          [disabled]="!element" [ngClass]="(!element) ? 'disabled':'btn-outline-warning'">
           <em class="fa fa-eye"></em></button>
-        <button id="edit" #edit class="margen mr-1 btn btn-xs btn-acciones" chkPrivilegiosButtons (click)="lgModal.show()"
-          [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-outline-info'" container="body" placement="bottom"
-          tooltip="Editar"><em class="fa fa-pencil"></em></button>
+        <button id="edit" #edit class="margen mr-1 btn btn-xs btn-acciones" chkPrivilegiosButtons
+          (click)="editarProspecto()" [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-outline-info'"
+          container="body" placement="bottom" tooltip="Editar"><em class="fa fa-pencil"></em></button>
         <em class="vl"></em>
         <button id="hacerCliente" #hacerCliente class="margen mr-1 btn btn-xs btn-acciones" chkPrivilegiosButtons
-          (click)="lgModal.show()" [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-outline-success'"
-          container="body" placement="bottom" tooltip="Hacer Cliente">
+          (click)="HacerClienteModal.show()" [disabled]="!element"
+          [ngClass]="(!element) ? 'disabled' : 'btn-outline-success'" container="body" placement="bottom"
+          tooltip="Hacer Cliente">
           <em class="fa  fa fa-handshake-o"></em></button>
         <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body"
-          class="margen mr-1 btn btn-xs btn-acciones float-right" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'disabled':'btn-outline-primary'">
+          class="margen mr-1 btn btn-xs btn-acciones float-right" [disabled]="!clearFilter"
+          [ngClass]="(!clearFilter) ? 'disabled':'btn-outline-primary'">
           <em class="fa fa-eraser"></em>
         </button>
-        <button type="button" class="margen mr-1 btn btn-xs btn-acciones btn-outline-success float-right" (click)="refreshTable()"
-          container="body" placement="bottom" tooltip="Actualizar" container="body">
+        <button type="button" class="margen mr-1 btn btn-xs btn-acciones btn-outline-success float-right"
+          (click)="refreshTable()" container="body" placement="bottom" tooltip="Actualizar" container="body">
           <em class="icon-refresh"></em>
         </button>
       </div>
@@ -34,19 +38,22 @@
         <div>
           <pre class="card-block float-right">Registros Totales: {{dataSource.length}}</pre>
         </div>
-        <table id="prospectosDataTable" ngClass="{{config.className || ''}}" class="table" role="grid" style="width: 100%;">
+        <table id="prospectosDataTable" ngClass="{{config.className || ''}}" class="table" role="grid"
+          style="width: 100%;">
           <thead>
             <tr>
               <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
                 <span>{{column.title | uppercase}}</span>
-                <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
+                <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)"
+                  [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
                 </i>
               </th>
             </tr>
             <tr *ngIf="showFilterRow">
               <td *ngFor="let column of columns">
-                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                  (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
+                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
+                  [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                  class="form-control form-control-sm" id="{{column.name}}">
               </td>
             </tr>
           </thead>
@@ -56,13 +63,13 @@
               <div>
                 <tr *ngFor="let row of rows; let i=index" (click)="onCellClick(row)" [class.selected]="row.selected">
                   <td class="text-center">
-                    <small *ngIf="row.nombrecomercial.length < 50 else toLength">
+                    <span *ngIf="row.nombrecomercial.length < 50 else toLength">
                       {{row.nombrecomercial}}
-                    </small>
+                    </span>
                     <ng-template #toLength>
-                      <small placement="bottom" tooltip="{{row.nombrecomercial}}"> {{row.nombrecomercial | slice:0:15 |
+                      <span placement="bottom" tooltip="{{row.nombrecomercial}}"> {{row.nombrecomercial | slice:0:15 |
                         uppercase }} ...
-                      </small>
+                      </span>
                     </ng-template>
                   </td>
                   <td class="text-center">{{row.giroEmpresa}}</td>
@@ -70,18 +77,18 @@
                   <td class="text-center">{{row.tamanoEmpresa}}</td>
                   <td class="text-center"> {{row.numeroEmpleados}}</td>
                   <td class="text-center">
-                    <small *ngIf="row.clasificacion == 1" class="color-star">
-                      <i class="fa fa-star fa-2x" aria-hidden="true"></i>
-                    </small>
-                    <small *ngIf="row.clasificacion == 2" class="color-star">
-                      <i class="fa fa-star fa-2x" aria-hidden="true"></i>
-                      <i class="fa fa-star fa-2x" aria-hidden="true"></i>
-                    </small>
-                    <small *ngIf="row.clasificacion == 3" class="color-star">
-                      <i class="fa fa-star fa-2x" aria-hidden="true"> </i>
-                      <i class="fa fa-star fa-2x" aria-hidden="true"> </i>
-                      <i class="fa fa-star fa-2x" aria-hidden="true"> </i>
-                    </small>
+                    <span *ngIf="row.clasificacion == 1" class="color-star">
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                    </span>
+                    <span *ngIf="row.clasificacion == 2" class="color-star">
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                      <i class="fa fa-star" aria-hidden="true"></i>
+                    </span>
+                    <span *ngIf="row.clasificacion == 3" class="color-star">
+                      <i class="fa fa-star" aria-hidden="true"> </i>
+                      <i class="fa fa-star" aria-hidden="true"> </i>
+                      <i class="fa fa-star" aria-hidden="true"> </i>
+                    </span>
                   </td>
                   <td class="text-center">{{row.tipoEmpresa}}</td>
                 </tr>
@@ -95,10 +102,11 @@
     <div class="row">
       <div class="col-md-12 clearfix">
         <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
-          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
-          (numPages)="numPages = $event"></pagination>
+          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+          (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
 
-        <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}} Registros: {{registros}}</small></pre>
+        <pre *ngIf="config.paging"
+          class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}} Registros: {{registros}}</small></pre>
       </div>
     </div>
   </div>
@@ -108,9 +116,50 @@
 
 <!-- Elenetos visuales -->
 <ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
+<toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
 
-
-<!-- <mat-form-field>
-  <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
-    (tableChanged)="onChangeTable(config)" id="filterGeneral">
-</mat-form-field> -->
+<!-- MODAL PARA HACER CLIENTE -->
+<div bsModal #HacerClienteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+  [config]="{ show: false, ignoreBackdropClick: true, keyboard: false }"
+  aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title text-center">{{element?.nombrecomercial}}</h4>
+        <button type="button" class="close pull-right" (click)="HacerClienteModal.hide(); formCliente.reset()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formCliente">
+          <div class="card-body">
+            <mat-form-field>
+              <input matInput placeholder="Razon Social" formControlName="RazonSocial" name="RazonSocial"
+                maxlength="100" required="" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="RFC" formControlName="RFC" name="RFC" minlength="12" maxlength="12"
+                required="" />
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput formControlName="ValidarRFC" name="ValidarRFC" placeholder="Validar RFC" />
+              <mat-hint align="start">
+                <strong *ngIf="formCliente.controls.ValidarRFC.errors?.MachRFC" class="text-danger">Los datos
+                  ingresados no coinciden, favor de verificar la informaci&oacute;n</strong>
+              </mat-hint>
+            </mat-form-field>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-xs btn-outline-danger" (click)="HacerClienteModal.hide(); formCliente.reset()">Cancelar
+        </button>
+        <button type="button" class="md-1 btn btn-xs"
+          [disabled]="!formCliente.valid"
+          [ngClass]="!formCliente.valid ? 'disabled' : 'btn-outline-success'"
+          (click)="HacerClienteModal.hide(); createCliente(); formCliente.reset()">Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

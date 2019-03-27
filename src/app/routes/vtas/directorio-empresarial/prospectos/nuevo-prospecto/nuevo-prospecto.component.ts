@@ -7,6 +7,7 @@ import { CatalogosService } from './../../../../../service/catalogos/catalogos.s
 import { ClientesService } from '../../../../../service/clientes/clientes.service';
 import { CompanyValidation } from './company-validation';
 import { CustomValidators } from 'ng2-validation';
+import { Router } from '@angular/router';
 import { config } from 'rxjs';
 import { element } from 'protractor';
 
@@ -17,6 +18,9 @@ import { element } from 'protractor';
   providers: [CatalogosService, ClientesService]
 })
 export class NuevoProspectoComponent implements OnInit {
+
+  //#region Variables
+  public loading: boolean = false;
 
   public itemsPerPage: number = 5;
   public maxSize: number = 5;
@@ -49,187 +53,13 @@ export class NuevoProspectoComponent implements OnInit {
   public formContactos: FormGroup;
 
   public addDireccion: boolean;
-  public DireccionesNew: Array<any> = [
-    {
-      idAux: 1,
-      activo: true,
-      calle: "Ramon Alcorta",
-      codigoPostal: "44970",
-      colonia: "Francisco Villa",
-      coloniaId: 58798,
-      esPrincipal: true,
-      estado: "Jalisco",
-      estadoId: 14,
-      numeroExterior: "1492",
-      numeroInterior: "",
-      municipio: "Guadalajara",
-      municipioId: 571,
-      pais: "Mexico",
-      paisId: 42,
-      referencia: "SIN REFERENCIA",
-      tipoDireccion: "Fiscal",
-      tipoDireccionId: 2,
-      usuarioAlta: 'DAMSA.NINIGUEZ',
-      telefonos: [],
-      emails: [],
-      contactos: []
-    },
-    {
-      idAux: 2,
-      activo: true,
-      calle: "Fuente de la Alianza",
-      codigoPostal: "45615",
-      colonia: "Villa Fontana",
-      coloniaId: 60595,
-      esPrincipal: false,
-      estado: "Jalisco",
-      estadoId: 14,
-      numeroExterior: "124",
-      numeroInterior: "",
-      municipio: "San Pedro Tlaquepaque",
-      municipioId: 611,
-      pais: "Mexico",
-      paisId: 42,
-      referencia: "SIN REFERENCIA",
-      tipoDireccion: "Sucursal",
-      tipoDireccionId: 3,
-      usuarioAlta: 'DAMSA.NINIGUEZ',
-      telefonos: [],
-      emails: [],
-      contactos: []
-    },
-    {
-      idAux: 3,
-      activo: true,
-      calle: "Fuente de la Alianza",
-      codigoPostal: "45615",
-      colonia: "Villa Fontana",
-      coloniaId: 60595,
-      esPrincipal: false,
-      estado: "Jalisco",
-      estadoId: 14,
-      numeroExterior: "126",
-      numeroInterior: "",
-      municipio: "San Pedro Tlaquepaque",
-      municipioId: 611,
-      pais: "Mexico",
-      paisId: 42,
-      referencia: "SIN REFERENCIA",
-      tipoDireccion: "Sucursal",
-      tipoDireccionId: 3,
-      usuarioAlta: 'DAMSA.NINIGUEZ',
-      telefonos: [],
-      emails: [],
-      contactos: []
-    },
-    {
-      idAux: 4,
-      activo: true,
-      calle: "Fuente de la Alianza",
-      codigoPostal: "45615",
-      colonia: "Villa Fontana",
-      coloniaId: 60595,
-      esPrincipal: false,
-      estado: "Jalisco",
-      estadoId: 14,
-      numeroExterior: "128",
-      numeroInterior: "",
-      municipio: "San Pedro Tlaquepaque",
-      municipioId: 611,
-      pais: "Mexico",
-      paisId: 42,
-      referencia: "SIN REFERENCIA",
-      tipoDireccion: "Sucursal",
-      tipoDireccionId: 3,
-      usuarioAlta: 'DAMSA.NINIGUEZ',
-      telefonos: [],
-      emails: [],
-      contactos: []
-    },
-    {
-      idAux: 5,
-      activo: true,
-      calle: "Fuente de la Alianza",
-      codigoPostal: "45615",
-      colonia: "Villa Fontana",
-      coloniaId: 60595,
-      esPrincipal: false,
-      estado: "Jalisco",
-      estadoId: 14,
-      numeroExterior: "130",
-      numeroInterior: "",
-      municipio: "San Pedro Tlaquepaque",
-      municipioId: 611,
-      pais: "Mexico",
-      paisId: 42,
-      referencia: "SIN REFERENCIA",
-      tipoDireccion: "Sucursal",
-      tipoDireccionId: 3,
-      usuarioAlta: 'DAMSA.NINIGUEZ',
-      telefonos: [],
-      emails: [],
-      contactos: []
-    },
-    {
-      idAux: 6,
-      activo: true,
-      calle: "Fuente de la Alianza",
-      codigoPostal: "45615",
-      colonia: "Villa Fontana",
-      coloniaId: 60595,
-      esPrincipal: false,
-      estado: "Jalisco",
-      estadoId: 14,
-      numeroExterior: "132",
-      numeroInterior: "",
-      municipio: "San Pedro Tlaquepaque",
-      municipioId: 611,
-      pais: "Mexico",
-      paisId: 42,
-      referencia: "SIN REFERENCIA",
-      tipoDireccion: "Sucursal",
-      tipoDireccionId: 3,
-      usuarioAlta: 'DAMSA.NINIGUEZ',
-      telefonos: [],
-      emails: [],
-      contactos: []
-    }
-  ];
+  public DireccionesNew: Array<any> = [];
   public indexDireccion: any;
   public EditDireccion: boolean;
   public textbtnDirecciones: string;
 
   public addTelefono: boolean;
-  public TelefonosNew: Array<any> = [
-    // {
-    //   idAux: 1,
-    //   activo: true,
-    //   calle: "Ramon Alcorta",
-    //   claveLada: "33",
-    //   clavePais: "52",
-    //   esPrincipal: false,
-    //   extension: "",
-    //   idDireccion: 1,
-    //   tTelefono: "Recados",
-    //   telefono: "31441648",
-    //   tipoTelefonoId: 3,
-    //   usuarioAlta: "DAL2789",
-    // },
-    // {
-    //   idAux: 2,
-    //   activo: true,
-    //   calle: "Fuente de la Alianza",
-    //   claveLada: "33",
-    //   clavePais: "52",
-    //   esPrincipal: false,
-    //   extension: "",
-    //   idDireccion: 2,
-    //   tTelefono: "Recados",
-    //   telefono: "36011746",
-    //   tipoTelefonoId: 3,
-    //   usuarioAlta: "DAL2789",
-    // }
-  ];
+  public TelefonosNew: Array<any> = [];
   public indexTelefonos: any;
   public EditTelefono: boolean;
   public textbtnTelefono: string;
@@ -272,10 +102,11 @@ export class NuevoProspectoComponent implements OnInit {
   public ladaPais: any = 52;
   public PrincipalT: boolean = false;
   public Usuario: string;
-
+//#endregion
 
 
   constructor(
+    private router: Router,
     private fb: FormBuilder,
     private _CatalogoService: CatalogosService,
     private _ClienteService: ClientesService,
@@ -346,10 +177,6 @@ export class NuevoProspectoComponent implements OnInit {
 
   ngOnInit() {
     this.Usuario = sessionStorage.getItem('usuario');
-    this.onChangeTableD(this.config);
-    this.onChangeTableT(this.config);
-    this.idAuxD = this.DireccionesNew.length + 1;
-    this.idAuxT = this.TelefonosNew.length + 1;
     this.showFilterRowD = true;
     this.showFilterRowT = true;
     this.showFilterRowC = true;
@@ -501,7 +328,8 @@ export class NuevoProspectoComponent implements OnInit {
     this.municipios = null;
     this.colonias = null;
     this.addDireccion = false;
-    this.elementD = null;
+    this.EditDireccion = false;
+    //this.elementD = null;
     this.formDirecciones.reset();
     this.formDirecciones.controls['Activo'].setValue(true);
     this.formDirecciones.controls['Principal'].setValue(false);
@@ -511,7 +339,8 @@ export class NuevoProspectoComponent implements OnInit {
   cancelarTelefono() {
     this.formTelefonos.reset();
     this.addTelefono = false;
-    this.elementT = null;
+    this.EditTelefono = false;
+    //this.elementT = null;
     this.formTelefonos.controls['Activo'].setValue(true);
     this.formTelefonos.controls['Principal'].setValue(false);
     this.formTelefonos.controls['LadaPais'].setValue(52)
@@ -520,10 +349,12 @@ export class NuevoProspectoComponent implements OnInit {
   cancelarCorreo() {
     this.formCorreos.reset();
     this.addCorreo = false;
-    this.elementC = null;
+    this.EditCorreo = false;
+    //this.elementC = null;
   }
   cancelarContacto() {
     this.addContacto = false;
+    this.EditContacto = false;
     // this.elementCn = null;
     this.formContactos.reset();
     this.formContactos.controls['LadaPais'].setValue(52)
@@ -657,6 +488,7 @@ export class NuevoProspectoComponent implements OnInit {
           this.ContactosNew[ContactoIndexUpdate]['calle'] = data.calle;
         }
         this.EditDireccion = false;
+        this.elementD = null;
       }
       else {
         this.popToast('info', 'Direcicones', 'La dirección que intenta actualizar ya existe.');
@@ -689,6 +521,10 @@ export class NuevoProspectoComponent implements OnInit {
 
   DtDireccion() {
     var idDireccion = this.DireccionesNew[this.indexDireccion]['idAux'];
+
+    if(this.DireccionesNew[this.indexDireccion]['esPrincipal'] == true){
+      this.Principal = false;
+    }
     this.DireccionesNew.splice(this.indexDireccion, 1);
     if (this.CorreosNew.length > 0) {
       var EmailIndexDelete = this.CorreosNew.findIndex(x => x.idDireccion == idDireccion)
@@ -696,6 +532,9 @@ export class NuevoProspectoComponent implements OnInit {
     }
     if (this.TelefonosNew.length > 0) {
       var TelefonoIndexDelete = this.TelefonosNew.findIndex(x => x.idDireccion == idDireccion)
+      if(this.TelefonosNew[TelefonoIndexDelete]['esPrincipal'] == true){
+        this.PrincipalT = false;
+      }
       this.TelefonosNew.splice(TelefonoIndexDelete, 1);
     }
     if (this.ContactosNew.length > 0) {
@@ -739,18 +578,19 @@ export class NuevoProspectoComponent implements OnInit {
 
     if (!this.EditTelefono) {
       var exist = this.TelefonosNew.find(element => {
-        if(element.telefono == data.telefono
-          && element.extension == data.extension){
+        if (element.telefono == data.telefono
+          && element.extension == data.extension) {
           return true;
-        }else{
+        } else {
           return false;
         }
       });
-      if(!exist){
+      if (!exist) {
         this.TelefonosNew.push(data);
         this.idAuxT++;
+
       }
-      else{
+      else {
         this.popToast('info', 'Teléfonos', 'El Teléfono que intenta registrar ya existe.');
         return;
       }
@@ -759,19 +599,20 @@ export class NuevoProspectoComponent implements OnInit {
       var idTelefono = this.TelefonosNew[this.indexTelefonos]['idAux'];
       data.idAux = idTelefono;
       var exist = this.TelefonosNew.find(element => {
-        if(element.telefono == data.telefono
+        if (element.telefono == data.telefono
           && element.extension == data.extension
-          && element.idAux != idTelefono){
+          && element.idAux != idTelefono) {
           return true;
-        }else{
+        } else {
           return false;
         }
       });
-      if(!exist){
+      if (!exist) {
         this.TelefonosNew[this.indexTelefonos] = data;
         this.EditTelefono = false;
+        this.elementT = null;
       }
-      else{
+      else {
         this.popToast('info', 'Teléfonos', 'El Teléfono que intenta actualizar ya existe.');
         return;
       }
@@ -788,7 +629,7 @@ export class NuevoProspectoComponent implements OnInit {
     if (this.PrincipalT && this.TelefonosNew[this.indexTelefonos]['esPrincipal']) {
       this.PrincipalT = false;
     }
-    this.formTelefonos.controls['TelDireccion'].setValue(this.TelefonosNew[this.indexTelefonos]['indexDireccion']);
+    this.formTelefonos.controls['TelDireccion'].setValue(this.TelefonosNew[this.indexTelefonos]['idDireccion']);
     this.formTelefonos.controls['TipoTelefono'].setValue(this.TelefonosNew[this.indexTelefonos]['tipoTelefonoId']);
     this.formTelefonos.controls['LadaPais'].setValue(this.TelefonosNew[this.indexTelefonos]['clavePais']);
     this.formTelefonos.controls['Lada'].setValue(this.TelefonosNew[this.indexTelefonos]['claveLada']);
@@ -799,6 +640,9 @@ export class NuevoProspectoComponent implements OnInit {
   }
 
   DtTelefono() {
+    if(this.TelefonosNew[this.indexTelefonos]['esPrincipal'] == true){
+      this.PrincipalT = false;
+    }
     this.TelefonosNew.splice(this.indexTelefonos, 1);
     this.elementT = null;
     this.onChangeTableT(this.config);
@@ -852,6 +696,7 @@ export class NuevoProspectoComponent implements OnInit {
       if (!exist) {
         this.CorreosNew[this.indexCorreos] = data;
         this.EditCorreo = false;
+        this.elementC = null;
       }
       else {
         this.popToast('info', 'Correo Electrónico', 'El correo electrónico que intenta actualizar ya existe.');
@@ -867,7 +712,7 @@ export class NuevoProspectoComponent implements OnInit {
   UpEmail() {
     this.addCorreo = true;
     this.EditCorreo = true;
-    this.formCorreos.controls['EmailDireccion'].setValue(this.CorreosNew[this.indexCorreos]['indexDireccion']);
+    this.formCorreos.controls['EmailDireccion'].setValue(this.CorreosNew[this.indexCorreos]['idDireccion']);
     this.formCorreos.controls['Email'].setValue(this.CorreosNew[this.indexCorreos]['email']);
   }
 
@@ -940,6 +785,7 @@ export class NuevoProspectoComponent implements OnInit {
     } else {
       this.ContactosNew[this.indexContacto] = data;
       this.EditContacto = false;
+      this.elementCn = null;
     }
     this.onChangeTableCn(this.config);
   }
@@ -947,12 +793,12 @@ export class NuevoProspectoComponent implements OnInit {
   UpContactos() {
     this.addContacto = true;
     this.EditContacto = true;
-    this.formContactos.controls['ContactoDireccion'].setValue(this.ContactosNew[this.indexContacto]['indexDireccion']);
+    this.formContactos.controls['ContactoDireccion'].setValue(this.ContactosNew[this.indexContacto]['idDireccion']);
     this.formContactos.controls['Nombre'].setValue(this.ContactosNew[this.indexContacto]['nombre']);
     this.formContactos.controls['ApellidoPaterno'].setValue(this.ContactosNew[this.indexContacto]['apellidoPaterno']);
     this.formContactos.controls['ApellidoMaterno'].setValue(this.ContactosNew[this.indexContacto]['apellidoMaterno']);
     this.formContactos.controls['Puesto'].setValue(this.ContactosNew[this.indexContacto]['puesto']);
-    this.formContactos.controls['TipoTelefono'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['tippoTelefonoId']);
+    this.formContactos.controls['TipoTelefono'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['tipoTelefonoId']);
     this.formContactos.controls['LadaPais'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['clavePais']);
     this.formContactos.controls['Lada'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['claveLada']);
     this.formContactos.controls['Numero'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['telefono']);
@@ -1537,6 +1383,7 @@ export class NuevoProspectoComponent implements OnInit {
 
 
   private GuardarProspecto() {
+    this.loading = true;
     var DireccionEmail = [];
     var DireccionTelefono = [];
     var DireccionContacto = [];
@@ -1611,10 +1458,16 @@ export class NuevoProspectoComponent implements OnInit {
       if (element == 202) {
         let msg = 'Se a Registrado Correctamente el Prospecto' + this.cp;
         this.popToast('success', 'Prospectos', msg);
+        setTimeout(() => {
+          this.loading = false;
+          this.router.navigate(['/ventas/directorio'])
+        }, 2000);
+
       }
       else {
         let msg = 'Error al intentar registrar Correctamente el Prospecto' + this.cp;
         this.popToast('error', 'Prospectos', msg);
+        this.loading = false;
       }
 
     })
@@ -1641,3 +1494,188 @@ export class NuevoProspectoComponent implements OnInit {
   }
   //#endregion
 }
+
+//#region Codigo Comentado ParaPruebas
+// --> Agregar en el ngOnInit()
+// this.onChangeTableD(this.config);
+// this.onChangeTableT(this.config);
+// this.idAuxD = this.DireccionesNew.length + 1;
+// this.idAuxT = this.TelefonosNew.length + 1;
+
+// --> Direcciones
+// {
+//   idAux: 1,
+//   activo: true,
+//   calle: "Ramon Alcorta",
+//   codigoPostal: "44970",
+//   colonia: "Francisco Villa",
+//   coloniaId: 58798,
+//   esPrincipal: true,
+//   estado: "Jalisco",
+//   estadoId: 14,
+//   numeroExterior: "1492",
+//   numeroInterior: "",
+//   municipio: "Guadalajara",
+//   municipioId: 571,
+//   pais: "Mexico",
+//   paisId: 42,
+//   referencia: "SIN REFERENCIA",
+//   tipoDireccion: "Fiscal",
+//   tipoDireccionId: 2,
+//   usuarioAlta: 'DAMSA.NINIGUEZ',
+//   telefonos: [],
+//   emails: [],
+//   contactos: []
+// },
+// {
+//   idAux: 2,
+//   activo: true,
+//   calle: "Fuente de la Alianza",
+//   codigoPostal: "45615",
+//   colonia: "Villa Fontana",
+//   coloniaId: 60595,
+//   esPrincipal: false,
+//   estado: "Jalisco",
+//   estadoId: 14,
+//   numeroExterior: "124",
+//   numeroInterior: "",
+//   municipio: "San Pedro Tlaquepaque",
+//   municipioId: 611,
+//   pais: "Mexico",
+//   paisId: 42,
+//   referencia: "SIN REFERENCIA",
+//   tipoDireccion: "Sucursal",
+//   tipoDireccionId: 3,
+//   usuarioAlta: 'DAMSA.NINIGUEZ',
+//   telefonos: [],
+//   emails: [],
+//   contactos: []
+// },
+// {
+//   idAux: 3,
+//   activo: true,
+//   calle: "Fuente de la Alianza",
+//   codigoPostal: "45615",
+//   colonia: "Villa Fontana",
+//   coloniaId: 60595,
+//   esPrincipal: false,
+//   estado: "Jalisco",
+//   estadoId: 14,
+//   numeroExterior: "126",
+//   numeroInterior: "",
+//   municipio: "San Pedro Tlaquepaque",
+//   municipioId: 611,
+//   pais: "Mexico",
+//   paisId: 42,
+//   referencia: "SIN REFERENCIA",
+//   tipoDireccion: "Sucursal",
+//   tipoDireccionId: 3,
+//   usuarioAlta: 'DAMSA.NINIGUEZ',
+//   telefonos: [],
+//   emails: [],
+//   contactos: []
+// },
+// {
+//   idAux: 4,
+//   activo: true,
+//   calle: "Fuente de la Alianza",
+//   codigoPostal: "45615",
+//   colonia: "Villa Fontana",
+//   coloniaId: 60595,
+//   esPrincipal: false,
+//   estado: "Jalisco",
+//   estadoId: 14,
+//   numeroExterior: "128",
+//   numeroInterior: "",
+//   municipio: "San Pedro Tlaquepaque",
+//   municipioId: 611,
+//   pais: "Mexico",
+//   paisId: 42,
+//   referencia: "SIN REFERENCIA",
+//   tipoDireccion: "Sucursal",
+//   tipoDireccionId: 3,
+//   usuarioAlta: 'DAMSA.NINIGUEZ',
+//   telefonos: [],
+//   emails: [],
+//   contactos: []
+// },
+// {
+//   idAux: 5,
+//   activo: true,
+//   calle: "Fuente de la Alianza",
+//   codigoPostal: "45615",
+//   colonia: "Villa Fontana",
+//   coloniaId: 60595,
+//   esPrincipal: false,
+//   estado: "Jalisco",
+//   estadoId: 14,
+//   numeroExterior: "130",
+//   numeroInterior: "",
+//   municipio: "San Pedro Tlaquepaque",
+//   municipioId: 611,
+//   pais: "Mexico",
+//   paisId: 42,
+//   referencia: "SIN REFERENCIA",
+//   tipoDireccion: "Sucursal",
+//   tipoDireccionId: 3,
+//   usuarioAlta: 'DAMSA.NINIGUEZ',
+//   telefonos: [],
+//   emails: [],
+//   contactos: []
+// },
+// {
+//   idAux: 6,
+//   activo: true,
+//   calle: "Fuente de la Alianza",
+//   codigoPostal: "45615",
+//   colonia: "Villa Fontana",
+//   coloniaId: 60595,
+//   esPrincipal: false,
+//   estado: "Jalisco",
+//   estadoId: 14,
+//   numeroExterior: "132",
+//   numeroInterior: "",
+//   municipio: "San Pedro Tlaquepaque",
+//   municipioId: 611,
+//   pais: "Mexico",
+//   paisId: 42,
+//   referencia: "SIN REFERENCIA",
+//   tipoDireccion: "Sucursal",
+//   tipoDireccionId: 3,
+//   usuarioAlta: 'DAMSA.NINIGUEZ',
+//   telefonos: [],
+//   emails: [],
+//   contactos: []
+// }
+
+// --> Telefonos
+// {
+//   idAux: 1,
+//   activo: true,
+//   calle: "Ramon Alcorta",
+//   claveLada: "33",
+//   clavePais: "52",
+//   esPrincipal: false,
+//   extension: "",
+//   idDireccion: 1,
+//   tTelefono: "Recados",
+//   telefono: "31441648",
+//   tipoTelefonoId: 3,
+//   usuarioAlta: "DAL2789",
+// },
+// {
+//   idAux: 2,
+//   activo: true,
+//   calle: "Fuente de la Alianza",
+//   claveLada: "33",
+//   clavePais: "52",
+//   esPrincipal: false,
+//   extension: "",
+//   idDireccion: 2,
+//   tTelefono: "Recados",
+//   telefono: "36011746",
+//   tipoTelefonoId: 3,
+//   usuarioAlta: "DAL2789",
+// }
+
+  //#endregion

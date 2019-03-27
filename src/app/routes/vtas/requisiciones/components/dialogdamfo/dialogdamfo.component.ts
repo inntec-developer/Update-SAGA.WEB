@@ -1,10 +1,10 @@
-import { CreateRequisicion } from './../../../../../models/vtas/Requisicion';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BodyOutputType, Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, NgForm, ReactiveFormsModule, Validator } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material'
 
+import { CreateRequisicion } from './../../../../../models/vtas/Requisicion';
 import { RequisicionesService } from '../../../../../service/index';
 
 const swal = require('sweetalert');
@@ -101,10 +101,10 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
       }
       else {
         this.IdEstatus = 4;
-        }
-        this._Router.navigate(['/ventas/requisicionNueva', this.IdDamfo, this.IdDireccion, this.IdEstatus], { skipLocationChange: true });
-        this.onNoClick();
-      
+      }
+      this._Router.navigate(['/ventas/requisicionNueva', this.IdDamfo, this.IdDireccion, this.IdEstatus], { skipLocationChange: true });
+      this.onNoClick();
+
 
 
     } else {

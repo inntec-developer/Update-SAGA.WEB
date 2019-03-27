@@ -26,6 +26,8 @@ export class ClientesService {
   private UrlGetProspectos = ApiConection.ServiceUrl + ApiConection.GetProspectos;
   private UrlGetClientes = ApiConection.ServiceUrl + ApiConection.GetClientes;
   private UrlAddProspecto = ApiConection.ServiceUrl + ApiConection.AddProspectos;
+  private UrlHacerCliente = ApiConection.ServiceUrl + ApiConection.HacerCliente;
+  private UrlGetCliente = ApiConection.ServiceUrl + ApiConection.GetCliente;
   constructor(private _httpClient: HttpClient) { }
 
   getProspectos() : Observable<any>{
@@ -39,5 +41,15 @@ export class ClientesService {
   addProspecto(data: any) : Observable<any>{
     return this._httpClient.post(this.UrlAddProspecto, data, httpOptions);
   }
+
+  hacerCliente(data: any) : Observable<any>{
+    return this._httpClient.post(this.UrlHacerCliente, data, httpOptions);
+  }
+
+  getCliente(clienteId:any) : Observable<any>{
+    let params = new HttpParams().set('ClienteId', clienteId);
+    return this._httpClient.get(this.UrlGetCliente, {params: params});
+  }
+
 
 }

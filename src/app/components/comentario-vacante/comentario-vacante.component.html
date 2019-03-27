@@ -16,7 +16,7 @@
           <div class="card">
             <div class="card-body" *ngFor="let coment of Comentarios">
               <div class="media">
-                <img class="mr-3 rounded-circle thumb64" [src]="coment.foto" alt="Image">
+                <img class="mr-3 rounded-circle thumb64" [src]="coment.foto" alt="Image" (error)="ErrorImg(coment.clave, coment.comentario)">
                 <div class="media-body mb-3">
                   <strong class="text-primary">
                     <!-- <span class="circle bg-success circle-lg text-left"></span> -->

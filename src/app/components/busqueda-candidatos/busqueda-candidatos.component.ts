@@ -210,7 +210,7 @@ export class BusquedaCandidatosComponent implements OnInit {
   }
   filterareaexp(area: string) {
     return this.filtroareaexp = this.Areasexp.filter(areaexp =>
-      areaexp.areaExperiencia.toLowerCase().indexOf(area.toLowerCase()) === 0);
+      areaexp.areaInteres.toLowerCase().indexOf(area.toLowerCase()) === 0);
   }
 
   // Perfil

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ClientesService } from './../../../../../service/clientes/clientes.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -42,7 +43,8 @@ export class DtClientesComponent implements OnInit {
 
   constructor(
     private _service: ClientesService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private _Router: Router,
   ) { }
 
   ngOnInit() {
@@ -221,5 +223,12 @@ export class DtClientesComponent implements OnInit {
     if (!this.selected) {
       // this._reinciar();
     }
+  }
+
+  editarCliente(){
+    this._Router.navigate(['/ventas/editarCliente', this.element['id'], ], { skipLocationChange: true });
+  }
+  visualizarCliente(){
+    this._Router.navigate(['/ventas/visualizarCliente', this.element['id'], ], { skipLocationChange: true });
   }
 }

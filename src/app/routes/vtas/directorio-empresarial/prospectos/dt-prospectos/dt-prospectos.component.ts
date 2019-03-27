@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { ClientesService } from '../../../../../service/clientes/clientes.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { RFCValidator } from './rfc-validation';
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -25,6 +29,9 @@ export class DtProspectosComponent implements OnInit {
   public clearFilter: boolean = false;
   selected: boolean = false;
 
+  /* Formulario para hacer cliente */
+  public formCliente: FormGroup;
+
   /* Variables de Paginador */
   public page: number = 1;
   public itemsPerPage: number = 20;
@@ -38,26 +45,43 @@ export class DtProspectosComponent implements OnInit {
 
   public rowAux = [];
   public element: any = null;
+  public Usuario: string;
 
   constructor(
     private _service: ClientesService,
-    private spinner: NgxSpinnerService
-  ) { }
+    private spinner: NgxSpinnerService,
+    private fb: FormBuilder,
+    private toasterService: ToasterService,
+    private _Router: Router,
+  ) {
+    this.formCliente = new FormGroup({
+      RazonSocial: new FormControl('',[Validators.required, Validators.maxLength(100)]),
+      RFC: new FormControl('', [Validators.required, Validators.maxLength(12), Validators.minLength(12)]),
+      ValidarRFC: new FormControl('', [Validators.required, Validators.maxLength(12), Validators.minLength(12)])
+    });
+   }
+
   ngOnInit() {
     this.spinner.show();
+    this.Usuario = sessionStorage.getItem('usuario');
     this.getProspectos();
+    this.formCliente = this.fb.group({
+      RazonSocial: ['', [Validators.required, Validators.maxLength(100)]],
+      RFC: ['', [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
+      ValidarRFC:  ['', [Validators.required, Validators.maxLength(12), Validators.minLength(12)]]
+    }, { validator: RFCValidator.MachRFC })
   }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.onChangeTable(this.config);
-    }, 1500);
-  }
+  // ngAfterViewInit(): void {
+  //   setTimeout(() => {
+  //     this.onChangeTable(this.config);
+  //   }, 1500);
+  // }
 
   getProspectos() {
     this._service.getProspectos().subscribe(data => {
-
       this.dataSource = data;
+      this.onChangeTable(this.config);
     }, error => this.errorMessage = <any>error);
   };
 
@@ -179,6 +203,7 @@ export class DtProspectosComponent implements OnInit {
 
   /* Funciones secundarias */
   onCellClick(data: any){
+    debugger;
     data.selected ? data.selected = false : data.selected = true;
     this.element = data;
 
@@ -221,5 +246,56 @@ export class DtProspectosComponent implements OnInit {
     if (!this.selected) {
       // this._reinciar();
     }
+  }
+
+  createCliente(){
+    var cliente = {
+      Id: this.element.id,
+      RazonSocial: this.formCliente.get('RazonSocial').value,
+      RFC: this.formCliente.get('RFC').value,
+      Usuario: this.Usuario
+    }
+    this._service.hacerCliente(cliente).subscribe(result => {
+      if(result == 200){
+        var msg = 'El prospecto se paso con exito a clientes, ir a la seccion de clientes para visualizarlo.'
+        this.popToast('success', 'Prospecto', msg);
+        this.refreshTable();
+      }
+      else{
+        var msg = 'Ocurrio un error al intntar pasar a cliente el prospecto';
+        this.popToast('error', 'Prospectos', msg);
+      }
+    })
+  }
+
+  editarProspecto(){
+    this._Router.navigate(['/ventas/editarCliente', this.element['id'], ], { skipLocationChange: true });
+  }
+
+  visualizarProspecto(){
+    this._Router.navigate(['/ventas/visualizarCliente', this.element['id'], ], { skipLocationChange: true });
+  }
+
+
+
+ /*
+ * Creacion de mensajes
+ */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7, tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
+  popToast(type: any, title: any, body: any) {
+    var toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 5000,
+      body: body
+    }
+    this.toasterService.pop(toast);
   }
 }

@@ -111,10 +111,10 @@
           <mat-form-field class="fieldautocomplete-full-width">
             <input matInput placeholder="Áreas Interés" aria-label="Area Exp" [matAutocomplete]="ae" [formControl]="aresexpCtrl">
             <mat-autocomplete #ae="matAutocomplete">
-              <mat-option *ngFor="let areaexp of filteredareaexp | async" [value]="areaexp.areaExperiencia">
+              <mat-option *ngFor="let areaexp of filteredareaexp | async" [value]="areaexp.areaInteres">
                 <div class="row">
                   <div class="col-md-4">
-                    <small>{{ areaexp.areaExperiencia }}</small>
+                    <small>{{ areaexp.areaInteres }}</small>
                   </div>
                 </div>
               </mat-option>

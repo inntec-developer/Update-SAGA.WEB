@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChil
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
+import { ApiConection } from './../../service/api-conection.service';
 import { DialogLiberarCandidatoComponent } from '../dialog-liberar-candidato/dialog-liberar-candidato.component';
 import { DirectorioEmpresarialComponent } from './../../routes/vtas/directorio-empresarial/directorio-empresarial.component';
 import { DtCandidatosPostComponent } from './../../routes/recl/vacantes/vacantes/components/dt-candidatos-post/dt-candidatos-post.component';
@@ -56,6 +57,7 @@ export class InfoCandidatoComponent implements OnInit {
   reclutador: any = '';
   reclutadorId;
   procesoCandidato: any = {};
+  urlCV: any;
   msg: string;
   procesoCandidatoId: any = 0; // Recuperar el estatus en el que se encuetra el candidato.
   Estatus: any; // Toma el Id del procesoCandidato para realizar las afectaciones correspondientes.
@@ -73,6 +75,8 @@ export class InfoCandidatoComponent implements OnInit {
   //examenes
   examen = { 'tecnicos': [], 'psicometricos': [] };
   modalExamen = false;
+  ShowButtonCV: boolean = false;
+
 
   constructor(
     private _serviceCandidato: InfoCandidatoService,
@@ -138,17 +142,26 @@ export class InfoCandidatoComponent implements OnInit {
         estatus: data.estatus,
         about: data.aboutMe[0],
         info: data.candidato,
-        propietarioId: data.propietarioId
+        propietarioId: data.propietarioId,
+        urlCv: data.urlCv
       }
+      console.log(this.candidato);
+      if (this.candidato.urlCv != '') {
+        this.urlCV = ApiConection.ServiceUrlBolsa + this.candidato.urlCv;
+        this.ShowButtonCV = true;
+      }
+      else {
+        this.urlCV = '';
+        this.ShowButtonCV = false;
+      }
+
       if (this.candidato.estatus) {
         this.Estatus = this.candidato.estatus.id;
         this.procesoCandidatoId = this.candidato.estatus.estatusId;
         this.Status = this.candidato.estatus.estatus.descripcion;
         this.RequisicionId = this.candidato.estatus.requisicionId;
         this.reclutador = this.candidato.estatus.reclutador;
-        this.reclutadorId = this.candidato.estatus.reclutadorId;
       }
-
       this._serviceExamen.GetExamenCandidato(this.candidato.id).subscribe(exa => {
         this.examen.tecnicos = exa[0];
         this.examen.psicometricos = exa[1];
@@ -337,11 +350,11 @@ export class InfoCandidatoComponent implements OnInit {
         data.vacantes == 0 || data.vacantes == data.contratados || data.estatusId == 39 || this.candidato.estatusId == 28 ||
           (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 26) ||
           (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 40) ||
-          (this.candidato.estatus.requisicionId != data.id && this.candidato.estatus.estatusId != 27  && this.candidato.estatus.estatusId != 26 && this.candidato.estatus.estatusId != 40) ? this.auxestatus = true : this.auxestatus = false;
-       
-          data.estatusId != 39 && (this.candidato.estatus.requisicionId == data.id && this.reclutadorId == this.usuarioId && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 40 &&
+          (this.candidato.estatus.requisicionId != data.id && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 26 && this.candidato.estatus.estatusId != 40) ? this.auxestatus = true : this.auxestatus = false;
+
+        data.estatusId != 39 && (this.candidato.estatus.requisicionId == data.id && this.reclutadorId == this.usuarioId && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 40 &&
           this.candidato.estatus.estatusId != 24 && this.candidato.estatus.estatusId != 26 && this.candidato.estatus.estatusId != 28 && this.candidato.estatus.estatusId != 42) ? this.desapartar = false : this.desapartar = true;
-        }
+      }
       else {
         this.desapartar = true;
 
@@ -512,8 +525,7 @@ export class InfoCandidatoComponent implements OnInit {
 
   }
 
-  LiberarPermisoEjecutivo()
-  {
+  LiberarPermisoEjecutivo() {
     this.objLiberar.push({
       RequisicionId: this.RequisicionId,
       CandidatoId: this.CandidatoId,
@@ -539,7 +551,7 @@ export class InfoCandidatoComponent implements OnInit {
 
     // const dialogConfig = new MatDialogConfig();
     // dialogConfig.autoFocus = true;
-    // dialogConfig.hasBackdrop = true; 
+    // dialogConfig.hasBackdrop = true;
     // dialogConfig.width = '28%';
     // dialogConfig.height = 'auto';
 
@@ -610,5 +622,14 @@ export class InfoCandidatoComponent implements OnInit {
     else {
       this.notAccess();
     }
+  }
+
+  showCvCandidato() {
+    var window290 = window.open(this.urlCV, "_blank",
+      "toolbar=no,scrollbars=no,resizable=no,status=no,menubar=no,location=no,fullscreen=yes,directories=no");
+  }
+
+  ImgErrorCandidato() {
+    this.candidato['picture'] = '/assets/img/user/default-user.png'
   }
 }
