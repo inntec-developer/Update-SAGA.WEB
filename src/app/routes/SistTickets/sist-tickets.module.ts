@@ -1,58 +1,19 @@
-import { ReclutamientoModule } from './../recl/reclutamiento.module';
-import { VentaModule } from './../vtas/ventas.module';
-import { ComponentsModule } from './../../components/components.module';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {
-  MatAutocompleteModule,
-  MatButtonModule,
-  MatButtonToggleModule,
-  MatCardModule,
-  MatCheckboxModule,
-  MatChipsModule,
-  MatDatepickerModule,
-  MatDialogModule,
-  MatDividerModule,
-  MatExpansionModule,
-  MatGridListModule,
-  MatIconModule,
-  MatInputModule,
-  MatListModule,
-  MatMenuModule,
-  MatNativeDateModule,
-  MatOptionModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatRadioModule,
-  MatRippleModule,
-  MatSelectModule,
-  MatSidenavModule,
-  MatSlideToggleModule,
-  MatSliderModule,
-  MatSnackBarModule,
-  MatSortModule,
-  MatStepperModule,
-  MatTableModule,
-  MatTabsModule,
-  MatToolbarModule,
-  MatTooltipModule
-} from '@angular/material';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-import { SeguimientoTicketComponent } from './seguimiento-ticket/seguimiento-ticket.component';
-
 import { RouterModule, Routes } from '@angular/router';
-import { SharedModule } from '../../shared/shared.module';
-import { VerTurnosComponent } from './ver-turnos/ver-turnos.component';
-import { FilaTicketsComponent } from './fila-tickets/fila-tickets.component';
-import { EnAtencionComponent } from './en-atencion/en-atencion.component';
-import { CarruselVacantesComponent } from './carrusel-vacantes/carrusel-vacantes.component';
-import { CarruselArteVacantesComponent } from './carrusel-arte-vacantes/carrusel-arte-vacantes.component';
-import { DlgAsignarModuloComponent } from './dlg-asignar-modulo/dlg-asignar-modulo.component';
-import { RevisionExamenesComponent } from './revision-examenes/revision-examenes.component';
-import { DlgRevisarExamenesComponent } from '../../components/dlg-revisar-examenes/dlg-revisar-examenes.component';
-import { TicketCitaPruebaComponent } from './ticket-cita-prueba/ticket-cita-prueba.component';
 
+import { CarruselArteVacantesComponent } from './carrusel-arte-vacantes/carrusel-arte-vacantes.component';
+import { CarruselVacantesComponent } from './carrusel-vacantes/carrusel-vacantes.component';
+import { ComponentsModule } from './../../components/components.module';
+import { DlgAsignarModuloComponent } from './dlg-asignar-modulo/dlg-asignar-modulo.component';
+import { EnAtencionComponent } from './en-atencion/en-atencion.component';
+import { FilaTicketsComponent } from './fila-tickets/fila-tickets.component';
+import { NgModule } from '@angular/core';
+import { ReclutamientoModule } from './../recl/reclutamiento.module';
+import { RevisionExamenesComponent } from './revision-examenes/revision-examenes.component';
+import { SeguimientoTicketComponent } from './seguimiento-ticket/seguimiento-ticket.component';
+import { SharedModule } from '../../shared/shared.module';
+import { TicketCitaPruebaComponent } from './ticket-cita-prueba/ticket-cita-prueba.component';
+import { VentaModule } from './../vtas/ventas.module';
+import { VerTurnosComponent } from './ver-turnos/ver-turnos.component';
 
 const routes: Routes = [
   { path: 'turno', component: SeguimientoTicketComponent},
@@ -66,45 +27,11 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    CommonModule,
-    SharedModule, 
+    SharedModule,
     RouterModule.forChild(routes),
-    MatAutocompleteModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatNativeDateModule,
-    MatOptionModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSlideToggleModule,
-    MatSliderModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatStepperModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatTooltipModule,
     ComponentsModule,
     VentaModule,
     ReclutamientoModule,
-    NgbModule
   ],
   declarations: [
     SeguimientoTicketComponent,
@@ -115,9 +42,7 @@ const routes: Routes = [
     CarruselArteVacantesComponent,
     DlgAsignarModuloComponent,
     RevisionExamenesComponent,
-    // DlgRevisarExamenesComponent,
     TicketCitaPruebaComponent,
   ],
-  // entryComponents: [DlgRevisarExamenesComponent]
 })
 export class SistTicketsModule { }

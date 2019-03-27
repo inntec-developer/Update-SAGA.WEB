@@ -1,8 +1,10 @@
 import { BsDatepickerModule, DatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ColorPickerModule, ColorPickerService } from 'ngx-color-picker';
+import { DataTableModule, FileUploadModule } from 'primeng/primeng';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { INgxSelectOptions, NgxSelectModule } from 'ngx-select-ex';
 import {
+  MAT_DATE_LOCALE,
   MatAutocompleteModule,
   MatButtonModule,
   MatButtonToggleModule,
@@ -44,6 +46,7 @@ import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../core/translator/config-paginator/config-paginator.component';
 
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { AgGridModule } from 'ag-grid-angular';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
@@ -54,9 +57,14 @@ import { ChkPrivilegiosMenuDirective } from './directives/checkPrivilegios/chk-p
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { ColorsService } from './colors/colors.service';
 import { CommonModule } from '@angular/common';
+import { CustomFormsModule } from 'ng2-validation';
+import { DndModule } from 'ng2-dnd';
 import { EasypiechartDirective } from './directives/easypiechart/easypiechart.directive';
 import { FlotDirective } from './directives/flot/flot.directive';
 import { FocusDirective } from './directives//focus/focus.directive';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
+import { ImageCropperModule } from 'ng2-img-cropper';
 import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ChartsModule as Ng2ChartsModule } from 'ng2-charts/ng2-charts'
@@ -70,8 +78,11 @@ import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { RatingModule } from 'ngx-bootstrap/rating';
 import { RouterModule } from '@angular/router';
 import { ScrollableDirective } from './directives/scrollable/scrollable.directive';
+import { SelectModule } from 'ng2-select';
 import { SparklineDirective } from './directives/sparkline/sparkline.directive';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { TagInputModule } from 'ngx-chips';
+import { TextMaskModule } from 'angular2-text-mask';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
@@ -88,6 +99,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
 @NgModule({
   imports: [
     AccordionModule.forRoot(),
+    AgGridModule,
     AlertModule.forRoot(),
     ButtonsModule.forRoot(),
     BsDatepickerModule.forRoot(),
@@ -96,8 +108,15 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     CollapseModule.forRoot(),
     ColorPickerModule,
     CommonModule,
+    CustomFormsModule,
+    DataTableModule,
     DatepickerModule.forRoot(),
+    DndModule.forRoot(),
+    FileUploadModule,
     FormsModule,
+    HttpClientModule,
+    HttpModule,
+    ImageCropperModule,
     MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -143,8 +162,11 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ProgressbarModule.forRoot(),
     RatingModule.forRoot(),
     ReactiveFormsModule,
+    SelectModule,
     TabsModule.forRoot(),
+    TagInputModule,
     TimepickerModule.forRoot(),
+    TextMaskModule,
     ToasterModule,
     TooltipModule.forRoot(),
     TranslateModule,
@@ -155,6 +177,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     ColorPickerService,
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
     { provide: PaginationConfig, useValue: getSpanishPaginatorBtp() },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-MX' },
     ToasterService
   ],
 
@@ -174,6 +197,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
   ],
   exports: [
     AccordionModule,
+    AgGridModule,
     AlertModule,
     ButtonsModule,
     BsDatepickerModule,
@@ -184,11 +208,16 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     CollapseModule,
     ColorPickerModule,
     CommonModule,
+    CustomFormsModule,
+    DataTableModule,
     DatepickerModule,
+    DndModule,
     EasypiechartDirective,
+    FileUploadModule,
     FocusDirective,
     FormsModule,
     FlotDirective,
+    ImageCropperModule,
     JqcloudDirective,
     MatAutocompleteModule,
     MatButtonModule,
@@ -237,9 +266,12 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     RatingModule,
     ReactiveFormsModule,
     RouterModule,
+    SelectModule,
     ScrollableDirective,
     SparklineDirective,
     TabsModule,
+    TagInputModule,
+    TextMaskModule,
     TimepickerModule,
     ToasterModule,
     TooltipModule,

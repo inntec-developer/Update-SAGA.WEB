@@ -1,4 +1,3 @@
-
 import { Error404Component } from './pages/error404/error404.component';
 import { Error500Component } from './pages/error500/error500.component';
 import { LayoutComponent } from '../layout/layout.component';
@@ -26,7 +25,7 @@ export const routes = [
             { path: 'examenes', loadChildren: './Examenes/examenes.module#ExamenesModule'},
             { path: 'catalogos', loadChildren: './catalogos/catalogos.module#CatalogosModule'},
             { path: 'reporte', loadChildren:'./reportes/reportes.module#ReportesModule'},
-           { path: 'tickets', loadChildren: './SistTickets/sist-tickets.module#SistTicketsModule'}
+            { path: 'tickets', loadChildren: './SistTickets/sist-tickets.module#SistTicketsModule'}
         ]},
 
 
