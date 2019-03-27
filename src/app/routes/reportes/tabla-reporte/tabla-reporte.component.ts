@@ -139,17 +139,17 @@ est = estatus == undefined?'0':est;
     this.General.forEach(item => {
       obj.push({
         Folio: item.folio.toString(),
-        'Fecha Solicitud': this.convertDateTime(item.fch_Creacion),
-        'Fecha Cumplimiento': this.convertDateTime(item.fch_Cumplimiento),
+        'Solicitud ': this.convertDateTime(item.fch_Creacion),
         Empresa: item.empresa,
+        Puesto : item.vBtra,
         Estado: item.estado,
-        Solicita: item.propietario,
-        'No. Vacante'	: item.numero,
-        'Avance%'	: item.numero + '%',
-        Vacante: item.vBtra,
+        Reclutador  : item.nombreReclutado,
+        'No.'	: item.numero,
+        'Cumplimiento'	: item.porcentaje + '%',
         Estatus: item.estatus,
-        'Tipo Coordinación': item.tipoReclutamiento,
-        'Fecha estatus': this.convertDateTime(item.fch_Modificacion)
+        'Fecha estatus': this.convertDateTime(item.fch_Modificacion),
+        'Coordinación ': item.clasesReclutamiento,
+        Solicita: item.propietario
       })
      });
      this.Exel.exportAsExcelFile(obj,'Reporte')
@@ -182,8 +182,13 @@ est = estatus == undefined?'0':est;
   convertDateTime(dateTime){
     if(dateTime != undefined){
       var res = dateTime.substring(0, 10);
-      var result = Date.parse(res);
-      return (res);
+    //  var result = Date.parse(res);
+      var date = res.split("-");
+      var yyyy = date[0];
+      var mm = date[1];
+      var dd = date[2];
+      var fecha = dd +'-' + mm+'-' + yyyy
+      return (fecha);
     }
     
    // var date = res.split("-");

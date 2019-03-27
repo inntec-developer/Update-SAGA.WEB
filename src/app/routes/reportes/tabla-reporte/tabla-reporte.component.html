@@ -4,7 +4,7 @@
     <div >
         <h2 *ngIf="General.length == 0" style="margin-top: 30px">
             
-             <div style="margin-top: 55px" role="alert" class="alert alert-info ng-star-inserted">
+             <div style="margin-top: 55px; font-size: 14px" role="alert" class="alert alert-info ng-star-inserted">
                 <strong >Oops!</strong> No se encontraron Resultados
               </div>
         </h2>
@@ -15,17 +15,19 @@
          <thead >
            <tr>
              <th class="text-center text-success ng-star-inserted" scope="col">Folio</th>
-             <th class="text-center text-primary ng-star-inserted" scope="col">Fecha solicitud</th>
-             <th class="text-center text-primary ng-star-inserted" scope="col">Fecha Cumplimiento</th>
+             <th class="text-center text-primary ng-star-inserted" scope="col">Solicitud </th>
              <th class="text-center text-success ng-star-inserted" scope="col">Empresa</th>
+             <th class="text-center text-success ng-star-inserted" scope="col">Puesto </th>
              <th class="text-center text-success ng-star-inserted" scope="col">Estado</th>
-             <th class="text-center text-primary ng-star-inserted" scope="col">Solicita</th>
-             <th class="text-center text-primary ng-star-inserted" scope="col">No. vacante</th>
-             <th class="text-center text-primary ng-star-inserted" scope="col">Porcentaje %</th>
-             <th class="text-center text-success ng-star-inserted" scope="col">Vacante</th>
+             <th class="text-center text-primary ng-star-inserted"  scope="col">Reclutador</th>
+             <th class="text-center text-primary ng-star-inserted" scope="col">No. </th>
+             <th class="text-center text-primary ng-star-inserted" scope="col">Cumplimiento</th>
              <th class="text-center text-primary ng-star-inserted" scope="col">Estatus</th>
              <th class="text-center text-primary ng-star-inserted" scope="col">Fecha estatus</th>
-             <th class="text-center text-primary ng-star-inserted" scope="col">Tipo Coordinación</th>
+             <th class="text-center text-primary ng-star-inserted" scope="col">Solicita</th>
+             <th class="text-center text-success ng-star-inserted" scope="col">Coordinación </th>
+             
+            
              <!-- <th class="text-center text-primary ng-star-inserted" scope="col">Reclutador</th> -->
 
            </tr>
@@ -34,18 +36,18 @@
            <tr *ngFor="let item of General">
              <th class="text-center">{{item.folio}}</th>
              <td class="text-center">{{this.convertDateTime(item.fch_Creacion)}}</td>
-             <td class="text-center">{{this.convertDateTime(item.fch_Cumplimiento)}}</td>
              <td class="text-center">{{item.empresa}}</td>
+             <td class="text-center">{{item.vBtra}}</td>
              <td class="text-center">{{item.estado}}</td>
-             <td class="text-center">{{item.propietario}}</td>
+             <td class="text-center" tooltip="{{item.nombreReclutado}}" > {{item.reclutadorTotal}}</td>
              <td class="text-center">{{item.numero}}</td>
              <td class="text-center">{{item.porcentaje}}%</td>
-             <td class="text-center">{{item.vBtra}}</td>
              <td class="text-center">{{item.estatus}}</td>
              <td class="text-center">{{this.convertDateTime(item.fch_Modificacion)}}</td>
-             <td class="text-center">{{item.tipoReclutamiento}}</td>
+             <td class="text-center" tooltip="{{item.nombreApellido}}" >{{item.propietario}}</td>
+             <td class="text-center">{{item.clasesReclutamiento}}</td>
            </tr>
-
+           
          </tbody>
        </table>
 
