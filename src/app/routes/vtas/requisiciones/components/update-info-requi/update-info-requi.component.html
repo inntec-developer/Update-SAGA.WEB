@@ -41,7 +41,7 @@
       </div>
       <div class="col-md-2">
         <mat-form-field>
-          <input matInput [min]="minLimitDate" [matDatepicker]="cumplimiento" placeholder="Fecha Cumplimiento"
+          <input matInput [matDatepicker]="cumplimiento" placeholder="Fecha Cumplimiento"
             formControlName="fch_Cumplimiento" required>
           <mat-datepicker-toggle matSuffix [for]="cumplimiento"></mat-datepicker-toggle>
           <mat-datepicker touchUi="true" #cumplimiento></mat-datepicker>

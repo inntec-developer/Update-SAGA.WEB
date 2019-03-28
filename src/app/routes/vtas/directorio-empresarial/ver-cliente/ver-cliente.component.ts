@@ -14,6 +14,13 @@ export class VerClienteComponent implements OnInit {
   private ClienteId: any;
   private Cliente: any = [];
   private esCliente: boolean;
+
+  //scroll
+  disabled = false;
+  compact = false;
+  invertX = false;
+  invertY = false;
+  shown = 'hover';
   constructor(
     private spinner: NgxSpinnerService,
     private _Router: Router,
@@ -24,7 +31,6 @@ export class VerClienteComponent implements OnInit {
       if (params['ClienteId'] != null) {
         this.ClienteId = params['ClienteId'];
         this._service.getCliente(this.ClienteId).subscribe(result => {
-          debugger;
           if (result != null) {
             this.Cliente = result;
             this.esCliente = result['esCliente'];

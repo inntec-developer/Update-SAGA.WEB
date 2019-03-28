@@ -95,7 +95,6 @@ export class DialogCancelRequiComponent implements OnInit {
             if (data == 200) {
               this.dialogCancel.close(data);
             }
-            console.log(data);
           }, err => {
             console.log(err);
           });
@@ -112,7 +111,7 @@ export class DialogCancelRequiComponent implements OnInit {
       this.popToast('warning', 'Requisición', 'Los caracteres mínimos del motivo de cancelacion son 50 sin espacios en blanco al final.');
       this.loading = false;
     }
-   
+
   }
 
   onCloseDialog() {

@@ -1400,7 +1400,6 @@ export class NuevoProspectoComponent implements OnInit {
             extension: telefono.extension
           }
           DireccionTelefono.push(data);
-          console.log(DireccionTelefono)
         }
       });
       this.CorreosNew.forEach(function (correo: any) {
@@ -1413,7 +1412,6 @@ export class NuevoProspectoComponent implements OnInit {
             email: correo.email,
           }
           DireccionEmail.push(data);
-          console.log(DireccionEmail)
         }
       });
       this.ContactosNew.forEach(function (contacto: any) {
@@ -1429,7 +1427,6 @@ export class NuevoProspectoComponent implements OnInit {
             puesto: contacto.puesto
           }
           DireccionContacto.push(data);
-          console.log(DireccionContacto)
         }
       });
     });

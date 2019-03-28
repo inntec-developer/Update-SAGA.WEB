@@ -1,7 +1,9 @@
-import { ComentariosService } from './../../service/Comentarios/comentarios.service';
-import { CandidatosService } from './../../service/Candidatos/candidatos.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+
+import { CandidatosService } from './../../service/Candidatos/candidatos.service';
+import { ComentariosService } from './../../service/Comentarios/comentarios.service';
+
 const swal = require('sweetalert');
 
 @Component({
@@ -35,7 +37,7 @@ export class EditarCandidatoEstatusComponent implements OnInit {
 
   }
 
-  updateValue(event, cell, rowIndex) 
+  updateValue(event, cell, rowIndex)
   {
     var aux;
     if(event.target.value !== '')
@@ -43,7 +45,7 @@ export class EditarCandidatoEstatusComponent implements OnInit {
       // var aux = this.candidatos[rowIndex]['comentario'];
       // aux.respuesta = event.target.value;
       this.candidatos[rowIndex]['respuesta'] = event.target.value;
-      
+
       this.candidatos[rowIndex]['activar'] = true;
       this.comentario = event.target.value;
     }
@@ -55,13 +57,13 @@ export class EditarCandidatoEstatusComponent implements OnInit {
 
   public AddComentario(row, estatus)
   {
-    
+
     let Comentario = {
         CandidatoId: row.candidatoId,
         Comentario: this.comentario,
         ComentarioId: row.id,
         Usuario: sessionStorage.getItem('usuario'),
-        UsuarioId: sessionStorage.getItem('id'), 
+        UsuarioId: sessionStorage.getItem('id'),
         RespuestaId: row.comentarioId,
         RequisicionId: row.requisicionId,
         MotivoId: row.motivoId,
@@ -70,25 +72,25 @@ export class EditarCandidatoEstatusComponent implements OnInit {
 
       console.log(row)
 
-  
+
 
       this.rowAux = [];
       this.estatusAux = 0;
       this.confirmar = false;
       this.confirmar2 = false;
-   
+
     }
 
 
     //#region modal confirmar
     Confirmar(row, estatus, modal){
-   
+
       var Comentario = {
         CandidatoId: row.candidatoId,
         Comentario: this.comentario,
         ComentarioId: row.comentarioId,
         Usuario: sessionStorage.getItem('usuario'),
-        UsuarioId: sessionStorage.getItem('id'), 
+        UsuarioId: sessionStorage.getItem('id'),
         RespuestaId: row.comentarioId,
         RequisicionId: row.requisicionId,
         MotivoId: row.motivoId,
@@ -96,8 +98,6 @@ export class EditarCandidatoEstatusComponent implements OnInit {
       }
 
 var conf = false;
-      console.log(row)
-
       if(modal == 1)
       {
         swal({
@@ -128,12 +128,12 @@ var conf = false;
 
                 }
                 swal("¡Candidato NR!", "Los datos se actualizaron con éxito.", "success");
-               
+
               }
             }, err => {
 
               console.log(err);
-            });      
+            });
           }
           else {
             swal("Cancelado", "No se realizó ningún cambio", "error");
@@ -157,10 +157,10 @@ var conf = false;
           closeOnConfirm: false,
           closeOnCancel: false
         },
-    
+
        (isConfirm) => {
           if (isConfirm) {
-           
+
             this.serviceComentarios.AddRespuesta(Comentario).subscribe(data => {
               if (data == 200) {
                 this.comentario = '';
@@ -180,7 +180,7 @@ var conf = false;
 
               }
             }, err => {
-              
+
               console.log(err);
             });
 
@@ -193,7 +193,7 @@ var conf = false;
     //#endregion
 
 
-   
+
 
     /**
    * configuracion para mensajes de acciones.

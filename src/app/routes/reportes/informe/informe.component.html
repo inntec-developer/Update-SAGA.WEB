@@ -30,13 +30,13 @@
     <div class="col-xl-2">
        
           <div class="form-group">
-            <label for="sel2">Sucursales:</label>
+            <label for="sel2">Sucursales</label>
             
                 <form  [formGroup]="FormSucursal">
                     <ngx-select
                     [allowClear]="true"
                     autoClearSearch="true"
-                   placeholder="Sucursales"
+                   placeholder="Sucursales..."
                    formControlName = "SucursalControl"
                    (data)="(value)"
                    [multiple]="true"
@@ -84,7 +84,7 @@
     
        
           <div class="form-group">
-            <label  for="sel3">Fecha Inicio:</label>
+            <label  for="sel3">Fecha Inicio</label>
             <input
             
               class="form-control input-sm"
@@ -103,7 +103,7 @@
   <div class="col-xl-2">
      
           <div class="form-group">
-            <label for="sel3">Fecha Fin:</label>
+            <label for="sel3">Fecha Fin</label>
             <input
               class="form-control input-sm"
               type="date"
@@ -119,11 +119,12 @@
 
   <div class="col-xl-2">
       <div class="form-group">
-        <label for="tiporeclutaR">Reclutamiento:</label>
+        <label for="tiporeclutaR">Reclutamiento</label>
         <select class="form-control input-sm" id="tiporeclutaR">
           <option value="0">Todos</option>
           <option value="1">Reclutamiento Puro</option>
           <option value="2">Subcontratación</option>
+          <option value="2">Staff</option>
         </select>
       </div>
   </div>
@@ -136,6 +137,7 @@
                 <option value="0">Todas</option>
                 <option value="1">Especializado</option>
                 <option value="2">Operativo</option>
+                <option value="3">Masivo</option>
               </select>
             </div>
          
@@ -148,7 +150,7 @@
               <label for="sel1">Estatus:</label>
               <form [formGroup]="FormEstatus">
                   <ngx-select
-                  autoSelectSingleOption= "true"
+               
                  [allowClear]="true"
                  autoClearSearch="true"
                  placeholder="Estatus..."
@@ -178,7 +180,7 @@
 
   <div class="col-xl-2" id="divSolicitante">
       <div class="form-group" >
-        <label for="solicitanteR">Solicitante:</label>
+        <label for="solicitanteR">Solicitante</label>
 
         <form [formGroup]="FormSolicitante" style="font-size: 10px !important">
             <ngx-select
@@ -219,7 +221,7 @@
 
   <div class="col-xl-4">
       <div class="form-group input-sm" >
-        <label for="empresaR">Empresa:</label>
+        <label for="empresaR">Empresa</label>
 
         <form [formGroup]="FormEmpresas">
             <ngx-select
@@ -253,7 +255,7 @@
   <div class="col-xl-4" id="divreclutador">
     
       <div class="form-group input-sm">
-        <label for="sel2">Reclutador:</label>
+        <label for="sel2">Reclutador</label>
 
         <form [formGroup]="FormReclutador">
             <ngx-select

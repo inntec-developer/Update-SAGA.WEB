@@ -1,7 +1,6 @@
 import { SistTicketsModule } from './../SistTickets/sist-tickets.module';
 import { VacantesComponent } from './../Tracking/vacantes/vacantes.component';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
-import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MatPaginatorIntl, MatTableModule } from '@angular/material';
 import { Ng2TableModule } from 'ng2-table/ng2-table';
@@ -10,15 +9,15 @@ import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { HttpClientModule } from '@angular/common/http';
-
-import { SharedModule } from '../../shared/shared.module';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { RecoverComponent } from './recover/recover.component';
-import { LockComponent } from './lock/lock.component';
-import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { Error404Component } from './error404/error404.component';
 import { Error500Component } from './error500/error500.component';
+import { LockComponent } from './lock/lock.component';
+import { LoginComponent } from './login/login.component';
+import { MaintenanceComponent } from './maintenance/maintenance.component';
+import { NgModule } from '@angular/core';
+import { RecoverComponent } from './recover/recover.component';
+import { RegisterComponent } from './register/register.component';
+import { SharedModule } from '../../shared/shared.module';
 import { TrackingVacantesComponent } from './tracking-vacantes/tracking-vacantes.component';
 import { TicketsInicioComponent } from './tickets-inicio/tickets-inicio.component';
 

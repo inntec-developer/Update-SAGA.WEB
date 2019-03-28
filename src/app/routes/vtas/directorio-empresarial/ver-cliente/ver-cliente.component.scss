@@ -1,0 +1,25 @@
+.acordin-padding {
+  padding: 0rem 0rem !important;
+}
+
+.mb-3,
+.my-3 {
+  margin-bottom: 1rem !important;
+  margin-top: 1rem !important;
+}
+
+.dt-container{
+  background-color: white !important;
+}
+
+div ol
+{
+  width: 100%;
+  height: 120px;
+}
+ng-scrollbar {
+  --scrollbar-size: 4px;
+  --scrollbar-thumb-color: rgb(94, 175, 255);
+  --scrollbar-thumb-hover-color: dodgerblue;
+  --scrollbar-border-radius: 4px;
+}

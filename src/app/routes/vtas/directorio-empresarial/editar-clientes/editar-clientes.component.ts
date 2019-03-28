@@ -28,7 +28,6 @@ export class EditarClientesComponent implements OnInit {
           debugger;
           if (result != null) {
             this.Cliente = result;
-            console.log(this.Cliente);
           }
         });
       } else {
