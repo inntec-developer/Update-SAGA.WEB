@@ -1,3 +1,4 @@
+import { SistTicketsModule } from './../SistTickets/sist-tickets.module';
 import { VacantesComponent } from './../Tracking/vacantes/vacantes.component';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
 import { NgModule } from '@angular/core';
@@ -19,6 +20,8 @@ import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { Error404Component } from './error404/error404.component';
 import { Error500Component } from './error500/error500.component';
 import { TrackingVacantesComponent } from './tracking-vacantes/tracking-vacantes.component';
+import { TicketsInicioComponent } from './tickets-inicio/tickets-inicio.component';
+
 
 
 
@@ -45,7 +48,8 @@ import { TrackingVacantesComponent } from './tracking-vacantes/tracking-vacantes
         FormsModule,
         ReactiveFormsModule,
         NgScrollbarModule,
-        HttpClientModule
+        HttpClientModule,
+        SistTicketsModule
     ],
     declarations: [
         LoginComponent,
@@ -56,7 +60,8 @@ import { TrackingVacantesComponent } from './tracking-vacantes/tracking-vacantes
         Error404Component,
         Error500Component,
         VacantesComponent,
-        TrackingVacantesComponent
+        TrackingVacantesComponent,
+        TicketsInicioComponent
     ],
     providers: [
         { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
