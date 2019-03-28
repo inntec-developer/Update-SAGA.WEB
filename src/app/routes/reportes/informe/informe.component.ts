@@ -29,6 +29,9 @@ export class InformeComponent implements OnInit {
   public objrecluta : any[];
   public objstatus : any[];
 
+  private reclutaList:any;
+  private cordinaList:any;
+
   public FormEmpresas: FormGroup;
   public FormSucursal: FormGroup;
   public FormSolicitante: FormGroup;
@@ -46,6 +49,7 @@ export class InformeComponent implements OnInit {
     private http: Http,
     private route: ActivatedRoute,
     private router: Router,
+
  //   private toasterService: ToasterService,
     private spinner: NgxSpinnerService
   ) {
@@ -69,6 +73,9 @@ export class InformeComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.cordinaList = [{id:0,nombre:'Todos'},
+      {id:1,nombre:'Especializado'},{id:2,nombre:'Operativo'},{id:3,nombre:'Masivo'}]
+
     this.Servicio.GetEmpresas().subscribe(item =>{
       this.Empresas = item;
       this.Oficina = [{id:0,nombre:'Todas'},

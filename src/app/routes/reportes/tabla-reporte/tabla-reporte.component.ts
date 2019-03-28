@@ -143,13 +143,13 @@ est = estatus == undefined?'0':est;
         Empresa: item.empresa,
         Puesto : item.vBtra,
         Estado: item.estado,
-        Reclutador  : item.nombreReclutado,
+        Reclutador  : item.nombreReclutado == ''?'SIN ASIGNAR':item.nombreReclutado,
         'No.'	: item.numero,
         'Cumplimiento'	: item.porcentaje + '%',
         Estatus: item.estatus,
         'Fecha estatus': this.convertDateTime(item.fch_Modificacion),
-        'Coordinación ': item.clasesReclutamiento,
-        Solicita: item.propietario
+        Solicita: item.nombreApellido,
+        'Coordinación ': item.clasesReclutamiento
       })
      });
      this.Exel.exportAsExcelFile(obj,'Reporte')
@@ -187,7 +187,7 @@ est = estatus == undefined?'0':est;
       var yyyy = date[0];
       var mm = date[1];
       var dd = date[2];
-      var fecha = dd +'-' + mm+'-' + yyyy
+      var fecha = dd +'/' + mm+'/' + yyyy
       return (fecha);
     }
     

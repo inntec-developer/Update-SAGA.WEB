@@ -124,6 +124,7 @@
           <option value="0">Todos</option>
           <option value="1">Reclutamiento Puro</option>
           <option value="2">Subcontratación</option>
+          <option value="2">Staff</option>
         </select>
       </div>
   </div>
@@ -136,6 +137,7 @@
                 <option value="0">Todas</option>
                 <option value="1">Especializado</option>
                 <option value="2">Operativo</option>
+                <option value="3">Masivo</option>
               </select>
             </div>
          
@@ -148,7 +150,7 @@
               <label for="sel1">Estatus:</label>
               <form [formGroup]="FormEstatus">
                   <ngx-select
-                  autoSelectSingleOption= "true"
+               
                  [allowClear]="true"
                  autoClearSearch="true"
                  placeholder="Estatus..."
