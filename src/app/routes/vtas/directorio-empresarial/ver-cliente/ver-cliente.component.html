@@ -98,6 +98,36 @@
           </ng-scrollbar>
         </div>
       </accordion-group>
+      <accordion-group [isOpen]="true">
+          <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
+            <div class="pull-left float-left text-warning">
+              <h5>Tel&eacute;fonos / Correos Electr&oacute;nicos</h5>
+            </div>
+            <span class="float-right pull-right">
+              <em class="fa fa-phone"></em>
+              <em class="fa fa-envelope"></em>
+            </span>
+          </button>
+          <div class="row">
+            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+              [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+              <div>
+                <ol>
+                  <li *ngFor="let d of Cliente?.direcciones">
+                    <strong class="text-primary">Calle: </strong>{{d.calle | uppercase}}
+                    <strong class="text-primary">Numero: </strong>{{d.numeroExterior}}
+                    <span *ngIf="d.numeroInterior"><strong class="text-primary">Ext:</strong> {{d.numeroInterior}}   </span>
+                    <strong class="text-primary">Colonia: </strong>{{d.colonia | uppercase}}
+                    <strong class="text-primary">C.P: </strong>{{d.codigoPostal | uppercase}}
+                    <strong class="text-primary">Estado: </strong>{{d.estado | uppercase}}
+                    <strong class="text-primary">Municipio: </strong>{{d.municipio | uppercase}}
+                  </li>
+
+                </ol>
+              </div>
+            </ng-scrollbar>
+          </div>
+        </accordion-group>
     </accordion>
   </div>
 </div>

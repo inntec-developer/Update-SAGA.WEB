@@ -145,7 +145,6 @@ export class InfoCandidatoComponent implements OnInit {
         propietarioId: data.propietarioId,
         urlCv: data.urlCv
       }
-      console.log(this.candidato);
       if (this.candidato.urlCv != '') {
         this.urlCV = ApiConection.ServiceUrlBolsa + this.candidato.urlCv;
         this.ShowButtonCV = true;

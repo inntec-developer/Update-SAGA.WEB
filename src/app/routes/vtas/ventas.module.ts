@@ -47,8 +47,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    ComponentsModule,
     SharedModule,
+    ComponentsModule,
     RouterModule.forChild(routes),
     // HttpModule,
     // HttpClientModule,

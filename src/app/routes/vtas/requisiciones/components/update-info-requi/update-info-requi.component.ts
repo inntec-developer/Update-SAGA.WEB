@@ -130,9 +130,6 @@ export class UpdateInfoRequiComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
     if (changes.Folios && !changes.Folios.isFirstChange()) {
       this.getInformacionRequisicio(this.Folios);
     }
@@ -219,7 +216,6 @@ export class UpdateInfoRequiComponent implements OnInit {
             confidencial: data.confidencial,
           });
           this.estatusId = data.estatus.id;
-          this.minLimitDate = data.fch_Creacion;
           this.GetExamenRequi();
         });
     }

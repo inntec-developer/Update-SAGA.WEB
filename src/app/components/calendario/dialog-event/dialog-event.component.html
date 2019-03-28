@@ -31,13 +31,13 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [min]="minDate" [matDatepicker]="fchInicio" placeholder="Inicio" formControlName="Inicio" (dateChange)="_CheckNuevaFecha()"
+        <input matInput [matDatepicker]="fchInicio" placeholder="Inicio" formControlName="Inicio" (dateChange)="_CheckNuevaFecha()"
           [(ngModel)]="SeletedDayC" required="">
         <mat-datepicker-toggle matSuffix [for]="fchInicio"></mat-datepicker-toggle>
         <mat-datepicker #fchInicio></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [min]="minLimitDate" [matDatepicker]="fchFinal" placeholder="Fin" formControlName="Fin"
+        <input matInput [matDatepicker]="fchFinal" placeholder="Fin" formControlName="Fin"
           required>
         <mat-datepicker-toggle matSuffix [for]="fchFinal"></mat-datepicker-toggle>
         <mat-datepicker #fchFinal></mat-datepicker>
@@ -49,10 +49,10 @@
           </section> -->
       <section *ngIf="!allDaySelected">
         <mat-form-field>
-          <input matInput placeholder="Hora Inicio" type="time" min="08:00" max="18:00" formControlName="HoraInicio" step="600" required="">
+          <input matInput placeholder="Hora Inicio" type="time" formControlName="HoraInicio" step="600" required="">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Hora Final" type="time" min="08:00" max="18:00" formControlName="HoraFin" step="600" required="">
+          <input matInput placeholder="Hora Final" type="time"  formControlName="HoraFin" step="600" required="">
         </mat-form-field>
       </section>
       <section>

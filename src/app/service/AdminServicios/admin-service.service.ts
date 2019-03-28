@@ -91,10 +91,10 @@ export class AdminServiceService {
      })
 
      let params = new HttpParams().set('entidadId', candidatoId)
- 
+
      return this._httpClient.get(this.UrlGetFiles, {params: params});
   }
- 
+
   GetImage(ruta): string
   {
     return ApiConection.ServiceUrlFileManager + 'Files/users/' + ruta;
@@ -102,14 +102,13 @@ export class AdminServiceService {
 
   GetPdf(ruta): Observable<any>
   {
-    let params = new HttpParams().set('ruta', ruta);  
+    let params = new HttpParams().set('ruta', ruta);
     return this._httpClient.get(this.UrlViewFile, {params: params, responseType: 'blob'});
   }
 
   DownloadFiles(ruta) : Observable<any>
   {
-    console.log(ruta)
-    let params = new HttpParams().set('file', ruta);  
+    let params = new HttpParams().set('file', ruta);
     return this._httpClient.get(this.UrlDownloadFiles, {params: params, responseType: 'blob'});
   }
 
@@ -124,28 +123,27 @@ export class AdminServiceService {
   downloadImage(ruta): Observable<any>
   {
     // let ruta = "utilerias/img/user/08155cc8-3568-e811-80e1-9e274155325e.jpeg";
-    // console.log(ruta)
 
     let httpHeaders = new HttpHeaders({
      'Access-Control-Allow-Origin': 'http://localhost:4200',
      'Content-Type': 'image/*.*'
     })
 
-    let params = new HttpParams().set('ruta', ruta);     
+    let params = new HttpParams().set('ruta', ruta);
     //let options = new RequestOptions({headers: httpHeaders, params: params, responseType: ResponseContentType.Blob });
       // return this.http.get(ruta, options)
       // .map(res => res.blob())
       //   .catch(this.handleError)
-     
-      
+
+
      return this._httpClient.get(ApiConection.ServiceUrlFileManager + '/img/user/' + ruta, {headers: httpHeaders, responseType: "blob"});
     //  return this._httpClient.get(ApiConection.ServiceUrlFoto + ruta, {responseType: "blob"});
-    
-    
+
+
     // return this._httpClient.get(this.UrlGetImage, { headers: httpHeaders,
     //   params: params
     //   })
- 
+
   }
 
   downloadPDF(url):  Observable<any> {
@@ -241,7 +239,7 @@ export class AdminServiceService {
             .map(result => result.json())
             .catch(this.handleError);
   }
-  
+
   GetTreeRoles(): Observable<any>
   {
      return this.http.get(this.UrlGetTreeRoles)
@@ -299,7 +297,7 @@ export class AdminServiceService {
             .map(result => result.json())
             .catch(this.handleError);
   }
-  
+
   AddGroupRol(data: any): Observable<any>{
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
