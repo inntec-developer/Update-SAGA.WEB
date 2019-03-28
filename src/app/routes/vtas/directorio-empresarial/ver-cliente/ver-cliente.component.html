@@ -1,37 +1,103 @@
-<div class="dt-container  mat-elevation-z8">
+<div class="dt-container mat-elevation-z8">
   <div class="card-header">
     <em class="fa fa-user"></em> Informaci&oacute;n General del
     <span *ngIf="esCliente else Prospecto">Cliente</span>
     <ng-template #Prospecto><span>Prospecto</span></ng-template>
 
   </div>
-
-  <tabset [justified]="true">
+  <div class="card-body">
     <accordion [closeOthers]="oneAtATime">
-      <accordion-group [isOpen]="isFirstOpen">
+      <accordion-group [isOpen]="true">
         <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
           <div class="pull-left float-left text-warning">
-            <h5>Acerca de M&iacute;</h5>
+            <h5>Datos Principales</h5>
           </div>
           <span class="float-right pull-right">
             <em class="fa fa-user-circle-o"></em>
           </span>
         </button>
         <div class="row">
+          <div class="col-md-2 col-sm-12" *ngIf="esCliente" #razonSocial>
+            <strong class="text-primary">Razon Social: </strong>
+            <label class="text-muted">
+              {{Cliente?.razonSocial | uppercase}}
+            </label>
+          </div>
+          <div class="col-md-2 col-sm-12" *ngIf="esCliente" #rfc>
+            <strong class="text-primary">RFC: </strong>
+            <label class="text-muted">
+              {{Cliente?.rfc | uppercase}}
+            </label>
+          </div>
+          <div class="col-md-2 col-sm-12" #nombreComercial>
+            <strong class="text-primary">Nombre Comercial: </strong>
+            <label class="text-muted">
+              {{Cliente?.nombreComercial | uppercase}}
+            </label>
+          </div>
+          <div class="col-md-2 col-sm-12" #actividadEmpresa>
+            <strong class="text-primary">Actividad: </strong>
+            <label class="text-muted">
+              {{Cliente?.actividadEmpresa?.actividadEmpresa | uppercase}}
+            </label>
+          </div>
+          <div class="col-md-2 col-sm-12" #tamanioEmpresa>
+            <strong class="text-primary">Tamaño: </strong>
+            <label class="text-muted">
+              {{Cliente?.tamanoEmpresa?.tamanoEmpresa | uppercase}}
+            </label>
+          </div>
+          <div class="col-md-2 col-sm-12" #numeroEmpleados>
+            <strong class="text-primary"># Empleados.: </strong>
+            <label class="text-muted">
+              {{Cliente?.numeroEmpleados}}
+            </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2 col-sm-12" #tipoempresa>
+            <strong class="text-primary">Tipo: </strong>
+            <label class="text-muted">
+              {{Cliente?.tipoEmpresa?.tipoEmpresa | uppercase}}
+            </label>
+          </div>
+          <div class="col-md-2 col-sm-12" #tipoBase>
+            <strong class="text-primary">Tipo Base: </strong>
+            <label class="text-muted">
+              {{Cliente?.tipoBase?.tipoBase | uppercase}}
+            </label>
+          </div>
         </div>
       </accordion-group>
-      <accordion-group>
+      <accordion-group [isOpen]="true">
         <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
           <div class="pull-left float-left text-warning">
             <h5>Direcci&oacute;n</h5>
           </div>
           <span class="float-right pull-right">
-            <em class="fa fa-home"></em>
+            <em class="fa fa-map-marker"></em>
           </span>
         </button>
         <div class="row">
+          <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+            [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+            <div>
+              <ol>
+                <li *ngFor="let d of Cliente?.direcciones">
+                  <strong class="text-primary">Calle: </strong>{{d.calle | uppercase}}
+                  <strong class="text-primary">Numero: </strong>{{d.numeroExterior}}
+                  <span *ngIf="d.numeroInterior"><strong class="text-primary">Ext:</strong> {{d.numeroInterior}}   </span>
+                  <strong class="text-primary">Colonia: </strong>{{d.colonia | uppercase}}
+                  <strong class="text-primary">C.P: </strong>{{d.codigoPostal | uppercase}}
+                  <strong class="text-primary">Estado: </strong>{{d.estado | uppercase}}
+                  <strong class="text-primary">Municipio: </strong>{{d.municipio | uppercase}}
+                </li>
+
+              </ol>
+            </div>
+          </ng-scrollbar>
         </div>
       </accordion-group>
     </accordion>
-  </tabset>
+  </div>
 </div>
