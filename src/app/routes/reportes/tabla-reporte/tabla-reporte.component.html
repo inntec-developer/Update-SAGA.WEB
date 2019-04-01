@@ -10,8 +10,11 @@
         </h2>
        </div>
 
+
+
+
        <!-- *ngIf="General.length > 0" -->
-       <table *ngIf="General.length > 0" style="font-size: 10px"  class="table table-striped table-hover ng-star-inserted sombra">
+       <!-- <table *ngIf="General.length > 0" style="font-size: 10px"  class="table table-striped table-hover ng-star-inserted sombra">
          <thead >
            <tr>
              <th class="text-center text-success ng-star-inserted" scope="col">Folio</th>
@@ -26,10 +29,6 @@
              <th class="text-center text-primary ng-star-inserted" scope="col">Fecha estatus</th>
              <th class="text-center text-primary ng-star-inserted" scope="col">Solicita</th>
              <th class="text-center text-success ng-star-inserted" scope="col">Coordinación </th>
-             
-            
-             <!-- <th class="text-center text-primary ng-star-inserted" scope="col">Reclutador</th> -->
-
            </tr>
          </thead>
          <tbody>
@@ -47,9 +46,87 @@
              <td class="text-center" tooltip="{{item.nombreApellido}}" >{{item.propietario}}</td>
              <td class="text-center">{{item.clasesReclutamiento}}</td>
            </tr>
-           
          </tbody>
-       </table>
+       </table> -->
+
+       <div>
+         
+<div class="card" *ngIf="General.length > 0" style="margin-top:80px">
+    <div class="card-body mat-elevation-z8">
+  
+      <ng-scrollbar #scrollableP [trackX]="true" [trackY]="false" [invertX]="invertX" [invertY]="invertY" [compact]="compact" [shown]="shown"
+        [disableOnBreakpoints]="false" [disabled]="disabled">
+  
+  
+        <div style="width: 1200px; height: auto; overflow: hidden;">
+          <table ngClass="{{config.className || ''}}" class="table">
+            <thead>
+              <tr>
+                <th *ngFor="let column of columns" ngClass="{{column.className || ''}}" >
+                  <small>{{column.title | uppercase}}</small>
+                  <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
+                  </i> -->
+                </th>
+              </tr>
+              <tr *ngIf="showFilterRow">
+                <th *ngFor="let column of columns">
+                  <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                    class="form-control form-control-sm" id="{{column.name}}">
+                </th>
+              </tr>
+  
+            </thead>
+           
+            <tbody>
+                <!-- <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
+                [disableOnBreakpoints]="false" [disabled]="disabled">
+                <div> -->
+                  <tr *ngFor="let item of rows" >
+                      <th class="text-center ">{{item.folio}}</th>
+                      <td class="text-center">{{this.convertDateTime(item.fch_Creacion)}}</td>
+                      <td class="text-center">{{item.empresa}}</td>
+                      <td class="text-center">{{item.vBtra}}</td>
+                      <td class="text-center">{{item.estado}}</td>
+                      <td class="text-center"  > <p tooltip="{{item.nombreReclutado}}">{{item.reclutadorTotal}}</p> </td>
+                      <td class="text-center">{{item.numero}}</td>
+                      <td class="text-center">{{item.porcentaje}}%</td>
+                      <td class="text-center">{{item.estatus}}</td>
+                      <td class="text-center"  ><p tooltip="{{item.nombreApellido}}">{{item.propietario}}</p> </td>
+                      <td class="text-center">{{this.convertDateTime(item.fch_Modificacion)}}</td>
+                      <td class="text-center">{{item.clasesReclutamiento}}</td>
+                  </tr>
+                <!-- </div>
+                </ng-scrollbar> -->
+            </tbody>
+         
+          </table>
+        </div>
+      </ng-scrollbar>
+  
+      <br/>
+      <div class="row">
+        <div class="col-md-12 clearfix">
+          <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+            [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
+  
+          <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
+  <ng-template #NotCandidatos>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <alert type="info">
+          <strong>Oops!</strong> A&uacute;n no cuentas con candidatos en proceso / apartados.
+        </alert>
+      </div>
+    </div>
+  </ng-template> -->
+
+       </div>
 
 
 

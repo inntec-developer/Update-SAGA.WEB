@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiConection } from '../../../service/api-conection.service';
 import {MatTableDataSource} from '@angular/material';
 import { window } from 'rxjs-compat/operator/window';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-oficinas',
@@ -14,22 +15,172 @@ import { window } from 'rxjs-compat/operator/window';
 })
 export class OficinasComponent implements OnInit {
  
+  closeResult: string;
   public datos : any[];
+  public Estado : any[];
+  public Municipio : any[];
+  public Colonia : any[];
   public dataSource: MatTableDataSource<any[]>;
 
   constructor(
     private Servicio: CatalogosService,
     private spinner: NgxSpinnerService,
-    private router : Router
+    private router : Router,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
-    this.Servicio.getSucursales().subscribe(item =>{
-    this.dataSource = item;
-    this.datos = item;
-      console.log(item);
-    })
+    this.LlamarOfi();
     document.oncontextmenu=null
+  }
+
+  LlamarOfi(){
+    this.Servicio.getSucursales('').subscribe(item =>{
+     
+      this.datos = item;
+        console.log(item);
+      })
+  }
+
+  Filtroo(){
+    let fil = document.getElementById('palabra')['value'];
+    this.Servicio.getSucursales(fil).subscribe(item =>{
+      this.datos = item;
+        console.log(item);
+      })
+  }
+
+  Guardar(){
+    let nom = document.getElementById('nombre')['value'];
+    let est = document.getElementById('EstadoOfi')['value'];
+    let mun = document.getElementById('MunicipioOfi')['value'];
+    let col = document.getElementById('colonia')['value'];
+    let cp = document.getElementById('cp')['value'];
+    let calle = document.getElementById('calle')['value'];
+    let num = document.getElementById('numero')['value'];
+    let tel = document.getElementById('telefono')['value'];
+    let email = document.getElementById('email')['value'];
+    let lat = document.getElementById('latitud')['value'];
+    let lon = document.getElementById('longitud')['value'];
+    let tipo = document.getElementById('tipoOfi')['value'];
+    let act = document.getElementById('checkModal-input')['checked'];
+    let id = document.getElementById('Identi')['value'];
+
+    if(id == ''){
+      this.Servicio.GuardarOficina(nom , est , mun , col , cp , calle , num , tel , email ,lat , lon , tipo ).subscribe(item =>{
+        alert(item)
+        this.LlamarOfi();
+      })
+    }else{
+      this.Servicio.EditarOficina(nom , est , mun , col , cp , calle , num , tel , email ,lat , lon , tipo,act,id ).subscribe(item =>{
+        alert(item)
+        this.LlamarOfi();
+      })
+    }
+
+   // alert(nom + est + mun + col + cp + calle + num + tel + email +lat + lon + tipo + act)
+   
+  }
+
+  Actualizar(){
+    let nom = document.getElementById('nombre')['value'];
+    let est = document.getElementById('EstadoOfi')['value'];
+    let mun = document.getElementById('MunicipioOfi')['value'];
+    let col = document.getElementById('colonia')['value'];
+    let cp = document.getElementById('cp')['value'];
+    let calle = document.getElementById('calle')['value'];
+    let num = document.getElementById('numero')['value'];
+    let tel = document.getElementById('telefono')['value'];
+    let email = document.getElementById('email')['value'];
+    let lat = document.getElementById('latitud')['value'];
+    let lon = document.getElementById('longitud')['value'];
+    let tipo = document.getElementById('tipoOfi')['value'];
+    let act = document.getElementById('checkModal-input')['checked'];
+    let id = document.getElementById('Identi')['value'];
+debugger
+   // alert(nom + est + mun + col + cp + calle + num + tel + email +lat + lon + tipo + act)
+    this.Servicio.EditarOficina(nom , est , mun , col , cp , calle , num , tel , email ,lat , lon , tipo,act,id ).subscribe(item =>{
+        alert(item)
+        this.LlamarOfi();
+      })
+  }
+
+  Eliminar(id){
+   
+    this.Servicio.EliminarOficina(id).subscribe(item =>{
+      alert(item);
+      this.ngOnInit()
+      this.LlamarOfi();
+    })
+  }
+
+  AbrirModal(){
+    document.getElementById('Identi')['value'] = '';
+    this.Servicio.getOficinaEstado('0').subscribe(item =>{
+      this.Estado = item;
+        console.log(item);
+      })
+  }
+
+  EditarModal(id){
+   
+    document.getElementById('Identi')['value'] = id;
+  //  document.getElementById('nombre')['value'] = document.getElementById('nombre_' + id)['value'];
+  //  document.getElementById('calle')['value'] = document.getElementById('calle_' + id)['value'];
+  //  document.getElementById('numero')['value'];document.getElementById('numero_' + id)['value'];
+  //  document.getElementById('telefono')['value'] = document.getElementById('telefono_' + id)['value'];
+  //  document.getElementById('email')['value'] = document.getElementById('Correo_' + id)['value'];
+  //  document.getElementById('latitud')['value'] = document.getElementById('latitud_' + id)['value'];
+  //  document.getElementById('longitud')['value'] = document.getElementById('longitud_' + id)['value'];
+  //  document.getElementById('cp')['value'] = document.getElementById('codigopostal_' + id)['value'];
+  
+    this.Servicio.getOficinaEstado('0').subscribe(item =>{
+      this.Estado = item;
+        console.log(item);
+      })
+  }
+
+
+
+  Muni(){
+    let res = document.getElementById('EstadoOfi')['value'];
+    this.Servicio.getOficinaMunicipio('0',res).subscribe(item =>{
+      this.Municipio = item;
+      if(res == '0'){
+        this.Municipio = null;
+      }
+        console.log(item);
+      })
+      this.Colonia = null;
+  }
+
+  Col(){
+    let res = document.getElementById('MunicipioOfi')['value'];
+    this.Servicio.getOficinaColonia('0',res).subscribe(item =>{
+      this.Colonia = item;
+      if(res == '0'){
+        this.Colonia = null;
+      }
+        console.log(item);
+      })
+  }
+
+  open(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
   }
 
   displayedColumns = [
@@ -46,7 +197,7 @@ export class OficinasComponent implements OnInit {
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+   // this.datos = this.datos();
   }
 
 }
@@ -66,136 +217,3 @@ export interface Element {
   correo: string;
 }
 
-
-// disabled = false;
-// compact = false;
-// invertX = false;
-// invertY = false;
-// shown = 'hover';
-
-// public datos: any[];
-// public dataSource: Array<any> = [];
-// public errorMessage: any;
-// public showFilterRow: boolean;
-// public clearFilter: boolean = false;
-// selected: boolean = false;
-
-
-// public rows: Array<any> = [];
-// public columns: Array<any> = [
-//   { title: 'Oficina', sorting: 'desc', className: 'text-success text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'RFC' } },
-//   // { title: 'Razón Social', sorting: 'desc', className: 'text-success text-center', name: 'razonSocial', filtering: { filterString: '', placeholder: 'Razon Social' } },
-//   // { title: 'Nombre Comercial', sorting: 'desc', className: 'text-success text-center', name: 'nombrecomercial', filtering: { filterString: '', placeholder: 'Nombre' } },
-//   // { title: 'Giro', className: 'text-info text-center', name: 'giroEmpresa', filtering: { filterString: '', placeholder: 'Giro' } },
-//   // { title: 'Actividad', className: 'text-info text-center', name: 'actividadEmpresa', filtering: { filterString: '', placeholder: 'Actividad' } },
-//   // { title: 'Tamano', className: 'text-info text-center', name: 'tamanoEmpresa', filtering: { filterString: '', placeholder: 'Tamaño' } },
-//   // { title: 'Empleados', className: 'text-info text-center', name: 'numeroEmpleados', filtering: { filterString: '', placeholder: 'No. Empleados' } },
-//   // { title: 'Clasificación', className: 'text-info text-center', name: 'clasificacion', filtering: { filterString: '', placeholder: 'Calsificación' } },
-//   // { title: 'TipoEmpresa', className: 'text-info text-center', name: 'tipoEmpresa', filtering: { filterString: '', placeholder: 'Tipo' } },
-// ];
-
-// public config: any = {
-//   paging: true,
-//   filtering: {filterString: ''},
-//   className: ['table-hover mb-0']
-// }
-
-
-// public changeSort(data: any, config: any): any {
-//   if (!config.sorting) {
-//     return data;
-//   }
-//   let columns = this.config.sorting.columns || [];
-//   let columnName: string = void 0;
-//   let sort: string = void 0;
-
-//   for (let i = 0; i < columns.length; i++) {
-//     if (columns[i].sort !== '' && columns[i].sort !== false) {
-//       columnName = columns[i].name;
-//       sort = columns[i].sort;
-//     }
-//   }
-//   if (!columnName) {
-//     return data;
-//   }
-//   // simple sorting
-//   return data.sort((previous: any, current: any) => {
-//     if (previous[columnName] > current[columnName]) {
-//       return sort === 'desc' ? -1 : 1;
-//     } else if (previous[columnName] < current[columnName]) {
-//       return sort === 'asc' ? -1 : 1;
-//     }
-//     return 0;
-//   });
-// }
-
-// public changeFilter(data: any, config: any): any {
-//   let filteredData: Array<any> = data;
-//   this.columns.forEach((column: any) => {
-//     this.clearFilter = true;
-//     if (column.filtering) {
-//       this.showFilterRow = true;
-//       filteredData = filteredData.filter((item: any) => {
-//         if (item[column.name] != null)
-//           return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
-//       });
-//     }
-//   });
-//   if (!config.filtering) {
-//     return filteredData;
-//   }
-
-//   if (config.filtering.columnName) {
-//     return filteredData.filter((item: any) =>
-//       item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-//   }
-
-//   let tempArray: Array<any> = [];
-//   filteredData.forEach((item: any) => {
-//     let flag = false;
-//     this.columns.forEach((column: any) => {
-//       if (item[column.name] == null) {
-//         flag = true;
-//       } else {
-//         if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-//           flag = true;
-//         }
-//       }
-//     });
-//     if (flag) {
-//       tempArray.push(item);
-//     }
-//   });
-//   filteredData = tempArray;
-//   return filteredData;
-// }
-
-// public clearfilters() {
-//   this.clearFilter = false;
-//   this.columns.forEach(element => {
-//     element.filtering.filterString = '';
-//     (<HTMLInputElement>document.getElementById(element.name)).value = '';
-//   });
-//   this.onChangeTable(this.config);
-//   if (!this.selected) {
-//     // this._reinciar();
-//   }
-// }
-
-// public onChangeTable(config: any): any {
-
-//   if (config.filtering) {
-//     (<any>Object).assign(this.config.filtering, config.filtering);
-//   }
-
-//   if (config.sorting) {
-//     (<any>Object).assign(this.config.sorting, config.sorting);
-//   }
-//   this.rows = this.dataSource;
-//   let filteredData = this.changeFilter(this.dataSource, this.config);
-//   let sortedData = this.changeSort(filteredData, this.config);
-//   // this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
-//   // this.registros = this.rows.length;
-//   // this.length = sortedData.length;
-//   // this.spinner.hide();
-// }

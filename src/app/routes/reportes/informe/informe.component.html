@@ -82,27 +82,41 @@
   </div>
 <div class="col-xl-2">
     
-       
-          <div class="form-group">
+    <div class="form-group">
+        <label for="sel4">Fecha Inicio</label>
+        <mat-form-field>
+            <input   matInput [matDatepicker]="picker1" id="fechaInicial"   [formControl]="date2">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+      </div>
+          <!-- <div class="form-group">
             <label  for="sel3">Fecha Inicio</label>
             <input
-            
               class="form-control input-sm"
               lang="es"
               type="date"
               id="fechaInicial"
               name="fecha"
-             
               max="{{ano}}-{{mes}}-{{dia}}"
             />
-          </div>
+          </div> -->
 </div>
 
 
 
   <div class="col-xl-2">
      
-          <div class="form-group">
+      <div class="form-group">
+          <label for="sel3">Fecha Fin</label>
+          <mat-form-field>
+              <input   matInput [matDatepicker]="fechaFinal" id="fechaFinal"  [formControl]="date">
+              <mat-datepicker-toggle matSuffix [for]="fechaFinal"></mat-datepicker-toggle>
+              <mat-datepicker #fechaFinal></mat-datepicker>
+            </mat-form-field>
+        </div>
+     
+          <!-- <div class="form-group">
             <label for="sel3">Fecha Fin</label>
             <input
               class="form-control input-sm"
@@ -113,7 +127,7 @@
               size="12" 
               max="{{ano}}-{{mes}}-{{dia}}"
             />
-          </div>
+          </div> -->
   </div>
  
 
@@ -132,7 +146,7 @@
       <div class="col-xl-2" id="divcordinacion">
           
             <div class="form-group">
-              <label for="condinacionR">Coordinación:</label>
+              <label for="condinacionR">Coordinación</label>
               <select class="form-control input-sm" id="condinacionR">
                 <option value="0">Todas</option>
                 <option value="1">Especializado</option>
@@ -147,7 +161,7 @@
 
         <div class="col-xl-2" id="divestatus">
             <div class="form-group input-sm" style="z-index: 100px !important">
-              <label for="sel1">Estatus:</label>
+              <label for="sel1">Estatus</label>
               <form [formGroup]="FormEstatus">
                   <ngx-select
                

@@ -31,11 +31,22 @@ debugger;
     this.service.getVRadial(this.UsuarioId).subscribe(item =>{
       this.Entrevistado = item['entrevi'];
       this.Entrevistadopor = item['entrevTotal'];
+      
       this.Enviadopor = item['enviadoTotal'];
       this.Enviado = item['enviado'];
       this.Contratadopor = item['contraTotal'];
       this.Contratado = item['contrata'];
+      
+     
     })
+    // var cadena = this.Entrevistadopor;
+    // let div = document.getElementById("RadialEntre");
+    // console.log(cadena);
+    // console.log(cadena.substring(0, 1));
+    // let cade = cadena.substring(0, 1) + '0';
+    // console.log('radial-bar-'+ cade);
+    // div.classList.add('radial-bar-'+ cade);
+   
   }
 
 }
