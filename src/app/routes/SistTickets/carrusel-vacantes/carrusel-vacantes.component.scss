@@ -19,16 +19,16 @@
 
 .card
 {
-    width: 600px !important;
-    height: 427px;
+    width: 700px !important;
+    height: 500px;
     
 }
 .carousel-caption
 {
-    width: 600px;
+    width: 700px;
     right: 0%;
     top: 90%;
-    bottom: 0px;
+    bottom: 2px;
     left: 0;
     z-index: 10;
     padding-top: 10px;
@@ -36,7 +36,22 @@
 
 }
 
-.carousel-control-prev-icon, .carousel-control-next-icon {
-
-    background-color: black !important;
+.btn-label
+{
+    width: 60px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
 }
+
+.btn
+{
+    border-radius: 25px;
+}
+
+.btn-postulate {
+  
+   width: 40%;
+height: 35px;
+  
+ }
+

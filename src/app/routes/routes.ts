@@ -8,7 +8,7 @@ import { MaintenanceComponent } from './pages/maintenance/maintenance.component'
 import { RecoverComponent } from './pages/recover/recover.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { TrackingVacantesComponent } from './pages/tracking-vacantes/tracking-vacantes.component';
-import { VacantesComponent } from './Tracking/vacantes/vacantes.component';
+import { TicketsInicioComponent } from './pages/tickets-inicio/tickets-inicio.component';
 
 export const routes = [
 
@@ -39,6 +39,7 @@ export const routes = [
     { path: '404', component: Error404Component },
     { path: '500', component: Error500Component },
     { path: 'TrackingVacantes', component: TrackingVacantesComponent },
+    { path: 'Tickets', component: TicketsInicioComponent },
 
 
     // Not found

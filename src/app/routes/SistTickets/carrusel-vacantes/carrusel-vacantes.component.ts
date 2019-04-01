@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { id } from '@swimlane/ngx-datatable/release/utils';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
-import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarousel, NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 const swal = require('sweetalert');
 @Component({
@@ -12,16 +14,20 @@ const swal = require('sweetalert');
 })
 export class CarruselVacantesComponent implements OnInit {
 
+  @ViewChild('myCarousel') myCarousel: NgbCarousel;
   vacantes = [];
   showNavigationArrows = true;
   showNavigationIndicators = false;
   modalTicket: boolean = false;
 num = "";
-
-  constructor(config: NgbCarouselConfig, private _service: SistTicketsService) { 
+  categorias: any[];
+  dataSource: any;
+  activeId;
+  constructor(config: NgbCarouselConfig, private _service: SistTicketsService, private spinner: NgxSpinnerService) { 
     config.interval = 10000;
     config.wrap = false;
     config.pauseOnHover = true;
+    
   }
 
   ngOnInit() {
@@ -75,13 +81,60 @@ num = "";
        './../assets/img/ArteVacantes/img04.jpg', './../assets/img/ArteVacantes/img05.png', 
        './../assets/img/ArteVacantes/img06.png', './../assets/img/ArteVacantes/img07.png', './../assets/img/ArteVacantes/img08.png']
       
-      this.vacantes = data;
+      this.dataSource = data;
+  var color = 0;
+      this.categorias = Array.from(new Set(this.dataSource.map(s => s.areaId)))
+      .map(id => {
+        color +=1;
+        if(color > 7)
+        {
+          color = 1;
+        }
+        return {
+          id: id, 
+          categoria: this.dataSource.find(s => s.areaId === id).categoria,
+          icono: this.dataSource.find(s => s.areaId === id).icono,
+          color: color
+        }
+      });
+
+
+
       for(var c = 0; c <= 7; c++)
       {
-        this.vacantes[c].image = images[c];
+        this.dataSource[c].image = images[c];
       }
-      console.log(this.vacantes)
+
+      this.vacantes = this.dataSource;
+
     })
+  }
+
+  FiltrarCategoria(id, mocos)
+  {
+    if(id==0)
+    {
+      this.vacantes = this.dataSource;
+    }
+    else
+    {
+    var filtro = this.dataSource.filter( item => {
+      if( item.areaId === id )
+      {
+        return item;
+      }
+    });
+
+    this.vacantes = filtro;
+  }
+this.activeId = this.vacantes[0].id;
+
+    console.log(this.vacantes)
+  //   setTimeout(() => {
+  //     /** spinner ends after 5 seconds */
+  //     this.spinner.hide();
+  // }, 5000);
+
   }
 
 }

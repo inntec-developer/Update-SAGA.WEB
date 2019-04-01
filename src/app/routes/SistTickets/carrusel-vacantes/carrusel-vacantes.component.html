@@ -1,15 +1,22 @@
-<div class="d-flex flex-row">
-  <div class="d-flex flex-column">
-      <button type="button" class="btn btn-labeled btn-success btn-lg btn-block mat-elevation-z8"><span class="btn-label"><i class="fa fa-check"></i></span>CATEGORIA 1</button>
-      <button type="button" class="btn btn-labeled btn-warning btn-lg btn-block mat-elevation-z8"><span class="btn-label"><i class="fa fa-bath"></i></span>CATEGORIA 2</button>
+<div class="container-fluid">
+<div class="d-flex flex-row justify-content-between">
+  <div class="d-flex flex-column" >
+    <button type="button" class="btn btn-labeled btn-secondary btn-lg btn-block mat-elevation-z8 d-flex justify-content-between" (click)="FiltrarCategoria(0, myCarousel)">
+      <span class="btn-label"><i class="fa fa-eye text-warning"></i></span><span class="align-self-center text-warning font-weight-bold">Ver todas</span></button>
+    <ng-container *ngFor="let r of categorias">
+      <button *ngIf="r.id != 0" type="button" [class.btn-success]="r.color == 1" [class.btn-info]="r.color == 2" [class.btn-danger]="r.color == 3" [class.btn-primary]="r.color == 4" [class.btn-purple]="r.color == 5" 
+      [class.btn-warning]="r.color == 6" [class.btn-dark] = "r.color == 7" class="btn btn-labeled btn-success btn-lg btn-block mat-elevation-z8 d-flex justify-content-between" (click)="FiltrarCategoria(r.id,myCarousel);myCarousel.cycle();"><span class="btn-label"><i class={{r.icono}}></i></span><span class="align-self-center">{{r.categoria}}</span></button>
+      <!-- <button type="button" class="btn btn-labeled btn-warning btn-lg btn-block mat-elevation-z8"><span class="btn-label"><i class="fa fa-bath"></i></span>CATEGORIA 2</button>
       <button type="button" class="btn btn-labeled btn-primary btn-lg btn-block mat-elevation-z8"><span class="btn-label"><i class="fa fa-handshake-o"></i></span>CATEGORIA 3</button>
-      <button type="button" class="btn btn-labeled btn-danger btn-lg btn-block mat-elevation-z8"><span class="btn-label"><i class="fa fa-wpexplorer"></i></span>CATEGORIA 4</button>
+      <button type="button" class="btn btn-labeled btn-danger btn-lg btn-block mat-elevation-z8"><span class="btn-label"><i class="fa fa-wpexplorer"></i></span>CATEGORIA 4</button> -->
+    </ng-container>
+
   </div>
   <div class="d-flex flex-column ml-2">
-    <ngb-carousel #mocos *ngIf="vacantes.length > 0" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
-      <ng-template ngbSlide *ngFor="let v of vacantes">
+    <ngb-carousel #myCarousel="ngbCarousel" *ngIf="vacantes.length > 0" [activeId]="activeId" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
+      <ng-template ngbSlide *ngFor="let v of vacantes" >
         <div class="media" *ngIf="v.image">
-          <img class="align-self-center mr-3" [src]="v.image" alt="Random slide" style="width: 600px; height: 427px;">
+          <img class="align-self-center mr-3" [src]="v.image" alt="Random slide" style="width: 700px; height: 500px;">
         </div>
         <div *ngIf="!v.image" class="card">
           <div class="card-body bg-light fontMio mat-elevation-z8">
@@ -26,15 +33,16 @@
             </div>
           </div>
         </div>
-        <div class="carousel-caption mat-elevation-z8">
-           
-           <h3 class="p-1 bg-warning">POST&Uacute;LATE
-            <button (click)="GenerarTicket(v)" class="btn btn-xs btn-success mr-2 mb-1" container="body" placement="bottom" tooltip="Generar Ticket">
-              <em class="fa fa-thumbs-o-up"></em>
+        <div class="carousel-caption d-flex justify-content-center">
+
+            <button (click)="GenerarTicket(v)" class="btn btn-success btn-postulate mat-elevation-z8">
+              <span class="align-self-center font-weight-bold">POST&Uacute;LATE</span><em class="fa fa-thumbs-o-up ml-3"></em>
             </button>
-          </h3>
+
         </div>
       </ng-template>
     </ngb-carousel>
   </div>
 </div>
+</div>
+<ngx-spinner></ngx-spinner>
