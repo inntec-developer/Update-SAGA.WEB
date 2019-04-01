@@ -12,15 +12,120 @@
 
 
 
-
-
-
-
-
-  <table _ngcontent-c12="" class="table table-hover ng-star-inserted">
+  <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Oficinas</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form style="font-size: 12px">
+          <div >
+              <label for="dateOfBirth">Nombre </label>
+                <input type="tetx" id="nombre" class="form-control form-control-sm ">
+            </div>
+            <div class="form-group">
+                <label >Estados</label>
+                <select class="form-control input-sm" (change)="Muni()"  id="EstadoOfi">
+                    <option value="0">Seleccione un estado</option>
+                  <option *ngFor="let item of Estado"  value="{{item.id}}">{{item.estado}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                  <label >Municipio</label>
+                  <select (change)="Col()" class="form-control input-sm" id="MunicipioOfi">
+                      <option  value="0">Seleccione un municipio</option>
+                      <option *ngFor="let item of Municipio"  value="{{item.id}}">{{item.municipio}}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                    <label for="condinacionR">Colonia</label>
+                    <select class="form-control input-sm" id="colonia">
+                        <option  value="0">Seleccione una colonia</option>
+                        <option *ngFor="let item of Colonia"  value="{{item.id}}">{{item.colonia}}</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                      <label for="dateOfBirth">Codigo Postal</label>
+                        <input type="number" id="cp" maxlength="5" class="form-control form-control-sm ">
+                    </div>
+              <div class="form-group">
+                  <label for="dateOfBirth">Calle</label>
+                    <input type="tetx" id="calle" class="form-control form-control-sm ">
+                </div>
+                <div class="form-group">
+                    <label for="dateOfBirth">Número</label>
+                      <input type="tetx" id="numero" class="form-control form-control-sm ">
+                  </div>
+                  <div class="form-group">
+                      <label for="dateOfBirth">Télefono</label>
+                        <input type="number" id="telefono" class="form-control form-control-sm ">
+                    </div>
+                    <div class="form-group">
+                        <label for="dateOfBirth">Email</label>
+                          <input type="tetx" id="email" class="form-control form-control-sm ">
+                      </div>
+                      <div class="form-group">
+                          <label for="dateOfBirth">Latitud</label>
+                            <input type="tetx" id="latitud" class="form-control form-control-sm ">
+                        </div>
+                        <div class="form-group">
+                            <label for="dateOfBirth">Longitud</label>
+                              <input type="tetx" id="longitud" class="form-control form-control-sm ">
+                          </div>
+                          <div class="form-group">
+                              <label >Colonia</label>
+                              <select class="form-control input-sm" id="tipoOfi">
+                                  <option  value="3">Reclutamiento</option>
+                                  <option  value="1">Corporativo</option>
+                                  <option  value="2">Ventas</option>
+                                  <option  value="4">Filial</option>
+                                  <option  value="5">Representante</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                                <mat-checkbox id="checkModal" style="margin: 20px"  checked="1">Activa o Desactiva!</mat-checkbox>
+                              </div>
+                         
+        </form>
+      </div>
+      <div class="modal-footer">
+          <!-- (click)="modal.close('Save click')" -->
+        <button type="button" class="btn btn-outline-dark ocultar" (click)="Guardar()" (click)="modal.close('Save click')" >Agregar</button>
+      
+      </div>
+    </ng-template>
+    
+    <div class="col-xl-6">
+        <div class="form-group ">
+            <!-- <label for="bus">Busqueda:</label> -->
+            <div class="input-group input-sm">
+              <input
+                id="palabra"
+                type="text"
+                size="12"
+                placeholder="Palabra clave"
+                class=" form-control input-sm"
+                (change)="Filtroo()"
+              />
+              <div class="input-group-append mano" >
+                <span class="input-group-text "> <em class="fa fa-search"></em></span>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="col-xl-2" style="position: relative;top: -49px;left: 94%;">
+          <button title="Agregar pregunta"  class="mb-1 btn btn-sm btn-outline-success" (click)="AbrirModal()"  (click)="open(content)"  type="button"   >
+              <em _ngcontent-c34="" class="fa fa-plus"></em>
+            </button>
+     </div>
+<input type="hidden" id="Identi" value="">
+   
+  <table _ngcontent-c12=""  style="font-size: 12px" class="table table-striped table-hover ">
     <thead _ngcontent-c12="">
       <tr _ngcontent-c12="">
-        <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> Nombre </th>
+        <th _ngcontent-c12="" class="text-center text-success ng-star-inserted"> Nombre </th>
         <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> municipio </th>
         <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> Estado </th>
         <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> calle y Numero </th>
@@ -30,29 +135,52 @@
         <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> latitud </th>
         <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> longitud </th>
         <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> tipoOficina </th>
-        
+        <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> Activo </th>
         <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> Accion </th></tr>
       </thead><tbody _ngcontent-c12=""><!---->
           <tr _ngcontent-c12="" class="rowHover ng-star-inserted" *ngFor="let item of datos">
-            <td _ngcontent-c12="" class="text-center">{{item.nombre}}</td>
+            <td _ngcontent-c12="" class="text-center">{{item.nombre}}
+              <input type="hidden" id="nombre_{{item.id}}" value="{{item.nombre}}" >
+            </td>
             <td _ngcontent-c12="" class="text-center">{{item.municipio}}</td>
-            <td _ngcontent-c12="" class="text-center">{{item.estado}}</td>
-            <td _ngcontent-c12="" class="text-center">{{item.calle}}, {{item.numeroExt}}</td>
-            <td _ngcontent-c12="" class="text-center">{{item.colonia}}</td>
-            <td _ngcontent-c12="" class="text-center">{{item.telefono}}</td>
-            <td _ngcontent-c12="" class="text-center">{{item.Correo}}</td>
-            <td _ngcontent-c12="" class="text-center">{{item.latitud}}</td>
-            <td _ngcontent-c12="" class="text-center">{{item.longitud}}</td>
-            <td _ngcontent-c12="" class="text-center">{{item.tipoOficina}}</td>
+            <td _ngcontent-c12=""  class="text-center">{{item.estado}}</td>
+            <td _ngcontent-c12=""  class="text-center">{{item.calle}}, {{item.numeroExt}}
+                <input type="hidden" id="calle_{{item.id}}" value="{{item.calle}}" >
+                <input type="hidden" id="numero_{{item.id}}" value="{{item.numeroExt}}" >
+            </td>
+            <td _ngcontent-c12=""  class="text-center">{{item.colonia}}</td>
+            <td _ngcontent-c12=""  class="text-center">{{item.telefono}}
+                <input type="hidden" id="telefono_{{item.id}}" value="{{item.telefono}}" >
+            </td>
+            <td _ngcontent-c12="" id="Correo_{{item.id}}" class="text-center">{{item.Correo}}
+                <input type="hidden" id="Correo_{{item.id}}" value="{{item.Correo}}" >
+            </td>
+            <td _ngcontent-c12="" id="latitud_{{item.id}}" class="text-center">{{item.latitud}}
+                <input type="hidden" id="latitud_{{item.id}}" value="{{item.latitud}}" >
+            </td>
+            <td _ngcontent-c12="" id="longitud_{{item.id}}" class="text-center">{{item.longitud}}
+                <input type="hidden" id="longitud_{{item.id}}" value="{{item.longitud}}" >
+            </td>
+            <td _ngcontent-c12=""  class="text-center">{{item.tipoOficina}}
+                <input type="hidden" id="codigopostal_{{item.id}}" value="{{item.cp}}" >
+            </td>
+            <!-- Actividad Empresas <Area Nombre> Column -->
+   
+            <td _ngcontent-c12="" class="text-center">
+                <mat-checkbox id="checkbox-{{item.id}}"  style="margin: 20px" *ngIf="item.activo" checked="1" >Activa o Desactiva!</mat-checkbox>
+                <mat-checkbox id="checkbox-{{item.id}}" style="margin: 20px" *ngIf="!item.activo" checked="0">Activa o Desactiva!</mat-checkbox>
+               
+            </td>
           
             <td _ngcontent-c12="" class="text-center">
-                <button title="Guardar pregunta"  class="mb-1 btn btn-sm btn-outline-success" (click)="Guardar(element.id,$event)" type="button"   >
+                <button title="Guardar pregunta"  class="mb-1 btn btn-sm btn-outline-success" (click)="EditarModal(item.id)"  (click)="open(content)" type="button"   >
                     <em _ngcontent-c34="" class="fa fa-check"></em>
                   </button>
-              <button title="Eliminar pregunta" class="mb-1 btn btn-sm btn-outline-danger" (click)="Eliminar(element.id)" type="button"  >
+              <button title="Eliminar pregunta" class="mb-1 btn btn-sm btn-outline-danger" (click)="Eliminar(item.id)" type="button"  >
                   <em _ngcontent-c34="" class="fa fa-trash"></em>
               </button>
             </td>
+          </tr>
         </tbody></table>
 
 

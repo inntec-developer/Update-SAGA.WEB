@@ -293,8 +293,11 @@ export class ApiConection {
 
     /*Oficinas */
     public static GetSucursal = 'Oficina/oficina'
+    public static GetEstadoOfi = 'Oficina/estado'
+    public static GetMunicipioOfi = 'Oficina/municipio'
+    public static GetColoniaOfi = 'Oficina/colonia'
     public static AddOficina = 'Oficina/add'
-    public static alterOficina = 'Oficina/alter'
+    public static alterOficina = 'Oficina/editar'
     public static deleteOficina = 'Oficina/delete'
 
     /*Indicadores */

@@ -50,15 +50,87 @@ export class CatalogosService {
 
   /* Catalogo de preguntas frecuentes */
   private UrlGetPreguntasFrecuentes = ApiConection.ServiceUrl + ApiConection.GetPreguntasFrecuentes;
+
   private UrlAddPreguntasFrecuentes = ApiConection.ServiceUrl + ApiConection.AddPreguntasFrecuentes;
   private UrlalterPreguntasFrecuentes = ApiConection.ServiceUrl + ApiConection.alterPreguntasFrecuentes;
   private UrlDeletePreguntasFrecuentes = ApiConection.ServiceUrl + ApiConection.deletePreguntasFrecuentes;
 
-  /* Catalogo de preguntas frecuentes */
+  /* Catalogo de Oficinas */
   private UrlGetSucursal = ApiConection.ServiceUrl + ApiConection.GetSucursal;
+  private UrlGetAgregarOfi = ApiConection.ServiceUrl + ApiConection.AddOficina;
+  private UrlGetEstadoOfi = ApiConection.ServiceUrl + ApiConection.GetEstadoOfi;
+  private UrlGetMunicipioOfi = ApiConection.ServiceUrl + ApiConection.GetMunicipioOfi;
+  private UrlGetColoniaOfi = ApiConection.ServiceUrl + ApiConection.GetColoniaOfi;
+  private UrlDeleteOficina = ApiConection.ServiceUrl + ApiConection.deleteOficina;
+  private UrlAlterOficina = ApiConection.ServiceUrl + ApiConection.alterOficina;
 
    
   constructor(private _httpClient: HttpClient) { }
+
+  getOficinaMunicipio(mun:string,es:string) : Observable<any>{
+    let params = new HttpParams().set('estado', es).set('municipio', mun);
+    return this._httpClient.get(this.UrlGetMunicipioOfi, {params: params});
+  }
+
+  getOficinaColonia(col:string,mun:string) : Observable<any>{
+    let params = new HttpParams().set('municipio', mun).set('colonia', col);
+    return this._httpClient.get(this.UrlGetColoniaOfi, {params: params});
+  }
+
+  getOficinaEstado(id:string) : Observable<any>{
+    let params = new HttpParams().set('id', id);
+    return this._httpClient.get(this.UrlGetEstadoOfi, {params: params});
+  }
+
+  GuardarOficina(nom:string,est:string,mun:string,col:string,cp:string,calle:string,num:string,tel:string
+  ,email:string,lat:string,lon:string,tipo:string) : Observable<any>{
+    let params = new HttpParams().set
+    ('nombre', nom).set
+    ('estado',est).set
+    ('municipio',mun).set
+    ('colonia',col).set
+    ('cp',cp).set
+    ('calle',calle).set
+    ('numero',num).set
+    ('telefono',tel).set
+    ('email',email).set
+    ('latitud',lat).set
+    ('longitud',lon).set
+    ('tipoOfi',tipo);
+    return this._httpClient.get(this.UrlGetAgregarOfi, {params: params});
+  }
+
+  EditarOficina(nom:string,est:string,mun:string,col:string,cp:string,calle:string,num:string,tel:string
+    ,email:string,lat:string,lon:string,tipo:string,activo:string,id:string) : Observable<any>{
+      let params = new HttpParams().set
+      ('nombre', nom).set
+      ('estado',est).set
+      ('municipio',mun).set
+      ('colonia',col).set
+      ('cp',cp).set
+      ('calle',calle).set
+      ('numero',num).set
+      ('telefono',tel).set
+      ('email',email).set
+      ('latitud',lat).set
+      ('longitud',lon).set
+      ('tipoOfi',tipo).set
+      ('activo',activo).set
+      ('id',id);
+      return this._httpClient.get(this.UrlAlterOficina, {params: params});
+    }
+
+  EliminarOficina(id:string) : Observable<any>{
+    let params = new HttpParams().set('id', id);
+    return this._httpClient.get(this.UrlDeleteOficina , {params: params})
+  }
+
+  getSucursales(fil:string) : Observable<any>{
+    let params = new HttpParams().set('filtro', fil);
+    return this._httpClient.get(this.UrlGetSucursal , {params: params})
+  }
+
+
 
   getPreguntasFrecuentes() : Observable<any>{
     return this._httpClient.get(this.UrlGetPreguntasFrecuentes)
@@ -79,9 +151,7 @@ export class CatalogosService {
     return this._httpClient.get(this.UrlDeletePreguntasFrecuentes, {params: params});
   }
 
-  getSucursales() : Observable<any>{
-    return this._httpClient.get(this.UrlGetSucursal)
-  }
+
 
 
   getDocumentosDamsa() : Observable<any>{
