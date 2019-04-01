@@ -275,6 +275,7 @@ export class ApiConection {
   public static SetEstatusCandidato = 'SistTickets/setEstatusCandidato'
   public static GetTicketConCita = 'SistTickets/ticketConCita'
   public static GetTicketSinCita = 'SistTickets/ticketSinCita'
+  public static GetConcurrenciaReporte = 'SistTickets/getConcurrencia'
 
   /*TrackingVacantes*/
   public static GetInformeTracking = 'Requisiciones/getInformeClientes';

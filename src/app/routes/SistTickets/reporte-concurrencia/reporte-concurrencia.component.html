@@ -1,0 +1,73 @@
+<div class="card">
+  <div class="card-body mat-elevation-z8">
+    <table class="table">
+      <thead>
+        <tr>
+          <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+            <small>{{column.title | uppercase}}</small>
+          </th>
+        </tr>
+        <tr *ngIf="showFilterRow">
+          <th *ngFor="let column of columns">
+            <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
+              (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+          [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+          <div> -->
+            <tr *ngFor="let r of reporte">
+              <td class="text-center">{{r.fecha | date:'dd/MM/yyyy h:mm' }}</td>
+              <td class="text-center">{{r.hora | date:'h:mm'}}</td>
+              <td class="text-center">{{r.usuario}}</td>
+              <td class="text-center">{{r.modulo}}</td>
+              <td class="text-center">{{r.turno}}</td>
+              <td class="text-center"><span class="badge badge-pill badge-info" [popover]="popEstatus" #popE="bs-popover" [outsideClick]="true" placement="left" container="body">{{r.resumen[r.resumen.length - 1].estatus}}</span>
+                <ng-template #popEstatus>
+                  <div class="card">
+                    <div class="card-body">
+                      <ul class="list-group list-group-flush">
+                        <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+                          [disabled]="disabled">
+                          <div style="height: 200px;">
+                            <li class="list-group-item" *ngFor="let rr of r.resumen">
+                
+                              <div class="d-flex flex-row justify-content-between align-items-stretch">
+                                <div style="width: 80px;">
+                                  <small *ngIf="rr.estatus.length <= 10 else toLengthEpop" class="badge badge-pill badge-info">{{rr.estatus | uppercase}}</small>
+                
+                                  <ng-template #toLengthEpop>
+                                    <small class="badge badge-pill badge-info" placement="bottom"
+                                      tooltip="{{rr.estatus | uppercase}}" container='body'> {{rr.estatus | slice:0:8 | uppercase }} ...
+                                    </small>
+                                  </ng-template>
+                                </div>
+                                <div>
+                                  <span class="text-muted ml-2 mr-2">{{rr.fecha | date:'dd/MM/yyyy'}}</span>
+                                </div>
+                
+                                <div>
+                                  <small class="badge badge-pill badge-warning mr-2">
+                                    {{rr.fecha | date: 'h:mm'}}
+                                  </small>
+                                </div>
+                              </div>
+                            </li>
+                          </div>
+                        </ng-scrollbar>
+                      </ul>
+                    </div>
+                  </div>
+                </ng-template>
+
+              </td>
+              <td class="text-center">{{r.tiempo}}</td>
+            </tr>
+          <!-- </div>
+          </ng-scrollbar> -->
+      </tbody>
+    </table>
+  </div>
+</div>

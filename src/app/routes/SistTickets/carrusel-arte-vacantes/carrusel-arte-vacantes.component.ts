@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { config } from 'rxjs';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { NgbCarouselConfig, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
 
 @Component({
@@ -10,28 +11,38 @@ import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.se
 })
 export class CarruselArteVacantesComponent implements OnInit {
 
+  @ViewChild('myCarousel') myCarousel: NgbCarousel;
  vacantes = [];
-  images = [];
-  showNavigationArrows = true;
+ activeId;
+  showNavigationArrows = false;
   showNavigationIndicators = false;
 
-
-  constructor(config: NgbCarouselConfig, private _service: SistTicketsService) {
+  images = ['./../assets/img/ArteVacantes/img01.png', 
+  './../assets/img/ArteVacantes/img02.png', './../assets/img/ArteVacantes/img03.jpg',
+   './../assets/img/ArteVacantes/img04.jpg', './../assets/img/ArteVacantes/img05.png', 
+   './../assets/img/ArteVacantes/img06.png', './../assets/img/ArteVacantes/img07.png', './../assets/img/ArteVacantes/img08.png'];
   
-    config.interval = 60000;
+
+  constructor(private config: NgbCarouselConfig, private _service: SistTicketsService) {
+  
+    config.interval = 5000;
     config.wrap = false;
     config.keyboard = false;
-    config.pauseOnHover = true;
+    config.pauseOnHover = false;
 
-console.log(this.vacantes) 
-   this.images = ['./../assets/img/ArteVacantes/img01.png', 
-   './../assets/img/ArteVacantes/img02.png', './../assets/img/ArteVacantes/img03.jpg',
-    './../assets/img/ArteVacantes/img04.jpg', './../assets/img/ArteVacantes/img05.png', 
-    './../assets/img/ArteVacantes/img06.png', './../assets/img/ArteVacantes/img07.png', './../assets/img/ArteVacantes/img08.png']
-   }
+    setInterval(() => this.timeWait(), 60000);
+  }
 
   ngOnInit() {
-this.GetVacantes();
+
+  }
+
+  timeWait()
+  {
+    this.activeId = this.images[0];
+    this.images = this.images;
+    this.myCarousel.cycle();
+
   }
 
   GetVacantes()

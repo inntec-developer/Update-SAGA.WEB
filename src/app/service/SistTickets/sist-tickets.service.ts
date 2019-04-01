@@ -34,6 +34,7 @@ export class SistTicketsService {
   private UrlSetEstatusCandidato = ApiConection.ServiceUrl + ApiConection.SetEstatusCandidato;
   private UrlGetTicketConCita = ApiConection.ServiceUrl + ApiConection.GetTicketConCita;
   private UrlGetTicketSinCita = ApiConection.ServiceUrl + ApiConection.GetTicketSinCita;
+  private UrlGetConcurrenciaReporte = ApiConection.ServiceUrl + ApiConection.GetConcurrenciaReporte;
 
 
   constructor(private _httpClient: HttpClient) { }
@@ -130,5 +131,10 @@ export class SistTicketsService {
     let params = new HttpParams().set('requisicionId', requisicionId);
     return this._httpClient.get(this.UrlGetTicketSinCita, {params: params});
 
+  }
+
+  GetConcurrenciaReporte() : Observable<any>
+  {
+    return this._httpClient.get(this.UrlGetConcurrenciaReporte);
   }
 }
