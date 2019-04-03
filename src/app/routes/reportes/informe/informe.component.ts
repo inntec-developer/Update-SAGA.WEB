@@ -52,14 +52,15 @@ export class InformeComponent implements OnInit {
   public FormReclutador: FormGroup;
   public FormEstatus: FormGroup;
 
-  // public myDate: any = new Date().getDay()-15;
+   public myDate: any = new Date();
   // public dia: any = this.myDate.getDate;
   // public mes: any = this.myDate.getMonth();
   // public ano: any = this.myDate.getFullYear();
  
 
   date = new FormControl(new Date());
-  date2 = new FormControl(moment([2019, new Date().getMonth(), new Date().getDate()-15]));
+  
+  //date2 = new FormControl(moment([2019, new Date().getMonth(), new Date().getDate()-15]));
  // date2 = this.myDate.setDate(this.myDate.getDate() + -15);
  // date2 = new FormControl(new Date().getDay()-15 );
   //date.setDate(date.getDate() + days);
@@ -104,6 +105,8 @@ export class InformeComponent implements OnInit {
 
     this.Servicio.GetEmpresas().subscribe(item =>{
       this.Empresas = item;
+     this.myDate = item.fechal
+     document.getElementById('fechaInicial')['value'] = this.ConvierteFecha(item[0].fechal)
       this.Oficina = [{id:0,nombre:'Todas'},
       {id:1,nombre:'Guadalajara'},{id:2,nombre:'México'},{id:3,nombre:'Monterrey'}]
     })
@@ -116,6 +119,19 @@ export class InformeComponent implements OnInit {
       this.Usuario = item;
     })
     document.oncontextmenu=null
+  }
+
+  ConvierteFecha(dateTime){
+    if(dateTime != undefined){
+      var res = dateTime.substring(0, 10);
+    //  var result = Date.parse(res);
+      var date = res.split("-");
+      var yyyy = date[0];
+      var mm = date[1];
+      var dd = date[2];
+      var fecha = dd +'/' + mm+'/' + yyyy
+      return (fecha);
+    }
   }
 
   empresaChange(obj) {
@@ -159,6 +175,10 @@ export class InformeComponent implements OnInit {
 
  }
 
+
+
+ 
+  date2 = new FormControl(this.myDate);
 
 
 }

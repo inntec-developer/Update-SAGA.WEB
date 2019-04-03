@@ -22,6 +22,17 @@ export class OficinasComponent implements OnInit {
   public Colonia : any[];
   public dataSource: MatTableDataSource<any[]>;
 
+  public nombre:string;
+  public cp:string;
+  public calle:string;
+  public num :string;
+  public tel :string;
+  public email :string;
+  public lat :string;
+  public lon :string;
+ // public tipo:string;
+  public act :boolean;
+
   constructor(
     private Servicio: CatalogosService,
     private spinner: NgxSpinnerService,
@@ -32,6 +43,8 @@ export class OficinasComponent implements OnInit {
   ngOnInit() {
     this.LlamarOfi();
     document.oncontextmenu=null
+
+    
   }
 
   LlamarOfi(){
@@ -51,7 +64,7 @@ export class OficinasComponent implements OnInit {
   }
 
   Guardar(){
-    let nom = document.getElementById('nombre')['value'];
+    let nom = document.getElementById('nombreOfi')['value'];
     let est = document.getElementById('EstadoOfi')['value'];
     let mun = document.getElementById('MunicipioOfi')['value'];
     let col = document.getElementById('colonia')['value'];
@@ -66,7 +79,7 @@ export class OficinasComponent implements OnInit {
     let act = document.getElementById('checkModal-input')['checked'];
     let id = document.getElementById('Identi')['value'];
 
-    if(id == ''){
+    if(id == '0'){
       this.Servicio.GuardarOficina(nom , est , mun , col , cp , calle , num , tel , email ,lat , lon , tipo ).subscribe(item =>{
         alert(item)
         this.LlamarOfi();
@@ -83,7 +96,8 @@ export class OficinasComponent implements OnInit {
   }
 
   Actualizar(){
-    let nom = document.getElementById('nombre')['value'];
+    this.nombre = document.getElementById('nombre_')['value'];
+  //  nombre = "hola";
     let est = document.getElementById('EstadoOfi')['value'];
     let mun = document.getElementById('MunicipioOfi')['value'];
     let col = document.getElementById('colonia')['value'];
@@ -99,10 +113,10 @@ export class OficinasComponent implements OnInit {
     let id = document.getElementById('Identi')['value'];
 debugger
    // alert(nom + est + mun + col + cp + calle + num + tel + email +lat + lon + tipo + act)
-    this.Servicio.EditarOficina(nom , est , mun , col , cp , calle , num , tel , email ,lat , lon , tipo,act,id ).subscribe(item =>{
-        alert(item)
-        this.LlamarOfi();
-      })
+    // this.Servicio.EditarOficina(nom , est , mun , col , cp , calle , num , tel , email ,lat , lon , tipo,act,id ).subscribe(item =>{
+    //     alert(item)
+    //     this.LlamarOfi();
+    //   })
   }
 
   Eliminar(id){
@@ -115,29 +129,45 @@ debugger
   }
 
   AbrirModal(){
-    document.getElementById('Identi')['value'] = '';
+    document.getElementById('Identi')['value'] = '0';
+    this.nombre = '';
     this.Servicio.getOficinaEstado('0').subscribe(item =>{
       this.Estado = item;
         console.log(item);
       })
+      this.Municipio = [{id:0,municipio:'Seleccione un municipio'}]
+      this.Colonia = [{id:0,colonia:'Seleccione una colonia'}]
   }
 
   EditarModal(id){
    
     document.getElementById('Identi')['value'] = id;
-  //  document.getElementById('nombre')['value'] = document.getElementById('nombre_' + id)['value'];
-  //  document.getElementById('calle')['value'] = document.getElementById('calle_' + id)['value'];
-  //  document.getElementById('numero')['value'];document.getElementById('numero_' + id)['value'];
-  //  document.getElementById('telefono')['value'] = document.getElementById('telefono_' + id)['value'];
-  //  document.getElementById('email')['value'] = document.getElementById('Correo_' + id)['value'];
-  //  document.getElementById('latitud')['value'] = document.getElementById('latitud_' + id)['value'];
-  //  document.getElementById('longitud')['value'] = document.getElementById('longitud_' + id)['value'];
-  //  document.getElementById('cp')['value'] = document.getElementById('codigopostal_' + id)['value'];
+    this.nombre = document.getElementById('nombre_' + id)['value'];
+    this.cp = document.getElementById('codigopostal_' + id)['value'];
+    this.calle = document.getElementById('calle_' + id)['value'];
+    this.num = document.getElementById('numero_' + id)['value'];
+    this.tel = document.getElementById('telefono_' + id)['value'];
+    this.email = document.getElementById('Correo_' + id)['value'];
+    this.lat = document.getElementById('longitud_' + id)['value'];
+    this.lon = document.getElementById('latitud_' + id)['value'];
+    let es = document.getElementById('Estadoid_' + id)['value'];
+    let mun = document.getElementById('Municipio_'+ id)['value'];
+    let col = document.getElementById('Colonia_'+ id)['value'];
+    
   
-    this.Servicio.getOficinaEstado('0').subscribe(item =>{
+    this.Servicio.getOficinaEstado(es).subscribe(item =>{
       this.Estado = item;
         console.log(item);
       })
+     
+    this.Servicio.getOficinaMunicipio(mun,es).subscribe(item =>{
+      this.Municipio = item;
+      })
+
+      this.Servicio.getOficinaColonia(col,mun).subscribe(item =>{
+        this.Colonia = item;
+        })
+     
   }
 
 
