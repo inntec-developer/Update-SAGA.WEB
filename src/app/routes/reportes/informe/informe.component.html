@@ -297,43 +297,43 @@
   </div>
 
 
+  <div class="col-xl-8 ">
+
+    </div>
+    <div class="col-xl-2 busmargen ">
+        <div class="form-group ">
+            <!-- <label for="bus">Busqueda:</label> -->
+            <div class="input-group input-sm">
+              <input
+                id="palabra"
+                type="text"
+                size="12"
+                #palabra
+                (blur)="hijo.Guardar(palabra.value)"
+                placeholder="Palabra clave"
+                class=" form-control input-sm"
+              />
+              <div class="input-group-append mano" (click)="hijo.Generar()">
+                <span class="input-group-text "> <em class="fa fa-search"></em></span>
+              </div>
+            </div>
+          </div>
+      </div>
+  
+      <div class="col-xl-2 botonmargen ">
+          <button tooltip="Exportar" (click)="hijo.Exportar()" class="btn btn-sm btn-outline-warning btnReport">
+    
+              <em _ngcontent-c34="" class="fa fa-download"></em>
+            </button>
+          <button tooltip="Generar Reporte" (click)="hijo.Generar(objsucursal,objsolicit,objrecluta,objempresa,objstatus)" class="btn btn-sm btn-outline-success btnReport">
+          
+              <em _ngcontent-c34="" class="fa fa-bar-chart"></em>
+            </button>
+        </div>
   
 
 </div>
 
-  <div class="col-xl-8">
-
-  </div>
-  <div class="col-xl-2 busmargen">
-      <div class="form-group ">
-          <!-- <label for="bus">Busqueda:</label> -->
-          <div class="input-group input-sm">
-            <input
-              id="palabra"
-              type="text"
-              size="12"
-              #palabra
-              (blur)="hijo.Guardar(palabra.value)"
-              placeholder="Palabra clave"
-              class=" form-control input-sm"
-            />
-            <div class="input-group-append mano" (click)="hijo.Generar()">
-              <span class="input-group-text "> <em class="fa fa-search"></em></span>
-            </div>
-          </div>
-        </div>
-    </div>
-
-    <div class="col-xl-2 botonmargen ">
-        <button tooltip="Exportar" (click)="hijo.Exportar()" class="btn btn-sm btn-outline-warning btnReport">
-  
-            <em _ngcontent-c34="" class="fa fa-download"></em>
-          </button>
-        <button tooltip="Generar Reporte" (click)="hijo.Generar(objsucursal,objsolicit,objrecluta,objempresa,objstatus)" class="btn btn-sm btn-outline-success btnReport">
-        
-            <em _ngcontent-c34="" class="fa fa-bar-chart"></em>
-          </button>
-      </div>
    
   
 
