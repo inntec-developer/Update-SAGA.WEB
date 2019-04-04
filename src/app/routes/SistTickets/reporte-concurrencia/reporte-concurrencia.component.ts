@@ -1,10 +1,13 @@
 import { SistTicketsService } from './../../../service/SistTickets/sist-tickets.service';
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { ExcelService } from '../../../service/ExcelService/excel.service';
 
 @Component({
   selector: 'app-reporte-concurrencia',
   templateUrl: './reporte-concurrencia.component.html',
-  styleUrls: ['./reporte-concurrencia.component.scss']
+  styleUrls: ['./reporte-concurrencia.component.scss'],
+  providers:[ DatePipe]
 })
 export class ReporteConcurrenciaComponent implements OnInit {
 
@@ -28,20 +31,21 @@ export class ReporteConcurrenciaComponent implements OnInit {
 
   registros: any;
   showFilterRow: boolean = true;
-  constructor(private _service: SistTicketsService) { }
+  clearFilter: boolean = true;
+  constructor(private _service: SistTicketsService, private pipe: DatePipe, private excelService: ExcelService) { }
 
   ngOnInit() {
     this.GetReporte();
   }
 
   public columns: Array<any> = [
-    { title: 'Fecha', className: 'text-success text-center', name: 'fecha', filtering: { filterString: '',  placeholder: 'dd-mm-yyyy' } },
+    { title: 'Fecha', className: 'text-success text-center', name: 'fecha', filtering: { filterString: '',  placeholder: 'aaaa/mm/dd' } },
     { title: 'Hora Atención', className: 'text-info text-center', name: 'hora', filtering: { filterString: '', placeholder: 'HH:MM' } },
     { title: 'Usuario', className: 'text-info text-center', name: 'usuario', filtering: { filterString: '', placeholder: 'Usuario' } },
-    { title: 'Modulo', className: 'text-info text-center', name: 'modulo', filtering: { filterString: '', placeholder: 'Modulo' } },
+    { title: 'Módulo', className: 'text-info text-center', name: 'modulo', filtering: { filterString: '', placeholder: 'Modulo' } },
     { title: 'No. Turno', className: 'text-info text-center', name: 'turno', filtering: { filterString: '', placeholder: 'Turno' } },
-    { title: 'Estatus', className: 'text-info text-center', name: 'estatus' },
-    { title: 'Tiempo en Atencion', className: 'text-info text-center', name: 'tiempo', filtering: { filterString: '', placeholder: 'Tiempo' } }
+    { title: 'Estatus', className: 'text-info text-center', name: 'resumen', filtering: { filterString: '', placeholder: 'Estatus' } },
+    { title: 'Tiempo en Atención', className: 'text-info text-center', name: 'tiempo', filtering: { filterString: '', placeholder: 'Tiempo' } }
   ];
 
   GetReporte()
@@ -50,9 +54,7 @@ export class ReporteConcurrenciaComponent implements OnInit {
 
     this._service.GetConcurrenciaReporte().subscribe(result => {
       this.reporte = result;
-      this.rows = this.reporte;
       this.onChangeTable(this.config);
-console.log(this.rows)
     })
   }
 
@@ -107,7 +109,36 @@ console.log(this.rows)
       if (column.filtering) {
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
-            return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+          {
+            if(!Array.isArray(item[column.name]))
+            {
+              return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+            }
+            else
+            {
+              let aux = item[column.name];
+              let bandera = false;
+              if(item[column.name].length > 0)
+              {
+                item[column.name].forEach(element => {
+                  if(element.estatus.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
+                  {
+                    bandera = true;
+                    return;
+                  }
+                });
+
+                if(bandera)
+                {
+                  return item[column.name];
+                }
+              }
+              else
+              {
+                  return item[column.name];
+              } 
+            }
+          }
         });
       }
     });
@@ -170,6 +201,36 @@ console.log(this.rows)
     });
     this.onChangeTable(this.config);
 
+  }
+
+  exportAsXLSX() {
+
+    if (this.reporte.length > 0) {
+      var aux = [];
+      this.reporte.forEach(row => {
+      
+        var d = this.pipe.transform(new Date(row.fecha), 'yyyy-MM-dd');
+
+        var estatus = '';
+        row.resumen.forEach(element => {
+          estatus = estatus + element.estatus + ' ' + this.pipe.transform(new Date(element.fecha), 'yyyy-MM-dd HH:mm') + '\n';
+        });
+
+        aux.push({
+          'FECHA TURNO': d,
+          'HORA DE ATENCION': row.hora,
+          'USUARIO': row.usuario,
+          MODULO: row.modulo,
+          TURNO: row.turno,
+          ESTATUS: estatus,
+          'TIEMPO EN ATENCION': row.tiempo
+        })
+
+      });
+
+      this.excelService.exportAsExcelFile(aux, 'Reporte_Concurrencia_de_Turnos');
+
+    }
   }
 
 }

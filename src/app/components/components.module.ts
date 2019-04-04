@@ -80,10 +80,14 @@ import { Reporte70Component } from './reporte70/reporte70.component';
 import { ReporteCandidatosComponent } from './tablas/reporte-candidatos/reporte-candidatos.component';
 import { RequisicionNuevaPuroComponent } from './requisicion-nueva-puro/requisicion-nueva-puro.component';
 import { SharedModule } from '../shared/shared.module';
-
+import { TicketsRegisterComponent } from './tickets-register/tickets-register.component';
+import { RegistroCandidatosComponent } from './registro-candidatos/registro-candidatos.component';
+import { FormsModule } from '@angular/forms';
+import { MAT_DATE_LOCALE } from '@angular/material';
 @NgModule({
   imports: [
     SharedModule,
+    FormsModule
   ],
   declarations: [
     DtDireccionComponent,
@@ -165,7 +169,10 @@ import { SharedModule } from '../shared/shared.module';
     GraficaVacantePorvencComponent,
     GraficaVacanteVencidaComponent,
     GraficaResumenComponent,
-    DlgRevisarExamenesComponent
+    DlgRevisarExamenesComponent,
+    RegistroCandidatosComponent,
+    TicketsRegisterComponent
+    
   ],
   exports: [
     DtDireccionComponent,
@@ -242,8 +249,11 @@ import { SharedModule } from '../shared/shared.module';
     GraficaVacantePorvencComponent,
     GraficaVacanteVencidaComponent,
     GraficaResumenComponent,
-    DlgRevisarExamenesComponent
+    DlgRevisarExamenesComponent,
+    TicketsRegisterComponent
   ],
-  entryComponents: [DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent]
+  entryComponents: [  TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
+
+
 })
 export class ComponentsModule { }

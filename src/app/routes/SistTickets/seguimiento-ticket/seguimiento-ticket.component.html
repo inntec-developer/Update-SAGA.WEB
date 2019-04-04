@@ -1,14 +1,14 @@
 <div class="content-heading">
   <div>
-    <h5 class="text-muted mb-2">TICKETS</h5>
-    <small class="text-muted">Sistema de Tickets.</small>
+    <h5 class="text-muted mb-2">TURNOS</h5>
+    <small class="text-muted">Sistema de Turnos.</small>
   </div>
   <!-- Breadcrumb right aligned-->
   <ol class="breadcrumb ml-auto">
     <li class="breadcrumb-item">
       <a [routerLink]="['/home']">Inicio</a>
     </li>
-    <li class="breadcrumb-item active text-muted">Tickets</li>
+    <li class="breadcrumb-item active text-muted">Turno</li>
   </ol>
 </div>
 <div class="container-fluid">
@@ -24,7 +24,7 @@
     <div class="col-sm-8 col-md-8">
       <div class="card" *ngIf="ticket.length > 0">
         <div class="card-body text-sm">
-          <h5 class="text-muted p-1 bg-light"><i class="fa fa-ticket mr-1" aria-hidden="true"></i>TICKET <em class="float-right">{{minutosEnAtencion}} min.</em></h5>
+          <h5 class="text-muted p-1 bg-light"><i class="fa fa-ticket mr-1" aria-hidden="true"></i>TURNO <em class="float-right">{{minutosEnAtencion}} min.</em></h5>
           <span class="text-sm text-center font-weight-bold mr-1">TURNO ACTUAL:</span>
           <span class="text-center text-muted mr-3">{{ticket[0].numero}}</span>
           <span class="text-sm text-center font-weight-bold mr-1">ESTATUS DE TURNO:</span>
@@ -331,7 +331,7 @@
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12">
       <alert type="info">
-        <strong>Oops!</strong> A&uacute;n no cuentas con tickets en proceso.
+        <strong>Oops!</strong> A&uacute;n no cuentas con turnos en proceso.
       </alert>
     </div>
   </div>

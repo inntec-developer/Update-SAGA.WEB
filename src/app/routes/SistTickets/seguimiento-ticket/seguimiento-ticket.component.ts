@@ -127,9 +127,18 @@ apartar = true;
   {
 
     this._service.GetTicketPrioridad(sessionStorage.getItem('id'), sessionStorage.getItem('moduloId')).subscribe(data => {
-     this.GetTicket(data);
-     setInterval(() => this.minutosEnAtencion+=1, 60000);
-     this.GetFilaTickets();
+      if(data != 417)
+      {
+        this.GetTicket(data);
+        setInterval(() => this.minutosEnAtencion+=1, 60000);
+        this.GetFilaTickets();
+      }
+     else
+     {
+
+      this.Reinciar();
+      this.atender = true;
+     }
     });
    
   }
@@ -201,7 +210,6 @@ apartar = true;
 
   SetApartar(datos, ticket)
   {
-    debugger;
     this._serviceCandidato.setApartarCandidato(datos)
       .subscribe(data => {
         switch (data) {
