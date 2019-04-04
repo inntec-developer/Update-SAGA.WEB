@@ -258,6 +258,7 @@ export class ApiConection {
 
 
   /*SistTickets */
+
   public static InsertTicket = 'SistTickets/InsertTicketRecl'
   public static GetFilaTickets = 'SistTickets/getFilaTickets'
   public static GetTicketRecl = 'SistTickets/getTicketsReclutador'

@@ -1,3 +1,4 @@
+
 import { SistTicketsModule } from './../SistTickets/sist-tickets.module';
 import { VacantesComponent } from './../Tracking/vacantes/vacantes.component';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
@@ -20,6 +21,7 @@ import { RegisterComponent } from './register/register.component';
 import { SharedModule } from '../../shared/shared.module';
 import { TrackingVacantesComponent } from './tracking-vacantes/tracking-vacantes.component';
 import { TicketsInicioComponent } from './tickets-inicio/tickets-inicio.component';
+
 
 
 
@@ -76,6 +78,7 @@ import { TicketsInicioComponent } from './tickets-inicio/tickets-inicio.componen
         Error404Component,
         Error500Component,
         TrackingVacantesComponent
-    ]
+    ],
+
 })
 export class PagesModule { }

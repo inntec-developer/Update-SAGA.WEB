@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
 import { RequisicionesService } from '../../../service';
+import { TicketsRegisterComponent } from '../../../components/tickets-register/tickets-register.component';
+import { MatDialog } from '@angular/material';
 const swal = require('sweetalert');
 
 @Component({
@@ -14,18 +16,41 @@ export class TicketsInicioComponent implements OnInit {
   folio = 0;
   num = '';
   dataSource: any = [];
-
-  constructor(private _service: SistTicketsService, private service: RequisicionesService) { }
+  btnCita = false;
+  constructor(private _service: SistTicketsService, private service: RequisicionesService, private dialog: MatDialog,) { }
 
   ngOnInit() {
-    this.GetMisVacantes();
+
   }
 
   GenerarTicket()
   {
     this._service.GetTicketConCita(this.folio).subscribe(data => {
+      if(data=="No")
+      {
+        swal("¡No hay citas registradas para el folio " + this.folio + "!", '', "error");
+        this.btnCita = false;
+        this.folio = 0;
+      }
+      else if(data == 200)
+      {
+        swal("¡Ya hay un ticket impreso para el folio " + this.folio + "!", '', "warning");
+        this.btnCita = false;
+        this.folio = 0;
+      }
+      else if(data==417)
+      {
+        swal("¡Ocurrio un error al intentar imprimir ticket!", '', "error");
+        this.btnCita = false;
+        this.folio = 0;
+      }
+      else
+      {
       this.num = data;
       swal("¡Ticket Impreso!", this.num, "success");
+      this.btnCita = false;
+      this.folio = 0;
+      }
     })
 
   }
@@ -42,9 +67,16 @@ export class TicketsInicioComponent implements OnInit {
   GetMisVacantes() {
     this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
-      console.log(this.dataSource)
     });
   }
 
 
+  Registrar()
+  {
+    let dialog = this.dialog.open(TicketsRegisterComponent, {
+      width: 'auto',
+      height: 'auto',
+
+    });
+  }
 }
