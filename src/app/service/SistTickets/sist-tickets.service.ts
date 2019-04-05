@@ -35,9 +35,25 @@ export class SistTicketsService {
   private UrlGetTicketConCita = ApiConection.ServiceUrl + ApiConection.GetTicketConCita;
   private UrlGetTicketSinCita = ApiConection.ServiceUrl + ApiConection.GetTicketSinCita;
   private UrlGetConcurrenciaReporte = ApiConection.ServiceUrl + ApiConection.GetConcurrenciaReporte;
+  private UrlGetEstados = ApiConection.ServiceUrl + ApiConection.GetEstado;
+  private UrlGetMunicipioByEstado = ApiConection.ServiceUrl + ApiConection.GetMunicipio;
 
 
   constructor(private _httpClient: HttpClient) { }
+
+  GetEstados() :Observable<any>
+  {
+    let params = new HttpParams().set('PaisId', '42');
+    return this._httpClient.get(this.UrlGetEstados, {params: params})
+  
+  }
+
+  GetMunicipio(estadoId) :Observable<any>
+  { 
+    let params = new HttpParams().set('EstadoId', estadoId);
+    return this._httpClient.get(this.UrlGetMunicipioByEstado, {params: params})
+
+  }
 
   InsertTicket(ticketId, reclutadorId, modulo) : Observable<any>
   {

@@ -23,7 +23,7 @@ export class JobRequiPauseComponent implements OnInit {
     this._service.ExecProcedurePause().subscribe(data => {
       if(data == 200)
       {
-        this.titulo = 'Pincha aqui'
+        this.titulo = 'Click aqui'
         this.popToast('success', 'JOB - PAUSE', 'El JOB se ejecutó con éxito');
 
       }

@@ -104,6 +104,27 @@ export class ApiConection {
   public static AddProspectos = 'Directorio/addProspecto';
   public static HacerCliente = 'Directorio/hacerCliente';
   public static GetCliente = 'Directorio/getCliente';
+  public static EditInfoGeneral = 'Directorio/EditInfoGeneral';
+    // Direcciones del Cliente
+  public static AddDireccionCliente = 'Directorio/AddDireccionCliente';
+  public static DeleteDireccionCliente = 'Directorio/DeleteDireccionCliente';
+  public static EditDireccionCliente = 'Directorio/EditDireccionCliente';s
+
+    // Telefonos del Cliente
+  public static AddTelefonoCliente = 'Directorio/AddTelefonoCliente';
+  public static DeleteTelefonoCliente = 'Directorio/DeleteTelefonoCliente';
+  public static EditTelefonoCliente = 'Directorio/EditTelefonoCliente';
+
+    // Emails del Cliente
+  public static AddEmailCliente = 'Directorio/AddEmailCliente';
+  public static DeleteEmailCliente = 'Directorio/DeleteEmailCliente';
+  public static EditEmailCliente = 'Directorio/EditEmailCliente';
+
+    // Contactos del Cliente
+  public static AddContactoCliente = 'Directorio/AddContactoCliente';
+  public static DeleteContactoCliente = 'Directorio/DeleteContactoCliente';
+  public static EditContactoCliente = 'Directorio/EditContactoCliente';
+
 
   /* Candidatos */
   public static filtropaises = 'Candidatos/get';
@@ -258,6 +279,7 @@ export class ApiConection {
 
 
   /*SistTickets */
+
   public static InsertTicket = 'SistTickets/InsertTicketRecl'
   public static GetFilaTickets = 'SistTickets/getFilaTickets'
   public static GetTicketRecl = 'SistTickets/getTicketsReclutador'
@@ -308,7 +330,7 @@ export class ApiConection {
     public static getVencidasG = 'indicador/vvencida'
     public static getResumenG = 'indicador/resumen'
     public static getRadialG = 'indicador/radial'
-       
+
 
 
 }

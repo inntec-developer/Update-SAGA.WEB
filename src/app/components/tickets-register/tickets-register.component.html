@@ -1,0 +1,37 @@
+<div class="register">
+  <div class="row">
+      <div class="col-md-3 register-left">
+          <img src="assets/img/damsa/logo.png" alt=""/>
+          <h3>BIENVENIDO</h3>
+          <p>Estas a 1 minuto de encontrar tu empleo ideal!</p>
+          <button type="button" class="btn btn-labeled btn-purple btn-lateral btn-block mat-elevation-z8 d-flex justify-content-between" mat-dialog-close>
+              <span class="btn-label float-left"><i class="fa fa-lock"></i></span><span class="align-self-center font-weight-bold texto">LOGIN</span></button>
+              <button type="button" class="btn btn-labeled btn-danger btn-lateral btn-block mat-elevation-z8 d-flex justify-content-between" mat-dialog-close>
+                  <span class="btn-label"><i class="fa fa-times"></i></span><span class="align-self-center font-weight-bold texto">SALIR</span>
+                </button>
+          
+          <!-- <input type="submit" name="" value="Login"/>
+          <input type="submit" name="" value="Salir"/><br/> -->
+      </div>
+      <div class="col-md-9 register-right">
+          <div class="d-flex justify-content-end mt-3">
+
+                  <button class="btn btn-primary btn-pais font-weight-bold" [disabled]="flagMX" [ngClass]="flagMX ? 'btn btn-primary disabled' : 'mat-elevation-z8'" type="button" (click)="flagEU=false;flagMX=true;"><img class="mr-1" src="assets/img/flags-mini/Mexico.png" alt=""/>M&Eacute;XICO</button>
+                  <!-- <a class="nav-link active" id="home-tab" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">Mexico</a> -->
+
+                  
+                  <button class="btn btn-info btn-pais font-weight-bold" type="button" [disabled]="flagEU" [ngClass]="flagEU ? 'disabled' : 'mat-elevation-z8'" (click)="flagMX=false; flagEU=true;"><i class="fa fa-user mr-1" aria-hidden="true"></i> EXT</button>
+                  <!-- <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">EU</a> -->
+      
+          </div>
+          <div>
+             
+                  <h3 class="register-heading">Registrate para ser usuario de Bolsa de Trabajo</h3>
+                  <div class="row register-form">
+                  <app-registro-candidatos></app-registro-candidatos>
+                </div>
+          </div>
+      </div>
+  </div>
+
+</div>

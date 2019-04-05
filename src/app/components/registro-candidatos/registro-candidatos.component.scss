@@ -1,0 +1,23 @@
+label
+{
+    font-size: 10px;
+}
+.btnRegister{
+    display: flex;
+     justify-content: center;
+     align-items: center;
+    border-radius: 25px;
+    width: 38%;
+    height: 25px;
+     font-size: 10px;
+     padding: 0;
+}
+
+.requerido
+{
+    border-color: red;
+}
+.valido
+{
+    border-color:rgb(76, 248, 76);
+}

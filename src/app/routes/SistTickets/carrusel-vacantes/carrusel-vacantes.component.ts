@@ -98,6 +98,15 @@ num = "";
         }
       });
 
+      console.log(this.dataSource)
+      this.dataSource = this.dataSource.filter(element => {
+        if(element.cubierta > 0)
+        {
+          return element;
+        }
+        
+      });
+
 
 
       for(var c = 0; c <= 7; c++)
@@ -107,6 +116,7 @@ num = "";
 
       this.vacantes = this.dataSource;
 
+      console.log(this.vacantes)
     })
   }
 

@@ -30,11 +30,6 @@ tbody tr:hover {
   box-shadow: 1px 20px 60px rgba(0, 0, 0, .23);
 }
 
-table tbody tr td
-{
-  font-family: 'Lato', sans-serif;
-  font-size: 12px;
-}
 
 ng-scrollbar {
   --scrollbar-size: 4px;
@@ -45,7 +40,8 @@ ng-scrollbar {
 
 .badge
 {
-  font-size: 10px;
+
+  font-size: 11px;
 }
 .badge-info:hover {
   color: #fff;
