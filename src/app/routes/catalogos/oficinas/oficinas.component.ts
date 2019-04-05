@@ -51,7 +51,7 @@ export class OficinasComponent implements OnInit {
     this.Servicio.getSucursales('').subscribe(item =>{
      
       this.datos = item;
-        console.log(item);
+       
       })
   }
 
@@ -59,7 +59,7 @@ export class OficinasComponent implements OnInit {
     let fil = document.getElementById('palabra')['value'];
     this.Servicio.getSucursales(fil).subscribe(item =>{
       this.datos = item;
-        console.log(item);
+        
       })
   }
 
@@ -111,7 +111,7 @@ export class OficinasComponent implements OnInit {
     let tipo = document.getElementById('tipoOfi')['value'];
     let act = document.getElementById('checkModal-input')['checked'];
     let id = document.getElementById('Identi')['value'];
-debugger
+
    // alert(nom + est + mun + col + cp + calle + num + tel + email +lat + lon + tipo + act)
     // this.Servicio.EditarOficina(nom , est , mun , col , cp , calle , num , tel , email ,lat , lon , tipo,act,id ).subscribe(item =>{
     //     alert(item)
@@ -133,7 +133,7 @@ debugger
     this.nombre = '';
     this.Servicio.getOficinaEstado('0').subscribe(item =>{
       this.Estado = item;
-        console.log(item);
+       
       })
       this.Municipio = [{id:0,municipio:'Seleccione un municipio'}]
       this.Colonia = [{id:0,colonia:'Seleccione una colonia'}]
@@ -157,7 +157,7 @@ debugger
   
     this.Servicio.getOficinaEstado(es).subscribe(item =>{
       this.Estado = item;
-        console.log(item);
+        
       })
      
     this.Servicio.getOficinaMunicipio(mun,es).subscribe(item =>{
@@ -179,7 +179,7 @@ debugger
       if(res == '0'){
         this.Municipio = null;
       }
-        console.log(item);
+       
       })
       this.Colonia = null;
   }
@@ -191,7 +191,7 @@ debugger
       if(res == '0'){
         this.Colonia = null;
       }
-        console.log(item);
+      
       })
   }
 

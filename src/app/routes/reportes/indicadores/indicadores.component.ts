@@ -27,7 +27,7 @@ export class IndicadoresComponent implements OnInit {
 
   ngOnInit() {
     this.UsuarioId = sessionStorage.getItem('id');
-debugger;
+
     this.service.getVRadial(this.UsuarioId).subscribe(item =>{
       this.Entrevistado = item['entrevi'];
       this.Entrevistadopor = item['entrevTotal'];

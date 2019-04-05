@@ -136,27 +136,27 @@ export class InformeComponent implements OnInit {
 
   empresaChange(obj) {
      this.objempresa = this.FormEmpresas.get('ClientesControl').value;
-    console.log(this.objempresa);
+    
   }
 
   sucursalChange(){
     this.objsucursal = this.FormSucursal.get('SucursalControl').value;
-    console.log(this.objsucursal);
+    
   }
 
   solicitanteChange(){
     this.objsolicit = this.FormSolicitante.get('SolicitanteControl').value;
-    console.log(this.objsolicit);
+   
   }
 
   reclutadorChange(){
     this.objrecluta = this.FormReclutador.get('ReclutadorControl').value;
-    console.log(this.objrecluta);
+   
   }
 
   estatusChange(){
     this.objstatus = this.FormEstatus.get('EstatusControl').value;
-    console.log(this.objstatus);
+    
   }
 
  Ocultar(){

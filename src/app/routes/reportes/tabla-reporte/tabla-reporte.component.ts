@@ -43,9 +43,6 @@ export class TablaReporteComponent implements OnInit {
   showFilterRow: boolean;
 
 
-
-
-  
   constructor(
     private Servicio: ReportesService,
     private Exel: ExcelService,
@@ -62,7 +59,7 @@ export class TablaReporteComponent implements OnInit {
   }
 
   Prueba(lista){
-    console.log(lista);
+   
   }
 
   Generar(oficina,solicitante,reclutador,empresa,estatus){
@@ -77,35 +74,35 @@ export class TablaReporteComponent implements OnInit {
   if(oficina != undefined){
     for (let item of oficina) {
       ofc += item +',';
-      console.log(ofc); // 1, "string", false
+    
     }
   }
 
   if(solicitante != undefined){
     for (let item of solicitante) {
       sol += item +',';
-      console.log(sol); // 1, "string", false
+      
     }
   }
 
   if(reclutador != undefined){
     for (let item of reclutador) {
       rec += item +',';
-      console.log(rec); // 1, "string", false
+     
     }
   }
 
   if(empresa != undefined){
     for (let item of empresa) {
       emp += item +',';
-      console.log(emp); // 1, "string", false
+     
     }
   }
 
   if(estatus != undefined){
     for (let item of estatus) {
       est += item +',';
-      console.log(est); // 1, "string", false
+    
     }
   }
 
@@ -136,13 +133,13 @@ est = estatus == undefined?'0':est;
     this.General = data;
     this.onChangeTable(this.config);
     this.spinner.hide();
-    console.log(this.General)
+    
     });
   }
 
   Exportar(){
     var obj = [];
-    console.log(this.General)
+   
     this.General.forEach(item => {
       obj.push({
         Folio: item.folio.toString(),
