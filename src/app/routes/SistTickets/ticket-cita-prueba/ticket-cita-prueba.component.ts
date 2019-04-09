@@ -27,13 +27,13 @@ num = '';
 
   }
 
-  GenerarTicketSinCita(requisicionId)
-  {
-    this._service.GetTicketSinCita(requisicionId).subscribe(data => {
-      this.num = data;
-    })
+  // GenerarTicketSinCita(requisicionId)
+  // {
+  //   this._service.GetTicketSinCita(requisicionId, req).subscribe(data => {
+  //     this.num = data;
+  //   })
 
-  }
+  // }
 
   
   GetMisVacantes() {

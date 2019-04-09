@@ -47,55 +47,65 @@
         <div class="card-body mat-elevation-z8">
           <h5 class="text-left text-info p-2 bg-light d-flex justify-content-between">
             <span><i class="fa fa-user-circle-o mr-1" aria-hidden="true"></i>DATOS CANDIDATO</span>
+            <ng-container *ngIf="ticket[0].candidato.length > 0">
             <button *ngIf="examenesCandidato.tecnicos.length > 0 || examenesCandidato.psicometricos.length > 0" class="btn btn-xs btn-success round float-right"
                 (click)="modalExamen=true;" container="body" placement="bottom" tooltip="Examenes Realizados">
                 <i class="fa fa-pencil"></i></button>
-            <small *ngIf="ticket[0].candidato.estatus.length <= 10 else toLength" class='badge badge-pill badge-success float-right'
-              [class.badge-warning]="ticket[0].candidato.estatusId === 42" [class.badge-danger]="ticket[0].candidato.estatusId == 28">
-              <small *ngIf="ticket[0].candidato.estatusId != 28"> {{ticket[0].candidato.estatus | uppercase }}</small>
-              <small *ngIf="ticket[0].candidato.estatusId == 28">POSTULADO</small>
+            <small *ngIf="ticket[0].candidato[0].estatus.length <= 10 else toLength" class='badge badge-pill badge-success float-right'
+              [class.badge-warning]="ticket[0].candidato[0].estatusId === 42" [class.badge-danger]="ticket[0].candidato[0].estatusId == 28">
+              <small *ngIf="ticket[0].candidato[0].estatusId != 28"> {{ticket[0].candidato[0].estatus | uppercase }}</small>
+              <small *ngIf="ticket[0].candidato[0].estatusId == 28">POSTULADO</small>
             </small>
             <ng-template #toLength>
-              <span class='badge badge-pill badge-info float-right' [class.badge-warning]="ticket[0].candidato.estatusId === 42" [class.badge-danger]="ticket[0].candidato.estatusId == 28"
-                placement="bottom" tooltip="{{ticket[0].candidato.estatus | uppercase}}" container="body">{{ticket[0].candidato.estatus | slice:0:8 | uppercase }} ... </span>
+              <span class='badge badge-pill badge-info float-right' [class.badge-warning]="ticket[0].candidato[0].estatusId === 42" [class.badge-danger]="ticket[0].candidato[0].estatusId == 28"
+                placement="bottom" tooltip="{{ticket[0].candidato[0].estatus | uppercase}}" container="body">{{ticket[0].candidato[0].estatus | slice:0:8 | uppercase }} ... </span>
             </ng-template>
+          </ng-container>
           </h5>
           <hr>
+          <ng-container *ngIf="ticket[0].candidato.length > 0">
           <div class="text-center">
-            <h3 class="text-center text-muted">{{ticket[0].candidato.nombre | uppercase}}</h3>
+            <h3 class="text-center text-muted">{{ticket[0].candidato[0].nombre | uppercase}}</h3>
             <p class="card-text font-weight-bold mr-1">CURP:
-              <span class="text-center text-success">{{ticket[0].candidato.curp | uppercase}}</span>
+              <span class="text-center text-success">{{ticket[0].candidato[0].curp | uppercase}}</span>
             </p>
 
             <p class="card-text font-weight-bold mr-1">LUGAR NAC.:
-              <span class="text-center text-muted">{{ticket[0].candidato.dirNacimiento | uppercase}}</span>
+              <span class="text-center text-muted">{{ticket[0].candidato[0].dirNacimiento | uppercase}}</span>
             </p>
             <p class="card-text font-weight-bold mr-1">FECHA NAC.:
-              <span class="text-center text-muted mr-4">{{ticket[0].candidato.fechaNac | date:'dd/MM/yyyy' }}</span>EDAD:
-              <span class="text-center text-muted">{{ticket[0].candidato.edad}}</span>
+              <span class="text-center text-muted mr-4">{{ticket[0].candidato[0].fechaNac | date:'dd/MM/yyyy' }}</span>EDAD:
+              <span class="text-center text-muted">{{ticket[0].candidato[0].edad}}</span>
             </p>
             <p class="card-text font-weight-bold mr-1">EMAIL:
-              <span class="text-center text-muted">{{ticket[0].candidato.email}}</span>
+              <span class="text-center text-muted">{{ticket[0].candidato[0].email}}</span>
             </p>
           </div>
           <div class="p-2 mb-2">
-            <app-comentario-candidato [CandidatoId]="ticket[0].candidato.candidatoId" [RequisicionId]="" [ProcesoCandidatoId]=""></app-comentario-candidato>
+            <app-comentario-candidato [CandidatoId]="ticket[0].candidato[0].candidatoId" [RequisicionId]="" [ProcesoCandidatoId]=""></app-comentario-candidato>
           </div>
-        </div>
+      
+      </ng-container>
+      <div *ngIf="ticket[0].candidato.length == 0">
+        <span>Debe registrar al candidato para seguir con su proceso</span>
+
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-purple btn-registro mat-elevation-z8 mt-3 font-weight-bold" type="button" (click)="registrarUsuario();">REGISTRAR</button>
+          </div>
+
       </div>
+      </div>
+    </div>
       <div class="mt-2 d-flex flex-row justify-content-end">
         <button type="button" [disabled]="fila.length == 0 || atender" [ngClass]="fila.length == 0 || atender ? 'btn disable' : 'btn btn-outline-success mat-elevation-z8'" (click)="Atender()" tooltip="ATENDER">
-
-            <i class="fa fa-play"></i>
+          <i class="fa fa-play"></i>
         </button>
-          <button type="button" *ngIf="ticket.length > 0" [disabled]="ticket[0].candidato.estatusId == 27 || ticket[0].estado != 2 || (exaTecnico && exaPsico)" [ngClass]="ticket[0].candidato.estatusId == 27 || ticket[0].estado != 2 || (exaTecnico && exaPsico) ? 'btn disable ml-2' : 'btn btn-outline-warning mat-elevation-z8 ml-2'" (click)="GetHorarioRequis(3)" tooltip="EXAMENES">
-
-                <i class="fa fa-file-text-o"></i>
-</button>
+        <button type="button" *ngIf="ticket.length > 0" [disabled]="ticket[0].candidato.length == 0 || ticket[0].candidato[0].estatusId == 27 || ticket[0].estado != 2 || (exaTecnico && exaPsico)" [ngClass]="ticket[0].candidato.length == 0 || ticket[0].candidato[0].estatusId == 27 || ticket[0].estado != 2 || (exaTecnico && exaPsico) ? 'btn disable ml-2' : 'btn btn-outline-warning mat-elevation-z8 ml-2'" (click)="GetHorarioRequis(3)" tooltip="EXAMENES">
+          <i class="fa fa-file-text-o"></i>
+        </button>
         <button type="button"  *ngIf="ticket.length > 0" [disabled]="ticket[0].estado == 4" [ngClass]="ticket[0].estado == 4 ? 'btn disable ml-2' : 'btn btn-outline-danger mat-elevation-z8 ml-2'" (click)="GetHorarioRequis(4);" tooltip="FINALIZAR">
-
-            <i class="fa fa-stop"></i>
-</button>
+          <i class="fa fa-stop"></i>
+        </button>
       </div>
       <br/>
       <hr>
@@ -115,13 +125,27 @@
           </ul>
         </div>
       </div>
-    </div>
-
-    <div class="col-sm-8 col-md-8">
-      <div class="card" *ngIf="ticket.length > 0">
+   
+</div>
+    <div class="col-sm-8 col-md-8" *ngIf="ticket.length > 0">
+      <div class="card" *ngIf="ticket[0].candidato.length > 0">
         <div class="card-body mat-elevation-z8">
-          <h5 class="text-left text-success p-2 bg-light">
-            <i class="fa fa-user-circle-o mr-1" aria-hidden="true"></i>POSTULACIONES</h5>
+            <div class="row p-1 bg-light">
+                <div class="col-sm-6 col-md-6">
+                    <h5 class="text-left text-success mt-1">
+                        <i class="fa fa-user-circle-o mr-1" aria-hidden="true"></i>POSTULACIONES</h5>
+               </div>
+               <div class="col-sm-6 col-md-6">
+                  <!-- <div class="input-group input-group-sm float-right mb-1">
+                      <div class="input-group-prepend">
+                          <span class="input-group-text text-info"><i class="fa fa-search" aria-hidden="true"></i></span>
+                        </div>
+                  <input (input)="Search($event,1, filteredDataPos)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
+                  
+                  </div> -->
+                </div>
+                </div>
+         
           <div class="justify-content-between">
             <ul class="list-group mb-2">
               <li *ngFor="let item of postulaciones; let ind = index;" class="list-group-item">
@@ -176,8 +200,20 @@
               </li>
             </ul>
 
-            <h5 class="text-left text-warning p-2 bg-light">
-              <i class="fa fa-file-text-o mr-1" aria-hidden="true"></i>MIS VACANTES</h5>
+            <div class="row p-1 bg-light">
+              <div class="col-sm-6 col-md-6">
+            <h5 class="float-left text-warning ml-1 mt-2"><i class="fa fa-file-text-o mr-1" aria-hidden="true"></i>MIS VACANTES</h5>
+             </div>
+             <div class="col-sm-6 col-md-6">
+                <div class="input-group input-group-sm float-right mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text text-info"><i class="fa fa-search" aria-hidden="true"></i></span>
+                      </div>
+                <input (input)="Search($event, 2, filteredData)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
+                
+                </div>
+              </div>
+              </div>
             <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
               [disableOnBreakpoints]="false" [disabled]="disabled">
 
@@ -201,12 +237,12 @@
                       <em class="fa fa-thumbs-o-down"></em>
                     </button> -->
 
-                    <button *ngIf="item.id == ticket[0].candidato.requisicionId && ticket[0].candidato.estatusId != 27 && ticket[0].estado != 4" (click)="_liberarCandidato(item, ticket[0])" class="btn btn-xs btn-outline-danger float-right"
+                    <button *ngIf="item.id == ticket[0].candidato[0].requisicionId && ticket[0].candidato[0].estatusId != 27 && ticket[0].estado != 4" (click)="openDialogLiberar(item, ticket[0])" class="btn btn-xs btn-outline-danger float-right"
                       container="body" placement="bottom" tooltip="Liberar">
                       <em class="fa fa-thumbs-o-down"></em>
                     </button>
 
-                    <button *ngIf="ticket[0].candidato.estatusId == 27 && ticket[0].estado != 4" (click)="item.reclutadores = [];_apartarCandidato(item, ticket[0])"
+                    <button *ngIf="ticket[0].candidato[0].estatusId == 27 && ticket[0].estado != 4" (click)="item.reclutadores = [];_apartarCandidato(item, ticket[0])"
                       [ngClass]="apartar ? 'btn-outline-success' : 'btn-outline-danger'" class="btn btn-xs  float-right" container="body"
                       placement="bottom" tooltip="Apartar">
                       <em class="fa fa-thumbs-o-up"></em>
@@ -226,103 +262,65 @@
       </div>
     </div>
   </div>
-  <!-- <div class="row">
-  <div class="col">
-  <div class="card">
-    <div class="card-body mat-elevation-z8">
-      <h5 class="text-center text-info"><i class="fa fa-hourglass-half mr-1" aria-hidden="true"></i>EN ESPERA</h5>
-        <ul class="list-group" *ngFor="let t of fila">
-            <li class="list-group-item" [ngClass]="t.movimientoId == 1 ? 'bg-warning' : ''"><span>{{t.ticket}}</span><span class="float-right" [ngClass]="t.movimientoId == 1 ? 'text-white' : 'text-warning'">{{t.tiempo}} min</span>
-            </li>
+
+  <!-- Modal para dlgLiberar  -->
+  <div *ngIf="dlgLiberar" [config]="{show: true, ignoreBackdropClick: true, keyboard: false}" bsModal #modallib="bs-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- <div class="modal-header">
+          <h4 id="dialog-sizes-name1" class="modal-title pull-left">Informaci&oacute;n de la Vacante</h4>
+          <button type="button" class="close pull-right" (click)="modallib.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div> -->
+        <div class="modal-body">
+          <app-dialog-liberar-candidato [objLiberar]="objLiberar" (close)="onClose($event)"></app-dialog-liberar-candidato>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="md-1 btn btn-outline-success" (click)="modallib.hide()">Cerrar</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal examenes -->
+<div *ngIf="modalExamen" [config]="{ show: true, ignoreBackdropClick: true, backdrop: 'static', keyboard: false }"
+bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+<div class="modal-dialog modal-size">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 id="dialog-sizes-name1" class="modal-title pull-left text-success"><em class="fa fa-pencil"></em> EXAMENES
+        REALIZADOS</h5>
+      <button type="button" class="btn btn-xs btn-danger btn-circle float-right"
+        (click)="lgModal.hide();modalExamen = false;"><i class="fa fa-times"></i></button>
+
+    </div>
+    <div class="modal-body">
+      <div *ngIf="examenesCandidato.tecnicos.length > 0">
+        <p class="text-warning">Examenes T&eacute;cnicos</p>
+
+        <ul>
+          <li *ngFor="let r of examenesCandidato.tecnicos" class="text-primary"><i class="fa fa-file-text-o"></i> Folio: <em
+              class="text-muted">{{r.folio }}</em> Perfil: <em class="text-muted">{{r.vBtra}}</em> Examen: <em
+              class="text-muted">{{r.examen}}</em>
+            Calificaci&oacute;n: <em class="text-muted">{{r.resultado}}</em></li>
         </ul>
-    </div>
-  </div>
-</div>
-
-        <button type="button" class="btn btn-labeled btn-success mat-elevation-z8 margen" [disabled]="fila.length == 0 || atender" (click)="Atender()"><span class="btn-label"><i class="fa fa-play"></i></span>ATENDER</button>
-        <button type="button" class="btn btn-labeled btn-danger mat-elevation-z8 margen" [disabled]="!finalizar" (click)="Finalizar(ticket[0].ticketId)" ><span class="btn-label"><i class="fa fa-stop"></i></span>FINALIZAR</button>
-
-
-
-</div>-->
-</div>
-
-
-
-<!-- Modal para asignar modulo -->
-<div *ngIf="moduloReclutador" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #MessageModal="bs-modal" class="modal"
-  tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="mt-3 p-1 bg-light d-flex flex-row justify-content-between align-items-stretch">
-        <h4 class="float-left text-success mt-2 ml-1"><em class="fa fa-users mr-2"></em>CANDIDATOS EN PROCESO </h4>
-        <h5 class="text-warning font-weight-bold mt-2" >{{folio}} - {{vBtra | uppercase}}</h5>
-
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right mr-1" (click)="procesoCandidato=false; lgModal.hide();"><i
-            class="fa fa-times"></i></button>
       </div>
-      <div class="modal-body">
-        <app-candidatos-en-proceso [RequisicionId]="id"></app-candidatos-en-proceso>
+      <hr>
+      <div *ngIf="examenesCandidato.psicometricos.length > 0">
+        <p class="text-warning">Examenes Psicom&eacute;tricos</p>
+
+        <ul>
+          <li *ngFor="let p of examenesCandidato.psicometricos" class="text-primary"><i class="fa fa-file-text-o"></i> Folio:
+            <em class="text-muted">{{p.folio }}</em> Perfil: <em class="text-muted">{{p.vBtra }} </em> Clave: <em
+              class="text-muted">{{p.clave}}</em> Calificaci&oacute;n: <em class="text-muted">{{p.resultado}}</em>
+          </li>
+        </ul>
       </div>
     </div>
+
   </div>
 </div>
-
-<!-- Modal examenes -->
-<div *ngIf="modalExamen" [config]="{ show: true, ignoreBackdropClick: true, backdrop: 'static', keyboard: false }" bsModal
-  #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-body">
-          <div class="clearfix">
-              <h4 class="float-left text-success mt-2">
-                <em class="fa fa-pencil"></em> EXAMENES REALIZADOS
-              </h4>
-              <button type="button" class="btn btn-xs btn-danger btn-circle float-right mb-2" (click)="lgModal.hide(); modalExamen = false;">
-                <i class="fa fa-times"></i>
-              </button>
-            </div>
-            <hr>
-        <div *ngIf="examenesCandidato.tecnicos.length > 0">
-          <p class="text-warning">Examenes T&eacute;cnicos</p>
-          <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
-          [disableOnBreakpoints]="false" [disabled]="disabled">
-          <div style="height: 230px;">
-          <ul class="list-group">
-            <li *ngFor="let r of examenesCandidato.tecnicos" class="text-primary list-group-item">
-              <i class="fa fa-file-text-o"></i> Folio:
-              <em class="text-muted">{{r.folio }}</em> Perfil:
-              <em class="text-muted">{{r.vBtra}}</em> Examen:
-              <em class="text-muted">{{r.examen}}</em>
-              Calificaci&oacute;n:
-              <em class="text-muted">{{r.resultado}}</em>
-            </li>
-          </ul>
-         </div>
-         </ng-scrollbar>
-        </div>
-        <hr>
-        <div *ngIf="examenesCandidato.psicometricos.length > 0">
-          <p class="text-warning">Examenes Psicom&eacute;tricos</p>
-          <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
-          [disableOnBreakpoints]="false" [disabled]="disabled">
-          <div style="height: 230px;">
-          <ul class="list-group">
-            <li *ngFor="let p of examenesCandidato.psicometricos" class="text-primary list-group-item">
-              <i class="fa fa-file-text-o"></i> Folio:
-              <em class="text-muted">{{p.folio }}</em> Perfil:
-              <em class="text-muted">{{p.vBtra }} </em> Clave:
-              <em class="text-muted">{{p.clave}}</em> Calificaci&oacute;n:
-              <em class="text-muted">{{p.resultado}}</em>
-            </li>
-          </ul>
-          </div>
-          </ng-scrollbar>
-        </div>
-      </div>
-
-    </div>
-  </div>
 </div>
 
 

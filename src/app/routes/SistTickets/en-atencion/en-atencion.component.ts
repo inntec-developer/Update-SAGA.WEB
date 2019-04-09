@@ -10,7 +10,7 @@ export class EnAtencionComponent implements OnInit {
  turnos: any = [];
 
   constructor(private _service: SistTicketsService) {
-    setInterval(() => this.GetTicketEnAtencion(), 2000);
+    setInterval(() => this.GetTicketEnAtencion(), 20000);
    }
 
   ngOnInit() {

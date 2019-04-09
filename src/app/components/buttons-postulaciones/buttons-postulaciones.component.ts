@@ -482,7 +482,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
     if (value == 200) {
       this.modal.hide();
       this.dlgLiberar = false;
-
+      this.objLiberar = [];
       var aux = this.dataSource;
       var idx = aux.findIndex(x => x.candidatoId === this.candidatoId);
 
@@ -499,12 +499,13 @@ export class ButtonsPostulacionesComponent implements OnInit {
     else if (value == 404) {
       this.modal.hide();
       this.dlgLiberar = false;
-
+      this.objLiberar = [];
       this.onChangeTable(this.config)
       this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos');
 
     }
     else {
+      this.objLiberar = [];
       this.modal.hide();
       this.dlgLiberar = false;
     }
@@ -512,12 +513,12 @@ export class ButtonsPostulacionesComponent implements OnInit {
   }
   openDialogLiberar() {
 
-    this.objLiberar.push({
+    this.objLiberar =[{
       RequisicionId: this.RequisicionId,
       CandidatoId: this.candidatoId,
       ReclutadorId: sessionStorage.getItem('id'),
       ProcesoCandidatoId: this.ProcesoCandidatoId,
-    });
+    }];
 
     this.dlgLiberar = true;
   }

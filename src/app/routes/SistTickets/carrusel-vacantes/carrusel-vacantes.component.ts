@@ -53,11 +53,19 @@ num = "";
 
       if (isConfirm) {
       
+        let candidatoId = "00000000-0000-0000-0000-000000000000";
 
-    this._service.GetTicketSinCita(row.id).subscribe(data => {
+        if(sessionStorage.getItem('candidatoId'))
+        {
+           candidatoId = sessionStorage.getItem('candidatoId');
+        }
+
+
+    this._service.GetTicketSinCita(row.id, candidatoId).subscribe(data => {
       this.num = data;
 
       swal("¡Ticket Impreso!", this.num, "success");
+      sessionStorage.removeItem('candidatoId');
 
     });
 
@@ -97,8 +105,6 @@ num = "";
           color: color
         }
       });
-
-      console.log(this.dataSource)
       this.dataSource = this.dataSource.filter(element => {
         if(element.cubierta > 0)
         {
@@ -116,7 +122,6 @@ num = "";
 
       this.vacantes = this.dataSource;
 
-      console.log(this.vacantes)
     })
   }
 
@@ -137,9 +142,11 @@ num = "";
 
     this.vacantes = filtro;
   }
-this.activeId = this.vacantes[0].id;
+  this.activeId = this.vacantes[0].id;
+  this.myCarousel.activeId = this.vacantes[0].id;
+  this.myCarousel.cycle();
 
-    console.log(this.vacantes)
+
   //   setTimeout(() => {
   //     /** spinner ends after 5 seconds */
   //     this.spinner.hide();
