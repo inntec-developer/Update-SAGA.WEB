@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ClientesService } from './../../../../../service/clientes/clientes.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 
 declare var $: any;
@@ -39,16 +38,17 @@ export class DtClientesComponent implements OnInit {
 
   public rowAux = [];
   public element: any = null;
+  public Loading: boolean;
 
 
   constructor(
     private _service: ClientesService,
-    private spinner: NgxSpinnerService,
     private _Router: Router,
   ) { }
 
   ngOnInit() {
-    this.spinner.show();
+    this.Loading = true;
+    this.showFilterRow = true;
     this.getClientes();
   }
 
@@ -72,7 +72,7 @@ export class DtClientesComponent implements OnInit {
     { title: 'Nombre Comercial', sorting: 'desc', className: 'text-success text-center', name: 'nombrecomercial', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'Giro', className: 'text-info text-center', name: 'giroEmpresa', filtering: { filterString: '', placeholder: 'Giro' } },
     { title: 'Actividad', className: 'text-info text-center', name: 'actividadEmpresa', filtering: { filterString: '', placeholder: 'Actividad' } },
-    { title: 'Tamano', className: 'text-info text-center', name: 'tamanoEmpresa', filtering: { filterString: '', placeholder: 'Tamaño' } },
+    { title: 'Tamaño', className: 'text-info text-center', name: 'tamanoEmpresa', filtering: { filterString: '', placeholder: 'Tamaño' } },
     { title: 'Empleados', className: 'text-info text-center', name: 'numeroEmpleados', filtering: { filterString: '', placeholder: 'No. Empleados' } },
     { title: 'Clasificación', className: 'text-info text-center', name: 'clasificacion', filtering: { filterString: '', placeholder: 'Calsificación' } },
     { title: 'TipoEmpresa', className: 'text-info text-center', name: 'tipoEmpresa', filtering: { filterString: '', placeholder: 'Tipo' } },
@@ -126,7 +126,6 @@ export class DtClientesComponent implements OnInit {
     this.columns.forEach((column: any) => {
       this.clearFilter = true;
       if (column.filtering) {
-        this.showFilterRow = true;
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
@@ -177,7 +176,7 @@ export class DtClientesComponent implements OnInit {
     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
     this.registros = this.rows.length;
     this.length = sortedData.length;
-    this.spinner.hide();
+    this.Loading = false;
   }
 
   onCellClick(data: any){
@@ -203,6 +202,7 @@ export class DtClientesComponent implements OnInit {
   }
 
   refreshTable(){
+    this.Loading = true;
     this.getClientes();
     setTimeout(() => {
       this.columns.forEach(element => {

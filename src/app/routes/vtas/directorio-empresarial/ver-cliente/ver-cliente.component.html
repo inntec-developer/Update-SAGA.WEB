@@ -1,133 +1,240 @@
-<div class="dt-container mat-elevation-z8">
-  <div class="card-header">
-    <em class="fa fa-user"></em> Informaci&oacute;n General del
-    <span *ngIf="esCliente else Prospecto">Cliente</span>
-    <ng-template #Prospecto><span>Prospecto</span></ng-template>
-
+<div class="content-heading" *ngIf="!imprimir">
+  <div>
+    Visualizar Prospecto / Cliente
   </div>
-  <div class="card-body">
-    <accordion [closeOthers]="oneAtATime">
-      <accordion-group [isOpen]="true">
-        <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
-          <div class="pull-left float-left text-warning">
-            <h5>Datos Principales</h5>
-          </div>
-          <span class="float-right pull-right">
-            <em class="fa fa-user-circle-o"></em>
-          </span>
-        </button>
-        <div class="row">
-          <div class="col-md-2 col-sm-12" *ngIf="esCliente" #razonSocial>
-            <strong class="text-primary">Razon Social: </strong>
-            <label class="text-muted">
-              {{Cliente?.razonSocial | uppercase}}
-            </label>
-          </div>
-          <div class="col-md-2 col-sm-12" *ngIf="esCliente" #rfc>
-            <strong class="text-primary">RFC: </strong>
-            <label class="text-muted">
-              {{Cliente?.rfc | uppercase}}
-            </label>
-          </div>
-          <div class="col-md-2 col-sm-12" #nombreComercial>
-            <strong class="text-primary">Nombre Comercial: </strong>
-            <label class="text-muted">
-              {{Cliente?.nombreComercial | uppercase}}
-            </label>
-          </div>
-          <div class="col-md-2 col-sm-12" #actividadEmpresa>
-            <strong class="text-primary">Actividad: </strong>
-            <label class="text-muted">
-              {{Cliente?.actividadEmpresa?.actividadEmpresa | uppercase}}
-            </label>
-          </div>
-          <div class="col-md-2 col-sm-12" #tamanioEmpresa>
-            <strong class="text-primary">Tamaño: </strong>
-            <label class="text-muted">
-              {{Cliente?.tamanoEmpresa?.tamanoEmpresa | uppercase}}
-            </label>
-          </div>
-          <div class="col-md-2 col-sm-12" #numeroEmpleados>
-            <strong class="text-primary"># Empleados.: </strong>
-            <label class="text-muted">
-              {{Cliente?.numeroEmpleados}}
-            </label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-2 col-sm-12" #tipoempresa>
-            <strong class="text-primary">Tipo: </strong>
-            <label class="text-muted">
-              {{Cliente?.tipoEmpresa?.tipoEmpresa | uppercase}}
-            </label>
-          </div>
-          <div class="col-md-2 col-sm-12" #tipoBase>
-            <strong class="text-primary">Tipo Base: </strong>
-            <label class="text-muted">
-              {{Cliente?.tipoBase?.tipoBase | uppercase}}
-            </label>
-          </div>
-        </div>
-      </accordion-group>
-      <accordion-group [isOpen]="true">
-        <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
-          <div class="pull-left float-left text-warning">
-            <h5>Direcci&oacute;n</h5>
-          </div>
-          <span class="float-right pull-right">
-            <em class="fa fa-map-marker"></em>
-          </span>
-        </button>
-        <div class="row">
-          <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-            [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
-            <div>
-              <ol>
-                <li *ngFor="let d of Cliente?.direcciones">
-                  <strong class="text-primary">Calle: </strong>{{d.calle | uppercase}}
-                  <strong class="text-primary">Numero: </strong>{{d.numeroExterior}}
-                  <span *ngIf="d.numeroInterior"><strong class="text-primary">Ext:</strong> {{d.numeroInterior}}   </span>
-                  <strong class="text-primary">Colonia: </strong>{{d.colonia | uppercase}}
-                  <strong class="text-primary">C.P: </strong>{{d.codigoPostal | uppercase}}
-                  <strong class="text-primary">Estado: </strong>{{d.estado | uppercase}}
-                  <strong class="text-primary">Municipio: </strong>{{d.municipio | uppercase}}
-                </li>
-
-              </ol>
-            </div>
-          </ng-scrollbar>
-        </div>
-      </accordion-group>
-      <accordion-group [isOpen]="true">
+  <!-- Breadcrumb right aligned-->
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item">
+      <a [routerLink]="['/home']">Inicio</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a [routerLink]="['/ventas/directorio']">Directorio Empresarial</a>
+    </li>
+    <li class="breadcrumb-item active">Visualizar</li>
+  </ol>
+</div>
+<div class="row" *ngIf="!imprimir">
+  <div class="col-md-12">
+    <div class="d-flex justify-content-between">
+      <button placement="right" tooltip="Editar" class="mr-1 btn btn-xs btn-outline-primary paddin-buttom"
+      (click)="editarCliente()">
+        <em class="fa fa-pencil"></em>
+      </button>
+      <!-- <button placement="right" tooltip="Imprimir" class="mr-1 btn btn-xs btn-outline-info paddin-buttom" (click)="print()">
+        <em class="fa fa-print"></em>
+      </button> -->
+      <button container="body" placement="bottom" tooltip="Regresar"
+        class="mr-1 btn btn-xs btn-outline-warning paddin-buttom" type="button" [routerLink]="['/ventas/directorio']">
+        <em class="fa fa-arrow-left"></em>
+      </button>
+    </div>
+  </div>
+</div>
+<br *ngIf="!imprimir" />
+<div id="content">
+  <div class="dt-container mat-elevation-z8">
+    <div class="card-body">
+      <accordion [closeOthers]="oneAtATime">
+        <accordion-group [isOpen]="true">
           <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
             <div class="pull-left float-left text-warning">
-              <h5>Tel&eacute;fonos / Correos Electr&oacute;nicos</h5>
+              <h5>Datos Principales</h5>
             </div>
             <span class="float-right pull-right">
+              <em class="fa fa-user-circle-o"></em>
+            </span>
+          </button>
+          <div class="row">
+            <div class="col-md-2 col-sm-12" *ngIf="esCliente" #razonSocial>
+              <strong class="text-primary margin-left">Razon Social: </strong>
+              <label class="text-muted margin-left">
+                {{Cliente?.razonSocial}}
+              </label>
+            </div>
+            <div class="col-md-2 col-sm-12" *ngIf="esCliente" #rfc>
+              <strong class="text-primary margin-left">RFC: </strong>
+              <label class="text-muted margin-left">
+                {{Cliente?.rfc}}
+              </label>
+            </div>
+            <div class="col-md-2 col-sm-12" #nombreComercial>
+              <strong class="text-primary margin-left">Nombre Comercial: </strong>
+              <label class="text-muted margin-left">
+                {{Cliente?.nombreComercial}}
+              </label>
+            </div>
+            <div class="col-md-2 col-sm-12" #actividadEmpresa>
+              <strong class="text-primary margin-left">Actividad: </strong>
+              <label class="text-muted margin-left">
+                {{Cliente?.actividadEmpresa?.actividadEmpresa}}
+              </label>
+            </div>
+            <div class="col-md-2 col-sm-12" #tamanioEmpresa>
+              <strong class="text-primary margin-left">Tamaño: </strong>
+              <label class="text-muted margin-left">
+                {{Cliente?.tamanoEmpresa?.tamanoEmpresa}}
+              </label>
+            </div>
+            <div class="col-md-2 col-sm-12" #numeroEmpleados>
+              <strong class="text-primary margin-left"># Empleados.: </strong>
+              <label class="text-muted margin-left">
+                {{Cliente?.numeroEmpleados}}
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2 col-sm-12" #tipoempresa>
+              <strong class="text-primary margin-left">Tipo: </strong>
+              <label class="text-muted margin-left">
+                {{Cliente?.tipoEmpresa?.tipoEmpresa}}
+              </label>
+            </div>
+            <div class="col-md-2 col-sm-12" #tipoBase>
+              <strong class="text-primary margin-left">Tipo Base: </strong>
+              <label class="text-muted margin-left">
+                {{Cliente?.tipoBase?.tipoBase}}
+              </label>
+            </div>
+          </div>
+        </accordion-group>
+        <accordion-group [isOpen]="true">
+          <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
+            <div class="pull-left float-left text-warning">
+              <h5>Direcci&oacute;n / Tel&eacute;fonos</h5>
+            </div>
+            <span class="float-right pull-right">
+              <em class="fa fa-map-marker"></em>
               <em class="fa fa-phone"></em>
+            </span>
+          </button>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+                [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+                <div>
+                  <ul id="rtl_func">
+                    <li class="list_root" id="d_{{i}}" *ngFor="let d of Cliente?.direcciones; let i=index;"><span
+                        class="text-success">{{d.tipoDireccion | uppercase}}</span> <span *ngIf="d.esPrincipal"
+                        class="text-success float-right"><em class="fa fa-check"></em></span>
+                      <ul>
+                        <li>
+                          <p><strong class="text-primary margin-left"> Calle: </strong><label class="text-muted">
+                              {{d.calle}}
+                            </label>
+                            <strong class="text-primary margin-left"> Numero: </strong><label class="text-muted">
+                              {{d.numeroExterior}} </label>
+                            <span *ngIf="d.numeroInteriormargin-left"><strong class="text-primary "> Ext:
+                              </strong><label class="text-muted margin-left"> {{d.numeroInterior}} </label></span></p>
+                          <p><strong class="text-primary margin-left"> Colonia: </strong><label class="text-muted">
+                              {{d.colonia}} </label>
+                            <strong class="text-primary margin-left"> C.P: </strong><label class="text-muted">
+                              {{d.codigoPostal}} </label></p>
+                          <p><strong class="text-primary margin-left"> Estado: </strong><label class="text-muted">
+                              {{d.estado}} </label>
+                            <strong class="text-primary margin-left"> Municipio: </strong><label class="text-muted">
+                              {{d.municipio}} </label></p>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+
+                </div>
+              </ng-scrollbar>
+
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+                [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+                <div>
+                  <ul id="rtl_func">
+                    <li class="list_root" id="t_{{i}}" *ngFor="let t of Cliente?.telefonos; let i=index;"><span
+                        class="text-success">{{t.tTelefono | uppercase}}</span> <span *ngIf="t.esPrincipal"
+                        class="text-success float-right"><em class="fa fa-check"></em></span>
+                      <ul>
+                        <li>
+                          <span *ngIf="t.direccion"><strong class="text-primary margin-left"> <em
+                                class="fa fa-map-marker"></em></strong><label class="text-muted margin-left">
+                              {{t.direccion.calle}} </label></span>
+                          <p><strong class="text-primary margin-left"> <em class="fa fa-phone"></em> </strong><label
+                              class="text-muted margin-left"> + {{t.clavePais}} <span *ngIf="t.claveLada">
+                                ({{t.claveLada}})
+                              </span> {{t.telefono | slice:0:4}}-{{t.telefono | slice:4:8}} <span *ngIf="t.extension">
+                                Ext.
+                                {{t.extension}} </span></label></p>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </ng-scrollbar>
+            </div>
+          </div>
+        </accordion-group>
+        <accordion-group [isOpen]="true">
+          <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
+            <div class="pull-left float-left text-warning">
+              <h5>Correos Electr&oacute;nicos / Contactos</h5>
+            </div>
+            <span class="float-right pull-right">
               <em class="fa fa-envelope"></em>
             </span>
           </button>
           <div class="row">
-            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-              [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
-              <div>
-                <ol>
-                  <li *ngFor="let d of Cliente?.direcciones">
-                    <strong class="text-primary">Calle: </strong>{{d.calle | uppercase}}
-                    <strong class="text-primary">Numero: </strong>{{d.numeroExterior}}
-                    <span *ngIf="d.numeroInterior"><strong class="text-primary">Ext:</strong> {{d.numeroInterior}}   </span>
-                    <strong class="text-primary">Colonia: </strong>{{d.colonia | uppercase}}
-                    <strong class="text-primary">C.P: </strong>{{d.codigoPostal | uppercase}}
-                    <strong class="text-primary">Estado: </strong>{{d.estado | uppercase}}
-                    <strong class="text-primary">Municipio: </strong>{{d.municipio | uppercase}}
-                  </li>
-
-                </ol>
-              </div>
-            </ng-scrollbar>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+                [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+                <div>
+                  <ul id="rtl_func">
+                    <li class="list_root" id="e_{{i}}" *ngFor="let e of Cliente?.correos; let i=index;">
+                      <ul>
+                        <li>
+                          <span *ngIf="e.direccion"><strong class="text-primary margin-left" *ngIf="e.direccion"> <em
+                                class="fa fa-map-marker"></em> </strong><label
+                              class="text-muted margin-left">{{e.direccion.calle}} </label></span>
+                          <p><strong class="text-primary margin-left"> <em class="fa fa-envelope"></em></strong><label
+                              class="text-muted margin-left">{{e.email}} </label></p>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </ng-scrollbar>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+                [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+                <div>
+                  <ul id="rtl_func">
+                    <li class="list_root" id="e_{{i}}" *ngFor="let c of Cliente?.contactos; let i=index;"><span class="text-success">{{c.puesto | uppercase}}</span> <span *ngIf="c.puesto"></span>
+                      <ul>
+                        <li>
+                          <span><strong class="text-primary margin-left"> <em
+                                class="fa fa-user"></em> </strong><label class="text-muted margin-left">{{c.nombre}}
+                              {{c.apellidoPaterno}} {{c.apellidoMaterno}} </label></span>
+                          <p *ngIf="c.direccion"><strong class="text-primary margin-left"><em
+                                  class="fa fa-map-marker"></em> </strong><label
+                                class="text-muted margin-left">{{c.direccion.calle}} </label></p>
+                          <p><strong class="text-primary margin-left"> <em class="fa fa-phone"></em> </strong><label
+                              class="text-muted margin-left"> + {{c.telefonos[0].clavePais}} <span
+                                *ngIf="c.telefonos.claveLada">
+                                ({{c.telefonos[0].claveLada}})
+                              </span> {{c.telefonos[0].telefono | slice:0:4}}-{{c.telefonos[0].telefono | slice:4:8}} <span
+                                *ngIf="c.telefonos.extension">
+                                Ext.
+                                {{c.telefonos[0].extension}} {{c.telefonos[0].tipoTelefono.tipo}}</span></label></p>
+                          <p><span *ngIf="c.emails"><strong class="text-primary margin-left"> <em
+                                  class="fa fa fa-envelope"></em> </strong><label
+                                class="text-muted margin-left">{{c.emails[0].email}} </label></span></p>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </ng-scrollbar>
+            </div>
           </div>
         </accordion-group>
-    </accordion>
+      </accordion>
+    </div>
   </div>
 </div>

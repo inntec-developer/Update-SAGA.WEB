@@ -14,7 +14,8 @@ import { MatDialog } from '@angular/material';
 export class DtCandidatosComponent implements OnInit, OnChanges {
 
   // Variables utilizadas. ***
-  @Input('Filtrado') FCandidatos: any; //Datos que reciben del filtro. ***  
+  @Input('Filtrado') FCandidatos: any; //Datos que reciben del filtro. ***
+  @Input('expanded') Expanded: boolean;
   candidatos: any;
   step = 0;
   infoCnd = 0;
@@ -45,6 +46,8 @@ export class DtCandidatosComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.FCandidatos && !changes.FCandidatos.isFirstChange()) {
       this.ngOnInit();
+      this.setInfoCnd(0);
+      this.showCandidato = false;
     }
   }
 

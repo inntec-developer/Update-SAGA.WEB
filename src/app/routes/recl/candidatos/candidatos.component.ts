@@ -13,10 +13,12 @@ import {startWith} from 'rxjs/operators/startWith';
 })
 export class CandidatosComponent implements OnInit {
 
-  filtradocandidatos: any;
+  public filtradocandidatos: any;
+  public Expanded: boolean = false;
 
   Filtrado(event) {
     this.filtradocandidatos = event;
+    this.Expanded = true;
   }
 
   ngOnInit(){
