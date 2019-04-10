@@ -170,6 +170,8 @@ export class CorreosClienteComponent implements OnInit {
       closeOnCancel: false,
       showLoaderOnConfirm: true
     }, (isConfirm) => {
+      window.onkeydown = null;
+      window.onfocus = null;
       if (isConfirm) {
         this._ClienteService.deleteCorreo(this.elementC.id).subscribe(result => {
           if (result == 200) {

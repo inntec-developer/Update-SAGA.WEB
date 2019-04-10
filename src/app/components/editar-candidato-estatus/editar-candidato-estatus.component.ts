@@ -29,19 +29,16 @@ export class EditarCandidatoEstatusComponent implements OnInit {
     //this.GetCandidatosNR();
   }
 
-  GetCandidatosNR()
-  {
-    this.service.GetFoliosIncidencias(this.estatusId).subscribe(result =>{
+  GetCandidatosNR() {
+    this.service.GetFoliosIncidencias(this.estatusId).subscribe(result => {
       this.candidatos = result;
     })
 
   }
 
-  updateValue(event, cell, rowIndex)
-  {
+  updateValue(event, cell, rowIndex) {
     var aux;
-    if(event.target.value !== '')
-    {
+    if (event.target.value !== '') {
       // var aux = this.candidatos[rowIndex]['comentario'];
       // aux.respuesta = event.target.value;
       this.candidatos[rowIndex]['respuesta'] = event.target.value;
@@ -55,149 +52,148 @@ export class EditarCandidatoEstatusComponent implements OnInit {
 
   }
 
-  public AddComentario(row, estatus)
-  {
+  public AddComentario(row, estatus) {
 
     let Comentario = {
-        CandidatoId: row.candidatoId,
-        Comentario: this.comentario,
-        ComentarioId: row.id,
-        Usuario: sessionStorage.getItem('usuario'),
-        UsuarioId: sessionStorage.getItem('id'),
-        RespuestaId: row.comentarioId,
-        RequisicionId: row.requisicionId,
-        MotivoId: row.motivoId,
-        estatusId: estatus
-      }
-
-      console.log(row)
-
-
-
-      this.rowAux = [];
-      this.estatusAux = 0;
-      this.confirmar = false;
-      this.confirmar2 = false;
-
+      CandidatoId: row.candidatoId,
+      Comentario: this.comentario,
+      ComentarioId: row.id,
+      Usuario: sessionStorage.getItem('usuario'),
+      UsuarioId: sessionStorage.getItem('id'),
+      RespuestaId: row.comentarioId,
+      RequisicionId: row.requisicionId,
+      MotivoId: row.motivoId,
+      estatusId: estatus
     }
 
-
-    //#region modal confirmar
-    Confirmar(row, estatus, modal){
-
-      var Comentario = {
-        CandidatoId: row.candidatoId,
-        Comentario: this.comentario,
-        ComentarioId: row.comentarioId,
-        Usuario: sessionStorage.getItem('usuario'),
-        UsuarioId: sessionStorage.getItem('id'),
-        RespuestaId: row.comentarioId,
-        RequisicionId: row.requisicionId,
-        MotivoId: row.motivoId,
-        estatusId: estatus
-      }
-
-var conf = false;
-      if(modal == 1)
-      {
-        swal({
-          title: "¿ESTAS SEGURO?",
-          text: "¡El candidato quedara como NR!",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#ec2121",
-          confirmButtonText: "¡Si, validar como NR!",
-          cancelButtonText: "¡No, cancelar!",
-          closeOnConfirm: false,
-          closeOnCancel: false
-        }, (isConfirm) => {
-
-          if (isConfirm) {
-            this.serviceComentarios.AddRespuesta(Comentario).subscribe(data => {
-              if (data == 200) {
-                this.comentario = '';
-                row.activar = false;
-                if (estatus == 27) {
+    console.log(row)
 
 
-                  row.estatus = 'Disponible';
-                }
-                else {
 
-                  row.estatus = 'NR';
+    this.rowAux = [];
+    this.estatusAux = 0;
+    this.confirmar = false;
+    this.confirmar2 = false;
 
-                }
-                swal("¡Candidato NR!", "Los datos se actualizaron con éxito.", "success");
-
-              }
-            }, err => {
-
-              console.log(err);
-            });
-          }
-          else {
-            swal("Cancelado", "No se realizó ningún cambio", "error");
-          }
-
-        });
+  }
 
 
-      }
-      else
-      {
-        swal({
-          title: "¿ESTAS SEGURO?",
-          text: "¡El candidato quedara como liberado!",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonClass: "btn btn-success",
-          confirmButtonColor: "#1e983b",
-          confirmButtonText: "¡Si, candidato liberado!",
-          cancelButtonText: "¡No, cancelar!",
-          closeOnConfirm: false,
-          closeOnCancel: false
-        },
+  //#region modal confirmar
+  Confirmar(row, estatus, modal) {
 
-       (isConfirm) => {
-          if (isConfirm) {
-
-            this.serviceComentarios.AddRespuesta(Comentario).subscribe(data => {
-              if (data == 200) {
-                this.comentario = '';
-                row.activar = false;
-                if (estatus == 27) {
-
-
-                  row.estatus = 'Disponible';
-                }
-                else {
-
-                  row.estatus = 'NR';
-
-                }
-
-                swal("¡Candidato Liberado!", "Los datos se actualizaron con éxito.", "success");
-
-              }
-            }, err => {
-
-              console.log(err);
-            });
-
-          } else {
-            swal("Cancelado", "No se realizó ningún cambio", "error");
-          }
-        });
-      }
+    var Comentario = {
+      CandidatoId: row.candidatoId,
+      Comentario: this.comentario,
+      ComentarioId: row.comentarioId,
+      Usuario: sessionStorage.getItem('usuario'),
+      UsuarioId: sessionStorage.getItem('id'),
+      RespuestaId: row.comentarioId,
+      RequisicionId: row.requisicionId,
+      MotivoId: row.motivoId,
+      estatusId: estatus
     }
-    //#endregion
+
+    var conf = false;
+    if (modal == 1) {
+      swal({
+        title: "¿ESTAS SEGURO?",
+        text: "¡El candidato quedara como NR!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#ec2121",
+        confirmButtonText: "¡Si, validar como NR!",
+        cancelButtonText: "¡No, cancelar!",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }, (isConfirm) => {
+        window.onkeydown = null;
+        window.onfocus = null;
+        if (isConfirm) {
+          window.onkeydown = null;
+          window.onfocus = null;
+          this.serviceComentarios.AddRespuesta(Comentario).subscribe(data => {
+            if (data == 200) {
+              this.comentario = '';
+              row.activar = false;
+              if (estatus == 27) {
+
+
+                row.estatus = 'Disponible';
+              }
+              else {
+
+                row.estatus = 'NR';
+
+              }
+              swal("¡Candidato NR!", "Los datos se actualizaron con éxito.", "success");
+
+            }
+          }, err => {
+
+            console.log(err);
+          });
+        }
+        else {
+          swal("Cancelado", "No se realizó ningún cambio", "error");
+        }
+
+      });
+
+
+    }
+    else {
+      swal({
+        title: "¿ESTAS SEGURO?",
+        text: "¡El candidato quedara como liberado!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn btn-success",
+        confirmButtonColor: "#1e983b",
+        confirmButtonText: "¡Si, candidato liberado!",
+        cancelButtonText: "¡No, cancelar!",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }, (isConfirm) => {
+        window.onkeydown = null;
+        window.onfocus = null;
+        if (isConfirm) {
+          this.serviceComentarios.AddRespuesta(Comentario).subscribe(data => {
+            if (data == 200) {
+              this.comentario = '';
+              row.activar = false;
+              if (estatus == 27) {
+
+
+                row.estatus = 'Disponible';
+              }
+              else {
+
+                row.estatus = 'NR';
+
+              }
+
+              swal("¡Candidato Liberado!", "Los datos se actualizaron con éxito.", "success");
+
+            }
+          }, err => {
+
+            console.log(err);
+          });
+
+        } else {
+          swal("Cancelado", "No se realizó ningún cambio", "error");
+        }
+      });
+    }
+  }
+  //#endregion
 
 
 
 
-    /**
-   * configuracion para mensajes de acciones.
-   */
+  /**
+ * configuracion para mensajes de acciones.
+ */
   toaster: any;
   toasterConfig: any;
   toasterconfig: ToasterConfig = new ToasterConfig({

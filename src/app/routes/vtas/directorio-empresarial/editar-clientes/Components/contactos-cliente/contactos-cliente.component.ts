@@ -142,7 +142,7 @@ export class ContactosClienteComponent implements OnInit {
     let data = {
       apellidoPaterno: this.formContactos.get('ApellidoPaterno').value,
       apellidoMaterno: this.formContactos.get('ApellidoMaterno').value || '',
-      calle: this.Direcciones[idxDireccion]['calle'] + ' No. '+ this.Direcciones[idxDireccion]['numeroExterior'] + ' C.P.' + this.Direcciones[idxDireccion]['codigoPostal'],
+      calle: this.Direcciones[idxDireccion]['calle'] + ' No. ' + this.Direcciones[idxDireccion]['numeroExterior'] + ' C.P.' + this.Direcciones[idxDireccion]['codigoPostal'],
       clienteId: this.EntidadId,
       direccionId: idDireccion,
       emails: this.Emails,
@@ -233,6 +233,8 @@ export class ContactosClienteComponent implements OnInit {
       closeOnCancel: false,
       showLoaderOnConfirm: true
     }, (isConfirm) => {
+      window.onkeydown = null;
+      window.onfocus = null;
       if (isConfirm) {
         this._ClienteService.deleteContacto(this.elementCn.id).subscribe(result => {
           if (result == 200) {

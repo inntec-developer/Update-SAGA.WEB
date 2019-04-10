@@ -64,7 +64,7 @@ export class DtRutasCamionRequiComponent implements OnInit {
   cargarRutas(id): void {
     this.rutasService.getRequiRutasCamion(id).subscribe(data => {
       this.rows = data;
-      if(this.rows.length == 0){
+      if (this.rows.length == 0) {
         this.TableDisable = true;
       }
     }, err => {
@@ -113,9 +113,9 @@ export class DtRutasCamionRequiComponent implements OnInit {
       data: ruta
     });
     dialogRuta.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         this.rows = result;
-        if(this.rows.length > 0){
+        if (this.rows.length > 0) {
           this.TableDisable = false;
         }
       }
@@ -136,9 +136,9 @@ export class DtRutasCamionRequiComponent implements OnInit {
       data: ruta
     });
     dialogRuta.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         this.rows = result;
-        if(this.rows.length > 0){
+        if (this.rows.length > 0) {
           this.TableDisable = false;
         }
       }
@@ -231,6 +231,8 @@ export class DtRutasCamionRequiComponent implements OnInit {
       closeOnConfirm: false,
       closeOnCancel: false,
     }, (isConfirm) => {
+      window.onkeydown = null;
+      window.onfocus = null;
       if (isConfirm) {
         this._deleteRuta();
       } else {

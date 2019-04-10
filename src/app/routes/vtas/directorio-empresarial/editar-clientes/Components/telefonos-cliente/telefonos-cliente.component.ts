@@ -121,7 +121,7 @@ export class TelefonosClienteComponent implements OnInit {
     }
     let data = {
       activo: this.formTelefonos.get('Activo').value,
-      calle: this.Direcciones[idxDireccion]['calle'] + ' No. '+ this.Direcciones[idxDireccion]['numeroExterior'] + ' C.P.' + this.Direcciones[idxDireccion]['codigoPostal'],
+      calle: this.Direcciones[idxDireccion]['calle'] + ' No. ' + this.Direcciones[idxDireccion]['numeroExterior'] + ' C.P.' + this.Direcciones[idxDireccion]['codigoPostal'],
       claveLada: this.formTelefonos.get('Lada').value || '',
       clavePais: this.formTelefonos.get('LadaPais').value,
       entidadId: this.EntidadId,
@@ -236,6 +236,8 @@ export class TelefonosClienteComponent implements OnInit {
       closeOnCancel: false,
       showLoaderOnConfirm: true
     }, (isConfirm) => {
+      window.onkeydown = null;
+      window.onfocus = null;
       if (isConfirm) {
         this._ClienteService.deleteTelefono(this.elementT.id).subscribe(result => {
           if (result == 200) {
