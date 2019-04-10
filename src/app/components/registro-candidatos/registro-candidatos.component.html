@@ -17,8 +17,8 @@
           <input type="text" class="form-control form-control-sm" placeholder="Apellido Materno *" [(ngModel)]="am" name="am" ngModel required [class.requerido]="am.length == 0" [class.valido]="am.length > 1" />
         </div>
         <div class="mb-1">
-        <mat-form-field>
-                <input matInput [matDatepicker]="picker" placeholder="Fecha de Nacimiento" name="edad" (dateChange)="validarFecha($event)">
+        <mat-form-field >
+                <input matInput [matDatepicker]="picker" placeholder="Fecha de Nacimiento" name="edad" [(ngModel)]="date" (dateChange)="validarFecha($event)">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
                 <small *ngIf="edad >= 18" class="text-info">Edad {{edad}}</small>
@@ -29,11 +29,11 @@
 
         <div class="form-group">
                 <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="rbM" id="inlineRadio1" [(ngModel)]="rbM" value="1">
+                        <input class="form-check-input" type="radio" name="rbM" id="inlineRadio1" [(ngModel)]="rbS" value="1">
                         <label class="form-check-label" for="inlineRadio1">MUJER</label>
                       </div>
                       <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="rbH" id="inlineRadio2" [(ngModel)]="rbM" value="2">
+                        <input class="form-check-input" type="radio" name="rbH" id="inlineRadio2" [(ngModel)]="rbS" value="2">
                         <label class="form-check-label" for="inlineRadio2">HOMBRE</label>
                       </div>
         </div>
@@ -41,27 +41,41 @@
    </div>
     <div class="col-md-6">
             <div class="form-group">
-                <label>LUGAR DE NACIMIENTO</label>
-                    <select class="form-control form-control-sm" name="estado" ngModel required (change)="GetMunicipio($event)">
+                <label class="text-muted">LUGAR DE NACIMIENTO</label>
+                    <select [disabled]="extranjero" class="form-control form-control-sm" name="estado" ngModel required [(ngModel)]="estadoId" (change)="GetMunicipio($event)" [class.requerido]="estadoId == 0 && !extranjero" [class.valido]="estadoId > 0">
                         <option [value]=0 selected disabled>Selecciona Estado de Nacimiento</option>
                         <option *ngFor="let e of estados" [value]=e.id>{{e.estado | uppercase}}</option>
                     </select>
                 </div>
                 <div class="form-group">
                         <label></label>
-                  <select class="form-control form-control-sm" name="municipio" ngModel required >
-                      <option class="hidden" [value]=0 selected disabled>Selecciona Municipio de Nacimiento</option>
-                      <option *ngFor="let m of municipios" [value]='m.id'>{{m.municipio | uppercase}}</option>
+                  <select [disabled]="extranjero" class="form-control form-control-sm" name="municipio" [(ngModel)]="municipioId" ngModel required [class.requerido]="municipioId == 0 && !extranjero" [class.valido]="municipioId > 0">
+                      <option [value]=0 selected disabled>Selecciona Municipio de Nacimiento</option>
+                      <option *ngFor="let m of municipios" [value]=m.id>{{m.municipio | uppercase}}</option>
                   </select>
               </div>
 
         <div class="form-group">
             <label class="text-muted" for="email">EMAIL</label>
+            <div class="input-group">
             <input type="email" class="form-control form-control-sm" placeholder="Email *" value="" name="email" [(ngModel)]="email" ngModel required [class.requerido]="email.length == 0" [class.valido]="email.length >= 1"/>
+            <div class="input-group-append">
+                <div class="input-group-text">
+                <input type="radio" [(ngModel)]="opcRegistro1" name="opc1" value=1 (click)="opcRegistro2=0" tooltip="Registrar con Email" placement="right">
+                </div>
+              </div>
+            </div>
         </div>
         <div class="form-group">
             <label class="text-muted" for="txtPhone">TELEFONO</label>
+            <div class="input-group">
             <input type="text" minlength="10" maxlength="10" name="txtPhone" class="form-control form-control-sm" placeholder="Telefono *" [(ngModel)]="txtPhone" value="" ngModel required [class.requerido]="txtPhone.length < 10" [class.valido]="txtPhone.length == 10"/>
+            <div class="input-group-append">
+                <div class="input-group-text">
+                <input type="radio" [(ngModel)]="opcRegistro2" name="opc2" value="2" (click)="opcRegistro1=0" tooltip="Registrar con Telefono" placement="right">
+                </div>
+              </div>
+            </div>
         </div>
         <!-- <div class="form-group">
                 <label class="text-muted" for="txtPhone">CONTRASEÑA</label>
@@ -73,11 +87,9 @@
 
         <div class="d-flex justify-content-end">
         <button type="button" class="btn btn-lg btn-warning mr-2 btnRegister" (click)="BorrarCampos()">BORRAR CAMPOS</button>
-        <button type="submit" [disabled]="f.invalid && edad < 18" class="btn btn-lg btn-success btnRegister">REGISTRAR</button>
+        <button type="submit" [disabled]="f.invalid || edad < 18" class="btn btn-lg btn-success btnRegister" (click)="registrar()">REGISTRAR</button>
       </div>
     </div>
 
   </div>
 </form>
-
-6

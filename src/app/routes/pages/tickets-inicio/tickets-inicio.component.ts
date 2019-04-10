@@ -20,7 +20,7 @@ export class TicketsInicioComponent implements OnInit {
   constructor(private _service: SistTicketsService, private service: RequisicionesService, private dialog: MatDialog,) { }
 
   ngOnInit() {
-
+    sessionStorage.removeItem('candidatoId');
   }
 
   GenerarTicket()
@@ -55,13 +55,20 @@ export class TicketsInicioComponent implements OnInit {
 
   }
 
-  GenerarTicketSinCita(requisicionId)
-  {
-    this._service.GetTicketSinCita(requisicionId).subscribe(data => {
-      this.num = data;
-    })
+  // GenerarTicketSinCita(requisicionId)
+  // {
+  //   let candidatoId = "00000000-0000-0000-0000-000000000000";
 
-  }
+  //   if(sessionStorage.getItem('candidatoId'))
+  //   {
+  //      candidatoId = sessionStorage.getItem('candidatoId');
+  //   }
+  
+  //   this._service.GetTicketSinCita(requisicionId, candidatoId).subscribe(data => {
+  //     this.num = data;
+  //   })
+
+  // }
 
   
   GetMisVacantes() {

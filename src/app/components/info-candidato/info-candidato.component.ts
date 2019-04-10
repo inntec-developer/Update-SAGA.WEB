@@ -117,6 +117,20 @@ export class InfoCandidatoComponent implements OnInit {
 
   }
 
+  validarFecha(fnac) : number{
+    var fn = new Date(fnac);
+    var date = new Date();
+    var edad = date.getFullYear() - fn.getFullYear();
+
+    if (date.getMonth() < fn.getMonth() - 1) {
+      edad--;
+    }
+    if (((fn.getMonth() - 1) == date.getMonth()) && (date < fn)) {
+      edad--;
+    }
+    return (edad); 
+  }
+
   GetInfoCandidato() {
     this.spinner.show();
     // this.CandidatoId = '4F65DAC1-C6A0-E811-80E8-9E274155325E'
@@ -127,7 +141,7 @@ export class InfoCandidatoComponent implements OnInit {
         picture: sessionStorage.getItem('ConexionBolsa') + data.foto,
         nombre: data.nombre,
         aboutMe: data.aboutMe.length != 0 ? data.aboutMe[0]['acercaDeMi'] : null,
-        edad: data.edad,
+        edad: this.validarFecha(data.fechaNacimiento),
         genero: data.genero,
         correo: data.email ? data.email.email : null,
         telefonos: data.telefono,
@@ -157,7 +171,7 @@ export class InfoCandidatoComponent implements OnInit {
       if (this.candidato.estatus) {
         this.Estatus = this.candidato.estatus.id;
         this.procesoCandidatoId = this.candidato.estatus.estatusId;
-        this.Status = this.candidato.estatus.estatus.descripcion;
+        this.Status = this.candidato.estatus.descripcion;
         this.RequisicionId = this.candidato.estatus.requisicionId;
         this.reclutador = this.candidato.estatus.reclutador;
       }

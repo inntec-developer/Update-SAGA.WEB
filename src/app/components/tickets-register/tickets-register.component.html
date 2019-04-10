@@ -16,19 +16,19 @@
       <div class="col-md-9 register-right">
           <div class="d-flex justify-content-end mt-3">
 
-                  <button class="btn btn-primary btn-pais font-weight-bold" [disabled]="flagMX" [ngClass]="flagMX ? 'btn btn-primary disabled' : 'mat-elevation-z8'" type="button" (click)="flagEU=false;flagMX=true;"><img class="mr-1" src="assets/img/flags-mini/Mexico.png" alt=""/>M&Eacute;XICO</button>
+                  <button class="btn btn-primary btn-pais font-weight-bold" [disabled]="flagMX" [ngClass]="flagMX ? 'btn btn-primary disabled' : 'mat-elevation-z8'" type="button" (click)="flagEU=false;flagMX=true; extranjero = false;"><img class="mr-1" src="assets/img/flags-mini/Mexico.png" alt=""/>M&Eacute;XICO</button>
                   <!-- <a class="nav-link active" id="home-tab" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">Mexico</a> -->
 
                   
-                  <button class="btn btn-info btn-pais font-weight-bold" type="button" [disabled]="flagEU" [ngClass]="flagEU ? 'disabled' : 'mat-elevation-z8'" (click)="flagMX=false; flagEU=true;"><i class="fa fa-user mr-1" aria-hidden="true"></i> EXT</button>
+                  <button class="btn btn-info btn-pais font-weight-bold" type="button" [disabled]="flagEU" [ngClass]="flagEU ? 'disabled' : 'mat-elevation-z8'" (click)="flagMX=false; flagEU=true; extranjero = true;"><i class="fa fa-user mr-1" aria-hidden="true"></i> EXT</button>
                   <!-- <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">EU</a> -->
       
-          </div>
+          </div> 
           <div>
              
                   <h3 class="register-heading">Registrate para ser usuario de Bolsa de Trabajo</h3>
                   <div class="row register-form">
-                  <app-registro-candidatos></app-registro-candidatos>
+                  <app-registro-candidatos [extranjero]="extranjero" (validarRegistro)="registrarUsuario($event)"></app-registro-candidatos>
                 </div>
           </div>
       </div>

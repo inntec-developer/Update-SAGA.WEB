@@ -1,3 +1,5 @@
+
+import { VerTurnosComponent } from './pages/ver-turnos/ver-turnos.component';
 import { Error404Component } from './pages/error404/error404.component';
 import { Error500Component } from './pages/error500/error500.component';
 import { LayoutComponent } from '../layout/layout.component';
@@ -9,6 +11,7 @@ import { RecoverComponent } from './pages/recover/recover.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { TrackingVacantesComponent } from './pages/tracking-vacantes/tracking-vacantes.component';
 import { TicketsInicioComponent } from './pages/tickets-inicio/tickets-inicio.component';
+
 
 export const routes = [
 
@@ -40,6 +43,7 @@ export const routes = [
     { path: '500', component: Error500Component },
     { path: 'TrackingVacantes', component: TrackingVacantesComponent },
     { path: 'Tickets', component: TicketsInicioComponent },
+    { path: 'VerTurno', component: VerTurnosComponent},
 
 
     // Not found

@@ -13,12 +13,10 @@ import { SeguimientoTicketComponent } from './seguimiento-ticket/seguimiento-tic
 import { SharedModule } from '../../shared/shared.module';
 import { TicketCitaPruebaComponent } from './ticket-cita-prueba/ticket-cita-prueba.component';
 import { VentaModule } from './../vtas/ventas.module';
-import { VerTurnosComponent } from './ver-turnos/ver-turnos.component';
 import { ReporteConcurrenciaComponent } from './reporte-concurrencia/reporte-concurrencia.component';
 
 const routes: Routes = [
   { path: 'turno', component: SeguimientoTicketComponent},
-  { path: 'verTurno', component: VerTurnosComponent},
   { path: 'Inicio', component: DlgAsignarModuloComponent},
   { path: 'Examenes', component: RevisionExamenesComponent},
   { path: 'ticketConCita', component: TicketCitaPruebaComponent},
@@ -37,7 +35,6 @@ const routes: Routes = [
   ],
   declarations: [
     SeguimientoTicketComponent,
-    VerTurnosComponent,
     FilaTicketsComponent,
     EnAtencionComponent,
     CarruselVacantesComponent,
@@ -47,6 +44,6 @@ const routes: Routes = [
     TicketCitaPruebaComponent,
     ReporteConcurrenciaComponent,
   ],
-  exports:[CarruselVacantesComponent]
+  exports:[CarruselVacantesComponent, EnAtencionComponent, CarruselArteVacantesComponent]
 })
 export class SistTicketsModule { }

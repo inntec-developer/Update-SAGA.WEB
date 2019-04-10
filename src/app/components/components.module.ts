@@ -84,6 +84,7 @@ import { TicketsRegisterComponent } from './tickets-register/tickets-register.co
 import { RegistroCandidatosComponent } from './registro-candidatos/registro-candidatos.component';
 import { FormsModule } from '@angular/forms';
 import { MAT_DATE_LOCALE } from '@angular/material';
+import { RegistroReclutadorComponent } from './registro-reclutador/registro-reclutador.component';
 @NgModule({
   imports: [
     SharedModule,
@@ -171,7 +172,8 @@ import { MAT_DATE_LOCALE } from '@angular/material';
     GraficaResumenComponent,
     DlgRevisarExamenesComponent,
     RegistroCandidatosComponent,
-    TicketsRegisterComponent
+    TicketsRegisterComponent,
+    RegistroReclutadorComponent
     
   ],
   exports: [
@@ -250,9 +252,11 @@ import { MAT_DATE_LOCALE } from '@angular/material';
     GraficaVacanteVencidaComponent,
     GraficaResumenComponent,
     DlgRevisarExamenesComponent,
-    TicketsRegisterComponent
+    TicketsRegisterComponent,
+    RegistroCandidatosComponent,
+    RegistroReclutadorComponent
   ],
-  entryComponents: [  TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
+  entryComponents: [ RegistroReclutadorComponent, TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
 
 
 })

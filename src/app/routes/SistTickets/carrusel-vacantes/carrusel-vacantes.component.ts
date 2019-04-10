@@ -53,10 +53,24 @@ export class CarruselVacantesComponent implements OnInit {
       window.onkeydown = null;
       window.onfocus = null;
       if (isConfirm) {
-        this._service.GetTicketSinCita(row.id).subscribe(data => {
-          this.num = data;
-          swal("¡Ticket Impreso!", this.num, "success");
-        });
+
+        let candidatoId = "00000000-0000-0000-0000-000000000000";
+
+        if(sessionStorage.getItem('candidatoId'))
+        {
+           candidatoId = sessionStorage.getItem('candidatoId');
+        }
+
+
+    this._service.GetTicketSinCita(row.id, candidatoId).subscribe(data => {
+      this.num = data;
+
+      swal("¡Ticket Impreso!", this.num, "success");
+      sessionStorage.removeItem('candidatoId');
+
+    });
+
+
       }
       else {
         this.modalTicket = false;
@@ -76,20 +90,19 @@ export class CarruselVacantesComponent implements OnInit {
       this.dataSource = data;
       var color = 0;
       this.categorias = Array.from(new Set(this.dataSource.map(s => s.areaId)))
-        .map(id => {
-          color += 1;
-          if (color > 7) {
-            color = 1;
-          }
-          return {
-            id: id,
-            categoria: this.dataSource.find(s => s.areaId === id).categoria,
-            icono: this.dataSource.find(s => s.areaId === id).icono,
-            color: color
-          }
-        });
-
-      console.log(this.dataSource)
+      .map(id => {
+        color +=1;
+        if(color > 7)
+        {
+          color = 1;
+        }
+        return {
+          id: id,
+          categoria: this.dataSource.find(s => s.areaId === id).categoria,
+          icono: this.dataSource.find(s => s.areaId === id).icono,
+          color: color
+        }
+      });
       this.dataSource = this.dataSource.filter(element => {
         if (element.cubierta > 0) {
           return element;
@@ -105,7 +118,6 @@ export class CarruselVacantesComponent implements OnInit {
 
       this.vacantes = this.dataSource;
 
-      console.log(this.vacantes)
     })
   }
 
@@ -120,15 +132,17 @@ export class CarruselVacantesComponent implements OnInit {
         }
       });
 
-      this.vacantes = filtro;
-    }
-    this.activeId = this.vacantes[0].id;
+    this.vacantes = filtro;
+  }
+  this.activeId = this.vacantes[0].id;
+  this.myCarousel.activeId = this.vacantes[0].id;
+  this.myCarousel.cycle();
 
-    console.log(this.vacantes)
-    //   setTimeout(() => {
-    //     /** spinner ends after 5 seconds */
-    //     this.spinner.hide();
-    // }, 5000);
+
+  //   setTimeout(() => {
+  //     /** spinner ends after 5 seconds */
+  //     this.spinner.hide();
+  // }, 5000);
 
   }
 

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import { MomentDateAdapter} from '@angular/material-moment-adapter';
 import { SistTicketsService } from '../../service/SistTickets/sist-tickets.service';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
@@ -35,6 +35,8 @@ export const MY_FORMATS = {
   ],
 })
 export class RegistroCandidatosComponent implements OnInit {
+  @Output() validarRegistro:  EventEmitter<any> = new EventEmitter();
+  @Input('extranjero') extranjero;
   nom = '';
   ap = ''; 
   am = '';
@@ -45,6 +47,13 @@ export class RegistroCandidatosComponent implements OnInit {
   rbM = 0;
   rbH = 0;
   edad: number = 0;
+  fn: Date;
+  rbS: any = 0;
+  estadoId = 0;
+  municipioId = 0;
+  opcRegistro1 = 1;
+  opcRegistro2 = 0;
+  date: Date;
   constructor(private adapter: DateAdapter<any>, private _service: SistTicketsService) {
     this.adapter.setLocale('es')
 
@@ -63,7 +72,6 @@ export class RegistroCandidatosComponent implements OnInit {
 
   GetMunicipio(event)
   {
-    console.log(event.target.value)
     this._service.GetMunicipio(event.target.value).subscribe(data => {
       this.municipios = data;
     })
@@ -80,23 +88,66 @@ export class RegistroCandidatosComponent implements OnInit {
     if (((fn.getMonth() - 1) == date.getMonth()) && (date < fn)) {
       edad--;
     }
-
-    this.edad = edad;
-    console.log(edad);
- 
+    this.fn = new Date(fn.getFullYear(), fn.getMonth() + 1, fn.getDate());
+    this.edad = edad; 
   }
 
+  registrar()
+  {
+
+    let opc = 0;
+    if(this.opcRegistro1 > 0)
+    {
+      opc = this.opcRegistro1;
+    }
+    else
+    {
+      opc = this.opcRegistro2;
+    }
+
+    let email = [{ email: this.email.trim(), UsuarioAlta: 'INNTEC' }];
+    let candidato = {
+      
+      Nombre: this.nom,
+      ApellidoPaterno: this.ap,
+      ApellidoMaterno: this.am,
+      Email: email,
+      FechaNac: this.fn.getFullYear().toString() + '/' + (this.fn.getMonth() + 1).toString() + '/' +  this.fn.getDate().toString(),
+      GeneroId: this.rbS,
+      EstadoNacimientoId: this.estadoId,
+      MunicipioNacimientoId: this.municipioId,
+      Telefono: [{ClavePais:52, ClaveLada: this.txtPhone.substring(0,2), telefono: this.txtPhone, TipoTelefonoId: 1}],
+      // opcRegistro: opc
+      
+    };
+    this._service.RegistrarCandidato(candidato).subscribe(data => {
+      if(data != 417)
+      {
+        this.BorrarCampos();
+
+      }
+      this.validarRegistro.emit(data);
+    })
+
+  }
   BorrarCampos()
   {
     this.nom = '';
     this.ap = ''; 
     this.am = '';
+    this.edad = 0;
     this.email = '';
     this.txtPhone = '';
     this.municipios = [];
     this.rbH = 0;
     this.rbM = 0;
+    this.rbS = 0;
+    this.estadoId = 0;
+    this.municipioId = 0;
+    this.opcRegistro1 = 1;
+    this.opcRegistro2 = 0;
     this.GetEstados();
+    this.date = new Date();
 
   }
 
