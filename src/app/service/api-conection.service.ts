@@ -331,6 +331,8 @@ export class ApiConection {
     public static getResumenG = 'indicador/resumen'
     public static getRadialG = 'indicador/radial'
 
-
+  /* Menu de Catalogos */
+  public static getCatalogos = 'Catalogos/getCatalogos';
+  public static getCatalogosComplete = 'Catalogos/getCatalogosComplete';
 
 }

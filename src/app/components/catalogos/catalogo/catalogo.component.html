@@ -1,0 +1,64 @@
+<mat-card class="example-card">
+    <!-- Header Card -->
+    <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>
+            <h3>{{ titulo }}</h3>
+        </mat-card-title>
+        <mat-card-subtitle>{{ descripcion }}</mat-card-subtitle>
+    </mat-card-header>
+    <!-- Contenido Card -->
+    <mat-card-content>
+        <!-- Panel expandible -->
+        <mat-accordion class="example-headers-align">
+            <!-- Tabla de registros -->
+            <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Registros de {{ titulo }}
+                    </mat-panel-title>
+                    <mat-icon>list</mat-icon>
+                </mat-expansion-panel-header>
+                <div class="container-12">
+                    <app-table [tableHeads]="HeadTable" [tableDatas]="DataTable" (IdRegistro)="LoadIdReg($event)"></app-table>
+                </div>
+            </mat-expansion-panel>
+            <!-- Formulario de catalogo -->
+            <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Formulario de {{ titulo }}
+                    </mat-panel-title>
+                    <mat-icon>map</mat-icon>
+                </mat-expansion-panel-header>
+                <app-paises *ngIf="idCatalogo == 1" [SelectedPais]="selectedId"></app-paises>
+                <app-estados *ngIf="idCatalogo == 2" [Paises]="paises"></app-estados>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <br>
+        <!-- Card de botones -->
+        <mat-card>
+            <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-green mb-1" type="button" (click)="LimpiarFiltro()" container="body" placement="bottom" tooltip="Nuevo catalogo">
+                  <span class="btn-label ">
+                    <i class="fa fa-file-text-o"></i>
+                  </span>Nuevo
+                </button>
+            <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-warning mb-1" type="button" (click)="LimpiarFiltro()" container="body" placement="bottom" tooltip="Editar catalogo">
+                <span class="btn-label ">
+                  <i class="fa fa-pencil"></i>
+                </span>Editar
+              </button>
+            <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-dark mb-1" type="button" (click)="LimpiarFiltro()" container="body" placement="bottom" tooltip="Guardar los datos">
+                <span class="btn-label ">
+                  <i class="fa fa-floppy-o"></i>
+                </span>Guardar
+              </button>
+            <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="LimpiarFiltro()" container="body" placement="bottom" tooltip="Limpia todo los filtros">
+                  <span class="btn-label ">
+                    <i class="fa fa-eraser"></i>
+                  </span>Limpiar
+                </button>
+        </mat-card>
+        <br>
+    </mat-card-content>
+</mat-card>

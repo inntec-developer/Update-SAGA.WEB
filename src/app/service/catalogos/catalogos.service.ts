@@ -64,20 +64,23 @@ export class CatalogosService {
   private UrlDeleteOficina = ApiConection.ServiceUrl + ApiConection.deleteOficina;
   private UrlAlterOficina = ApiConection.ServiceUrl + ApiConection.alterOficina;
 
-   
+  /*Menu de catalogos */
+  private UrlMenuCatalogos = ApiConection.ServiceUrl + ApiConection.getCatalogos;
+  private UrlCatalogos = ApiConection.ServiceUrl + ApiConection.getCatalogosComplete;
+
   constructor(private _httpClient: HttpClient) { }
 
-  getOficinaMunicipio(mun:string,es:string) : Observable<any>{
+  getOficinaMunicipio(mun: string, es: string): Observable<any> {
     let params = new HttpParams().set('estado', es).set('municipio', mun);
     return this._httpClient.get(this.UrlGetMunicipioOfi, {params: params});
   }
 
-  getOficinaColonia(col:string,mun:string) : Observable<any>{
+  getOficinaColonia(col: string, mun: string): Observable<any> {
     let params = new HttpParams().set('municipio', mun).set('colonia', col);
     return this._httpClient.get(this.UrlGetColoniaOfi, {params: params});
   }
 
-  getOficinaEstado(id:string) : Observable<any>{
+  getOficinaEstado(id: string): Observable<any> {
     let params = new HttpParams().set('id', id);
     return this._httpClient.get(this.UrlGetEstadoOfi, {params: params});
   }
@@ -120,19 +123,17 @@ export class CatalogosService {
       return this._httpClient.get(this.UrlAlterOficina, {params: params});
     }
 
-  EliminarOficina(id:string) : Observable<any>{
+  EliminarOficina(id: string): Observable<any>{
     let params = new HttpParams().set('id', id);
     return this._httpClient.get(this.UrlDeleteOficina , {params: params})
   }
 
-  getSucursales(fil:string) : Observable<any>{
+  getSucursales(fil: string): Observable<any>{
     let params = new HttpParams().set('filtro', fil);
     return this._httpClient.get(this.UrlGetSucursal , {params: params})
   }
 
-
-
-  getPreguntasFrecuentes() : Observable<any>{
+  getPreguntasFrecuentes(): Observable<any>{
     return this._httpClient.get(this.UrlGetPreguntasFrecuentes)
   }
 
@@ -150,9 +151,6 @@ export class CatalogosService {
     let params = new HttpParams().set('id', id);
     return this._httpClient.get(this.UrlDeletePreguntasFrecuentes, {params: params});
   }
-
-
-
 
   getDocumentosDamsa() : Observable<any>{
     return this._httpClient.get(this.urlGetDocumentosDamsa)
@@ -193,20 +191,20 @@ return this._httpClient.get(this.UrlGetTipoDireccion);
     return this._httpClient.get(this.UrlGetGiroEmpresa);
   }
 
-  getActividadEmp(giroId: any) : Observable<any>{
+  getActividadEmp(giroId: any): Observable<any>{
     let params= new HttpParams().set('GiroId', giroId);
     return this._httpClient.get(this.UrlGetActividadEmpresa, {params: params});
   }
 
-  getTamanioEmp() : Observable<any>{
+  getTamanioEmp(): Observable<any>{
     return this._httpClient.get(this.UrlGetTamanioEmpresa);
   }
 
-  getTipoEmp() : Observable<any>{
+  getTipoEmp(): Observable<any>{
     return this._httpClient.get(this.UrlGetTipoEmpresa);
   }
 
-  getTipoBase() : Observable<any>{
+  getTipoBase(): Observable<any>{
     return this._httpClient.get(this.UrlGetTipoBase);
   }
 
@@ -219,6 +217,7 @@ return this._httpClient.get(this.UrlGetTipoDireccion);
     let params= new HttpParams().set('PaisId', PaisId);
     return this._httpClient.get(this.UrlGetEstado, {params: params});
   }
+
   getMunicipio(EstadoId: any): Observable<any>{
     let params= new HttpParams().set('EstadoId', EstadoId);
     return this._httpClient.get(this.UrlGetMunicipio, {params: params});
@@ -228,13 +227,18 @@ return this._httpClient.get(this.UrlGetTipoDireccion);
     let params= new HttpParams().set('MunicipioId', MunicipioId);
     return this._httpClient.get(this.UrlGetColonia, {params: params});
   }
+
   getForCP(cp: any): Observable<any>{
     let params = new HttpParams().set('CP', cp);
     return this._httpClient.get(this.UrlGetForCP, {params: params});
   }
 
+  getCatalogos(): Observable<any>{
+    return this._httpClient.get(this.UrlMenuCatalogos);
+  }
 
-
-  
-
+  getCatalogo(IdCatalogo: any): Observable<any> {
+    let params= new HttpParams().set('IdCatalogo', IdCatalogo);
+    return this._httpClient.get(this.UrlCatalogos, {params: params});
+  }
 }
