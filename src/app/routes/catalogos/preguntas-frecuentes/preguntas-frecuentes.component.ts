@@ -25,9 +25,7 @@ export class PreguntasFrecuentesComponent implements OnInit {
   ngOnInit() {
     this.Servicio.getPreguntasFrecuentes().subscribe(item =>{
       this.Pregunta = item;
-      
       this.dataSource = new MatTableDataSource(item);
-      console.log(this.dataSource)
     })
     document.oncontextmenu=null
   }

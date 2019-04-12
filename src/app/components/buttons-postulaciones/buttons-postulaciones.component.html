@@ -1,4 +1,3 @@
-
 <div class="dt-container mat-elevation-z8">
   <div class="table-responsive">
     <table ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
@@ -35,74 +34,109 @@
     </table>
   </div>
 </div>
-<br/>
-<br/>
+<br />
+<br />
 <div class="dt-container mat-elevation-z8">
   <div class="dt-header">
-          <div class="box">
-          <span>
-            <ul>
+    <div class="box">
+      <span>
+        <ul>
 
-            <!-- <li><a>
+          <!-- <li><a>
               <button class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="VerCandidato()"  container="body" placement="bottom" tooltip="Ver Candidato">
                   <em class="fa fa-eye"></em>
                 </button>
               </a></li> -->
-              <li><a>
-                <button [ngClass]="pst ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" [disabled] = "pst"  type="button" (click)="SetProceso(12, 'Apartado')"  placement="bottom" tooltip="Apartar" container="body">
-                  <em class="fa fa-thumbs-o-up"></em>
-                </button>
-              </a></li>
-              <li><a>
-                <button [ngClass]="liberado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" [disabled]="liberado" type="button" (click)="SetProceso(27, 'Liberado')"  container="body" placement="bottom" tooltip="Desapartar">
-                  <em class="fa fa-thumbs-o-down"></em>
-                </button>
-              </a></li>
-              <li><a><em class="vl"></em></a></li>
-              <!-- <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button" (click)="SetProceso(16)"  container="body" placement="bottom" tooltip="Cita Candidato">
+          <li><a>
+              <button [ngClass]="pst ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'"
+                [disabled]="pst" type="button" (click)="SetProceso(12, 'Apartado')" placement="bottom" tooltip="Apartar"
+                container="body">
+                <em class="fa fa-thumbs-o-up"></em>
+              </button>
+            </a></li>
+          <li><a>
+              <button [ngClass]="liberado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'"
+                [disabled]="liberado" type="button" (click)="SetProceso(27, 'Liberado')" container="body"
+                placement="bottom" tooltip="Desapartar">
+                <em class="fa fa-thumbs-o-down"></em>
+              </button>
+            </a></li>
+          <li><a><em class="vl"></em></a></li>
+          <!-- <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button" (click)="SetProceso(16)"  container="body" placement="bottom" tooltip="Cita Candidato">
                 <em class="fa fa-address-book"></em>
               </button></a></li> -->
-              <li><a><button [disabled]="cr" [ngClass]="cr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"  type="button" (click)="SetProceso(17, 'Cita Reclutamiento')"  container="body" placement="bottom" tooltip="Cita Reclutamiento">
+          <li><a><button [disabled]="cr"
+                [ngClass]="cr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'" type="button"
+                (click)="SetProceso(17, 'Cita Reclutamiento')" container="body" placement="bottom"
+                tooltip="Cita Reclutamiento">
                 <em class="fa fa-address-book"></em>
               </button></a></li>
-              <li><a><button [ngClass]="enr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'" [disabled]="enr"   type="button" (click)="SetProceso(18, 'Entrevista Reclutamiento')"  container="body" placement="bottom" tooltip="Entrevista Reclutamiento" >
+          <li><a><button [ngClass]="enr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"
+                [disabled]="enr" type="button" (click)="SetProceso(18, 'Entrevista Reclutamiento')" container="body"
+                placement="bottom" tooltip="Entrevista Reclutamiento">
                 <em class="fa fa-microphone"></em>
               </button></a></li>
-              <li><a><em class="vl"></em></a></li>
-              <li><a><button [disabled]="evt" [ngClass]="evt ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetProceso(13, 'Evaluaci&oacute;n T&eacute;cnica')"  container="body" placement="bottom" tooltip="Evaluaci&oacute;n T&eacute;cnica">
+          <li><a><em class="vl"></em></a></li>
+          <li><a><button [disabled]="evt"
+                [ngClass]="evt ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'" type="button"
+                (click)="SetProceso(13, 'Evaluaci&oacute;n T&eacute;cnica')" container="body" placement="bottom"
+                tooltip="Evaluaci&oacute;n T&eacute;cnica">
                 <em class="fa fa-search"></em>
               </button></a></li>
-              <li><a><button [disabled]="evps" [ngClass]="evps ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetProceso(14, 'Evaluaci&oacute;n Psicom&eacute;trica')"  container="body" placement="bottom" tooltip="Evaluaci&oacute;n Psicom&eacute;trica">
+          <li><a><button [disabled]="evps"
+                [ngClass]="evps ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'" type="button"
+                (click)="SetProceso(14, 'Evaluaci&oacute;n Psicom&eacute;trica')" container="body" placement="bottom"
+                tooltip="Evaluaci&oacute;n Psicom&eacute;trica">
                 <em class="fa fa-users"></em>
               </button></a></li>
-              <li><a><button [disabled]="evm" [ngClass]="evm ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'"  type="button" (click)="SetProceso(15, 'Evaluaci&oacute;n M&eacute;dica')"  container="body" placement="bottom" tooltip="Evaluaci&oacute;n M&eacute;dica">
+          <li><a><button [disabled]="evm"
+                [ngClass]="evm ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'" type="button"
+                (click)="SetProceso(15, 'Evaluaci&oacute;n M&eacute;dica')" container="body" placement="bottom"
+                tooltip="Evaluaci&oacute;n M&eacute;dica">
                 <em class="fa fa-user-md"></em>
               </button></a></li>
-              <li><a><em class="vl"></em></a></li>
-              <li><a><button [disabled]="fr" [ngClass]="fr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"  type="button" (click)="SetProceso(21, 'Finalista Reclutamiento')"  container="body" placement="bottom" tooltip="Finalista Reclutamiento">
+          <li><a><em class="vl"></em></a></li>
+          <li><a><button [disabled]="fr"
+                [ngClass]="fr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'" type="button"
+                (click)="SetProceso(21, 'Finalista Reclutamiento')" container="body" placement="bottom"
+                tooltip="Finalista Reclutamiento">
                 <em class="fa fa-user-circle-o"></em>
               </button></a></li>
-              <li><a><button [disabled]="enc" [ngClass]="enc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetProceso(22, 'Entrevista Cliente')"  container="body" placement="bottom" tooltip="Entrevista Cliente" >
+          <li><a><button [disabled]="enc"
+                [ngClass]="enc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'" type="button"
+                (click)="SetProceso(22, 'Entrevista Cliente')" container="body" placement="bottom"
+                tooltip="Entrevista Cliente">
                 <em class="fa fa-microphone"></em>
               </button></a></li>
-              <li><a><button [disabled]="fc" [ngClass]="fc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'"  type="button" (click)="SetProceso(23, 'Finalista Cliente')"  container="body" placement="bottom" tooltip="Finalista Cliente">
+          <li><a><button [disabled]="fc"
+                [ngClass]="fc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'" type="button"
+                (click)="SetProceso(23, 'Finalista Cliente')" container="body" placement="bottom"
+                tooltip="Finalista Cliente">
                 <em class="fa fa-user-circle-o"></em>
               </button></a></li>
-              <li><a><button [disabled]="contratado" [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'" type="button" (click)="SetProceso(24, 'Cubierto')"  container="body" placement="bottom" tooltip="Cubierto">
+          <li><a><button [disabled]="contratado"
+                [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'"
+                type="button" (click)="SetProceso(24, 'Cubierto')" container="body" placement="bottom"
+                tooltip="Cubierto">
                 <em class="fa fa-user-plus"></em>
               </button></a></li>
-              <!-- <li><a><em class="vl"></em></a></li>
+          <!-- <li><a><em class="vl"></em></a></li>
               <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(28)"  container="body" placement="bottom" tooltip="Cancelada">-->
 
-              <li><a><button [disabled]="rechazado" [ngClass]="rechazado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'"  type="button" (click)="SetProceso(40, 'Rechazado por Cliente')"  container="body" placement="bottom" tooltip="Rechazado por Cliente">
+          <li><a><button [disabled]="rechazado"
+                [ngClass]="rechazado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" type="button"
+                (click)="SetProceso(40, 'Rechazado por Cliente')" container="body" placement="bottom"
+                tooltip="Rechazado por Cliente">
                 <em class="fa fa-user-times"></em>
               </button></a></li>
 
-              <li><a><button [disabled]="nr" [ngClass]="nr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'"  type="button" (click)="SetProceso(42, 'NR')"  container="body" placement="bottom" tooltip="NR">
+          <li><a><button [disabled]="nr"
+                [ngClass]="nr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" type="button"
+                (click)="SetProceso(42, 'NR')" container="body" placement="bottom" tooltip="NR">
                 <em class="fa fa-flag"></em>
               </button></a></li>
 
-              <!-- <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
+          <!-- <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
                 <em class="fa fa-phone"></em>
               </button></a></li>
               <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button">
@@ -110,7 +144,7 @@
               </button></a></li> -->
 
 
-              <!-- <li><a>
+          <!-- <li><a>
                 <button [disabled]="cv" class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="SetProceso(11)"  container="body" placement="bottom" tooltip="CV Visto">
                     <em class="fa fa-file-text-o"></em>
                   </button>
@@ -121,113 +155,133 @@
 
 
 
-              <!-- <li><a><em class="vl"></em></a></li>
+          <!-- <li><a><em class="vl"></em></a></li>
 
               <li><a><button class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="SetProceso(23)"  container="body" placement="bottom" tooltip="Transferir">
                 <em class="fa fa-exchange"></em>
               </button></a></li>
           -->
-              <!-- <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button">
+          <!-- <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button">
                 <em class="fa fa-unlock"></em>
               </button></a></li>
  -->
 
 
-            </ul>
-          </span>
+        </ul>
+      </span>
+      <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body"
+        class="margen mr-1 btn btn-xs btn-acciones float-right" [disabled]="!showFilterRow"
+        [ngClass]="(!showFilterRow) ? 'disabled':'btn-outline-primary'">
+        <em class="fa fa-eraser"></em>
+      </button>
+      <button class="mb-1  btn btn-xs btn-outline-success float-right margen" type="button" (click)="refresh()"
+        container="body" placement="bottom" tooltip="Actualizar">
+        <em class="icon-refresh"></em>
+      </button>
 
-              <button class="mb-1  btn btn-outline-success float-right margen" type="button" (click)="refresh()" container="body" placement="bottom" tooltip="Actualizar">
-                <em class="icon-refresh"></em>
-              </button>
-
-              <!-- <button [ngClass]="flagContratados ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'" [disabled] = "flagContratados" class="float-right margen {{activeClass}}" type="button" (click)="OpenEditarComponent()" container="body" placement="bottom" tooltip="Editar Contratados">
+      <!-- <button [ngClass]="flagContratados ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'" [disabled] = "flagContratados" class="float-right margen {{activeClass}}" type="button" (click)="OpenEditarComponent()" container="body" placement="bottom" tooltip="Editar Contratados">
                 <em class="fa fa-pencil"></em>
               </button> -->
-          </div>
-          <br/>
+    </div>
+    <br />
 
     <mat-form-field>
-      <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)">
+      <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
+        (tableChanged)="onChangeTable(config)">
     </mat-form-field>
-    <br/>
+    <br />
 
   </div>
   <div class="card">
     <div class="card-body">
-    <div class="table-responsive" #tableContainer>
-      <table *ngIf="dataSource.length > 0 else NotCandidatos" id="resultDataTable" ngClass="{{config.className || ''}}" class="table">
-        <thead>
-          <tr>
-            <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
-              {{column.title | uppercase}}
-              <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
-              </i>
-            </th>
-          </tr>
-          <tr *ngIf="showFilterRow">
+      <div class="table-responsive" #tableContainer>
+        <table *ngIf="dataSource.length > 0 else NotCandidatos" id="resultDataTable"
+          ngClass="{{config.className || ''}}" class="table">
+          <thead>
+            <tr>
+              <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+                {{column.title | uppercase}}
+                <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)"
+                  [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
+                </i>
+              </th>
+            </tr>
+            <tr *ngIf="showFilterRow">
               <td *ngFor="let column of columns">
-                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
-                  class="form-control form-control-sm">
+                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
+                  [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                  class="form-control form-control-sm"  id="{{column.name}}">
               </td>
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
 
-          <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of dataSource" [class.selected]="row.selected"  placement="bottom" tooltip="click para seleccionar - dblclick para visualizar" container="body">
-            <td class="text-center"><span *ngIf="row.estatusId != 12 && row.estatusId != 17 && row.estatusId != 27 else sinAsignar">{{row.horario}}</span></td>
-            <ng-template #sinAsignar>
-              <span>SIN ASIGNAR</span>
-            </ng-template>
-            <td class="text-center"> {{row.nombre}} {{row.apellidoPaterno }} {{row.apellidoMaterno}}</td>
-            <td class="text-center"> {{row.areaExp }}</td>
-            <td class="text-center"> {{row.areaInt }}</td>
-            <td class="text-center"> {{row.localidad }} </td>
-            <td class="text-center"> {{row.sueldoMinimo | currency : '$'}} </td>
-            <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
-            <td class="text-center"> {{row.curp | uppercase }}</td>
-            <td class="text-center"> {{row.rfc | uppercase }}</td>
-            <td class="text-center"> {{row.nss | uppercase }}</td>
-            <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength" class='px-1 mr-1 badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42" [class.badge-danger]="row.estatusId == 28">
-              <span *ngIf="row.estatusId != 28"> {{row.estatus | uppercase }}</span>
-              <span *ngIf="row.estatusId == 28">POSTULADO</span>
-            </span></td>
-            <ng-template #toLength>
-              <span class='px-1 mr-1 badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42" [class.badge-danger]="row.estatusId == 28" placement="bottom" tooltip="{{row.estatus | uppercase}}" container="body">{{row.estatus | slice:0:6 | uppercase }} ... </span>
-          </ng-template>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+            <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of rows"
+              [class.selected]="row.selected" placement="bottom"
+              tooltip="click para seleccionar - dblclick para visualizar" container="body">
+              <td class="text-center"><span
+                  *ngIf="row.estatusId != 12 && row.estatusId != 17 && row.estatusId != 27 else sinAsignar">{{row.horario}}</span>
+              </td>
+              <ng-template #sinAsignar>
+                <span>SIN ASIGNAR</span>
+              </ng-template>
+              <td class="text-center"> {{row.nombre}}</td>
+              <td class="text-center"> {{row.areaExp }}</td>
+              <td class="text-center"> {{row.areaInt }}</td>
+              <td class="text-center"> {{row.localidad }} </td>
+              <td class="text-center"> {{row.sueldoMinimo | currency : '$'}} </td>
+              <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
+              <td class="text-center"> {{row.curp | uppercase }}</td>
+              <td class="text-center"> {{row.rfc | uppercase }}</td>
+              <td class="text-center"> {{row.nss | uppercase }}</td>
+              <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength"
+                  class='px-1 mr-1 badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42"
+                  [class.badge-danger]="row.estatusId == 28">
+                  <span *ngIf="row.estatusId != 28"> {{row.estatus | uppercase }}</span>
+                  <span *ngIf="row.estatusId == 28">POSTULADO</span>
+                </span></td>
+              <ng-template #toLength>
+                <span class='px-1 mr-1 badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42"
+                  [class.badge-danger]="row.estatusId == 28" placement="bottom" tooltip="{{row.estatus | uppercase}}"
+                  container="body">{{row.estatus | slice:0:6 | uppercase }} ... </span>
+              </ng-template>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
   <div class="text-right">
-    <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
-      [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+    <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length"
+      [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+      (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
     </pagination>
   </div>
-  <pre *ngIf="config.paging" class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
+  <pre *ngIf="config.paging"
+    class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
 </div>
 <toaster-container toaster-options="{'toaster-id': 2 }" [toasterconfig]="toasterconfig"></toaster-container>
 
 <!-- Modal -->
- <div *ngIf="isModalShow" [config]="{ show: true, ignoreBackdropClick: true }" (onHidden)="onHidden()" bsModal #MessageModal="bs-modal"
-     class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
-     <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-<div class="modal-header">
-  <h4 class="modal-title float-left">Información de Candidato</h4>
-  <button type="button" class="close float-right" aria-label="Close" (click)="closeModal(1)">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div class="modal-body">
-<app-info-candidato [IdCandidato] = 'candidatoId' [VerVacantes]='false' (Estatus)="EstatusModal($event)"></app-info-candidato>
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-outline-success" (click)="closeModal(1)">Cerrar</button>
-</div>
-</div>
-</div>
+<div *ngIf="isModalShow" [config]="{ show: true, ignoreBackdropClick: true }" (onHidden)="onHidden()" bsModal
+  #MessageModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title float-left">Información de Candidato</h4>
+        <button type="button" class="close float-right" aria-label="Close" (click)="closeModal(1)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-info-candidato [IdCandidato]='candidatoId' [VerVacantes]='false' (Estatus)="EstatusModal($event)">
+        </app-info-candidato>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-success" (click)="closeModal(1)">Cerrar</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!--spinner-->
@@ -237,9 +291,9 @@
 <ng-template #NotCandidatos>
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12">
-        <alert type="info">
-            <strong>Oops!</strong> A&uacute;n no cuentas con candidatos en proceso / apartados.
-          </alert>
+      <alert type="info">
+        <strong>Oops!</strong> A&uacute;n no cuentas con candidatos en proceso / apartados.
+      </alert>
     </div>
   </div>
 </ng-template>
@@ -255,29 +309,32 @@
   <div class="modal-body">
     <label class="form-check-inline">
       <input class="form-check-input" type="radio" name="mode" [value]="false">
-  </label>
+    </label>
   </div>
 </ng-template>
 
 
 <!--Editar contratados-->
-<div *ngIf="editarContratados" [config]="{ show: true, ignoreBackdropClick: true, backdrop: 'static', keyboard: false }" bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 id="dialog-sizes-name1" class="modal-title pull-left text-success">EDITAR CANDIDATO CUBIERTO</h4>
-          <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal.hide();closeModal(2)" ><i class="fa fa-times"></i></button>
-        </div>
-        <div class="modal-body">
-          <app-editar-contratados [data]="dataContratados"></app-editar-contratados>
-        </div>
-
+<div *ngIf="editarContratados" [config]="{ show: true, ignoreBackdropClick: true, backdrop: 'static', keyboard: false }"
+  bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left text-success">EDITAR CANDIDATO CUBIERTO</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right"
+          (click)="lgModal.hide();closeModal(2)"><i class="fa fa-times"></i></button>
       </div>
+      <div class="modal-body">
+        <app-editar-contratados [data]="dataContratados"></app-editar-contratados>
+      </div>
+
     </div>
   </div>
+</div>
 
-  <!-- Modal para dlgLiberar  -->
-<div *ngIf="dlgLiberar" [config]="{show: true, ignoreBackdropClick: true, keyboard: false}" bsModal #modallib="bs-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+<!-- Modal para dlgLiberar  -->
+<div *ngIf="dlgLiberar" [config]="{show: true, ignoreBackdropClick: true, keyboard: false}" bsModal #modallib="bs-modal"
+  class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog">
     <div class="modal-content">
       <!-- <div class="modal-header">
@@ -287,7 +344,8 @@
         </button>
       </div> -->
       <div class="modal-body">
-        <app-dialog-liberar-candidato [objLiberar]="objLiberar" (close)="onClose($event)"></app-dialog-liberar-candidato>
+        <app-dialog-liberar-candidato [objLiberar]="objLiberar" (close)="onClose($event)">
+        </app-dialog-liberar-candidato>
       </div>
       <!-- <div class="modal-footer">
         <button type="button" class="md-1 btn btn-outline-success" (click)="modallib.hide()">Cerrar</button>

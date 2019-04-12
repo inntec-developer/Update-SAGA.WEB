@@ -92,6 +92,7 @@ import { EstadosComponent } from './catalogos/estados/estados.component';
 import { MunicipiosComponent } from './catalogos/municipios/municipios.component';
 import { TableComponent } from './catalogos/table/table.component';
 
+import { RegistroReclutadorComponent } from './registro-reclutador/registro-reclutador.component';
 @NgModule({
   imports: [
     SharedModule,
@@ -186,8 +187,9 @@ import { TableComponent } from './catalogos/table/table.component';
     PaisesComponent,
     EstadosComponent,
     MunicipiosComponent,
-    TableComponent
-    ],
+    TableComponent,
+    RegistroReclutadorComponent
+  ],
   exports: [
     DtDireccionComponent,
     DtTelefonosComponent,
@@ -267,9 +269,11 @@ import { TableComponent } from './catalogos/table/table.component';
     TicketsRegisterComponent,
     CatalogosComponent,
     SearchComponent,
-    CatalogoComponent
+    CatalogoComponent,
+    RegistroCandidatosComponent,
+    RegistroReclutadorComponent
   ],
-  entryComponents: [  TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
+  entryComponents: [ RegistroReclutadorComponent, TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
 
 
 })

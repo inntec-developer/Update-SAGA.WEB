@@ -1,21 +1,7 @@
-import { AfterContentChecked, AfterViewChecked, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 import { ComponentsService } from '../../service/Components/components.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { forEach } from '@angular/router/src/utils/collection';
-
-export interface Pokemon {
-  value: string;
-  viewValue: string;
-}
-
-export interface PokemonGroup {
-  disabled?: boolean;
-  name: string;
-  pokemon: Pokemon[];
-}
-
 
 @Component({
   selector: 'app-asignar-requisicion',
@@ -66,7 +52,7 @@ export class AsignarRequisicionComponent implements OnInit {
   }
 
   valueChange(obj) {
-    
+
     this.Asignacion.emit(this.AsignacionForm.get('selectControl').value);
 
   }
@@ -87,7 +73,7 @@ export class AsignarRequisicionComponent implements OnInit {
     let flag = false;
     this.filteredData.forEach(function (item) {
       colFilter.forEach(function (c) {
-        
+
         if (c.title == 'usuarios') {
           var user = item['usuarios'];
           if (user.length > 0) {
@@ -98,7 +84,7 @@ export class AsignarRequisicionComponent implements OnInit {
               if (u['email'].toString().toLowerCase().match(data.target.value.toLowerCase())) {
                 flag = true
               }
-             
+
             })
           }
         }

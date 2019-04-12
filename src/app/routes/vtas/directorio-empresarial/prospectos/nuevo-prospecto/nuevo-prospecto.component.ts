@@ -69,7 +69,7 @@ export class NuevoProspectoComponent implements OnInit {
   public CorreosNew: Array<any> = [];
   public indexCorreos: any;
   public EditCorreo: boolean;
-  textbtnCorreo: string;
+  public textbtnCorreo: string;
 
   public addContacto: boolean;
   public ContactosNew: Array<any> = [];
@@ -102,7 +102,7 @@ export class NuevoProspectoComponent implements OnInit {
   public ladaPais: any = 52;
   public PrincipalT: boolean = false;
   public Usuario: string;
-//#endregion
+  //#endregion
 
 
   constructor(
@@ -186,10 +186,8 @@ export class NuevoProspectoComponent implements OnInit {
 
     // #region INICIALIZACION DE FORMULARIOS
     this.formGeneral = this.fb.group({
-      // RazonSocial: this.fb.group({
       Empresa: ['', [Validators.required]],
       ValidarEmpresa: ['', [Validators.required]],
-      // }, {validator: CompanyValidation.MachCompany}),
       Giros: ['', Validators.required],
       Actividades: ['', Validators.required],
       NoEmpleados: ['', Validators.required],
@@ -241,7 +239,7 @@ export class NuevoProspectoComponent implements OnInit {
       Numero: ['', [Validators.required, Validators.maxLength(8)]],
       Extension: [''],
       Email: ['', [Validators.required, Validators.email]],
-    })
+    });
     // #endregion
   }
 
@@ -270,11 +268,11 @@ export class NuevoProspectoComponent implements OnInit {
     });
   }
 
-  getTipoTeledono() {
+  getTipoTelefono() {
     this.esOficina = this.formTelefonos.get('TipoTelefono').value;
   }
 
-  getTipoTeledonoContacto() {
+  getTipoTelefonoContacto() {
     this.esOficinaContacto = this.formContactos.get('TipoTelefono').value;
   }
 
@@ -319,6 +317,31 @@ export class NuevoProspectoComponent implements OnInit {
     this.formDirecciones.controls['CodigoPostal'].setValue(cp);
   }
 
+  changeEmpleados(){
+    this.formGeneral.controls['Tamanio'].reset();
+  }
+
+  validarNoEmpleado() {
+    var isValid = true;
+    var noEmpleados = this.formGeneral.get('NoEmpleados').value;
+    var noEmpleadosId = this.formGeneral.get('Tamanio').value;
+    if (noEmpleados >= 1 && noEmpleados <= 9 && noEmpleadosId != 1) {
+      isValid = false;
+    } else if (noEmpleados >= 10 && noEmpleados <= 49 && noEmpleadosId != 2) {
+      isValid = false;
+    } else if (noEmpleados >= 50 && noEmpleados <= 249 && noEmpleadosId != 3) {
+      isValid = false;
+    } else if (noEmpleados >= 250 && noEmpleadosId != 4) {
+      isValid = false;
+    }
+    if (!isValid) {
+      let msg = 'El número de empleados no coincide con el tamañano de la empresa. ';
+      this.popToast('error', 'Tamaño Empresa', msg);
+      this.formGeneral.controls['NoEmpleados'].reset();
+      this.formGeneral.controls['Tamanio'].reset();
+    }
+  }
+
   //#endregion
 
   //#region Cancelar Acciones
@@ -358,7 +381,6 @@ export class NuevoProspectoComponent implements OnInit {
     // this.elementCn = null;
     this.formContactos.reset();
     this.formContactos.controls['LadaPais'].setValue(52)
-
   }
 
   //#endregion
@@ -452,7 +474,7 @@ export class NuevoProspectoComponent implements OnInit {
         this.idAuxD++;
       }
       else {
-        this.popToast('info', 'Direcicones', 'La dirección que intenta registrar ya existe.');
+        this.popToast('info', 'Direcciones', 'La dirección que intenta registrar ya existe.');
         return;
       }
 
@@ -491,12 +513,10 @@ export class NuevoProspectoComponent implements OnInit {
         this.elementD = null;
       }
       else {
-        this.popToast('info', 'Direcicones', 'La dirección que intenta actualizar ya existe.');
+        this.popToast('info', 'Direcciones', 'La dirección que intenta actualizar ya existe.');
         return;
       }
     }
-
-
     this.cancelarDireccion();
     this.onChangeTableD(this.config);
   }
@@ -522,24 +542,30 @@ export class NuevoProspectoComponent implements OnInit {
   DtDireccion() {
     var idDireccion = this.DireccionesNew[this.indexDireccion]['idAux'];
 
-    if(this.DireccionesNew[this.indexDireccion]['esPrincipal'] == true){
+    if (this.DireccionesNew[this.indexDireccion]['esPrincipal'] == true) {
       this.Principal = false;
     }
     this.DireccionesNew.splice(this.indexDireccion, 1);
     if (this.CorreosNew.length > 0) {
       var EmailIndexDelete = this.CorreosNew.findIndex(x => x.idDireccion == idDireccion)
-      this.CorreosNew.splice(EmailIndexDelete, 1);
+      this.CorreosNew[EmailIndexDelete]['calle'] = 'Sin Registro';
+      this.CorreosNew[EmailIndexDelete]['idDireccion'] = 0;
+      this.onChangeTableC(this.config);
     }
     if (this.TelefonosNew.length > 0) {
       var TelefonoIndexDelete = this.TelefonosNew.findIndex(x => x.idDireccion == idDireccion)
-      if(this.TelefonosNew[TelefonoIndexDelete]['esPrincipal'] == true){
+      if (this.TelefonosNew[TelefonoIndexDelete]['esPrincipal'] == true) {
         this.PrincipalT = false;
       }
-      this.TelefonosNew.splice(TelefonoIndexDelete, 1);
+      this.TelefonosNew[TelefonoIndexDelete]['calle'] = 'Sin Registro';
+      this.TelefonosNew[TelefonoIndexDelete]['idDireccion'] = 0;
+      this.onChangeTableC(this.config);
     }
     if (this.ContactosNew.length > 0) {
       var ContactoIndexDelete = this.ContactosNew.findIndex(x => x.idDireccion == idDireccion)
-      this.ContactosNew.splice(ContactoIndexDelete, 1);
+      this.ContactosNew[ContactoIndexDelete]['calle'] = 'Sin Registro';
+      this.ContactosNew[ContactoIndexDelete]['idDireccion'] = 0;
+      this.onChangeTableC(this.config);
     }
     this.onChangeTableD(this.config);
   }
@@ -640,7 +666,7 @@ export class NuevoProspectoComponent implements OnInit {
   }
 
   DtTelefono() {
-    if(this.TelefonosNew[this.indexTelefonos]['esPrincipal'] == true){
+    if (this.TelefonosNew[this.indexTelefonos]['esPrincipal'] == true) {
       this.PrincipalT = false;
     }
     this.TelefonosNew.splice(this.indexTelefonos, 1);
@@ -702,7 +728,6 @@ export class NuevoProspectoComponent implements OnInit {
         this.popToast('info', 'Correo Electrónico', 'El correo electrónico que intenta actualizar ya existe.');
         return;
       }
-
     }
 
     this.cancelarCorreo();
@@ -778,7 +803,6 @@ export class NuevoProspectoComponent implements OnInit {
       emailAux: this.formContactos.get('Email').value,
       emails: this.Emails
     }
-    this.cancelarContacto();
     if (!this.EditContacto) {
       this.ContactosNew.push(data);
       this.idAuxCn++;
@@ -787,6 +811,7 @@ export class NuevoProspectoComponent implements OnInit {
       this.EditContacto = false;
       this.elementCn = null;
     }
+    this.cancelarContacto();
     this.onChangeTableCn(this.config);
   }
 
@@ -843,8 +868,9 @@ export class NuevoProspectoComponent implements OnInit {
 
   public rowsD: Array<any> = [];
   public columnsD: Array<any> = [
-    { title: 'Tipo Direccion', sorting: 'desc', className: 'text-success text-center', name: 'tipoDireccion', filtering: { filterString: '', placeholder: 'Tipo' } },
-    { title: 'Pais', sorting: 'desc', className: 'text-success text-center', name: 'pais', filtering: { filterString: '', placeholder: 'Pias' } },
+    { title: 'Tipo Dirección', sorting: 'desc', className: 'text-success text-center', name: 'tipoDireccion', filtering: { filterString: '', placeholder: 'Tipo' } },
+    { title: 'Código Postal', sorting: 'desc', className: 'text-success text-center', name: 'codigoPostal', filtering: { filterString: '', placeholder: 'C.P.' } },
+    { title: 'País', sorting: 'desc', className: 'text-success text-center', name: 'pais', filtering: { filterString: '', placeholder: 'Pias' } },
     { title: 'Estado', sorting: 'desc', className: 'text-success text-center', name: 'estado', filtering: { filterString: '', placeholder: 'Estado' } },
     { title: 'Municipio', className: 'text-info text-center', name: 'municipio', filtering: { filterString: '', placeholder: 'Municipio' } },
     { title: 'Colonia', className: 'text-info text-center', name: 'colonia', filtering: { filterString: '', placeholder: 'Colonia' } },
@@ -949,25 +975,27 @@ export class NuevoProspectoComponent implements OnInit {
   }
 
   onCellClickD(data: any, id: any) {
-    data.selectedD ? data.selectedD = false : data.selectedD = true;
-    this.elementD = data;
-    this.indexDireccion = this.DireccionesNew.findIndex(x => x.idAux === id);
+    if (!this.EditDireccion) {
+      data.selectedD ? data.selectedD = false : data.selectedD = true;
+      this.elementD = data;
+      this.indexDireccion = this.DireccionesNew.findIndex(x => x.idAux === id);
 
-    if (!data.selectedD) {
-      this.elementD = null;
-      this.selectedD = false;
-    } else {
-      this.selectedD = true;
-    }
-    if (this.rowAuxD.length == 0) {
-      this.rowAuxD = data;
-    }
-    else if (data.selectedD && this.rowAuxD != []) {
-      let aux = data;
-      data = this.rowAuxD;
-      data.selectedD = false;
-      aux.selectedD = true;
-      this.rowAuxD = aux;
+      if (!data.selectedD) {
+        this.elementD = null;
+        this.selectedD = false;
+      } else {
+        this.selectedD = true;
+      }
+      if (this.rowAuxD.length == 0) {
+        this.rowAuxD = data;
+      }
+      else if (data.selectedD && this.rowAuxD != []) {
+        let aux = data;
+        data = this.rowAuxD;
+        data.selectedD = false;
+        aux.selectedD = true;
+        this.rowAuxD = aux;
+      }
     }
   }
   //#endregion
@@ -984,10 +1012,10 @@ export class NuevoProspectoComponent implements OnInit {
 
   public rowsT: Array<any> = [];
   public columnsT: Array<any> = [
-    { title: 'Direccion', sorting: 'desc', className: 'text-success text-center', name: 'calle', filtering: { filterString: '', placeholder: 'Dirección' } },
+    { title: 'Dirección', sorting: 'desc', className: 'text-success text-center', name: 'calle', filtering: { filterString: '', placeholder: 'Dirección' } },
     { title: 'Tipo', sorting: 'desc', className: 'text-success text-center', name: 'tTelefono', filtering: { filterString: '', placeholder: 'Tipo' } },
     { title: 'Número', sorting: 'desc', className: 'text-success text-center', name: 'telefono', filtering: { filterString: '', placeholder: 'Número' } },
-    { title: 'Extención', className: 'text-info text-center', name: 'extension', filtering: { filterString: '', placeholder: 'Extención' } },
+    { title: 'Extensión', className: 'text-info text-center', name: 'extension', filtering: { filterString: '', placeholder: 'Extensión' } },
     { title: 'Principal', className: 'text-info text-center', name: 'esPrincipal', filtering: { filterString: '', placeholder: 'Principal' } },
     { title: 'Activo', className: 'text-info text-center', name: 'activo', filtering: { filterString: '', placeholder: 'Activo' } },
   ];
@@ -1085,25 +1113,27 @@ export class NuevoProspectoComponent implements OnInit {
   }
 
   onCellClickT(data: any, id: any) {
-    data.selectedT ? data.selectedT = false : data.selectedT = true;
-    this.elementT = data;
-    this.indexTelefonos = this.TelefonosNew.findIndex(x => x.idAux === id);
+    if (!this.EditTelefono) {
+      data.selectedT ? data.selectedT = false : data.selectedT = true;
+      this.elementT = data;
+      this.indexTelefonos = this.TelefonosNew.findIndex(x => x.idAux === id);
 
-    if (!data.selectedT) {
-      this.elementT = null;
-      this.selectedT = false;
-    } else {
-      this.selectedT = true;
-    }
-    if (this.rowAuxT.length == 0) {
-      this.rowAuxT = data;
-    }
-    else if (data.selectedT && this.rowAuxT != []) {
-      let aux = data;
-      data = this.rowAuxT;
-      data.selectedT = false;
-      aux.selectedT = true;
-      this.rowAuxT = aux;
+      if (!data.selectedT) {
+        this.elementT = null;
+        this.selectedT = false;
+      } else {
+        this.selectedT = true;
+      }
+      if (this.rowAuxT.length == 0) {
+        this.rowAuxT = data;
+      }
+      else if (data.selectedT && this.rowAuxT != []) {
+        let aux = data;
+        data = this.rowAuxT;
+        data.selectedT = false;
+        aux.selectedT = true;
+        this.rowAuxT = aux;
+      }
     }
   }
 
@@ -1121,7 +1151,7 @@ export class NuevoProspectoComponent implements OnInit {
 
   public rowsC: Array<any> = [];
   public columnsC: Array<any> = [
-    { title: 'Direccion', sorting: 'desc', className: 'text-success text-center', name: 'calle', filtering: { filterString: '', placeholder: 'Dirección' } },
+    { title: 'Dirección', sorting: 'desc', className: 'text-success text-center', name: 'calle', filtering: { filterString: '', placeholder: 'Dirección' } },
     { title: 'Email / Correo', sorting: 'desc', className: 'text-success text-center', name: 'email', filtering: { filterString: '', placeholder: 'Email / Correo' } },
     // { title: 'Activo', className: 'text-info text-center', name: 'activo', filtering: { filterString: '', placeholder: 'Activo' } },
   ];
@@ -1219,25 +1249,27 @@ export class NuevoProspectoComponent implements OnInit {
   }
 
   onCellClickC(data: any, id: any) {
-    data.selectedC ? data.selectedC = false : data.selectedC = true;
-    this.elementC = data;
-    this.indexCorreos = this.CorreosNew.findIndex(x => x.idAux === id);
+    if (!this.EditCorreo) {
+      data.selectedC ? data.selectedC = false : data.selectedC = true;
+      this.elementC = data;
+      this.indexCorreos = this.CorreosNew.findIndex(x => x.idAux === id);
 
-    if (!data.selectedC) {
-      this.elementC = null;
-      this.selectedC = false;
-    } else {
-      this.selectedC = true;
-    }
-    if (this.rowAuxC.length == 0) {
-      this.rowAuxC = data;
-    }
-    else if (data.selectedC && this.rowAuxC != []) {
-      let aux = data;
-      data = this.rowAuxC;
-      data.selectedC = false;
-      aux.selectedC = true;
-      this.rowAuxC = aux;
+      if (!data.selectedC) {
+        this.elementC = null;
+        this.selectedC = false;
+      } else {
+        this.selectedC = true;
+      }
+      if (this.rowAuxC.length == 0) {
+        this.rowAuxC = data;
+      }
+      else if (data.selectedC && this.rowAuxC != []) {
+        let aux = data;
+        data = this.rowAuxC;
+        data.selectedC = false;
+        aux.selectedC = true;
+        this.rowAuxC = aux;
+      }
     }
   }
 
@@ -1255,10 +1287,10 @@ export class NuevoProspectoComponent implements OnInit {
 
   public rowsCn: Array<any> = [];
   public columnsCn: Array<any> = [
-    { title: 'Direccion', sorting: 'desc', className: 'text-success text-center', name: 'calle', filtering: { filterString: '', placeholder: 'Dirección' } },
+    { title: 'Dirección', sorting: 'desc', className: 'text-success text-center', name: 'calle', filtering: { filterString: '', placeholder: 'Dirección' } },
     { title: 'Nombre', sorting: 'desc', className: 'text-success', name: 'nombreAux', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'Puesto', className: 'text-info', name: 'puesto', filtering: { filterString: '', placeholder: 'Puesto' } },
-    { title: 'Tipo Telefóno', className: 'text-info', name: 'tipoTelefonoAux', filtering: { filterString: '', placeholder: 'Tipo Tel.' } },
+    { title: 'Tipo Teléfono', className: 'text-info', name: 'tipoTelefonoAux', filtering: { filterString: '', placeholder: 'Tipo Tel.' } },
     { title: 'Número', className: 'text-info', name: 'telefonoAux', filtering: { filterString: '', placeholder: 'Número' } },
     { title: 'Email / Correo', className: 'text-info', name: 'emailAux', filtering: { filterString: '', placeholder: 'Email / Correo' } },
 
@@ -1357,26 +1389,29 @@ export class NuevoProspectoComponent implements OnInit {
   }
 
   onCellClickCn(data: any, id: any) {
-    data.selectedCn ? data.selectedCn = false : data.selectedCn = true;
-    this.elementCn = data;
-    this.indexContacto = this.ContactosNew.findIndex(x => x.idAux === id);
+    if (!this.EditContacto) {
+      data.selectedCn ? data.selectedCn = false : data.selectedCn = true;
+      this.elementCn = data;
+      this.indexContacto = this.ContactosNew.findIndex(x => x.idAux === id);
 
-    if (!data.selectedCn) {
-      this.elementCn = null;
-      this.selectedCn = false;
-    } else {
-      this.selectedCn = true;
+      if (!data.selectedCn) {
+        this.elementCn = null;
+        this.selectedCn = false;
+      } else {
+        this.selectedCn = true;
+      }
+      if (this.rowAuxCn.length == 0) {
+        this.rowAuxCn = data;
+      }
+      else if (data.selectedCn && this.rowAuxCn != []) {
+        let aux = data;
+        data = this.rowAuxCn;
+        data.selectedCn = false;
+        aux.selectedCn = true;
+        this.rowAuxCn = aux;
+      }
     }
-    if (this.rowAuxCn.length == 0) {
-      this.rowAuxCn = data;
-    }
-    else if (data.selectedCn && this.rowAuxCn != []) {
-      let aux = data;
-      data = this.rowAuxCn;
-      data.selectedCn = false;
-      aux.selectedCn = true;
-      this.rowAuxCn = aux;
-    }
+
   }
 
   //#endregion
@@ -1384,6 +1419,9 @@ export class NuevoProspectoComponent implements OnInit {
 
   private GuardarProspecto() {
     this.loading = true;
+    var notData = false;
+    var msg = 'En al sección ';
+    var section = '';
     var DireccionEmail = [];
     var DireccionTelefono = [];
     var DireccionContacto = [];
@@ -1400,6 +1438,9 @@ export class NuevoProspectoComponent implements OnInit {
             extension: telefono.extension
           }
           DireccionTelefono.push(data);
+        } else if (telefono.idDireccion == 0) {
+          notData = true;
+          msg = msg + 'teléfono, ';
         }
       });
       this.CorreosNew.forEach(function (correo: any) {
@@ -1412,6 +1453,9 @@ export class NuevoProspectoComponent implements OnInit {
             email: correo.email,
           }
           DireccionEmail.push(data);
+        } else if (correo.idDireccion == 0) {
+          notData = true;
+          msg = msg + 'correo electrónico, ';
         }
       });
       this.ContactosNew.forEach(function (contacto: any) {
@@ -1427,9 +1471,19 @@ export class NuevoProspectoComponent implements OnInit {
             puesto: contacto.puesto
           }
           DireccionContacto.push(data);
+        } else if (contacto.idDireccion == 0) {
+          notData = true;
+          msg = msg + 'contacto, ';
         }
       });
     });
+
+    if (notData) {
+      msg = msg + 'no esta asignado a una dirección, favor de verificarlo para continuer'
+      this.popToast('info', 'Sin asignación de Dirección', msg);
+      this.loading = false;
+      return;
+    }
 
 
     var prospecto = {

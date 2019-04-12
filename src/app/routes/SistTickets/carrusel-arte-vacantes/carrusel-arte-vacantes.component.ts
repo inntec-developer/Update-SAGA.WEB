@@ -17,10 +17,10 @@ export class CarruselArteVacantesComponent implements OnInit {
   showNavigationArrows = false;
   showNavigationIndicators = false;
 
-  images = ['./../assets/img/ArteVacantes/img01.png', 
-  './../assets/img/ArteVacantes/img02.png', './../assets/img/ArteVacantes/img03.jpg',
-   './../assets/img/ArteVacantes/img04.jpg', './../assets/img/ArteVacantes/img05.png', 
-   './../assets/img/ArteVacantes/img06.png', './../assets/img/ArteVacantes/img07.png', './../assets/img/ArteVacantes/img08.png'];
+  images = [{ id:1, img:'./../assets/img/ArteVacantes/img01.png'}, 
+  {id: 2, img:'./../assets/img/ArteVacantes/img02.png'}, {id:3, img:'./../assets/img/ArteVacantes/img03.jpg'},
+   {id: 4, img: './../assets/img/ArteVacantes/img04.jpg'},{id:5, img: './../assets/img/ArteVacantes/img05.png'}, 
+   {id: 6, img: './../assets/img/ArteVacantes/img06.png'}, {id: 7, img: './../assets/img/ArteVacantes/img07.png'}, {id: 8, img: './../assets/img/ArteVacantes/img08.png'}];
   
 
   constructor(private config: NgbCarouselConfig, private _service: SistTicketsService) {
@@ -39,10 +39,10 @@ export class CarruselArteVacantesComponent implements OnInit {
 
   timeWait()
   {
-    this.activeId = this.images[0];
     this.images = this.images;
+    this.activeId = 1;
+    this.myCarousel.activeId = '1';
     this.myCarousel.cycle();
-
   }
 
   GetVacantes()
@@ -50,14 +50,6 @@ export class CarruselArteVacantesComponent implements OnInit {
 
     this._service.GetVacantes().subscribe(data => {
       this.vacantes = data;
-
-
-  // for(var i = 0; i <= 7; i++)
-  // {
-  //   this.vacantes[i].image = this.images[i];
-  // }
-
-   
     });
   }
 

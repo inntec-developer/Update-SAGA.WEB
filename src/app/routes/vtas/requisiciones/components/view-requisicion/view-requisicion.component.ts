@@ -11,7 +11,7 @@ import { ViewInforRequiComponent } from '../view-info-requi/view-info-requi.comp
 })
 export class ViewRequisicionComponent implements OnInit {
 
-  public RequisicionId : string;
+  public RequisicionId: string;
   public Folio: number;
   public estatusId: number;
   public Vacante: any;
@@ -21,8 +21,8 @@ export class ViewRequisicionComponent implements OnInit {
     private _Router: Router,
     private _Route: ActivatedRoute,
   ) {
-    this._Route.params.subscribe( params => {
-      if(params['IdRequi'] != null  && params['Folio'] != null){
+    this._Route.params.subscribe(params => {
+      if (params['IdRequi'] != null && params['Folio'] != null) {
         this.RequisicionId = params['IdRequi'];
         this.Folio = params['Folio'];
         this.Vacante = params['Vacante'];
@@ -30,13 +30,13 @@ export class ViewRequisicionComponent implements OnInit {
       }
     });
   }
-  ngOnInit(){}
+  ngOnInit() { }
 
-  editRequi(){
-    this._Router.navigate(['/ventas/edicionRequisicion', this.RequisicionId, this.Folio,this.estatusId, this.TipoReclutamiento ], {skipLocationChange:true});
+  editRequi() {
+    this._Router.navigate(['/ventas/edicionRequisicion', this.RequisicionId, this.Folio, this.estatusId, this.TipoReclutamiento], { skipLocationChange: true });
   }
 
-  getEstatusRequi(event){
+  getEstatusRequi(event) {
     this.estatusId = event;
   }
 }

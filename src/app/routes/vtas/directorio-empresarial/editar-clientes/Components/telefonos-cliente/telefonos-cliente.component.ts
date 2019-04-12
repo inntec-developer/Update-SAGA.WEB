@@ -121,7 +121,7 @@ export class TelefonosClienteComponent implements OnInit {
     }
     let data = {
       activo: this.formTelefonos.get('Activo').value,
-      calle: this.Direcciones[idxDireccion]['calle'] + ' No. '+ this.Direcciones[idxDireccion]['numeroExterior'] + ' C.P.' + this.Direcciones[idxDireccion]['codigoPostal'],
+      calle: this.Direcciones[idxDireccion]['calle'] + ' No. ' + this.Direcciones[idxDireccion]['numeroExterior'] + ' C.P.' + this.Direcciones[idxDireccion]['codigoPostal'],
       claveLada: this.formTelefonos.get('Lada').value || '',
       clavePais: this.formTelefonos.get('LadaPais').value,
       entidadId: this.EntidadId,
@@ -236,6 +236,8 @@ export class TelefonosClienteComponent implements OnInit {
       closeOnCancel: false,
       showLoaderOnConfirm: true
     }, (isConfirm) => {
+      window.onkeydown = null;
+      window.onfocus = null;
       if (isConfirm) {
         this._ClienteService.deleteTelefono(this.elementT.id).subscribe(result => {
           if (result == 200) {
@@ -246,11 +248,11 @@ export class TelefonosClienteComponent implements OnInit {
             this.onChangeTableT(this.config);
             swal('Direcciones', 'Se elimino el teléfono correctamente.', 'success');
           } else {
-            swal('Direcciones', 'Algo salio mal al intertar eliminar los registros.', 'error');
+            swal('Direcciones', 'Algo salio mal al intertar eliminar los registros.', 'error')
           }
         });
       } else {
-        swal('Cancelado!', 'No se realizarón modificaciones en los Teléfonos', 'error');
+        swal('Cancelado!', 'No se realizaron modificaciones en los Teléfonos', 'error');
       }
     });
   }

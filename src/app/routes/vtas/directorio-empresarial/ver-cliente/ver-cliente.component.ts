@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ClientesService } from '../../../../service/clientes/clientes.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SettingsService } from '../../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-ver-cliente',
@@ -21,11 +22,13 @@ export class VerClienteComponent implements OnInit {
   invertX = false;
   invertY = false;
   shown = 'hover';
+  imprimir: boolean;
   constructor(
     private spinner: NgxSpinnerService,
     private _Router: Router,
     private _Route: ActivatedRoute,
-    private _service: ClientesService
+    private _service: ClientesService,
+    public settings: SettingsService,
   ) {
     this._Route.params.subscribe(params => {
       if (params['ClienteId'] != null) {
@@ -44,6 +47,28 @@ export class VerClienteComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  editarCliente(){
+    this._Router.navigate(['/ventas/editarCliente', this.ClienteId], { skipLocationChange: true });
+  }
+
+  print(){
+    this.imprimir = true;
+    if(!this.settings.layout.isCollapsed){
+        this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
+    }
+    setTimeout(() => {
+      document.getElementById('content').style.marginLeft = "60px";
+      document.getElementById('content').style.marginTop = "25px";
+      window.print();
+    }, 500);
+    setTimeout(() => {
+      this.imprimir = false;
+      document.getElementById('content').style.marginTop = "0";
+      document.getElementById('content').style.marginLeft = "0";
+    }, 500);
+
   }
 
 }

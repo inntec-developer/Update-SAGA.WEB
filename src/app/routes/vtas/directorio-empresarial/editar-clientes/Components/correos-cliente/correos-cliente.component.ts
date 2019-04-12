@@ -170,6 +170,8 @@ export class CorreosClienteComponent implements OnInit {
       closeOnCancel: false,
       showLoaderOnConfirm: true
     }, (isConfirm) => {
+      window.onkeydown = null;
+      window.onfocus = null;
       if (isConfirm) {
         this._ClienteService.deleteCorreo(this.elementC.id).subscribe(result => {
           if (result == 200) {
@@ -181,7 +183,7 @@ export class CorreosClienteComponent implements OnInit {
           }
         });
       } else {
-        swal('Cancelado!', 'No se realizarón modificaciones en los correos electrónicos.', 'error');
+        swal('Cancelado!', 'No se realizaron modificaciones en los correos electrónicos.', 'error');
       }
     });
   }

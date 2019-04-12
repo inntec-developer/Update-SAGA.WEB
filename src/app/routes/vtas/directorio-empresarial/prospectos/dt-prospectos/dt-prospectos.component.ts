@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { ClientesService } from '../../../../../service/clientes/clientes.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { RFCValidator } from './rfc-validation';
 import { Router } from '@angular/router';
 
@@ -46,29 +45,30 @@ export class DtProspectosComponent implements OnInit {
   public rowAux = [];
   public element: any = null;
   public Usuario: string;
+  Loading: boolean;
 
   constructor(
     private _service: ClientesService,
-    private spinner: NgxSpinnerService,
     private fb: FormBuilder,
     private toasterService: ToasterService,
     private _Router: Router,
   ) {
     this.formCliente = new FormGroup({
       RazonSocial: new FormControl('',[Validators.required, Validators.maxLength(100)]),
-      RFC: new FormControl('', [Validators.required, Validators.maxLength(12), Validators.minLength(12)]),
-      ValidarRFC: new FormControl('', [Validators.required, Validators.maxLength(12), Validators.minLength(12)])
+      RFC: new FormControl('', [Validators.required, Validators.maxLength(13), Validators.minLength(12)]),
+      ValidarRFC: new FormControl('', [Validators.required, Validators.maxLength(13), Validators.minLength(12)])
     });
    }
 
   ngOnInit() {
-    this.spinner.show();
+    this.Loading = true;
+    this.showFilterRow = true;
     this.Usuario = sessionStorage.getItem('usuario');
     this.getProspectos();
     this.formCliente = this.fb.group({
       RazonSocial: ['', [Validators.required, Validators.maxLength(100)]],
-      RFC: ['', [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
-      ValidarRFC:  ['', [Validators.required, Validators.maxLength(12), Validators.minLength(12)]]
+      RFC: ['', [Validators.required, Validators.maxLength(13), Validators.minLength(12)]],
+      ValidarRFC:  ['', [Validators.required, Validators.maxLength(13), Validators.minLength(12)]]
     }, { validator: RFCValidator.MachRFC })
   }
 
@@ -91,7 +91,7 @@ export class DtProspectosComponent implements OnInit {
     { title: 'Nombre Comercial', sorting: 'desc', className: 'text-success text-center', name: 'nombrecomercial', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'Giro', className: 'text-info text-center', name: 'giroEmpresa', filtering: { filterString: '', placeholder: 'Giro' } },
     { title: 'Actividad', className: 'text-info text-center', name: 'actividadEmpresa', filtering: { filterString: '', placeholder: 'Actividad' } },
-    { title: 'Tamano', className: 'text-info text-center', name: 'tamanoEmpresa', filtering: { filterString: '', placeholder: 'Tamaño' } },
+    { title: 'Tamaño', className: 'text-info text-center', name: 'tamanoEmpresa', filtering: { filterString: '', placeholder: 'Tamaño' } },
     { title: 'Empleados', className: 'text-info text-center', name: 'numeroEmpleados', filtering: { filterString: '', placeholder: 'No. Empleados' } },
     { title: 'Clasificación', className: 'text-info text-center', name: 'clasificacion', filtering: { filterString: '', placeholder: 'Calsificación' } },
     { title: 'TipoEmpresa', className: 'text-info text-center', name: 'tipoEmpresa', filtering: { filterString: '', placeholder: 'Tipo' } },
@@ -147,7 +147,7 @@ export class DtProspectosComponent implements OnInit {
     this.columns.forEach((column: any) => {
       this.clearFilter = true;
       if (column.filtering) {
-        this.showFilterRow = true;
+
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
@@ -198,12 +198,11 @@ export class DtProspectosComponent implements OnInit {
     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
     this.registros = this.rows.length;
     this.length = sortedData.length;
-    this.spinner.hide();
+    this.Loading = false;
   }
 
   /* Funciones secundarias */
   onCellClick(data: any){
-    debugger;
     data.selected ? data.selected = false : data.selected = true;
     this.element = data;
 
@@ -226,6 +225,7 @@ export class DtProspectosComponent implements OnInit {
   }
 
   refreshTable(){
+    this.Loading = true;
     this.getProspectos();
     setTimeout(() => {
       this.columns.forEach(element => {
@@ -257,7 +257,7 @@ export class DtProspectosComponent implements OnInit {
     }
     this._service.hacerCliente(cliente).subscribe(result => {
       if(result == 200){
-        var msg = 'El prospecto se paso con exito a clientes, ir a la seccion de clientes para visualizarlo.'
+        var msg = 'El prospecto se pasó con éxito a clientes, ir a la sección de clientes para visualizarlo.'
         this.popToast('success', 'Prospecto', msg);
         this.refreshTable();
       }

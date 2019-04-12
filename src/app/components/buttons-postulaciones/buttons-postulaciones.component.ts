@@ -1,22 +1,21 @@
-import { element } from 'protractor';
-import { ApiConection } from './../../service/api-conection.service';
-import { DlgComentariosNRComponent } from './../dlg-comentarios-nr/dlg-comentarios-nr.component';
-
-import { CandidatosService } from './../../service/Candidatos/candidatos.service';
-import { ModalDirective } from 'ngx-bootstrap';
-import { Component, Input, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
+import { ApiConection } from './../../service/api-conection.service';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { CandidatosService } from './../../service/Candidatos/candidatos.service';
 import { DialogHorariosConteoComponent } from '../../components/dialog-horarios-conteo/dialog-horarios-conteo.component'
 import { DialogLiberarCandidatoComponent } from './../dialog-liberar-candidato/dialog-liberar-candidato.component';
+import { DlgComentariosNRComponent } from './../dlg-comentarios-nr/dlg-comentarios-nr.component';
+import { EditarContratadosComponent } from '../editar-contratados/editar-contratados.component';
 import { InfoCandidatoService } from '../../service/SeguimientoVacante/info-candidato.service';
 import { MatDialog } from '@angular/material';
+import { ModalDirective } from 'ngx-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../service';
-import {EditarContratadosComponent} from '../editar-contratados/editar-contratados.component';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-buttons-postulaciones',
@@ -70,13 +69,13 @@ export class ButtonsPostulacionesComponent implements OnInit {
   rechazado = true;
   nr = true; //no recontatable
   flagContratados = true;
-  rowAux : any = [];
+  rowAux: any = [];
   conteo = [];
   horarioId: any;
   ProcesoCandidatoId: any;
 
   bsModalRef: BsModalRef;
-objLiberar = [];
+  objLiberar = [];
   constructor(
     private serviceRequi: RequisicionesService,
     private service: PostulateService,
@@ -84,8 +83,8 @@ objLiberar = [];
     private serviceCandidato: CandidatosService,
     private toasterService: ToasterService,
     private spinner: NgxSpinnerService,
-    private dialog: MatDialog, 
-    private modalService: BsModalService ) {}
+    private dialog: MatDialog,
+    private modalService: BsModalService) { }
 
   ngOnInit() {
     this.getpostulados();
@@ -101,12 +100,10 @@ objLiberar = [];
       return element.estatusId == 24
     });
 
-    if(auxc.length == this.conteo[0]['totalVacantes'] && estatus != 42 && estatus != 24)
-    {
+    if (auxc.length == this.conteo[0]['totalVacantes'] && estatus != 42 && estatus != 24) {
       this.GetHorarioRequis(estatus, estatus)
     }
-    else if(this.estatusVacante == 39)
-    {
+    else if (this.estatusVacante == 39) {
       this.cr = true;
       this.enr = true;
       this.fr = true;
@@ -358,7 +355,7 @@ objLiberar = [];
           horarioId: element.horarioId,
           horario: element.horario,
           foto: ApiConection.ServiceUrlFoto + element.perfil[0]['foto'],
-          nombre: element.perfil[0]['nombre'],
+          nombre: element.perfil[0]['nombre'] + ' ' + element.perfil[0]['apellidoPaterno'] + ' ' + element.perfil[0]['apellidoMaterno'],
           apellidoPaterno: element.perfil[0]['apellidoPaterno'],
           apellidoMaterno: element.perfil[0]['apellidoMaterno'],
           areaExp: element.perfil[0]['areaExp'],
@@ -375,20 +372,19 @@ objLiberar = [];
           folio: element.folio,
           usuario: element.usuario,
           usuarioId: element.usuarioId,
-          fecha:element.fecha, 
-          areaReclutamiento: element.areaReclutamiento, 
+          fecha: element.fecha,
+          areaReclutamiento: element.areaReclutamiento,
           areaReclutamientoId: element.areaReclutamientoId,
           fuenteReclutamiento: element.fuenteReclutamiento,
           fuenteReclutamientoId: element.fuenteReclutamientoId,
           requisicionId: this.RequisicionId,
-          paisNacimiento: element.perfil[0]['paisNacimiento'] != null ? element.perfil[0]['paisNacimiento'] : 0, 
+          paisNacimiento: element.perfil[0]['paisNacimiento'] != null ? element.perfil[0]['paisNacimiento'] : 0,
           estadoNacimiento: element.perfil[0]['estadoNacimiento'] != null ? element.perfil[0]['estadoNacimiento'] : 0,
-          municipioNacimiento: element.perfil[0]['municipioNacimiento'] != null ? element.perfil[0]['municipioNacimiento'] : 0, 
+          municipioNacimiento: element.perfil[0]['municipioNacimiento'] != null ? element.perfil[0]['municipioNacimiento'] : 0,
           generoId: element.perfil[0]['generoId'],
           editarCURP: false
         }
-        if( element.contratados.length > 0)
-        {
+        if (element.contratados.length > 0) {
           perfil.nombre = element.contratados[0]['nombre'];
           perfil.apellidoPaterno = element.contratados[0]['apellidoPaterno'];
           perfil.apellidoMaterno = element.contratados[0]['apellidoMaterno'];
@@ -401,6 +397,8 @@ objLiberar = [];
 
         this.dataSource.push(perfil);
         this.showFilterRow = true;
+        this.onChangeTable(this.config);
+        console.log(this.dataSource);
 
       })
     }, error => this.errorMessage = <any>error);
@@ -409,30 +407,28 @@ objLiberar = [];
   GetConteoVacante() {
     this.service.GetConteoVacante(this.RequisicionId, this.clienteId).subscribe(data => {
       this.conteo = data;
-///////// Esto es lo que tengo que modificar falla como loco............................................................... calineta el procesador y la memoria se desgorda.
+      ///////// Esto es lo que tengo que modificar falla como loco............................................................... calineta el procesador y la memoria se desgorda.
       var cc = this.conteo.filter(element => {
-        if( element.contratados > 0 )
-        {
+        if (element.contratados > 0) {
           return 1;
         }
       });
-     cc.length > 0 ? this.flagContratados = false : this.flagContratados = true;
+      cc.length > 0 ? this.flagContratados = false : this.flagContratados = true;
     })
 
   }
 
   GetHorarioRequis(estatusId, estatus) {
-    
+
     this.serviceRequi.GetHorariosRequiConteo(this.RequisicionId).subscribe(data => {
       // if (data.length > 0) {
-        var aux = data.filter(element => !element.vacantes)
+      var aux = data.filter(element => !element.vacantes)
 
-        if(aux.length == 0)
-        {
-          aux = [{id: 0, nombre: "Los horarios ya están cubiertos"}]
-        }
+      if (aux.length == 0) {
+        aux = [{ id: 0, nombre: "Los horarios ya están cubiertos" }]
+      }
 
-        this.OpenDlgHorarios(aux, estatusId, estatus);
+      this.OpenDlgHorarios(aux, estatusId, estatus);
       // }
       // else {
       //   var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId };
@@ -441,9 +437,8 @@ objLiberar = [];
     })
   }
 
-  UpdateFuenteReclutamiento(data, estatusId, estatus)
-  {
-    this.serviceCandidato.UpdateFuenteRecl(data).subscribe(result =>{ 
+  UpdateFuenteReclutamiento(data, estatusId, estatus) {
+    this.serviceCandidato.UpdateFuenteRecl(data).subscribe(result => {
       this.SetApiProceso(data, estatusId, estatus);
     });
   }
@@ -469,15 +464,13 @@ objLiberar = [];
 
         var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, tipoMediosId: result.mediosId, ReclutadorId: sessionStorage.getItem('id') };
 
-        if(estatusId == 24)
-        {
+        if (estatusId == 24) {
           this.SetApiProceso(datos, estatusId, estatus)
         }
-        else
-        {
+        else {
           this.UpdateFuenteReclutamiento(datos, estatusId, estatus);
         }
-        
+
       }
       else {
         this.onChangeTable(this.config)
@@ -485,16 +478,14 @@ objLiberar = [];
     });
   }
 
-  onClose(value)
-  {
-    if(value == 200)
-    {
+  onClose(value) {
+    if (value == 200) {
       this.modal.hide();
       this.dlgLiberar = false;
-
+      this.objLiberar = [];
       var aux = this.dataSource;
       var idx = aux.findIndex(x => x.candidatoId === this.candidatoId);
-     
+
       this.dataSource[idx]['estatusId'] = 27;
       this.dataSource[idx]['estatus'] = 'Liberado';
 
@@ -503,32 +494,31 @@ objLiberar = [];
       this.onChangeTable(this.config)
       this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
 
-      
+
     }
-    else if(value == 404)
-    {
+    else if (value == 404) {
       this.modal.hide();
       this.dlgLiberar = false;
-      
+      this.objLiberar = [];
       this.onChangeTable(this.config)
       this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos');
- 
+
     }
-    else
-    {
+    else {
+      this.objLiberar = [];
       this.modal.hide();
       this.dlgLiberar = false;
     }
 
   }
-  openDialogLiberar(){
+  openDialogLiberar() {
 
-    this.objLiberar.push( {
+    this.objLiberar =[{
       RequisicionId: this.RequisicionId,
       CandidatoId: this.candidatoId,
       ReclutadorId: sessionStorage.getItem('id'),
       ProcesoCandidatoId: this.ProcesoCandidatoId,
-    });
+    }];
 
     this.dlgLiberar = true;
   }
@@ -548,11 +538,11 @@ objLiberar = [];
   //         ProcesoCandidatoId: this.ProcesoCandidatoId,
   //         Comentario: result.comentario,
   //       }
-      
+
   //       this.serviceLiberar.setLiberarCandidato(data).subscribe(result => {
   //           switch(result){
   //             case 200:{
-            
+
   //             }
   //             case 404: {
   //               this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos');
@@ -568,22 +558,21 @@ objLiberar = [];
   //   });
   // }
 
-  OpenEditarComponent(datos)
-  {
-    this.dataContratados = this.dataSource.filter( element => {
+  OpenEditarComponent(datos) {
+    this.dataContratados = this.dataSource.filter(element => {
       return element.candidatoId === datos.candidatoId
-    //  if( element.estatusId == 24 )
-    //   {
-    //     element.areaReclutamiento = 'SIN ASIGNAR';
-    //     element.areaReclutamientoId = -1;
-    //     element.fuenteReclutamiento = 'SIN ASIGNAR';
-    //     element.fuenteReclutamientoId = -1;
+      //  if( element.estatusId == 24 )
+      //   {
+      //     element.areaReclutamiento = 'SIN ASIGNAR';
+      //     element.areaReclutamientoId = -1;
+      //     element.fuenteReclutamiento = 'SIN ASIGNAR';
+      //     element.fuenteReclutamientoId = -1;
 
-    //     return element;
-    //   }
+      //     return element;
+      //   }
     });
 
-   this.editarContratados = true;
+    this.editarContratados = true;
 
     // let dialogRef = this.dialog.open(EditarContratadosComponent, {
     //    width: '200%',
@@ -599,14 +588,13 @@ objLiberar = [];
     //this.bsModalRef.content.closeBtnName = 'Close';
   }
 
-  OpenDialogComentariosNR(data, estatusId, estatus)
-  {
-    var aux = { 
-      CandidatoId: this.candidatoId, 
+  OpenDialogComentariosNR(data, estatusId, estatus) {
+    var aux = {
+      CandidatoId: this.candidatoId,
       nombre: this.rowAux.nombre + ' ' + this.rowAux.apellidoPaterno + ' ' + this.rowAux.apellidoMaterno,
       curp: this.rowAux.curp,
-      foto: this.rowAux.foto, 
-      requisicionId: this.RequisicionId, 
+      foto: this.rowAux.foto,
+      requisicionId: this.RequisicionId,
       ReclutadorId: sessionStorage.getItem('id')
     };
 
@@ -617,9 +605,8 @@ objLiberar = [];
       data: aux
     });
     dialog.afterClosed().subscribe(result => {
-      if(result)
-      {
-         this.SetApiProceso(data, 42, 'En Revision')
+      if (result) {
+        this.SetApiProceso(data, 42, 'En Revision')
 
       }
     })
@@ -628,28 +615,23 @@ objLiberar = [];
   SetProceso(estatusId, estatus) {
 
     if (this.candidatoId != null) {
-      if(estatusId == 27){
+      if (estatusId == 27) {
         this.openDialogLiberar();
-      }else if (estatusId == 18) {
+      } else if (estatusId == 18) {
         this.GetHorarioRequis(estatusId, estatus);
       }
-      else if(estatusId == 42 )
-      {
+      else if (estatusId == 42) {
         var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: sessionStorage.getItem('id') };
         this.OpenDialogComentariosNR(datos, estatusId, estatus);
 
       }
-      else if(estatusId == 24)
-      {
+      else if (estatusId == 24) {
         var idx = this.conteo.findIndex(x => x.id === this.horarioId);
-        if(idx > -1)
-        {
-          if(this.conteo[idx]['contratados'] == this.conteo[idx]['vacantes'])
-          {
+        if (idx > -1) {
+          if (this.conteo[idx]['contratados'] == this.conteo[idx]['vacantes']) {
             this.GetHorarioRequis(estatusId, estatus)
           }
-          else
-          {
+          else {
             var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: sessionStorage.getItem('id') };
             this.OpenEditarComponent(datos);
             //this.SetApiProceso(datos, estatusId, estatus);
@@ -657,10 +639,10 @@ objLiberar = [];
         }
 
       }
-      else  {
+      else {
         var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: sessionStorage.getItem('id') };
         this.SetApiProceso(datos, estatusId, estatus);
-    
+
       }
     }
 
@@ -730,20 +712,20 @@ objLiberar = [];
 
           }
 
-          if (estatusId === 22 && this.estatusVacante != "33" && this.estatusVacante != "30"  && this.estatusVacante != "39" && this.estatusVacante != "38") // si es cita con cliente cambio automatico a envio al cliente 
+          if (estatusId === 22 && this.estatusVacante != "33" && this.estatusVacante != "30" && this.estatusVacante != "39" && this.estatusVacante != "38") // si es cita con cliente cambio automatico a envio al cliente
           {
             var datosVacante = { estatusId: 30, requisicionId: this.RequisicionId };
 
             this.service.SetProcesoVacante(datosVacante).subscribe(data => {
             })
           }
-          else if (estatusId == 23 && this.estatusVacante != "33"  && this.estatusVacante != "39" && this.estatusVacante != "38") {
+          else if (estatusId == 23 && this.estatusVacante != "33" && this.estatusVacante != "39" && this.estatusVacante != "38") {
             var datosVacante = { estatusId: 33, requisicionId: this.RequisicionId }; //espera de contratacion
 
             this.service.SetProcesoVacante(datosVacante).subscribe(data => {
             })
           }
-        
+
           this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
 
           // if (estatusId == 22 && this.estatusVacante != "30"  && this.estatusVacante != "39") {
@@ -798,7 +780,6 @@ objLiberar = [];
     // });
   }
 
-
   VerCandidato(row) {
 
     this.candidatoId = row.candidatoId;
@@ -815,8 +796,6 @@ objLiberar = [];
     // }, 1000);
 
   }
-
- 
 
   EstatusModal($event) {
     var idx = this.dataSource.findIndex(x => x.candidatoId === $event.candidatoId);
@@ -849,21 +828,17 @@ objLiberar = [];
   }
 
   closeModal(modal) {
-    if(modal == 1)
-    {
-    this.ShownModal.hide();
-    this.isModalShow = false;
+    if (modal == 1) {
+      this.ShownModal.hide();
+      this.isModalShow = false;
     }
-    else
-    {
-      if(this.actualizoContratados)
-      {
+    else {
+      if (this.actualizoContratados) {
         var datos = { candidatoId: this.candidatoId, estatusId: 24, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: sessionStorage.getItem('id') };
         this.SetApiProceso(datos, 24, 'Contratado')
         this.editarContratados = false;
       }
-      else
-      {
+      else {
         this.editarContratados = false;
       }
     }
@@ -872,7 +847,7 @@ objLiberar = [];
 
   }
 
- 
+
 
   public rows: Array<any> = []
   public columns: Array<any> = [
@@ -976,7 +951,6 @@ objLiberar = [];
   }
 
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
-
     if (config.filtering) {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
@@ -990,6 +964,15 @@ objLiberar = [];
     let sortedData = this.changeSort(filteredData, this.config);
     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
     this.length = sortedData.length;
+  }
+
+  public clearfilters() {
+    this.showFilterRow = false;
+    this.columns.forEach(element => {
+      element.filtering.filterString = '';
+      (<HTMLInputElement>document.getElementById(element.name)).value = '';
+    });
+    this.onChangeTable(this.config);
   }
 
 

@@ -1,0 +1,14 @@
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+        <app-en-atencion></app-en-atencion>
+      </div>
+    </div>
+    
+    <div *ngIf="carrusel" [config]="{ show: true, ignoreBackdropClick: false }" bsModal #lgModal="bs-modal" class="modal" tabindex="-1"
+      role="document" aria-labelledby="dialog-auto-name">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <app-carrusel-arte-vacantes></app-carrusel-arte-vacantes>  
+        </div>
+      </div>
+    </div>

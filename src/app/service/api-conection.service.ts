@@ -286,6 +286,7 @@ export class ApiConection {
   public static GetTicketPrioridad = 'SistTickets/getTicketPrioridad'
   public static UpdateStatusTicket = 'SistTickets/updateStatus'
   public static GetPostulaciones = 'SistTickets/getPostulaciones'
+  public static GetVacantesReclutador = 'SistTickets/getVacantesReclutador'
   public static LiberarCandidato = 'SistTickets/liberarCandidato'
   public static GetTicketEnAtencion = 'SistTickets/getTicketEnAtencion'
   public static GetVacantes = 'SistTickets/getVacantes'
@@ -298,6 +299,8 @@ export class ApiConection {
   public static GetTicketConCita = 'SistTickets/ticketConCita'
   public static GetTicketSinCita = 'SistTickets/ticketSinCita'
   public static GetConcurrenciaReporte = 'SistTickets/getConcurrencia'
+  public static UpdateCandidatoTicket = 'SistTickets/updateCandidatoTicket'
+  public static RegistrarCandidato = 'SistTickets/registrarCandidato'
 
   /*TrackingVacantes*/
   public static GetInformeTracking = 'Requisiciones/getInformeClientes';

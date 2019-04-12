@@ -227,32 +227,32 @@ export class DtDamfoComponent implements OnInit {
     this.element = null;
   }
 
-  public clearfilters(){
+  public clearfilters() {
     this.columns.forEach(element => {
       element.filtering.filterString = '';
-     (<HTMLInputElement>document.getElementById(element.name)).value = '';
+      (<HTMLInputElement>document.getElementById(element.name)).value = '';
     });
     this.onChangeTable(this.config);
   }
 
   showDamfo() {
     // Mandamos la información por medio de la URL sin que esta se muestre en la liga.
-    if(this.element.horariosActivos === 0){
+    if (this.element.horariosActivos === 0) {
       swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. No es posible visualizarlo.', 'error');
-    }else if (this.damfoId) {
+    } else if (this.damfoId) {
       this._Router.navigate(['/ventas/visualizarDamfo290', this.damfoId], { skipLocationChange: true });
     }
   }
 
   openDialog() {
     if (this.element) {
-      if(this.element.horariosActivos > 0){
+      if (this.element.horariosActivos > 0) {
         let dialogRef = this.dialog.open(DialogdamfoComponent, {
           width: '50%',
           height: 'auto',
           data: this.element
         });
-      }else{
+      } else {
         // Mensaje de Error, en caso de que el damfo no cuente con horarios activos.
         swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. No es posible generar la requisición', 'error');
       }
@@ -282,7 +282,7 @@ export class DtDamfoComponent implements OnInit {
   /**
    * Creacion de Alertas modal
    */
-  sweetalertNNotActivatedHours(){
+  sweetalertNNotActivatedHours() {
     swal({
       title: 'Estas seguro? ',
       text: 'Este formato DAM-FO-290 no cuenta con horarios activos.',
@@ -294,14 +294,16 @@ export class DtDamfoComponent implements OnInit {
       closeOnConfirm: false,
       closeOnCancel: false,
     }, (isConfirm) => {
-      if(isConfirm){
-        swal('Generar Requisicion','', 'success');
+      window.onkeydown = null;
+      window.onfocus = null;
+      if (isConfirm) {
+        swal('Generar Requisicion', '', 'success');
         let dialogRef = this.dialog.open(DialogdamfoComponent, {
           width: '50%',
           height: 'auto',
           data: this.element
         });
-      }else{
+      } else {
         swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. :)', 'error');
       }
     });

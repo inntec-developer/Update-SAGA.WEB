@@ -160,6 +160,31 @@ export class DatosGeneralesComponent implements OnInit {
   }
   //#endregion
 
+  changeEmpleados(){
+    this.formGeneral.controls['Tamanio'].reset();
+  }
+
+  validarNoEmpleado() {
+    var isValid = true;
+    var noEmpleados = this.formGeneral.get('NoEmpleados').value;
+    var noEmpleadosId = this.formGeneral.get('Tamanio').value;
+    if (noEmpleados >= 1 && noEmpleados <= 9 && noEmpleadosId != 1) {
+      isValid = false;
+    } else if (noEmpleados >= 10 && noEmpleados <= 49 && noEmpleadosId != 2) {
+      isValid = false;
+    } else if (noEmpleados >= 50 && noEmpleados <= 249 && noEmpleadosId != 3) {
+      isValid = false;
+    } else if (noEmpleados >= 250 && noEmpleadosId != 4) {
+      isValid = false;
+    }
+    if (!isValid) {
+      let msg = 'El número de empleados no coincide con el tamañano de la empresa. ';
+      this.popToast('error', 'Tamaño Empresa', msg);
+      this.formGeneral.controls['NoEmpleados'].reset();
+      this.formGeneral.controls['Tamanio'].reset();
+    }
+  }
+
   Guardar() {
     this.loading = true;
     var Cliente = {
@@ -179,7 +204,7 @@ export class DatosGeneralesComponent implements OnInit {
 
      this._ClienteService.editInfoGeneral(Cliente).subscribe(result => {
        if(result == 200){
-         let msg = 'La Información General se actualizo correctamente';
+         let msg = 'La Información General se actualizó correctamente';
          this.popToast('success', 'Información General', msg);
          this.loading = false;
        }

@@ -17,8 +17,8 @@ const swal = require('sweetalert');
 export class DireccionesClienteComponent implements OnInit {
   @Input('Direcciones') Direcciones: any = [];
   @Input('EntidadId') EntidadId: any;
-  @Output('DataEmitter') DataEmitter : EventEmitter<any[]> =  new EventEmitter();
-  @Output('DeleteDireccion') DeleteDireccion : EventEmitter<any[]> =  new EventEmitter();
+  @Output('DataEmitter') DataEmitter: EventEmitter<any[]> = new EventEmitter();
+  @Output('DeleteDireccion') DeleteDireccion: EventEmitter<any[]> = new EventEmitter();
 
   public loading: boolean = false;
 
@@ -93,9 +93,9 @@ export class DireccionesClienteComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes.Direcciones && !changes.Direcciones.isFirstChange()){
+    if (changes.Direcciones && !changes.Direcciones.isFirstChange()) {
       this.Direcciones.forEach(element => {
-        if(element['esPrincipal']){
+        if (element['esPrincipal']) {
           this.Principal = true;
         }
       });
@@ -103,7 +103,7 @@ export class DireccionesClienteComponent implements OnInit {
     }
   }
 
-  AddDireccion(){
+  AddDireccion() {
     this.auxTipoDireccion = this.tipoDireccion.filter(x => {
       if (x.id == this.formDirecciones.get('TipoDireccion').value) {
         return x.tipoDireccion
@@ -119,7 +119,7 @@ export class DireccionesClienteComponent implements OnInit {
       esPrincipal: this.formDirecciones.get('Principal').value,
       estado: this.auxEstado,
       estadoId: this.formDirecciones.get('Estados').value,
-      id:'',
+      id: '',
       municipio: this.auxMunicipio,
       municipioId: this.formDirecciones.get('Municipios').value,
       numeroExterior: this.formDirecciones.get('Exterior').value,
@@ -148,26 +148,26 @@ export class DireccionesClienteComponent implements OnInit {
         }
       });
       if (!exist) {
-       this._ClienteService.addDireccion(data).subscribe(result => {
-         if(result != 404){
-          data['id'] = result;
-          this.Direcciones.push(data);
-          this.DataEmitter.emit(this.Direcciones);
-          this.popToast('success', 'Direcicones', 'Se agregó con éxito una nueva dirección.');
-          this.cancelarDireccion();
-          this.onChangeTableD(this.config);
-         }
-         else {
-          this.popToast('error', 'Direcicones', 'Algo salio mal, no se puedo registrar la nueva dirección.');
-          return;
-        }
-       })
+        this._ClienteService.addDireccion(data).subscribe(result => {
+          if (result != 404) {
+            data['id'] = result;
+            this.Direcciones.push(data);
+            this.DataEmitter.emit(this.Direcciones);
+            this.popToast('success', 'Direcicones', 'Se agregó con éxito una nueva dirección.');
+            this.cancelarDireccion();
+            this.onChangeTableD(this.config);
+          }
+          else {
+            this.popToast('error', 'Direcicones', 'Algo salio mal, no se puedo registrar la nueva dirección.');
+            return;
+          }
+        })
       }
       else {
         this.popToast('info', 'Direcicones', 'La dirección que intenta registrar ya existe.');
         return;
       }
-    }else {
+    } else {
       var idDireccion = this.Direcciones[this.indexDireccion]['id'];
       data.id = idDireccion;
       var exist = this.Direcciones.find(element => {
@@ -184,7 +184,7 @@ export class DireccionesClienteComponent implements OnInit {
       });
       if (!exist) {
         this._ClienteService.editDireccion(data).subscribe(result => {
-          if(result != 404){
+          if (result != 404) {
             this.Direcciones[this.indexDireccion] = data;
             this.popToast('success', 'Direcicones', 'Se actualizo con éxito la dirección.');
             this.EditDireccion = false;
@@ -192,7 +192,7 @@ export class DireccionesClienteComponent implements OnInit {
             this.cancelarDireccion();
             this.onChangeTableD(this.config);
             this.DataEmitter.emit(this.Direcciones[this.indexDireccion])
-          }else{
+          } else {
             this.popToast('error', 'Direcicones', 'Algo salio mal, no se puedo actualizar la dirección.');
             return;
           }
@@ -224,10 +224,10 @@ export class DireccionesClienteComponent implements OnInit {
     this.formDirecciones.controls['Activo'].setValue(this.Direcciones[this.indexDireccion]['activo']);
   }
 
-  sweetalertEliminarDireccion(){
+  sweetalertEliminarDireccion() {
     swal({
       title: 'Estas seguro? ',
-      text: 'Confirme la eliminación de la direcición para continuar.',
+      text: 'Confirme la eliminación de la dirección para continuar.',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#DD6B55',
@@ -237,22 +237,24 @@ export class DireccionesClienteComponent implements OnInit {
       closeOnCancel: false,
       showLoaderOnConfirm: true
     }, (isConfirm) => {
-      if(isConfirm){
-        this._ClienteService.deleteDireccion(this.elementD.id).subscribe(result =>{
-          if(result == 200){
+      window.onkeydown = null;
+      window.onfocus = null;
+      if (isConfirm) {
+        this._ClienteService.deleteDireccion(this.elementD.id).subscribe(result => {
+          if (result == 200) {
             if (this.Direcciones[this.indexDireccion]['esPrincipal'] == true) {
               this.Principal = false;
             }
             this.DeleteDireccion.emit(this.EntidadId);
             this.Direcciones.splice(this.indexDireccion, 1);
             this.onChangeTableD(this.config);
-            swal('Direcciones','Se elimino la dirección correctamente..', 'success');
-          }else{
-            swal('Direcciones','Algo salio mal al intertar eliminar los registros.', 'error');
+            swal('Direcciones', 'Se eliminó la dirección correctamente..', 'success');
+          } else {
+            swal('Direcciones', 'Algo salio mal al intertar eliminar los registros.', 'error');
           }
         });
-      }else{
-        swal('Cancelado!', 'No se realizarón modificaciones en Direcciones', 'error');
+      } else {
+        swal('Cancelado!', 'No se realizaron modificaciones en Direcciones', 'error');
       }
     });
   }
