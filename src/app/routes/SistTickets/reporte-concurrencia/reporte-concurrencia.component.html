@@ -2,7 +2,7 @@
   <div class="card-body mat-elevation-z8">
     <div class="row p-1 bg-light">
       <div class="col clearfix">
-        <h5 class="text-info float-left mt-2">REPORTE CONCURRENCIA DE TURNOS</h5>
+        <h5 class="text-warning float-left mt-2">REPORTE CONCURRENCIA DE TURNOS</h5>
         <button class="float-right mt-1" (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Descargar reporte"
           container="body" [disabled]="reporte.length == 0" [ngClass]="reporte.length == 0 ? 'btn btn-xs disabled':'btn btn-xs btn-outline-success'">
           <em class="fa fa-download"></em>
@@ -30,12 +30,12 @@
         </tr>
       </thead>
       <tbody>
-        <!-- <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
           [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
-          <div> -->
+          <div> 
             <tr *ngFor="let r of rows">
-              <td class="text-left">{{r.fecha | date:'yyyy/MM/dd HH:mm' }}</td>
-              <td class="text-center">{{r.hora | date:'HH:mm'}}</td>
+              <td class="text-left">{{r.fecha | date:'yyyy/MM/dd H:mm' }}</td>
+              <td class="text-center">{{r.hora | date:'H:mm'}}</td>
               <td class="text-center">{{r.usuario}}</td>
               <td class="text-center">{{r.modulo}}</td>
               <td class="text-center">{{r.turno}}</td>
@@ -65,7 +65,7 @@
                 
                                 <div>
                                   <small class="badge badge-pill badge-warning mr-2">
-                                    {{rr.fecha | date: 'h:mm'}}
+                                    {{rr.fecha | date: 'H:mm'}}
                                   </small>
                                 </div>
                               </div>
@@ -81,8 +81,8 @@
               <td class="text-center">{{r.tiempo}}</td>
               <td width="1%"></td>
             </tr>
-          <!-- </div>
-          </ng-scrollbar> -->
+          </div>
+          </ng-scrollbar>
       </tbody>
     </table>
     <br/>

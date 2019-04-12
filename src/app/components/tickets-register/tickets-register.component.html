@@ -3,10 +3,38 @@
       <div class="col-md-3 register-left">
           <img src="assets/img/damsa/logo.png" alt=""/>
           <h3>BIENVENIDO</h3>
+          <h5 *ngIf="logeado">Melina Morales Cordova</h5>
           <p>Estas a 1 minuto de encontrar tu empleo ideal!</p>
-          <button type="button" class="btn btn-labeled btn-purple btn-lateral btn-block mat-elevation-z8 d-flex justify-content-between" mat-dialog-close>
-              <span class="btn-label float-left"><i class="fa fa-lock"></i></span><span class="align-self-center font-weight-bold texto">LOGIN</span></button>
-              <button type="button" class="btn btn-labeled btn-danger btn-lateral btn-block mat-elevation-z8 d-flex justify-content-between" mat-dialog-close>
+        
+          <button [disabled]="logeado" class="btn btn-labeled btn-purple btn-lateral btn-block mb-2" [class.mat-elevation-z8]="!verLogin" tabindex="-1" (click)="verLogin=!verLogin">
+              <span class="btn-label fa fa-lock float-left"></span><span class="align-self-center font-weight-bold texto">LOGIN</span></button>
+              <div *ngIf="verLogin">
+                <div class="card card-body bg-transparent">
+                    <div class="d-flex flex-column">
+                        <div class="input-group input-group-sm with-focus mb-2">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text text-warning border-right-0 fa fa-user"></span>
+                          </div>
+                          <input type="text" class="form-control form-control-sm border-left-0 round" #inputEmail4 placeholder="Usuario">
+                        </div>
+                        <div class="input-group input-group-sm with-focus mb-2">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text text-warning border-right-0 fa fa-key"></span>
+                          </div>
+                          <input type="password" class="form-control form-control-sm border-left-0 round" id="inputPassword4" placeholder="Contraseña">
+                        </div>
+                        <div>
+                        <button type="button" class="btn btn-labeled btn-success mat-elevation-z8 d-flex align-items-center btn-iniciar float-right" (click)="logeado = true; verLogin=false;">
+                            <span class="btn-label fa fa-play mr-1">
+                            
+                            </span>INICIAR</button>
+                        </div>
+                        
+                      </div>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-labeled btn-danger btn-lateral btn-block mat-elevation-z8" tabindex="-1" mat-dialog-close>
                   <span class="btn-label"><i class="fa fa-times"></i></span><span class="align-self-center font-weight-bold texto">SALIR</span>
                 </button>
           
@@ -16,11 +44,11 @@
       <div class="col-md-9 register-right">
           <div class="d-flex justify-content-end mt-3">
 
-                  <button class="btn btn-primary btn-pais font-weight-bold" [disabled]="flagMX" [ngClass]="flagMX ? 'btn btn-primary disabled' : 'mat-elevation-z8'" type="button" (click)="flagEU=false;flagMX=true; extranjero = false;"><img class="mr-1" src="assets/img/flags-mini/Mexico.png" alt=""/>M&Eacute;XICO</button>
+                  <button tabindex="-1" class="btn btn-primary btn-pais font-weight-bold" [disabled]="flagMX" [ngClass]="flagMX ? 'btn btn-primary disabled' : 'mat-elevation-z8'" type="button" (click)="flagEU=false;flagMX=true; extranjero = false;"><img class="mr-1" src="assets/img/flags-mini/Mexico.png" alt=""/>M&Eacute;XICO</button>
                   <!-- <a class="nav-link active" id="home-tab" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">Mexico</a> -->
 
                   
-                  <button class="btn btn-info btn-pais font-weight-bold" type="button" [disabled]="flagEU" [ngClass]="flagEU ? 'disabled' : 'mat-elevation-z8'" (click)="flagMX=false; flagEU=true; extranjero = true;"><i class="fa fa-user mr-1" aria-hidden="true"></i> EXT</button>
+                  <button tabindex="-1" class="btn btn-info btn-pais font-weight-bold" type="button" [disabled]="flagEU" [ngClass]="flagEU ? 'disabled' : 'mat-elevation-z8'" (click)="flagMX=false; flagEU=true; extranjero = true;"><i class="fa fa-user mr-1" aria-hidden="true"></i> EXT</button>
                   <!-- <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">EU</a> -->
       
           </div> 

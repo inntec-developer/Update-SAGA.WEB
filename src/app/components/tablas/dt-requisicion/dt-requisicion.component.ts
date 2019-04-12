@@ -666,6 +666,7 @@ export class DtRequisicionComponent implements OnInit {
           'FECHA SOLICITUD': d,//new Date(d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString(),
           SOLICITANTE: row.propietario,
           EMPRESA: row.cliente,
+          SUCURSAL: row.sucursal,
           NO: row.vacantes,
           PUESTO: row.vBtra,
           SUELDO:  row.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),

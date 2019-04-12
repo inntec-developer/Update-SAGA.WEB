@@ -112,7 +112,7 @@ export class RegistroCandidatosComponent implements OnInit {
       ApellidoPaterno: this.ap,
       ApellidoMaterno: this.am,
       Email: email,
-      FechaNac: this.fn.getFullYear().toString() + '/' + (this.fn.getMonth() + 1).toString() + '/' +  this.fn.getDate().toString(),
+      FechaNac: this.fn.getFullYear().toString() + '/' + (this.fn.getMonth()).toString() + '/' +  this.fn.getDate().toString(),
       GeneroId: this.rbS,
       EstadoNacimientoId: this.estadoId,
       MunicipioNacimientoId: this.municipioId,

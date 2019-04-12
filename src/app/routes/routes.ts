@@ -11,6 +11,7 @@ import { RecoverComponent } from './pages/recover/recover.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { TrackingVacantesComponent } from './pages/tracking-vacantes/tracking-vacantes.component';
 import { TicketsInicioComponent } from './pages/tickets-inicio/tickets-inicio.component';
+import { InicioKioscoComponent } from './pages/inicio-kiosco/inicio-kiosco.component';
 
 
 export const routes = [
@@ -44,6 +45,7 @@ export const routes = [
     { path: 'TrackingVacantes', component: TrackingVacantesComponent },
     { path: 'Tickets', component: TicketsInicioComponent },
     { path: 'VerTurno', component: VerTurnosComponent},
+    { path: 'Principal', component: InicioKioscoComponent},
 
 
     // Not found
