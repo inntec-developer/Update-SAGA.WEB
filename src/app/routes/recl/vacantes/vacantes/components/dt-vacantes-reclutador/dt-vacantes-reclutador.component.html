@@ -66,7 +66,7 @@
 
         <!-- informes -->
         <em class="vl ml-1 mr-1"></em>
-        <button id="update" chkPrivilegiosButtons class="mr-1" type="button" (click)="refreshTableInfo();informeVacante=true;"
+        <button id="update" chkPrivilegiosButtons class="mr-1" type="button" (click)="informeVacante=true;"
           [disabled]="dataSource.length == 0" [ngClass]="dataSource.length == 0 ? 'btn btn-xs disable' : 'btn btn-xs btn-outline-info'"
           container="body" placement="bottom" tooltip="Informe Vacantes">
           <em class="fa fa-file-text-o"></em>
@@ -290,97 +290,8 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="table-responsive">
-          <table class="table" style="width: 100%;">
-            <thead>
-              <tr>
-                <th *ngFor="let column of columnsInfo" ngClass="{{column.className || ''}}">
-                  <small>{{column.title | uppercase}}</small>
-                  <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
-                        </i> -->
-                </th>
-              </tr>
-              <tr>
-                <th *ngFor="let column of columnsInfo">
-                  <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                    (tableChanged)="onChangeTableInfo(config)" class="form-control form-control-sm" id="{{column.name}}">
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-                [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
-                <div class="fontMio">
-
-                  <tr class="fontMio" *ngFor="let row of rowsInfo">
-                    <td class="text-center"> {{row.folio}}</td>
-                    <td class="text-center"> {{row.vBtra | uppercase}}</td>
-                    <td class="text-center"> {{row.cliente | uppercase}}</td>
-                    <td class="text-center"> {{row.fch_limite | date:'dd/MM/yyyy'}} </td>
-                    <td class="text-center">
-                      <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-primary"
-                        [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
-                        [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20" [class.badge-success]="row.estatusId  === 7"
-                        [class.badge-danger]="row.estatusId  === 8">
-                        {{row.estatus | uppercase}}
-                      </small>
-                      <ng-template #toLength>
-                        <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
-                          [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20"
-                          [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8"
-                          placement="bottom" tooltip="{{row.estatus | uppercase}}" container='body'> {{row.estatus |
-                          slice:0:8 | uppercase }} ...
-                        </small>
-                      </ng-template>
-                    </td>
-                    <td class="text-center">
-                      <small class="badge badge-pill badge-primary" [class.badge-warning]="row.vacantes > 0">
-                        {{row.vacantes}}</small>
-                    </td>
-                    <td class="text-center">
-                      <small class="badge badge-pill badge-primary" [class.badge-success]="row.porcentaje > 0">
-                        {{row.porcentaje}} %</small>
-                    </td>
-                    <td class="text-center">
-                      <small class="badge badge-pill badge-primary" [class.badge-warning]="row.postulados > 0">{{row.postulados}}</small>
-                    </td>
-                    <td class="text-center">
-                      <small class="badge badge-pill badge-primary" [class.badge-warning]="row.entrevista > 0">{{row.entrevista}}</small>
-                    </td>
-                    <td class="text-center">
-                      <small class="badge badge-pill badge-primary" [class.badge-warning]="row.abandono > 0">{{row.abandono}}</small>
-                    </td>
-                    <td class="text-center">
-                      <small class="badge badge-pill badge-primary" [class.badge-warning]="row.descartados > 0">{{row.descartados}}</small>
-                    </td>
-                    <td class="text-center">
-                      <small class="badge badge-pill badge-primary" [class.badge-warning]="row.enviados > 0">{{row.enviados}}</small>
-                    </td>
-                    <td class="text-center">
-                      <small class="badge badge-pill badge-primary" [class.badge-warning]="row.rechazados > 0">{{row.rechazados}}</small>
-                    </td>
-                    <td class="text-center">
-                      <small class="badge badge-pill badge-primary" [class.badge-success]="row.contratados > 0">{{row.contratados}}</small>
-                    </td>
-                  </tr>
-                </div>
-              </ng-scrollbar>
-            </tbody>
-          </table>
-          <br />
-          <div class="text-right">
-            <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="pageInfo" [totalItems]="lengthInfo"
-              [itemsPerPage]="itemsPerPageInfo" [maxSize]="maxSizeInfo" [boundaryLinks]="true" [rotate]="false"
-              (pageChanged)="onChangeTableInfo(config, $event)" (numPages)="numPagesInfo = $event">
-            </pagination>
-            <pre *ngIf="config.paging" class="text-muted">P&aacute;gina: {{pageInfo}} / {{numPagesInfo}}  Total Registros: {{registrosInfo}}</pre>
-          </div>
-
-        </div>
+        <app-informe-vacantes></app-informe-vacantes>
       </div>
-      <!-- <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal2.hide()">Cerrar</button>
-      </div> -->
     </div>
   </div>
 </div>
