@@ -41,20 +41,20 @@ export class GraficaResumenComponent implements OnInit {
       let dia30Con = item['dia30Contratado'];
 
     this.Data = {
-      labels: ['25 a 30 dias','20 a 25 dias','15 a 20 dias','10 a 15 dias','5 a 10 dias','hoy a 5 dias'],
+      labels: ['mes 1','mes 2','mes 3'],
     datasets: [{ 
-        data: [dia30Ent,dia25Ent,dia20Ent,dia15Ent,dia10Ent,dia5Ent],
-        label: "entrevistados",
+        data: [80,65,90],
+        label: "Entrevistados",
         borderColor: "#1E37FF",
         fill: false
       }, { 
-        data: [dia30Env,dia25Env,dia20Env,dia15Ent,dia10Env,dia5Env],
-        label: "enviados",
+        data: [70,50,75],
+        label: "Enviados",
         borderColor: "#FF4B4B",
         fill: false
       }, { 
-        data: [dia30Con,dia25Con,dia20Con,dia15Con,dia10Con,dia5Con],
-        label: "contrados",
+        data: [20,15,23],
+        label: "Cubiertos",
         borderColor: "#0FFF5B",
         fill: false
       }

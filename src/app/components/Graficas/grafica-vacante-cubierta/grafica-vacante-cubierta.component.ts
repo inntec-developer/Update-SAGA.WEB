@@ -28,6 +28,8 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
       let cubiertas = result['cubiertas'];
       let parcialmente = result['parcialmente'];
       let medios = result['medios'];
+     
+    
     
     // Chart.defaults.scale.ticks.beginAtZero = true;
     document.oncontextmenu=null
@@ -35,14 +37,21 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
  
   this.Data = {
     datasets: [{
-      backgroundColor: ['#3e95cd', '#8e5ea2','#e8c3b9'],
-      data: [cubiertas,parcialmente,medios]
+      backgroundColor: [
+        '#3F3CFF', 
+        '#F335FF',
+        '#C5FF60'
+         ],
+      data: [cubiertas,
+            parcialmente,
+            medios,
+          ]
     }],
     // These labels appear in the legend and in the tooltips when hovering different arcs
     labels: [
       'Cubiertas',
-      'Cubierta parcialmente',
-      'Cubierta por medios'
+      'Cubiertas parcialmente',
+      'Cubiertas por medios',
     ]
   }
 

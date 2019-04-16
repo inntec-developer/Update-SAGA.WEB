@@ -49,7 +49,7 @@ export class GraficaVacanteActivaComponent implements OnInit {
                       '#c45850',
                       '#70FFD3',
                       '#F335FF',
-                     // '#C5FF60'
+                      '#C5FF60'
                        ],
       data: [
          nuevo ,
@@ -61,21 +61,21 @@ export class GraficaVacanteActivaComponent implements OnInit {
          socioeconomicos,
          espera ,
          pausada ,
-     //    garantia
+         garantia
       ]
     }],
     // These labels appear in the legend and in the tooltips when hovering different arcs
     labels: [
-      'Nuevo',
-      'Aprobada',
-      'Publicada',
-      'Búsqueda de Candidatos',
+      'Nuevas',
+      'Aprobadas',
+      'Publicadas',
+      'Búsqueda de candidatos',
       'Envió al cliente',
       'Nueva busqueda',
       'Socioeconomicos',
       'En espera de contratación',
-      'Pausada',
- //     'Garantía de búsqueda',
+      'Pausadas',
+      'Garantía de búsqueda',
     ]
   }
   this.Chart = new Chart('canvas2', {
