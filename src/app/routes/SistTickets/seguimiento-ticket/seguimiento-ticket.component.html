@@ -148,7 +148,7 @@
          
           <div class="justify-content-between">
             <ul class="list-group mb-2">
-              <li *ngFor="let item of postulaciones; let ind = index;" class="list-group-item">
+              <li *ngFor="let item of postulaciones; let ind = index;" class="list-group-item" [ngClass]="item.id == ticket[0].requisicionId && postulaciones.length > 1? 'bg-info' : ''">
                 <span class="text-info">
                   <button (click)="openDialogShowRequi(item)" class="btn btn-xs btn-outline-warning float-left mr-1" container="body" placement="bottom"
                     tooltip="Visualizar">

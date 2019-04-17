@@ -420,16 +420,20 @@ export class SeguimientoTicketComponent implements OnInit {
       this.examenesCandidato.tecnicos = exa[0];
       this.examenesCandidato.psicometricos = exa[1];
 
-      if(this.examenesCandidato.tecnicos[0].resultado > 0 && this.examenesCandidato.tecnicos[0].requisicionId == this.ticket[0].requisicionId)
+      if(this.examenesCandidato.tecnicos.length > 0)
       {
-        this.exaTecnico = true;
+        if(this.examenesCandidato.tecnicos[0].resultado > 0 && this.examenesCandidato.tecnicos[0].requisicionId == this.ticket[0].requisicionId)
+        {
+          this.exaTecnico = true;
+        }
       }
-
-      if(this.examenesCandidato.psicometricos[0].resultado != "SIN RESULTADO" && this.examenesCandidato.psicometricos[0].requisicionId == this.ticket[0].requisicionId)
+      if(this.examenesCandidato.psicometricos.length > 0)
       {
-        this.exaPsico = true;
+        if(this.examenesCandidato.psicometricos[0].resultado.toUpperCase() != "SIN RESULTADO" && this.examenesCandidato.psicometricos[0].requisicionId == this.ticket[0].requisicionId)
+        {
+          this.exaPsico = true;
+        }
       }
-
     });
   }
 

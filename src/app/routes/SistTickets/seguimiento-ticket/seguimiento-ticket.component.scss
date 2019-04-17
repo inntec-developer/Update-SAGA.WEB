@@ -34,7 +34,11 @@ a:hover
 {
   border-radius: 24px;
 }
+.bg-info
+{
+    background-color: #b0eeff !important;
 
+}
 ng-scrollbar {
     --scrollbar-size: 4px;
     --scrollbar-thumb-color: rgb(94, 175, 255);

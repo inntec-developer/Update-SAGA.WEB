@@ -40,7 +40,7 @@ export class TicketsInicioComponent implements OnInit {
       }
       else if(data==417)
       {
-        swal("¡Ocurrio un error al intentar imprimir ticket!", '', "error");
+        swal("¡Ocurrió un error al intentar imprimir ticket!", '', "error");
         this.btnCita = false;
         this.folio = 0;
       }

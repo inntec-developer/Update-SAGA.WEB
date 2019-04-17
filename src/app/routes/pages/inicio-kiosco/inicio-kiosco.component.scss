@@ -18,7 +18,7 @@
     background: #f8f9fa;
     border-top-left-radius: 10% 50%;
     border-bottom-left-radius: 10% 50%;
-    height: 480px;
+    height: 580px;
 }
 
 
@@ -36,6 +36,7 @@
     border-bottom-left-radius: 25px;
     background-color:#fff;
     border: 1px solid #dde6e9;
+    height: 32px;
 }
 
 .input-group > .input-group-append > .input-group-text
@@ -50,14 +51,14 @@
     margin-top: 15%;
     margin-bottom: 5%;
     margin-left: 2%;
-    width: 90%;
+    width: 80%;
     -webkit-animation: mover 2s infinite  alternate;
     animation: mover 1s infinite  alternate;
 }
 .register-left .inputLogin
 {
     max-width: 180px;
-    max-height: 35px;
+    height: 32px;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
 }
@@ -91,36 +92,40 @@
  .btn-lateral
  {
     width: 230px;
-    height: 25px;
+    height: 40px;
      display: flex;
      justify-content: space-between;
 
  }
  .btn-lateral .btn-label
 {
-    display: flex;
-    align-self: center;
     border-top-left-radius: 25px;
     border-bottom-left-radius: 25px;
+    height: 40px;
 }
 
 .btn-iniciar
 {
-  align-self: center;
-  width: 50%;
-  height: 20px;
-  font-size: 10px;
+  width: 100px;
+  height: 28px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .btn-iniciar > .btn-label
 {
-  padding: 0.3rem 0.7rem;
-  width: 30px;
+
+    width: 30px;
+    height: 30px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    display: flex;
+    align-self: center;
 }
 .btn-lg
 {
     width: 280px;
-    height: 30px;
+    height: 45px;
     display: flex;
     justify-content: space-between;
 }
@@ -128,7 +133,7 @@
 .btn-lg > .btn-label
  {
      width: 50px;
-     height: 30px;
+     height: 45px;
      border-top-left-radius: 25px;
      border-bottom-left-radius: 25px;
      display: flex;
@@ -138,7 +143,7 @@
 .carouselLong > .card-body
 {
     width: 600px !important;
-    height: 400px;
+    height: 500px;
 }
 
 .carousel-caption

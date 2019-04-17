@@ -43,39 +43,35 @@ num = "";
        './../assets/img/ArteVacantes/img06.png', './../assets/img/ArteVacantes/img07.png', './../assets/img/ArteVacantes/img08.png']
       
       this.dataSource = data;
-  var color = 0;
-      this.categorias = Array.from(new Set(this.dataSource.map(s => s.areaId)))
-      .map(id => {
-        color +=1;
-        if(color > 7)
-        {
-          color = 1;
-        }
-        return {
-          id: id, 
-          categoria: this.dataSource.find(s => s.areaId === id).categoria,
-          icono: this.dataSource.find(s => s.areaId === id).icono,
-          color: color
-        }
-      });
-      this.dataSource = this.dataSource.filter(element => {
-        if(element.cubierta > 0)
-        {
-          return element;
-        }
-        
-      });
-
-
-
-      for(var c = 0; c <= 7; c++)
+      if(this.dataSource.length > 0)
       {
-        this.dataSource[c].image = images[c];
+        var color = 0;
+        this.categorias = Array.from(new Set(this.dataSource.map(s => s.areaId)))
+          .map(id => {
+            color += 1;
+            if (color > 7) {
+              color = 1;
+            }
+            return {
+              id: id,
+              categoria: this.dataSource.find(s => s.areaId === id).categoria,
+              icono: this.dataSource.find(s => s.areaId === id).icono,
+              color: color
+            }
+          });
+        this.dataSource = this.dataSource.filter(element => {
+          if (element.cubierta > 0) {
+            return element;
+          }
+
+        });
+
+        for (var c = 0; c <= 7; c++) {
+          this.dataSource[c].image = images[c];
+        }
+        this.vacantes = this.dataSource;
       }
-
-      this.vacantes = this.dataSource;
-
-    })
+    });
   }
 
   FiltrarCategoria(id, mocos)

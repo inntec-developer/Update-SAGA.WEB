@@ -88,6 +88,8 @@ export class CarruselVacantesComponent implements OnInit {
         './../assets/img/ArteVacantes/img06.png', './../assets/img/ArteVacantes/img07.png', './../assets/img/ArteVacantes/img08.png']
 
       this.dataSource = data;
+      if(this.dataSource.length > 0)
+      {
       var color = 0;
       this.categorias = Array.from(new Set(this.dataSource.map(s => s.areaId)))
       .map(id => {
@@ -110,15 +112,13 @@ export class CarruselVacantesComponent implements OnInit {
 
       });
 
-
-
       for (var c = 0; c <= 7; c++) {
         this.dataSource[c].image = images[c];
       }
 
       this.vacantes = this.dataSource;
-
-    })
+    }
+    });
   }
 
   FiltrarCategoria(id, mocos) {
