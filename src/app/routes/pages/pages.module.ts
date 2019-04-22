@@ -21,6 +21,7 @@ import { RegisterComponent } from './register/register.component';
 import { SharedModule } from '../../shared/shared.module';
 import { TrackingVacantesComponent } from './tracking-vacantes/tracking-vacantes.component';
 import { TicketsInicioComponent } from './tickets-inicio/tickets-inicio.component';
+import { InicioKioscoComponent } from './inicio-kiosco/inicio-kiosco.component';
 
 
 
@@ -61,7 +62,8 @@ import { TicketsInicioComponent } from './tickets-inicio/tickets-inicio.componen
         VacantesComponent,
         TrackingVacantesComponent,
         TicketsInicioComponent,
-        VerTurnosComponent, 
+        VerTurnosComponent,
+        InicioKioscoComponent, 
     ],
     providers: [
         { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

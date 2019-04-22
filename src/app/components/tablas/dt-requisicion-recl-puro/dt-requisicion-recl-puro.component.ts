@@ -17,7 +17,12 @@ import { Router } from '@angular/router';
   providers: [RequisicionesService]
 })
 export class DtRequisicionReclPuroComponent implements OnInit {
-
+  disabled = false;
+  compact = false;
+  invertX = false;
+  invertY = false;
+  shown = 'hover';
+  
   dataSource = [];
   Vacantes: number = 0;
   // Varaibles del paginador
@@ -213,7 +218,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
   public onCellClick(data: any): any {
 
     data.selected ? data.selected = false : data.selected = true;
-    data.selected ? this.ValidarEstatus(data.estatusId) : this.ValidarEstatus(0);
+    data.selected ? this.ValidarEstatus(data.estatusId, data.vacantes) : this.ValidarEstatus(0, data.vacantes);
 
     this.RequisicionId = data.id
     this.estatusId = data.estatusId;
@@ -247,7 +252,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
         var idx = this.rows.findIndex(x => x.id == this.RequisicionId);
         this.rows[idx]['estatus'] = estatus;
         this.rows[idx]['estatusId'] = estatusId;
-        this.ValidarEstatus(estatusId);
+        this.ValidarEstatus(estatusId, 1);
         this.refreshTable();
         this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
         this.SendEmail();
@@ -261,8 +266,17 @@ export class DtRequisicionReclPuroComponent implements OnInit {
   }
 
 
-  ValidarEstatus(estatusId) {
-    if (estatusId == 43) {
+  ValidarEstatus(estatusId, vacantes) {
+    if(vacantes == 0)
+    {
+      this.view = true;
+      this.coment = true;
+      this.facturar = false;
+      this.cancelar = false;
+      this.borrar = false;
+      this.autorizar = false;
+    }
+    else if (estatusId == 43) {
       this.view = true;
       this.coment = true;
       this.facturar = true;
@@ -304,8 +318,8 @@ export class DtRequisicionReclPuroComponent implements OnInit {
     }
     else
     {
-      this.view = false;
-      this.coment = false;
+      this.view = true;
+      this.coment = true;
       this.facturar = false;
       this.cancelar = false;
       this.borrar = false;
@@ -314,7 +328,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
     }
   }
   showRequi() {
-    this._Router.navigate(['/ventas/visualizarRequisicion/', this.element.id, this.element.folio, this.Vacante], { skipLocationChange: true });
+    this._Router.navigate(['/ventas/visualizarRequisicion/', this.element.id, this.element.folio, this.Vacante, 1], { skipLocationChange: true });
   }
 
   openDialogDelete() {
@@ -340,7 +354,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
     dialogCnc.afterClosed().subscribe(result => {
       if (result == 200) {
         // this.updataStatus(8, 'Cancelar')
-        this.ValidarEstatus(8);
+        this.ValidarEstatus(8, 1);
         this.refreshTable();
         this.SendEmail();
         this.resetSelect();

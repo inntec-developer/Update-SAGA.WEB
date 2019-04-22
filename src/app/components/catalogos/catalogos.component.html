@@ -1,0 +1,16 @@
+<!-- Header de modulo -->
+<div class="content-heading">
+    <div>
+        Menu de catalogos
+        <span class="text-sm d-none d-sm-block">Administraci&oacute;n de catalogos del sistema.</span>
+    </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+        <li class="breadcrumb-item"><a [routerLink]="['/home']">Inicio</a></li>
+        <li class="breadcrumb-item active">Menu catalogos</li>
+    </ol>
+</div>
+<!-- Componente de busqueda -->
+<app-search (idCatalogo)="selectIdCat($event)"></app-search>
+<!-- Componente formulario de catalogo -->
+<app-catalogo *ngIf="idCat" [idCatalogo]="idCat"></app-catalogo>

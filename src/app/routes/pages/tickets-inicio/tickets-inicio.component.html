@@ -49,11 +49,15 @@
                     </div>
                     <input type="password" class="form-control form-control-sm round" id="inputPassword4" placeholder="Contraseña">
                   </div>
-                  <button class="btn btn-success btn-iniciar ml-2 font-weight-bold"  type="button">INICIAR</button>
+                  <button class="btn btn-labeled btn-success btn-iniciar ml-2 font-weight-bold d-flex align-items-center" type="button">
+                      <span class="btn-label fa fa-play mr-1">
+                        </span>INICIO
+                      </button>
                 </div>
                 <div class="row">
                   <div class="col d-flex justify-content-center">
-                    <button class="btn btn-purple btn-registro mat-elevation-z8 mt-3 font-weight-bold" type="button" (click)="Registrar()">REGISTRATE</button>
+                    <button class="btn btn-labeled btn-purple btn-registro mat-elevation-z8 mt-3 font-weight-bold d-flex align-items-center" type="button" (click)="Registrar()">
+                        <span class="btn-label fa fa-user-plus mr-auto"></span><span class="mr-auto">REGISTRATE</span></button>
                   </div>
                 </div>
               </div>

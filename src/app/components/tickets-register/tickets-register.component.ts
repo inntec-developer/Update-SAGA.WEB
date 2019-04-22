@@ -12,6 +12,7 @@ export class TicketsRegisterComponent implements OnInit {
   flagMX = true;
   flagEU = false;
   extranjero = false;
+  verLogin = false;
   constructor(private dialog : MatDialogRef<TicketsRegisterComponent>) { }
 
   ngOnInit() {

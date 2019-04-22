@@ -17,23 +17,59 @@
     align-items: center;
 }
 
-// .register-left input{
-//     border: none;
-//     border-radius: 1.5rem;
-//     padding: 2%;
-//     width: 60%;
-//     background: #f8f9fa;
-//     font-weight: bold;
-//     color: #383d41;
-//     margin-top: 30%;
-//     margin-bottom: 3%;
-//     cursor: pointer;
-// }
+.register-left input{
+    border: none;
+    padding: 2%;
+    width: 60%;
+    height: 45%;
+    background: #f8f9fa;
+    font-weight: bold;
+    color: #383d41;
+    cursor: pointer;
+}
 .register-right{
     background: #f8f9fa;
     border-top-left-radius: 10% 50%;
     border-bottom-left-radius: 10% 50%;
 }
+
+.login-left{
+    text-align: center;
+    color: #fff;
+    margin-top: 4%;
+}
+.round
+{
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.input-group > .input-group-prepend > .input-group-text
+{
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    background-color: #fff;
+    height: 72%;
+}
+
+.card-body
+{
+    padding: 1em;
+}
+.btn-iniciar{
+    border-radius: 25px;
+    width: 45%;
+     height: 20px;
+     font-size: 10px;
+     padding: 0;
+  }
+
+  .btn-iniciar > .btn-label
+  {
+    padding: 0.3rem 0.7rem;
+    width: 30px;
+  }
+
 .register-left img{
     margin-top: 15%;
     margin-bottom: 5%;
@@ -84,7 +120,7 @@
  }
  .btn-label
  {
-    //  width: 60px;
+    //  width: 30px;
     //  height: 30px;
     left: 0;
      border-top-left-radius: 25px;

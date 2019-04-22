@@ -38,7 +38,7 @@ export class GraficaVacanteVencidaComponent implements OnInit {
       // These labels appear in the legend and in the tooltips when hovering different arcs
       labels: [
         'Total de vacantes',
-        'Vacantes Vencidas',
+        'Vacantes vencidas',
       ]
     }
     this.Chart = new Chart('canvas4', {

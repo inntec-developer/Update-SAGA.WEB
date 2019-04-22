@@ -1,98 +1,92 @@
 <div class="dt-container  mat-elevation-z8">
-  <div class="card-header">
-    <em class="fa fa-user"></em> Informaci&oacute;n General
-  </div>
-  <div class="card-body">
-    <form [formGroup]="formGeneral">
-      <div #rating class="float-right">
-        <rating [(ngModel)]="clf" [max]="maxRat" [readonly]="isReadonly" (onHover)="hoveringOver($event)"
-          class="fa-2x text-warning" [ngModelOptions]="{standalone: true}" (onLeave)="resetStar()"
-          [titles]="['A','AA','AAA']" stateOn="fa fa-star" stateOff="fa fa-star-o"></rating>
-        <p><span>Clasificaci&oacute;n </span></p>
-      </div>
-      <div *ngIf="esCliente">
-        <mat-form-field>
-          <input matInput formControlName="RazonSocial" name="RazonSocial" placeholder="Razon Social" autofocus />
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput formControlName="RFC" name="RFC" placeholder="RFC" autofocus />
-        </mat-form-field>
-      </div>
-      <mat-form-field>
-        <input matInput formControlName="Empresa" name="empresa" placeholder="Nombre Comercial" autofocus />
-      </mat-form-field>
-
-      <body oncopy="return false" onpaste="return false">
-        <mat-form-field>
-          <input matInput formControlName="ValidarEmpresa" name="validarEmpresa" placeholder="Nombre Comercial" />
-          <mat-hint align="start">
-            <strong *ngIf="formGeneral.controls.ValidarEmpresa.errors?.MachCompany" class="text-danger">Los datos
-              ingresados no coinciden, favor de verificar la informaci&oacute;n</strong>
-          </mat-hint>
-        </mat-form-field>
-      </body>
-      <div class="row">
-        <div class="col-md-2 col-lg-2 col-sm-12">
-          <mat-form-field>
-            <mat-select placeholder="Giros" formControlName="Giros" (selectionChange)="getActividades()">
-              <mat-option *ngFor="let x of giros" [value]="x.id">
-                {{x.giroEmpresa}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-md-2 col-lg-2 col-sm-12">
-          <mat-form-field>
-            <mat-select placeholder="Actividades" formControlName="Actividades">
-              <mat-option *ngFor="let x of actividades" [value]="x.id">
-                {{x.actividadEmpresa}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-md-2 col-lg-2 col-sm-12">
-          <mat-form-field>
-            <input matInput type="number" formControlName="NoEmpleados" name="NoEmpleados" placeholder="# Empleados" (blur)="changeEmpleados()"
-              focus />
-          </mat-form-field>
-        </div>
-        <div class="col-md-2 col-lg-2 col-sm-12">
-          <mat-form-field>
-            <mat-select placeholder="Tamaño" formControlName="Tamanio"  (selectionChange)="validarNoEmpleado()">
-              <mat-option *ngFor="let x of tamanioEmpresa" [value]="x.id">
-                {{x.tamanoEmpresa}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-md-2 col-lg-2 col-sm-12">
-          <mat-form-field>
-            <mat-select placeholder="Tipo" formControlName="Tipo">
-              <mat-option *ngFor="let x of tipo" [value]="x.id">
-                {{x.tipoEmpresa}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-md-2 col-lg-2 col-sm-12">
-          <mat-form-field>
-            <mat-select placeholder="Tipo Base" formControlName="TipoBase">
-              <mat-option *ngFor="let x of tipoBase" [value]="x.id">
-                {{x.tipoBase}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
-    </form>
-    <div class="modal-footer">
-      <button type="button" class="md-1 btn btn-xs" *ngIf="!loading"
-        [disabled]="!formGeneral.valid"
-        [ngClass]="!formGeneral.valid ? 'disabled' : 'btn-outline-success'" (click)="Guardar()">Guardar</button>
-        <img *ngIf="loading"
-        src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+    <div class="card-header">
+        <em class="fa fa-user"></em> Informaci&oacute;n General
     </div>
-  </div>
+    <div class="card-body">
+        <form [formGroup]="formGeneral">
+            <div #rating class="float-right">
+                <rating [(ngModel)]="clf" [max]="maxRat" [readonly]="isReadonly" (onHover)="hoveringOver($event)" class="fa-2x text-warning" [ngModelOptions]="{standalone: true}" (onLeave)="resetStar()" [titles]="['A','AA','AAA']" stateOn="fa fa-star" stateOff="fa fa-star-o"></rating>
+                <p><span>Clasificaci&oacute;n </span></p>
+            </div>
+            <div *ngIf="esCliente">
+                <mat-form-field>
+                    <input matInput formControlName="RazonSocial" name="RazonSocial" placeholder="Razon Social" autofocus />
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput formControlName="RFC" name="RFC" placeholder="RFC" autofocus />
+                </mat-form-field>
+            </div>
+            <mat-form-field>
+                <input matInput formControlName="Empresa" name="empresa" placeholder="Nombre Comercial" autofocus />
+            </mat-form-field>
+
+            <body oncopy="return false" onpaste="return false">
+                <mat-form-field>
+                    <input matInput formControlName="ValidarEmpresa" name="validarEmpresa" placeholder="Nombre Comercial" />
+                    <mat-hint align="start">
+                        <strong *ngIf="formGeneral.controls.ValidarEmpresa.errors?.MachCompany" class="text-danger">Los datos
+              ingresados no coinciden, favor de verificar la informaci&oacute;n</strong>
+                    </mat-hint>
+                </mat-form-field>
+            </body>
+            <div class="row">
+                <div class="col-md-2 col-lg-2 col-sm-12">
+                    <mat-form-field>
+                        <mat-select placeholder="Giros" formControlName="Giros" (selectionChange)="getActividades()">
+                            <mat-option *ngFor="let x of giros" [value]="x.id">
+                                {{x.giroEmpresa}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-12">
+                    <mat-form-field>
+                        <mat-select placeholder="Actividades" formControlName="Actividades">
+                            <mat-option *ngFor="let x of actividades" [value]="x.id">
+                                {{x.actividadEmpresa}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-12">
+                    <mat-form-field>
+                        <input matInput type="number" formControlName="NoEmpleados" name="NoEmpleados" placeholder="# Empleados" (blur)="changeEmpleados()" focus />
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-12">
+                    <mat-form-field>
+                        <mat-select placeholder="Tamaño" formControlName="Tamanio" (selectionChange)="validarNoEmpleado()">
+                            <mat-option *ngFor="let x of tamanioEmpresa" [value]="x.id">
+                                {{x.tamanoEmpresa}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-12">
+                    <mat-form-field>
+                        <mat-select placeholder="Tipo" formControlName="Tipo">
+                            <mat-option *ngFor="let x of tipo" [value]="x.id">
+                                {{x.tipoEmpresa}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-12">
+                    <mat-form-field>
+                        <mat-select placeholder="Tipo Base" formControlName="TipoBase">
+                            <mat-option *ngFor="let x of tipoBase" [value]="x.id">
+                                {{x.tipoBase}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+        <div class="modal-footer">
+            <button type="button" class="md-1 btn btn-xs" *ngIf="!loading" [disabled]="!formGeneral.valid" [ngClass]="!formGeneral.valid ? 'disabled' : 'btn-outline-success'" (click)="Guardar()">Guardar</button>
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+        </div>
+    </div>
 </div>
 
 <!-- Mensajes informativos -->

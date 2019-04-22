@@ -84,7 +84,16 @@ import { TicketsRegisterComponent } from './tickets-register/tickets-register.co
 import { RegistroCandidatosComponent } from './registro-candidatos/registro-candidatos.component';
 import { FormsModule } from '@angular/forms';
 import { MAT_DATE_LOCALE } from '@angular/material';
+import { CatalogosComponent } from './catalogos/catalogos.component';
+import { SearchComponent } from './catalogos/search/search.component';
+import { CatalogoComponent } from './catalogos/catalogo/catalogo.component';
+import { PaisesComponent } from './catalogos/paises/paises.component';
+import { EstadosComponent } from './catalogos/estados/estados.component';
+import { MunicipiosComponent } from './catalogos/municipios/municipios.component';
+import { TableComponent } from './catalogos/table/table.component';
+
 import { RegistroReclutadorComponent } from './registro-reclutador/registro-reclutador.component';
+import { InformeVacantesComponent } from './informe-vacantes/informe-vacantes.component';
 @NgModule({
   imports: [
     SharedModule,
@@ -173,8 +182,15 @@ import { RegistroReclutadorComponent } from './registro-reclutador/registro-recl
     DlgRevisarExamenesComponent,
     RegistroCandidatosComponent,
     TicketsRegisterComponent,
-    RegistroReclutadorComponent
-    
+    CatalogosComponent,
+    SearchComponent,
+    CatalogoComponent,
+    PaisesComponent,
+    EstadosComponent,
+    MunicipiosComponent,
+    TableComponent,
+    RegistroReclutadorComponent,
+    InformeVacantesComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -253,8 +269,13 @@ import { RegistroReclutadorComponent } from './registro-reclutador/registro-recl
     GraficaResumenComponent,
     DlgRevisarExamenesComponent,
     TicketsRegisterComponent,
+    CatalogosComponent,
+    SearchComponent,
+    CatalogoComponent,
     RegistroCandidatosComponent,
-    RegistroReclutadorComponent
+    RegistroReclutadorComponent,
+    InformeVacantesComponent
+
   ],
   entryComponents: [ RegistroReclutadorComponent, TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
 

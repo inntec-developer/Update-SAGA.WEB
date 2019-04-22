@@ -6,11 +6,12 @@ import { PreguntasFrecuentesComponent } from './preguntas-frecuentes/preguntas-f
 import { RouterModule } from '@angular/router';
 import { Routes } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
+import { CatalogosComponent } from '../../components/catalogos/catalogos.component';
 
 const routes: Routes = [
   { path: 'preguntas', component: PreguntasFrecuentesComponent },
-  { path: 'oficinas', component: OficinasComponent }
-
+  { path: 'oficinas', component: OficinasComponent },
+  { path: 'menucatalogo', component: CatalogosComponent }
 ];
 
 @NgModule({
@@ -19,7 +20,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ComponentsModule
   ],
-  declarations: [PreguntasFrecuentesComponent, OficinasComponent,],
+  declarations: [PreguntasFrecuentesComponent, OficinasComponent],
   providers: [CatalogosService]
 })
 export class CatalogosModule { }

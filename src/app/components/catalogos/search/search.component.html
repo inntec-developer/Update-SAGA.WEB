@@ -1,0 +1,22 @@
+<h4>Selecciona el catalogo</h4>
+<div class="row">
+    <div class="col-md-10">
+        <mat-form-field>
+            <mat-label>Selección de catalogos</mat-label>
+            <mat-select [(ngModel)]="selectedValue" name="cHdr">
+                <mat-optgroup *ngFor="let group of catalogosGroup" [label]="group.nombre">
+                    <mat-option *ngFor="let catalogo of group.catalogos" [value]="catalogo.id">
+                        {{catalogo.nombre}}
+                    </mat-option>
+                </mat-optgroup>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-md-2">
+        <button [disabled]="!selectedValue" style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="buscaCatalogo()" container="body" placement="bottom" tooltip="Buscar catalogo seleccionado">
+         <span class="btn-label ">
+         <i class="fa fa-search"></i>
+         </span>Buscar
+      </button>
+    </div>
+</div>

@@ -23,14 +23,11 @@ export class DlgAsignarModuloComponent implements OnInit {
   {
     this._service.GetModulos().subscribe(data =>{
       this.modulos = data;
-      console.log(this.modulos)
     })
   }
 
   Iniciar(tipo, mod)
   {
-    console.log(this.moduloId)
-
     sessionStorage.setItem('modulo', mod); 
     sessionStorage.setItem('moduloId', this.moduloId)
 

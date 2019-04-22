@@ -142,7 +142,7 @@ export class ContactosClienteComponent implements OnInit {
     let data = {
       apellidoPaterno: this.formContactos.get('ApellidoPaterno').value,
       apellidoMaterno: this.formContactos.get('ApellidoMaterno').value || '',
-      calle: this.Direcciones[idxDireccion]['calle'] + ' No. ' + this.Direcciones[idxDireccion]['numeroExterior'] + ' C.P.' + this.Direcciones[idxDireccion]['codigoPostal'],
+      calle: this.Direcciones[idxDireccion]['calle'] + ' No. '+ this.Direcciones[idxDireccion]['numeroExterior'] + ' C.P.' + this.Direcciones[idxDireccion]['codigoPostal'],
       clienteId: this.EntidadId,
       direccionId: idDireccion,
       emails: this.Emails,
@@ -233,20 +233,18 @@ export class ContactosClienteComponent implements OnInit {
       closeOnCancel: false,
       showLoaderOnConfirm: true
     }, (isConfirm) => {
-      window.onkeydown = null;
-      window.onfocus = null;
       if (isConfirm) {
         this._ClienteService.deleteContacto(this.elementCn.id).subscribe(result => {
           if (result == 200) {
             this.Contactos.splice(this.indexContacto, 1);
             this.onChangeTableCn(this.config);
-            swal('Direcciones', 'Se eliminó el contacto correctamente.', 'success');
+            swal('Direcciones', 'Se elimino el contacto correctamente.', 'success');
           } else {
             swal('Direcciones', 'Algo salio mal al intertar eliminar los registros.', 'error');
           }
         });
       } else {
-        swal('Cancelado!', 'No se realizaron modificaciones den el contacto.', 'error');
+        swal('Cancelado!', 'No se realizarón modificaciones den el contacto.', 'error');
       }
     });
   }

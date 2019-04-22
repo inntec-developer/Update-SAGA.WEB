@@ -14,21 +14,21 @@
 
 .input-group-prepend > .input-group-text {
     font-size: .75rem;
-    height: 28px;
+    height: 25px;
     border-top-left-radius: 25px;
     border-bottom-left-radius: 25px;
 }
 
 .input-group > .input-group-append > .btn, .input-group > .input-group-append > .input-group-text, .input-group > .input-group-prepend:not(:first-child) > .btn, .input-group > .input-group-prepend:not(:first-child) > .input-group-text, .input-group > .input-group-prepend:first-child > .btn:not(:first-child), .input-group > .input-group-prepend:first-child > .input-group-text:not(:first-child)
  {
-    height: 28px;
+    height: 25px;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
 }
 
 .form-control-sm
 {
-    height: 28px !important;
+    height: 25px !important;
 }
 
 .round
@@ -38,25 +38,31 @@
 }
 
 .btn-iniciar{
-     display: flex;
-     justify-content: center;
-     align-items: center;
     border-radius: 25px;
     width: 30%;
-    height: 25px;
+     height: 23px;
      font-size: 10px;
      padding: 0;
   }
 
+  .btn-iniciar > .btn-label
+  {
+    padding: 0.3rem 0.7rem;
+    width: 20px;
+  }
 .btn-registro {
-     display: flex;
-     justify-content: center;
-     align-items: center;
     border-radius: 25px;
     width: 50%;
     height: 23px;
      font-size: 10px;
      padding: 0;
+  }
+
+.btn-label
+  {
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    left: 0;
   }
   .mat-dialog-container
   {

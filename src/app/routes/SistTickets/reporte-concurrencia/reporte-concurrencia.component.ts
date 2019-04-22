@@ -13,8 +13,8 @@ export class ReporteConcurrenciaComponent implements OnInit {
 
   disabled = false;
   compact = false;
-  invertX = true;
-  invertY = true;
+  invertX = false;
+  invertY = false;
 
   shown = 'hover';
 
