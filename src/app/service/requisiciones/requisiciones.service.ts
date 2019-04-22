@@ -52,6 +52,7 @@ export class RequisicionesService {
   private URLExecProcedurePause = ApiConection.ServiceUrl + ApiConection.execProcedurePause;
   private URLGetRequiTipoRecl = ApiConection.ServiceUrl + ApiConection.GetRequiTipoRecl;
   private URLSendEmailRequiPuro = ApiConection.ServiceUrl + ApiConection.SendEmailRequiPuro;
+  private URLSendEmailRedesSociales = ApiConection.ServiceUrl + ApiConection.SendEmailRedesSociales;
   private URLAddDtosFactura = ApiConection.ServiceUrl + ApiConection.AddDatosFactura;
   private URLGetReporte70 = ApiConection.ServiceUrl + ApiConection.GetReporte70;
 
@@ -228,7 +229,7 @@ export class RequisicionesService {
     return this._httpClient.get(this.URLGetInformeRequisiciones, { params: params });
   }
 
-  
+
   GetRequiTipoRecl(propietarioId: any, tipo): Observable<any> {
     let params = new HttpParams().set('propietario', propietarioId).set('tipo', tipo);
     return this._httpClient.get(this.URLGetRequiTipoRecl, { params: params });
@@ -239,12 +240,16 @@ export class RequisicionesService {
     return this._httpClient.get(this.URLSendEmailRequiPuro, {params: params});
   }
 
+  SendEmailRedesSociales(data: any): Observable<any>{
+    return this._httpClient.post(this.URLSendEmailRedesSociales, data, httpOptions);
+  }
+
   AddDatosFactura(datos):Observable<any>
   {
     return this._httpClient.post(this.URLAddDtosFactura, datos, httpOptions);
   }
   ExecProcedurePause(): Observable<any> {
-   
+
     return this._httpClient.get(this.URLExecProcedurePause);
   }
   GetReporte70() : Observable<any> {

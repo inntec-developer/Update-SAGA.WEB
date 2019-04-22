@@ -50,8 +50,8 @@ export class ApiConection {
   public static GetTipoDireccion = 'Catalogos/getTipoDireccion';
   public static GetPais = 'Catalogos/getPais';
   public static GetEstado = 'Catalogos/getEstado';
-  public static GetMunicipio ='Catalogos/getMunicipio';
-  public static GetColonia ='Catalogos/getColonia';
+  public static GetMunicipio = 'Catalogos/getMunicipio';
+  public static GetColonia = 'Catalogos/getColonia';
   public static GetForCP = 'Catalogos/getInfoCP';
 
   /* Catalogos para clientes */
@@ -94,6 +94,7 @@ export class ApiConection {
   public static GetUltimoEstatusRequi = 'Requisiciones/getUltimoEstatus';
   public static GetRequiTipoRecl = 'Requisiciones/getRequisicionesTipo';
   public static SendEmailRequiPuro = 'Requisiciones/sendEmailRequiPura';
+  public static SendEmailRedesSociales = 'Requisiciones/sendEmailRedesSociales'
   public static AddDatosFactura = 'Requisiciones/insertDtosFactura';
   public static GetReporte70 = 'Requisiciones/getReporte70';
   public static GetRepoteCandidatos = 'Candidatos/getRPTCandidatosVacante'
@@ -105,22 +106,22 @@ export class ApiConection {
   public static HacerCliente = 'Directorio/hacerCliente';
   public static GetCliente = 'Directorio/getCliente';
   public static EditInfoGeneral = 'Directorio/EditInfoGeneral';
-    // Direcciones del Cliente
+  // Direcciones del Cliente
   public static AddDireccionCliente = 'Directorio/AddDireccionCliente';
   public static DeleteDireccionCliente = 'Directorio/DeleteDireccionCliente';
-  public static EditDireccionCliente = 'Directorio/EditDireccionCliente';s
+  public static EditDireccionCliente = 'Directorio/EditDireccionCliente'; s
 
-    // Telefonos del Cliente
+  // Telefonos del Cliente
   public static AddTelefonoCliente = 'Directorio/AddTelefonoCliente';
   public static DeleteTelefonoCliente = 'Directorio/DeleteTelefonoCliente';
   public static EditTelefonoCliente = 'Directorio/EditTelefonoCliente';
 
-    // Emails del Cliente
+  // Emails del Cliente
   public static AddEmailCliente = 'Directorio/AddEmailCliente';
   public static DeleteEmailCliente = 'Directorio/DeleteEmailCliente';
   public static EditEmailCliente = 'Directorio/EditEmailCliente';
 
-    // Contactos del Cliente
+  // Contactos del Cliente
   public static AddContactoCliente = 'Directorio/AddContactoCliente';
   public static DeleteContactoCliente = 'Directorio/DeleteContactoCliente';
   public static EditContactoCliente = 'Directorio/EditContactoCliente';
@@ -310,29 +311,29 @@ export class ApiConection {
   public static GetRequisicionesGPA = 'Graficas/getRequisicionesGPA'
 
 
-    /*Preguntas frecuentes */
-    public static GetPreguntasFrecuentes = 'PreguntasFrecuente/preguntas'
-    public static AddPreguntasFrecuentes = 'PreguntasFrecuente/add'
-    public static alterPreguntasFrecuentes = 'PreguntasFrecuente/alter'
-    public static deletePreguntasFrecuentes = 'PreguntasFrecuente/delete'
+  /*Preguntas frecuentes */
+  public static GetPreguntasFrecuentes = 'PreguntasFrecuente/preguntas'
+  public static AddPreguntasFrecuentes = 'PreguntasFrecuente/add'
+  public static alterPreguntasFrecuentes = 'PreguntasFrecuente/alter'
+  public static deletePreguntasFrecuentes = 'PreguntasFrecuente/delete'
 
 
-    /*Oficinas */
-    public static GetSucursal = 'Oficina/oficina'
-    public static GetEstadoOfi = 'Oficina/estado'
-    public static GetMunicipioOfi = 'Oficina/municipio'
-    public static GetColoniaOfi = 'Oficina/colonia'
-    public static AddOficina = 'Oficina/add'
-    public static alterOficina = 'Oficina/editar'
-    public static deleteOficina = 'Oficina/delete'
+  /*Oficinas */
+  public static GetSucursal = 'Oficina/oficina'
+  public static GetEstadoOfi = 'Oficina/estado'
+  public static GetMunicipioOfi = 'Oficina/municipio'
+  public static GetColoniaOfi = 'Oficina/colonia'
+  public static AddOficina = 'Oficina/add'
+  public static alterOficina = 'Oficina/editar'
+  public static deleteOficina = 'Oficina/delete'
 
-    /*Indicadores */
-    public static getCubiertaG = 'indicador/vcubierta'
-    public static getActivaG = 'indicador/vactiva'
-    public static getPorvencerG = 'indicador/vporvencer'
-    public static getVencidasG = 'indicador/vvencida'
-    public static getResumenG = 'indicador/resumen'
-    public static getRadialG = 'indicador/radial'
+  /*Indicadores */
+  public static getCubiertaG = 'indicador/vcubierta'
+  public static getActivaG = 'indicador/vactiva'
+  public static getPorvencerG = 'indicador/vporvencer'
+  public static getVencidasG = 'indicador/vvencida'
+  public static getResumenG = 'indicador/resumen'
+  public static getRadialG = 'indicador/radial'
 
 
 

@@ -118,6 +118,7 @@ export class InfoCandidatoComponent implements OnInit {
   }
 
   validarFecha(fnac) : number{
+    debugger;
     var fn = new Date(fnac);
     var date = new Date();
     var edad = date.getFullYear() - fn.getFullYear();
@@ -128,7 +129,7 @@ export class InfoCandidatoComponent implements OnInit {
     if (((fn.getMonth() - 1) == date.getMonth()) && (date < fn)) {
       edad--;
     }
-    return (edad); 
+    return (edad);
   }
 
   GetInfoCandidato() {

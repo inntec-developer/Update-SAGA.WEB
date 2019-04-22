@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -24,16 +24,26 @@ const swal = require('sweetalert');
 })
 export class DialogAssingRequiComponent implements OnInit {
   @ViewChild('asginaciones') asignaciones: AsignarRequisicionComponent;
+  //scroll
+  disabled = false;
+  compact = false;
+  invertX = false;
+  invertY = false;
+  shown = 'hover';
+
   placeHolderSelect: string;
   loading: boolean;
   public return: any;
   public formAsignaciones: FormGroup;
+  public formRS: FormGroup;
   public asignadosRequi: any[] = [];
   alertAssing: boolean;
   RequiId: string;
   checked: boolean;
   today: any;
   Confidencial: boolean;
+  redesSociales: boolean;
+  oficiorequisicionId: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -44,32 +54,34 @@ export class DialogAssingRequiComponent implements OnInit {
     private toasterService: ToasterService,
   ) {
     dialogAssing.disableClose = true;
-    this.placeHolderSelect = 'ASIGNAR RECLUTADORES / CELULAS / GRUPOS TRABAJO';
+    this.placeHolderSelect = 'ASIGNAR RECLUTADORES';
+    this.formAsignaciones = new FormGroup({
+      fch_Cumplimiento: new FormControl('', [Validators.required]),
+      diasEnvio: new FormControl('', [Validators.required])
+    })
+    this.formRS = new FormGroup({
+      Oficio: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      Comentario: new FormControl('', [Validators.maxLength(500)])
+    })
   }
-
-
-
   ngOnInit() {
     this.initForm();
+    this.getInformacion()
+    this.getAsignacion(this.data.asignados);
   }
 
   initForm() {
     this.formAsignaciones = this.fb.group({
       fch_Cumplimiento: ['', Validators.required],
       diasEnvio: ['', Validators.required]
-    })
-
-  }
-
-  ngAfterContentChecked() {
-    if (!this.checked) {
-      this.getInformacion()
-      this.getAsignacion(this.data.asignados);
-    }
+    });
+    this.formRS = this.fb.group({
+      Oficio: ['', [Validators.required, Validators.maxLength(100)]],
+      Comentario: ['', Validators.maxLength(500)]
+    });
   }
 
   getInformacion() {
-    debugger;
     if (this.data != null) {
       this.today = this.data.fch_Creacion;
       this.RequiId = this.data.id;
@@ -77,9 +89,16 @@ export class DialogAssingRequiComponent implements OnInit {
       this.formAsignaciones.patchValue({
         fch_Cumplimiento: this.data.fch_Cumplimiento,
         diasEnvio: this.data.diasEnvio,
-      })
+      });
+      if (this.data['oficio'] != null) {
+        this.redesSociales = true;
+        this.oficiorequisicionId = this.data['oficio']['id'];
+        this.formRS.patchValue({
+          Oficio: this.data['oficio']['oficio'],
+          Comentario: this.data['oficio']['comentario'] || ''
+        })
+      }
     }
-    this.checked = true;
   }
 
   onCloseDialog() {
@@ -127,12 +146,33 @@ export class DialogAssingRequiComponent implements OnInit {
         .subscribe(data => {
           this.return = data;
           if (this.return == 200) {
-            this.loading = false;
-            this.dialogAssing.close(true);
-            this.sweetalertNotificarRedesSociales()
+            if (this.redesSociales) {
+              var oficio = {
+                Id: this.oficiorequisicionId || '',
+                Oficio: this.formRS.get('Oficio').value,
+                Comentario: this.formRS.get('Comentario').value || '',
+                RequisicionId: this.RequiId
+              }
+              this.serviceRequisicion.SendEmailRedesSociales(oficio).subscribe(result => {
+                if (result != 404) {
+                  swal('Redes sociales', 'Se a notificado con exito la publicacion de la vacante.', 'success');
+                  this.dialogAssing.close(true);
+                  this.formRS.reset();
+                  this.loading = false;
+                } else {
+                  swal('Redes sociales', 'Algo salio mal al intentar notificar al departamento de redes sociales.', 'error');
+                  this.loading = false;
+                }
+              });
+            }
+            else {
+              this.dialogAssing.close(true);
+              this.loading = false;
+            }
           }
           else {
             this.dialogAssing.close(false)
+            this.loading = false;
           }
         });
     }
@@ -172,9 +212,13 @@ export class DialogAssingRequiComponent implements OnInit {
       if (isConfirm) {
         window.onkeydown = null;
         window.onfocus = null;
-        setTimeout(() => {
-          swal('Redes sociales', 'Se a notificado con exito la publicacion de la vacante.', 'success');
-        }, 2000);
+        this.serviceRequisicion.SendEmailRedesSociales(this.RequiId).subscribe(result => {
+          if (result != 404) {
+            swal('Redes sociales', 'Se a notificado con exito la publicacion de la vacante.', 'success');
+          } else {
+            swal('Redes sociales', 'Algo salio mal al intentar notificar al departamento de redes sociales.', 'error');
+          }
+        });
       }
     });
   }
