@@ -22,7 +22,7 @@ export class CarruselVacantesComponent implements OnInit {
   modalTicket: boolean = false;
   num = "";
   categorias: any[];
-  dataSource: any;
+  dataSource = [];
   activeId;
   constructor(config: NgbCarouselConfig, private _service: SistTicketsService, private spinner: NgxSpinnerService) {
     config.interval = 10000;
@@ -107,14 +107,16 @@ export class CarruselVacantesComponent implements OnInit {
       });
       this.dataSource = this.dataSource.filter(element => {
         if (element.cubierta > 0) {
+       
           return element;
         }
+     
 
       });
 
-      for (var c = 0; c <= 7; c++) {
-        this.dataSource[c].image = images[c];
-      }
+      // for (var c = 0; c <= 7; c++) {
+      //   this.dataSource[c].image = images[c];
+      // }
 
       this.vacantes = this.dataSource;
     }

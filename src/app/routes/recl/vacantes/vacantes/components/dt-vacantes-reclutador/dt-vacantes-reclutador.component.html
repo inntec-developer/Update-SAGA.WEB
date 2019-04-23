@@ -145,21 +145,21 @@
                   <td class="text-center">
                     {{row.folio}}
                   </td>
-                  <td> {{row.solicita}}</td>
+                  <td> {{row.solicita | uppercase}}</td>
                   <td class="text-center">
-                    <span *ngIf="row.cliente.length <= 10 else toLengthCliente">{{row.cliente}}</span>
+                    <span *ngIf="row.cliente.length <= 10 else toLengthCliente">{{row.cliente | uppercase}}</span>
                     <ng-template #toLengthCliente>
                       <span placement="bottom" tooltip="{{row.cliente}}" container='body'> {{row.cliente | slice:0:10
-                        }} ...
+                        | uppercase }} ...
                       </span>
                     </ng-template>
                   </td>
-                  <td> {{row.vBtra}}</td>
+                  <td> {{row.vBtra | uppercase}}</td>
                   <td class="text-center">
-                    <span class="px-1 mr-1  badge  badge-pill badge-info"> {{row.vacantes}}</span>
+                    <span class="px-1 mr-1  badge  badge-pill badge-info"> {{row.contratados}}/{{row.vacantes}}</span>
                   </td>
-                  <td class="text-center"> {{row.tipoReclutamiento}}</td>
-                  <td class="text-center"> {{row.claseReclutamiento}}</td>
+                  <td class="text-center"> {{row.tipoReclutamiento | uppercase}}</td>
+                  <td class="text-center"> {{row.claseReclutamiento | uppercase}}</td>
                   <!-- <td class="text-right"> {{row.sueldoMinimo | currency: $}}</td>
                   <td class="text-right"> {{row.sueldoMaximo | currency: $}}</td> -->
                   <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
@@ -182,7 +182,7 @@
                   </td>
                   <td class="text-center">
                     <small class="badge badge-pill" [class.badge-danger]="row.prioridadId === 1" [class.badge-warning]="row.prioridadId === 2">
-                      {{row.prioridad}}
+                      {{row.prioridad | uppercase}}
                     </small>
                   </td>
                   <td class="text-center">

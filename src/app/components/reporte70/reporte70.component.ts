@@ -56,8 +56,8 @@ export class Reporte70Component implements OnInit {
     { title: 'Enviado', className: 'text-info text-center', name: 'enProcesoEC', filtering: { filterString: '', placeholder: 'Enviado' } },
     { title: 'Aceptado', className: 'text-info text-center', name: 'enProcesoFC', filtering: { filterString: '', placeholder: 'Aceptado' } },
     { title: 'Cubiertos', className: 'text-info text-center', name: 'contratados', filtering: { filterString: '', placeholder: 'Cubiertos' } },
-    { title: 'Vacantes Faltantes', className: 'text-info text-center', name: 'faltantes', filtering: { filterString: '', placeholder: 'Vac. faltantes' } },
-    { title: 'Avance', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'Avance' } },
+    { title: 'Faltantes', className: 'text-info text-center', name: 'faltantes', filtering: { filterString: '', placeholder: 'Faltantes' } },
+    { title: 'Cumplimiento', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'Cumplimiento' } },
     { title: 'Dias Transcurridos', className: 'text-info text-center', name: 'diasTrans', filtering: { filterString: '', placeholder: 'Dias' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
     // { title: 'Fecha Estatus', className: 'text-info text-center', name: 'fch_Modificacion', filtering: { filterString: '', placeholder: 'dd-mm-yyyy' } },
@@ -75,7 +75,8 @@ export class Reporte70Component implements OnInit {
 
     this._service.GetReporte70().subscribe(result => {
       this.requisiciones = result;
-      this.onChangeTable(this.config);
+      this.rows = this.requisiciones;
+      this.spinner.hide();
 
     })
   }
@@ -227,7 +228,7 @@ export class Reporte70Component implements OnInit {
     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
     this.length = sortedData.length;
 
-    this.spinner.hide();
+  
   }
 //#endregion
 
@@ -317,10 +318,10 @@ public refreshTable() {
           reclutador = row.reclutadores[0].reclutador;
         }
 
-        var estatus = '';
-        row.estatus.forEach(element => {
-          estatus = estatus + element.estatus + ' ' + this.pipe.transform(new Date(element.fch_Modificacion), 'yyyy-MM-dd') + '\n';
-        });
+        var estatus = row.estatus[row.estatus.length - 1].estatus;
+        // row.estatus.forEach(element => {
+        //   estatus = estatus + element.estatus + ' ' + this.pipe.transform(new Date(element.fch_Modificacion), 'yyyy-MM-dd') + '\n';
+        // });
 
         if(row.fch_Solicitud != null)
         {
@@ -359,7 +360,7 @@ public refreshTable() {
           ACEPTADO: row.enProcesoFC,
           CONTRATADOS: row.contratados,
           FALTANTES: row.faltantes,
-          AVANCE: row.porcentaje,
+          CUMPLIMIENTO: row.porcentaje,
           'DIAS TRANSCURRIDOS': row.estatus[0].diasTotal,
           ESTATUS: estatus,
           'TIPO RECLUTAMIENTO': row.tipoReclutamiento,
