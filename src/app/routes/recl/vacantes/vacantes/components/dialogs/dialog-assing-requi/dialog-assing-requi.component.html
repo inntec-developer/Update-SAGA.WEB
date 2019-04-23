@@ -26,7 +26,7 @@
     <br>
     <form [formGroup]="formAsignaciones">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <mat-form-field>
             <input matInput [matDatepicker]="cumplimiento" placeholder="Fecha Cumplimiento"
               formControlName="fch_Cumplimiento" required>
@@ -34,10 +34,22 @@
             <mat-datepicker touchUi="true" #cumplimiento></mat-datepicker>
           </mat-form-field>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <mat-form-field>
             <input type="number" matInput max="20" min="1" placeholder="Días habiles envío al cliente"
               formControlName="diasEnvio" required>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-select placeholder="Ponderación" formControlName="Ponderacion">
+              <mat-option *ngFor="let x of Ponderacion" [value]="x.Id">
+                {{x.Ponderacion}}
+              </mat-option>
+            </mat-select>
+            <mat-hint align="start">
+              <strong class="text-info">Verificar que la Ponderación sea la correcta</strong>
+            </mat-hint>
           </mat-form-field>
         </div>
       </div>

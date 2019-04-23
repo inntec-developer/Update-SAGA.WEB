@@ -24,6 +24,20 @@ const swal = require('sweetalert');
 })
 export class DialogAssingRequiComponent implements OnInit {
   @ViewChild('asginaciones') asignaciones: AsignarRequisicionComponent;
+  public Ponderacion = [
+    {
+      Id: 1,
+      Ponderacion: 1
+    },
+    {
+      Id: 2,
+      Ponderacion: 2
+    },
+    {
+      Id: 3,
+      Ponderacion: 3
+    }
+  ]
   //scroll
   disabled = false;
   compact = false;
@@ -57,7 +71,8 @@ export class DialogAssingRequiComponent implements OnInit {
     this.placeHolderSelect = 'ASIGNAR RECLUTADORES';
     this.formAsignaciones = new FormGroup({
       fch_Cumplimiento: new FormControl('', [Validators.required]),
-      diasEnvio: new FormControl('', [Validators.required])
+      diasEnvio: new FormControl('', [Validators.required]),
+      Ponderacion: new FormControl('', [Validators.required])
     })
     this.formRS = new FormGroup({
       Oficio: new FormControl('', [Validators.required, Validators.maxLength(100)]),
@@ -73,7 +88,8 @@ export class DialogAssingRequiComponent implements OnInit {
   initForm() {
     this.formAsignaciones = this.fb.group({
       fch_Cumplimiento: ['', Validators.required],
-      diasEnvio: ['', Validators.required]
+      diasEnvio: ['', Validators.required],
+      Ponderacion: ['', Validators.required]
     });
     this.formRS = this.fb.group({
       Oficio: ['', [Validators.required, Validators.maxLength(100)]],
@@ -82,13 +98,27 @@ export class DialogAssingRequiComponent implements OnInit {
   }
 
   getInformacion() {
+    debugger;
     if (this.data != null) {
+      var Ponderacion = 0;
+      switch(this.data['claseReclutamientoId']){
+        case 1:
+          Ponderacion = 3
+        break;
+        case 2:
+          Ponderacion = 2
+        break;
+        case 3:
+          Ponderacion = 1
+        break;
+      }
       this.today = this.data.fch_Creacion;
       this.RequiId = this.data.id;
       this.Confidencial = this.data.confidencial;
       this.formAsignaciones.patchValue({
         fch_Cumplimiento: this.data.fch_Cumplimiento,
         diasEnvio: this.data.diasEnvio,
+        Ponderacion: Ponderacion
       });
       if (this.data['oficio'] != null) {
         this.redesSociales = true;
