@@ -19,6 +19,7 @@ export class AddExamenComponent implements OnInit {
   pa;
   nomExamen = "";
   respInc = "";
+  msg: string = "";
   constructor(private service: ExamenesService, private toasterService: ToasterService) { }
 
   ngOnInit() {
@@ -72,20 +73,34 @@ export class AddExamenComponent implements OnInit {
 
   AgregarPregunta()
   {
-    if(this.respuestas.length > 0)
+    if(this.respuestas.length > 3)
     {
       this.examen.push({Pregunta: this.preguntas, Tipo: 2, Respuestas: this.respuestas, TipoExamen: {Id: this.tipoexamenId, Nombre: this.nomExamen}})
+
+      this.preguntas = "";
+      this.respuestas = [];
+      this.resp1 = "";
+      this.pa = 0;
+      this.respInc = "";
+      this.msg = "";
+    }
+    else if(this.respuestas.length == 0)
+    {
+      this.examen.push({Pregunta: this.preguntas, Tipo: 1, Respuestas: this.respuestas, TipoExamen: {Id: this.tipoexamenId, Nombre: this.nomExamen}})
+
+      this.preguntas = "";
+      this.respuestas = [];
+      this.resp1 = "";
+      this.pa = 0;
+      this.respInc = "";
+      this.msg = "";
     }
     else
     {
-      this.examen.push({Pregunta: this.preguntas, Tipo: 1, Respuestas: this.respuestas, TipoExamen: {Id: this.tipoexamenId, Nombre: this.nomExamen}})
+      this.msg = "Debe agregar mas de una opción de respuesta para la pregunta";
     }
 
-    this.preguntas = "";
-    this.respuestas = [];
-    this.resp1 = "";
-    this.pa = 0;
-    this.respInc = "";
+   
   }
 
   UpdateResp(row)

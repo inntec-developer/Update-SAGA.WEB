@@ -76,7 +76,7 @@
               <div class="input-group">
                 <input type="text" class="form-control form-control-sm" [(ngModel)]="respInc" name="respInc" (keydown.enter)="AgregarRespuesta(respInc, 0)">
                 <div class="input-group-append">
-                  <button [disabled]="!respInc" class="btn btn-xs btn-outline-success" type="button" (click)="AgregarRespuesta(respInc, 0)">
+                  <button [disabled]="!respInc" [ngClass]="!respInc ? 'btn btn-xs disabled' : 'btn btn-xs btn-outline-success'" type="button" (click)="AgregarRespuesta(respInc, 0)">
                     <em class="fa fa-plus"></em>
                   </button>
                 </div>
@@ -86,8 +86,9 @@
               <ul class="list-group">
                   <li *ngFor="let item of respuestas" class="list-group-item" [ngClass]="item.value == 1 ? 'text-success' : 'text-warning'">{{item.resp}}</li>
               </ul>
+              <small class="text-danger">{{msg}}</small>
    <br/>
-              <button [disabled]="!resp1 && !pa" type="button" class="btn btn-xs btn-outline-success float-right" (click)="AgregarPregunta()" container="body" placement="bottom" tooltip="Agregar pregunta">
+              <button [disabled]="!resp1 && !pa" type="button" [ngClass]="!resp1 && !pa ? 'btn btn-xs float-right disabled' : 'btn btn-xs btn-outline-success float-right'" (click)="AgregarPregunta()" container="body" placement="bottom" tooltip="Agregar pregunta">
                   <em class="fa fa-check"></em>
               </button>
       
@@ -102,10 +103,10 @@
       <div class="card elev">
           <div class="card-body">
               <h5 class="card-title text-info"><em class="fa fa-pencil"></em> EDITAR EX&Aacute;MEN <span *ngIf="nom">- Examen de {{nom}} / {{nomExamen}}</span>
-                <button [disabled]="examen.length == 0 || nomExamen.length == 0 || tipoexamenId=='0'" type="button" (click)="AgregarExamen()" class="btn btn-xs btn-outline-success float-right" container="body" placement="bottom" tooltip="Agregar Ex&aacute;men">
+                <button [disabled]="examen.length == 0 || nomExamen.length == 0 || tipoexamenId=='0'" type="button" (click)="AgregarExamen()" [ngClass]="examen.length == 0 || nomExamen.length == 0 || tipoexamenId=='0' ? 'btn btn-xs disabled float-right ml-1' : 'btn btn-xs btn-outline-success float-right ml-1'" container="body" placement="bottom" tooltip="Agregar Ex&aacute;men">
                     <em class="fa fa-file-text-o"></em>
                 </button>
-                <button [disabled]="examen.length == 0" type="button" (click)="Borrar()" class="btn btn-xs btn-outline-danger float-right margen" container="body" placement="bottom" tooltip="Borrar preguntas">
+                <button [disabled]="examen.length == 0" type="button" (click)="Borrar()" [ngClass]="examen.length == 0 ? 'btn btn-xs disabled float-right' :'btn btn-xs btn-outline-danger float-right'" container="body" placement="bottom" tooltip="Borrar preguntas">
                     <em class="fa fa-trash"></em>
                 </button>
               </h5>
