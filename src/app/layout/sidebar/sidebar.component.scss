@@ -22,7 +22,24 @@ width: 45px;
 
 z-index: 9999;
 }
-.minus
-{
 
-}
+// .sidebar
+// {
+//     position: fixed;
+//     width: 60px;
+//     top:0;
+//     height: 100vh;
+//     z-index: 100;
+//     background-color: #202020;
+//     overflow:hidden;
+//     transition:width .3s ease;
+//     cursor:pointer;
+//     box-shadow:4px 7px 10px rgba(0,0,0,.4);
+//     &:hover {
+//       width:200px;
+//     }
+//     @media screen and (min-width: 600px) {
+//       width: 80px;
+//     }
+
+// }

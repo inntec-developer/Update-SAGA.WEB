@@ -78,6 +78,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   procesoCandidato: boolean = false;
   candidatosNR: any = [];
   requisPausa: any = [];
+  totalPos: any = 0;
 
 
   constructor(
@@ -119,7 +120,11 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   getVacantes() {
     this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
-      this.rows = this.dataSource;
+      this.dataSource.forEach(r => {
+        this.totalPos += r.vacantes;
+      })
+
+      this.onChangeTable(this.config);
     });
   }
 

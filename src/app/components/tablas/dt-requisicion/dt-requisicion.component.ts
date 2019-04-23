@@ -76,6 +76,7 @@ export class DtRequisicionComponent implements OnInit {
   comentario: string;
 
   reporte70 = false;
+  totalPos: number = 0;
   constructor(
     private service: RequisicionesService,
     private postulacionservice: PostulateService,
@@ -105,9 +106,12 @@ export class DtRequisicionComponent implements OnInit {
   getRequisiciones() {
     this.service.getRequisiciones(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
-      this.rows = this.dataSource;
-      this.spinner.hide();
-      // this.onChangeTable(this.config);
+  
+      this.dataSource.forEach(r => {
+        this.totalPos += r.vacantes;
+      })
+
+     this.onChangeTable(this.config);
     }, error => this.errorMessage = <any>error);
   }
 
