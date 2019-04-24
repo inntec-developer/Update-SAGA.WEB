@@ -109,12 +109,18 @@ export class DtVacantesReclutadorComponent implements OnInit {
   getVacantes() {
     this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
+      this.GetCandidatosNR();
+
+      this.totalPos = 0;
+      this.dataSource.forEach(r => {
+        if(r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37))
+        {
+          this.totalPos += r.vacantes;
+        }
+      })
       this.onChangeTable(this.config);
       this.spinner.hide();
-      this.GetCandidatosNR();
-      this.dataSource.forEach(r => {
-        this.totalPos += r.vacantes;
-      });
+
     });
   }
 
