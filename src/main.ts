@@ -11,4 +11,4 @@ if (environment.production) {
 
 let p = platformBrowserDynamic().bootstrapModule(AppModule);
 p.then(() => { (<any>window).appBootstrap && (<any>window).appBootstrap(); })
-// .catch(err => console.error(err));
+.catch(err => console.error(err));
