@@ -11,7 +11,7 @@
   <div class="card-body mat-elevation-z8">
     <div class="row p-2 bg-light clearfix">
       <div class="col-sm-12 col-md-12">
-        <button id="view" (click)="openDialogShowRequi(element.id, element.folio)" placement="bottom" tooltip="Ver Requisición"
+        <button id="view" (click)="lgModal15.show()" placement="bottom" tooltip="Ver Requisición"
           class="mr-1" [disabled]="!element" [ngClass]="(!element) ? 'btn btn-xs disabled':'btn btn-xs btn-outline-warning'">
           <em class="fa fa-eye"></em></button>
         <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-xs btn-acciones" [disabled]="!element"
@@ -311,6 +311,25 @@
       </div>
       <div class="modal-body">
         <app-candidatos-en-proceso [RequisicionId]="id"></app-candidatos-en-proceso>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #lgModal15="bs-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Informaci&oacute;n de la Vacante</h4>
+        <button  type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal15.hide()" aria-label="Close">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-info-vacante [Folios]="folio" [Requisicion]="id"></app-info-vacante>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-xs btn-outline-danger" (click)="lgModal15.hide()">Cerrar</button>
       </div>
     </div>
   </div>

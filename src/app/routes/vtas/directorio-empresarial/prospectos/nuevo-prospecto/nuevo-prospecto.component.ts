@@ -114,8 +114,8 @@ export class NuevoProspectoComponent implements OnInit {
   ) {
     // #region FORMULARIO DE DATOS GENERALES
     this.formGeneral = new FormGroup({
-      Empresa: new FormControl('', [Validators.required]),
-      ValidarEmpresa: new FormControl('', [Validators.required]),
+      Empresa: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      ValidarEmpresa: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       Giros: new FormControl('', Validators.required),
       Actividades: new FormControl('', Validators.required),
       NoEmpleados: new FormControl('', Validators.required),
@@ -132,10 +132,10 @@ export class NuevoProspectoComponent implements OnInit {
       Estados: new FormControl('', Validators.required),
       Municipios: new FormControl('', Validators.required),
       Colonias: new FormControl('', Validators.required),
-      Calle: new FormControl('', Validators.required),
-      Exterior: new FormControl('', Validators.required),
-      Interior: new FormControl(''),
-      Referencia: new FormControl(''),
+      Calle: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      Exterior: new FormControl('', [Validators.required, Validators.maxLength(10)]),
+      Interior: new FormControl('' , Validators.maxLength(30)),
+      Referencia: new FormControl('', Validators.maxLength(500)),
       Principal: new FormControl(false),
       Activo: new FormControl(true)
     });
@@ -186,8 +186,8 @@ export class NuevoProspectoComponent implements OnInit {
 
     // #region INICIALIZACION DE FORMULARIOS
     this.formGeneral = this.fb.group({
-      Empresa: ['', [Validators.required]],
-      ValidarEmpresa: ['', [Validators.required]],
+      Empresa: ['', [Validators.required, Validators.maxLength(100)]],
+      ValidarEmpresa: ['', [Validators.required, Validators.maxLength(100)]],
       Giros: ['', Validators.required],
       Actividades: ['', Validators.required],
       NoEmpleados: ['', Validators.required],
@@ -203,10 +203,10 @@ export class NuevoProspectoComponent implements OnInit {
       Estados: ['', [Validators.required]],
       Municipios: ['', [Validators.required]],
       Colonias: ['', [Validators.required]],
-      Calle: ['', [Validators.required]],
-      Exterior: ['', [Validators.required]],
-      Interior: [''],
-      Referencia: [''],
+      Calle: ['', [Validators.required, Validators.maxLength(100)]],
+      Exterior: ['', [Validators.required, Validators.maxLength(10)]],
+      Interior: ['', Validators.maxLength(30)],
+      Referencia: ['', Validators.maxLength(500)],
       Principal: [false],
       Activo: [true]
     });

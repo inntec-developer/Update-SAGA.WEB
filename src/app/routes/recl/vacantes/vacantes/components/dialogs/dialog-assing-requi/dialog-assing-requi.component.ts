@@ -98,20 +98,24 @@ export class DialogAssingRequiComponent implements OnInit {
   }
 
   getInformacion() {
-    debugger;
     if (this.data != null) {
       var Ponderacion = 0;
-      switch(this.data['claseReclutamientoId']){
-        case 1:
-          Ponderacion = 3
-        break;
-        case 2:
-          Ponderacion = 2
-        break;
-        case 3:
-          Ponderacion = 1
-        break;
+      if (this.data['ponderacion'] == null) {
+        switch (this.data['claseReclutamientoId']) {
+          case 1:
+            Ponderacion = 3
+            break;
+          case 2:
+            Ponderacion = 2
+            break;
+          case 3:
+            Ponderacion = 1
+            break;
+        }
+      }else{
+        Ponderacion = this.data['ponderacion']['ponderacion'];
       }
+
       this.today = this.data.fch_Creacion;
       this.RequiId = this.data.id;
       this.Confidencial = this.data.confidencial;
@@ -163,13 +167,21 @@ export class DialogAssingRequiComponent implements OnInit {
         });
       }
 
+
+      var Ponderacion ={
+        id: this.data['ponderacion'] ? this.data['ponderacion']['id'] : '',
+        ponderacion: this.formAsignaciones.get('Ponderacion').value,
+        requisicionId: this.RequiId
+      }
+
       var assing = {
-        id: this.data.id,
+        id: this.RequiId,
         fch_Cumplimiento: this.formAsignaciones.get('fch_Cumplimiento').value,
         diasEnvio: this.formAsignaciones.get('diasEnvio').value,
         usuario: sessionStorage.getItem('usuario'),
         aprobadorId: sessionStorage.getItem('id'),
-        asignacionRequi: asg
+        asignacionRequi: asg,
+        ponderacion: Ponderacion
       }
       this.asignarRequi = assing;
       this.serviceRequisicion.asignarRequisicion(this.asignarRequi)
@@ -201,7 +213,7 @@ export class DialogAssingRequiComponent implements OnInit {
             }
           }
           else {
-            this.dialogAssing.close(false)
+            swal('Aprobaciónn / Asignación Requisición', 'Algo Salio mal intentear actualizar la información.', 'error');
             this.loading = false;
           }
         });

@@ -28,22 +28,24 @@
             <p><span>Clasificaci&oacute;n </span></p>
           </div>
           <mat-form-field>
-            <input matInput formControlName="Empresa" name="empresa" placeholder="Empresa" autofocus />
+            <input #empresa matInput formControlName="Empresa" name="empresa" placeholder="Empresa" autofocus maxlength="100" focus required />
+            <mat-hint align="end">{{empresa.value.length}} / 100</mat-hint>
           </mat-form-field>
 
           <body oncopy="return false" onpaste="return false">
             <mat-form-field>
-              <input matInput formControlName="ValidarEmpresa" name="validarEmpresa" placeholder="Validar Empresa" />
+              <input #validarEmpresa matInput formControlName="ValidarEmpresa" name="validarEmpresa" placeholder="Validar Empresa"  maxlength="100" required />
               <mat-hint align="start">
                 <strong *ngIf="formGeneral.controls.ValidarEmpresa.errors?.MachCompany" class="text-danger">Los datos
                   ingresados no coinciden, favor de verificar la informaci&oacute;n</strong>
               </mat-hint>
+              <mat-hint align="end">{{validarEmpresa.value.length}} / 100</mat-hint>
             </mat-form-field>
           </body>
           <div class="row">
             <div class="col-md-2 col-lg-2 col-sm-12">
               <mat-form-field>
-                <mat-select placeholder="Giros" formControlName="Giros" (selectionChange)="getActividades()">
+                <mat-select placeholder="Giros" formControlName="Giros" (selectionChange)="getActividades()" required>
                   <mat-option *ngFor="let x of giros" [value]="x.id">
                     {{x.giroEmpresa}}
                   </mat-option>
@@ -52,7 +54,7 @@
             </div>
             <div class="col-md-2 col-lg-2 col-sm-12">
               <mat-form-field>
-                <mat-select placeholder="Actividades" formControlName="Actividades">
+                <mat-select placeholder="Actividades" formControlName="Actividades" required>
                   <mat-option *ngFor="let x of actividades" [value]="x.id">
                     {{x.actividadEmpresa}}
                   </mat-option>
@@ -62,12 +64,12 @@
             <div class="col-md-2 col-lg-2 col-sm-12">
               <mat-form-field>
                 <input matInput type="number" formControlName="NoEmpleados" name="NoEmpleados" placeholder="# Empleados" (blur)="changeEmpleados()"
-                  focus />
+                  required maxlength="10" />
               </mat-form-field>
             </div>
             <div class="col-md-2 col-lg-2 col-sm-12">
               <mat-form-field>
-                <mat-select placeholder="Tamaño" formControlName="Tamanio"  (selectionChange)="validarNoEmpleado()">
+                <mat-select placeholder="Tamaño" formControlName="Tamanio"  (selectionChange)="validarNoEmpleado()" required>
                   <mat-option *ngFor="let x of tamanioEmpresa" [value]="x.id">
                     {{x.tamanoEmpresa}}
                   </mat-option>
@@ -76,7 +78,7 @@
             </div>
             <div class="col-md-2 col-lg-2 col-sm-12">
               <mat-form-field>
-                <mat-select placeholder="Tipo" formControlName="Tipo">
+                <mat-select placeholder="Tipo" formControlName="Tipo" required>
                   <mat-option *ngFor="let x of tipo" [value]="x.id">
                     {{x.tipoEmpresa}}
                   </mat-option>
@@ -85,7 +87,7 @@
             </div>
             <div class="col-md-2 col-lg-2 col-sm-12">
               <mat-form-field>
-                <mat-select placeholder="Tipo Base" formControlName="TipoBase">
+                <mat-select placeholder="Tipo Base" formControlName="TipoBase" required>
                   <mat-option *ngFor="let x of tipoBase" [value]="x.id">
                     {{x.tipoBase}}
                   </mat-option>
@@ -109,8 +111,8 @@
             <div class="row">
               <div class="col-md-2 col-lg-2 col-sm-12">
                 <mat-form-field>
-                  <mat-select placeholder="Tipo Dirección" formControlName="TipoDireccion">
-                    <mat-option *ngFor="let x of tipoDireccion" [value]="x.id">
+                  <mat-select placeholder="Tipo Dirección" formControlName="TipoDireccion" required>
+                    <mat-option *ngFor="let x of tipoDireccion" [value]="x.id" >
                       {{x.tipoDireccion}}
                     </mat-option>
                   </mat-select>
@@ -119,13 +121,13 @@
               <div class="col-md-2 col-lg-2 col-sm-12">
                 <mat-form-field>
                   <input matInput formControlName="CodigoPostal" name="CodigoPostal" maxlength="5" #postalCode
-                    placeholder="Código Postal" (keyup)="showForCP($event)" />
+                    placeholder="Código Postal" (keyup)="showForCP($event)"  required/>
                   <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-md-2">
                 <mat-form-field>
-                  <mat-select placeholder="Paises" formControlName="Paises" (selectionChange)="getEstados()">
+                  <mat-select placeholder="Paises" formControlName="Paises" (selectionChange)="getEstados()" required>
                     <mat-option *ngFor="let x of paises" [value]="x.id" (onSelectionChange)="auxPais = x.pais">
                       {{x.pais}}
                     </mat-option>
@@ -134,7 +136,7 @@
               </div>
               <div class="col-md-2">
                 <mat-form-field>
-                  <mat-select placeholder="Estados" formControlName="Estados" (selectionChange)="getMunicipio()">
+                  <mat-select placeholder="Estados" formControlName="Estados" (selectionChange)="getMunicipio()" required>
                     <mat-option *ngFor="let x of estados" [value]="x.id" (onSelectionChange)="auxEstado = x.estado">
                       {{x.estado}}
                     </mat-option>
@@ -143,7 +145,7 @@
               </div>
               <div class="col-md-2">
                 <mat-form-field>
-                  <mat-select placeholder="Municipios" formControlName="Municipios" (selectionChange)="getColonias()">
+                  <mat-select placeholder="Municipios" formControlName="Municipios" (selectionChange)="getColonias()" required>
                     <mat-option *ngFor="let x of municipios" [value]="x.id"
                       (onSelectionChange)="auxMunicipio = x.municipio">
                       {{x.municipio}}
@@ -153,7 +155,7 @@
               </div>
               <div class="col-md-2">
                 <mat-form-field>
-                  <mat-select placeholder="Colonias" formControlName="Colonias">
+                  <mat-select placeholder="Colonias" formControlName="Colonias" required>
                     <mat-option *ngFor="let x of colonias" [value]="x.id"
                       (onSelectionChange)="auxColonia = x.colonia ; getCodigoPostal(x.cp)">
                       {{x.colonia}}
@@ -165,17 +167,20 @@
             <div class="row">
               <div class="col-md-2">
                 <mat-form-field>
-                  <input matInput formControlName="Calle" name="Calle" placeholder="Calle" />
+                  <input #calle matInput formControlName="Calle" name="Calle" placeholder="Calle" maxlength="100" required />
+                  <mat-hint align="end">{{calle.value.length}} / 100</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-md-2">
                 <mat-form-field>
-                  <input matInput formControlName="Exterior" name="Exterior" placeholder="No. Exterior" />
+                  <input #exterior matInput formControlName="Exterior" name="Exterior" placeholder="No. Exterior" maxlength="10" required />
+                  <mat-hint align="end">{{exterior.value.length}} / 10</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-md-2">
                 <mat-form-field>
-                  <input matInput formControlName="Interior" name="Interior" placeholder="No. Interior" />
+                  <input #interior matInput formControlName="Interior" name="Interior" placeholder="No. Interior" maxlength="30" />
+                  <mat-hint align="end">{{interior.value.length}} / 30</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-md-2">
