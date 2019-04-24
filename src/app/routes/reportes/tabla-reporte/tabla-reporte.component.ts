@@ -62,14 +62,17 @@ export class TablaReporteComponent implements OnInit {
    
   }
 
-  Generar(oficina,solicitante,reclutador,empresa,estatus){
+  Generar(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor){
     this.spinner.show();
-    
+    document.getElementById('DivReportefil').classList.remove('ocultar');
+  document.getElementById('Divprincipal').classList.add('ocultar');
   var ofc = '';
   var sol = '';
   var rec = '';
   var emp = '';
   var est = '';
+  let trcu = '';
+  let coo = '';
 
   if(oficina != undefined){
     for (let item of oficina) {
@@ -106,27 +109,39 @@ export class TablaReporteComponent implements OnInit {
     }
   }
 
+  if(tiporeclu != undefined){
+    for (let item of tiporeclu) {
+      trcu += item +',';
+    
+    }
+  }
+
+  if(tipocor != undefined){
+    for (let item of tipocor) {
+      coo += item +',';
+    
+    }
+  }
+
 ofc = oficina == undefined?'0':ofc;
 sol = solicitante == undefined?'0':sol;
 rec = reclutador == undefined?'0':rec;
 emp = empresa == undefined?'0':emp;
 est = estatus == undefined?'0':est;
+trcu = trcu == undefined?'0':trcu;
+coo = coo == undefined?'0':coo;
 
 
     let pal = document.getElementById('palabra');
-    let trcu = document.getElementById('tiporeclutaR');
-    let coo = document.getElementById('condinacionR');
     let inc = document.getElementById('fechaInicial');
     let fin = document.getElementById('fechaFinal');
 
     var palabra = pal['value'];
-    var tiporecluta = trcu['value'];
-    var tipocordina = coo['value'];
     var inicio = inc['value'];
     var final = fin['value'];
     let tipo = document.getElementById('TipoReporte')['value'];
     
-    this.Servicio.GetInforme(palabra,ofc,tipo,inicio,final,emp,sol,tiporecluta,tipocordina,est,rec)
+    this.Servicio.GetInforme(palabra,ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec)
     .subscribe( data => {
     // this.popGenerico(data.mensaje,data.bandera,'Publicacion');
     this.requisiciones = data;
@@ -191,10 +206,13 @@ public columns: Array<any> = [
   { title: 'Estado', className: 'text-info text-center', name: 'estado', filtering: { filterString: '', placeholder: 'Estado' } },
   { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadorTotal', filtering: { filterString: '', placeholder: 'No. Reclutador' } },
   { title: 'No.', className: 'text-info text-center', name: 'numero' , filtering: { filterString: '', placeholder: 'No. vacante' } },
+  { title: 'Cubierta', className: 'text-info text-center', name: 'cubierta' , filtering: { filterString: '', placeholder: 'Cubiertas..' } },
   { title: 'Cumplimiento', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'Cumplimiento..' } },
-  { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
+ 
   { title: 'Solicita', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Solicita' } },
- { title: 'Fecha Estatus', className: 'text-info text-center', name: 'fch_Modificacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+  { title: 'Coordinador', className: 'text-info text-center', name: 'cordinador2', filtering: { filterString: '', placeholder: 'Coordinador' } },
+  { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
+  { title: 'Fecha Estatus', className: 'text-info text-center', name: 'fch_Modificacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
  
   { title: 'Coordinación', className: 'text-info text-center', name: 'clasesReclutamiento', filtering: { filterString: '', placeholder: 'Coordinacion' } }
 ];
@@ -352,8 +370,8 @@ public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: t
 }
 //#endregion
 
-public refreshTable(oficina,solicitante,reclutador,empresa,estatus) {
-  this.Generar(oficina,solicitante,reclutador,empresa,estatus);
+public refreshTable(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor) {
+  this.Generar(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor);
 }
 
 public clearfilters() {

@@ -66,8 +66,9 @@
       <div class="form-group">
         <label for="TipoReporte">Reporte</label>
         <select  (change)="Ocultar()" class="form-control" id="TipoReporte">
-            <option value="1">Fecha de Solicitud</option>
-            <option value="2">Fecha de Estatus</option>
+            <option value="1">Por Solicitud</option>
+            <option value="2">Por Estatus</option>
+            <option value="3">General</option>
             <!-- <option value="3">Movimientos Vacantes </option>
             <option value="5">Fecha Estatus Grupal</option>
             <option value="6">Reporte General </option> -->
@@ -131,28 +132,65 @@
  
 
   <div class="col-xl-2">
+
       <div class="form-group">
-        <label for="tiporeclutaR">Reclutamiento</label>
-        <select class="form-control input-sm" id="tiporeclutaR">
-          <option value="0">Todos</option>
-          <option value="1">Reclutamiento Puro</option>
-          <option value="2">Subcontratación</option>
-          <option value="2">Staff</option>
-        </select>
-      </div>
+          <label >Reclutamiento</label>
+              <form  [formGroup]="FormTipoReclu">
+                  <ngx-select
+                  [allowClear]="true"
+                  autoClearSearch="true"
+                 placeholder="Reclutamiento..."
+                 formControlName = "TiporecluControl"
+                 (data)="(value)"
+                 [multiple]="true"
+                 [items]="reclutaList"
+                 size="small"
+                 optionValueField="id"
+                 optionTextField="nombre"
+                 (remove)="cordinaChange($event)"
+                 (select)="cordinaChange($event)"
+               >
+                 <ng-template  ngx-select-option-selected let-option >
+                   <span >{{ option.data.nombre }}</span>
+                 </ng-template>
+                 <ng-template ngx-select-option-not-found>
+                    <span style="font-size: 11px">No se encontraron resultados...</span>
+                  </ng-template>
+               </ngx-select>
+               </form>
+        </div>
+
+    
   </div>
 
       <div class="col-xl-2" id="divcordinacion">
           
-            <div class="form-group">
-              <label for="condinacionR">Coordinación</label>
-              <select class="form-control input-sm" id="condinacionR">
-                <option value="0">Todas</option>
-                <option value="1">Especializado</option>
-                <option value="2">Operativo</option>
-                <option value="3">Masivo</option>
-              </select>
-            </div>
+        <div class="form-group">
+          <label for="sel2">Coordinación</label>
+              <form  [formGroup]="FormCordina">
+                  <ngx-select
+                  [allowClear]="true"
+                  autoClearSearch="true"
+                 placeholder="Coordinación..."
+                 formControlName = "CordinaControl"
+                 (data)="(value)"
+                 [multiple]="true"
+                 [items]="cordinaList"
+                 size="small"
+                 optionValueField="id"
+                 optionTextField="nombre"
+                 (remove)="cordinaChange($event)"
+                 (select)="cordinaChange($event)"
+               >
+                 <ng-template  ngx-select-option-selected let-option >
+                   <span >{{ option.data.nombre }}</span>
+                 </ng-template>
+                 <ng-template ngx-select-option-not-found>
+                    <span style="font-size: 11px">No se encontraron resultados...</span>
+                  </ng-template>
+               </ngx-select>
+               </form>
+        </div>
          
         </div>
 
@@ -321,12 +359,18 @@
       </div>
   
       <div class="col-xl-2 " style="top: -13px;">
-          <button tooltip="Exportar" (click)="hijo.Exportar()" class="btn btn-sm btn-outline-warning btnReport">
-    
+          <button id="exel1" tooltip="Exportar" (click)="hijo.Exportar()" class="btn btn-sm btn-outline-warning btnReport">
               <em _ngcontent-c34="" class="fa fa-download"></em>
             </button>
-          <button tooltip="Generar Reporte" (click)="hijo.Generar(objsucursal,objsolicit,objrecluta,objempresa,objstatus)" class="btn btn-sm btn-outline-success btnReport">
-          
+            <button id="exel2" tooltip="Exportar" (click)="ReGeneral.exportAsXLSX()" class="ocultar btn btn-sm btn-outline-warning btnReport">
+                <em _ngcontent-c34="" class="fa fa-download"></em>
+              </button>
+            
+
+          <button class="btn btn-sm btn-outline-success btnReport" (click)="hijo.Generar(objsucursal,objsolicit,objrecluta,objempresa,objstatus,objtiporeclu,objtipocordi)" tooltip="Generar Reporte" id="report1"  >
+              <em _ngcontent-c34="" class="fa fa-bar-chart"></em>
+            </button>
+          <button class="ocultar btn btn-sm btn-outline-success btnReport" (click)="ReGeneral.llamado(objsucursal,objsolicit,objrecluta,objempresa,objstatus,objtiporeclu,objtipocordi)" tooltip="Generar Reporte" id="report2"  >
               <em _ngcontent-c34="" class="fa fa-bar-chart"></em>
             </button>
         </div>
@@ -338,5 +382,7 @@
   
 
 <div>
-  <app-tabla-reporte #hijo [data]="true"></app-tabla-reporte>
+  <app-tabla-reporte class="ocultar" id="DivReportefil" #hijo [data]="true"></app-tabla-reporte>
+
+  <app-reporte70 class="ocultar" id="Divprincipal" #ReGeneral ></app-reporte70>
 </div>

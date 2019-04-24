@@ -42,6 +42,8 @@ export class InformeComponent implements OnInit {
   public objsolicit : any[];
   public objrecluta : any[];
   public objstatus : any[];
+  public objtipocordi : any[];
+  public objtiporeclu : any[];
 
   private reclutaList:any;
   private cordinaList:any;
@@ -51,6 +53,8 @@ export class InformeComponent implements OnInit {
   public FormSolicitante: FormGroup;
   public FormReclutador: FormGroup;
   public FormEstatus: FormGroup;
+  public FormCordina: FormGroup;
+  public FormTipoReclu: FormGroup;
 
    public myDate: any = new Date();
   // public dia: any = this.myDate.getDate;
@@ -92,6 +96,13 @@ export class InformeComponent implements OnInit {
     this.FormEstatus = new FormGroup({
       EstatusControl: new FormControl({ value: '', disabled: false })
     });
+    this.FormCordina = new FormGroup({
+      CordinaControl: new FormControl({ value: '', disabled: false })
+    });
+    this.FormTipoReclu = new FormGroup({
+      TiporecluControl: new FormControl({ value: '', disabled: false })
+    });
+
 
    }
 
@@ -102,6 +113,9 @@ export class InformeComponent implements OnInit {
     this.adapter.setLocale('es');
     this.cordinaList = [{id:0,nombre:'Todos'},
       {id:1,nombre:'Especializado'},{id:2,nombre:'Operativo'},{id:3,nombre:'Masivo'}]
+
+      this.reclutaList = [{id:0,nombre:'Todos'},
+      {id:1,nombre:'Reclutamiento Puro'},{id:2,nombre:'Subcontratación'},{id:3,nombre:'Staff'}]
 
     this.Servicio.GetEmpresas().subscribe(item =>{
       this.Empresas = item;
@@ -156,11 +170,31 @@ export class InformeComponent implements OnInit {
 
   estatusChange(){
     this.objstatus = this.FormEstatus.get('EstatusControl').value;
-    
+  }
+
+  cordinaChange(){
+    this.objtipocordi = this.FormEstatus.get('CordinaControl').value;
+  }
+
+  tiporeclutaChange(){
+    this.objtiporeclu = this.FormEstatus.get('TiporecluControl').value;
   }
 
  Ocultar(){
+  document.getElementById('DivReportefil').classList.add('ocultar');
+  document.getElementById('Divprincipal').classList.add('ocultar');
   let tipo = document.getElementById('TipoReporte')['value'];
+  if(tipo == 3){
+    document.getElementById('report1').classList.add('ocultar');
+    document.getElementById('report2').classList.remove('ocultar');
+    document.getElementById('exel1').classList.add('ocultar');
+    document.getElementById('exel2').classList.remove('ocultar');
+  }else{
+    document.getElementById('report2').classList.add('ocultar');
+    document.getElementById('report1').classList.remove('ocultar');
+    document.getElementById('exel2').classList.add('ocultar');
+    document.getElementById('exel1').classList.remove('ocultar');
+  }
   if(tipo > 4){
     document.getElementById('divreclutador').classList.add('ocultar');
     document.getElementById('divestatus').classList.add('ocultar');

@@ -51,7 +51,7 @@
 
        <div>
          
-<div class="card" *ngIf="General?.length > 0" style="margin-top:80px">
+<div class="card"  *ngIf="General?.length > 0" style="margin-top:80px">
     <div class="card-body mat-elevation-z8">
   
       <ng-scrollbar #scrollableP [trackX]="true" [trackY]="true" [invertX]="invertX" [invertY]="invertY" [compact]="compact" [shown]="shown"
@@ -86,11 +86,27 @@
                       <td class="text-center">{{item.empresa}}</td>
                       <td class="text-center">{{item.vBtra}}</td>
                       <td class="text-center">{{item.estado}}</td>
-                      <td class="text-center"  > <p tooltip="{{item.nombreReclutado}}">{{item.reclutadorTotal}}</p> </td>
+                      <td class="text-center"  >
+                          <ng-template #popTemplate>
+                              <div class="card">
+                                <div class="card-body">
+                                  <ul class="list-group list-group-flush">
+                                    <li *ngFor="let r of item.nombreReclutado.split(',')" class="list-group-item text-muted">{{r}}</li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </ng-template>
+                          <small class="text-center badge badge-pill " *ngIf="item.reclutadorTotal > 1" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{item.reclutadorTotal}}</small>
+                          <span class="text-left" *ngIf="item.reclutadorTotal == 1">{{item.nombreReclutado}}</span>
+                          <span class="text-left" *ngIf="item.reclutadorTotal == 'SIN ASIGNAR'">{{item.reclutadorTotal}}</span>
+                         <!-- <p tooltip="{{item.nombreReclutado}}">{{item.reclutadorTotal}}</p> -->
+                         </td>
                       <td class="text-center">{{item.numero}}</td>
+                      <td class="text-center">{{item.cubierta}}</td>
                       <td class="text-center">{{item.porcentaje}}%</td>
+                      <td class="text-center"  ><p >{{item.nombreApellido}}</p> </td>
+                      <td class="text-center">{{item.cordinador2}}</td>
                       <td class="text-center">{{item.estatus}}</td>
-                      <td class="text-center"  ><p tooltip="{{item.nombreApellido}}">{{item.propietario}}</p> </td>
                       <td class="text-center">{{this.convertDateTime(item.fch_Modificacion)}}</td>
                       <td class="text-center">{{item.clasesReclutamiento}}</td>
                   </tr>
