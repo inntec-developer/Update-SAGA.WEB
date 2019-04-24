@@ -105,7 +105,11 @@
                       <td class="text-center">{{item.cubierta}}</td>
                       <td class="text-center">{{item.porcentaje}}%</td>
                       <td class="text-center"  ><p >{{item.nombreApellido}}</p> </td>
-                      <td class="text-center">{{item.cordinador2}}</td>
+                      <td class="text-center">
+                          <p *ngIf="item.cordinador2 != ''">{{item.cordinador2}}</p>
+                          <p *ngIf="item.cordinador2 == ''">SIN ASIGNAR</p>
+                        
+                      </td>
                       <td class="text-center">{{item.estatus}}</td>
                       <td class="text-center">{{this.convertDateTime(item.fch_Modificacion)}}</td>
                       <td class="text-center">{{item.clasesReclutamiento}}</td>
