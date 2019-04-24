@@ -117,6 +117,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   getVacantes() {
     this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
+      this.onChangeTable(this.config);
     });
   }
 
@@ -273,7 +274,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
     return filteredData;
   }
 
-  
+
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
     if (config.filtering) {
       (<any>Object).assign(this.config.filtering, config.filtering);
@@ -305,7 +306,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
         element.filtering.filterString = '';
         (<HTMLInputElement>document.getElementById(element.name)).value = '';
       });
-      this.onChangeTable(this.config);
+
       this._reinciar();
     }, 800);
   }
@@ -678,18 +679,19 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   /*
    * Funciones para la administracion de las requisiciones.
    * */
-  openDialogShowRequi() {
-    let dialogShow = this.dialog.open(DialogShowRequiComponent, {
-      width: '200%',
-      height: '100%',
-      data: this.requi
-    });
-    dialogShow.afterClosed().subscribe(result => {
-      if (result) {
-        this.refreshTable();
-      }
-    });
-  }
+  // openDialogShowRequi() {
+  //   let dialogShow = this.dialog.open(DialogShowRequiComponent, {
+  //     width: '200%',
+  //     height: '100%',
+  //     data: this.requi
+  //   });
+  //   dialogShow.afterClosed().subscribe(result => {
+  //     if (result) {
+  //       this.refreshTable();
+  //     }
+  //   });
+  // }
+
   openDialogAssingRequi() {
     let dialogAssing = this.dialog.open(DialogAssingRequiComponent, {
       data: this.element
