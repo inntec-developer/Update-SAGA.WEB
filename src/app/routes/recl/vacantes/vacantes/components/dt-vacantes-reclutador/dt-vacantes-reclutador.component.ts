@@ -22,7 +22,7 @@ declare var $: any;
   styleUrls: ['./dt-vacantes-reclutador.component.scss'],
   providers: [RequisicionesService, PostulateService, DatePipe, CandidatosService]
 })
-export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
+export class DtVacantesReclutadorComponent implements OnInit {
   //scroll
   disabled = false;
   compact = false;
@@ -99,32 +99,27 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.spinner.show();
     this.getVacantes();
-    this.GetCandidatosNR();
-    this.GetRequisicionesPausa();
-    setTimeout(() => {
-        this.spinner.hide();
-       }, 3000);
-  }
-  ngAfterViewChecked() {
-
-  }
-  ngAfterViewInit() {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
+    // this.GetCandidatosNR();
+    // this.GetRequisicionesPausa();
     // setTimeout(() => {
-    //   this.onChangeTable(this.config);
-    // }, 1500);
-
+    //     this.spinner.hide();
+    //    }, 3000);
   }
 
   getVacantes() {
     this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
+      this.totalPos = 0;
       this.dataSource.forEach(r => {
-        this.totalPos += r.vacantes;
+        if(r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37))
+        {
+          this.totalPos += r.vacantes;
+        }
       })
-
       this.onChangeTable(this.config);
+      this.spinner.hide();
+      this.GetCandidatosNR();
+   
     });
   }
 
@@ -143,7 +138,6 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
 
   GetRequisicionesPausa() {
     this.service.GetRequisicionesEstatus(39, this.usuarioId).subscribe(result => {
-
       this.requisPausa = result;
     });
   }
@@ -757,6 +751,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
     }
 
   }
+ 
   openDesignVacante() {
     if (this.aprobador === sessionStorage.getItem('usuario')) {
       this._Router.navigate(['/reclutamiento/configuracionVacante/', this.id, this.folio, this.vBtra], { skipLocationChange: true });

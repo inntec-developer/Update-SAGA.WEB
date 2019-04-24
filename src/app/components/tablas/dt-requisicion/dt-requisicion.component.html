@@ -95,7 +95,7 @@
     <div class="row">
       <div class="col-sm-12 col-md-12 table-responsive clearfix">
         <div class="mt-3 ">
-          <span class="text-muted font-weight-bold float-right ml-2 mr-3 mb-3 text-uppercase">Total de Posiciones <span class="badge badge-pill badge-success">{{totalPos}}</span></span>
+          <span class="text-muted font-weight-bold float-right ml-2 mr-3 mb-3 text-uppercase">Total de posiciones activas <span class="badge badge-pill badge-success">{{totalPos}}</span></span>
           <span class="text-muted font-weight-bold float-right text-uppercase mb-3 ">Total de Folios <span class="badge badge-pill badge-success">{{dataSource.length}}</span></span>
         </div>
 
@@ -135,7 +135,7 @@
                   <td> {{row.cliente | uppercase}}</td>
                   <td class="text-center"> {{row.vBtra | uppercase}}</td>
                   <td class="text-center">
-                    <span class="px-1 mr-1  badge  badge-pill badge-info"> {{row.contratados}}/{{row.vacantes}}</span>
+                    <span class="mr-1 badge badge-pill badge-info"> {{row.contratados}}/{{row.vacantes}}</span>
                   </td>
                   <td class="text-center"> {{row.tipoReclutamiento | uppercase}}</td>
                   <!-- <td class="text-right"> {{row.sueldoMinimo | currency: $}}</td>
@@ -154,7 +154,7 @@
                       <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
                         [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
                         [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8"
-                        placement="bottom" tooltip="{{row.estatus | uppercase}}"> {{row.estatus | slice:0:8 | uppercase
+                        tooltip="{{row.estatus | uppercase}}" placement="top" container="body"> {{row.estatus | slice:0:8 | uppercase
                         }} ...
                       </small>
                     </ng-template>

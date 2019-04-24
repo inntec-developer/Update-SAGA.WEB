@@ -106,9 +106,13 @@ export class DtRequisicionComponent implements OnInit {
   getRequisiciones() {
     this.service.getRequisiciones(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
-  
+
+      this.totalPos = 0;
       this.dataSource.forEach(r => {
-        this.totalPos += r.vacantes;
+        if(r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37))
+        {
+          this.totalPos += r.vacantes;
+        }
       })
 
      this.onChangeTable(this.config);
@@ -466,6 +470,7 @@ export class DtRequisicionComponent implements OnInit {
     this.view = false;
     this.coment = false;
     this.candidatos = true;
+    this.totalPos = 0;
   }
 
 

@@ -1,10 +1,9 @@
-
-import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { ComentariosService } from './../../service/Comentarios/comentarios.service';
 import { RequisicionesService } from './../../service/requisiciones/requisiciones.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { PostulateService } from '../../service/SeguimientoVacante/postulate.service';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -21,10 +20,13 @@ export class EditarRequiEstatusComponent implements OnInit {
   editing = {};
   comentario: string = "";
   loading = false;
-  constructor(private service: RequisicionesService, private comentarioService: ComentariosService, private postulateService: PostulateService, private toasterService: ToasterService) { }
+  constructor( private spinner: NgxSpinnerService, private service: RequisicionesService, private comentarioService: ComentariosService, private postulateService: PostulateService, private toasterService: ToasterService) { }
 
   ngOnInit() {
-    //this.GetRequisiciones();
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+     }, 2000);
   }
 
   GetRequisiciones() {

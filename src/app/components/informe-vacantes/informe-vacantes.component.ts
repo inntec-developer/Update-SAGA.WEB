@@ -1,5 +1,6 @@
 import { RequisicionesService } from './../../service/requisiciones/requisiciones.service';
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-informe-vacantes',
@@ -42,9 +43,10 @@ export class InformeVacantesComponent implements OnInit {
     { title: 'CUBIERTOS', className: 'text-info text-center', name: 'contratados', filtering: { filterString: '', placeholder: 'CUBIERTOS' } }
   ];
 
-  constructor(private service: RequisicionesService) { }
+  constructor(private service: RequisicionesService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
+    this.spinner.show();
     this.getInfoVacantes();
   }
 
@@ -137,6 +139,9 @@ export class InformeVacantesComponent implements OnInit {
     this.service.GetInformeRequisiciones(sessionStorage.getItem('id')).subscribe(data => {
       this.dataInfoRequi = data;
       this.onChangeTableInfo(this.config);
+      setTimeout(() => {
+        this.spinner.hide();
+       }, 2000);
     });
   }
 
