@@ -76,6 +76,7 @@ export class DtRequisicionComponent implements OnInit {
   comentario: string;
 
   reporte70 = false;
+  totalPos: number = 0;
   constructor(
     private service: RequisicionesService,
     private postulacionservice: PostulateService,
@@ -105,7 +106,12 @@ export class DtRequisicionComponent implements OnInit {
   getRequisiciones() {
     this.service.getRequisiciones(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
-      this.onChangeTable(this.config);
+  
+      this.dataSource.forEach(r => {
+        this.totalPos += r.vacantes;
+      })
+
+     this.onChangeTable(this.config);
     }, error => this.errorMessage = <any>error);
   }
 
@@ -114,7 +120,7 @@ export class DtRequisicionComponent implements OnInit {
     { title: 'Folio', sorting: 'desc', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
     { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
     { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
-    { title: 'No. Vacantes', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' } },
+    { title: 'Cub/Vac', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No.' } },
     { title: 'Tipo Recl.', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo' } },
     // { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
     // { title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
@@ -646,7 +652,7 @@ export class DtRequisicionComponent implements OnInit {
 
         if(row.reclutadores.length == 0)
         {
-          reclutador = row.propietario;
+          reclutador = "SIN ASIGNAR";
         }
         else if(row.reclutadores.length > 1)
         {
@@ -658,8 +664,8 @@ export class DtRequisicionComponent implements OnInit {
         {
           reclutador = row.reclutadores[0].reclutador;
         }
-        var d = this.pipe.transform(new Date(row.fch_Creacion), 'yyyy-MM-dd');
-        var e = this.pipe.transform( new Date(row.fch_Modificacion), 'yyyy-MM-dd');
+        var d = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
+        var e = this.pipe.transform( new Date(row.fch_Modificacion), 'dd/MM/yyyy');
 
         aux.push({
           FOLIO: row.folio.toString(),
@@ -668,10 +674,12 @@ export class DtRequisicionComponent implements OnInit {
           EMPRESA: row.cliente,
           SUCURSAL: row.sucursal,
           NO: row.vacantes,
+          CUBIERTOS: row.contratados,
           PUESTO: row.vBtra,
           SUELDO:  row.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
           ESTATUS: row.estatus,
           'FECHA ESTATUS': e,
+          COORDINADOR: row.coordinador,
           RECLUTADOR: reclutador,
           'COMENTARIOS': comentarios
         })

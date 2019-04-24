@@ -78,6 +78,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   procesoCandidato: boolean = false;
   candidatosNR: any = [];
   requisPausa: any = [];
+  totalPos: any = 0;
 
 
   constructor(
@@ -100,7 +101,9 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
     this.getVacantes();
     this.GetCandidatosNR();
     this.GetRequisicionesPausa();
-
+    setTimeout(() => {
+        this.spinner.hide();
+       }, 3000);
   }
   ngAfterViewChecked() {
 
@@ -108,15 +111,19 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
   ngAfterViewInit() {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
-    setTimeout(() => {
-      this.onChangeTable(this.config);
-    }, 1500);
+    // setTimeout(() => {
+    //   this.onChangeTable(this.config);
+    // }, 1500);
 
   }
 
   getVacantes() {
     this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
+      this.dataSource.forEach(r => {
+        this.totalPos += r.vacantes;
+      })
+
       this.onChangeTable(this.config);
     });
   }
@@ -173,7 +180,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
     { title: 'Solicita', className: 'text-info text-center', name: 'solicita', filtering: { filterString: '', placeholder: 'Solicita' } },
     { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
     { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
-    { title: 'No. Vacantes', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' } },
+    { title: 'Cub/Vac', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No.' } },
     { title: 'Tipo Recl.', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo' } },
     { title: 'Clase Recl.', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Clase' } },
     // { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
@@ -186,6 +193,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
     { title: 'En Proceso', className: 'text-info text-center', name: 'enProceso', filtering: { filterString: '', placeholder: 'Proceso' } },
   ];
 
+  //#region paginador
   public config: any = {
     paging: true,
     //sorting: { columns: this.columns },
@@ -274,6 +282,7 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
     return filteredData;
   }
 
+  //#endregion
 
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
     if (config.filtering) {
@@ -781,6 +790,8 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
     if (this.dataSource.length > 0) {
       var aux = [];
       var comentarios = "";
+      var reclutador = "";
+
       this.dataSource.forEach(row => {
         if (row.comentarioReclutador.length > 0) {
           row.comentarioReclutador.forEach(element => {
@@ -791,9 +802,24 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
         else {
           comentarios = "";
         }
-        var d = this.pipe.transform(new Date(row.fch_Creacion), 'yyyy-MM-dd');
+        var d = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
         // var mocos = (d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString()
-        var e = this.pipe.transform(new Date(row.fch_Modificacion), 'yyyy-MM-dd');
+        var e = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
+
+        if(row.reclutadores.length == 0)
+        {
+          reclutador = "SIN ASIGNAR";
+        }
+        else if(row.reclutadores.length > 1)
+        {
+          row.reclutadores.forEach(element => {
+            reclutador = reclutador + element.reclutador + '\n'
+          });
+        }
+        else
+        {
+          reclutador = row.reclutador;
+        }
 
         aux.push({
           FOLIO: row.folio.toString(),
@@ -802,14 +828,17 @@ export class DtVacantesReclutadorComponent implements OnInit, AfterViewChecked {
           EMPRESA: row.cliente,
           SUCURSAL: row.sucursal,
           NO: row.vacantes,
+          CUBIERTOS: row.contratados,
           PUESTO: row.vBtra,
           SUELDO: row.sueldoMinimo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
           ESTATUS: row.estatus,
           'FECHA ESTATUS': e,
-          RECLUTADOR: row.reclutador,
+          COORDINADOR: row.coordinador,
+          RECLUTADOR: reclutador,
           'COMENTARIOS': comentarios
         })
         comentarios = "";
+        reclutador = "";
       });
 
       //   })

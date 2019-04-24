@@ -32,14 +32,30 @@ export class Reporte70Component implements OnInit {
   public numPages: number = 1;
   public length: number = 0;
 
+  public objsucursal1 : any[];
+  public objempresa1 : any[];
+  public objsolicit1 : any[];
+  public objrecluta1 : any[];
+  public objstatus1 : any[];
+  public objtipocordi1 : any[];
+  public objtiporeclu1 : any[];
+
   registros: any;
   showFilterRow: boolean;
   constructor(private _service: RequisicionesService, private pipe: DatePipe, private excelService: ExcelService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
-    this.spinner.show();
-    this.GetReporte70();
+    // this.spinner.show();
+    // this.GetReporte70();
   }
+
+  llamado(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor){
+    document.getElementById('DivReportefil').classList.add('ocultar');
+    document.getElementById('Divprincipal').classList.remove('ocultar');
+    this.spinner.show();
+    this.GetReporte70(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor);
+  }
+  
 
 
   public columns: Array<any> = [
@@ -56,8 +72,8 @@ export class Reporte70Component implements OnInit {
     { title: 'Enviado', className: 'text-info text-center', name: 'enProcesoEC', filtering: { filterString: '', placeholder: 'Enviado' } },
     { title: 'Aceptado', className: 'text-info text-center', name: 'enProcesoFC', filtering: { filterString: '', placeholder: 'Aceptado' } },
     { title: 'Cubiertos', className: 'text-info text-center', name: 'contratados', filtering: { filterString: '', placeholder: 'Cubiertos' } },
-    { title: 'Vacantes Faltantes', className: 'text-info text-center', name: 'faltantes', filtering: { filterString: '', placeholder: 'Vac. faltantes' } },
-    { title: 'Avance', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'Avance' } },
+    { title: 'Faltantes', className: 'text-info text-center', name: 'faltantes', filtering: { filterString: '', placeholder: 'Faltantes' } },
+    { title: 'Cumplimiento', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'Cumplimiento' } },
     { title: 'Dias Transcurridos', className: 'text-info text-center', name: 'diasTrans', filtering: { filterString: '', placeholder: 'Dias' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
     // { title: 'Fecha Estatus', className: 'text-info text-center', name: 'fch_Modificacion', filtering: { filterString: '', placeholder: 'dd-mm-yyyy' } },
@@ -70,13 +86,97 @@ export class Reporte70Component implements OnInit {
     { title: 'Solicita', className: 'text-info text-center', name: 'solicita', filtering: { filterString: '', placeholder: 'Solicita' } }
   ];
 
-  GetReporte70()
+  GetReporte70(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor)
   {
 
-    this._service.GetReporte70().subscribe(result => {
-      this.requisiciones = result;
-      this.onChangeTable(this.config);
 
+    this.objsucursal1 = oficina;
+    this.objsolicit1 = solicitante;
+    this.objrecluta1 = reclutador;
+    this.objempresa1 = empresa;
+    this.objstatus1 = estatus;
+    this.objtiporeclu1 = tiporeclu;
+    this.objtipocordi1 = tipocor;
+ 
+    var ofc = '';
+    var sol = '';
+    var rec = '';
+    var emp = '';
+    var est = '';
+    let trcu = '';
+    let coo = '';
+  
+    if(oficina != undefined){
+      for (let item of oficina) {
+        ofc += item +',';
+      
+      }
+    }
+  
+    if(solicitante != undefined){
+      for (let item of solicitante) {
+        sol += item +',';
+        
+      }
+    }
+  
+    if(reclutador != undefined){
+      for (let item of reclutador) {
+        rec += item +',';
+       
+      }
+    }
+  
+    if(empresa != undefined){
+      for (let item of empresa) {
+        emp += item +',';
+       
+      }
+    }
+  
+    if(estatus != undefined){
+      for (let item of estatus) {
+        est += item +',';
+      
+      }
+    }
+  
+    if(tiporeclu != undefined){
+      for (let item of tiporeclu) {
+        trcu += item +',';
+      
+      }
+    }
+  
+    if(tipocor != undefined){
+      for (let item of tipocor) {
+        coo += item +',';
+      
+      }
+    }
+  
+  ofc = oficina == undefined?'0':ofc;
+  sol = solicitante == undefined?'0':sol;
+  rec = reclutador == undefined?'0':rec;
+  emp = empresa == undefined?'0':emp;
+  est = estatus == undefined?'0':est;
+  trcu = trcu == undefined?'0':trcu;
+  coo = coo == undefined?'0':coo;
+  
+  
+      let pal = document.getElementById('palabra');
+      let inc = document.getElementById('fechaInicial');
+      let fin = document.getElementById('fechaFinal');
+  
+      var palabra = pal['value'];
+      var inicio = inc['value'];
+      var final = fin['value'];
+      let tipo = document.getElementById('TipoReporte')['value'];
+ 
+    this._service.GetReporte70(palabra,ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec).subscribe(result => {
+      this.requisiciones = result;
+      this.rows = this.requisiciones;
+      this.spinner.hide();
     })
   }
 
@@ -227,12 +327,13 @@ export class Reporte70Component implements OnInit {
     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
     this.length = sortedData.length;
 
-    this.spinner.hide();
+  
   }
 //#endregion
 
 public refreshTable() {
-    this.GetReporte70();
+  this.GetReporte70(this.objsucursal1, this.objsolicit1, this.objrecluta1,
+    this.objempresa1,this.objstatus1,this.objtiporeclu1,this.objtipocordi1 );
     // setTimeout(() => {
     //   this.columns.forEach(element => {
     //     (<HTMLInputElement>document.getElementById(element.name)).value = '';
@@ -317,10 +418,10 @@ public refreshTable() {
           reclutador = row.reclutadores[0].reclutador;
         }
 
-        var estatus = '';
-        row.estatus.forEach(element => {
-          estatus = estatus + element.estatus + ' ' + this.pipe.transform(new Date(element.fch_Modificacion), 'yyyy-MM-dd') + '\n';
-        });
+        var estatus = row.estatus[row.estatus.length - 1].estatus;
+        // row.estatus.forEach(element => {
+        //   estatus = estatus + element.estatus + ' ' + this.pipe.transform(new Date(element.fch_Modificacion), 'yyyy-MM-dd') + '\n';
+        // });
 
         if(row.fch_Solicitud != null)
         {
@@ -359,7 +460,7 @@ public refreshTable() {
           ACEPTADO: row.enProcesoFC,
           CONTRATADOS: row.contratados,
           FALTANTES: row.faltantes,
-          AVANCE: row.porcentaje,
+          CUMPLIMIENTO: row.porcentaje,
           'DIAS TRANSCURRIDOS': row.estatus[0].diasTotal,
           ESTATUS: estatus,
           'TIPO RECLUTAMIENTO': row.tipoReclutamiento,
