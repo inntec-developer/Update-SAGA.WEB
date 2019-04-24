@@ -291,7 +291,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.length = sortedData.length;
     setTimeout(() => {
       this.spinner.hide();
-    }, 500);
+    }, 700);
 
 
   }
@@ -762,7 +762,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   seguimientoRequi() {
 
-    if (this.numeroVacantes != 0 && sessionStorage.getItem('tipoUsuario') == '4')
+    if (this.numeroVacantes != 0 && (sessionStorage.getItem('tipoUsuario') == '4' || sessionStorage.getItem('tipoUsuario') == '3'))
     {
       this.procesoCandidato = true;
     }
