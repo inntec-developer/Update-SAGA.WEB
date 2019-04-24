@@ -1,7 +1,10 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
-declare var $: any;
 
 import { SettingsService } from './core/settings/settings.service';
+
+declare var $: any;
+
+
 
 @Component({
     selector: 'app-root',
