@@ -28,7 +28,7 @@
                         </ng-template>
             
                         <li>
-                            <a [popover]="popTemplate" placement="right" container="body" triggers="mouseenter:mouseleave">{{contacto.nombre}} {{contacto.apellidoParterno}} {{contacto.apellidoMaterno}}</a>
+                            <a [popover]="popTemplate" placement="right" container="body" triggers="mouseenter:mouseleave">{{contacto.nombre | uppercase}}</a>
                         </li>
                     </ul>
                 </div>
