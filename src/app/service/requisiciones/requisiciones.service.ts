@@ -83,10 +83,9 @@ export class RequisicionesService {
       .map(result => result.json())
       .catch(this.handleError);
   }
-  getRequiFolio(folio: string): Observable<any> {
-    return this.http.get(this.urlGetRequisicionByFolio + folio)
-      .map(result => result.json())
-      .catch(this.handleError);
+  getRequiFolio(folio: any): Observable<any> {
+    let params = new HttpParams().set('folio', folio)
+    return this._httpClient.get(this.urlGetRequisicionByFolio, {params: params});
   }
   // Recupera la información completa del DAMFO-290 que se requiera.
   getDamfoById(damfoId: string) {

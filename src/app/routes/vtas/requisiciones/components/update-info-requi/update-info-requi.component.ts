@@ -198,7 +198,7 @@ export class UpdateInfoRequiComponent implements OnInit {
     this.GetExamenRequi();
   }
 
-  public getInformacionRequisicio(folio) {
+  public getInformacionRequisicio(folio: any) {
     if (folio != null) {
       this.serviceRequisicion.getRequiFolio(this.Folios)
         .subscribe(data => {
@@ -217,7 +217,7 @@ export class UpdateInfoRequiComponent implements OnInit {
           });
           this.estatusId = data.estatus.id;
           this.GetExamenRequi();
-        });
+        }, error => console.error(error));
     }
   }
   /*Cargar Formularios*/

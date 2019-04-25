@@ -71,7 +71,7 @@ export class ApiConection {
   public static AddressCliente = "Requisiciones/getAddress?Id=";
   public static CreateRequi = "Requisiciones/createRequi";
   public static GetRequisicionById = "Requisiciones/getById?Id=";
-  public static GetRequisicionByFolio = "Requisiciones/getByFolio?folio=";
+  public static GetRequisicionByFolio = "Requisiciones/getByFolio";
   public static GetRequisicionesAll = "Requisiciones/getRequisiciones?propietario=";
   public static UpdateRequisicion = "Requisiciones/updateRequisiciones";
   public static DeleteRequisicion = "Requisiciones/deleteRequisiciones";
