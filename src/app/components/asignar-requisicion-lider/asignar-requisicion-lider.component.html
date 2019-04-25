@@ -6,11 +6,11 @@
       formControlName="selectControl"
       (data)="value"
       class="select-asig"
-      [multiple]="true" 
+      [multiple]="true"
       [items]="items"
       (remove)="valueChange($event)"
       (select)="valueChange($event)"
-      optionValueField="id" 
+      optionValueField="id"
       optionTextField="nombre"
       optGroupLabelField="nombre" optGroupOptionsField="usuarios">
         <ng-template ngx-select-option-selected let-option let-text="descripcion">
@@ -23,9 +23,9 @@
     <label class="form-control-placeholder">{{placeHolder}}</label>
   </div>
   <!-- <mat-form-field>
-      <mat-select 
-        placeholder="ASIGNAR COORDINADOR DE CELULA" 
-        formControlName="selectControl" 
+      <mat-select
+        placeholder="ASIGNAR COORDINADOR DE CELULA"
+        formControlName="selectControl"
         (selectionChange)="valueChange($event)"
         multiple required="">
         <mat-optgroup *ngFor="let g of items" [label]="g.nombre" [disabled]="g.disabled">

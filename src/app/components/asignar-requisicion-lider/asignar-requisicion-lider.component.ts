@@ -51,7 +51,7 @@ export class AsignarRequisicionLiderComponent implements OnInit {
 
   valueChange(obj){
     this.Asignacion.emit(this.AsignacionForm.get('selectControl').value);
-    
+
   }
 
   getGrpUserL(){

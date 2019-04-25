@@ -117,7 +117,7 @@ export class RegistroCandidatosComponent implements OnInit {
       EstadoNacimientoId: this.estadoId,
       MunicipioNacimientoId: this.municipioId,
       Telefono: [{ClavePais:52, ClaveLada: this.txtPhone.substring(0,2), telefono: this.txtPhone, TipoTelefonoId: 1}],
-      // opcRegistro: opc
+      OpcionRegistro: opc
       
     };
     this._service.RegistrarCandidato(candidato).subscribe(data => {

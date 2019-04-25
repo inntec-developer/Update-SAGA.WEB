@@ -8,13 +8,17 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
   styleUrls: ['./agregar-resultados-psico.component.scss']
 })
 export class AgregarResultadosPsicoComponent implements OnInit {
-
+  disabled = false;
+  compact = false;
+  invertX = false;
+  invertY = false;
+  shown = 'hover';
   constructor(private _serviceExamen: ExamenesService, private toasterService: ToasterService) { }
 
   candidatos = [];
   catalogo = ['APTO', 'NO APTO'];
   filteredData = [];
-  se = new FormControl('', [Validators.required]);
+  resVal = true;
 
   ngOnInit() {
     this.GetClavesCandidatos();
@@ -25,19 +29,20 @@ export class AgregarResultadosPsicoComponent implements OnInit {
     this._serviceExamen.GetClavesCandidatos().subscribe(data => {
       this.candidatos = data;
       this.filteredData = data;
+
     })
   }
 
   AgregarResultado(row, c)
   {
-    var resultado = {RequiClaveId: row.requiClaveId, Resultado: c, UsuarioId: sessionStorage.getItem('id')};
+
+    var resultado = {RequiClaveId: row.requiClaveId, Resultado: row.resultado, UsuarioId: sessionStorage.getItem('id')};
+
     this._serviceExamen.AgregarResultadoPsico(resultado).subscribe(data => {
       if(data == 200)
       {
         this.popToast('success', 'Agregar Resultados', 'Los cambios se realizaron con éxito');
-        this.se.setValue('');
-        this.GetClavesCandidatos();
-
+        row.resVal = false;
       }
       else
       {
@@ -45,6 +50,8 @@ export class AgregarResultadosPsicoComponent implements OnInit {
       
       }
     })
+    
+   
   }
 
   public Search(data: any) {

@@ -92,12 +92,14 @@
         </div>
         </div> -->
 
-    <div class="row" #tableContainer>
+    <div class="row">
       <div class="col-sm-12 col-md-12 table-responsive clearfix">
-        <div>
-          <pre class="card-block float-right">Registros Totales: {{dataSource.length}}</pre>
+        <div class="mt-3 ">
+          <span class="text-muted font-weight-bold float-right ml-2 mr-3 mb-3 text-uppercase">Total de posiciones activas <span class="badge badge-pill badge-success">{{totalPos}}</span></span>
+          <span class="text-muted font-weight-bold float-right text-uppercase mb-3 ">Total de Folios <span class="badge badge-pill badge-success">{{dataSource.length}}</span></span>
         </div>
-        <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
+
+        <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table border-top" style="width: 100%;">
           <thead>
             <tr>
               <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
@@ -133,9 +135,9 @@
                   <td> {{row.cliente | uppercase}}</td>
                   <td class="text-center"> {{row.vBtra | uppercase}}</td>
                   <td class="text-center">
-                    <span class="px-1 mr-1  badge  badge-pill badge-info"> {{row.vacantes}}</span>
+                    <span class="mr-1 badge badge-pill badge-info"> {{row.contratados}}/{{row.vacantes}}</span>
                   </td>
-                  <td class="text-center"> {{row.tipoReclutamiento}}</td>
+                  <td class="text-center"> {{row.tipoReclutamiento | uppercase}}</td>
                   <!-- <td class="text-right"> {{row.sueldoMinimo | currency: $}}</td>
             <td class="text-right"> {{row.sueldoMaximo | currency: $}}</td> -->
                   <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
@@ -152,24 +154,24 @@
                       <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
                         [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
                         [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8"
-                        placement="bottom" tooltip="{{row.estatus | uppercase}}"> {{row.estatus | slice:0:8 | uppercase
+                        tooltip="{{row.estatus | uppercase}}" placement="top" container="body"> {{row.estatus | slice:0:8 | uppercase
                         }} ...
                       </small>
                     </ng-template>
                   </td>
                   <td class="text-center">
                     <small class="badge badge-pill" [class.badge-danger]="row.prioridadId  === 1" [class.badge-warning]="row.prioridadId  === 2">
-                      {{row.prioridad}}
+                      {{row.prioridad | uppercase}}
                     </small>
                   </td>
-                  <td> {{row.propietario }}</td>
+                  <td> {{row.propietario | uppercase}}</td>
                   <td class="text-center">
                     <ng-template #popTemplate>
                       <div class="row">
                         <div class="col-md-12">
                           <div class="popover-body">
                             <ul *ngFor="let r of row.reclutadores">
-                              <li class="text-muted">{{r.reclutador}}</li>
+                              <li class="text-muted">{{r.reclutador | uppercase}}</li>
                             </ul>
 
                           </div>
@@ -177,10 +179,10 @@
                       </div>
                     </ng-template>
 
-                    <span class="text-center" *ngIf="row.reclutadores.length == 0">{{row.propietario}}</span>
-                    <a class="text-center" *ngIf="row.reclutadores.length > 1" [popover]="popTemplate" placement="left"
+                    <span class="text-center" *ngIf="row.reclutadores.length == 0">{{row.propietario | uppercase }}</span>
+                    <a class="badge badge-pill badge-primary text-white text-center" *ngIf="row.reclutadores.length > 1" [popover]="popTemplate" placement="left"
                       container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
-                    <span class="text-center" *ngIf="row.reclutadores.length == 1">{{row.reclutadores[0].reclutador}}</span>
+                    <span class="text-center" *ngIf="row.reclutadores.length == 1">{{row.reclutadores[0].reclutador | uppercase}}</span>
 
                   </td>
                 </tr>

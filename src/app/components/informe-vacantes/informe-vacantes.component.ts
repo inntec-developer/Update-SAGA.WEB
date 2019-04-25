@@ -1,5 +1,6 @@
 import { RequisicionesService } from './../../service/requisiciones/requisiciones.service';
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-informe-vacantes',
@@ -31,7 +32,7 @@ export class InformeVacantesComponent implements OnInit {
     { title: 'CLIENTE', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'CLIENTE' } },
     { title: 'FECHA LIMITE', className: 'text-info text-center', name: 'fch_limite', filtering: { filterString: '', placeholder: 'FECHA LIMITE' } },
     { title: 'ESTATUS', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'ESTATUS' } },
-    { title: '# VACANTES', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: '# VACANTES' } },
+    { title: 'CUB/VAC', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: '# VACANTES' } },
     { title: '% CUMPLIMIENTO', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: '% CUMPLIMIENTO' } },
     { title: 'POSTULADOS', className: 'text-info text-center', name: 'postulados', filtering: { filterString: '', placeholder: 'POSTULADOS' } },
     { title: 'ENTREVISTADOS', className: 'text-info text-center', name: 'entrevista', filtering: { filterString: '', placeholder: 'ENTREVISTADOS' } },
@@ -42,9 +43,10 @@ export class InformeVacantesComponent implements OnInit {
     { title: 'CUBIERTOS', className: 'text-info text-center', name: 'contratados', filtering: { filterString: '', placeholder: 'CUBIERTOS' } }
   ];
 
-  constructor(private service: RequisicionesService) { }
+  constructor(private service: RequisicionesService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
+    this.spinner.show();
     this.getInfoVacantes();
   }
 
@@ -137,6 +139,9 @@ export class InformeVacantesComponent implements OnInit {
     this.service.GetInformeRequisiciones(sessionStorage.getItem('id')).subscribe(data => {
       this.dataInfoRequi = data;
       this.onChangeTableInfo(this.config);
+      setTimeout(() => {
+        this.spinner.hide();
+       }, 2000);
     });
   }
 

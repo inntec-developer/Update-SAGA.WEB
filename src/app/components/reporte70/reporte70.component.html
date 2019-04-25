@@ -1,9 +1,9 @@
 <ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
 
-<div class="card">
+<div class="card" style="margin-top: 80px" >
   <div class="card-body mat-elevation-z8">
 
-    <button type="button" class="float-right" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'btn btn-xs disable' : 'btn btn-xs btn-outline-success'"
+    <button type="button" class="float-right oculta" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'btn btn-xs disable' : 'btn btn-xs btn-outline-success'"
       (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Descargar Reporte">
       <i class="fa fa-download"></i>
     </button>

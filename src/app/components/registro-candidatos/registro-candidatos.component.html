@@ -60,19 +60,19 @@
             <div class="input-group">
             <input type="email" class="form-control form-control-sm" placeholder="Email *" value="" name="email" [(ngModel)]="email" ngModel required [class.requerido]="email.length == 0" [class.valido]="email.length >= 1"/>
             <div class="input-group-append">
-                <div class="input-group-text">
-                <input type="radio" [(ngModel)]="opcRegistro1" name="opc1" value=1 (click)="opcRegistro2=0" tooltip="Registrar con Email" placement="right">
+                <div class="input-group-text" tooltip="Registrar con Email" placement="top" container="body">
+                <input type="radio" [(ngModel)]="opcRegistro1" name="opc1" value=1 (click)="opcRegistro2=0" >
                 </div>
               </div>
             </div>
         </div>
         <div class="form-group">
-            <label class="text-muted" for="txtPhone">TELEFONO</label>
+            <label class="text-muted" for="txtPhone">TEL&Eacute;FONO</label>
             <div class="input-group">
-            <input type="text" minlength="10" maxlength="10" name="txtPhone" class="form-control form-control-sm" placeholder="Telefono *" [(ngModel)]="txtPhone" value="" ngModel required [class.requerido]="txtPhone.length < 10" [class.valido]="txtPhone.length == 10"/>
+            <input type="text" minlength="10" maxlength="10" name="txtPhone" class="form-control form-control-sm" placeholder="Tel&eacute;fono *" [(ngModel)]="txtPhone" value="" ngModel required [class.requerido]="txtPhone.length < 10" [class.valido]="txtPhone.length == 10"/>
             <div class="input-group-append">
-                <div class="input-group-text">
-                <input type="radio" [(ngModel)]="opcRegistro2" name="opc2" value="2" (click)="opcRegistro1=0" tooltip="Registrar con Telefono" placement="right">
+                <div class="input-group-text" tooltip="Registrar con Tel&eacute;fono" placement="top" container="body">
+                <input type="radio" [(ngModel)]="opcRegistro2" name="opc2" value="2" (click)="opcRegistro1=0" >
                 </div>
               </div>
             </div>

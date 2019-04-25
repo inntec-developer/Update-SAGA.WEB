@@ -83,10 +83,8 @@ export class SeguimientoTicketComponent implements OnInit {
 
   }
   ngOnInit() {
-    // setInterval(() => this.timeWait(), 1000);
     this.moduloId = sessionStorage.getItem('moduloId');
     this.GetFilaTickets();
-    //this.GetTicket('6FD2758C-A533-E911-AF44-E4B31877AAB4');
 
   }
 
@@ -94,7 +92,6 @@ export class SeguimientoTicketComponent implements OnInit {
   {
     this._service.GetFilaTickets(1, sessionStorage.getItem('id')).subscribe( data => {
         this.fila = data;
-        console.log(this.fila)
     })
   }
 
@@ -111,10 +108,6 @@ export class SeguimientoTicketComponent implements OnInit {
         this.GetPostulaciones(this.ticket[0].candidato[0].candidatoId);
         this.ExamenesCandidatos();
       }
-     // this.GetFilaTickets();
-
-      
-   
     })
 
   }

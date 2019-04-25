@@ -28,7 +28,7 @@
       </div>
       <br/>
         <div class="table-responsive mat-elevation-z8">
-         <table class="table scroll">
+         <table class="table">
           <thead>
               <tr class="text-primary">
                 <th class="text-center text-success">CLAVE</th>
@@ -39,7 +39,9 @@
               </tr>
             </thead>
           <tbody>
-
+              <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
+              [disableOnBreakpoints]="false" [disabled]="disabled">
+              <div>
             <tr *ngFor="let row of candidatos;">
               <td class="text-center text-success">{{row.clave | uppercase}}</td>
               <td class="text-center text-muted">{{row.nombre | uppercase}} {{row.apellidoPaterno | uppercase}} {{row.apellidoMaterno | uppercase}}</td>
@@ -52,21 +54,22 @@
                       {{row.resultado | uppercase}}
                   </span>
                   <mat-form-field class="longSelect" *ngIf="row.resultado == 'SIN RESULTADO'">
-                      <mat-select placeholder="Seleccionar Resultado" [(value)]="c" [formControl]="se" required>
-                        <mat-option *ngFor="let c of catalogo" [value]="c">
+                      <mat-select placeholder="Seleccionar Resultado">
+                        <mat-option *ngFor="let c of catalogo" [value]="c" (click)="row.resultado = c; row.resVal = true;">
                           {{c}}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
               </td>
               <td class="text-center">
-                  <button [disabled]="!c || row.resultado != 'SIN RESULTADO'" [ngClass]="!c || row.resultado != 'SIN RESULTADO' ? 'btn btn-xs enabled' : 'btn btn-xs btn-outline-success'" type="button" (click)="AgregarResultado(row, c)">
+                  <button [disabled]="!row.resVal" [ngClass]="!row.resVal ? 'btn btn-xs enabled' : 'btn btn-xs btn-outline-success'" type="button" (click)="AgregarResultado(row)">
                       <em class="fa fa-check"></em>
                   </button>
               </td>
    
             </tr>
-
+          </div>
+          </ng-scrollbar>
           </tbody>
        </table>
        </div>

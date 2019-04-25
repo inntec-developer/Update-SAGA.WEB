@@ -1,3 +1,4 @@
+<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
 <div class="card">
   <div class="card-body">
     <div class="table-responsive">
@@ -45,7 +46,7 @@
                 </td>
                 <td class="text-center">
                   <small class="badge badge-pill badge-primary" [class.badge-warning]="row.vacantes > 0">
-                    {{row.vacantes}}</small>
+                    {{row.contratados}}/{{row.vacantes}}</small>
                 </td>
                 <td class="text-center">
                   <small class="badge badge-pill badge-primary" [class.badge-success]="row.porcentaje > 0">
