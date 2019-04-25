@@ -1,5 +1,5 @@
-<div class="container">
-    <table class="table table-striped table-hover table-responsive-lg">
+<div class="mat-elevation-z8">
+    <table style="width: 100%;" class="table table-striped table-hover table-responsive-lg">
         <thead>
             <tr>
                 <th *ngFor="let tableHead of tableHeads" class="text-center text-success ng-star-inserted">
@@ -8,11 +8,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let tableData of tableDatas" (dblclick)="selectEdit(tableData.id)" class="rowHover ng-star-inserted">
+            <tr *ngFor="let tableData of tableDatas" (dblclick)="selectEdit(tableData.id)">
                 <td *ngFor="let colName of tableColNameGenerated" class="text-center">
-                    {{tableData[colName]}}
+                    {{tableData[colName] === true ? 'Si': tableData[colName] === false ? 'No': tableData[colName] }}
             </tr>
         </tbody>
     </table>
+    <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
 </div>
-<!-- Nueva tabla -->

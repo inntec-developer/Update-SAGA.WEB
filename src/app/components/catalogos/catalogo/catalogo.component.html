@@ -11,8 +11,15 @@
     <mat-card-content>
         <!-- Panel expandible -->
         <mat-accordion class="example-headers-align">
+            <!-- Filtros -->
+            <mat-expansion-panel *ngIf="idCatalogo == 3 || idCatalogo == 4" [expanded]="step === 0" (opened)="setStep(0)">
+                <mat-expansion-panel-header>
+                    Filtros
+                </mat-expansion-panel-header>
+                <app-filtros [IdCat]="idCatalogo" [Estados]="estados" [Municipios]="municipios" (Parametros)="Filtros($event)"></app-filtros>
+            </mat-expansion-panel>
             <!-- Tabla de registros -->
-            <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+            <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         Registros de {{ titulo }}
@@ -24,41 +31,28 @@
                 </div>
             </mat-expansion-panel>
             <!-- Formulario de catalogo -->
-            <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+            <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         Formulario de {{ titulo }}
                     </mat-panel-title>
-                    <mat-icon>map</mat-icon>
+                    <mat-icon *ngIf="idCatalogo == 1 || idCatalogo == 2">map</mat-icon>
+                    <mat-icon *ngIf="idCatalogo == 3 || idCatalogo == 4">place</mat-icon>
+                    <mat-icon *ngIf="idCatalogo == 6">phone</mat-icon>
+                    <mat-icon *ngIf="idCatalogo == 41">account_circle</mat-icon>
+                    <mat-icon *ngIf="idCatalogo == 7">book</mat-icon>
                 </mat-expansion-panel-header>
-                <app-paises *ngIf="idCatalogo == 1" [SelectedPais]="selectedId"></app-paises>
-                <app-estados *ngIf="idCatalogo == 2" [Paises]="paises"></app-estados>
+                <!-- Componentes -->
+                <!-- Sistema -->
+                <app-paises *ngIf="idCatalogo == 1" [SelectedPais]="selectedId" (UpPaises)="Refresh($event)"></app-paises>
+                <app-estados *ngIf="idCatalogo == 2" [Paises]="paises" [SelectedEstado]="selectedId" (UpEstados)="Refresh($event)"></app-estados>
+                <app-municipios *ngIf="idCatalogo == 3" [Estados]="estados" [SelectedMunicipio]="selectedId" (UpMunicipios)="Refresh($event)"></app-municipios>
+                <app-colonias *ngIf="idCatalogo == 4" [Paises]="paises" [Estados]="estados" [Municipios]="municipios" [SelectedColonia]="selectedId" (UpColonia)="Refresh($event)"></app-colonias>
+                <app-tipo-telefono *ngIf="idCatalogo == 6" [SelectedTipoTelefono]="selectedId" (UpTpTelefono)="Refresh($event)"></app-tipo-telefono>
+                <app-tipo-usuario *ngIf="idCatalogo == 41" [SelectedTipoUsuario]="selectedId" (UpTpUsuario)="Refresh($event)"></app-tipo-usuario>
+                <app-estado-civil *ngIf="idCatalogo == 7" [SelectedEstadoCivil]="selectedId" (UpEstadoCivil)="Refresh($event)"></app-estado-civil>
+                <!-- Reclutamiento -->
             </mat-expansion-panel>
         </mat-accordion>
-        <br>
-        <!-- Card de botones -->
-        <mat-card>
-            <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-green mb-1" type="button" (click)="LimpiarFiltro()" container="body" placement="bottom" tooltip="Nuevo catalogo">
-                  <span class="btn-label ">
-                    <i class="fa fa-file-text-o"></i>
-                  </span>Nuevo
-                </button>
-            <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-warning mb-1" type="button" (click)="LimpiarFiltro()" container="body" placement="bottom" tooltip="Editar catalogo">
-                <span class="btn-label ">
-                  <i class="fa fa-pencil"></i>
-                </span>Editar
-              </button>
-            <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-dark mb-1" type="button" (click)="LimpiarFiltro()" container="body" placement="bottom" tooltip="Guardar los datos">
-                <span class="btn-label ">
-                  <i class="fa fa-floppy-o"></i>
-                </span>Guardar
-              </button>
-            <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="LimpiarFiltro()" container="body" placement="bottom" tooltip="Limpia todo los filtros">
-                  <span class="btn-label ">
-                    <i class="fa fa-eraser"></i>
-                  </span>Limpiar
-                </button>
-        </mat-card>
-        <br>
     </mat-card-content>
 </mat-card>

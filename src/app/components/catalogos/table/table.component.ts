@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter, ViewChild } from '@angular/core';
+import {MatPaginator, MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-table',
@@ -13,14 +14,19 @@ export class TableComponent implements OnInit, OnChanges {
   @Input() tableColName: Array<String> = new Array<String>();
   private tableColNameGenerated: Array<String> = new Array<String>();
   private isTableColNameSet: Boolean = false;
+  private datas = new MatTableDataSource();
 //#endregion
 
 @Output() IdRegistro = new EventEmitter<number>();
 
-  constructor() { }
+  constructor() {
+  }
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit() {
   }
+
   //#region Armado de tabla.
   ngOnChanges(changes: SimpleChanges) {
     // debugger;
@@ -31,6 +37,8 @@ export class TableComponent implements OnInit, OnChanges {
     }
 
     if (changes['tableDatas']) {
+      this.datas = new MatTableDataSource(this.tableDatas);
+      this.datas.paginator = this.paginator;
       if (!this.isTableColNameSet) {
         if (this.tableDatas.length > 0) {
           this.tableColNameGenerated = this.getKeys(this.tableDatas[0]);

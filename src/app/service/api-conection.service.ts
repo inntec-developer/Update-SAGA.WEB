@@ -337,5 +337,7 @@ export class ApiConection {
   /* Menu de Catalogos */
   public static getCatalogos = 'Catalogos/getCatalogos';
   public static getCatalogosComplete = 'Catalogos/getCatalogosComplete';
+  public static postCatalogos = 'Catalogos/postCatalogo';
+  public static FilterCatalogos = 'Catalogos/FilterCatalogo';
 
 }

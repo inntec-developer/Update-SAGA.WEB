@@ -14,6 +14,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { debug } from 'util';
+import { HttpParamsOptions } from '@angular/common/http/src/params';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -67,8 +69,10 @@ export class CatalogosService {
   /*Menu de catalogos */
   private UrlMenuCatalogos = ApiConection.ServiceUrl + ApiConection.getCatalogos;
   private UrlCatalogos = ApiConection.ServiceUrl + ApiConection.getCatalogosComplete;
+  private UrlCatalogoCrud = ApiConection.ServiceUrl + ApiConection.postCatalogos;
+  private UrlCatalogoFilter = ApiConection.ServiceUrl + ApiConection.FilterCatalogos;
 
-  constructor(private _httpClient: HttpClient) { }
+  constructor(private _httpClient: HttpClient, private http: Http) { }
 
   getOficinaMunicipio(mun: string, es: string): Observable<any> {
     let params = new HttpParams().set('estado', es).set('municipio', mun);
@@ -240,5 +244,33 @@ return this._httpClient.get(this.UrlGetTipoDireccion);
   getCatalogo(IdCatalogo: any): Observable<any> {
     let params= new HttpParams().set('IdCatalogo', IdCatalogo);
     return this._httpClient.get(this.UrlCatalogos, {params: params});
+  }
+
+  getCatalogoFilter(Params: any): Observable<any> {
+    let httpHeaders = new HttpHeaders({
+      'Content-Type' : 'application/json',
+      'Cache-Control': 'no-cache'
+    });
+
+    let options = {
+      headers: httpHeaders
+    };
+    return this._httpClient.post<any>(this.UrlCatalogoFilter, Params, options);
+  }
+
+  GuardaCatalogo(Catalogo: any): Observable<any> {
+    let httpHeaders = new HttpHeaders({
+      'Content-Type' : 'application/json',
+      'Cache-Control': 'no-cache'
+    });
+
+    let options = {
+      headers: httpHeaders
+    };
+    return this._httpClient.post<any>(this.UrlCatalogoCrud , Catalogo, options);
+  }
+
+  EditCatalogo(): Observable<any> {
+    return;
   }
 }

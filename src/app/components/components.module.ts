@@ -94,6 +94,11 @@ import { TableComponent } from './catalogos/table/table.component';
 
 import { RegistroReclutadorComponent } from './registro-reclutador/registro-reclutador.component';
 import { InformeVacantesComponent } from './informe-vacantes/informe-vacantes.component';
+import { ColoniasComponent } from './catalogos/colonias/colonias.component';
+import { FiltrosComponent } from './catalogos/filtros/filtros.component';
+import { TipoTelefonoComponent } from './catalogos/tipo-telefono/tipo-telefono.component';
+import { EstadoCivilComponent } from './catalogos/estado-civil/estado-civil.component';
+import { TipoUsuarioComponent } from './catalogos/tipo-usuario/tipo-usuario.component';
 @NgModule({
   imports: [
     SharedModule,
@@ -190,7 +195,12 @@ import { InformeVacantesComponent } from './informe-vacantes/informe-vacantes.co
     MunicipiosComponent,
     TableComponent,
     RegistroReclutadorComponent,
-    InformeVacantesComponent
+    InformeVacantesComponent,
+    ColoniasComponent,
+    FiltrosComponent,
+    TipoTelefonoComponent,
+    EstadoCivilComponent,
+    TipoUsuarioComponent
   ],
   exports: [
     DtDireccionComponent,

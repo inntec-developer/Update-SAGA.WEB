@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-md-2">
+        <mat-form-field>
+            <mat-label>Selecciona un estado</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let estado of Estados" [value]="estado.id" (click)="ChEstado(estado.estado)">
+                    {{estado.estado}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-md-2" *ngIf="IdCat == 4">
+        <mat-form-field>
+            <mat-label>Selecciona un municipio</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let municipio of municipios" [value]="municipio.id" (click)="ChMunicipio(municipio.id)">
+                    {{municipio.municipio}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-labeled btn-outline-green mb-1" type="button" (click)="Aplica()" container="body" placement="bottom" tooltip="Aplica filtros a busqueda">
+            <span class="btn-label ">
+              <i class="fa fa-file-text-o"></i>
+            </span>Aplicar filtros
+        </button>
+    </div>
+</div>

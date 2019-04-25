@@ -1,6 +1,6 @@
 <mat-tab-group>
     <mat-tab>
-        <div [formGroup]="formPaises">
+        <div [formGroup]="formEstadoCivil">
             <ng-template mat-tab-label>
                 <mat-icon class="example-tab-icon">assignment</mat-icon>
                 Formulario
@@ -8,8 +8,8 @@
             <div class="row">
                 <div class="col-md-2 m-5">
                     <mat-form-field>
-                        <input matInput placeholder="País" formControlName="pais" required>
-                        <mat-error *ngIf="formPaises.controls['pais'].hasError('required')">Agrega un país válido</mat-error>
+                        <input matInput placeholder="Estado civil" formControlName="estadoCivil" required>
+                        <mat-error *ngIf="formEstadoCivil.controls['estadoCivil'].hasError('required')">Agrega un tipo válido</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-md-1 m-5">
