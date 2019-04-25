@@ -97,9 +97,9 @@ export class CandidatosService {
         return this._httpClient.get(this.URLGetInfoContratados);
     }
 
-    GetFoliosIncidencias(estatus): Observable<any> { // Obtener el esatus del candidato para las banderas de mostrar la información.
+    GetFoliosIncidencias(estatus, propietarioId): Observable<any> { // Obtener el esatus del candidato para las banderas de mostrar la información.
 
-        let params = new HttpParams().set('estatus', estatus)
+        let params = new HttpParams().set('estatus', estatus).set('propietarioId', propietarioId)
         const httpOptions = {
             headers: new HttpHeaders({
               'Content-Type':  'application/json'

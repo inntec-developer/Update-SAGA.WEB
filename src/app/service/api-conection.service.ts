@@ -158,7 +158,7 @@ export class ApiConection {
   public static GetMotivos = 'Candidatos/getMotivos'
   public static GetContratados = 'Candidatos/getContratados'
   public static AddComentarioNR = 'Candidatos/addComentariosNR'
-  public static GetCandidatosNR = 'Candidatos/getFoliosIncidencias'
+  public static GetCandidatosNR = 'Candidatos/getFoliosIncidencias' //comentarioCandidatosController
   public static AddRespuesta = 'Candidatos/addRespuesta'
   public static GetInfoContratados = 'Candidatos/getInfoContratados'
 
