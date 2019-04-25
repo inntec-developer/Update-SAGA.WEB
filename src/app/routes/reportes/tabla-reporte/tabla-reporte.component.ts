@@ -166,7 +166,7 @@ coo = coo == undefined?'0':coo;
         'No.'	: item.numero,
         Cubierta:item.cubierta,
         'Cumplimiento'	: item.porcentaje + '%',
-        Coordinador:item.cordinador2,
+        Coordinador:item.cordinador2 == ''?'SIN ASIGNAR':item.cordinador2,
         Estatus: item.estatus,
         'Fecha estatus': this.convertDateTime(item.fch_Modificacion),
         Solicita: item.nombreApellido,
