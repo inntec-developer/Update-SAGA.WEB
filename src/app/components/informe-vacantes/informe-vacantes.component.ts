@@ -121,27 +121,18 @@ export class InformeVacantesComponent implements OnInit {
     //let sortedData = this.changeSort(filteredData, this.config);
     this.rowsInfo = page && config.paging ? this.changePageInfo(page, filteredData) : filteredData;
     this.lengthInfo = filteredData.length;
-  }
-  public refreshTableInfo() {
-    this.getInfoVacantes();
+
     setTimeout(() => {
-      this.columnsInfo.forEach(element => {
-        element.filtering.filterString = '';
-        (<HTMLInputElement>document.getElementById(element.name)).value = '';
-      });
-      let page: any = { page: 1, itemsPerPage: this.itemsPerPageInfo }
-      this.onChangeTableInfo(this.config, page);
-    }, 400);
+      this.spinner.hide();
+     }, 1000);
   }
+
   //#endregion
 
   getInfoVacantes() {
     this.service.GetInformeRequisiciones(sessionStorage.getItem('id')).subscribe(data => {
       this.dataInfoRequi = data;
       this.onChangeTableInfo(this.config);
-      setTimeout(() => {
-        this.spinner.hide();
-       }, 2000);
     });
   }
 

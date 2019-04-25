@@ -110,7 +110,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
       this.dataSource = data;
       this.GetCandidatosNR();
-
+      this.GetRequisicionesPausa();
       this.totalPos = 0;
       this.dataSource.forEach(r => {
         if(r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37))
@@ -131,14 +131,14 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   GetCandidatosNR()
   {
-    this.serviceCandidato.GetFoliosIncidencias(28).subscribe(result =>{
+    this.serviceCandidato.GetFoliosIncidencias(28, sessionStorage.getItem('id')).subscribe(result =>{
       this.candidatosNR = result;
     });
 
   }
 
   GetRequisicionesPausa() {
-    this.service.GetRequisicionesEstatus(39, this.usuarioId).subscribe(result => {
+    this.service.GetRequisicionesEstatus(39, sessionStorage.getItem('id')).subscribe(result => {
       this.requisPausa = result;
     });
   }

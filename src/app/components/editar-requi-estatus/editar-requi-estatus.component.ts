@@ -23,22 +23,20 @@ export class EditarRequiEstatusComponent implements OnInit {
   constructor( private spinner: NgxSpinnerService, private service: RequisicionesService, private comentarioService: ComentariosService, private postulateService: PostulateService, private toasterService: ToasterService) { }
 
   ngOnInit() {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-     }, 2000);
+    // this.spinner.show();
+    // setTimeout(() => {
+    //   this.spinner.hide();
+    //  }, 2000);
   }
 
-  GetRequisiciones() {
-    this.service.GetRequisicionesEstatus(this.estatusId, this.usuarioId).subscribe(result => {
+  // GetRequisiciones() {
+  //   this.service.GetRequisicionesEstatus(this.estatusId, this.usuarioId).subscribe(result => {
 
-      this.requis = result;
-      // this.requis.forEach(element => {
-      //   element.activar = false;
-      // });
+  //     this.requis = result;
 
-    })
-  }
+
+  //   })
+  // }
 
   onSelect(row, rowIndex) {
 
