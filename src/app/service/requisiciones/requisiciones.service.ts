@@ -50,6 +50,7 @@ export class RequisicionesService {
   private URLGetRequiEstadisticos = ApiConection.ServiceUrl + ApiConection.getRequiEstadisticos;
   private URLGetUltimoEstatusRequi = ApiConection.ServiceUrl + ApiConection.GetUltimoEstatusRequi;
   private URLExecProcedurePause = ApiConection.ServiceUrl + ApiConection.execProcedurePause;
+  private URLExecProcedureSinCambios = ApiConection.ServiceUrl + ApiConection.execProcedureSinCambios;
   private URLGetRequiTipoRecl = ApiConection.ServiceUrl + ApiConection.GetRequiTipoRecl;
   private URLSendEmailRequiPuro = ApiConection.ServiceUrl + ApiConection.SendEmailRequiPuro;
   private URLSendEmailRedesSociales = ApiConection.ServiceUrl + ApiConection.SendEmailRedesSociales;
@@ -247,9 +248,15 @@ export class RequisicionesService {
   {
     return this._httpClient.post(this.URLAddDtosFactura, datos, httpOptions);
   }
+
   ExecProcedurePause(): Observable<any> {
 
     return this._httpClient.get(this.URLExecProcedurePause);
+  }
+
+  ExecProcedureSinCambios(): Observable<any> {
+
+    return this._httpClient.get(this.URLExecProcedureSinCambios);
   }
 
 

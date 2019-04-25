@@ -30,7 +30,7 @@ export class EditarCandidatoEstatusComponent implements OnInit {
   }
 
   GetCandidatosNR() {
-    this.service.GetFoliosIncidencias(this.estatusId).subscribe(result => {
+    this.service.GetFoliosIncidencias(this.estatusId, sessionStorage.getItem('id')).subscribe(result => {
       this.candidatos = result;
     })
 

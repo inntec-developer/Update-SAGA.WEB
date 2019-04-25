@@ -249,6 +249,7 @@ export class ApiConection {
   public static sendEmailNoContratado = 'reclutamiento/seguimientovacante/sendEmailsNoContratado';
   public static getConteoVacante = 'Requisiciones/getConteoVacante';
   public static execProcedurePause = 'Requisiciones/execProcedurePause'
+  public static execProcedureSinCambios = 'Requisiciones/execProcedureSinCambio'
 
   /*Examenes */
   public static InsertExamen = 'examenes/insertExamen'

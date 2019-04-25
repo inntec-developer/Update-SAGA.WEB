@@ -56,7 +56,7 @@ export class AgregarResultadosPsicoComponent implements OnInit {
 
   public Search(data: any) {
     let tempArray: Array<any> = [];
-    let colFiltar: Array<any> = [{ title: "clave" }];
+    let colFiltar: Array<any> = [{ title: "clave" }, { title: "nombre" }];
 
     this.filteredData.forEach(function (item) {
       let flag = false;

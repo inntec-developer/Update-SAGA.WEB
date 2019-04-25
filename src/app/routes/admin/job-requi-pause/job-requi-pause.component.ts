@@ -12,7 +12,7 @@ export class JobRequiPauseComponent implements OnInit {
 
   constructor(private _service: RequisicionesService, private toasterService: ToasterService) { }
 
-  titulo = 'Pincha aqui'
+  titulo = 'Requis en pausa'
   ngOnInit() {
 
   }
@@ -21,6 +21,25 @@ export class JobRequiPauseComponent implements OnInit {
   {
     this.titulo = "Espera a que te salga el mensaje de confirmación \\m/"
     this._service.ExecProcedurePause().subscribe(data => {
+      if(data == 200)
+      {
+        this.titulo = 'Click aqui'
+        this.popToast('success', 'JOB - PAUSE', 'El JOB se ejecutó con éxito');
+
+      }
+      else
+      {
+        this.popToast('error', 'JOB - PAUSE', 'Ocurrio un error al intentar ejecutar el JOB');
+      
+      }
+  
+    })
+  }
+  ExecProcedureSinCambios()
+  {
+    this.titulo = "Espera a que te salga el mensaje de confirmación \\m/"
+    this._service.ExecProcedureSinCambios().subscribe(data => {
+    
       if(data == 200)
       {
         this.titulo = 'Click aqui'

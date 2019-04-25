@@ -60,7 +60,7 @@ export class Reporte70Component implements OnInit {
 
   public columns: Array<any> = [
     { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
-    { title: 'Fecha Solicitud', className: 'text-info text-center', name: 'fch_Solicitud', filtering: { filterString: '', placeholder: 'dd-mm-yyyy' } },
+    { title: 'Fecha Solicitud', className: 'text-info text-center', name: 'fch_Solicitud', filtering: { filterString: '', placeholder: 'dd/mm/yyyy' } },
     { title: 'Empresa', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Empresa' } },
     { width: '4%', title: 'Puesto', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Puesto' } },
     { title: 'Sueldo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo' } },
@@ -76,7 +76,7 @@ export class Reporte70Component implements OnInit {
     { title: 'Cumplimiento', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'Cumplimiento' } },
     { title: 'Dias Transcurridos', className: 'text-info text-center', name: 'diasTrans', filtering: { filterString: '', placeholder: 'Dias' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
-    // { title: 'Fecha Estatus', className: 'text-info text-center', name: 'fch_Modificacion', filtering: { filterString: '', placeholder: 'dd-mm-yyyy' } },
+    // { title: 'Fecha Estatus', className: 'text-info text-center', name: 'fch_Modificacion', filtering: { filterString: '', placeholder: 'dd/mm/yyyy' } },
     { title: 'Tipo Reclutamiento', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo reclutamiento' } },
     { title: 'Coordinación', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Coordinación' } },
     { title: 'Com. Sol.', className: 'text-info text-center', name: 'comentarios_solicitante' },
@@ -176,7 +176,8 @@ export class Reporte70Component implements OnInit {
     this._service.GetReporte70(palabra,ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec).subscribe(result => {
       this.requisiciones = result;
       this.rows = this.requisiciones;
-      this.spinner.hide();
+      this.onChangeTable(this.config);
+  this.spinner.hide();
     })
   }
 
@@ -390,7 +391,7 @@ public refreshTable() {
             element.comentario.forEach(el => {
               if(element.fch_Creacion != null)
             {
-              fecha =  this.pipe.transform(new Date(element.fch_Creacion), 'yyyy-MM-dd');
+              fecha =  this.pipe.transform(new Date(element.fch_Creacion), 'dd/MM/yyyy');
             }
 
               comentariosRecl = comentariosRecl + fecha + ' ' + el.comentario + '\n'
@@ -425,20 +426,20 @@ public refreshTable() {
 
         if(row.fch_Solicitud != null)
         {
-        var d = this.pipe.transform(new Date(row.fch_Solicitud), 'yyyy-MM-dd');
+        var d = this.pipe.transform(new Date(row.fch_Solicitud), 'dd/MM/yyyy');
         }
         else
         {
-          var d = this.pipe.transform( new Date(), 'yyyy-MM-dd');
+          var d = this.pipe.transform( new Date(), 'dd/MM/yyyy');
         }
 
         if(row.fch_Modificacion != null)
         {
-          var e = this.pipe.transform( new Date(row.fch_Modificacion), 'yyyy-MM-dd');
+          var e = this.pipe.transform( new Date(row.fch_Modificacion), 'dd/MM/yyyy');
         }
         else
         {
-           var e = this.pipe.transform( new Date(), 'yyyy-MM-dd');
+           var e = this.pipe.transform( new Date(), 'dd/MM/yyyy');
         }
 
 

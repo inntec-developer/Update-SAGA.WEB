@@ -410,6 +410,7 @@ export class SeguimientoTicketComponent implements OnInit {
   ExamenesCandidatos()
   {
     this._serviceExamen.GetExamenCandidato(this.ticket[0].candidato[0].candidatoId).subscribe(exa => {
+
       this.examenesCandidato.tecnicos = exa[0];
       this.examenesCandidato.psicometricos = exa[1];
 
