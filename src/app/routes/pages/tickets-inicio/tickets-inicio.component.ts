@@ -26,7 +26,7 @@ export class TicketsInicioComponent implements OnInit {
   GenerarTicket()
   {
     this._service.GetTicketConCita(this.folio).subscribe(data => {
-      if(data=="No")
+      if(data==404)
       {
         swal("¡No hay citas registradas para el folio " + this.folio + "!", '', "error");
         this.btnCita = false;
@@ -35,6 +35,12 @@ export class TicketsInicioComponent implements OnInit {
       else if(data == 200)
       {
         swal("¡Ya hay un ticket impreso para el folio " + this.folio + "!", '', "warning");
+        this.btnCita = false;
+        this.folio = 0;
+      }
+      else if(data == 204)
+      {
+        swal("¡Se canceló la cita para el " + this.folio + "!. Pasó el tiempo de espera", '', "warning");
         this.btnCita = false;
         this.folio = 0;
       }
