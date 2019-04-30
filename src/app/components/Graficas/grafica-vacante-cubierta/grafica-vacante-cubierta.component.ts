@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
 import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
 import { DataTableModule } from 'primeng/primeng';
-
 
 @Component({
   selector: 'app-grafica-vacante-cubierta',
@@ -12,7 +12,7 @@ import { DataTableModule } from 'primeng/primeng';
 })
 
 export class GraficaVacanteCubiertaComponent implements OnInit {
- 
+
   constructor(private _ServiceComponente: ComponentsService) {
   }
 
@@ -20,25 +20,25 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
   Data: any;
   private UsuarioId: any;
 
-  private NumeroVacantes: number;
+  public NumeroVacantes: number;
   ngOnInit() {
     this.UsuarioId = sessionStorage.getItem('id');
     this._ServiceComponente.getVCubierta(this.UsuarioId).subscribe(result => {
-      
+
       let cubiertas = result['cubiertas'];
       let parcialmente = result['parcialmente'];
       let medios = result['medios'];
-     
-    
-    
+
+
+
     // Chart.defaults.scale.ticks.beginAtZero = true;
     document.oncontextmenu=null
   this.NumeroVacantes = result['total'];
- 
+
   this.Data = {
     datasets: [{
       backgroundColor: [
-        '#3F3CFF', 
+        '#3F3CFF',
         '#F335FF',
         '#C5FF60'
          ],
@@ -74,7 +74,7 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
     });
 
   });
-  
+
 
 
   }

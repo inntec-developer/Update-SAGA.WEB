@@ -1,29 +1,28 @@
-import { VerTurnosComponent } from './ver-turnos/ver-turnos.component';
-import { SistTicketsModule } from './../SistTickets/sist-tickets.module';
-import { VacantesComponent } from './../Tracking/vacantes/vacantes.component';
-import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
-import { Routes, RouterModule } from '@angular/router';
-import { MatPaginatorIntl, MatTableModule } from '@angular/material';
-import { Ng2TableModule } from 'ng2-table/ng2-table';
-import { PopoverModule, TooltipModule } from 'ngx-bootstrap';
-import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgScrollbarModule } from 'ngx-scrollbar';
-import { HttpClientModule } from '@angular/common/http';
+import { MatPaginatorIntl, MatTableModule } from '@angular/material';
+import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
+import { PopoverModule, TooltipModule } from 'ngx-bootstrap';
+import { RouterModule, Routes } from '@angular/router';
+import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
+
 import { Error404Component } from './error404/error404.component';
 import { Error500Component } from './error500/error500.component';
+import { HttpClientModule } from '@angular/common/http';
+import { InicioKioscoComponent } from './inicio-kiosco/inicio-kiosco.component';
 import { LockComponent } from './lock/lock.component';
 import { LoginComponent } from './login/login.component';
 import { MaintenanceComponent } from './maintenance/maintenance.component';
+import { Ng2TableModule } from 'ng2-table/ng2-table';
 import { NgModule } from '@angular/core';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 import { RecoverComponent } from './recover/recover.component';
 import { RegisterComponent } from './register/register.component';
 import { SharedModule } from '../../shared/shared.module';
-import { TrackingVacantesComponent } from './tracking-vacantes/tracking-vacantes.component';
+import { SistTicketsModule } from './../SistTickets/sist-tickets.module';
 import { TicketsInicioComponent } from './tickets-inicio/tickets-inicio.component';
-import { InicioKioscoComponent } from './inicio-kiosco/inicio-kiosco.component';
-
-
+import { TrackingVacantesComponent } from './tracking-vacantes/tracking-vacantes.component';
+import { VacantesComponent } from './../Tracking/vacantes/vacantes.component';
+import { VerTurnosComponent } from './ver-turnos/ver-turnos.component';
 
 /* Use this routes definition in case you want to make them lazy-loaded */
 // const routes: Routes = [
@@ -39,6 +38,7 @@ import { InicioKioscoComponent } from './inicio-kiosco/inicio-kiosco.component';
 
 @NgModule({
     imports: [
+
         SharedModule,
         //  RouterModule.forChild(routes),
         MatTableModule,
@@ -63,7 +63,7 @@ import { InicioKioscoComponent } from './inicio-kiosco/inicio-kiosco.component';
         TrackingVacantesComponent,
         TicketsInicioComponent,
         VerTurnosComponent,
-        InicioKioscoComponent, 
+        InicioKioscoComponent,
     ],
     providers: [
         { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

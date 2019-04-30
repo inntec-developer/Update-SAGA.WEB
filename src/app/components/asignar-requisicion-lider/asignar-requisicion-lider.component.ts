@@ -19,7 +19,7 @@ export class AsignarRequisicionLiderComponent implements OnInit {
   @Output() Asignacion : EventEmitter<any[]> =  new EventEmitter();
 
   public items: any[] = [];
-
+  public value: any;
   public asignacionCtrl : any[];
   public allowClear : boolean = true;
 

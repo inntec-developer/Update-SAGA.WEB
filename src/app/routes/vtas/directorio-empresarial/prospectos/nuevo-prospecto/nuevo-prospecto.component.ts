@@ -6,10 +6,7 @@ import { emptyStringGetter, id } from '@swimlane/ngx-datatable/release/utils';
 import { CatalogosService } from './../../../../../service/catalogos/catalogos.service';
 import { ClientesService } from '../../../../../service/clientes/clientes.service';
 import { CompanyValidation } from './company-validation';
-import { CustomValidators } from 'ng2-validation';
 import { Router } from '@angular/router';
-import { config } from 'rxjs';
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-nuevo-prospecto',

@@ -17,8 +17,9 @@ export class UpdateRequisicionComponent implements OnInit {
   public Horarios: any;
   public EstatusRequi: any;
   public TipoReclutamiento: any;
+  public NumeroVacantes: any;
   constructor( private _Router: ActivatedRoute, private _RequiService: RequisicionesService) {
-    
+
   }
   ngOnInit(){
     this._Router.params.subscribe(params => {

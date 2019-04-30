@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ReportesService } from '../../../service/Reporte/reportes.service';
-import {Http} from '@angular/http';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-indicadores',
@@ -12,7 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./indicadores.component.scss']
 })
 export class IndicadoresComponent implements OnInit {
- 
+
   public UsuarioId: any;
 
   public Entrevistado: string = '0';
@@ -53,18 +49,10 @@ export class IndicadoresComponent implements OnInit {
 
       this.Contratado = item['contrata'];
       this.Contratadopor = item['contraTotal'];
-     
-      
-     
+
+
+
     })
-    // var cadena = this.Entrevistadopor;
-    // let div = document.getElementById("RadialEntre");
-    // console.log(cadena);
-    // console.log(cadena.substring(0, 1));
-    // let cade = cadena.substring(0, 1) + '0';
-    // console.log('radial-bar-'+ cade);
-    // div.classList.add('radial-bar-'+ cade);
-   
   }
 
 }

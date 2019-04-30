@@ -18,12 +18,12 @@ import { ToasterService } from 'angular2-toaster';
 })
 export class DialogCancelRequiComponent implements OnInit {
   // Varibales de control
-  requisicion: any[];
-  infoCancelRequi: any;
-  return: any;
-  folio: number;
-  loading: boolean;
-  formComentario: FormGroup;
+  public requisicion: any[];
+  public infoCancelRequi: any;
+  public return: any;
+  public folio: number;
+  public loading: boolean;
+  public formComentario: FormGroup;
 
   constructor(
     private dialogCancel: MatDialogRef<DialogCancelRequiComponent>,
@@ -45,8 +45,8 @@ export class DialogCancelRequiComponent implements OnInit {
 
 
   // Configuracion de mensaje
-  toaster: any;
-  ToasterConfig: any;
+  public toaster: any;
+  public ToasterConfig: any;
   toasterconfig: ToasterConfig = new ToasterConfig({
     positionClass: 'toast-bottom-right',
     limit: 7,

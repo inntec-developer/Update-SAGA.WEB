@@ -28,6 +28,7 @@ import { PerfilComponent } from './candidatos/busqueda/perfil/perfil.component';
 import { ReubicacionComponent } from './candidatos/busqueda/reubicacion/reubicacion.component';
 import { SeguimientoVacanteComponent } from './vacantes/vacantes/seguimiento-vacante/seguimiento-vacante/seguimiento-vacante.component';
 import { SharedModule } from '../../shared/shared.module';
+import { ToolsModule } from '../../tools/tools.module';
 import { TplicenciaComponent } from './candidatos/busqueda/tplicencia/tplicencia.component';
 import { VacantesComponent } from './vacantes/vacantes.component';
 import { VacantesPostulateComponent } from './vacantes/vacantes/vacantes-postulate/vacantes-postulate.component';
@@ -49,6 +50,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     SharedModule,
+    ToolsModule,
     RouterModule.forChild(routes),
     ComponentsModule,
     VentaModule,

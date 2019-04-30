@@ -383,7 +383,7 @@
               <strong class="text-info">Observaciones Confidenciales</strong>
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <div *ngFor="let observaciones of Datos?.requisicion?.observacionesRequi; let indice=index" class="row">
+          <div *ngFor="let observaciones of observacionesRequi; let indice=index" class="row">
               <div class="col-md-12 text-muted">
                 <strong>{{indice+1}}.</strong> {{observaciones.observaciones}}
               </div>

@@ -11,6 +11,7 @@ import { NgModule } from '@angular/core';
 import { RequisicionesService } from '../../service';
 import { RevisarExamenesComponent } from './revisar-examenes/revisar-examenes.component';
 import { SharedModule } from './../../shared/shared.module';
+import { ToolsModule } from '../../tools/tools.module';
 
 const routes: Routes = [
   { path: 'addexamen', component: AddExamenComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     SharedModule,
+    ToolsModule,
     RouterModule.forChild(routes),
     ComponentsModule
   ],

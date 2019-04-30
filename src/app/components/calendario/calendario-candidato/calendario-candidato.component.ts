@@ -376,7 +376,7 @@ export class CalendarioCandidatoComponent implements OnInit {
   //   this.allDaySelected = this.allDaySelected.toISOString();
   // }
 
-  private DeleteEvent(data: any) {
+  public DeleteEvent(data: any) {
     this.componenteService.deleteCalendarEvent(data)
       .subscribe(result => {
         if (result == 200) {
@@ -396,7 +396,7 @@ export class CalendarioCandidatoComponent implements OnInit {
       });
   }
 
-  private CulminarEvent(data: any) {
+  public CulminarEvent(data: any) {
     this.componenteService.culminarElement(data.id)
       .subscribe(result => {
         if (result == 200) {
@@ -572,9 +572,9 @@ export class CalendarioCandidatoComponent implements OnInit {
   /*
  * Creacion de mensajes
  * */
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
+  public toaster: any;
+  public toasterConfig: any;
+  public toasterconfig: ToasterConfig = new ToasterConfig({
     positionClass: 'toast-bottom-right',
     limit: 7, tapToDismiss: false,
     showCloseButton: true,

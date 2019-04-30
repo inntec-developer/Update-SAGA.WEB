@@ -14,6 +14,7 @@ import { RegistroComponent } from './registro/registro.component';
 import { RolGrupoComponent } from './rol-grupo/rol-grupo.component';
 import { RollsStructComponent } from './rolls-struct/rolls-struct.component';
 import { SharedModule } from '../../shared/shared.module';
+import { ToolsModule } from '../../tools/tools.module';
 import { UploadImgsComponent } from './upload-imgs/upload-imgs.component';
 
 const routes: Routes = [
@@ -32,6 +33,7 @@ const routes: Routes = [
 @NgModule({
     imports: [
         SharedModule,
+        ToolsModule,
         RouterModule.forChild(routes),
         ComponentsModule,
       ],

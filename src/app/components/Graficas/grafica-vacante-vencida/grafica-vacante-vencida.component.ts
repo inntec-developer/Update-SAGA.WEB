@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
-
 
 @Component({
   selector: 'app-grafica-vacante-vencida',
@@ -14,7 +14,7 @@ export class GraficaVacanteVencidaComponent implements OnInit {
   Chart: Chart;
   Data: any;
   private UsuarioId: any;
-  private Vencidas:number;
+  public Vencidas:number;
 
   constructor(private service: ComponentsService) { }
 
@@ -26,7 +26,7 @@ export class GraficaVacanteVencidaComponent implements OnInit {
 
     this.service.getVVencida(this.UsuarioId).subscribe(item =>{
 
-   
+
     this.Vencidas = item['vencidas'];
       let total = item['total'];
 

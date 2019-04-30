@@ -47,7 +47,7 @@ export class DialogRutasComponent implements OnInit {
     this.dialogRutas.close();
   }
 
-  private _guardarRutas() {
+  public _guardarRutas() {
     if (!this.data.Edit) {
       this._addRuta();
     } else {
@@ -55,7 +55,7 @@ export class DialogRutasComponent implements OnInit {
     }
   }
 
-  private _addRuta() {
+  public _addRuta() {
     this.loading = true;
     let rc = {
       DireccionId: this.DireccionId,
@@ -82,7 +82,7 @@ export class DialogRutasComponent implements OnInit {
     });
   }
 
-  private _editRuta() {
+  public _editRuta() {
     this.loading = true;
     let rc = {
       Id: this.RutaId,

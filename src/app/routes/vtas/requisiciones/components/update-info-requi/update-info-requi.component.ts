@@ -38,7 +38,7 @@ export class UpdateInfoRequiComponent implements OnInit {
   public asignadosRequi: any[] = [];
   public infoRequi: any[];
   public loading: boolean;
-
+  public warn:string = 'warn';
   public formRequi: FormGroup;
   public minLimitDate: any;
 

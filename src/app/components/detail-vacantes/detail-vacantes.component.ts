@@ -11,9 +11,10 @@ import { DetailService } from '../../service/SeguimientoVacante/DetailService.se
 export class DetailVacantesComponent implements OnInit {
 
   @Input('RequisicionId') RequisicionId;
-  Datos = [];
-
+  public Datos = [];
+  public observacionesRequi: any;
    step = 0;
+
 
   setStep(index: number) {
     this.step = index;
@@ -29,9 +30,10 @@ export class DetailVacantesComponent implements OnInit {
   constructor(private _service: DetailService ) { }
 
   GetDtosDetail() {
-  
+
     this._service.GetDtosDetail(this.RequisicionId).subscribe(data => {
       this.Datos = data;
+      this.observacionesRequi = data['requisicion']['observacionesRequi'] || null;
       this.Datos.length = 1;
     }
     );

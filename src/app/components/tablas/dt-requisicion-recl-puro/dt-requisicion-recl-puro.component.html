@@ -83,7 +83,7 @@
           <tbody>
               <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
               [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
-              <div> 
+              <div>
             <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial"
               [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
               <td class="text-center">
@@ -159,4 +159,27 @@
     </div>
   </div>
 </div>
+
+<!--Mensajes del sistema-->
 <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
+
+
+<!--Modal de Comentarios-->
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Vacante: {{Vacante}} {{Folio}}</h4>
+        <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <comentario-vacante [RequisicionId]="RequisicionId" [MotivoId]="7"></comentario-vacante>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-xs btn-outline-danger" (click)="lgModal.hide(); closeModal(0);">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

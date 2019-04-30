@@ -17,12 +17,12 @@ export class GraficaVacantesPieComponent implements OnInit {
   constructor(private _ServiceComponente: ComponentsService) {
   }
 
-  Chart: Chart;
-  Data: any;
-  private UsuarioId: any;
-  private ShowModal: boolean;
-  private EstadoVacante: string;
-  private NumeroVacantes: number;
+  public Chart: Chart;
+  public Data: any;
+  public UsuarioId: any;
+  public ShowModal: boolean;
+  public EstadoVacante: string;
+  public NumeroVacantes: number;
   ngOnInit() {
     this.UsuarioId = sessionStorage.getItem('id');
     Chart.defaults.scale.ticks.beginAtZero = true;
@@ -38,7 +38,7 @@ export class GraficaVacantesPieComponent implements OnInit {
         }],
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: [
-          'Activas',
+          'Vigentes',
           'Por Vencer',
           'Vencidas'
         ]

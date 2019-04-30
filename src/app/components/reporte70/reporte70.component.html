@@ -84,7 +84,7 @@
                     <span class="badge badge-pill badge-warning"> {{row.porcentaje}} % </span>
                   </td>
                   <td class="text-center">
-                    <small class="badge badge-pill badge-warning">                     
+                    <small class="badge badge-pill badge-warning">
                         {{row.estatus[0].diasTotal}}
                       </small>
                     <!-- <ng-template #popEstatusRequi>
@@ -113,19 +113,19 @@
                     <ng-template #popEstatus>
                       <div class="card">
                         <div class="card-body">
-                    
+
                           <ul class="list-group list-group-flush">
                             <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
                               [disabled]="disabled">
                               <div style="height: 200px;">
                                 <li class="list-group-item" *ngFor="let r of row.estatus">
-                    
+
                                   <div class="d-flex flex-row justify-content-between align-items-stretch">
                                     <div style="width: 80px;">
                                       <small *ngIf="r.estatus.length <= 10 else toLengthEpop" class="badge badge-pill" [class.badge-warning]="r.estatusId === 4 || r.estatusId === 33"
                                         [class.badge-primary]="r.estatusId  === 5" [class.badge-info]="r.estatusId  === 6 || r.estatusId >= 29"
                                         [class.badge-success]="r.estatusId  === 7" [class.badge-danger]="r.estatusId  === 8">{{r.estatus | uppercase}}</small>
-                    
+
                                       <ng-template #toLengthEpop>
                                         <small class="badge badge-pill" [class.badge-warning]="r.estatusId  === 4" [class.badge-primary]="r.estatusId  === 5" [class.badge-info]="r.estatusId  === 6 || r.estatusId > 20"
                                           [class.badge-success]="r.estatusId  === 7" [class.badge-danger]="r.estatusId  === 8" placement="bottom"
@@ -136,7 +136,7 @@
                                     <div>
                                       <small class="text-muted mr-2">{{r.fch_Modificacion | date:'dd/MM/yyyy'}}</small>
                                     </div>
-                    
+
                                     <div>
                                       <small class="badge badge-pill badge-warning mr-2">
                                         {{r.diasTrans}}
@@ -153,7 +153,7 @@
 
                   </td>
                   <!-- <td>{{row.fch_Modificacion | date:'dd/MM/yyyy'}}</td> -->
-                  <td> 
+                  <td>
                     <small *ngIf="row.tipoReclutamiento.length < 10 else toLengthTipoRecl" class="badge badge-pill badge-info">
                       {{row.tipoReclutamiento | uppercase}}
                   </small>
@@ -208,7 +208,7 @@
                     <span class="badge badge-pill badge-info" *ngIf="row.comentarios_coord.length == 0">0</span>
                     <small role="button" class="badge badge-pill badge-warning" *ngIf="row.comentarios_coord.length > 0" [popover]="popTemplateComenCoord" #popC="bs-popover" [outsideClick]="true" placement="left"
                       container="body"><i class="fa fa-commenting-o" aria-hidden="true"></i></small>
-                    
+
                       <ng-template #popTemplateComenCoord>
                         <div class="card">
                           <div class="card-body" *ngFor="let r of row.comentarios_coord">
@@ -217,7 +217,7 @@
                         </div>
                     </ng-template>
                   </td>
-                 
+
                   <td> {{row.solicita}}</td>
                 </tr>
 
@@ -242,7 +242,6 @@
   </div>
 
 </div>
-<toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
 <!--mensaje cuando esta vacio la tabla-->
 <ng-template #NotCandidatos>
   <div class="row">

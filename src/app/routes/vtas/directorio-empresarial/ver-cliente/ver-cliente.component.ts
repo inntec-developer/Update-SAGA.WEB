@@ -12,17 +12,17 @@ import { SettingsService } from '../../../../core/settings/settings.service';
   providers: [ClientesService]
 })
 export class VerClienteComponent implements OnInit {
-  private ClienteId: any;
-  private Cliente: any = [];
-  private esCliente: boolean;
+  public ClienteId: any;
+  public Cliente: any;
+  public esCliente: boolean;
 
   //scroll
-  disabled = false;
-  compact = false;
-  invertX = false;
-  invertY = false;
-  shown = 'hover';
-  imprimir: boolean;
+  public disabled = false;
+  public compact = false;
+  public invertX = false;
+  public invertY = false;
+  public shown = 'hover';
+  public imprimir: boolean;
   constructor(
     private spinner: NgxSpinnerService,
     private _Router: Router,

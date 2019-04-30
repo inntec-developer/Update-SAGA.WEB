@@ -11,9 +11,10 @@ import { ComponentsService } from '../../service/Components/components.service';
 })
 export class AsignarRequisicionComponent implements OnInit {
   //Formulario
+  public value: any;
   public AsignacionForm: FormGroup;
-  filteredData: Array<any> = [];
-  filtro: string;
+  public filteredData: Array<any> = [];
+  public filtro: string;
   //Variables de entrada
   @Input() placeHolder: string;
   @Input() Asignados: any[];

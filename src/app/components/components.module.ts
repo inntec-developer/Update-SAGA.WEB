@@ -11,7 +11,6 @@ import { ButtonCheckComponent } from './buttons/button-check/button-check.compon
 import { ButtonClosedComponent } from './buttons/button-closed/button-closed.component';
 import { ButtonDeleteComponent } from './buttons/button-delete/button-delete.component';
 import { ButtonDesignComponent } from './buttons/button-design/button-design.component';
-import { ButtonDesingReclComponent } from './buttons/button-desing-recl/button-desing-recl.component';
 import { ButtonDislikeComponent } from './buttons/button-dislike/button-dislike.component';
 import { ButtonDocsComponent } from './buttons/button-docs/button-docs.component';
 import { ButtonEditComponent } from './buttons/button-edit/button-edit.component';
@@ -27,7 +26,10 @@ import { ButtonsPostulacionesComponent } from './buttons-postulaciones/buttons-p
 import { CalendarioCandidatoComponent } from './calendario/calendario-candidato/calendario-candidato.component';
 import { CandidatosEnProcesoComponent } from './candidatos-en-proceso/candidatos-en-proceso.component';
 import { CardVacanteComponent } from './card-vacantes/card-vacante.component';
+import { CatalogoComponent } from './catalogos/catalogo/catalogo.component';
+import { CatalogosComponent } from './catalogos/catalogos.component';
 import { ClockComponent } from './clock/clock.component';
+import { ColoniasComponent } from './catalogos/colonias/colonias.component';
 import { ComentarioCandidatoComponent } from './comentario-candidato/comentario-candidato.component';
 import { ComentarioVacanteComponent } from './comentario-vacante/comentario-vacante.component';
 import { DetailVacantesComponent } from './detail-vacantes/detail-vacantes.component';
@@ -62,7 +64,11 @@ import { DtVacantesGraficaPAComponent } from './Graficas/grafica-vacantes-pie/dt
 import { EditarCandidatoEstatusComponent } from './editar-candidato-estatus/editar-candidato-estatus.component';
 import { EditarContratadosComponent } from './editar-contratados/editar-contratados.component';
 import { EditarRequiEstatusComponent } from './editar-requi-estatus/editar-requi-estatus.component';
+import { EstadoCivilComponent } from './catalogos/estado-civil/estado-civil.component';
+import { EstadosComponent } from './catalogos/estados/estados.component';
 import { FileManagerComponent } from './file-manager/file-manager.component';
+import { FiltrosComponent } from './catalogos/filtros/filtros.component';
+import { FormsModule } from '@angular/forms';
 import { GraficaResumenComponent } from './Graficas/grafica-resumen/grafica-resumen.component';
 import { GraficaVacanteActivaComponent } from './Graficas/grafica-vacante-activa/grafica-vacante-activa.component';
 import { GraficaVacanteCubiertaComponent } from './Graficas/grafica-vacante-cubierta/grafica-vacante-cubierta.component';
@@ -71,33 +77,25 @@ import { GraficaVacanteVencidaComponent } from './Graficas/grafica-vacante-venci
 import { GraficaVacantesPieComponent } from './Graficas/grafica-vacantes-pie/grafica-vacantes-pie.component';
 import { InfoCandidatoComponent } from './info-candidato/info-candidato.component';
 import { InfoVacanteComponent } from './info-vacante/info-vacante.component';
+import { InformeVacantesComponent } from './informe-vacantes/informe-vacantes.component';
+import { MAT_DATE_LOCALE } from '@angular/material';
+import { MunicipiosComponent } from './catalogos/municipios/municipios.component';
 import { NgModule } from '@angular/core';
 import { ObservacionesComponent } from './tablas/observaciones/observaciones.component';
+import { PaisesComponent } from './catalogos/paises/paises.component';
 import { PrestacionesClienteComponent } from './tablas/prestaciones-cliente/prestaciones-cliente.component';
 import { PrestacionesLeyComponent } from './tablas/prestaciones-ley/prestaciones-ley.component';
 import { ProcesosComponent } from './tablas/procesos/procesos.component';
+import { RegistroCandidatosComponent } from './registro-candidatos/registro-candidatos.component';
+import { RegistroReclutadorComponent } from './registro-reclutador/registro-reclutador.component';
 import { Reporte70Component } from './reporte70/reporte70.component';
 import { ReporteCandidatosComponent } from './tablas/reporte-candidatos/reporte-candidatos.component';
 import { RequisicionNuevaPuroComponent } from './requisicion-nueva-puro/requisicion-nueva-puro.component';
-import { SharedModule } from '../shared/shared.module';
-import { TicketsRegisterComponent } from './tickets-register/tickets-register.component';
-import { RegistroCandidatosComponent } from './registro-candidatos/registro-candidatos.component';
-import { FormsModule } from '@angular/forms';
-import { MAT_DATE_LOCALE } from '@angular/material';
-import { CatalogosComponent } from './catalogos/catalogos.component';
 import { SearchComponent } from './catalogos/search/search.component';
-import { CatalogoComponent } from './catalogos/catalogo/catalogo.component';
-import { PaisesComponent } from './catalogos/paises/paises.component';
-import { EstadosComponent } from './catalogos/estados/estados.component';
-import { MunicipiosComponent } from './catalogos/municipios/municipios.component';
+import { SharedModule } from '../shared/shared.module';
 import { TableComponent } from './catalogos/table/table.component';
-
-import { RegistroReclutadorComponent } from './registro-reclutador/registro-reclutador.component';
-import { InformeVacantesComponent } from './informe-vacantes/informe-vacantes.component';
-import { ColoniasComponent } from './catalogos/colonias/colonias.component';
-import { FiltrosComponent } from './catalogos/filtros/filtros.component';
+import { TicketsRegisterComponent } from './tickets-register/tickets-register.component';
 import { TipoTelefonoComponent } from './catalogos/tipo-telefono/tipo-telefono.component';
-import { EstadoCivilComponent } from './catalogos/estado-civil/estado-civil.component';
 import { TipoUsuarioComponent } from './catalogos/tipo-usuario/tipo-usuario.component';
 import { DepartamentosComponent } from './catalogos/departamentos/departamentos.component';
 import { AreasComponent } from './catalogos/areas/areas.component';
@@ -108,9 +106,11 @@ import { IdiomasComponent } from './catalogos/idiomas/idiomas.component';
 import { DiscapacidadesComponent } from './catalogos/discapacidades/discapacidades.component';
 import { TipolicenciaComponent } from './catalogos/tipolicencia/tipolicencia.component';
 import { TipoexamenComponent } from './catalogos/tipoexamen/tipoexamen.component';
+import { ToolsModule } from '../tools/tools.module';
 @NgModule({
   imports: [
     SharedModule,
+    ToolsModule,
     FormsModule
   ],
   declarations: [
@@ -149,7 +149,6 @@ import { TipoexamenComponent } from './catalogos/tipoexamen/tipoexamen.component
     ButtonPrintComponent,
     ButtonAcceptComponent,
     ButtonDocsComponent,
-    ButtonDesingReclComponent,
     ButtonAddComponent,
     BusquedaCandidatosComponent,
     ClockComponent,
@@ -256,7 +255,6 @@ import { TipoexamenComponent } from './catalogos/tipoexamen/tipoexamen.component
     ButtonPrintComponent,
     ButtonAcceptComponent,
     ButtonDocsComponent,
-    ButtonDesingReclComponent,
     ButtonAddComponent,
     BusquedaCandidatosComponent,
     ClockComponent,

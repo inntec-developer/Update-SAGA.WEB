@@ -1,9 +1,8 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
-import { BrowserModule } from '@angular/platform-browser';
 import {CardService} from './service/SeguimientoVacante/CardService.service';
 import { CoreModule } from './core/core.module';
 import { DetailService } from './service/SeguimientoVacante/DetailService.service';

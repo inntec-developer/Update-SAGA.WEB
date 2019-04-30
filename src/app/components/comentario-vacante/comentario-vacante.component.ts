@@ -16,10 +16,12 @@ export class ComentarioVacanteComponent implements OnInit {
   @Input('RequisicionId') RequisicionId: string;
   @Input('EstatusId') EstatusId: string;
   @Input('MotivoId') MotivoId;
-  private Comentarios: any;
-  private Comentario: any = {};
-  private CountComent: any;
-  private comentario: any;
+  public Comentarios: any;
+  public Comentario: any = {};
+  public CountComent: any;
+  public comentario: any;
+  public msgError: boolean = false;
+  public msgSuccess: boolean = false;
 
   constructor(
     private _ComentariosService: ComentariosService,
@@ -89,9 +91,16 @@ export class ComentarioVacanteComponent implements OnInit {
           this.getComentarios(this.RequisicionId);
           this.comentario = '';
           this.elem.nativeElement.querySelector('textarea').focus();
+          this.msgSuccess = true;
+          setTimeout(() => {
+            this.msgSuccess = false;
+          }, 5000);
         }
       }, err => {
-        console.log(err);
+        this.msgError = true;
+        setTimeout(() => {
+          this.msgError = false;
+        }, 5000);
       });
       setTimeout(() => {
         let scroll = this.elem.nativeElement.querySelector('.container-coments');

@@ -3,7 +3,6 @@ import { NgbCarousel, NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
-import { id } from '@swimlane/ngx-datatable/release/utils';
 
 const swal = require('sweetalert');
 @Component({
@@ -107,10 +106,10 @@ export class CarruselVacantesComponent implements OnInit {
       });
       this.dataSource = this.dataSource.filter(element => {
         if (element.cubierta > 0) {
-       
+
           return element;
         }
-     
+
 
       });
 
