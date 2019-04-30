@@ -1,3 +1,4 @@
+import { CatalogosComponent } from '../../components/catalogos/catalogos.component';
 import { CatalogosService } from '../../service/catalogos/catalogos.service';
 import { ComponentsModule } from '../../components/components.module';
 import { NgModule } from '@angular/core';
@@ -6,7 +7,7 @@ import { PreguntasFrecuentesComponent } from './preguntas-frecuentes/preguntas-f
 import { RouterModule } from '@angular/router';
 import { Routes } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
-import { CatalogosComponent } from '../../components/catalogos/catalogos.component';
+import { ToolsModule } from '../../tools/tools.module';
 
 const routes: Routes = [
   { path: 'preguntas', component: PreguntasFrecuentesComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     SharedModule,
+    ToolsModule,
     RouterModule.forChild(routes),
     ComponentsModule
   ],

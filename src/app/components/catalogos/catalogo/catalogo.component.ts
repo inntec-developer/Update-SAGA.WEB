@@ -1,8 +1,12 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges, Output, EventEmitter } from '@angular/core';
-// Servicios
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
-// Modelos
 import { filtros } from '../../../models/catalogos/catalogos';
+
+// Servicios
+
+// Modelos
+
 
 const swal = require('sweetalert');
 
@@ -14,21 +18,22 @@ const swal = require('sweetalert');
 export class CatalogoComponent implements OnChanges , OnInit {
 
   @Input() public idCatalogo: number;
-  fCatalogo: any;
-  titulo: string;
-  descripcion: string;
-  private DataTable: Array<any>;
-  private HeadTable: Array<String>;
-  private tableColName: Array<String>;
-  paises: any[];
-  estados: any[];
-  municipios: any[];
-  selectedId: any;
+  public fCatalogo: any;
+  public titulo: string;
+  public descripcion: string;
+  public DataTable: Array<any>;
+  public HeadTable: Array<String>;
+  public tableColName: Array<String>;
+  public paises: any[];
+  public estados: any[];
+  public municipios: any[];
+  public selectedId: any;
+  public step = 0;
 
   constructor( private serviceCatalogo: CatalogosService ) {
   }
 
-  private step = 0;
+
 
   setStep(index: number) {
     this.step = index;

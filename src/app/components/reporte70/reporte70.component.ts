@@ -14,16 +14,15 @@ import { RequisicionesService } from './../../service/requisiciones/requisicione
 export class Reporte70Component implements OnInit {
 
 
-  disabled = false;
-  compact = false;
-  invertX = true;
-  invertY = true;
-
-  shown = 'hover';
+  public disabled = false;
+  public compact = false;
+  public invertX = true;
+  public invertY = true;
+  public shown = 'hover';
 
   public rows: Array<any> = [];
 
-  requisiciones = [];
+  public requisiciones = [];
 
   // Varaibles del paginador
   public page: number = 1;
@@ -55,7 +54,7 @@ export class Reporte70Component implements OnInit {
     this.spinner.show();
     this.GetReporte70(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor);
   }
-  
+
 
 
   public columns: Array<any> = [
@@ -97,7 +96,7 @@ export class Reporte70Component implements OnInit {
     this.objstatus1 = estatus;
     this.objtiporeclu1 = tiporeclu;
     this.objtipocordi1 = tipocor;
- 
+
     var ofc = '';
     var sol = '';
     var rec = '';
@@ -105,56 +104,56 @@ export class Reporte70Component implements OnInit {
     var est = '';
     let trcu = '';
     let coo = '';
-  
+
     if(oficina != undefined){
       for (let item of oficina) {
         ofc += item +',';
-      
+
       }
     }
-  
+
     if(solicitante != undefined){
       for (let item of solicitante) {
         sol += item +',';
-        
+
       }
     }
-  
+
     if(reclutador != undefined){
       for (let item of reclutador) {
         rec += item +',';
-       
+
       }
     }
-  
+
     if(empresa != undefined){
       for (let item of empresa) {
         emp += item +',';
-       
+
       }
     }
-  
+
     if(estatus != undefined){
       for (let item of estatus) {
         est += item +',';
-      
+
       }
     }
-  
+
     if(tiporeclu != undefined){
       for (let item of tiporeclu) {
         trcu += item +',';
-      
+
       }
     }
-  
+
     if(tipocor != undefined){
       for (let item of tipocor) {
         coo += item +',';
-      
+
       }
     }
-  
+
   ofc = oficina == undefined?'0':ofc;
   sol = solicitante == undefined?'0':sol;
   rec = reclutador == undefined?'0':rec;
@@ -162,17 +161,17 @@ export class Reporte70Component implements OnInit {
   est = estatus == undefined?'0':est;
   trcu = trcu == undefined?'0':trcu;
   coo = coo == undefined?'0':coo;
-  
-  
+
+
       let pal = document.getElementById('palabra');
       let inc = document.getElementById('fechaInicial');
       let fin = document.getElementById('fechaFinal');
-  
+
       var palabra = pal['value'];
       var inicio = inc['value'];
       var final = fin['value'];
       let tipo = document.getElementById('TipoReporte')['value'];
- 
+
     this._service.GetReporte70(palabra,ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec).subscribe(result => {
       this.requisiciones = result;
       this.rows = this.requisiciones;
@@ -328,7 +327,7 @@ export class Reporte70Component implements OnInit {
     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
     this.length = sortedData.length;
 
-  
+
   }
 //#endregion
 
