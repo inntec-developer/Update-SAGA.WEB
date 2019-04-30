@@ -5,7 +5,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Toast, ToasterConfig } from 'angular2-toaster';
 
 import { ComentariosService } from './../../../../../service/Comentarios/comentarios.service';
-import { IdiomasComponent } from './../../../../recl/candidatos/busqueda/idiomas/idiomas.component';
 import { RequisicionesService } from '../../../../../service/requisiciones/requisiciones.service';
 import { SettingsService } from '../../../../../core/settings/settings.service';
 import { ToasterService } from 'angular2-toaster';

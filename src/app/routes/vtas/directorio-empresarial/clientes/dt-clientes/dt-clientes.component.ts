@@ -19,7 +19,7 @@ export class DtClientesComponent implements OnInit {
   public invertY = false;
   public shown = 'hover';
 
-  public dataSource: Array<any> = [];
+  dataSource: Array<any> = [];
   public errorMessage: any;
   public showFilterRow: boolean;
   public clearFilter: boolean = false;
@@ -207,7 +207,6 @@ export class DtClientesComponent implements OnInit {
     setTimeout(() => {
       this.columns.forEach(element => {
         element.filtering.filterString = '';
-        (<HTMLInputElement>document.getElementById(element.name)).value = '';
       });
       this.onChangeTable(this.config);
     }, 500);

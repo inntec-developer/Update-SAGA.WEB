@@ -1,10 +1,10 @@
-import { ActivatedRoute } from '@angular/router';
-import { forEach } from '@angular/router/src/utils/collection';
-import { ApiConection } from '../../../service/api-conection.service';
 import { Component, OnInit } from '@angular/core';
-import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { ActivatedRoute } from '@angular/router';
+import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
+import { ApiConection } from '../../../service/api-conection.service';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-addadmin',
@@ -25,6 +25,7 @@ export class AddadminComponent implements OnInit {
   filteredData: Array<any> = [];
   IdGrupo: any = null;
   draggable = false;
+  flag = false;
   msj = 'Arrastrar usuario aqui'
   verMsj = false;
 
@@ -81,7 +82,7 @@ onClosed(): void {
   resetBasket() {
     this.ListaPG = [];
     this.GetEntidades();
-      
+
   }
 
   addToGroups($event, idG) {
@@ -106,7 +107,7 @@ onClosed(): void {
           this.ListEntidades.push($event);
         }
     }
-   
+
 
   }
 
@@ -150,10 +151,10 @@ onClosed(): void {
       {
         var id = this.ListAuxEntidades.findIndex(x => x.entidadId === element.entidadId);
         this.ListEntidades.push(this.ListAuxEntidades[id]);
-      }  
-      
+      }
+
     });
-  
+
   }
   DeleteUsers(grupo, user, index) {
 
@@ -183,7 +184,7 @@ onClosed(): void {
           // {
           //   this.ListEntidades[idx]['grupos'] = grupos;
           // }
-        
+
         })
   }
 
@@ -198,7 +199,7 @@ onClosed(): void {
             this.ListaPG.forEach(item => {
               item.fotoAux = ApiConection.ServiceUrlFoto + item.foto;
             })
-          
+
           // var idx = this.ListEntidades.findIndex(x => x.entidadId == Id);
           // if( idx != -1)
           // {
@@ -206,7 +207,7 @@ onClosed(): void {
           // }
           //para llenar el panel donde se hace drop solo se utiliza npara cunado le den select to grupo
           //por si arrastras un usuario y despues selecionas un grupo donde esta incluido el usuario i.e. para que no se repita el usuario
-          //ya no es necesario por que no puedes hacer el drag a menos que selecciones un grupo 
+          //ya no es necesario por que no puedes hacer el drag a menos que selecciones un grupo
 
           // this.ListaPG.forEach(element => {
           //   var idx = this.ListEntidades.findIndex(x => x.entidadId === element.entidadId);
@@ -221,7 +222,7 @@ onClosed(): void {
       {
         this.ListaPG = [];
       }
-        
+
   }
 
   addUsuarioGrupo(idgrupo) {
@@ -229,7 +230,7 @@ onClosed(): void {
     if(idgrupo !== "0" && idgrupo != null && idgrupo != 0)
     {
     let lug = [];
-    
+
     var uniq = this.ListaPG.filter((elem, pos, arr) => {
       return elem.grupos.findIndex(x => x.id == idgrupo) < 0
 
@@ -268,7 +269,7 @@ onClosed(): void {
             this.alert = this.alerts[1];
             this.verMsj = true;
           }
-         
+
         });
 
     }
@@ -297,7 +298,7 @@ onClosed(): void {
           this.ListAuxEntidades = this.ListEntidades;
 
           this.filteredData = this.ListEntidades;
-         
+
         })
   }
 

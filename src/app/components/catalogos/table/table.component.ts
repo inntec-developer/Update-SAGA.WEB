@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
+
 import { debug } from 'util';
 
 @Component({
@@ -16,7 +17,7 @@ export class TableComponent implements OnInit, OnChanges {
   private tableColNameGenerated: Array<String> = new Array<String>();
   private isTableColNameSet: Boolean = false;
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
-  private Reg = false;
+  public Reg = false;
 //#endregion
 
 @Output() IdRegistro = new EventEmitter<number>();

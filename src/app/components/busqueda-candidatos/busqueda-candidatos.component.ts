@@ -4,7 +4,6 @@ import { FormControl, Validators } from '@angular/forms';
 import { CandidatosService } from '../../service/Candidatos/candidatos.service';
 import { Filtros } from '../../models/recl/candidatos';
 import { Observable } from 'rxjs';
-import { PcondiscapacidadComponent } from '../../routes/recl/candidatos/busqueda/pcondiscapacidad/pcondiscapacidad.component';
 import { map } from 'rxjs/operators/map';
 import { startWith } from 'rxjs/operators';
 

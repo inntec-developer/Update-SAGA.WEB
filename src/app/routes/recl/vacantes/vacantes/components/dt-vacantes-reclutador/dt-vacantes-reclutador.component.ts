@@ -4,7 +4,6 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { CandidatosService } from './../../../../../../service/Candidatos/candidatos.service';
 import { DatePipe } from '@angular/common';
 import { DialogAssingRequiComponent } from '../dialogs/dialog-assing-requi/dialog-assing-requi.component';
-import { DialogShowRequiComponent } from '../dialogs/dialog-show-requi/dialog-show-requi.component';
 import { DlgRequisicionPausaComponent } from './../../../../../../components/dlg-requisicion-pausa/dlg-requisicion-pausa.component';
 import { ExcelService } from '../../../../../../service/ExcelService/excel.service';
 import { MatDialog } from '@angular/material';
@@ -14,7 +13,6 @@ import { RequisicionesService } from '../../../../../../service';
 import { Router } from '@angular/router';
 
 const swal = require('sweetalert');
-declare var $: any;
 
 @Component({
   selector: 'app-dt-vacantes-reclutador',
@@ -24,11 +22,11 @@ declare var $: any;
 })
 export class DtVacantesReclutadorComponent implements OnInit {
   //scroll
-  disabled = false;
-  compact = false;
-  invertX = false;
-  invertY = false;
-  shown = 'hover';
+  public disabled = false;
+  public invertX = false;
+  public compact = false;
+  public invertY = false;
+  public shown = 'hover';
 
 
   public dataSource: Array<any> = [];
@@ -696,7 +694,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     });
   }
 
-  OpenDialogRequiPausa(estatusId, estatus) {
+  OpenDialogRequiPausa(estatusId: any, estatus: any) {
     var aux = { requisicionId: this.requi.id, folio: this.requi.folio, cliente: this.requi.vacante, vacante: this.vBtra }
     let dialog = this.dialog.open(DlgRequisicionPausaComponent, {
       width: '50%',
@@ -741,7 +739,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     }
 
   }
- 
+
   openDesignVacante() {
     if (this.aprobador === sessionStorage.getItem('usuario')) {
       this._Router.navigate(['/reclutamiento/configuracionVacante/', this.id, this.folio, this.vBtra], { skipLocationChange: true });

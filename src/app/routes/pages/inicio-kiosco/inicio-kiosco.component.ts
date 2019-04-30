@@ -12,16 +12,16 @@ import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.se
 export class InicioKioscoComponent implements OnInit {
 
   verLogin = true;
-
+  logeado: boolean = false;
   @ViewChild('myCarousel') myCarousel: NgbCarousel;
   vacantes = [];
   showNavigationArrows = true;
   showNavigationIndicators = false;
   modalTicket: boolean = false;
-num = "";
+  num = "";
   categorias: any[];
   dataSource: any;
-  activeId;
+  activeId: any;
   constructor(config: NgbCarouselConfig, private _service: SistTicketsService) {
     config.interval = 10000;
     config.wrap = false;
@@ -35,18 +35,16 @@ num = "";
 
   }
 
-  GetVacantes()
-  {
+  GetVacantes() {
 
     this._service.GetVacantes().subscribe(data => {
       var images = ['./../assets/img/ArteVacantes/img01.png',
-      './../assets/img/ArteVacantes/img02.png', './../assets/img/ArteVacantes/img03.jpg',
-       './../assets/img/ArteVacantes/img04.jpg', './../assets/img/ArteVacantes/img05.png',
-       './../assets/img/ArteVacantes/img06.png', './../assets/img/ArteVacantes/img07.png', './../assets/img/ArteVacantes/img08.png']
+        './../assets/img/ArteVacantes/img02.png', './../assets/img/ArteVacantes/img03.jpg',
+        './../assets/img/ArteVacantes/img04.jpg', './../assets/img/ArteVacantes/img05.png',
+        './../assets/img/ArteVacantes/img06.png', './../assets/img/ArteVacantes/img07.png', './../assets/img/ArteVacantes/img08.png']
 
       this.dataSource = data;
-      if(this.dataSource.length > 0)
-      {
+      if (this.dataSource.length > 0) {
         var color = 0;
         this.categorias = Array.from(new Set(this.dataSource.map(s => s.areaId)))
           .map(id => {
@@ -76,32 +74,28 @@ num = "";
     });
   }
 
-  FiltrarCategoria(id, mocos)
-  {
-    if(id==0)
-    {
+  FiltrarCategoria(id, mocos) {
+    if (id == 0) {
       this.vacantes = this.dataSource;
     }
-    else
-    {
-    var filtro = this.dataSource.filter( item => {
-      if( item.areaId === id )
-      {
-        return item;
-      }
-    });
+    else {
+      var filtro = this.dataSource.filter(item => {
+        if (item.areaId === id) {
+          return item;
+        }
+      });
 
-    this.vacantes = filtro;
-  }
-  this.activeId = this.vacantes[0].id;
-  this.myCarousel.activeId = this.vacantes[0].id;
-  this.myCarousel.cycle();
+      this.vacantes = filtro;
+    }
+    this.activeId = this.vacantes[0].id;
+    this.myCarousel.activeId = this.vacantes[0].id;
+    this.myCarousel.cycle();
 
 
-  //   setTimeout(() => {
-  //     /** spinner ends after 5 seconds */
-  //     this.spinner.hide();
-  // }, 5000);
+    //   setTimeout(() => {
+    //     /** spinner ends after 5 seconds */
+    //     this.spinner.hide();
+    // }, 5000);
 
   }
 
