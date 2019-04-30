@@ -29,10 +29,10 @@
   <br>
   <div class="row">
     <div class="col-md-12 col-sm-12">
-      <app-direccionauto [Damfo]='IdDamfo' [IdDireccion]='FDireccion' (change)='FiltroDireccion($event)'></app-direccionauto>
+      <app-direccionauto [Damfo]='IdDamfo' [IdDireccion]='IdDireccion' (change)='FiltroDireccion($event)'></app-direccionauto>
     </div>
   </div>
- 
+
   <mat-divider></mat-divider>
 </mat-dialog-content>
 <br>
@@ -42,7 +42,7 @@
       <i class="fa fa-times"></i>
     </span> Cancelar
   </button>
-  <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-1 margin" 
+  <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-1 margin"
     (click)="createRequisicion()"
     [disabled]="DisabledButton">
     <span class="btn-label">

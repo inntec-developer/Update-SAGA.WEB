@@ -22,6 +22,8 @@ declare var $: any;
 })
 
 export class DtRequisicionComponent implements OnInit {
+  public reporteCandidatos : boolean = false;
+
   //scroll
   disabled = false;
   compact = false;

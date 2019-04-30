@@ -1,8 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { ComentariosService } from './../../service/Comentarios/comentarios.service';
-import { CandidatosService } from './../../service/Candidatos/candidatos.service';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+
+import { CandidatosService } from './../../service/Candidatos/candidatos.service';
+import { ComentariosService } from './../../service/Comentarios/comentarios.service';
 
 @Component({
   selector: 'app-dlg-requisicion-pausa',
@@ -12,13 +13,13 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 })
 export class DlgRequisicionPausaComponent implements OnInit {
 
-  motivos;
-  comentario: string;
-  motivoId;
-  loading = false;
+  public motivos: any;
+  public comentario: string;
+  public motivoId: any;
+  public loading = false;
   constructor(@Inject(MAT_DIALOG_DATA) public requi: any,
-  private serviceCandidato: CandidatosService, 
-  private serviceComentarios: ComentariosService, 
+  private serviceCandidato: CandidatosService,
+  private serviceComentarios: ComentariosService,
   private toasterService: ToasterService,
   private dialog: MatDialogRef<DlgRequisicionPausaComponent>) { }
 
@@ -31,7 +32,7 @@ export class DlgRequisicionPausaComponent implements OnInit {
     this.serviceCandidato.GetMotivos(39).subscribe(result =>{
       this.motivos = result;
     })
-  
+
   }
 
   AddComentario()
@@ -60,8 +61,8 @@ export class DlgRequisicionPausaComponent implements OnInit {
         console.log(err);
       });
     }
-  
-    
+
+
 /**
    * configuracion para mensajes de acciones.
    */

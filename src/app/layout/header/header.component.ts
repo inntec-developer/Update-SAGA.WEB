@@ -61,12 +61,11 @@ export class HeaderComponent implements OnInit {
             this.fsbutton.nativeElement.style.display = 'none';
         }
 
-        let timer = Observable.timer(2000, 10000);
+        let timer = Observable.timer(1000, 60000);
         this.subscription = timer.subscribe(x => {
             this._service.getAlertStm(this.UserId).subscribe(elemnt => {
                 this.alertMessage = elemnt;
             });
-            this.getAllAlertStm();
         });
     }
 
@@ -126,7 +125,6 @@ export class HeaderComponent implements OnInit {
                 this.NotRead = this.allAlertMessage.filter(alert => alert.activo == true);
             }
         });
-
     }
     leidoTodo() {
         this._service.deleteAlertStm(sessionStorage.getItem('id'), true).subscribe(element => {
@@ -161,7 +159,7 @@ export class HeaderComponent implements OnInit {
 
 const renderActualizaciones = `
 <ul>
-    <li>Loberación de modulo de reportes para los perfiles que lo requieran.
+    <li>Liberación de modulo de reportes para los perfiles que lo requieran.
       <ol>
       <li>Menú Principal -> Reportes -> Reporte</li>
       <li>Para hacer uso del mimos, es necesario utilixar los filtros para que la busqueda,

@@ -8,12 +8,13 @@ import { EnAtencionComponent } from './en-atencion/en-atencion.component';
 import { FilaTicketsComponent } from './fila-tickets/fila-tickets.component';
 import { NgModule } from '@angular/core';
 import { ReclutamientoModule } from './../recl/reclutamiento.module';
+import { ReporteConcurrenciaComponent } from './reporte-concurrencia/reporte-concurrencia.component';
 import { RevisionExamenesComponent } from './revision-examenes/revision-examenes.component';
 import { SeguimientoTicketComponent } from './seguimiento-ticket/seguimiento-ticket.component';
 import { SharedModule } from '../../shared/shared.module';
 import { TicketCitaPruebaComponent } from './ticket-cita-prueba/ticket-cita-prueba.component';
+import { ToolsModule } from '../../tools/tools.module';
 import { VentaModule } from './../vtas/ventas.module';
-import { ReporteConcurrenciaComponent } from './reporte-concurrencia/reporte-concurrencia.component';
 
 const routes: Routes = [
   { path: 'turno', component: SeguimientoTicketComponent},
@@ -28,6 +29,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     SharedModule,
+    ToolsModule,
     RouterModule.forChild(routes),
     ComponentsModule,
     VentaModule,

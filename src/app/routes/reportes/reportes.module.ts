@@ -10,6 +10,7 @@ import { ReporteGeneralComponent } from './reporte-general/reporte-general.compo
 import { ReportesService } from '../../service/Reporte/reportes.service';
 import { SharedModule } from '../../shared/shared.module';
 import { TablaReporteComponent } from './tabla-reporte/tabla-reporte.component';
+import { ToolsModule } from '../../tools/tools.module';
 
 //import { DatePipe } from '@angular/common';
 
@@ -21,6 +22,7 @@ const routes:Routes =[
 @NgModule({
   imports: [
     SharedModule,
+    ToolsModule,
     RouterModule.forChild(routes),
     ComponentsModule,
   ],

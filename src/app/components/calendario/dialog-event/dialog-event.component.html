@@ -13,7 +13,7 @@
     <mat-divider></mat-divider>
   </div>
   <div class="card-body">
-    <form [formGroup]="formEvent" (ngSubmit)="Save()">
+    <form [formGroup]="formEvent">
       <section>
         <mat-form-field>
           <input matInput [(colorPicker)]="ColorPicker" [style.background]="ColorPicker" [(ngModel)]="ColorPicker"

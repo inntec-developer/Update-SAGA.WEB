@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
 
@@ -12,7 +13,7 @@ export class GraficaVacantePorvencComponent implements OnInit {
   Chart: Chart;
   Data: any;
   private UsuarioId: any;
-  private porVencer : number;
+  public porVencer : number;
 
   constructor(private servicio : ComponentsService ) { }
 
@@ -34,15 +35,15 @@ export class GraficaVacantePorvencComponent implements OnInit {
       let espera = item['espera'];
       let pausada = item['pausada'];
       let garantia = item['garantia'];
-     
+
 
       this.Data = {
         datasets: [{
-          backgroundColor: 
+          backgroundColor:
           [
              '#FFED3D',
              '#FF4B4B',
-             '#0F3CFF', 
+             '#0F3CFF',
             '#FF8F35',
             '#3e95cd',
             '#8e5ea2',
@@ -54,9 +55,9 @@ export class GraficaVacantePorvencComponent implements OnInit {
             '#C5FF60'
 
           ],
-          data: 
+          data:
             [
-                this.porVencer, 
+                this.porVencer,
                 total,
                 nuevo ,
                 aprobada ,
@@ -103,10 +104,10 @@ export class GraficaVacantePorvencComponent implements OnInit {
           },
         }
       });
-  
+
     })
     document.oncontextmenu=null
-   
+
 
   }
 

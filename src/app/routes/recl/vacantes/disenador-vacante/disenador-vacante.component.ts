@@ -1,14 +1,13 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 
+import { ApiConection } from '../../../../service/api-conection.service';
 import { CatalogoConfiguracionService } from '../../../../service/DisenioVacante/catalogo-configuracion.service';
 import { ConfiguracionService } from '../../../../service/DisenioVacante/configuracion.service';
 import {Http} from '@angular/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../service/requisiciones/requisiciones.service';
-import { ApiConection } from '../../../../service/api-conection.service';
 
 @Component({
   selector: 'app-disenador-vacante',
@@ -44,7 +43,7 @@ export class DisenadorVacanteComponent implements OnInit {
   private toasterService: ToasterService;
   public bol:boolean;
   private UrlBolsa = ApiConection.ServiceUrlLoginBolsa;
-  
+
   step = 0;
   toaster: any;
   toasterConfig: any;
@@ -192,7 +191,7 @@ export class DisenadorVacanteComponent implements OnInit {
    this.step--;
  }
 
- 
+
 
  PrevResumen() {
   this.spinner.show();
@@ -217,8 +216,8 @@ export class DisenadorVacanteComponent implements OnInit {
   window.open(this.UrlBolsa+'/Home/Previsulizacion?RequiID='+this.Requi+'&tipo=1', '_blank');
  });
  this.ListaCon = [];
- 
-  
+
+
 }
 PrevDetalle() {
   this.spinner.show();
@@ -243,6 +242,6 @@ PrevDetalle() {
   window.open(this.UrlBolsa+'/Home/Previsulizacion?RequiID='+this.Requi, '_blank');
  });
  this.ListaCon = [];
-  
+
 }
 }

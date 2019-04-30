@@ -6,7 +6,6 @@ import { ApiConection } from '../../../service/api-conection.service';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { UploadImgsComponent } from '../upload-imgs/upload-imgs.component';
-import { id } from '@swimlane/ngx-datatable/release/utils';
 
 @Component({
   selector: 'app-add-persona',
@@ -51,12 +50,6 @@ export class AddPersonaComponent implements OnInit {
     this.getUsuarios();
     this.GetCatalogos();
   }
-
-  // ngAfterViewInit(): void {
-  //   setTimeout(() => {
-  //     this.onChangeTable(this.config)
-  //   }, 1500);
-  // }
 
   public rows: Array<any> = [];
   public columns: Array<any> = [
@@ -176,7 +169,6 @@ export class AddPersonaComponent implements OnInit {
     });
     this.onChangeTable(this.config);
     if (!this.selected) {
-      // this._reinciar();
     }
   }
 
@@ -196,7 +188,6 @@ export class AddPersonaComponent implements OnInit {
 
 
   updateFoto() {
-    //this.name = this.name + '.' + this.someInput.selectedFile.type.split('/')[1];
     if (this.someInput.StatusCode == 201 || this.someInput.StatusCode == 500) {
       this.closeModal();
 
@@ -296,19 +287,9 @@ export class AddPersonaComponent implements OnInit {
       .subscribe(data => {
         if (data == 201) {
           this.popToast('success', 'Actualizar Datos', 'Los datos se actualizaron con éxito');
-          // this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
-          // this.alert = this.alerts[0];
-          // this.verMsj = true;
-          // this.success = true;
-          // this.haserror = false;
         }
         else {
           this.popToast('error', 'Actualizar Datos', 'Ocurrio un error al intentar actualizar datos');
-          // this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
-          // this.alert = this.alerts[1];
-          // this.verMsj = true;
-          // this.success = false;
-          // this.haserror = true;
         }
 
       });

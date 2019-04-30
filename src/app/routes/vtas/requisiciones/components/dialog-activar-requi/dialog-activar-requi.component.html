@@ -1,49 +1,49 @@
 <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
 <div>
-  <h3>Re-Activar Requisici&oacute;n {{requisicion.folio}}</h3>
+  <h3>Re-Activar Requisici&oacute;n {{folio}}</h3>
 </div>
 <mat-divider></mat-divider>
 <div class="row">
   <div class="col-sm-12">
-    
+
       <strong>Cliente: </strong> <p>{{data.cliente}}</p>
   </div>
 </div>
 <div class="row">
   <div class="col-md-4 col-sm-4">
-    
+
       <strong>Giro: </strong><p>{{data.giroEmpresa}}</p>
   </div>
   <div class="col-md-4 col-sm-4">
-    
+
       <strong>Actividad: </strong><p>{{data.actividadEmpresa}}</p>
   </div>
 </div>
 <div class="row">
   <div class="col-md-4 col-sm-4">
-    
+
       <strong>Puesto: </strong><p>{{data.vBtra}}</p>
   </div>
   <div class="col-md-4 col-sm-4">
-    
+
       <strong>Sueldo M&iacute;nimo: </strong><p>{{data.sueldoMinimo | currency: '$'}}</p>
   </div>
   <div class="col-md-4 col-sm-4">
-    
+
       <strong>Sueldo M&aacute;ximo: </strong><p>{{data.sueldoMaximo | currency: '$'}}</p>
   </div>
 </div>
 <div class="row">
   <div class="col-md-4 col-sm-4">
-    
+
       <strong>Clase Reclutamiento: </strong><p>{{data.claseReclutamiento}}</p>
   </div>
   <div class="col-md-4 col-sm-4">
-    
+
       <strong>Tipo Reclutamiento: </strong><p>{{data.tipoReclutamiento}}</p>
   </div>
   <div class="col-md-4 col-sm-4">
-      
+
         <strong>Fecha Creacion: </strong><p>{{data.fch_Creacion | date:'dd/MM/yyyy HH:mm'}}</p>
     </div>
 </div>

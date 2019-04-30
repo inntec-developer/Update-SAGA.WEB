@@ -1,5 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { CatalogosService, RequisicionesService } from '../../service';
+import { Cliente, Requisicion } from './../../models/models';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -22,29 +23,28 @@ export class InfoVacanteComponent implements OnInit {
   @Input('Folios') Folios: string;
   @Input('Requisicion') Requisicion: string;
   @Output() EstatusId: EventEmitter<number> = new EventEmitter();
+
+  public cliente: any;
   public RequiId: string;
   public Prioridades: any[];
   public Estatus: any[];
-  public msj: string;
-  public requisicion: Array<any[]>;
-  sueldoMinimo: any;
-  sueldoSemanalMin: number;
-  sueldoDiarioMin: number;
-  sueldoMaximo: number;
-  sueldoDiarioMax: number;
-  sueldoSemanalMax: number;
-  fch_Solicitud: any;
-  folio: any;
-  fch_Limite: any;
-  prioridad: any;
-  estatus: any;
-  fch_Cumplimiento: any;
-  confidencial: any;
-  estatusId: any;
-  prioridadId: any;
-  vacantes: any;
-  asignados: Array<any[]> = [];
-  vBtra: any;
+  public requisicion: any;
+  public fch_Solicitud: any;
+  public folio: any;
+  public fch_Limite: any;
+  public prioridad: any;
+  public estatus: any;
+  public fch_Cumplimiento: any;
+  public confidencial: any;
+  public estatusId: any;
+  public prioridadId: any;
+  public vacantes: any;
+  public asignados: Array<any[]> = [];
+  public vBtra: any;
+
+  //Arreglos
+  public horariosRequi: any;
+
 
 
   constructor(
@@ -61,22 +61,16 @@ export class InfoVacanteComponent implements OnInit {
       this.getPrioridades();
       this.getEstatus(2);
     }
-
   }
 
-  ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
-    if (this.Folios != null && this.Requisicion != null) {
-      this.getInitialData();
-      this.GetDataRequi();
-    }
-
-  }
+  // ngAfterViewInit(): void {
+  //   if (this.Folios != null && this.Requisicion != null) {
+  //     this.getInitialData();
+  //     this.GetDataRequi();
+  //   }
+  // }
 
   ngOnChanges(changes: SimpleChanges): void {
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
     if (changes.Folios && !changes.Folios.isFirstChange() || changes.Requisicion && !changes.Requisicion.isFirstChange()) {
       if (this.Folios != null && this.Requisicion != null) {
         this.getInitialData();
@@ -88,6 +82,7 @@ export class InfoVacanteComponent implements OnInit {
   getInitialData() {
     this.serviceRequisicion.getRequiFolio(this.Folios)
       .subscribe(DataRequisicion => {
+        debugger;
         this.RequiId = DataRequisicion.id;
         this.folio = DataRequisicion.folio;
         this.fch_Solicitud = DataRequisicion.fch_Creacion;
@@ -122,7 +117,10 @@ export class InfoVacanteComponent implements OnInit {
   GetDataRequi() {
     this.serviceRequisicion.getNewRequi(this.Requisicion)
       .subscribe(data => {
+        debugger;
         this.requisicion = data;
+        this.cliente = data['cliente'];
+        this.horariosRequi = data['horariosRequi'];
         this.spinner.hide();
       });
   }

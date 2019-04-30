@@ -9,33 +9,33 @@ import { ToasterService } from 'angular2-toaster';
   selector: 'app-dialog-activar-requi',
   templateUrl: './dialog-activar-requi.component.html',
   styleUrls: ['./dialog-activar-requi.component.scss'],
-  providers : [RequisicionesService] 
+  providers : [RequisicionesService]
 })
 export class DialogActivarRequiComponent implements OnInit {
-  textBtnCerrar: string;
-  textBtnAceptar: string;
-  requisicion : any[];
-  infoReactivarRequi : any;
-  return: any;
-  folio: number;
-  loading : boolean;
-  
+  public textBtnCerrar: string;
+  public textBtnAceptar: string;
+  public requisicion : any;
+  public infoReactivarRequi : any;
+  public return: any;
+  public folio: number;
+  public loading : boolean;
+
 
   constructor(
     private dialogReActivar : MatDialogRef<DialogActivarRequiComponent>,
     private toasterService: ToasterService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private service : RequisicionesService,
-  ) { 
+  ) {
     this.textBtnCerrar = 'Cerrar';
     this.textBtnAceptar = 'Aceptar';
   }
 
-  
+
 
   // Configuracion de mensaje
-  toaster: any;
-  ToasterConfig: any;
+  public toaster: any;
+  public ToasterConfig: any;
   toasterconfig: ToasterConfig =  new ToasterConfig({
     positionClass: 'toast-bottom-right',
     limit: 7,

@@ -15,15 +15,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class ViewCuerpoRequiComponent implements OnInit {
   @Input('Requisicion') Requisicion: string;
   @Input('ShowRequi') ShowRequi: boolean;
-  public requisicion: Array<any[]>;
+  public requisicion: any;
   public checked: boolean = false;
-  sueldoMinimo: any;
-  sueldoSemanalMin: number;
-  sueldoDiarioMin: number;
-  sueldoMaximo: number;
-  sueldoDiarioMax: number;
-  sueldoSemanalMax: number;
-  EstatusRequi: any;
+  public EstatusRequi: any;
 
   constructor(
     private serviceRequisiciones: RequisicionesService,
@@ -37,16 +31,12 @@ export class ViewCuerpoRequiComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
     if (this.Requisicion != null) {
       this.GetDataRequi();
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
     if (changes.Requisicion && !changes.Requisicion.isFirstChange()) {
       this.GetDataRequi();
     }

@@ -16,18 +16,23 @@ export class ReporteCandidatosComponent implements OnInit {
   @Input('EstatusId') EstatusId: any;
   @ViewChild('modallib') modal: any;
 
+  public disabled = false;
+  public compact = false;
+  public invertX = false;
+  public invertY = false;
+  public shown = 'hover';
 
-  private UsuarioId: string;
-  private objLiberar: Array<any> = [];
-  private CandidatoId: string;
-  private ProcesoCandidatoId: any;
-  private auxestatus = true;
-  private desapartar = true;
-  private loading: boolean;
-  private dlgLiberar = false;
-  private selected: boolean;
-  private candidatos: boolean;
-  private rowAux = [];
+  public UsuarioId: string;
+  public objLiberar: Array<any> = [];
+  public CandidatoId: string;
+  public ProcesoCandidatoId: any;
+  public auxestatus = true;
+  public desapartar = true;
+  public loading: boolean;
+  public dlgLiberar = false;
+  public selected: boolean;
+  public candidatos: boolean;
+  public rowAux = [];
 
 
   // Varaibles del paginador

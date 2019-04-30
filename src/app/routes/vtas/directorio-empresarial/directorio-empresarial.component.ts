@@ -10,12 +10,12 @@ import { Router } from '@angular/router';
   providers: [ClientesService]
 })
 export class DirectorioEmpresarialComponent implements OnInit {
-  Prospectos: Array<any> = [];
-  Clientes: Array<any> = [];
-  CountProspectos: number = 0;
-  CountClientes: number = 0;
-  viewProspectos: boolean = null;
-  
+  public Prospectos: Array<any> = [];
+  public Clientes: Array<any> = [];
+  public CountProspectos: number = 0;
+  public CountClientes: number = 0;
+  public viewProspectos: boolean = null;
+
 
   constructor(
     private _service: ClientesService,

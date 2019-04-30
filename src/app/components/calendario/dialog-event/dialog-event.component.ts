@@ -90,11 +90,11 @@ export class DialogEventComponent implements OnInit {
   //   //   HoraFin: [{ value: '18:00' }]
   //   // });
   // }
-  private _CheckNuevaFecha() {
+  public _CheckNuevaFecha() {
     this.minLimitDate = this.formEvent.get('Inicio').value;
   }
 
-  private _CheckAllDay() {
+  public _CheckAllDay() {
     this.allDaySelected = this.formEvent.get('AllDay').value;
   }
 

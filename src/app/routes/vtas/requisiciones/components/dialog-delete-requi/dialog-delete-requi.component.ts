@@ -15,15 +15,15 @@ import { _createDefaultCookieXSRFStrategy } from '@angular/http/src/http_module'
   providers: [RequisicionesService]
 })
 export class DialogDeleteRequiComponent implements OnInit {
-  // Varibales de contol 
-  requisicion : any[];
-  infoDeleteRequi: any;
-  return: any;
-  folio: number;
-  success : boolean;
-  loading : boolean;
-  textBtnCerrar: string;
-  textBtnAceptar: string;
+  // Varibales de contol
+  public requisicion : any;
+  public infoDeleteRequi: any;
+  public return: any;
+  public folio: number;
+  public success : boolean;
+  public loading : boolean;
+  public textBtnCerrar: string;
+  public textBtnAceptar: string;
   constructor(
     private dialogDelete: MatDialogRef<DialogDeleteRequiComponent>,
     private _Router: Router,
@@ -32,12 +32,12 @@ export class DialogDeleteRequiComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private service: RequisicionesService,
     private setings: SettingsService
-  ) { 
+  ) {
     dialogDelete.disableClose = true;
     this.textBtnCerrar = 'Cerrar';
     this.textBtnAceptar = 'Aceptar';
   }
-  
+
    // Configuracion de mensaje
    toaster: any;
   toasterConfig: any;

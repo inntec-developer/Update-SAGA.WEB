@@ -38,7 +38,7 @@
             removePreloader();
             // retore scrollbar
             body.style.overflow = '';
-        }, 300);
+        }, 100);
     }
 
     function removePreloader() {

@@ -1,8 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { AfterViewInit, Directive, Input } from '@angular/core';
 
-import { style } from '@angular/animations';
-
 @Directive({
   selector: '[chkPrivilegiosButtons]'
 })
@@ -12,8 +10,8 @@ export class ChkButtonsDirective implements AfterViewInit {
 
      }
 
-  ngAfterViewInit(){ 
-    var ruta; 
+  ngAfterViewInit(){
+    var ruta;
 
     var btncreate = document.querySelectorAll("#create");
     var btnupdate = document.querySelectorAll("#update");
@@ -21,8 +19,8 @@ export class ChkButtonsDirective implements AfterViewInit {
     var btnspecial = document.querySelectorAll("#special");
     let privilegios = JSON.parse(sessionStorage.getItem('privilegios'));
 
-     ruta = this.activeRoute.snapshot.routeConfig.data ? 
-     this.activeRoute.snapshot.routeConfig.data.componente : 
+     ruta = this.activeRoute.snapshot.routeConfig.data ?
+     this.activeRoute.snapshot.routeConfig.data.componente :
       sessionStorage.getItem('ruta')
 
       if(ruta == null)
@@ -64,19 +62,19 @@ export class ChkButtonsDirective implements AfterViewInit {
       }
       if(btnupdate.length > 0 && !campo.update)
       {
-        for (var i = 0; i < btnupdate.length; i++) 
+        for (var i = 0; i < btnupdate.length; i++)
         {
           btnupdate[i].setAttribute('hidden', 'true')
           if(btnupdate[i].childElementCount > 0)
           {
             btnupdate[i].firstElementChild.removeAttribute('disabled')
           }
-          
+
         }
       }
       else if(btnupdate.length > 0 && campo.update)
       {
-        for (var i = 0; i < btnupdate.length; i++) 
+        for (var i = 0; i < btnupdate.length; i++)
         {
           btnupdate[i].removeAttribute('hidden')
           if(btnupdate[i].childElementCount > 0)
@@ -88,7 +86,7 @@ export class ChkButtonsDirective implements AfterViewInit {
       }
       if(btndelete.length > 0 && !campo.delete)
       {
-  
+
         for (var i = 0; i < btndelete.length; i++)
         {
           btndelete[i].setAttribute('hidden', 'true')
@@ -136,6 +134,6 @@ export class ChkButtonsDirective implements AfterViewInit {
     });
 }
 
-  
-      
+
+
 }

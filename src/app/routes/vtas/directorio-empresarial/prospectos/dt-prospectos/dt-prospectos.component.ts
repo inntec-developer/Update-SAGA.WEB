@@ -16,17 +16,17 @@ declare var $: any;
 })
 export class DtProspectosComponent implements OnInit {
   //scroll
-  disabled = false;
-  compact = false;
-  invertX = false;
-  invertY = false;
-  shown = 'hover';
+  public disabled = false;
+  public compact = false;
+  public invertX = false;
+  public invertY = false;
+  public shown = 'hover';
 
   public dataSource: Array<any> = [];
-  errorMessage: any;
-  showFilterRow: boolean;
+  public errorMessage: any;
+  public showFilterRow: boolean;
   public clearFilter: boolean = false;
-  selected: boolean = false;
+  public selected: boolean = false;
 
   /* Formulario para hacer cliente */
   public formCliente: FormGroup;
@@ -45,7 +45,7 @@ export class DtProspectosComponent implements OnInit {
   public rowAux = [];
   public element: any = null;
   public Usuario: string;
-  Loading: boolean;
+  public Loading: boolean;
 
   constructor(
     private _service: ClientesService,

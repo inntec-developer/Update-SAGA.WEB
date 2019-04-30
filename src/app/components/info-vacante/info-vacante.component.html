@@ -87,7 +87,7 @@
     <div class="row">
       <div class="col-md-12">
         <!-- HORARIOS -->
-        <app-dt-horarios [Horarios]="requisicion?.horariosRequi" [Requi]="false" [EstatusRequi]="requisicion?.estatusId"></app-dt-horarios>
+        <app-dt-horarios [Horarios]="horariosRequi" [Requi]="false" [EstatusRequi]="estatusId"></app-dt-horarios>
       </div>
     </div>
   </div>
@@ -104,23 +104,23 @@
         <mat-divider></mat-divider>
         <p>
           <strong>Nombre Comercial: </strong>
-          <label id="nombre" class="card-text"> {{requisicion?.cliente?.nombrecomercial | uppercase}}</label>
+          <label id="nombre" class="card-text"> {{cliente?.nombrecomercial | uppercase}}</label>
         </p>
         <p>
           <strong>Raz&oacute;n Social: </strong>
-          <label class="card-text"> {{requisicion?.cliente?.razonSocial | uppercase}}</label>
+          <label class="card-text"> {{cliente?.razonSocial | uppercase}}</label>
         </p>
         <p>
           <strong>RFC: </strong>
-          <label class="card-text"> {{requisicion?.cliente?.rfc | uppercase}}</label>
+          <label class="card-text"> {{cliente?.rfc | uppercase}}</label>
         </p>
         <p>
           <strong>Giro Empresa: </strong>
-          <label class="card-text"> {{requisicion?.cliente?.giroEmpresas?.giroEmpresa | uppercase}}</label>
+          <label class="card-text"> {{cliente?.giroEmpresas?.giroEmpresa | uppercase}}</label>
         </p>
         <p>
           <strong>Actividad Empresa: </strong>
-          <label class="card-text"> {{requisicion?.cliente?.actividadEmpresas?.actividadEmpresa | uppercase}}</label>
+          <label class="card-text"> {{cliente?.actividadEmpresas?.actividadEmpresa | uppercase}}</label>
         </p>
       </div>
       <div class="col-md-3 col-sm-12 col-xs-12">
@@ -150,7 +150,7 @@
         <mat-divider></mat-divider>
         <p>
           <strong>Nombre del Perfil: </strong>
-          <label class="card-text"> {{requisicion?.vBtra}}</label>
+          <label class="card-text"> {{vBtra}}</label>
         </p>
         <p>
           <strong>&Aacute;rea: </strong>
@@ -277,14 +277,14 @@
 <div class="row">
   <div class="col-md-6">
     <!-- TELEFONOS -->
-    <app-dt-telefonos [Telefonos]="requisicion?.cliente?.telefonos"></app-dt-telefonos>
+    <app-dt-telefonos [Telefonos]="cliente?.telefonos"></app-dt-telefonos>
   </div>
 </div>
 <br />
 <!-- CONTACTOS -->
 <div class="row">
   <div class="col-md-10">
-    <app-dt-contactos [Contactos]="requisicion?.cliente?.contactos"></app-dt-contactos>
+    <app-dt-contactos [Contactos]="cliente?.contactos"></app-dt-contactos>
   </div>
 </div>
 <br />

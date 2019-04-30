@@ -1,8 +1,9 @@
-import { ComentariosService } from './../../service/Comentarios/comentarios.service';
-import { CandidatosService } from './../../service/Candidatos/candidatos.service';
-import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+
+import { CandidatosService } from './../../service/Candidatos/candidatos.service';
+import { ComentariosService } from './../../service/Comentarios/comentarios.service';
 
 @Component({
   selector: 'app-dlg-comentarios-nr',
@@ -12,13 +13,13 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 })
 export class DlgComentariosNRComponent implements OnInit, AfterViewInit {
 
-  motivos;
-  comentario: string;
-  motivoId;
-  loading = false;
+  public motivos: any;
+  public comentario: string;
+  public motivoId: any;
+  public loading = false;
   constructor(@Inject(MAT_DIALOG_DATA) public usuario: any,
-   private serviceCandidato: CandidatosService, 
-   private serviceComentarios: ComentariosService, 
+   private serviceCandidato: CandidatosService,
+   private serviceComentarios: ComentariosService,
    private toasterService: ToasterService,
    private dialog: MatDialogRef<DlgComentariosNRComponent>) { }
 
@@ -37,9 +38,9 @@ export class DlgComentariosNRComponent implements OnInit, AfterViewInit {
     this.serviceCandidato.GetMotivos(28).subscribe(result =>{
       this.motivos = result;
     })
-  
+
   }
-  
+
   AddComentario()
   {
     this.loading = true;
@@ -65,16 +66,16 @@ export class DlgComentariosNRComponent implements OnInit, AfterViewInit {
         else
         {
           this.loading = false;
-       
+
        //   this.popToast('error', 'Candidato posible NR', 'Ocurrio un error al intentar agregar comentario');
-        
+
         this.dialog.close(false);
 
         }
       });
     }
-  
-    
+
+
 /**
    * configuracion para mensajes de acciones.
    */

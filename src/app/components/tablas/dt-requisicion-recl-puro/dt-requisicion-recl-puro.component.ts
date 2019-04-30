@@ -17,14 +17,14 @@ import { Router } from '@angular/router';
   providers: [RequisicionesService]
 })
 export class DtRequisicionReclPuroComponent implements OnInit {
-  disabled = false;
-  compact = false;
-  invertX = false;
-  invertY = false;
-  shown = 'hover';
-  
-  dataSource = [];
-  Vacantes: number = 0;
+  public disabled = false;
+  public compact = false;
+  public invertX = false;
+  public invertY = false;
+  public shown = 'hover';
+
+  public dataSource = [];
+  public Vacantes: number = 0;
   // Varaibles del paginador
   public page: number = 1;
   public itemsPerPage: number = 20;
@@ -32,25 +32,25 @@ export class DtRequisicionReclPuroComponent implements OnInit {
   public numPages: number = 1;
   public length: number = 0;
 
-  showFilterRow: boolean;
-  registros: number;
-  errorMessage: any;
-  element: any = [];
+  public showFilterRow: boolean;
+  public registros: number;
+  public errorMessage: any;
+  public element: any = [];
 
-  requisicionId: any;
-  Vacante: any;
-  RequisicionId: any;
-  estatusId: any;
-  Folio: any;
-  row = [];
-  rowAux: any = [];
+  public requisicionId: any;
+  public Vacante: any;
+  public RequisicionId: any;
+  public estatusId: any;
+  public Folio: any;
+  public row = [];
+  public rowAux: any = [];
 
-  facturar = false;
-  cancelar = false;
-  borrar = false;
-  autorizar = false;
-  view = false;
-  coment = false;
+  public facturar = false;
+  public cancelar = false;
+  public borrar = false;
+  public autorizar = false;
+  public view = false;
+  public coment = false;
 
   constructor(private service: RequisicionesService, private spinner: NgxSpinnerService,
     private _Router: Router,
@@ -223,7 +223,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
     this.RequisicionId = data.id
     this.estatusId = data.estatusId;
     this.Folio = data.folio;
-    this.Vacante = data.vBtra;
+    this.Vacante  = data.vBtra;
     this.element = data;
 
     this.row = data;

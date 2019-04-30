@@ -25,6 +25,7 @@ import { RequisicionComponent } from './requisiciones/requisicion.component';
 import { RequisicionNuevaComponent } from './requisiciones/components/requisicion-nueva/requisicion-nueva.component';
 import { SharedModule } from '../../shared/shared.module';
 import { TelefonosClienteComponent } from './directorio-empresarial/editar-clientes/Components/telefonos-cliente/telefonos-cliente.component';
+import { ToolsModule } from '../../tools/tools.module';
 import { UpdateInfoRequiComponent } from './requisiciones/components/update-info-requi/update-info-requi.component';
 import { UpdateRequisicionComponent } from './requisiciones/components/update-requisicion/update-requisicion.component';
 import { VerClienteComponent } from './directorio-empresarial/ver-cliente/ver-cliente.component';
@@ -50,6 +51,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     SharedModule,
+    ToolsModule,
     ComponentsModule,
     RouterModule.forChild(routes),
     // HttpModule,

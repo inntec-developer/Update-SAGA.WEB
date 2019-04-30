@@ -13,17 +13,17 @@ declare var $: any;
 })
 export class DtClientesComponent implements OnInit {
   //scroll
-  disabled = false;
-  compact = false;
-  invertX = false;
-  invertY = false;
-  shown = 'hover';
+  public disabled = false;
+  public compact = false;
+  public invertX = false;
+  public invertY = false;
+  public shown = 'hover';
 
   public dataSource: Array<any> = [];
   public errorMessage: any;
   public showFilterRow: boolean;
   public clearFilter: boolean = false;
-  selected: boolean = false;
+  public selected: boolean = false;
 
   /* Variables de Paginador */
   public page: number = 1;

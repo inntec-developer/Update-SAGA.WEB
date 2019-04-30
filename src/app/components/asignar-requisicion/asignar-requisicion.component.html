@@ -1,18 +1,18 @@
 <form [formGroup]="AsignacionForm">
   <div class="form-group">
-    <ngx-select 
-      [allowClear]="true" 
+    <ngx-select
+      [allowClear]="true"
       autoClearSearch="true"
-      placeholder="Busqueda..." 
+      placeholder="Busqueda..."
       formControlName="selectControl"
-      (data)="value" 
-      class="select-asig" 
-      [multiple]="true" 
-      [items]="items" 
-      (remove)="valueChange($event)" 
+      (data)="value"
+      class="select-asig"
+      [multiple]="true"
+      [items]="items"
+      (remove)="valueChange($event)"
       (select)="valueChange($event)"
       (navigated)="valueChange($event)"
-      optionValueField="id" 
+      optionValueField="id"
       optionTextField="nombre"
       optGroupLabelField="nombre" optGroupOptionsField="usuarios">
       <ng-template ngx-select-option-selected let-option let-text="descripcion">

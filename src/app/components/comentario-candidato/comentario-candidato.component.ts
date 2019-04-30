@@ -17,10 +17,13 @@ export class ComentarioCandidatoComponent implements OnInit {
   @Input('RequisicionId') RequisicionId: any;
   @Input('ProcesoCandidatoId') ProcesocandidatoId: any;
 
-  private Comentarios: any;
-  private Comentario: any = {};
-  private comentario: any;
-  CountComent: any;
+  public Comentarios: any;
+  public Comentario: any = {};
+  public comentario: any;
+  public CountComent: any;
+
+  public msgError: boolean = false;
+  public msgSuccess: boolean = false;
 
   constructor(
     private _ComentariosService: ComentariosService,
@@ -83,9 +86,16 @@ export class ComentarioCandidatoComponent implements OnInit {
         if (data == 200) {
           this.getComentarios(this.CandidatoId);
           this.comentario = '';
+          this.msgSuccess = true;
+          setTimeout(() => {
+            this.msgSuccess = false;
+          }, 5000);
         }
       }, err => {
-        console.log(err);
+        this.msgError = true;
+        setTimeout(() => {
+          this.msgError = false;
+        }, 5000);
       });
     }
   }

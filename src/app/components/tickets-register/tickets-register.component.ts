@@ -1,6 +1,7 @@
-
 import { Component, OnInit } from '@angular/core';
+
 import { MatDialogRef } from '@angular/material';
+
 const swal = require('sweetalert');
 @Component({
   selector: 'app-tickets-register',
@@ -9,13 +10,15 @@ const swal = require('sweetalert');
 })
 export class TicketsRegisterComponent implements OnInit {
 
-  flagMX = true;
-  flagEU = false;
-  extranjero = false;
-  verLogin = false;
+  public flagMX = true;
+  public flagEU = false;
+  public extranjero = false;
+  public verLogin = false;
+  public logeado: boolean;
   constructor(private dialog : MatDialogRef<TicketsRegisterComponent>) { }
 
   ngOnInit() {
+    this.logeado = false;
   }
 
   registrarUsuario($event)

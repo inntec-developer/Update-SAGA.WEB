@@ -8,13 +8,11 @@ $width: 40px;
 $overlay-color: #f0f0f0;
 
 body {
-
-    // whirl loaders can be used in cards to show a preloader
     .whirl {
         position: relative;
         &:before {
             content: attr(data-spinner-text);
-            display: block; // Added to force display
+            display: block;
             background-color: $overlay-color;
             opacity: 0.7;
         }
@@ -24,8 +22,7 @@ body {
         &:after {
             border-top-color: $primary;
         }
-    } // Note: Some other Whirl CSS requires to customize
-    //       the animation $keyframes
+    }
     .whirl.blade:after {
         border-bottom-color: $primary;
     }
