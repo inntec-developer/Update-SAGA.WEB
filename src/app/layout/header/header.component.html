@@ -78,7 +78,7 @@
       <div *dropdownMenu class="dropdown-menu dropdown-menu-right animated flipInX" style="max-width: 200px;">
         <div class="dropdown-item">
           <div class=" d-flex justify-content-between">
-            <a href="#" (click)="openModal(template)">
+            <a href="#" (click)="openModal(template); getAllAlertStm();">
               <p class="text-info text-left action">Mostrar todo</p>
             </a>
             <a href="#" (click)="leidoTodo()" *ngIf="NotRead.length > 0">
