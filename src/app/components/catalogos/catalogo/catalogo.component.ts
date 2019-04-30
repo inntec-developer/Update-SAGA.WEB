@@ -30,6 +30,7 @@ export class CatalogoComponent implements OnChanges , OnInit {
   public selectedId: any;
   public areas: any[];
   public step = 0;
+  public log: any;
 
   constructor( private serviceCatalogo: CatalogosService ) {
   }
