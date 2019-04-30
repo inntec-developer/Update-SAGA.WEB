@@ -58,7 +58,9 @@ export class VacantesComponent implements OnInit {
   getInfoVacantes() {
     this.service.GetInformeRequisiciones(this.clienteId).subscribe(data => {
       this.dataInfoRequi = data;
-      this.rowsInfo= data;
+      this.rowsInfo = this.dataInfoRequi.slice(0, this.itemsPerPageInfo);
+      this.registrosInfo = this.rowsInfo.length;
+      this.lengthInfo = this.dataInfoRequi.length;
       // this._appcomponent.nombreCliente = this.dataInfoRequi[0].cliente;
       // sessionStorage.setItem('nombreCliente', this.dataInfoRequi[0].cliente)
 

@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges, EventEmitter, Output } from '@angular/core';
-import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { Component, OnInit, Input, SimpleChanges, OnChanges, EventEmitter, Output, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
 // Servicios
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 // Modelos
@@ -13,10 +14,17 @@ import { catalogos } from '../../../models/catalogos/catalogos';
 export class EstadosComponent implements OnInit, OnChanges {
 
   @Input() SelectedEstado: any;
+  @Input() Log: any;
   @Input() Paises: any[];
   @Output() UpEstados = new EventEmitter<number>(); // Id de Estado para actualizar tabla.
   formEstados: FormGroup;
   CPaises: any[];
+
+  displayedColumns: string[] = ['id', 'usuario', 'fechaAct', 'tpMov'];
+  dataSource: MatTableDataSource<any>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor( private services: CatalogosService ) {
     this.formEstados = new FormGroup({
@@ -32,7 +40,7 @@ export class EstadosComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes['SelectedEstado'].firstChange) {
+    if (this.SelectedEstado !== undefined) {
       this.Habilita(false);
       this.CPaises = this.Paises;
       const idpais = this.CPaises.find( p => p.pais === this.SelectedEstado.pais ).id;
@@ -41,6 +49,11 @@ export class EstadosComponent implements OnInit, OnChanges {
       this.formEstados.get('estado').setValue(this.SelectedEstado.estado);
       this.formEstados.get('clave').setValue(this.SelectedEstado.clave);
       this.formEstados.get('activo').setValue(this.SelectedEstado.activo);
+    }
+    if (this.Log !== undefined) {
+      this.dataSource = new MatTableDataSource(this.Log);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }
   }
 
@@ -54,6 +67,7 @@ export class EstadosComponent implements OnInit, OnChanges {
   Save() {
     const catalogo: catalogos = new catalogos();
     this.SelectedEstado !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
+    catalogo.usuario = sessionStorage.getItem('usuario');
     catalogo.Catalogos = {
       Id: 2,
       Nombre: 'Estados',
@@ -91,4 +105,11 @@ export class EstadosComponent implements OnInit, OnChanges {
     }
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 }

@@ -118,7 +118,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
           this.totalPos += r.vacantes;
         }
       })
-      this.onChangeTable(this.config);
+      this.rows = this.dataSource.slice(0, this.itemsPerPage);
+      this.registros = this.rows.length;
+      this.length = this.dataSource.length;
+     // this.onChangeTable(this.config);
       this.spinner.hide();
 
     });
@@ -172,18 +175,18 @@ export class DtVacantesReclutadorComponent implements OnInit {
   public rows: Array<any> = [];
   public columns: Array<any> = [
     { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
-    { title: 'Solicita', className: 'text-info text-center', name: 'solicita', filtering: { filterString: '', placeholder: 'Solicita' } },
+    { title: 'Solicitante', className: 'text-info text-center', name: 'solicita', filtering: { filterString: '', placeholder: 'Solicitante' } },
     { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
     { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
     { title: 'Cub/Vac', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No.' } },
-    { title: 'Tipo Recl.', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo' } },
-    { title: 'Clase Recl.', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Clase' } },
+    { title: 'Coordinación.', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Coordinación' } },
     // { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
     // { title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
     { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
-    { title: 'Prioridad', className: 'text-info text-center', name: 'prioridad', filtering: { filterString: '', placeholder: 'Prioridad' } },
+    { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador', filtering: { filterString: '', placeholder: 'Coordinador' } },
+    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador' } },
     { title: 'Postulados', className: 'text-info text-center', name: 'postulados', filtering: { filterString: '', placeholder: 'Postulados' } },
     { title: 'En Proceso', className: 'text-info text-center', name: 'enProceso', filtering: { filterString: '', placeholder: 'Proceso' } },
   ];
@@ -241,7 +244,40 @@ export class DtVacantesReclutadorComponent implements OnInit {
       if (column.filtering) {
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
-            return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+          {
+            if(!Array.isArray(item[column.name]))
+            {
+              return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+            }
+            else
+            {
+                let aux = item[column.name];
+                let mocos = false;
+                if(item[column.name].length > 0)
+                {
+                  item[column.name].forEach(element => {
+                    if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
+                    {
+                      mocos = true;
+                      return;
+                    }
+                  });
+
+                  if(mocos)
+                  {
+                    return item[column.name];
+                  }
+                }
+              else
+              {
+                  return item[column.name];
+              }
+            }
+          }
+          else
+          {
+            return 'sin asignar'
+          }
         });
       }
     });
@@ -291,10 +327,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
     this.rows = this.dataSource;
     let filteredData = this.changeFilter(this.dataSource, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
+    //let sortedData = this.changeSort(filteredData, this.config);
+    this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
     this.registros = this.rows.length;
-    this.length = sortedData.length;
+    this.length = filteredData.length;
     setTimeout(() => {
       this.spinner.hide();
     }, 700);
@@ -386,10 +422,15 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.asignar = true;
     this.disenador = true;
     this.pds = true;
+    this.page = 1;
   }
 
   ValidarEstatus(estatusId) {
     //revisar en pausa
+    (this.element.propietarioId == sessionStorage.getItem("id") && (estatusId != 39 && estatusId != 34 && estatusId != 35 && estatusId != 36 && estatusId != 37) && this.element.vacantes > 0 )
+    ? this.asignar = false : this.asignar = true
+
+    estatusId == 6 && this.element.propietarioId == sessionStorage.getItem("id") && this.element.vacantes > 0 ? this.disenador = false : this.disenador = true;
 
     if (estatusId == 4 && this.element.vacantes > 0) //nueva
     {
@@ -399,8 +440,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = false;
-      this.disenador = true;
     }
     else if (estatusId == 6 && this.element.vacantes > 0 && this.element.confidencial)// aprobada
     {
@@ -410,8 +449,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = false;
-      this.disenador = true;
     }
     else if (estatusId == 6 && this.element.vacantes > 0)// aprobada
     {
@@ -421,8 +458,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = false;
-      this.disenador = false;
     }
     else if (estatusId == 7 && this.element.vacantes > 0 && this.element.enProceso == 0)// publicada
     {
@@ -431,9 +466,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ecc = true; //envío candidato cliente
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
-      this.pausa = false;
-      this.asignar = false;
-      this.disenador = true;
     }
     else if (estatusId == 7 && this.element.vacantes > 0 && this.element.enProceso > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0)// publicada
     {
@@ -443,8 +475,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = false;
-      this.asignar = false;
-      this.disenador = true;
     }
     else if (estatusId == 7 && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR > 0)// publicada
     {
@@ -454,8 +484,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = false;
-      this.asignar = false;
-      this.disenador = true;
     }
     else if (estatusId == 7 && this.element.vacantes > 0 && this.element.enProcesoFC > 0)// publicada
     {
@@ -465,8 +493,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = false; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = false;
-      this.disenador = true;
     }
     else if (estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso == 0) //busqueda de candidatos
     {
@@ -476,8 +502,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = false;
-      this.asignar = false;
-      this.disenador = true;
     }
     else if (estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso > 0) // busqueda de candidatos
     {
@@ -487,8 +511,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = false;
-      this.asignar = false;
-      this.disenador = true;
     }
     else if (estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFC > 0)// busqueda de candidatos
     {
@@ -498,8 +520,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = false; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = false;
-      this.disenador = true;
     }
     else if (estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFR > 0) //busqueda de candidatos
     {
@@ -509,8 +529,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = false;
-      this.asignar = false;
-      this.disenador = true;
     }
     else if (estatusId == 38 && this.element.vacantes > 0) //garantia de busqueda
     {
@@ -520,8 +538,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = false; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = false;
-      this.disenador = true;
     }
     else if (estatusId == 39 && this.element.vacantes > 0) //pausada
     {
@@ -531,8 +547,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = true;
-      this.disenador = true;
     }
     else if ((estatusId == 5 || estatusId == 31) &&
       this.element.vacantes > 0 && this.element.enProceso == 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0) //reactivada  - garantia de busqueda - nueva busqueda
@@ -543,8 +557,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = true;
-      this.disenador = true;
     }
     else if ((estatusId == 5 || estatusId == 31) && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso > 0) //reactivada   - garantia de busqueda - nueva busqueda -pausada
     {
@@ -554,8 +566,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = true;
-      this.disenador = true;
     }
 
     else if ((estatusId == 5 || estatusId == 31) && this.element.vacantes > 0 && this.element.enProcesoFR > 0) //reactivada - publicada  - garantia de busqueda - nueva busqueda -pausada
@@ -566,8 +576,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = true;
-      this.disenador = true;
     }
     else if ((estatusId == 5 || estatusId == 31) && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes) //reactivada - publicada - garantia de busqueda - nueva busqueda - pausada
     {
@@ -577,8 +585,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = true;
-      this.disenador = true;
     }
     else if (estatusId == 30 && this.element.enProcesoFC == 0) //envio al cliente
     {
@@ -588,8 +594,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = false; //nueva busqueda candidato
       this.pausa = false;
-      this.asignar = false;
-      this.disenador = true;
     }
     else if (estatusId == 30 && this.element.enProcesoFC > 0) //envio al cliente
     {
@@ -599,8 +603,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = false; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = false;
-      this.asignar = false;
-      this.disenador = true;
     }
     else if (estatusId == 32 && this.element.enProcesoFC > 0) //socioeconomico
     {
@@ -610,8 +612,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = false; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = false;
-      this.disenador = true;
     }
     else if (estatusId == 32 && this.enProceso > 0 && this.element.contratados > 0 && this.element.contratados < this.element.vacantes) //socioeconomico
     {
@@ -621,8 +621,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = false; //espera contratacion
       this.nbc = false; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = false;
-      this.disenador = true;
     }
     else if (estatusId == 33 && this.element.contratados == 0) //espera de contratacion
     {
@@ -632,8 +630,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = false; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = false;
-      this.disenador = true;
     }
     else if (estatusId == 33 && this.element.contratados > 0 && this.element.contratados < this.element.vacantes) //espera de contratacion
     {
@@ -643,8 +639,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = false; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = false;
-      this.disenador = true;
     }
     else if (estatusId >= 34 && estatusId <= 37) { //cubierta
       /*estatus vacante */
@@ -654,8 +648,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = true;
-      this.disenador = true;
     }
     else if (this.element.vacantes == 0) {
       this.bc = true; //busqueda candidato
@@ -664,8 +656,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = true;
-      this.disenador = true;
     }
     else {
       this.bc = true; //busqueda candidato
@@ -674,7 +664,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
-      this.asignar = false;
       this.disenador = true;
 
     }

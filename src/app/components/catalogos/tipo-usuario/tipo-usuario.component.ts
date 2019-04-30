@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, Validator } from '@angular/forms';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 // Servicios
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 // Modelos
@@ -13,9 +14,15 @@ import { catalogos } from '../../../models/catalogos/catalogos';
 export class TipoUsuarioComponent implements OnInit, OnChanges {
 
   @Input() SelectedTipoUsuario: any;
+  @Input() Log: any;
   @Output() UpTpUsuario = new EventEmitter<number>(); // Id de tipo de telefono para actualizar tabla.
-
   formTipoUsuario: FormGroup;
+
+  displayedColumns: string[] = ['id', 'usuario', 'fechaAct', 'tpMov'];
+  dataSource: MatTableDataSource<any>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private services: CatalogosService ) {
     this.formTipoUsuario = new FormGroup({
@@ -28,11 +35,14 @@ export class TipoUsuarioComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.SelectedTipoUsuario !== undefined) {
-// tslint:disable-next-line: no-debugger
-      debugger;
       this.Habilita(false);
       this.formTipoUsuario.get('id').setValue(this.SelectedTipoUsuario.id);
       this.formTipoUsuario.get('tipo').setValue(this.SelectedTipoUsuario.tipo);
+    }
+    if (this.Log !== undefined) {
+      this.dataSource = new MatTableDataSource(this.Log);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }
   }
 
@@ -45,6 +55,7 @@ export class TipoUsuarioComponent implements OnInit, OnChanges {
   Save() {
     const catalogo: catalogos = new catalogos();
     this.SelectedTipoUsuario !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
+    catalogo.usuario = sessionStorage.getItem('usuario');
     catalogo.Catalogos = {
       Id: 41,
       Nombre: 'Tipo de usuarios',
@@ -72,4 +83,11 @@ export class TipoUsuarioComponent implements OnInit, OnChanges {
     }
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 }

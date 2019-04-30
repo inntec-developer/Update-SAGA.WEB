@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 // Servicios
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
@@ -13,10 +14,17 @@ import { catalogos } from '../../../models/catalogos/catalogos';
 export class MunicipiosComponent implements OnInit, OnChanges {
 
   @Input() SelectedMunicipio: any;
+  @Input() Log: any;
   @Input() Estados: any[];
   @Output() UpMunicipios = new EventEmitter<number>(); // Id de Estado para actualizar tabla.
   formMunicipio: FormGroup;
   CEstados: any[];
+
+  displayedColumns: string[] = ['id', 'usuario', 'fechaAct', 'tpMov'];
+  dataSource: MatTableDataSource<any>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor( private services: CatalogosService ) {
     this.formMunicipio = new FormGroup({
@@ -42,6 +50,11 @@ export class MunicipiosComponent implements OnInit, OnChanges {
       this.formMunicipio.get('activo').setValue(this.SelectedMunicipio.activo);
       this.formMunicipio.get('clave').setValue(this.SelectedMunicipio.clave);
     }
+    if (this.Log !== undefined) {
+      this.dataSource = new MatTableDataSource(this.Log);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   New() {
@@ -53,6 +66,7 @@ export class MunicipiosComponent implements OnInit, OnChanges {
   Save() {
     let catalogo: catalogos = new catalogos();
     this.SelectedMunicipio !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
+    catalogo.usuario = sessionStorage.getItem('usuario');
     catalogo.Catalogos = {
       Id: 3,
       Nombre: 'Municipios',
@@ -89,6 +103,14 @@ export class MunicipiosComponent implements OnInit, OnChanges {
       this.formMunicipio.get('estado').disable();
       this.formMunicipio.get('activo').disable();
       this.formMunicipio.get('clave').disable();
+    }
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
   }
 }

@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { RegistroReclutadorComponent } from './../../../components/registro-reclutador/registro-reclutador.component';
 import { ExamenesService } from './../../../service/Examenes/examenes.service';
 import { CandidatosService } from './../../../service/Candidatos/candidatos.service';
@@ -122,8 +123,20 @@ export class SeguimientoTicketComponent implements OnInit {
 
   GetMisVacantes() {
     this._service.GetVacantesReclutador(sessionStorage.getItem('id')).subscribe(data => {
-      this.dataSource = data;
-      this.filteredData = data;
+      var aux = [];
+      this.dataSource = data.filter(element => {
+        if(element.id === this.ticket[0].requisicionId)
+        {
+          aux = element;
+        }
+        else
+        {
+          return element;
+        }
+      });
+
+      this.dataSource.unshift(aux);
+      this.filteredData = this.dataSource;
     });
   }
 

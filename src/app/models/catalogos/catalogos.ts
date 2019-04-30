@@ -1,5 +1,6 @@
 export class catalogos {
    opt: number;
+   usuario: string;
    Catalogos: Catalogos;
    Pais: Array<paises>;
    Estado: Array<estados>;
@@ -8,6 +9,13 @@ export class catalogos {
    TpTelefono: Array<tptelefonos>;
    TpUsuario: Array<tpusuario>;
    EstadoCivil: Array<estadocivil>;
+   Departamentos: Array<departamentos>;
+   Areas: Array<areas>;
+   Escolaridades: Array<escolaridades>;
+   Nivel: Array<niveles>;
+   Medio: Array<medios>;
+   Idioma: Array<idiomas>;
+
 }
 
 interface Catalogos {
@@ -63,6 +71,43 @@ interface tpusuario {
 interface estadocivil {
     Id: number;
     estadocivil: string;
+    activo: boolean;
+}
+
+interface departamentos {
+    Id: string;
+    nombre: string;
+    area: string;
+    clave: string;
+    orden: number;
+}
+
+interface areas {
+    Id: number;
+    nombre: string;
+    clave: string;
+    orden: string;
+}
+
+interface escolaridades {
+    Id: number;
+    gradoEstudio: string;
+}
+
+interface niveles {
+    Id: number;
+    nivel: string;
+}
+
+interface medios {
+    Id: number;
+    nombre: string;
+    activo: boolean;
+}
+
+interface idiomas {
+    Id: number;
+    idioma: string;
     activo: boolean;
 }
 

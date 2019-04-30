@@ -97,8 +97,16 @@ import { TableComponent } from './catalogos/table/table.component';
 import { TicketsRegisterComponent } from './tickets-register/tickets-register.component';
 import { TipoTelefonoComponent } from './catalogos/tipo-telefono/tipo-telefono.component';
 import { TipoUsuarioComponent } from './catalogos/tipo-usuario/tipo-usuario.component';
+import { DepartamentosComponent } from './catalogos/departamentos/departamentos.component';
+import { AreasComponent } from './catalogos/areas/areas.component';
+import { EscolaridadesComponent } from './catalogos/escolaridades/escolaridades.component';
+import { NivelestudiosComponent } from './catalogos/nivelestudios/nivelestudios.component';
+import { MediovacanteComponent } from './catalogos/mediovacante/mediovacante.component';
+import { IdiomasComponent } from './catalogos/idiomas/idiomas.component';
+import { DiscapacidadesComponent } from './catalogos/discapacidades/discapacidades.component';
+import { TipolicenciaComponent } from './catalogos/tipolicencia/tipolicencia.component';
+import { TipoexamenComponent } from './catalogos/tipoexamen/tipoexamen.component';
 import { ToolsModule } from '../tools/tools.module';
-
 @NgModule({
   imports: [
     SharedModule,
@@ -200,7 +208,16 @@ import { ToolsModule } from '../tools/tools.module';
     FiltrosComponent,
     TipoTelefonoComponent,
     EstadoCivilComponent,
-    TipoUsuarioComponent
+    TipoUsuarioComponent,
+    DepartamentosComponent,
+    AreasComponent,
+    EscolaridadesComponent,
+    NivelestudiosComponent,
+    MediovacanteComponent,
+    IdiomasComponent,
+    DiscapacidadesComponent,
+    TipolicenciaComponent,
+    TipoexamenComponent
   ],
   exports: [
     DtDireccionComponent,

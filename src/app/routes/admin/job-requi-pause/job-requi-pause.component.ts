@@ -12,7 +12,7 @@ export class JobRequiPauseComponent implements OnInit {
 
   constructor(private _service: RequisicionesService, private toasterService: ToasterService) { }
 
-  titulo = 'Requis en pausa'
+  titulo = ''
   ngOnInit() {
 
   }
@@ -23,14 +23,14 @@ export class JobRequiPauseComponent implements OnInit {
     this._service.ExecProcedurePause().subscribe(data => {
       if(data == 200)
       {
-        this.titulo = 'Click aqui'
+        this.titulo = ''
         this.popToast('success', 'JOB - PAUSE', 'El JOB se ejecutó con éxito');
 
       }
       else
       {
         this.popToast('error', 'JOB - PAUSE', 'Ocurrio un error al intentar ejecutar el JOB');
-      
+        this.titulo = ''
       }
   
     })
@@ -42,14 +42,31 @@ export class JobRequiPauseComponent implements OnInit {
     
       if(data == 200)
       {
-        this.titulo = 'Click aqui'
         this.popToast('success', 'JOB - PAUSE', 'El JOB se ejecutó con éxito');
-
+        this.titulo = ''
       }
       else
       {
         this.popToast('error', 'JOB - PAUSE', 'Ocurrio un error al intentar ejecutar el JOB');
-      
+        this.titulo = ''
+      }
+  
+    })
+  }
+  ExecProcedureSinAsignar()
+  {
+    this.titulo = "Espera a que te salga el mensaje de confirmación \\m/"
+    this._service.ExecProcedureSinAsignar().subscribe(data => {
+    
+      if(data == 200)
+      {
+        this.popToast('success', 'JOB - PAUSE', 'El JOB se ejecutó con éxito');
+        this.titulo = ''
+      }
+      else
+      {
+        this.popToast('error', 'JOB - PAUSE', 'Ocurrio un error al intentar ejecutar el JOB');
+        this.titulo = ''
       }
   
     })

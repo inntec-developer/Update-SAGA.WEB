@@ -250,6 +250,7 @@ export class ApiConection {
   public static getConteoVacante = 'Requisiciones/getConteoVacante';
   public static execProcedurePause = 'Requisiciones/execProcedurePause'
   public static execProcedureSinCambios = 'Requisiciones/execProcedureSinCambio'
+  public static execProcedureSinAsignar = 'Requisiciones/execProcedureSinAsignar'
 
   /*Examenes */
   public static InsertExamen = 'examenes/insertExamen'

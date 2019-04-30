@@ -51,6 +51,7 @@ export class RequisicionesService {
   private URLGetUltimoEstatusRequi = ApiConection.ServiceUrl + ApiConection.GetUltimoEstatusRequi;
   private URLExecProcedurePause = ApiConection.ServiceUrl + ApiConection.execProcedurePause;
   private URLExecProcedureSinCambios = ApiConection.ServiceUrl + ApiConection.execProcedureSinCambios;
+  private URLExecProcedureSinAsignar = ApiConection.ServiceUrl + ApiConection.execProcedureSinAsignar;
   private URLGetRequiTipoRecl = ApiConection.ServiceUrl + ApiConection.GetRequiTipoRecl;
   private URLSendEmailRequiPuro = ApiConection.ServiceUrl + ApiConection.SendEmailRequiPuro;
   private URLSendEmailRedesSociales = ApiConection.ServiceUrl + ApiConection.SendEmailRedesSociales;
@@ -259,6 +260,10 @@ export class RequisicionesService {
     return this._httpClient.get(this.URLExecProcedureSinCambios);
   }
 
+  ExecProcedureSinAsignar(): Observable<any> {
+
+    return this._httpClient.get(this.URLExecProcedureSinAsignar);
+  }
 
   GetReporte70(clave:string,ofc:string,tipo:string,fini:string,ffin:string,emp:string,
     sol:string,trcl:string,cor:string,stus:string,recl:string) : Observable<any> {

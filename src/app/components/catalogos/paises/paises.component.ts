@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 // Servicios
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 // Modelos
@@ -14,8 +15,15 @@ import { catalogos } from '../../../models/catalogos/catalogos';
 export class PaisesComponent implements OnInit, OnChanges {
 
   @Input() SelectedPais: any;
+  @Input() Log: any;
   @Output() UpPaises = new EventEmitter<number>(); // Id de País para actualizar tabla.
   formPaises: FormGroup;
+
+  displayedColumns: string[] = ['id', 'usuario', 'fechaAct', 'tpMov'];
+  dataSource: MatTableDataSource<any>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor( private services: CatalogosService ) {
     this.formPaises = new FormGroup({
@@ -29,11 +37,16 @@ export class PaisesComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes['SelectedPais'].firstChange) {
+    if (this.SelectedPais !== undefined) {
       this.Habilita(false);
       this.formPaises.get('id').setValue(this.SelectedPais.id);
       this.formPaises.get('pais').setValue(this.SelectedPais.pais);
       this.formPaises.get('activo').setValue(this.SelectedPais.activo);
+    }
+    if (this.Log !== undefined) {
+      this.dataSource = new MatTableDataSource(this.Log);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }
   }
 
@@ -44,8 +57,9 @@ export class PaisesComponent implements OnInit, OnChanges {
   }
 
   Save() {
-    let catalogo: catalogos = new catalogos();
+    const catalogo: catalogos = new catalogos();
     this.SelectedPais !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
+    catalogo.usuario = sessionStorage.getItem('usuario');
     catalogo.Catalogos = {
       Id: 1,
       Nombre: 'Paises',
@@ -54,7 +68,7 @@ export class PaisesComponent implements OnInit, OnChanges {
     };
     let Estados: Array<any> = [];
     catalogo.Estado = Estados;
-    let Municipios: Array<any> = [];
+    const Municipios: Array<any> = [];
     catalogo.Municipio = Municipios;
     catalogo.Pais = [this.formPaises.getRawValue()];
     console.log(catalogo);
@@ -76,6 +90,14 @@ export class PaisesComponent implements OnInit, OnChanges {
     } else {
       this.formPaises.get('pais').disable();
       this.formPaises.get('activo').disable();
+    }
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
   }
 
