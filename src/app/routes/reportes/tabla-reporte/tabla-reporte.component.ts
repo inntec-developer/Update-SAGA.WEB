@@ -166,11 +166,12 @@ coo = coo == undefined?'0':coo;
         'No.'	: item.numero,
         Cubierta:item.cubierta,
         'Cumplimiento'	: item.porcentaje + '%',
-        Coordinador:item.cordinador2 == ''?'SIN ASIGNAR':item.cordinador2,
+       
         Estatus: item.estatus,
         'Fecha estatus': this.convertDateTime(item.fch_Modificacion),
+        'Coordinación ': item.clasesReclutamiento,
+        Coordinador:item.cordinador2 == ''?'SIN ASIGNAR':item.cordinador2,
         Solicita: item.nombreApellido,
-        'Coordinación ': item.clasesReclutamiento
       })
      });
      this.Exel.exportAsExcelFile(obj,'Reporte')
@@ -211,12 +212,11 @@ public columns: Array<any> = [
   { title: 'Cubierta', className: 'text-info text-center', name: 'cubierta' , filtering: { filterString: '', placeholder: 'Cubiertas..' } },
   { title: 'Cumplimiento', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'Cumplimiento..' } },
  
-  { title: 'Solicita', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Solicita' } },
-  { title: 'Coordinador', className: 'text-info text-center', name: 'cordinador2', filtering: { filterString: '', placeholder: 'Coordinador' } },
   { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
   { title: 'Fecha Estatus', className: 'text-info text-center', name: 'fch_Modificacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
- 
-  { title: 'Coordinación', className: 'text-info text-center', name: 'clasesReclutamiento', filtering: { filterString: '', placeholder: 'Coordinacion' } }
+  { title: 'Coordinación', className: 'text-info text-center', name: 'clasesReclutamiento', filtering: { filterString: '', placeholder: 'Coordinacion' } },
+  { title: 'Coordinador', className: 'text-info text-center', name: 'cordinador2', filtering: { filterString: '', placeholder: 'Coordinador' } },
+  { title: 'Solicita', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Solicita' } }
 ];
 
 
