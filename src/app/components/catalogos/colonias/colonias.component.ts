@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 // Servicios
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 // Modelos
@@ -13,6 +14,7 @@ import { catalogos } from '../../../models/catalogos/catalogos';
 export class ColoniasComponent implements OnInit, OnChanges {
 
   @Input() SelectedColonia: any;
+  @Input() Log: any;
   @Input() Paises: any[];
   @Input() Estados: any[];
   @Input() Municipios: any[];
@@ -21,6 +23,12 @@ export class ColoniasComponent implements OnInit, OnChanges {
   CPaises: any[];
   CEstados: any[];
   CMunicipios: any[];
+
+  displayedColumns: string[] = ['id', 'usuario', 'fechaAct', 'tpMov'];
+  dataSource: MatTableDataSource<any>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor( private services: CatalogosService ) {
     this.formColonia = new FormGroup({
@@ -40,7 +48,6 @@ export class ColoniasComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.SelectedColonia !== undefined) {
-      debugger;
       this.Habilita(false);
       this.CEstados = this.Estados;
       const idestado = this.CEstados.find( p => p.estado === this.SelectedColonia.estado ).id;
@@ -57,6 +64,11 @@ export class ColoniasComponent implements OnInit, OnChanges {
       this.formColonia.get('TipoColonia').setValue(this.SelectedColonia.tipoColonia);
       this.formColonia.get('activo').setValue(this.SelectedColonia.activo);
     }
+    if (this.Log !== undefined) {
+      this.dataSource = new MatTableDataSource(this.Log);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   New() {
@@ -71,6 +83,7 @@ export class ColoniasComponent implements OnInit, OnChanges {
   Save() {
     const catalogo: catalogos = new catalogos();
     this.SelectedColonia !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
+    catalogo.usuario = sessionStorage.getItem('usuario');
     catalogo.Catalogos = {
       Id: 4,
       Nombre: 'Colonias',
@@ -121,6 +134,14 @@ export class ColoniasComponent implements OnInit, OnChanges {
       this.formColonia.get('estado').disable();
       this.formColonia.get('cp').disable();
       this.formColonia.get('activo').disable();
+    }
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
   }
 }

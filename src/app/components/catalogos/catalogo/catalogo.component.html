@@ -44,14 +44,21 @@
                 </mat-expansion-panel-header>
                 <!-- Componentes -->
                 <!-- Sistema -->
-                <app-paises *ngIf="idCatalogo == 1" [SelectedPais]="selectedId" (UpPaises)="Refresh($event)"></app-paises>
-                <app-estados *ngIf="idCatalogo == 2" [Paises]="paises" [SelectedEstado]="selectedId" (UpEstados)="Refresh($event)"></app-estados>
-                <app-municipios *ngIf="idCatalogo == 3" [Estados]="estados" [SelectedMunicipio]="selectedId" (UpMunicipios)="Refresh($event)"></app-municipios>
-                <app-colonias *ngIf="idCatalogo == 4" [Paises]="paises" [Estados]="estados" [Municipios]="municipios" [SelectedColonia]="selectedId" (UpColonia)="Refresh($event)"></app-colonias>
-                <app-tipo-telefono *ngIf="idCatalogo == 6" [SelectedTipoTelefono]="selectedId" (UpTpTelefono)="Refresh($event)"></app-tipo-telefono>
-                <app-tipo-usuario *ngIf="idCatalogo == 41" [SelectedTipoUsuario]="selectedId" (UpTpUsuario)="Refresh($event)"></app-tipo-usuario>
-                <app-estado-civil *ngIf="idCatalogo == 7" [SelectedEstadoCivil]="selectedId" (UpEstadoCivil)="Refresh($event)"></app-estado-civil>
+                <app-paises *ngIf="idCatalogo == 1" [Log]="log" [SelectedPais]="selectedId" (UpPaises)="Refresh($event)"></app-paises>
+                <app-estados *ngIf="idCatalogo == 2" [Log]="log" [Paises]="paises" [SelectedEstado]="selectedId" (UpEstados)="Refresh($event)"></app-estados>
+                <app-municipios *ngIf="idCatalogo == 3" [Log]="log" [Estados]="estados" [SelectedMunicipio]="selectedId" (UpMunicipios)="Refresh($event)"></app-municipios>
+                <app-colonias *ngIf="idCatalogo == 4" [Log]="log" [Paises]="paises" [Estados]="estados" [Municipios]="municipios" [SelectedColonia]="selectedId" (UpColonia)="Refresh($event)"></app-colonias>
+                <app-tipo-telefono *ngIf="idCatalogo == 6" [Log]="log" [SelectedTipoTelefono]="selectedId" (UpTpTelefono)="Refresh($event)"></app-tipo-telefono>
+                <app-tipo-usuario *ngIf="idCatalogo == 41" [Log]="log" [SelectedTipoUsuario]="selectedId" (UpTpUsuario)="Refresh($event)"></app-tipo-usuario>
+                <app-estado-civil *ngIf="idCatalogo == 7" [Log]="log" [SelectedEstadoCivil]="selectedId" (UpEstadoCivil)="Refresh($event)"></app-estado-civil>
+                <app-departamentos *ngIf="idCatalogo == 42" [Log]="log" [Areas]="areas" [SelectedDepartamento]="selectedId" (UpDepartamentos)="Refresh($event)"></app-departamentos>
+                <app-areas *ngIf="idCatalogo == 43" [Log]="log" [SelectedArea]="selectedId" (UpAreas)="Refresh($event)"></app-areas>
                 <!-- Reclutamiento -->
+                <app-escolaridades *ngIf="idCatalogo == 34" [SelectedEscolaridad]="selectedId" [Log]="log" (UpEscolaridad)="Refresh($event)"></app-escolaridades>
+                <app-nivelestudios *ngIf="idCatalogo == 35" [SelectedNivel]="selectedId" (UpNivel)="Refresh($event)"></app-nivelestudios>
+                <app-nivelestudios *ngIf="idCatalogo == 35" [SelectedNivel]="selectedId" [Log]="log" (UpNivel)="Refresh($event)"></app-nivelestudios>
+                <app-mediovacante *ngIf="idCatalogo == 36" [SelectedMedio]="selectedId" [Log]="log" (UpMedios)="Refresh($event)"></app-mediovacante>
+                <app-idiomas *ngIf="idCatalogo == 37" [SelectedIdioma]="selectedId" [Log]="log" (UpIdioma)="Refresh($event)"></app-idiomas>
             </mat-expansion-panel>
         </mat-accordion>
     </mat-card-content>

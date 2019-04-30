@@ -20,9 +20,11 @@ export class CatalogoComponent implements OnChanges , OnInit {
   private DataTable: Array<any>;
   private HeadTable: Array<String>;
   private tableColName: Array<String>;
+  private log: Array<string>;
   paises: any[];
   estados: any[];
   municipios: any[];
+  areas: any[];
   selectedId: any;
 
   constructor( private serviceCatalogo: CatalogosService ) {
@@ -37,9 +39,7 @@ export class CatalogoComponent implements OnChanges , OnInit {
   ngOnChanges(changes: SimpleChanges) {
     if (this.idCatalogo !== undefined) {
       this.idCatalogo === 3 || this.idCatalogo === 4 ? this.setStep(0) : this.setStep(1);
-      this.idCatalogo !== 3 ? this.idCatalogo !== 4 ?
-       this.loadData(this.idCatalogo) : console.log('No hay datos') :
-        console.log('No hay datos');
+      this.loadData(this.idCatalogo);
     }
   }
 
@@ -71,6 +71,26 @@ export class CatalogoComponent implements OnChanges , OnInit {
       case 41:
         this.selectedId = this.fCatalogo.tpUsuario.find( (p: { id: number; }) => p.id === IdReg);
         break;
+      case 42:
+        this.selectedId = this.fCatalogo.departamentos.find( (p: { id: number; }) => p.id === IdReg);
+        break;
+      case 43:
+      this.selectedId = this.fCatalogo.areas.find( (p: { id: number; }) => p.id === IdReg);
+        break;
+      //#endregion
+      //#region Reclutamiento
+      case 34:
+      this.selectedId = this.fCatalogo.escolaridades.find( (p: { id: number; }) => p.id === IdReg);
+        break;
+      case 35:
+      this.selectedId = this.fCatalogo.nivel.find( (p: { id: number; }) => p.id === IdReg);
+        break;
+      case 36:
+      this.selectedId = this.fCatalogo.medio.find( (p: { id: number; }) => p.id === IdReg);
+        break;
+      case 37:
+      this.selectedId = this.fCatalogo.idioma.find( (p: { id: number; }) => p.id === IdReg);
+        break;
       //#endregion
       default:
         break;
@@ -92,9 +112,16 @@ export class CatalogoComponent implements OnChanges , OnInit {
         this.fCatalogo = result;
         this.titulo = this.fCatalogo.catalogos.nombre;
         this.descripcion = this.fCatalogo.catalogos.descripcion;
-        // Registros.
-        this.HeadTable = new Array<String>('Id', 'Pais', 'Activo');
-        this.DataTable = this.fCatalogo.pais;
+        if (this.fCatalogo.pais.length === 0) {
+                  // Registros.
+          this.HeadTable = new Array<String>('');
+          this.DataTable = [];
+        } else {
+                 // Registros.
+          this.HeadTable = new Array<String>('Id', 'Pais', 'Activo');
+          this.DataTable = this.fCatalogo.pais;
+          this.log = this.fCatalogo.log; // Log de cada catalogo.
+        }
        } );
       break;
 
@@ -104,11 +131,19 @@ export class CatalogoComponent implements OnChanges , OnInit {
         this.fCatalogo = result;
         this.titulo = this.fCatalogo.catalogos.nombre;
         this.descripcion = this.fCatalogo.catalogos.descripcion;
-        // Registros.
-        this.HeadTable = new Array<String>('Id', 'Estado', 'Clave', 'Pais', 'Activo');
-        this.DataTable = this.fCatalogo.estado;
-        this.paises = this.fCatalogo.pais;
-        this.selectedId = this.fCatalogo.estado.find( (p: { id: number; }) => p.id === 1);
+        if (this.fCatalogo.estado.length === 0) {
+          // Registros.
+          this.HeadTable = new Array<String>('');
+          this.DataTable = [];
+          this.paises = [];
+        } else {
+          // Registros.
+          this.HeadTable = new Array<String>('Id', 'Estado', 'Clave', 'Pais', 'Activo');
+          this.DataTable = this.fCatalogo.estado;
+          this.paises = this.fCatalogo.pais;
+          this.log = this.fCatalogo.log; // Log de cada catalogo.
+        }
+
        } );
       break;
 
@@ -119,11 +154,11 @@ export class CatalogoComponent implements OnChanges , OnInit {
         this.titulo = this.fCatalogo.catalogos.nombre;
         this.descripcion = this.fCatalogo.catalogos.descripcion;
         // Registros.
-        this.HeadTable = new Array<String>('');
-        this.DataTable = [];
+        // this.HeadTable = new Array<String>('');
+        // this.DataTable = [];
         this.paises = this.fCatalogo.pais;
         this.estados = this.fCatalogo.estado;
-        // this.selectedId = this.fCatalogo.municipio.find( (p: { id: number; }) => p.id === 1);
+        this.log = this.fCatalogo.log; // Log de cada catalogo.
        } );
       break;
 
@@ -139,6 +174,7 @@ export class CatalogoComponent implements OnChanges , OnInit {
         this.paises = this.fCatalogo.pais;
         this.estados = this.fCatalogo.estado;
         this.municipios = this.fCatalogo.municipio;
+        this.log = this.fCatalogo.log; // Log de cada catalogo.
         // this.selectedId = this.fCatalogo.colonias.find( (p: { id: number; }) => p.id === 1);
        } );
       break;
@@ -149,9 +185,16 @@ export class CatalogoComponent implements OnChanges , OnInit {
         this.fCatalogo = result;
         this.titulo = this.fCatalogo.catalogos.nombre;
         this.descripcion = this.fCatalogo.catalogos.descripcion;
-        // Registros.
-        this.HeadTable = new Array<String>('Id', 'Tipo', 'Activo');
-        this.DataTable = this.fCatalogo.tpTelefono;
+        if (this.fCatalogo.tpTelefono.length === 0) {
+          // Registros.
+          this.HeadTable = new Array<String>('');
+          this.DataTable = [];
+        } else {
+          // Registros.
+          this.HeadTable = new Array<String>('Id', 'Tipo', 'Activo');
+          this.DataTable = this.fCatalogo.tpTelefono;
+          this.log = this.fCatalogo.log; // Log de cada catalogo.
+        }
         // this.selectedId = this.fCatalogo.tpTelefono.find( (p: { id: number; }) => p.id === 1);
        } );
       break;
@@ -162,9 +205,16 @@ export class CatalogoComponent implements OnChanges , OnInit {
         this.fCatalogo = result;
         this.titulo = this.fCatalogo.catalogos.nombre;
         this.descripcion = this.fCatalogo.catalogos.descripcion;
-        // Registros.
-        this.HeadTable = new Array<String>('Id', 'Tipo', 'Activo');
-        this.DataTable = this.fCatalogo.estadoCivil;
+        if (this.fCatalogo.estadoCivil.length === 0) {
+                  // Registros.
+          this.HeadTable = new Array<String>('');
+          this.DataTable = [];
+        } else {
+                  // Registros.
+          this.HeadTable = new Array<String>('Id', 'Tipo', 'Activo');
+          this.DataTable = this.fCatalogo.estadoCivil;
+          this.log = this.fCatalogo.log; // Log de cada catalogo.
+        }
        } );
       break;
 
@@ -174,10 +224,131 @@ export class CatalogoComponent implements OnChanges , OnInit {
         this.fCatalogo = result;
         this.titulo = this.fCatalogo.catalogos.nombre;
         this.descripcion = this.fCatalogo.catalogos.descripcion;
-        // Registros.
-        this.HeadTable = new Array<String>('Id', 'Tipo');
-        this.DataTable = this.fCatalogo.tpUsuario;
-        // this.selectedId = this.fCatalogo.tpTelefono.find( (p: { id: number; }) => p.id === 1);
+        if (this.fCatalogo.tpUsuario.length === 0) {
+                  // Registros.
+          this.HeadTable = new Array<String>('');
+          this.DataTable = [];
+        } else {
+                 // Registros.
+          this.HeadTable = new Array<String>('Id', 'Tipo');
+          this.DataTable = this.fCatalogo.tpUsuario;
+          this.log = this.fCatalogo.log; // Log de cada catalogo.
+        }
+       } );
+      break;
+
+    case 42: // Departamentos
+      this.serviceCatalogo.getCatalogo(IdCat)
+      .subscribe( result => {
+        this.fCatalogo = result;
+        this.titulo = this.fCatalogo.catalogos.nombre;
+        this.descripcion = this.fCatalogo.catalogos.descripcion;
+        if (this.fCatalogo.departamentos.length === 0) {
+                  // Registros.
+          this.HeadTable = new Array<String>('');
+          this.DataTable = [];
+        } else {
+                 // Registros.
+          this.HeadTable = new Array<String>('Id', 'Nombre', 'Area', 'Clave', 'Orden');
+          this.DataTable = this.fCatalogo.departamentos;
+          this.log = this.fCatalogo.log; // Log de cada catalogo.
+        }
+        this.areas = this.fCatalogo.areas;
+       } );
+      break;
+
+    case 43: // Areas
+      this.serviceCatalogo.getCatalogo(IdCat)
+      .subscribe( result => {
+        this.fCatalogo = result;
+        this.titulo = this.fCatalogo.catalogos.nombre;
+        this.descripcion = this.fCatalogo.catalogos.descripcion;
+        if (this.fCatalogo.areas.length === 0) {
+                  // Registros.
+          this.HeadTable = new Array<String>('');
+          this.DataTable = [];
+        } else {
+                 // Registros.
+          this.HeadTable = new Array<String>('Id', 'Nombre', 'Clave', 'Orden');
+          this.DataTable = this.fCatalogo.areas;
+          this.log = this.fCatalogo.log; // Log de cada catalogo.
+        }
+       } );
+      break;
+    //#endregion
+    //#region Reclutamiento
+    case 34: // Escolaridades
+      this.serviceCatalogo.getCatalogo(IdCat)
+      .subscribe( result => {
+        this.fCatalogo = result;
+        this.titulo = this.fCatalogo.catalogos.nombre;
+        this.descripcion = this.fCatalogo.catalogos.descripcion;
+        if (this.fCatalogo.escolaridades.length === 0) {
+                  // Registros.
+          this.HeadTable = new Array<String>('');
+          this.DataTable = [];
+        } else {
+                 // Registros.
+          this.HeadTable = new Array<String>('Id', 'Escolaridad');
+          this.DataTable = this.fCatalogo.escolaridades;
+          this.log = this.fCatalogo.log; // Log de cada catalogo.
+        }
+       } );
+      break;
+
+    case 35: // Nivel estudio
+      this.serviceCatalogo.getCatalogo(IdCat)
+      .subscribe( result => {
+        this.fCatalogo = result;
+        this.titulo = this.fCatalogo.catalogos.nombre;
+        this.descripcion = this.fCatalogo.catalogos.descripcion;
+        if (this.fCatalogo.nivel.length === 0) {
+                  // Registros.
+          this.HeadTable = new Array<String>('');
+          this.DataTable = [];
+        } else {
+                 // Registros.
+          this.HeadTable = new Array<String>('Id', 'Escolaridad');
+          this.DataTable = this.fCatalogo.nivel;
+          this.log = this.fCatalogo.log; // Log de cada catalogo.
+        }
+       } );
+      break;
+
+    case 36: // Medios
+      this.serviceCatalogo.getCatalogo(IdCat)
+      .subscribe( result => {
+        this.fCatalogo = result;
+        this.titulo = this.fCatalogo.catalogos.nombre;
+        this.descripcion = this.fCatalogo.catalogos.descripcion;
+        if (this.fCatalogo.medio.length === 0) {
+                  // Registros.
+          this.HeadTable = new Array<String>('');
+          this.DataTable = [];
+        } else {
+                 // Registros.
+          this.HeadTable = new Array<String>('Id', 'Medio', 'Activo');
+          this.DataTable = this.fCatalogo.medio;
+          this.log = this.fCatalogo.log; // Log de cada catalogo.
+        }
+       } );
+      break;
+    case 37: // Idiomas
+      this.serviceCatalogo.getCatalogo(IdCat)
+      .subscribe( result => {
+        this.fCatalogo = result;
+        this.titulo = this.fCatalogo.catalogos.nombre;
+        this.descripcion = this.fCatalogo.catalogos.descripcion;
+        if (this.fCatalogo.idioma.length === 0) {
+                  // Registros.
+          this.HeadTable = new Array<String>('');
+          this.DataTable = [];
+        } else {
+                 // Registros.
+          this.HeadTable = new Array<String>('Id', 'Idioma', 'Activo');
+          this.DataTable = this.fCatalogo.idioma;
+          this.log = this.fCatalogo.log; // Log de cada catalogo.
+        }
        } );
       break;
     //#endregion

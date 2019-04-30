@@ -1,23 +1,22 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges, Output, EventEmitter, ViewChild } from '@angular/core';
-import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { Component, OnInit, Input, SimpleChanges, OnChanges, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 // Servicios
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 // Modelos
 import { catalogos } from '../../../models/catalogos/catalogos';
 
-
 @Component({
-  selector: 'app-paises',
-  templateUrl: './paises.component.html',
-  styleUrls: ['./paises.component.scss']
+  selector: 'app-idiomas',
+  templateUrl: './idiomas.component.html',
+  styleUrls: ['./idiomas.component.scss']
 })
-export class PaisesComponent implements OnInit, OnChanges {
+export class IdiomasComponent implements OnInit, OnChanges {
 
-  @Input() SelectedPais: any;
+  @Input() SelectedIdioma: any;
   @Input() Log: any;
-  @Output() UpPaises = new EventEmitter<number>(); // Id de País para actualizar tabla.
-  formPaises: FormGroup;
+  @Output() UpIdioma = new EventEmitter<number>(); // Id de Areas para actualizar tabla.
+  formIdiomas: FormGroup;
 
   displayedColumns: string[] = ['id', 'usuario', 'fechaAct', 'tpMov'];
   dataSource: MatTableDataSource<any>;
@@ -26,22 +25,23 @@ export class PaisesComponent implements OnInit, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor( private services: CatalogosService ) {
-    this.formPaises = new FormGroup({
+    this.formIdiomas = new FormGroup({
       id: new FormControl(),
-      pais: new FormControl({value: '', disabled: true}, [Validators.required]),
+      idioma: new FormControl({value: '', disabled: true}, [Validators.required]),
       activo: new FormControl({value: '', disabled: true})
     });
-  }
+   }
 
   ngOnInit() {
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.SelectedPais !== undefined) {
+    if (this.SelectedIdioma !== undefined) {
       this.Habilita(false);
-      this.formPaises.get('id').setValue(this.SelectedPais.id);
-      this.formPaises.get('pais').setValue(this.SelectedPais.pais);
-      this.formPaises.get('activo').setValue(this.SelectedPais.activo);
+      this.formIdiomas.get('id').setValue(this.SelectedIdioma.id);
+      this.formIdiomas.get('idioma').setValue(this.SelectedIdioma.idioma);
+      this.formIdiomas.get('activo').setValue(this.SelectedIdioma.activo);
     }
     if (this.Log !== undefined) {
       this.dataSource = new MatTableDataSource(this.Log);
@@ -51,45 +51,41 @@ export class PaisesComponent implements OnInit, OnChanges {
   }
 
   New() {
-    this.formPaises.reset();
+    this.formIdiomas.reset();
+    this.SelectedIdioma = '';
     this.Habilita(false);
-    this.SelectedPais = '';
   }
 
   Save() {
     const catalogo: catalogos = new catalogos();
-    this.SelectedPais !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
+    this.SelectedIdioma !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
     catalogo.usuario = sessionStorage.getItem('usuario');
     catalogo.Catalogos = {
-      Id: 1,
-      Nombre: 'Paises',
-      Descripcion: 'Catalogo de países',
+      Id: 37,
+      Nombre: 'Idiomas',
+      Descripcion: 'Catalogo de idiomas',
       Activo: true
     };
-    let Estados: Array<any> = [];
-    catalogo.Estado = Estados;
-    const Municipios: Array<any> = [];
-    catalogo.Municipio = Municipios;
-    catalogo.Pais = [this.formPaises.getRawValue()];
+    catalogo.Idioma = [this.formIdiomas.getRawValue()];
     console.log(catalogo);
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpPaises.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpIdioma.emit(catalogo.Catalogos.Id) : console.log(result);
       this.Habilita(true);
     });
   }
 
   Limpiar() {
-    this.formPaises.reset();
+    this.formIdiomas.reset();
   }
 
   Habilita(opt: boolean) {
     if (!opt) {
-      this.formPaises.get('pais').enable();
-      this.formPaises.get('activo').enable();
+      this.formIdiomas.get('idioma').enable();
+      this.formIdiomas.get('activo').enable();
     } else {
-      this.formPaises.get('pais').disable();
-      this.formPaises.get('activo').disable();
+      this.formIdiomas.get('idioma').disable();
+      this.formIdiomas.get('activo').disable();
     }
   }
 
@@ -100,5 +96,4 @@ export class PaisesComponent implements OnInit, OnChanges {
       this.dataSource.paginator.firstPage();
     }
   }
-
 }

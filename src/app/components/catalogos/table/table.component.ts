@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter, ViewChild } from '@angular/core';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
+import { debug } from 'util';
 
 @Component({
   selector: 'app-table',
@@ -14,7 +15,8 @@ export class TableComponent implements OnInit, OnChanges {
   @Input() tableColName: Array<String> = new Array<String>();
   private tableColNameGenerated: Array<String> = new Array<String>();
   private isTableColNameSet: Boolean = false;
-  private datas = new MatTableDataSource();
+  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
+  private Reg = false;
 //#endregion
 
 @Output() IdRegistro = new EventEmitter<number>();
@@ -29,16 +31,19 @@ export class TableComponent implements OnInit, OnChanges {
 
   //#region Armado de tabla.
   ngOnChanges(changes: SimpleChanges) {
-    // debugger;
     if (changes['tableHeads']) {
       if (this.tableHeads === undefined) {
+        this.Reg = false;
          return;
       }
     }
 
     if (changes['tableDatas']) {
-      this.datas = new MatTableDataSource(this.tableDatas);
-      this.datas.paginator = this.paginator;
+      if (this.tableDatas.length > 0) {
+        this.Reg = true;
+        this.dataSource = new MatTableDataSource(this.tableDatas);
+        this.dataSource.paginator = this.paginator;
+      }
       if (!this.isTableColNameSet) {
         if (this.tableDatas.length > 0) {
           this.tableColNameGenerated = this.getKeys(this.tableDatas[0]);
@@ -78,6 +83,14 @@ export class TableComponent implements OnInit, OnChanges {
     return Object.keys(value);
   }
   //#endregion
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 
   //#region Metodo de edición.
   selectEdit(IdReg: any) {
