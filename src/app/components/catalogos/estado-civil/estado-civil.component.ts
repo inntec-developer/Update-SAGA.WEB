@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, Validator } from '@angular/forms';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 // Servicios
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 // Modelos
@@ -13,9 +14,15 @@ import { catalogos } from '../../../models/catalogos/catalogos';
 export class EstadoCivilComponent implements OnInit, OnChanges {
 
   @Input() SelectedEstadoCivil: any;
+  @Input() Log: any;
   @Output() UpEstadoCivil = new EventEmitter<number>(); // Id de tipo de telefono para actualizar tabla.
-
   formEstadoCivil: FormGroup;
+
+  displayedColumns: string[] = ['id', 'usuario', 'fechaAct', 'tpMov'];
+  dataSource: MatTableDataSource<any>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor( private services: CatalogosService ) {
     this.formEstadoCivil = new FormGroup({
@@ -29,12 +36,16 @@ export class EstadoCivilComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    debugger;
     if (this.SelectedEstadoCivil !== undefined) {
       this.Habilita(false);
       this.formEstadoCivil.get('id').setValue(this.SelectedEstadoCivil.id);
       this.formEstadoCivil.get('estadoCivil').setValue(this.SelectedEstadoCivil.estadoCivil);
       this.formEstadoCivil.get('activo').setValue(this.SelectedEstadoCivil.activo);
+    }
+    if (this.Log !== undefined) {
+      this.dataSource = new MatTableDataSource(this.Log);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }
   }
 
@@ -47,6 +58,7 @@ export class EstadoCivilComponent implements OnInit, OnChanges {
   Save() {
     const catalogo: catalogos = new catalogos();
     this.SelectedEstadoCivil !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
+    catalogo.usuario = sessionStorage.getItem('usuario');
     catalogo.Catalogos = {
       Id: 7,
       Nombre: 'Estado Civil',
@@ -75,4 +87,11 @@ export class EstadoCivilComponent implements OnInit, OnChanges {
     }
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 }

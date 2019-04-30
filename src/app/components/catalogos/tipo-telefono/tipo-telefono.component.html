@@ -50,37 +50,43 @@
             <mat-icon class="example-tab-icon">history</mat-icon>
             Historico
         </ng-template>
-        <table _ngcontent-c12="" style="font-size: 12px" class="table table-striped table-hover ">
-            <thead _ngcontent-c12="">
-                <tr _ngcontent-c12="">
-                    <th _ngcontent-c12="" class="text-center text-success ng-star-inserted"> Campo 1 </th>
-                    <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> Campo 2 </th>
-                    <th _ngcontent-c12="" class="text-center text-primary ng-star-inserted"> Campo 3 </th>
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+
+        <div class="mat-elevation-z8">
+            <table style="width: 100%;" mat-table [dataSource]="dataSource" matSort>
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                    <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+                </ng-container>
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="usuario">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
+                    <td mat-cell *matCellDef="let row"> {{row.usuario | uppercase}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="fechaAct">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Actualización </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.fechaAct | date:'d MMM, y, h:mm'}} </td>
+                </ng-container>
+
+                <!-- Color Column -->
+                <ng-container matColumnDef="tpMov">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Movimiento </th>
+                    <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.tpMov}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;">
                 </tr>
-            </thead>
-            <tbody _ngcontent-c12="">
-                <tr _ngcontent-c12="" class="rowHover ng-star-inserted">
-                    <td _ngcontent-c12="" class="text-center">1
-                    </td>
-                    <td _ngcontent-c12="" class="text-center">2</td>
-                    <td _ngcontent-c12="" class="text-center">3
-                    </td>
-                </tr>
-                <tr _ngcontent-c12="" class="rowHover ng-star-inserted">
-                    <td _ngcontent-c12="" class="text-center">1
-                    </td>
-                    <td _ngcontent-c12="" class="text-center">2</td>
-                    <td _ngcontent-c12="" class="text-center">3
-                    </td>
-                </tr>
-                <tr _ngcontent-c12="" class="rowHover ng-star-inserted">
-                    <td _ngcontent-c12="" class="text-center">1
-                    </td>
-                    <td _ngcontent-c12="" class="text-center">2</td>
-                    <td _ngcontent-c12="" class="text-center">3
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
     </mat-tab>
 </mat-tab-group>

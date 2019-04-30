@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, Validator } from '@angular/forms';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 // Servicios
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 // Modelos
@@ -13,9 +14,15 @@ import { catalogos } from '../../../models/catalogos/catalogos';
 export class TipoTelefonoComponent implements OnInit, OnChanges {
 
   @Input() SelectedTipoTelefono: any;
+  @Input() Log: any;
   @Output() UpTpTelefono = new EventEmitter<number>(); // Id de tipo de telefono para actualizar tabla.
-
   formTipoTelefono: FormGroup;
+
+  displayedColumns: string[] = ['id', 'usuario', 'fechaAct', 'tpMov'];
+  dataSource: MatTableDataSource<any>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor( private services: CatalogosService ) {
     this.formTipoTelefono = new FormGroup({
@@ -35,6 +42,11 @@ export class TipoTelefonoComponent implements OnInit, OnChanges {
       this.formTipoTelefono.get('tipo').setValue(this.SelectedTipoTelefono.tipo);
       this.formTipoTelefono.get('activo').setValue(this.SelectedTipoTelefono.activo);
     }
+    if (this.Log !== undefined) {
+      this.dataSource = new MatTableDataSource(this.Log);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 
   New() {
@@ -46,6 +58,7 @@ export class TipoTelefonoComponent implements OnInit, OnChanges {
   Save() {
     const catalogo: catalogos = new catalogos();
     this.SelectedTipoTelefono !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
+    catalogo.usuario = sessionStorage.getItem('usuario');
     catalogo.Catalogos = {
       Id: 6,
       Nombre: 'Tipo de telefono',
@@ -74,4 +87,11 @@ export class TipoTelefonoComponent implements OnInit, OnChanges {
     }
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 }

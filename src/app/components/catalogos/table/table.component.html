@@ -1,18 +1,64 @@
-<div class="mat-elevation-z8">
-    <table style="width: 100%;" class="table table-striped table-hover table-responsive-lg">
+<div class="container" *ngIf="!Reg">
+    <div class="col-xs-12">
+        <div class="center-block text-center">
+            <i class="fa fa-search fa-5x" aria-hidden="true"></i>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="center-block">
+            <br><br>
+            <p class="text-gray-darker text-center">No hay resutados</p>
+            {{tableDatas}}
+            <hr>
+        </div>
+    </div>
+</div>
+
+<mat-form-field *ngIf="Reg">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtro">
+</mat-form-field>
+<div *ngIf="Reg" style=" height: 400px; overflow: auto;" class="mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <ng-container *ngFor="let colName of tableColNameGenerated; let colIndex = index" matColumnDef="{{colName}}">
+            <mat-header-cell class="font-weight-bold" *matHeaderCellDef>
+                <ng-container *ngIf="colName == 'id'">
+                    EDITAR
+                </ng-container>
+                <ng-container *ngIf="colName != 'id'">
+                    {{ colName | uppercase }}
+                </ng-container>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <ng-container *ngIf="colName == 'id'">
+                    <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="selectEdit(element[colName])" container="body" placement="bottom" tooltip="Buscar catalogo seleccionado">
+                            <i class="fa fa-pencil"></i>
+                    </button>
+                </ng-container>
+                <ng-container *ngIf="colName != 'id'">
+                    {{element[colName] === true ? 'SI': element[colName] === false ? 'NO': element[colName]}}
+                </ng-container>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="tableColNameGenerated; sticky: true "></mat-header-row>
+        <mat-row *matRowDef="let row; columns: tableColNameGenerated; "></mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20] " showFirstLastButtons></mat-paginator>
+</div>
+
+<!-- <table style="width: 100%; " class="table table-striped table-hover table-responsive-lg ">
         <thead>
             <tr>
-                <th *ngFor="let tableHead of tableHeads" class="text-center text-success ng-star-inserted">
+                <th *ngFor="let tableHead of tableHeads " class="text-center text-success ng-star-inserted ">
                     {{tableHead}}
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let tableData of tableDatas" (dblclick)="selectEdit(tableData.id)">
-                <td *ngFor="let colName of tableColNameGenerated" class="text-center">
+            <tr *ngFor="let tableData of tableDatas " (dblclick)="selectEdit(tableData.id) ">
+                <td *ngFor="let colName of tableColNameGenerated " class="text-center ">
                     {{tableData[colName] === true ? 'Si': tableData[colName] === false ? 'No': tableData[colName] }}
             </tr>
         </tbody>
-    </table>
-    <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> -->
-</div>
+    </table> -->

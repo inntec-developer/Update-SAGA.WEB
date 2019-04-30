@@ -1,6 +1,6 @@
 import { CatalogosService } from '../../service/catalogos/catalogos.service';
 import { ComponentsModule } from '../../components/components.module';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { OficinasComponent } from './oficinas/oficinas.component';
 import { PreguntasFrecuentesComponent } from './preguntas-frecuentes/preguntas-frecuentes.component';
 import { RouterModule } from '@angular/router';
@@ -14,6 +14,11 @@ const routes: Routes = [
   { path: 'menucatalogo', component: CatalogosComponent }
 ];
 
+import es from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(es);
+
 @NgModule({
   imports: [
     SharedModule,
@@ -21,6 +26,6 @@ const routes: Routes = [
     ComponentsModule
   ],
   declarations: [PreguntasFrecuentesComponent, OficinasComponent],
-  providers: [CatalogosService]
+  providers: [CatalogosService, { provide: LOCALE_ID, useValue: 'es-ES' }]
 })
 export class CatalogosModule { }
