@@ -1,18 +1,19 @@
-import { element } from 'protractor';
-import { RegistroReclutadorComponent } from './../../../components/registro-reclutador/registro-reclutador.component';
-import { ExamenesService } from './../../../service/Examenes/examenes.service';
-import { CandidatosService } from './../../../service/Candidatos/candidatos.service';
-import { DlgAsignarPerfilComponent } from './../../../components/dlg-asignar-perfil/dlg-asignar-perfil.component';
-import { SistTicketsService } from './../../../service/SistTickets/sist-tickets.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { DialogShowRequiComponent } from '../../recl/vacantes/vacantes/components/dialogs/dialog-show-requi/dialog-show-requi.component';
-import { MatDialog } from '@angular/material';
-import { InfoCandidatoService } from '../../../service/SeguimientoVacante/info-candidato.service';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-import { RequisicionesService } from '../../../service';
+
+import { CandidatosService } from './../../../service/Candidatos/candidatos.service';
 import { DialogHorariosConteoComponent } from '../../../components/dialog-horarios-conteo/dialog-horarios-conteo.component';
+import { DialogShowRequiComponent } from '../../recl/vacantes/vacantes/components/dialogs/dialog-show-requi/dialog-show-requi.component';
+import { DlgAsignarPerfilComponent } from './../../../components/dlg-asignar-perfil/dlg-asignar-perfil.component';
+import { ExamenesService } from './../../../service/Examenes/examenes.service';
+import { InfoCandidatoService } from '../../../service/SeguimientoVacante/info-candidato.service';
+import { MatDialog } from '@angular/material';
 import { PostulateService } from '../../../service/SeguimientoVacante/postulate.service';
+import { RegistroReclutadorComponent } from './../../../components/registro-reclutador/registro-reclutador.component';
+import { RequisicionesService } from '../../../service';
+import { Router } from '@angular/router';
+import { SistTicketsService } from './../../../service/SistTickets/sist-tickets.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-seguimiento-ticket',
@@ -22,6 +23,8 @@ import { PostulateService } from '../../../service/SeguimientoVacante/postulate.
 })
 export class SeguimientoTicketComponent implements OnInit {
   @ViewChild('modallib') modal;
+  modalExamen : boolean;
+
   disabled = false;
   compact = false;
   invertX = false;
@@ -57,17 +60,17 @@ export class SeguimientoTicketComponent implements OnInit {
   filteredDataPos: any = [];
   search = "";
 
-  constructor( private _service: SistTicketsService, 
-      private _Router: Router, private dialog: MatDialog, 
-      private _serviceCandidato: InfoCandidatoService,  
+  constructor( private _service: SistTicketsService,
+      private _Router: Router, private dialog: MatDialog,
+      private _serviceCandidato: InfoCandidatoService,
       private serviceCandidato: CandidatosService,
       private servicePost: PostulateService,
       private toasterService: ToasterService,
-      private service: RequisicionesService, 
-    private _serviceExamen: ExamenesService) { 
-        setInterval(() => this.timeWait(), 60000);    
+      private service: RequisicionesService,
+    private _serviceExamen: ExamenesService) {
+        setInterval(() => this.timeWait(), 60000);
   }
-  
+
   Reinciar()
   {
     this.ticket = [];
@@ -79,11 +82,12 @@ export class SeguimientoTicketComponent implements OnInit {
     this.apartar = true;
     this.requisicionId = null;
     this.examenId = 0;
-    
+
     this.examenesCandidato = { 'tecnicos': [], 'psicometricos': [] };
 
   }
   ngOnInit() {
+    this.modalExamen = false;
     this.moduloId = sessionStorage.getItem('moduloId');
     this.GetFilaTickets();
 
@@ -157,7 +161,7 @@ export class SeguimientoTicketComponent implements OnInit {
       this.atender = true;
      }
     });
-   
+
   }
 
   public Finalizar(ticketId, estatus)
@@ -201,7 +205,7 @@ export class SeguimientoTicketComponent implements OnInit {
 
         var datos = { candidatoId: this.ticket[0].candidato[0].candidatoId, estatusId: estatusId, requisicionId: requi, horarioId: horarioId, tipoMediosId: result.mediosId, ReclutadorId: sessionStorage.getItem('id') };
 
-        this.serviceCandidato.UpdateFuenteRecl(datos).subscribe(result =>{ 
+        this.serviceCandidato.UpdateFuenteRecl(datos).subscribe(result =>{
           this.servicePost.SetProceso(datos).subscribe(data => {
             if (data == 201) {
               if(estatusTicket == 3)
@@ -225,7 +229,7 @@ export class SeguimientoTicketComponent implements OnInit {
         });
 
       }
-     
+
     });
   }
 
@@ -240,10 +244,10 @@ export class SeguimientoTicketComponent implements OnInit {
               if(data == 200)
               {
                 this.loading = false;
-                       
+
                 var msg = 'El candidato se apartó correctamente.';
                 this.popToast('success', 'Apartado', msg);
-    
+
                 this.GetTicket(ticket.ticketId)
               }
               else
@@ -253,7 +257,7 @@ export class SeguimientoTicketComponent implements OnInit {
                 this._liberarCandidato(datos, ticket)
               }
             })
-          
+
             break;
           }
           case 304: {
@@ -281,7 +285,7 @@ export class SeguimientoTicketComponent implements OnInit {
       }, err => {
         console.log(err);
       });
-    
+
   }
 
   _apartarCandidato(row, candidato) {
@@ -358,7 +362,7 @@ export class SeguimientoTicketComponent implements OnInit {
         this.apartar = true;
         this.popToast('success', 'SEGUIMIENTO', 'El candidato se liberó correctamente');
 
-      
+
     }
     else if(value == 404)
     {
@@ -366,7 +370,7 @@ export class SeguimientoTicketComponent implements OnInit {
       this.dlgLiberar = false;
       this.objLiberar = [];
       this.popToast('error', 'SEGUIMIENTO', 'Ocurrió un error al intentar actualizar datos');
- 
+
     }
     else
     {
@@ -386,7 +390,7 @@ export class SeguimientoTicketComponent implements OnInit {
 
     this.dlgLiberar = true;
   }
-  
+
   _liberarCandidato(row, candidato)
   {
     this._service.LiberarCandidato(row.id, candidato.candidato[0].candidatoId).subscribe(data =>{
@@ -415,7 +419,7 @@ export class SeguimientoTicketComponent implements OnInit {
     dialogShow.afterClosed().subscribe(result => {
       if(result)
       {
-        
+
       }
     });
   }
@@ -474,7 +478,7 @@ export class SeguimientoTicketComponent implements OnInit {
     console.log(aux)
     this.search = data.target.value;
     let tempArray: Array<any> = [];
-   
+
     let colFiltar: Array<any> = [{ title: "folio" }, { title: "vBtra" }, { title: "cliente" }];
 
     aux.forEach(function (item) {
@@ -504,7 +508,7 @@ export class SeguimientoTicketComponent implements OnInit {
     let d = new Date();
     let s = d.getSeconds() * 6;
     let m = d.getMinutes();
-  
+
 
   }
 
@@ -512,7 +516,7 @@ export class SeguimientoTicketComponent implements OnInit {
   {
     if(this.fila.length > 0)
     {
-      this.minutosEnEspera += 1; 
+      this.minutosEnEspera += 1;
       this.fila.forEach(e => {
         e.te = this.minutosEnEspera;
       })

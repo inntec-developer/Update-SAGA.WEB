@@ -1,6 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
+import { Cliente } from './../../../../models/vtas/Cliente';
 import { ClientesService } from '../../../../service/clientes/clientes.service';
 import { FileManagerComponent } from './../../../../components/file-manager/file-manager.component';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -14,7 +15,7 @@ import { forEach } from '@angular/router/src/utils/collection';
 })
 export class EditarClientesComponent implements OnInit {
   private ClienteId: any;
-  private Cliente: any = [];
+  public Cliente: any = [];
   Direcciones: any = [];
   Telefonos: any = [];
   Emails: any = [];

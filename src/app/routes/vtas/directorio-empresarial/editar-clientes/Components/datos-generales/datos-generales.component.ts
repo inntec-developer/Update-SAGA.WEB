@@ -18,10 +18,10 @@ export class DatosGeneralesComponent implements OnInit {
 
   public formGeneral: FormGroup;
   private Usuario: string;
-  private esCliente: any;
+  public esCliente: any;
   public ClienteId: any;
 
-  private loading: boolean = false;
+  public loading: boolean = false;
 
   public isReadonly: boolean = false;
   public maxRat: number = 3;

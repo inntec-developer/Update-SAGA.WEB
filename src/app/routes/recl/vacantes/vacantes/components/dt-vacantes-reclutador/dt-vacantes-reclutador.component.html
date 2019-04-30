@@ -17,10 +17,10 @@
         <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-xs btn-acciones" [disabled]="!element"
           [ngClass]="(!element) ? 'disabled' : 'btn-outline-dark'" container="body" placement="bottom" tooltip="Comentarios"><em
             class="fa fa-comments-o"></em></button>
-        <button id="create" chkPrivilegiosButtons (click)="openDialogAssingRequi(element)" placement="bottom" tooltip="Asignar"
+        <button id="create" chkPrivilegiosButtons (click)="openDialogAssingRequi()" placement="bottom" tooltip="Asignar"
           container="body" class="mr-1" [disabled]="asignar" [ngClass]="asignar ? 'btn btn-xs disabled':'btn btn-xs btn-outline-purple'">
           <em class="icon-user-follow"></em></button>
-        <button type="button" id="special" chkPrivilegiosButtons (click)="openDesignVacante(element.id, element.folio, element.vBtra)"
+        <button type="button" id="special" chkPrivilegiosButtons (click)="openDesignVacante()"
           container="body" placement="bottom" tooltip="Diseñar Vacante" container="body" [disabled]="disenador || confidencial"
           [ngClass]="(disenador || confidencial) ? 'btn btn-xs disabled':'btn btn-xs btn-outline-primary'">
           <em class="icon-list"></em>

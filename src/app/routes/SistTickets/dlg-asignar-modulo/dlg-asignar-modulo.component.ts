@@ -1,6 +1,7 @@
-import { SistTicketsService } from './../../../service/SistTickets/sist-tickets.service';
 import { Component, OnInit } from '@angular/core';
+
 import { Router } from '@angular/router';
+import { SistTicketsService } from './../../../service/SistTickets/sist-tickets.service';
 
 @Component({
   selector: 'app-dlg-asignar-modulo',
@@ -12,6 +13,8 @@ export class DlgAsignarModuloComponent implements OnInit {
   modulos = [];
   reclutador = sessionStorage.getItem('nombre');
   moduloId = '';
+  mod: any;
+  tipo: any;
   constructor(private _Router: Router, private _service: SistTicketsService) { }
 
   ngOnInit() {
@@ -28,7 +31,7 @@ export class DlgAsignarModuloComponent implements OnInit {
 
   Iniciar(tipo, mod)
   {
-    sessionStorage.setItem('modulo', mod); 
+    sessionStorage.setItem('modulo', mod);
     sessionStorage.setItem('moduloId', this.moduloId)
 
     if(tipo == 1)
@@ -38,7 +41,7 @@ export class DlgAsignarModuloComponent implements OnInit {
     else if(tipo==2)
     {
       this._Router.navigate(['/examenes/agregarResultPsico'], { skipLocationChange: true });
-      
+
     }
 
   }

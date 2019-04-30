@@ -15,6 +15,7 @@ export class VerClienteComponent implements OnInit {
   public ClienteId: any;
   public Cliente: any;
   public esCliente: boolean;
+  public oneAtATime: boolean;
 
   //scroll
   public disabled = false;
@@ -47,6 +48,7 @@ export class VerClienteComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.oneAtATime = false;
   }
 
   editarCliente(){
