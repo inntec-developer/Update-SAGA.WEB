@@ -39,7 +39,7 @@ export class ReporteConcurrenciaComponent implements OnInit {
   }
 
   public columns: Array<any> = [
-    { title: 'Fecha', className: 'text-success text-center', name: 'fecha', filtering: { filterString: '',  placeholder: 'aaaa/mm/dd' } },
+    { title: 'Fecha', className: 'text-success text-center', name: 'fecha', filtering: { filterString: '',  placeholder: 'aaaa-mm-dd' } },
     { title: 'Hora Atención', className: 'text-info text-center', name: 'hora', filtering: { filterString: '', placeholder: 'HH:MM' } },
     { title: 'Usuario', className: 'text-info text-center', name: 'usuario', filtering: { filterString: '', placeholder: 'Usuario' } },
     { title: 'Módulo', className: 'text-info text-center', name: 'modulo', filtering: { filterString: '', placeholder: 'Modulo' } },
