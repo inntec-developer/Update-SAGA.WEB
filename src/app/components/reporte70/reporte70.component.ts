@@ -175,8 +175,9 @@ export class Reporte70Component implements OnInit {
  
     this._service.GetReporte70(palabra,ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec).subscribe(result => {
       this.requisiciones = result;
-      this.rows = this.requisiciones;
-      this.onChangeTable(this.config);
+      this.rows = this.requisiciones.slice(0, this.itemsPerPage);
+      this.registros = this.rows.length;
+      this.length = this.requisiciones.length;
   this.spinner.hide();
     })
   }
@@ -335,12 +336,7 @@ export class Reporte70Component implements OnInit {
 public refreshTable() {
   this.GetReporte70(this.objsucursal1, this.objsolicit1, this.objrecluta1,
     this.objempresa1,this.objstatus1,this.objtiporeclu1,this.objtipocordi1 );
-    // setTimeout(() => {
-    //   this.columns.forEach(element => {
-    //     (<HTMLInputElement>document.getElementById(element.name)).value = '';
-    //   });
-
-    // }, 1000);
+  this.page = 1;
   }
 
   public clearfilters() {

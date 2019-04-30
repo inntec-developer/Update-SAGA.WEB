@@ -5,7 +5,7 @@
     background: -o-linear-gradient(left, #3931af 0%, #00c6ff 100%);
     background: -ms-linear-gradient(left, #3931af 0%, #00c6ff 100%);
     background: linear-gradient(to right, #3931af 0%, #00c6ff 100%);
-    padding: 3%;
+    padding: 2%;
 
 }
 
@@ -18,7 +18,7 @@
     background: #f8f9fa;
     border-top-left-radius: 10% 50%;
     border-bottom-left-radius: 10% 50%;
-    height: 580px;
+    height: 700px;
 }
 
 
@@ -125,7 +125,7 @@
 .btn-lg
 {
     width: 280px;
-    height: 45px;
+    height: 40px;
     display: flex;
     justify-content: space-between;
 }
@@ -133,7 +133,7 @@
 .btn-lg > .btn-label
  {
      width: 50px;
-     height: 45px;
+     height: 40px;
      border-top-left-radius: 25px;
      border-bottom-left-radius: 25px;
      display: flex;

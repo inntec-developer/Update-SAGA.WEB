@@ -114,9 +114,9 @@ export class CarruselVacantesComponent implements OnInit {
 
       });
 
-      // for (var c = 0; c <= 7; c++) {
-      //   this.dataSource[c].image = images[c];
-      // }
+      for (var c = 0; c <= 7; c++) {
+        this.dataSource[c].image = images[c];
+      }
 
       this.vacantes = this.dataSource;
     }
