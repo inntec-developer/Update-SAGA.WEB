@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit {
     alertAllIndex: number;
     private subscription: Subscription;
     UserId: string;
-
+    admin;
     text = renderActualizaciones;
     disabled = false;
     compact = false;
@@ -52,7 +52,7 @@ export class HeaderComponent implements OnInit {
         // show only a few items on demo
         this.menuItems = menu.setEstructuraMenu().slice(0, 4); // for horizontal layout
         this.UserId = sessionStorage.getItem('id');
-
+        this.admin = sessionStorage.getItem('tipoUsuario')
     }
 
     ngOnInit() {

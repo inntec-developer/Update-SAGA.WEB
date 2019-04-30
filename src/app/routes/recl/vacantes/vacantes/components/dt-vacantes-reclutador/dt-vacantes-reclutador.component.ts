@@ -425,10 +425,24 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   ValidarEstatus(estatusId) {
     //revisar en pausa
-    (this.element.propietarioId == sessionStorage.getItem("id") && (estatusId != 39 && estatusId != 34 && estatusId != 35 && estatusId != 36 && estatusId != 37) && this.element.vacantes > 0 )
-    ? this.asignar = false : this.asignar = true
 
-    estatusId == 6 && this.element.propietarioId == sessionStorage.getItem("id") && this.element.vacantes > 0 ? this.disenador = false : this.disenador = true;
+    if(this.element.aprobada == 1 && this.element.aprobadorId == sessionStorage.getItem("id") && (estatusId != 39 && estatusId != 34 && estatusId != 35 && estatusId != 36 && estatusId != 37) && this.element.vacantes > 0 )
+     {
+      this.asignar = false
+      this.disenador = false
+     } 
+     else if(this.element.aprobada == 0 && (estatusId != 39 && estatusId != 34 && estatusId != 35 && estatusId != 36 && estatusId != 37) && this.element.vacantes > 0)
+     {
+       this.asignar = false
+       this.disenador = false;
+     }
+     else
+     {
+       this.asignar = true;
+       this.disenador = true;
+     }
+
+    // estatusId == 6 && this.element.propietarioId == sessionStorage.getItem("id") && this.element.vacantes > 0 ? this.disenador = false : this.disenador = true;
 
     if (estatusId == 4 && this.element.vacantes > 0) //nueva
     {
@@ -796,7 +810,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
         else if(row.reclutadores.length > 1)
         {
           row.reclutadores.forEach(element => {
-            reclutador = reclutador + element.reclutador + '\n'
+            reclutador = reclutador + element + '\n'
           });
         }
         else

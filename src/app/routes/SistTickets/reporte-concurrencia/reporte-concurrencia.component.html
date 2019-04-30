@@ -34,12 +34,12 @@
           [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
           <div> 
             <tr *ngFor="let r of rows">
-              <td class="text-left">{{r.fecha | date:'yyyy/MM/dd H:mm' }}</td>
+              <td class="text-left">{{r.fecha | date:'dd/MM/yyyy H:mm' }}</td>
               <td class="text-center">{{r.hora | date:'H:mm'}}</td>
               <td class="text-center">{{r.usuario}}</td>
               <td class="text-center">{{r.modulo}}</td>
               <td class="text-center">{{r.turno}}</td>
-              <td class="text-center"><span class="badge badge-pill badge-info" [popover]="popEstatus" #popE="bs-popover" [outsideClick]="true" placement="left" container="body">{{r.resumen[r.resumen.length - 1].estatus}}</span>
+              <td class="text-center"><span class="badge badge-pill badge-info" [popover]="popEstatus" #popE="bs-popover" [outsideClick]="true" placement="left" container="body">{{r.resumen[r.resumen.length - 1].estatus | uppercase}}</span>
                 <ng-template #popEstatus>
                   <div class="card">
                     <div class="card-body">
@@ -60,7 +60,7 @@
                                   </ng-template>
                                 </div>
                                 <div>
-                                  <span class="text-muted ml-2 mr-2">{{rr.fecha | date:'yyyy/MM/dd'}}</span>
+                                  <span class="text-muted ml-2 mr-2">{{rr.fecha | date:'dd/MM/yyyy'}}</span>
                                 </div>
                 
                                 <div>

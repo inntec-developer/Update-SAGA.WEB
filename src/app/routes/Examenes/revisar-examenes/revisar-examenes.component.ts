@@ -11,6 +11,9 @@ import { DlgRevisarExamenesComponent } from '../../../components/dlg-revisar-exa
 export class RevisarExamenesComponent implements OnInit {
 
   resultados = [];
+  filteredData: any = [];
+  search = "";
+
   public columns: Array<any> = [
     { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
     { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
@@ -32,6 +35,7 @@ export class RevisarExamenesComponent implements OnInit {
   {
     this.service.GetCandidatosExamenes().subscribe(data =>{
       this.resultados = data;
+      this.filteredData = data;
     });
   }
   OpenDialogRevisar(row)
@@ -50,5 +54,27 @@ export class RevisarExamenesComponent implements OnInit {
       dialog.afterClosed().subscribe(result => {
       });
     })
+  }
+  public Search(data: any) {
+    this.search = data.target.value;
+    let tempArray: Array<any> = [];
+   
+    let colFiltar: Array<any> = [{ title: "folio" }, { title: "vBtra" }, { title: "cliente" }];
+
+    this.filteredData.forEach(function (item) {
+      let flag = false;
+      colFiltar.forEach(function (c) {
+        if (item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
+          flag = true;
+        }
+      });
+
+      if (flag) {
+        tempArray.push(item)
+      }
+    });
+
+    this.resultados = tempArray;
+    
   }
 }
