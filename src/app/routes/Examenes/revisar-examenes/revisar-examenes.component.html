@@ -13,8 +13,23 @@
 
 <div class="card">
   <div class="card-body">
-   <h5 class="card-title text-warning"><em class="fa fa-pencil"></em> EXAMENES DISPONIBLES</h5>
-   <hr>
+      <div class="row bg-light">
+        <div class="col-sm-8 col-md-8">
+          <h5 class="card-title text-warning mt-2">
+            <em class="fa fa-pencil"></em> EXAMENES DISPONIBLES</h5>
+        </div>
+        <div class="col-sm-4 col-md-4">
+          <div class="input-group input-group-sm float-right mt-1 mb-1 with-focus">
+      
+            <input (input)="Search($event, 2, filteredData)" class="form-control form-control-sm border-right-0" type="text" placeholder="Filtrar"
+            />
+            <div class="input-group-append">
+              <span class="input-group-text fa fa-search text-info bg-transparent border-left-0"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
    <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
    [disabled]="disabled">
    <div style="height: 400px;">

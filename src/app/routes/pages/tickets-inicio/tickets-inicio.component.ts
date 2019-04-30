@@ -40,7 +40,7 @@ export class TicketsInicioComponent implements OnInit {
       }
       else if(data == 204)
       {
-        swal("¡Se canceló la cita para el " + this.folio + "!. Pasó el tiempo de espera", '', "warning");
+        swal("¡Se canceló tu cita con el folio " + this.folio + "!. Pasó tu tiempo limite", '', "warning");
         this.btnCita = false;
         this.folio = 0;
       }

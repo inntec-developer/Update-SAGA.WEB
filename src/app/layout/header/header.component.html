@@ -35,7 +35,7 @@
     <!-- END User avatar toggle-->
     <!-- START lock screen-->
     <li class="nav-item d-none d-md-block">
-      <a class="nav-link" title="Lock screen" [routerLink]="'/login'">
+      <a class="nav-link" title="Cerrar sesi&oacute;n" [routerLink]="'/login'">
         <em class="icon-lock"></em>
       </a>
     </li>
@@ -65,8 +65,8 @@
                 <em class="icon-magnifier"></em>
             </a>
         </li> -->
-        <li class="nav-item">
-            <a class="nav-link"  [routerLink]="'/admin/jobPause'">
+        <li *ngIf="admin == '1'" class="nav-item">
+            <a class="nav-link" title="Jobs"  [routerLink]="'/admin/jobPause'">
                 <em class="fa fa-bolt"></em>
             </a>
         </li>
