@@ -259,6 +259,7 @@ return this._httpClient.get(this.UrlGetTipoDireccion);
   }
 
   GuardaCatalogo(Catalogo: any): Observable<any> {
+    debugger;
     let httpHeaders = new HttpHeaders({
       'Content-Type' : 'application/json',
       'Cache-Control': 'no-cache'

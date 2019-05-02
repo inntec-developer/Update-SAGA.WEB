@@ -107,6 +107,19 @@ import { DiscapacidadesComponent } from './catalogos/discapacidades/discapacidad
 import { TipolicenciaComponent } from './catalogos/tipolicencia/tipolicencia.component';
 import { TipoexamenComponent } from './catalogos/tipoexamen/tipoexamen.component';
 import { ToolsModule } from '../tools/tools.module';
+import { GiroEmpresaComponent } from './catalogos/giro-empresa/giro-empresa.component';
+import { ActividadEmpresaComponent } from './catalogos/actividad-empresa/actividad-empresa.component';
+import { TamanoEmpresaComponent } from './catalogos/tamano-empresa/tamano-empresa.component';
+import { TipoBaseComponent } from './catalogos/tipo-base/tipo-base.component';
+import { PerfilExpComponent } from './catalogos/perfil-exp/perfil-exp.component';
+import { AreaExpComponent } from './catalogos/area-exp/area-exp.component';
+import { AptitudComponent } from './catalogos/aptitud/aptitud.component';
+import { AreaInteresComponent } from './catalogos/area-interes/area-interes.component';
+import { JornadaLaboralComponent } from './catalogos/jornada-laboral/jornada-laboral.component';
+import { ModalidadComponent } from './catalogos/modalidad/modalidad.component';
+import { TpPsicometriaComponent } from './catalogos/tp-psicometria/tp-psicometria.component';
+import { PeriodoPagoComponent } from './catalogos/periodo-pago/periodo-pago.component';
+import { TpNominaComponent } from './catalogos/tp-nomina/tp-nomina.component';
 @NgModule({
   imports: [
     SharedModule,
@@ -217,7 +230,20 @@ import { ToolsModule } from '../tools/tools.module';
     IdiomasComponent,
     DiscapacidadesComponent,
     TipolicenciaComponent,
-    TipoexamenComponent
+    TipoexamenComponent,
+    GiroEmpresaComponent,
+    ActividadEmpresaComponent,
+    TamanoEmpresaComponent,
+    TipoBaseComponent,
+    PerfilExpComponent,
+    AreaExpComponent,
+    AptitudComponent,
+    AreaInteresComponent,
+    JornadaLaboralComponent,
+    ModalidadComponent,
+    TpPsicometriaComponent,
+    PeriodoPagoComponent,
+    TpNominaComponent
   ],
   exports: [
     DtDireccionComponent,

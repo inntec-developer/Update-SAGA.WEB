@@ -7,16 +7,16 @@ import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 import { catalogos } from '../../../models/catalogos/catalogos';
 
 @Component({
-  selector: 'app-discapacidades',
-  templateUrl: './discapacidades.component.html',
-  styleUrls: ['./discapacidades.component.scss']
+  selector: 'app-giro-empresa',
+  templateUrl: './giro-empresa.component.html',
+  styleUrls: ['./giro-empresa.component.scss']
 })
-export class DiscapacidadesComponent implements OnInit, OnChanges {
+export class GiroEmpresaComponent implements OnInit, OnChanges {
 
-  @Input() SelectedDiscapacidad: any;
+  @Input() SelectedGiro: any;
   @Input() Log: any;
-  @Output() UpDiscapacidad = new EventEmitter<number>(); // Id de País para actualizar tabla.
-  formDiscapacidades: FormGroup;
+  @Output() UpGiro = new EventEmitter<number>(); // Id de País para actualizar tabla.
+  formGiro: FormGroup;
 
   displayedColumns: string[] = ['id', 'usuario', 'fechaAct', 'tpMov'];
   dataSource: MatTableDataSource<any>;
@@ -25,9 +25,9 @@ export class DiscapacidadesComponent implements OnInit, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor( private services: CatalogosService ) {
-    this.formDiscapacidades = new FormGroup({
+    this.formGiro = new FormGroup({
       id: new FormControl(),
-      tipodiscapacidad: new FormControl({value: '', disabled: true}, [Validators.required]),
+      giroempresa: new FormControl({value: '', disabled: true}, [Validators.required]),
       activo: new FormControl({value: '', disabled: true})
     });
   }
@@ -36,11 +36,11 @@ export class DiscapacidadesComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.SelectedDiscapacidad !== undefined) {
+    if (this.SelectedGiro !== undefined) {
       this.Habilita(false);
-      this.formDiscapacidades.get('id').setValue(this.SelectedDiscapacidad.id);
-      this.formDiscapacidades.get('tipodiscapacidad').setValue(this.SelectedDiscapacidad.tipoDiscapacidad);
-      this.formDiscapacidades.get('activo').setValue(this.SelectedDiscapacidad.activo);
+      this.formGiro.get('id').setValue(this.SelectedGiro.id);
+      this.formGiro.get('giroempresa').setValue(this.SelectedGiro.giroEmpresa);
+      this.formGiro.get('activo').setValue(this.SelectedGiro.activo);
     }
     if (this.Log !== undefined) {
       this.dataSource = new MatTableDataSource(this.Log);
@@ -50,41 +50,41 @@ export class DiscapacidadesComponent implements OnInit, OnChanges {
   }
 
   New() {
-    this.formDiscapacidades.reset();
+    this.formGiro.reset();
     this.Habilita(false);
-    this.SelectedDiscapacidad = '';
+    this.SelectedGiro = '';
   }
 
   Save() {
     const catalogo: catalogos = new catalogos();
-    this.SelectedDiscapacidad !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
+    this.SelectedGiro !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
     catalogo.usuario = sessionStorage.getItem('usuario');
     catalogo.Catalogos = {
-      Id: 38,
-      Nombre: 'Discapacidades',
-      Descripcion: 'Catalogo de discapacidades',
+      Id: 8,
+      Nombre: 'Giro Empresa',
+      Descripcion: 'Catalogo de giro empresas',
       Activo: true
     };
-    catalogo.Discapacidad = [this.formDiscapacidades.getRawValue()];
+    catalogo.GiroEmpresa = [this.formGiro.getRawValue()];
     console.log(catalogo);
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpDiscapacidad.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpGiro.emit(catalogo.Catalogos.Id) : console.log(result);
       this.Habilita(true);
     });
   }
 
   Limpiar() {
-    this.formDiscapacidades.reset();
+    this.formGiro.reset();
   }
 
   Habilita(opt: boolean) {
     if (!opt) {
-      this.formDiscapacidades.get('tipodiscapacidad').enable();
-      this.formDiscapacidades.get('activo').enable();
+      this.formGiro.get('giroempresa').enable();
+      this.formGiro.get('activo').enable();
     } else {
-      this.formDiscapacidades.get('tipodiscapacidad').disable();
-      this.formDiscapacidades.get('activo').disable();
+      this.formGiro.get('giroempresa').disable();
+      this.formGiro.get('activo').disable();
     }
   }
 
