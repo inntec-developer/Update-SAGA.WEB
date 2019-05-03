@@ -1,19 +1,34 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-//import {ToasterConfig, ToasterService} from 'angular2-toaster';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-
-import { ReportesService } from '../../../service/Reporte/reportes.service';
-import {Http} from '@angular/http';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { ApiConection } from '../../../service/api-conection.service';
-import { FormGroup } from '@angular/forms';
-import { FormControl } from '@angular/forms';
-import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import { daLocale } from 'ngx-bootstrap/chronos/i18n/da';
 import * as _moment from 'moment';
 import * as _rollupMoment from 'moment';
+
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
+import { ApiConection } from '../../../service/api-conection.service';
+import { FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import {Http} from '@angular/http';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ReportesService } from '../../../service/Reporte/reportes.service';
+import { daLocale } from 'ngx-bootstrap/chronos/i18n/da';
+
+//import {ToasterConfig, ToasterService} from 'angular2-toaster';
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const moment = _rollupMoment || _moment;
 
@@ -30,9 +45,9 @@ const moment = _rollupMoment || _moment;
 export class InformeComponent implements OnInit {
 
 
-  
 
- 
+
+  public value: any;
   public Empresas : any[];
   public Estatus : any[];
   public Usuario : any[];
@@ -45,8 +60,8 @@ export class InformeComponent implements OnInit {
   public objtipocordi : any[];
   public objtiporeclu : any[];
 
-  private reclutaList:any;
-  private cordinaList:any;
+  public reclutaList:any;
+  public cordinaList:any;
 
   public FormEmpresas: FormGroup;
   public FormSucursal: FormGroup;
@@ -60,10 +75,10 @@ export class InformeComponent implements OnInit {
   // public dia: any = this.myDate.getDate;
   // public mes: any = this.myDate.getMonth();
   // public ano: any = this.myDate.getFullYear();
- 
+
 
   date = new FormControl(new Date());
-  
+
   //date2 = new FormControl(moment([2019, new Date().getMonth(), new Date().getDate()-15]));
  // date2 = this.myDate.setDate(this.myDate.getDate() + -15);
  // date2 = new FormControl(new Date().getDay()-15 );
@@ -150,22 +165,22 @@ export class InformeComponent implements OnInit {
 
   empresaChange(obj) {
      this.objempresa = this.FormEmpresas.get('ClientesControl').value;
-    
+
   }
 
   sucursalChange(){
     this.objsucursal = this.FormSucursal.get('SucursalControl').value;
-    
+
   }
 
   solicitanteChange(){
     this.objsolicit = this.FormSolicitante.get('SolicitanteControl').value;
-   
+
   }
 
   reclutadorChange(){
     this.objrecluta = this.FormReclutador.get('ReclutadorControl').value;
-   
+
   }
 
   estatusChange(){
@@ -211,7 +226,7 @@ export class InformeComponent implements OnInit {
 
 
 
- 
+
   date2 = new FormControl(this.myDate);
 
 

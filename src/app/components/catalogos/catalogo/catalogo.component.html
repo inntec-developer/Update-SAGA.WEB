@@ -59,6 +59,11 @@
                 <app-nivelestudios *ngIf="idCatalogo == 35" [SelectedNivel]="selectedId" [Log]="log" (UpNivel)="Refresh($event)"></app-nivelestudios>
                 <app-mediovacante *ngIf="idCatalogo == 36" [SelectedMedio]="selectedId" [Log]="log" (UpMedios)="Refresh($event)"></app-mediovacante>
                 <app-idiomas *ngIf="idCatalogo == 37" [SelectedIdioma]="selectedId" [Log]="log" (UpIdioma)="Refresh($event)"></app-idiomas>
+                <app-discapacidades *ngIf="idCatalogo == 38" [SelectedDiscapacidad]="selectedId" [Log]="log" (UpDiscapacidad)="Refresh($event)"></app-discapacidades>
+                <app-tipolicencia *ngIf="idCatalogo == 39" [SelectedTpLicencia]="selectedId" [Log]="log" (UpTpLicencia)="Refresh($event)"></app-tipolicencia>
+                <app-tipoexamen *ngIf="idCatalogo == 40" [SelectedTpExamen]="selectedId" [Log]="log" (UpTpExamen)="Refresh($event)"></app-tipoexamen>
+                <!-- Ventas -->
+                <app-giro-empresa *ngIf="idCatalogo == 8" [SelectedGiro]="selectedId" [Log]="log" (UpGiro)="Refresh($event)"></app-giro-empresa>
             </mat-expansion-panel>
         </mat-accordion>
     </mat-card-content>

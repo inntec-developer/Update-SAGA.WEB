@@ -87,7 +87,7 @@ export class AdminServiceService {
   {
 
     let httpHeaders = new HttpHeaders({
-      'Access-Control-Allow-Origin': 'http://localhost:4200'
+      'Access-Control-Allow-Origin': 'https://weberp.damsa.com.mx'
      })
 
      let params = new HttpParams().set('entidadId', candidatoId)
@@ -125,7 +125,7 @@ export class AdminServiceService {
     // let ruta = "utilerias/img/user/08155cc8-3568-e811-80e1-9e274155325e.jpeg";
 
     let httpHeaders = new HttpHeaders({
-     'Access-Control-Allow-Origin': 'http://localhost:4200',
+     'Access-Control-Allow-Origin': 'https://weberp.damsa.com.mx',
      'Content-Type': 'image/*.*'
     })
 

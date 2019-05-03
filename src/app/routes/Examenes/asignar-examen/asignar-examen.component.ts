@@ -1,9 +1,9 @@
-import { RequisicionesService } from './../../../service/requisiciones/requisiciones.service';
 import { Component, OnInit } from '@angular/core';
-import { ExamenesService } from './../../../service/Examenes/examenes.service';
-import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import {FormControl, Validators} from '@angular/forms';
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
+import { ExamenesService } from './../../../service/Examenes/examenes.service';
+import { RequisicionesService } from './../../../service/requisiciones/requisiciones.service';
 
 @Component({
   selector: 'app-asignar-examen',
@@ -14,6 +14,8 @@ export class AsignarExamenComponent implements OnInit {
 
   se = new FormControl('', [Validators.required]);
   ste = new FormControl('', [Validators.required]);
+  nom: any;
+  tipoId:any;
   catalogo = [];
   examenes = [];
   examen = [];
@@ -23,7 +25,7 @@ export class AsignarExamenComponent implements OnInit {
   examenId = 0;
   verExamen = false;
   filterData = [];
-  
+
   public columns: Array<any> = [
     { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
     { title: 'Solicita', className: 'text-center', name: 'solicita', filtering: { filterString: '', placeholder: 'Solicita' } },
@@ -110,7 +112,7 @@ export class AsignarExamenComponent implements OnInit {
         }
       })
     }
-      
+
   }
 
   closeModal()
@@ -133,8 +135,8 @@ export class AsignarExamenComponent implements OnInit {
       }
       else
       {
-        this.requiselect = this.requiselect.filter(function(item) 
-        { 
+        this.requiselect = this.requiselect.filter(function(item)
+        {
           if(item.folio !== row.folio)
           {
             return item;
@@ -142,7 +144,7 @@ export class AsignarExamenComponent implements OnInit {
         });
       }
     }
-   
+
   }
   public Search(data: any) {
     let tempArray: Array<any> = [];
@@ -164,7 +166,7 @@ export class AsignarExamenComponent implements OnInit {
     this.requisiciones = tempArray;
   }
 
-  
+
    /**
   * configuracion para mensajes de acciones.
   */

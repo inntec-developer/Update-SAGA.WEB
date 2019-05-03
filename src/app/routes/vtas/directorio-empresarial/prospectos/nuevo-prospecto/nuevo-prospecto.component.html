@@ -28,13 +28,15 @@
             <p><span>Clasificaci&oacute;n </span></p>
           </div>
           <mat-form-field>
-            <input #empresa matInput formControlName="Empresa" name="empresa" placeholder="Empresa" autofocus maxlength="100" focus required />
+            <input #empresa matInput formControlName="Empresa" name="empresa" placeholder="Empresa" autofocus
+              maxlength="100" focus required />
             <mat-hint align="end">{{empresa.value.length}} / 100</mat-hint>
           </mat-form-field>
 
           <body oncopy="return false" onpaste="return false">
             <mat-form-field>
-              <input #validarEmpresa matInput formControlName="ValidarEmpresa" name="validarEmpresa" placeholder="Validar Empresa"  maxlength="100" required />
+              <input #validarEmpresa matInput formControlName="ValidarEmpresa" name="validarEmpresa"
+                placeholder="Validar Empresa" maxlength="100" required />
               <mat-hint align="start">
                 <strong *ngIf="formGeneral.controls.ValidarEmpresa.errors?.MachCompany" class="text-danger">Los datos
                   ingresados no coinciden, favor de verificar la informaci&oacute;n</strong>
@@ -63,13 +65,15 @@
             </div>
             <div class="col-md-2 col-lg-2 col-sm-12">
               <mat-form-field>
-                <input matInput type="number" formControlName="NoEmpleados" name="NoEmpleados" placeholder="# Empleados" (blur)="changeEmpleados()"
-                  required maxlength="10" />
+                <input matInput #NoEmpleados type="number" formControlName="NoEmpleados" name="NoEmpleados"
+                  placeholder="# Empleados" min="1" max="9999999999" maxlength="10" required/>
+                <mat-hint align="end">{{NoEmpleados.value.length}} / 10</mat-hint>
               </mat-form-field>
             </div>
             <div class="col-md-2 col-lg-2 col-sm-12">
               <mat-form-field>
-                <mat-select placeholder="Tamaño" formControlName="Tamanio"  (selectionChange)="validarNoEmpleado()" required>
+                <mat-select placeholder="Tamaño" formControlName="Tamanio" (selectionChange)="validarNoEmpleado()"
+                  required>
                   <mat-option *ngFor="let x of tamanioEmpresa" [value]="x.id">
                     {{x.tamanoEmpresa}}
                   </mat-option>
@@ -112,7 +116,7 @@
               <div class="col-md-2 col-lg-2 col-sm-12">
                 <mat-form-field>
                   <mat-select placeholder="Tipo Dirección" formControlName="TipoDireccion" required>
-                    <mat-option *ngFor="let x of tipoDireccion" [value]="x.id" >
+                    <mat-option *ngFor="let x of tipoDireccion" [value]="x.id">
                       {{x.tipoDireccion}}
                     </mat-option>
                   </mat-select>
@@ -121,7 +125,7 @@
               <div class="col-md-2 col-lg-2 col-sm-12">
                 <mat-form-field>
                   <input matInput formControlName="CodigoPostal" name="CodigoPostal" maxlength="5" #postalCode
-                    placeholder="Código Postal" (keyup)="showForCP($event)"  required/>
+                    placeholder="Código Postal" (keyup)="showForCP($event)" required />
                   <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
                 </mat-form-field>
               </div>
@@ -136,7 +140,8 @@
               </div>
               <div class="col-md-2">
                 <mat-form-field>
-                  <mat-select placeholder="Estados" formControlName="Estados" (selectionChange)="getMunicipio()" required>
+                  <mat-select placeholder="Estados" formControlName="Estados" (selectionChange)="getMunicipio()"
+                    required>
                     <mat-option *ngFor="let x of estados" [value]="x.id" (onSelectionChange)="auxEstado = x.estado">
                       {{x.estado}}
                     </mat-option>
@@ -145,7 +150,8 @@
               </div>
               <div class="col-md-2">
                 <mat-form-field>
-                  <mat-select placeholder="Municipios" formControlName="Municipios" (selectionChange)="getColonias()" required>
+                  <mat-select placeholder="Municipios" formControlName="Municipios" (selectionChange)="getColonias()"
+                    required>
                     <mat-option *ngFor="let x of municipios" [value]="x.id"
                       (onSelectionChange)="auxMunicipio = x.municipio">
                       {{x.municipio}}
@@ -167,19 +173,22 @@
             <div class="row">
               <div class="col-md-2">
                 <mat-form-field>
-                  <input #calle matInput formControlName="Calle" name="Calle" placeholder="Calle" maxlength="100" required />
+                  <input #calle matInput formControlName="Calle" name="Calle" placeholder="Calle" maxlength="100"
+                    required />
                   <mat-hint align="end">{{calle.value.length}} / 100</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-md-2">
                 <mat-form-field>
-                  <input #exterior matInput formControlName="Exterior" name="Exterior" placeholder="No. Exterior" maxlength="10" required />
+                  <input #exterior matInput formControlName="Exterior" name="Exterior" placeholder="No. Exterior"
+                    maxlength="10" required />
                   <mat-hint align="end">{{exterior.value.length}} / 10</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-md-2">
                 <mat-form-field>
-                  <input #interior matInput formControlName="Interior" name="Interior" placeholder="No. Interior" maxlength="30" />
+                  <input #interior matInput formControlName="Interior" name="Interior" placeholder="No. Interior"
+                    maxlength="30" />
                   <mat-hint align="end">{{interior.value.length}} / 30</mat-hint>
                 </mat-form-field>
               </div>
@@ -331,7 +340,7 @@
             <div class="row">
               <div class="col-md-4 col-lg-4 col-sm-12">
                 <mat-form-field>
-                  <mat-select placeholder="Dirección" formControlName="TelDireccion">
+                  <mat-select placeholder="Dirección" formControlName="TelDireccion" required>
                     <mat-option *ngFor="let x of DireccionesNew; let i=index " [value]="x.idAux">
                       <span
                         *ngIf="(x?.calle.length + x?.municipio.length + x?.codigoPostal.length) < 42 else toLengthDr">
@@ -350,7 +359,7 @@
             <div class="row">
               <div class="col-md-4 col-lg-4 col-sm-12">
                 <mat-form-field>
-                  <mat-select placeholder="Tipo Teléfono" formControlName="TipoTelefono"
+                  <mat-select placeholder="Tipo Teléfono" formControlName="TipoTelefono" required
                     (selectionChange)="getTipoTelefono()">
                     <mat-option *ngFor="let x of tipoTelefonos" [value]="x.id">
                       <span>{{x.tipo}}</span>
@@ -362,25 +371,30 @@
                 <div class="col-md-2 col-lg-2 col-sm-12">
                   <mat-form-field>
                     <span matPrefix>+&nbsp;</span>
-                    <input matInput type="phone" formControlName="LadaPais" maxlength="3" name="LadaPais"
-                      placeholder="País" />
+                    <input matInput #ladaPias type="phone" formControlName="LadaPais" maxlength="3" name="LadaPais"
+                      placeholder="País" required />
+                      <mat-hint align="end">{{ladaPias.value.length}} / 3</mat-hint>
                   </mat-form-field>
                 </div>
                 <div class="col-md-2 col-lg-2 col-sm-12">
                   <mat-form-field>
-                    <input matInput type="phone" formControlName="Lada" maxlength="3" name="Lada" placeholder="Lada" />
+                    <input matInput #lada type="phone" formControlName="Lada" maxlength="3" name="Lada" placeholder="Lada"
+                      required />
+                      <mat-hint align="end">{{lada.value.length}} / 3</mat-hint>
                   </mat-form-field>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-12">
                   <mat-form-field>
-                    <input matInput type="phone" formControlName="Numero" maxlength="8" name="Numero"
-                      placeholder="Número" />
+                    <input matInput #numero type="phone" formControlName="Numero" maxlength="8" name="Numero"
+                      placeholder="Número" required />
+                      <mat-hint align="end">{{numero.value.length}} / 8</mat-hint>
                   </mat-form-field>
                 </div>
                 <div class="col-md-2 col-lg-2 col-sm-12" *ngIf="esOficina === 4">
                   <mat-form-field>
-                    <input matInput type="phone" formControlName="Extension" maxlength="5" name="Extension"
+                    <input matInput #extencion type="phone" formControlName="Extension" maxlength="5" name="Extension"
                       placeholder="Ext." />
+                      <mat-hint align="end">{{extencion.value.length}} / 5</mat-hint>
                   </mat-form-field>
                 </div>
               </div>
@@ -502,7 +516,7 @@
             <div class="row">
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <mat-form-field>
-                  <mat-select placeholder="Dirección" formControlName="EmailDireccion">
+                  <mat-select placeholder="Dirección" formControlName="EmailDireccion" required>
                     <mat-option *ngFor="let x of DireccionesNew; " [value]="x.idAux">
                       <span
                         *ngIf="(x?.calle.length + x?.municipio.length + x?.codigoPostal.length) < 42 else toLengthDr">
@@ -519,8 +533,9 @@
               </div>
               <div class="col-md-6 col-lg-6 col-sm-12">
                 <mat-form-field>
-                  <input matInput type="email" formControlName="Email" maxlength="100" name="Email"
-                    placeholder="Correo Electronico" />
+                  <input matInput #correoElectronico type="email" formControlName="Email" maxlength="100" name="Email"
+                    placeholder="Correo Electronico" required/>
+                    <mat-hint align="end">{{correoElectronico.value.length}} / 100</mat-hint>
                 </mat-form-field>
               </div>
             </div>
@@ -628,7 +643,7 @@
             <div class="row" #DireccionContacto>
               <div class="col-sm-6 col-ms-6 col-lg-6">
                 <mat-form-field>
-                  <mat-select placeholder="Dirección" formControlName="ContactoDireccion">
+                  <mat-select placeholder="Dirección" formControlName="ContactoDireccion" required>
                     <mat-option *ngFor="let x of DireccionesNew; let i=index " [value]="x.idAux">
                       <span
                         *ngIf="(x?.calle.length + x?.municipio.length + x?.codigoPostal.length) < 42 else toLengthDr">
@@ -647,22 +662,26 @@
             <div class="row" #DatosContacto>
               <div class="col-sm-12 col-md-3 col-lg-3">
                 <mat-form-field>
-                  <input matInput formControlName="Nombre" placeholder="Nombre (s)" />
+                  <input matInput #nombreC formControlName="Nombre" placeholder="Nombre (s)" maxlength="50" required/>
+                  <mat-hint align="end">{{nombreC.value.length}} / 50</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-sm-12 col-md-3 col-lg-3">
                 <mat-form-field>
-                  <input matInput formControlName="ApellidoPaterno" placeholder="Apellido Paterno" />
+                  <input matInput #apellidoPC formControlName="ApellidoPaterno" placeholder="Apellido Paterno" maxlength="50" required/>
+                  <mat-hint align="end">{{apellidoPC.value.length}} / 50</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-sm-12 col-md-3 col-lg-3">
                 <mat-form-field>
-                  <input matInput formControlName="ApellidoMaterno" placeholder="Apellido Materno" />
+                  <input matInput #apellidoMC formControlName="ApellidoMaterno" placeholder="Apellido Materno" maxlength="50"/>
+                  <mat-hint align="end">{{apellidoMC.value.length}} / 50</mat-hint>
                 </mat-form-field>
               </div>
               <div class="col-sm-12 col-md-3 col-lg-3">
                 <mat-form-field>
-                  <input matInput formControlName="Puesto" placeholder="Puesto" />
+                  <input matInput #puesto formControlName="Puesto" placeholder="Puesto" maxlength="100" required/>
+                  <mat-hint align="end">{{puesto.value.length}} / 100</mat-hint>
                 </mat-form-field>
               </div>
             </div>
@@ -681,26 +700,30 @@
                 <div class="col-md-2 col-lg-2 col-sm-12">
                   <mat-form-field>
                     <span matPrefix>+&nbsp;</span>
-                    <input matInput type="phone" formControlName="LadaPais" maxlength="3" name="LadaPais-Contacto"
-                      placeholder="País" />
+                    <input matInput #ladaPaisC type="phone" formControlName="LadaPais" maxlength="3" name="LadaPais-Contacto"
+                      placeholder="País" required />
+                      <mat-hint align="end">{{ladaPaisC.value.length}} / 3</mat-hint>
                   </mat-form-field>
                 </div>
                 <div class="col-md-2 col-lg-2 col-sm-12">
                   <mat-form-field>
-                    <input matInput type="phone" formControlName="Lada" maxlength="3" name="Lada-Contacto"
-                      placeholder="Lada" />
+                    <input matInput #ladaC type="phone" formControlName="Lada" maxlength="3" name="Lada-Contacto"
+                      placeholder="Lada" required/>
+                      <mat-hint align="end">{{ladaC.value.length}} / 3</mat-hint>
                   </mat-form-field>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-12">
                   <mat-form-field>
-                    <input matInput type="phone" formControlName="Numero" maxlength="8" name="Numero-Contacto"
-                      placeholder="Número" />
+                    <input matInput #numeroC type="phone" formControlName="Numero" maxlength="8" name="Numero-Contacto"
+                      placeholder="Número" required/>
+                      <mat-hint align="end">{{numeroC.value.length}} / 8</mat-hint>
                   </mat-form-field>
                 </div>
                 <div class="col-md-2 col-lg-2 col-sm-12" *ngIf="esOficinaContacto === 4">
                   <mat-form-field>
-                    <input matInput type="phone" formControlName="Extension" maxlength="5" name="Extension-Contacto"
+                    <input matInput #extencionC type="phone" formControlName="Extension" maxlength="5" name="Extension-Contacto"
                       placeholder="Ext." />
+                      <mat-hint align="end">{{extencionC.value.length}} / 5</mat-hint>
                   </mat-form-field>
                 </div>
               </div>
@@ -708,8 +731,9 @@
             <div class="row" #Emailcontacto>
               <div class="col-sm -12 col-md-4 col-lg-4">
                 <mat-form-field>
-                  <input matInput type="email" formControlName="Email" maxlength="100" name="Email"
+                  <input matInput #correoElectronicoC type="email" formControlName="Email" maxlength="100" name="Email"
                     placeholder="Correo Electronico" />
+                    <mat-hint align="end">{{correoElectronicoC.value.length}} / 100</mat-hint>
                 </mat-form-field>
               </div>
             </div>

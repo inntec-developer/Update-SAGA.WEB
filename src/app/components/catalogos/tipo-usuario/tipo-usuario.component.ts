@@ -1,10 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators, Validator } from '@angular/forms';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-// Servicios
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validator, Validators } from '@angular/forms';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
-// Modelos
 import { catalogos } from '../../../models/catalogos/catalogos';
+
+// Servicios
+
+// Modelos
+
 
 @Component({
   selector: 'app-tipo-usuario',
@@ -63,7 +67,6 @@ export class TipoUsuarioComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.TpUsuario = [this.formTipoUsuario.getRawValue()];
-    debugger;
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
       result ? this.UpTpUsuario.emit(catalogo.Catalogos.Id) : console.log(result);

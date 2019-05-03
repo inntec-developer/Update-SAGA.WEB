@@ -1,7 +1,8 @@
-import { ExamenesService } from './../../../service/Examenes/examenes.service';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+
 import { DlgRevisarExamenesComponent } from '../../../components/dlg-revisar-examenes/dlg-revisar-examenes.component';
+import { ExamenesService } from './../../../service/Examenes/examenes.service';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-revisar-examenes',
@@ -13,6 +14,10 @@ export class RevisarExamenesComponent implements OnInit {
   resultados = [];
   filteredData: any = [];
   search = "";
+
+  public disabled = false;
+  public compact = false;
+  public shown = 'shown';
 
   public columns: Array<any> = [
     { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
@@ -39,7 +44,7 @@ export class RevisarExamenesComponent implements OnInit {
     });
   }
   OpenDialogRevisar(row)
-  {        
+  {
     this.service.GetResultadosCandidato(row.candidatoId, row.requisicionId).subscribe(data => {
       let aux = data;
       aux[0].candidatoId = row.candidatoId;
@@ -58,7 +63,7 @@ export class RevisarExamenesComponent implements OnInit {
   public Search(data: any) {
     this.search = data.target.value;
     let tempArray: Array<any> = [];
-   
+
     let colFiltar: Array<any> = [{ title: "folio" }, { title: "vBtra" }, { title: "cliente" }];
 
     this.filteredData.forEach(function (item) {
@@ -75,6 +80,6 @@ export class RevisarExamenesComponent implements OnInit {
     });
 
     this.resultados = tempArray;
-    
+
   }
 }

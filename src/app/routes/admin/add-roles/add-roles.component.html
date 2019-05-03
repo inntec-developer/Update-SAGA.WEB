@@ -1,27 +1,24 @@
 <div class="content-heading">
-        <div>
-          Roles
-          <span class="text-sm d-none d-sm-block">Administraci&oacute;n de roles.</span>
-        </div>
-        <!-- Breadcrumb right aligned-->
-        <ol class="breadcrumb ml-auto">
-          <li class="breadcrumb-item">
-            <a [routerLink]="['/home']">Inicio</a>
-          </li>
-          <li class="breadcrumb-item active">Roles</li>
-        </ol>
-      </div>
-      
+  <div>
+    Roles
+    <span class="text-sm d-none d-sm-block">Administraci&oacute;n de roles.</span>
+  </div>
+  <!-- Breadcrumb right aligned-->
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item">
+      <a [routerLink]="['/home']">Inicio</a>
+    </li>
+    <li class="breadcrumb-item active">Roles</li>
+  </ol>
+</div>
 
-<form [formGroup]="formRoles" novalidate>
-   
-    <div class="panel panel-default panel-flat mat-elevation-z8">
-        <div class="panel-body">
-            <grid-roles #grid [nodes] = "nodes" [rol]="rol"></grid-roles>
-        </div>
 
-    </div>
-</form>
+<div class="panel panel-default panel-flat mat-elevation-z8">
+  <div class="panel-body">
+    <grid-roles #grid [nodes]="nodes" [rol]="rol"></grid-roles>
+  </div>
+
+</div>
 
 <!-- <grid-roles [nodes] = "nodeAux"></grid-roles> -->
 
@@ -33,7 +30,7 @@
 
 
 
-      <!-- <div>
+<!-- <div>
                 <div class="panel col-md-12">
                     <br/>
                     <p class="text-center pv">AGREGAR ROL</p>
@@ -41,15 +38,15 @@
                         <mat-form-field>
                             <input matInput formControlName="Rol" placeholder="Nombre">
                         </mat-form-field>
-                      
+
                         <p>
                             <span *ngIf="formRoles.controls['Rol'].touched && !formRoles.controls['Rol'].valid">Nombre es requerido</span>
                         </p>
                  <br/>
                 </div>
             </div> -->
- 
-                    <!-- <div class="col-md-12 pull-left">
+
+<!-- <div class="col-md-12 pull-left">
                         {{alert}}
                     </div>
                     <div class="col-md-12">
@@ -78,13 +75,13 @@
                                     'esparbol3': node.id != node.idPadre && node.tipoEstructuraId > 4 && node.tipoEstructuraId < 8,
                                     'esparbol4': node.id != node.idPadre && node.tipoEstructuraId == 8
                                     }">{{node.nombre }}</td>
-                    
+
                     <td class="center"><mat-checkbox id="{{ 'C-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Create')" [checked]="node.create"  container="body" placement="bottom" tooltip="Create"></mat-checkbox></td>
                     <td class="center"> <mat-checkbox id="{{ 'R-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Read')" [checked]="node['read']"  container="body" placement="bottom" tooltip="Read"></mat-checkbox></td>
                     <td class="center"><mat-checkbox id="{{ 'U-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Update')" [checked]="node['update']"  container="body" placement="bottom" tooltip="Update"></mat-checkbox></td>
                     <td class="center"><mat-checkbox id="{{ 'D-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Delete')" [checked]="node['delete']"  container="body" placement="bottom" tooltip="Delete"></mat-checkbox></td>
                     <td class="center"><mat-checkbox id="{{ 'E-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Especial')" [checked]="node['especial']"  container="body" placement="bottom" tooltip="Special"></mat-checkbox></td>
-                    
+
                 </tr>
             </tbody>
         </table>

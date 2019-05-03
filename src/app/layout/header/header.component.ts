@@ -159,11 +159,14 @@ export class HeaderComponent implements OnInit {
 
 const renderActualizaciones = `
 <ul>
-    <li>Liberación de modulo de reportes para los perfiles que lo requieran.
-      <ol>
-      <li>Menú Principal -> Reportes -> Reporte</li>
-      <li>Para hacer uso del mimos, es necesario utilixar los filtros para que la busqueda,
-      se efectiva y especifica, al momnento de filtrar o mostrar los resultados.</li>
-      </ol>
-    </li>
+    <li>Notificar el departamento de Medios si la Vacante se va a publicar en redes sociales. Esto al momento de asignar la vacante.</li>
+    <li>Agregar la ponderación de la vacante, el sistema en automático calcula dependiendo el tipo de reclutamiento, si el Coordinador o Líder considera
+    que no es correcta la ponderación puede cambiarla</li>
 </ul>`;
+
+
+// <ol>
+//       <li>Menú Principal -> Reportes -> Reporte</li>
+//       <li>Para hacer uso del mimos, es necesario utilixar los filtros para que la busqueda,
+//       se efectiva y especifica, al momnento de filtrar o mostrar los resultados.</li>
+//       </ol>
