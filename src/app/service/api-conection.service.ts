@@ -313,6 +313,7 @@ export class ApiConection {
   public static GetConcurrenciaReporte = 'SistTickets/getConcurrencia'
   public static UpdateCandidatoTicket = 'SistTickets/updateCandidatoTicket'
   public static RegistrarCandidato = 'SistTickets/registrarCandidato'
+  public static LoginBolsa = 'SistTickets/loginBolsa'
 
   /*TrackingVacantes*/
   public static GetInformeTracking = 'Requisiciones/getInformeClientes';

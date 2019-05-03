@@ -59,6 +59,8 @@ export class SeguimientoTicketComponent implements OnInit {
   filteredData: any = [];
   filteredDataPos: any = [];
   search = "";
+  username: string = "";
+  pass: string = "";
 
   constructor( private _service: SistTicketsService,
       private _Router: Router, private dialog: MatDialog,
@@ -457,12 +459,13 @@ export class SeguimientoTicketComponent implements OnInit {
 
     dialogDlt.afterClosed().subscribe(result => {
       if (result != 417) {
-        this._service.UpdateCandidatoTicket(this.ticket[0].ticketId, result).subscribe(data => {
-          var datos = { candidatoId: result, estatusId: 18, requisicionId: this.ticket[0].requisicionId, ReclutadorId: sessionStorage.getItem('id') };
+        this._service.UpdateCandidatoTicket(this.ticket[0].ticketId, result.id).subscribe(data => {
+          var datos = { candidatoId: result.id, estatusId: 18, requisicionId: this.ticket[0].requisicionId, ReclutadorId: sessionStorage.getItem('id') };
 
           this.servicePost.SetProceso(datos).subscribe(data => {
             this.GetTicket(this.ticket[0].ticketId);
-
+            this.username = result.username;
+            this.pass = result.pass;
             this.popToast('success', 'Seguimiento', 'El registro se realizó correctamente');
           });
 

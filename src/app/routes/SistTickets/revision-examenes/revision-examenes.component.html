@@ -31,6 +31,9 @@
           <p class="card-text font-weight-bold mr-1">EMAIL:
             <span class="text-center text-muted">{{ticket[0].candidato.email}}</span>
           </p>
+          <p *ngIf="ticket[0].candidato.credenciales.username.length > 1" class="card-text font-weight-bold mr-1 text-warning">CREDENCIALES INICIO SESI&Oacute;N</p>
+          <p *ngIf="ticket[0].candidato.credenciales.username.length > 1" class="text-center text-muted">Usuario: {{ticket[0].candidato.credenciales.username}}</p>
+          <p *ngIf="ticket[0].candidato.credenciales.username.length > 1" class="text-center text-muted">Contraseña: {{ticket[0].candidato.credenciales.pass}}</p>
         </div>
         <div class="p-2 mb-2">
           <app-comentario-candidato [CandidatoId]="ticket[0].candidato.candidatoId" [RequisicionId]="" [ProcesoCandidatoId]=""></app-comentario-candidato>

@@ -26,13 +26,13 @@
         <div class="form-group">
           <label class="text-sm text-warning"><i class="fa fa-id-badge mr-1" aria-hidden="true"></i>SELECCIONAR MODULO</label>
           <select multiple class="form-control" id="exampleFormControlSelect2" [(ngModel)]="moduloId">
-            <option class="font-weight-bold" *ngFor="let r of modulos" [value]="r.id" (click)="mod = r.modulo; tipo = r.tipoModulo;">{{r.modulo}}</option>
+            <option class="font-weight-bold" *ngFor="let r of modulos" [value]="r.id" (click)="mod = r.modulo; tipo = r.tipoModulo;">{{r.modulo | uppercase}}</option>
           </select>
         </div>
       </div>
       <div class="col-sm-4 col-md-4">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item"><i class="fa fa-user-circle text-success mr-1" aria-hidden="true"></i><span class="text-muted font-weight-bold">{{reclutador}}</span> - MODULO <span class="text-success font-weight-bold ml-1">{{mod}}</span></li>
+          <li class="list-group-item"><i class="fa fa-user-circle text-success mr-1" aria-hidden="true"></i><span class="text-muted font-weight-bold">{{reclutador | uppercase}}</span> - MODULO <span class="text-success font-weight-bold ml-1">{{mod | uppercase}}</span></li>
         </ul>
       </div>
     </div>

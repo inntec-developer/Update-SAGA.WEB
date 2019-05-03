@@ -39,6 +39,7 @@ export class SistTicketsService {
   private UrlGetEstados = ApiConection.ServiceUrl + ApiConection.GetEstado;
   private UrlGetMunicipioByEstado = ApiConection.ServiceUrl + ApiConection.GetMunicipio;
   private UrlRegistrarCandidato = ApiConection.ServiceUrl + ApiConection.RegistrarCandidato;
+  private UrlLoginBolsa = ApiConection.ServiceUrl + ApiConection.LoginBolsa;
   private UrlGetVacantesReclutador = ApiConection.ServiceUrl + ApiConection.GetVacantesReclutador;
   
   constructor(private _httpClient: HttpClient) { }
@@ -63,6 +64,11 @@ export class SistTicketsService {
     return this._httpClient.post(this.UrlRegistrarCandidato, datos)
   }
   
+  LoginBolsa(usuario, pass) :Observable<any>
+  {
+    let params = new HttpParams().set('usuario', usuario).set('pass', pass);
+    return this._httpClient.get(this.UrlLoginBolsa, {params: params})
+  }
   InsertTicket(ticketId, reclutadorId, modulo) : Observable<any>
   {
     let params = new HttpParams().set('Ticket', ticketId).set('ReclutadorId', reclutadorId).set('ModuloId', modulo);
