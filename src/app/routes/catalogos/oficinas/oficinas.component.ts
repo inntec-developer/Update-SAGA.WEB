@@ -1,12 +1,13 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { CatalogosService } from '../../../service/catalogos/catalogos.service';
-import { ActivatedRoute,Router} from '@angular/router';
-import {Http} from '@angular/http';
-import { NgxSpinnerService } from 'ngx-spinner';
+import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+
 import { ApiConection } from '../../../service/api-conection.service';
+import { CatalogosService } from '../../../service/catalogos/catalogos.service';
+import {Http} from '@angular/http';
 import {MatTableDataSource} from '@angular/material';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { window } from 'rxjs-compat/operator/window';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-oficinas',
@@ -14,7 +15,14 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./oficinas.component.scss']
 })
 export class OficinasComponent implements OnInit {
- 
+
+  //scroll
+  public disabled = false;
+  public compact = false;
+  public invertX = false;
+  public invertY = false;
+  public shown = 'hover';
+
   closeResult: string;
   public datos : any[];
   public Estado : any[];
@@ -44,14 +52,14 @@ export class OficinasComponent implements OnInit {
     this.LlamarOfi();
     document.oncontextmenu=null
 
-    
+
   }
 
   LlamarOfi(){
     this.Servicio.getSucursales('').subscribe(item =>{
-     
+
       this.datos = item;
-       
+
       })
   }
 
@@ -59,7 +67,7 @@ export class OficinasComponent implements OnInit {
     let fil = document.getElementById('palabra')['value'];
     this.Servicio.getSucursales(fil).subscribe(item =>{
       this.datos = item;
-        
+
       })
   }
 
@@ -92,7 +100,7 @@ export class OficinasComponent implements OnInit {
     }
 
    // alert(nom + est + mun + col + cp + calle + num + tel + email +lat + lon + tipo + act)
-   
+
   }
 
   Actualizar(){
@@ -120,7 +128,7 @@ export class OficinasComponent implements OnInit {
   }
 
   Eliminar(id){
-   
+
     this.Servicio.EliminarOficina(id).subscribe(item =>{
       alert(item);
       this.ngOnInit()
@@ -133,14 +141,14 @@ export class OficinasComponent implements OnInit {
     this.nombre = '';
     this.Servicio.getOficinaEstado('0').subscribe(item =>{
       this.Estado = item;
-       
+
       })
       this.Municipio = [{id:0,municipio:'Seleccione un municipio'}]
       this.Colonia = [{id:0,colonia:'Seleccione una colonia'}]
   }
 
   EditarModal(id){
-   
+
     document.getElementById('Identi')['value'] = id;
     this.nombre = document.getElementById('nombre_' + id)['value'];
     this.cp = document.getElementById('codigopostal_' + id)['value'];
@@ -153,13 +161,13 @@ export class OficinasComponent implements OnInit {
     let es = document.getElementById('Estadoid_' + id)['value'];
     let mun = document.getElementById('Municipio_'+ id)['value'];
     let col = document.getElementById('Colonia_'+ id)['value'];
-    
-  
+
+
     this.Servicio.getOficinaEstado(es).subscribe(item =>{
       this.Estado = item;
-        
+
       })
-     
+
     this.Servicio.getOficinaMunicipio(mun,es).subscribe(item =>{
       this.Municipio = item;
       })
@@ -167,7 +175,7 @@ export class OficinasComponent implements OnInit {
       this.Servicio.getOficinaColonia(col,mun).subscribe(item =>{
         this.Colonia = item;
         })
-     
+
   }
 
 
@@ -179,7 +187,7 @@ export class OficinasComponent implements OnInit {
       if(res == '0'){
         this.Municipio = null;
       }
-       
+
       })
       this.Colonia = null;
   }
@@ -191,7 +199,7 @@ export class OficinasComponent implements OnInit {
       if(res == '0'){
         this.Colonia = null;
       }
-      
+
       })
   }
 

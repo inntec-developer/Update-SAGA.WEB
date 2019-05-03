@@ -1,7 +1,8 @@
-import { ExamenesService } from './../../../service/Examenes/examenes.service';
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+
+import { ExamenesService } from './../../../service/Examenes/examenes.service';
 
 @Component({
   selector: 'app-add-examen',
@@ -10,6 +11,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 })
 export class AddExamenComponent implements OnInit {
   se = new FormControl('', [Validators.required]);
+  nom:any;
   catalogo = [];
   respuestas = [];
   examen = [];
@@ -53,7 +55,7 @@ export class AddExamenComponent implements OnInit {
         {
           this.respuestas.push({ resp: resp, value: value});
         }
-      
+
       }
       else if(value != 3)
       {
@@ -67,7 +69,7 @@ export class AddExamenComponent implements OnInit {
 
       this.respInc = "";
     }
-   
+
 
   }
 
@@ -100,7 +102,7 @@ export class AddExamenComponent implements OnInit {
       this.msg = "Debe agregar mas de una opción de respuesta para la pregunta";
     }
 
-   
+
   }
 
   UpdateResp(row)
@@ -165,4 +167,3 @@ export class AddExamenComponent implements OnInit {
 
 
 }
- 

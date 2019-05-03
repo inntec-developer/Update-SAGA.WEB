@@ -64,6 +64,7 @@ export class DialogEventComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger;
     var DateNow = new Date();
     this.minDate = DateNow;
     this.ColorPicker = '#4290ff'

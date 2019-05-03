@@ -28,21 +28,21 @@
             <div class="form-group">
                 <label >Estados</label>
                 <select class="form-control input-sm" (change)="Muni()"  id="EstadoOfi">
-                    
+
                   <option *ngFor="let item of Estado"  value="{{item.id}}">{{item.estado}}</option>
                 </select>
               </div>
               <div class="form-group">
                   <label >Municipio</label>
                   <select (change)="Col()" class="form-control input-sm" id="MunicipioOfi">
-                     
+
                       <option *ngFor="let item of Municipio"  value="{{item.id}}">{{item.municipio}}</option>
                   </select>
                 </div>
                 <div class="form-group">
                     <label for="condinacionR">Colonia</label>
                     <select class="form-control input-sm" id="colonia">
-                       
+
                         <option *ngFor="let item of Colonia"  value="{{item.id}}">{{item.colonia}}</option>
                     </select>
                   </div>
@@ -87,7 +87,7 @@
                             <div class="form-group">
                                 <mat-checkbox id="checkModal" style="margin: 20px"  checked="1">Activa o Desactiva!</mat-checkbox>
                               </div>
-                         
+
         </form>
       </div>
       <div class="modal-footer">
@@ -96,10 +96,10 @@
               <em _ngcontent-c34="" class="fa fa-save"></em>
             </button>
         <!-- <button type="button" class="btn btn-outline-dark" (click)="Guardar()" (click)="modal.close('Save click')" >Guardar</button> -->
-      
+
       </div>
     </ng-template>
-    
+
     <div class="col-xl-6">
         <div class="form-group ">
             <!-- <label for="bus">Busqueda:</label> -->
@@ -129,7 +129,7 @@
 [disableOnBreakpoints]="false" [disabled]="disabled">
 <div style="width: 1200px; height: 400px;">
 
-   
+
   <table _ngcontent-c12=""  style="font-size: 12px" class="table table-striped table-hover ">
     <thead _ngcontent-c12="">
       <tr _ngcontent-c12="">
@@ -177,13 +177,13 @@
                 <input type="hidden" id="codigopostal_{{item.id}}" value="{{item.cp}}" >
             </td>
             <!-- Actividad Empresas <Area Nombre> Column -->
-   
+
             <td _ngcontent-c12="" class="text-center">
                 <mat-checkbox id="checkbox-{{item.id}}"  style="margin: 20px" *ngIf="item.activo" checked="1" >Activa o Desactiva!</mat-checkbox>
                 <mat-checkbox id="checkbox-{{item.id}}" style="margin: 20px" *ngIf="!item.activo" checked="0">Activa o Desactiva!</mat-checkbox>
-               
+
             </td>
-          
+
             <td _ngcontent-c12="" class="text-center">
                 <button title="Guardar pregunta"  class="mb-1 btn btn-sm btn-outline-success" (click)="EditarModal(item.id)"  (click)="open(content)" type="button"   >
                     <em _ngcontent-c34="" class="fa fa-check"></em>
@@ -204,7 +204,7 @@
 
 
 
-<!-- 
+<!--
 
   <div class="dtDamfo-container mat-elevation-z8 " style="margin-top: 20px">
     <div class="dtDamfo-header">
@@ -213,26 +213,26 @@
       </mat-form-field>
     </div>
     <div  class="table ng-star-inserted ">
-  
+
     </div>
     <mat-table #table [dataSource]="dataSource" >
-     
+
       <ng-container matColumnDef="nombre">
         <mat-header-cell *matHeaderCellDef> nombre </mat-header-cell>
         <mat-cell *matCellDef="let element" (click)="Ocultar(element?.id)"(click)="PEditar(element?.id)" >
             <div id="Pres_{{element?.id}}"> {{element?.nombre}} </div>
          </mat-cell>
       </ng-container>
-  
+
 
       <ng-container matColumnDef="tipoOficina">
         <mat-header-cell *matHeaderCellDef> Tipo Oficina</mat-header-cell>
         <mat-cell *matCellDef="let element"  (click)="POcultar(element?.id)" (click)="Editar(element?.id)">
           <div id="res_{{element?.id}}"> {{element?.tipoOficina}} </div>
-         
+
         </mat-cell>
       </ng-container>
-  
+
 
       <ng-container matColumnDef="Direccion">
         <mat-header-cell *matHeaderCellDef> Direccion</mat-header-cell>
@@ -272,7 +272,7 @@
       <ng-container matColumnDef="accion">
         <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
           <mat-cell *matCellDef="let element" (click)="Ocultar(element?.id)" (click)="POcultar(element?.id)">
-              
+
               <button title="Guardar pregunta" style="margin-right: 20px" class="mb-1 btn btn-sm btn-outline-success" (click)="Guardar(element.id,$event)" type="button"   >
                   <em _ngcontent-c34="" class="fa fa-save"></em>
                 </button>
@@ -281,7 +281,7 @@
             </button>
         </mat-cell>
       </ng-container>
-  
+
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
@@ -293,8 +293,8 @@
 
 
 
-  
-<!-- 
+
+<!--
   <div class="row" #tableContainer>
       <div class="col-sm-12 col-md-12 table-responsive clearfix">
         <div>
@@ -305,7 +305,7 @@
             <tr>
               <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
                 <span>{{column.title | uppercase}}</span>
-              
+
               </th>
             </tr>
             <tr *ngIf="showFilterRow">
@@ -370,4 +370,3 @@
     </div> -->
 
 
-  

@@ -20,8 +20,8 @@
         </div>
         <div class="col-sm-4 col-md-4">
           <div class="input-group input-group-sm float-right mt-1 mb-1 with-focus">
-      
-            <input (input)="Search($event, 2, filteredData)" class="form-control form-control-sm border-right-0" type="text" placeholder="Filtrar"
+
+            <input (input)="Search($event)" class="form-control form-control-sm border-right-0" type="text" placeholder="Filtrar"
             />
             <div class="input-group-append">
               <span class="input-group-text fa fa-search text-info bg-transparent border-left-0"></span>
@@ -38,13 +38,13 @@
         <a class="card-header" [class.collapsed]="row.verRow"  (click)="row.verRow = !row.verRow">
           <h5>
                 <span class="text-primary float-left "><em class="fa fa-file-text-o"></em> {{ row.folio}} - {{row.cliente | uppercase}} - {{row.vBtra | uppercase}} <span class="text-warning">({{row.candidatos.length}})</span></span>
-        
+
             <i *ngIf="!row.verRow" class="fa fa-caret-down float-right text-muted" aria-hidden="true"></i>
             <i *ngIf="row.verRow" class="fa fa-caret-up float-right text-muted" aria-hidden="true"></i>
           </h5>
-         
+
         </a>
-    
+
         <div *ngIf="row.verRow" id="collapseOne" class="collapse show">
           <div class="card-body">
               <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
@@ -54,14 +54,14 @@
                   <tbody>
                       <ng-container *ngIf="row.candidatos.length > 0 else NotCandidatos">
                     <tr class="rowHover" *ngFor="let r of row.candidatos; let rowIndex = index">
-  
+
                       <td class="text-center text-success">
                         <em class="fa fa-user"></em> {{ r.curp | uppercase}}</td>
 
                       <td class="text-center">{{r.nombre | uppercase}}</td>
                       <td class="text-center">{{r.usuario |uppercase }}</td>
                       <td class="text-center">{{r.fecha | date:'dd-MM-yyyy'}}</td>
-  
+
                       <td class="text-center">
                         <button type="button" class="mb-1 btn btn-xs btn-outline-warning" container="body" placement="bottom" tooltip="Revisar examen"
                           (click)="OpenDialogRevisar(r)">
