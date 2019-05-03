@@ -757,7 +757,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   openDesignVacante() {
-    debugger;
     var usuario = sessionStorage.getItem('id');
     if (this.aprobador === usuario) {
       this._Router.navigate(['/reclutamiento/configuracionVacante/', this.id, this.folio, this.vBtra], { skipLocationChange: true });

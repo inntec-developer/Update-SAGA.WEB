@@ -60,7 +60,8 @@ export class DtVacantesGraficaPAComponent implements OnInit {
   }
 
   getRequisiciones() {
-    this._ComponentService.getRequiGraficaPA(this.EstadoVacante, this.UsuarioId ).subscribe(data => {
+    var estado = this.EstadoVacante.split(':', 1);
+    this._ComponentService.getRequiGraficaPA(estado, this.UsuarioId ).subscribe(data => {
       this.dataSource = data;
       this.onChangeTable(this.config);
     }, error => this.errorMessage = <any>error);

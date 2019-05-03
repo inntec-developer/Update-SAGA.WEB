@@ -316,7 +316,6 @@ export class NuevoProspectoComponent implements OnInit {
   }
 
   changeEmpleados($event : any){
-    debugger;
     if($event != null)
       this.formGeneral.controls['Tamanio'].reset();
   }

@@ -12,10 +12,10 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ApiConection } from './../api-conection.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { HttpParamsOptions } from '@angular/common/http/src/params';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { debug } from 'util';
-import { HttpParamsOptions } from '@angular/common/http/src/params';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -259,7 +259,6 @@ return this._httpClient.get(this.UrlGetTipoDireccion);
   }
 
   GuardaCatalogo(Catalogo: any): Observable<any> {
-    debugger;
     let httpHeaders = new HttpHeaders({
       'Content-Type' : 'application/json',
       'Cache-Control': 'no-cache'
