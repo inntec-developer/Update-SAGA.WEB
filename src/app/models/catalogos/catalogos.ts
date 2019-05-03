@@ -15,7 +15,10 @@ export class catalogos {
    Nivel: Array<niveles>;
    Medio: Array<medios>;
    Idioma: Array<idiomas>;
-
+   Discapacidad: Array<discapacidades>;
+   TipoLicencia: Array<tplicencias>;
+   TipoExamen: Array<tpexamen>;
+   GiroEmpresa: Array<giroempresas>;
 }
 
 interface Catalogos {
@@ -111,6 +114,31 @@ interface idiomas {
     activo: boolean;
 }
 
+interface discapacidades {
+    Id: number;
+    tipodiscapacidad: string;
+    activo: boolean;
+}
+
+interface tplicencias {
+    Id: number;
+    tipolicencia: string;
+    descripcion: string;
+    activo: boolean;
+}
+
+interface tpexamen {
+    Id: number;
+    nombre: string;
+    descripcion: string;
+    activo: boolean;
+}
+
+interface giroempresas {
+    Id: number;
+    giroEmpresa: string;
+    activo: boolean;
+}
 export class filtros {
     IdCat: number;
     IdEstado: number;

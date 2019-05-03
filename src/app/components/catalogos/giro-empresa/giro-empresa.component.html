@@ -1,6 +1,6 @@
 <mat-tab-group>
     <mat-tab>
-        <div [formGroup]="formDiscapacidades">
+        <div [formGroup]="formGiro">
             <ng-template mat-tab-label>
                 <mat-icon class="example-tab-icon">assignment</mat-icon>
                 Formulario
@@ -8,8 +8,8 @@
             <div class="row">
                 <div class="col-md-2 m-5">
                     <mat-form-field>
-                        <input matInput placeholder="Discapacidad" formControlName="tipodiscapacidad" required>
-                        <mat-error *ngIf="formDiscapacidades.controls['tipodiscapacidad'].hasError('required')">Agrega una discapacidad válida</mat-error>
+                        <input matInput placeholder="Giro de empresa" formControlName="giroempresa" required>
+                        <mat-error *ngIf="formGiro.controls['giroempresa'].hasError('required')">Agrega un giro válido</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-md-1 m-5">
@@ -23,25 +23,25 @@
         <!-- Card de botones -->
         <mat-card>
             <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-green mb-1" type="button" (click)="New()" container="body" placement="bottom" tooltip="Nuevo catalogo">
-                              <span class="btn-label ">
-                                <i class="fa fa-file-text-o"></i>
-                              </span>Nuevo
-                            </button>
-            <!-- <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-warning mb-1" type="button" (click)="LimpiarFiltro()" container="body" placement="bottom" tooltip="Editar catalogo">
                             <span class="btn-label ">
-                              <i class="fa fa-pencil"></i>
-                            </span>Editar
-                          </button> -->
-            <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-dark mb-1" type="button" (click)="Save()" container="body" placement="bottom" tooltip="Guardar los datos">
-                            <span class="btn-label ">
-                              <i class="fa fa-floppy-o"></i>
-                            </span>Guardar
+                              <i class="fa fa-file-text-o"></i>
+                            </span>Nuevo
                           </button>
+            <!-- <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-warning mb-1" type="button" (click)="LimpiarFiltro()" container="body" placement="bottom" tooltip="Editar catalogo">
+                          <span class="btn-label ">
+                            <i class="fa fa-pencil"></i>
+                          </span>Editar
+                        </button> -->
+            <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-dark mb-1" type="button" (click)="Save()" container="body" placement="bottom" tooltip="Guardar los datos">
+                          <span class="btn-label ">
+                            <i class="fa fa-floppy-o"></i>
+                          </span>Guardar
+                        </button>
             <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="Limpiar()" container="body" placement="bottom" tooltip="Limpia todo los filtros">
-                              <span class="btn-label ">
-                                <i class="fa fa-eraser"></i>
-                              </span>Limpiar
-                            </button>
+                            <span class="btn-label ">
+                              <i class="fa fa-eraser"></i>
+                            </span>Limpiar
+                          </button>
         </mat-card>
     </mat-tab>
 

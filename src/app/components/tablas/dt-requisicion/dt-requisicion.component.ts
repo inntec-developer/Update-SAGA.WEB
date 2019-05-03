@@ -664,7 +664,7 @@ export class DtRequisicionComponent implements OnInit {
         else if(row.reclutadores.length > 1)
         {
           row.reclutadores.forEach(element => {
-            reclutador = reclutador + element.reclutador + '\n'
+            reclutador = reclutador + element.reclutador + ', \n'
           });
         }
         else

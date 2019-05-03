@@ -35,8 +35,6 @@ export class CatalogoComponent implements OnChanges , OnInit {
   constructor( private serviceCatalogo: CatalogosService ) {
   }
 
-
-
   setStep(index: number) {
     this.step = index;
   }
@@ -95,6 +93,20 @@ export class CatalogoComponent implements OnChanges , OnInit {
         break;
       case 37:
       this.selectedId = this.fCatalogo.idioma.find( (p: { id: number; }) => p.id === IdReg);
+        break;
+      case 38:
+      this.selectedId = this.fCatalogo.discapacidad.find( (p: { id: number; }) => p.id === IdReg);
+        break;
+      case 39:
+      this.selectedId = this.fCatalogo.tipoLicencia.find( (p: { id: number; }) => p.id === IdReg);
+        break;
+      case 40:
+      this.selectedId = this.fCatalogo.tipoExamen.find( (p: { id: number; }) => p.id === IdReg);
+        break;
+      //#endregion
+      //#region Ventas
+      case 8:
+      this.selectedId = this.fCatalogo.giroEmpresa.find( (p: { id: number; }) => p.id === IdReg);
         break;
       //#endregion
       default:
@@ -352,6 +364,83 @@ export class CatalogoComponent implements OnChanges , OnInit {
                  // Registros.
           this.HeadTable = new Array<String>('Id', 'Idioma', 'Activo');
           this.DataTable = this.fCatalogo.idioma;
+          this.log = this.fCatalogo.log; // Log de cada catalogo.
+        }
+       } );
+      break;
+
+    case 38: // Discapacidad
+      this.serviceCatalogo.getCatalogo(IdCat)
+      .subscribe( result => {
+        this.fCatalogo = result;
+        this.titulo = this.fCatalogo.catalogos.nombre;
+        this.descripcion = this.fCatalogo.catalogos.descripcion;
+        if (this.fCatalogo.discapacidad.length === 0) {
+                  // Registros.
+          this.HeadTable = new Array<String>('');
+          this.DataTable = [];
+        } else {
+                 // Registros.
+          this.HeadTable = new Array<String>('Id', 'Discapacidad', 'Activo');
+          this.DataTable = this.fCatalogo.discapacidad;
+          this.log = this.fCatalogo.log; // Log de cada catalogo.
+        }
+       } );
+      break;
+
+    case 39: // Tipo licencia
+      this.serviceCatalogo.getCatalogo(IdCat)
+      .subscribe( result => {
+        this.fCatalogo = result;
+        this.titulo = this.fCatalogo.catalogos.nombre;
+        this.descripcion = this.fCatalogo.catalogos.descripcion;
+        if (this.fCatalogo.tipoLicencia.length === 0) {
+                  // Registros.
+          this.HeadTable = new Array<String>('');
+          this.DataTable = [];
+        } else {
+                 // Registros.
+          this.HeadTable = new Array<String>('Id', 'Licencia', 'Descripcion', 'Activo');
+          this.DataTable = this.fCatalogo.tipoLicencia;
+          this.log = this.fCatalogo.log; // Log de cada catalogo.
+        }
+       } );
+      break;
+
+    case 40: // Tipo Examen
+      this.serviceCatalogo.getCatalogo(IdCat)
+      .subscribe( result => {
+        this.fCatalogo = result;
+        this.titulo = this.fCatalogo.catalogos.nombre;
+        this.descripcion = this.fCatalogo.catalogos.descripcion;
+        if (this.fCatalogo.tipoExamen.length === 0) {
+                  // Registros.
+          this.HeadTable = new Array<String>('');
+          this.DataTable = [];
+        } else {
+                 // Registros.
+          this.HeadTable = new Array<String>('Id', 'Examen', 'Descripcion', 'Activo');
+          this.DataTable = this.fCatalogo.tipoExamen;
+          this.log = this.fCatalogo.log; // Log de cada catalogo.
+        }
+       } );
+      break;
+    //#endregion
+    //#region Ventas
+    case 8: // Giro Empresa
+      this.serviceCatalogo.getCatalogo(IdCat)
+      .subscribe( result => {
+        this.fCatalogo = result;
+        this.titulo = this.fCatalogo.catalogos.nombre;
+        this.descripcion = this.fCatalogo.catalogos.descripcion;
+        if (this.fCatalogo.giroEmpresa.length === 0) {
+                  // Registros.
+          this.HeadTable = new Array<String>('');
+          this.DataTable = [];
+        } else {
+                 // Registros.
+          this.HeadTable = new Array<String>('Id', 'Giro', 'Activo');
+          this.DataTable = this.fCatalogo.giroEmpresa;
           this.log = this.fCatalogo.log; // Log de cada catalogo.
         }
        } );

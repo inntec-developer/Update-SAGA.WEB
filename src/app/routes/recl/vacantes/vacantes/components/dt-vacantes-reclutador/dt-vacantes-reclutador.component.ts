@@ -819,7 +819,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
         else if(row.reclutadores.length > 1)
         {
           row.reclutadores.forEach(element => {
-            reclutador = reclutador + element + '\n'
+            reclutador = reclutador + element + ', \n'
           });
         }
         else

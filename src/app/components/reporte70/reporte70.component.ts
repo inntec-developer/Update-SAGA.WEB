@@ -372,7 +372,7 @@ public refreshTable() {
         if(row.comentarios_solicitante.length > 0)
         {
           row.comentarios_solicitante.forEach(element => {
-              comentariosSol = comentariosSol + element + '\n'
+              comentariosSol = comentariosSol + element + ', \n'
           });
 
         }
