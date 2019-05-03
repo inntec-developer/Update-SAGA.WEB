@@ -755,7 +755,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   openDesignVacante() {
-    if (this.aprobador === sessionStorage.getItem('usuario')) {
+    if (this.aprobador === sessionStorage.getItem('id')) {
       this._Router.navigate(['/reclutamiento/configuracionVacante/', this.id, this.folio, this.vBtra], { skipLocationChange: true });
     } else {
       swal('Ops...!', 'Esta vacante solo puede ser diseñada por el aprobador (' + this.aprobador + ').', 'error');

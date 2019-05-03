@@ -15,7 +15,6 @@ export class RegistroReclutadorComponent implements OnInit {
 
   registrarUsuario($event)
   {
-    
     if($event != 417)
     {
       this.dialog.close($event);

@@ -14,9 +14,12 @@ const swal = require('sweetalert');
 export class TicketsInicioComponent implements OnInit {
 
   folio = 0;
+  iniciar = false;
   num = '';
   dataSource: any = [];
   btnCita = false;
+  user: string;
+  pass: string;
   constructor(private _service: SistTicketsService, private service: RequisicionesService, private dialog: MatDialog,) { }
 
   ngOnInit() {
@@ -91,5 +94,44 @@ export class TicketsInicioComponent implements OnInit {
       height: 'auto',
 
     });
+  }
+
+  Login(usuario, pass)
+  {
+    this._service.LoginBolsa(usuario, pass).subscribe(data => {
+      if(data == 300)
+      {
+        swal("¡Error en la contraseña!", '', "error");
+        this.user = "";
+        this.pass = "";
+        this.iniciar = false;
+      }
+      else if(data == 404)
+      {
+        swal("¡El usuario no se encuentra!", '', "error");
+        this.user = "";
+        this.pass = "";
+        this.iniciar = false;
+      }
+      else
+      {
+        sessionStorage.setItem('candidatoId', data[0].personaId);
+        this.iniciar = true;
+        swal({
+          title: "¡Bienvenido!",
+          text: data[0].usuario + " ¡Ya puedes empezar!",
+          type: "success",
+        })
+
+      }
+    })
+  }
+
+  LogOut()
+  {
+    sessionStorage.removeItem('candidatoId');
+    this.user = "";
+    this.pass = "";
+    this.iniciar = false;
   }
 }

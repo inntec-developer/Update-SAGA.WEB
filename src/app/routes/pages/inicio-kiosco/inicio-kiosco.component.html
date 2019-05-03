@@ -5,7 +5,7 @@
         <div class="register-left">
           <img src="assets/img/damsa/damsa_logo4.png" alt="" />
           <h3>BIENVENIDO</h3>
-          <h4 *ngIf="logeado">Melina Morales Cordova</h4>
+          <h4 *ngIf="logeado">{{usuario}}</h4>
           <p>¡Estas a 1 minuto de encontrar tu empleo ideal!</p>
           <p *ngIf="verLogin">¡Solo inicia sesión!</p>
           <div *ngIf="verLogin" class="card bg-transparent">
@@ -15,15 +15,15 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text text-warning border-right-0 fa fa-user"></span>
                   </div>
-                  <input type="text" class="form-control form-control-sm border-left-0 inputLogin" placeholder="Usuario">
+                  <input type="text" class="form-control form-control-sm border-left-0 inputLogin" [(ngModel)]="user" placeholder="Usuario">
                 </div>
                 <div class="input-group input-group-sm with-focus mb-2">
                   <div class="input-group-prepend">
                     <span class="input-group-text text-warning border-right-0 fa fa-key"></span>
                   </div>
-                  <input type="password" class="form-control form-control-sm border-left-0 inputLogin" placeholder="Contraseña">
+                  <input type="password" class="form-control form-control-sm border-left-0 inputLogin" [(ngModel)]="pass" placeholder="Contraseña">
                 </div>
-                <button type="button" class="btn btn-labeled btn-success mat-elevation-z8 btn-iniciar float-right" (click)="logeado = true; verLogin=false;">
+                <button type="button" class="btn btn-labeled btn-success mat-elevation-z8 btn-iniciar float-right" (click)="Login(user, pass);">
                   <span class="btn-label">
                       <i class="fa fa-play"></i>
               </span>
@@ -33,7 +33,7 @@
             </div>
           </div>
           <div class="d-flex justify-content-center">
-            <button *ngIf="!verLogin" type="button" class="btn btn-labeled btn-danger btn-lateral mat-elevation-z8" tabindex="-1" (click)="logeado = false; verLogin=true;">
+            <button *ngIf="!verLogin" type="button" class="btn btn-labeled btn-danger btn-lateral mat-elevation-z8" tabindex="-1" (click)="LogOut()">
               <span class="btn-label my-auto">
                 <i class="fa fa-times"></i>
               </span>
@@ -44,9 +44,9 @@
       </div>
       <div *ngIf="vacantes.length > 0 else NotVacantes" class="col-sm-9 col-md-9 register-right">
         <div class="row">
-          <div class="col mt-2">
+          <div class="col mt-2 mb-2">
             <div class="input-group input-group-sm with-focus d-flex justify-content-end">
-              <input type="text" class="form-control form-control-sm border-right-0 round" placeholder="Buscar por palabra clave">
+              <input type="text" class="form-control form-control-sm border-right-0 round" placeholder="Buscar por palabra clave" (keydown.enter)="Search($event)">
               <div class="input-group-append">
                 <span class="input-group-text fa fa-search text-info bg-transparent border-left-0"></span>
               </div>
@@ -89,7 +89,7 @@
                 </div>
                 <div class="carousel-caption d-flex justify-content-center">
 
-                  <button *ngIf="logeado" class="btn btn-success btn-postulate mat-elevation-z8">
+                  <button *ngIf="logeado" class="btn btn-success btn-postulate mat-elevation-z8" (click)="GenerarTicket(v)">
                     <span class="align-self-center font-weight-bold">POST&Uacute;LATE</span>
                     <em class="fa fa-thumbs-o-up ml-3"></em>
                   </button>
