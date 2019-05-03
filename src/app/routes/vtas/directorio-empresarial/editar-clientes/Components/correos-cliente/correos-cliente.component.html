@@ -1,7 +1,7 @@
-<div class="dt-container mat-elevation-z8">
-  <div class="card-header">
+<div class="dt-container">
+  <!-- <div class="card-header">
     <em class="fa fa-envelope-o"></em>Correo Electr&oacute;nico
-  </div>
+  </div> -->
   <div class="card-body">
     <div *ngIf="addCorreo">
       <form [formGroup]="formCorreos">
@@ -64,7 +64,7 @@
     </div>
     <div *ngIf="Correos.length > 0">
       <div class="card media">
-        <div class="card-body mat-elevation-z8">
+        <div class="card-body">
           <div class="row" #tableCorreos>
             <div class="col-sm-12 col-md-12 table-responsive clearfix">
               <div>

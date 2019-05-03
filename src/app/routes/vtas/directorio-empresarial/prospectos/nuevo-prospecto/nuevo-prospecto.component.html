@@ -15,10 +15,10 @@
 </div>
 <tabset [justified]="true">
   <tab heading="Información Principal" id="TapInfoPrincipal">
-    <div class="dt-container  mat-elevation-z8">
-      <div class="card-header">
+    <div class="dt-container ">
+      <!-- <div class="card-header">
         <em class="fa fa-user"></em> Informaci&oacute;n General
-      </div>
+      </div> -->
       <div class="card-body">
         <form [formGroup]="formGeneral">
           <div #rating class="float-right">
@@ -104,10 +104,10 @@
     </div>
   </tab>
   <tab heading="Dirección / Sucursales" id="TapDirecciones">
-    <div class="dt-container mat-elevation-z8">
-      <div class="card-header">
+    <div class="dt-container">
+      <!-- <div class="card-header">
         <em class="fa fa-map-marker"></em> Direcci&oacute;n / Sucursales
-      </div>
+      </div> -->
 
       <div class="card-body">
         <div *ngIf="addDireccion">
@@ -249,7 +249,7 @@
         </div>
         <div *ngIf="DireccionesNew.length > 0">
           <div class="card media">
-            <div class="card-body mat-elevation-z8">
+            <div class="card-body">
               <div class="row" #tableDirecciones>
                 <div class="col-sm-12 col-md-12 table-responsive clearfix">
                   <div>
@@ -330,10 +330,10 @@
     </div>
   </tab>
   <tab heading="Teléfonos" id="TapTelefonos">
-    <div class="dt-container mat-elevation-z8">
-      <div class="card-header">
+    <div class="dt-container">
+      <!-- <div class="card-header">
         <em class="fa fa-phone"></em>Tel&eacute;fonos
-      </div>
+      </div> -->
       <div class="card-body">
         <div *ngIf="addTelefono">
           <form [formGroup]="formTelefonos">
@@ -442,7 +442,7 @@
         </div>
         <div *ngIf="TelefonosNew.length > 0">
           <div class="card media">
-            <div class="card-body mat-elevation-z8">
+            <div class="card-body">
               <div class="row" TableTelefonos>
                 <div class="col-sm-12 col-md-12 table-responsive clearfix">
                   <div>
@@ -506,10 +506,10 @@
     </div>
   </tab>
   <tab heading="Correo Electrónico" id="TapCorreo">
-    <div class="dt-container mat-elevation-z8">
-      <div class="card-header">
+    <div class="dt-container">
+      <!-- <div class="card-header">
         <em class="fa fa-envelope-o"></em>Correo Electr&oacute;nico
-      </div>
+      </div> -->
       <div class="card-body">
         <div *ngIf="addCorreo">
           <form [formGroup]="formCorreos">
@@ -572,7 +572,7 @@
         </div>
         <div *ngIf="CorreosNew.length > 0">
           <div class="card media">
-            <div class="card-body mat-elevation-z8">
+            <div class="card-body">
               <div class="row" #tableCorreos>
                 <div class="col-sm-12 col-md-12 table-responsive clearfix">
                   <div>
@@ -633,10 +633,10 @@
     </div>
   </tab>
   <tab heading="Contactos" id="TapContactos">
-    <div class="dt-container mat-elevation-z8">
-      <div class="card-header">
+    <div class="dt-container">
+      <!-- <div class="card-header">
         <em class="fa fa-users"></em> Contactos
-      </div>
+      </div> -->
       <div class="card-body">
         <div *ngIf="addContacto">
           <form [formGroup]="formContactos">
@@ -770,7 +770,7 @@
         </div>
         <div *ngIf="ContactosNew.length > 0">
           <div class="card media">
-            <div class="card-body mat-elevation-z8">
+            <div class="card-body">
               <div class="row" #TableContactos>
                 <div class="col-sm-12 col-md-12 table-responsive clearfix">
                   <div>

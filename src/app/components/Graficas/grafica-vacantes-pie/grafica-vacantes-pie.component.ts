@@ -23,7 +23,7 @@ export class GraficaVacantesPieComponent implements OnInit {
   public ShowModal: boolean;
   public EstadoVacante: string;
   public NumeroVacantes: number;
-  public RegistrosT: number;
+  public RegistrosT: number = 0;
   ngOnInit() {
     this.UsuarioId = sessionStorage.getItem('id');
     Chart.defaults.scale.ticks.beginAtZero = true;
