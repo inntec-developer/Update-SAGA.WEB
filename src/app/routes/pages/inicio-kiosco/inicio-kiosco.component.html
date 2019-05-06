@@ -42,7 +42,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="vacantes.length > 0 else NotVacantes" class="col-sm-9 col-md-9 register-right">
+      <div class="col-sm-9 col-md-9 register-right">
         <div class="row">
           <div class="col mt-2 mb-2">
             <div class="input-group input-group-sm with-focus d-flex justify-content-end">
@@ -71,7 +71,7 @@
                 </button>
               </ng-container>
             </div>
-            <ngb-carousel #myCarousel="ngbCarousel" *ngIf="vacantes.length > 0" [activeId]="activeId" [showNavigationArrows]="showNavigationArrows"
+            <ngb-carousel #myCarousel="ngbCarousel" *ngIf="vacantes.length > 0 else NotVacantes" [activeId]="activeId" [showNavigationArrows]="showNavigationArrows"
               [showNavigationIndicators]="showNavigationIndicators">
               <ng-template ngbSlide *ngFor="let v of vacantes">
                 <div class="media ml-1" *ngIf="v.image">

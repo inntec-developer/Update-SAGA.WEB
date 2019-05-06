@@ -42,12 +42,12 @@ export class JobRequiPauseComponent implements OnInit {
     
       if(data == 200)
       {
-        this.popToast('success', 'JOB - PAUSE', 'El JOB se ejecutó con éxito');
+        this.popToast('success', 'JOB - Sin cambio de estatus', 'El JOB se ejecutó con éxito');
         this.titulo = ''
       }
       else
       {
-        this.popToast('error', 'JOB - PAUSE', 'Ocurrio un error al intentar ejecutar el JOB');
+        this.popToast('error', 'JOB - Sin cambio de estatus', 'Ocurrio un error al intentar ejecutar el JOB');
         this.titulo = ''
       }
   
@@ -60,12 +60,31 @@ export class JobRequiPauseComponent implements OnInit {
     
       if(data == 200)
       {
-        this.popToast('success', 'JOB - PAUSE', 'El JOB se ejecutó con éxito');
+        this.popToast('success', 'JOB - Sin asignar', 'El JOB se ejecutó con éxito');
         this.titulo = ''
       }
       else
       {
-        this.popToast('error', 'JOB - PAUSE', 'Ocurrio un error al intentar ejecutar el JOB');
+        this.popToast('error', 'JOB - Sin asignar', 'Ocurrio un error al intentar ejecutar el JOB');
+        this.titulo = ''
+      }
+  
+    })
+  }
+
+  ExecProcedureVencidas()
+  {
+    this.titulo = "Espera a que te salga el mensaje de confirmación \\m/"
+    this._service.ExecProcedureVencidas().subscribe(data => {
+    
+      if(data == 200)
+      {
+        this.popToast('success', 'JOB - Vencidas', 'El JOB se ejecutó con éxito');
+        this.titulo = ''
+      }
+      else
+      {
+        this.popToast('error', 'JOB - Vencidas', 'Ocurrio un error al intentar ejecutar el JOB');
         this.titulo = ''
       }
   

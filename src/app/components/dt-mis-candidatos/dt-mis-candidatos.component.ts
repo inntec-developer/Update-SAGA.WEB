@@ -12,6 +12,12 @@ declare var $: any;
 })
 export class DtMisCandidatosComponent implements OnInit {
   @Output('CandidatoId') CandidatoId: EventEmitter<any> = new EventEmitter<any>();
+  disabled = false;
+  compact = false;
+  invertX = false;
+  invertY = false;
+  shown = 'hover';
+  
   public dataSource: Array<any> = [];
   // Varaibles del paginador
   public page: number = 1;

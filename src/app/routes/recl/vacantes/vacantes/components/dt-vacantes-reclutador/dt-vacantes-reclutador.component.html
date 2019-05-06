@@ -218,7 +218,7 @@
           [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
           (numPages)="numPages = $event">
         </pagination>
-        <pre *ngIf="config.paging" class="text-muted float-right">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
+        <!-- <pre *ngIf="config.paging" class="text-muted float-right">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre> -->
       </div>
     </div>
   </div>
