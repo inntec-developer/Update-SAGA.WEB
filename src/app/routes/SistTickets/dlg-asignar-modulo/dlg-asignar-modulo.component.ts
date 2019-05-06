@@ -31,6 +31,7 @@ export class DlgAsignarModuloComponent implements OnInit {
 
   Iniciar(tipo, mod)
   {
+
     sessionStorage.setItem('modulo', mod);
     sessionStorage.setItem('moduloId', this.moduloId)
 
@@ -38,9 +39,9 @@ export class DlgAsignarModuloComponent implements OnInit {
     {
       this._Router.navigate(['/tickets/turno'], { skipLocationChange: true });
     }
-    else if(tipo==2)
+    else if(tipo == 3)
     {
-      this._Router.navigate(['/examenes/agregarResultPsico'], { skipLocationChange: true });
+      this._Router.navigate(['/tickets/Examenes'], { skipLocationChange: true });
 
     }
 

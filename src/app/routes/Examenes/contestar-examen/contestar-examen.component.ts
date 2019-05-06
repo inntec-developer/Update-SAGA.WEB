@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { ExamenesService } from './../../../service/Examenes/examenes.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class ContestarExamenComponent implements OnInit {
   Resp = [];
   candidatoId = '8E283A4F-C7BA-E811-80EA-9E274155325E'
   constructor(private service: ExamenesService) { }
-
+  nomExamen: any;
 
   ngOnInit() {
     this.GetExamen();

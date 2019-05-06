@@ -23,24 +23,26 @@ export class GraficaVacantesPieComponent implements OnInit {
   public ShowModal: boolean;
   public EstadoVacante: string;
   public NumeroVacantes: number;
+  public RegistrosT: number = 0;
   ngOnInit() {
     this.UsuarioId = sessionStorage.getItem('id');
     Chart.defaults.scale.ticks.beginAtZero = true;
     this._ServiceComponente.getGraficaVPA(this.UsuarioId).subscribe(result => {
-      let activas = result['activas'];
+      let vigentes = result['vigentes'];
       let porVecner = result['porVencer'];
       let vencidas = result['vencidas'];
+      this.RegistrosT = vigentes + porVecner + vencidas;
 
       this.Data = {
         datasets: [{
           backgroundColor: ['#00FF00', '#FFCC00', '#FF3300'],
-          data: [activas, porVecner, vencidas]
+          data: [vigentes, porVecner, vencidas]
         }],
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: [
-          'Vigentes',
-          'Por Vencer',
-          'Vencidas'
+          'Vigentes: '+ vigentes ,
+          'Por Vencer: ' + porVecner,
+          'Vencidas: ' + vencidas
         ]
       }
       this.Chart = new Chart('canvas', {
@@ -57,10 +59,10 @@ export class GraficaVacantesPieComponent implements OnInit {
             position: 'right',
             display: true,
             labels:{
-              fontSize: 9,
+              fontSize: 12,
               boxWidth: 10,
               usePointStyle: true,
-              padding: 3
+              padding: 5
             }
           },
         }

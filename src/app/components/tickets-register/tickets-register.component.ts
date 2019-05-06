@@ -25,8 +25,14 @@ export class TicketsRegisterComponent implements OnInit {
   {
     if($event != 417)
     {
-      sessionStorage.setItem('candidatoId', $event);
+      sessionStorage.setItem('candidatoId', $event.id);
       swal("¡El registro se completó con éxito!" , '', "success");
+      
+      swal({
+        title: "El registro se completó con éxito!",
+        text: "Usuario: " + $event.username + " contraseña: " + $event.pass + " ¡Ya puedes empezar!",
+        type: "success",
+      })
       this.dialog.close();
 
     }

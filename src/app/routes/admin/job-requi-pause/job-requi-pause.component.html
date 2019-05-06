@@ -1,12 +1,13 @@
 <div class="card">
     <div class="card-header justify-content-between text-warning">
-        <h5><em class="fa fa-key"></em>PINCHA EL BOTON IVAN :P</h5>
+        <h5><em class="fa fa-cogs"></em>JOBS PARA SEGUIMIENTO DE REQUISICIONES</h5>
         <hr>
     </div>
   <div class="card-body">
     <button class="btn btn-success" (click)="ExecProcedure()">Requis en pausa</button>
     <button class="btn btn-warning ml-2" (click)="ExecProcedureSinCambios()">Requis sin cambios</button>
     <button class="btn btn-info ml-2" (click)="ExecProcedureSinAsignar()">Requis sin asignar</button>
+    <button class="btn btn-purple ml-2" (click)="ExecProcedureVencidas()">Requis Vencidas</button>
     <br/>
     <h4>{{titulo}}</h4>
   </div>

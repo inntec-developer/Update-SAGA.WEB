@@ -15,7 +15,8 @@ import { Router } from '@angular/router';
   providers: [CatalogosService, ClientesService]
 })
 export class NuevoProspectoComponent implements OnInit {
-
+  // Customs
+  public CMNumEmleados: number = 10;
   //#region Variables
   public loading: boolean = false;
 
@@ -115,7 +116,7 @@ export class NuevoProspectoComponent implements OnInit {
       ValidarEmpresa: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       Giros: new FormControl('', Validators.required),
       Actividades: new FormControl('', Validators.required),
-      NoEmpleados: new FormControl('', Validators.required),
+      NoEmpleados: new FormControl('', [Validators.required, Validators.min(1)]),
       Tamanio: new FormControl('', Validators.required),
       Tipo: new FormControl('', Validators.required),
       TipoBase: new FormControl('', Validators.required)
@@ -187,7 +188,7 @@ export class NuevoProspectoComponent implements OnInit {
       ValidarEmpresa: ['', [Validators.required, Validators.maxLength(100)]],
       Giros: ['', Validators.required],
       Actividades: ['', Validators.required],
-      NoEmpleados: ['', Validators.required],
+      NoEmpleados: ['', Validators.required, Validators.min(1), Validators.maxLength(10)],
       Tamanio: ['', Validators.required],
       Tipo: ['', Validators.required],
       TipoBase: ['', Validators.required],
@@ -314,8 +315,9 @@ export class NuevoProspectoComponent implements OnInit {
     this.formDirecciones.controls['CodigoPostal'].setValue(cp);
   }
 
-  changeEmpleados(){
-    this.formGeneral.controls['Tamanio'].reset();
+  changeEmpleados($event : any){
+    if($event != null)
+      this.formGeneral.controls['Tamanio'].reset();
   }
 
   validarNoEmpleado() {
@@ -1504,7 +1506,7 @@ export class NuevoProspectoComponent implements OnInit {
     }
     this._ClienteService.addProspecto(prospecto).subscribe(element => {
       if (element == 202) {
-        let msg = 'Se a Registrado Correctamente el Prospecto' + this.cp;
+        let msg = 'Se a Registrado Correctamente el Prospecto' + prospecto['Nombre Comercial'];
         this.popToast('success', 'Prospectos', msg);
         setTimeout(() => {
           this.loading = false;
@@ -1513,7 +1515,7 @@ export class NuevoProspectoComponent implements OnInit {
 
       }
       else {
-        let msg = 'Error al intentar registrar Correctamente el Prospecto' + this.cp;
+        let msg = 'Error al intentar registrar Correctamente el Prospecto' + prospecto['Nombre Comercial'];
         this.popToast('error', 'Prospectos', msg);
         this.loading = false;
       }

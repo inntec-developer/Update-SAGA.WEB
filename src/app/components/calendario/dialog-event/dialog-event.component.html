@@ -31,7 +31,12 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [matDatepicker]="fchInicio" placeholder="Inicio" formControlName="Inicio" (dateChange)="_CheckNuevaFecha()"
+        <input matInput
+          [min]="minLimitDate"
+          [matDatepicker]="fchInicio"
+          placeholder="Inicio"
+          formControlName="Inicio"
+          (dateChange)="_CheckNuevaFecha()"
           [(ngModel)]="SeletedDayC" required="">
         <mat-datepicker-toggle matSuffix [for]="fchInicio"></mat-datepicker-toggle>
         <mat-datepicker #fchInicio></mat-datepicker>

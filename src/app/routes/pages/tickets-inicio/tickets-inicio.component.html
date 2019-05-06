@@ -39,7 +39,7 @@
                         <i class="fa fa-user" aria-hidden="true"></i>
                       </span>
                     </div>
-                    <input type="text" class="form-control form-control-sm round" #inputEmail4 placeholder="Usuario">
+                    <input type="text" class="form-control form-control-sm round" [(ngModel)]="user" placeholder="Usuario">
                   </div>
                   <div class="input-group input-group-sm ml-2">
                     <div class="input-group-prepend">
@@ -47,12 +47,16 @@
                         <i class="fa fa-key" aria-hidden="true"></i>
                       </span>
                     </div>
-                    <input type="password" class="form-control form-control-sm round" id="inputPassword4" placeholder="Contraseña">
+                    <input type="password" class="form-control form-control-sm round" [(ngModel)]="pass" placeholder="Contraseña">
                   </div>
-                  <button class="btn btn-labeled btn-success btn-iniciar ml-2 font-weight-bold d-flex align-items-center" type="button">
+                  <button *ngIf="!iniciar" [disabled]="iniciar" class="btn btn-labeled btn-success btn-iniciar ml-2 font-weight-bold d-flex align-items-center" type="button" (click)="Login(user, pass)">
                       <span class="btn-label fa fa-play mr-1">
                         </span>INICIO
                       </button>
+                      <button *ngIf="iniciar" class="btn btn-labeled btn-success btn-iniciar ml-2 font-weight-bold d-flex align-items-center" [class.btn-danger]="iniciar" type="button" (click)="LogOut()">
+                        <span class="btn-label fa fa-unlock mr-1">
+                          </span>SALIR
+                        </button>
                 </div>
                 <div class="row">
                   <div class="col d-flex justify-content-center">

@@ -1,23 +1,32 @@
 export class ApiConection {
-  // public static ServiceUrlWeb = 'http://192.168.8.124:444/'
   public static ServiceUrlWeb = 'http://localhost:4200/';
   public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
-  /*Servicio de purbeas locales*/
-  //public static ServiceUrl = 'http://192.168.8.124:333/api/';
   public static ServiceUrl = 'http://localhost:33333/api/';
-
-  // public static ServiceUrlFileManager = 'http://192.168.8.124:33333/utilerias/';
   public static ServiceUrlFileManager = 'http://localhost:33333/utilerias/';
-
-  // public static ServiceUrlFoto = 'http://192.168.8.124:333/';
   public static ServiceUrlFoto = 'http://localhost:33333/';
-
-  // Conexiones a bolsa de trabajo.
   public static ServiceUrlBolsa = 'http://sagainn.com.mx:403';
   public static ServiceUrlLoginBolsa = 'http://sagainn.com.mx:402';
-  // Conexion a FORMATO 290
+   public static ServicioUrl290 = 'http://sagainn.com.mx:413/Home/';
 
-  public static ServicioUrl290 = 'http://sagainn.com.mx:413/Home/';
+  //Produccion
+  // public static ServiceUrlWeb = 'https://weberp.damsa.com.mx/';
+  // public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
+  // public static ServiceUrl = 'https://apierp.damsa.com.mx/api/';
+  // public static ServiceUrlFileManager = 'https://apierp.damsa.com.mx/utilerias/';
+  // public static ServiceUrlFoto = 'https://apierp.damsa.com.mx/';
+  // public static ServiceUrlBolsa = 'https://aplicapp.damsa.com.mx';
+  // public static ServiceUrlLoginBolsa = 'https://bolsa.damsa.com.mx';
+  // public static ServicioUrl290 = 'https://webpfrc.damsa.com.mx/Home/';
+
+  //Pruebas
+  // public static ServiceUrlWeb = 'https://weberp.damsa.com.mx/';
+  // public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
+  // public static ServiceUrl = 'https://apisb.damsa.com.mx/api/';
+  // public static ServiceUrlFileManager = 'https://apisb.damsa.com.mx/utilerias/';
+  // public static ServiceUrlFoto = 'https://apisb.damsa.com.mx/';
+  // public static ServiceUrlBolsa = 'https://btapi.damsa.com.mx';
+  // public static ServiceUrlLoginBolsa = 'https://btweb.damsa.com.mx';
+  // public static ServicioUrl290 = 'https://webrcsb.damsa.com.mx/Home/';
 
   /* Calendario Event */
   public static GetCalendarioEvent = 'CalendarEvent/GetEvent';
@@ -251,6 +260,7 @@ export class ApiConection {
   public static execProcedurePause = 'Requisiciones/execProcedurePause'
   public static execProcedureSinCambios = 'Requisiciones/execProcedureSinCambio'
   public static execProcedureSinAsignar = 'Requisiciones/execProcedureSinAsignar'
+  public static execProcedureVencidas = 'Requisiciones/execProcedureVencidas'
 
   /*Examenes */
   public static InsertExamen = 'examenes/insertExamen'
@@ -304,6 +314,7 @@ export class ApiConection {
   public static GetConcurrenciaReporte = 'SistTickets/getConcurrencia'
   public static UpdateCandidatoTicket = 'SistTickets/updateCandidatoTicket'
   public static RegistrarCandidato = 'SistTickets/registrarCandidato'
+  public static LoginBolsa = 'SistTickets/loginBolsa'
 
   /*TrackingVacantes*/
   public static GetInformeTracking = 'Requisiciones/getInformeClientes';

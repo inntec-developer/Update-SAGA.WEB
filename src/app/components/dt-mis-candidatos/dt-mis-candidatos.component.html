@@ -38,6 +38,9 @@
           </tr>
         </thead>
         <tbody>
+            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact"
+            [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+            <div>
           <tr (click)="onCellClick(row)" (dblclick)="getCandidato(row.candidatoId)" *ngFor="let row of rows"
             [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
             <td class="text-center">
@@ -67,6 +70,8 @@
             <td> {{row.curp}}</td>
             <td> {{row.rfc}}</td>
           </tr>
+          </div>
+          </ng-scrollbar>
         </tbody>
       </table>
     </div>
@@ -77,7 +82,7 @@
       (numPages)="numPages = $event">
     </pagination>
   </div>
-  <pre *ngIf="config.paging" class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
+  <!-- <pre *ngIf="config.paging" class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre> -->
 </div>
 <ng-template #NotCandidatos>
   <div class="row">

@@ -67,6 +67,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   asignar = true;
   disenador = true;
   aprobador: any;
+  coordinador: any;
 
   rowAux = [];
   selected: boolean = false;
@@ -374,7 +375,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.numeroVacantes = data.vacantes;
     this.enProceso = data.enProceso;
     this.clienteId = data.clienteId;
-    this.aprobador = data.aprobador;
+    this.aprobador = data.aprobadorId || null;
+    this.coordinador = data.coordinador || null;
     this.confidencial = data.confidencial
     this.ValidarEstatus(this.estatusId)
 
@@ -430,7 +432,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
      {
       this.asignar = false
       this.disenador = false
-     } 
+     }
      else if(this.element.aprobada == 0 && (estatusId != 39 && estatusId != 34 && estatusId != 35 && estatusId != 36 && estatusId != 37) && this.element.vacantes > 0)
      {
        this.asignar = false
@@ -755,10 +757,16 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   openDesignVacante() {
-    if (this.aprobador === sessionStorage.getItem('usuario')) {
+    var usuario = sessionStorage.getItem('id');
+    if (this.aprobador === usuario) {
       this._Router.navigate(['/reclutamiento/configuracionVacante/', this.id, this.folio, this.vBtra], { skipLocationChange: true });
     } else {
-      swal('Ops...!', 'Esta vacante solo puede ser diseñada por el aprobador (' + this.aprobador + ').', 'error');
+      if(this.coordinador != null){
+          swal('Ops...!', 'Esta vacante solo puede ser diseñada por el aprobador (' + this.coordinador + ').', 'error');
+      }
+      else{
+        swal('Ops...!', 'Esta vacante aún no esta aprobada', 'error');
+      }
     }
 
   }
