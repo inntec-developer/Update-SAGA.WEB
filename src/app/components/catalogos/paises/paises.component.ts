@@ -66,7 +66,7 @@ export class PaisesComponent implements OnInit, OnChanges {
       Descripcion: 'Catalogo de países',
       Activo: true
     };
-    let Estados: Array<any> = [];
+    const Estados: Array<any> = [];
     catalogo.Estado = Estados;
     const Municipios: Array<any> = [];
     catalogo.Municipio = Municipios;

@@ -120,6 +120,11 @@ import { ModalidadComponent } from './catalogos/modalidad/modalidad.component';
 import { TpPsicometriaComponent } from './catalogos/tp-psicometria/tp-psicometria.component';
 import { PeriodoPagoComponent } from './catalogos/periodo-pago/periodo-pago.component';
 import { TpNominaComponent } from './catalogos/tp-nomina/tp-nomina.component';
+import { DiaSemanaComponent } from './catalogos/dia-semana/dia-semana.component';
+import { TipoBeneficioComponent } from './catalogos/tipo-beneficio/tipo-beneficio.component';
+import { TipoContratoComponent } from './catalogos/tipo-contrato/tipo-contrato.component';
+import { DocDamsaComponent } from './catalogos/doc-damsa/doc-damsa.component';
+import { PrestLeyComponent } from './catalogos/prest-ley/prest-ley.component';
 @NgModule({
   imports: [
     SharedModule,
@@ -243,7 +248,12 @@ import { TpNominaComponent } from './catalogos/tp-nomina/tp-nomina.component';
     ModalidadComponent,
     TpPsicometriaComponent,
     PeriodoPagoComponent,
-    TpNominaComponent
+    TpNominaComponent,
+    DiaSemanaComponent,
+    TipoBeneficioComponent,
+    TipoContratoComponent,
+    DocDamsaComponent,
+    PrestLeyComponent
   ],
   exports: [
     DtDireccionComponent,

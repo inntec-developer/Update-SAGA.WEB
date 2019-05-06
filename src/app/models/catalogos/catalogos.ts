@@ -19,6 +19,18 @@ export class catalogos {
    TipoLicencia: Array<tplicencias>;
    TipoExamen: Array<tpexamen>;
    GiroEmpresa: Array<giroempresas>;
+   ActividadEmpresa: Array<actividadempresas>;
+   TamanoEmpresa: Array<tamanoempresas>;
+   TiposBase: Array<tiposbase>;
+   PerfilExperiencia: Array<perfilexperiencia>;
+   Aptitud: Array<aptitudes>;
+   AreaExperiencia: Array<areaExperiencias>;
+   AreaInteres: Array<areaintereses>;
+   JornadaLaboral: Array<areaintereses>;
+   TipoModalidad: Array<tpmodalidad>;
+   TipoPsicometria: Array<psicometrias>;
+   TipoNomina: Array<tpNomina>;
+   PeriodoPago: Array<periodospago>;
 }
 
 interface Catalogos {
@@ -139,6 +151,86 @@ interface giroempresas {
     giroEmpresa: string;
     activo: boolean;
 }
+
+interface actividadempresas {
+    Id: number;
+    giroempresa: string;
+    actividadempresa: string;
+    activo: boolean;
+}
+
+interface tamanoempresas {
+    Id: number;
+    tamanoempresa: string;
+    activo: boolean;
+}
+
+interface tiposbase {
+    Id: number;
+    tipobase: string;
+    activo: boolean;
+}
+
+interface perfilexperiencia {
+    Id: number;
+    perfilexperiencia: string;
+    activo: boolean;
+}
+
+interface aptitudes {
+    Id: number;
+    aptitud: string;
+    activo: boolean;
+}
+
+interface areaExperiencias {
+    Id: number;
+    areaExperiencia: string;
+    activo: boolean;
+    icono: string;
+}
+
+interface areaintereses {
+    Id: number;
+    areainteres: string;
+    areaExperiencia: string;
+    activo: boolean;
+}
+
+interface jornadalaboral {
+    Id: number;
+    jornada: string;
+    orden: number;
+    varioshorarios: boolean;
+    activo: boolean;
+}
+
+interface tpmodalidad {
+    Id: number;
+    modalidad: string;
+    orden: number;
+    activo: boolean;
+}
+
+interface psicometrias {
+    Id: number;
+    tipoPsicometria: string;
+    descripcion: number;
+    activo: boolean;
+}
+
+interface tpNomina {
+    Id: number;
+    tipodenomina: string;
+    activo: boolean;
+}
+
+interface periodospago {
+    Id: number;
+    periodoPago: string;
+    activo: boolean;
+}
+
 export class filtros {
     IdCat: number;
     IdEstado: number;

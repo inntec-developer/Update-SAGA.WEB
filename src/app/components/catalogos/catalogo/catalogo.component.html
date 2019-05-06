@@ -64,6 +64,18 @@
                 <app-tipoexamen *ngIf="idCatalogo == 40" [SelectedTpExamen]="selectedId" [Log]="log" (UpTpExamen)="Refresh($event)"></app-tipoexamen>
                 <!-- Ventas -->
                 <app-giro-empresa *ngIf="idCatalogo == 8" [SelectedGiro]="selectedId" [Log]="log" (UpGiro)="Refresh($event)"></app-giro-empresa>
+                <app-actividad-empresa *ngIf="idCatalogo == 9" [SelectedActividad]="selectedId" [Giros]="giros" [Log]="log" (UpActividad)="Refresh($event)"></app-actividad-empresa>
+                <app-tamano-empresa *ngIf="idCatalogo == 10" [SelectedTamano]="selectedId" [Log]="log" (UpTamano)="Refresh($event)"></app-tamano-empresa>
+                <app-tipo-base *ngIf="idCatalogo == 11" [SelectedTipoBase]="selectedId" [Log]="log" (UpTipoBase)="Refresh($event)"></app-tipo-base>
+                <app-perfil-exp *ngIf="idCatalogo == 16" [SelectedPerfil]="selectedId" [Log]="log" (UpPerfil)="Refresh($event)"></app-perfil-exp>
+                <app-aptitud *ngIf="idCatalogo == 17" [SelectedAptitud]="selectedId" [Log]="log" (UpAptitud)="Refresh($event)"></app-aptitud>
+                <app-area-exp *ngIf="idCatalogo == 18" [SelectedAreaExp]="selectedId" [Log]="log" (UpAreaExp)="Refresh($event)"></app-area-exp>
+                <app-area-interes *ngIf="idCatalogo == 19" [SelectedAreaInteres]="selectedId" [areaExp]="areaExp" [Log]="log" (UpAreaInteres)="Refresh($event)"></app-area-interes>
+                <app-jornada-laboral *ngIf="idCatalogo == 20" [SelectedJornada]="selectedId" [Log]="log" (UpJornada)="Refresh($event)"></app-jornada-laboral>
+                <app-modalidad *ngIf="idCatalogo == 21" [SelectedModalidad]="selectedId" [Log]="log" (UpModalidad)="Refresh($event)"></app-modalidad>
+                <app-tp-psicometria *ngIf="idCatalogo == 22" [SelectedPsicometria]="selectedId" [Log]="log" (UpPsicometria)="Refresh($event)"></app-tp-psicometria>
+                <app-tp-nomina *ngIf="idCatalogo == 24" [SelectedNomina]="selectedId" [Log]="log" (UpNomina)="Refresh($event)"></app-tp-nomina>
+                <app-periodo-pago *ngIf="idCatalogo == 26" [SelectedPeriodo]="selectedId" [Log]="log" (UpPeriodo)="Refresh($event)"></app-periodo-pago>
             </mat-expansion-panel>
         </mat-accordion>
     </mat-card-content>
