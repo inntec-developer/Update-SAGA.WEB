@@ -62,7 +62,7 @@ export class TablaReporteComponent implements OnInit {
    
   }
 
-  Generar(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor){
+  Generar(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor,usercoo){
     this.spinner.show();
     document.getElementById('DivReportefil').classList.remove('ocultar');
   document.getElementById('Divprincipal').classList.add('ocultar');
@@ -73,6 +73,7 @@ export class TablaReporteComponent implements OnInit {
   var est = '';
   let trcu = '';
   let coo = '';
+  let ucor = '';
 
   if(oficina != undefined){
     for (let item of oficina) {
@@ -81,45 +82,45 @@ export class TablaReporteComponent implements OnInit {
     }
   }
 
+  if(usercoo != undefined){
+    for (let item of usercoo) {
+      ucor += item +',';
+    }
+  }
+
   if(solicitante != undefined){
     for (let item of solicitante) {
       sol += item +',';
-      
     }
   }
 
   if(reclutador != undefined){
     for (let item of reclutador) {
       rec += item +',';
-     
     }
   }
 
   if(empresa != undefined){
     for (let item of empresa) {
       emp += item +',';
-     
     }
   }
 
   if(estatus != undefined){
     for (let item of estatus) {
       est += item +',';
-    
     }
   }
 
   if(tiporeclu != undefined){
     for (let item of tiporeclu) {
       trcu += item +',';
-    
     }
   }
 
   if(tipocor != undefined){
     for (let item of tipocor) {
       coo += item +',';
-    
     }
   }
 
@@ -130,6 +131,7 @@ emp = empresa == undefined?'0':emp;
 est = estatus == undefined?'0':est;
 trcu = trcu == undefined?'0':trcu;
 coo = coo == undefined?'0':coo;
+ucor = ucor == undefined?'0':ucor;
 
 
     let pal = document.getElementById('palabra');
@@ -141,7 +143,7 @@ coo = coo == undefined?'0':coo;
     var final = fin['value'];
     let tipo = document.getElementById('TipoReporte')['value'];
     
-    this.Servicio.GetInforme(palabra,ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec)
+    this.Servicio.GetInforme(palabra,ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec,ucor)
     .subscribe( data => {
     // this.popGenerico(data.mensaje,data.bandera,'Publicacion');
     this.requisiciones = data;
@@ -372,8 +374,8 @@ public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: t
 }
 //#endregion
 
-public refreshTable(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor) {
-  this.Generar(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor);
+public refreshTable(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor,usercoo) {
+  this.Generar(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor,usercoo);
 }
 
 public clearfilters() {
