@@ -125,6 +125,7 @@ import { TipoBeneficioComponent } from './catalogos/tipo-beneficio/tipo-benefici
 import { TipoContratoComponent } from './catalogos/tipo-contrato/tipo-contrato.component';
 import { DocDamsaComponent } from './catalogos/doc-damsa/doc-damsa.component';
 import { PrestLeyComponent } from './catalogos/prest-ley/prest-ley.component';
+import { TiempoContratoComponent } from './catalogos/tiempo-contrato/tiempo-contrato.component';
 @NgModule({
   imports: [
     SharedModule,
@@ -253,7 +254,8 @@ import { PrestLeyComponent } from './catalogos/prest-ley/prest-ley.component';
     TipoBeneficioComponent,
     TipoContratoComponent,
     DocDamsaComponent,
-    PrestLeyComponent
+    PrestLeyComponent,
+    TiempoContratoComponent
   ],
   exports: [
     DtDireccionComponent,

@@ -76,6 +76,12 @@
                 <app-tp-psicometria *ngIf="idCatalogo == 22" [SelectedPsicometria]="selectedId" [Log]="log" (UpPsicometria)="Refresh($event)"></app-tp-psicometria>
                 <app-tp-nomina *ngIf="idCatalogo == 24" [SelectedNomina]="selectedId" [Log]="log" (UpNomina)="Refresh($event)"></app-tp-nomina>
                 <app-periodo-pago *ngIf="idCatalogo == 26" [SelectedPeriodo]="selectedId" [Log]="log" (UpPeriodo)="Refresh($event)"></app-periodo-pago>
+                <app-dia-semana *ngIf="idCatalogo == 23" [SelectedDia]="selectedId" [Log]="log" (UpDias)="Refresh($event)"></app-dia-semana>
+                <app-tipo-beneficio *ngIf="idCatalogo == 27" [SelectedBeneficio]="selectedId" [Log]="log" (UpBeneficio)="Refresh($event)"></app-tipo-beneficio>
+                <app-tipo-contrato *ngIf="idCatalogo == 28" [SelectedTpContrato]="selectedId" [Log]="log" (UpTpContrato)="Refresh($event)"></app-tipo-contrato>
+                <app-tiempo-contrato *ngIf="idCatalogo == 29" [SelectedTiempoContrato]="selectedId" [Log]="log" (UpTiempoCont)="Refresh($event)"></app-tiempo-contrato>
+                <app-doc-damsa *ngIf="idCatalogo == 31" [SelectedDocDamsa]="selectedId" [Log]="log" (UpDocDamsa)="Refresh($event)"></app-doc-damsa>
+                <app-prest-ley *ngIf="idCatalogo == 32" [SelectedPrestLey]="selectedId" [Log]="log" (UpPrestLey)="Refresh($event)"></app-prest-ley>
             </mat-expansion-panel>
         </mat-accordion>
     </mat-card-content>

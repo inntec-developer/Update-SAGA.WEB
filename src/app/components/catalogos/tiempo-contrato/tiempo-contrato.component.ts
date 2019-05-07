@@ -6,17 +6,18 @@ import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 // Modelos
 import { catalogos } from '../../../models/catalogos/catalogos';
 
-@Component({
-  selector: 'app-prest-ley',
-  templateUrl: './prest-ley.component.html',
-  styleUrls: ['./prest-ley.component.scss']
-})
-export class PrestLeyComponent implements OnInit, OnChanges {
 
-  @Input() SelectedPrestLey: any;
+@Component({
+  selector: 'app-tiempo-contrato',
+  templateUrl: './tiempo-contrato.component.html',
+  styleUrls: ['./tiempo-contrato.component.scss']
+})
+export class TiempoContratoComponent implements OnInit, OnChanges {
+
+  @Input() SelectedTiempoContrato: any;
   @Input() Log: any;
-  @Output() UpPrestLey = new EventEmitter<number>(); // Id de País para actualizar tabla.
-  formPrestLey: FormGroup;
+  @Output() UpTiempoCont = new EventEmitter<number>(); // Id de País para actualizar tabla.
+  formTiempoCont: FormGroup;
 
   displayedColumns: string[] = ['id', 'usuario', 'fechaAct', 'tpMov'];
   dataSource: MatTableDataSource<any>;
@@ -25,9 +26,10 @@ export class PrestLeyComponent implements OnInit, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor( private services: CatalogosService ) {
-    this.formPrestLey = new FormGroup({
+    this.formTiempoCont = new FormGroup({
       id: new FormControl(),
-      prestacionLey: new FormControl({value: '', disabled: true}, [Validators.required]),
+      tiempo: new FormControl({value: '', disabled: true}, [Validators.required]),
+      orden: new FormControl({value: '', disabled: true}, [Validators.required]),
       activo: new FormControl({value: '', disabled: true})
     });
   }
@@ -36,11 +38,12 @@ export class PrestLeyComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.SelectedPrestLey !== undefined) {
+    if (this.SelectedTiempoContrato !== undefined) {
       this.Habilita(false);
-      this.formPrestLey.get('id').setValue(this.SelectedPrestLey.id);
-      this.formPrestLey.get('prestacionLey').setValue(this.SelectedPrestLey.prestacionLey);
-      this.formPrestLey.get('activo').setValue(this.SelectedPrestLey.activo);
+      this.formTiempoCont.get('id').setValue(this.SelectedTiempoContrato.id);
+      this.formTiempoCont.get('tiempo').setValue(this.SelectedTiempoContrato.tiempo);
+      this.formTiempoCont.get('orden').setValue(this.SelectedTiempoContrato.orden);
+      this.formTiempoCont.get('activo').setValue(this.SelectedTiempoContrato.activo);
     }
     if (this.Log !== undefined) {
       this.dataSource = new MatTableDataSource(this.Log);
@@ -50,41 +53,43 @@ export class PrestLeyComponent implements OnInit, OnChanges {
   }
 
   New() {
-    this.formPrestLey.reset();
+    this.formTiempoCont.reset();
     this.Habilita(false);
-    this.SelectedPrestLey = '';
+    this.SelectedTiempoContrato = '';
   }
 
   Save() {
     const catalogo: catalogos = new catalogos();
-    this.SelectedPrestLey !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
+    this.SelectedTiempoContrato !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
     catalogo.usuario = sessionStorage.getItem('usuario');
     catalogo.Catalogos = {
-      Id: 32,
-      Nombre: 'Pretsaciones de ley',
-      Descripcion: 'Catalogo de prestaciones de ley',
+      Id: 29,
+      Nombre: 'Tiempo contrato',
+      Descripcion: 'Catalogo de tiempos de contrato',
       Activo: true
     };
-    catalogo.PrestacionesLey = [this.formPrestLey.getRawValue()];
+    catalogo.TiemposContrato = [this.formTiempoCont.getRawValue()];
     console.log(catalogo);
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpPrestLey.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpTiempoCont.emit(catalogo.Catalogos.Id) : console.log(result);
       this.Habilita(true);
     });
   }
 
   Limpiar() {
-    this.formPrestLey.reset();
+    this.formTiempoCont.reset();
   }
 
   Habilita(opt: boolean) {
     if (!opt) {
-      this.formPrestLey.get('prestacionLey').enable();
-      this.formPrestLey.get('activo').enable();
+      this.formTiempoCont.get('tiempo').enable();
+      this.formTiempoCont.get('orden').enable();
+      this.formTiempoCont.get('activo').enable();
     } else {
-      this.formPrestLey.get('prestacionLey').disable();
-      this.formPrestLey.get('activo').disable();
+      this.formTiempoCont.get('tiempo').disable();
+      this.formTiempoCont.get('orden').disable();
+      this.formTiempoCont.get('activo').disable();
     }
   }
 

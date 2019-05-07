@@ -31,6 +31,12 @@ export class catalogos {
    TipoPsicometria: Array<psicometrias>;
    TipoNomina: Array<tpNomina>;
    PeriodoPago: Array<periodospago>;
+   DiasSemana: Array<diasemana>;
+   BeneficioPerfil: Array<beneficios>;
+   TipoContrato: Array<tpcontratos>;
+   TiemposContrato: Array<tiempocontratos>;
+   DocDamsa: Array<DocDamsa>;
+   PrestacionesLey: Array<PrestacionesLey>;
 }
 
 interface Catalogos {
@@ -228,6 +234,44 @@ interface tpNomina {
 interface periodospago {
     Id: number;
     periodoPago: string;
+    activo: boolean;
+}
+
+interface diasemana {
+    Id: number;
+    diaSemana: string;
+    activo: boolean;
+}
+
+interface beneficios {
+    Id: number;
+    tipoBeneficio: string;
+    activo: boolean;
+}
+
+interface tpcontratos {
+    Id: number;
+    tipoContrato: string;
+    periodoPrueba: boolean;
+    activo: boolean;
+}
+
+interface tiempocontratos {
+    Id: number;
+    tiempo: string;
+    orden: number;
+    activo: boolean;
+}
+
+interface DocDamsa {
+    Id: number;
+    documentoDamsa: string;
+    activo: boolean;
+}
+
+interface PrestacionesLey {
+    Id: number;
+    prestacionLey: string;
     activo: boolean;
 }
 

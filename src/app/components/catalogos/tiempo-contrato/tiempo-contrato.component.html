@@ -1,6 +1,6 @@
 <mat-tab-group>
     <mat-tab>
-        <div [formGroup]="formDocDamsa">
+        <div [formGroup]="formTiempoCont">
             <ng-template mat-tab-label>
                 <mat-icon class="example-tab-icon">assignment</mat-icon>
                 Formulario
@@ -8,8 +8,14 @@
             <div class="row">
                 <div class="col-md-2 m-5">
                     <mat-form-field>
-                        <input matInput placeholder="Documento" formControlName="documentoDamsa" required>
-                        <mat-error *ngIf="formDocDamsa.controls['documentoDamsa'].hasError('required')">Agrega un país válido</mat-error>
+                        <input matInput placeholder="Tiempo" formControlName="tiempo" required>
+                        <mat-error *ngIf="formTiempoCont.controls['tiempo'].hasError('required')">Agrega un tiempo válido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2 m-5">
+                    <mat-form-field>
+                        <input type="number" matInput placeholder="Orden" formControlName="orden" required>
+                        <mat-error *ngIf="formTiempoCont.controls['orden'].hasError('required')">Agrega un orden válido</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-md-1 m-5">
