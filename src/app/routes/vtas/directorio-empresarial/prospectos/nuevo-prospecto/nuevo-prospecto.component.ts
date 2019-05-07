@@ -315,7 +315,7 @@ export class NuevoProspectoComponent implements OnInit {
     this.formDirecciones.controls['CodigoPostal'].setValue(cp);
   }
 
-  changeEmpleados($event : any){
+  changeEmpleados(){
       this.formGeneral.controls['Tamanio'].reset();
   }
 
