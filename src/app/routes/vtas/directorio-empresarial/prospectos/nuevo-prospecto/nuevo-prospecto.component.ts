@@ -116,7 +116,7 @@ export class NuevoProspectoComponent implements OnInit {
       ValidarEmpresa: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       Giros: new FormControl('', Validators.required),
       Actividades: new FormControl('', Validators.required),
-      NoEmpleados: new FormControl('', [Validators.required, Validators.min(1)]),
+      NoEmpleados: new FormControl('', [Validators.required]),
       Tamanio: new FormControl('', Validators.required),
       Tipo: new FormControl('', Validators.required),
       TipoBase: new FormControl('', Validators.required)
@@ -188,7 +188,7 @@ export class NuevoProspectoComponent implements OnInit {
       ValidarEmpresa: ['', [Validators.required, Validators.maxLength(100)]],
       Giros: ['', Validators.required],
       Actividades: ['', Validators.required],
-      NoEmpleados: ['', Validators.required, Validators.min(1), Validators.maxLength(10)],
+      NoEmpleados: ['', Validators.required],
       Tamanio: ['', Validators.required],
       Tipo: ['', Validators.required],
       TipoBase: ['', Validators.required],
@@ -316,7 +316,6 @@ export class NuevoProspectoComponent implements OnInit {
   }
 
   changeEmpleados($event : any){
-    if($event != null)
       this.formGeneral.controls['Tamanio'].reset();
   }
 

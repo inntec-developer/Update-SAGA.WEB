@@ -49,7 +49,7 @@ export class DatosGeneralesComponent implements OnInit {
       ValidarEmpresa: new FormControl('', [Validators.required]),
       Giros: new FormControl('', Validators.required),
       Actividades: new FormControl('', Validators.required),
-      NoEmpleados: new FormControl('', Validators.required),
+      NoEmpleados: new FormControl('', [Validators.required, Validators.min(1), Validators.max(99999)]),
       Tamanio: new FormControl('', Validators.required),
       Tipo: new FormControl('', Validators.required),
       TipoBase: new FormControl('', Validators.required)
@@ -168,7 +168,7 @@ export class DatosGeneralesComponent implements OnInit {
     var isValid = true;
     var noEmpleados = this.formGeneral.get('NoEmpleados').value;
     var noEmpleadosId = this.formGeneral.get('Tamanio').value;
-    if (noEmpleados >= 1 && noEmpleados <= 9 && noEmpleadosId != 1) {
+    if(noEmpleados >= 1 && noEmpleados <= 9 && noEmpleadosId != 1) {
       isValid = false;
     } else if (noEmpleados >= 10 && noEmpleados <= 49 && noEmpleadosId != 2) {
       isValid = false;

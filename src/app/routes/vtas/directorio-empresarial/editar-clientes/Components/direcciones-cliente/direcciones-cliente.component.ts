@@ -153,18 +153,18 @@ export class DireccionesClienteComponent implements OnInit {
             data['id'] = result;
             this.Direcciones.push(data);
             this.DataEmitter.emit(this.Direcciones);
-            this.popToast('success', 'Direcicones', 'Se agregó con éxito una nueva dirección.');
+            this.popToast('success', 'Direcciones', 'Se agregó con éxito una nueva dirección.');
             this.cancelarDireccion();
             this.onChangeTableD(this.config);
           }
           else {
-            this.popToast('error', 'Direcicones', 'Algo salio mal, no se puedo registrar la nueva dirección.');
+            this.popToast('error', 'Direcciones', 'Algo salio mal, no se puedo registrar la nueva dirección.');
             return;
           }
         })
       }
       else {
-        this.popToast('info', 'Direcicones', 'La dirección que intenta registrar ya existe.');
+        this.popToast('info', 'Direcciones', 'La dirección que intenta registrar ya existe.');
         return;
       }
     } else {
@@ -186,20 +186,20 @@ export class DireccionesClienteComponent implements OnInit {
         this._ClienteService.editDireccion(data).subscribe(result => {
           if (result != 404) {
             this.Direcciones[this.indexDireccion] = data;
-            this.popToast('success', 'Direcicones', 'Se actualizo con éxito la dirección.');
+            this.popToast('success', 'Direcciones', 'Se actualizo con éxito la dirección.');
             this.EditDireccion = false;
             this.elementD = null;
             this.cancelarDireccion();
             this.onChangeTableD(this.config);
             this.DataEmitter.emit(this.Direcciones[this.indexDireccion])
           } else {
-            this.popToast('error', 'Direcicones', 'Algo salio mal, no se puedo actualizar la dirección.');
+            this.popToast('error', 'Direcciones', 'Algo salio mal, no se puedo actualizar la dirección.');
             return;
           }
         });
       }
       else {
-        this.popToast('info', 'Direcicones', 'La dirección que intenta actualizar ya existe.');
+        this.popToast('info', 'Direcciones', 'La dirección que intenta actualizar ya existe.');
         return;
       }
     }

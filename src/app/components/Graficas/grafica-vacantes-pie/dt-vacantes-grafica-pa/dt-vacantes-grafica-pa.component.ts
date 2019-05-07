@@ -32,20 +32,21 @@ export class DtVacantesGraficaPAComponent implements OnInit {
   public errorMessage: any;
   public registros: number;
 
+  public totalPos = 0;
+
   constructor(private _ComponentService: ComponentsService) { }
 
   public rows: Array<any> = [];
   public columns: Array<any> = [
     { title: 'Folio', sorting: 'desc', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
-    { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
-    { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
-    { title: 'No. Vacantes', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' } },
-    { title: 'Tipo Recl.', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo' } },
     { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
+    { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
+    { title: 'Cub/Vac', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No.' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
-    { title: 'Prioridad', className: 'text-info text-center', name: 'prioridad', filtering: { filterString: '', placeholder: 'Prioridad' } },
-    { title: 'Propietario', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Propietario' } }
+    { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador', filtering: { filterString: '', placeholder: 'Coordinador' } },
+    { title: 'Solicitante', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Solicitante' } }
   ];
 
   ngOnInit() {
@@ -60,9 +61,16 @@ export class DtVacantesGraficaPAComponent implements OnInit {
   }
 
   getRequisiciones() {
+    this.totalPos = 0;
     var estado = this.EstadoVacante.split(':', 1);
     this._ComponentService.getRequiGraficaPA(estado, this.UsuarioId ).subscribe(data => {
       this.dataSource = data;
+      this.dataSource.forEach(r => {
+        if(r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37))
+        {
+          this.totalPos += r.vacantes;
+        }
+      });
       this.onChangeTable(this.config);
     }, error => this.errorMessage = <any>error);
   }
