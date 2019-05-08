@@ -19,8 +19,8 @@ export class ApiConection {
   // public static ServicioUrl290 = 'https://webpfrc.damsa.com.mx/Home/';
 
   //Pruebas
-  // public static ServiceUrlWeb = 'https://weberp.damsa.com.mx/';
-  // public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
+  // public static ServiceUrlWeb = 'https://websb.damsa.com.mx/';
+  // public static ServiceUrlFotoUser = 'https://apisb.damsa.com.mx/img/';
   // public static ServiceUrl = 'https://apisb.damsa.com.mx/api/';
   // public static ServiceUrlFileManager = 'https://apisb.damsa.com.mx/utilerias/';
   // public static ServiceUrlFoto = 'https://apisb.damsa.com.mx/';
@@ -315,6 +315,7 @@ export class ApiConection {
   public static UpdateCandidatoTicket = 'SistTickets/updateCandidatoTicket'
   public static RegistrarCandidato = 'SistTickets/registrarCandidato'
   public static LoginBolsa = 'SistTickets/loginBolsa'
+  public static GetCitas  = 'SistTickets/getCitas'
 
   /*TrackingVacantes*/
   public static GetInformeTracking = 'Requisiciones/getInformeClientes';

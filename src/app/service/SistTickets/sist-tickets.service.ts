@@ -41,6 +41,7 @@ export class SistTicketsService {
   private UrlRegistrarCandidato = ApiConection.ServiceUrl + ApiConection.RegistrarCandidato;
   private UrlLoginBolsa = ApiConection.ServiceUrl + ApiConection.LoginBolsa;
   private UrlGetVacantesReclutador = ApiConection.ServiceUrl + ApiConection.GetVacantesReclutador;
+  private UrlGetCitas = ApiConection.ServiceUrl + ApiConection.GetCitas;
   
   constructor(private _httpClient: HttpClient) { }
 
@@ -111,7 +112,12 @@ export class SistTicketsService {
     return this._httpClient.get(this.UrlGetTicketPrioridad, {params: params})
   
   }
-
+  GetCitas(reclutadorId, modulo) :Observable<any>
+  {
+    let params = new HttpParams().set('reclutadorId', reclutadorId).set('ModuloId', modulo);
+    return this._httpClient.get(this.UrlGetCitas, {params: params})
+  
+  }
   GetTicketRecl(ticket, recl) :Observable<any>
   {
      let params = new HttpParams().set('Ticket', ticket).set('ReclutadorId', recl);

@@ -44,6 +44,8 @@ export class InfoVacanteComponent implements OnInit {
 
   //Arreglos
   public horariosRequi: any;
+  solicitante: any;
+  coordinador: any;
 
 
 
@@ -93,6 +95,8 @@ export class InfoVacanteComponent implements OnInit {
         this.estatusId = DataRequisicion.estatus.id;
         this.confidencial = DataRequisicion.confidencial;
         this.vacantes = DataRequisicion.vacantes;
+        this.solicitante = DataRequisicion.solicitante || "SIN ASIGNAR";
+        this.coordinador = DataRequisicion.coordinador || "SIN ASIGNAR";
         this.asignados = DataRequisicion.asignadosN;
         this.vBtra = DataRequisicion.vBtra;
         this.EstatusId.emit(this.estatusId);

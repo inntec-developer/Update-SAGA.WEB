@@ -35,7 +35,7 @@ export class DlgAsignarModuloComponent implements OnInit {
     sessionStorage.setItem('modulo', mod);
     sessionStorage.setItem('moduloId', this.moduloId)
 
-    if(tipo == 1)
+    if(tipo == 1 || tipo == 2)
     {
       this._Router.navigate(['/tickets/turno'], { skipLocationChange: true });
     }

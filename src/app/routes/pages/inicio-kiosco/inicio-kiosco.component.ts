@@ -17,6 +17,8 @@ export class InicioKioscoComponent implements OnInit {
   user = "";
   pass = "";
   @ViewChild('myCarousel') myCarousel: NgbCarousel;
+  @ViewChild('lgModal') modal;
+
   vacantes = [];
   showNavigationArrows = true;
   showNavigationIndicators = false;
@@ -26,6 +28,7 @@ export class InicioKioscoComponent implements OnInit {
   dataSource: any;
   activeId: any;
   search: any;
+
   constructor(config: NgbCarouselConfig, private _service: SistTicketsService) {
     config.interval = 10000;
     config.wrap = false;
