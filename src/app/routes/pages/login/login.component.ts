@@ -53,14 +53,16 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           if (data != 404 && data != 406) {
-            this.foto = ApiConection.ServiceUrlFotoUser + data.clave + '.jpg';
+            debugger;
+            // this.foto = ApiConection.ServiceUrlFotoUser + data.clave + '.jpg';
+            data['foto'] = ApiConection.ServiceUrlFotoUser + data.clave + '.jpg';
             sessionStorage.setItem('ConexionBolsa', ApiConection.ServiceUrlBolsa);
             sessionStorage.setItem('privilegios', JSON.stringify(data.privilegios));
             sessionStorage.setItem('usuario', data.usuario);
             sessionStorage.setItem('nombre', data.nombre);
             sessionStorage.setItem('email', data.email);
             sessionStorage.setItem('clave', data.clave)
-            sessionStorage.setItem('foto', this.foto);
+            sessionStorage.setItem('foto', data.foto);
             sessionStorage.setItem('id', data.id);
             sessionStorage.setItem('tipoUsuario', data.tipoUsuarioId);
             sessionStorage.setItem('tipo', data.tipo);
@@ -73,7 +75,7 @@ export class LoginComponent implements OnInit {
             this.loading = false;
             setTimeout(() => {
               this.failLogin = false;
-            }, 1500);
+            }, 5000);
           }
           if (data == 406) {
             this.noAccess = true;
@@ -81,7 +83,7 @@ export class LoginComponent implements OnInit {
             this.loading = false;
             setTimeout(() => {
               this.noAccess = false;
-            }, 1500);
+            }, 5000);
           }
         },
         error => {

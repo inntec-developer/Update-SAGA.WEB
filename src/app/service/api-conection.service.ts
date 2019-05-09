@@ -6,9 +6,9 @@ export class ApiConection {
   public static ServiceUrlFoto = 'http://localhost:33333/';
   public static ServiceUrlBolsa = 'http://sagainn.com.mx:403';
   public static ServiceUrlLoginBolsa = 'http://sagainn.com.mx:402';
-   public static ServicioUrl290 = 'http://sagainn.com.mx:413/Home/';
+  public static ServicioUrl290 = 'http://sagainn.com.mx:413/Home/';
 
-  //Produccion
+  // //Produccion
   // public static ServiceUrlWeb = 'https://weberp.damsa.com.mx/';
   // public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
   // public static ServiceUrl = 'https://apierp.damsa.com.mx/api/';
@@ -18,9 +18,9 @@ export class ApiConection {
   // public static ServiceUrlLoginBolsa = 'https://bolsa.damsa.com.mx';
   // public static ServicioUrl290 = 'https://webpfrc.damsa.com.mx/Home/';
 
-  //Pruebas
+  // // Pruebas
   // public static ServiceUrlWeb = 'https://websb.damsa.com.mx/';
-  // public static ServiceUrlFotoUser = 'https://apisb.damsa.com.mx/img/';
+  // public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
   // public static ServiceUrl = 'https://apisb.damsa.com.mx/api/';
   // public static ServiceUrlFileManager = 'https://apisb.damsa.com.mx/utilerias/';
   // public static ServiceUrlFoto = 'https://apisb.damsa.com.mx/';

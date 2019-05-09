@@ -7,6 +7,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { AsignarRequis } from '../../../../../../../models/models';
 import { AsignarRequisicionComponent } from './../../../../../../../components/asignar-requisicion/asignar-requisicion.component';
 import { RequisicionesService } from '../../../../../../../service/requisiciones/requisiciones.service';
+import { Router } from '@angular/router';
 
 const swal = require('sweetalert');
 
@@ -65,7 +66,7 @@ export class DialogAssingRequiComponent implements OnInit {
     public dialogAssing: MatDialogRef<DialogAssingRequiComponent>,
     public fb: FormBuilder,
     public asignarRequi: AsignarRequis,
-    private toasterService: ToasterService,
+    private _Router: Router,
   ) {
     dialogAssing.disableClose = true;
     this.placeHolderSelect = 'ASIGNAR RECLUTADORES';
@@ -112,7 +113,7 @@ export class DialogAssingRequiComponent implements OnInit {
             Ponderacion = 1
             break;
         }
-      }else{
+      } else {
         Ponderacion = this.data['ponderacion']['ponderacion'];
       }
 
@@ -139,7 +140,7 @@ export class DialogAssingRequiComponent implements OnInit {
     this.dialogAssing.close();
   }
 
-  getAsignacion($event) {
+  getAsignacion($event: any) {
     this.asignadosRequi = $event;
     if (this.asignadosRequi.length > 0)
       this.alertAssing = false;
@@ -168,7 +169,7 @@ export class DialogAssingRequiComponent implements OnInit {
       }
 
 
-      var Ponderacion ={
+      var Ponderacion = {
         id: this.data['ponderacion'] ? this.data['ponderacion']['id'] : '',
         ponderacion: this.formAsignaciones.get('Ponderacion').value,
         requisicionId: this.RequiId
@@ -197,7 +198,21 @@ export class DialogAssingRequiComponent implements OnInit {
               }
               this.serviceRequisicion.SendEmailRedesSociales(oficio).subscribe(result => {
                 if (result != 404) {
-                  swal('Redes sociales', 'Se a notificado con exito la publicacion de la vacante.', 'success');
+                  swal({
+                    title: 'Se a notificado al departamento de medios.',
+                    text: 'Desea diseñar la Vacante para Publicar en Bolsa DAMSA ?',
+                    type: 'success',
+                    showCancelButton: true,
+                    confirmButtonText: 'SI, Diseñar',
+                    cencelButtomText: 'No',
+                    closeOnConfirm: true,
+                    showLoaderOnConfirm: true
+                  }, (isConfirm: any) => {
+                    if (isConfirm) {
+                      this._Router.navigate(['/reclutamiento/configuracionVacante/', this.RequiId, this.data.folio, this.data.vBtra], { skipLocationChange: true });
+                    }
+                  });
+
                   this.dialogAssing.close(true);
                   this.formRS.reset();
                   this.loading = false;
@@ -210,6 +225,25 @@ export class DialogAssingRequiComponent implements OnInit {
             else {
               this.dialogAssing.close(true);
               this.loading = false;
+            }
+
+            if (!this.redesSociales && !this.data.confidencial) {
+              if (this.data.aprobadorId == sessionStorage.getItem('id')) {
+                swal({
+                  title: 'Diseñador de Vacante',
+                  text: 'Desea diseñar la vacante para su publicación en Bolsa DAMSA?',
+                  type: 'success',
+                  showCancelButton: true,
+                  confirmButtonText: 'SI, Diseñar',
+                  cencelButtomText: 'No',
+                  closeOnConfirm: true,
+                  showLoaderOnConfirm: true
+                }, (isConfirm: any) => {
+                  if (isConfirm) {
+                    this._Router.navigate(['/reclutamiento/configuracionVacante/', this.RequiId, this.data.folio, this.data.vBtra], { skipLocationChange: true });
+                  }
+                });
+              }
             }
           }
           else {
