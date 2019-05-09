@@ -60,18 +60,25 @@
 
     </div>
     <mat-divider></mat-divider>
-    <br>
-    <div class="row">
-      <div class="col-lg-12 col-md-12 col-sm-12">
-        <h4>
-          <strong> Asignados </strong>
-        </h4>
-        <ol class="list-inline">
-          <li  class="list-inline-item" *ngFor="let x of asignados">
-            <h5>{{x.nombre}} {{x.apellidoPaterno}} {{x.apellidoMaterno}} / </h5>
+<br>
+      <div class="d-flex flex-row justify-content-between">
+          <h5>
+              <strong>Solicitante</strong><br>
+              <label class="text-muted">{{solicitante}}</label>
+            </h5>
+            <h5>
+                <strong>Coordinador o líder</strong><br>
+                <label class="text-muted">{{coordinador}}</label>
+              </h5>
+   
+        <ol class="list-group list-group-flush bg-light">
+            <h5>
+                <strong>Reclutadores</strong>
+              </h5>
+          <li  class="list-group-item" *ngFor="let x of asignados">
+            <span class="text-muted bg-light">{{x.nombre}} {{x.apellidoPaterno}} {{x.apellidoMaterno}}</span>
           </li>
         </ol>
       </div>
-    </div>
   </div>
 </div>

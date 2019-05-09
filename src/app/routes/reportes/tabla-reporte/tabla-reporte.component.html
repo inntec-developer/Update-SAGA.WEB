@@ -54,10 +54,10 @@
 <div class="card"  *ngIf="General?.length > 0" style="margin-top:80px">
     <div class="card-body mat-elevation-z8">
   
-      <ng-scrollbar #scrollableP [trackX]="true" [trackY]="true" [invertX]="invertX" [invertY]="invertY" [compact]="compact" [shown]="shown"
+      <ng-scrollbar #scrollableP [trackX]="true" [trackY]="false" [invertX]="invertX" [invertY]="invertY" [compact]="compact" [shown]="shown"
         [disableOnBreakpoints]="false" [disabled]="disabled">
   
-        <div style="width: 1200px; height: 350px; ">
+        <div style="width: 1300px; height: 400px; overflow: hidden;">
           <table ngClass="{{config.className || ''}}" class="table">
             <thead>
               <tr>
@@ -77,9 +77,10 @@
             </thead>
            
             <tbody>
-                <!-- <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
+                <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
                 [disableOnBreakpoints]="false" [disabled]="disabled">
-                <div> -->
+                <div>
+                  
                   <tr *ngFor="let item of rows" >
                       <th class="text-center ">{{item.folio}}</th>
                       <td class="text-center">{{this.convertDateTime(item.fch_Creacion)}}</td>
@@ -116,8 +117,8 @@
                       </td>
                       <td class="text-center"  ><p >{{item.nombreApellido}}</p> </td>
                   </tr>
-                <!-- </div>
-                </ng-scrollbar> -->
+                </div>
+                </ng-scrollbar>
             </tbody>
          
           </table>

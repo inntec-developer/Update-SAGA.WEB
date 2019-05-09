@@ -146,23 +146,38 @@ export class SeguimientoTicketComponent implements OnInit {
     });
   }
 
-  public Atender()
+  public Atender() 
   {
+    if (sessionStorage.getItem('moduloId') == "1") 
+    {
+      this._service.GetTicketPrioridad(sessionStorage.getItem('id'), sessionStorage.getItem('moduloId')).subscribe(data => {
+        if (data != 417) {
+          this.GetTicket(data);
+          setInterval(() => this.minutosEnAtencion += 1, 60000);
+          this.GetFilaTickets();
+        }
+        else {
 
-    this._service.GetTicketPrioridad(sessionStorage.getItem('id'), sessionStorage.getItem('moduloId')).subscribe(data => {
-      if(data != 417)
-      {
-        this.GetTicket(data);
-        setInterval(() => this.minutosEnAtencion+=1, 60000);
-        this.GetFilaTickets();
-      }
-     else
-     {
-
-      this.Reinciar();
-      this.atender = true;
-     }
-    });
+          this.Reinciar();
+          this.atender = true;
+        }
+      });
+    }
+    else 
+    {
+      this._service.GetCitas(sessionStorage.getItem('id'), sessionStorage.getItem('moduloId')).subscribe(data => {
+        if (data != 417) {
+          this.GetTicket(data);
+          setInterval(() => this.minutosEnAtencion += 1, 60000);
+          this.GetFilaTickets();
+        }
+        else {
+          this.popToast('warning', 'Seguimiento', 'No hay mas citas en espera');
+          this.Reinciar();
+         
+        }
+      });
+    }
 
   }
 

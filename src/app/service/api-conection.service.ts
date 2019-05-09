@@ -6,7 +6,7 @@ export class ApiConection {
   public static ServiceUrlFoto = 'http://localhost:33333/';
   public static ServiceUrlBolsa = 'http://sagainn.com.mx:403';
   public static ServiceUrlLoginBolsa = 'http://sagainn.com.mx:402';
-   public static ServicioUrl290 = 'http://sagainn.com.mx:413/Home/';
+  public static ServicioUrl290 = 'http://sagainn.com.mx:413/Home/';
 
   // //Produccion
   // public static ServiceUrlWeb = 'https://weberp.damsa.com.mx/';
@@ -315,6 +315,7 @@ export class ApiConection {
   public static UpdateCandidatoTicket = 'SistTickets/updateCandidatoTicket'
   public static RegistrarCandidato = 'SistTickets/registrarCandidato'
   public static LoginBolsa = 'SistTickets/loginBolsa'
+  public static GetCitas  = 'SistTickets/getCitas'
 
   /*TrackingVacantes*/
   public static GetInformeTracking = 'Requisiciones/getInformeClientes';

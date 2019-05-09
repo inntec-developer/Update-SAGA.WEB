@@ -21,15 +21,6 @@ import { daLocale } from 'ngx-bootstrap/chronos/i18n/da';
 
 
 
-
-
-
-
-
-
-
-
-
 const moment = _rollupMoment || _moment;
 
 @Component({
@@ -59,6 +50,8 @@ export class InformeComponent implements OnInit {
   public objstatus : any[];
   public objtipocordi : any[];
   public objtiporeclu : any[];
+  public objusercoo : any[];
+  public UsuarioCor : any[];
 
   public reclutaList:any;
   public cordinaList:any;
@@ -70,20 +63,10 @@ export class InformeComponent implements OnInit {
   public FormEstatus: FormGroup;
   public FormCordina: FormGroup;
   public FormTipoReclu: FormGroup;
+  public FormUserCor: FormGroup;
 
    public myDate: any = new Date();
-  // public dia: any = this.myDate.getDate;
-  // public mes: any = this.myDate.getMonth();
-  // public ano: any = this.myDate.getFullYear();
-
-
   date = new FormControl(new Date());
-
-  //date2 = new FormControl(moment([2019, new Date().getMonth(), new Date().getDate()-15]));
- // date2 = this.myDate.setDate(this.myDate.getDate() + -15);
- // date2 = new FormControl(new Date().getDay()-15 );
-  //date.setDate(date.getDate() + days);
- // serializedDate = new FormControl((new Date()).toISOString());
 
   constructor(
     private Rutas: ActivatedRoute,
@@ -118,6 +101,10 @@ export class InformeComponent implements OnInit {
       TiporecluControl: new FormControl({ value: '', disabled: false })
     });
 
+    this.FormUserCor = new FormGroup({
+      UserCorControl: new FormControl({ value: '', disabled: false })
+    });
+
 
    }
 
@@ -144,9 +131,14 @@ export class InformeComponent implements OnInit {
       this.Estatus = item;
     })
 
-    this.Servicio.GetUsuario().subscribe(item =>{
+    this.Servicio.GetUsuario('0').subscribe(item =>{
       this.Usuario = item;
     })
+
+    this.Servicio.GetUsuario('1').subscribe(item =>{
+      this.UsuarioCor = item;
+    })
+
     document.oncontextmenu=null
   }
 
@@ -188,12 +180,20 @@ export class InformeComponent implements OnInit {
   }
 
   cordinaChange(){
-    this.objtipocordi = this.FormEstatus.get('CordinaControl').value;
+    this.objtipocordi = this.FormCordina.get('CordinaControl').value;
   }
 
   tiporeclutaChange(){
-    this.objtiporeclu = this.FormEstatus.get('TiporecluControl').value;
+    this.objtiporeclu = this.FormTipoReclu.get('TiporecluControl').value;
   }
+
+
+  UsuarioCorChange(){
+    this.objusercoo = this.FormUserCor.get('UserCorControl').value;
+    
+  }
+
+  
 
  Ocultar(){
   document.getElementById('DivReportefil').classList.add('ocultar');
