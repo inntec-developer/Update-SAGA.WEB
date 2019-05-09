@@ -355,7 +355,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
           horarioId: element.horarioId,
           horario: element.horario,
           foto: ApiConection.ServiceUrlFoto + element.perfil[0]['foto'],
-          nombre: element.perfil[0]['nombre'] + ' ' + element.perfil[0]['apellidoPaterno'] + ' ' + element.perfil[0]['apellidoMaterno'],
+          nombre: element.perfil[0]['nombre'],
           apellidoPaterno: element.perfil[0]['apellidoPaterno'],
           apellidoMaterno: element.perfil[0]['apellidoMaterno'],
           areaExp: element.perfil[0]['areaExp'],
@@ -398,7 +398,6 @@ export class ButtonsPostulacionesComponent implements OnInit {
         this.dataSource.push(perfil);
         this.showFilterRow = true;
         this.onChangeTable(this.config);
-        console.log(this.dataSource);
 
       })
     }, error => this.errorMessage = <any>error);

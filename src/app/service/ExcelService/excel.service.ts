@@ -1,3 +1,4 @@
+import { style } from '@angular/animations';
 import { Injectable } from '@angular/core';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
@@ -25,14 +26,17 @@ export class ExcelService {
     });
    
 
-
     worksheet['!cols'] = wscols;
-
+    // worksheet['A1'].l = { Target:"http://sheetjs.com", Tooltip:"Find us @ SheetJS.com!" };
+    // worksheet['A1'].s = { patternType: 'solid',
+    //                       fgColor: { theme: 8, tint: 0.3999755851924192, rgb: '2f80e7' },
+    //                       bgColor: { indexed: 64 } }; 
     
     var workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "hoja1");
+    
     //const workbook: XLSX.WorkBook = { Sheets: { 'hoja1': worksheet }, SheetNames: ['hoja1'] };
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array'});
     this.saveAsExcelFile(excelBuffer, excelFileName);
 
   }

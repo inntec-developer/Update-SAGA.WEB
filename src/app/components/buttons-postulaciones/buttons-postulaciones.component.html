@@ -225,7 +225,7 @@
               <ng-template #sinAsignar>
                 <span>SIN ASIGNAR</span>
               </ng-template>
-              <td class="text-center"> {{row.nombre}}</td>
+              <td class="text-center"> {{row.nombre}} {{ row.apellidoPaterno }} {{row.apellidoMaterno}}</td>
               <td class="text-center"> {{row.areaExp }}</td>
               <td class="text-center"> {{row.areaInt }}</td>
               <td class="text-center"> {{row.localidad }} </td>
@@ -257,9 +257,9 @@
       (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
     </pagination>
   </div>
-  <pre *ngIf="config.paging"
+  <!-- <pre *ngIf="config.paging"
     class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
-</div>
+</div> -->
 <toaster-container toaster-options="{'toaster-id': 2 }" [toasterconfig]="toasterconfig"></toaster-container>
 
 <!-- Modal -->
