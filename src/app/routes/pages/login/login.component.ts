@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  submitForm($ev, value: any) {
+  submitForm($ev: any, value: any) {
     $ev.preventDefault();
     for (let c in this.valForm.controls) {
       this.valForm.controls[c].markAsTouched();
@@ -67,6 +67,7 @@ export class LoginComponent implements OnInit {
             sessionStorage.setItem('tipoUsuario', data.tipoUsuarioId);
             sessionStorage.setItem('tipo', data.tipo);
             sessionStorage.setItem('sucursal', data.sucursal);
+
             this.router.navigate(['/home']);
           }
           if (data == 404) {

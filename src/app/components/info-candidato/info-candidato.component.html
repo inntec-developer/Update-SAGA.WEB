@@ -683,30 +683,32 @@
                         </mat-form-field> -->
               <div class="row">
                 <div class="col-sm-12 col-md-12 p-2 bg-light clearfix">
-                  <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-acciones"
+                  <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-xs btn-acciones"
                     [disabled]="!infoRequiId && !infoFolio"
                     [ngClass]="(!infoRequiId && !infoFolio) ? 'disabled' : 'btn-outline-warning'" container="body"
                     placement="bottom" tooltip="Visualizar">
                     <em class="fa fa-eye"></em>
                   </button>
 
-                  <button [disabled]="loading || auxestatus" [ngClass]="loading || auxestatus
-                                                  ? 'mr-1 btn disabled' : 'mr-1 btn btn-outline-success'"
+                  <button id="apartarCandidato" class="mr-1 btn btn-xs btn-acciones"
+                    [disabled]="loading || auxestatus"
+                    [ngClass]="loading || auxestatus ? 'disabled' : 'btn-outline-success'"
                     container="body" placement="bottom" tooltip="Apartar" (click)="_apartarCandidato()">
                     <em class="fa fa-thumbs-o-up"></em>
                   </button>
-                  <button [disabled]="desapartar || loading"
-                    [ngClass]="desapartar || loading ? 'mr-1 btn disabled':'mr-1 btn btn-outline-danger'"
+                  <button id="desapartarCandidato" class="mr-1 btn btn-xs btn-acciones"
+                    [disabled]="desapartar || loading"
+                    [ngClass]="desapartar || loading ? 'disabled':'btn-outline-danger'"
                     container="body" placement="bottom" tooltip="Desapartar" (click)="openDialogLiberar()">
                     <em class="fa fa-thumbs-o-down"></em>
                   </button>
 
 
                   <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
-                    class="btn btn-outline-primary float-right">
+                    class="mr-1 btn btn-xs btn-outline-primary float-right">
                     <em class="fa fa-eraser"></em>
                   </button>
-                  <button class="mr-1 btn btn-outline-success float-right" type="button" (click)="refreshTable_v()"
+                  <button class="mr-1 btn btn-xs btn-outline-success float-right" type="button" (click)="refreshTable_v()"
                     container="body" placement="bottom" tooltip="Actualizar">
                     <em class="icon-refresh"></em>
                   </button>

@@ -85,7 +85,7 @@
       <i class="fa fa-times"></i>
     </span> Cancelar
   </button>
-  <button type="button" [disabled]="!formAsignaciones.valid " *ngIf="!redesSociales && !loading"
+  <button type="button" [disabled]="!formAsignaciones.valid || loading" *ngIf="!redesSociales && !loading"
     class="btn btn-xs btn-labeled btn-outline-success mb-1 margen float-right" (click)="Save()">
     <span class="btn-label">
       <i class="fa fa-check"></i>

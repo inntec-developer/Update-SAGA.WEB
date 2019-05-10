@@ -101,7 +101,7 @@ export class UpdateInfoRequiComponent implements OnInit {
   ngOnInit() {
 
     this.DisabledButton = true;
-    this.placeHolderSelect = 'ASIGNAR COORDINADOR DE CELULA'
+    this.placeHolderSelect = 'ASIGNAR COORDINADOR'
     this.getPrioridades();
     this.getEstatus(2);
     this.formRequi = this.fb.group({
