@@ -15,6 +15,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { TicketCitaPruebaComponent } from './ticket-cita-prueba/ticket-cita-prueba.component';
 import { ToolsModule } from '../../tools/tools.module';
 import { VentaModule } from './../vtas/ventas.module';
+import { RportTicketsGeneradosComponent } from './rport-tickets-generados/rport-tickets-generados.component';
 
 const routes: Routes = [
   { path: 'turno', component: SeguimientoTicketComponent},
@@ -45,6 +46,7 @@ const routes: Routes = [
     RevisionExamenesComponent,
     TicketCitaPruebaComponent,
     ReporteConcurrenciaComponent,
+    RportTicketsGeneradosComponent,
   ],
   exports:[CarruselVacantesComponent, EnAtencionComponent, CarruselArteVacantesComponent]
 })

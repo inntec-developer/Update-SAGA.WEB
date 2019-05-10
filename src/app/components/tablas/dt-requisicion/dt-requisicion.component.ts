@@ -695,12 +695,12 @@ export class DtRequisicionComponent implements OnInit {
         else if(row.reclutadores.length > 1)
         {
           row.reclutadores.forEach(element => {
-            reclutador = reclutador + element.reclutador + ', \n'
+            reclutador = reclutador + element + ', \n'
           });
         }
         else
         {
-          reclutador = row.reclutadores[0].reclutador;
+          reclutador = row.reclutadores[0];
         }
         var d = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
         var e = this.pipe.transform( new Date(row.fch_Modificacion), 'dd/MM/yyyy');

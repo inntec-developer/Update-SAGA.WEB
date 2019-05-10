@@ -823,7 +823,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
         }
         else
         {
-          reclutador = row.reclutador;
+          reclutador = row.reclutadores[0];
         }
 
         aux.push({

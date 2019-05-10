@@ -96,8 +96,8 @@ export class EditarCandidatoEstatusComponent implements OnInit {
     var conf = false;
     if (modal == 1) {
       swal({
-        title: "¿ESTAS SEGURO?",
-        text: "¡El candidato quedara como NR!",
+        title: "¿ESTÁS SEGURO?",
+        text: "¡El candidato quedará como NR!",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#ec2121",
