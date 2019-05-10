@@ -76,6 +76,7 @@ export class DisenadorVacanteComponent implements OnInit {
     this.service.getGeneral(this.Requi)
     .subscribe( data => {
       this.General = data;
+      console.log(this.General);
     });
 
     this.service.getCampos()
@@ -94,28 +95,27 @@ export class DisenadorVacanteComponent implements OnInit {
 
   Publicar(){
     this.spinner.show();
-    for (let item of this.ListaCampo) {
-      let d = document.getElementById('Detalle_' + item.id);
-      let r = document.getElementById('Resumen_' + item.id);
-      let det = d['checked'];
-      let res = r['checked'];
-      let config = {
-                      detalle:det,
-                      resumen:res,
-                      idCampo:item.id,
-                      nombre:item.nombre,
-                      id:this.Requi
+    for (const item of this.ListaCampo) {
+      const d = document.getElementById('Detalle_' + item.id);
+      const r = document.getElementById('Resumen_' + item.id);
+      const det = d['checked'];
+      const res = r['checked'];
+      const config = {
+                      detalle: det,
+                      resumen: res,
+                      idCampo: item.id,
+                      nombre: item.nombre,
+                      id: this.Requi
                    }
       this.ListaCon.push(config);
    }
 
    this.Config.UpdatePublicar(this.ListaCon)
    .subscribe( data => {
-    this.popGenerico(data.mensaje,data.bandera,'Publicacion');
+    this.popGenerico(data.mensaje, data.bandera, 'Publicacion');
     this.spinner.hide();
    });
    this.ListaCon = [];
-
   }
 
   // public config: ToasterConfig =
@@ -125,11 +125,11 @@ export class DisenadorVacanteComponent implements OnInit {
   //          timeout: 0
   //      });
 
-  Descripcion(){
+  Descripcion() {
     this.toasterService.pop('warning', 'Trabajando', 'Se cambio la forma de como guardar la configuracion');
   }
 
-  SetDetalle(id,titulo){
+  SetDetalle(id,titulo) {
     // let e2 = document.getElementById('Detalle_' + id);
     // let algo = (<HTMLInputElement>e2).checked;
     let e = document.getElementById('Detalle_' + id);
@@ -141,13 +141,13 @@ export class DisenadorVacanteComponent implements OnInit {
   }
 
 
-  SetResumen(id,titulo){
-    let e = document.getElementById('Resumen_' + id);
+  SetResumen(id: any, titulo: any) {
+    const e = document.getElementById('Resumen_' + id);
     this.bol = e['checked'];
     // this.Config.SetResumen(this.Requi,id,this.bol)
     // .subscribe( data => {
     //   this.Mensaje = data;
-       this.pop('',true,this.bol,titulo,'Resumen');
+       this.pop('', true, this.bol, titulo, 'Resumen');
     // });
   }
 
@@ -191,8 +191,6 @@ export class DisenadorVacanteComponent implements OnInit {
    this.step--;
  }
 
-
-
  PrevResumen() {
   this.spinner.show();
   for (let item of this.ListaCampo) {
@@ -213,12 +211,11 @@ export class DisenadorVacanteComponent implements OnInit {
  this.Config.GuardarPublicacion(this.ListaCon)
  .subscribe( data => {
   this.spinner.hide();
-  window.open(this.UrlBolsa+'/Home/Previsulizacion?RequiID='+this.Requi+'&tipo=1', '_blank');
+  window.open(this.UrlBolsa+'/Home/Previsualizacion?RequiID='+this.Requi+'&tipo=1', '_blank');
  });
  this.ListaCon = [];
-
-
 }
+
 PrevDetalle() {
   this.spinner.show();
   for (let item of this.ListaCampo) {

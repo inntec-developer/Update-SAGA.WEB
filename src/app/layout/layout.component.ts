@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ApiConection } from '../service/api-conection.service';
 
 declare var $: any;
@@ -17,47 +16,59 @@ export class LayoutComponent implements OnInit {
     private mouseStop = null;
     public lock: boolean;
 
-    constructor( private _Router: Router ) { }
+    constructor() { }
 
     ngOnInit() {
     }
 
     Sesion() {
-        clearTimeout(this.mouseStop);
-        this.mouseStop = setTimeout(() => {
-            this.lock = true;
-            // swal('Tu sesión esta proxima caducar', 'Tienes 20 segundos para confirmar', 'warning');
-            swal({
-                title: 'Tu sesión esta proxima a caducar',
-                text: 'Tienes 20 segundos para confirmar',
-                type: 'warning',
-                showCancelButton: false,
-                confirmButtonText: 'Permanecer',
-                closeOnConfirm: true,
-                showLoaderOnConfirm: true
-                }, (isConfirm) => {
-                if (isConfirm) {
-                    this.lock = false;
-                    return;
-                }
-                });
-                setTimeout(() => {
-                if (this.lock) {
-                    swal({
-                        title: 'Tu sesión ha caducado',
-                        text: 'Incia sesión nuevamente.',
-                        type: 'info',
-                        showCancelButton: false,
-                        confirmButtonText: 'Ok',
-                        closeOnConfirm: true,
-                        showLoaderOnConfirm: true
-                        }, (isConfirm: any) => {
-                        if (isConfirm) {
-                            window.location.href = ApiConection.ServiceUrlWeb + 'login';
-                        }
+        if (sessionStorage.getItem('usuario') === 'DAMSA.JCERVANTES' || sessionStorage.getItem('usuario') === 'DAMSA.MVENTURA'
+        || sessionStorage.getItem('usuario') === 'DAMSA.NINIGUEZ' || sessionStorage.getItem('usuario') === 'DAMSA.IDELATORRE'
+        || sessionStorage.getItem('usuario') === 'DAMSA.BMORALES') {
+
+            clearTimeout(this.mouseStop);
+            this.mouseStop = setTimeout(() => {
+                swal('Valar Morghulis,(Pero tu sesión NO!, puedes continuar trabajando)', 'Valar Doheris', 'error');
+            }, 900000);
+
+        } else {
+            if (sessionStorage.getItem('id')) { // Nos percatamos si ya inicio sesión.
+                clearTimeout(this.mouseStop);
+                this.mouseStop = setTimeout(() => {
+                this.lock = true;
+                swal({
+                    title: 'Tu sesión esta proxima a caducar',
+                    text: 'Tienes 20 segundos para confirmar',
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonText: 'Permanecer',
+                    closeOnConfirm: true,
+                    showLoaderOnConfirm: true
+                    }, (isConfirm) => {
+                    if (isConfirm) {
+                        this.lock = false;
+                        return;
+                    }
                     });
-                }
-            }, 20000);
-        }, 900000);
+                    setTimeout(() => {
+                    if (this.lock) {
+                        swal({
+                            title: 'Tu sesión ha caducado',
+                            text: 'Incia sesión nuevamente.',
+                            type: 'info',
+                            showCancelButton: false,
+                            confirmButtonText: 'Ok',
+                            closeOnConfirm: true,
+                            showLoaderOnConfirm: true
+                            }, (isConfirm: any) => {
+                            if (isConfirm) {
+                                window.location.href = ApiConection.ServiceUrlWeb + 'login';
+                            }
+                        });
+                    }
+                }, 20000);
+            }, 1800000);
+        }
+        }
     }
 }
