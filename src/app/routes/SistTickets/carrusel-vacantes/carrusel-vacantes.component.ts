@@ -38,7 +38,7 @@ export class CarruselVacantesComponent implements OnInit {
 
   GenerarTicket(row) {
     swal({
-      title: "¿ESTAS SEGURO?",
+      title: "¿ESTÁS SEGURO?",
       text: "¡Se generará ticket para entrevista! para la vacante de " + row.vBtra,
       type: "warning",
       showCancelButton: true,

@@ -112,11 +112,20 @@ export class SeguimientoTicketComponent implements OnInit {
 
       if(this.ticket[0].candidato.length > 0 )
       {
+        this.PostularCandidato(this.ticket[0].candidato[0].candidatoId, this.ticket[0].requisicionId)
         this.GetPostulaciones(this.ticket[0].candidato[0].candidatoId);
         this.ExamenesCandidatos();
       }
+      
     })
 
+  }
+
+  PostularCandidato(candidatoId, requisicionId)
+  {
+    this._service.PostularCandidato(candidatoId, requisicionId).subscribe(data => {
+
+    });
   }
   GetPostulaciones(candidatoId)
   {

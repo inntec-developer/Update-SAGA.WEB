@@ -42,6 +42,7 @@ export class SistTicketsService {
   private UrlLoginBolsa = ApiConection.ServiceUrl + ApiConection.LoginBolsa;
   private UrlGetVacantesReclutador = ApiConection.ServiceUrl + ApiConection.GetVacantesReclutador;
   private UrlGetCitas = ApiConection.ServiceUrl + ApiConection.GetCitas;
+  private UrlPostularCandidato = ApiConection.ServiceUrl + ApiConection.PostularCandidato;
   
   constructor(private _httpClient: HttpClient) { }
 
@@ -131,6 +132,13 @@ export class SistTicketsService {
     return this._httpClient.get(this.UrlGetTicketExamen, {params: params})
   
   }
+
+  PostularCandidato(candidatoId, requisicionId) : Observable<any>
+  {
+    let params = new HttpParams().set('candidatoId', candidatoId).set('requisicionId', requisicionId);
+    return this._httpClient.get(this.UrlPostularCandidato, {params: params})
+  }
+
 
   GetPostulaciones(candidatoId) : Observable<any>
   {
