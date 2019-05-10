@@ -134,7 +134,8 @@ export class DtRequisicionComponent implements OnInit {
     { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
     { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador', filtering: { filterString: '', placeholder: 'Coordinador' } },
-    { title: 'Solicitante', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Solicitante' } }
+    { title: 'Solicitante', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Solicitante' } },
+    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador' } },
   ];
 
   ValidarEstatus(estatusId)
@@ -368,12 +369,42 @@ export class DtRequisicionComponent implements OnInit {
 
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
+
     this.columns.forEach((column: any) => {
       if (column.filtering) {
         this.showFilterRow = true;
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
-            return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+          {
+            if(!Array.isArray(item[column.name]))
+            {
+              return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+            }
+            else
+            {
+                let aux = item[column.name];
+                let mocos = false;
+                if(item[column.name].length > 0)
+                {
+                  item[column.name].forEach(element => {
+                    if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
+                    {
+                      mocos = true;
+                      return;
+                    }
+                  });
+
+                  if(mocos)
+                  {
+                    return item[column.name];
+                  }
+                }
+              else
+              {
+                  return item[column.name];
+              }
+            }
+          }
         });
       }
     });

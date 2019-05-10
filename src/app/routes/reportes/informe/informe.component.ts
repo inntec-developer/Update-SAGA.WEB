@@ -155,7 +155,7 @@ export class InformeComponent implements OnInit {
     }
   }
 
-  empresaChange(obj) {
+  empresaChange() {
      this.objempresa = this.FormEmpresas.get('ClientesControl').value;
 
   }
