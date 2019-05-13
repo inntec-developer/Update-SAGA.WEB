@@ -251,18 +251,18 @@ export class DtVacantesReclutadorComponent implements OnInit {
             else
             {
                 let aux = item[column.name];
-                let mocos = false;
+                let flag = false;
                 if(item[column.name].length > 0)
                 {
                   item[column.name].forEach(element => {
                     if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
                     {
-                      mocos = true;
+                      flag = true;
                       return;
                     }
                   });
 
-                  if(mocos)
+                  if(flag)
                   {
                     return item[column.name];
                   }
@@ -751,7 +751,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.editarNR = false;
       this.GetCandidatosNR();
       this.GetRequisicionesPausa();
-      this.refreshTable();
     }
 
   }
