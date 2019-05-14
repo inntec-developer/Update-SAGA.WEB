@@ -317,6 +317,7 @@ export class ApiConection {
   public static LoginBolsa = 'SistTickets/loginBolsa'
   public static GetCitas  = 'SistTickets/getCitas'
   public static PostularCandidato = 'SistTickets/postularCandidato'
+  public static GetTicketsGenerados = 'SistTickets/getTicketsGenerados'
 
   /*TrackingVacantes*/
   public static GetInformeTracking = 'Requisiciones/getInformeClientes';

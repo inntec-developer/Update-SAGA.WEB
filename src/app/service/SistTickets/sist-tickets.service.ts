@@ -43,7 +43,7 @@ export class SistTicketsService {
   private UrlGetVacantesReclutador = ApiConection.ServiceUrl + ApiConection.GetVacantesReclutador;
   private UrlGetCitas = ApiConection.ServiceUrl + ApiConection.GetCitas;
   private UrlPostularCandidato = ApiConection.ServiceUrl + ApiConection.PostularCandidato;
-  
+  private UrlGetTicketsGenerados = ApiConection.ServiceUrl + ApiConection.GetTicketsGenerados;
   constructor(private _httpClient: HttpClient) { }
 
   GetEstados() :Observable<any>
@@ -105,6 +105,12 @@ export class SistTicketsService {
   {
 
     return this._httpClient.get(this.UrlGetTicketEnAtencion)
+  
+  }
+  GetTicketsGenerados() :Observable<any>
+  {
+
+    return this._httpClient.get(this.UrlGetTicketsGenerados)
   
   }
   GetTicketPrioridad(reclutadorId, modulo) :Observable<any>
