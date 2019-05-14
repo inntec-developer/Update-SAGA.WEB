@@ -288,7 +288,7 @@ export class ApiConection {
   public static GetUsuario = 'reporte/usuario'
   public static GetEstatusRep = 'reporte/estatus'
   public static GetOficinas = 'reporte/oficinas'
-
+  public static GetProActividad = 'reporte/actividad'
 
 
   /*SistTickets */
