@@ -48,6 +48,7 @@ private handleError(error: any) {
 constructor(private http: Http) {  }
 
 getGeneral(RequiID:string): Observable<any> {
+    debugger;
    return this.http.get(this.UrlGeneral + '?Requi='+RequiID)
        .map(result => result.json())
        .catch(this.handleError);

@@ -30,7 +30,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-7">
         <mat-accordion class="example-headers-align">
             <mat-expansion-panel *ngFor="let item of Clasifica" [expanded]="step === item.id" (opened)="setStep(item.id)" hideToggle="true" class="{{item.publica?'':'hidden'}}">
                 <mat-expansion-panel-header>
@@ -47,7 +47,6 @@
                     <div *ngFor="let item2 of General">
                         <div class="col-md-12   Column width {{item2.publica?'':'d-none'}}" *ngIf="item.id == item2.idPadre;">
                             <div class="panel panel-default sombra">
-
                                 <div class="panel-body">
                                     <div class="table-responsive">
                                         <table class="table table-hover">
@@ -63,18 +62,16 @@
                                                     </td>
                                                     <td>
                                                         <label class="switch  switch-lg danger">
-                                  <div *ngIf="item2.resumen; then pintaSI else pintaNo"></div>
-                                  <ng-template #pintaSI>
-                                    <input checked id="Resumen_{{item2.id}}" (click)="SetResumen(item2.id,item2.nombre)" type="checkbox" />
-                                  </ng-template>
-                                  <ng-template #pintaNo>
-                                    <input id="Resumen_{{item2.id}}" (click)="SetResumen(item2.id,item2.nombre)" type="checkbox" />
-                                  </ng-template>
-                                  <span></span>
-                                </label>
+                                                        <div *ngIf="item2.resumen; then pintaSI else pintaNo"></div>
+                                                        <ng-template #pintaSI>
+                                                            <input checked id="Resumen_{{item2.id}}" (click)="SetResumen(item2.id,item2.nombre)" type="checkbox" />
+                                                        </ng-template>
+                                                        <ng-template #pintaNo>
+                                                            <input id="Resumen_{{item2.id}}" (click)="SetResumen(item2.id,item2.nombre)" type="checkbox" />
+                                                        </ng-template>
+                                                        <span></span>
+                                                        </label>
                                                     </td>
-                                                </tr>
-                                                <tr>
                                                     <td>Detalle</td>
                                                     <td>
                                                         <label class="switch switch-lg">
@@ -89,6 +86,21 @@
                                 </label>
                                                     </td>
                                                 </tr>
+                                                <!-- <tr>
+                                                    <td>Detalle</td>
+                                                    <td>
+                                                        <label class="switch switch-lg">
+                                  <div *ngIf="item2.detalle; then pintaSId else pintaNod"></div>
+                                  <ng-template #pintaSId>
+                                    <input checked id="Detalle_{{item2.id}}" (click)="SetDetalle(item2.id,item2.nombre)" type="checkbox" />
+                                  </ng-template>
+                                  <ng-template #pintaNod>
+                                    <input id="Detalle_{{item2.id}}" (click)="SetDetalle(item2.id,item2.nombre)" type="checkbox" />
+                                  </ng-template>
+                                  <span></span>
+                                </label>
+                                                    </td>
+                                                </tr> -->
 
                                                 <tr>
                                                     <!-- <td colspan="1">
@@ -128,9 +140,54 @@
         </mat-accordion>
 
     </div>
-    <div class="col-md-4 container">
-        <div class="row">
-            {{VBtra}} Folio: {{Folio}}
+    <div class="col-md-5 container">
+        <!-- Resumen -->
+        <div class="row col-results margin-bottom-15x margin-top-15-x">
+            <h3>Resumen</h3>
+            <hr>
+            <div class="job-name">
+                <div class="row">
+                    <div class="col-md-9"><img src="../../../../../assets/img/icon-arrow.png" />
+                        <span *ngIf="Vistas.Id30" class="font-bold font-family:'Lato' margin-left-15x">  {{VBtra}} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="job-description">
+                <strong>Experiencia: </strong><span> {{ ViewRequi?.experiencia }}</span>
+                <br>
+                <div class="color-blue text-uppercase font-bold">Datos de la vacante:</div>
+                <ul class="DV">
+                    <li *ngIf="Vistas.Id19">
+                        <strong>Folio: </strong><span>{{ViewRequi?.folio}}</span>
+                    </li>
+                    <li *ngIf="Vistas.Id20">
+                        <strong>Prioridad: </strong><span>{{ViewRequi?.prioridad?.descripcion}}</span>
+                    </li>
+                    <li *ngIf="Vistas.Id21">
+                        <strong>Fecha creación: </strong><span>{{ViewRequi?.fch_Creacion | date}}</span>
+                    </li>
+                    <li *ngIf="Vistas.Id22">
+                        <strong>Fecha limite: </strong><span>{{ViewRequi?.fch_Limite | date}}</span>
+                    </li>
+                    <li>
+                        <strong>Fecha cumplimiento: </strong><span>{{ViewRequi?.fch_Cumplimiento | date}}</span>
+                    </li>
+                    <li>
+                        <strong>Estatus: </strong><span>{{ViewRequi?.estatus?.descripcion}}</span>
+                    </li>
+                    <li>
+                        <strong>Confidencial: </strong><span>{{ViewRequi?.confidencial? 'Si': 'No'}}</span>
+                    </li>
+                    <li>
+                        <strong>Asignada: </strong><span>{{ViewRequi?.asignada? 'Si': 'No'}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <br>
+        <div class="row col-results margin-bottom-15x margin-top-15-x">
+            <h3>Detalle</h3>
+            <hr>
         </div>
     </div>
 </div>

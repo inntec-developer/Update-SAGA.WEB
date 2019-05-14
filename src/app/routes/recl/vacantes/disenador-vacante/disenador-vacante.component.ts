@@ -9,6 +9,11 @@ import {Http} from '@angular/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../service/requisiciones/requisiciones.service';
 
+// Modelos
+import { views } from '../../../../models/recl/viewvacantes';
+import { debug } from 'util';
+
+
 @Component({
   selector: 'app-disenador-vacante',
   templateUrl: './disenador-vacante.component.html',
@@ -36,6 +41,10 @@ export class DisenadorVacanteComponent implements OnInit {
   public ListaCampo :Array<any> = [];
   public ListaCon : Array<any> = [];
   public Clasifica : any[];
+  public ViewRequi: any[];
+  public IdHdr: number;
+  public IdDtl: number;
+  public Vistas = new views;
 
   public Requi : string;
   public Mensaje :string;
@@ -76,7 +85,8 @@ export class DisenadorVacanteComponent implements OnInit {
     this.service.getGeneral(this.Requi)
     .subscribe( data => {
       this.General = data;
-      console.log(this.General);
+      this.ViewRequi = data[0].requi;
+      console.log(this.ViewRequi);
     });
 
     this.service.getCampos()
@@ -93,7 +103,7 @@ export class DisenadorVacanteComponent implements OnInit {
     });
   }
 
-  Publicar(){
+  Publicar() {
     this.spinner.show();
     for (const item of this.ListaCampo) {
       const d = document.getElementById('Detalle_' + item.id);
@@ -142,13 +152,85 @@ export class DisenadorVacanteComponent implements OnInit {
 
 
   SetResumen(id: any, titulo: any) {
+    console.log(id, titulo);
     const e = document.getElementById('Resumen_' + id);
     this.bol = e['checked'];
+    this.View(id, this.bol);
     // this.Config.SetResumen(this.Requi,id,this.bol)
     // .subscribe( data => {
     //   this.Mensaje = data;
        this.pop('', true, this.bol, titulo, 'Resumen');
     // });
+  }
+
+  View(Id: any, view: boolean) {
+    switch (Id) {
+      case 10:
+        this.Vistas.Id19 = view;
+        break;
+      case 11:
+        this.Vistas.Id19 = view;
+        break;
+      case 12:
+        this.Vistas.Id19 = view;
+        break;
+      case 13:
+        this.Vistas.Id19 = view;
+        break;
+      case 14:
+        this.Vistas.Id19 = view;
+        break;
+      case 15:
+        this.Vistas.Id19 = view;
+        break;
+      case 16:
+        this.Vistas.Id19 = view;
+        break;
+      case 17:
+        this.Vistas.Id19 = view;
+        break;
+      case 18:
+        this.Vistas.Id19 = view;
+        break;
+      case 19:
+        this.Vistas.Id19 = view;
+        break;
+      case 20:
+        this.Vistas.Id20 = view;
+        break;
+      case 21:
+        this.Vistas.Id21 = view;
+        break;
+      case 22:
+        this.Vistas.Id22 = view;
+        break;
+      case 23:
+        this.Vistas.Id22 = view;
+        break;
+      case 24:
+        this.Vistas.Id22 = view;
+        break;
+      case 25:
+        this.Vistas.Id22 = view;
+        break;
+      case 26:
+        this.Vistas.Id22 = view;
+        break;
+      case 27:
+        this.Vistas.Id22 = view;
+        break;
+      case 28:
+        this.Vistas.Id22 = view;
+        break;
+      case 29:
+        this.Vistas.Id22 = view;
+        break;
+      case 30:
+        this.Vistas.Id30 = view;
+        break;
+      default:
+        break;
+    }
   }
 
   popGenerico(mensaje:string,bandera:boolean,titulo:string) {
