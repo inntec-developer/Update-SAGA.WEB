@@ -110,9 +110,8 @@ export class RequisicionesService {
   }
   // Recupera la información de las requisiciones que se han asignado al reclutador.
   getRequiReclutador(user: string): Observable<any> {
-    return this.http.get(this.urlGetRequiReclutador + user)
-      .map(result => result.json())
-      .catch(this.handleError);
+    let params = new HttpParams().set('IdUsuario', user);
+    return this._httpClient.get(this.urlGetRequiReclutador, {params: params});
   }
 
   // Recuperar la direccion que se registro en la requisicion.

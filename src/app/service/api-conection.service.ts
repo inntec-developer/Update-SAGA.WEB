@@ -87,7 +87,7 @@ export class ApiConection {
   public static CancelRequisicion = 'Requisiciones/cancelREquisiciones';
   public static ReActivarRequisicion = 'Requisiciones/reActivarRequisiciones';
   public static GetUserGroups = 'Requisiciones/getUserGroups'
-  public static GetRequiReclutador = 'Requisiciones/getRequiReclutador?IdUsuario=';
+  public static GetRequiReclutador = 'Requisiciones/getRequiReclutador';
   public static AsignarRequisicion = 'Requisiciones/asignacionRequisiciones'
   public static GetDireccionRequisicion = 'Requisiciones/getDireccionRequisicon';
   public static GetRutasCamionRequisicion = 'Requisiciones/getRutasCamion'

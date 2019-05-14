@@ -53,7 +53,6 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           if (data != 404 && data != 406) {
-            debugger;
             // this.foto = ApiConection.ServiceUrlFotoUser + data.clave + '.jpg';
             data['foto'] = ApiConection.ServiceUrlFotoUser + data.clave + '.jpg';
             sessionStorage.setItem('ConexionBolsa', ApiConection.ServiceUrlBolsa);
