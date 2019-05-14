@@ -22,7 +22,8 @@ const routes: Routes = [
   { path: 'Inicio', component: DlgAsignarModuloComponent},
   { path: 'Examenes', component: RevisionExamenesComponent},
   { path: 'ticketConCita', component: TicketCitaPruebaComponent},
-  {path: 'reporteConcurrencia', component: ReporteConcurrenciaComponent}
+  {path: 'reporteConcurrencia', component: ReporteConcurrenciaComponent},
+  { path: 'reporteTurnos', component: RportTicketsGeneradosComponent}
 ];
 
 

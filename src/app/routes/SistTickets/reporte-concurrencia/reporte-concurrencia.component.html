@@ -90,8 +90,8 @@
       <div class="col-md-12 clearfix">
         <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
           [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
-<!-- 
-        <pre *ngIf="config.paging" class="text-muted float-right"><span>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</span></pre> -->
+
+        <pre *ngIf="config.paging" class="text-muted float-right"><span>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</span></pre>
       </div>
     </div>
   </div>

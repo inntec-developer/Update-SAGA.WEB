@@ -1,0 +1,45 @@
+.card
+{
+  font-family: 'Lato', sans-serif;
+  font-size: 12px;
+}
+
+table thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+//   table thead {
+//     width: calc(100% - 1em)
+//   }
+
+
+table {
+  width: 100%;
+}
+
+table tbody div {
+  height: 300px;
+}
+
+
+tbody tr:hover {
+  font-size: 12.5px;
+  box-shadow: 1px 20px 60px rgba(0, 0, 0, .23);
+}
+
+
+ng-scrollbar {
+  --scrollbar-size: 4px;
+  --scrollbar-thumb-color: rgb(94, 175, 255);
+  --scrollbar-thumb-hover-color: dodgerblue;
+  --scrollbar-border-radius: 4px;
+}
+
+.badge
+{
+
+  font-size: 11px;
+}

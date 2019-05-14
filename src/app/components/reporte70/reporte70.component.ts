@@ -237,16 +237,6 @@ export class Reporte70Component implements OnInit {
             if(!Array.isArray(item[column.name]))
             {
               return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
-              // if(item[column.name].length > 0)
-              // {
-              //   var aux = item[column.name];
-              //   aux.filter(r => {
-              //     return r.toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
-              //   })
-
-              //   return aux;
-                // var mocos = Object.keys(aux[0])
-              // }
             }
             else
             {
