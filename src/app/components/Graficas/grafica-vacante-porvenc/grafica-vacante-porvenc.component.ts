@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-grafica-vacante-porvenc',
@@ -14,17 +15,18 @@ export class GraficaVacantePorvencComponent implements OnInit {
   Data: any;
   private UsuarioId: any;
   public porVencer : number;
+  public Total : number;
 
-  constructor(private servicio : ComponentsService ) { }
+  constructor(private servicio : ComponentsService,private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
 
     this.UsuarioId = sessionStorage.getItem('id');
     // Chart.defaults.scale.ticks.beginAtZero = true;
     this.servicio.getVPorVencer(this.UsuarioId).subscribe(item =>{
-
+      this.spinner.hide();
       this.porVencer = item['porVencer'];
-      let total = item['total'];
+      this.Total = item['total'];
       let nuevo = item['nuevo'];
       let aprobada = item['aprobada'];
       let publicada = item['publicada'];
@@ -41,10 +43,6 @@ export class GraficaVacantePorvencComponent implements OnInit {
         datasets: [{
           backgroundColor:
           [
-             '#FFED3D',
-             '#FF4B4B',
-             '#0F3CFF',
-            '#FF8F35',
             '#3e95cd',
             '#8e5ea2',
             '#3cba9f',
@@ -57,10 +55,6 @@ export class GraficaVacantePorvencComponent implements OnInit {
           ],
           data:
             [
-                this.porVencer,
-                total,
-                nuevo ,
-                aprobada ,
                 publicada ,
                 busCandidatos,
                 envCliente ,
@@ -73,10 +67,6 @@ export class GraficaVacantePorvencComponent implements OnInit {
         }],
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: [
-          'Vacantes por vencer',
-          'Vacantes vencidas',
-          'Nuevas',
-          'Aprobadas',
           'Publicadas',
           'Búsqueda de candidatos',
           'Envió al cliente',

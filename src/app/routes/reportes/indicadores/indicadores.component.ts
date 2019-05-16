@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ReportesService } from '../../../service/Reporte/reportes.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-indicadores',
@@ -26,12 +27,14 @@ export class IndicadoresComponent implements OnInit {
   public Rechazadopor: string = '0';
 
 
-  constructor(private service:ReportesService) { }
+  constructor(private service:ReportesService,private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
+    this.spinner.show();
     this.UsuarioId = sessionStorage.getItem('id');
 
     this.service.getVRadial(this.UsuarioId).subscribe(item =>{
+      
       this.Entrevistado = item['entrevi'];
       this.Entrevistadopor = item['entrevTotal'];
 
@@ -49,10 +52,8 @@ export class IndicadoresComponent implements OnInit {
 
       this.Contratado = item['contrata'];
       this.Contratadopor = item['contraTotal'];
-
-
-
     })
+    
   }
 
 }

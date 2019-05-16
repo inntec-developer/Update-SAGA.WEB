@@ -28,6 +28,7 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
       let cubiertas = result['cubiertas'];
       let parcialmente = result['parcialmente'];
       let medios = result['medios'];
+      let cubiertacliente = result['cubiertacliente'];
 
 
 
@@ -40,11 +41,13 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
       backgroundColor: [
         '#3F3CFF',
         '#F335FF',
-        '#C5FF60'
+        '#C5FF60',
+        '#FF4B4B'
          ],
       data: [cubiertas,
             parcialmente,
             medios,
+            cubiertacliente
           ]
     }],
     // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -52,6 +55,7 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
       'Cubiertas',
       'Cubiertas parcialmente',
       'Cubiertas por medios',
+      'Cubiertas por el cliente'
     ]
   }
 
