@@ -96,7 +96,7 @@ td {
     box-shadow: 10px 12px 7px -6px rgba(0, 0, 0, 0.63);
     background: white;
     margin-bottom: 10px;
-    width: 300px
+    width: 230px
 }
 
 .col-results {
@@ -159,4 +159,71 @@ td {
     line-height: 35px;
     width: 100%;
     padding-left: 10px;
+}
+
+ul.DV {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+ul.DV li {
+    margin-top: -5px;
+}
+
+ul.DV-dot li {
+    margin-top: -5px;
+}
+
+.color-blue {
+    color: #5184ca;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+table {
+    width: 100%;
+}
+
+.color-grey {
+    color: #696a6b;
+}
+
+#lista1 li {
+    display: inline;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.example-small-box,
+.example-large-box {
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+    margin: 16px;
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.example-small-box {
+    height: 100px;
+    width: 100px;
+}
+
+.example-large-box {
+    height: 100%;
+    width: 600px;
+}
+
+.margin-bottom-15x {
+    margin-bottom: 15px;
+}
+
+.margin-top-15-x {
+    margin-top: -15px;
+}
+
+.example-tab-icon {
+    margin-right: 8px;
 }
