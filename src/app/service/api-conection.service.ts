@@ -318,6 +318,7 @@ export class ApiConection {
   public static GetCitas  = 'SistTickets/getCitas'
   public static PostularCandidato = 'SistTickets/postularCandidato'
   public static GetTicketsGenerados = 'SistTickets/getTicketsGenerados'
+  public static GetRportAtencion = 'SistTickets/getRportAtencion'
 
   /*TrackingVacantes*/
   public static GetInformeTracking = 'Requisiciones/getInformeClientes';

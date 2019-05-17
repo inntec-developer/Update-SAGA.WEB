@@ -143,8 +143,8 @@ export class EditarCandidatoEstatusComponent implements OnInit {
     }
     else {
       swal({
-        title: "¿ESTAS SEGURO?",
-        text: "¡El candidato quedara como liberado!",
+        title: "¿ESTÁS SEGURO?",
+        text: "¡El candidato quedará como liberado!",
         type: "warning",
         showCancelButton: true,
         confirmButtonClass: "btn btn-success",

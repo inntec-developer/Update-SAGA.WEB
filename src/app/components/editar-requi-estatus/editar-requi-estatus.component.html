@@ -7,6 +7,8 @@
         <th class="text-center text-info">FOLIO</th>
         <th class="text-center text-info">VACANTE</th>
         <th class="text-center text-info">RECLUTADOR</th>
+        <th class="text-center text-info">SOLICITANTE</th>
+        <th class="text-center text-info">COORDINADOR</th>
         <th class="text-center text-info">MOTIVO</th>
         <th class="text-center text-info">FECHA REPORTE</th>
         <th class="text-center text-info">ESTATUS</th>
@@ -19,7 +21,9 @@
       <tr *ngFor="let row of requis; let rowIndex = index" [class.selected]="row.selected">
         <td class="text-center"> {{row.folio}}</td>
         <td class="text-center"> {{row.vBtra}}</td>
-        <td class="text-center"> {{row.reclutador}}</td>
+        <td class="text-center"> {{row.comentarioReclutador.reclutador}}</td>
+        <td class="text-center"> {{row.solicita}}</td>
+        <td class="text-center"> {{row.coordinador}}</td>
         <td class="text-center">{{row.comentarioReclutador.motivo}}</td>
         <td class="text-center"> {{row.comentarioReclutador.fecha | date:'dd/MM/yyyy'}}</td>
         <td class="text-center">{{row.estatus}}</td>

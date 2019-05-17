@@ -154,7 +154,25 @@
                       </small>
                     </ng-template>
                   </td>
-                  <td>{{row.coordinador | uppercase}}</td>
+                  <td> <ng-template #popTemplate>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="popover-body">
+                          <ul *ngFor="let r of row.reclutadores">
+                            <li class="text-muted">{{r | uppercase}}</li>
+                          </ul>
+
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+
+                  <span class="text-center" *ngIf="row.reclutadores.length == 0 && row.estatusId == 4">SIN ASIGNAR</span>
+                  <a class="badge badge-pill badge-primary text-white text-center" *ngIf="row.reclutadores.length > 1 && row.estatusId == 4" [popover]="popTemplate" placement="left"
+                    container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
+                  <span class="text-center" *ngIf="row.reclutadores.length == 1 && row.estatusId == 4">{{row.reclutadores[0] | uppercase}}</span>
+                  <span class="text-center" *ngIf="row.estatusId != 4">{{row.coordinador | uppercase}}</span>
+                  </td>
                   <td> {{row.propietario | uppercase}}</td>
                   <td class="text-center">
                     <ng-template #popTemplate>
@@ -170,10 +188,10 @@
                       </div>
                     </ng-template>
 
-                    <span class="text-center" *ngIf="row.reclutadores.length == 0">SIN ASIGNAR</span>
-                    <a class="badge badge-pill badge-primary text-white text-center" *ngIf="row.reclutadores.length > 1" [popover]="popTemplate" placement="left"
+                    <span class="text-center" *ngIf="row.reclutadores.length == 0 || row.estatusId == 4">SIN ASIGNAR</span>
+                    <a class="badge badge-pill badge-primary text-white text-center" *ngIf="row.reclutadores.length > 1 && row.estatusId != 4" [popover]="popTemplate" placement="left"
                       container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
-                    <span class="text-center" *ngIf="row.reclutadores.length == 1">{{row.reclutadores[0] | uppercase}}</span>
+                    <span class="text-center" *ngIf="row.reclutadores.length == 1 && row.estatusId != 4">{{row.reclutadores[0] | uppercase}}</span>
 
                   </td>
                 </tr>
