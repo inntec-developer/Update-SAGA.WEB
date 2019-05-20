@@ -513,6 +513,7 @@ export class DtRequisicionComponent implements OnInit {
   * Funciones para la administracion de las requisiciones.
   * */
   public refreshTable() {
+    this.spinner.show();
     this.getRequisiciones();
     setTimeout(() => {
       this.columns.forEach(element => {
@@ -522,6 +523,7 @@ export class DtRequisicionComponent implements OnInit {
       this.enProceso = null;
       this.element = [];
       this.ValidarEstatus(9999);
+      this.spinner.hide();
     }, 1000);
   }
 
@@ -678,6 +680,7 @@ export class DtRequisicionComponent implements OnInit {
       var aux = [];
       var comentarios = "";
       var reclutador = "";
+      var coordinador = "";
       this.dataSource.forEach(row => {
         if(row.comentarioReclutador.length > 0)
         {
@@ -707,6 +710,16 @@ export class DtRequisicionComponent implements OnInit {
         var d = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
         var e = this.pipe.transform( new Date(row.fch_Modificacion), 'dd/MM/yyyy');
 
+        if(row.estatusId == 4)
+        {
+          coordinador = reclutador;
+          reclutador = "SIN ASIGNAR"
+
+        }
+        else
+        {
+          coordinador = row.coordinador;
+        }
         aux.push({
           FOLIO: row.folio.toString(),
           'FECHA SOLICITUD': d,//new Date(d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString(),
@@ -719,7 +732,7 @@ export class DtRequisicionComponent implements OnInit {
           SUELDO:  row.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
           ESTATUS: row.estatus,
           'FECHA ESTATUS': e,
-          COORDINADOR: row.coordinador,
+          COORDINADOR: coordinador,
           RECLUTADOR: reclutador,
           'COMENTARIOS': comentarios
         })

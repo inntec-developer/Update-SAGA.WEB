@@ -1,14 +1,15 @@
+import { forEach } from '@angular/router/src/utils/collection';
 import { Component, OnInit } from '@angular/core';
 import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
 import { DatePipe } from '@angular/common';
 import { ExcelService } from '../../../service/ExcelService/excel.service';
 @Component({
-  selector: 'app-rport-tickets-generados',
-  templateUrl: './rport-tickets-generados.component.html',
-  styleUrls: ['./rport-tickets-generados.component.scss'],
+  selector: 'app-rport-atencion-turnos',
+  templateUrl: './rport-atencion-turnos.component.html',
+  styleUrls: ['./rport-atencion-turnos.component.scss'],
   providers:[ DatePipe]
 })
-export class RportTicketsGeneradosComponent implements OnInit {
+export class RportAtencionTurnosComponent implements OnInit {
   result: any = [];
   public rows: Array<any> = [];
 
@@ -25,25 +26,25 @@ export class RportTicketsGeneradosComponent implements OnInit {
     public numPages: number = 1;
     public length: number = 0;
     clearFilter: boolean = true;
+
   public columns: Array<any> = [
     { title: 'Fecha', className: 'text-success text-center', name: 'fecha', filtering: { filterString: '',  placeholder: 'dd/mm/yyyy' } },
-    { title: 'Turnos Generados', className: 'text-info text-center', name: 'total', filtering: { filterString: '', placeholder: 'Turnos generados' } },
-    { title: 'Turnos Atendidos', className: 'text-info text-center', name: 'atendidos', filtering: { filterString: '', placeholder: 'Atendidos' } },
+    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutador', filtering: { filterString: '', placeholder: 'Reclutador' } },
+    { title: 'Turnos Atendidos', className: 'text-info text-center', name: 'total', filtering: { filterString: '', placeholder: 'Atendidos' } },
     { title: 'Turnos con Cita', className: 'text-info text-center', name: 'concita', filtering: { filterString: '', placeholder: 'Con cita' } },
     { title: 'Turnos sin Cita', className: 'text-info text-center', name: 'sincita', filtering: { filterString: '', placeholder: 'Sin cita' } },
+    // { title: 'Tiempo entre turnos', className: 'text-info text-center', name: 'tiempo', filtering: { filterString: '', placeholder: 'tiempo' } },
   ];
   registros: any;
-
   constructor(private _service: SistTicketsService, private pipe: DatePipe, private excelService: ExcelService) { }
 
   ngOnInit() {
-    this.GetTickets();
+    this.GetReport();
   }
 
-
-  GetTickets()
+  GetReport()
   {
-    this._service.GetTicketsGenerados().subscribe(data => {
+    this._service.GetRportAtencion().subscribe(data => {
       this.result = data;
       this.rows = data;
 
@@ -80,37 +81,29 @@ export class RportTicketsGeneradosComponent implements OnInit {
     {
       if (column[0].filtering) {
         filteredData = filteredData.filter((item: any) => {
-          if (item[col] != null)
-          {
-            if(!Array.isArray(item[col]))
+            if(col == 'fecha')
             {
               return item[col].toString().toLowerCase().match(column[0].filtering.filterString.toLowerCase());
             }
             else
             {
-              let aux = item[col];
-              let bandera = false;
-              if(item[col].length > 0)
+              let aux = item['datos']; // solo para este reporte
+              if(aux.length > 0)
               {
-                item[col].forEach(element => {
-                  if(element.estatus.toString().toLowerCase().match(column[0].filtering.filterString.toLowerCase()))
+                aux = aux.filter(e => {
+                  if(e[col].toString().toLowerCase().match(column[0].filtering.filterString.toLowerCase()))
                   {
-                    bandera = true;
-                    return;
+                    return e;
                   }
                 });
 
-                if(bandera)
+                if(aux.length > 0)
                 {
-                  return item[col];
+                  item.datos = aux;
+                  return item.datos;
                 }
               }
-              else
-              {
-                  return item[col];
-              } 
             }
-          }
         });
       }
     }
@@ -118,50 +111,12 @@ export class RportTicketsGeneradosComponent implements OnInit {
     {
       filteredData = this.result
 
-      // if (!config.filtering) {
-      //   return filteredData;
-      // }
-  
-      // if (config.filtering.columnName) {
-      //   return filteredData.filter((item: any) =>
-      //     item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-      // }
-  
-      // let tempArray: Array<any> = [];
-      // filteredData.forEach((item: any) => {
-      //   let flag = false;
-      //   this.columns.forEach((column: any) => {
-      //     if (item[column.name] == null) {
-      //       flag = true;
-      //     } else {
-      //       if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-      //         flag = true;
-      //       }
-      //     }
-      //   });
-      //   if (flag) {
-  
-      //     tempArray.push(item);
-      //   }
-      // });
-      // filteredData = tempArray;
   
     }
 
    
     return filteredData;
   }
-
-  // public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }, col: any = ''): any {
-  //   if (config.filtering) {
-  //     (<any>Object).assign(this.config.filtering, config.filtering);
-  //   }
-
-  //   this.rows = this.result;
-  //   let filteredData = this.changeFilter(this.result, this.config, col);
-  //   this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
-  //   this.length = this.rows.length;
-  // }
 
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }, col: string = ''): any {
     if (config.filtering) {
@@ -200,17 +155,18 @@ export class RportTicketsGeneradosComponent implements OnInit {
       
         var d = this.pipe.transform(new Date(row.fecha), 'dd/MM/yyyy');
 
+        row.datos.forEach(element => {
         aux.push({
           'FECHA': d,
-          'TURNOS GENERADOS': row.total,
-          'TURNOS ATENDIDOS': row.atendidos,
-          'TURNOS CON CITA': row.concita,
-          'TURNOS SIN CITA': row.sincita
+          'RECLUTADOR': element.reclutador,
+          'TURNOS ATENDIDOS': element.total,
+          'TURNOS CON CITA': element.concita,
+          'TURNOS SIN CITA': element.sincita
         })
-
+      });
       });
 
-      this.excelService.exportAsExcelFile(aux, 'Reporte_Turnos_Generados');
+      this.excelService.exportAsExcelFile(aux, 'Reporte_Turnos_Atendidos');
 
     }
   }

@@ -16,6 +16,7 @@ import { TicketCitaPruebaComponent } from './ticket-cita-prueba/ticket-cita-prue
 import { ToolsModule } from '../../tools/tools.module';
 import { VentaModule } from './../vtas/ventas.module';
 import { RportTicketsGeneradosComponent } from './rport-tickets-generados/rport-tickets-generados.component';
+import { RportAtencionTurnosComponent } from './rport-atencion-turnos/rport-atencion-turnos.component';
 
 const routes: Routes = [
   { path: 'turno', component: SeguimientoTicketComponent},
@@ -23,7 +24,8 @@ const routes: Routes = [
   { path: 'Examenes', component: RevisionExamenesComponent},
   { path: 'ticketConCita', component: TicketCitaPruebaComponent},
   {path: 'reporteConcurrencia', component: ReporteConcurrenciaComponent},
-  { path: 'reporteTurnos', component: RportTicketsGeneradosComponent}
+  { path: 'reporteTurnos', component: RportTicketsGeneradosComponent},
+  { path: 'reporteAtencion', component: RportAtencionTurnosComponent}
 ];
 
 
@@ -48,6 +50,7 @@ const routes: Routes = [
     TicketCitaPruebaComponent,
     ReporteConcurrenciaComponent,
     RportTicketsGeneradosComponent,
+    RportAtencionTurnosComponent,
   ],
   exports:[CarruselVacantesComponent, EnAtencionComponent, CarruselArteVacantesComponent]
 })

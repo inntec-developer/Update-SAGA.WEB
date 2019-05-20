@@ -180,7 +180,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
     { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
     { title: 'Cub/Vac', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No.' } },
-    { title: 'Coordinación.', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Coordinación' } },
+    { title: 'Coordinación', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Coordinación' } },
     // { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
     // { title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
     { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
@@ -340,6 +340,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   public refreshTable() {
+    this.spinner.show();
     this.getVacantes();
 
     setTimeout(() => {
@@ -349,6 +350,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       });
 
       this._reinciar();
+      this.spinner.hide();
     }, 800);
   }
 
@@ -430,12 +432,12 @@ export class DtVacantesReclutadorComponent implements OnInit {
   ValidarEstatus(estatusId) {
     //revisar en pausa
 
-    if(this.element.aprobada == 1 && this.element.aprobadorId == this.settings.user['id'] && (estatusId != 39 && estatusId != 34 && estatusId != 35 && estatusId != 36 && estatusId != 37) && this.element.vacantes > 0 )
+    if(this.element.aprobada == 1 && this.element.aprobadorId ==  this.settings.user['id'] && this.element.contratados == 0 && (estatusId != 39 && estatusId != 34 && estatusId != 35 && estatusId != 36 && estatusId != 37) && this.element.vacantes > 0 )
      {
       this.asignar = false
       this.disenador = false
      }
-     else if(this.element.aprobada == 0 && (estatusId != 39 && estatusId != 34 && estatusId != 35 && estatusId != 36 && estatusId != 37) && this.element.vacantes > 0)
+     else if(this.element.aprobada == 0 && this.element.contratados == 0 && (estatusId != 39 && estatusId != 34 && estatusId != 35 && estatusId != 36 && estatusId != 37) && this.element.vacantes > 0)
      {
        this.asignar = false
        this.disenador = false;
@@ -468,7 +470,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     }
     else if (estatusId == 6 && this.element.vacantes > 0)// aprobada
     {
-      this.bc = true; //busqueda candidato
+      this.bc = false; //busqueda candidato
       this.sc = true; //socieconomico
       this.ecc = true; //envío candidato cliente
       this.ec = true; //espera contratacion
@@ -797,6 +799,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       var aux = [];
       var comentarios = "";
       var reclutador = "";
+      var coordinador = "";
 
       this.dataSource.forEach(row => {
         if (row.comentarioReclutador.length > 0) {
@@ -827,6 +830,17 @@ export class DtVacantesReclutadorComponent implements OnInit {
           reclutador = row.reclutadores[0];
         }
 
+        if(row.estatusId == 4)
+        {
+          coordinador = reclutador;
+          reclutador = "SIN ASIGNAR"
+
+        }
+        else
+        {
+          coordinador = row.coordinador;
+        }
+
         aux.push({
           FOLIO: row.folio.toString(),
           'FECHA SOLICITUD': d,//new Date(d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString(),
@@ -839,7 +853,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
           SUELDO: row.sueldoMinimo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
           ESTATUS: row.estatus,
           'FECHA ESTATUS': e,
-          COORDINADOR: row.coordinador,
+          COORDINADOR: coordinador,
           RECLUTADOR: reclutador,
           'COMENTARIOS': comentarios
         })

@@ -180,7 +180,21 @@
                       </small>
                     </ng-template>
                   </td>
-                  <td class="text-center"> {{row.coordinador || "SIN REGISTRO" | uppercase}}</td>
+                  <td class="text-center"> 
+                      <ng-template #popTemplate>
+                          <div class="card">
+                            <div class="card-body">
+                              <ul class="list-group list-group-flush">
+                                <li *ngFor="let r of row.reclutadores" class="list-group-item text-muted">{{r}}</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </ng-template>
+      
+                        <span *ngIf="row.reclutadores.length == 0 && row.estatusId == 4">SIN ASIGNAR</span>
+                        <small class="text-center badge badge-pill badge-danger" *ngIf="row.reclutadores.length > 1 && row.estatusId == 4" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</small>
+                        <span class="text-left" *ngIf="row.reclutadores.length == 1 && row.estatusId == 4">{{row.reclutadores[0]}}</span>
+                        <span *ngIf = "row.estatusId != 4">{{row.coordinador || "SIN REGISTRO" | uppercase}}</span></td>
                   <td class="text-center">
                   <ng-template #popTemplate>
                     <div class="card">
@@ -192,9 +206,9 @@
                     </div>
                   </ng-template>
 
-                  <span *ngIf="row.reclutadores.length == 0">SIN ASIGNAR</span>
-                  <small class="text-center badge badge-pill badge-danger" *ngIf="row.reclutadores.length > 1" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</small>
-                  <span class="text-left" *ngIf="row.reclutadores.length == 1">{{row.reclutadores[0]}}</span>
+                  <span *ngIf="row.reclutadores.length == 0 || row.estatusId == 4">SIN ASIGNAR</span>
+                  <small class="text-center badge badge-pill badge-danger" *ngIf="row.reclutadores.length > 1 && row.estatusId != 4" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</small>
+                  <span class="text-left" *ngIf="row.reclutadores.length == 1 && row.estatusId != 4">{{row.reclutadores[0]}}</span>
                 </td>
                   <td class="text-center">
                     <small class="badge  badge-pill badge-warning" [popover]="popTemplatePostulados" container="body"
@@ -251,7 +265,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title pull-left text-warning"><i class="fa fa-file-text-o mr-1" aria-hidden="true"></i>CAMBIAR ESTATUS REQUISICI&Oacute;N</h4>
+        <h4 class="modal-title pull-left text-warning"><i class="fa fa-file-text-o mr-1" aria-hidden="true"></i>FOLIOS PAUSADOS</h4>
         <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal2.hide();closeModal(0)"><i
             class="fa fa-times"></i></button>
 
