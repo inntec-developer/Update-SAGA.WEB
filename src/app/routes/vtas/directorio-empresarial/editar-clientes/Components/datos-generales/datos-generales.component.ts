@@ -6,6 +6,7 @@ import { CatalogosService } from '../../../../../../service';
 import { ClientesService } from '../../../../../../service/clientes/clientes.service';
 import { CompanyValidation } from '../../../prospectos/nuevo-prospecto/company-validation';
 import { Router } from '@angular/router';
+import { SettingsService } from '../../../../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-datos-generales',
@@ -42,7 +43,8 @@ export class DatosGeneralesComponent implements OnInit {
     private fb: FormBuilder,
     private _CatalogoService: CatalogosService,
     private _ClienteService: ClientesService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private settings: SettingsService
   ) {
     this.formGeneral = new FormGroup({
       Empresa: new FormControl('', [Validators.required]),
@@ -57,7 +59,7 @@ export class DatosGeneralesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.Usuario = sessionStorage.getItem('usuario');
+    this.Usuario = this.settings.user['usuario'];
     this.getCatalogos();
 
 

@@ -3,6 +3,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
 import { DialogEventComponent } from './../../../components/calendario/dialog-event/dialog-event.component';
 import { MatDialog } from '@angular/material';
+import { SettingsService } from '../../../core/settings/settings.service';
 
 declare var $: any;
 
@@ -13,11 +14,10 @@ declare var $: any;
     providers: []
 })
 export class HomeComponent implements OnInit {
-    constructor(
+    constructor(private settings: SettingsService
     ) {
     }
 
     ngOnInit() {
-      
     }
 }

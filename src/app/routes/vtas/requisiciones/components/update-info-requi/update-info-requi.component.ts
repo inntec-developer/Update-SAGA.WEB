@@ -245,8 +245,8 @@ export class UpdateInfoRequiComponent implements OnInit {
           RequisicionId: this.RequiId,
           GrpUsrId: a,
           CRUD: '',
-          UsuarioAlta: sessionStorage.getItem('usuario'),
-          UsuarioMod: sessionStorage.getItem('usuario'),
+          UsuarioAlta: this.settings.user['usuario'],
+          UsuarioMod: this.settings.user['usuario'],
           fch_Modificacion: new Date()
         });
       };
@@ -260,7 +260,7 @@ export class UpdateInfoRequiComponent implements OnInit {
       fch_Cumplimiento: this.formRequi.get('fch_Cumplimiento').value,
       estatusId: this.formRequi.get('estatus').value,
       confidencial: this.formRequi.get('confidencial').value,
-      usuario: sessionStorage.getItem('usuario'),
+      usuario: this.settings.user['usuario'],
       asignacionRequi: asg
     }
     this.requiUpdate = update;

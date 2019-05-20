@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
+import { SettingsService } from '../../../core/settings/settings.service';
 import { catalogos } from '../../../models/catalogos/catalogos';
 
 // Servicios
@@ -28,7 +29,7 @@ export class TipoexamenComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor( private services: CatalogosService ) {
+  constructor( private services: CatalogosService, private settings: SettingsService ) {
     this.formTpExamen = new FormGroup({
       id: new FormControl(),
       nombre: new FormControl({value: '', disabled: true}, [Validators.required]),
@@ -64,7 +65,7 @@ export class TipoexamenComponent implements OnInit, OnChanges {
   Save() {
     const catalogo: catalogos = new catalogos();
     this.SelectedTpExamen !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
-    catalogo.usuario = sessionStorage.getItem('usuario');
+    catalogo.usuario = this.settings.user['usuario'];
     catalogo.Catalogos = {
       Id: 40,
       Nombre: 'Tipo examen',

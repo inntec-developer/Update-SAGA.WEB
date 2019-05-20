@@ -15,9 +15,10 @@ import { Response } from '@angular/http';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   })
 };
+const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization','Bearer ' + localStorage.getItem('access-token'));
 
 @Injectable()
 export class ComponentsService {
@@ -105,7 +106,7 @@ export class ComponentsService {
 
   getAlertStm(data: string) : Observable<any>{
     let params =  new HttpParams().set('Id', data);
-    return this._httpClient.get(this.UrlGetAlertStm, {params: params});
+    return this._httpClient.get<any>(this.UrlGetAlertStm, {params: params });
   }
 
   getAllAlertStm(data: string) : Observable<any>{

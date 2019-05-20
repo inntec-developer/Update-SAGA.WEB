@@ -4,6 +4,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { ComponentsService } from './../../../service/Components/components.service';
 import { InfoCandidatoService } from '../../../service/SeguimientoVacante/info-candidato.service';
+import { SettingsService } from '../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-reporte-candidatos',
@@ -52,7 +53,8 @@ export class ReporteCandidatosComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private toasterService: ToasterService,
-    private _ServiceComponente: ComponentsService
+    private _ServiceComponente: ComponentsService,
+    private settings: SettingsService
   ) { }
 
   ngOnInit() {
@@ -61,7 +63,7 @@ export class ReporteCandidatosComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.RequisicionId && changes.RequisicionId.isFirstChange()) {
-      this.UsuarioId = sessionStorage.getItem('id');
+      this.UsuarioId = this.settings.user['id'];
       this.getCandidatos();
       this.candidatos = false;
       if (this.EstatusId == 34 || this.EstatusId == 35 || this.EstatusId == 36 || this.EstatusId == 37 || this.EstatusId == 39) {

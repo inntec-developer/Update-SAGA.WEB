@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 
 import { ComponentsService } from './../../../../service/Components/components.service';
+import { SettingsService } from '../../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-dt-vacantes-grafica-pa',
@@ -34,7 +35,7 @@ export class DtVacantesGraficaPAComponent implements OnInit {
 
   public totalPos = 0;
 
-  constructor(private _ComponentService: ComponentsService) { }
+  constructor(private _ComponentService: ComponentsService, private settings: SettingsService) { }
 
   public rows: Array<any> = [];
   public columns: Array<any> = [
@@ -51,11 +52,11 @@ export class DtVacantesGraficaPAComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.UsuarioId = sessionStorage.getItem('id');
+    this.UsuarioId = this.settings.user['id'];
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.UsuarioId = sessionStorage.getItem('id');
+    this.UsuarioId = this.settings.user['id'];
     // if (changes.EstadoVacante && !changes.EstadoVacante.isFirstChange()) {
       this.getRequisiciones();
     // }

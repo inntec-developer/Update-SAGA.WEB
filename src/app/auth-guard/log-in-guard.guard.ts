@@ -1,8 +1,8 @@
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from '@angular/router';
 
-import { Injectable } from '@angular/core';
-import { Router, CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../service/auth/auth.service'
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { SettingsService } from '../core/settings/settings.service';
 
 @Injectable()
@@ -10,9 +10,9 @@ export class LogInGuardGuard implements CanActivate, CanActivateChild {
 
   constructor(
     private authService: AuthService,
-    private router: Router, 
+    private router: Router,
     public settings: SettingsService ) { }
-    
+
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
@@ -21,14 +21,14 @@ export class LogInGuardGuard implements CanActivate, CanActivateChild {
         return false;
       }
       else
-      { 
+      {
+
         return true;
       }
   }
   canActivateChild(next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot) : boolean
   {
-    
     var privilegios = this.settings.user.privilegios;
     return false;
   }

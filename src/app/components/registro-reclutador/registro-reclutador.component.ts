@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -21,12 +22,12 @@ export class RegistroReclutadorComponent implements OnInit {
 
       // this.registrar = false;
       // this._service.UpdateCandidatoTicket(this.ticket[0].ticketId, $event).subscribe(data => {
-      //   var datos = { candidatoId: $event, estatusId: 18, requisicionId: this.ticket[0].requisicionId, ReclutadorId: sessionStorage.getItem('id') };
+      //   var datos = { candidatoId: $event, estatusId: 18, requisicionId: this.ticket[0].requisicionId, ReclutadorId: this.settings.user['id'] };
 
       //   this.servicePost.SetProceso(datos).subscribe(data => {
       //     this.GetTicket(this.ticket[0].ticketId);
       //   });
-        
+
       // });
     }
   }

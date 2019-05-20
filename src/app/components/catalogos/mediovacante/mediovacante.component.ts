@@ -1,10 +1,15 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges, EventEmitter, Output, ViewChild } from '@angular/core';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-// Servicios
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
-// Modelos
+import { SettingsService } from '../../../core/settings/settings.service';
 import { catalogos } from '../../../models/catalogos/catalogos';
+
+// Servicios
+
+// Modelos
+
 
 @Component({
   selector: 'app-mediovacante',
@@ -24,13 +29,13 @@ export class MediovacanteComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor( private services: CatalogosService ) {
+  constructor(private services: CatalogosService, private settings: SettingsService) {
     this.formMedios = new FormGroup({
       id: new FormControl(),
-      nombre: new FormControl({value: '', disabled: true}, [Validators.required]),
-      activo: new FormControl({value: '', disabled: true})
+      nombre: new FormControl({ value: '', disabled: true }, [Validators.required]),
+      activo: new FormControl({ value: '', disabled: true })
     });
-   }
+  }
 
   ngOnInit() {
   }
@@ -58,7 +63,7 @@ export class MediovacanteComponent implements OnInit, OnChanges {
   Save() {
     const catalogo: catalogos = new catalogos();
     this.SelectedMedio !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
-    catalogo.usuario = sessionStorage.getItem('usuario');
+    catalogo.usuario = this.settings.user['usuario'];
     catalogo.Catalogos = {
       Id: 36,
       Nombre: 'Medios',
@@ -68,10 +73,10 @@ export class MediovacanteComponent implements OnInit, OnChanges {
     catalogo.Medio = [this.formMedios.getRawValue()];
     console.log(catalogo);
     this.services.GuardaCatalogo(catalogo)
-    .subscribe( result => { // Agregar
-      result ? this.UpMedios.emit(catalogo.Catalogos.Id) : console.log(result);
-      this.Habilita(true);
-    });
+      .subscribe(result => { // Agregar
+        result ? this.UpMedios.emit(catalogo.Catalogos.Id) : console.log(result);
+        this.Habilita(true);
+      });
   }
 
   Limpiar() {
@@ -85,14 +90,14 @@ export class MediovacanteComponent implements OnInit, OnChanges {
     } else {
       this.formMedios.get('nombre').disable();
       this.formMedios.get('activo').disable();
+    }
   }
-}
 
-applyFilter(filterValue: string) {
-  this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-  if (this.dataSource.paginator) {
-    this.dataSource.paginator.firstPage();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
-}
 }

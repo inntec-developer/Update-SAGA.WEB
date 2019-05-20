@@ -1,3 +1,5 @@
+import * as jwt_decode from "jwt-decode";
+
 import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -22,6 +24,7 @@ export class LoginComponent implements OnInit {
   failLogin: any;
   noAccess: any;
   foto: string;
+  Priv : Array<any> = [];
 
   constructor(
     private service: AdminServiceService,
@@ -49,24 +52,28 @@ export class LoginComponent implements OnInit {
 
   login(email: string, password: string) {
     this.loading = true;
-    this.authenticationService.login(email, password)
+    var user = {
+      email: email,
+      password: password
+    }
+    this.authenticationService.login(user)
       .subscribe(
         data => {
           if (data != 404 && data != 406) {
-            // this.foto = ApiConection.ServiceUrlFotoUser + data.clave + '.jpg';
-            data['foto'] = ApiConection.ServiceUrlFotoUser + data.clave + '.jpg';
-            sessionStorage.setItem('ConexionBolsa', ApiConection.ServiceUrlBolsa);
-            sessionStorage.setItem('privilegios', JSON.stringify(data.privilegios));
-            sessionStorage.setItem('usuario', data.usuario);
-            sessionStorage.setItem('nombre', data.nombre);
-            sessionStorage.setItem('email', data.email);
-            sessionStorage.setItem('clave', data.clave)
-            sessionStorage.setItem('foto', data.foto);
-            sessionStorage.setItem('id', data.id);
-            sessionStorage.setItem('tipoUsuario', data.tipoUsuarioId);
-            sessionStorage.setItem('tipo', data.tipo);
-            sessionStorage.setItem('sucursal', data.sucursal);
-
+            sessionStorage.setItem('access-token', data['token'])
+            var decode = this.getDecodedAccessToken(sessionStorage.getItem('access-token'));
+            debugger;
+            this.Priv = JSON.parse(decode['Privilegios'])
+            this.settings.user['id'] = decode['IdUsuario'];
+            this.settings.user['nombre'] = decode['Nombre'];
+            this.settings.user['usuario'] = decode['Usuario'];
+            this.settings.user['email'] = decode['Email'];
+            this.settings.user['clave'] = decode['Clave'];
+            this.settings.user['tipoUsuarioId'] = decode['tipoUsuarioId'];
+            this.settings.user['tipo'] = decode['Tipo'];
+            this.settings.user['sucursal'] = decode['Sucursal'];
+            this.settings.user['foto'] = ApiConection.ServiceUrlFotoUser + decode['Clvave'] + '.jpg';
+            this.settings.user['privilegios'] = this.Priv;
             this.router.navigate(['/home']);
           }
           if (data == 404) {
@@ -97,4 +104,15 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     sessionStorage.clear();
   }
+
+  getDecodedAccessToken(token: string): any {
+    try{
+        return jwt_decode(token);
+    }
+    catch(Error){
+        return null;
+    }
+  }
+
+
 }

@@ -1,6 +1,8 @@
-import { ExamenesService } from './../../../service/Examenes/examenes.service';
 import { Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+
+import { ExamenesService } from './../../../service/Examenes/examenes.service';
+import { SettingsService } from '../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-asignar-psicometricos',
@@ -20,7 +22,10 @@ export class AsignarPsicometricosComponent implements OnInit {
   registros: number;
   filterData = [];
 
-  constructor(private _serviceExamen: ExamenesService, private toasterService: ToasterService) { }
+  constructor(
+    private _serviceExamen: ExamenesService,
+    private toasterService: ToasterService,
+    private settings: SettingsService) { }
 
   ngOnInit() {
     this.GetRequisiciones();
@@ -70,7 +75,7 @@ export class AsignarPsicometricosComponent implements OnInit {
       this.spinner = true;
       var aux = [];
       this.listClaves.forEach(item => {
-        aux.push({ RequisicionId: this.seleccionados[0].requisicionId, UsuarioId: sessionStorage.getItem('id'), Clave: item })
+        aux.push({ RequisicionId: this.seleccionados[0].requisicionId, UsuarioId: this.settings.user['id'], Clave: item })
       })
 
       this._serviceExamen.InsertClaves(aux).subscribe(data => {

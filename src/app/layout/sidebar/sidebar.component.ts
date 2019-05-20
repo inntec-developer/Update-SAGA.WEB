@@ -191,7 +191,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
         return this.settings.layout.asideHover;
     }
 
-   
     isCollapsedChevron() {
         return this.settings.layout.viewChevron;
     }

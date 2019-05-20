@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ExamenesService } from '../../../service/Examenes/examenes.service';
 import {FormControl, Validators} from '@angular/forms';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+
+import { ExamenesService } from '../../../service/Examenes/examenes.service';
+import { SettingsService } from '../../../core/settings/settings.service';
+
 @Component({
   selector: 'app-agregar-resultados-psico',
   templateUrl: './agregar-resultados-psico.component.html',
@@ -13,7 +16,11 @@ export class AgregarResultadosPsicoComponent implements OnInit {
   invertX = false;
   invertY = false;
   shown = 'hover';
-  constructor(private _serviceExamen: ExamenesService, private toasterService: ToasterService) { }
+  constructor(
+    private _serviceExamen: ExamenesService,
+    private toasterService: ToasterService,
+    private settings: SettingsService
+    ) { }
 
   candidatos = [];
   catalogo = ['APTO', 'NO APTO'];
@@ -36,7 +43,7 @@ export class AgregarResultadosPsicoComponent implements OnInit {
   AgregarResultado(row, c)
   {
 
-    var resultado = {RequiClaveId: row.requiClaveId, Resultado: row.resultado, UsuarioId: sessionStorage.getItem('id')};
+    var resultado = {RequiClaveId: row.requiClaveId, Resultado: row.resultado, UsuarioId: this.settings.user['id']};
 
     this._serviceExamen.AgregarResultadoPsico(resultado).subscribe(data => {
       if(data == 200)
@@ -47,11 +54,11 @@ export class AgregarResultadosPsicoComponent implements OnInit {
       else
       {
         this.popToast('error', 'Agregar Resultados', 'Ocurrio un error al intentar agregar resultado');
-      
+
       }
     })
-    
-   
+
+
   }
 
   public Search(data: any) {
@@ -74,7 +81,7 @@ export class AgregarResultadosPsicoComponent implements OnInit {
     this.candidatos = tempArray;
   }
 
-  
+
     /**
   * configuracion para mensajes de acciones.
   */

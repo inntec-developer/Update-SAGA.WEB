@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import { DialogEventComponent } from '../dialog-event/dialog-event.component';
 import { EventoCalendario } from './../../../models/vtas/Requisicion';
 import { MatDialog } from '@angular/material';
+import { SettingsService } from '../../../core/settings/settings.service';
 import { getMonth } from 'ngx-bootstrap/chronos';
 import { toDate } from '@angular/common/src/i18n/format_date';
 
@@ -115,9 +116,10 @@ export class CalendarioCandidatoComponent implements OnInit {
     private componenteService: ComponentsService,
     private _catalogotService: CatalogosService,
     private toasterService: ToasterService,
-    private dateParse: DatePipe
+    private dateParse: DatePipe,
+    private settings: SettingsService
   ) {
-    this.ReclutadorId = sessionStorage.getItem('id');
+    this.ReclutadorId = this.settings.user['id'];
     this.getEvent();
     setTimeout(() => {
       this.formEvent = new FormGroup({

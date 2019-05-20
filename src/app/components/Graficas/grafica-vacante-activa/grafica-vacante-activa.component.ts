@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
+import { SettingsService } from '../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-grafica-vacante-activa',
@@ -15,11 +16,14 @@ export class GraficaVacanteActivaComponent implements OnInit {
   private UsuarioId: any;
   public total : number;
 
-  constructor(private servicio:ComponentsService) { }
+  constructor(
+    private servicio:ComponentsService,
+    private settings: SettingsService
+    ) { }
 
   ngOnInit() {
 
-    this.UsuarioId = sessionStorage.getItem('id');
+    this.UsuarioId = this.settings.user['id'];
    // this.UsuarioId = '2217B0F2-5A6E-E811-80E1-9E274155325E';
     // Chart.defaults.scale.ticks.beginAtZero = true;
     document.oncontextmenu=null

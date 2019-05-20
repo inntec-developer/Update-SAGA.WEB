@@ -6,6 +6,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { CatalogosService } from './../../../service/index';
 import { DatePipe } from '@angular/common';
+import { SettingsService } from '../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-dialog-event',
@@ -47,6 +48,7 @@ export class DialogEventComponent implements OnInit {
     private dialogEvent: MatDialogRef<DialogEventComponent>,
     private dateParse: DatePipe,
     private toasterService: ToasterService,
+    private settings: SettingsService
   ) {
     dialogEvent.disableClose = true;
     this.formEvent = new FormGroup({
@@ -143,7 +145,7 @@ export class DialogEventComponent implements OnInit {
       // Final = new Date(ye, me, de, 0, 0).toJSON();
     }
     var data = {
-      entidadId: sessionStorage.getItem('id'),
+      entidadId: this.settings.user['id'],
       TipoActividadId: this.formEvent.get('Actividad').value,
       title: this.formEvent.get('Titulo').value,
       start: Inicio,

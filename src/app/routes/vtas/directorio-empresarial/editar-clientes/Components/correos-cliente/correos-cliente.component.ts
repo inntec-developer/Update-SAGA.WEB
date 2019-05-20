@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { ClientesService } from '../../../../../../service/clientes/clientes.service';
+import { SettingsService } from '../../../../../../core/settings/settings.service';
 
 const swal = require('sweetalert');
 
@@ -45,7 +46,8 @@ export class CorreosClienteComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private _ClienteService: ClientesService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private settings: SettingsService
   ) {
     this.formCorreos = new FormGroup({
       EmailDireccion: new FormControl('', [Validators.required]),
@@ -54,7 +56,7 @@ export class CorreosClienteComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.Usuario = sessionStorage.getItem('usuario');
+    this.Usuario = this.settings.user['usuario'];
     this.showFilterRowC = true;
     this.formCorreos = this.fb.group({
       EmailDireccion: ['', [Validators.required]],

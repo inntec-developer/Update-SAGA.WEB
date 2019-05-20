@@ -1,6 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { PostulateService } from '../../service/SeguimientoVacante/postulate.service';
+import { Component, Input, OnInit } from '@angular/core';
+
 import { ApiConection } from './../../service/api-conection.service';
+import { PostulateService } from '../../service/SeguimientoVacante/postulate.service';
+import { SettingsService } from '../../core/settings/settings.service';
 
 @Component({
   selector: 'app-candidatos-en-proceso',
@@ -38,16 +40,16 @@ export class CandidatosEnProcesoComponent implements OnInit {
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } }
   ]
 
-  
-  constructor(private service: PostulateService) { }
+
+  constructor(private service: PostulateService, private settings: SettingsService) { }
 
   ngOnInit() {
     this.GetEnProceso();
   }
 
-  GetEnProceso() 
+  GetEnProceso()
   {
-    this.service.GetProceso(this.RequisicionId, sessionStorage.getItem('id')).subscribe(data => {
+    this.service.GetProceso(this.RequisicionId, this.settings.user['id']).subscribe(data => {
       this.dataSource = [];
 
       data.forEach(element => {
@@ -73,15 +75,15 @@ export class CandidatosEnProcesoComponent implements OnInit {
           folio: element.folio,
           usuario: element.usuario,
           usuarioId: element.usuarioId,
-          fecha:element.fecha, 
-          areaReclutamiento: element.areaReclutamiento, 
+          fecha:element.fecha,
+          areaReclutamiento: element.areaReclutamiento,
           areaReclutamientoId: element.areaReclutamientoId,
           fuenteReclutamiento: element.fuenteReclutamiento,
           fuenteReclutamientoId: element.fuenteReclutamientoId,
           requisicionId: this.RequisicionId,
-          paisNacimiento: element.perfil[0]['paisNacimiento'] != null ? element.perfil[0]['paisNacimiento'] : 0, 
+          paisNacimiento: element.perfil[0]['paisNacimiento'] != null ? element.perfil[0]['paisNacimiento'] : 0,
           estadoNacimiento: element.perfil[0]['estadoNacimiento'] != null ? element.perfil[0]['estadoNacimiento'] : 0,
-          municipioNacimiento: element.perfil[0]['municipioNacimiento'] != null ? element.perfil[0]['municipioNacimiento'] : 0, 
+          municipioNacimiento: element.perfil[0]['municipioNacimiento'] != null ? element.perfil[0]['municipioNacimiento'] : 0,
           generoId: element.perfil[0]['generoId'],
           editarCURP: false
         }
@@ -100,7 +102,7 @@ export class CandidatosEnProcesoComponent implements OnInit {
         this.dataSource.push(perfil);
         this.onChangeTable(this.config);
       });
-    }); 
+    });
   }
 
   //#region filtros y paginacion

@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 import { ApiConection } from '../../service';
 import { ComentariosService } from './../../service/Comentarios/comentarios.service';
+import { SettingsService } from '../../core/settings/settings.service';
 
 declare var $: any;
 
@@ -28,6 +29,7 @@ export class ComentarioCandidatoComponent implements OnInit {
   constructor(
     private _ComentariosService: ComentariosService,
     public elem: ElementRef,
+    private settings: SettingsService
     // @Inject(MAT_DIALOG_DATA) public dataNR: any,
   ) {
 
@@ -79,8 +81,8 @@ export class ComentarioCandidatoComponent implements OnInit {
         Comentario: this.comentario,
         CandidatoId: this.CandidatoId,
         RequisicionId: this.RequisicionId,
-        Usuario: sessionStorage.getItem('usuario'),
-        UsuarioId: sessionStorage.getItem('id')
+        Usuario: this.settings.user['usuario'],
+        UsuarioId: this.settings.user['id']
       }
       this._ComentariosService.addComentarioCandidato(this.Comentario).subscribe(data => {
         if (data == 200) {

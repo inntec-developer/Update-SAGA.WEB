@@ -129,7 +129,7 @@
   <div class="col-lg-8 col-md-9 col-sm-12 col-xs-12">
     <div class="mat-elevation-z8" *ngIf="candidato">
       <tabset [justified]="true">
-        <tab heading="Información de Candidato" id="infoCand">
+        <tab heading="Información de Candidato" id="infoCand" (click)="SelectedMisVacantes = false" [active]="!SelectedMisVacantes">
           <accordion [closeOthers]="oneAtATime">
             <accordion-group [isOpen]="isFirstOpen">
               <button class="btn btn-link btn-block clearfix acordin-padding" accordion-heading>
@@ -160,7 +160,7 @@
                     <div>
                       <strong class="text-primary">Lugar Nacimiento: </strong>
                       <label
-                        *ngIf="candidato?.info?.estadoNacimiento?.estado && andidato?.info?.paisNacimiento?.pais else NotBirthPlace"
+                        *ngIf="candidato?.info?.estadoNacimiento?.estado && candidato?.info?.paisNacimiento?.pais else NotBirthPlace"
                         class="text-muted"> {{candidato?.info?.estadoNacimiento?.estado}},
                         {{candidato?.info?.paisNacimiento?.pais}}</label>
                       <ng-template #NotBirthPlace>
@@ -673,7 +673,7 @@
             </accordion-group>
           </accordion>
         </tab>
-        <tab *ngIf="VerVacantes" heading="Mis Vacantes ({{registros_v}})" id="misVacantes">
+        <tab *ngIf="VerVacantes" heading="Mis Vacantes ({{registros_v}})" id="misVacantes" [active]="SelectedMisVacantes">
           <div class="card">
             <div class="card-body">
 
@@ -732,7 +732,7 @@
                         <td *ngFor="let column of columns">
                           <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
                             [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable_v(config_v)"
-                            class="form-control form-control-sm" id="{{column.name}}">
+                            class="form-control form-control-sm" id="{{column.title}}">
                         </td>
                       </tr>
                       <tr (click)="onCellClick_v(row)" (dblclick)="lgModal.show()" *ngFor="let row of rows"

@@ -1,10 +1,15 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges, Output, EventEmitter, ViewChild } from '@angular/core';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-// Servicios
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
-// Modelos
+import { SettingsService } from './../../../core/settings/settings.service';
 import { catalogos } from '../../../models/catalogos/catalogos';
+
+// Servicios
+
+// Modelos
+
 
 @Component({
   selector: 'app-area-interes',
@@ -25,7 +30,7 @@ export class AreaInteresComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor( private services: CatalogosService ) {
+  constructor( private services: CatalogosService, private settings: SettingsService ) {
     this.formAreaInt = new FormGroup({
       id: new FormControl(),
       areainteres: new FormControl({value: '', disabled: true}, [Validators.required]),
@@ -40,7 +45,6 @@ export class AreaInteresComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.SelectedAreaInteres !== undefined) {
       this.Habilita(false);
-      debugger;
       const idaexp = this.areaExp.find( p => p.areaExperiencia === this.SelectedAreaInteres.areaExperiencia ).id;
       this.formAreaInt.get('id').setValue(this.SelectedAreaInteres.id);
       this.formAreaInt.get('areainteres').setValue(this.SelectedAreaInteres.areaInteres);
@@ -63,7 +67,7 @@ export class AreaInteresComponent implements OnInit, OnChanges {
   Save() {
     const catalogo: catalogos = new catalogos();
     this.SelectedAreaInteres !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
-    catalogo.usuario = sessionStorage.getItem('usuario');
+    catalogo.usuario = this.settings.user['usuario'];
     catalogo.Catalogos = {
       Id: 19,
       Nombre: 'Area interes',

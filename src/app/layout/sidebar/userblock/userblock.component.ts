@@ -1,3 +1,5 @@
+import * as jwt_decode from "jwt-decode";
+
 import { Component, OnInit, SimpleChanges } from '@angular/core';
 
 import { ApiConection } from '../../../service/api-conection.service';
@@ -17,24 +19,26 @@ export class UserblockComponent implements OnInit {
   constructor(
     public userblockService: UserblockService,
     private _Service: AuthService,
-    private settings: SettingsService) {
+    private settings: SettingsService
+  ) { }
+
+  ngOnInit() {
     this.user = {
-      picture: sessionStorage.getItem('foto'),
-      name: sessionStorage.getItem('nombre'),
-      clave: sessionStorage.getItem('clave'),
-      tipo: sessionStorage.getItem('tipo'),
-      sucursal: sessionStorage.getItem('sucursal')
+      picture: ApiConection.ServiceUrlFotoUser + this.settings.user['clave'] + '.jpg',
+      name: this.settings.user['nombre'],
+      clave: this.settings.user['clave'],
+      tipo: this.settings.user['tipo'],
+      sucursal: this.settings.user['sucursal']
     };
   }
 
-  ngOnInit() {
-  }
+
 
   userBlockIsVisible() {
     return this.userblockService.getVisibility();
   }
 
-  errorImg(){
+  errorImg() {
     this.user['picture'] = '/assets/img/user/default.jpg';
   }
 }

@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 import { FormGroup } from '@angular/forms';
 import { RequisicionesService } from '../../../../service';
+import { SettingsService } from '../../../../core/settings/settings.service';
 import { Vacante } from '../../../../models/models';
 
 @Component({
@@ -26,6 +27,7 @@ export class DialogEditHorarioComponent implements OnInit {
     private service : RequisicionesService,
     private dialogVacantes : MatDialogRef<DialogEditHorarioComponent>,
     public Vacante : Vacante,
+    private settings: SettingsService
   ) {
     dialogVacantes.disableClose = true;
    }
@@ -49,7 +51,7 @@ export class DialogEditHorarioComponent implements OnInit {
     var vacante = {
       id : this.HorarioId,
       requisicionId : this.RequisicionId,
-      usuario : sessionStorage.getItem('usuario'),
+      usuario : this.settings.user['usuario'],
       numeroVacantes : this.vacanteN
     }
     this.Vacante = vacante;

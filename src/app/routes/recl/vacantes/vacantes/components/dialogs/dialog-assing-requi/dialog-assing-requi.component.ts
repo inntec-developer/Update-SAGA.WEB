@@ -8,6 +8,7 @@ import { AsignarRequis } from '../../../../../../../models/models';
 import { AsignarRequisicionComponent } from './../../../../../../../components/asignar-requisicion/asignar-requisicion.component';
 import { RequisicionesService } from '../../../../../../../service/requisiciones/requisiciones.service';
 import { Router } from '@angular/router';
+import { SettingsService } from '../../../../../../../core/settings/settings.service';
 
 const swal = require('sweetalert');
 
@@ -67,6 +68,7 @@ export class DialogAssingRequiComponent implements OnInit {
     public fb: FormBuilder,
     public asignarRequi: AsignarRequis,
     private _Router: Router,
+    private settings: SettingsService
   ) {
     dialogAssing.disableClose = true;
     this.placeHolderSelect = 'ASIGNAR RECLUTADORES';
@@ -144,13 +146,15 @@ export class DialogAssingRequiComponent implements OnInit {
     this.asignadosRequi = $event;
     if (this.asignadosRequi.length > 0)
       this.alertAssing = false;
+    else
+      this.alertAssing = true;
   }
 
 
   Save() {
     if (this.formAsignaciones.get('diasEnvio').value > 0 && this.formAsignaciones.get('diasEnvio').value <= 20) {
       this.loading = true;
-      this.asignadosRequi.push(sessionStorage.getItem('id'));
+      this.asignadosRequi.push(this.settings.user['id']);
       let List = [];
       for (let a of this.asignadosRequi) {
         List.push({ id: a });
@@ -162,8 +166,8 @@ export class DialogAssingRequiComponent implements OnInit {
           RequisicionId: this.RequiId,
           GrpUsrId: a['id'],
           CRUD: '',
-          UsuarioAlta: sessionStorage.getItem('usuario'),
-          UsuarioMod: sessionStorage.getItem('usuario'),
+          UsuarioAlta: this.settings.user['usuario'],
+          UsuarioMod: this.settings.user['usuario'],
           fch_Modificacion: new Date()
         });
       }
@@ -179,8 +183,8 @@ export class DialogAssingRequiComponent implements OnInit {
         id: this.RequiId,
         fch_Cumplimiento: this.formAsignaciones.get('fch_Cumplimiento').value,
         diasEnvio: this.formAsignaciones.get('diasEnvio').value,
-        usuario: sessionStorage.getItem('usuario'),
-        aprobadorId: sessionStorage.getItem('id'),
+        usuario: this.settings.user['usuario'],
+        aprobadorId: this.settings.user['id'],
         asignacionRequi: asg,
         ponderacion: Ponderacion
       }
@@ -225,10 +229,24 @@ export class DialogAssingRequiComponent implements OnInit {
             else {
               this.dialogAssing.close(true);
               this.loading = false;
+              swal({
+                title: 'Diseñador de Vacante',
+                text: 'Desea diseñar la vacante para su publicación en Bolsa DAMSA?',
+                type: 'success',
+                showCancelButton: true,
+                confirmButtonText: 'SI, Diseñar',
+                cencelButtomText: 'No',
+                closeOnConfirm: true,
+                showLoaderOnConfirm: true
+              }, (isConfirm: any) => {
+                if (isConfirm) {
+                  this._Router.navigate(['/reclutamiento/configuracionVacante/', this.RequiId, this.data.folio, this.data.vBtra], { skipLocationChange: true });
+                }
+              });
             }
 
             if (!this.redesSociales && !this.data.confidencial) {
-              if (this.data.aprobadorId == sessionStorage.getItem('id')) {
+              if (this.data.aprobadorId == this.settings.user['id']) {
                 swal({
                   title: 'Diseñador de Vacante',
                   text: 'Desea diseñar la vacante para su publicación en Bolsa DAMSA?',
@@ -245,8 +263,8 @@ export class DialogAssingRequiComponent implements OnInit {
                 });
               }
             }
-          }else if(this.return == 300){
-            swal('Aprobaciónn / Asignación Requisición', 'Este folio ya fue aprobado por otro usuario, actualize la tabla de Vacantes.', 'info');
+          } else if (this.return == 300) {
+            swal('Aprobaciónn / Asignación Requisición', 'Este folio ya fue aprobado por otro usuario, actualice la tabla de Vacantes.', 'info');
             this.loading = false;
             this.dialogAssing.close(true);
           }
@@ -273,6 +291,15 @@ export class DialogAssingRequiComponent implements OnInit {
     }
 
     return nuevoArray;
+  }
+
+  validateAsignados(): boolean {
+    debugger;
+    if (this.asignadosRequi.length > 0) {
+      return true
+    } else {
+      return true;
+    }
   }
 
   sweetalertNotificarRedesSociales() {

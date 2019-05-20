@@ -1,99 +1,110 @@
+import * as jwt_decode from "jwt-decode";
+
 import { Injectable } from '@angular/core';
+import { SettingsService } from "../settings/settings.service";
 
 @Injectable()
 export class MenuService {
-    menuItems: Array<any>;
-    submenu: Array<any> = [];
+  menuItems: Array<any>;
+  submenu: Array<any> = [];
+  Priv : Array<any> = [];
 
-    constructor()
-    {
-        this.menuItems = [];
-    }
-    addMenu(items: Array<{
-        text: string,
-        heading?: boolean,
-        link?: string,     // internal route links
-        elink?: string,    // used only for external links
-        target?: string,   // anchor target="_blank|_self|_parent|_top|framename"
-        icon?: string,
-        alert?: string,
-        submenu?: Array<any>
-        
-    }>) {
-        items.forEach((item) => {
-            this.menuItems.push(item);
-        });
-    }
+  constructor(
+    private settings: SettingsService
+  ) {
 
-    getMenu() {
-        return this.menuItems;
-    }
+    this.menuItems = [];
+  }
+  addMenu(items: Array<{
+    text: string,
+    heading?: boolean,
+    link?: string,     // internal route links
+    elink?: string,    // used only for external links
+    target?: string,   // anchor target="_blank|_self|_parent|_top|framename"
+    icon?: string,
+    alert?: string,
+    submenu?: Array<any>
 
-    /*recursividad para generar el menu*/
-    setSubMenu(modules, privilegios)
-    {
-        
-        var  menuList = [];
+  }>) {
+    items.forEach((item) => {
+      this.menuItems.push(item);
+    });
+  }
 
-        modules.children = privilegios.filter(function(c){
-         return c.idPadre === modules.estructuraId
-         });
+  getMenu() {
+    return this.menuItems;
+  }
 
-        if(modules.children != null)
-        {
-         modules.children.forEach(element => {
-             if(modules.tipoEstructuraId < 4 && element.read){ //para limitar lo que se puede ver en el menu
-                 if( element.idPadre == modules.estructuraId)
-                 { 
-                     var submenu = {text: element.nombre, link: element.accion, submenu: this.setSubMenu(element, privilegios)}
-                     if(submenu.submenu.length === 0)
-                     {
-                         menuList.push({text:submenu.text, link: submenu.link})
-                     }
-                     else
-                     {
-                     menuList.push(submenu);
-                     }
-                     // menuList.push({text: element.nombre, link: element.accion, submenu: this.otraSub(element, privilegios) })
-                 }
-             }
-         });
-        }
-         return menuList
-       
-    }
-    setEstructuraMenu() //creo el menu dependiendo de los privilegios de usuario
-    {
-        var privilegios = JSON.parse(sessionStorage.getItem('privilegios'));
+  /*recursividad para generar el menu*/
+  setSubMenu(modules, privilegios) {
 
-        if(this.menuItems.length > 2)
-        {
-            this.menuItems.splice(2, this.menuItems.length - 2)
-        }
+    var menuList = [];
 
-        var modules = privilegios.filter(function(row){
-                   return row.tipoEstructuraId === 2 && row.read
-                    });
+    modules.children = privilegios.filter(function (c) {
+      return c.IdPadre === modules.EstructuraId
+    });
 
-        modules.forEach(element => {
-            if(element.accion === null)
-            {
-                this.menuItems.push( { text: element.nombre, icon: element.icono, submenu: this.setSubMenu(element, privilegios) })
+    if (modules.children != null) {
+      modules.children.forEach(element => {
+        if (modules.TipoEstructuraId < 4 && element.Read) { //para limitar lo que se puede ver en el menu
+          if (element.IdPadre == modules.EstructuraId) {
+            var submenu = { text: element.Nombre, link: element.Accion, submenu: this.setSubMenu(element, privilegios) }
+            if (submenu.submenu.length === 0) {
+              menuList.push({ text: submenu.text, link: submenu.link })
             }
-            else
-            {
-                this.menuItems.push( { text: element.nombre, icon: element.icono, link: element.accion })
+            else {
+              menuList.push(submenu);
             }
-        });   
+            // menuList.push({text: element.nombre, link: element.accion, submenu: this.otraSub(element, privilegios) })
+          }
+        }
+      });
+    }
+    return menuList
 
-        modules = [];
-        return this.menuItems;
+  }
+  setEstructuraMenu() //creo el menu dependiendo de los privilegios de usuario
+  {
+    // let decode = this.getDecodedAccessToken(sessionStorage.getItem('access-token'));
+    // this.Priv = JSON.parse(decode['role'])
+    // var privilegios = this.Priv;
+
+    var privilegios = this.settings.user['privilegios'];
+
+    if (this.menuItems.length > 2) {
+      this.menuItems.splice(2, this.menuItems.length - 2)
     }
 
-//   setEstructuraSubMenu(e: number)
-//     {
-//         return this.menuItems.forEach( x => x.submenu.estructura = e)
+    var modules = privilegios.filter(function (row) {
+      return row.TipoEstructuraId === 2 && row.Read
+    });
 
-//     }
+    modules.forEach(element => {
+      if (element.Accion === null) {
+        this.menuItems.push({ text: element.Nombre, icon: element.Icono, submenu: this.setSubMenu(element, privilegios) })
+      }
+      else {
+        this.menuItems.push({ text: element.Nombre, icon: element.Icono, link: element.Accion })
+      }
+    });
+
+    modules = [];
+    return this.menuItems;
+  }
+
+  //   setEstructuraSubMenu(e: number)
+  //     {
+  //         return this.menuItems.forEach( x => x.submenu.estructura = e)
+
+  //     }
+
+  // getDecodedAccessToken(token: string): any {
+  //   try {
+  //     return jwt_decode(token);
+  //   }
+  //   catch (Error) {
+  //     return null;
+  //   }
+  // }
 
 }

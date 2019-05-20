@@ -11,6 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../../../../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../../../../../service';
 import { Router } from '@angular/router';
+import { SettingsService } from '../../../../../../core/settings/settings.service';
 
 const swal = require('sweetalert');
 
@@ -55,7 +56,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   editarRequi = false;
   editarNR = false;
   informeVacante = false;
-  usuarioId: any = sessionStorage.getItem('id');
+  usuarioId: any = this.settings.user['id'];
   //estatus vacantes
 
   bc = true; //busqueda candidato
@@ -89,7 +90,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toasterService: ToasterService,
     private excelService: ExcelService,
-    private pipe: DatePipe
+    private pipe: DatePipe,
+    private settings: SettingsService
   ) {
     this.enProceso = 0;
     this.postulados = 0;
@@ -106,7 +108,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   getVacantes() {
-    this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
+    this.service.getRequiReclutador(this.settings.user['id']).subscribe(data => {
       this.dataSource = data;
       this.GetCandidatosNR();
       this.GetRequisicionesPausa();
@@ -127,27 +129,27 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   getRequiEstadisticos() {
-    this.service.GetRequiEstadisticos(sessionStorage.getItem('id')).subscribe(data => {
+    this.service.GetRequiEstadisticos(this.settings.user['id']).subscribe(data => {
     });
   }
 
   GetCandidatosNR()
   {
-    this.serviceCandidato.GetFoliosIncidencias(28, sessionStorage.getItem('id')).subscribe(result =>{
+    this.serviceCandidato.GetFoliosIncidencias(28, this.settings.user['id']).subscribe(result =>{
       this.candidatosNR = result;
     });
 
   }
 
   GetRequisicionesPausa() {
-    this.service.GetRequisicionesEstatus(39, sessionStorage.getItem('id')).subscribe(result => {
+    this.service.GetRequisicionesEstatus(39, this.settings.user['id']).subscribe(result => {
       this.requisPausa = result;
     });
   }
 
   //estatus vacantes
   SetStatus(estatusId, estatus) {
-    var datos = { estatusId: estatusId, requisicionId: this.requi.id, ReclutadorId: sessionStorage.getItem('id') };
+    var datos = { estatusId: estatusId, requisicionId: this.requi.id, ReclutadorId: this.settings.user['id'] };
 
     if (estatusId == 39) {
       this.OpenDialogRequiPausa(estatusId, estatus);
@@ -428,7 +430,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   ValidarEstatus(estatusId) {
     //revisar en pausa
 
-    if(this.element.aprobada == 1 && this.element.aprobadorId == sessionStorage.getItem("id") && (estatusId != 39 && estatusId != 34 && estatusId != 35 && estatusId != 36 && estatusId != 37) && this.element.vacantes > 0 )
+    if(this.element.aprobada == 1 && this.element.aprobadorId == this.settings.user['id'] && (estatusId != 39 && estatusId != 34 && estatusId != 35 && estatusId != 36 && estatusId != 37) && this.element.vacantes > 0 )
      {
       this.asignar = false
       this.disenador = false
@@ -444,7 +446,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
        this.disenador = true;
      }
 
-    // estatusId == 6 && this.element.propietarioId == sessionStorage.getItem("id") && this.element.vacantes > 0 ? this.disenador = false : this.disenador = true;
+    // estatusId == 6 && this.element.propietarioId == this.settings.user['id'] && this.element.vacantes > 0 ? this.disenador = false : this.disenador = true;
 
     if (estatusId == 4 && this.element.vacantes > 0) //nueva
     {
@@ -719,7 +721,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     });
     dialog.afterClosed().subscribe(result => {
       if (result) {
-        this.postulateservice.SetProcesoVacante({ estatusId: estatusId, requisicionId: this.requi.id, ReclutadorId: sessionStorage.getItem('id') }).subscribe(data => {
+        this.postulateservice.SetProcesoVacante({ estatusId: estatusId, requisicionId: this.requi.id, ReclutadorId: this.settings.user['id'] }).subscribe(data => {
           if (data == 201) {
             var idx = this.rows.findIndex(x => x.id == this.requi.id);
             this.rows[idx]['estatus'] = estatus;
@@ -756,7 +758,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   openDesignVacante() {
-    var usuario = sessionStorage.getItem('id');
+    var usuario = this.settings.user['id'];
     if (this.aprobador === usuario) {
       this._Router.navigate(['/reclutamiento/configuracionVacante/', this.id, this.folio, this.vBtra], { skipLocationChange: true });
     } else {
@@ -777,7 +779,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   seguimientoRequi() {
 
-    if (this.numeroVacantes != 0 && (sessionStorage.getItem('tipoUsuario') == '4' || sessionStorage.getItem('tipoUsuario') == '3'))
+    if (this.numeroVacantes != 0 && (this.settings.user['tipoUsuarioId'] == '4' || this.settings.user['tipoUsuarioId'] == '3'))
     {
       this.procesoCandidato = true;
     }

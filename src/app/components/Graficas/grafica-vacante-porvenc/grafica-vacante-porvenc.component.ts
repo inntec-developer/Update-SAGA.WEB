@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SettingsService } from '../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-grafica-vacante-porvenc',
@@ -17,11 +18,15 @@ export class GraficaVacantePorvencComponent implements OnInit {
   public porVencer : number;
   public Total : number;
 
-  constructor(private servicio : ComponentsService,private spinner: NgxSpinnerService) { }
+  constructor(
+    private servicio : ComponentsService,
+    private spinner: NgxSpinnerService,
+    private settings: SettingsService
+    ) { }
 
   ngOnInit() {
 
-    this.UsuarioId = sessionStorage.getItem('id');
+    this.UsuarioId = this.settings.user['id'];
     // Chart.defaults.scale.ticks.beginAtZero = true;
     this.servicio.getVPorVencer(this.UsuarioId).subscribe(item =>{
       this.spinner.hide();

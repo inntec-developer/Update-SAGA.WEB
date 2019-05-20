@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
+
 import { RequisicionesService } from '../../../service';
+import { SettingsService } from './../../../core/settings/settings.service';
+import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
+
 const swal = require('sweetalert');
 @Component({
   selector: 'app-ticket-cita-prueba',
@@ -12,7 +15,11 @@ export class TicketCitaPruebaComponent implements OnInit {
 folio = 0;
 num = '';
   dataSource: any = [];
-  constructor(private _service: SistTicketsService, private service: RequisicionesService) { }
+  constructor(
+    private _service: SistTicketsService,
+    private service: RequisicionesService,
+    private settings: SettingsService
+    ) { }
 
   ngOnInit() {
     this.GetMisVacantes();
@@ -35,9 +42,9 @@ num = '';
 
   // }
 
-  
+
   GetMisVacantes() {
-    this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
+    this.service.getRequiReclutador(this.settings.user['id']).subscribe(data => {
       this.dataSource = data;
       console.log(this.dataSource)
     });

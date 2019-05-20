@@ -38,6 +38,9 @@
           <mat-form-field>
             <input type="number" matInput max="20" min="1" placeholder="Días habiles envío al cliente"
               formControlName="diasEnvio" required>
+              <mat-hint align="start">
+                  <strong class="text-info">Seleccione de 1 - 20 d&iacute;as</strong>
+                </mat-hint>
           </mat-form-field>
         </div>
         <div class="col-md-4">
@@ -75,24 +78,36 @@
         </form>
       </div>
     </div>
+    <div class="row" #MessageAlert>
+      <span>
+        <small [ngClass]="alertAssing ? 'text-danger': 'text-success'">
+          <em *ngIf="alertAssing" class="fa fa-close"></em>
+          <em *ngIf="!alertAssing" class="fa fa-check"></em>
+          Seleccione por lo menos a un Reclutador o usted mismo para continuar.
+        </small>
+      </span>
+    </div>
   </div>
 </ng-scrollbar>
 <mat-divider></mat-divider>
 <mat-dialog-actions>
+
   <button type="button" class="btn btn-xs btn-labeled btn-outline-danger mb-1 margen float-right"
     (click)="onCloseDialog()">
     <span class="btn-label">
       <i class="fa fa-times"></i>
     </span> Cancelar
   </button>
-  <button type="button" [disabled]="!formAsignaciones.valid || loading" *ngIf="!redesSociales && !loading"
-    class="btn btn-xs btn-labeled btn-outline-success mb-1 margen float-right" (click)="Save()">
+  <button type="button" [disabled]="!formAsignaciones.valid || loading ||  alertAssing"
+    *ngIf="!redesSociales && !loading" class="btn btn-xs btn-labeled btn-outline-success mb-1 margen float-right"
+    (click)="Save()">
     <span class="btn-label">
       <i class="fa fa-check"></i>
     </span> Aceptar
   </button>
-  <button type="button" [disabled]="!formAsignaciones.valid || !formRS.valid" *ngIf="redesSociales && !loading"
-    class="btn btn-xs btn-labeled btn-outline-success mb-1 margen float-right" (click)="Save()">
+  <button type="button" [disabled]="!formAsignaciones.valid || !formRS.valid ||  alertAssing"
+    *ngIf="redesSociales && !loading" class="btn btn-xs btn-labeled btn-outline-success mb-1 margen float-right"
+    (click)="Save()">
     <span class="btn-label">
       <i class="fa fa-check"></i>
     </span> Aceptar

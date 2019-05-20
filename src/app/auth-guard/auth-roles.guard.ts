@@ -9,7 +9,7 @@ export class AuthRolesGuard implements CanActivate {
 
   constructor(
     private el: ElementRef,
-    private router: Router, 
+    private router: Router,
     public settings: SettingsService ) { }
 
   canActivate(
@@ -17,11 +17,11 @@ export class AuthRolesGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
       return this.onclick(state);
 
-     
+
   }
   @HostListener('click', ['$event']) onclick(btn){
 
-    let privilegios = JSON.parse(sessionStorage.getItem('privilegios'))
+    // let privilegios = JSON.parse(sessionStorage.getItem('privilegios'))
     let part = this.el.nativeElement.querySelector('btn-delete');
 
     return true;

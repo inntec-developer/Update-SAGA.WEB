@@ -1,10 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators, Validator } from '@angular/forms';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-// Servicios
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validator, Validators } from '@angular/forms';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
-// Modelos
+import { SettingsService } from '../../../core/settings/settings.service';
 import { catalogos } from '../../../models/catalogos/catalogos';
+
+// Servicios
+
+// Modelos
+
 
 @Component({
   selector: 'app-tipo-telefono',
@@ -24,7 +29,7 @@ export class TipoTelefonoComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor( private services: CatalogosService ) {
+  constructor( private services: CatalogosService, private settings: SettingsService ) {
     this.formTipoTelefono = new FormGroup({
       id: new FormControl(),
       tipo: new FormControl({value: '', disabled: true}, [Validators.required]),
@@ -58,7 +63,7 @@ export class TipoTelefonoComponent implements OnInit, OnChanges {
   Save() {
     const catalogo: catalogos = new catalogos();
     this.SelectedTipoTelefono !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
-    catalogo.usuario = sessionStorage.getItem('usuario');
+    catalogo.usuario = this.settings.user['usuario'];
     catalogo.Catalogos = {
       Id: 6,
       Nombre: 'Tipo de telefono',

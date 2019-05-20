@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import { SettingsService } from '../../../core/settings/settings.service';
+
 @Component({
   selector: 'btn-dislike',
   templateUrl: './button-dislike.component.html',
@@ -11,10 +13,10 @@ export class ButtonDislikeComponent implements OnInit {
   @Input('RequisicionId') requisicionId: string;
   @Input('Reclutador') Reclutador: string;
   Usuario : any;
-  
 
-  constructor() {
-    this.Usuario = sessionStorage.getItem('nombre');
+
+  constructor(private settings: SettingsService) {
+    this.Usuario = this.settings.user['nombre'];
    }
 
   ngOnInit() {

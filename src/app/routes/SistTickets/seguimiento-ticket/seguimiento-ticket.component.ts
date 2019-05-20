@@ -12,6 +12,7 @@ import { PostulateService } from '../../../service/SeguimientoVacante/postulate.
 import { RegistroReclutadorComponent } from './../../../components/registro-reclutador/registro-reclutador.component';
 import { RequisicionesService } from '../../../service';
 import { Router } from '@angular/router';
+import { SettingsService } from '../../../core/settings/settings.service';
 import { SistTicketsService } from './../../../service/SistTickets/sist-tickets.service';
 import { element } from 'protractor';
 
@@ -69,7 +70,9 @@ export class SeguimientoTicketComponent implements OnInit {
       private servicePost: PostulateService,
       private toasterService: ToasterService,
       private service: RequisicionesService,
-    private _serviceExamen: ExamenesService) {
+      private _serviceExamen: ExamenesService,
+      private settings: SettingsService
+    ) {
         setInterval(() => this.timeWait(), 60000);
   }
 
@@ -97,14 +100,14 @@ export class SeguimientoTicketComponent implements OnInit {
 
   public GetFilaTickets()
   {
-    this._service.GetFilaTickets(1, sessionStorage.getItem('id')).subscribe( data => {
+    this._service.GetFilaTickets(1, this.settings.user['id']).subscribe( data => {
         this.fila = data;
     })
   }
 
   public GetTicket(ticketId)
   {
-    this._service.GetTicketRecl(ticketId, sessionStorage.getItem('id')).subscribe(data => {
+    this._service.GetTicketRecl(ticketId, this.settings.user['id']).subscribe(data => {
       this.ticket = data;
 
       this.ticket[0].estado == 3 ? this.finalizar = false : this.finalizar = true;
@@ -116,7 +119,7 @@ export class SeguimientoTicketComponent implements OnInit {
         this.GetPostulaciones(this.ticket[0].candidato[0].candidatoId);
         this.ExamenesCandidatos();
       }
-      
+
     })
 
   }
@@ -137,7 +140,7 @@ export class SeguimientoTicketComponent implements OnInit {
   }
 
   GetMisVacantes() {
-    this._service.GetVacantesReclutador(sessionStorage.getItem('id')).subscribe(data => {
+    this._service.GetVacantesReclutador(this.settings.user['id']).subscribe(data => {
       var aux = [];
       this.dataSource = data.filter(element => {
         if(element.id === this.ticket[0].requisicionId)
@@ -155,11 +158,11 @@ export class SeguimientoTicketComponent implements OnInit {
     });
   }
 
-  public Atender() 
+  public Atender()
   {
-    if (sessionStorage.getItem('moduloId') == "1") 
+    if (sessionStorage.getItem('moduloId') == "1")
     {
-      this._service.GetTicketPrioridad(sessionStorage.getItem('id'), sessionStorage.getItem('moduloId')).subscribe(data => {
+      this._service.GetTicketPrioridad(this.settings.user['id'], sessionStorage.getItem('moduloId')).subscribe(data => {
         if (data != 417) {
           this.GetTicket(data);
           setInterval(() => this.minutosEnAtencion += 1, 60000);
@@ -172,9 +175,9 @@ export class SeguimientoTicketComponent implements OnInit {
         }
       });
     }
-    else 
+    else
     {
-      this._service.GetCitas(sessionStorage.getItem('id'), sessionStorage.getItem('moduloId')).subscribe(data => {
+      this._service.GetCitas(this.settings.user['id'], sessionStorage.getItem('moduloId')).subscribe(data => {
         if (data != 417) {
           this.GetTicket(data);
           setInterval(() => this.minutosEnAtencion += 1, 60000);
@@ -183,7 +186,7 @@ export class SeguimientoTicketComponent implements OnInit {
         else {
           this.popToast('warning', 'Seguimiento', 'No hay mas citas en espera');
           this.Reinciar();
-         
+
         }
       });
     }
@@ -229,7 +232,7 @@ export class SeguimientoTicketComponent implements OnInit {
 
        let horarioId = result.horarioId;
 
-        var datos = { candidatoId: this.ticket[0].candidato[0].candidatoId, estatusId: estatusId, requisicionId: requi, horarioId: horarioId, tipoMediosId: result.mediosId, ReclutadorId: sessionStorage.getItem('id') };
+        var datos = { candidatoId: this.ticket[0].candidato[0].candidatoId, estatusId: estatusId, requisicionId: requi, horarioId: horarioId, tipoMediosId: result.mediosId, ReclutadorId: this.settings.user['id'] };
 
         this.serviceCandidato.UpdateFuenteRecl(datos).subscribe(result =>{
           this.servicePost.SetProceso(datos).subscribe(data => {
@@ -368,8 +371,8 @@ export class SeguimientoTicketComponent implements OnInit {
         candidatoId: candidato.candidato[0].candidatoId,
         requisicionId: row.id,
         folio: row.folio,
-        reclutador: sessionStorage.getItem('nombre'),
-        reclutadorId: sessionStorage.getItem('id'),
+        reclutador: this.settings.user['nombre'],
+        reclutadorId: this.settings.user['id'],
         estatusId: 18
       }
       this.SetApartar(procesoCandidato, candidato);
@@ -411,7 +414,7 @@ export class SeguimientoTicketComponent implements OnInit {
     this.objLiberar = [{
       RequisicionId: row.id,
       CandidatoId: candidato.candidato[0].candidatoId,
-      ReclutadorId: sessionStorage.getItem('id')
+      ReclutadorId: this.settings.user['id']
     }];
 
     this.dlgLiberar = true;
@@ -484,7 +487,7 @@ export class SeguimientoTicketComponent implements OnInit {
     dialogDlt.afterClosed().subscribe(result => {
       if (result != 417) {
         this._service.UpdateCandidatoTicket(this.ticket[0].ticketId, result.id).subscribe(data => {
-          var datos = { candidatoId: result.id, estatusId: 18, requisicionId: this.ticket[0].requisicionId, ReclutadorId: sessionStorage.getItem('id') };
+          var datos = { candidatoId: result.id, estatusId: 18, requisicionId: this.ticket[0].requisicionId, ReclutadorId: this.settings.user['id'] };
 
           this.servicePost.SetProceso(datos).subscribe(data => {
             this.GetTicket(this.ticket[0].ticketId);

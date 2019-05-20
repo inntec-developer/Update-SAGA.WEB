@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
-import { RequisicionesService } from '../../../service';
-import { TicketsRegisterComponent } from '../../../components/tickets-register/tickets-register.component';
+
 import { MatDialog } from '@angular/material';
+import { RequisicionesService } from '../../../service';
+import { SettingsService } from '../../../core/settings/settings.service';
+import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
+import { TicketsRegisterComponent } from '../../../components/tickets-register/tickets-register.component';
+
 const swal = require('sweetalert');
 
 @Component({
@@ -20,7 +23,12 @@ export class TicketsInicioComponent implements OnInit {
   btnCita = false;
   user: string;
   pass: string;
-  constructor(private _service: SistTicketsService, private service: RequisicionesService, private dialog: MatDialog,) { }
+  constructor(
+    private _service: SistTicketsService,
+    private service: RequisicionesService,
+    private dialog: MatDialog,
+    private settings: SettingsService) { }
+
 
   ngOnInit() {
     sessionStorage.removeItem('candidatoId');
@@ -72,16 +80,16 @@ export class TicketsInicioComponent implements OnInit {
   //   {
   //      candidatoId = sessionStorage.getItem('candidatoId');
   //   }
-  
+
   //   this._service.GetTicketSinCita(requisicionId, candidatoId).subscribe(data => {
   //     this.num = data;
   //   })
 
   // }
 
-  
+
   GetMisVacantes() {
-    this.service.getRequiReclutador(sessionStorage.getItem('id')).subscribe(data => {
+    this.service.getRequiReclutador(this.settings.user['id']).subscribe(data => {
       this.dataSource = data;
     });
   }

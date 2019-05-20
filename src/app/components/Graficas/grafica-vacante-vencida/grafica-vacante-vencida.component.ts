@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
+import { SettingsService } from '../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-grafica-vacante-vencida',
@@ -16,11 +17,11 @@ export class GraficaVacanteVencidaComponent implements OnInit {
   private UsuarioId: any;
   public Vencidas:number;
 
-  constructor(private service: ComponentsService) { }
+  constructor(private service: ComponentsService, private settings: SettingsService) { }
 
   ngOnInit() {
 
-    this.UsuarioId = sessionStorage.getItem('id');
+    this.UsuarioId = this.settings.user['id'];
     // Chart.defaults.scale.ticks.beginAtZero = true;
     document.oncontextmenu=null
 

@@ -10,6 +10,7 @@ import { ExamenesService } from '../../service/Examenes/examenes.service';
 import { InfoCandidatoService } from '../../service/SeguimientoVacante/info-candidato.service';
 import { ModalDirective } from 'ngx-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SettingsService } from '../../core/settings/settings.service';
 import { log } from 'util';
 
 declare var $: any;
@@ -29,6 +30,7 @@ export class InfoCandidatoComponent implements OnInit {
 
   @ViewChild('modallib') modal;
 
+  SelectedMisVacantes: boolean = true;
   selected: boolean = false;
   rowAux = [];
 
@@ -83,7 +85,8 @@ export class InfoCandidatoComponent implements OnInit {
     private toasterService: ToasterService,
     private spinner: NgxSpinnerService,
     private dialog: MatDialog,
-    private _serviceExamen: ExamenesService
+    private _serviceExamen: ExamenesService,
+    private settings: SettingsService
   ) {
     this.registros_v = 0;
     this.registros_p = 0;
@@ -92,8 +95,9 @@ export class InfoCandidatoComponent implements OnInit {
       vBtra: null,
       folio: null
     }
-    this.usuario = sessionStorage.getItem('nombre');
-    this.usuarioId = sessionStorage.getItem('id')
+    debugger;
+    this.usuario = this.settings.user['nombre'];
+    this.usuarioId = this.settings.user['id']
     this.getMisVacates();
   }
 
@@ -105,6 +109,7 @@ export class InfoCandidatoComponent implements OnInit {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
     if (changes.CandidatoId && !changes.CandidatoId.isFirstChange()) {
+      this.SelectedMisVacantes = true;
       this.ngOnInit();
       this.getPostulaciones();
       this.refreshTable_v()
@@ -138,7 +143,7 @@ export class InfoCandidatoComponent implements OnInit {
 
       this.candidato = {
         id: data.id,
-        picture: sessionStorage.getItem('ConexionBolsa') + data.foto,
+        picture: ApiConection.ServiceUrlBolsa + data.foto,
         nombre: data.nombre,
         aboutMe: data.aboutMe.length != 0 ? data.aboutMe[0]['acercaDeMi'] : null,
         edad: this.validarFecha(data.fechaNacimiento),
@@ -159,6 +164,7 @@ export class InfoCandidatoComponent implements OnInit {
         propietarioId: data.propietarioId,
         urlCv: data.urlCv
       }
+      console.log('Candidato', this.candidato);
       if (this.candidato.urlCv != '') {
         this.urlCV = ApiConection.ServiceUrlBolsa + this.candidato.urlCv;
         this.ShowButtonCV = true;
@@ -169,11 +175,13 @@ export class InfoCandidatoComponent implements OnInit {
       }
 
       if (this.candidato.estatus) {
+        debugger;
         this.Estatus = this.candidato.estatus.id;
         this.procesoCandidatoId = this.candidato.estatus.estatusId;
         this.Status = this.candidato.estatus.descripcion;
         this.RequisicionId = this.candidato.estatus.requisicionId;
         this.reclutador = this.candidato.estatus.reclutador;
+        this.reclutadorId = this.candidato.estatus.reclutadorId;
       }
       this._serviceExamen.GetExamenCandidato(this.candidato.id).subscribe(exa => {
         this.examen.tecnicos = exa[0];
@@ -211,7 +219,7 @@ export class InfoCandidatoComponent implements OnInit {
   ];
 
   getMisVacates() {
-    this._serviceCandidato.getMisVacantes(sessionStorage.getItem('id')).subscribe(data => {
+    this._serviceCandidato.getMisVacantes(this.settings.user['id']).subscribe(data => {
       this.dataSource_v = data;
     });
   }
@@ -322,7 +330,7 @@ export class InfoCandidatoComponent implements OnInit {
     setTimeout(() => {
       this.columns.forEach(element => {
         element.filtering.filterString = '';
-        (<HTMLInputElement>document.getElementById(element.name)).value = '';
+        (<HTMLInputElement>document.getElementById(element.title)).value = '';
       });
       this.infoRequiId = null;
       this.infoFolio = null;
@@ -331,9 +339,10 @@ export class InfoCandidatoComponent implements OnInit {
     this.vacante = {};
   }
   public clearfilters() {
+    debugger;
     this.columns.forEach(element => {
       element.filtering.filterString = '';
-      (<HTMLInputElement>document.getElementById(element.name)).value = '';
+      (<HTMLInputElement>document.getElementById(element.title)).value = '';
     });
     this.onChangeTable_v(this.config_v);
     this.vacante = {};
@@ -542,7 +551,7 @@ export class InfoCandidatoComponent implements OnInit {
     this.objLiberar.push({
       RequisicionId: this.RequisicionId,
       CandidatoId: this.CandidatoId,
-      ReclutadorId: sessionStorage.getItem('id'),
+      ReclutadorId: this.settings.user['id'],
       ProcesoCandidatoId: this.Estatus,
 
     })
@@ -555,7 +564,7 @@ export class InfoCandidatoComponent implements OnInit {
     this.objLiberar.push({
       RequisicionId: this.vacante.id,
       CandidatoId: this.CandidatoId,
-      ReclutadorId: sessionStorage.getItem('id'),
+      ReclutadorId: this.settings.user['id'],
       ProcesoCandidatoId: this.Estatus,
 
     })
@@ -592,7 +601,7 @@ export class InfoCandidatoComponent implements OnInit {
       var data = {
         RequisicionId: this.vacante.id,
         CandidatoId: this.CandidatoId,
-        ReclutadorId: sessionStorage.getItem('id'),
+        ReclutadorId: this.settings.user['id'],
         MotivoId: result.motivo,
         ProcesoCandidatoId: this.Estatus,
         Comentario: result.comentario,

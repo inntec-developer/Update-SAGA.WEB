@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validator, Validators } from '@angular/forms';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
+import { SettingsService } from '../../../core/settings/settings.service';
 import { catalogos } from '../../../models/catalogos/catalogos';
 
 // Servicios
@@ -28,7 +29,7 @@ export class TipoUsuarioComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private services: CatalogosService ) {
+  constructor(private services: CatalogosService, private settings: SettingsService ) {
     this.formTipoUsuario = new FormGroup({
       id: new FormControl(),
       tipo: new FormControl({value: '', disabled: true}, [Validators.required])
@@ -59,7 +60,7 @@ export class TipoUsuarioComponent implements OnInit, OnChanges {
   Save() {
     const catalogo: catalogos = new catalogos();
     this.SelectedTipoUsuario !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
-    catalogo.usuario = sessionStorage.getItem('usuario');
+    catalogo.usuario = this.settings.user['usuario'];
     catalogo.Catalogos = {
       Id: 41,
       Nombre: 'Tipo de usuarios',

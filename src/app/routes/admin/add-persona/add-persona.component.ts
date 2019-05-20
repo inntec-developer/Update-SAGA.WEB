@@ -5,6 +5,7 @@ import { AdminServiceService } from '../../../service/AdminServicios/admin-servi
 import { ApiConection } from '../../../service/api-conection.service';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material';
+import { SettingsService } from '../../../core/settings/settings.service';
 import { UploadImgsComponent } from '../upload-imgs/upload-imgs.component';
 
 @Component({
@@ -43,7 +44,8 @@ export class AddPersonaComponent implements OnInit {
     private service: AdminServiceService,
     public fb: FormBuilder,
     public dialog: MatDialog,
-    private toasterService: ToasterService) {
+    private toasterService: ToasterService,
+    private settings: SettingsService) {
   }
 
   ngOnInit() {
@@ -282,7 +284,10 @@ export class AddPersonaComponent implements OnInit {
       liderId: user.liderId
 
     }
-    sessionStorage.setItem('usuario', user.usuario);
+    if(user.entidadId === this.settings.user['id']){
+      this.settings.user['usuario'] = user.usuario;
+    }
+
     this.service.UpdateUsuario(u)
       .subscribe(data => {
         if (data == 201) {
