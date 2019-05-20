@@ -39,7 +39,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <mat-accordion class="example-headers-align">
-                        <mat-expansion-panel *ngFor="let item of Clasifica" [expanded]="step === item.id" (opened)="setStep(item.id)" hideToggle="true" class="{{item.publica?'':'hidden'}}">
+                        <mat-expansion-panel *ngFor="let item of Clasifica" [expanded]="step === item.id" (opened)="setStep(item.id)" hideToggle="true">
                             <mat-expansion-panel-header>
                                 <mat-panel-title style="font-weight: bold;">
                                     {{item.nombre}}
@@ -81,76 +81,6 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <!-- <tr>
-                                                                <td>
-                                                                    <div>
-                                                                        <h5 class="font-bold">{{item2.nombre}}</h5>
-                                                                    </div>
-                                                                    <div>
-                                                                        <mat-slide-toggle [color]="primary" [checked]="item2.resumen" (change)="SetResumen(item2.id,item2.nombre, $event.checked)">
-                                                                        </mat-slide-toggle>
-                                                                    </div>
-                                                                </td>
-                                                            </tr> -->
-                                                            <!-- <tr>
-                                                                <td>
-                                                                    <p>Resumen</p>
-                                                                </td>
-                                                                <td>
-                                                                    <label class="switch  switch-lg danger">
-                                                                                    <div *ngIf="item2.resumen; then pintaSI else pintaNo"></div>
-                                                                                    <ng-template #pintaSI>
-                                                                                        <input checked id="Resumen_{{item2.id}}" (click)="SetResumen(item2.id,item2.nombre)" type="checkbox" />
-                                                                                    </ng-template>
-                                                                                    <ng-template #pintaNo>
-                                                                                        <input id="Resumen_{{item2.id}}" (click)="SetResumen(item2.id,item2.nombre)" type="checkbox" />
-                                                                                    </ng-template>
-                                                                                    <span></span>
-                                                                                    </label>
-                                                                </td>
-                                                                <td>Detalle</td>
-                                                                <td>
-                                                                    <label class="switch switch-lg">
-                                                                                        <div *ngIf="item2.detalle; then pintaSId else pintaNod"></div>
-                                                                                        <ng-template #pintaSId>
-                                                                                         <input checked id="Detalle_{{item2.id}}" (click)="SetDetalle(item2.id,item2.nombre)" type="checkbox" />
-                                                                                        </ng-template>
-                                                                                        <ng-template #pintaNod>
-                                                                                         <input id="Detalle_{{item2.id}}" (click)="SetDetalle(item2.id,item2.nombre)" type="checkbox" />
-                                                                                        </ng-template>
-                                                                                        <span></span>
-                                                                                    </label>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                                <td>Detalle</td>
-                                                                                <td>
-                                                                                    <label class="switch switch-lg">
-                                                              <div *ngIf="item2.detalle; then pintaSId else pintaNod"></div>
-                                                              <ng-template #pintaSId>
-                                                                <input checked id="Detalle_{{item2.id}}" (click)="SetDetalle(item2.id,item2.nombre)" type="checkbox" />
-                                                              </ng-template>
-                                                              <ng-template #pintaNod>
-                                                                <input id="Detalle_{{item2.id}}" (click)="SetDetalle(item2.id,item2.nombre)" type="checkbox" />
-                                                              </ng-template>
-                                                              <span></span>
-                                                            </label>
-                                                                                </td>
-                                                                            </tr>
-
-                                                            <tr>
-                                                                <td colspan="1">
-                                                                            <form class="example-form">
-                                                                                  <mat-form-field class="example-full-width">
-                                                                                    <textarea matInput placeholder="Descripcion"></textarea>
-                                                                                  </mat-form-field>
-                                                                                </form>
-                                                                          </td>
-                                                                            <td>
-                                                                              <button (click)="Descripcion()" class="mb-sm btn btn-success btn-outline" type="button">Guardar</button>
-                                    
-                                                                            </td>
-                                                            </tr> -->
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -283,7 +213,7 @@
                                         <th *ngIf="Vistas.Id57"><strong>Activo</strong></th>
                                         <th *ngIf="Vistas.Id58"><strong>Principal</strong></th>
                                     </tr>
-                                    <tr *ngFor="let telefono of ViewRequi?.telefono[0]; let i = index ">
+                                    <tr *ngFor="let telefono of telefono; let i = index ">
                                         <td *ngIf="Vistas.Id54"><span>{{telefono?.tipo}}</span></td>
                                         <td *ngIf="Vistas.Id55"><span>{{telefono?.telefono}}</span></td>
                                         <td *ngIf="Vistas.Id56"><span>{{telefono?.extension}}</span></td>
@@ -301,7 +231,7 @@
                                         <th *ngIf="Vistas.Id64"><strong>Telefono</strong></th>
                                         <th *ngIf="Vistas.Id65"><strong>Email</strong></th>
                                     </tr>
-                                    <tr *ngFor="let contacto of ViewRequi?.contactos[0]; let i = index ">
+                                    <tr *ngFor="let contacto of contactos; let i = index ">
                                         <td *ngIf="Vistas.Id60">{{contacto?.nombre}}</td>
                                         <td *ngIf="Vistas.Id61">{{contacto?.puesto}}</td>
                                         <td *ngIf="Vistas.Id62">{{contacto?.tipoEntidad}}</td>
@@ -327,7 +257,7 @@
                                                 <th *ngIf="Vistas.Id73"><strong>Escolaridad: </strong></th>
                                                 <th *ngIf="Vistas.Id72"><strong>Nivel: </strong></th>
                                             </tr>
-                                            <tr *ngFor="let escolaridades of ViewRequi?.escolaridadesRequi; let i = index">
+                                            <tr *ngFor="let escolaridades of escolaridadesRequi; let i = index">
                                                 <td *ngIf="Vistas.Id73"><span>{{escolaridades?.gradoEstudio}}</span></td>
                                                 <td *ngIf="Vistas.Id72"><span>{{escolaridades?.estadoEstudio}}</span></td>
                                             </tr>
@@ -359,7 +289,7 @@
                                         <th *ngIf="Vistas.Id83"><strong>Especificaciones</strong></th>
                                         <th *ngIf="Vistas.Id84"><strong>Activo</strong></th>
                                     </tr>
-                                    <tr *ngFor="let horario of ViewRequi?.horariosRequi; let i = index ">
+                                    <tr *ngFor="let horario of horariosRequi; let i = index ">
                                         <td *ngIf="Vistas.Id77"><span>{{horario?.nombre}}</span></td>
                                         <td *ngIf="Vistas.Id78"><span></span>{{horario?.deDia}}</td>
                                         <td *ngIf="Vistas.Id79"><span></span>{{horario?.aDia}}</td>
@@ -377,7 +307,7 @@
                                         <th *ngIf="Vistas.Id87"><strong>Cantidad</strong></th>
                                         <th *ngIf="Vistas.Id88"><strong>Observaciones</strong></th>
                                     </tr>
-                                    <tr *ngFor="let beneficio of ViewRequi?.beneficiosRequi; let i = index ">
+                                    <tr *ngFor="let beneficio of beneficiosRequi; let i = index ">
                                         <td *ngIf="Vistas.Id86"><span>{{beneficio?.tipoBeneficio}}</span></td>
                                         <td *ngIf="Vistas.Id87"><span>{{beneficio?.cantidad}}</span></td>
                                         <td *ngIf="Vistas.Id88"><span>{{beneficio?.observaciones}}</span></td>
@@ -501,7 +431,7 @@
                                         <th *ngIf="Vistas.Id111"><strong>Nombre</strong></th>
                                         <th *ngIf="Vistas.Id112"><strong>Descripcion</strong></th>
                                     </tr>
-                                    <tr *ngFor="let psicodamsa of ViewRequi?.psicoDamsa; let i = index">
+                                    <tr *ngFor="let psicodamsa of psicoDamsa; let i = index">
                                         <td *ngIf="Vistas.Id111"><span>{{psicodamsa?.tipoPsicometria}}</span></td>
                                         <td *ngIf="Vistas.Id112"><span>{{psicodamsa?.descripcion}}</span></td>
                                     </tr>
@@ -545,7 +475,7 @@
                                         <th *ngIf="Vistas.Id244"><strong>Nombre</strong></th>
                                         <th *ngIf="Vistas.Id245"><strong>Descripcion</strong></th>
                                     </tr>
-                                    <tr *ngFor="let psico of ViewRequi?.psicoCliente; let i = index">
+                                    <tr *ngFor="let psico of psicoCliente; let i = index">
                                         <td *ngIf="Vistas.Id244"><span>{{psico?.psicometria}}</span></td>
                                         <td *ngIf="Vistas.Id245"><span>{{psico?.descripcion}}</span></td>
                                     </tr>
@@ -572,19 +502,19 @@
             </ng-template>
             <div class="row">
                 <div class="col-md-6">
-                    <mat-accordion class="example-headers-align">
-                        <mat-expansion-panel *ngFor="let item of Clasifica" [expanded]="stepd" (opened)="setStepD(item.id)" hideToggle="true" class="{{item.publica?'':'hidden'}}">
+                    <mat-accordion>
+                        <mat-expansion-panel *ngFor="let detalle of Clasifica" [expanded]="stepd === detalle.id" (opened)="setStepD(detalle.id)" hideToggle="true">
                             <mat-expansion-panel-header>
                                 <mat-panel-title style="font-weight: bold;">
-                                    {{item.nombre}}
+                                    {{detalle.nombre}}
                                 </mat-panel-title>
                                 <mat-panel-description>
-                                    {{item.descripcion}}
+                                    {{detalle.descripcion}}
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
                             <div class="row">
                                 <div *ngFor="let item2 of General">
-                                    <div class="col-md-12" *ngIf="item.id == item2.idPadre;">
+                                    <div class="col-md-12" *ngIf="detalle.id == item2.idPadre;">
                                         <div class="panel panel-default sombra">
                                             <div class="panel-body">
                                                 <div class="table-responsive">
@@ -601,65 +531,6 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <!-- <tr>
-                                                                <td>
-                                                                    <p>Resumen</p>
-                                                                </td>
-                                                                <td>
-                                                                    <label class="switch  switch-lg danger">
-                                                                                            <div *ngIf="item2.resumen; then pintaSI else pintaNo"></div>
-                                                                                            <ng-template #pintaSI>
-                                                                                                <input checked id="Resumen_{{item2.id}}" (click)="SetResumen(item2.id,item2.nombre)" type="checkbox" />
-                                                                                            </ng-template>
-                                                                                            <ng-template #pintaNo>
-                                                                                                <input id="Resumen_{{item2.id}}" (click)="SetResumen(item2.id,item2.nombre)" type="checkbox" />
-                                                                                            </ng-template>
-                                                                                            <span></span>
-                                                                                            </label>
-                                                                </td>
-                                                                <td>Detalle</td>
-                                                                <td>
-                                                                    <label class="switch switch-lg">
-                                                                                                <div *ngIf="item2.detalle; then pintaSId else pintaNod"></div>
-                                                                                                <ng-template #pintaSId>
-                                                                                                 <input checked id="Detalle_{{item2.id}}" (click)="SetDetalle(item2.id,item2.nombre)" type="checkbox" />
-                                                                                                </ng-template>
-                                                                                                <ng-template #pintaNod>
-                                                                                                 <input id="Detalle_{{item2.id}}" (click)="SetDetalle(item2.id,item2.nombre)" type="checkbox" />
-                                                                                                </ng-template>
-                                                                                                <span></span>
-                                                                                            </label>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                                        <td>Detalle</td>
-                                                                                        <td>
-                                                                                            <label class="switch switch-lg">
-                                                                      <div *ngIf="item2.detalle; then pintaSId else pintaNod"></div>
-                                                                      <ng-template #pintaSId>
-                                                                        <input checked id="Detalle_{{item2.id}}" (click)="SetDetalle(item2.id,item2.nombre)" type="checkbox" />
-                                                                      </ng-template>
-                                                                      <ng-template #pintaNod>
-                                                                        <input id="Detalle_{{item2.id}}" (click)="SetDetalle(item2.id,item2.nombre)" type="checkbox" />
-                                                                      </ng-template>
-                                                                      <span></span>
-                                                                    </label>
-                                                                                        </td>
-                                                                                    </tr>
-
-                                                            <tr>
-                                                                <td colspan="1">
-                                                                                    <form class="example-form">
-                                                                                          <mat-form-field class="example-full-width">
-                                                                                            <textarea matInput placeholder="Descripcion"></textarea>
-                                                                                          </mat-form-field>
-                                                                                        </form>
-                                                                                  </td>
-                                                                                    <td>
-                                                                                      <button (click)="Descripcion()" class="mb-sm btn btn-success btn-outline" type="button">Guardar</button>
-                                            
-                                                                                    </td>
-                                                            </tr> -->
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -668,20 +539,10 @@
                                     </div>
                                 </div>
                             </div>
-
                             <mat-action-row>
                                 <button mat-button color="primary" (click)="nextStepD()">Cerrar</button>
-
                             </mat-action-row>
                         </mat-expansion-panel>
-
-                        <!-- <div class="col-xs-12" style="margin:20px">
-                                                  <div class="col-xs-2  pull-right">
-                                                    <button _ngcontent-c40="" class="mb-sm btn-md btn btn-success btn-outline "  container="body" placement="bottom" tooltip="Publicar" type="button" tabindex="0" ng-reflect-router-link="/ventas/crearRequisicion" aria-describedby="cdk-describedby-message-2" cdk-describedby-host="" ng-reflect-message="Nueva Requisición">
-                                                        <em _ngcontent-c40="" class="fa fa-download"></em> Publicar vacante
-                                                      </button>
-                                                  </div>
-                                              </div> -->
                     </mat-accordion>
                 </div>
                 <div class="col-md-6">
@@ -787,7 +648,7 @@
                                         <th *ngIf="Vistasdtl.Idd57"><strong>Activo</strong></th>
                                         <th *ngIf="Vistasdtl.Idd58"><strong>Principal</strong></th>
                                     </tr>
-                                    <tr *ngFor="let telefono of ViewRequi?.telefono[0]; let i = index ">
+                                    <tr *ngFor="let telefono of telefono; let i = index ">
                                         <td *ngIf="Vistasdtl.Idd54"><span>{{telefono?.tipo}}</span></td>
                                         <td *ngIf="Vistasdtl.Idd55"><span>{{telefono?.telefono}}</span></td>
                                         <td *ngIf="Vistasdtl.Idd56"><span>{{telefono?.extension}}</span></td>
@@ -805,7 +666,7 @@
                                         <th *ngIf="Vistasdtl.Idd64"><strong>Telefono</strong></th>
                                         <th *ngIf="Vistasdtl.Idd65"><strong>Email</strong></th>
                                     </tr>
-                                    <tr *ngFor="let contacto of ViewRequi?.contactos[0]; let i = index ">
+                                    <tr *ngFor="let contacto of contactos; let i = index ">
                                         <td *ngIf="Vistasdtl.Idd60">{{contacto?.nombre}}</td>
                                         <td *ngIf="Vistasdtl.Idd61">{{contacto?.puesto}}</td>
                                         <td *ngIf="Vistasdtl.Idd62">{{contacto?.tipoEntidad}}</td>
@@ -831,7 +692,7 @@
                                                 <th *ngIf="Vistasdtl.Idd73"><strong>Escolaridad: </strong></th>
                                                 <th *ngIf="Vistasdtl.Idd72"><strong>Nivel: </strong></th>
                                             </tr>
-                                            <tr *ngFor="let escolaridades of ViewRequi?.escolaridadesRequi; let i = index">
+                                            <tr *ngFor="let escolaridades of escolaridadesRequi; let i = index">
                                                 <td *ngIf="Vistasdtl.Idd73"><span>{{escolaridades?.gradoEstudio}}</span></td>
                                                 <td *ngIf="Vistasdtl.Idd72"><span>{{escolaridades?.estadoEstudio}}</span></td>
                                             </tr>
@@ -863,7 +724,7 @@
                                         <th *ngIf="Vistasdtl.Idd83"><strong>Especificaciones</strong></th>
                                         <th *ngIf="Vistasdtl.Idd84"><strong>Activo</strong></th>
                                     </tr>
-                                    <tr *ngFor="let horario of ViewRequi?.horariosRequi; let i = index ">
+                                    <tr *ngFor="let horario of horariosRequi; let i = index ">
                                         <td *ngIf="Vistasdtl.Idd77"><span>{{horario?.nombre}}</span></td>
                                         <td *ngIf="Vistasdtl.Idd78"><span></span>{{horario?.deDia}}</td>
                                         <td *ngIf="Vistasdtl.Idd79"><span></span>{{horario?.aDia}}</td>
@@ -881,7 +742,7 @@
                                         <th *ngIf="Vistasdtl.Idd87"><strong>Cantidad</strong></th>
                                         <th *ngIf="Vistasdtl.Idd88"><strong>Observaciones</strong></th>
                                     </tr>
-                                    <tr *ngFor="let beneficio of ViewRequi?.beneficiosRequi; let i = index ">
+                                    <tr *ngFor="let beneficio of beneficiosRequi; let i = index ">
                                         <td *ngIf="Vistasdtl.Idd86"><span>{{beneficio?.tipoBeneficio}}</span></td>
                                         <td *ngIf="Vistasdtl.Idd87"><span>{{beneficio?.cantidad}}</span></td>
                                         <td *ngIf="Vistasdtl.Idd88"><span>{{beneficio?.observaciones}}</span></td>
@@ -1005,7 +866,7 @@
                                         <th *ngIf="Vistasdtl.Idd111"><strong>Nombre</strong></th>
                                         <th *ngIf="Vistasdtl.Idd112"><strong>Descripcion</strong></th>
                                     </tr>
-                                    <tr *ngFor="let psicodamsa of ViewRequi?.psicoDamsa; let i = index">
+                                    <tr *ngFor="let psicodamsa of psicoDamsa; let i = index">
                                         <td *ngIf="Vistasdtl.Idd111"><span>{{psicodamsa?.tipoPsicometria}}</span></td>
                                         <td *ngIf="Vistasdtl.Idd112"><span>{{psicodamsa?.descripcion}}</span></td>
                                     </tr>
@@ -1049,7 +910,7 @@
                                         <th *ngIf="Vistasdtl.Idd244"><strong>Nombre</strong></th>
                                         <th *ngIf="Vistasdtl.Idd245"><strong>Descripcion</strong></th>
                                     </tr>
-                                    <tr *ngFor="let psico of ViewRequi?.psicoCliente; let i = index">
+                                    <tr *ngFor="let psico of psicoCliente; let i = index">
                                         <td *ngIf="Vistasdtl.Idd244"><span>{{psico?.psicometria}}</span></td>
                                         <td *ngIf="Vistasdtl.Idd245"><span>{{psico?.descripcion}}</span></td>
                                     </tr>

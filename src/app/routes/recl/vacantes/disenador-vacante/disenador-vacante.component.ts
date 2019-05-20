@@ -42,6 +42,13 @@ export class DisenadorVacanteComponent implements OnInit {
   public ListaCon : Array<any> = [];
   public Clasifica : any[];
   public ViewRequi: any[];
+  public contactos: any[];
+  public escolaridadesRequi: any[];
+  public horariosRequi: any[];
+  public beneficiosRequi: any[];
+  public psicoDamsa: any[];
+  public psicoCliente: any[];
+  public telefono: any[];
   public IdHdr: number;
   public IdDtl: number;
   public Vistas = new views;
@@ -89,7 +96,19 @@ export class DisenadorVacanteComponent implements OnInit {
     .subscribe( data => {
       this.General = data;
       this.ViewRequi = data[0].requi;
+      this.contactos = data[0].requi.contactos[0];
+      this.escolaridadesRequi = data[0].requi.escolaridadesRequi;
+      this.horariosRequi = data[0].requi.horariosRequi;
+      this.beneficiosRequi = data[0].requi.beneficiosRequi;
+      this.psicoDamsa = data[0].requi.psicoDamsa;
+      this.psicoCliente = data[0].requi.psicoCliente;
+      this.telefono = data[0].requi.telefono[0];
       console.log(this.ViewRequi);
+      for (let index = 0; index < data.length; index++) {
+        const element = data[index];
+        this.View(element.id, element.resumen, 'H');
+        this.View(element.id, element.resumen, 'D');
+      }
     });
 
     this.service.getCampos()
@@ -168,7 +187,6 @@ export class DisenadorVacanteComponent implements OnInit {
   }
 
   View(Id: any, view: boolean, tp: string) {
-    debugger;
     if (tp === 'H') {
       switch (Id) {  // Vistas del header
         case 10:
@@ -865,6 +883,7 @@ export class DisenadorVacanteComponent implements OnInit {
  }
 
 setStepD(index: number) {
+  console.log(index);
   this.stepd = index;
 }
 
