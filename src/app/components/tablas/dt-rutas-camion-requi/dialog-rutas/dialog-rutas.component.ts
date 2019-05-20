@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { RequisicionesService } from '../../../../service';
+import { SettingsService } from '../../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-dialog-rutas',
@@ -22,7 +23,8 @@ export class DialogRutasComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private rutasService : RequisicionesService,
     private dialogRutas : MatDialogRef<DialogRutasComponent>,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private settings: SettingsService
   ) {
     dialogRutas.disableClose = true;
   }
@@ -61,7 +63,7 @@ export class DialogRutasComponent implements OnInit {
       DireccionId: this.DireccionId,
       Ruta: this.RutaCamion,
       Via: this.ViaCamion,
-      Usuario: sessionStorage.getItem('usuario')
+      Usuario: this.settings.user['usuario']
     }
     this.rutasService.addRutaCamion(rc).subscribe(data => {
       if (data == 200) {
@@ -89,7 +91,7 @@ export class DialogRutasComponent implements OnInit {
       DireccionId: this.DireccionId,
       Ruta: this.RutaCamion,
       Via: this.ViaCamion,
-      Usuario: sessionStorage.getItem('usuario')
+      Usuario: this.settings.user['usuario']
     }
     this.rutasService.updateRutaCamion(rc).subscribe(data => {
       if (data == 200) {

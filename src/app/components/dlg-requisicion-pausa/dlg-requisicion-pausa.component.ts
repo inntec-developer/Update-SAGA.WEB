@@ -4,6 +4,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { CandidatosService } from './../../service/Candidatos/candidatos.service';
 import { ComentariosService } from './../../service/Comentarios/comentarios.service';
+import { SettingsService } from '../../core/settings/settings.service';
 
 @Component({
   selector: 'app-dlg-requisicion-pausa',
@@ -21,6 +22,7 @@ export class DlgRequisicionPausaComponent implements OnInit {
   private serviceCandidato: CandidatosService,
   private serviceComentarios: ComentariosService,
   private toasterService: ToasterService,
+  private settings: SettingsService,
   private dialog: MatDialogRef<DlgRequisicionPausaComponent>) { }
 
   ngOnInit() {
@@ -42,8 +44,8 @@ export class DlgRequisicionPausaComponent implements OnInit {
         Comentario: this.comentario,
         RequisicionId: this.requi.requisicionId,
         MotivoId: this.motivoId,
-        UsuarioAlta: sessionStorage.getItem('usuario'),
-        ReclutadorId: sessionStorage.getItem('id'),
+        UsuarioAlta: this.settings.user['usuario'],
+        ReclutadorId: this.settings.user['id'],
         EstatusId: 39
       }
       this.serviceComentarios.addComentarioVacante(Comentario).subscribe(data => {

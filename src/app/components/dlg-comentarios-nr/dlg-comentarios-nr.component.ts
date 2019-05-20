@@ -4,6 +4,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { CandidatosService } from './../../service/Candidatos/candidatos.service';
 import { ComentariosService } from './../../service/Comentarios/comentarios.service';
+import { SettingsService } from './../../core/settings/settings.service';
 
 @Component({
   selector: 'app-dlg-comentarios-nr',
@@ -21,6 +22,7 @@ export class DlgComentariosNRComponent implements OnInit, AfterViewInit {
    private serviceCandidato: CandidatosService,
    private serviceComentarios: ComentariosService,
    private toasterService: ToasterService,
+   private settings: SettingsService,
    private dialog: MatDialogRef<DlgComentariosNRComponent>) { }
 
   ngOnInit() {
@@ -49,8 +51,8 @@ export class DlgComentariosNRComponent implements OnInit, AfterViewInit {
         CandidatoId: this.usuario.CandidatoId,
         RequisicionId: this.usuario.requisicionId,
         MotivoId: this.motivoId,
-        Usuario: sessionStorage.getItem('usuario'),
-        UsuarioId: sessionStorage.getItem('id')
+        Usuario: this.settings.user['usuario'],
+        UsuarioId: this.settings.user['id']
       }
 
       this.serviceComentarios.AddComentariosNR(Comentario).subscribe(data => {

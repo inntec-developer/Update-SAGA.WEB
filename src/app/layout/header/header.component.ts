@@ -49,10 +49,6 @@ export class HeaderComponent implements OnInit {
     public settings: SettingsService,
     public _service: ComponentsService,
     private modalService: BsModalService) {
-    // show only a few items on demo
-    this.menuItems = menu.setEstructuraMenu().slice(0, 4); // for horizontal layout
-    this.UserId = sessionStorage.getItem('id');
-    this.admin = sessionStorage.getItem('tipoUsuario')
   }
 
   ngOnInit() {
@@ -63,7 +59,7 @@ export class HeaderComponent implements OnInit {
 
     let timer = Observable.timer(1000, 60000);
     this.subscription = timer.subscribe(x => {
-      this._service.getAlertStm(this.UserId).subscribe(elemnt => {
+      this._service.getAlertStm(this.settings.user['id']).subscribe(elemnt => {
         this.alertMessage = elemnt;
         this.NotRead = elemnt;
       });
@@ -128,7 +124,7 @@ export class HeaderComponent implements OnInit {
     });
   }
   leidoTodo() {
-    this._service.deleteAlertStm(sessionStorage.getItem('id'), true).subscribe(element => {
+    this._service.deleteAlertStm(this.settings.user['id'], true).subscribe(element => {
       if (element === 200) {
         for (let objeto in this.alertMessage) {
           this.alertMessage[objeto]['activo'] = false;
@@ -139,7 +135,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getAllAlertStm() {
-    this._service.getAllAlertStm(this.UserId).subscribe(result => {
+    this._service.getAllAlertStm(this.settings.user['id']).subscribe(result => {
       if (result != 400) {
         this.allAlertMessage = result;
         this.NotRead = this.allAlertMessage.filter(alert => alert.activo == true);

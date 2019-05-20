@@ -5,6 +5,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { CatalogosService } from '../../../../../../service';
 import { ClientesService } from '../../../../../../service/clientes/clientes.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SettingsService } from '../../../../../../core/settings/settings.service';
 
 const swal = require('sweetalert');
 
@@ -55,6 +56,7 @@ export class DireccionesClienteComponent implements OnInit {
     private _ClienteService: ClientesService,
     private toasterService: ToasterService,
     private spinner: NgxSpinnerService,
+    private settings: SettingsService
   ) {
     this.formDirecciones = new FormGroup({
       TipoDireccion: new FormControl('', [Validators.required]),
@@ -74,7 +76,7 @@ export class DireccionesClienteComponent implements OnInit {
 
   ngOnInit() {
     this.getCatalogos();
-    this.Usuario = sessionStorage.getItem('usuario');
+    this.Usuario = this.settings.user['usuario'];
     this.showFilterRowD = true;
     this.formDirecciones = this.fb.group({
       TipoDireccion: ['', [Validators.required]],

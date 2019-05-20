@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { ApiConection } from '../service/api-conection.service';
+import { SettingsService } from '../core/settings/settings.service';
 
 declare var $: any;
 
@@ -16,15 +18,15 @@ export class LayoutComponent implements OnInit {
     private mouseStop = null;
     public lock: boolean;
 
-    constructor() { }
+    constructor(private settings: SettingsService) { }
 
     ngOnInit() {
     }
 
     Sesion() {
-        if (sessionStorage.getItem('usuario') === 'DAMSA.JCERVANTES' || sessionStorage.getItem('usuario') === 'DAMSA.MVENTURA'
-        || sessionStorage.getItem('usuario') === 'DAMSA.NINIGUEZ' || sessionStorage.getItem('usuario') === 'DAMSA.IDELATORRE'
-        || sessionStorage.getItem('usuario') === 'DAMSA.BMORALES') {
+        if (this.settings.user['usuario'] === 'DAMSA.JCERVANTES' || this.settings.user['usuario'] === 'DAMSA.MVENTURA'
+        || this.settings.user['usuario'] === 'DAMSA.NINIGUEZ' || this.settings.user['usuario'] === 'DAMSA.IDELATORRE'
+        || this.settings.user['usuario'] === 'DAMSA.BMORALES') {
 
             clearTimeout(this.mouseStop);
             this.mouseStop = setTimeout(() => {
@@ -32,7 +34,7 @@ export class LayoutComponent implements OnInit {
             }, 900000);
 
         } else {
-            if (sessionStorage.getItem('id')) { // Nos percatamos si ya inicio sesión.
+            if (this.settings.user['id']) { // Nos percatamos si ya inicio sesión.
                 clearTimeout(this.mouseStop);
                 this.mouseStop = setTimeout(() => {
                 this.lock = true;

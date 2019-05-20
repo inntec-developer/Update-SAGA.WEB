@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
 import { DataTableModule } from 'primeng/primeng';
+import { SettingsService } from '../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-grafica-vacante-cubierta',
@@ -13,7 +14,10 @@ import { DataTableModule } from 'primeng/primeng';
 
 export class GraficaVacanteCubiertaComponent implements OnInit {
 
-  constructor(private _ServiceComponente: ComponentsService) {
+  constructor(
+    private _ServiceComponente: ComponentsService,
+    private settings: SettingsService
+    ) {
   }
 
   Chart: Chart;
@@ -22,7 +26,7 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
 
   public NumeroVacantes: number;
   ngOnInit() {
-    this.UsuarioId = sessionStorage.getItem('id');
+    this.UsuarioId = this.settings.user['id'];
     this._ServiceComponente.getVCubierta(this.UsuarioId).subscribe(result => {
 
       let cubiertas = result['cubiertas'];

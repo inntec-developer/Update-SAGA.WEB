@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
 import { DataTableModule } from 'primeng/primeng';
+import { SettingsService } from '../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-grafica-vacantes-pie',
@@ -14,7 +15,7 @@ import { DataTableModule } from 'primeng/primeng';
 
 export class GraficaVacantesPieComponent implements OnInit {
 
-  constructor(private _ServiceComponente: ComponentsService) {
+  constructor(private _ServiceComponente: ComponentsService, private settings: SettingsService) {
   }
 
   public Chart: Chart;
@@ -25,7 +26,7 @@ export class GraficaVacantesPieComponent implements OnInit {
   public NumeroVacantes: number;
   public RegistrosT: number = 0;
   ngOnInit() {
-    this.UsuarioId = sessionStorage.getItem('id');
+    this.UsuarioId = this.settings.user['id'];
     Chart.defaults.scale.ticks.beginAtZero = true;
     this._ServiceComponente.getGraficaVPA(this.UsuarioId).subscribe(result => {
       let vigentes = result['vigentes'];
@@ -40,9 +41,9 @@ export class GraficaVacantesPieComponent implements OnInit {
         }],
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: [
-          'Vigentes: '+ vigentes ,
-          'Por Vencer: ' + porVecner,
-          'Vencidas: ' + vencidas
+          'Vigentes: ',
+          'Por Vencer: ',
+          'Vencidas: '
         ]
       }
       this.Chart = new Chart('canvas', {

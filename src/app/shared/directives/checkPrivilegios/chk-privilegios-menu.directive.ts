@@ -1,23 +1,27 @@
 import { ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { AfterViewInit, Directive } from '@angular/core';
 
+import { SettingsService } from "../../../core/settings/settings.service";
 import { forEach } from '@angular/router/src/utils/collection';
 
 @Directive({
   selector: '[chkPrivilegiosMenu]'
 })
 export class ChkPrivilegiosMenuDirective implements AfterViewInit {
-  
-  constructor(private router: Router, private activeRoute: ActivatedRoute ) {
 
-     }
+  constructor(
+    private router: Router,
+    private activeRoute: ActivatedRoute,
+    private settings: SettingsService
+    ) {
 
-  ngAfterViewInit(){ 
+  }
+
+  ngAfterViewInit() {
     var btncreate = document.querySelectorAll("#create");
     var btnupdate = document.querySelectorAll("#update");
     var btndelete = document.querySelectorAll("#delete");
-
-    let privilegios = JSON.parse(sessionStorage.getItem('privilegios'))
+    let privilegios = this.settings.user['privilegios'];
     let ruta = this.activeRoute.snapshot.routeConfig.data;
 
     var campos = privilegios.filter(function(row){
@@ -35,7 +39,7 @@ export class ChkPrivilegiosMenuDirective implements AfterViewInit {
       }
       if(btnupdate != null && !campo.update)
       {
-        for (var i = 0; i < btnupdate.length; i++) 
+        for (var i = 0; i < btnupdate.length; i++)
         {
           var upd = btnupdate[i].querySelector("button");
           upd.setAttribute('disabled','')
@@ -50,8 +54,5 @@ export class ChkPrivilegiosMenuDirective implements AfterViewInit {
         }
       }
     });
-}
-
-  
-      
+  }
 }

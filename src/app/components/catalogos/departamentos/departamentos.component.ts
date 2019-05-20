@@ -1,10 +1,16 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges, EventEmitter, Output, ViewChild } from '@angular/core';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-// Servicios
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
-// Modelos
+import { SettingsService } from '../../../core/settings/settings.service';
 import { catalogos } from '../../../models/catalogos/catalogos';
+
+// Servicios
+
+// Modelos
+
+
 
 @Component({
   selector: 'app-departamentos',
@@ -26,7 +32,7 @@ export class DepartamentosComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor( private services: CatalogosService ) {
+  constructor( private services: CatalogosService, private settings: SettingsService ) {
     this.formDepartamentos = new FormGroup({
       id: new FormControl(),
       nombre: new FormControl({value: '', disabled: true}, [Validators.required]),
@@ -67,7 +73,7 @@ export class DepartamentosComponent implements OnInit, OnChanges {
   Save() {
     const catalogo: catalogos = new catalogos();
     this.SelectedDepartamento !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
-    catalogo.usuario = sessionStorage.getItem('usuario');
+    catalogo.usuario = this.settings.user['usuario'];
     catalogo.Catalogos = {
       Id: 42,
       Nombre: 'Departamentos',

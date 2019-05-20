@@ -2,6 +2,7 @@ import { Component, ElementRef, Input, OnInit, SimpleChanges } from '@angular/co
 
 import { ApiConection } from './../../service/api-conection.service';
 import { ComentariosService } from '../../service/Comentarios/comentarios.service';
+import { SettingsService } from '../../core/settings/settings.service';
 import { forEach } from '@angular/router/src/utils/collection';
 
 declare var $: any;
@@ -25,7 +26,8 @@ export class ComentarioVacanteComponent implements OnInit {
 
   constructor(
     private _ComentariosService: ComentariosService,
-    public elem: ElementRef
+    public elem: ElementRef,
+    private settings: SettingsService
   ) { }
 
   ngOnInit() {
@@ -81,8 +83,8 @@ export class ComentarioVacanteComponent implements OnInit {
       this.Comentario = {
         Comentario: this.comentario,
         RequisicionId: this.RequisicionId,
-        UsuarioAlta: sessionStorage.getItem('usuario'),
-        reclutadorId: sessionStorage.getItem('id'),
+        UsuarioAlta: this.settings.user['usuario'],
+        reclutadorId: this.settings.user['id'],
         MotivoId: this.MotivoId,
         EstatusId: 0
       }

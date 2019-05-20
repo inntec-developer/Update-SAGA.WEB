@@ -33,9 +33,8 @@ export class DtHorariosComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private toasterService: ToasterService,
   ) {
-    // this.ruta = this.activeRoute.snapshot.routeConfig ? 
-    // this.activeRoute.routeConfig.data.componente : 
-    // sessionStorage.getItem('ruta')
+    // this.ruta = this.activeRoute.snapshot.routeConfig ?
+    // this.activeRoute.routeConfig.data.componente :
   }
 
   ngOnInit() {

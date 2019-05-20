@@ -15,6 +15,7 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../service';
+import { SettingsService } from './../../core/settings/settings.service';
 import { element } from 'protractor';
 
 @Component({
@@ -84,7 +85,8 @@ export class ButtonsPostulacionesComponent implements OnInit {
     private toasterService: ToasterService,
     private spinner: NgxSpinnerService,
     private dialog: MatDialog,
-    private modalService: BsModalService) { }
+    private modalService: BsModalService,
+    private settings: SettingsService) { }
 
   ngOnInit() {
     this.getpostulados();
@@ -346,7 +348,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   getpostulados() {
 
-    this.service.GetProceso(this.RequisicionId, sessionStorage.getItem('id')).subscribe(data => {
+    this.service.GetProceso(this.RequisicionId, this.settings.user['id']).subscribe(data => {
       this.dataSource = [];
 
       data.forEach(element => {
@@ -461,7 +463,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
         this.dataSource[idx]['horario'] = nom[0]['nombre'];
         this.dataSource[idx]['horarioId'] = this.horarioId;
 
-        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, tipoMediosId: result.mediosId, ReclutadorId: sessionStorage.getItem('id') };
+        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, tipoMediosId: result.mediosId, ReclutadorId: this.settings.user['id'] };
 
         if (estatusId == 24) {
           this.SetApiProceso(datos, estatusId, estatus)
@@ -515,7 +517,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
     this.objLiberar =[{
       RequisicionId: this.RequisicionId,
       CandidatoId: this.candidatoId,
-      ReclutadorId: sessionStorage.getItem('id'),
+      ReclutadorId: this.settings.user['id'],
       ProcesoCandidatoId: this.ProcesoCandidatoId,
     }];
 
@@ -532,7 +534,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   //       var data = {
   //         RequisicionId: this.RequisicionId,
   //         CandidatoId: this.candidatoId,
-  //         ReclutadorId: sessionStorage.getItem('id'),
+  //         ReclutadorId: this.settings.user['id'],
   //         MotivoId: result.motivo,
   //         ProcesoCandidatoId: this.ProcesoCandidatoId,
   //         Comentario: result.comentario,
@@ -594,7 +596,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       curp: this.rowAux.curp,
       foto: this.rowAux.foto,
       requisicionId: this.RequisicionId,
-      ReclutadorId: sessionStorage.getItem('id')
+      ReclutadorId: this.settings.user['id']
     };
 
     let dialog = this.dialog.open(DlgComentariosNRComponent, {
@@ -620,7 +622,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
         this.GetHorarioRequis(estatusId, estatus);
       }
       else if (estatusId == 42) {
-        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: sessionStorage.getItem('id') };
+        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: this.settings.user['id'] };
         this.OpenDialogComentariosNR(datos, estatusId, estatus);
 
       }
@@ -631,7 +633,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
             this.GetHorarioRequis(estatusId, estatus)
           }
           else {
-            var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: sessionStorage.getItem('id') };
+            var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: this.settings.user['id'] };
             this.OpenEditarComponent(datos);
             //this.SetApiProceso(datos, estatusId, estatus);
           }
@@ -639,7 +641,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
       }
       else {
-        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: sessionStorage.getItem('id') };
+        var datos = { candidatoId: this.candidatoId, estatusId: estatusId, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: this.settings.user['id'] };
         this.SetApiProceso(datos, estatusId, estatus);
 
       }
@@ -839,7 +841,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
     }
     else {
       if (this.actualizoContratados) {
-        var datos = { candidatoId: this.candidatoId, estatusId: 24, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: sessionStorage.getItem('id') };
+        var datos = { candidatoId: this.candidatoId, estatusId: 24, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: this.settings.user['id'] };
         this.SetApiProceso(datos, 24, 'Contratado')
         this.editarContratados = false;
       }

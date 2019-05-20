@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { CandidatosService } from './../../service/Candidatos/candidatos.service';
+import { SettingsService } from '../../core/settings/settings.service';
 
 declare var $: any;
 
@@ -17,7 +18,7 @@ export class DtMisCandidatosComponent implements OnInit {
   invertX = false;
   invertY = false;
   shown = 'hover';
-  
+
   public dataSource: Array<any> = [];
   // Varaibles del paginador
   public page: number = 1;
@@ -36,13 +37,15 @@ export class DtMisCandidatosComponent implements OnInit {
 
   ReclutadorId: string;
 
-  constructor(private service: CandidatosService) {
-    this.ReclutadorId = sessionStorage.getItem('id');
+  constructor(
+    private service: CandidatosService,
+    private settings: SettingsService) {
+    this.ReclutadorId = this.settings.user['id'];
     this.misCandidatos();
    }
 
   ngOnInit() {
-    // this.ReclutadorId = sessionStorage.getItem('id');
+    // this.ReclutadorId = this.settings.user['id'];
     // this.onChangeTable(this.config);
   }
 

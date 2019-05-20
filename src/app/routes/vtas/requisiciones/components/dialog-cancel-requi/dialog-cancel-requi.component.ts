@@ -86,8 +86,8 @@ export class DialogCancelRequiComponent implements OnInit {
           let comentario = {
             Comentario: comentarioReclutador,
             RequisicionId: this.data.id,
-            UsuarioAlta: sessionStorage.getItem('usuario'),
-            ReclutadorId: sessionStorage.getItem('id'),
+            UsuarioAlta: this.settings.user['usuario'],
+            ReclutadorId: this.settings.user['id'],
             MotivoId: this.data.motivoId
           }
           this.serviceComent.addComentarioVacante(comentario).subscribe(data => {

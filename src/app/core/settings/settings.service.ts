@@ -14,10 +14,16 @@ export class SettingsService {
         // User Settings
         // -----------------------------------
         this.user = {
-            name: '',
-            job: 'USUARIO',
-            picture: '',
-            privilegios: Array<any>()
+            id : '',
+            nombre : '',
+            usuario : '',
+            email : '',
+            clave : '',
+            tipoUsuarioId : '',
+            tipo : '',
+            sucursal : '',
+            privilegios: Array<any>(),
+            foto: ''
         };
 
         // App Settings

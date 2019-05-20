@@ -5,6 +5,7 @@ import { DialogRutasComponent } from './dialog-rutas/dialog-rutas.component';
 import { MatDialog } from '@angular/material';
 import { ModalDirective } from 'ngx-bootstrap';
 import { RequisicionesService } from '../../../service';
+import { SettingsService } from '../../../core/settings/settings.service';
 
 const swal = require('sweetalert');
 
@@ -32,7 +33,8 @@ export class DtRutasCamionRequiComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private rutasService: RequisicionesService,
-    private toasterService: ToasterService) {
+    private toasterService: ToasterService,
+    private settings: SettingsService) {
 
   }
 
@@ -152,7 +154,7 @@ export class DtRutasCamionRequiComponent implements OnInit {
         DireccionId: this.ruta.direccionId,
         Ruta: this.ruta.ruta,
         Via: this.ruta.via,
-        Usuario: sessionStorage.getItem('usuario')
+        Usuario: this.settings.user['usuario']
       }
       this.rutasService.deleteRutaCamion(rc).subscribe(data => {
         if (data == 200) {

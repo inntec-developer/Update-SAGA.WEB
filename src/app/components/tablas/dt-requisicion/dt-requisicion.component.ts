@@ -12,6 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from '../../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../../service';
 import { Router } from '@angular/router';
+import { SettingsService } from '../../../core/settings/settings.service';
 
 declare var $: any;
 
@@ -88,7 +89,8 @@ export class DtRequisicionComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toasterService: ToasterService,
     private excelService: ExcelService,
-    private pipe: DatePipe
+    private pipe: DatePipe,
+    private settings: SettingsService
 
   ) { }
 
@@ -107,7 +109,7 @@ export class DtRequisicionComponent implements OnInit {
   // }
 
   getRequisiciones() {
-    this.service.getRequisiciones(sessionStorage.getItem('id')).subscribe(data => {
+    this.service.getRequisiciones(this.settings.user['id']).subscribe(data => {
       this.dataSource = data;
 
       this.totalPos = 0;

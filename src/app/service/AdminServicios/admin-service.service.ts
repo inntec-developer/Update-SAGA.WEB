@@ -28,7 +28,7 @@ export class AdminServiceService {
   private UrlAddGroupRol = ApiConection.ServiceUrl+ApiConection.addGroupRol;
   private UrlGetDepas = ApiConection.ServiceUrl+ApiConection.getDepartamentos;
   private UrlAddUser = ApiConection.ServiceUrl+ApiConection.addUser;
-  private UrlGetSession = ApiConection.ServiceUrl+ApiConection.getSession;
+  private UrlLogIn = ApiConection.ServiceUrl+ApiConection.login;
   private UrlUdActivo = ApiConection.ServiceUrl+ApiConection.udActivoUser;
   private UrlGetByDepa = ApiConection.ServiceUrl+ApiConection.getUsuariosByDepa;
   private UrlGetGrupos = ApiConection.ServiceUrl+ApiConection.GetGrupos;
@@ -230,7 +230,7 @@ export class AdminServiceService {
   }
 
   GetSession(mail :any, pass: any): Observable<any>{
-    return this.http.get(this.UrlGetSession + '?p='+ pass + '&e=' + mail)
+    return this.http.get(this.UrlLogIn + '?p='+ pass + '&e=' + mail)
             .map(result => result.json())
             .catch(this.handleError);
   }

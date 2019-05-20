@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
+import { SettingsService } from '../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-grafica-resumen',
@@ -13,11 +15,14 @@ export class GraficaResumenComponent implements OnInit {
   Data: any;
   private UsuarioId: any;
 
-  constructor(private servicio:ComponentsService) { }
+  constructor(
+    private servicio:ComponentsService,
+    private settings: SettingsService
+    ) { }
 
   ngOnInit() {
 
-    this.UsuarioId = sessionStorage.getItem('id');
+    this.UsuarioId = this.settings.user['id'];
     document.oncontextmenu=null
     this.servicio.getVResumen(this.UsuarioId).subscribe(item =>{
 
@@ -35,17 +40,17 @@ export class GraficaResumenComponent implements OnInit {
 
     this.Data = {
       labels: ['Mes 1','Mes 2','Mes 3'],
-    datasets: [{ 
+    datasets: [{
         data: [dia5Ent,dia10Ent,dia15Ent],
         label: "Entrevistados",
         borderColor: "#1E37FF",
         fill: false
-      }, { 
+      }, {
         data: [dia5Env,dia10Env,dia15Env],
         label: "Enviados",
         borderColor: "#FF4B4B",
         fill: false
-      }, { 
+      }, {
         data: [dia5Con,dia10Con,dia15Con],
         label: "Cubiertos",
         borderColor: "#0FFF5B",
@@ -58,12 +63,12 @@ export class GraficaResumenComponent implements OnInit {
       title: { text: 'Seguimiento de Vacantes' },
       data: this.Data,
       options: {
-       
+
       }
     });
   });
 
-    
+
 
   }
 }

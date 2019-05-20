@@ -5,6 +5,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { ClientesService } from '../../../../../service/clientes/clientes.service';
 import { RFCValidator } from './rfc-validation';
 import { Router } from '@angular/router';
+import { SettingsService } from '../../../../../core/settings/settings.service';
 
 declare var $: any;
 
@@ -52,6 +53,7 @@ export class DtProspectosComponent implements OnInit {
     private fb: FormBuilder,
     private toasterService: ToasterService,
     private _Router: Router,
+    private settings: SettingsService
   ) {
     this.formCliente = new FormGroup({
       RazonSocial: new FormControl('',[Validators.required, Validators.maxLength(100)]),
@@ -63,7 +65,7 @@ export class DtProspectosComponent implements OnInit {
   ngOnInit() {
     this.Loading = true;
     this.showFilterRow = true;
-    this.Usuario = sessionStorage.getItem('usuario');
+    this.Usuario = this.settings.user['usuario'];
     this.getProspectos();
     this.formCliente = this.fb.group({
       RazonSocial: ['', [Validators.required, Validators.maxLength(100)]],

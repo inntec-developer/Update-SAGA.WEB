@@ -7,6 +7,7 @@ import { CatalogosService } from './../../../../../service/catalogos/catalogos.s
 import { ClientesService } from '../../../../../service/clientes/clientes.service';
 import { CompanyValidation } from './company-validation';
 import { Router } from '@angular/router';
+import { SettingsService } from '../../../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-nuevo-prospecto',
@@ -108,7 +109,8 @@ export class NuevoProspectoComponent implements OnInit {
     private fb: FormBuilder,
     private _CatalogoService: CatalogosService,
     private _ClienteService: ClientesService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private settings: SettingsService
   ) {
     // #region FORMULARIO DE DATOS GENERALES
     this.formGeneral = new FormGroup({
@@ -174,7 +176,7 @@ export class NuevoProspectoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.Usuario = sessionStorage.getItem('usuario');
+    this.Usuario = this.settings.user['usuario'];
     this.showFilterRowD = true;
     this.showFilterRowT = true;
     this.showFilterRowC = true;

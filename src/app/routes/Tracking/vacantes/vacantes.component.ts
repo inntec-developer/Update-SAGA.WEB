@@ -1,6 +1,6 @@
-import { AppComponent } from './../../../app.component';
+import { Component, Input, OnInit } from '@angular/core';
 
-import { Component, OnInit, Input } from '@angular/core';
+import { AppComponent } from './../../../app.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { VacantesService } from '../../../service/TrackingVacantes/vacantes.service';
 
@@ -61,9 +61,6 @@ export class VacantesComponent implements OnInit {
       this.rowsInfo = this.dataInfoRequi.slice(0, this.itemsPerPageInfo);
       this.registrosInfo = this.rowsInfo.length;
       this.lengthInfo = this.dataInfoRequi.length;
-      // this._appcomponent.nombreCliente = this.dataInfoRequi[0].cliente;
-      // sessionStorage.setItem('nombreCliente', this.dataInfoRequi[0].cliente)
-
     });
   }
 
@@ -147,7 +144,7 @@ export class VacantesComponent implements OnInit {
   }
 
   public refreshTableInfo() {
-    this.getInfoVacantes();  
+    this.getInfoVacantes();
     setTimeout(() => {
       this.columnsInfo.forEach(element => {
         element.filtering.filterString = '';
@@ -167,6 +164,6 @@ export class VacantesComponent implements OnInit {
       (<HTMLInputElement>document.getElementById(element.name)).value = '';
     });
     this.onChangeTableInfo(this.config);
-   
+
   }
 }

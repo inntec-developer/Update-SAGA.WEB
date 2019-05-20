@@ -30,9 +30,14 @@ export class RequisicionNuevaComponent implements OnInit {
   public TipoReclutamiento: any;
 
   constructor(
-    private setings : SettingsService,  private serviceCatalogo: CatalogosService, private serviceRequisiciones: RequisicionesService, private _Router: Router,
-    private _Route: ActivatedRoute, private spinner: NgxSpinnerService, private fb : FormBuilder)
-  { 
+    private settings : SettingsService,
+    private serviceCatalogo: CatalogosService,
+    private serviceRequisiciones: RequisicionesService,
+    private _Router: Router,
+    private _Route: ActivatedRoute,
+    private spinner: NgxSpinnerService,
+    private fb : FormBuilder)
+  {
     //Recupera la informacion que se manda en los parametros.
     this.spinner.show();
     this._Route.params.subscribe(params => {
@@ -50,8 +55,8 @@ export class RequisicionNuevaComponent implements OnInit {
         datas.IdDamfo = this.damfoId;
         datas.IdAddress = this.direccionId;
         datas.IdEstatus = this.estatusId;
-        datas.Usuario = sessionStorage.getItem('usuario');
-        datas.UsuarioId = sessionStorage.getItem('id');
+        datas.Usuario = this.settings.user['usuario'];
+        datas.UsuarioId = this.settings.user['id'];
         this.serviceRequisiciones.createNewRequi(datas).subscribe(data => {
           this.requisicionId = data.id;
           this.folio = data.folio;

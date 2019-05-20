@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Toast, ToasterConfig } from 'angular2-toaster';
 
 import { RequisicionesService } from '../../../../../service/requisiciones/requisiciones.service';
+import { SettingsService } from '../../../../../core/settings/settings.service';
 import { ToasterService } from 'angular2-toaster';
 
 @Component({
@@ -26,6 +27,7 @@ export class DialogActivarRequiComponent implements OnInit {
     private toasterService: ToasterService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private service : RequisicionesService,
+    private settings: SettingsService
   ) {
     this.textBtnCerrar = 'Cerrar';
     this.textBtnAceptar = 'Aceptar';
@@ -59,7 +61,7 @@ export class DialogActivarRequiComponent implements OnInit {
     this.folio = this.data.folio;
     this.infoReactivarRequi = {
       id : this.data.id,
-      UsuarioMod: sessionStorage.getItem('usuario')
+      UsuarioMod: this.settings.user['usuario']
     }
   }
 

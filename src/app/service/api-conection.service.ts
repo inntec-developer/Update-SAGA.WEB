@@ -4,9 +4,9 @@ export class ApiConection {
   public static ServiceUrl = 'http://localhost:33333/api/';
   public static ServiceUrlFileManager = 'http://localhost:33333/utilerias/';
   public static ServiceUrlFoto = 'http://localhost:33333/';
-  public static ServiceUrlBolsa = 'http://sagainn.com.mx:403';
-  public static ServiceUrlLoginBolsa = 'http://sagainn.com.mx:402';
-  public static ServicioUrl290 = 'http://sagainn.com.mx:413/Home/';
+  public static ServiceUrlBolsa = 'https://btapi.damsa.com.mx';
+  public static ServiceUrlLoginBolsa = 'https://btweb.damsa.com.mx';
+  public static ServicioUrl290 = 'https://webrcsb.damsa.com.mx/Home/';
 
   // //Produccion
   // public static ServiceUrlWeb = 'https://weberp.damsa.com.mx/';
@@ -204,8 +204,9 @@ export class ApiConection {
   public static getUsuariosByDepa = '/admin/getUsuarioByDepa';
   public static addRol = '/admin/agregarRol';
   public static addGrupo = '/admin/addGrupo';
-  public static addUser = '/admin/addUsuario';
-  public static getSession = 'admin/setUsers';
+  public static addUser = 'admin/addUsuario';
+  public static login = 'admin/login';
+  public static GetUser = '/admin/getUser';
   public static udActivoUser = '/admin/udActivo';
   public static addUserGroup = '/admin/addUserGroup';
   public static addGroupRol = '/admin/addGroupRol';

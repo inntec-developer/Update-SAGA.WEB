@@ -1,6 +1,8 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { AfterViewInit, Directive, Input } from '@angular/core';
 
+import { SettingsService } from '../../../core/settings/settings.service';
+
 @Directive({
   selector: '[chkPrivilegiosButtons]'
 })
@@ -8,7 +10,8 @@ export class ChkButtonsDirective implements AfterViewInit {
   @Input('ruta') ruta: any;
   constructor(
     private router: Router,
-    private activeRoute: ActivatedRoute) {
+    private activeRoute: ActivatedRoute,
+    private settings: SettingsService) {
 
   }
 
@@ -19,7 +22,7 @@ export class ChkButtonsDirective implements AfterViewInit {
     var btnupdate = document.querySelectorAll("#update");
     var btndelete = document.querySelectorAll("#delete");
     var btnspecial = document.querySelectorAll("#special");
-    let privilegios = JSON.parse(sessionStorage.getItem('privilegios'));
+    let privilegios = this.settings.user['privilegios'];
 
     ruta = this.activeRoute.snapshot.routeConfig.data ?
       this.activeRoute.snapshot.routeConfig.data.componente :

@@ -3,6 +3,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { CandidatosService } from './../../service/Candidatos/candidatos.service';
 import { ComentariosService } from './../../service/Comentarios/comentarios.service';
+import { SettingsService } from '../../core/settings/settings.service';
 
 const swal = require('sweetalert');
 
@@ -23,14 +24,18 @@ export class EditarCandidatoEstatusComponent implements OnInit {
   confirmar2: boolean = false;
   rowAux: any = [];
   estatusAux: any = 0;
-  constructor(private service: CandidatosService, public serviceComentarios: ComentariosService, private toasterService: ToasterService) { }
+  constructor(
+    private service: CandidatosService,
+    public serviceComentarios: ComentariosService,
+    private toasterService: ToasterService,
+    private settings: SettingsService) { }
 
   ngOnInit() {
     //this.GetCandidatosNR();
   }
 
   GetCandidatosNR() {
-    this.service.GetFoliosIncidencias(this.estatusId, sessionStorage.getItem('id')).subscribe(result => {
+    this.service.GetFoliosIncidencias(this.estatusId, this.settings.user['id']).subscribe(result => {
       this.candidatos = result;
     })
 
@@ -58,8 +63,8 @@ export class EditarCandidatoEstatusComponent implements OnInit {
       CandidatoId: row.candidatoId,
       Comentario: this.comentario,
       ComentarioId: row.id,
-      Usuario: sessionStorage.getItem('usuario'),
-      UsuarioId: sessionStorage.getItem('id'),
+      Usuario: this.settings.user['usuario'],
+      UsuarioId: this.settings.user['id'],
       RespuestaId: row.comentarioId,
       RequisicionId: row.requisicionId,
       MotivoId: row.motivoId,
@@ -85,8 +90,8 @@ export class EditarCandidatoEstatusComponent implements OnInit {
       CandidatoId: row.candidatoId,
       Comentario: this.comentario,
       ComentarioId: row.comentarioId,
-      Usuario: sessionStorage.getItem('usuario'),
-      UsuarioId: sessionStorage.getItem('id'),
+      Usuario: this.settings.user['usuario'],
+      UsuarioId: this.settings.user['id'],
       RespuestaId: row.comentarioId,
       RequisicionId: row.requisicionId,
       MotivoId: row.motivoId,

@@ -1,4 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
+import { SettingsService } from '../../../core/settings/settings.service';
 import { SistTicketsService } from './../../../service/SistTickets/sist-tickets.service';
 
 @Component({
@@ -14,7 +16,9 @@ export class FilaTicketsComponent implements OnInit {
 
   fila = [];
 
-  constructor(private _service: SistTicketsService) { 
+  constructor(
+    private _service: SistTicketsService,
+    private settings: SettingsService) {
     setInterval(() => this.GetFilaTickets(), 1000);
   }
 
@@ -24,12 +28,12 @@ export class FilaTicketsComponent implements OnInit {
 
   public GetFilaTickets()
   {
-    this._service.GetFilaTickets(1, sessionStorage.getItem('id')).subscribe( data => {
+    this._service.GetFilaTickets(1, this.settings.user['id']).subscribe( data => {
 
         this.fila = data;
     })
   }
 
-  
+
 
 }

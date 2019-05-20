@@ -59,13 +59,16 @@
     </div>
     <br>
     <div *ngIf="estatusId != 43" class="col-mg-10 col-sm-9">
-      <app-asignar-requisicion #asginaciones [placeHolder]='placeHolderSelect' (Asignacion)='getAsignacion($event)'></app-asignar-requisicion>
+      <app-asignar-requisicion #asginaciones [placeHolder]='placeHolderSelect' (Asignacion)='getAsignacion($event)'>
+      </app-asignar-requisicion>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
-        <button *ngIf="formRequi.valid" [disabled]="DisabledButton"  class="mb-1 btn btn-outline-success float-right margen"
-          container="body" placement="bottom" tooltip="Actualizar" (click)="Save()">
+        <img *ngIf="loading"
+          src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+        <button *ngIf="formRequi.valid" [disabled]="DisabledButton || (estatusId != 43 && asignadosRequi.length == 0 )"
+          class="mb-1 btn btn-outline-success float-right margen" container="body" placement="bottom"
+          tooltip="Actualizar" (click)="Save()">
           <em class="fa fa-save"></em>
         </button>
         <!-- <button class="mb-1 btn btn-outline-warning float-right margen" container="body" placement="bottom" tooltip="Agregar Examen" (click)="GetCatalogoExamenes();verExamen=true;">
@@ -77,14 +80,14 @@
 </form>
 
 <!--modal asignar examen-->
-<div *ngIf="verExamen" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal3="bs-modal" class="modal fade"
-  tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+<div *ngIf="verExamen" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal3="bs-modal"
+  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="card-title text-info"><em class="fa fa-pencil"></em> ASIGNAR EX&Aacute;MEN</h4>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal3.hide();CloseModal()"><i
-            class="fa fa-times"></i></button>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right"
+          (click)="lgModal3.hide();CloseModal()"><i class="fa fa-times"></i></button>
       </div>
       <div class="modal-body">
         <div *ngIf="examenRequi.length == 0 else NotRequi">
@@ -101,14 +104,16 @@
           <div class="form-group">
             <label class="text-primary">EX&Aacute;MEN</label>
             <div class="input-group">
-              <select [(ngModel)]="examenId" class="form-control form-control-sm" (ngModelChange)="GetExamen(examenId);">
+              <select [(ngModel)]="examenId" class="form-control form-control-sm"
+                (ngModelChange)="GetExamen(examenId);">
                 <option value="0">SELECCIONAR EX&Aacute;MEN</option>
                 <option *ngFor="let e of examenes" value="{{e.id}}">{{e.nombre}}</option>
               </select>
             </div>
           </div>
           <div class="form-group">
-            <button [disabled]="examenId == 0" type="button" (click)="AgregarExamen()" [ngClass]="examenId == 0 ? 'btn enabled float-right' : 'btn btn-outline-success float-right'">
+            <button [disabled]="examenId == 0" type="button" (click)="AgregarExamen()"
+              [ngClass]="examenId == 0 ? 'btn enabled float-right' : 'btn btn-outline-success float-right'">
               <em class="fa fa-check"></em>
             </button>
           </div>
@@ -123,7 +128,8 @@
             <ng-container *ngFor="let p of examen; let ind = index">
               <em class="list-group">{{( ind + 1) + '.- ' + p.pregunta}}</em>
               <ul class="respStyle">
-                <li [ngClass]="r.value == 1 ? 'text-success' : 'text-warning'" *ngFor="let r of p.respuestas">{{r.resp}}</li>
+                <li [ngClass]="r.value == 1 ? 'text-success' : 'text-warning'" *ngFor="let r of p.respuestas">{{r.resp}}
+                </li>
               </ul>
             </ng-container>
 

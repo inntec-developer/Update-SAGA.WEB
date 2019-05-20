@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from '../../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from './../../../service/requisiciones/requisiciones.service';
 import { Router } from '@angular/router';
+import { SettingsService } from '../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-dt-requisicion-recl-puro',
@@ -56,7 +57,8 @@ export class DtRequisicionReclPuroComponent implements OnInit {
     private _Router: Router,
     private dialog: MatDialog,
     private toasterService: ToasterService,
-    private postulacionservice: PostulateService) { }
+    private postulacionservice: PostulateService,
+    private settings: SettingsService) { }
 
   public rows: Array<any> = [];
   public columns: Array<any> = [
@@ -87,7 +89,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
   // }
 
   GetRequisicionesPuro() {
-    this.service.GetRequiTipoRecl(sessionStorage.getItem('id'), 1).subscribe(data => {
+    this.service.GetRequiTipoRecl(this.settings.user['id'], 1).subscribe(data => {
       this.dataSource = data;
       this.onChangeTable(this.config);
     })

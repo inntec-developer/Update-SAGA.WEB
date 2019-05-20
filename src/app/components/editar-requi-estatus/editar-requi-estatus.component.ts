@@ -1,10 +1,11 @@
-import { ComentariosService } from './../../service/Comentarios/comentarios.service';
-import { RequisicionesService } from './../../service/requisiciones/requisiciones.service';
-import { Component, OnInit, Input } from '@angular/core';
-import { PostulateService } from '../../service/SeguimientoVacante/postulate.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-import { NgxSpinnerService } from 'ngx-spinner';
 
+import { ComentariosService } from './../../service/Comentarios/comentarios.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { PostulateService } from '../../service/SeguimientoVacante/postulate.service';
+import { RequisicionesService } from './../../service/requisiciones/requisiciones.service';
+import { SettingsService } from '../../core/settings/settings.service';
 
 @Component({
   selector: 'app-editar-requi-estatus',
@@ -20,7 +21,13 @@ export class EditarRequiEstatusComponent implements OnInit {
   editing = {};
   comentario: string = "";
   loading = false;
-  constructor( private spinner: NgxSpinnerService, private service: RequisicionesService, private comentarioService: ComentariosService, private postulateService: PostulateService, private toasterService: ToasterService) { }
+  constructor(
+    private spinner: NgxSpinnerService,
+    private service: RequisicionesService,
+    private comentarioService: ComentariosService,
+    private postulateService: PostulateService,
+    private toasterService: ToasterService,
+    private settings: SettingsService) { }
 
   ngOnInit() {
     // this.spinner.show();
@@ -62,7 +69,7 @@ export class EditarRequiEstatusComponent implements OnInit {
   //estatus vacantes
   SetStatus(row, rowIndex) {
     this.loading = true;
-  
+
     this.service.GetUltimoEstatusRequi(row.id).subscribe(estatus => {
 
       if (estatus != 404) {
@@ -109,8 +116,8 @@ export class EditarRequiEstatusComponent implements OnInit {
       Comentario: this.comentario,
       RequisicionId: row.id,
       MotivoId: 7,
-      UsuarioAlta: sessionStorage.getItem('usuario'),
-      ReclutadorId: sessionStorage.getItem('id'),
+      UsuarioAlta: this.settings.user['usuario'],
+      ReclutadorId: this.settings.user['id'],
       RespuestaId: row.comentarioReclutador.id
     }
     this.comentarioService.addComentarioVacante(Comentario).subscribe(data => {

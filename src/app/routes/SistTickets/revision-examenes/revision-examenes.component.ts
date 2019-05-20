@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {NgbTabsetConfig} from '@ng-bootstrap/ng-bootstrap';
-import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
-import { ExamenesService } from '../../../service/Examenes/examenes.service';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+
 import { DlgRevisarExamenesComponent } from '../../../components/dlg-revisar-examenes/dlg-revisar-examenes.component';
+import { ExamenesService } from '../../../service/Examenes/examenes.service';
 import { MatDialog } from '@angular/material';
+import {NgbTabsetConfig} from '@ng-bootstrap/ng-bootstrap';
+import { SettingsService } from '../../../core/settings/settings.service';
+import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
 
 @Component({
   selector: 'app-revision-examenes',
@@ -33,7 +35,13 @@ slcClave;
   iniciarexamen = false;
   atender = false;
 
-  constructor(config: NgbTabsetConfig, private _service: SistTicketsService, private _serviceExamen: ExamenesService, private toasterService: ToasterService, private dialog: MatDialog) {
+  constructor(
+    config: NgbTabsetConfig,
+    private _service: SistTicketsService,
+    private _serviceExamen: ExamenesService,
+    private toasterService: ToasterService,
+    private dialog: MatDialog,
+    private settings: SettingsService) {
     config.justify = 'center';
     config.type = 'pills';
     setInterval(() => this.timeWait(), 60000);
@@ -45,7 +53,7 @@ slcClave;
 
   public GetFilaTickets()
   {
-    this._service.GetFilaTickets(3, sessionStorage.getItem('id')).subscribe( data => {
+    this._service.GetFilaTickets(3, this.settings.user['id']).subscribe( data => {
         this.fila = data;
     })
   }
@@ -74,7 +82,7 @@ slcClave;
     })
 
   }
-  
+
   GetClaves() {
 
     this._serviceExamen.GetClaves(this.ticket[0].requisicionId).subscribe(data => {
@@ -114,7 +122,7 @@ slcClave;
 
   }
   Agregar(clave) {
-        var aux = [{ RequisicionId: this.ticket[0].requisicionId, UsuarioId: sessionStorage.getItem('id'), Clave: clave }];
+        var aux = [{ RequisicionId: this.ticket[0].requisicionId, UsuarioId: this.settings.user['id'], Clave: clave }];
         this.activas = true;
         console.log(aux)
 
@@ -125,11 +133,11 @@ slcClave;
         }
         else {
           this.popToast('error', 'Generar Claves', 'Ocurrio un error al intentar agregar claves');
-  
+
         }
       })
     }
-  
+
   PopClave(row) {
     this.clavesRequi[0].claves = this.clavesRequi[0].claves.filter(function (item) {
       if (item.clave !== row) {
@@ -140,10 +148,10 @@ slcClave;
 
   AsignarClave()
   {
-    var objeto = {CandidatoId: this.ticket[0].candidato.candidatoId, RequisicionId: this.ticket[0].requisicionId, RequiClaveId: this.slcClave, Resultado: 'SIN RESULTADO', UsuarioId: sessionStorage.getItem('id')};
-  
+    var objeto = {CandidatoId: this.ticket[0].candidato.candidatoId, RequisicionId: this.ticket[0].requisicionId, RequiClaveId: this.slcClave, Resultado: 'SIN RESULTADO', UsuarioId: this.settings.user['id']};
+
     console.log(objeto)
-    
+
 
 
     this._serviceExamen.AsignarClaveCandidato(objeto).subscribe(data => {
@@ -159,7 +167,7 @@ slcClave;
       else
       {
         this.popToast('error', 'Asignar Clave', 'Ocurrio un error al intentar asignar clave');
-      
+
       }
     })
   }
@@ -218,14 +226,14 @@ slcClave;
           }
         })
     }
-    
+
     OpenDialogRevisar()
-    {        
+    {
       this._serviceExamen.GetResultadosCandidato(this.ticket[0].candidato.candidatoId, this.ticket[0].requisicionId).subscribe(data => {
         let aux = data;
         aux[0].candidatoId = this.ticket[0].candidato.candidatoId;
         aux[0].requisicionId = this.ticket[0].requisicionId;
-  
+
         let dialog = this.dialog.open(DlgRevisarExamenesComponent, {
           width: '60%',
           height: 'auto',
@@ -233,7 +241,7 @@ slcClave;
           data: aux
         });
         dialog.afterClosed().subscribe(result => {
-          
+
           this._service.SetEstatusCandidato(this.ticket[0].candidato.candidatoId, this.ticket[0].requisicionId, 13).subscribe(data => {
             this.ticket[0].candidato.estatus = 'EVALUACIÓN TÉCNICA';
             this.ticket[0].candidato.estatusId = 13;
@@ -249,7 +257,7 @@ slcClave;
         if(data == 200)
         {
           this.Reiniciar();
-          
+
         }
       });
     }
@@ -282,9 +290,9 @@ slcClave;
           e.te = m + mocos.getUTCMinutes()
         })
       }
-  
+
     }
-  
+
 
   /**
 * configuracion para mensajes de acciones.
