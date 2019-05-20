@@ -238,6 +238,7 @@ export class ApiConection {
   public static updateActivo = 'admin/updateActivo';
   public static getLideres = 'admin/getLideres';
   public static getOficinas = 'admin/getOficinas';
+  public static GetByUsuario = 'admin/getByTipoUsuario'
 
   /*Seguimiento Vacantes*/
   public static getDtosCard = 'reclutamiento/seguimientovacante/getCard';

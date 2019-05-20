@@ -6,7 +6,6 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
 
-import { Headers, RequestOptions } from '@angular/http';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 
 import { ApiConection } from './../api-conection.service';

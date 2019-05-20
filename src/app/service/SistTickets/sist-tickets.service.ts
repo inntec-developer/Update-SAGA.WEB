@@ -56,7 +56,7 @@ export class SistTicketsService {
 
   GetMunicipio(estadoId) :Observable<any>
   { 
-    let params = new HttpParams().set('EstadoId', estadoId);
+    let params = new HttpParams().set('EstadoId', estadoId);  
     return this._httpClient.get(this.UrlGetMunicipioByEstado, {params: params})
 
   }

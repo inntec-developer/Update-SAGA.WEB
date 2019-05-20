@@ -1,3 +1,4 @@
+import { DlgTransferComponent } from './../vtas/requisiciones/components/dlg-transfer/dlg-transfer.component';
 import { RouterModule, Routes } from '@angular/router';
 
 import { CandidatosComponent } from './candidatos/candidatos.component';
@@ -51,10 +52,11 @@ const routes: Routes = [
     DialogAssingRequiComponent,
     DtCandidatosPostComponent,
     VacantesPostulateComponent,
-    SeguimientoVacanteComponent],
+    SeguimientoVacanteComponent,
+    DlgTransferComponent],
   entryComponents: [
-    DialogcandidatosComponent, DialogShowRequiComponent, DialogAssingRequiComponent],
-  exports: [RouterModule, DialogShowRequiComponent]
+    DialogcandidatosComponent, DialogShowRequiComponent, DialogAssingRequiComponent, DlgTransferComponent],
+  exports: [RouterModule, DialogShowRequiComponent,DlgTransferComponent ]
 })
 
 export class ReclutamientoModule { }

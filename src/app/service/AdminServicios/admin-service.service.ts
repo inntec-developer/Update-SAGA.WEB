@@ -59,6 +59,7 @@ export class AdminServiceService {
   private UrlUploadFile = ApiConection.ServiceUrl + ApiConection.uploadFile;
   private UrlGetLideres = ApiConection.ServiceUrl + ApiConection.getLideres;
   private UrlGetOficinas = ApiConection.ServiceUrl + ApiConection.getOficinas;
+  private UrlGetByUsuario = ApiConection.ServiceUrl + ApiConection.GetByUsuario;
   // Error.
   private handleError(error: any) {
          console.log('sever error:', error);
@@ -411,6 +412,10 @@ export class AdminServiceService {
 
   }
 
+  GetByUsuario(tipo: any): Observable<any>{
+    let params = new HttpParams().set('tipo', tipo);
+    return this._httpClient.get(this.UrlGetByUsuario, {params: params});
+  }
   GetLideres() : Observable<any>
   {
     return this._httpClient.get(this.UrlGetLideres);

@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-between">
+  <h4 class="text-warning">TRANSFERIR FOLIO A COORDINADOR</h4>
+  <button type="button" class="btn btn-xs btn-danger btn-circle mb-3" mat-dialog-close><i class="fa fa-times"></i></button>
+</div>
+<mat-divider></mat-divider>
+<div class="card">
+  <div class="card-body">
+    <div class="bg-light text-muted">
+    <p><strong>FOLIO: </strong> {{data.folio}}</p>
+    <p><strong>CLIENTE: </strong> {{data.cliente}}</p>
+    <p><strong>PERF&Iacute;L: </strong> {{data.vBtra}}</p>
+    <p><strong>FECHA CREACI&Oacute;N: </strong> {{data.fch_Creacion | date:'dd/MM/yyyy'}}</p>
+   </div>
+    <mat-divider></mat-divider>
+    <br/>
+    <h6 class="text-info">SELECCIONAR COORDINADOR</h6>
+    <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
+    [disableOnBreakpoints]="false" [disabled]="disabled">
+<div class="long">
+    <div class="list-group" *ngFor="let r of coord">
+        <a type="button" (click)="Seleccionar(r.id, r.nombre)" class="list-group-item list-group-item-action text-success">{{r.nombre}}</a>
+    </div>
+  </div>
+    </ng-scrollbar>
+    <br/>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+        <textarea matInput #message maxlength="500" placeholder="Comentario" rows="2" [(ngModel)]="comentario"></textarea>
+        <mat-hint align="end">{{message.value.length}} / 500</mat-hint>
+  
+    </mat-form-field>
+      <p>
+          <span>
+            <small [ngClass]="!comentario ? 'text-danger': 'text-success'">
+               <em *ngIf="!comentario" class="fa fa-close"></em>
+              <em *ngIf="comentario" class="fa fa-check"></em>
+              Ingrese comentario de por el cual se transfiere la vacante.
+            </small>
+          </span>
+        </p>
+  
+      <br>
+      <div class="text-right">
+        <btn-send (click)="AddComentario()" *ngIf="comentario && !loading"></btn-send>
+        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+      </div>
+  </div>
+
+</div>
+

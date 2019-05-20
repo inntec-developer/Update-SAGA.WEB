@@ -83,6 +83,9 @@
           <i class="fa fa-clock-o"></i>
           <span *ngIf="requisPausa.length > 0" class="badge badge-pill badge-warning mr-2">{{requisPausa.length}}</span>
         </button>
+        <button class="btn btn-xs btn-outline-purple mr-1" id='special' chkPrivilegiosButtons type="button" (click)="openDialogTransfer()" container="body" placement="bottom"
+        tooltip="Transferir folio"><i class="fa fa-exchange"></i>
+      </button>
         <!-- <button id='special' chkPrivilegiosButtons type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-warning'"
           (click)="reporte70=true;" container="body" placement="bottom" tooltip="Reporte 70">
           <i class="fa fa-file-text-o"></i>

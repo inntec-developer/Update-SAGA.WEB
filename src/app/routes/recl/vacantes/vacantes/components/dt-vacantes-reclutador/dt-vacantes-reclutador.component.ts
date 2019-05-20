@@ -11,6 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../../../../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../../../../../service';
 import { Router } from '@angular/router';
+import { DlgTransferComponent } from '../../../../../vtas/requisiciones/components/dlg-transfer/dlg-transfer.component';
 
 const swal = require('sweetalert');
 
@@ -712,6 +713,16 @@ export class DtVacantesReclutadorComponent implements OnInit {
     });
   }
 
+  openDialogTransfer() {
+    let dialogCnc = this.dialog.open(DlgTransferComponent, {
+      width: '50%',
+      height: '100%',
+      data: this.element
+    });
+    dialogCnc.afterClosed().subscribe(result => {
+    })
+  }
+  
   OpenDialogRequiPausa(estatusId: any, estatus: any) {
     var aux = { requisicionId: this.requi.id, folio: this.requi.folio, cliente: this.requi.vacante, vacante: this.vBtra }
     let dialog = this.dialog.open(DlgRequisicionPausaComponent, {
