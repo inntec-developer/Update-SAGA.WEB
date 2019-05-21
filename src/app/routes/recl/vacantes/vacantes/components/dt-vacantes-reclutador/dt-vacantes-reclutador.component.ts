@@ -42,7 +42,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   showFilterRow: boolean = true;
   registros: number;
   errorMessage: any;
-  element: any = null;
+  element: any = [];
   confidencial: boolean = true;
 
   estatusId: any;
@@ -416,7 +416,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   private _reinciar() {
-    this.element = null;
+    this.element = [];
     this.postulados = null;
     this.bc = true; //busqueda candidato
     this.sc = true; //socieconomico
@@ -716,12 +716,17 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   openDialogTransfer() {
+    this.element.usuario = 4;
     let dialogCnc = this.dialog.open(DlgTransferComponent, {
       width: '50%',
-      height: '100%',
+      height: '95%',
       data: this.element
     });
     dialogCnc.afterClosed().subscribe(result => {
+      if(result)
+      {
+        this.refreshTable();
+      }
     })
   }
   

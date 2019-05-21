@@ -64,7 +64,9 @@
               (click)="reporte70=true;" container="body" placement="bottom" tooltip="Reporte 70">
               <i class="fa fa-file-text-o"></i>
             </button> -->
-
+            <button class="btn mr-1" [ngClass]="element.length == 0 ? 'btn-xs disable' : 'btn-xs btn-outline-purple'" [disabled]="element.length == 0" id='special' chkPrivilegiosButtons type="button" (click)="openDialogTransfer()" container="body" placement="bottom"
+            tooltip="Transferir folio"><i class="fa fa-exchange"></i>
+          </button>
         <button id="special" chkPrivilegiosButtons type="button" [disabled]="rows.length == 0" class="mr-2 btn  btn-xs" [ngClass]="rows.length == 0 ? 'disable' : 'btn-outline-success'"
           (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
           <i class="fa fa-download"></i>

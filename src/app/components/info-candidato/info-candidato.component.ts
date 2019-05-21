@@ -95,7 +95,7 @@ export class InfoCandidatoComponent implements OnInit {
       vBtra: null,
       folio: null
     }
-    debugger;
+
     this.usuario = this.settings.user['nombre'];
     this.usuarioId = this.settings.user['id']
     this.getMisVacates();

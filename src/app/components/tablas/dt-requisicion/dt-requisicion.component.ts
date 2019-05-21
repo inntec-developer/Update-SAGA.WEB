@@ -650,6 +650,20 @@ export class DtRequisicionComponent implements OnInit {
 
     })
   }
+  openDialogTransfer() {
+    this.element.usuario = 10;
+    let dialogCnc = this.dialog.open(DlgTransferComponent, {
+      width: '50%',
+      height: '95%',
+      data: this.element
+    });
+    dialogCnc.afterClosed().subscribe(result => {
+      if(result)
+      {
+        this.refreshTable();
+      }
+    })
+  }
 
   openDialogReActivar() {
     let dialogCnc = this.dialog.open(DialogActivarRequiComponent, {
