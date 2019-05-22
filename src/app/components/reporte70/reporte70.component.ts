@@ -455,7 +455,7 @@ public refreshTable() {
           'COMENTARIOS RECLUTADORES': comentariosRecl,
           COORDINADOR: row.coordinador,
           'COMENTARIOS COORDINADOR': comentariosCoord,
-          SOLICITA: row.propietario,
+          SOLICITA: row.solicita,
         })
         comentariosSol = "";
         comentariosRecl = "";

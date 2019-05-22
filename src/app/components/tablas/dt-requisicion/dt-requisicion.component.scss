@@ -53,7 +53,10 @@ table tbody tr:hover{
 }
 
 
-
+.modal-lg 
+{
+  max-width: 80% !important;
+}
 table tbody div
 {
   height: 350px;
@@ -64,6 +67,13 @@ ng-scrollbar {
   --scrollbar-thumb-hover-color: dodgerblue;
   --scrollbar-border-radius: 4px;
 }
+
+// button .badge {
+//   position: absolute;
+//   top: -6px;
+// z-index: 9;
+//   font-size: .7em;
+// }
 
 
 .row

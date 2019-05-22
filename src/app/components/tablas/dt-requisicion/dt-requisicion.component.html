@@ -95,6 +95,7 @@
           (click)="reporteCandidatos = true" [ngClass]="candidatos ? 'disabled' : 'btn-outline-warning'"
           container="body" placement="bottom" tooltip="Candidatos">
           <i class="fa fa-users" aria-hidden="true"></i>
+          <span *ngIf="element.length > 0" class="badge badge-pill badge-warning">{{element.enProceso}}</span>
         </button>
       </div>
     </div>
@@ -278,11 +279,11 @@
 </div> -->
 <div *ngIf="reporteCandidatos" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal
   #candiModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
-  <div class="modal-dialog modal-lg ">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="float-left text-success"><em class="fa fa-users mr-2"></em>Candidatos Cubiertos de Requisici&oacute;n
-          {{Folio}} - {{Vacante}}</h4>
+        <h5 class="float-left text-warning"><em class="fa fa-users mr-2"></em>CANDIDATOS EN PROCESO / REQUISICI&Oacute;N
+          {{Folio}} - {{Vacante}}</h5>
         <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="reporteCandidatos=false;">
           <i class="fa fa-times"></i></button>
       </div>
