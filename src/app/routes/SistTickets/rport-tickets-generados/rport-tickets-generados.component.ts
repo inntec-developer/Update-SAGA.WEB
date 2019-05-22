@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
+
 import { DatePipe } from '@angular/common';
 import { ExcelService } from '../../../service/ExcelService/excel.service';
+import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
+
 @Component({
   selector: 'app-rport-tickets-generados',
   templateUrl: './rport-tickets-generados.component.html',
@@ -108,7 +110,7 @@ export class RportTicketsGeneradosComponent implements OnInit {
               else
               {
                   return item[col];
-              } 
+              }
             }
           }
         });
@@ -121,12 +123,12 @@ export class RportTicketsGeneradosComponent implements OnInit {
       // if (!config.filtering) {
       //   return filteredData;
       // }
-  
+
       // if (config.filtering.columnName) {
       //   return filteredData.filter((item: any) =>
       //     item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
       // }
-  
+
       // let tempArray: Array<any> = [];
       // filteredData.forEach((item: any) => {
       //   let flag = false;
@@ -140,15 +142,15 @@ export class RportTicketsGeneradosComponent implements OnInit {
       //     }
       //   });
       //   if (flag) {
-  
+
       //     tempArray.push(item);
       //   }
       // });
       // filteredData = tempArray;
-  
+
     }
 
-   
+
     return filteredData;
   }
 
@@ -197,7 +199,7 @@ export class RportTicketsGeneradosComponent implements OnInit {
     if (this.result.length > 0) {
       var aux = [];
       this.result.forEach(row => {
-      
+
         var d = this.pipe.transform(new Date(row.fecha), 'dd/MM/yyyy');
 
         aux.push({

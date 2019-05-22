@@ -1,16 +1,16 @@
 <div class="item user-block" *ngIf="userBlockIsVisible()">
-    <!-- User picture-->
-    <div class="user-block-picture">
-        <div class="user-block-status">
-            <img class="img-thumbnail rounded-circle" [src]="user.picture" alt="Avatar" (error)="errorImg()" />
-            <div class="circle bg-success circle-lg"></div>
-        </div>
+  <!-- User picture-->
+  <div class="user-block-picture">
+    <div class="user-block-status">
+      <img class="img-thumbnail rounded-circle" [src]="user.picture" alt="Avatar" (error)="errorImg()" />
+      <div class="circle bg-success circle-lg"></div>
     </div>
-    <!-- Name and Job-->
-    <div class="user-block-info">
-        <span class="user-block-role"> {{user.name}} </span>
-        <p><span class="user-block-role"> {{user.clave}}</span></p>
-        <span class="user-block-role">{{user.tipo | uppercase}}</span>
-        <span class="user-block-role">{{user.sucursal | uppercase}}</span>
-    </div>
+  </div>
+  <!-- Name and Job-->
+  <div class="user-block-info">
+    <span class="user-block-role"> {{user.name}} </span>
+    <p><span class="user-block-role"> {{user.clave}}</span></p>
+    <span class="user-block-role">{{user.tipo | uppercase}}</span>
+    <span class="user-block-role">{{user.sucursal | uppercase}}</span>
+  </div>
 </div>

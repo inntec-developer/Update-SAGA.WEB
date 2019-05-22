@@ -92,7 +92,7 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
         this.HorariosVacantes.forEach(element => {
           horarios = horarios + element.nombre + ' (' + element.vacantes + ') \n';
         });
-        swal('Requisición Generada.!', 'Vacante(s) registrada(s) del DAM-FO-290: \n' + horarios + '\n El número de vacante(s) en la requisición van en 0 (cero), realice los cambios correspondientes.', 'success');
+        // swal('Requisición Generada.!', 'Vacante(s) registrada(s) del DAM-FO-290: \n' + horarios + '\n El número de vacante(s) en la requisición van en 0 (cero), realice los cambios correspondientes.', 'success');
       }, err => {
         console.log(err);
       });

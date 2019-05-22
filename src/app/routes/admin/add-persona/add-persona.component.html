@@ -18,26 +18,25 @@
 <br/> -->
 <div class="dt-container mat-elevation-z8">
   <div class="dt-header">
-    <div class="input-group">
+    <!-- <div class="input-group">
       <mat-form-field>
         <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
           (tableChanged)="onChangeTable(config)" id="filterGeneral">
       </mat-form-field>
-      <!-- <input (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
-      <div class="input-group-append">
-        <span class="input-group-text text-info"><em class="fa fa-search"></em></span>
-      </div> -->
-    </div>
+    </div> -->
     <div class="row justify-content-between">
       <div>
-        <pre class="card-block">Total Registros: {{rows.length}}</pre>
+        <span class="text-muted font-weight-bold float-right text-uppercase mb-3 ">Total de Usuarios
+          <span class="badge badge-pill badge-success">{{Users.length}}</span>
+        </span>
       </div>
       <div>
         <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body"
-          class="margen mb-1 btn" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'disabled':'btn-outline-primary'">
+          class="margen mr-2 btn btn-xs" [disabled]="!clearFilter"
+          [ngClass]="(!clearFilter) ? 'disabled':'btn-outline-primary'">
           <em class="fa fa-eraser"></em>
         </button>
-        <button type="button" class="margen mb-1 btn btn-outline-success" (click)="refreshTable()" container="body"
+        <button type="button" class="margen mr-2 btn btn-xs btn-outline-success" (click)="refreshTable()" container="body"
           placement="bottom" tooltip="Actualizar" container="body">
           <em class="icon-refresh"></em>
         </button>
@@ -58,8 +57,9 @@
           </tr>
           <tr *ngIf="showFilterRow">
             <td *ngFor="let column of columns">
-              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
+              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
+                [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                class="form-control form-control-sm" id="{{column.name}}">
             </td>
           </tr>
         </thead>
@@ -67,50 +67,58 @@
           <tr *ngFor="let p of rows; let rowIndex = index">
             <td>
               <div class="media">
-                <a container="body" style="margin:auto;" placement="bottom" tooltip="Click para editar" data-toggle="modal"
-                  data-target="#staticModal" (click)="rowAux = rowIndex; CrearURL(p.entidadId); staticModal.show();">
-                  <img class="img-fluid circle thumb32" src="{{p.fotoAux}}" alt="Image" />
+                <a container="body" style="margin:auto;">
+                  <!-- placement="bottom" tooltip="Click para editar" data-toggle="modal"
+                  data-target="#staticModal" (click)="rowAux = rowIndex; CrearURL(p.entidadId); staticModal.show();" -->
+                  <img class="img-fluid circle thumb32" [src]="p.foto" alt="Avatar" (error)="errorImg(p.entidadId)" />
                 </a>
               </div>
             </td>
             <td>
-              <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-clave'] = true"
-                *ngIf="!editing[rowIndex + '-clave']">
+              <span container="body" placement="bottom" tooltip="Doble click para editar"
+                (dblclick)="editing[rowIndex + '-clave'] = true" *ngIf="!editing[rowIndex + '-clave']">
                 {{p.clave}}
               </span>
-              <input class="form-control-sm form-control" autofocus (blur)="updateValue($event, 'clave', rowIndex, p.entidadId)"
-                *ngIf="editing[rowIndex + '-clave']" type="text" [value]=p.clave />
+              <input class="form-control-sm form-control" autofocus
+                (blur)="updateValue($event, 'clave', rowIndex, p.entidadId)" *ngIf="editing[rowIndex + '-clave']"
+                type="text" [value]=p.clave />
             </td>
             <td>
-              <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-usuario'] = true"
-                *ngIf="!editing[rowIndex + '-usuario']">
+              <span container="body" placement="bottom" tooltip="Doble click para editar"
+                (dblclick)="editing[rowIndex + '-usuario'] = true" *ngIf="!editing[rowIndex + '-usuario']">
                 {{p.usuario}}
               </span>
-              <input class="form-control-sm form-control" autofocus (blur)="updateValue($event, 'usuario', rowIndex, p.entidadId)"
-                *ngIf="editing[rowIndex + '-usuario']" type="text" [value]=p.usuario />
+              <input class="form-control-sm form-control" autofocus
+                (blur)="updateValue($event, 'usuario', rowIndex, p.entidadId)" *ngIf="editing[rowIndex + '-usuario']"
+                type="text" [value]=p.usuario />
             </td>
             <td>
-              <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-nombre'] = true"
-                *ngIf="!editing[rowIndex + '-nombre']">
+              <span container="body" placement="bottom" tooltip="Doble click para editar"
+                (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
                 {{p.nombre}}
               </span>
-              <input class="form-control-sm form-control" autofocus (blur)="updateValue($event, 'nombre', rowIndex, p.entidadId)"
-                *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=p.nombre />
+              <input class="form-control-sm form-control" autofocus
+                (blur)="updateValue($event, 'nombre', rowIndex, p.entidadId)" *ngIf="editing[rowIndex + '-nombre']"
+                type="text" [value]=p.nombre />
             </td>
             <td>
-              <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoPaterno'] = true"
+              <span container="body" placement="bottom" tooltip="Doble click para editar"
+                (dblclick)="editing[rowIndex + '-apellidoPaterno'] = true"
                 *ngIf="!editing[rowIndex + '-apellidoPaterno']">
                 {{p.apellidoPaterno}}
               </span>
-              <input class="form-control-sm form-control" autofocus (blur)="updateValue($event, 'apellidoPaterno', rowIndex, p.entidadId)"
+              <input class="form-control-sm form-control" autofocus
+                (blur)="updateValue($event, 'apellidoPaterno', rowIndex, p.entidadId)"
                 *ngIf="editing[rowIndex + '-apellidoPaterno']" type="text" [value]=p.apellidoPaterno />
             </td>
             <td>
-              <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoMaterno'] = true"
+              <span container="body" placement="bottom" tooltip="Doble click para editar"
+                (dblclick)="editing[rowIndex + '-apellidoMaterno'] = true"
                 *ngIf="!editing[rowIndex + '-apellidoMaterno']">
                 {{p.apellidoMaterno}}
               </span>
-              <input class="form-control-sm form-control" autofocus (blur)="updateValue($event, 'apellidoMaterno', rowIndex, p.entidadId)"
+              <input class="form-control-sm form-control" autofocus
+                (blur)="updateValue($event, 'apellidoMaterno', rowIndex, p.entidadId)"
                 *ngIf="editing[rowIndex + '-apellidoMaterno']" type="text" [value]=p.apellidoMaterno />
             </td>
             <td *ngIf="p.email.length > 0">
@@ -118,43 +126,47 @@
               <!-- <tr *ngFor="let e of p.email" class="text-center" >{{e.email}}</tr> -->
             </td>
             <td>
-              <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-departamento'] = true"
-                *ngIf="!editing[rowIndex + '-departamento']">
+              <span container="body" placement="bottom" tooltip="Doble click para editar"
+                (dblclick)="editing[rowIndex + '-departamento'] = true" *ngIf="!editing[rowIndex + '-departamento']">
                 {{p.departamento}}
               </span>
-              <select class="form-control-sm form-control" (change)="updateValue($event, 'departamentoId', rowIndex, p.entidadId)"
+              <select class="form-control-sm form-control"
+                (change)="updateValue($event, 'departamentoId', rowIndex, p.entidadId)"
                 *ngIf="editing[rowIndex + '-departamento']">
                 <option [value]=0>Seleccionar Departamento</option>
                 <option *ngFor="let d of ListDepas" [value]='d.id'>{{d.nombre}}</option>
               </select>
             </td>
             <td>
-              <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-tipoUsuario'] = true"
-                *ngIf="!editing[rowIndex + '-tipoUsuario']">
+              <span container="body" placement="bottom" tooltip="Doble click para editar"
+                (dblclick)="editing[rowIndex + '-tipoUsuario'] = true" *ngIf="!editing[rowIndex + '-tipoUsuario']">
                 {{p.tipoUsuario}}
               </span>
-              <select class="form-control-sm form-control" (change)="updateValue($event, 'tipoUsuarioId', rowIndex, p.entidadId)"
+              <select class="form-control-sm form-control"
+                (change)="updateValue($event, 'tipoUsuarioId', rowIndex, p.entidadId)"
                 *ngIf="editing[rowIndex + '-tipoUsuario']">
                 <option [value]=0>Seleccionar Tipo Usuario</option>
                 <option *ngFor="let t of ListTipos" [value]='t.id'>{{t.tipo}}</option>
               </select>
             </td>
             <td>
-              <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-lider'] = true"
-                *ngIf="!editing[rowIndex + '-lider']">
+              <span container="body" placement="bottom" tooltip="Doble click para editar"
+                (dblclick)="editing[rowIndex + '-lider'] = true" *ngIf="!editing[rowIndex + '-lider']">
                 {{p.nombreLider}}
               </span>
-              <select class="form-control-sm form-control" (change)="updateValue($event, 'lider', rowIndex, p.entidadId)" *ngIf="editing[rowIndex + '-lider']">
+              <select class="form-control-sm form-control"
+                (change)="updateValue($event, 'lider', rowIndex, p.entidadId)" *ngIf="editing[rowIndex + '-lider']">
                 <option [value]=0>Seleccionar Lider</option>
                 <option *ngFor="let t of Lideres" [value]='t.liderId'>{{t.nombreLider | uppercase}}</option>
               </select>
             </td>
             <td>
-              <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-oficina'] = true"
-                *ngIf="!editing[rowIndex + '-oficina']">
+              <span container="body" placement="bottom" tooltip="Doble click para editar"
+                (dblclick)="editing[rowIndex + '-oficina'] = true" *ngIf="!editing[rowIndex + '-oficina']">
                 {{p.oficina}}
               </span>
-              <select class="form-control-sm form-control" (change)="updateValue($event, 'oficina', rowIndex, p.entidadId)" *ngIf="editing[rowIndex + '-oficina']">
+              <select class="form-control-sm form-control"
+                (change)="updateValue($event, 'oficina', rowIndex, p.entidadId)" *ngIf="editing[rowIndex + '-oficina']">
                 <option [value]=0>Seleccionar Oficina</option>
                 <option *ngFor="let o of Oficina" [value]='o.id'>{{o.nombre | uppercase}}</option>
               </select>
@@ -167,13 +179,13 @@
             </td>
             <td class="action-width">
               <button id='update' chkPrivilegiosButtons class="margin-butto
-                  mb-1 btn btn-xs btn-outline-success float-right"
-                (click)="updateUser(p, rowIndex)" container="body" placement="bottom" tooltip="Guardar Cambios">
+                  mb-1 btn btn-xs btn-outline-success float-right" (click)="updateUser(p, rowIndex)" container="body"
+                placement="bottom" tooltip="Guardar Cambios">
                 <em class="fa fa-check"></em>
               </button>
-              <button id='email' chkPrivilegiosButtons class="margin-butto 
-                  ms-1 btn btn-xs btn-outline-warning"
-                (click)="SendEmail(p)" container="body" placement="bottom" tooltip="Enviar Correo">
+              <button id='email' chkPrivilegiosButtons class="margin-butto
+                  ms-1 btn btn-xs btn-outline-warning" (click)="SendEmail(p)" container="body" placement="bottom"
+                tooltip="Enviar Correo">
                 <em class="fa fa-envelope"></em>
               </button>
             </td>
@@ -206,8 +218,10 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-12">
-            <app-upload-imgs #uploadImg [maxFileSize]="1*1024*1024" [accept]="['image/png', 'image/jpeg', 'image/jpg', 'image/bmp']"
-              [errorMessageMaxSize]="'File size great than 1MB'" [name]="name" (onItemChanged)="updateFoto()"></app-upload-imgs>
+            <app-upload-imgs #uploadImg [maxFileSize]="1*1024*1024"
+              [accept]="['image/png', 'image/jpeg', 'image/jpg', 'image/bmp']"
+              [errorMessageMaxSize]="'File size great than 1MB'" [name]="name" (onItemChanged)="updateFoto()">
+            </app-upload-imgs>
           </div>
         </div>
         <!-- <div class="modal-footer">

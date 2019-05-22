@@ -95,7 +95,6 @@ export class InfoCandidatoComponent implements OnInit {
       vBtra: null,
       folio: null
     }
-    debugger;
     this.usuario = this.settings.user['nombre'];
     this.usuarioId = this.settings.user['id']
     this.getMisVacates();
@@ -175,7 +174,6 @@ export class InfoCandidatoComponent implements OnInit {
       }
 
       if (this.candidato.estatus) {
-        debugger;
         this.Estatus = this.candidato.estatus.id;
         this.procesoCandidatoId = this.candidato.estatus.estatusId;
         this.Status = this.candidato.estatus.descripcion;
@@ -339,7 +337,6 @@ export class InfoCandidatoComponent implements OnInit {
     this.vacante = {};
   }
   public clearfilters() {
-    debugger;
     this.columns.forEach(element => {
       element.filtering.filterString = '';
       (<HTMLInputElement>document.getElementById(element.title)).value = '';

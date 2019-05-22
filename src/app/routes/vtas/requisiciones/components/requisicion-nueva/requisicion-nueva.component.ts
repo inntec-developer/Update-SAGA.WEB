@@ -1,55 +1,55 @@
 import { ActivatedRoute, CanDeactivate, Router, } from '@angular/router';
 import { CatalogosService, RequisicionesService } from '../../../../../service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 import { CreateRequisicion } from '../../../../../models/vtas/Requisicion';
+import { FormBuilder } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SettingsService } from '../../../../../core/settings/settings.service';
 import { UpdateInfoRequiComponent } from '../update-info-requi/update-info-requi.component';
-import { UpdateRequisicionComponent } from '../update-requisicion/update-requisicion.component';
+
+const swal = require('sweetalert');
 
 @Component({
   selector: 'app-requisicion-nueva',
   templateUrl: './requisicion-nueva.component.html',
   styleUrls: ['./requisicion-nueva.component.scss'],
-  providers:[CatalogosService, RequisicionesService]
+  providers: [CatalogosService, RequisicionesService]
 })
 export class RequisicionNuevaComponent implements OnInit {
-  @ViewChild('updateRequi') updateRequi : UpdateInfoRequiComponent;
+  @ViewChild('updateRequi') updateRequi: UpdateInfoRequiComponent;
 
   public damfoId: string;
   public direccionId: string;
   public requisicionId: string;
   public folio: any[];
   public createRequi: boolean;
-  public dataRequisicion : any[];
+  public dataRequisicion: any[];
   public Horarios: any[];
   public EstatusRequi: any;
   public estatusId: any;
   public TipoReclutamiento: any;
 
   constructor(
-    private settings : SettingsService,
+    private settings: SettingsService,
     private serviceCatalogo: CatalogosService,
     private serviceRequisiciones: RequisicionesService,
     private _Router: Router,
     private _Route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private fb : FormBuilder)
-  {
+    private fb: FormBuilder) {
     //Recupera la informacion que se manda en los parametros.
     this.spinner.show();
     this._Route.params.subscribe(params => {
-      if(params['IdDamfo'] != null && params['IdDireccion'] != null){
+      if (params['IdDamfo'] != null && params['IdDireccion'] != null) {
         this.damfoId = params['IdDamfo'];
         this.direccionId = params['IdDireccion'];
         this.estatusId = params['IdEstatus']
         this.createRequi = true;
-      }else{
+      } else {
         this.createRequi = false;
       }
-      if(this.createRequi){
+      if (this.createRequi) {
         //Manda la informacion para la creacion de la Requisicion.
         let datas: CreateRequisicion = new CreateRequisicion();
         datas.IdDamfo = this.damfoId;
@@ -58,14 +58,21 @@ export class RequisicionNuevaComponent implements OnInit {
         datas.Usuario = this.settings.user['usuario'];
         datas.UsuarioId = this.settings.user['id'];
         this.serviceRequisiciones.createNewRequi(datas).subscribe(data => {
-          this.requisicionId = data.id;
-          this.folio = data.folio;
-          this.Horarios = data.horariosRequi;
-          this.EstatusRequi = data.estatusId
-          this.TipoReclutamiento = data.tipoReclutamientoId;
+          if (data != 404) {
+            swal('Requisición Generada!', 'Capture número de vacantes y asigne un Coordinador.', 'success');
+            this.requisicionId = data.id;
+            this.folio = data.folio;
+            this.Horarios = data.horariosRequi;
+            this.EstatusRequi = data.estatusId
+            this.TipoReclutamiento = data.tipoReclutamientoId;
+          }
+          else {
+            swal('Ups!', 'Algo salio mal al intentar generar la requisición.', 'error');
+            this._Router.navigate(['/ventas/crearRequisicion']);
+          }
         });
       }
     });
   }
-  ngOnInit() {  }
+  ngOnInit() { }
 }

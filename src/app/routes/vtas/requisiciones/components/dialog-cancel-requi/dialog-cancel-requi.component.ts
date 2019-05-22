@@ -72,7 +72,7 @@ export class DialogCancelRequiComponent implements OnInit {
     this.folio = this.data.folio;
     this.infoCancelRequi = {
       id: this.data.id,
-      UsuarioMod: this.settings.user.name
+      UsuarioMod: this.settings.user['usuario']
     }
   }
 

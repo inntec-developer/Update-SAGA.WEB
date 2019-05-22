@@ -62,7 +62,6 @@ export class LoginComponent implements OnInit {
           if (data != 404 && data != 406) {
             sessionStorage.setItem('access-token', data['token'])
             var decode = this.getDecodedAccessToken(sessionStorage.getItem('access-token'));
-            debugger;
             this.Priv = JSON.parse(decode['Privilegios'])
             this.settings.user['id'] = decode['IdUsuario'];
             this.settings.user['nombre'] = decode['Nombre'];
