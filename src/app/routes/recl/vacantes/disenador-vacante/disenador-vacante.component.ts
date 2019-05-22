@@ -103,11 +103,11 @@ export class DisenadorVacanteComponent implements OnInit {
       this.psicoDamsa = data[0].requi.psicoDamsa;
       this.psicoCliente = data[0].requi.psicoCliente;
       this.telefono = data[0].requi.telefono[0];
-      console.log(this.ViewRequi);
+      debugger;
       for (let index = 0; index < data.length; index++) {
         const element = data[index];
         this.View(element.id, element.resumen, 'H');
-        this.View(element.id, element.resumen, 'D');
+        this.View(element.id, element.detalle, 'D');
       }
     });
 
@@ -187,6 +187,7 @@ export class DisenadorVacanteComponent implements OnInit {
   }
 
   View(Id: any, view: boolean, tp: string) {
+    debugger;
     if (tp === 'H') {
       switch (Id) {  // Vistas del header
         case 10:

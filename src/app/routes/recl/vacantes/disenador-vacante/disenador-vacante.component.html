@@ -38,7 +38,7 @@
             </ng-template>
             <div class="row">
                 <div class="col-md-6">
-                    <mat-accordion class="example-headers-align">
+                    <mat-accordion class="m-4">
                         <mat-expansion-panel *ngFor="let item of Clasifica" [expanded]="step === item.id" (opened)="setStep(item.id)" hideToggle="true">
                             <mat-expansion-panel-header>
                                 <mat-panel-title style="font-weight: bold;">
@@ -502,7 +502,7 @@
             </ng-template>
             <div class="row">
                 <div class="col-md-6">
-                    <mat-accordion>
+                    <mat-accordion class="m-4">
                         <mat-expansion-panel *ngFor="let detalle of Clasifica" [expanded]="stepd === detalle.id" (opened)="setStepD(detalle.id)" hideToggle="true">
                             <mat-expansion-panel-header>
                                 <mat-panel-title style="font-weight: bold;">

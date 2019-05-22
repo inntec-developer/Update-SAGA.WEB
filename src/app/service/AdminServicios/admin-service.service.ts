@@ -60,6 +60,9 @@ export class AdminServiceService {
   private UrlGetLideres = ApiConection.ServiceUrl + ApiConection.getLideres;
   private UrlGetOficinas = ApiConection.ServiceUrl + ApiConection.getOficinas;
   private UrlGetByUsuario = ApiConection.ServiceUrl + ApiConection.GetByUsuario;
+  private UrlSendEmail = ApiConection.ServiceUrl + ApiConection.EnviaCorreo;
+  private UrlUpdatePassword = ApiConection.ServiceUrl + ApiConection.updatePassword;
+
   // Error.
   private handleError(error: any) {
          console.log('sever error:', error);
@@ -425,5 +428,17 @@ export class AdminServiceService {
     return this._httpClient.get(this.UrlGetOficinas);
   }
 
-
+  UpdatePassword(data: any): Observable<any> {
+    const params = new HttpParams().set('datos', data)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    return this._httpClient.post(this.UrlUpdatePassword, JSON.stringify(data), httpOptions);
+  }
+  EnviaCorreo(correo: string, pass: string): Observable<any> {
+    let params = new HttpParams().set('correo', correo).set('pass', pass);
+    return this._httpClient.get(this.UrlSendEmail, {params: params});
+  }
 }

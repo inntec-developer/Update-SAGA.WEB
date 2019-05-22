@@ -1,0 +1,34 @@
+<div class="row text-center">
+    <mat-icon>lock</mat-icon>
+    <h3 style="margin-left: 45px">Restablecer contraseña</h3>
+    <span class="text-center">{{data.user}}</span>
+</div>
+<hr>
+<div *ngIf="!Codigo" class="row">
+    <mat-form-field>
+        <input #pass matInput placeholder="Nueva contraseña" [type]="showpass ? 'text' : 'password'" (blur)="passw(pass.value)">
+        <mat-icon matSuffix (mouseover)="showpass=true" (mouseout)="showpass=false">remove_red_eye</mat-icon>
+    </mat-form-field>
+    <mat-form-field>
+        <input #rpass matInput placeholder="Repite la contraseña" [type]="showPassR ? 'text' : 'password'" (blur)="passwr(rpass.value)">
+        <mat-icon matSuffix (mouseover)="showPassR=true" (mouseout)="showPassR=false">remove_red_eye</mat-icon>
+    </mat-form-field>
+</div>
+<ng-container *ngIf="Codigo">
+    <small>Se envió un correo electrónico, con tu nueva contraseña y un código que deberas ingresar para confirmar el cambio.</small>
+    <br>
+    <div class="row">
+        <mat-form-field>
+            <input #codigo matInput placeholder="Ingresa tu código" type="number" (blur)="code(codigo.value)">
+        </mat-form-field>
+    </div>
+</ng-container>
+<br>
+<div class="row">
+    <button *ngIf="!Codigo" class="btn btn-outline-green btn-lg btn-block" type="button" (click)="Enviar()" container="body" placement="bottom" tooltip="Guardar contraseña">
+        Guardar
+    </button>
+    <button *ngIf="Codigo" class="btn btn-outline-info btn-lg btn-block" type="button" (click)="Confirmar()" container="body" placement="bottom" tooltip="Confirma el código ingresado">
+        Confirmar
+    </button>
+</div>

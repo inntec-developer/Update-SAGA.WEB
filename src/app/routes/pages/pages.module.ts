@@ -1,5 +1,5 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatPaginatorIntl, MatTableModule } from '@angular/material';
+import { MatPaginatorIntl, MatTableModule, MatInputModule, MatIconModule } from '@angular/material';
 import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
 import { PopoverModule, TooltipModule } from 'ngx-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
@@ -10,7 +10,7 @@ import { Error500Component } from './error500/error500.component';
 import { HttpClientModule } from '@angular/common/http';
 import { InicioKioscoComponent } from './inicio-kiosco/inicio-kiosco.component';
 import { LockComponent } from './lock/lock.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent, DialogOverviewExampleDialog } from './login/login.component';
 import { MaintenanceComponent } from './maintenance/maintenance.component';
 import { Ng2TableModule } from 'ng2-table/ng2-table';
 import { NgModule } from '@angular/core';
@@ -42,6 +42,8 @@ import { VerTurnosComponent } from './ver-turnos/ver-turnos.component';
         SharedModule,
         //  RouterModule.forChild(routes),
         MatTableModule,
+        MatInputModule,
+        MatIconModule,
         Ng2TableModule,
         PaginationModule.forRoot(),
         TooltipModule.forRoot(),
@@ -53,6 +55,7 @@ import { VerTurnosComponent } from './ver-turnos/ver-turnos.component';
     ],
     declarations: [
         LoginComponent,
+        DialogOverviewExampleDialog,
         RegisterComponent,
         RecoverComponent,
         LockComponent,
@@ -69,6 +72,7 @@ import { VerTurnosComponent } from './ver-turnos/ver-turnos.component';
         { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
         { provide: PaginationConfig, useValue: getSpanishPaginatorBtp()}
         ],
+    entryComponents: [DialogOverviewExampleDialog],
     exports: [
         RouterModule,
         LoginComponent,
