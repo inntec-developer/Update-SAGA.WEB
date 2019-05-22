@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between">
   <h4 class="text-warning">TRANSFERIR FOLIO A COORDINADOR</h4>
-  <button type="button" class="btn btn-xs btn-danger btn-circle mb-3" mat-dialog-close><i class="fa fa-times"></i></button>
+  <button type="button" class="btn btn-xs btn-danger btn-circle mb-3" [disabled] = "loading"  mat-dialog-close><i class="fa fa-times"></i></button>
 </div>
 <mat-divider></mat-divider>
 <div class="card">
@@ -17,15 +17,15 @@
     <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
     [disableOnBreakpoints]="false" [disabled]="disabled">
     <div class="long">
-      <div class="list-group" *ngFor="let r of coord; let rowIndex = index;" >
-        <a type="button" (click)="Seleccionar(r, rowIndex)" class="list-group-item list-group-item-action text-muted" [class.bg-info] ="r.selected">{{r.nombre}}</a>
+      <div class="list-group" *ngFor="let r of coord; let rowIndex = index;">
+        <button type="button" [disabled] = "loading" (click)="Seleccionar(r, rowIndex)" class="list-group-item list-group-item-action text-muted" [class.bg-info] ="r.selected">{{r.nombre}}</button>
     </div>
   </div>
     </ng-scrollbar>
     <br/>
     <mat-divider></mat-divider>
     <mat-form-field>
-        <textarea matInput #message maxlength="500" placeholder="Comentario" rows="2" [(ngModel)]="comentario"></textarea>
+        <textarea matInput #message maxlength="500" placeholder="Comentario" rows="2" [(ngModel)]="comentario" [disabled]="loading"></textarea>
         <mat-hint align="end">{{message.value.length}} / 500</mat-hint>
   
     </mat-form-field>

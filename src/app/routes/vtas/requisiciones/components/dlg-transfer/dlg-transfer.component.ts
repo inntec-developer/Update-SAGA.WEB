@@ -3,6 +3,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ComentariosService } from '../../../../../service/Comentarios/comentarios.service';
 import { SettingsService } from '../../../../../core/settings/settings.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 const swal = require('sweetalert');
 @Component({
   selector: 'app-dlg-transfer',
@@ -25,7 +26,15 @@ export class DlgTransferComponent implements OnInit {
   loading: boolean = false;
   public comentario: string = "";
   dataRowIndex: any;
-  constructor(private _sevice: AdminServiceService,  private dialog : MatDialogRef<DlgTransferComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private serviceComentarios: ComentariosService, private settings: SettingsService) { }
+  constructor(
+    private _sevice: AdminServiceService, 
+    private dialog : MatDialogRef<DlgTransferComponent>, 
+    @Inject(MAT_DIALOG_DATA) public data: any, 
+    private serviceComentarios: ComentariosService, 
+    private settings: SettingsService) 
+    {
+      dialog.disableClose = true;
+    }
 
   ngOnInit() {
    this.GetCoordinadores();
@@ -74,6 +83,11 @@ export class DlgTransferComponent implements OnInit {
     if(this.coordNom.length > 0)
     {
   
+      let tipo = 1; //cambio coordinador
+      if(this.data.usuario == 10)
+      {
+        tipo = 2 //cambio ejecutivo
+      }
     let Comentario = {
         Comentario: this.comentario,
         RequisicionId: this.data.id,
@@ -82,7 +96,7 @@ export class DlgTransferComponent implements OnInit {
         ReclutadorId: this.settings.user['id'],
         EstatusId: 20,
         UsuarioTransferId: this.coordId,
-        Tipo: 1
+        Tipo: tipo
       }
       swal({
         title: "¿ESTÁS SEGURO?",
@@ -93,28 +107,30 @@ export class DlgTransferComponent implements OnInit {
         confirmButtonText: "Aceptar",
         cancelButtonColor: "#ec2121",
         cancelButtonText: "Cancelar",
-        closeOnConfirm: false,
-        closeOnCancel: false
+        closeOnConfirm: true,
+        closeOnCancel: true
       }, (isConfirm) => {
 
-        window.onkeydown = null;
-        window.onfocus = null;
+        // window.onkeydown = null;
+        // window.onfocus = null;
         if (isConfirm) {
           this.loading = true;
-
+        
           this.serviceComentarios.addComentarioVacante(Comentario).subscribe(data => {
             if (data == 200) {
               this.comentario = '';
               this.rowAux.selected = false;
               this.loading = false;
+
               swal("TRANSFERIR", '¡La asignación se realizó con éxito!', 'success' );
               this.dialog.close(true);
             
             }
             else
             {
-            this.loading = false;
-            swal('ERROR', 'Ocurrio un error', 'error');
+              this.loading = false;
+
+              swal('ERROR', 'Ocurrio un error', 'error');
             }
           });
   
