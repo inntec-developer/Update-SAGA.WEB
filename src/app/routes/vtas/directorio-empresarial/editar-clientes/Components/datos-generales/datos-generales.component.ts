@@ -180,7 +180,7 @@ export class DatosGeneralesComponent implements OnInit {
       isValid = false;
     }
     if (!isValid) {
-      let msg = 'El número de empleados no coincide con el tamañano de la empresa. ';
+      let msg = 'El número de empleados no coincide con el tamaño de la empresa. ';
       this.popToast('error', 'Tamaño Empresa', msg);
       this.formGeneral.controls['NoEmpleados'].reset();
       this.formGeneral.controls['Tamanio'].reset();

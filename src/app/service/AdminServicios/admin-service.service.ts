@@ -415,8 +415,8 @@ export class AdminServiceService {
 
   }
 
-  GetByUsuario(tipo: any): Observable<any>{
-    let params = new HttpParams().set('tipo', tipo);
+  GetByUsuario(tipo: number): Observable<any>{
+    let params = new HttpParams().set('tipo', tipo.toString());
     return this._httpClient.get(this.UrlGetByUsuario, {params: params});
   }
   GetLideres() : Observable<any>

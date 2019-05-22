@@ -726,12 +726,6 @@ export class ButtonsPostulacionesComponent implements OnInit {
             this.service.SetProcesoVacante(datosVacante).subscribe(data => {
             })
           }
-          else if (estatusId == 12 || estatusId == 17 && this.estatusVacante != 29 && this.estatusVacante != "33" && this.estatusVacante != "39" && this.estatusVacante != "38") {
-            var datosVacante = { estatusId: 29, requisicionId: this.RequisicionId }; //espera de contratacion
-
-            this.service.SetProcesoVacante(datosVacante).subscribe(data => {
-            })
-          }
 
           this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
 

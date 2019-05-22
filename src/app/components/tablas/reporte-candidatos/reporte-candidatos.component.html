@@ -2,29 +2,26 @@
   <div class="row">
     <div class="col-sm-12 col-md-12 clearfix">
       <button  *ngIf="Liberar"  [disabled]="!candidatos" [ngClass]="!candidatos ? 'disabled':' btn-outline-danger'" container="body"
-        class="mb-1 btn btn-xs" placement="bottom" tooltip="Desapartar" (click)="openDialogLiberar()">
+        class="mr-1 mb-1 btn btn-xs" placement="bottom" tooltip="Desapartar" (click)="openDialogLiberar()">
         <em class="fa fa-thumbs-o-down"></em>
       </button>
-      <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="mb-1 btn btn-xs btn-outline-primary margen">
+      <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="mr-1 mb-1 btn btn-xs btn-outline-primary">
         <em class="fa fa-eraser"></em>
       </button>
-      <button class="mb-1 btn btn-xs btn-outline-success margen" type="button" (click)="refresh()" container="body"
+      <button class="mr-1 mb-1 btn btn-xs btn-outline-success" type="button" (click)="refresh()" container="body"
         placement="bottom" tooltip="Actualizar">
         <em class="icon-refresh"></em>
       </button>
-      <pre class="card-block float-right">Registros: {{dataSource.length}}</pre>
+     
     </div>
   </div>
-  <div class="row" #tableContainer>
-    <div class="col-sm-12 col-md-12 table-responsive clearfix">
-
-      <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 table-responsive">
+      <table *ngIf="rows.length > 0 else NotCandidatos" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
         <thead>
           <tr>
             <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
               <span>{{column.title | uppercase}}</span>
-              <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
-              </i>
             </th>
           </tr>
           <tr *ngIf="showFilterRow">
@@ -44,7 +41,7 @@
                 <td class="text-center"> {{row.curp | uppercase }}</td>
                 <td class="text-center"> {{row.rfc | uppercase }}</td>
                 <td class="text-center"> {{row.nss | uppercase }}</td>
-                <!-- <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength" class='px-1 mr-1 badge badge-pill badge-info'
+                <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength" class='px-1 mr-1 badge badge-pill badge-info'
                     [class.badge-warning]="row.estatusId === 42" [class.badge-danger]="row.estatusId == 28">
                     <span *ngIf="row.estatusId != 28"> {{row.estatus | uppercase }}</span>
                   </span>
@@ -53,7 +50,7 @@
                       [class.badge-danger]="row.estatusId == 28" placement="bottom" tooltip="{{row.estatus | uppercase}}"
                       container="body">{{row.estatus | slice:0:6 | uppercase }} ... </span>
                   </ng-template>
-                </td> -->
+                </td>
               </tr>
             </div>
           </ng-scrollbar>
@@ -96,3 +93,13 @@
     </div>
   </div>
 </div>
+<!--mensaje cuando esta vacio la tabla-->
+<ng-template #NotCandidatos>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <alert type="info">
+        <strong>Oops!</strong> La requsici&oacute;n a&uacute;n no cuenta con candidatos en proceso / apartados.
+      </alert>
+    </div>
+  </div>
+</ng-template>

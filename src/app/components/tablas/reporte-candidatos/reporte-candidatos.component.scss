@@ -2,20 +2,17 @@
   margin-left: 10px;
 }
 
-.margen {
-  margin-left: 5px;
-}
-
-table tbody {
+tbody {
   display: block;
-
+  height: 250px;
 }
 
-table thead,
+thead,
 tbody tr {
   display: table;
   width: 100%;
   table-layout: fixed;
+  font-size: 12px;
 }
 
 table thead {
@@ -59,7 +56,7 @@ table tbody tr:hover {
 
 
 table tbody div {
-  height: 350px;
+  height: 50px;
 }
 
 ng-scrollbar {
@@ -68,7 +65,6 @@ ng-scrollbar {
   --scrollbar-thumb-hover-color: dodgerblue;
   --scrollbar-border-radius: 4px;
 }
-
 
 .row {
   display: flex;

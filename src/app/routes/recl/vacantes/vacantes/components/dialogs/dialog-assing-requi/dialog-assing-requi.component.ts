@@ -294,7 +294,6 @@ export class DialogAssingRequiComponent implements OnInit {
   }
 
   validateAsignados(): boolean {
-    debugger;
     if (this.asignadosRequi.length > 0) {
       return true
     } else {

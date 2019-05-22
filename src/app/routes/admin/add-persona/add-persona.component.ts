@@ -21,6 +21,7 @@ export class AddPersonaComponent implements OnInit {
   public showFilterRow: boolean;
   public clearFilter: boolean = false;
   selected: boolean = false;
+  public foto: string;
 
 
 
@@ -189,17 +190,17 @@ export class AddPersonaComponent implements OnInit {
   }
 
 
-  updateFoto() {
-    if (this.someInput.StatusCode == 201 || this.someInput.StatusCode == 500) {
-      this.closeModal();
+  // updateFoto() {
+  //   if (this.someInput.StatusCode == 201 || this.someInput.StatusCode == 500) {
+  //     this.closeModal();
 
-      this.Users[this.rowAux]['foto'] = 'utilerias/img/user/' + this.someInput.name;
-      this.Users[this.rowAux]['fotoAux'] = this.someInput.image.src;
-      this.Users = [...this.Users];
+  //     this.Users[this.rowAux]['foto'] = 'utilerias/img/user/' + this.someInput.name;
+  //     this.Users[this.rowAux]['fotoAux'] = this.someInput.image.src;
+  //     this.Users = [...this.Users];
 
-    }
+  //   }
 
-  }
+  // }
 
   SendEmail(user: any) {
     let u = {
@@ -284,7 +285,7 @@ export class AddPersonaComponent implements OnInit {
       liderId: user.liderId
 
     }
-    if(user.entidadId === this.settings.user['id']){
+    if (user.entidadId === this.settings.user['id']) {
       this.settings.user['usuario'] = user.usuario;
     }
 
@@ -316,7 +317,8 @@ export class AddPersonaComponent implements OnInit {
     this.service.getPersonas().subscribe(e => {
       this.Users = e;
       this.Users.forEach(item => {
-        item.fotoAux = ApiConection.ServiceUrlFoto + item.foto
+        item.foto = ApiConection.ServiceUrlFotoUser + item.clave + '.jpg';
+        // item.fotoAux = ApiConection.ServiceUrlFotoUser + item.clave + '.jpg';
         item.selected = false;
       });
       this.onChangeTable(this.config)
@@ -336,6 +338,11 @@ export class AddPersonaComponent implements OnInit {
     this.service.GetOficinas().subscribe(data => {
       this.Oficina = data;
     });
+  }
+
+  errorImg(entidadId) {
+    let index = this.rows.findIndex(u => u.entidadId === entidadId);
+    this.rows[index]['foto'] = '/assets/img/user/default.jpg';
   }
 
   /**
