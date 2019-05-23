@@ -14,6 +14,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { saveAs } from 'file-saver';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
+
 @Injectable()
 export class AdminServiceService {
 
@@ -353,7 +359,7 @@ export class AdminServiceService {
   {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
-    return this.http.post(this.UrlUpdateGrupo, JSON.stringify(data), options)
+    return this._httpClient.post(this.UrlUpdateGrupo, data
             .map(result => result.json())
             .catch(this.handleError);
 
@@ -370,12 +376,8 @@ export class AdminServiceService {
 
   UpdatePrivilegios(data: any) : Observable<any>
   {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    return this.http.post(this.UrlUpdatePrivilegios, JSON.stringify(data), options)
-            .map(result => result.json())
-            .catch(this.handleError);
-
+    debugger;
+    return this._httpClient.post(this.UrlUpdatePrivilegios, data, httpOptions);
   }
   DeleteGrupo(data: any) : Observable<any>
   {

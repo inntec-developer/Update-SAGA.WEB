@@ -21,7 +21,8 @@
         <em class="fa fa-navicon"></em>
       </a>
       <!-- Button to show/hide the sidebar on mobile. Visible on mobile only. -->
-      <a class="nav-link sidebar-toggle d-md-none" (click)="settings.layout.asideToggled =! settings.layout.asideToggled; $event.stopPropagation(); settings.layout.viewChevron = !settings.layout.viewChevron">
+      <a class="nav-link sidebar-toggle d-md-none"
+        (click)="settings.layout.asideToggled =! settings.layout.asideToggled; $event.stopPropagation(); settings.layout.viewChevron = !settings.layout.viewChevron">
         <em class="fa fa-navicon"></em>
       </a>
     </li>
@@ -40,15 +41,23 @@
       </a>
     </li>
 
-      <!-- START sistema tickets-->
-      <li class="nav-item d-none d-md-block">
-          <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
-          <a class="nav-link" title="Sistema de turnos" [routerLink]="'/Tickets'">
-            <em class="fa fa-ticket"></em>
-          </a>
-        </li>
-        <!-- END sistema tickets-->
+    <!-- START sistema tickets-->
+    <li class="nav-item d-none d-md-block">
+      <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+      <a class="nav-link" title="Sistema de turnos" [routerLink]="'/Tickets'">
+        <em class="fa fa-ticket"></em>
+      </a>
+    </li>
+    <!-- END sistema tickets-->
 
+    <!--Start Mostrar Calendario -->
+    <li class="nav-item d-none d-md-block">
+        <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+        <a class="nav-link" title="Calendario" [routerLink]="['/home/Calendario']">
+          <em class="fa fa-calendar"></em>
+        </a>
+      </li>
+    <!-- End Mostrar Calendario -->
     <li class="nav-item d-none d-md-block">
       <a href="#" (click)="openModal(acercaDe)" title="Actualizaci&oacute;n" class="nav-link">
         <em class="fa fa-question-circle-o"></em>
@@ -65,11 +74,11 @@
                 <em class="icon-magnifier"></em>
             </a>
         </li> -->
-        <li *ngIf="admin == '1'" class="nav-item">
-            <a class="nav-link" title="Jobs"  [routerLink]="'/admin/jobPause'">
-                <em class="fa fa-bolt"></em>
-            </a>
-        </li>
+    <li *ngIf="admin == '1'" class="nav-item">
+      <a class="nav-link" title="Jobs" [routerLink]="'/admin/jobPause'">
+        <em class="fa fa-bolt"></em>
+      </a>
+    </li>
 
     <!-- START Alert menu-->
     <li class="nav-item dropdown dropdown-list" dropdown>
@@ -97,8 +106,8 @@
                 <div class="align-self-start mr-2">
                   <em class="{{item.icon}} text-info"></em>
                   <p class="m-0 text-muted text-sm float-rigth">
-                    <em (click)="leido(item)" *ngIf="item.activo" class="fa fa-envelope-o envelope action" placement="bottom"
-                      tooltip="Marcar como leido"></em>
+                    <em (click)="leido(item)" *ngIf="item.activo" class="fa fa-envelope-o envelope action"
+                      placement="bottom" tooltip="Marcar como leido"></em>
                     <em *ngIf="!item.activo" class="fa fa-envelope-open-o envelope-open "></em>
                   </p>
                 </div>
@@ -185,8 +194,8 @@
     </div>
     <div class="modal-body">
       <div class="contenAcerDe">
-        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="true" [compact]="compact" [shown]="shown"
-          [disableOnBreakpoints]="false" [disabled]="disabled">
+        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="true" [compact]="compact"
+          [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
 
           <div class="content-acercaDe" [innerHTML]="text"></div>
 

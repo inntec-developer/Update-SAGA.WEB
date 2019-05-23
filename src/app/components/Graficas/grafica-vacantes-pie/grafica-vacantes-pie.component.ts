@@ -37,33 +37,49 @@ export class GraficaVacantesPieComponent implements OnInit {
       this.Data = {
         datasets: [{
           backgroundColor: ['#00FF00', '#FFCC00', '#FF3300'],
+          borderColor: '#fff',
           data: [vigentes, porVecner, vencidas]
         }],
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: [
-          'Vigentes: ',
-          'Por Vencer: ',
-          'Vencidas: '
+          'Vigentes',
+          'Por Vencer',
+          'Vencidas'
         ]
       }
       this.Chart = new Chart('canvas', {
-        type: 'polarArea',
-        title: { text: 'Seguimiento de Vacantes' },
+        type: 'pie',
         data: this.Data,
         options: {
+          hoverBorderColor: '#00000',
           responsive: true,
           onClick: this.detectedClick.bind(this),
-          scale: {
-            display: true
+          // title: {
+          //   text: 'Seguimiento Vacantes'
+          //   display: true,
+          // },
+          // scale: {
+          //   ticks: {
+          //     scaleBeginAtZero: true,
+          //     scaleStartValue: 0,
+          //   },
+          //   display: true,
+          //   scaleShowLine: true,
+          //   reverse: false
+          // },
+          animation: {
+            animateRotate: true,
+            animateScale: true
           },
+          // startAngle: -Math.PI / -4,
           legend: {
             position: 'right',
             display: true,
-            labels:{
-              fontSize: 12,
+            labels: {
+              fontSize: 10,
               boxWidth: 10,
               usePointStyle: true,
-              padding: 5
+              padding: 3
             }
           },
         }
