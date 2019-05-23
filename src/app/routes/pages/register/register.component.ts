@@ -22,6 +22,7 @@ export class RegisterComponent implements OnInit {
     email: Array<any> = [];
     ListDepas: Array<any> = [];
     Oficinas: Array<any> = [];
+    Lideres: Array<any> = [];
     user: string = '';
     verMsj = false;
     loading = false;
@@ -72,7 +73,8 @@ export class RegisterComponent implements OnInit {
             'ApellidoMaterno': ['', [Validators.required]],
             'Usuario': [{ value: '', disabled: true }],
             'DepartamentoId': ['', [Validators.required]],
-            'OficinasId': ['', [Validators.required]]
+            'OficinasId': ['', [Validators.required]],
+            'LiderId': ['', [Validators.required]]
         });
 
     }
@@ -130,6 +132,7 @@ export class RegisterComponent implements OnInit {
                     Usuario: this.user.toUpperCase(),
                     DepartamentoId: this.valForm.controls['DepartamentoId'].value,
                     OficinaId: this.valForm.controls['OficinasId'].value,
+                    LiderId: this.valForm.controls['LiderId'].value,
                     Email: this.email,
                     Password: this.passwordForm.controls['password'].value,
                     Foto: "/utilerias/img/user/default.jpg"
@@ -175,6 +178,12 @@ export class RegisterComponent implements OnInit {
     getOficinas() {
         this.service.GetOficinas().subscribe(result => {
             this.Oficinas = result;
+        });
+    }
+
+    getLider() {
+        this.service.GetLideres()
+        .subscribe(result => { this.Lideres = result; console.log(result);
         });
     }
 
@@ -270,6 +279,7 @@ export class RegisterComponent implements OnInit {
         this.passwordForm.controls['confirmPassword'].reset();
         this.getDepartamentos();
         this.getOficinas();
+        this.getLider();
         this.disabledE = false;
         // this.disabledC = false;
     }

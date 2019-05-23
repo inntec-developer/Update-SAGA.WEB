@@ -154,11 +154,10 @@ export class AdminServiceService {
     return this._httpClient.get(ApiConection.ServiceUrlFileManager + 'pdf/' + url, {responseType: "blob"});
   }
 
-  getPersonas(): Observable<any>
+  getPersonas(user: any): Observable<any>
   {
-     return this.http.get(this.Url)
-         .map(result => result.json())
-         .catch(this.handleError);
+      let params = new HttpParams().set('user', user);
+     return this._httpClient.get(this.Url, {params: params});
   }
 
   SendEmailRegister(data: any): Observable<any>{
