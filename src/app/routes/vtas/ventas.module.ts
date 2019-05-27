@@ -32,7 +32,8 @@ import { VerClienteComponent } from './directorio-empresarial/ver-cliente/ver-cl
 import { ViewCuerpoRequiComponent } from './requisiciones/components/view-cuerpo-requi/view-cuerpo-requi.component';
 import { ViewInforRequiComponent } from './requisiciones/components/view-info-requi/view-info-requi.component';
 import { ViewRequisicionComponent } from './requisiciones/components/view-requisicion/view-requisicion.component';
-import { ViewdamfoComponent } from './requisiciones/components/viewdamfo/viewdamfo.component';import { DlgTransferComponent } from './requisiciones/components/dlg-transfer/dlg-transfer.component';
+import { ViewdamfoComponent } from './requisiciones/components/viewdamfo/viewdamfo.component';
+import { DTHistorialComponent } from './requisiciones/components/dthistorial/dthistorial.component'
 ;
 
 const routes: Routes = [
@@ -86,7 +87,8 @@ const routes: Routes = [
     DireccionesClienteComponent ,
     TelefonosClienteComponent ,
     CorreosClienteComponent,
-    ContactosClienteComponent,
+    ContactosClienteComponent,,
+    DTHistorialComponent
   ],
 
   entryComponents: [DialogdamfoComponent, DialogDeleteRequiComponent, DialogCancelRequiComponent, DialogActivarRequiComponent, DialogEditHorarioComponent, DialogRutasComponent],

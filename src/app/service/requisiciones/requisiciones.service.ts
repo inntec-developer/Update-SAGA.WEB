@@ -58,6 +58,8 @@ export class RequisicionesService {
   private URLSendEmailRedesSociales = ApiConection.ServiceUrl + ApiConection.SendEmailRedesSociales;
   private URLAddDtosFactura = ApiConection.ServiceUrl + ApiConection.AddDatosFactura;
   private URLGetReporte70 = ApiConection.ServiceUrl + ApiConection.GetReporte70;
+  private URLGetAsignados = ApiConection.ServiceUrl + ApiConection.GetAsignados;
+  private UrlGetRequisicionesHistorial = ApiConection.ServiceUrl + ApiConection.getRequisicionesHistorial;
 
   constructor(private http: Http, private _httpClient: HttpClient) { }
   // Recupera todos los damfos que esten dados de alta y se encuentren activos
@@ -108,6 +110,13 @@ export class RequisicionesService {
       .map(result => result.json())
       .catch(this.handleError);
   }
+
+  GetRequisicionesHistorial(propietario): Observable<any> {
+    let params = new HttpParams().set('propietario', propietario);
+    return this._httpClient.get(this.UrlGetRequisicionesHistorial, { params: params });
+  }
+
+
   // Recupera la información de las requisiciones que se han asignado al reclutador.
   getRequiReclutador(user: string): Observable<any> {
     let params = new HttpParams().set('IdUsuario', user);
@@ -230,6 +239,11 @@ export class RequisicionesService {
     return this._httpClient.get(this.URLGetInformeRequisiciones, { params: params });
   }
 
+  GetAsignados(requisicionId: any): Observable<any>
+  {
+    let params = new HttpParams().set('requisicionId', requisicionId);
+    return this._httpClient.get(this.URLGetAsignados, { params: params });
+  }
 
   GetRequiTipoRecl(propietarioId: any, tipo): Observable<any> {
     let params = new HttpParams().set('propietario', propietarioId).set('tipo', tipo);

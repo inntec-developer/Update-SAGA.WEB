@@ -1,0 +1,119 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12 table-responsive clearfix">
+      <div class="mt-3 ">
+        <span class="text-muted font-weight-bold float-right text-uppercase mb-3 ">Total de Folios <span
+            class="badge badge-pill badge-success">{{dataSource.length}}</span></span>
+      </div>
+
+      <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table border-top" style="width: 100%;">
+        <thead>
+          <tr>
+            <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+              <small>{{column.title | uppercase}}</small>
+              <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)"
+                [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
+              </i>
+            </th>
+          </tr>
+          <tr *ngIf="showFilterRow">
+            <th *ngFor="let column of columns">
+              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
+                [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                class="form-control form-control-sm" id="{{column.name}}">
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+          <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+            [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+            <div>
+              <tr (click)="onCellClick(row)" *ngFor="let row of rows" [class.confident]="row.confidencial"
+                [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
+                <td class="text-center">
+                  {{row.folio}}
+                </td>
+                <td> {{row.cliente | uppercase}}</td>
+                <td class="text-center"> {{row.vBtra | uppercase}}</td>
+                <td class="text-center">
+                  <span class="mr-1 badge badge-pill badge-info"> {{row.contratados}}/{{row.vacantes}}</span>
+                </td>
+                <td class="text-center"> {{row.tipoReclutamiento | uppercase}}</td>
+                <!-- <td class="text-right"> {{row.sueldoMinimo | currency: $}}</td>
+          <td class="text-right"> {{row.sueldoMaximo | currency: $}}</td> -->
+                <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
+                <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
+                <td class="text-center">
+                  <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info"
+                    [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
+                    [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
+                    [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
+                    {{row.estatus | uppercase}}
+                  </small>
+
+                  <ng-template #toLength>
+                    <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
+                      [class.badge-primary]="row.estatusId  === 5"
+                      [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
+                      [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8"
+                      tooltip="{{row.estatus | uppercase}}" placement="top" container="body"> {{row.estatus | slice:0:8 | uppercase
+                      }} ...
+                    </small>
+                  </ng-template>
+                </td>
+                <td>
+                  <ng-template #popTemplate>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="popover-body">
+                          <ul *ngFor="let r of row.reclutadores">
+                            <li class="text-muted">{{r | uppercase}}</li>
+                          </ul>
+
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+
+                  <span class="text-center" *ngIf="row.reclutadores.length == 0 && row.estatusId == 4">SIN
+                    ASIGNAR</span>
+                  <a class="badge badge-pill badge-primary text-white text-center"
+                    *ngIf="row.reclutadores.length > 1 && row.estatusId == 4" [popover]="popTemplate" placement="left"
+                    container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
+                  <span class="text-center"
+                    *ngIf="row.reclutadores.length == 1 && row.estatusId == 4">{{row.reclutadores[0] | uppercase}}</span>
+                  <span class="text-center" *ngIf="row.estatusId != 4">{{row.coordinador | uppercase}}</span>
+                </td>
+                <td> {{row.propietario | uppercase}}</td>
+                <td class="text-center">
+                  <ng-template #popTemplate>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="popover-body">
+                          <ul *ngFor="let r of row.reclutadores">
+                            <li class="text-muted">{{r | uppercase}}</li>
+                          </ul>
+
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+
+                  <span class="text-center" *ngIf="row.reclutadores.length == 0 || row.estatusId == 4">SIN
+                    ASIGNAR</span>
+                  <a class="badge badge-pill badge-primary text-white text-center"
+                    *ngIf="row.reclutadores.length > 1 && row.estatusId != 4" [popover]="popTemplate" placement="left"
+                    container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
+                  <span class="text-center"
+                    *ngIf="row.reclutadores.length == 1 && row.estatusId != 4">{{row.reclutadores[0] | uppercase}}</span>
+
+                </td>
+              </tr>
+            </div>
+          </ng-scrollbar>
+        </tbody>
+      </table>
+    </div>
+    </div>

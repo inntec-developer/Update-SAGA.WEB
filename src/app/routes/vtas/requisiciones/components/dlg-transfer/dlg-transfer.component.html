@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between">
-  <h4 class="text-warning">TRANSFERIR FOLIO A COORDINADOR</h4>
+  <h4 class="text-warning">TRANSFERENCIA DE FOLIOS</h4>
   <button type="button" class="btn btn-xs btn-danger btn-circle mb-3" [disabled] = "loading"  mat-dialog-close><i class="fa fa-times"></i></button>
 </div>
 <mat-divider></mat-divider>
@@ -13,7 +13,42 @@
    </div>
     <mat-divider></mat-divider>
     <br/>
+    <div class="d-flex justify-content-between">
     <h6 class="text-info">SELECCIONAR {{titulo | uppercase}}</h6>
+      <mat-checkbox (change)="GetReclutadores($event);">Reclutador</mat-checkbox>
+  </div>
+  <div *ngIf="verRecl" class="row">
+      <div *ngIf="listaAsignar.length > 0 else NotCandidatos" class="col-md-6">
+        <span class="text-muted">DE</span>
+        <div class="card">
+          <div class="card-body mat-elevation-z8">
+        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+          <div class="long">
+            <div class="list-group" *ngFor="let l of listaAsignar; let rowIndex = index;">
+              <button type="button" [disabled] = "loading" (click)="onSelect(l, rowIndex)" class="list-group-item list-group-item-action text-muted" [class.bg-info] ="l.selected">{{l.nombre}}</button>
+            </div>
+          </div>
+        </ng-scrollbar>
+      </div>
+      </div>
+      </div>
+      <div *ngIf="listaAsignar.length > 0" class="col-md-6">
+        <span class="text-muted">PARA</span>
+          <div class="card">
+              <div class="card-body mat-elevation-z8">
+          <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+            <div class="long">
+              <div class="list-group" *ngFor="let a of listaAsignar2; let rowIndex2 = index;">
+                <button type="button" [disabled] = "loading" (click)="onSelect2(a, rowIndex2)" class="list-group-item list-group-item-action text-muted" [class.bg-info] ="a.selected">{{a.nombre}}</button>
+              </div>
+            </div>
+          </ng-scrollbar>
+          </div>
+          </div>
+        </div>
+        <div *ngIf="asig.length > 0" class="ml-3 p-2 mb-2 bg-success text-white"><span *ngIf="asig.length > 0">Transferir de {{asig[0].nombre }} </span><span class="ml-1" *ngIf="asig2.length > 0"> a {{asig2[0].nombre}}</span></div>
+    </div>
+    <div *ngIf="!verRecl">
     <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
     [disableOnBreakpoints]="false" [disabled]="disabled">
     <div class="long">
@@ -22,6 +57,7 @@
     </div>
   </div>
     </ng-scrollbar>
+  </div>
     <br/>
     <mat-divider></mat-divider>
     <mat-form-field>
@@ -46,3 +82,13 @@
 
 </div>
 
+<!--mensaje cuando esta vacio la tabla-->
+<ng-template #NotCandidatos>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <alert type="info">
+        <strong>Oops!</strong> La requisición no cuenta con reclutadores asignados.
+      </alert>
+    </div>
+  </div>
+</ng-template>

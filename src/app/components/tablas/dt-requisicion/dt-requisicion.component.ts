@@ -79,7 +79,7 @@ export class DtRequisicionComponent implements OnInit {
   Vacante: any;
   comentario: string;
 
-  reporte70 = false;
+  historial = false;
   totalPos: number = 0;
   constructor(
     private service: RequisicionesService,
