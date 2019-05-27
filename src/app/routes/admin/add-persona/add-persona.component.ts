@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { UploadImgsComponent } from '../upload-imgs/upload-imgs.component';
 
+
 @Component({
   selector: 'app-add-persona',
   templateUrl: './add-persona.component.html',
@@ -293,8 +294,7 @@ export class AddPersonaComponent implements OnInit {
       .subscribe(data => {
         if (data == 201) {
           this.popToast('success', 'Actualizar Datos', 'Los datos se actualizaron con éxito');
-        }
-        else {
+        } else {
           this.popToast('error', 'Actualizar Datos', 'Ocurrio un error al intentar actualizar datos');
         }
 
@@ -314,7 +314,7 @@ export class AddPersonaComponent implements OnInit {
   }
 
   getUsuarios() {
-    this.service.getPersonas().subscribe(e => {
+    this.service.getPersonas(this.settings.user['id']).subscribe(e => {
       this.Users = e;
       this.Users.forEach(item => {
         item.foto = ApiConection.ServiceUrlFotoUser + item.clave + '.jpg';

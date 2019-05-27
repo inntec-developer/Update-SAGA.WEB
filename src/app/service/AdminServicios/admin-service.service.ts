@@ -14,6 +14,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { saveAs } from 'file-saver';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
+
 @Injectable()
 export class AdminServiceService {
 
@@ -60,6 +66,9 @@ export class AdminServiceService {
   private UrlGetLideres = ApiConection.ServiceUrl + ApiConection.getLideres;
   private UrlGetOficinas = ApiConection.ServiceUrl + ApiConection.getOficinas;
   private UrlGetByUsuario = ApiConection.ServiceUrl + ApiConection.GetByUsuario;
+  private UrlSendEmail = ApiConection.ServiceUrl + ApiConection.EnviaCorreo;
+  private UrlUpdatePassword = ApiConection.ServiceUrl + ApiConection.updatePassword;
+
   // Error.
   private handleError(error: any) {
          console.log('sever error:', error);
@@ -151,11 +160,10 @@ export class AdminServiceService {
     return this._httpClient.get(ApiConection.ServiceUrlFileManager + 'pdf/' + url, {responseType: "blob"});
   }
 
-  getPersonas(): Observable<any>
+  getPersonas(user: any): Observable<any>
   {
-     return this.http.get(this.Url)
-         .map(result => result.json())
-         .catch(this.handleError);
+      let params = new HttpParams().set('user', user);
+     return this._httpClient.get(this.Url, {params: params});
   }
 
   SendEmailRegister(data: any): Observable<any>{
@@ -353,7 +361,7 @@ export class AdminServiceService {
   {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
-    return this.http.post(this.UrlUpdateGrupo, JSON.stringify(data), options)
+    return this._httpClient.post(this.UrlUpdateGrupo, data
             .map(result => result.json())
             .catch(this.handleError);
 
@@ -370,12 +378,8 @@ export class AdminServiceService {
 
   UpdatePrivilegios(data: any) : Observable<any>
   {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    return this.http.post(this.UrlUpdatePrivilegios, JSON.stringify(data), options)
-            .map(result => result.json())
-            .catch(this.handleError);
-
+    debugger;
+    return this._httpClient.post(this.UrlUpdatePrivilegios, data, httpOptions);
   }
   DeleteGrupo(data: any) : Observable<any>
   {
@@ -425,5 +429,17 @@ export class AdminServiceService {
     return this._httpClient.get(this.UrlGetOficinas);
   }
 
-
+  UpdatePassword(data: any): Observable<any> {
+    const params = new HttpParams().set('datos', data)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    return this._httpClient.post(this.UrlUpdatePassword, JSON.stringify(data), httpOptions);
+  }
+  EnviaCorreo(correo: string, pass: string): Observable<any> {
+    let params = new HttpParams().set('correo', correo).set('pass', pass);
+    return this._httpClient.get(this.UrlSendEmail, {params: params});
+  }
 }

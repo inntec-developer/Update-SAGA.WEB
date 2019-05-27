@@ -189,6 +189,7 @@ export class DisenadorVacanteComponent implements OnInit {
   }
 
   View(Id: any, view: boolean, tp: string) {
+    debugger;
     if (tp === 'H') {
       switch (Id) {  // Vistas del header
         case 10:

@@ -17,7 +17,7 @@ export class RollsStructComponent implements OnInit {
   @Input() public hiddenSelect = false;
   @Output('onItemChanged') public onItemChanged = new EventEmitter();
   @ViewChild('grid') grid;
- 
+
   filteredData: Array<any> = [];
   editing = {};
   listRoles: Array<any> = [];
@@ -49,9 +49,10 @@ onClosed(): void {
 }
 
   constructor(private service: AdminServiceService) { }
-  
+
   GuardarCambios()
   {
+    debugger;
     var privilegios = this.grid.privilegios;
     if (this.grid.privilegios.length > 0) {
       if(this.nomRol != '' && this.nuevoRol == true)
@@ -61,23 +62,23 @@ onClosed(): void {
           item.Nombre = nom;
           return item;
         });
-  
+
         this.service.AddRoles(obj)
           .subscribe(data => {
             if(data == 201)
             {
               this.alerts[0]['msg'] = 'Los datos se agregaron con éxito';
-              this.alert = this.alerts[0]; 
+              this.alert = this.alerts[0];
               this.verMsj = true;
               this.grid.privilegios = [];
               this.nomRol = "";
-              
-              this.GetRoles();              
+
+              this.GetRoles();
             }
             else
             {
               this.alerts[1]['msg'] = 'Ocurrio un error al intentar agregar'
-              this.alert = this.alerts[1]; 
+              this.alert = this.alerts[1];
               this.verMsj = true;
             }
           });
@@ -89,14 +90,14 @@ onClosed(): void {
             if(data == 201)
             {
               this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito'
-              this.alert = this.alerts[0]; 
+              this.alert = this.alerts[0];
               this.verMsj = true;
               this.grid.privilegios = [];
             }
             else
             {
               this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar'
-              this.alert = this.alerts[1]; 
+              this.alert = this.alerts[1];
               this.verMsj = true;
             }
           });
@@ -105,7 +106,7 @@ onClosed(): void {
     }
     else {
       this.alerts[1]['msg'] =  'No se ha seleccionado Estructuras';
-      this.alert = this.alerts[1]; 
+      this.alert = this.alerts[1];
       this.verMsj = true;
     }
   }
@@ -135,7 +136,7 @@ onClosed(): void {
 
   }
 
- 
+
   // setData() {
   //   this.onItemChanged.emit(this.StructList);
   // }
@@ -181,7 +182,7 @@ onClosed(): void {
     //   this.CrearArbol(element);
     // })
 
- 
+
     // aux.forEach(element => {
     //   var idx = this.nodes.findIndex(x => x.estructuraId === element.estructuraId)
     //   if(idx >= 0)
@@ -190,13 +191,13 @@ onClosed(): void {
     //     this.nodes.push(element);
     //   }
     // })
-    
+
     // this.grid.nodes = this.nodes;
     // this.StructList = [];
-   
-    //  
- 
-    
+
+    //
+
+
     this.StructList.forEach(element => {
       var idx = this.nodes.findIndex(x => x.estructuraId == element.estructuraId )
       if(idx != -1)
@@ -210,21 +211,21 @@ onClosed(): void {
         this.nodes[idx]['rolId'] = rol;
       //  this.CrearArbol(element)
       }
-       
+
     });
 
     this.grid.rol = rol;
     this.grid.nodes = this.nodes;
   }
-  
+
   GetTreeRoles() {
- 
+
     this.service.GetTreeRoles()
       .subscribe(
         e => {
 
           this.grid.ngOnInit();
-      
+
            this.nodes = e;
            this.StructList = e;
 
@@ -241,12 +242,12 @@ onClosed(): void {
 
   GetTreeByRol(rol) {
     this.verMsj = false;
-    
+
     this.service.GetEstructuraRoles(rol)
         .subscribe(
           e => {
             this.grid.ngOnInit();
-            
+
             //limpio las variables pero no pierdo la estructura
             this.nodes.forEach(element => {
               element.create = false;
@@ -261,14 +262,14 @@ onClosed(): void {
             this.filtrarTree(rol)
           });
 
-        
+
 
     // var aux = [];
     // this.service.GetTreeRoles()
     //   .subscribe(
     //     e => {
     //       aux = e;
-        
+
     //      this.filtrarTree(aux, modulo)
     //     })
   }
@@ -304,7 +305,7 @@ onClosed(): void {
       {
         this.listAux.push(element)
       }
-      
+
     });
   }
 
@@ -315,13 +316,13 @@ onClosed(): void {
         if(data == 201)
             {
               this.alerts[0]['msg'] = 'Se borró el Rol con éxito';
-              this.alert = this.alerts[0]; 
+              this.alert = this.alerts[0];
               this.verMsj = true;
             }
             else
             {
               this.alerts[1]['msg'] = 'Ocurrio un error al intentar borrar rol';
-              this.alert = this.alerts[1]; 
+              this.alert = this.alerts[1];
             }
         this.ngOnInit();
     });
@@ -334,7 +335,7 @@ onClosed(): void {
     .subscribe(
       e=>{
         this.listRoles = e;
-        
+
       })
   }
   GetEntidades(id)
@@ -361,6 +362,6 @@ onClosed(): void {
 }
 
 
-/////////////distinct 
-// this.listRoles = this.StructList.reduce((p, c) => 
+/////////////distinct
+// this.listRoles = this.StructList.reduce((p, c) =>
 // p.findIndex(e => e.rolId === c.rolId)<0 ? [...p,c]: p,[]);
