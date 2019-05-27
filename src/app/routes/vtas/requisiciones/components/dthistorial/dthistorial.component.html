@@ -40,7 +40,12 @@
                 <td class="text-center">
                   <span class="mr-1 badge badge-pill badge-info"> {{row.contratados}}/{{row.vacantes}}</span>
                 </td>
-                <td class="text-center"> {{row.tipoReclutamiento | uppercase}}</td>
+                <td class="text-center"> <span *ngIf="row.tipoReclutamiento.length < 8 else toLengthRecl">{{row.tipoReclutamiento | uppercase}}</span>
+                  <ng-template #toLengthRecl>
+                      <span tooltip="{{row.tipoReclutamiento | uppercase}}" placement="top" container="body"> {{row.tipoReclutamiento | slice:0:6 | uppercase
+                        }} ...
+                      </span>
+                    </ng-template></td>
                 <!-- <td class="text-right"> {{row.sueldoMinimo | currency: $}}</td>
           <td class="text-right"> {{row.sueldoMaximo | currency: $}}</td> -->
                 <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>

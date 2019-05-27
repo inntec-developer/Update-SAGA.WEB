@@ -35,10 +35,14 @@ export class DTHistorialComponent implements OnInit {
   constructor( private service: RequisicionesService, private spinner: NgxSpinnerService, private settings: SettingsService) { }
 
   ngOnInit() {
+    this.spinner.show();
+    this.getRequisiciones();
   }
 
+
+
   getRequisiciones() {
-    this.service.getRequisiciones(this.settings.user['id']).subscribe(data => {
+    this.service.GetRequisicionesHistorial(this.settings.user['id']).subscribe(data => {
       this.dataSource = data;
 
      this.onChangeTable(this.config);

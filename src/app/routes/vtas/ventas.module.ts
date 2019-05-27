@@ -1,4 +1,5 @@
-﻿import { RouterModule, Routes } from '@angular/router';
+﻿
+import { RouterModule, Routes } from '@angular/router';
 
 import { ComponentsModule } from '../../components/components.module';
 import { ContactosClienteComponent } from './directorio-empresarial/editar-clientes/Components/contactos-cliente/contactos-cliente.component';
@@ -33,8 +34,6 @@ import { ViewCuerpoRequiComponent } from './requisiciones/components/view-cuerpo
 import { ViewInforRequiComponent } from './requisiciones/components/view-info-requi/view-info-requi.component';
 import { ViewRequisicionComponent } from './requisiciones/components/view-requisicion/view-requisicion.component';
 import { ViewdamfoComponent } from './requisiciones/components/viewdamfo/viewdamfo.component';
-import { DTHistorialComponent } from './requisiciones/components/dthistorial/dthistorial.component'
-;
 
 const routes: Routes = [
   { path: 'directorio', component: DirectorioEmpresarialComponent, data: { componente: 'Directorio Empresarial' } },
@@ -87,14 +86,12 @@ const routes: Routes = [
     DireccionesClienteComponent ,
     TelefonosClienteComponent ,
     CorreosClienteComponent,
-    ContactosClienteComponent,,
-    DTHistorialComponent
+    ContactosClienteComponent
   ],
 
   entryComponents: [DialogdamfoComponent, DialogDeleteRequiComponent, DialogCancelRequiComponent, DialogActivarRequiComponent, DialogEditHorarioComponent, DialogRutasComponent],
   exports: [
-    RouterModule, ViewCuerpoRequiComponent, ViewInforRequiComponent
-  ]
+    RouterModule, ViewCuerpoRequiComponent, ViewInforRequiComponent  ]
 })
 
 export class VentaModule { }

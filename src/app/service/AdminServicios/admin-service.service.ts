@@ -361,7 +361,7 @@ export class AdminServiceService {
   {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
-    return this._httpClient.post(this.UrlUpdateGrupo, data
+    return this.http.post(this.UrlUpdateGrupo, data)
             .map(result => result.json())
             .catch(this.handleError);
 

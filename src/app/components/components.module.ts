@@ -1,3 +1,4 @@
+import { DTHistorialComponent } from './../routes/vtas/requisiciones/components/dthistorial/dthistorial.component';
 import { ActividadesComponent } from './tablas/actividades/actividades.component';
 import { ActividadesReclutadorComponent } from './calendario/actividades-reclutador/actividades-reclutador.component';
 import { AsignarRequisicionComponent } from './asignar-requisicion/asignar-requisicion.component';
@@ -126,6 +127,8 @@ import { TipoContratoComponent } from './catalogos/tipo-contrato/tipo-contrato.c
 import { DocDamsaComponent } from './catalogos/doc-damsa/doc-damsa.component';
 import { PrestLeyComponent } from './catalogos/prest-ley/prest-ley.component';
 import { TiempoContratoComponent } from './catalogos/tiempo-contrato/tiempo-contrato.component';
+
+
 @NgModule({
   imports: [
     SharedModule,
@@ -255,7 +258,8 @@ import { TiempoContratoComponent } from './catalogos/tiempo-contrato/tiempo-cont
     TipoContratoComponent,
     DocDamsaComponent,
     PrestLeyComponent,
-    TiempoContratoComponent
+    TiempoContratoComponent, 
+    DTHistorialComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -338,8 +342,8 @@ import { TiempoContratoComponent } from './catalogos/tiempo-contrato/tiempo-cont
     CatalogoComponent,
     RegistroCandidatosComponent,
     RegistroReclutadorComponent,
-    InformeVacantesComponent
-
+    InformeVacantesComponent,
+    DTHistorialComponent
   ],
   entryComponents: [ RegistroReclutadorComponent, TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
 

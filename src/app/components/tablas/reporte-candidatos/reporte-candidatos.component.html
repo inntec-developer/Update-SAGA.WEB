@@ -36,7 +36,7 @@
             [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
             <div>
               <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of rows" [class.selected]="row.selected">
-                <td class="text-center"> {{row.nombre}}</td>
+                <td class="text-center"> {{row.nombre | uppercase}}</td>
                 <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
                 <td class="text-center"> {{row.curp | uppercase }}</td>
                 <td class="text-center"> {{row.rfc | uppercase }}</td>

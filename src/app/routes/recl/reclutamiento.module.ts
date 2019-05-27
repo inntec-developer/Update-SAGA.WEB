@@ -53,7 +53,8 @@ const routes: Routes = [
     DtCandidatosPostComponent,
     VacantesPostulateComponent,
     SeguimientoVacanteComponent,
-    DlgTransferComponent],
+    DlgTransferComponent
+    ],
   entryComponents: [
     DialogcandidatosComponent, DialogShowRequiComponent, DialogAssingRequiComponent, DlgTransferComponent],
   exports: [RouterModule, DialogShowRequiComponent,DlgTransferComponent ]
