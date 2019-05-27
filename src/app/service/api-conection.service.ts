@@ -356,6 +356,14 @@ export class ApiConection {
   public static getResumenG = 'indicador/resumen'
   public static getRadialG = 'indicador/radial'
 
+  /* Contadores */
+  public static getPerfiles = 'contadores/perfiles';
+  public static getFolios = 'contadores/folios';
+  public static getPosiciones = 'contadores/posiciones';
+  public static getPosicionesActivas = 'contadores/posicionesActivas';
+  public static getCandidatos = 'contadores/candidatos';
+  public static getCandidatosInicio = 'contadores/candidatosEstatus';
+
   /* Menu de Catalogos */
   public static getCatalogos = 'Catalogos/getCatalogos';
   public static getCatalogosComplete = 'Catalogos/getCatalogosComplete';
