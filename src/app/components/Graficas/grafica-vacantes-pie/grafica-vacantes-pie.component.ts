@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
-import { DataTableModule } from 'primeng/primeng';
 import { SettingsService } from '../../../core/settings/settings.service';
 
 @Component({
@@ -47,7 +46,8 @@ export class GraficaVacantesPieComponent implements OnInit {
           'Vencidas'
         ]
       }
-      this.Chart = new Chart('canvas', {
+
+      this.Chart = new Chart('cavasFoliosActivos', {
         type: 'pie',
         data: this.Data,
         options: {

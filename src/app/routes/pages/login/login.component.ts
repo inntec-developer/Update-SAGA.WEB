@@ -1,21 +1,23 @@
 import * as jwt_decode from 'jwt-decode';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import { ApiConection } from '../../../service';
 import { AuthService } from '../../../service/auth/auth.service';
 import { CustomValidators } from 'ng2-validation';
-import { SettingsService } from '../../../core/settings/settings.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { INVALID } from '@angular/forms/src/model';
 import { HttpClient } from '@angular/common/http';
+import { INVALID } from '@angular/forms/src/model';
+import { SettingsService } from '../../../core/settings/settings.service';
+import { log } from 'util';
+import { password } from '../../../models/admin/password';
 
 //Modelos
-import { password } from '../../../models/admin/password';
-import { log } from 'util';
+
+
 
 
 export interface DialogData {
@@ -84,10 +86,10 @@ export class LoginComponent implements OnInit {
             this.settings.user['usuario'] = decode['Usuario'];
             this.settings.user['email'] = decode['Email'];
             this.settings.user['clave'] = decode['Clave'];
-            this.settings.user['tipoUsuarioId'] = decode['tipoUsuarioId'];
+            this.settings.user['tipoUsuarioId'] = decode['TipoUsuarioId'];
             this.settings.user['tipo'] = decode['Tipo'];
             this.settings.user['sucursal'] = decode['Sucursal'];
-            this.settings.user['foto'] = ApiConection.ServiceUrlFotoUser + decode['Clvave'] + '.jpg';
+            this.settings.user['foto'] = ApiConection.ServiceUrlFotoUser + decode['Clave'] + '.jpg';
             this.settings.user['privilegios'] = this.Priv;
             this.router.navigate(['/home']);
           }
