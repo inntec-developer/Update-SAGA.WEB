@@ -30,7 +30,7 @@ export class DTHistorialComponent implements OnInit {
 
   showFilterRow: boolean;
   registros: number;
-  totalPos: number = 0;
+  totalContratados: number = 0;
 
   constructor( private service: RequisicionesService, private spinner: NgxSpinnerService, private settings: SettingsService) { }
 
@@ -44,7 +44,12 @@ export class DTHistorialComponent implements OnInit {
   getRequisiciones() {
     this.service.GetRequisicionesHistorial(this.settings.user['id']).subscribe(data => {
       this.dataSource = data;
-
+      this.totalContratados = 0;
+      this.dataSource.forEach(r => {
+       
+          this.totalContratados += r.contratados;
+      
+      })
      this.onChangeTable(this.config);
     });
   }

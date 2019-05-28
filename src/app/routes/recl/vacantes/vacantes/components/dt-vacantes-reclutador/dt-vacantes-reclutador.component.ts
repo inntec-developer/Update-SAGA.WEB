@@ -81,7 +81,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   candidatosNR: any = [];
   requisPausa: any = [];
   totalPos: any = 0;
-  requisCubiertas: number = 0;
+  totalContratados: number = 0;
 
 
   constructor(
@@ -116,25 +116,15 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.GetCandidatosNR();
       this.GetRequisicionesPausa();
       this.totalPos = 0;
-      this.requisCubiertas = 0;
+      this.totalContratados = 0;
       this.dataSource.forEach(r => {
         if(r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37))
         {
           this.totalPos += r.vacantes;
+          this.totalContratados += r.contratados;
         }
-        else if (r.estatusId >= 34 && r.estatusId <= 37 )
-        {
-          this.requisCubiertas += 1;
-        }
+       
       })
-
-      this.dataSource = this.dataSource.filter(rr => {
-        if(rr.estatusId != 8 && (rr.estatusId < 34 || rr.estatusId > 37))
-        {
-          return rr;
-        }
-      })
-
       this.rows = this.dataSource.slice(0, this.itemsPerPage);
       this.registros = this.rows.length;
       this.length = this.dataSource.length;
