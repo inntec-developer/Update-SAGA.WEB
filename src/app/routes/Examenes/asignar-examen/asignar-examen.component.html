@@ -15,7 +15,8 @@
   <div class="col-md-4">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title text-info"><em class="fa fa-pencil"></em> EXAMENES DISPONIBLES</h5>
+        <h5 class="card-title text-info">
+          <em class="fa fa-pencil"></em> EXAMENES DISPONIBLES</h5>
         <hr>
         <mat-form-field class="longSelect">
           <mat-select placeholder="Seleccionar tipo de examen" [(value)]="tipoId" [formControl]="se" required>
@@ -25,7 +26,7 @@
           </mat-select>
         </mat-form-field>
 
-       <mat-form-field class="longSelect">
+        <mat-form-field class="longSelect">
           <mat-select placeholder="Seleccionar examen" [(value)]="examenId" [formControl]="ste" required>
             <mat-option *ngFor="let e of examenes" [value]="e.id" (click)="GetExamen(e.id); nomExamen = e.nombre">
               {{e.nombre}}
@@ -38,19 +39,21 @@
 
     </div>
 
-      <div *ngIf="examen.length > 0" class="card">
-        <div class="card-body mat-elevation-z8">
-          <h5 class="card-title text-info">VISUALIZAR <span *ngIf="nomExamen">- Examen de {{nom}} / {{nomExamen}}</span></h5>
-          <hr>
-          <ng-container *ngFor="let p of examen; let ind = index">
-          <p class="list-group text-primary" >{{( ind + 1)  + '.- ' + p.pregunta}}</p>
+    <div *ngIf="examen.length > 0" class="card">
+      <div class="card-body mat-elevation-z8">
+        <h5 class="card-title text-info">VISUALIZAR
+          <span *ngIf="nomExamen">- Examen de {{nom}} / {{nomExamen}}</span>
+        </h5>
+        <hr>
+        <ng-container *ngFor="let p of examen; let ind = index">
+          <p class="list-group text-primary">{{( ind + 1) + '.- ' + p.pregunta}}</p>
           <ul class="respStyle">
             <li [ngClass]="r.value == 1 ? 'text-success' : 'text-warning'" *ngFor="let r of p.respuestas">{{r.resp}}</li>
           </ul>
         </ng-container>
 
-        
-      
+
+
         <!-- <button [disabled]="examen.length == 0 && !nomExamen" type="button" (click)="AgregarExamen()" class="btn btn-outline-success float-right">
             <em class="fa fa-file-text-o"></em>
         </button>
@@ -59,16 +62,17 @@
         </button> -->
 
 
-        </div>
+      </div>
     </div>
-</div>
+  </div>
 
-<div class="col-md-8">
-  <div class="card">
-    <div class="card-body">
-    <h5 class="card-title text-info"><em class="fa fa-file-text-o"></em> REQUISICIONES DISPONIBLES</h5>
-    <hr>
-    <!-- <br/>
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title text-info">
+          <em class="fa fa-file-text-o"></em> REQUISICIONES DISPONIBLES</h5>
+        <hr>
+        <!-- <br/>
     <div class="input-group">
         <input (input)="Search($event)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
         <div class="input-group-append">
@@ -76,75 +80,79 @@
           </div>
       </div> -->
 
-    <div class="mat-elevation-z8">
-      <table class="table" container="body" placement="bottom" tooltip="click para seleccionar">
-        <thead>
-          <tr>
+        <div class="mat-elevation-z8">
+          <table class="table" container="body" placement="bottom" tooltip="click para seleccionar">
+            <thead>
+              <tr>
 
-                  <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
-                    <small>{{column.title | uppercase}}</small>
-                    <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
-                    </i>
-                  </th>
-                </tr>
-                <tr >
-                  <th *ngFor="let column of columns">
-                    <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                      (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
-                  </th>
+                <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+                  <small>{{column.title | uppercase}}</small>
 
-          </tr> 
-        </thead>
-        <tbody>
-          <tr *ngFor="let row of rows" [class.unselectable] = "row.examen" [class.select]="row.selected" (click)="onSelect(row)">
-            <td class="text-center">
-              {{row.folio}}
-            </td>
-            <td class="text-center"> {{row.solicita}}</td>
-            <td class="text-center"> {{row.cliente}}</td>
-            <td class="text-center"> {{row.vBtra}}</td>
-            <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
-            <td class="text-center">
-                <button [disabled]="!row.examen" type="button" [ngClass]="!row.examen ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'" container="body" placement="bottom" tooltip="Ver examen" (click)="GetExamenRequi(row.id)">
-                    <em class="fa fa-file-text-o"></em>
-                </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <br/>
-      <div class="text-right">
-          <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
-          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
-          (numPages)="numPages = $event">
-        </pagination>
-          <pre class="card card-block card-header text-muted">Total Registros: {{requisiciones.length}}</pre>
+                </th>
+              </tr>
+              <tr>
+                <th *ngFor="let column of columns">
+                  <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                    class="form-control form-control-sm" id="{{column.name}}">
+                </th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+                [disabled]="disabled">
+                <div style="height: 300px;">
+                  <tr *ngFor="let row of rows" [class.unselectable]="row.examen" [class.select]="row.selected" (click)="onSelect(row)">
+                    <td class="text-center">
+                      {{row.folio}}
+                    </td>
+                    <td class="text-center"> {{row.solicita}}</td>
+                    <td class="text-center"> {{row.cliente}}</td>
+                    <td class="text-center"> {{row.vBtra}}</td>
+                    <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
+                    <td class="text-center">
+                      <button [disabled]="!row.examen" type="button" [ngClass]="!row.examen ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"
+                        container="body" placement="bottom" tooltip="Ver examen" (click)="GetExamenRequi(row.id)">
+                        <em class="fa fa-file-text-o"></em>
+                      </button>
+                    </td>
+                  </tr>
+                </div>
+                </ng-scrollbar>
+            </tbody>
+          </table>
+          <br/>
+          <div class="text-right">
+            <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+              [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+            </pagination>
+            <pre class="card card-block card-header text-muted">Total Registros: {{requisiciones.length}}</pre>
           </div>
 
-    </div>
+        </div>
 
-    <hr>
-    <br/>
-    <div class="lon">
-      <ul *ngIf="requiselect.length > 0" class="list-group">
-        <li *ngFor="let item of requiselect" class="list-group-item">{{item.folio + ' - ' + item.vBtra}}</li>
-    </ul>
-    </div>
-    <small *ngIf="examenId == 0" class="form-text text-muted text-danger">Debe seleccionar examen</small>
-    <button [disabled]="requiselect.length == 0 || examenId == 0" type="button" class="btn btn-outline-success float-right" container="body" placement="bottom" tooltip="Asignar Examen" (click)="AgregarRelacion()">
-      <em class="fa fa-check"></em>
-  </button>
+        <hr>
+        <br/>
+        <div class="lon">
+          <ul *ngIf="requiselect.length > 0" class="list-group">
+            <li *ngFor="let item of requiselect" class="list-group-item">{{item.folio + ' - ' + item.vBtra}}</li>
+          </ul>
+        </div>
+        <small *ngIf="examenId == 0" class="form-text text-muted text-danger">Debe seleccionar examen</small>
+        <button [disabled]="requiselect.length == 0 || examenId == 0" type="button" class="btn btn-outline-success float-right" container="body"
+          placement="bottom" tooltip="Asignar Examen" (click)="AgregarRelacion()">
+          <em class="fa fa-check"></em>
+        </button>
+
+      </div>
 
     </div>
-  
   </div>
-</div>
-
 </div>
 <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
 
-<div *ngIf="verExamen" [config]="{ show: true, ignoreBackdropClick: true, backdrop: 'static', keyboard: false }"
-  bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+<div *ngIf="verExamen" [config]="{ show: true, ignoreBackdropClick: true, backdrop: 'static', keyboard: false }" bsModal
+  #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">

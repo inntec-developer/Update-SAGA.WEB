@@ -11,7 +11,13 @@ import { RequisicionesService } from './../../../service/requisiciones/requisici
   styleUrls: ['./asignar-examen.component.scss']
 })
 export class AsignarExamenComponent implements OnInit {
-
+  //scroll
+  public disabled = false;
+  public invertX = false;
+  public compact = false;
+  public invertY = false;
+  public shown = 'hover';
+  
   se = new FormControl('', [Validators.required]);
   ste = new FormControl('', [Validators.required]);
   nom: any;
@@ -146,7 +152,6 @@ export class AsignarExamenComponent implements OnInit {
     if (config.sorting) {
       (<any>Object).assign(this.config.sorting, config.sorting);
     }
-
 
     this.rows = this.requisiciones;
     let filteredData = this.changeFilter(this.requisiciones, this.config);

@@ -42,7 +42,7 @@
               <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
               [disableOnBreakpoints]="false" [disabled]="disabled">
               <div>
-            <tr *ngFor="let row of candidatos;">
+            <tr *ngFor="let row of rows">
               <td class="text-center text-success">{{row.clave | uppercase}}</td>
               <td class="text-center text-muted">{{row.nombre | uppercase}} {{row.apellidoPaterno | uppercase}} {{row.apellidoMaterno | uppercase}}</td>
               <td class="text-center text-muted">
@@ -75,9 +75,13 @@
        </div>
      </div>
      <div class="text-right">
-     
+      
+        <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+          [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+        </pagination>
         <pre class="card card-block card-header text-muted">Total Registros: {{candidatos.length}}</pre>
-        </div>
+
+    </div>
 
   </div>
 

@@ -6,37 +6,25 @@
 //   box-shadow:1px 2px 6px rgba(0,0,0,.25);
 // }
 
-table.scroll {
-  width: 100%; /* Optional */
-  /* border-collapse: collapse; */
-  border-spacing: 0;
-
-}
-
-table.scroll tbody,
-table.scroll thead { display: block; }
-
-thead tr th { 
-  height: 30px;
-
-  /*text-align: left;*/
-}
-
 tbody {
-  height: 700px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  display: block;
+  height: 350px;
 }
 
-
-
-tbody td, thead th {
-  width: 20%; /* Optional */
-  // border-right: 1px solid black;
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  font-size: 12px;
 }
 
-tbody td:last-child, thead th:last-child {
-  border-right: none;
+table thead {
+  width: calc(100% - 1em)
+}
+
+table {
+  width: 100%;
 }
 
 .long
@@ -75,8 +63,9 @@ ul.scroll
   width: 90%;
 }
 
-// .card
-// {
-//   box-shadow:0 5px 30px rgba(0,0,0,.3);
-//   border-right: 10px #aaa;
-// }
+ng-scrollbar {
+  --scrollbar-size: 4px;
+  --scrollbar-thumb-color: rgb(94, 175, 255);
+  --scrollbar-thumb-hover-color: dodgerblue;
+  --scrollbar-border-radius: 4px;
+}

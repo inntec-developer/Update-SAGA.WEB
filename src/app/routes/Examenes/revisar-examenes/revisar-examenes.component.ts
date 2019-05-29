@@ -54,23 +54,19 @@ export class RevisarExamenesComponent implements OnInit {
   public changePage(page: any, data: Array<any> = this.resultados): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
     let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    this.rows = data.slice(start, end);
     return data.slice(start, end);
-  }
-
-  public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
-    this.rows = this.resultados;
-    // let filteredData = this.changeFilter(this.requisiciones, this.config);
-    //let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = page && config.paging ? this.changePage(page, this.rows) : this.rows;
-    this.length = this.rows.length;
-
   }
 
   GetCandidatos()
   {
     this.service.GetCandidatosExamenes().subscribe(data =>{
       this.resultados = data;
-      this.onChangeTable(this.config)
+      this.rows = this.resultados.slice(0, this.itemsPerPage);
+
+      this.length = this.resultados.length;
+
+     // this.onChangeTable(this.config)
     });
   }
   OpenDialogRevisar(row)
