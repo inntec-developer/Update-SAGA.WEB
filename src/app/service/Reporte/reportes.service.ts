@@ -23,6 +23,7 @@ export class ReportesService {
   private UrlEstatu = ApiConection.ServiceUrl+ApiConection.GetEstatusRep;
   private UrlOficina = ApiConection.ServiceUrl+ApiConection.GetOficinas;
   private UrlRadial = ApiConection.ServiceUrl+ApiConection.getRadialG;
+  private UrlProActividad = ApiConection.ServiceUrl+ApiConection.GetProActividad;
 
   constructor(private http: Http,private _httpClient : HttpClient) {  }
   
@@ -34,6 +35,15 @@ export class ReportesService {
     return Observable.throw(error || 'backend server error');
 }
 
+
+  getProActividad(fini:string,ffin:string,recl:string): Observable<any> {
+    let params = new HttpParams().set('fini', fini).set('ffin', ffin).set('recl', recl);
+    return this._httpClient.get(this.UrlProActividad, {params: params});
+    // return this.http.get(this.UrlProActividad)
+    //     .map(result => result.json())
+    //     .catch(this.handleError);
+    }
+
 getVRadial(data: any) : Observable<any>{
     let params = new HttpParams().set('usuario', data);
     return this._httpClient.get(this.UrlRadial, {params: params});
@@ -41,12 +51,12 @@ getVRadial(data: any) : Observable<any>{
 
 
 GetInforme(clave:string,ofc:string,tipo:string,fini:string,ffin:string,emp:string,
-    sol:string,trcl:string,cor:string,stus:string,recl:string,usercor:string): Observable<any> {
-    
-return this.http.get(this.UrlInforme + '?clave='+clave+'&ofc='+ofc+'&tipo='+tipo+'&fini='+fini
-    +'&ffin='+ffin+'&emp='+emp+'&sol='+sol+'&trcl='+trcl+'&cor='+cor+'&stus='+stus+'&recl='+recl +'&usercor='+usercor)
-    .map(result => result.json())
-    .catch(this.handleError);
+    sol:string,trcl:string,cor:string,stus:string,recl:string,usercor:string): 
+    Observable<any> {
+    return this.http.get(
+        this.UrlInforme + '?clave='+clave+'&ofc='+ofc+'&tipo='+tipo+'&fini='+fini
+      +'&ffin='+ffin+'&emp='+emp+'&sol='+sol+'&trcl='+trcl+'&cor='+cor+'&stus='+stus+'&recl='+recl +'&usercor='+usercor
+    ).map(result => result.json()).catch(this.handleError);
 }
 
 GetEmpresas(): Observable<any> {

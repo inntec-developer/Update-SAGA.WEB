@@ -1,419 +1,427 @@
 <div class="content-heading">
-    <div>
-       Sistema de Reportes
-        <span class="text-sm d-none d-sm-block">Administraci&oacute;n de Reportes.</span>
-    </div>
-    <!-- Breadcrumb right aligned-->
-    <ol class="breadcrumb ml-auto">
-        <li class="breadcrumb-item"><a [routerLink]="['/home']" >Inicio</a></li>
-        <li class="breadcrumb-item active">Reportes</li>
-    </ol>
+  <div>
+     Sistema de Reportes
+      <span class="text-sm d-none d-sm-block">Administraci&oacute;n de Reportes.</span>
   </div>
- 
- 
- 
+  <!-- Breadcrumb right aligned-->
+  <ol class="breadcrumb ml-auto">
+      <li class="breadcrumb-item"><a [routerLink]="['/home']" >Inicio</a></li>
+      <li class="breadcrumb-item active">Reportes</li>
+  </ol>
+</div>
+
+
+
 <ngx-spinner
-  bdColor="rgba(198,195,195,0.8)"
-  size="medium"
-  color="#90daff"
-  type="square-jelly-box"
+bdColor="rgba(198,195,195,0.8)"
+size="medium"
+color="#90daff"
+type="square-jelly-box"
 ></ngx-spinner>
- 
- 
- 
- 
- 
+
+
+
+
+
 <div class="row sombra" style="font-size: 12px">
+
  
-   
- 
-    <div class="col-xl-2">
-       
-          <div class="form-group">
-            <label for="sel2">Sucursales</label>
-            
-                <form  [formGroup]="FormSucursal">
-                    <ngx-select
-                    [allowClear]="true"
-                    autoClearSearch="true"
-                   placeholder="Sucursales..."
-                   formControlName = "SucursalControl"
-                   (data)="(value)"
-                   [multiple]="true"
-                   [items]="Oficina"
-                   size="small"
-                   optionValueField="id"
-                   optionTextField="nombre"
-                   (remove)="sucursalChange()"
-                   (select)="sucursalChange()"
-                 >
-                   <ng-template  ngx-select-option-selected let-option >
-                     <span >{{ option.data.nombre }}</span>
-                   </ng-template>
-                   <ng-template ngx-select-option-not-found>
-                      <span style="font-size: 11px">No se encontraron resultados...</span>
-                      
-                    </ng-template>
-                 </ngx-select>
-                 </form>
-            
-          </div>
-       
-      </div>
- 
-  <div class="col-xl-2">
-    
-      <div class="form-group">
-        <label for="TipoReporte">Reporte</label>
-        <select  (change)="Ocultar()" class="form-control" id="TipoReporte">
-            <option value="1">Por Solicitud</option>
-            <option value="2">Por Estatus</option>
-            <option value="3">General</option>
-            <!-- <option value="3">Movimientos Vacantes </option>
-            <option value="5">Fecha Estatus Grupal</option>
-            <option value="6">Reporte General </option> -->
-          <!-- <option>Contratado vs Requerido</option>
-          <option>Estatus de Vacantes</option>
-          <option>Captación</option>
-          <option>Productividad</option>
-          <option>Fecha de Solicitud</option> -->
-        </select>
-      </div>
-    
-  </div>
+
+  <div class="col-xl-2" id="divSucursal">
+     
+        <div class="form-group">
+          <label for="sel2"></label>
+          
+              <form  [formGroup]="FormSucursal">
+                  <ngx-select
+                  [allowClear]="true"
+                  autoClearSearch="true"
+                 placeholder="Sucursales..."
+                 formControlName = "SucursalControl"
+                 (data)="(value)"
+                 [multiple]="true"
+                 [items]="Oficina"
+                 size="small"
+                 optionValueField="id"
+                 optionTextField="nombre"
+                 (remove)="sucursalChange($event)"
+                 (select)="sucursalChange($event)"
+               >
+                 <ng-template  ngx-select-option-selected let-option >
+                   <span >{{ option.data.nombre }}</span>
+                 </ng-template>
+                 <ng-template ngx-select-option-not-found>
+                    <span style="font-size: 11px">No se encontraron resultados...</span>
+                    
+                  </ng-template>
+               </ngx-select>
+               </form>
+          
+        </div>
+     
+    </div>
+
 <div class="col-xl-2">
-    
+  
+    <div class="form-group divtiporeport">
+      <label for="TipoReporte"></label>
+      <select  (change)="Ocultar()" class="form-control" id="TipoReporte">
+          <option value="1">Por Solicitud</option>
+          <option value="2">Por Estatus</option>
+          <option value="3">General</option>
+          <option value="4">Productividad</option>
+          <!-- <option value="3">Movimientos Vacantes </option>
+          <option value="5">Fecha Estatus Grupal</option>
+          <option value="6">Reporte General </option> -->
+        <!-- <option>Contratado vs Requerido</option>
+        <option>Estatus de Vacantes</option>
+        <option>Captación</option>
+        <option>Productividad</option>
+        <option>Fecha de Solicitud</option> -->
+      </select>
+    </div>
+  
+</div>
+<div class="col-xl-2">
+  
+  <div class="form-group">
+      <label for="sel4"></label>
+      <mat-form-field style="top: 17px;">
+          <input   matInput [matDatepicker]="picker1" id="fechaInicial"   [formControl]="date2">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+    </div>
+        <!-- <div class="form-group">
+          <label  for="sel3">Fecha Inicio</label>
+          <input
+            class="form-control input-sm"
+            lang="es"
+            type="date"
+            id="fechaInicial"
+            name="fecha"
+            max="{{ano}}-{{mes}}-{{dia}}"
+          />
+        </div> -->
+</div>
+
+
+
+<div class="col-xl-2">
     <div class="form-group">
-        <label for="sel4">Fecha Inicio</label>
-        <mat-form-field>
-            <input   matInput [matDatepicker]="picker1" id="fechaInicial"   [formControl]="date2">
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
+        <label for="sel3"></label>
+        <mat-form-field style="top: 17px;">
+            <input   matInput [matDatepicker]="fechaFinal" id="fechaFinal"  [formControl]="date">
+            <mat-datepicker-toggle matSuffix [for]="fechaFinal"></mat-datepicker-toggle>
+            <mat-datepicker #fechaFinal></mat-datepicker>
           </mat-form-field>
       </div>
-          <!-- <div class="form-group">
-            <label  for="sel3">Fecha Inicio</label>
-            <input
-              class="form-control input-sm"
-              lang="es"
-              type="date"
-              id="fechaInicial"
-              name="fecha"
-              max="{{ano}}-{{mes}}-{{dia}}"
-            />
-          </div> -->
-</div>
- 
- 
- 
-  <div class="col-xl-2">
-      <div class="form-group">
+   
+        <!-- <div class="form-group">
           <label for="sel3">Fecha Fin</label>
-          <mat-form-field>
-              <input   matInput [matDatepicker]="fechaFinal" id="fechaFinal"  [formControl]="date">
-              <mat-datepicker-toggle matSuffix [for]="fechaFinal"></mat-datepicker-toggle>
-              <mat-datepicker #fechaFinal></mat-datepicker>
-            </mat-form-field>
-        </div>
-     
-          <!-- <div class="form-group">
-            <label for="sel3">Fecha Fin</label>
-            <input
-              class="form-control input-sm"
-              type="date"
-              lang="es"
-              id="fechaFinal"
-              name="fecha"
-              size="12" 
-              max="{{ano}}-{{mes}}-{{dia}}"
-            />
-          </div> -->
-  </div>
- 
- 
-  <div class="col-xl-2">
- 
+          <input
+            class="form-control input-sm"
+            type="date"
+            lang="es"
+            id="fechaFinal"
+            name="fecha"
+            size="12" 
+            max="{{ano}}-{{mes}}-{{dia}}"
+          />
+        </div> -->
+</div>
+
+
+<div class="col-xl-2" id="divTipoReclu">
+
+    <div class="form-group">
+        <label ></label>
+            <form  [formGroup]="FormTipoReclu">
+                <ngx-select
+                [allowClear]="true"
+                autoClearSearch="true"
+               placeholder="Reclutamiento..."
+               formControlName = "TiporecluControl"
+               (data)="(value)"
+               [multiple]="true"
+               [items]="reclutaList"
+               size="small"
+               optionValueField="id"
+               optionTextField="nombre"
+               (remove)="cordinaChange()"
+               (select)="cordinaChange()"
+             >
+               <ng-template  ngx-select-option-selected let-option >
+                 <span >{{ option.data.nombre }}</span>
+               </ng-template>
+               <ng-template ngx-select-option-not-found>
+                  <span style="font-size: 11px">No se encontraron resultados...</span>
+                </ng-template>
+             </ngx-select>
+             </form>
+      </div>
+
+  
+</div>
+
+    <div class="col-xl-2" id="divcordinacion">
+        
       <div class="form-group">
-          <label >Reclutamiento</label>
-              <form  [formGroup]="FormTipoReclu">
-                  <ngx-select
-                  [allowClear]="true"
-                  autoClearSearch="true"
-                 placeholder="Reclutamiento..."
-                 formControlName = "TiporecluControl"
-                 (data)="(value)"
-                 [multiple]="true"
-                 [items]="reclutaList"
-                 size="small"
-                 optionValueField="id"
-                 optionTextField="nombre"
-                 (remove)="cordinaChange()"
-                 (select)="cordinaChange()"
-               >
-                 <ng-template  ngx-select-option-selected let-option >
-                   <span >{{ option.data.nombre }}</span>
-                 </ng-template>
-                 <ng-template ngx-select-option-not-found>
-                    <span style="font-size: 11px">No se encontraron resultados...</span>
-                  </ng-template>
-               </ngx-select>
-               </form>
-        </div>
- 
-    
-  </div>
- 
-      <div class="col-xl-2" id="divcordinacion">
-          
-        <div class="form-group">
-          <label for="sel2">Coordinación</label>
-              <form  [formGroup]="FormCordina">
-                  <ngx-select
-                  [allowClear]="true"
-                  autoClearSearch="true"
-                 placeholder="Coordinación..."
-                 formControlName = "CordinaControl"
-                 (data)="(value)"
-                 [multiple]="true"
-                 [items]="cordinaList"
-                 size="small"
-                 optionValueField="id"
-                 optionTextField="nombre"
-                 (remove)="cordinaChange()"
-                 (select)="cordinaChange()"
-               >
-                 <ng-template  ngx-select-option-selected let-option >
-                   <span >{{ option.data.nombre }}</span>
-                 </ng-template>
-                 <ng-template ngx-select-option-not-found>
-                    <span style="font-size: 11px">No se encontraron resultados...</span>
-                  </ng-template>
-               </ngx-select>
-               </form>
-        </div>
-         
-        </div>
- 
-     
- 
-        <div class="col-xl-2" id="divestatus">
-            <div class="form-group input-sm" style="z-index: 100px !important">
-              <label for="sel1">Estatus</label>
-              <form [formGroup]="FormEstatus">
-                  <ngx-select
+        <label for="sel2"></label>
+            <form  [formGroup]="FormCordina">
+                <ngx-select
+                [allowClear]="true"
+                autoClearSearch="true"
+               placeholder="Coordinación..."
+               formControlName = "CordinaControl"
+               (data)="(value)"
+               [multiple]="true"
+               [items]="cordinaList"
+               size="small"
+               optionValueField="id"
+               optionTextField="nombre"
+               (remove)="cordinaChange()"
+               (select)="cordinaChange()"
+             >
+               <ng-template  ngx-select-option-selected let-option >
+                 <span >{{ option.data.nombre }}</span>
+               </ng-template>
+               <ng-template ngx-select-option-not-found>
+                  <span style="font-size: 11px">No se encontraron resultados...</span>
+                </ng-template>
+             </ngx-select>
+             </form>
+      </div>
+       
+      </div>
+
+   
+
+      <div class="col-xl-2" id="divestatus">
+          <div class="form-group input-sm" style="z-index: 100px !important">
+            <label for="sel1"></label>
+            <form [formGroup]="FormEstatus">
+                <ngx-select
+             
+               [allowClear]="true"
+               autoClearSearch="true"
+               placeholder="Estatus..."
+               formControlName = "EstatusControl"
+               (data)="(value)"
+               [multiple]="true"
+               [items]="Estatus"
+               size="small"
+               optionValueField="id"
+               optionTextField="descripcion"
+               (remove)="estatusChange()"
+               (select)="estatusChange()">
                
-                 [allowClear]="true"
-                 autoClearSearch="true"
-                 placeholder="Estatus..."
-                 formControlName = "EstatusControl"
-                 (data)="(value)"
-                 [multiple]="true"
-                 [items]="Estatus"
-                 size="small"
-                 optionValueField="id"
-                 optionTextField="descripcion"
-                 (remove)="estatusChange()"
-                 (select)="estatusChange()">
-                 
-                 <ng-template ngx-select-option-selected let-option  >
-                   <span style="font-size: 10px !important" >{{ option.data.descripcion }}</span>
-                 </ng-template>
-                 <ng-template ngx-select-option-not-found>
-                    <span style="font-size: 11px">No se encontraron resultados...</span>
-                  </ng-template>
-                 
-               </ngx-select>
-               </form>
-            </div>
-        </div>
- 
- 
- 
-  <div class="col-xl-2" id="divSolicitante">
-      <div class="form-group" >
-        <label for="solicitanteR">Solicitante</label>
- 
-        <form [formGroup]="FormSolicitante" style="font-size: 10px !important">
-            <ngx-select
-            [allowClear]="true"
-            autoClearSearch="true"
-           placeholder="Solicitantes..."
-           formControlName = "SolicitanteControl"
-           (data)="(value)"
-           [multiple]="true"
-           [items]="Usuario"
-           optionValueField="usuario"
-           optionTextField="nombre"
-           size="small"
-           (remove)="solicitanteChange()"
-           (select)="solicitanteChange()">
-           <ng-template  size="small" ngx-select-option-selected let-option >
-             <span style="font-size: 10px !important" >{{ option.data.nombre }}</span>
-           </ng-template>
-           <ng-template ngx-select-option-not-found>
-              No se encontraron resultados...
-            </ng-template>
-         </ngx-select>
-         </form>
- 
-        <!-- <select class="form-control" id="solicitanteR">
-          <option value="0">Todos los solicitantes</option>
-          <option value="{{ item.usuario }}" *ngFor="let item of Usuario">{{
-            item.nombre
-          }}</option>
-        </select> -->
-      </div>
-    
-  </div>
- 
- 
- 
-  
- 
-  <div class="col-xl-4">
-      <div class="form-group input-sm" >
-        <label for="empresaR">Empresa</label>
- 
-        <form [formGroup]="FormEmpresas">
-            <ngx-select
-           [allowClear]="true"
-           autoClearSearch="true"
-           placeholder="Empresas..."
-           formControlName = "ClientesControl"
-           (data)="(value)"
-           class="select-asig"
-           [multiple]="true"
-           [items]="Empresas"
-           (remove)="empresaChange()"
-           (select)="empresaChange()"
-           size="small"
-           optionValueField="id"
-           optionTextField="razonSocial"
-           
-         >
-           <ng-template ngx-select-option-selected let-option let-text="descripcion">
-             <span style="font-size: 9px !important">{{ option.data.razonSocial }}</span>
-           </ng-template>
-           <ng-template ngx-select-option-not-found>
-             No se encontraron resultados...
-           </ng-template>
-         </ngx-select>
-         </form>
-      </div>
-  </div>
- 
-  
-  <div class="col-xl-4" id="divreclutador">
-    
-      <div class="form-group input-sm">
-        <label for="sel2">Reclutador</label>
- 
-        <form [formGroup]="FormReclutador">
-            <ngx-select
-           [allowClear]="true"
-           autoClearSearch="true"
-           placeholder="Reclutador..."
-           formControlName = "ReclutadorControl"
-           (data)="(value)"
-           [multiple]="true"
-           [items]="Usuario"
-           size="small"
-           optionValueField="id"
-           optionTextField="nombre"
-           (remove)="reclutadorChange()"
-           (select)="reclutadorChange()">
-           <ng-template ngx-select-option-selected let-option >
-             <span style="font-size: 13px !important">{{ option.data.nombre }}</span>
-           </ng-template>
-           <ng-template ngx-select-option-not-found>
-              No se encontraron resultados...
-            </ng-template>
-         </ngx-select>
-         </form>
- 
-      </div>  
-  </div>
- 
- 
-  <div class="col-xl-4">
-    
-      <div class="form-group input-sm">
-        <label for="sel2">Cordinador</label>
- 
-        <form [formGroup]="FormUserCor">
-            <ngx-select
-           [allowClear]="true"
-           autoClearSearch="true"
-           placeholder="Cordinador..."
-           formControlName = "UserCorControl"
-           (data)="(value)"
-           [multiple]="true"
-           [items]="UsuarioCor"
-           size="small"
-           optionValueField="id"
-           optionTextField="nombre"
-           (remove)="UsuarioCorChange()"
-           (select)="UsuarioCorChange()">
-           <ng-template ngx-select-option-selected let-option >
-             <span style="font-size: 13px !important">{{ option.data.nombre }}</span>
-           </ng-template>
-           <ng-template ngx-select-option-not-found>
-              No se encontraron resultados...
-            </ng-template>
-         </ngx-select>
-         </form>
- 
-      </div>  
- 
-  </div>
-  <div class="col-xl-4 ">
- 
-    </div>
-    <div class="col-xl-2 " style="margin-top: 23px;">
-        <div class="form-group ">
-            <!-- <label for="bus">Busqueda:</label> -->
-            <div class="input-group input-sm">
-              <input
-                id="palabra"
-                type="text"
-                size="12"
-                #palabra
-                (blur)="hijo.Guardar(palabra.value)"
-                placeholder="Palabra clave"
-                class=" form-control input-sm"
-              />
-              <div class="input-group-append mano" (click)="hijo.Generar()">
-                <span class="input-group-text "> <em class="fa fa-search"></em></span>
-              </div>
-            </div>
+               <ng-template ngx-select-option-selected let-option  >
+                 <span style="font-size: 10px !important" >{{ option.data.descripcion }}</span>
+               </ng-template>
+               <ng-template ngx-select-option-not-found>
+                  <span style="font-size: 11px">No se encontraron resultados...</span>
+                </ng-template>
+               
+             </ngx-select>
+             </form>
           </div>
       </div>
+
+
+
+<div class="col-xl-2" id="divSolicitante">
+    <div class="form-group" >
+      <label for="solicitanteR"></label>
+
+      <form [formGroup]="FormSolicitante" style="font-size: 10px !important">
+          <ngx-select
+          [allowClear]="true"
+          autoClearSearch="true"
+         placeholder="Solicitantes..."
+         formControlName = "SolicitanteControl"
+         (data)="(value)"
+         [multiple]="true"
+         [items]="Usuario"
+         optionValueField="usuario"
+         optionTextField="nombre"
+         size="small"
+         (remove)="solicitanteChange()"
+         (select)="solicitanteChange()">
+         <ng-template  size="small" ngx-select-option-selected let-option >
+           <span style="font-size: 10px !important" >{{ option.data.nombre }}</span>
+         </ng-template>
+         <ng-template ngx-select-option-not-found>
+            No se encontraron resultados...
+          </ng-template>
+       </ngx-select>
+       </form>
+
+      <!-- <select class="form-control" id="solicitanteR">
+        <option value="0">Todos los solicitantes</option>
+        <option value="{{ item.usuario }}" *ngFor="let item of Usuario">{{
+          item.nombre
+        }}</option>
+      </select> -->
+    </div>
   
-      <div class="col-xl-2" style="margin-top: 10px;">
-          <button id="exel1" tooltip="Exportar" (click)="hijo.Exportar()" class="btn btn-sm btn-outline-warning btnReport">
-              <em _ngcontent-c34="" class="fa fa-download"></em>
-            </button>
-            <button id="exel2" tooltip="Exportar" (click)="ReGeneral.exportAsXLSX()" class="ocultar btn btn-sm btn-outline-warning btnReport">
-                <em _ngcontent-c34="" class="fa fa-download"></em>
-              </button>
-            
- 
-          <button class="btn btn-sm btn-outline-success btnReport" (click)="hijo.Generar(objsucursal,objsolicit,objrecluta,objempresa,objstatus,objtiporeclu,objtipocordi,objusercoo)" tooltip="Generar Reporte" id="report1"  >
-              <em _ngcontent-c34="" class="fa fa-bar-chart"></em>
-            </button>
-          <button class="ocultar btn btn-sm btn-outline-success btnReport" (click)="ReGeneral.llamado(objsucursal,objsolicit,objrecluta,objempresa,objstatus,objtiporeclu,objtipocordi)" tooltip="Generar Reporte" id="report2"  >
-              <em _ngcontent-c34="" class="fa fa-bar-chart"></em>
-            </button>
-        </div>
-  
- 
 </div>
- 
-   
+
+
+
+
+
+<div class="col-xl-4" id="divEmpresas">
+    <div class="form-group input-sm" >
+      <label for="empresaR"></label>
+
+      <form [formGroup]="FormEmpresas">
+          <ngx-select
+         [allowClear]="true"
+         autoClearSearch="true"
+         placeholder="Empresas..."
+         formControlName = "ClientesControl"
+         (data)="(value)"
+         class="select-asig"
+         [multiple]="true"
+         [items]="Empresas"
+         (remove)="empresaChange()"
+         (select)="empresaChange()"
+         size="small"
+         optionValueField="id"
+         optionTextField="razonSocial"
+         
+       >
+         <ng-template ngx-select-option-selected let-option let-text="descripcion">
+           <span style="font-size: 9px !important">{{ option.data.razonSocial }}</span>
+         </ng-template>
+         <ng-template ngx-select-option-not-found>
+           No se encontraron resultados...
+         </ng-template>
+       </ngx-select>
+       </form>
+    </div>
+</div>
+
+
+<div class="col-xl-4" id="divreclutador">
   
+    <div class="form-group input-sm">
+      <label for="sel2"></label>
+
+      <form [formGroup]="FormReclutador">
+          <ngx-select
+         [allowClear]="true"
+         autoClearSearch="true"
+         placeholder="Reclutador..."
+         formControlName = "ReclutadorControl"
+         (data)="(value)"
+         [multiple]="true"
+         [items]="Usuario"
+         size="small"
+         optionValueField="id"
+         optionTextField="nombre"
+         (remove)="reclutadorChange()"
+         (select)="reclutadorChange()">
+         <ng-template ngx-select-option-selected let-option >
+           <span style="font-size: 13px !important">{{ option.data.nombre }}</span>
+         </ng-template>
+         <ng-template ngx-select-option-not-found>
+            No se encontraron resultados...
+          </ng-template>
+       </ngx-select>
+       </form>
+
+    </div>  
+</div>
+
+
+<div class="col-xl-4">
+  
+    <div class="form-group input-sm" id="divBusCoordina">
+      <label for="sel2"></label>
+
+      <form [formGroup]="FormUserCor">
+          <ngx-select
+         [allowClear]="true"
+         autoClearSearch="true"
+         placeholder="Coordinador..."
+         formControlName = "UserCorControl"
+         (data)="(value)"
+         [multiple]="true"
+         [items]="UsuarioCor"
+         size="small"
+         optionValueField="id"
+         optionTextField="nombre"
+         (remove)="UsuarioCorChange()"
+         (select)="UsuarioCorChange()">
+         <ng-template ngx-select-option-selected let-option >
+           <span style="font-size: 13px !important">{{ option.data.nombre }}</span>
+         </ng-template>
+         <ng-template ngx-select-option-not-found>
+            No se encontraron resultados...
+          </ng-template>
+       </ngx-select>
+       </form>
+
+    </div>  
+
+</div>
+<div class="col-xl-4 ">
+
+  </div>
+  <div class="col-xl-2 " style="margin-top: 23px;">
+      <div class="form-group ocultar">
+          <div class="input-group input-sm">
+            <input
+              id="palabra"
+              type="text"
+              size="12"
+              #palabra
+              (blur)="hijo.Guardar(palabra.value)"
+              placeholder="Palabra clave"
+              class=" form-control input-sm"
+            />
+            <div class="input-group-append mano" (click)="hijo.Generar()">
+              <span class="input-group-text "> <em class="fa fa-search"></em></span>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="col-xl-2" style="margin-top: 10px;">
+        <button id="exel1" tooltip="Exportar" (click)="hijo.Exportar()" class="btn btn-sm btn-outline-warning btnReport">
+            <em  class="fa fa-download"></em>
+          </button>
+          <button id="exel2" tooltip="Exportar" (click)="ReGeneral.exportAsXLSX()" class="ocultar btn btn-sm btn-outline-warning btnReport">
+              <em  class="fa fa-download"></em>
+            </button>
+            <button id="exelProact" tooltip="Exportar" style="right: auto;" (click)="ProAct.Exportar()" class="ocultar btn btn-sm btn-outline-warning btnReport">
+              <em  class="fa fa-download"></em>
+            </button>
+          
+
+        <button class="btn btn-sm btn-outline-success btnReport" (click)="hijo.Generar(objsucursal,objsolicit,objrecluta,objempresa,objstatus,objtiporeclu,objtipocordi,objusercoo)" tooltip="Generar Reporte" id="report1"  >
+            <em class="fa fa-bar-chart"></em>
+          </button>
+        <button class="ocultar btn btn-sm btn-outline-success btnReport" (click)="ReGeneral.llamado(objsucursal,objsolicit,objrecluta,objempresa,objstatus,objtiporeclu,objtipocordi)" tooltip="Generar Reporte" id="report2"  >
+            <em  class="fa fa-bar-chart"></em>
+          </button>
+          <button class="ocultar btn btn-sm btn-outline-success btnReport" style="right: auto;" (click)="ProAct.Generar(objrecluta)" tooltip="Generar Reporte" id="repProActi"  >
+            <em  class="fa fa-bar-chart"></em>
+          </button>
+      </div>
+
+
+</div>
+
  
+
+
 <div>
-  <app-tabla-reporte class="ocultar" id="DivReportefil" #hijo [data]="true"></app-tabla-reporte>
- 
-  <app-reporte70 class="ocultar" id="Divprincipal" #ReGeneral ></app-reporte70>
+<app-tabla-reporte class="ocultar" id="DivReportefil" #hijo [data]="true"></app-tabla-reporte>
+
+<app-reporte70 class="ocultar" id="Divprincipal" #ReGeneral ></app-reporte70>
+
+<app-productividad id="DivProacti" #ProAct > </app-productividad>
 </div>
