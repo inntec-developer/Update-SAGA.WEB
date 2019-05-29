@@ -32,9 +32,9 @@
       <hr>
    <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
    [disabled]="disabled">
-   <div style="height: 400px;">
+   <div style="height: 300px;">
    <div id="accordion">
-      <div class="card" *ngFor="let row of resultados; let rowIndex = index">
+      <div class="card" *ngFor="let row of rows; let rowIndex = index">
         <a class="card-header" [class.collapsed]="row.verRow"  (click)="row.verRow = !row.verRow">
           <h5>
                 <span class="text-primary float-left "><em class="fa fa-file-text-o"></em> {{ row.folio}} - {{row.cliente | uppercase}} - {{row.vBtra | uppercase}} <span class="text-warning">({{row.candidatos.length}})</span></span>
@@ -79,15 +79,24 @@
       </div>
       </div>
     </div>
+   
     </ng-scrollbar>
-  </div>
+    <br/>
+    <div class="text-right">
+        <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
+        [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
+        (numPages)="numPages = $event">
+      </pagination>
+        <pre class="card card-block card-header text-muted">Total Registros: {{resultados.length}}</pre>
+        </div>
+</div>
 </div>
   <!--mensaje cuando esta vacio la tabla-->
 <ng-template #NotCandidatos>
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12">
           <alert type="info">
-              <strong>Oops!</strong> A&uacute;n no cuentas con examenes pra revisar.
+              <strong>Oops!</strong> A&uacute;n no cuentas con examenes para revisar.
             </alert>
       </div>
     </div>

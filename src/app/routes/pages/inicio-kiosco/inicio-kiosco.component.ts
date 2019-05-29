@@ -1,3 +1,4 @@
+import { SettingsService } from './../../../core/settings/settings.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbCarousel, NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 
@@ -29,7 +30,10 @@ export class InicioKioscoComponent implements OnInit {
   activeId: any;
   search: any;
 
-  constructor(config: NgbCarouselConfig, private _service: SistTicketsService) {
+  constructor(config: NgbCarouselConfig, 
+    private _service: SistTicketsService,
+    private settings: SettingsService
+  ) {
     config.interval = 10000;
     config.wrap = false;
     config.pauseOnHover = true;
@@ -149,7 +153,7 @@ export class InicioKioscoComponent implements OnInit {
   Login(usuario, pass)
   {
     this._service.LoginBolsa(usuario, pass).subscribe(data => {
-      console.log(data)
+
       if(data == 300)
       {
         swal("¡Error en la contraseña!", '', "error");

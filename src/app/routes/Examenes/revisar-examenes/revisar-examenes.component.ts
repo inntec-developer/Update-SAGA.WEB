@@ -13,11 +13,19 @@ export class RevisarExamenesComponent implements OnInit {
 
   resultados = [];
   filteredData: any = [];
+  rows = [];
   search = "";
 
   public disabled = false;
   public compact = false;
   public shown = 'shown';
+
+  public page: number = 1;
+  public itemsPerPage: number = 20;
+  public maxSize: number = 5;
+  public numPages: number = 1;
+  public length: number = 0;
+  
 
   public columns: Array<any> = [
     { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
@@ -36,11 +44,33 @@ export class RevisarExamenesComponent implements OnInit {
     this.GetCandidatos();
   }
 
+  public config: any = {
+    paging: true,
+    //sorting: { columns: this.columns },
+    filtering: { filterString: '' },
+    className: ['table-hover mb-0 ']
+  };
+
+  public changePage(page: any, data: Array<any> = this.resultados): Array<any> {
+    let start = (page.page - 1) * page.itemsPerPage;
+    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    return data.slice(start, end);
+  }
+
+  public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
+    this.rows = this.resultados;
+    // let filteredData = this.changeFilter(this.requisiciones, this.config);
+    //let sortedData = this.changeSort(filteredData, this.config);
+    this.rows = page && config.paging ? this.changePage(page, this.rows) : this.rows;
+    this.length = this.rows.length;
+
+  }
+
   GetCandidatos()
   {
     this.service.GetCandidatosExamenes().subscribe(data =>{
       this.resultados = data;
-      this.filteredData = data;
+      this.onChangeTable(this.config)
     });
   }
   OpenDialogRevisar(row)

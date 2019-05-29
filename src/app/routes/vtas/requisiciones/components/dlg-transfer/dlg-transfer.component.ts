@@ -190,6 +190,7 @@ export class DlgTransferComponent implements OnInit {
     {
   
       let tipo = 1; //cambio coordinador
+      let usuarioAux = this.settings.user['id'];
       if(this.data.usuario == 10)
       {
         tipo = 2 //cambio ejecutivo
@@ -198,6 +199,7 @@ export class DlgTransferComponent implements OnInit {
       { 
         tipo = 3 //cambio reclutador
         this.coordId = this.asig2[0].reclutadorId;
+        usuarioAux = this.asig[0].reclutadorId;
       }
     let Comentario = {
         Comentario: this.comentario,
@@ -207,7 +209,7 @@ export class DlgTransferComponent implements OnInit {
         ReclutadorId: this.settings.user['id'],
         EstatusId: 20,
         UsuarioTransferId: this.coordId,
-        UsuarioAux: this.asig[0].reclutadorId,
+        UsuarioAux: usuarioAux,
         Tipo: tipo
       }
       swal({
