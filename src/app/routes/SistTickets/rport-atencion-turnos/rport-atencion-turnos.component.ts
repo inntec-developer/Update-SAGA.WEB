@@ -28,7 +28,7 @@ export class RportAtencionTurnosComponent implements OnInit {
     clearFilter: boolean = true;
 
   public columns: Array<any> = [
-    { title: 'Fecha', className: 'text-success text-center', name: 'fecha', filtering: { filterString: '',  placeholder: 'dd/mm/yyyy' } },
+    { title: 'Fecha', className: 'text-success text-center', name: 'fecha', filtering: { filterString: '',  placeholder: 'aaaa-mm-dd' } },
     { title: 'Reclutador', className: 'text-info text-center', name: 'reclutador', filtering: { filterString: '', placeholder: 'Reclutador' } },
     { title: 'Turnos Atendidos', className: 'text-info text-center', name: 'total', filtering: { filterString: '', placeholder: 'Atendidos' } },
     { title: 'Turnos con Cita', className: 'text-info text-center', name: 'concita', filtering: { filterString: '', placeholder: 'Con cita' } },

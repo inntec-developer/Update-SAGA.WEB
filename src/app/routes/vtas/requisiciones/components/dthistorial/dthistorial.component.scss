@@ -1,0 +1,30 @@
+table tbody {
+    display: block;
+  
+  }
+  
+  table thead,
+  tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  table thead {
+    width: calc(100% - 1em)
+  }
+  
+  table {
+    width: 400px;
+  }
+
+table tbody div
+{
+  height: 350px;
+}
+ng-scrollbar {
+  --scrollbar-size: 4px;
+  --scrollbar-thumb-color: rgb(94, 175, 255);
+  --scrollbar-thumb-hover-color: dodgerblue;
+  --scrollbar-border-radius: 4px;
+}

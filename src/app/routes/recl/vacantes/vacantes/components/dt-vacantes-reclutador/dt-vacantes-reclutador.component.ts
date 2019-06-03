@@ -57,6 +57,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   editarRequi = false;
   editarNR = false;
   informeVacante = false;
+  historial = false;
   usuarioId: any = this.settings.user['id'];
   //estatus vacantes
 
@@ -80,6 +81,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   candidatosNR: any = [];
   requisPausa: any = [];
   totalPos: any = 0;
+  totalContratados: number = 0;
 
 
   constructor(
@@ -114,11 +116,14 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.GetCandidatosNR();
       this.GetRequisicionesPausa();
       this.totalPos = 0;
+      this.totalContratados = 0;
       this.dataSource.forEach(r => {
         if(r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37))
         {
           this.totalPos += r.vacantes;
+          this.totalContratados += r.contratados;
         }
+       
       })
       this.rows = this.dataSource.slice(0, this.itemsPerPage);
       this.registros = this.rows.length;
@@ -796,7 +801,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   seguimientoRequi() {
-
     if (this.numeroVacantes != 0 && (this.settings.user['tipoUsuarioId'] == '4' || this.settings.user['tipoUsuarioId'] == '3'))
     {
       this.procesoCandidato = true;

@@ -55,7 +55,7 @@ table tbody tr:hover{
 
 .modal-lg 
 {
-  max-width: 80% !important;
+  max-width: 90% !important;
 }
 table tbody div
 {
@@ -68,12 +68,13 @@ ng-scrollbar {
   --scrollbar-border-radius: 4px;
 }
 
-// button .badge {
-//   position: absolute;
-//   top: -6px;
-// z-index: 9;
-//   font-size: .7em;
-// }
+button .badge {
+  position: absolute;
+  top: -6px;
+ 
+z-index: 9;
+  font-size: .7em;
+}
 
 
 .row

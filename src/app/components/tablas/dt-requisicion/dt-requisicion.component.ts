@@ -79,8 +79,9 @@ export class DtRequisicionComponent implements OnInit {
   Vacante: any;
   comentario: string;
 
-  reporte70 = false;
+  historial = false;
   totalPos: number = 0;
+  totalContratados: number = 0;
   constructor(
     private service: RequisicionesService,
     private postulacionservice: PostulateService,
@@ -113,10 +114,13 @@ export class DtRequisicionComponent implements OnInit {
       this.dataSource = data;
 
       this.totalPos = 0;
+      this.totalContratados = 0;
+
       this.dataSource.forEach(r => {
         if(r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37))
         {
           this.totalPos += r.vacantes;
+          this.totalContratados += r.contratados;
         }
       })
 

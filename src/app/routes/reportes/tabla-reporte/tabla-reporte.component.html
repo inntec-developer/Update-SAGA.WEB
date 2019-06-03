@@ -57,7 +57,7 @@
       <ng-scrollbar #scrollableP [trackX]="true" [trackY]="false" [invertX]="invertX" [invertY]="invertY" [compact]="compact" [shown]="shown"
         [disableOnBreakpoints]="false" [disabled]="disabled">
   
-        <div style="width: 1300px; height: 400px; overflow: hidden;">
+        <div style="width: 1600px; height: 450px; overflow: hidden;">
           <table ngClass="{{config.className || ''}}" class="table">
             <thead>
               <tr>
@@ -87,7 +87,8 @@
                       <td class="text-center">{{item.empresa}}</td>
                       <td class="text-center">{{item.vBtra}}</td>
                       <td class="text-center">{{item.estado}}</td>
-                      <td class="text-center"  >
+                      <td class="text-center" *ngIf="item.estatusId == '4'"><p>SIN ASIGNAR</p></td>
+                      <td class="text-center" *ngIf="item.estatusId != '4'" >
                           <ng-template #popTemplate>
                               <div class="card">
                                 <div class="card-body">
@@ -100,7 +101,6 @@
                           <small class="text-center badge badge-pill " *ngIf="item.reclutadorTotal > 1" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{item.reclutadorTotal}}</small>
                           <span class="text-left" *ngIf="item.reclutadorTotal == 1">{{item.nombreReclutado}}</span>
                           <span class="text-left" *ngIf="item.reclutadorTotal == 'SIN ASIGNAR'">{{item.reclutadorTotal}}</span>
-                         <!-- <p tooltip="{{item.nombreReclutado}}">{{item.reclutadorTotal}}</p> -->
                          </td>
                       <td class="text-center">{{item.numero}}</td>
                       <td class="text-center">{{item.cubierta}}</td>
@@ -110,7 +110,21 @@
                       <td class="text-center">{{item.estatus}}</td>
                       <td class="text-center">{{this.convertDateTime(item.fch_Modificacion)}}</td>
                       <td class="text-center">{{item.clasesReclutamiento}}</td>
-                      <td class="text-center">
+                      <td class="text-center" *ngIf="item.estatusId == '4'" >
+                        <ng-template #popTemplate>
+                            <div class="card">
+                              <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                  <li *ngFor="let r of item.nombreReclutado.split(',')" class="list-group-item text-muted">{{r}}</li>
+                                </ul>
+                              </div>
+                            </div>
+                          </ng-template>
+                        <small class="text-center badge badge-pill " *ngIf="item.reclutadorTotal > 1" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{item.reclutadorTotal}}</small>
+                        <span class="text-left" *ngIf="item.reclutadorTotal == 1">{{item.nombreReclutado}}</span>
+                        <span class="text-left" *ngIf="item.reclutadorTotal == 'SIN ASIGNAR'">{{item.reclutadorTotal}}</span>
+                       </td>
+                      <td class="text-center" *ngIf="item.estatusId != '4'">
                           <p *ngIf="item.cordinador2 != ''">{{item.cordinador2}}</p>
                           <p *ngIf="item.cordinador2 == ''">SIN ASIGNAR</p>
                         

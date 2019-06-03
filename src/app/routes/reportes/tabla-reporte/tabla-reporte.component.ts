@@ -148,6 +148,7 @@ ucor = ucor == undefined?'0':ucor;
     // this.popGenerico(data.mensaje,data.bandera,'Publicacion');
     this.requisiciones = data;
     this.General = data;
+    console.log(data);
     this.onChangeTable(this.config);
     this.spinner.hide();
     
@@ -159,21 +160,20 @@ ucor = ucor == undefined?'0':ucor;
    
     this.General.forEach(item => {
       obj.push({
-        Folio: item.folio.toString(),
-        'Solicitud ': this.convertDateTime(item.fch_Creacion),
-        Empresa: item.empresa,
-        Puesto : item.vBtra,
-        Estado: item.estado,
-        Reclutador  : item.nombreReclutado == ''?'SIN ASIGNAR':item.nombreReclutado,
-        'No.'	: item.numero,
-        Cubierta:item.cubierta,
-        'Cumplimiento'	: item.porcentaje + '%',
-       
-        Estatus: item.estatus,
-        'Fecha estatus': this.convertDateTime(item.fch_Modificacion),
-        'Coordinación ': item.clasesReclutamiento,
-        Coordinador:item.cordinador2 == ''?'SIN ASIGNAR':item.cordinador2,
-        Solicita: item.nombreApellido,
+        'FOLIO': item.folio.toString(),
+        'SOLICITUD': this.convertDateTime(item.fch_Creacion),
+        'EMPRESA': item.empresa,
+        'PUESTO' : item.vBtra,
+        'ESTADO': item.estado,
+        'RECLUTADOR'  : item.nombreReclutado == ''?'SIN ASIGNAR':item.nombreReclutado,
+        'NO.'	: item.numero,
+        'CUBIERTA':item.cubierta,
+        'CUMPLIMIENTO'	: item.porcentaje + '%',
+        'ESTATUS': item.estatus,
+        'FECHA ESTATUS': this.convertDateTime(item.fch_Modificacion),
+        'COORDINACÍON ': item.clasesReclutamiento,
+        'COORDINADOR':item.cordinador2 == ''?'SIN ASIGNAR':item.cordinador2,
+        'SOLICITA': item.nombreApellido,
       })
      });
      this.Exel.exportAsExcelFile(obj,'Reporte')

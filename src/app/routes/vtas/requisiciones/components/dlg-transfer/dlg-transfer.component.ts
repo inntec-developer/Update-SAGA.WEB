@@ -1,3 +1,4 @@
+import { RequisicionesService } from './../../../../../service/requisiciones/requisiciones.service';
 import { AdminServiceService } from './../../../../../service/AdminServicios/admin-service.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
@@ -9,9 +10,10 @@ const swal = require('sweetalert');
   selector: 'app-dlg-transfer',
   templateUrl: './dlg-transfer.component.html',
   styleUrls: ['./dlg-transfer.component.scss'], 
-  providers: [AdminServiceService, ComentariosService]
+  providers: [AdminServiceService, ComentariosService, RequisicionesService]
 })
 export class DlgTransferComponent implements OnInit {
+
   disabled = false;
   compact = false;
   invertX = false;
@@ -19,15 +21,26 @@ export class DlgTransferComponent implements OnInit {
   shown = 'hover';
 
   coord = [];
+  asig = [];
+  asig2 = [];
+  listaAsignar = [];
+  listaAsignar2 = [];
+
   rowAux;
   coordId;
   coordNom = "";
   titulo = "";
+  usuario = 0;
+  verRecl: boolean = false;
   loading: boolean = false;
   public comentario: string = "";
   dataRowIndex: any;
+  dataRowIndex2: any;
+  rowAux2: any;
+  
   constructor(
     private _sevice: AdminServiceService, 
+    private _requiService: RequisicionesService,
     private dialog : MatDialogRef<DlgTransferComponent>, 
     @Inject(MAT_DIALOG_DATA) public data: any, 
     private serviceComentarios: ComentariosService, 
@@ -39,7 +52,36 @@ export class DlgTransferComponent implements OnInit {
   ngOnInit() {
    this.GetCoordinadores();
   }
+  setLista2()
+  {
+   this._requiService.GetAsignados(this.data.id).subscribe(result => {
+        this.listaAsignar2 = result;
+     
+      });
+  }
 
+  GetReclutadores($event)
+  {
+    if($event.checked)
+    {     
+      this._requiService.GetAsignados(this.data.id).subscribe(result => {
+        this.listaAsignar = result;
+        this.listaAsignar2 = Object.assign([], this.listaAsignar);
+        this.verRecl = true;
+      this.usuario = this.data.usuario;
+      this.data.usuario = 11;
+      this.titulo = "Reclutador";
+        // this.setLista2();
+      });
+    }
+    else
+    {
+      this.verRecl = false;
+      this.data.usuario = this.usuario;
+      this.asig = [];
+      this.GetCoordinadores();
+    }
+  }
   GetCoordinadores()
   {
     this._sevice.GetByUsuario(this.data.usuario).subscribe(data => {
@@ -48,11 +90,75 @@ export class DlgTransferComponent implements OnInit {
       {
         this.titulo = "Coordinador";
       }
+      else if(this.data.usuario == 11)
+      {
+        this.titulo = "Reclutador";
+      }
       else
       {
         this.titulo = "Ejecutivo";
       }
     });
+  }
+
+  onSelect(item: any, rowIndex) 
+  {
+      var entidad = this.listaAsignar2.findIndex(x => x.reclutadorId == item.reclutadorId);
+      
+      if(entidad >= 0) //para que no repita usuarios
+      {
+         this.listaAsignar2.splice(entidad, 1);
+       
+      }
+
+      if(this.rowAux)
+      {
+        this.listaAsignar2.push(this.rowAux);
+        this.asig.pop();
+        this.rowAux.selected = false;
+        
+        this.dataRowIndex = rowIndex;
+        this.rowAux = item;
+        item.selected = true;
+        this.asig.push(item)
+      }
+      else
+      {
+        this.rowAux = item;
+        this.dataRowIndex = rowIndex;
+        item.selected = true; //para poner el backgroun cuando seleccione
+        this.asig.push(item)
+      }
+  }
+  onSelect2(item: any, rowIndex) 
+  {
+    var entidad = this.listaAsignar.findIndex(x => x.reclutadorId == item.reclutadorId);
+      
+      if(entidad >= 0) //para que no repita usuarios
+      {
+         this.listaAsignar.splice(entidad, 1);
+       
+      }
+      if(this.dataRowIndex2 != rowIndex)
+      {
+        if(this.rowAux2)
+        {
+          this.listaAsignar.push(this.rowAux2);
+          this.asig2.pop();
+          this.rowAux2.selected = false;
+        }
+        this.dataRowIndex2 = rowIndex;
+        this.rowAux2 = item;
+        item.selected = true;
+        this.asig2.push(item)
+      }
+      else
+      {
+        this.rowAux2 = item;
+        this.dataRowIndex2 = rowIndex;
+        item.selected = true; //para poner el backgroun cuando seleccione
+        this.asig2.push(item)
+      }
   }
 
   Seleccionar(row, rowIndex)
@@ -80,13 +186,20 @@ export class DlgTransferComponent implements OnInit {
 
   AddComentario()
   {
-    if(this.coordNom.length > 0)
+    if(this.coordNom.length > 0 || this.asig.length > 0)
     {
   
       let tipo = 1; //cambio coordinador
+      let usuarioAux = this.settings.user['id'];
       if(this.data.usuario == 10)
       {
         tipo = 2 //cambio ejecutivo
+      }
+      else if(this.data.usuario == 11)
+      { 
+        tipo = 3 //cambio reclutador
+        this.coordId = this.asig2[0].reclutadorId;
+        usuarioAux = this.asig[0].reclutadorId;
       }
     let Comentario = {
         Comentario: this.comentario,
@@ -96,6 +209,7 @@ export class DlgTransferComponent implements OnInit {
         ReclutadorId: this.settings.user['id'],
         EstatusId: 20,
         UsuarioTransferId: this.coordId,
+        UsuarioAux: usuarioAux,
         Tipo: tipo
       }
       swal({

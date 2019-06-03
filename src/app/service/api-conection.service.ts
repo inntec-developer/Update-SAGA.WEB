@@ -38,6 +38,7 @@ export class ApiConection {
   /* Compoentes de Asignacion de Requisiciones */
   public static GetUserGroup = 'AsignacionRequi/getUserGroup';
   public static GetUserGroupL = 'AsignacionRequi/getUserGroupL';
+  public static GetAsignados = 'AsignacionRequi/getAsignados';
 
   /* Alertas STM  */
   public static GetAlertStm = 'AlertSTM/getAlert';
@@ -265,7 +266,8 @@ export class ApiConection {
   public static execProcedureSinCambios = 'Requisiciones/execProcedureSinCambio'
   public static execProcedureSinAsignar = 'Requisiciones/execProcedureSinAsignar'
   public static execProcedureVencidas = 'Requisiciones/execProcedureVencidas'
-
+  public static getRequisicionesHistorial = 'Requisiciones/getRequisicionesHistorial'
+  
   /*Examenes */
   public static InsertExamen = 'examenes/insertExamen'
   public static GetCatalogo = 'examenes/getCatalogo'
@@ -355,6 +357,14 @@ export class ApiConection {
   public static getVencidasG = 'indicador/vvencida'
   public static getResumenG = 'indicador/resumen'
   public static getRadialG = 'indicador/radial'
+
+  /* Contadores */
+  public static getPerfiles = 'contadores/perfiles';
+  public static getFolios = 'contadores/folios';
+  public static getPosiciones = 'contadores/posiciones';
+  public static getPosicionesActivas = 'contadores/posicionesActivas';
+  public static getCandidatos = 'contadores/candidatos';
+  public static getCandidatosInicio = 'contadores/candidatosEstatus';
 
   /* Menu de Catalogos */
   public static getCatalogos = 'Catalogos/getCatalogos';

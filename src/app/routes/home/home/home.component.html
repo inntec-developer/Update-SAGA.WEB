@@ -11,48 +11,16 @@
 
 <div class="row">
   <div class="col-lg-3 col-md-3 col-sm-12">
-    <div class="card flex-row align-items-center align-items-stretch border-0">
-      <div class="col-4 d-flex align-items-center bg-primary-dark justify-content-center rounded-left">
-        <em class="fa fa-id-card-o fa-3x"></em>
-      </div>
-      <div class="col-8 py-3 bg-primary rounded-right">
-        <div class="h2 mt-0">1700</div>
-        <div class="text-uppercase">Perfiles</div>
-      </div>
-    </div>
+    <app-indicador-perfiles></app-indicador-perfiles>
   </div>
   <div class="col-lg-3 col-md-3 col-sm-12">
-    <div class="card flex-row align-items-center align-items-stretch border-0">
-      <div class="col-4 d-flex align-items-center bg-success-dark justify-content-center rounded-left">
-        <em class="fa fa-file-text fa-3x"></em>
-      </div>
-      <div class="col-8 py-3 bg-success rounded-right">
-        <div class="h2 mt-0">398</div>
-        <div class="text-uppercase">Folios</div>
-      </div>
-    </div>
+    <app-indicador-folios></app-indicador-folios>
   </div>
   <div class="col-lg-3 col-md-3 col-sm-12">
-    <div class="card flex-row align-items-center align-items-stretch border-0">
-      <div class="col-4 d-flex align-items-center bg-info-dark justify-content-center rounded-left">
-        <em class="fa fa-briefcase fa-3x"></em>
-      </div>
-      <div class="col-8 py-3 bg-info rounded-right">
-        <div class="h2 mt-0">456</div>
-        <div class="text-uppercase">Posiciones</div>
-      </div>
-    </div>
+    <app-indicador-posiciones></app-indicador-posiciones>
   </div>
   <div class="col-lg-3 col-md-3 col-sm-12">
-    <div class="card flex-row align-items-center align-items-stretch border-0">
-      <div class="col-4 d-flex align-items-center bg-green-dark justify-content-center rounded-left">
-        <em class="fa fa-users fa-3x"></em>
-      </div>
-      <div class="col-8 py-3 bg-green rounded-right">
-        <div class="h2 mt-0">3500</div>
-        <div class="text-uppercase">Candidatos</div>
-      </div>
-    </div>
+    <app-indicador-candidatos></app-indicador-candidatos>
   </div>
 </div>
 <div class="row">
@@ -66,9 +34,21 @@
     </div>
   </div>
   <div class="col-lg-4 col-md-4 col-sm-12">
-    <label for="indicador6"> INDICADOR 6</label>
+      <div class="card box">
+          <div class="card-body mat-elevation-z8">
+            <label class="text-info"><strong>Posiciones Activas</strong></label>
+            <br>
+            <app-indicador-posiciones-activas></app-indicador-posiciones-activas>
+          </div>
+        </div>
   </div>
   <div class="col-lg-4 col-md-4 col-sm-12">
-    <label for="indicador7"> INDICADOR 7</label>
+      <div class="card box">
+          <div class="card-body mat-elevation-z8">
+            <label class="text-info"><strong>Candidatos</strong></label>
+            <br>
+            <app-indicador-candidatos-estatus></app-indicador-candidatos-estatus>
+          </div>
+        </div>
   </div>
 </div>

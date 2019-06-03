@@ -72,10 +72,10 @@
           <em class="fa fa-user-circle"></em>
         </button>
         <em class="vl mr-2"></em>
-        <!-- <button id='special' chkPrivilegiosButtons type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-info'"
-              (click)="reporte70=true;" container="body" placement="bottom" tooltip="Reporte 70">
-              <i class="fa fa-file-text-o"></i>
-            </button> -->
+         <button type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn btn-xs disable' : 'mr-1 btn btn-xs btn-outline-info'"
+              (click)="historial=true;" container="body" placement="bottom" tooltip="Historial">
+              <i class="fa fa-area-chart"></i>
+            </button>
             <button class="btn mr-1" [ngClass]="element.length == 0 ? 'btn-xs disable' : 'btn-xs btn-outline-purple'" [disabled]="element.length == 0" id='special' chkPrivilegiosButtons type="button" (click)="openDialogTransfer()" container="body" placement="bottom"
             tooltip="Transferir folio"><i class="fa fa-exchange"></i>
           </button>
@@ -91,11 +91,11 @@
           container="body" placement="bottom" tooltip="Actualizar">
           <em class="icon-refresh"></em>
         </button>
-        <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs float-right" [disabled]="candidatos"
-          (click)="reporteCandidatos = true" [ngClass]="candidatos ? 'disabled' : 'btn-outline-warning'"
+        <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs float-right" [disabled]="element.length == 0 || element.enProceso == 0"
+          (click)="reporteCandidatos = true" [ngClass]="element.length == 0 || element.enProceso == 0 ? 'disabled' : 'btn-outline-warning'"
           container="body" placement="bottom" tooltip="Candidatos">
           <i class="fa fa-users" aria-hidden="true"></i>
-          <span *ngIf="element.length > 0" class="badge badge-pill badge-warning">{{element.enProceso}}</span>
+          <span *ngIf="element.enProceso > 0" class="badge badge-pill badge-warning">{{element.enProceso}}</span>
         </button>
       </div>
     </div>
@@ -111,10 +111,13 @@
     <div class="row">
       <div class="col-sm-12 col-md-12 table-responsive clearfix">
         <div class="mt-3 ">
-          <span class="text-muted font-weight-bold float-right ml-2 mr-3 mb-3 text-uppercase">Total de posiciones
-            activas <span class="badge badge-pill badge-success">{{totalPos}}</span></span>
+            <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total posiciones cubiertas
+                <span class="badge badge-pill badge-success ml-1">{{totalContratados}}</span></span>
+          <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total de posiciones
+            activas <span class="badge badge-pill badge-success ml-1">{{totalPos}}</span></span>
           <span class="text-muted font-weight-bold float-right text-uppercase mb-3 ">Total de Folios <span
-              class="badge badge-pill badge-success">{{dataSource.length}}</span></span>
+              class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span></span>
+             
         </div>
 
         <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table border-top" style="width: 100%;">
@@ -152,7 +155,13 @@
                   <td class="text-center">
                     <span class="mr-1 badge badge-pill badge-info"> {{row.contratados}}/{{row.vacantes}}</span>
                   </td>
-                  <td class="text-center"> {{row.tipoReclutamiento | uppercase}}</td>
+                  <td class="text-center"><span *ngIf="row.tipoReclutamiento.length < 9 else toLengthRecl">{{row.tipoReclutamiento | uppercase}}</span>
+                      <ng-template #toLengthRecl>
+                          <span tooltip="{{row.tipoReclutamiento | uppercase}}" placement="top" container="body"> {{row.tipoReclutamiento | slice:0:8 | uppercase
+                            }} ...
+                          </span>
+                        </ng-template>
+                  </td>
                   <!-- <td class="text-right"> {{row.sueldoMinimo | currency: $}}</td>
             <td class="text-right"> {{row.sueldoMaximo | currency: $}}</td> -->
                   <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
@@ -262,21 +271,21 @@
 </div>
 
 <!-- Modal para reporte -->
-<!-- <div *ngIf="reporte70" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #MessageModal="bs-modal" class="modal"
+<div *ngIf="historial" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #MessageModal="bs-modal" class="modal"
   tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
-  <div class="modal-dialog modal-lg reporteMod">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="float-left text-warning"><em class="fa fa-file-text-o mr-2"></em>Reporte - Requisiciones</h4>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="reporte70=false; lgModal.hide();"><i
+        <h4 class="float-left text-warning"><em class="fa fa-area-chart mr-2"></em>HISTORIAL - REQUISICIONES</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="historial=false; lgModal.hide();"><i
             class="fa fa-times"></i></button>
       </div>
       <div class="modal-body">
-        <app-reporte70></app-reporte70>
+        <app-dthistorial></app-dthistorial>
       </div>
     </div>
   </div>
-</div> -->
+</div>
 <div *ngIf="reporteCandidatos" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal
   #candiModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
   <div class="modal-dialog modal-lg">

@@ -349,6 +349,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   getpostulados() {
 
     this.service.GetProceso(this.RequisicionId, this.settings.user['id']).subscribe(data => {
+
       this.dataSource = [];
 
       data.forEach(element => {
