@@ -12,19 +12,32 @@ import { settings } from 'cluster';
   styleUrls: ['./perfiles.component.scss']
 })
 export class PerfilesComponent implements OnInit {
-  public user :  string;
+
+  public foto:  string;
+  public nombre:  string;
+  public clave:  string;
+  public tipo:  string;
+  public sucursal:  string;
+  public email:  string;
+  public lider:  string;
+  public departamento:  string;
 
   constructor(
     private _Route: ActivatedRoute,
-    private settings : SettingsService
+    private settings: SettingsService
   ) { }
 
   ngOnInit() {
-    if( this._Route.queryParams.filter(params => params.user) != null ){
-      let userName = this._Route.queryParams.filter(params => params.user)
-      .subscribe(params => {
-        this.settings.user.name = params.user;
-      })
+    this._Route.params.subscribe(params => {
+      this.foto = params['picture'];
+      this.nombre = params['name'];
+      this.clave = params['clave'];
+      this.tipo = params['tipo'];
+      this.sucursal = params['sucursal'];
+      this.email = params['email'];
+      this.lider = params['lider'];
+      this.departamento = params['departamento'];
+      });
     }
 
     // let userName = this._Route.snapshot.paramMap.get('user');

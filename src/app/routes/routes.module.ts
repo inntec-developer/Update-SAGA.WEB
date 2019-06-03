@@ -16,7 +16,7 @@ import { routes } from './routes';
     imports: [
         SharedModule,
         RouterModule.forRoot(routes),
-        PagesModule       
+        PagesModule
     ],
     declarations: [
    ],

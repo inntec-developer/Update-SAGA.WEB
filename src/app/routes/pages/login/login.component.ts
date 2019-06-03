@@ -89,6 +89,10 @@ export class LoginComponent implements OnInit {
             this.settings.user['sucursal'] = decode['Sucursal'];
             this.settings.user['foto'] = ApiConection.ServiceUrlFotoUser + decode['Clvave'] + '.jpg';
             this.settings.user['privilegios'] = this.Priv;
+            this.settings.user['lider'] = decode['Lider'];
+            this.settings.user['liderId'] = decode['LiderId'];
+            this.settings.user['departamentoId'] = decode['DepartamentoId'];
+            this.settings.user['departamento'] = decode['Departamento'];
             this.router.navigate(['/home']);
           }
           if (data === 404) {

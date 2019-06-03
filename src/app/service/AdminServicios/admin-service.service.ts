@@ -361,7 +361,7 @@ export class AdminServiceService {
   {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
-    return this._httpClient.post(this.UrlUpdateGrupo, data
+    return this.http.post(this.UrlUpdateGrupo, data)
             .map(result => result.json())
             .catch(this.handleError);
 
@@ -378,7 +378,6 @@ export class AdminServiceService {
 
   UpdatePrivilegios(data: any) : Observable<any>
   {
-    debugger;
     return this._httpClient.post(this.UrlUpdatePrivilegios, data, httpOptions);
   }
   DeleteGrupo(data: any) : Observable<any>
