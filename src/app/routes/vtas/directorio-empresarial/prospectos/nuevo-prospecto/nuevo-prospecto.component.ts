@@ -20,6 +20,8 @@ export class NuevoProspectoComponent implements OnInit {
   public CMNumEmleados: number = 10;
   //#region Variables
   public loading: boolean = false;
+  //Edit for columns
+  public editingCT = {};
 
   public itemsPerPage: number = 5;
   public maxSize: number = 5;
@@ -43,6 +45,8 @@ export class NuevoProspectoComponent implements OnInit {
   private idAuxT: number = 1;
   private idAuxC: number = 1;
   private idAuxCn: number = 1;
+  private idAuxCnT: number = 1;
+  private idAuxCnC: number = 1;
   /***************************/
 
   public formGeneral: FormGroup;
@@ -50,6 +54,8 @@ export class NuevoProspectoComponent implements OnInit {
   public formTelefonos: FormGroup;
   public formCorreos: FormGroup;
   public formContactos: FormGroup;
+  public formContactoTelefonos: FormGroup;
+  public formContactoCorreo: FormGroup;
 
   public addDireccion: boolean;
   public DireccionesNew: Array<any> = [];
@@ -76,6 +82,15 @@ export class NuevoProspectoComponent implements OnInit {
   public EditContacto: boolean;
   public textbtnContacto: string;
   public esOficinaContacto: any;
+
+  public addContactoTelefono: boolean;
+  public indexContactoTelefonos: any;
+  public EditContactoTelefono: boolean;
+  public esOficinaCT: any;
+
+  public addContactoCorreo: boolean;
+  public indexContactoCorreos: any;
+  public EditContactoCorreo: boolean;
 
   public giros: any;
   public actividades: any;
@@ -134,7 +149,7 @@ export class NuevoProspectoComponent implements OnInit {
       Colonias: new FormControl('', Validators.required),
       Calle: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       Exterior: new FormControl('', [Validators.required, Validators.maxLength(10)]),
-      Interior: new FormControl('' , Validators.maxLength(30)),
+      Interior: new FormControl('', Validators.maxLength(30)),
       Referencia: new FormControl('', Validators.maxLength(500)),
       Principal: new FormControl(false),
       Activo: new FormControl(true)
@@ -164,13 +179,19 @@ export class NuevoProspectoComponent implements OnInit {
       Nombre: new FormControl('', [Validators.required]),
       ApellidoPaterno: new FormControl('', [Validators.required]),
       ApellidoMaterno: new FormControl(''),
-      Puesto: new FormControl('', [Validators.required]),
+      Puesto: new FormControl('', [Validators.required])
+    });
+
+    this.formContactoTelefonos = new FormGroup({
       TipoTelefono: new FormControl('', [Validators.required]),
       LadaPais: new FormControl('52', [Validators.required, Validators.maxLength(3)]),
       Lada: new FormControl('', [Validators.required, Validators.maxLength(3)]),
-      Numero: new FormControl('', [Validators.required, Validators.maxLength(8)]),
-      Extension: new FormControl(''),
-      Email: new FormControl('', [Validators.required, Validators.email]),
+      Numero: new FormControl('', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]),
+      Extension: new FormControl('')
+    });
+
+    this.formContactoCorreo = new FormGroup({
+      Email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(100)])
     });
     // #endregion
   }
@@ -233,13 +254,20 @@ export class NuevoProspectoComponent implements OnInit {
       ApellidoMaterno: ['',],
       Puesto: ['', [Validators.required]],
       ContactoDireccion: ['', [Validators.required]],
+    });
+
+    this.formContactoTelefonos = this.fb.group({
       TipoTelefono: ['', [Validators.required]],
       LadaPais: ['52', [Validators.required, Validators.maxLength(3)]],
       Lada: ['', [Validators.required, Validators.maxLength(3)]],
       Numero: ['', [Validators.required, Validators.maxLength(8)]],
       Extension: [''],
-      Email: ['', [Validators.required, Validators.email]],
+    })
+
+    this.formContactoCorreo = this.fb.group({
+      Email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]]
     });
+
     // #endregion
   }
 
@@ -267,13 +295,12 @@ export class NuevoProspectoComponent implements OnInit {
       this.tipoTelefonos = result;
     });
   }
-
   getTipoTelefono() {
     this.esOficina = this.formTelefonos.get('TipoTelefono').value;
   }
 
   getTipoTelefonoContacto() {
-    this.esOficinaContacto = this.formContactos.get('TipoTelefono').value;
+    this.esOficinaContacto = this.formContactoTelefonos.get('TipoTelefono').value;
   }
 
 
@@ -317,8 +344,8 @@ export class NuevoProspectoComponent implements OnInit {
     this.formDirecciones.controls['CodigoPostal'].setValue(cp);
   }
 
-  changeEmpleados(){
-      this.formGeneral.controls['Tamanio'].reset();
+  changeEmpleados() {
+    this.formGeneral.controls['Tamanio'].reset();
   }
 
   validarNoEmpleado() {
@@ -352,7 +379,6 @@ export class NuevoProspectoComponent implements OnInit {
     this.colonias = null;
     this.addDireccion = false;
     this.EditDireccion = false;
-    //this.elementD = null;
     this.formDirecciones.reset();
     this.formDirecciones.controls['Activo'].setValue(true);
     this.formDirecciones.controls['Principal'].setValue(false);
@@ -363,7 +389,6 @@ export class NuevoProspectoComponent implements OnInit {
     this.formTelefonos.reset();
     this.addTelefono = false;
     this.EditTelefono = false;
-    //this.elementT = null;
     this.formTelefonos.controls['Activo'].setValue(true);
     this.formTelefonos.controls['Principal'].setValue(false);
     this.formTelefonos.controls['LadaPais'].setValue(52)
@@ -373,16 +398,28 @@ export class NuevoProspectoComponent implements OnInit {
     this.formCorreos.reset();
     this.addCorreo = false;
     this.EditCorreo = false;
-    //this.elementC = null;
   }
+
   cancelarContacto() {
     this.addContacto = false;
     this.EditContacto = false;
-    // this.elementCn = null;
     this.formContactos.reset();
-    this.formContactos.controls['LadaPais'].setValue(52)
+    this.Emails = [];
+    this.Telefonos = [];
   }
 
+  cancelarContactoTelefono() {
+    this.addContactoTelefono = false;
+    this.formContactoTelefonos.reset();
+    this.EditContactoTelefono = false;
+    this.formContactoTelefonos.controls['LadaPais'].setValue(52)
+  }
+
+  cancelarContactoCorreo() {
+    this.formContactoCorreo.reset();
+    this.addContactoCorreo = false;
+    this.EditContactoCorreo = false;
+  }
   //#endregion
 
   // #region BUSCAR POR CODIGO POSTAL
@@ -642,7 +679,6 @@ export class NuevoProspectoComponent implements OnInit {
         this.popToast('info', 'Teléfonos', 'El Teléfono que intenta actualizar ya existe.');
         return;
       }
-
     }
 
     this.cancelarTelefono();
@@ -751,40 +787,8 @@ export class NuevoProspectoComponent implements OnInit {
 
   //#region FUNCIONES PARA CONTACTOS
   AddContacto() {
-    this.Emails = [];
-    this.Telefonos = [];
     let idDireccion = this.formContactos.get('ContactoDireccion').value;
     let idxDireccion = this.DireccionesNew.findIndex(x => x.idAux == idDireccion)
-    let tipoTelefonoId = this.formContactos.get('TipoTelefono').value;
-    this.auxTipoTelefono = this.tipoTelefonos.filter(x => {
-      if (x.id == tipoTelefonoId) {
-        return x.tipo;
-      }
-    });
-    if (tipoTelefonoId != 4) {
-      this.formContactos.controls['Extension'].setValue('');
-    }
-
-    let email = {
-      email: this.formContactos.get('Email').value,
-      esPrincila: false,
-      UsuarioAlta: this.Usuario,
-    }
-
-    let telefono = {
-      tipoTelefonos: this.auxTipoTelefono[0].tipo,
-      tipoTelefonoId: this.formContactos.get('TipoTelefono').value,
-      clavePais: this.formContactos.get('LadaPais').value,
-      claveLada: this.formContactos.get('Lada').value || '',
-      telefono: this.formContactos.get('Numero').value,
-      extension: this.formContactos.get('Extension').value || '',
-      activo: true,
-      esPrincipal: true,
-      UsuarioAlta: this.Usuario,
-    }
-
-    this.Telefonos.push(telefono);
-    this.Emails.push(email);
 
     let data = {
       idAux: this.idAuxCn,
@@ -793,14 +797,11 @@ export class NuevoProspectoComponent implements OnInit {
       nombre: this.formContactos.get('Nombre').value,
       apellidoPaterno: this.formContactos.get('ApellidoPaterno').value,
       apellidoMaterno: this.formContactos.get('ApellidoMaterno').value || '',
-      tipoEntidadId: 3,
       nombreAux: this.formContactos.get('Nombre').value + ' ' + this.formContactos.get('ApellidoPaterno').value,
-      tipoTelefonoAux: this.auxTipoTelefono[0].tipo,
-      telefonoAux: this.formContactos.get('Numero').value,
+      tipoEntidadId: 3,
       puesto: this.formContactos.get('Puesto').value,
       usuarioAlta: this.Usuario,
       telefonos: this.Telefonos,
-      emailAux: this.formContactos.get('Email').value,
       emails: this.Emails
     }
     if (!this.EditContacto) {
@@ -811,6 +812,7 @@ export class NuevoProspectoComponent implements OnInit {
       this.EditContacto = false;
       this.elementCn = null;
     }
+    console.log(this.ContactosNew);
     this.cancelarContacto();
     this.onChangeTableCn(this.config);
   }
@@ -823,12 +825,10 @@ export class NuevoProspectoComponent implements OnInit {
     this.formContactos.controls['ApellidoPaterno'].setValue(this.ContactosNew[this.indexContacto]['apellidoPaterno']);
     this.formContactos.controls['ApellidoMaterno'].setValue(this.ContactosNew[this.indexContacto]['apellidoMaterno']);
     this.formContactos.controls['Puesto'].setValue(this.ContactosNew[this.indexContacto]['puesto']);
-    this.formContactos.controls['TipoTelefono'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['tipoTelefonoId']);
-    this.formContactos.controls['LadaPais'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['clavePais']);
-    this.formContactos.controls['Lada'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['claveLada']);
-    this.formContactos.controls['Numero'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['telefono']);
-    this.formContactos.controls['Extension'].setValue(this.ContactosNew[this.indexContacto]['telefonos'][0]['extension']);
-    this.formContactos.controls['Email'].setValue(this.ContactosNew[this.indexContacto]['emails'][0]['email']);
+    this.Telefonos = this.ContactosNew[this.indexContacto]['telefonos'];
+    this.Emails = this.ContactosNew[this.indexContacto]['emails'];
+    this.rowsCnT = this.changePageCnT({ page: this.pageCnT, itemsPerPage: this.itemsPerPage });
+    this.rowsCnC = this.changePageCnC({ page: this.pageCnT, itemsPerPage: this.itemsPerPage });
   }
 
   DtContacto() {
@@ -836,6 +836,163 @@ export class NuevoProspectoComponent implements OnInit {
     this.elementCn = null;
     this.onChangeTableCn(this.config);
   }
+
+  AddContactoTelefono() {
+    let tipoTelefonoId = this.formContactoTelefonos.get('TipoTelefono').value;
+
+    if (tipoTelefonoId != 4) {
+      this.formContactoTelefonos.controls['Extension'].setValue('');
+    }
+    this.auxTipoTelefono = this.tipoTelefonos.filter(x => {
+      if (x.id == tipoTelefonoId) {
+        return x.tipo;
+      }
+    });
+
+    let telefono = {
+      idAux: this.idAuxCnT,
+      tipoTelefonos: this.auxTipoTelefono[0].tipo,
+      tipoTelefonoId: this.formContactoTelefonos.get('TipoTelefono').value,
+      clavePais: this.formContactoTelefonos.get('LadaPais').value,
+      claveLada: this.formContactoTelefonos.get('Lada').value || '',
+      telefono: this.formContactoTelefonos.get('Numero').value,
+      extension: this.formContactoTelefonos.get('Extension').value || '',
+      activo: true,
+      esPrincipal: true,
+      UsuarioAlta: this.Usuario,
+    }
+
+    if (!this.EditContactoTelefono) {
+      var exist = this.Telefonos.find(element => {
+        if (element.telefono == telefono.telefono
+          && element.extension == telefono.extension) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      if (!exist) {
+        this.Telefonos.push(telefono);
+        this.idAuxCnT++;
+        this.lengthCnT = this.Telefonos.length;
+      }
+      else {
+        this.popToast('info', 'Contacto Teléfonos', 'El Teléfono que intenta registrar ya existe.');
+        return;
+      }
+
+    } else {
+      var idTelefono = this.Telefonos[this.indexContactoTelefonos]['idAux'];
+      telefono.idAux = idTelefono;
+      var exist = this.Telefonos.find(element => {
+        if (element.telefono == telefono.telefono
+          && element.extension == telefono.extension
+          && element.idAux != idTelefono) {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      if (!exist) {
+        this.Telefonos[this.indexContactoTelefonos] = telefono;
+        this.EditContactoTelefono = false;
+        this.elementCnT = null;
+      }
+      else {
+        this.popToast('info', 'Contacto Teléfonos', 'El Teléfono que intenta actualizar ya existe.');
+        return;
+      }
+    }
+    this.cancelarContactoTelefono();
+    this.rowsCnT = this.changePageCnT({ page: this.pageCnT, itemsPerPage: this.itemsPerPage });
+  }
+
+  UdContactoTelefono() {
+    this.addContactoTelefono = true;
+    this.EditContactoTelefono = true;
+    this.formContactoTelefonos.controls['TipoTelefono'].setValue(this.Telefonos[this.indexContactoTelefonos]['tipoTelefonoId']);
+    this.formContactoTelefonos.controls['LadaPais'].setValue(this.Telefonos[this.indexContactoTelefonos]['clavePais']);
+    this.formContactoTelefonos.controls['Lada'].setValue(this.Telefonos[this.indexContactoTelefonos]['claveLada']);
+    this.formContactoTelefonos.controls['Numero'].setValue(this.Telefonos[this.indexContactoTelefonos]['telefono']);
+    this.formContactoTelefonos.controls['Extension'].setValue(this.Telefonos[this.indexContactoTelefonos]['extension']);
+
+  }
+
+  DtContactoTelefono() {
+    this.Telefonos.splice(this.indexContactoTelefonos, 1);
+    this.elementCnT = null;
+    this.lengthCnT = this.Telefonos.length;
+    this.rowsCnT = this.changePageCnT({ page: this.pageCnT, itemsPerPage: this.itemsPerPage });
+  }
+
+  AddContactoCorreo(){
+    let data = {
+      idAux: this.idAuxCnC,
+      email: this.formContactoCorreo.get('Email').value,
+      esPrincipal: false,
+      usuarioAlta: this.Usuario
+    }
+
+    if (!this.EditContactoCorreo) {
+      var exist = this.Emails.find(element => {
+        if (element.email == data.email) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      });
+      if (!exist) {
+        this.Emails.push(data);
+        this.idAuxCnC++;
+        this.lengthCnC = this.Emails.length;
+      }
+      else {
+        this.popToast('info', 'Correo Electrónico', 'El correo electrónico que intenta registrar ya existe.');
+        return;
+      }
+
+    } else {
+      var idEmail = this.Emails[this.indexContactoCorreos]['idAux'];
+      data.idAux = idEmail;
+      var exist = this.Emails.find(element => {
+        if (element.email == data.email
+          && element.idAux != idEmail) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      });
+      if (!exist) {
+        this.Emails[this.indexContactoCorreos] = data;
+        this.EditContactoCorreo = false;
+        this.elementCnC = null;
+      }
+      else {
+        this.popToast('info', 'Correo Electrónico', 'El correo electrónico que intenta actualizar ya existe.');
+        return;
+      }
+    }
+
+    this.cancelarContactoCorreo();
+    this.rowsCnC = this.changePageCnC({ page: this.pageCnC, itemsPerPage: this.itemsPerPage });
+  }
+
+  UdContactoCorreo() {
+    this.addContactoCorreo = true;
+    this.EditContactoCorreo = true;
+    this.formContactoCorreo.controls['Email'].setValue(this.Emails[this.indexContactoCorreos]['email']);
+
+  }
+
+  DtContactoCorreo() {
+    this.Emails.splice(this.indexContactoCorreos, 1);
+    this.elementCnC = null;
+    this.lengthCnC = this.Telefonos.length;
+    this.rowsCnC = this.changePageCnC({ page: this.pageCnT, itemsPerPage: this.itemsPerPage });
+  }
+
 
   //#endregion
 
@@ -1287,13 +1444,11 @@ export class NuevoProspectoComponent implements OnInit {
 
   public rowsCn: Array<any> = [];
   public columnsCn: Array<any> = [
-    { title: 'Dirección', sorting: 'desc', className: 'text-success text-center', name: 'calle', filtering: { filterString: '', placeholder: 'Dirección' } },
+    { title: 'Dirección', sorting: 'desc', className: 'text-success', name: 'calle', filtering: { filterString: '', placeholder: 'Dirección' } },
     { title: 'Nombre', sorting: 'desc', className: 'text-success', name: 'nombreAux', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'Puesto', className: 'text-info', name: 'puesto', filtering: { filterString: '', placeholder: 'Puesto' } },
-    { title: 'Tipo Teléfono', className: 'text-info', name: 'tipoTelefonoAux', filtering: { filterString: '', placeholder: 'Tipo Tel.' } },
-    { title: 'Número', className: 'text-info', name: 'telefonoAux', filtering: { filterString: '', placeholder: 'Número' } },
-    { title: 'Email / Correo', className: 'text-info', name: 'emailAux', filtering: { filterString: '', placeholder: 'Email / Correo' } },
-
+    { title: 'Teléfonos', className: 'text-info', name: 'telefonos' },
+    { title: 'Email / Correo', className: 'text-info', name: 'emails'},
   ];
 
   public changePageCn(page: any, data: Array<any> = this.ContactosNew): Array<any> {
@@ -1339,7 +1494,36 @@ export class NuevoProspectoComponent implements OnInit {
       if (column.filtering) {
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
-            return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+          {
+            if(!Array.isArray(item[column.name]))
+            {
+              return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+            }
+            else
+            {
+                let aux = item[column.name];
+                let mocos = false;
+                if(item[column.name].length > 0)
+                {
+                  item[column.name].forEach(element => {
+                    if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
+                    {
+                      mocos = true;
+                      return;
+                    }
+                  });
+
+                  if(mocos)
+                  {
+                    return item[column.name];
+                  }
+                }
+              else
+              {
+                  return item[column.name];
+              }
+            }
+          }
         });
       }
     });
@@ -1411,16 +1595,119 @@ export class NuevoProspectoComponent implements OnInit {
         this.rowAuxCn = aux;
       }
     }
-
   }
 
   //#endregion
 
+  //#region CONFIGURACION Y ACCIONES TABLA CONTACTOS TELEFONOS
+  public selectedCnT: boolean = false;
+  public registrosCnT: number = 0;
+  public rowAuxCnT = [];
+  public elementCnT: any = null;
+  /* Variables de Paginador Telefonos */
+  public pageCnT: number = 1;
+  public numPagesCnT: number = 1;
+  public lengthCnT: number = 0;
+
+  public rowsCnT: Array<any> = [];
+  public columnsCnT: Array<any> = [
+    { title: 'Tipo Teléfono', className: 'text-info', name: 'tipoTelefonos' },
+    { title: 'Número', className: 'text-info', name: 'telefono' }
+  ];
+
+  public changePageCnT(page: any, data: Array<any> = this.Telefonos): Array<any> {
+    var pageActual = parseInt(page['page']);
+    let start = (pageActual - 1) * this.itemsPerPage;
+    let end = this.itemsPerPage > -1 ? (start + this.itemsPerPage) : data.length;
+    let rows = data.slice(start, end)
+    return rows;
+  }
+  public nextPageCnT(page: any) {
+    this.rowsCnT = this.changePageCnT({ page: page.page['page'], itemsPerPage: page.itemsPerPage });
+  }
+
+  onCellClickCnT(data: any, id: any) {
+    if (!this.EditContactoTelefono) {
+      data.selectedCnT ? data.selectedCnT = false : data.selectedCnT = true;
+      this.elementCnT = data;
+      this.indexContactoTelefonos = this.Telefonos.findIndex(x => x.idAux === id);
+
+      if (!data.selectedCnT) {
+        this.elementCnT = null;
+        this.selectedCnT = false;
+      } else {
+        this.selectedCnT = true;
+      }
+      if (this.rowAuxCnT.length == 0) {
+        this.rowAuxCnT = data;
+      }
+      else if (data.selectedCnT && this.rowAuxCnT != []) {
+        let aux = data;
+        data = this.rowAuxCnT;
+        data.selectedCnT = false;
+        aux.selectedCnT = true;
+        this.rowAuxCnT = aux;
+      }
+    }
+  }
+  //#endregion
+
+  //#region CONFIGURACION Y ACCIONES TABLA CONTACTOS  EMAILS / CORREO ELECTRONICO
+  public selectedCnC: boolean = false;
+  public registrosCnC: number = 0;
+  public rowAuxCnC = [];
+  public elementCnC: any = null;
+  /* Variables de Paginador Telefonos */
+  public pageCnC: number = 1;
+  public numPagesCnC: number = 1;
+  public lengthCnC: number = 0;
+
+  public rowsCnC: Array<any> = [];
+  public columnsCnC: Array<any> = [
+    { title: 'Email / Correo', className: 'text-info', name: 'email' }
+  ];
+
+  public changePageCnC(page: any, data: Array<any> = this.Emails): Array<any> {
+    var pageActual = parseInt(page['page']);
+    let start = (pageActual - 1) * this.itemsPerPage;
+    let end = this.itemsPerPage > -1 ? (start + this.itemsPerPage) : data.length;
+    let rows = data.slice(start, end)
+    return rows;
+  }
+  public nextPageCnC(page: any) {
+    this.rowsCnC = this.changePageCnC({ page: page.page['page'], itemsPerPage: page.itemsPerPage });
+  }
+
+  onCellClickCnC(data: any, id: any) {
+    if (!this.EditContactoCorreo) {
+      data.selectedCnC ? data.selectedCnC = false : data.selectedCnC = true;
+      this.elementCnC = data;
+      this.indexContactoCorreos = this.Emails.findIndex(x => x.idAux === id);
+
+      if (!data.selectedCnC) {
+        this.elementCnC = null;
+        this.selectedCnC = false;
+      } else {
+        this.selectedCnC = true;
+      }
+      if (this.rowAuxCnC.length == 0) {
+        this.rowAuxCnC = data;
+      }
+      else if (data.selectedCnC && this.rowAuxCnC != []) {
+        let aux = data;
+        data = this.rowAuxCnC;
+        data.selectedCnC = false;
+        aux.selectedCnC = true;
+        this.rowAuxCnC = aux;
+      }
+    }
+  }
+  //#endregion
 
   private GuardarProspecto() {
     this.loading = true;
     var notData = false;
-    var msg = 'En al sección ';
+    var msg = 'En la sección ';
     var section = '';
     var DireccionEmail = [];
     var DireccionTelefono = [];
@@ -1543,6 +1830,33 @@ export class NuevoProspectoComponent implements OnInit {
     }
     this.toasterService.pop(toast);
   }
+
+  TelefonosContactosPruebas = [
+    {
+      idAux: 1,
+      activo: true,
+      claveLada: "33",
+      clavePais: "52",
+      esPrincipal: false,
+      extension: "",
+      tTelefono: "Recados",
+      telefono: "31441648",
+      tipoTelefonoId: 3,
+      usuarioAlta: "DAL2789",
+    },
+    {
+      idAux: 2,
+      activo: true,
+      claveLada: "33",
+      clavePais: "52",
+      esPrincipal: false,
+      extension: "254",
+      tipoTelefonos: "Oficina",
+      telefono: "36011746",
+      tipoTelefonoId: 4,
+      usuarioAlta: "DAL2789",
+    }
+  ]
   //#endregion
 }
 
@@ -1699,34 +2013,6 @@ export class NuevoProspectoComponent implements OnInit {
 //   contactos: []
 // }
 
-// --> Telefonos
-// {
-//   idAux: 1,
-//   activo: true,
-//   calle: "Ramon Alcorta",
-//   claveLada: "33",
-//   clavePais: "52",
-//   esPrincipal: false,
-//   extension: "",
-//   idDireccion: 1,
-//   tTelefono: "Recados",
-//   telefono: "31441648",
-//   tipoTelefonoId: 3,
-//   usuarioAlta: "DAL2789",
-// },
-// {
-//   idAux: 2,
-//   activo: true,
-//   calle: "Fuente de la Alianza",
-//   claveLada: "33",
-//   clavePais: "52",
-//   esPrincipal: false,
-//   extension: "",
-//   idDireccion: 2,
-//   tTelefono: "Recados",
-//   telefono: "36011746",
-//   tipoTelefonoId: 3,
-//   usuarioAlta: "DAL2789",
-// }
+
 
   //#endregion

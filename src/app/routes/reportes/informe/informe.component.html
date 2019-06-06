@@ -25,13 +25,13 @@ type="square-jelly-box"
 
 <div class="row sombra" style="font-size: 12px">
 
- 
+
 
   <div class="col-xl-2" id="divSucursal">
-     
+
         <div class="form-group">
           <label for="sel2"></label>
-          
+
               <form  [formGroup]="FormSucursal">
                   <ngx-select
                   [allowClear]="true"
@@ -44,25 +44,25 @@ type="square-jelly-box"
                  size="small"
                  optionValueField="id"
                  optionTextField="nombre"
-                 (remove)="sucursalChange($event)"
-                 (select)="sucursalChange($event)"
+                 (remove)="sucursalChange()"
+                 (select)="sucursalChange()"
                >
                  <ng-template  ngx-select-option-selected let-option >
                    <span >{{ option.data.nombre }}</span>
                  </ng-template>
                  <ng-template ngx-select-option-not-found>
                     <span style="font-size: 11px">No se encontraron resultados...</span>
-                    
+
                   </ng-template>
                </ngx-select>
                </form>
-          
+
         </div>
-     
+
     </div>
 
 <div class="col-xl-2">
-  
+
     <div class="form-group divtiporeport">
       <label for="TipoReporte"></label>
       <select  (change)="Ocultar()" class="form-control" id="TipoReporte">
@@ -80,10 +80,10 @@ type="square-jelly-box"
         <option>Fecha de Solicitud</option> -->
       </select>
     </div>
-  
+
 </div>
 <div class="col-xl-2">
-  
+
   <div class="form-group">
       <label for="sel4"></label>
       <mat-form-field style="top: 17px;">
@@ -116,7 +116,7 @@ type="square-jelly-box"
             <mat-datepicker #fechaFinal></mat-datepicker>
           </mat-form-field>
       </div>
-   
+
         <!-- <div class="form-group">
           <label for="sel3">Fecha Fin</label>
           <input
@@ -125,7 +125,7 @@ type="square-jelly-box"
             lang="es"
             id="fechaFinal"
             name="fecha"
-            size="12" 
+            size="12"
             max="{{ano}}-{{mes}}-{{dia}}"
           />
         </div> -->
@@ -161,11 +161,11 @@ type="square-jelly-box"
              </form>
       </div>
 
-  
+
 </div>
 
     <div class="col-xl-2" id="divcordinacion">
-        
+
       <div class="form-group">
         <label for="sel2"></label>
             <form  [formGroup]="FormCordina">
@@ -192,17 +192,17 @@ type="square-jelly-box"
              </ngx-select>
              </form>
       </div>
-       
+
       </div>
 
-   
+
 
       <div class="col-xl-2" id="divestatus">
           <div class="form-group input-sm" style="z-index: 100px !important">
             <label for="sel1"></label>
             <form [formGroup]="FormEstatus">
                 <ngx-select
-             
+
                [allowClear]="true"
                autoClearSearch="true"
                placeholder="Estatus..."
@@ -215,14 +215,14 @@ type="square-jelly-box"
                optionTextField="descripcion"
                (remove)="estatusChange()"
                (select)="estatusChange()">
-               
+
                <ng-template ngx-select-option-selected let-option  >
                  <span style="font-size: 10px !important" >{{ option.data.descripcion }}</span>
                </ng-template>
                <ng-template ngx-select-option-not-found>
                   <span style="font-size: 11px">No se encontraron resultados...</span>
                 </ng-template>
-               
+
              </ngx-select>
              </form>
           </div>
@@ -264,7 +264,7 @@ type="square-jelly-box"
         }}</option>
       </select> -->
     </div>
-  
+
 </div>
 
 
@@ -290,7 +290,7 @@ type="square-jelly-box"
          size="small"
          optionValueField="id"
          optionTextField="razonSocial"
-         
+
        >
          <ng-template ngx-select-option-selected let-option let-text="descripcion">
            <span style="font-size: 9px !important">{{ option.data.razonSocial }}</span>
@@ -305,7 +305,7 @@ type="square-jelly-box"
 
 
 <div class="col-xl-4" id="divreclutador">
-  
+
     <div class="form-group input-sm">
       <label for="sel2"></label>
 
@@ -332,12 +332,12 @@ type="square-jelly-box"
        </ngx-select>
        </form>
 
-    </div>  
+    </div>
 </div>
 
 
 <div class="col-xl-4">
-  
+
     <div class="form-group input-sm" id="divBusCoordina">
       <label for="sel2"></label>
 
@@ -364,7 +364,7 @@ type="square-jelly-box"
        </ngx-select>
        </form>
 
-    </div>  
+    </div>
 
 </div>
 <div class="col-xl-4 ">
@@ -399,7 +399,7 @@ type="square-jelly-box"
             <button id="exelProact" tooltip="Exportar" style="right: auto;" (click)="ProAct.Exportar()" class="ocultar btn btn-sm btn-outline-warning btnReport">
               <em  class="fa fa-download"></em>
             </button>
-          
+
 
         <button class="btn btn-sm btn-outline-success btnReport" (click)="hijo.Generar(objsucursal,objsolicit,objrecluta,objempresa,objstatus,objtiporeclu,objtipocordi,objusercoo)" tooltip="Generar Reporte" id="report1"  >
             <em class="fa fa-bar-chart"></em>
@@ -415,7 +415,7 @@ type="square-jelly-box"
 
 </div>
 
- 
+
 
 
 <div>

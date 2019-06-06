@@ -20,6 +20,8 @@ export class ContactosClienteComponent implements OnInit {
   @Input('Contactos') Contactos: any = [];
 
   public formContactos: FormGroup;
+  public formContactoTelefonos: FormGroup;
+  public formContactoCorreo: FormGroup;
 
   public loading: boolean = false;
 
@@ -63,7 +65,7 @@ export class ContactosClienteComponent implements OnInit {
       Lada: new FormControl('', [Validators.required, Validators.maxLength(3)]),
       Numero: new FormControl('', [Validators.required, Validators.maxLength(8)]),
       Extension: new FormControl(''),
-      Email: new FormControl('', [Validators.required, Validators.email]),
+      Email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(100)]),
     });
   }
 
@@ -82,7 +84,7 @@ export class ContactosClienteComponent implements OnInit {
       Lada: ['', [Validators.required, Validators.maxLength(3)]],
       Numero: ['', [Validators.required, Validators.maxLength(8)]],
       Extension: [''],
-      Email: ['', [Validators.required, Validators.email]],
+      Email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
     });
   }
 
@@ -255,7 +257,6 @@ export class ContactosClienteComponent implements OnInit {
   cancelarContacto() {
     this.addContacto = false;
     this.EditContacto = false;
-    // this.elementCn = null;
     this.formContactos.reset();
     this.formContactos.controls['LadaPais'].setValue(52)
   }
