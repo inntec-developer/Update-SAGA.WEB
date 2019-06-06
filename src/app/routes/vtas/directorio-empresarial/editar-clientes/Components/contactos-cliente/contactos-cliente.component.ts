@@ -60,12 +60,18 @@ export class ContactosClienteComponent implements OnInit {
       ApellidoPaterno: new FormControl('', [Validators.required]),
       ApellidoMaterno: new FormControl(''),
       Puesto: new FormControl('', [Validators.required]),
+    });
+
+    this.formContactoTelefonos = new FormGroup({
       TipoTelefono: new FormControl('', [Validators.required]),
       LadaPais: new FormControl('52', [Validators.required, Validators.maxLength(3)]),
       Lada: new FormControl('', [Validators.required, Validators.maxLength(3)]),
-      Numero: new FormControl('', [Validators.required, Validators.maxLength(8)]),
-      Extension: new FormControl(''),
-      Email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(100)]),
+      Numero: new FormControl('', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]),
+      Extension: new FormControl('')
+    });
+
+    this.formContactoCorreo = new FormGroup({
+      Email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(100)])
     });
   }
 
@@ -73,18 +79,25 @@ export class ContactosClienteComponent implements OnInit {
     this.Usuario = this.settings.user['usuario'];
     this.showFilterRowCn = true;
     this.getCatalogos();
+    console.log(this.Contactos);
     this.formContactos = this.fb.group({
       Nombre: ['', [Validators.required]],
       ApellidoPaterno: ['', [Validators.required]],
       ApellidoMaterno: ['',],
       Puesto: ['', [Validators.required]],
       ContactoDireccion: ['', [Validators.required]],
+    });
+
+    this.formContactoTelefonos = this.fb.group({
       TipoTelefono: ['', [Validators.required]],
       LadaPais: ['52', [Validators.required, Validators.maxLength(3)]],
       Lada: ['', [Validators.required, Validators.maxLength(3)]],
       Numero: ['', [Validators.required, Validators.maxLength(8)]],
       Extension: [''],
-      Email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
+    })
+
+    this.formContactoCorreo = this.fb.group({
+      Email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]]
     });
   }
 
@@ -146,7 +159,7 @@ export class ContactosClienteComponent implements OnInit {
     let data = {
       apellidoPaterno: this.formContactos.get('ApellidoPaterno').value,
       apellidoMaterno: this.formContactos.get('ApellidoMaterno').value || '',
-      calle: this.Direcciones[idxDireccion]['calle'] + ' No. '+ this.Direcciones[idxDireccion]['numeroExterior'] + ' C.P.' + this.Direcciones[idxDireccion]['codigoPostal'],
+      calle: this.Direcciones[idxDireccion]['calle'] + ' No. ' + this.Direcciones[idxDireccion]['numeroExterior'] + ' C.P.' + this.Direcciones[idxDireccion]['codigoPostal'],
       clienteId: this.EntidadId,
       direccionId: idDireccion,
       emails: this.Emails,
@@ -237,7 +250,11 @@ export class ContactosClienteComponent implements OnInit {
       closeOnCancel: false,
       showLoaderOnConfirm: true
     }, (isConfirm) => {
+      window.onkeydown = null;
+      window.onfocus = null;
       if (isConfirm) {
+        window.onkeydown = null;
+        window.onfocus = null;
         this._ClienteService.deleteContacto(this.elementCn.id).subscribe(result => {
           if (result == 200) {
             this.Contactos.splice(this.indexContacto, 1);
@@ -284,9 +301,8 @@ export class ContactosClienteComponent implements OnInit {
     { title: 'Dirección', sorting: 'desc', className: 'text-success text-center', name: 'calle', filtering: { filterString: '', placeholder: 'Dirección' } },
     { title: 'Nombre', sorting: 'desc', className: 'text-success', name: 'nombreAux', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'Puesto', className: 'text-info', name: 'puesto', filtering: { filterString: '', placeholder: 'Puesto' } },
-    { title: 'Tipo Telefóno', className: 'text-info', name: 'tipoTelefonoAux', filtering: { filterString: '', placeholder: 'Tipo Tel.' } },
-    { title: 'Número', className: 'text-info', name: 'telefonoAux', filtering: { filterString: '', placeholder: 'Número' } },
-    { title: 'Email / Correo', className: 'text-info', name: 'emailAux', filtering: { filterString: '', placeholder: 'Email / Correo' } },
+    { title: 'Teléfonos', className: 'text-info', name: 'telefonos', filtering: { filterString: '', placeholder: 'Número' } },
+    { title: 'Email / Correo', className: 'text-info', name: 'emails', filtering: { filterString: '', placeholder: 'Email / Correo' } },
 
   ];
 
@@ -328,12 +344,39 @@ export class ContactosClienteComponent implements OnInit {
   }
 
   public changeFilterCn(data: any, config: any): any {
+    debugger;
     let filteredData: Array<any> = data;
     this.columnsCn.forEach((column: any) => {
       if (column.filtering) {
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
-            return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+          if (item[column.name] != null) {
+            if (!Array.isArray(item[column.name])) {
+              return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+            }
+            else {
+              let aux = item[column.name];
+              let mocos = false;
+              if (item[column.name].length > 0) {
+                item[column.name].forEach(element => {
+                  let Objeto = element
+                  for (let variable in element) {
+                    if (variable != "id") {
+                      if (Objeto[variable].toString().toLowerCase().match(column.filtering.filterString.toLowerCase())) {
+                        mocos = true;
+                        return;
+                      }
+                    }
+                  };
+                });
+                if (mocos) {
+                  return item[column.name];
+                }
+              }
+              else {
+                return item[column.name];
+              }
+            }
+          }
         });
       }
     });

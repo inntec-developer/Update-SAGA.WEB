@@ -925,7 +925,7 @@ export class NuevoProspectoComponent implements OnInit {
     this.rowsCnT = this.changePageCnT({ page: this.pageCnT, itemsPerPage: this.itemsPerPage });
   }
 
-  AddContactoCorreo(){
+  AddContactoCorreo() {
     let data = {
       idAux: this.idAuxCnC,
       email: this.formContactoCorreo.get('Email').value,
@@ -1447,8 +1447,9 @@ export class NuevoProspectoComponent implements OnInit {
     { title: 'Dirección', sorting: 'desc', className: 'text-success', name: 'calle', filtering: { filterString: '', placeholder: 'Dirección' } },
     { title: 'Nombre', sorting: 'desc', className: 'text-success', name: 'nombreAux', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'Puesto', className: 'text-info', name: 'puesto', filtering: { filterString: '', placeholder: 'Puesto' } },
-    { title: 'Teléfonos', className: 'text-info', name: 'telefonos' },
-    { title: 'Email / Correo', className: 'text-info', name: 'emails'},
+    { title: 'Teléfonos', className: 'text-info', name: 'telefonos', filtering: { filterString: '', placeholder: 'Teléfono' } },
+    { title: 'Email / Correo', className: 'text-info', name: 'emails', filtering: { filterString: '', placeholder: 'Email / Correo' } },
+
   ];
 
   public changePageCn(page: any, data: Array<any> = this.ContactosNew): Array<any> {
@@ -1493,34 +1494,31 @@ export class NuevoProspectoComponent implements OnInit {
     this.columnsCn.forEach((column: any) => {
       if (column.filtering) {
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
-          {
-            if(!Array.isArray(item[column.name]))
-            {
+          if (item[column.name] != null) {
+            if (!Array.isArray(item[column.name])) {
               return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
             }
-            else
-            {
-                let aux = item[column.name];
-                let mocos = false;
-                if(item[column.name].length > 0)
-                {
-                  item[column.name].forEach(element => {
-                    if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
-                    {
-                      mocos = true;
-                      return;
+            else {
+              let aux = item[column.name];
+              let mocos = false;
+              if (item[column.name].length > 0) {
+                item[column.name].forEach(element => {
+                  let Objeto = element
+                  for (let variable in element) {
+                    if (variable != "idAux") {
+                      if (Objeto[variable].toString().toLowerCase().match(column.filtering.filterString.toLowerCase())) {
+                        mocos = true;
+                        return;
+                      }
                     }
-                  });
-
-                  if(mocos)
-                  {
-                    return item[column.name];
-                  }
-                }
-              else
-              {
+                  };
+                });
+                if (mocos) {
                   return item[column.name];
+                }
+              }
+              else {
+                return item[column.name];
               }
             }
           }

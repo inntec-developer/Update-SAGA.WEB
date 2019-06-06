@@ -39,7 +39,8 @@
           </div>
           <div class="col-sm-12 col-md-3 col-lg-3">
             <mat-form-field>
-              <input matInput #apellidoMC formControlName="ApellidoMaterno" placeholder="Apellido Materno"  maxlength="50"/>
+              <input matInput #apellidoMC formControlName="ApellidoMaterno" placeholder="Apellido Materno"
+                maxlength="50" />
               <mat-hint align="end">{{apellidoMC.value.length}} / 50</mat-hint>
             </mat-form-field>
           </div>
@@ -81,14 +82,14 @@
               <mat-form-field>
                 <input matInput #numeroC type="phone" formControlName="Numero" maxlength="8" name="Numero-Contacto"
                   placeholder="Número" required />
-                  <mat-hint align="end">{{numeroC.value.length}} / 8</mat-hint>
+                <mat-hint align="end">{{numeroC.value.length}} / 8</mat-hint>
               </mat-form-field>
             </div>
             <div class="col-md-2 col-lg-2 col-sm-12" *ngIf="esOficinaContacto === 4">
               <mat-form-field>
-                <input matInput #extencionC type="phone" formControlName="Extension" maxlength="5" name="Extension-Contacto"
-                  placeholder="Ext." />
-                  <mat-hint align="end">{{extencionC.value.length}} / 5</mat-hint>
+                <input matInput #extencionC type="phone" formControlName="Extension" maxlength="5"
+                  name="Extension-Contacto" placeholder="Ext." />
+                <mat-hint align="end">{{extencionC.value.length}} / 5</mat-hint>
               </mat-form-field>
             </div>
           </div>
@@ -98,7 +99,7 @@
             <mat-form-field>
               <input matInput #correoElectronicoC type="email" formControlName="Email" maxlength="100" name="Email"
                 placeholder="Correo Electronico" />
-                <mat-hint align="end">{{correoElectronicoC.value.length}} / 100</mat-hint>
+              <mat-hint align="end">{{correoElectronicoC.value.length}} / 100</mat-hint>
             </mat-form-field>
           </div>
         </div>
@@ -159,14 +160,24 @@
                 <tbody>
                   <tr *ngFor="let rowcn of rowsCn; let i=index" (click)="onCellClickCn(rowcn, rowcn.id)"
                     [class.selected]="rowcn.selectedCn">
-                    <td class="text-center">{{rowcn.calle}}</td>
-                    <td class="text-center">{{rowcn.nombre}} {{rowcn.apellidoPaterno}} {{rowcn.apellidoMaterno}}
+                    <td>{{rowcn.calle}}</td>
+                    <td>{{rowcn.nombre}} {{rowcn.apellidoPaterno}} {{rowcn.apellidoMaterno}}
                     </td>
-                    <td class="text-center">{{rowcn.puesto}}</td>
-                    <td class="text-center">{{rowcn.tipoTelefonoAux}}</td>
-                    <td class="text-center"> +{{rowcn.telefonos[0].clavePais}} ({{rowcn.telefonos[0].claveLada}})
-                      {{rowcn.telefonos[0].telefono | slice:0:4}}-{{rowcn.telefonos[0].telefono | slice:4:8}}</td>
-                    <td class="text-center">{{rowcn.emails[0].email}}</td>
+                    <td>{{rowcn.puesto}}</td>
+                    <td>
+                      <p *ngFor="let t of rowcn.telefonos">
+                        {{t.tipoTelefono}}:
+                        +{{t.clavePais}} ({{t.claveLada}})
+                        {{t.telefono |
+                              slice:0:4}}-{{t.telefono | slice:4:8}}
+                        <span *ngIf="t.tipoTelefonoId == 4 && t.extension != ''">
+                          Ext. {{t.extension}}
+                        </span>
+                      </p>
+                    </td>
+                    <td>
+                      <p *ngFor="let e of rowcn.emails">{{e.email}}</p>
+                    </td>
                   </tr>
                 </tbody>
               </table>

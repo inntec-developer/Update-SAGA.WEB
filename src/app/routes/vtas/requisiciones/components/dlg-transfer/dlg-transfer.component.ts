@@ -1,15 +1,17 @@
-import { RequisicionesService } from './../../../../../service/requisiciones/requisiciones.service';
-import { AdminServiceService } from './../../../../../service/AdminServicios/admin-service.service';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+
+import { AdminServiceService } from './../../../../../service/AdminServicios/admin-service.service';
 import { ComentariosService } from '../../../../../service/Comentarios/comentarios.service';
-import { SettingsService } from '../../../../../core/settings/settings.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { RequisicionesService } from './../../../../../service/requisiciones/requisiciones.service';
+import { SettingsService } from '../../../../../core/settings/settings.service';
+
 const swal = require('sweetalert');
 @Component({
   selector: 'app-dlg-transfer',
   templateUrl: './dlg-transfer.component.html',
-  styleUrls: ['./dlg-transfer.component.scss'], 
+  styleUrls: ['./dlg-transfer.component.scss'],
   providers: [AdminServiceService, ComentariosService, RequisicionesService]
 })
 export class DlgTransferComponent implements OnInit {
@@ -37,14 +39,14 @@ export class DlgTransferComponent implements OnInit {
   dataRowIndex: any;
   dataRowIndex2: any;
   rowAux2: any;
-  
+
   constructor(
-    private _sevice: AdminServiceService, 
+    private _sevice: AdminServiceService,
     private _requiService: RequisicionesService,
-    private dialog : MatDialogRef<DlgTransferComponent>, 
-    @Inject(MAT_DIALOG_DATA) public data: any, 
-    private serviceComentarios: ComentariosService, 
-    private settings: SettingsService) 
+    private dialog : MatDialogRef<DlgTransferComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private serviceComentarios: ComentariosService,
+    private settings: SettingsService)
     {
       dialog.disableClose = true;
     }
@@ -56,14 +58,14 @@ export class DlgTransferComponent implements OnInit {
   {
    this._requiService.GetAsignados(this.data.id).subscribe(result => {
         this.listaAsignar2 = result;
-     
+
       });
   }
 
   GetReclutadores($event)
   {
     if($event.checked)
-    {     
+    {
       this._requiService.GetAsignados(this.data.id).subscribe(result => {
         this.listaAsignar = result;
         this.listaAsignar2 = Object.assign([], this.listaAsignar);
@@ -101,14 +103,14 @@ export class DlgTransferComponent implements OnInit {
     });
   }
 
-  onSelect(item: any, rowIndex) 
+  onSelect(item: any, rowIndex)
   {
       var entidad = this.listaAsignar2.findIndex(x => x.reclutadorId == item.reclutadorId);
-      
+
       if(entidad >= 0) //para que no repita usuarios
       {
          this.listaAsignar2.splice(entidad, 1);
-       
+
       }
 
       if(this.rowAux)
@@ -116,7 +118,7 @@ export class DlgTransferComponent implements OnInit {
         this.listaAsignar2.push(this.rowAux);
         this.asig.pop();
         this.rowAux.selected = false;
-        
+
         this.dataRowIndex = rowIndex;
         this.rowAux = item;
         item.selected = true;
@@ -130,14 +132,14 @@ export class DlgTransferComponent implements OnInit {
         this.asig.push(item)
       }
   }
-  onSelect2(item: any, rowIndex) 
+  onSelect2(item: any, rowIndex)
   {
     var entidad = this.listaAsignar.findIndex(x => x.reclutadorId == item.reclutadorId);
-      
+
       if(entidad >= 0) //para que no repita usuarios
       {
          this.listaAsignar.splice(entidad, 1);
-       
+
       }
       if(this.dataRowIndex2 != rowIndex)
       {
@@ -188,7 +190,7 @@ export class DlgTransferComponent implements OnInit {
   {
     if(this.coordNom.length > 0 || this.asig.length > 0)
     {
-  
+
       let tipo = 1; //cambio coordinador
       let usuarioAux = this.settings.user['id'];
       if(this.data.usuario == 10)
@@ -196,7 +198,7 @@ export class DlgTransferComponent implements OnInit {
         tipo = 2 //cambio ejecutivo
       }
       else if(this.data.usuario == 11)
-      { 
+      {
         tipo = 3 //cambio reclutador
         this.coordId = this.asig2[0].reclutadorId;
         usuarioAux = this.asig[0].reclutadorId;
@@ -224,12 +226,11 @@ export class DlgTransferComponent implements OnInit {
         closeOnConfirm: true,
         closeOnCancel: true
       }, (isConfirm) => {
-
-        // window.onkeydown = null;
-        // window.onfocus = null;
+        window.onkeydown = null;
+        window.onfocus = null;
         if (isConfirm) {
           this.loading = true;
-        
+
           this.serviceComentarios.addComentarioVacante(Comentario).subscribe(data => {
             if (data == 200) {
               this.comentario = '';
@@ -238,7 +239,7 @@ export class DlgTransferComponent implements OnInit {
 
               swal("TRANSFERIR", '¡La asignación se realizó con éxito!', 'success' );
               this.dialog.close(true);
-            
+
             }
             else
             {
@@ -247,13 +248,13 @@ export class DlgTransferComponent implements OnInit {
               swal('ERROR', 'Ocurrio un error de conexion', 'error');
             }
           });
-  
+
         }
         else {
           swal("Cancelado", "No se realizó ningún cambio", "error");
         }
       });
-     
+
     }
     else
     {

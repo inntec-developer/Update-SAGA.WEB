@@ -945,7 +945,7 @@
                         <td>{{rowcn.puesto}}</td>
                         <td>
                           <p *ngFor="let t of rowcn.telefonos">
-                              {{t.tipoTelefonos}} :
+                              {{t.tipoTelefonos}}:
                               +{{t.clavePais}} ({{t.claveLada}})
                               {{t.telefono |
                                       slice:0:4}}-{{t.telefono | slice:4:8}}
