@@ -136,7 +136,6 @@ export class DisenadorVacanteComponent implements OnInit {
   Publicar() {
     this.spinner.show();
     for (const item of this.ListaCampo) {
-      debugger;
       const r = document.getElementById('Resumen_' + item.id);
       const res = r.lastElementChild.firstElementChild.firstElementChild['checked'];
       const d = document.getElementById('Detalle_' + item.id);
@@ -151,7 +150,7 @@ export class DisenadorVacanteComponent implements OnInit {
       this.ListaCon.push(config);
     }
 
-    this.Config.UpdatePublicar(this.ListaCon,"pablo")
+    this.Config.UpdatePublicar(this.ListaCon, '')
       .subscribe(data => {
         this.popGenerico(data.mensaje, data.bandera, 'Publicacion');
         this.spinner.hide();
