@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-3 col-md-3 col-lg-3">
             <div class="ml-1">
-                <label for="image-input" class="file-upload elevar">
+                <label for="image-input" class="file-upload">
                     <button class="btn btn-info mat-elevation-z8">
                         <em class="fa fa-upload mr-2"></em>SUBIR ARCHIVO</button>
                     <input id="image-input" type="file" #fileInput (change)="fileChangeListener($event)" [accept]="['image/png', 'image/jpeg', 'image/jpg', 'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel', 'application/msword']">
