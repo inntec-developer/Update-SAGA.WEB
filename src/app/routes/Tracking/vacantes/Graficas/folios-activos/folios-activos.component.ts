@@ -54,6 +54,12 @@ export class FoliosActivosComponent implements OnInit {
               this.totalActivos += 1;
               break;
             }
+            case 6:
+            {
+              aprobada += 1;
+              this.totalActivos += 1;
+              break;
+            }
           case 4:
             {
               nuevo += 1;
@@ -72,7 +78,7 @@ export class FoliosActivosComponent implements OnInit {
               this.totalActivos += 1;
               break;
             }
-          case 32:
+          case 30:
             {
               envCliente += 1;
               this.totalActivos += 1;
@@ -141,8 +147,8 @@ export class FoliosActivosComponent implements OnInit {
       this.Data = {
         datasets: [{
           backgroundColor: [
-            '#0F3CFF',
             '#FF8F35',
+            '#0F3CFF',
             '#3e95cd',
             '#8e5ea2',
             '#3cba9f',
