@@ -172,10 +172,10 @@ export class DtClientesComponent implements OnInit {
     }
     this.rows = this.dataSource;
     let filteredData = this.changeFilter(this.dataSource, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
+    // let sortedData = this.changeSort(filteredData, this.config);
+    this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
     this.registros = this.rows.length;
-    this.length = sortedData.length;
+    this.length = filteredData.length;
     this.Loading = false;
   }
 

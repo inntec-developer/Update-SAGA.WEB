@@ -144,7 +144,7 @@ export class DisenadorVacanteComponent implements OnInit {
       this.ListaCon.push(config);
     }
 
-    this.Config.UpdatePublicar(this.ListaCon)
+    this.Config.UpdatePublicar(this.ListaCon,"pablo")
       .subscribe(data => {
         this.popGenerico(data.mensaje, data.bandera, 'Publicacion');
         this.spinner.hide();

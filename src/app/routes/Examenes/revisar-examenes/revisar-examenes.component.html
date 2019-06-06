@@ -79,12 +79,13 @@
       </div>
       </div>
     </div>
-   
+
     </ng-scrollbar>
     <br/>
     <div class="text-right">
         <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
-        [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="changePage({ page: page, itemsPerPage: itemsPerPage })"
+        [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+        (pageChanged)="changePage({ page: page, itemsPerPage: itemsPerPage })"
         (numPages)="numPages = $event">
       </pagination>
         <pre class="card card-block card-header text-muted">Total Registros: {{resultados.length}}</pre>
