@@ -1,4 +1,3 @@
-import { DlgTransferComponent } from './../../../routes/vtas/requisiciones/components/dlg-transfer/dlg-transfer.component';
 import { Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -6,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { DialogActivarRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-activar-requi/dialog-activar-requi.component';
 import { DialogCancelRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-cancel-requi/dialog-cancel-requi.component';
 import { DialogDeleteRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-delete-requi/dialog-delete-requi.component';
+import { DlgTransferComponent } from './../../../routes/vtas/requisiciones/components/dlg-transfer/dlg-transfer.component';
 import { ExcelService } from './../../../service/ExcelService/excel.service';
 import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -457,9 +457,9 @@ export class DtRequisicionComponent implements OnInit {
 
     this.rows = this.dataSource;
     let filteredData = this.changeFilter(this.dataSource, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
-    this.length = sortedData.length;
+    // let sortedData = this.changeSort(filteredData, this.config);
+    this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
+    this.length = filteredData.length;
     this.registros = this.rows.length;
     this.spinner.hide();
   }

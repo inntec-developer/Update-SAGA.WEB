@@ -47,6 +47,6 @@ export class PerfilesComponent implements OnInit {
     //   this.userName = params['user'];
     //   this.settings.user.name = this.userName;
     // });
-  }
+  
 
 }

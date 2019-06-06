@@ -1,8 +1,3 @@
-import { Http, Response, RequestOptions, Headers, HttpModule } from '@angular/http';
-import { Injectable } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -11,8 +6,21 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
 
+import { Headers, Http, HttpModule, RequestOptions, Response } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+
 import { ApiConection } from '../api-conection.service';
-// console.log('hola mundo')
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+
+const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+
 @Injectable()
 export class ConfiguracionService {
 // Url de servicios.
@@ -30,7 +38,7 @@ private handleError(error: any) {
        return Observable.throw(error || 'backend server error');
    }
 
-constructor(private http: Http) {  }
+constructor(private http: Http, private _httpClient: HttpClient) {  }
 SetDetalle(RequiID:string,Idcampo:number,detalle:boolean): Observable<any> {
    return this.http.get(this.UrlDetalle + '?Requi='+RequiID+'&Idcampo='+Idcampo+'&detalle='+detalle)
        .map(result => result.json())
@@ -49,13 +57,29 @@ SetResumen(RequiID:string,Idcampo:number,detalle:boolean): Observable<any> {
 //        .catch(this.handleError);
 // }
 
-UpdatePublicar(data: any): Observable<any>{
-  let headers = new Headers({'Content-Type' : 'application/json'});
-  let options = new RequestOptions({headers: headers});
-  return this.http.post(this.UrlPublicar, JSON.stringify(data), options )
-          .map(result => result.json())
-          .catch(this.handleError);
-}
+
+// UpdatePublicar(data: any, requi: string): Observable<any>{
+//   let headers = new Headers({'Content-Type' : 'application/json'});
+//   let options = new RequestOptions({headers: headers});
+//   return this.http.post(this.UrlPublicar, JSON.stringify(data), options )
+//           .map(result => result.json())
+//           .catch(this.handleError);
+// }
+
+
+
+UpdatePublicar(data: any, requi: string): Observable<any> {
+    debugger;
+    let httpHeaders = new HttpHeaders({
+      'Content-Type' : 'application/json',
+      'Cache-Control': 'no-cache'
+    });
+    let params= new HttpParams().set('RequiID', requi).set('ListadoJson', data);
+    // let options = {
+    //   headers: httpHeaders
+    // };
+    return this._httpClient.post<any>(this.UrlPublicar, params, httpOptions);
+  }
 
 
 

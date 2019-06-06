@@ -18,6 +18,7 @@ export class IndicadorPerfilesComponent implements OnInit {
 
   ngOnInit() {
     this._ComponeteServices.getPerfiles().subscribe(result =>{
+      debugger;
       this.Perfiles = result
     }, err => console.error(err));
   }

@@ -1,0 +1,241 @@
+<h4 class="text-warning">Requisicion {{data.folio}} {{data.vacante}} {{data.cliente}}
+<button type="button" class="btn btn-xs btn-danger btn-circle float-right mb-3" mat-dialog-close ><i class="fa fa-times"></i></button>
+</h4>
+<hr>
+<!-- <mat-dialog-content> -->
+<form novalidate #f="ngForm">
+        <div class="row">
+            <div class="col sm-6 col-md-6">
+                <div class="form-group">
+                    <label class="text-muted" for="nombre">NOMBRE</label>
+                    <input type="text" class="form-control form-control-sm" placeholder="Nombre(s) *" [(ngModel)]="nom" name="nombre" ngModel
+                    required [class.requerido]="nom.length == 0" [class.valido]="nom.length > 1">
+                            <!-- <small *ngIf="nom.length == 0" class="text-danger">
+                                      El campo nombre es requerido
+                                    </small> -->
+                </div>
+                <div class="form-group">
+                    <label class="text-muted" for="ap">APELLIDO PATERNO</label>
+                    <input type="text" class="form-control form-control-sm" placeholder="Apellido Paterno *" [(ngModel)]="ap" name="ap" ngModel
+                                required [class.requerido]="ap.length == 0" [class.valido]="ap.length > 1" />
+                </div>
+                <div class="form-group">
+                    <label class="text-muted" for="ap">APELLIDO MATERNO</label>
+                    <input type="text" class="form-control form-control-sm" placeholder="Apellido Materno *" [(ngModel)]="am" name="am" ngModel
+                             required [class.requerido]="am.length == 0" [class.valido]="am.length > 1" />
+                </div>
+                <div class="mb-1">
+                    <mat-form-field>
+                    <input matInput [matDatepicker]="picker" placeholder="Fecha de Nacimiento" name="edad" [(ngModel)]="date" (dateChange)="validarFecha($event.value)">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <small *ngIf="edad >= 18" class="text-info">Edad {{edad}}</small>
+                    <small *ngIf="edad < 18" class="text-danger">El usuario debe ser mayor de edad</small>
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="rb" [(ngModel)]="model.options" value="2">
+                            <label class="form-check-label" for="inlineRadio1">MUJER</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="rb" [(ngModel)]="model.options" value="1">
+                            <label class="form-check-label" for="inlineRadio2">HOMBRE</label>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <div class="form-group">
+                    <label class="text-muted">LUGAR DE NACIMIENTO</label>
+                    <select class="form-control form-control-sm" name="estado" ngModel required [(ngModel)]="estadoId"
+                           [class.requerido]="estadoId == 0" [class.valido]="estadoId > 0" (change)="GenerarCurp()">
+                            <option [value]=0 selected disabled>Selecciona Estado de Nacimiento</option>
+                            <option *ngFor="let e of estados" [value]=e.id>{{e.estado | uppercase}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="text-muted">CURP</label>
+                     <div class="input-group">
+                        <input type="text" class="form-control form-control-sm" placeholder="CURP *" name="curp" [(ngModel)]="curp" ngModel required
+                            [class.requerido]="curp.length == 0" [class.valido]="curp.length >= 16" minlength="16" maxlength=18 />
+                            <div class="input-group-append">
+                                 
+                                            <button type="button" class="btn btn-xs btn-info" (click)="GenerarCurp()"  container="body" placement="top" tooltip="Generar CURP">
+                                                <i class="fa fa-file-text-o" aria-hidden="true"></i></button>
+       
+                                    </div>
+                        </div>
+                </div>
+                <!-- <div class="form-group">
+                    <label></label>
+                    <select class="form-control form-control-sm" name="municipio" [(ngModel)]="municipioId" ngModel required
+                             [class.requerido]="municipioId == 0" [class.valido]="municipioId > 0">
+                        <option [value]=0 selected disabled>Selecciona Municipio de Nacimiento</option>
+                        <option *ngFor="let m of municipios" [value]=m.id>{{m.municipio | uppercase}}</option>
+                    </select>
+                </div> -->
+                <div class="form-group">
+                    <label class="text-muted" for="email">EMAIL</label>
+                            <!-- <div class="input-group"> -->
+                    <input type="email" class="form-control form-control-sm" placeholder="Email *" name="email" [(ngModel)]="email" ngModel required
+                            [class.requerido]="email.length == 0" [class.valido]="email.length >= 1" />
+                            <!-- <div class="input-group-append">
+                                        <div class="input-group-text" tooltip="Registrar con Email" placement="top" container="body">
+                                            <input type="radio" [(ngModel)]="opcRegistro1" name="opc1" value=1 (click)="opcRegistro2=0">
+                                        </div>
+                                    </div> -->
+                            <!-- </div> -->
+                </div>
+                <div class="form-group">
+                    <label class="text-muted" for="txtPhone">TEL&Eacute;FONO</label>
+                    <div class="input-group">
+                       <input type="text" minlength="10" maxlength="10" name="txtPhone" class="form-control form-control-sm" placeholder="Tel&eacute;fono *"
+                                [(ngModel)]="txtPhone" value="" ngModel required [class.requerido]="txtPhone.length < 10" [class.valido]="txtPhone.length == 10"
+                        />
+                                <!-- <div class="input-group-append">
+                                        <div class="input-group-text" tooltip="Registrar con Tel&eacute;fono" placement="top" container="body">
+                                            <input type="radio" [(ngModel)]="opcRegistro2" name="opc2" value="2" (click)="opcRegistro1=0">
+                                        </div>
+                                    </div> -->
+                    </div>
+                </div>
+                <button type="button" class="btn btn-xs btn-info ml-1 float-right" (click)="BorrarCampos()">
+                        <i class="fa fa-eraser" aria-hidden="true"></i>
+                        </button>
+
+                <button [disabled]="f.invalid || edad < 18 || rowIndex == -1" type="button" [ngClass]="f.invalid || edad < 18 || rowIndex == -1 ? 'disabled' : 'btn-warning'" class="btn btn-xs float-right ml-1" (click)="EditarCandidato()">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+        </button>
+                <button [disabled]="f.invalid || edad < 18 || rowIndex != -1" type="button" [ngClass]="f.invalid || edad < 18 || rowIndex != -1 ? 'disabled' : 'btn-success'" class="btn btn-xs float-right" (click)="AgregarCandidato()">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+            </div>
+         </div>
+       <div class="row">
+     
+        <div class="col">
+            <div class="card card-body mat-elevation-z8">
+                <table *ngIf="rows.length > 0 else NotCandidatos" class="table">
+                        <thead>
+                          <tr>
+
+                            <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+                              <small>{{column.title | uppercase}}</small>
+
+                            </th>
+                          </tr>
+                          <!-- <tr>
+                            <th *ngFor="let column of columns">
+                              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                                class="form-control form-control-sm" id="{{column.name}}">
+                            </th>
+
+                          </tr> -->
+                        </thead>
+                        <tbody>
+                          <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+                            [disabled]="disabled">
+                            <div style="height: 300px;">
+                              <tr *ngFor="let row of rows; let rowIndex = index" (click)="onCellClick(row, rowIndex)" container="body" placement="bottom" tooltip="Selecciona para editar"  [class.bg-info]="row.selected">
+                                <td class="text-center">{{row.curp}}
+                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-curp'] = true" *ngIf="!editing[rowIndex + '-curp']">
+                                        
+                                    </span>
+                                    <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'curp', rowIndex, row)" *ngIf="editing[rowIndex + '-curp']" type="text" [value]=row.curp /> -->
+                                </td>
+                                <td class="text-center">{{row.nombre}}
+                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
+                                       
+                                    </span>
+                                    <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'nombre', rowIndex, row)" *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=row.nombre /> -->
+                                </td>
+                                <td class="text-center">{{row.apellidoPaterno}}
+                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoPaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoPaterno']">
+                                        
+                                    </span>
+                                    <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'apellidoPaterno', rowIndex, row)" *ngIf="editing[rowIndex + '-apellidoPaterno']" type="text" [value]=row.apellidoPaterno /> -->
+                                </td>
+                                <td class="text-center"> {{row.apellidoMaterno}}
+                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoMaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoMaterno']">
+                                       
+                                    </span>
+                                    <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'apellidoMaterno', rowIndex, row)" *ngIf="editing[rowIndex + '-apellidoMaterno']" type="text" [value]=row.apellidoMaterno /> -->
+                                </td>
+                                <td class="text-center"> {{row.fechaNac | date:'dd/MM/yyyy'}}
+                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-fechaNac'] = true" *ngIf="!editing[rowIndex + '-fechaNac']">
+                                       
+                                    </span>
+                                    <mat-form-field *ngIf="editing[rowIndex + '-fechaNac']">
+                                       <input matInput [matDatepicker]="picker2" placeholder="Fecha de Nacimiento" name="edad" (dateChange)="validarFecha($event)" (blur)="updateValue($event, 'fechaNac', rowIndex, row)" *ngIf="editing[rowIndex + '-fechaNac']">
+                                       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                       <mat-datepicker #picker2></mat-datepicker>
+                                       <small *ngIf="edad >= 18" class="text-info">Edad {{edad}}</small>
+                                       <small *ngIf="edad < 18" class="text-danger">El usuario debe ser mayor de edad</small>
+                                    </mat-form-field> -->
+                                </td>
+                                <td class="text-center"> {{row.genero}}
+                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-genero'] = true" *ngIf="!editing[rowIndex + '-genero']">
+                                       
+                                    </span>
+                                    <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'genero', rowIndex, row)" *ngIf="editing[rowIndex + '-genero']" type="text" [value]=row.genero /> -->
+                                </td>
+                                <td class="text-center">{{row.estado}}
+                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-estado'] = true" *ngIf="!editing[rowIndex + '-estado']">
+                                        
+                                    </span>
+                                    <select class="form-control form-control-sm" name="estado" (change)="GetMunicipio($event.target.value)" autofocus (blur)="updateValue($event, 'estado', rowIndex, row)" *ngIf="editing[rowIndex + '-estado']" type="text" [value]=row.estadoId>
+                                        <option [value]=0 selected disabled>Selecciona Estado de Nacimiento</option>
+                                        <option *ngFor="let e of estados" [value]=e.id>{{e.estado | uppercase}}</option>
+                                    </select> -->
+                                 </td>
+                                <!-- <td class="text-center">{{row.municipio}} -->
+                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-municipio'] = true" *ngIf="!editing[rowIndex + '-municipio']">
+                                        
+                                    </span>
+                                    <select class="form-control form-control-sm" name="municipio" autofocus (blur)="updateValue($event, 'municipio', rowIndex, row)" *ngIf="editing[rowIndex + '-municipio']" type="text" [value]=row.municipioId>
+                                            <option [value]=0 selected disabled>Selecciona Estado de Nacimiento</option>
+                                            <option *ngFor="let e of municipios" [value]=e.id>{{e.municipio | uppercase}}</option>
+                                    </select> -->
+                                <!-- </td> -->
+                                <td class="text-center">{{row.email}}
+                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-email'] = true" *ngIf="!editing[rowIndex + '-email']">
+                                        
+                                    </span>
+                                    <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'email', rowIndex, row)" *ngIf="editing[rowIndex + '-email']" type="text" [value]=row.email /> -->
+                                </td>
+                                <td class="text-center">{{row.telefono}}
+                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-telefono'] = true" *ngIf="!editing[rowIndex + '-telefono']">
+                                        
+                                    </span>
+                                    <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'telefono', rowIndex, row)" *ngIf="editing[rowIndex + '-telefono']" type="text" [value]=row.telefono /> -->
+                                </td>
+                              </tr>
+                            </div>
+                            </ng-scrollbar>
+                        </tbody>
+                      </table>
+                      <div class="d-flex justify-content-end">
+                        <button type="button" [disabled]="dataSource.length == 0" [ngClass]="dataSource.length == 0 ? 'disabled' : 'btn-success'" class="btn btn-labeled mat-elevation-z8 d-flex justify-content-between" (click)="registrar()">
+                            <span class="btn-label"><i class="fa fa-check"></i></span><span class="align-self-center font-weight-bold">REGISTRAR</span></button>
+                        </div>
+                    </div>
+        </div>
+
+    </div>
+</form>
+<!-- </mat-dialog-content>
+<mat-dialog-actions>
+        <button mat-button mat-dialog-close>No</button>
+
+      </mat-dialog-actions> -->
+
+      <!--mensaje cuando esta vacio la tabla-->
+<ng-template #NotCandidatos>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <alert type="info">
+              <strong>Oops!</strong> A&uacute;n no cuentas con candidatos para registro.
+            </alert>
+          </div>
+        </div>
+      </ng-template>
