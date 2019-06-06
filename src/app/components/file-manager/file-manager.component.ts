@@ -17,7 +17,13 @@ export class FileManagerComponent implements OnInit {
   @Input() public candidatoId: any;
 
   @ViewChild('staticModal') modal;
-
+  //config scroll
+  disabled = false;
+  compact = false;
+  invertX = true;
+  invertY = true;
+  shown = 'hover';
+  
   selectedFile: File;
   cont_image = 0;
   cont_pdf = 0;
@@ -83,7 +89,7 @@ onClosed(): void {
 
   verArchivo(datos)
   {
-    if(datos.type === '.jpeg' || datos.type === '.jpg' || datos.type === '.png')
+    if(datos.type.toLowerCase() === '.jpeg' || datos.type.toLowerCase() === '.jpg' || datos.type.toLowerCase() === '.png')
     {
       
         this.imgShow = true;
@@ -126,7 +132,7 @@ onClosed(): void {
   getTypes(data)
   {
     data.forEach(element => {
-      if(element.ext == '.jpeg' || element.ext == '.jpg' || element.ext == '.png')
+      if(element.ext.toLowerCase() == '.jpeg' || element.ext.toLowerCase() == '.jpg' || element.ext.toLowerCase() == '.png')
       {
         this.files.push({
           type: element.ext, 

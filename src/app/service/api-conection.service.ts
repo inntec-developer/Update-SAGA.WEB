@@ -1,9 +1,9 @@
 export class ApiConection {
-  // public static ServiceUrlWeb = 'http://localhost:4200/';
-  // public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
-   public static ServiceUrl = 'http://localhost:33333/api/';
-  // public static ServiceUrlFileManager = 'http://localhost:33333/utilerias/';
-  // public static ServiceUrlFoto = 'http://localhost:33333/';
+  public static ServiceUrlWeb = 'http://localhost:4200/';
+  public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
+  public static ServiceUrl = 'http://localhost:33333/api/';
+  public static ServiceUrlFileManager = 'http://localhost:33333/utilerias/';
+  public static ServiceUrlFoto = 'http://localhost:33333/';
   // public static ServiceUrlBolsa = 'https://btapi.damsa.com.mx';
   // public static ServiceUrlLoginBolsa = 'https://btweb.damsa.com.mx';
   // public static ServicioUrl290 = 'https://webrcsb.damsa.com.mx/Home/';
@@ -19,11 +19,11 @@ export class ApiConection {
   // public static ServicioUrl290 = 'https://webpfrc.damsa.com.mx/Home/';
 
   // // Pruebas
-  public static ServiceUrlWeb = 'https://websb.damsa.com.mx/';
-  public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
-  //public static ServiceUrl = 'https://apisb.damsa.com.mx/api/';
-  public static ServiceUrlFileManager = 'https://apisb.damsa.com.mx/utilerias/';
-  public static ServiceUrlFoto = 'https://apisb.damsa.com.mx/';
+  // public static ServiceUrlWeb = 'https://websb.damsa.com.mx/';
+  // public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
+  // public static ServiceUrl = 'https://apisb.damsa.com.mx/api/';
+  // public static ServiceUrlFileManager = 'https://apisb.damsa.com.mx/utilerias/';
+  // public static ServiceUrlFoto = 'https://apisb.damsa.com.mx/';
   public static ServiceUrlBolsa = 'https://btapi.damsa.com.mx';
   public static ServiceUrlLoginBolsa = 'https://btweb.damsa.com.mx';
   public static ServicioUrl290 = 'https://webrcsb.damsa.com.mx/Home/';
@@ -267,6 +267,7 @@ export class ApiConection {
   public static execProcedureSinAsignar = 'Requisiciones/execProcedureSinAsignar'
   public static execProcedureVencidas = 'Requisiciones/execProcedureVencidas'
   public static getRequisicionesHistorial = 'Requisiciones/getRequisicionesHistorial'
+  public static registrarCandidatos = 'reclutamiento/seguimientovacante/registrarCandidatos'
   
   /*Examenes */
   public static InsertExamen = 'examenes/insertExamen'

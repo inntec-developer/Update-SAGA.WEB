@@ -1,3 +1,4 @@
+import { FoliosActivosComponent } from './../Tracking/vacantes/Graficas/folios-activos/folios-activos.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorIntl, MatTableModule, MatInputModule, MatIconModule } from '@angular/material';
 import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
@@ -67,6 +68,7 @@ import { VerTurnosComponent } from './ver-turnos/ver-turnos.component';
         TicketsInicioComponent,
         VerTurnosComponent,
         InicioKioscoComponent,
+        FoliosActivosComponent
     ],
     providers: [
         { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

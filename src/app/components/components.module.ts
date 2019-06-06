@@ -1,3 +1,4 @@
+import { CURPValidator } from './dlg-registro-masivo/GenerarCURP';
 import { DTHistorialComponent } from './../routes/vtas/requisiciones/components/dthistorial/dthistorial.component';
 import { ActividadEmpresaComponent } from './catalogos/actividad-empresa/actividad-empresa.component';
 import { ActividadesComponent } from './tablas/actividades/actividades.component';
@@ -133,6 +134,7 @@ import { TipolicenciaComponent } from './catalogos/tipolicencia/tipolicencia.com
 import { ToolsModule } from '../tools/tools.module';
 import { TpNominaComponent } from './catalogos/tp-nomina/tp-nomina.component';
 import { TpPsicometriaComponent } from './catalogos/tp-psicometria/tp-psicometria.component';
+import { DlgRegistroMasivoComponent } from './dlg-registro-masivo/dlg-registro-masivo.component';
 
 @NgModule({
   imports: [
@@ -271,7 +273,9 @@ import { TpPsicometriaComponent } from './catalogos/tp-psicometria/tp-psicometri
     IndicadorPosicionesComponent,
     IndicadorCandidatosComponent,
     IndicadorCandidatosEstatusComponent,
-    IndicadorPosicionesActivasComponent
+    IndicadorPosicionesActivasComponent,
+    DlgRegistroMasivoComponent,
+    CURPValidator
   ],
   exports: [
     DtDireccionComponent,
@@ -361,9 +365,10 @@ import { TpPsicometriaComponent } from './catalogos/tp-psicometria/tp-psicometri
     IndicadorPosicionesComponent,
     IndicadorCandidatosComponent,
     IndicadorCandidatosEstatusComponent,
-    IndicadorPosicionesActivasComponent
+    IndicadorPosicionesActivasComponent,
+    DlgRegistroMasivoComponent
   ],
-  entryComponents: [ RegistroReclutadorComponent, TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
+  entryComponents: [ DlgRegistroMasivoComponent, RegistroReclutadorComponent, TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
 
 
 })

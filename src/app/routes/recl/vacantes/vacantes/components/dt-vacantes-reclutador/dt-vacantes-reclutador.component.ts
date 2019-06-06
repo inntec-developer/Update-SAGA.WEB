@@ -1,3 +1,4 @@
+import { DlgRegistroMasivoComponent } from './../../../../../../components/dlg-registro-masivo/dlg-registro-masivo.component';
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -13,6 +14,7 @@ import { RequisicionesService } from '../../../../../../service';
 import { Router } from '@angular/router';
 import { DlgTransferComponent } from '../../../../../vtas/requisiciones/components/dlg-transfer/dlg-transfer.component';
 import { SettingsService } from '../../../../../../core/settings/settings.service';
+
 
 const swal = require('sweetalert');
 
@@ -766,6 +768,27 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   }
 
+  openDialogRegistro() {
+    let dialogDlt = this.dialog.open(DlgRegistroMasivoComponent, {
+      width: '1300px',
+      height: '600px',
+      data: { requisicionId: this.requi.id, folio: this.requi.folio, cliente: this.element.cliente, vacante: this.vBtra },
+      disableClose: true
+      
+    });
+
+    dialogDlt.afterClosed().subscribe(result => {
+      if (result == 200) {
+    
+            this.popToast('success', 'Seguimiento', 'El registro se realizó correctamente');
+
+
+      }
+      else if(result == 417) {
+        this.popToast('error', 'Seguimiento', 'Ocurrió un error al intentar registrar candidato');
+      }
+    });
+  }
   closeModal(flag) {
 
     if (flag == 1) {

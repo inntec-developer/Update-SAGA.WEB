@@ -1,3 +1,4 @@
+
 import { Component, Input, OnInit } from '@angular/core';
 
 import { AppComponent } from './../../../app.component';
@@ -38,7 +39,7 @@ export class VacantesComponent implements OnInit {
     // { title: 'CLIENTE', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'CLIENTE' } },
     { title: 'FECHA LÍMITE', className: 'text-info text-center', name: 'fch_limite', filtering: { filterString: '', placeholder: 'FECHA LIMITE' } },
     { title: 'ESTATUS', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'ESTATUS' } },
-    { title: '# VACANTES', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: '# VACANTES' } },
+    { title: '# POSICIONES', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: '# POSICIONES' } },
     { title: '% AVANCE', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: '% AVANCE' } },
     { title: 'POSTULADOS', className: 'text-info text-center', name: 'postulados', filtering: { filterString: '', placeholder: 'POSTULADOS' } },
     { title: 'ENTREVISTA', className: 'text-info text-center', name: 'entrevista', filtering: { filterString: '', placeholder: 'ENTREVISTA' } },
