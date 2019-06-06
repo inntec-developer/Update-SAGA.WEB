@@ -114,7 +114,7 @@ export class AgregarResultadosPsicoComponent implements OnInit {
       }
     });
 
-    this.candidatos = tempArray;
+    this.rows = tempArray;
   }
 
 

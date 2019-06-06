@@ -74,11 +74,14 @@ UpdatePublicar(data: any, requi: string): Observable<any> {
       'Content-Type' : 'application/json',
       'Cache-Control': 'no-cache'
     });
-    let params= new HttpParams().set('RequiID', requi).set('ListadoJson', data);
+    var obj = {
+      ListaPublicar: data,
+      RequiId: requi
+    }
     // let options = {
     //   headers: httpHeaders
     // };
-    return this._httpClient.post<any>(this.UrlPublicar, params, httpOptions);
+    return this._httpClient.post(this.UrlPublicar, obj, httpOptions);
   }
 
 

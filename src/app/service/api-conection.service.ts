@@ -260,6 +260,8 @@ export class ApiConection {
   public static execProcedureSinAsignar = 'Requisiciones/execProcedureSinAsignar'
   public static execProcedureVencidas = 'Requisiciones/execProcedureVencidas'
   public static getRequisicionesHistorial = 'Requisiciones/getRequisicionesHistorial'
+  public static registrarCandidatos = 'reclutamiento/seguimientovacante/registrarCandidatos'
+  
 
   /*Examenes */
   public static InsertExamen = 'examenes/insertExamen'

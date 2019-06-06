@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ToasterConfig, ToasterService } from 'angular2-toaster';
 import { views, viewsdtl } from '../../../../models/recl/viewvacantes';
 
@@ -9,11 +9,9 @@ import { ConfiguracionService } from '../../../../service/DisenioVacante/configu
 import { Http } from '@angular/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../service/requisiciones/requisiciones.service';
-import { debug } from 'util';
+import { DOCUMENT } from '@angular/common';
 
 // Modelos
-
-
 
 
 @Component({
@@ -43,6 +41,7 @@ export class DisenadorVacanteComponent implements OnInit {
   public ListaCampo: Array<any> = [];
   public ListaCon: Array<any> = [];
   public Clasifica: any[];
+  public ClasificaD: any[];
   public ViewRequi: any[];
   public contactos: any[];
   public escolaridadesRequi: any[];
@@ -55,6 +54,8 @@ export class DisenadorVacanteComponent implements OnInit {
   public IdDtl: number;
   public Vistas = new views;
   public Vistasdtl = new viewsdtl;
+  public ModelOptions: string;
+  public Options: string[] = ['Resumen', 'Detalle'];
   panelOpenState = false;
 
   public Requi: string;
@@ -74,6 +75,7 @@ export class DisenadorVacanteComponent implements OnInit {
   });
   Folio: any;
   VBtra: any;
+  element: HTMLElement;
 
   constructor(
     private service: CatalogoConfiguracionService
@@ -84,6 +86,7 @@ export class DisenadorVacanteComponent implements OnInit {
     , toasterService: ToasterService
     , private spinner: NgxSpinnerService
     , private serviceRequi: RequisicionesService
+    , @Inject(DOCUMENT) document
   ) {
     this.toasterService = toasterService;
     this.route.params.subscribe(params => {
@@ -96,6 +99,7 @@ export class DisenadorVacanteComponent implements OnInit {
   ngOnInit() {
     this.service.getGeneral(this.Requi)
       .subscribe(data => {
+        debugger;
         this.General = data;
         this.ViewRequi = data[0].requi;
         this.contactos = data[0].requi.contactos[0];
@@ -105,12 +109,12 @@ export class DisenadorVacanteComponent implements OnInit {
         this.psicoDamsa = data[0].requi.psicoDamsa;
         this.psicoCliente = data[0].requi.psicoCliente;
         this.telefono = data[0].requi.telefono[0];
-        console.log(this.ViewRequi);
         for (let index = 0; index < data.length; index++) {
           const element = data[index];
           this.View(element.id, element.resumen, 'H');
-          this.View(element.id, element.resumen, 'D');
+          this.View(element.id, element.detalle, 'D');
         }
+        this.ModelOptions = 'Resumen';
       });
 
     this.service.getCampos()
@@ -124,16 +128,18 @@ export class DisenadorVacanteComponent implements OnInit {
     this.service.getClasificaciones()
       .subscribe(data => {
         this.Clasifica = data;
+        this.ClasificaD = data;
+        console.log('Clasifica', this.ClasificaD);
       });
   }
 
   Publicar() {
     this.spinner.show();
     for (const item of this.ListaCampo) {
-      const d = document.getElementById('Detalle_' + item.id);
       const r = document.getElementById('Resumen_' + item.id);
-      const det = d['checked'];
-      const res = r['checked'];
+      const res = r.lastElementChild.firstElementChild.firstElementChild['checked'];
+      const d = document.getElementById('Detalle_' + item.id);
+      const det = d.lastElementChild.firstElementChild.firstElementChild['checked'];
       const config = {
         detalle: det,
         resumen: res,
@@ -144,7 +150,7 @@ export class DisenadorVacanteComponent implements OnInit {
       this.ListaCon.push(config);
     }
 
-    this.Config.UpdatePublicar(this.ListaCon,"pablo")
+    this.Config.UpdatePublicar(this.ListaCon, '')
       .subscribe(data => {
         this.popGenerico(data.mensaje, data.bandera, 'Publicacion');
         this.spinner.hide();
@@ -189,7 +195,6 @@ export class DisenadorVacanteComponent implements OnInit {
   }
 
   View(Id: any, view: boolean, tp: string) {
-    debugger;
     if (tp === 'H') {
       switch (Id) {  // Vistas del header
         case 10:
@@ -886,7 +891,6 @@ export class DisenadorVacanteComponent implements OnInit {
   }
 
   setStepD(index: number) {
-    console.log(index);
     this.stepd = index;
   }
 

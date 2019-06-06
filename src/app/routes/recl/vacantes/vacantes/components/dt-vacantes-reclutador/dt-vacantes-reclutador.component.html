@@ -118,6 +118,10 @@
           container="body" placement="bottom" tooltip="Postulados">
           <i class="fa fa-users" aria-hidden="true"></i>
         </button>
+        <button class="mr-1 float-right" [disabled]="element.length == 0" (click)="openDialogRegistro()" [ngClass]="element.length == 0 ? 'btn btn-xs disabled':'btn btn-xs btn-outline-success'"
+        container="body" placement="bottom" tooltip="Registro Masivo">
+        <i class="fa fa-user-plus" aria-hidden="true"></i>
+      </button>
 
       </div>
     </div>
@@ -260,6 +264,7 @@
         </button>
       </div>
       <div class="modal-body">
+          <!-- <app-dlg-registro-masivo></app-dlg-registro-masivo> -->
         <comentario-vacante [RequisicionId]="id" [MotivoId]="7"></comentario-vacante>
       </div>
       <div class="modal-footer">

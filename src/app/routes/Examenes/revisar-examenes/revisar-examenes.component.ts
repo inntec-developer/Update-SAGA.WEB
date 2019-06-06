@@ -87,12 +87,13 @@ export class RevisarExamenesComponent implements OnInit {
     })
   }
   public Search(data: any) {
+
     this.search = data.target.value;
     let tempArray: Array<any> = [];
 
     let colFiltar: Array<any> = [{ title: "folio" }, { title: "vBtra" }, { title: "cliente" }];
 
-    this.filteredData.forEach(function (item) {
+    this.resultados.forEach(function (item) {
       let flag = false;
       colFiltar.forEach(function (c) {
         if (item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
@@ -105,7 +106,7 @@ export class RevisarExamenesComponent implements OnInit {
       }
     });
 
-    this.resultados = tempArray;
+    this.rows = tempArray;
 
   }
 }

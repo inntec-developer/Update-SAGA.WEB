@@ -1,0 +1,59 @@
+label
+{
+    font-size: 10px;
+}
+.btnRegister{
+    display: flex;
+     justify-content: center;
+     align-items: center;
+    border-radius: 25px;
+    width: 38%;
+    height: 25px;
+     font-size: 10px;
+     padding: 0;
+}
+
+.requerido
+{
+    border-color: red;
+}
+.valido
+{
+    border-color:rgb(76, 248, 76);
+    background-color: rgb(232, 240, 254);
+}
+
+.long
+{
+    width: 250px;
+    height: 80px;
+}
+
+tbody {
+    display: block;
+    height: 350px;
+  }
+  
+  thead,
+  tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    font-size: 12px;
+  }
+  
+  table thead {
+    width: calc(100% - 1em)
+  }
+  
+  table {
+    width: 100%;
+  }
+
+ng-scrollbar {
+    --scrollbar-size: 4px;
+    --scrollbar-thumb-color: rgb(94, 175, 255);
+    --scrollbar-thumb-hover-color: dodgerblue;
+    --scrollbar-border-radius: 4px;
+  }
+  

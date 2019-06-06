@@ -177,7 +177,7 @@ export class DlgTransferComponent implements OnInit {
     {
       this.rowAux = row;
       this.dataRowIndex = rowIndex;
-      row.selected = true; //para poner el backgroun cuando seleccione
+      row.selected = true; //para poner el background cuando seleccione
     }
 
     this.coordId = row.id;
@@ -244,7 +244,7 @@ export class DlgTransferComponent implements OnInit {
             {
               this.loading = false;
 
-              swal('ERROR', 'Ocurrio un error', 'error');
+              swal('ERROR', 'Ocurrio un error de conexion', 'error');
             }
           });
   

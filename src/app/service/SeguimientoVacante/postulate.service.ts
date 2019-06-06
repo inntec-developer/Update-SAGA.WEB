@@ -24,8 +24,22 @@ export class PostulateService {
   private UrlSendEmailCandidato = ApiConection.ServiceUrl + ApiConection.sendEmailCandidato;
   private UrlSendEmailsNoContrado = ApiConection.ServiceUrl + ApiConection.sendEmailNoContratado;
   private UrlGetConteoVacante = ApiConection.ServiceUrl + ApiConection.getConteoVacante;
+  private UrlRegistrarCandidatos = ApiConection.ServiceUrl + ApiConection.registrarCandidatos;
 
   constructor(private _HttpClient: HttpClient) { }
+
+  RegistrarCandidatos(data)
+  {
+    let params = new HttpParams().set('datos', data)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+
+    return this._HttpClient.post(this.UrlRegistrarCandidatos, data, httpOptions )
+  }
+
 
   getPostulados(VacanteId : string) : Observable<any>{
     let params = new HttpParams().set('VacanteId', VacanteId);

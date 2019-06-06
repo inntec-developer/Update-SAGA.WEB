@@ -34,6 +34,7 @@ export class DtVacantesGraficaPAComponent implements OnInit {
   public registros: number;
 
   public totalPos = 0;
+  totalContratados: number = 0;
 
   constructor(private _ComponentService: ComponentsService, private settings: SettingsService) { }
 
@@ -64,6 +65,7 @@ export class DtVacantesGraficaPAComponent implements OnInit {
 
   getRequisiciones() {
     this.totalPos = 0;
+    this.totalContratados = 0;
     var estado = this.EstadoVacante.split(':', 1);
     this._ComponentService.getRequiGraficaPA(estado, this.UsuarioId ).subscribe(data => {
       this.dataSource = data;
@@ -71,6 +73,7 @@ export class DtVacantesGraficaPAComponent implements OnInit {
         if(r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37))
         {
           this.totalPos += r.vacantes;
+          this.totalContratados += r.contratados;
         }
       });
       this.onChangeTable(this.config);
