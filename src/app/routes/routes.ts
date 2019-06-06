@@ -24,7 +24,7 @@ export const routes = [
             { path: 'reclutamiento', loadChildren: './recl/reclutamiento.module#ReclutamientoModule'},
             { path: 'ventas', loadChildren: './vtas/ventas.module#VentaModule'},
             { path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
-            { path: 'perfiles', loadChildren: './perfiles/perfiles.module#PerfilesModule'},
+            { path: 'usuario', loadChildren: './perfiles/perfiles.module#PerfilesModule'},
             { path: 'examenes', loadChildren: './Examenes/examenes.module#ExamenesModule'},
             { path: 'catalogos', loadChildren: './catalogos/catalogos.module#CatalogosModule'},
             { path: 'reporte', loadChildren:'./reportes/reportes.module#ReportesModule'},

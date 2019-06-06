@@ -23,7 +23,11 @@ export class SettingsService {
             tipo : '',
             sucursal : '',
             privilegios: Array<any>(),
-            foto: ''
+            foto: '',
+            liderId: '',
+            lider: '',
+            deparamentoId: '',
+            departamento: ''
         };
 
         // App Settings

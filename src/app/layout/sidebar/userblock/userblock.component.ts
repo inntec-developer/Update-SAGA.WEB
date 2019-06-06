@@ -28,8 +28,12 @@ export class UserblockComponent implements OnInit {
       name: this.settings.user['nombre'],
       clave: this.settings.user['clave'],
       tipo: this.settings.user['tipo'],
-      sucursal: this.settings.user['sucursal']
+      sucursal: this.settings.user['sucursal'],
+      email: this.settings.user['email'],
+      lider: this.settings.user['lider'],
+      departamento: this.settings.user['departamento']
     };
+    console.log(this.user);
   }
 
 

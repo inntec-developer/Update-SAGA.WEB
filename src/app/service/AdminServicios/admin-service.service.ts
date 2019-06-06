@@ -376,7 +376,6 @@ export class AdminServiceService {
 
   UpdatePrivilegios(data: any) : Observable<any>
   {
-    debugger;
     return this._httpClient.post(this.UrlUpdatePrivilegios, data, httpOptions);
   }
   DeleteGrupo(data: any) : Observable<any>

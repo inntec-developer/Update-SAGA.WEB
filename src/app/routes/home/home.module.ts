@@ -9,7 +9,7 @@ import { ToolsModule } from '../../tools/tools.module';
 
 const routes: Routes = [
     { path: '', component: HomeComponent},
-    { path: 'Calendario', component: StarCalendarioComponent},
+    { path: 'Calendario', component: StarCalendarioComponent}
 ];
 @NgModule({
     imports: [
