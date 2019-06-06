@@ -8,7 +8,7 @@ import { ApiConection } from '../api-conection.service';
 import { FooterRowOutlet } from '@angular/cdk/table';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { SettingsService } from '../../core/settings/settings.service';
 import { map } from 'rxjs/operators';
 
@@ -69,6 +69,8 @@ export class AuthService {
         this.settings.user['tipo'] = decode['Tipo'];
         this.settings.user['sucursal'] = decode['Sucursal'];
         this.settings.user['foto'] = ApiConection.ServiceUrlFotoUser + decode['Clvave'] + '.jpg';
+        this.settings.user['lider'] = decode['Lider'];
+        this.settings.user['liderId'] = decode['LiderId'];
         this.settings.user['privilegios'] = this.Priv;
       }
       return true;

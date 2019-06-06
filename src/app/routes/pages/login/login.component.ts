@@ -34,6 +34,8 @@ const swal = require('sweetalert');
 })
 export class LoginComponent implements OnInit {
 
+
+  showPassL: boolean = false;
   valForm: FormGroup;
   loading = false;
   returnUrl: string;
@@ -91,6 +93,10 @@ export class LoginComponent implements OnInit {
             this.settings.user['sucursal'] = decode['Sucursal'];
             this.settings.user['foto'] = ApiConection.ServiceUrlFotoUser + decode['Clave'] + '.jpg';
             this.settings.user['privilegios'] = this.Priv;
+            this.settings.user['lider'] = decode['Lider'];
+            this.settings.user['liderId'] = decode['LiderId'];
+            this.settings.user['departamentoId'] = decode['DepartamentoId'];
+            this.settings.user['departamento'] = decode['Departamento'];
             this.router.navigate(['/home']);
           }
           if (data === 404) {
@@ -159,9 +165,8 @@ export class DialogOverviewExampleDialog {
   RContrasena: string;
   ICodigo: number;
   BCodigo: number;
-  showPass: boolean;
-  showPassR: boolean;
-  showPassL: boolean;
+  showPass: boolean = false;
+  showPassR: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,

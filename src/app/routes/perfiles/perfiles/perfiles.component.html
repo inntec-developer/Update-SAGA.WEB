@@ -1,2 +1,73 @@
-
-
+<!-- <div class="card b text-white">
+    <div class="card-body bg-cover clearfix" style="background-image: url(../../../../assets/img/fondo.jpg);
+                                                    background-size: cover; background-position: center;">
+        <div class="media mt-0 align-items-center">
+            <img class="mr-3 img-thumbnail rounded-circle thumb96" [src]="foto" alt="Image" />
+            <div class="media-body">
+                <div class="d-flex">
+                    <div>
+                        <h4 class="m-0">{{nombre}}</h4>
+                        <p>{{clave}} <br> {{tipo}} <br> {{sucursal}}
+                        </p>
+                        <button class="btn btn-info btn-xs" type="button">"Seguir"</button>
+                    </div>
+                    <div class="ml-auto">
+                        <div class="inline text-center mr-2">
+                            <div class="h3 m-0">
+                                <strong>1.4k</strong>
+                            </div>
+                            <small>Seguidores</small>
+                        </div>
+                        <div class="inline text-center mr-2">
+                            <div class="h3 m-0">
+                                <strong>350</strong>
+                            </div>
+                            <small>Amigos</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="unwrap">
+    <div class="bg-cover" style="background-image: url(../../../../assets/img/Fondo-Professional.jpg);">
+        <div class="p-4 text-center text-white">
+            <img class="img-thumbnail rounded-circle thumb128" [src]="foto" alt="Image" />
+            <br><br>
+            <h3 class="m-0">{{nombre | uppercase }}</h3>
+            <p>{{email}}</p>
+        </div>
+    </div>
+    <div class="text-center bg-gray-dark p-3 mb-4">
+        <div class="row">
+            <div class="col-4 br">
+                <h3 class="m-0">{{clave | uppercase }}</h3>
+                <p class="m-0">
+                    <span class="d-none d-md-inline">Clave</span>
+                </p>
+            </div>
+            <div class="col-4 br">
+                <h3 class="m-0">{{tipo | uppercase }}</h3>
+                <p class="m-0">Puesto</p>
+            </div>
+            <div class="col-4">
+                <h3 class="m-0">{{sucursal | uppercase}}</h3>
+                <p class="m-0">Sucursal</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-6 br">
+                <h3 class="m-0 pointer">{{departamento | uppercase }}</h3>
+                <p class="m-0">
+                    <span class="d-none d-md-inline">Departamento</span>
+                </p>
+            </div>
+            <div class="col-6 br">
+                <h3 class="m-0">{{lider | uppercase}}</h3>
+                <p class="m-0">Líder</p>
+            </div>
+        </div>
+    </div>
+</div>

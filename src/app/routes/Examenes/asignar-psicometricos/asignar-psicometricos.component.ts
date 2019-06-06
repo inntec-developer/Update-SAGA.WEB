@@ -11,6 +11,18 @@ import { SettingsService } from '../../../core/settings/settings.service';
 })
 export class AsignarPsicometricosComponent implements OnInit {
 
+  //scroll
+  public disabled = false;
+  public invertX = false;
+  public compact = false;
+  public invertY = false;
+  public shown = 'hover';
+
+  public page: number = 1;
+  public itemsPerPage: number = 20;
+  public maxSize: number = 5;
+  public numPages: number = 1;
+  public length: number = 0;
 
   requisiciones = [];
   seleccionados = [];
@@ -22,6 +34,7 @@ export class AsignarPsicometricosComponent implements OnInit {
   registros: number;
   filterData = [];
 
+  rows = [];
   constructor(
     private _serviceExamen: ExamenesService,
     private toasterService: ToasterService,
@@ -31,7 +44,123 @@ export class AsignarPsicometricosComponent implements OnInit {
     this.GetRequisiciones();
 
   }
+  public columns: Array<any> = [
+    { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+    { title: 'Perfil', className: 'text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
+    { title: 'Psicometrico', className: 'text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Psicometrico' } },
+    
+    { title: 'Claves disponibles', className: 'text-center', name: 'claves', filtering: { filterString: '', placeholder: 'Claves' } },
+  ];
 
+
+  //#region paginador
+  public config: any = {
+    paging: true,
+    //sorting: { columns: this.columns },
+    filtering: { filterString: '' },
+    className: ['table-hover mb-0 ']
+  };
+
+  public changePage(page: any, data: Array<any> = this.requisiciones): Array<any> {
+    let start = (page.page - 1) * page.itemsPerPage;
+    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    return data.slice(start, end);
+  }
+
+  public changeFilter(data: any, config: any): any {
+    let filteredData: Array<any> = data;
+    this.columns.forEach((column: any) => {
+      if (column.filtering) {
+        filteredData = filteredData.filter((item: any) => {
+          if (item[column.name] != null)
+          {
+            if(!Array.isArray(item[column.name]))
+            {
+              return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+            }
+            else
+            {
+                let aux = item[column.name];
+                let flag = false;
+                if(item[column.name].length > 0)
+                {
+                  item[column.name].forEach(element => {
+                    if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
+                    {
+                      flag = true;
+                      return;
+                    }
+                  });
+
+                  if(flag)
+                  {
+                    return item[column.name];
+                  }
+                }
+              else
+              {
+                  return item[column.name];
+              }
+            }
+          }
+          else
+          {
+            return 'sin asignar'
+          }
+        });
+      }
+    });
+
+    if (!config.filtering) {
+      return filteredData;
+    }
+
+    if (config.filtering.columnName) {
+      return filteredData.filter((item: any) =>
+        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
+    }
+
+    let tempArray: Array<any> = [];
+    filteredData.forEach((item: any) => {
+      let flag = false;
+      this.columns.forEach((column: any) => {
+        if (item[column.name] == null) {
+          flag = true;
+        } else {
+          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
+            flag = true;
+          }
+        }
+      });
+      if (flag) {
+
+        tempArray.push(item);
+      }
+    });
+    filteredData = tempArray;
+
+    return filteredData;
+  }
+
+  
+  //#endregion
+  public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
+    if (config.filtering) {
+      (<any>Object).assign(this.config.filtering, config.filtering);
+    }
+
+    if (config.sorting) {
+      (<any>Object).assign(this.config.sorting, config.sorting);
+    }
+
+    this.rows = this.requisiciones;
+    let filteredData = this.changeFilter(this.requisiciones, this.config);
+    //let sortedData = this.changeSort(filteredData, this.config);
+    this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
+    this.registros = this.rows.length;
+    this.length = filteredData.length;
+
+  }
   CloseModal() {
     this.verClaves = false;
   }
@@ -39,7 +168,7 @@ export class AsignarPsicometricosComponent implements OnInit {
     this._serviceExamen.GetRequisicionesPsico().subscribe(data => {
       this.requisiciones = data;
       this.filterData = data;
-      this.registros = this.requisiciones.length;
+      this.onChangeTable(this.config)
     })
   }
 
