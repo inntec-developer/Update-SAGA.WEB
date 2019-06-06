@@ -29,898 +29,913 @@
         </button>
     </div>
 </div>
+<hr>
 <div class="row">
-    <mat-tab-group dynamicHeight>
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <mat-icon class="example-tab-icon">list</mat-icon>
-                Resumen
-            </ng-template>
-            <div class="row">
-                <div class="col-md-6">
-                    <mat-accordion class="m-4">
-                        <mat-expansion-panel *ngFor="let item of Clasifica" [expanded]="step === item.id" (opened)="setStep(item.id)" hideToggle="true">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title style="font-weight: bold;">
-                                    {{item.nombre}}
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    {{item.descripcion}}
-                                    <!-- <mat-icon>info_outline</mat-icon> -->
-                                </mat-panel-description>
-                            </mat-expansion-panel-header>
-                            <div class="row">
-                                <div *ngFor="let item2 of General">
-                                    <div class="col-md-12" *ngIf="item.id == item2.idPadre;">
-                                        <div class="panel panel-default sombra">
-                                            <div class="panel-body">
-                                                <div class="table-responsive">
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                            <tr>
-                                                                <th colspan="2">
-                                                                    <h5 class="font-bold">{{item2.nombre}}</h5>
-                                                                </th>
-                                                                <th colspan="2">
-                                                                    <mat-slide-toggle [color]="primary" [checked]="item2.resumen" (change)="SetResumen(item2.id,item2.nombre, $event.checked)">
-                                                                    </mat-slide-toggle>
-                                                                </th>
-                                                                <!-- <th colspan="2">{{item2.nombre}}</th>
-                                                                <th colspan="7">
-                                                                    <label class="switch  switch-lg danger">
-                                                                                <div *ngIf="item2.resumen; then pintaSI else pintaNo"></div>
-                                                                                <ng-template #pintaSI>
-                                                                                    <input checked id="Resumen_{{item2.id}}" (click)="SetResumen(item2.id,item2.nombre)" type="checkbox" />
-                                                                                </ng-template>
-                                                                                <ng-template #pintaNo>
-                                                                                    <input id="Resumen_{{item2.id}}" (click)="SetResumen(item2.id,item2.nombre)" type="checkbox" />
-                                                                                </ng-template>
-                                                                                <span></span>
-                                                                        </label>
-                                                                </th> -->
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <mat-action-row>
-                                <button mat-button color="primary" (click)="nextStep()">Cerrar</button>
-                            </mat-action-row>
-                        </mat-expansion-panel>
-
-                        <!-- <div class="col-xs-12" style="margin:20px">
-                                          <div class="col-xs-2  pull-right">
-                                            <button _ngcontent-c40="" class="mb-sm btn-md btn btn-success btn-outline "  container="body" placement="bottom" tooltip="Publicar" type="button" tabindex="0" ng-reflect-router-link="/ventas/crearRequisicion" aria-describedby="cdk-describedby-message-2" cdk-describedby-host="" ng-reflect-message="Nueva Requisición">
-                                                <em _ngcontent-c40="" class="fa fa-download"></em> Publicar vacante
-                                              </button>
-                                          </div>
-                                      </div> -->
-                    </mat-accordion>
-                </div>
-                <div class="col-md-6">
-                    <div>
-                        <!-- Resumen -->
-                        <div class="row col-results example-large-box mat-elevation-z4">
-                            <div class="job-name">
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="ModelOptions">
+        <div class="row" style="margin-left: 30px;">
+            <div class="col-md-6" *ngFor="let option of Options">
+                <mat-radio-button [value]="option" [checked]="option">
+                    <h4 style="margin-top: 12px;">{{option}}</h4>
+                </mat-radio-button>
+            </div>
+        </div>
+    </mat-radio-group>
+</div>
+<hr>
+<div>
+    <!-- Resumen -->
+    <div class="row" [hidden]="ModelOptions == 'Detalle'">
+        <div class="col-md-12">
+            <ng-container>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-accordion class="m-4">
+                            <mat-expansion-panel *ngFor="let item of Clasifica" [expanded]="step === item.id" (opened)="setStep(item.id)" hideToggle="true">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title style="font-weight: bold;">
+                                        {{item.nombre}}
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        {{item.descripcion}}
+                                        <!-- <mat-icon>info_outline</mat-icon> -->
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
                                 <div class="row">
-                                    <div class="col-md-9"><img src="../../../../../assets/img/icon-arrow.png" />
-                                        <span *ngIf="Vistas.Id67" class="font-bold font-family:'Lato' margin-left-15x">  {{VBtra}} </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="job-description">
-                                <div class="color-blue text-uppercase font-bold">Datos de la vacante:</div>
-                                <ul class="DV">
-                                    <li *ngIf="Vistas.Id19">
-                                        <strong>Folio: </strong><span>{{ViewRequi?.folio}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id20">
-                                        <strong>Prioridad: </strong><span>{{ViewRequi?.prioridad}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id21">
-                                        <strong>Fecha creación: </strong><span>{{ViewRequi?.fch_Creacion | date}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id22">
-                                        <strong>Fecha limite: </strong><span>{{ViewRequi?.fch_Limite | date}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id23">
-                                        <strong>Fecha cumplimiento: </strong><span>{{ViewRequi?.fch_Cumplimiento | date}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id136">
-                                        <strong>Días envio: </strong><span>{{ViewRequi?.diasEnvio}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id24">
-                                        <strong>Estatus: </strong><span>{{ViewRequi?.estatus}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id25">
-                                        <strong>Confidencial: </strong><span>{{ViewRequi?.confidencial? 'Si': 'No'}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id26">
-                                        <strong>Asignada: </strong><span>{{ViewRequi?.asignada? 'Si': 'No'}}</span>
-                                    </li>
-                                </ul>
-                                <div class="color-blue text-uppercase font-bold">Información General:</div>
-                                <ul class="DV">
-                                    <li *ngIf="Vistas.Id29">
-                                        <strong>Logotipo: </strong><span><img src="{{ViewRequi?.logotipo}}" alt=""></span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id30">
-                                        <strong>Nombre: </strong><span>{{ViewRequi?.nombrecomercial}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id31">
-                                        <strong>Razon: </strong><span>{{ViewRequi?.razonSocial}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id32">
-                                        <strong>RFC: </strong><span>{{ViewRequi?.rfc}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id33">
-                                        <strong>Giro: </strong><span>{{ViewRequi?.giroEmpresa}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id34">
-                                        <strong>Actividad: </strong><span>{{ViewRequi?.actividadEmpresa}}</span>
-                                    </li>
-                                </ul>
-                                <div class="color-blue text-uppercase font-bold">Contrato:</div>
-                                <ul class="DV">
-                                    <li *ngIf="Vistas.Id40">
-                                        <strong>Tipo contrato: </strong><span>{{ViewRequi?.tipoContrato}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id242">
-                                        <strong>Disa de prueba: </strong><span>{{ViewRequi?.periodoPrueba? 'Si': 'No'}}</span>
-                                    </li>
-                                </ul>
-                                <div class="color-blue text-uppercase font-bold">Direcciones:</div>
-                                <table class="table table-striped color-grey">
-                                    <tr>
-                                        <th *ngIf="Vistas.Id42"><strong>Tipo</strong></th>
-                                        <th *ngIf="Vistas.Id43"><strong>País</strong></th>
-                                        <th *ngIf="Vistas.Id44"><strong>Estado</strong></th>
-                                        <th *ngIf="Vistas.Id45"><strong>Municipio</strong></th>
-                                        <th *ngIf="Vistas.Id46"><strong>Colonia</strong></th>
-                                        <th *ngIf="Vistas.Id47"><strong>Calle</strong></th>
-                                        <th *ngIf="Vistas.Id48"><strong>No. Ext.</strong></th>
-                                        <th *ngIf="Vistas.Id49"><strong>No. Int.</strong></th>
-                                        <th *ngIf="Vistas.Id50"><strong>CP</strong></th>
-                                        <th *ngIf="Vistas.Id51"><strong>Activo</strong></th>
-                                        <th *ngIf="Vistas.Id52"><strong>Es principal</strong></th>
-                                    </tr>
-                                    <tr>
-                                        <td *ngIf="Vistas.Id42"><span>{{ViewRequi?.direccion?.tipoDireccion}}</span></td>
-                                        <td *ngIf="Vistas.Id43"><span>{{ViewRequi?.direccion?.pais}}</span></td>
-                                        <td *ngIf="Vistas.Id44"><span>{{ViewRequi?.direccion?.estado}}</span></td>
-                                        <td *ngIf="Vistas.Id45"><span>{{ViewRequi?.direccion?.municipio}}</span></td>
-                                        <td *ngIf="Vistas.Id46"><span>{{ViewRequi?.direccion?.colonia}}</span></td>
-                                        <td *ngIf="Vistas.Id47"><span>{{ViewRequi?.direccion?.calle}}</span></td>
-                                        <td *ngIf="Vistas.Id48"><span>{{ViewRequi?.direccion?.numeroExterior}}</span></td>
-                                        <td *ngIf="Vistas.Id49"><span>{{ViewRequi?.direccion?.numeroInterior}}</span></td>
-                                        <td *ngIf="Vistas.Id50"><span>{{ViewRequi?.direccion?.codigoPostal}}</span></td>
-                                        <td *ngIf="Vistas.Id51"><span>{{ViewRequi?.direccion?.activo? 'Si': 'No'}}</span></td>
-                                        <td *ngIf="Vistas.Id52"><span>{{ViewRequi?.direccion?.esPrincipal? 'Si': 'No'}}</span></td>
-                                    </tr>
-                                </table>
-                                <div class="color-blue text-uppercase font-bold">Teléfonos:</div>
-                                <table class="table table-striped color-grey">
-                                    <tr>
-                                        <th *ngIf="Vistas.Id54"><strong>Tipo</strong></th>
-                                        <th *ngIf="Vistas.Id55"><strong>Telefono</strong></th>
-                                        <th *ngIf="Vistas.Id56"><strong>Extensión</strong></th>
-                                        <th *ngIf="Vistas.Id57"><strong>Activo</strong></th>
-                                        <th *ngIf="Vistas.Id58"><strong>Principal</strong></th>
-                                    </tr>
-                                    <tr *ngFor="let telefono of telefono; let i = index ">
-                                        <td *ngIf="Vistas.Id54"><span>{{telefono?.tipo}}</span></td>
-                                        <td *ngIf="Vistas.Id55"><span>{{telefono?.telefono}}</span></td>
-                                        <td *ngIf="Vistas.Id56"><span>{{telefono?.extension}}</span></td>
-                                        <td *ngIf="Vistas.Id57"><span>{{telefono?.activo? 'Si': 'No'}}</span></td>
-                                        <td *ngIf="Vistas.Id58"><span>{{telefono?.esPrincipal? 'Si': 'No'}}</span></td>
-                                    </tr>
-                                </table>
-                                <div class="color-blue text-uppercase font-bold">Contactos:</div>
-                                <table class="table table-striped color-grey">
-                                    <tr>
-                                        <th *ngIf="Vistas.Id60"><strong>Nombre</strong></th>
-                                        <th *ngIf="Vistas.Id61"><strong>Puesto</strong></th>
-                                        <th *ngIf="Vistas.Id62"><strong>Tipo</strong></th>
-                                        <th *ngIf="Vistas.Id63"><strong>Extensión</strong></th>
-                                        <th *ngIf="Vistas.Id64"><strong>Telefono</strong></th>
-                                        <th *ngIf="Vistas.Id65"><strong>Email</strong></th>
-                                    </tr>
-                                    <tr *ngFor="let contacto of contactos; let i = index ">
-                                        <td *ngIf="Vistas.Id60">{{contacto?.nombre}}</td>
-                                        <td *ngIf="Vistas.Id61">{{contacto?.puesto}}</td>
-                                        <td *ngIf="Vistas.Id62">{{contacto?.tipoEntidad}}</td>
-                                        <td *ngIf="Vistas.Id63">{{contacto?.extension}}</td>
-                                        <td *ngIf="Vistas.Id64">{{contacto?.telefono}}</td>
-                                        <td *ngIf="Vistas.Id64">{{contacto?.email}}</td>
-                                    </tr>
-                                </table>
-                                <div class="color-blue text-uppercase font-bold">Puesto a reclutar:</div>
-                                <ul class="DV">
-                                    <li *ngIf="Vistas.Id68">
-                                        <strong>Genero: </strong><span>Indistinto</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id71">
-                                        <strong>Estado civil: </strong><span>Indistinto</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id69 || Vistas.Id70">
-                                        <strong>Edad: </strong><span>Indistinto</span>
-                                    </li>
-                                    <li>
-                                        <table class="table table-striped color-grey">
-                                            <tr>
-                                                <th *ngIf="Vistas.Id73"><strong>Escolaridad: </strong></th>
-                                                <th *ngIf="Vistas.Id72"><strong>Nivel: </strong></th>
-                                            </tr>
-                                            <tr *ngFor="let escolaridades of escolaridadesRequi; let i = index">
-                                                <td *ngIf="Vistas.Id73"><span>{{escolaridades?.gradoEstudio}}</span></td>
-                                                <td *ngIf="Vistas.Id72"><span>{{escolaridades?.estadoEstudio}}</span></td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                    <li *ngIf="Vistas.Id74">
-                                        <strong>Aptitudes: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td style="vertical-align: middle;" *ngFor="let aptitudes of ViewRequi?.aptitudesRequis; let i = index">
-                                                    <span>{{aptitudes}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                    <li *ngIf="Vistas.Id75">
-                                        <strong>Experiencia: </strong><span> {{ViewRequi?.experiencia}}</span>
-                                    </li>
-                                </ul>
-                                <div class="color-blue text-uppercase font-bold">Horarios:</div>
-                                <table class="table table-striped color-grey">
-                                    <tr>
-                                        <th *ngIf="Vistas.Id77"><strong>Nombre</strong></th>
-                                        <th *ngIf="Vistas.Id78"><strong>de Día</strong></th>
-                                        <th *ngIf="Vistas.Id79"><strong>a Día</strong></th>
-                                        <th *ngIf="Vistas.Id80"><strong>de Hora</strong></th>
-                                        <th *ngIf="Vistas.Id81"><strong>a Hora</strong></th>
-                                        <th *ngIf="Vistas.Id82"><strong>Vacantes</strong></th>
-                                        <th *ngIf="Vistas.Id83"><strong>Especificaciones</strong></th>
-                                        <th *ngIf="Vistas.Id84"><strong>Activo</strong></th>
-                                    </tr>
-                                    <tr *ngFor="let horario of horariosRequi; let i = index ">
-                                        <td *ngIf="Vistas.Id77"><span>{{horario?.nombre}}</span></td>
-                                        <td *ngIf="Vistas.Id78"><span></span>{{horario?.deDia}}</td>
-                                        <td *ngIf="Vistas.Id79"><span></span>{{horario?.aDia}}</td>
-                                        <td *ngIf="Vistas.Id80"><span>{{horario?.deHora | date:'HH:mm':'UTC-6'}}</span></td>
-                                        <td *ngIf="Vistas.Id81"><span>{{horario?.aHora | date:'HH:mm':'UTC-6'}}</span></td>
-                                        <td *ngIf="Vistas.Id82"><span>{{horario?.numeroVacantes}}</span></td>
-                                        <td *ngIf="Vistas.Id83"><span>{{horario?.especificaciones}}</span></td>
-                                        <td *ngIf="Vistas.Id84"><span>{{horario?.activo? 'Si': 'No'}}</span></td>
-                                    </tr>
-                                </table>
-                                <div class="color-blue text-uppercase font-bold">Beneficios:</div>
-                                <table class="table table-striped color-grey">
-                                    <tr>
-                                        <th *ngIf="Vistas.Id86"><strong>Tipo</strong></th>
-                                        <th *ngIf="Vistas.Id87"><strong>Cantidad</strong></th>
-                                        <th *ngIf="Vistas.Id88"><strong>Observaciones</strong></th>
-                                    </tr>
-                                    <tr *ngFor="let beneficio of beneficiosRequi; let i = index ">
-                                        <td *ngIf="Vistas.Id86"><span>{{beneficio?.tipoBeneficio}}</span></td>
-                                        <td *ngIf="Vistas.Id87"><span>{{beneficio?.cantidad}}</span></td>
-                                        <td *ngIf="Vistas.Id88"><span>{{beneficio?.observaciones}}</span></td>
-                                    </tr>
-                                </table>
-                                <div class="color-blue text-uppercase font-bold">Puesto:</div>
-                                <ul class="DV">
-                                    <li *ngIf="Vistas.Id90">
-                                        <strong>Actividades: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td style="vertical-align: middle;" *ngFor="let actividad of ViewRequi?.actividadesRequis; let i = index">
-                                                    <span>{{actividad}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                    <li *ngIf="Vistas.Id91">
-                                        <strong>Observaciones: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td style="vertical-align: middle;" *ngFor="let observaciones of ViewRequi?.observacionesRequi; let i = index">
-                                                    <span>{{observaciones}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                    <li *ngIf="Vistas.Id92">
-                                        <strong>Proceso: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td style="vertical-align: middle;" *ngFor="let proceso of ViewRequi?.procesoRequi; let i = index">
-                                                    <span>{{proceso?.proceso}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                </ul>
-                                <div class="color-blue text-uppercase font-bold">Sueldos:</div>
-                                <ul class="DV">
-                                    <li *ngIf="Vistas.Id94">
-                                        <strong>Periodo pago: </strong><span>{{ViewRequi?.periodoPago}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id95">
-                                        <strong>Día corte: </strong><span>{{ViewRequi?.diaCorte}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id96">
-                                        <strong>Día pago: </strong><span>{{ViewRequi?.diaPago}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id97">
-                                        <strong>Tipo nomina: </strong><span>{{ViewRequi?.tipoDeNomina}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id98">
-                                        <strong>Sueldo minimo: </strong><span>${{ViewRequi?.sueldoMinimo | number: '1.2-2'}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id99">
-                                        <strong>Sueldo máximo: </strong><span>${{ViewRequi?.sueldoMaximo | number: '1.2-2'}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id100">
-                                        <strong>Diario minimo: </strong><span>${{ViewRequi?.sueldoMinimo/30.6 | number: '1.2-2'}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id101">
-                                        <strong>Diario máximo: </strong><span>${{ViewRequi?.sueldoMaximo/30.6 | number: '1.2-2'}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id102">
-                                        <strong>Semanal minimo: </strong><span>${{ViewRequi?.sueldoMinimo/7 | number: '1.2-2'}}</span>
-                                    </li>
-                                    <li *ngIf="Vistas.Id103">
-                                        <strong>Semanal máximo: </strong><span>${{ViewRequi?.sueldoMaximo/7 | number: '1.2-2'}}</span>
-                                    </li>
-                                </ul>
-                                <div class="color-blue text-uppercase font-bold">Documentación:</div>
-                                <ul class="DV" id="lista1">
-                                    <li *ngIf="Vistas.Id105">
-                                        <strong>Documentos damsa: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td *ngFor="let documentodamsa of ViewRequi?.documentosDamsa; let i = index">
-                                                    <span>{{documentodamsa}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                    <li *ngIf="Vistas.Id106">
-                                        <strong>Documentos cliente: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td *ngFor="let documentorequi of ViewRequi?.documentosCliente; let i = index">
-                                                    <span>{{documentorequi}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                </ul>
-                                <div class="color-blue text-uppercase font-bold">Prestaciones:</div>
-                                <ul class="DV">
-                                    <li *ngIf="Vistas.Id108">
-                                        <strong>Prestaciones de ley: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td *ngFor="let prestacionesley of ViewRequi?.prestacionLey; let i = index">
-                                                    <span>{{prestacionesley}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                    <li *ngIf="Vistas.Id109">
-                                        <strong>Prestaciones adicionales: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td *ngFor="let prestacionesrequi of ViewRequi?.prestacionesRequi; let i = index">
-                                                    <span>{{prestacionesrequi}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                </ul>
-                                <div class="color-blue text-uppercase font-bold">Psicometrias Damsa:</div>
-                                <table class="table table-striped color-grey">
-                                    <tr>
-                                        <th *ngIf="Vistas.Id111"><strong>Nombre</strong></th>
-                                        <th *ngIf="Vistas.Id112"><strong>Descripcion</strong></th>
-                                    </tr>
-                                    <tr *ngFor="let psicodamsa of psicoDamsa; let i = index">
-                                        <td *ngIf="Vistas.Id111"><span>{{psicodamsa?.tipoPsicometria}}</span></td>
-                                        <td *ngIf="Vistas.Id112"><span>{{psicodamsa?.descripcion}}</span></td>
-                                    </tr>
-                                </table>
-                                <div class="color-blue text-uppercase font-bold">Competencias:</div>
-                                <ul class="DV">
-                                    <li *ngIf="Vistas.Id114">
-                                        <strong>Competencias cardinal: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td *ngFor="let compcardinal of ViewRequi?.competenciasCardinal; let i = index">
-                                                    <span>{{compcardinal?.competenciaCardinal}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                    <li *ngIf="Vistas.Id115">
-                                        <strong>Competencias area: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td *ngFor="let comparea of ViewRequi?.competenciasArea; let i = index">
-                                                    <span>{{comparea?.competenciaArea}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                    <li *ngIf="Vistas.Id116">
-                                        <strong>Competencia gerencial: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td *ngFor="let compgerencial of ViewRequi?.competenciaGerencial; let i = index">
-                                                    <span>{{compgerencial?.competenciaGerencial}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                </ul>
-                                <div class="color-blue text-uppercase font-bold">Psicometrias:</div>
-                                <table class="table table-striped color-grey">
-                                    <tr>
-                                        <th *ngIf="Vistas.Id244"><strong>Nombre</strong></th>
-                                        <th *ngIf="Vistas.Id245"><strong>Descripcion</strong></th>
-                                    </tr>
-                                    <tr *ngFor="let psico of psicoCliente; let i = index">
-                                        <td *ngIf="Vistas.Id244"><span>{{psico?.psicometria}}</span></td>
-                                        <td *ngIf="Vistas.Id245"><span>{{psico?.descripcion}}</span></td>
-                                    </tr>
-                                </table>
-                                <!-- <div class="color-blue text-uppercase font-bold">Reclutamiento:</div>
-                                                                        <ul class="DV">
-                                                                            <li>
-                                                                                <strong>Tipo reclutamiento: </strong><span>{{ViewRequi?.tipoReclutamiento}}</span>
-                                                                            </li>
-                                                                            <li>
-                                                                                <strong>Clase reclutamiento: </strong><span>{{ViewRequi?.claseReclutamiento}}</span>
-                                                                            </li>
-                                                                        </ul> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </mat-tab>
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <mat-icon class="example-tab-icon">list</mat-icon>
-                Detalle
-            </ng-template>
-            <div class="row">
-                <div class="col-md-6">
-                    <mat-accordion class="m-4">
-                        <mat-expansion-panel *ngFor="let detalle of Clasifica" [expanded]="stepd === detalle.id" (opened)="setStepD(detalle.id)" hideToggle="true">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title style="font-weight: bold;">
-                                    {{detalle.nombre}}
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    {{detalle.descripcion}}
-                                </mat-panel-description>
-                            </mat-expansion-panel-header>
-                            <div class="row">
-                                <div *ngFor="let item2 of General">
-                                    <div class="col-md-12" *ngIf="detalle.id == item2.idPadre;">
-                                        <div class="panel panel-default sombra">
-                                            <div class="panel-body">
-                                                <div class="table-responsive">
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                            <tr>
-                                                                <th colspan="2">
-                                                                    <h5 class="font-bold">{{item2.nombre}}</h5>
-                                                                </th>
-                                                                <th colspan="2">
-                                                                    <mat-slide-toggle [color]="primary" [checked]="item2.detalle" (change)="SetDetalle(item2.id,item2.nombre, $event.checked)">
-                                                                    </mat-slide-toggle>
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        </tbody>
-                                                    </table>
+                                    <div *ngFor="let item2 of General">
+                                        <div class="col-md-12" *ngIf="item.id == item2.idPadre;">
+                                            <div class="panel panel-default sombra">
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th colspan="2">
+                                                                        <h5 class="font-bold">{{item2.nombre}}</h5>
+                                                                    </th>
+                                                                    <th colspan="2">
+                                                                        <mat-slide-toggle id="Resumen_{{item2.id}}" [color]="primary" [checked]="item2.resumen" (change)="SetResumen(item2.id,item2.nombre, $event.checked)">
+                                                                        </mat-slide-toggle>
+                                                                    </th>
+                                                                    <!-- <th colspan="2">{{item2.nombre}}</th>
+                                                                                    <th colspan="7">
+                                                                                        <label class="switch  switch-lg danger">
+                                                                                                    <div *ngIf="item2.resumen; then pintaSI else pintaNo"></div>
+                                                                                                    <ng-template #pintaSI>
+                                                                                                        <input checked id="Resumen_{{item2.id}}" (click)="SetResumen(item2.id,item2.nombre)" type="checkbox" />
+                                                                                                    </ng-template>
+                                                                                                    <ng-template #pintaNo>
+                                                                                                        <input id="Resumen_{{item2.id}}" (click)="SetResumen(item2.id,item2.nombre)" type="checkbox" />
+                                                                                                    </ng-template>
+                                                                                                    <span></span>
+                                                                                            </label>
+                                                                                    </th> -->
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <mat-action-row>
-                                <button mat-button color="primary" (click)="nextStepD()">Cerrar</button>
-                            </mat-action-row>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                </div>
-                <div class="col-md-6">
-                    <div>
-                        <!-- Detalle -->
-                        <div class="row col-results example-large-box mat-elevation-z4">
-                            <div class="job-description">
-                                <div class="color-blue text-uppercase font-bold">Datos de la vacante:</div>
-                                <ul class="DV">
-                                    <li *ngIf="Vistasdtl.Idd19">
-                                        <strong>Folio: </strong><span>{{ViewRequi?.folio}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd20">
-                                        <strong>Prioridad: </strong><span>{{ViewRequi?.prioridad}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd21">
-                                        <strong>Fecha creación: </strong><span>{{ViewRequi?.fch_Creacion | date}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd22">
-                                        <strong>Fecha limite: </strong><span>{{ViewRequi?.fch_Limite | date}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd23">
-                                        <strong>Fecha cumplimiento: </strong><span>{{ViewRequi?.fch_Cumplimiento | date}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd136">
-                                        <strong>Días envio: </strong><span>{{ViewRequi?.diasEnvio}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd24">
-                                        <strong>Estatus: </strong><span>{{ViewRequi?.estatus}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd25">
-                                        <strong>Confidencial: </strong><span>{{ViewRequi?.confidencial? 'Si': 'No'}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd26">
-                                        <strong>Asignada: </strong><span>{{ViewRequi?.asignada? 'Si': 'No'}}</span>
-                                    </li>
-                                </ul>
-                                <div class="color-blue text-uppercase font-bold">Información General:</div>
-                                <ul class="DV">
-                                    <li *ngIf="Vistasdtl.Idd29">
-                                        <strong>Logotipo: </strong><span><img src="{{ViewRequi?.logotipo}}" alt=""></span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd30">
-                                        <strong>Nombre: </strong><span>{{ViewRequi?.nombrecomercial}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd31">
-                                        <strong>Razon: </strong><span>{{ViewRequi?.razonSocial}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd32">
-                                        <strong>RFC: </strong><span>{{ViewRequi?.rfc}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd33">
-                                        <strong>Giro: </strong><span>{{ViewRequi?.giroEmpresa}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd34">
-                                        <strong>Actividad: </strong><span>{{ViewRequi?.actividadEmpresa}}</span>
-                                    </li>
-                                </ul>
-                                <div class="color-blue text-uppercase font-bold">Contrato:</div>
-                                <ul class="DV">
-                                    <li *ngIf="Vistasdtl.Idd40">
-                                        <strong>Tipo contrato: </strong><span>{{ViewRequi?.tipoContrato}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd242">
-                                        <strong>Disa de prueba: </strong><span>{{ViewRequi?.periodoPrueba? 'Si': 'No'}}</span>
-                                    </li>
-                                </ul>
-                                <div class="color-blue text-uppercase font-bold">Direcciones:</div>
-                                <table class="table table-striped color-grey">
-                                    <tr>
-                                        <th *ngIf="Vistasdtl.Idd42"><strong>Tipo</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd43"><strong>País</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd44"><strong>Estado</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd45"><strong>Municipio</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd46"><strong>Colonia</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd47"><strong>Calle</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd48"><strong>No. Ext.</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd49"><strong>No. Int.</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd50"><strong>CP</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd51"><strong>Activo</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd52"><strong>Es principal</strong></th>
-                                    </tr>
-                                    <tr>
-                                        <td *ngIf="Vistasdtl.Idd42"><span>{{ViewRequi?.direccion?.tipoDireccion}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd43"><span>{{ViewRequi?.direccion?.pais}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd44"><span>{{ViewRequi?.direccion?.estado}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd45"><span>{{ViewRequi?.direccion?.municipio}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd46"><span>{{ViewRequi?.direccion?.colonia}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd47"><span>{{ViewRequi?.direccion?.calle}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd48"><span>{{ViewRequi?.direccion?.numeroExterior}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd49"><span>{{ViewRequi?.direccion?.numeroInterior}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd50"><span>{{ViewRequi?.direccion?.codigoPostal}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd51"><span>{{ViewRequi?.direccion?.activo? 'Si': 'No'}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd52"><span>{{ViewRequi?.direccion?.esPrincipal? 'Si': 'No'}}</span></td>
-                                    </tr>
-                                </table>
-                                <div class="color-blue text-uppercase font-bold">Teléfonos:</div>
-                                <table class="table table-striped color-grey">
-                                    <tr>
-                                        <th *ngIf="Vistasdtl.Idd54"><strong>Tipo</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd55"><strong>Telefono</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd56"><strong>Extensión</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd57"><strong>Activo</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd58"><strong>Principal</strong></th>
-                                    </tr>
-                                    <tr *ngFor="let telefono of telefono; let i = index ">
-                                        <td *ngIf="Vistasdtl.Idd54"><span>{{telefono?.tipo}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd55"><span>{{telefono?.telefono}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd56"><span>{{telefono?.extension}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd57"><span>{{telefono?.activo? 'Si': 'No'}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd58"><span>{{telefono?.esPrincipal? 'Si': 'No'}}</span></td>
-                                    </tr>
-                                </table>
-                                <div class="color-blue text-uppercase font-bold">Contactos:</div>
-                                <table class="table table-striped color-grey">
-                                    <tr>
-                                        <th *ngIf="Vistasdtl.Idd60"><strong>Nombre</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd61"><strong>Puesto</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd62"><strong>Tipo</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd63"><strong>Extensión</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd64"><strong>Telefono</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd65"><strong>Email</strong></th>
-                                    </tr>
-                                    <tr *ngFor="let contacto of contactos; let i = index ">
-                                        <td *ngIf="Vistasdtl.Idd60">{{contacto?.nombre}}</td>
-                                        <td *ngIf="Vistasdtl.Idd61">{{contacto?.puesto}}</td>
-                                        <td *ngIf="Vistasdtl.Idd62">{{contacto?.tipoEntidad}}</td>
-                                        <td *ngIf="Vistasdtl.Idd63">{{contacto?.extension}}</td>
-                                        <td *ngIf="Vistasdtl.Idd64">{{contacto?.telefono}}</td>
-                                        <td *ngIf="Vistasdtl.Idd64">{{contacto?.email}}</td>
-                                    </tr>
-                                </table>
-                                <div class="color-blue text-uppercase font-bold">Puesto a reclutar:</div>
-                                <ul class="DV">
-                                    <li *ngIf="Vistasdtl.Idd68">
-                                        <strong>Genero: </strong><span>Indistinto</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd71">
-                                        <strong>Estado civil: </strong><span>Indistinto</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd69 || Vistasdtl.Idd70">
-                                        <strong>Edad: </strong><span>Indistinto</span>
-                                    </li>
-                                    <li>
-                                        <table class="table table-striped color-grey">
-                                            <tr>
-                                                <th *ngIf="Vistasdtl.Idd73"><strong>Escolaridad: </strong></th>
-                                                <th *ngIf="Vistasdtl.Idd72"><strong>Nivel: </strong></th>
-                                            </tr>
-                                            <tr *ngFor="let escolaridades of escolaridadesRequi; let i = index">
-                                                <td *ngIf="Vistasdtl.Idd73"><span>{{escolaridades?.gradoEstudio}}</span></td>
-                                                <td *ngIf="Vistasdtl.Idd72"><span>{{escolaridades?.estadoEstudio}}</span></td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd74">
-                                        <strong>Aptitudes: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td style="vertical-align: middle;" *ngFor="let aptitudes of ViewRequi?.aptitudesRequis; let i = index">
-                                                    <span>{{aptitudes}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd75">
-                                        <strong>Experiencia: </strong><span> {{ViewRequi?.experiencia}}</span>
-                                    </li>
-                                </ul>
-                                <div class="color-blue text-uppercase font-bold">Horarios:</div>
-                                <table class="table table-striped color-grey">
-                                    <tr>
-                                        <th *ngIf="Vistasdtl.Idd77"><strong>Nombre</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd78"><strong>de Día</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd79"><strong>a Día</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd80"><strong>de Hora</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd81"><strong>a Hora</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd82"><strong>Vacantes</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd83"><strong>Especificaciones</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd84"><strong>Activo</strong></th>
-                                    </tr>
-                                    <tr *ngFor="let horario of horariosRequi; let i = index ">
-                                        <td *ngIf="Vistasdtl.Idd77"><span>{{horario?.nombre}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd78"><span></span>{{horario?.deDia}}</td>
-                                        <td *ngIf="Vistasdtl.Idd79"><span></span>{{horario?.aDia}}</td>
-                                        <td *ngIf="Vistasdtl.Idd80"><span>{{horario?.deHora | date:'HH:mm':'UTC-6'}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd81"><span>{{horario?.aHora | date:'HH:mm':'UTC-6'}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd82"><span>{{horario?.numeroVacantes}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd83"><span>{{horario?.especificaciones}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd84"><span>{{horario?.activo? 'Si': 'No'}}</span></td>
-                                    </tr>
-                                </table>
-                                <div class="color-blue text-uppercase font-bold">Beneficios:</div>
-                                <table class="table table-striped color-grey">
-                                    <tr>
-                                        <th *ngIf="Vistasdtl.Idd86"><strong>Tipo</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd87"><strong>Cantidad</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd88"><strong>Observaciones</strong></th>
-                                    </tr>
-                                    <tr *ngFor="let beneficio of beneficiosRequi; let i = index ">
-                                        <td *ngIf="Vistasdtl.Idd86"><span>{{beneficio?.tipoBeneficio}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd87"><span>{{beneficio?.cantidad}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd88"><span>{{beneficio?.observaciones}}</span></td>
-                                    </tr>
-                                </table>
-                                <div class="color-blue text-uppercase font-bold">Puesto:</div>
-                                <ul class="DV">
-                                    <li *ngIf="Vistasdtl.Idd90">
-                                        <strong>Actividades: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td style="vertical-align: middle;" *ngFor="let actividad of ViewRequi?.actividadesRequis; let i = index">
-                                                    <span>{{actividad}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd91">
-                                        <strong>Observaciones: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td style="vertical-align: middle;" *ngFor="let observaciones of ViewRequi?.observacionesRequi; let i = index">
-                                                    <span>{{observaciones}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd92">
-                                        <strong>Proceso: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td style="vertical-align: middle;" *ngFor="let proceso of ViewRequi?.procesoRequi; let i = index">
-                                                    <span>{{proceso?.proceso}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                </ul>
-                                <div class="color-blue text-uppercase font-bold">Sueldos:</div>
-                                <ul class="DV">
-                                    <li *ngIf="Vistasdtl.Idd94">
-                                        <strong>Periodo pago: </strong><span>{{ViewRequi?.periodoPago}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd95">
-                                        <strong>Día corte: </strong><span>{{ViewRequi?.diaCorte}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd96">
-                                        <strong>Día pago: </strong><span>{{ViewRequi?.diaPago}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd97">
-                                        <strong>Tipo nomina: </strong><span>{{ViewRequi?.tipoDeNomina}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd98">
-                                        <strong>Sueldo minimo: </strong><span>${{ViewRequi?.sueldoMinimo | number: '1.2-2'}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd99">
-                                        <strong>Sueldo máximo: </strong><span>${{ViewRequi?.sueldoMaximo | number: '1.2-2'}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd100">
-                                        <strong>Diario minimo: </strong><span>${{ViewRequi?.sueldoMinimo/30.6 | number: '1.2-2'}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd101">
-                                        <strong>Diario máximo: </strong><span>${{ViewRequi?.sueldoMaximo/30.6 | number: '1.2-2'}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd102">
-                                        <strong>Semanal minimo: </strong><span>${{ViewRequi?.sueldoMinimo/7 | number: '1.2-2'}}</span>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd103">
-                                        <strong>Semanal máximo: </strong><span>${{ViewRequi?.sueldoMaximo/7 | number: '1.2-2'}}</span>
-                                    </li>
-                                </ul>
-                                <div class="color-blue text-uppercase font-bold">Documentación:</div>
-                                <ul class="DV" id="lista1">
-                                    <li *ngIf="Vistasdtl.Idd105">
-                                        <strong>Documentos damsa: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td *ngFor="let documentodamsa of ViewRequi?.documentosDamsa; let i = index">
-                                                    <span>{{documentodamsa}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd106">
-                                        <strong>Documentos cliente: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td *ngFor="let documentorequi of ViewRequi?.documentosCliente; let i = index">
-                                                    <span>{{documentorequi}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                </ul>
-                                <div class="color-blue text-uppercase font-bold">Prestaciones:</div>
-                                <ul class="DV">
-                                    <li *ngIf="Vistasdtl.Idd108">
-                                        <strong>Prestaciones de ley: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td *ngFor="let prestacionesley of ViewRequi?.prestacionLey; let i = index">
-                                                    <span>{{prestacionesley}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd109">
-                                        <strong>Prestaciones adicionales: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td *ngFor="let prestacionesrequi of ViewRequi?.prestacionesRequi; let i = index">
-                                                    <span>{{prestacionesrequi}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                </ul>
-                                <div class="color-blue text-uppercase font-bold">Psicometrias Damsa:</div>
-                                <table class="table table-striped color-grey">
-                                    <tr>
-                                        <th *ngIf="Vistasdtl.Idd111"><strong>Nombre</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd112"><strong>Descripcion</strong></th>
-                                    </tr>
-                                    <tr *ngFor="let psicodamsa of psicoDamsa; let i = index">
-                                        <td *ngIf="Vistasdtl.Idd111"><span>{{psicodamsa?.tipoPsicometria}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd112"><span>{{psicodamsa?.descripcion}}</span></td>
-                                    </tr>
-                                </table>
-                                <div class="color-blue text-uppercase font-bold">Competencias:</div>
-                                <ul class="DV">
-                                    <li *ngIf="Vistasdtl.Idd114">
-                                        <strong>Competencias cardinal: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td *ngFor="let compcardinal of ViewRequi?.competenciasCardinal; let i = index">
-                                                    <span>{{compcardinal?.competenciaCardinal}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd115">
-                                        <strong>Competencias area: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td *ngFor="let comparea of ViewRequi?.competenciasArea; let i = index">
-                                                    <span>{{comparea?.competenciaArea}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                    <li *ngIf="Vistasdtl.Idd116">
-                                        <strong>Competencia gerencial: </strong>
-                                        <table class="table table-striped">
-                                            <tr>
-                                                <td *ngFor="let compgerencial of ViewRequi?.competenciaGerencial; let i = index">
-                                                    <span>{{compgerencial?.competenciaGerencial}}</span>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </li>
-                                </ul>
-                                <div class="color-blue text-uppercase font-bold">Psicometrias:</div>
-                                <table class="table table-striped color-grey">
-                                    <tr>
-                                        <th *ngIf="Vistasdtl.Idd244"><strong>Nombre</strong></th>
-                                        <th *ngIf="Vistasdtl.Idd245"><strong>Descripcion</strong></th>
-                                    </tr>
-                                    <tr *ngFor="let psico of psicoCliente; let i = index">
-                                        <td *ngIf="Vistasdtl.Idd244"><span>{{psico?.psicometria}}</span></td>
-                                        <td *ngIf="Vistasdtl.Idd245"><span>{{psico?.descripcion}}</span></td>
-                                    </tr>
-                                </table>
-                                <hr>
+                                <mat-action-row>
+                                    <button mat-button color="primary" (click)="nextStep()">Cerrar</button>
+                                </mat-action-row>
+                            </mat-expansion-panel>
+
+                            <!-- <div class="col-xs-12" style="margin:20px">
+                                                              <div class="col-xs-2  pull-right">
+                                                                <button _ngcontent-c40="" class="mb-sm btn-md btn btn-success btn-outline "  container="body" placement="bottom" tooltip="Publicar" type="button" tabindex="0" ng-reflect-router-link="/ventas/crearRequisicion" aria-describedby="cdk-describedby-message-2" cdk-describedby-host="" ng-reflect-message="Nueva Requisición">
+                                                                    <em _ngcontent-c40="" class="fa fa-download"></em> Publicar vacante
+                                                                  </button>
+                                                              </div>
+                                                          </div> -->
+                        </mat-accordion>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <!-- Resumen -->
+                            <div class="row col-results example-large-box mat-elevation-z4">
+                                <div class="job-name">
+                                    <div class="row">
+                                        <div class="col-md-9"><img src="../../../../../assets/img/icon-arrow.png" />
+                                            <span *ngIf="Vistas.Id67" class="font-bold font-family:'Lato' margin-left-15x">  {{VBtra}} </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="job-description">
+                                    <div class="color-blue text-uppercase font-bold">Datos de la vacante:</div>
+                                    <ul class="DV">
+                                        <li *ngIf="Vistas.Id19">
+                                            <strong>Folio: </strong><span>{{ViewRequi?.folio}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id20">
+                                            <strong>Prioridad: </strong><span>{{ViewRequi?.prioridad}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id21">
+                                            <strong>Fecha creación: </strong><span>{{ViewRequi?.fch_Creacion | date}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id22">
+                                            <strong>Fecha limite: </strong><span>{{ViewRequi?.fch_Limite | date}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id23">
+                                            <strong>Fecha cumplimiento: </strong><span>{{ViewRequi?.fch_Cumplimiento | date}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id136">
+                                            <strong>Días envio: </strong><span>{{ViewRequi?.diasEnvio}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id24">
+                                            <strong>Estatus: </strong><span>{{ViewRequi?.estatus}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id25">
+                                            <strong>Confidencial: </strong><span>{{ViewRequi?.confidencial? 'Si': 'No'}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id26">
+                                            <strong>Asignada: </strong><span>{{ViewRequi?.asignada? 'Si': 'No'}}</span>
+                                        </li>
+                                    </ul>
+                                    <div class="color-blue text-uppercase font-bold">Información General:</div>
+                                    <ul class="DV">
+                                        <li *ngIf="Vistas.Id29">
+                                            <strong>Logotipo: </strong><span><img src="{{ViewRequi?.logotipo}}" alt=""></span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id30">
+                                            <strong>Nombre: </strong><span>{{ViewRequi?.nombrecomercial}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id31">
+                                            <strong>Razon: </strong><span>{{ViewRequi?.razonSocial}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id32">
+                                            <strong>RFC: </strong><span>{{ViewRequi?.rfc}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id33">
+                                            <strong>Giro: </strong><span>{{ViewRequi?.giroEmpresa}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id34">
+                                            <strong>Actividad: </strong><span>{{ViewRequi?.actividadEmpresa}}</span>
+                                        </li>
+                                    </ul>
+                                    <div class="color-blue text-uppercase font-bold">Contrato:</div>
+                                    <ul class="DV">
+                                        <li *ngIf="Vistas.Id40">
+                                            <strong>Tipo contrato: </strong><span>{{ViewRequi?.tipoContrato}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id242">
+                                            <strong>Disa de prueba: </strong><span>{{ViewRequi?.periodoPrueba? 'Si': 'No'}}</span>
+                                        </li>
+                                    </ul>
+                                    <div class="color-blue text-uppercase font-bold">Direcciones:</div>
+                                    <table class="table table-striped color-grey">
+                                        <tr>
+                                            <th *ngIf="Vistas.Id42"><strong>Tipo</strong></th>
+                                            <th *ngIf="Vistas.Id43"><strong>País</strong></th>
+                                            <th *ngIf="Vistas.Id44"><strong>Estado</strong></th>
+                                            <th *ngIf="Vistas.Id45"><strong>Municipio</strong></th>
+                                            <th *ngIf="Vistas.Id46"><strong>Colonia</strong></th>
+                                            <th *ngIf="Vistas.Id47"><strong>Calle</strong></th>
+                                            <th *ngIf="Vistas.Id48"><strong>No. Ext.</strong></th>
+                                            <th *ngIf="Vistas.Id49"><strong>No. Int.</strong></th>
+                                            <th *ngIf="Vistas.Id50"><strong>CP</strong></th>
+                                            <th *ngIf="Vistas.Id51"><strong>Activo</strong></th>
+                                            <th *ngIf="Vistas.Id52"><strong>Es principal</strong></th>
+                                        </tr>
+                                        <tr>
+                                            <td *ngIf="Vistas.Id42"><span>{{ViewRequi?.direccion?.tipoDireccion}}</span></td>
+                                            <td *ngIf="Vistas.Id43"><span>{{ViewRequi?.direccion?.pais}}</span></td>
+                                            <td *ngIf="Vistas.Id44"><span>{{ViewRequi?.direccion?.estado}}</span></td>
+                                            <td *ngIf="Vistas.Id45"><span>{{ViewRequi?.direccion?.municipio}}</span></td>
+                                            <td *ngIf="Vistas.Id46"><span>{{ViewRequi?.direccion?.colonia}}</span></td>
+                                            <td *ngIf="Vistas.Id47"><span>{{ViewRequi?.direccion?.calle}}</span></td>
+                                            <td *ngIf="Vistas.Id48"><span>{{ViewRequi?.direccion?.numeroExterior}}</span></td>
+                                            <td *ngIf="Vistas.Id49"><span>{{ViewRequi?.direccion?.numeroInterior}}</span></td>
+                                            <td *ngIf="Vistas.Id50"><span>{{ViewRequi?.direccion?.codigoPostal}}</span></td>
+                                            <td *ngIf="Vistas.Id51"><span>{{ViewRequi?.direccion?.activo? 'Si': 'No'}}</span></td>
+                                            <td *ngIf="Vistas.Id52"><span>{{ViewRequi?.direccion?.esPrincipal? 'Si': 'No'}}</span></td>
+                                        </tr>
+                                    </table>
+                                    <div class="color-blue text-uppercase font-bold">Teléfonos:</div>
+                                    <table class="table table-striped color-grey">
+                                        <tr>
+                                            <th *ngIf="Vistas.Id54"><strong>Tipo</strong></th>
+                                            <th *ngIf="Vistas.Id55"><strong>Telefono</strong></th>
+                                            <th *ngIf="Vistas.Id56"><strong>Extensión</strong></th>
+                                            <th *ngIf="Vistas.Id57"><strong>Activo</strong></th>
+                                            <th *ngIf="Vistas.Id58"><strong>Principal</strong></th>
+                                        </tr>
+                                        <tr *ngFor="let telefono of telefono; let i = index ">
+                                            <td *ngIf="Vistas.Id54"><span>{{telefono?.tipo}}</span></td>
+                                            <td *ngIf="Vistas.Id55"><span>{{telefono?.telefono}}</span></td>
+                                            <td *ngIf="Vistas.Id56"><span>{{telefono?.extension}}</span></td>
+                                            <td *ngIf="Vistas.Id57"><span>{{telefono?.activo? 'Si': 'No'}}</span></td>
+                                            <td *ngIf="Vistas.Id58"><span>{{telefono?.esPrincipal? 'Si': 'No'}}</span></td>
+                                        </tr>
+                                    </table>
+                                    <div class="color-blue text-uppercase font-bold">Contactos:</div>
+                                    <table class="table table-striped color-grey">
+                                        <tr>
+                                            <th *ngIf="Vistas.Id60"><strong>Nombre</strong></th>
+                                            <th *ngIf="Vistas.Id61"><strong>Puesto</strong></th>
+                                            <th *ngIf="Vistas.Id62"><strong>Tipo</strong></th>
+                                            <th *ngIf="Vistas.Id63"><strong>Extensión</strong></th>
+                                            <th *ngIf="Vistas.Id64"><strong>Telefono</strong></th>
+                                            <th *ngIf="Vistas.Id65"><strong>Email</strong></th>
+                                        </tr>
+                                        <tr *ngFor="let contacto of contactos; let i = index ">
+                                            <td *ngIf="Vistas.Id60">{{contacto?.nombre}}</td>
+                                            <td *ngIf="Vistas.Id61">{{contacto?.puesto}}</td>
+                                            <td *ngIf="Vistas.Id62">{{contacto?.tipoEntidad}}</td>
+                                            <td *ngIf="Vistas.Id63">{{contacto?.extension}}</td>
+                                            <td *ngIf="Vistas.Id64">{{contacto?.telefono}}</td>
+                                            <td *ngIf="Vistas.Id64">{{contacto?.email}}</td>
+                                        </tr>
+                                    </table>
+                                    <div class="color-blue text-uppercase font-bold">Puesto a reclutar:</div>
+                                    <ul class="DV">
+                                        <li *ngIf="Vistas.Id68">
+                                            <strong>Genero: </strong><span>Indistinto</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id71">
+                                            <strong>Estado civil: </strong><span>Indistinto</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id69 || Vistas.Id70">
+                                            <strong>Edad: </strong><span>Indistinto</span>
+                                        </li>
+                                        <li>
+                                            <table class="table table-striped color-grey">
+                                                <tr>
+                                                    <th *ngIf="Vistas.Id73"><strong>Escolaridad: </strong></th>
+                                                    <th *ngIf="Vistas.Id72"><strong>Nivel: </strong></th>
+                                                </tr>
+                                                <tr *ngFor="let escolaridades of escolaridadesRequi; let i = index">
+                                                    <td *ngIf="Vistas.Id73"><span>{{escolaridades?.gradoEstudio}}</span></td>
+                                                    <td *ngIf="Vistas.Id72"><span>{{escolaridades?.estadoEstudio}}</span></td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                        <li *ngIf="Vistas.Id74">
+                                            <strong>Aptitudes: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td style="vertical-align: middle;" *ngFor="let aptitudes of ViewRequi?.aptitudesRequis; let i = index">
+                                                        <span>{{aptitudes}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                        <li *ngIf="Vistas.Id75">
+                                            <strong>Experiencia: </strong><span> {{ViewRequi?.experiencia}}</span>
+                                        </li>
+                                    </ul>
+                                    <div class="color-blue text-uppercase font-bold">Horarios:</div>
+                                    <table class="table table-striped color-grey">
+                                        <tr>
+                                            <th *ngIf="Vistas.Id77"><strong>Nombre</strong></th>
+                                            <th *ngIf="Vistas.Id78"><strong>de Día</strong></th>
+                                            <th *ngIf="Vistas.Id79"><strong>a Día</strong></th>
+                                            <th *ngIf="Vistas.Id80"><strong>de Hora</strong></th>
+                                            <th *ngIf="Vistas.Id81"><strong>a Hora</strong></th>
+                                            <th *ngIf="Vistas.Id82"><strong>Vacantes</strong></th>
+                                            <th *ngIf="Vistas.Id83"><strong>Especificaciones</strong></th>
+                                            <th *ngIf="Vistas.Id84"><strong>Activo</strong></th>
+                                        </tr>
+                                        <tr *ngFor="let horario of horariosRequi; let i = index ">
+                                            <td *ngIf="Vistas.Id77"><span>{{horario?.nombre}}</span></td>
+                                            <td *ngIf="Vistas.Id78"><span></span>{{horario?.deDia}}</td>
+                                            <td *ngIf="Vistas.Id79"><span></span>{{horario?.aDia}}</td>
+                                            <td *ngIf="Vistas.Id80"><span>{{horario?.deHora | date:'HH:mm':'UTC-6'}}</span></td>
+                                            <td *ngIf="Vistas.Id81"><span>{{horario?.aHora | date:'HH:mm':'UTC-6'}}</span></td>
+                                            <td *ngIf="Vistas.Id82"><span>{{horario?.numeroVacantes}}</span></td>
+                                            <td *ngIf="Vistas.Id83"><span>{{horario?.especificaciones}}</span></td>
+                                            <td *ngIf="Vistas.Id84"><span>{{horario?.activo? 'Si': 'No'}}</span></td>
+                                        </tr>
+                                    </table>
+                                    <div class="color-blue text-uppercase font-bold">Beneficios:</div>
+                                    <table class="table table-striped color-grey">
+                                        <tr>
+                                            <th *ngIf="Vistas.Id86"><strong>Tipo</strong></th>
+                                            <th *ngIf="Vistas.Id87"><strong>Cantidad</strong></th>
+                                            <th *ngIf="Vistas.Id88"><strong>Observaciones</strong></th>
+                                        </tr>
+                                        <tr *ngFor="let beneficio of beneficiosRequi; let i = index ">
+                                            <td *ngIf="Vistas.Id86"><span>{{beneficio?.tipoBeneficio}}</span></td>
+                                            <td *ngIf="Vistas.Id87"><span>{{beneficio?.cantidad}}</span></td>
+                                            <td *ngIf="Vistas.Id88"><span>{{beneficio?.observaciones}}</span></td>
+                                        </tr>
+                                    </table>
+                                    <div class="color-blue text-uppercase font-bold">Puesto:</div>
+                                    <ul class="DV">
+                                        <li *ngIf="Vistas.Id90">
+                                            <strong>Actividades: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td style="vertical-align: middle;" *ngFor="let actividad of ViewRequi?.actividadesRequis; let i = index">
+                                                        <span>{{actividad}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                        <li *ngIf="Vistas.Id91">
+                                            <strong>Observaciones: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td style="vertical-align: middle;" *ngFor="let observaciones of ViewRequi?.observacionesRequi; let i = index">
+                                                        <span>{{observaciones}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                        <li *ngIf="Vistas.Id92">
+                                            <strong>Proceso: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td style="vertical-align: middle;" *ngFor="let proceso of ViewRequi?.procesoRequi; let i = index">
+                                                        <span>{{proceso?.proceso}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                    <div class="color-blue text-uppercase font-bold">Sueldos:</div>
+                                    <ul class="DV">
+                                        <li *ngIf="Vistas.Id94">
+                                            <strong>Periodo pago: </strong><span>{{ViewRequi?.periodoPago}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id95">
+                                            <strong>Día corte: </strong><span>{{ViewRequi?.diaCorte}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id96">
+                                            <strong>Día pago: </strong><span>{{ViewRequi?.diaPago}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id97">
+                                            <strong>Tipo nomina: </strong><span>{{ViewRequi?.tipoDeNomina}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id98">
+                                            <strong>Sueldo minimo: </strong><span>${{ViewRequi?.sueldoMinimo | number: '1.2-2'}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id99">
+                                            <strong>Sueldo máximo: </strong><span>${{ViewRequi?.sueldoMaximo | number: '1.2-2'}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id100">
+                                            <strong>Diario minimo: </strong><span>${{ViewRequi?.sueldoMinimo/30.6 | number: '1.2-2'}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id101">
+                                            <strong>Diario máximo: </strong><span>${{ViewRequi?.sueldoMaximo/30.6 | number: '1.2-2'}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id102">
+                                            <strong>Semanal minimo: </strong><span>${{ViewRequi?.sueldoMinimo/7 | number: '1.2-2'}}</span>
+                                        </li>
+                                        <li *ngIf="Vistas.Id103">
+                                            <strong>Semanal máximo: </strong><span>${{ViewRequi?.sueldoMaximo/7 | number: '1.2-2'}}</span>
+                                        </li>
+                                    </ul>
+                                    <div class="color-blue text-uppercase font-bold">Documentación:</div>
+                                    <ul class="DV" id="lista1">
+                                        <li *ngIf="Vistas.Id105">
+                                            <strong>Documentos damsa: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td *ngFor="let documentodamsa of ViewRequi?.documentosDamsa; let i = index">
+                                                        <span>{{documentodamsa}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                        <li *ngIf="Vistas.Id106">
+                                            <strong>Documentos cliente: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td *ngFor="let documentorequi of ViewRequi?.documentosCliente; let i = index">
+                                                        <span>{{documentorequi}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                    <div class="color-blue text-uppercase font-bold">Prestaciones:</div>
+                                    <ul class="DV">
+                                        <li *ngIf="Vistas.Id108">
+                                            <strong>Prestaciones de ley: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td *ngFor="let prestacionesley of ViewRequi?.prestacionLey; let i = index">
+                                                        <span>{{prestacionesley}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                        <li *ngIf="Vistas.Id109">
+                                            <strong>Prestaciones adicionales: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td *ngFor="let prestacionesrequi of ViewRequi?.prestacionesRequi; let i = index">
+                                                        <span>{{prestacionesrequi}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                    <div class="color-blue text-uppercase font-bold">Psicometrias Damsa:</div>
+                                    <table class="table table-striped color-grey">
+                                        <tr>
+                                            <th *ngIf="Vistas.Id111"><strong>Nombre</strong></th>
+                                            <th *ngIf="Vistas.Id112"><strong>Descripcion</strong></th>
+                                        </tr>
+                                        <tr *ngFor="let psicodamsa of psicoDamsa; let i = index">
+                                            <td *ngIf="Vistas.Id111"><span>{{psicodamsa?.tipoPsicometria}}</span></td>
+                                            <td *ngIf="Vistas.Id112"><span>{{psicodamsa?.descripcion}}</span></td>
+                                        </tr>
+                                    </table>
+                                    <div class="color-blue text-uppercase font-bold">Competencias:</div>
+                                    <ul class="DV">
+                                        <li *ngIf="Vistas.Id114">
+                                            <strong>Competencias cardinal: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td *ngFor="let compcardinal of ViewRequi?.competenciasCardinal; let i = index">
+                                                        <span>{{compcardinal?.competenciaCardinal}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                        <li *ngIf="Vistas.Id115">
+                                            <strong>Competencias area: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td *ngFor="let comparea of ViewRequi?.competenciasArea; let i = index">
+                                                        <span>{{comparea?.competenciaArea}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                        <li *ngIf="Vistas.Id116">
+                                            <strong>Competencia gerencial: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td *ngFor="let compgerencial of ViewRequi?.competenciaGerencial; let i = index">
+                                                        <span>{{compgerencial?.competenciaGerencial}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                    <div class="color-blue text-uppercase font-bold">Psicometrias:</div>
+                                    <table class="table table-striped color-grey">
+                                        <tr>
+                                            <th *ngIf="Vistas.Id244"><strong>Nombre</strong></th>
+                                            <th *ngIf="Vistas.Id245"><strong>Descripcion</strong></th>
+                                        </tr>
+                                        <tr *ngFor="let psico of psicoCliente; let i = index">
+                                            <td *ngIf="Vistas.Id244"><span>{{psico?.psicometria}}</span></td>
+                                            <td *ngIf="Vistas.Id245"><span>{{psico?.descripcion}}</span></td>
+                                        </tr>
+                                    </table>
+                                    <!-- <div class="color-blue text-uppercase font-bold">Reclutamiento:</div>
+                                                                                            <ul class="DV">
+                                                                                                <li>
+                                                                                                    <strong>Tipo reclutamiento: </strong><span>{{ViewRequi?.tipoReclutamiento}}</span>
+                                                                                                </li>
+                                                                                                <li>
+                                                                                                    <strong>Clase reclutamiento: </strong><span>{{ViewRequi?.claseReclutamiento}}</span>
+                                                                                                </li>
+                                                                                            </ul> -->
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </mat-tab>
-    </mat-tab-group>
+            </ng-container>
+        </div>
+    </div>
+    <!-- Detalle -->
+    <div class="row" [hidden]="ModelOptions == 'Resumen'">
+        <div class="col-md-12">
+            <ng-container>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-accordion class="m-4">
+                            <ng-container *ngFor="let detalle of ClasificaD">
+                                <mat-expansion-panel [expanded]="stepd === detalle.id" (opened)="setStepD(detalle.id)" hideToggle="true">
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title style="font-weight: bold;">
+                                            {{detalle.nombre}}
+                                        </mat-panel-title>
+                                        <mat-panel-description>
+                                            {{detalle.descripcion}}
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                                    <div class="row">
+                                        <div *ngFor="let item3 of General">
+                                            <div class="col-md-12" *ngIf="detalle.id == item3.idPadre;">
+                                                <div class="panel panel-default sombra">
+                                                    <div class="panel-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th colspan="2">
+                                                                            <h5 class="font-bold">{{item3.nombre}}</h5>
+                                                                        </th>
+                                                                        <th colspan="2">
+                                                                            <mat-slide-toggle id="Detalle_{{item3.id}}" [color]="primary" [checked]="item3.detalle" (change)="SetDetalle(item3.id,item3.nombre, $event.checked)">
+                                                                            </mat-slide-toggle>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <mat-action-row>
+                                        <button mat-button color="primary" (click)="nextStepD()">Cerrar</button>
+                                    </mat-action-row>
+                                </mat-expansion-panel>
+                            </ng-container>
+                        </mat-accordion>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <!-- Detalle -->
+                            <div class="row col-results example-large-box mat-elevation-z4">
+                                <div class="job-description">
+                                    <div class="color-blue text-uppercase font-bold">Datos de la vacante:</div>
+                                    <ul class="DV">
+                                        <li *ngIf="Vistasdtl.Idd19">
+                                            <strong>Folio: </strong><span>{{ViewRequi?.folio}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd20">
+                                            <strong>Prioridad: </strong><span>{{ViewRequi?.prioridad}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd21">
+                                            <strong>Fecha creación: </strong><span>{{ViewRequi?.fch_Creacion | date}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd22">
+                                            <strong>Fecha limite: </strong><span>{{ViewRequi?.fch_Limite | date}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd23">
+                                            <strong>Fecha cumplimiento: </strong><span>{{ViewRequi?.fch_Cumplimiento | date}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd136">
+                                            <strong>Días envio: </strong><span>{{ViewRequi?.diasEnvio}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd24">
+                                            <strong>Estatus: </strong><span>{{ViewRequi?.estatus}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd25">
+                                            <strong>Confidencial: </strong><span>{{ViewRequi?.confidencial? 'Si': 'No'}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd26">
+                                            <strong>Asignada: </strong><span>{{ViewRequi?.asignada? 'Si': 'No'}}</span>
+                                        </li>
+                                    </ul>
+                                    <div class="color-blue text-uppercase font-bold">Información General:</div>
+                                    <ul class="DV">
+                                        <li *ngIf="Vistasdtl.Idd29">
+                                            <strong>Logotipo: </strong><span><img src="{{ViewRequi?.logotipo}}" alt=""></span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd30">
+                                            <strong>Nombre: </strong><span>{{ViewRequi?.nombrecomercial}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd31">
+                                            <strong>Razon: </strong><span>{{ViewRequi?.razonSocial}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd32">
+                                            <strong>RFC: </strong><span>{{ViewRequi?.rfc}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd33">
+                                            <strong>Giro: </strong><span>{{ViewRequi?.giroEmpresa}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd34">
+                                            <strong>Actividad: </strong><span>{{ViewRequi?.actividadEmpresa}}</span>
+                                        </li>
+                                    </ul>
+                                    <div class="color-blue text-uppercase font-bold">Contrato:</div>
+                                    <ul class="DV">
+                                        <li *ngIf="Vistasdtl.Idd40">
+                                            <strong>Tipo contrato: </strong><span>{{ViewRequi?.tipoContrato}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd242">
+                                            <strong>Disa de prueba: </strong><span>{{ViewRequi?.periodoPrueba? 'Si': 'No'}}</span>
+                                        </li>
+                                    </ul>
+                                    <div class="color-blue text-uppercase font-bold">Direcciones:</div>
+                                    <table class="table table-striped color-grey">
+                                        <tr>
+                                            <th *ngIf="Vistasdtl.Idd42"><strong>Tipo</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd43"><strong>País</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd44"><strong>Estado</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd45"><strong>Municipio</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd46"><strong>Colonia</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd47"><strong>Calle</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd48"><strong>No. Ext.</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd49"><strong>No. Int.</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd50"><strong>CP</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd51"><strong>Activo</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd52"><strong>Es principal</strong></th>
+                                        </tr>
+                                        <tr>
+                                            <td *ngIf="Vistasdtl.Idd42"><span>{{ViewRequi?.direccion?.tipoDireccion}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd43"><span>{{ViewRequi?.direccion?.pais}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd44"><span>{{ViewRequi?.direccion?.estado}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd45"><span>{{ViewRequi?.direccion?.municipio}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd46"><span>{{ViewRequi?.direccion?.colonia}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd47"><span>{{ViewRequi?.direccion?.calle}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd48"><span>{{ViewRequi?.direccion?.numeroExterior}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd49"><span>{{ViewRequi?.direccion?.numeroInterior}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd50"><span>{{ViewRequi?.direccion?.codigoPostal}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd51"><span>{{ViewRequi?.direccion?.activo? 'Si': 'No'}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd52"><span>{{ViewRequi?.direccion?.esPrincipal? 'Si': 'No'}}</span></td>
+                                        </tr>
+                                    </table>
+                                    <div class="color-blue text-uppercase font-bold">Teléfonos:</div>
+                                    <table class="table table-striped color-grey">
+                                        <tr>
+                                            <th *ngIf="Vistasdtl.Idd54"><strong>Tipo</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd55"><strong>Telefono</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd56"><strong>Extensión</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd57"><strong>Activo</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd58"><strong>Principal</strong></th>
+                                        </tr>
+                                        <tr *ngFor="let telefono of telefono; let i = index ">
+                                            <td *ngIf="Vistasdtl.Idd54"><span>{{telefono?.tipo}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd55"><span>{{telefono?.telefono}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd56"><span>{{telefono?.extension}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd57"><span>{{telefono?.activo? 'Si': 'No'}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd58"><span>{{telefono?.esPrincipal? 'Si': 'No'}}</span></td>
+                                        </tr>
+                                    </table>
+                                    <div class="color-blue text-uppercase font-bold">Contactos:</div>
+                                    <table class="table table-striped color-grey">
+                                        <tr>
+                                            <th *ngIf="Vistasdtl.Idd60"><strong>Nombre</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd61"><strong>Puesto</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd62"><strong>Tipo</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd63"><strong>Extensión</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd64"><strong>Telefono</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd65"><strong>Email</strong></th>
+                                        </tr>
+                                        <tr *ngFor="let contacto of contactos; let i = index ">
+                                            <td *ngIf="Vistasdtl.Idd60">{{contacto?.nombre}}</td>
+                                            <td *ngIf="Vistasdtl.Idd61">{{contacto?.puesto}}</td>
+                                            <td *ngIf="Vistasdtl.Idd62">{{contacto?.tipoEntidad}}</td>
+                                            <td *ngIf="Vistasdtl.Idd63">{{contacto?.extension}}</td>
+                                            <td *ngIf="Vistasdtl.Idd64">{{contacto?.telefono}}</td>
+                                            <td *ngIf="Vistasdtl.Idd64">{{contacto?.email}}</td>
+                                        </tr>
+                                    </table>
+                                    <div class="color-blue text-uppercase font-bold">Puesto a reclutar:</div>
+                                    <ul class="DV">
+                                        <li *ngIf="Vistasdtl.Idd68">
+                                            <strong>Genero: </strong><span>Indistinto</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd71">
+                                            <strong>Estado civil: </strong><span>Indistinto</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd69 || Vistasdtl.Idd70">
+                                            <strong>Edad: </strong><span>Indistinto</span>
+                                        </li>
+                                        <li>
+                                            <table class="table table-striped color-grey">
+                                                <tr>
+                                                    <th *ngIf="Vistasdtl.Idd73"><strong>Escolaridad: </strong></th>
+                                                    <th *ngIf="Vistasdtl.Idd72"><strong>Nivel: </strong></th>
+                                                </tr>
+                                                <tr *ngFor="let escolaridades of escolaridadesRequi; let i = index">
+                                                    <td *ngIf="Vistasdtl.Idd73"><span>{{escolaridades?.gradoEstudio}}</span></td>
+                                                    <td *ngIf="Vistasdtl.Idd72"><span>{{escolaridades?.estadoEstudio}}</span></td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd74">
+                                            <strong>Aptitudes: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td style="vertical-align: middle;" *ngFor="let aptitudes of ViewRequi?.aptitudesRequis; let i = index">
+                                                        <span>{{aptitudes}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd75">
+                                            <strong>Experiencia: </strong><span> {{ViewRequi?.experiencia}}</span>
+                                        </li>
+                                    </ul>
+                                    <div class="color-blue text-uppercase font-bold">Horarios:</div>
+                                    <table class="table table-striped color-grey">
+                                        <tr>
+                                            <th *ngIf="Vistasdtl.Idd77"><strong>Nombre</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd78"><strong>de Día</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd79"><strong>a Día</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd80"><strong>de Hora</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd81"><strong>a Hora</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd82"><strong>Vacantes</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd83"><strong>Especificaciones</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd84"><strong>Activo</strong></th>
+                                        </tr>
+                                        <tr *ngFor="let horario of horariosRequi; let i = index ">
+                                            <td *ngIf="Vistasdtl.Idd77"><span>{{horario?.nombre}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd78"><span></span>{{horario?.deDia}}</td>
+                                            <td *ngIf="Vistasdtl.Idd79"><span></span>{{horario?.aDia}}</td>
+                                            <td *ngIf="Vistasdtl.Idd80"><span>{{horario?.deHora | date:'HH:mm':'UTC-6'}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd81"><span>{{horario?.aHora | date:'HH:mm':'UTC-6'}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd82"><span>{{horario?.numeroVacantes}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd83"><span>{{horario?.especificaciones}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd84"><span>{{horario?.activo? 'Si': 'No'}}</span></td>
+                                        </tr>
+                                    </table>
+                                    <div class="color-blue text-uppercase font-bold">Beneficios:</div>
+                                    <table class="table table-striped color-grey">
+                                        <tr>
+                                            <th *ngIf="Vistasdtl.Idd86"><strong>Tipo</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd87"><strong>Cantidad</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd88"><strong>Observaciones</strong></th>
+                                        </tr>
+                                        <tr *ngFor="let beneficio of beneficiosRequi; let i = index ">
+                                            <td *ngIf="Vistasdtl.Idd86"><span>{{beneficio?.tipoBeneficio}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd87"><span>{{beneficio?.cantidad}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd88"><span>{{beneficio?.observaciones}}</span></td>
+                                        </tr>
+                                    </table>
+                                    <div class="color-blue text-uppercase font-bold">Puesto:</div>
+                                    <ul class="DV">
+                                        <li *ngIf="Vistasdtl.Idd90">
+                                            <strong>Actividades: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td style="vertical-align: middle;" *ngFor="let actividad of ViewRequi?.actividadesRequis; let i = index">
+                                                        <span>{{actividad}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd91">
+                                            <strong>Observaciones: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td style="vertical-align: middle;" *ngFor="let observaciones of ViewRequi?.observacionesRequi; let i = index">
+                                                        <span>{{observaciones}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd92">
+                                            <strong>Proceso: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td style="vertical-align: middle;" *ngFor="let proceso of ViewRequi?.procesoRequi; let i = index">
+                                                        <span>{{proceso?.proceso}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                    <div class="color-blue text-uppercase font-bold">Sueldos:</div>
+                                    <ul class="DV">
+                                        <li *ngIf="Vistasdtl.Idd94">
+                                            <strong>Periodo pago: </strong><span>{{ViewRequi?.periodoPago}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd95">
+                                            <strong>Día corte: </strong><span>{{ViewRequi?.diaCorte}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd96">
+                                            <strong>Día pago: </strong><span>{{ViewRequi?.diaPago}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd97">
+                                            <strong>Tipo nomina: </strong><span>{{ViewRequi?.tipoDeNomina}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd98">
+                                            <strong>Sueldo minimo: </strong><span>${{ViewRequi?.sueldoMinimo | number: '1.2-2'}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd99">
+                                            <strong>Sueldo máximo: </strong><span>${{ViewRequi?.sueldoMaximo | number: '1.2-2'}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd100">
+                                            <strong>Diario minimo: </strong><span>${{ViewRequi?.sueldoMinimo/30.6 | number: '1.2-2'}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd101">
+                                            <strong>Diario máximo: </strong><span>${{ViewRequi?.sueldoMaximo/30.6 | number: '1.2-2'}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd102">
+                                            <strong>Semanal minimo: </strong><span>${{ViewRequi?.sueldoMinimo/7 | number: '1.2-2'}}</span>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd103">
+                                            <strong>Semanal máximo: </strong><span>${{ViewRequi?.sueldoMaximo/7 | number: '1.2-2'}}</span>
+                                        </li>
+                                    </ul>
+                                    <div class="color-blue text-uppercase font-bold">Documentación:</div>
+                                    <ul class="DV" id="lista1">
+                                        <li *ngIf="Vistasdtl.Idd105">
+                                            <strong>Documentos damsa: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td *ngFor="let documentodamsa of ViewRequi?.documentosDamsa; let i = index">
+                                                        <span>{{documentodamsa}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd106">
+                                            <strong>Documentos cliente: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td *ngFor="let documentorequi of ViewRequi?.documentosCliente; let i = index">
+                                                        <span>{{documentorequi}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                    <div class="color-blue text-uppercase font-bold">Prestaciones:</div>
+                                    <ul class="DV">
+                                        <li *ngIf="Vistasdtl.Idd108">
+                                            <strong>Prestaciones de ley: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td *ngFor="let prestacionesley of ViewRequi?.prestacionLey; let i = index">
+                                                        <span>{{prestacionesley}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd109">
+                                            <strong>Prestaciones adicionales: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td *ngFor="let prestacionesrequi of ViewRequi?.prestacionesRequi; let i = index">
+                                                        <span>{{prestacionesrequi}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                    <div class="color-blue text-uppercase font-bold">Psicometrias Damsa:</div>
+                                    <table class="table table-striped color-grey">
+                                        <tr>
+                                            <th *ngIf="Vistasdtl.Idd111"><strong>Nombre</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd112"><strong>Descripcion</strong></th>
+                                        </tr>
+                                        <tr *ngFor="let psicodamsa of psicoDamsa; let i = index">
+                                            <td *ngIf="Vistasdtl.Idd111"><span>{{psicodamsa?.tipoPsicometria}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd112"><span>{{psicodamsa?.descripcion}}</span></td>
+                                        </tr>
+                                    </table>
+                                    <div class="color-blue text-uppercase font-bold">Competencias:</div>
+                                    <ul class="DV">
+                                        <li *ngIf="Vistasdtl.Idd114">
+                                            <strong>Competencias cardinal: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td *ngFor="let compcardinal of ViewRequi?.competenciasCardinal; let i = index">
+                                                        <span>{{compcardinal?.competenciaCardinal}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd115">
+                                            <strong>Competencias area: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td *ngFor="let comparea of ViewRequi?.competenciasArea; let i = index">
+                                                        <span>{{comparea?.competenciaArea}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                        <li *ngIf="Vistasdtl.Idd116">
+                                            <strong>Competencia gerencial: </strong>
+                                            <table class="table table-striped">
+                                                <tr>
+                                                    <td *ngFor="let compgerencial of ViewRequi?.competenciaGerencial; let i = index">
+                                                        <span>{{compgerencial?.competenciaGerencial}}</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                    <div class="color-blue text-uppercase font-bold">Psicometrias:</div>
+                                    <table class="table table-striped color-grey">
+                                        <tr>
+                                            <th *ngIf="Vistasdtl.Idd244"><strong>Nombre</strong></th>
+                                            <th *ngIf="Vistasdtl.Idd245"><strong>Descripcion</strong></th>
+                                        </tr>
+                                        <tr *ngFor="let psico of psicoCliente; let i = index">
+                                            <td *ngIf="Vistasdtl.Idd244"><span>{{psico?.psicometria}}</span></td>
+                                            <td *ngIf="Vistasdtl.Idd245"><span>{{psico?.descripcion}}</span></td>
+                                        </tr>
+                                    </table>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
 </div>
