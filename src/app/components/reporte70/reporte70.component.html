@@ -39,7 +39,7 @@
                   <td width="3.2%"> {{row.fch_Solicitud | date:'dd/MM/yyyy'}}</td>
                   <td class="text-left"> {{row.cliente }}</td>
                   <td width="5%" class="text-left"> {{row.vBtra | uppercase}}</td>
-                  <td class="text-left"> {{row.sueldoMaximo | currency: $}}</td>
+                  <td class="text-left"> {{row.sueldoMaximo}}</td>
                   <td class="text-left"> {{row.estado | uppercase}}</td>
                   <td><small *ngIf="row.domicilio_trabajo.length < 10 else toLengthDir" >{{row.domicilio_trabajo}}</small>
                     <ng-template #toLengthDir>
