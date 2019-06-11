@@ -199,36 +199,52 @@ export class InformeComponent implements OnInit {
   document.getElementById('DivReportefil').classList.add('ocultar');
   document.getElementById('Divprincipal').classList.add('ocultar');
   document.getElementById('DivProacti').classList.add('ocultar');
+  document.getElementById('DivDetalleReclu').classList.add('ocultar');
+
   
   let tipo = document.getElementById('TipoReporte')['value'];
   if(tipo == 3){
     document.getElementById('report1').classList.add('ocultar');
     document.getElementById('repProActi').classList.add('ocultar');
     document.getElementById('report2').classList.remove('ocultar');
+    document.getElementById('exel2').classList.remove('ocultar');
     document.getElementById('exel1').classList.add('ocultar');
     document.getElementById('exelProact').classList.add('ocultar');
-    document.getElementById('exel2').classList.remove('ocultar');
+    document.getElementById('repDetalleReclu').classList.add('ocultar');
+    document.getElementById('exelDetalleReclu').classList.add('ocultar');
   }else if(tipo == 4){
     document.getElementById('report1').classList.add('ocultar');
     document.getElementById('report2').classList.add('ocultar');
     document.getElementById('repProActi').classList.remove('ocultar');
+    document.getElementById('exelProact').classList.remove('ocultar');
     document.getElementById('exel1').classList.add('ocultar');
     document.getElementById('exel2').classList.add('ocultar');
-    document.getElementById('exelProact').classList.remove('ocultar');
-  }
-   else{
+    document.getElementById('repDetalleReclu').classList.add('ocultar');
+    document.getElementById('exelDetalleReclu').classList.add('ocultar');
+  }else if(tipo == 5){
+    document.getElementById('report1').classList.add('ocultar');
+    document.getElementById('report2').classList.add('ocultar');
+    document.getElementById('repDetalleReclu').classList.remove('ocultar');
+    document.getElementById('exelDetalleReclu').classList.remove('ocultar');
+    document.getElementById('exel1').classList.add('ocultar');
+    document.getElementById('exel2').classList.add('ocultar');
+    document.getElementById('repProActi').classList.add('ocultar');
+    document.getElementById('exelProact').classList.add('ocultar');
+  }else{
     document.getElementById('report2').classList.add('ocultar');
     document.getElementById('repProActi').classList.add('ocultar');
     document.getElementById('report1').classList.remove('ocultar');
+    document.getElementById('exel1').classList.remove('ocultar');
     document.getElementById('exel2').classList.add('ocultar');
     document.getElementById('exelProact').classList.add('ocultar');
-    document.getElementById('exel1').classList.remove('ocultar');
+    document.getElementById('repDetalleReclu').classList.add('ocultar');
+    document.getElementById('exelDetalleReclu').classList.add('ocultar');
   }
 
-  if(tipo == 4){
+  if(tipo == 4 || tipo == 5){
     document.getElementById('divTipoReclu').classList.add('ocultar');
     document.getElementById('divestatus').classList.add('ocultar');
-    document.getElementById('divcordinacion').classList.add('ocultar');
+    // document.getElementById('divcordinacion').classList.add('ocultar');
     document.getElementById('divSolicitante').classList.add('ocultar');
     document.getElementById('divBusCoordina').classList.add('ocultar');
     document.getElementById('divEmpresas').classList.add('ocultar');
@@ -236,7 +252,7 @@ export class InformeComponent implements OnInit {
   }else{
     document.getElementById('divTipoReclu').classList.remove('ocultar');
     document.getElementById('divestatus').classList.remove('ocultar');
-    document.getElementById('divcordinacion').classList.remove('ocultar');
+    // document.getElementById('divcordinacion').classList.remove('ocultar');
     document.getElementById('divSolicitante').classList.remove('ocultar');
     document.getElementById('divBusCoordina').classList.remove('ocultar');
     document.getElementById('divEmpresas').classList.remove('ocultar');

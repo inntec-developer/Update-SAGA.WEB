@@ -70,6 +70,7 @@ type="square-jelly-box"
           <option value="2">Por Estatus</option>
           <option value="3">General</option>
           <option value="4">Productividad</option>
+          <option value="5">Detalle Reclutador</option>
           <!-- <option value="3">Movimientos Vacantes </option>
           <option value="5">Fecha Estatus Grupal</option>
           <option value="6">Reporte General </option> -->
@@ -399,6 +400,10 @@ type="square-jelly-box"
             <button id="exelProact" tooltip="Exportar" style="right: auto;" (click)="ProAct.Exportar()" class="ocultar btn btn-sm btn-outline-warning btnReport">
               <em  class="fa fa-download"></em>
             </button>
+            <button id="exelDetalleReclu" tooltip="Exportar" style="right: auto;" (click)="DetalleReclu.Exportar()" class="ocultar btn btn-sm btn-outline-warning btnReport">
+              <em  class="fa fa-download"></em>
+            </button>
+
 
 
         <button class="btn btn-sm btn-outline-success btnReport" (click)="hijo.Generar(objsucursal,objsolicit,objrecluta,objempresa,objstatus,objtiporeclu,objtipocordi,objusercoo)" tooltip="Generar Reporte" id="report1"  >
@@ -407,7 +412,10 @@ type="square-jelly-box"
         <button class="ocultar btn btn-sm btn-outline-success btnReport" (click)="ReGeneral.llamado(objsucursal,objsolicit,objrecluta,objempresa,objstatus,objtiporeclu,objtipocordi)" tooltip="Generar Reporte" id="report2"  >
             <em  class="fa fa-bar-chart"></em>
           </button>
-          <button class="ocultar btn btn-sm btn-outline-success btnReport" style="right: auto;" (click)="ProAct.Generar(objrecluta)" tooltip="Generar Reporte" id="repProActi"  >
+          <button class="ocultar btn btn-sm btn-outline-success btnReport" style="right: auto;" (click)="ProAct.Generar(objrecluta,objtipocordi)" tooltip="Generar Reporte" id="repProActi"  >
+            <em  class="fa fa-bar-chart"></em>
+          </button>
+          <button class="ocultar btn btn-sm btn-outline-success btnReport" style="right: auto;" (click)="DetalleReclu.Generar(objrecluta,objtipocordi)" tooltip="Generar Reporte" id="repDetalleReclu"  >
             <em  class="fa fa-bar-chart"></em>
           </button>
       </div>
@@ -424,4 +432,6 @@ type="square-jelly-box"
 <app-reporte70 class="ocultar" id="Divprincipal" #ReGeneral ></app-reporte70>
 
 <app-productividad id="DivProacti" #ProAct > </app-productividad>
+
+<app-detallerecluta id="DivDetalleReclu" #DetalleReclu > </app-detallerecluta>
 </div>

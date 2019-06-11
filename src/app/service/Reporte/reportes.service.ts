@@ -24,6 +24,7 @@ export class ReportesService {
   private UrlOficina = ApiConection.ServiceUrl+ApiConection.GetOficinas;
   private UrlRadial = ApiConection.ServiceUrl+ApiConection.getRadialG;
   private UrlProActividad = ApiConection.ServiceUrl+ApiConection.GetProActividad;
+  private UrlDetalleReclu = ApiConection.ServiceUrl+ApiConection.GetDetalleReclu;
 
   constructor(private http: Http,private _httpClient : HttpClient) {  }
   
@@ -36,13 +37,21 @@ export class ReportesService {
 }
 
 
-  getProActividad(fini:string,ffin:string,recl:string): Observable<any> {
-    let params = new HttpParams().set('fini', fini).set('ffin', ffin).set('recl', recl);
+  getProActividad(fini:string,ffin:string,recl:string,cor:string): Observable<any> {
+    let params = new HttpParams().set('fini', fini).set('ffin', ffin).set('recl', recl).set('cor', cor);
     return this._httpClient.get(this.UrlProActividad, {params: params});
     // return this.http.get(this.UrlProActividad)
     //     .map(result => result.json())
     //     .catch(this.handleError);
     }
+
+    getDetalleReclu(fini:string,ffin:string,recl:string,cor:string): Observable<any> {
+        let params = new HttpParams().set('fini', fini).set('ffin', ffin).set('recl', recl).set('cor', cor);
+        return this._httpClient.get(this.UrlDetalleReclu, {params: params});
+        // return this.http.get(this.UrlProActividad)
+        //     .map(result => result.json())
+        //     .catch(this.handleError);
+        }
 
 getVRadial(data: any) : Observable<any>{
     let params = new HttpParams().set('usuario', data);
