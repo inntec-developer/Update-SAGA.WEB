@@ -23,6 +23,7 @@ export class AddExamenComponent implements OnInit {
   nomExamen = "";
   respInc = "";
   msg: string = "";
+  img : boolean = false;
   constructor(private service: ExamenesService, private toasterService: ToasterService) { }
 
   ngOnInit() {

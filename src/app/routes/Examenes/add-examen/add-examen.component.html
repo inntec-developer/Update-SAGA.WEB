@@ -52,7 +52,7 @@
             </div>
             <div *ngIf="!pa" class="form-group">
               <label class="text-muted">Respuesta Correcta</label> 
-                <input ngModel required #respCorr="ngModel" name="respCorr" type="text" class="form-control form-control-sm" placeholder="Respuesta correcta" (blur)="AgregarRespuesta(resp1, 1)" [(ngModel)]="resp1">
+                <input ngModel required #respCorr="ngModel" name="respCorr" type="text" class="form-control form-control-sm" placeholder="Respuesta correcta" (blur)="AgregarRespuesta(resp1, 1); img=false;" [(ngModel)]="resp1">
               <small *ngIf="!respCorr.valid" class="form-text text-muted text-danger">Debe agregar respuesta</small>
             </div>
             <div class="input-group d-flex justify-content-between">
