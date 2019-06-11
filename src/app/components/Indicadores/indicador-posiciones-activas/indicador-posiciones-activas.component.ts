@@ -44,7 +44,7 @@ export class IndicadorPosicionesActivasComponent implements OnInit {
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: [
             'Cubiertos',
-            'No Cumbiertos'
+            'No Cubiertos'
         ]
       }
 

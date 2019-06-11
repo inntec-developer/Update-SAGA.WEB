@@ -1,5 +1,5 @@
 export class ApiConection {
-   public static ServiceUrl = 'http://localhost:33333/api/';
+  public static ServiceUrl = 'http://localhost:33333/api/';
 
   // //Produccion
   // public static ServiceUrlWeb = 'https://weberp.damsa.com.mx/';
@@ -129,6 +129,9 @@ export class ApiConection {
   public static DeleteContactoCliente = 'Directorio/DeleteContactoCliente';
   public static EditContactoCliente = 'Directorio/EditContactoCliente';
 
+  public static CRUDTelefonContacto = 'Directorio/CRUDTelefonContacto';
+
+  public static CRUDContactoCorreo = 'Directorio/CRUDContactoCorreo';
 
   /* Candidatos */
   public static filtropaises = 'Candidatos/get';
@@ -262,7 +265,7 @@ export class ApiConection {
   public static execProcedureVencidas = 'Requisiciones/execProcedureVencidas'
   public static getRequisicionesHistorial = 'Requisiciones/getRequisicionesHistorial'
   public static registrarCandidatos = 'reclutamiento/seguimientovacante/registrarCandidatos'
-  
+
 
   /*Examenes */
   public static InsertExamen = 'examenes/insertExamen'
@@ -293,6 +296,7 @@ export class ApiConection {
   public static GetEstatusRep = 'reporte/estatus'
   public static GetOficinas = 'reporte/oficinas'
   public static GetProActividad = 'reporte/actividad'
+  public static GetDetalleReclu = 'reporte/detallerecluta'
 
 
   /*SistTickets */
@@ -319,7 +323,7 @@ export class ApiConection {
   public static UpdateCandidatoTicket = 'SistTickets/updateCandidatoTicket'
   public static RegistrarCandidato = 'SistTickets/registrarCandidato'
   public static LoginBolsa = 'SistTickets/loginBolsa'
-  public static GetCitas  = 'SistTickets/getCitas'
+  public static GetCitas = 'SistTickets/getCitas'
   public static PostularCandidato = 'SistTickets/postularCandidato'
   public static GetTicketsGenerados = 'SistTickets/getTicketsGenerados'
   public static GetRportAtencion = 'SistTickets/getRportAtencion'

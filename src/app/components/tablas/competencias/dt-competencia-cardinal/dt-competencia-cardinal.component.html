@@ -13,7 +13,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let row of rows" [class.selected]="row.selected" (click)="onCellClick(row)">
-            <td white="75%"> {{row.competencia?.competenciaCardinal}} </td>
+            <td white="75%"> {{row.competencia}} </td>
             <td class="text-center"> {{row.nivel}}</td>
           </tr>
         </tbody>

@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ReportesService } from '../../../service/Reporte/reportes.service';
 import { ExcelService } from '../../../service/ExcelService/excel.service';
-import { SpinnerModule } from 'primeng/primeng';
 
 @Component({
-  selector: 'app-productividad',
-  templateUrl: './productividad.component.html',
-  styleUrls: ['./productividad.component.scss']
+  selector: 'app-detallerecluta',
+  templateUrl: './detallerecluta.component.html',
+  styleUrls: ['./detallerecluta.component.scss']
 })
-export class ProductividadComponent implements OnInit {
+export class DetallereclutaComponent implements OnInit {
 
   public General : any[];
   public palabra :string;
@@ -41,8 +40,9 @@ export class ProductividadComponent implements OnInit {
             ) { }
 
   ngOnInit() {
-   // this.Generar()
+    
   }
+
 
   Exportar(){
     var obj = [];
@@ -53,7 +53,7 @@ export class ProductividadComponent implements OnInit {
         'Folios': item.vacantes,
         'Posiciones': item.numeropos,
         'Cubiertos' : item.cubiertas,
-        'Puntaje': item.puntaje,
+        'Avance %': item.porcentaje,
       })
      });
      this.Exel.exportAsExcelFile(obj,'Reporte')
@@ -61,10 +61,10 @@ export class ProductividadComponent implements OnInit {
 
   Generar(reclutador,cordina){
     this.spinner.show();
-  
+    document.getElementById('DivDetalleReclu').classList.remove('ocultar');
     document.getElementById('Divprincipal').classList.add('ocultar');
     document.getElementById('DivReportefil').classList.add('ocultar');
-    document.getElementById('DivProacti').classList.remove('ocultar');
+    document.getElementById('DivProacti').classList.add('ocultar');
 
     var rec = '';
     var coo = '';
@@ -84,15 +84,16 @@ export class ProductividadComponent implements OnInit {
       }
     }
 
-    rec = reclutador == undefined?'0':rec;
     coo = cordina == undefined?'0':coo;
+    rec = reclutador == undefined?'0':rec;
 
     // var palabra = pal['value'];
     var inicio = inc['value'];
     var final = fin['value'];
+   
     let tipo = document.getElementById('TipoReporte')['value'];
     
-    this.servicio.getProActividad(inicio,final,rec,coo)
+    this.servicio.getDetalleReclu(inicio,final,rec,coo)
     .subscribe( data => {
     // this.popGenerico(data.mensaje,data.bandera,'Publicacion');
     this.requisiciones = data;
@@ -105,11 +106,11 @@ export class ProductividadComponent implements OnInit {
 
 
 public columns: Array<any> = [
-  { title: 'Reclutadores', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'nombre' } },
-  { title: 'Folios', className: 'text-success text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'Folios' } },
-  { title: 'Posiciones', className: 'text-success text-center', name: 'numeropos', filtering: { filterString: '', placeholder: 'Posiciones' } },
-  { title: 'Cubiertos', className: 'text-success text-center', name: 'cubiertas', filtering: { filterString: '', placeholder: 'cubiertas' } },
-  { title: 'Puntaje', className: 'text-info text-center', name: 'puntaje', filtering: { filterString: '', placeholder: 'puntos' } },
+  { title: 'RECLUTADORES', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'nombre' } },
+  { title: 'FOLIOS', className: 'text-success text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'Folio' } },
+  { title: 'POSICIONES', className: 'text-success text-center', name: 'numeropos', filtering: { filterString: '', placeholder: 'Folio' } },
+  { title: 'CUBIERTOS', className: 'text-success text-center', name: 'cubiertas', filtering: { filterString: '', placeholder: 'cubiertas' } },
+  { title: 'AVANCE', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'puntos' } },
  
 ];
 
@@ -278,5 +279,6 @@ public clearfilters() {
   this.onChangeTable(this.config);
 
 }
+
 
 }

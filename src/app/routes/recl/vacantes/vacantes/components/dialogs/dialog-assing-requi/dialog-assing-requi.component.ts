@@ -212,6 +212,8 @@ export class DialogAssingRequiComponent implements OnInit {
                     closeOnConfirm: true,
                     showLoaderOnConfirm: true
                   }, (isConfirm: any) => {
+                    window.onkeydown = null;
+                    window.onfocus = null;
                     if (isConfirm) {
                       this._Router.navigate(['/reclutamiento/configuracionVacante/', this.RequiId, this.data.folio, this.data.vBtra], { skipLocationChange: true });
                     }
@@ -239,6 +241,8 @@ export class DialogAssingRequiComponent implements OnInit {
                 closeOnConfirm: true,
                 showLoaderOnConfirm: true
               }, (isConfirm: any) => {
+                window.onkeydown = null;
+                window.onfocus = null;
                 if (isConfirm) {
                   this._Router.navigate(['/reclutamiento/configuracionVacante/', this.RequiId, this.data.folio, this.data.vBtra], { skipLocationChange: true });
                 }
@@ -257,6 +261,8 @@ export class DialogAssingRequiComponent implements OnInit {
                   closeOnConfirm: true,
                   showLoaderOnConfirm: true
                 }, (isConfirm: any) => {
+                  window.onkeydown = null;
+                  window.onfocus = null;
                   if (isConfirm) {
                     this._Router.navigate(['/reclutamiento/configuracionVacante/', this.RequiId, this.data.folio, this.data.vBtra], { skipLocationChange: true });
                   }
@@ -315,6 +321,8 @@ export class DialogAssingRequiComponent implements OnInit {
       closeOnCancel: false,
       showLoaderOnConfirm: true
     }, (isConfirm) => {
+      window.onkeydown = null;
+      window.onfocus = null;
       if (isConfirm) {
         window.onkeydown = null;
         window.onfocus = null;

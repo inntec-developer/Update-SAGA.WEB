@@ -13,12 +13,22 @@
           </thead>
           <tbody>
             <tr *ngFor="let row of rows" [class.selected]="row.selected" (click)="onCellClick(row)">
-              <td class="text-center"> {{row.nombre}} {{row.apellidoPaterno}} {{row.apellidoMaterno}}</td>
-              <td class="text-center"> {{row.puesto}}</td>
-              <td class="text-center"> {{row.telefonos[0]?.tipoTelefono?.tipo}}</td>
-              <td class="text-center"> {{row.telefonos[0]?.extension}}</td>
-              <td class="text-center"> {{row.telefonos[0]?.clavePais}} - {{row.telefonos[0]?.claveLada}} - {{row.telefonos[0]?.telefono}}</td>
-              <td class="text-center"> {{row.emails[0]?.email}}</td>
+              <td> {{row.nombre}} {{row.apellidoPaterno}} {{row.apellidoMaterno}}</td>
+              <td> {{row.puesto}}</td>
+              <td>
+                <p *ngFor="let t of row.telefonos">
+                  {{t.tipo}}:
+                  +{{t.clavePais}} ({{t.claveLada}})
+                  {{t.telefono |
+                        slice:0:4}}-{{t.telefono | slice:4:8}}
+                  <span *ngIf="t.extension != ''">
+                    Ext. {{t.extension}}
+                  </span>
+                </p>
+              </td>
+              <td>
+                <p *ngFor="let e of row.email">{{e.email}}</p>
+              </td>
             </tr>
             <tr *ngIf="!rows">
               Sin resultados...

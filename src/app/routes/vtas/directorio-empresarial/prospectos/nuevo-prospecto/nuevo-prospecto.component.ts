@@ -179,7 +179,8 @@ export class NuevoProspectoComponent implements OnInit {
       Nombre: new FormControl('', [Validators.required]),
       ApellidoPaterno: new FormControl('', [Validators.required]),
       ApellidoMaterno: new FormControl(''),
-      Puesto: new FormControl('', [Validators.required])
+      Puesto: new FormControl('', [Validators.required]),
+      InfoAdicional: new FormControl('', [Validators.maxLength(250)])
     });
 
     this.formContactoTelefonos = new FormGroup({
@@ -254,6 +255,7 @@ export class NuevoProspectoComponent implements OnInit {
       ApellidoMaterno: ['',],
       Puesto: ['', [Validators.required]],
       ContactoDireccion: ['', [Validators.required]],
+      InfoAdicional: ['', [Validators.maxLength(250)]]
     });
 
     this.formContactoTelefonos = this.fb.group({
@@ -800,6 +802,7 @@ export class NuevoProspectoComponent implements OnInit {
       nombreAux: this.formContactos.get('Nombre').value + ' ' + this.formContactos.get('ApellidoPaterno').value,
       tipoEntidadId: 3,
       puesto: this.formContactos.get('Puesto').value,
+      infoAdicional: this.formContactos.get('InfoAdicional').value,
       usuarioAlta: this.Usuario,
       telefonos: this.Telefonos,
       emails: this.Emails
@@ -825,6 +828,7 @@ export class NuevoProspectoComponent implements OnInit {
     this.formContactos.controls['ApellidoPaterno'].setValue(this.ContactosNew[this.indexContacto]['apellidoPaterno']);
     this.formContactos.controls['ApellidoMaterno'].setValue(this.ContactosNew[this.indexContacto]['apellidoMaterno']);
     this.formContactos.controls['Puesto'].setValue(this.ContactosNew[this.indexContacto]['puesto']);
+    this.formContactos.controls['InfoAdicional'].setValue(this.ContactosNew[this.indexContacto]['infoAdicional']);
     this.Telefonos = this.ContactosNew[this.indexContacto]['telefonos'];
     this.Emails = this.ContactosNew[this.indexContacto]['emails'];
     this.rowsCnT = this.changePageCnT({ page: this.pageCnT, itemsPerPage: this.itemsPerPage });
@@ -915,7 +919,6 @@ export class NuevoProspectoComponent implements OnInit {
     this.formContactoTelefonos.controls['Lada'].setValue(this.Telefonos[this.indexContactoTelefonos]['claveLada']);
     this.formContactoTelefonos.controls['Numero'].setValue(this.Telefonos[this.indexContactoTelefonos]['telefono']);
     this.formContactoTelefonos.controls['Extension'].setValue(this.Telefonos[this.indexContactoTelefonos]['extension']);
-
   }
 
   DtContactoTelefono() {
@@ -925,7 +928,7 @@ export class NuevoProspectoComponent implements OnInit {
     this.rowsCnT = this.changePageCnT({ page: this.pageCnT, itemsPerPage: this.itemsPerPage });
   }
 
-  AddContactoCorreo(){
+  AddContactoCorreo() {
     let data = {
       idAux: this.idAuxCnC,
       email: this.formContactoCorreo.get('Email').value,
@@ -1447,8 +1450,10 @@ export class NuevoProspectoComponent implements OnInit {
     { title: 'Dirección', sorting: 'desc', className: 'text-success', name: 'calle', filtering: { filterString: '', placeholder: 'Dirección' } },
     { title: 'Nombre', sorting: 'desc', className: 'text-success', name: 'nombreAux', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'Puesto', className: 'text-info', name: 'puesto', filtering: { filterString: '', placeholder: 'Puesto' } },
-    { title: 'Teléfonos', className: 'text-info', name: 'telefonos' },
-    { title: 'Email / Correo', className: 'text-info', name: 'emails'},
+    { title: 'Teléfonos', className: 'text-info', name: 'telefonos', filtering: { filterString: '', placeholder: 'Teléfono' } },
+    { title: 'Email / Correo', className: 'text-info', name: 'emails', filtering: { filterString: '', placeholder: 'Email / Correo' } },
+    { title: 'Info. Adicional', className: 'text-info', name: 'infoAdicional', filtering: { filterString: '', placeholder: 'Info. Adicional' } },
+
   ];
 
   public changePageCn(page: any, data: Array<any> = this.ContactosNew): Array<any> {
@@ -1493,34 +1498,31 @@ export class NuevoProspectoComponent implements OnInit {
     this.columnsCn.forEach((column: any) => {
       if (column.filtering) {
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
-          {
-            if(!Array.isArray(item[column.name]))
-            {
+          if (item[column.name] != null) {
+            if (!Array.isArray(item[column.name])) {
               return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
             }
-            else
-            {
-                let aux = item[column.name];
-                let mocos = false;
-                if(item[column.name].length > 0)
-                {
-                  item[column.name].forEach(element => {
-                    if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
-                    {
-                      mocos = true;
-                      return;
+            else {
+              let aux = item[column.name];
+              let mocos = false;
+              if (item[column.name].length > 0) {
+                item[column.name].forEach(element => {
+                  let Objeto = element
+                  for (let variable in element) {
+                    if (variable != "idAux") {
+                      if (Objeto[variable].toString().toLowerCase().match(column.filtering.filterString.toLowerCase())) {
+                        mocos = true;
+                        return;
+                      }
                     }
-                  });
-
-                  if(mocos)
-                  {
-                    return item[column.name];
-                  }
-                }
-              else
-              {
+                  };
+                });
+                if (mocos) {
                   return item[column.name];
+                }
+              }
+              else {
+                return item[column.name];
               }
             }
           }

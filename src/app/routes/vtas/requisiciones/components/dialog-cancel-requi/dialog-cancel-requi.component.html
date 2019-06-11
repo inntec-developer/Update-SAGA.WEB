@@ -45,6 +45,15 @@
           </mat-hint>
           <mat-hint align="end">{{message.value.length}} / 500</mat-hint>
         </mat-form-field>
+        <p>
+          <span>
+            <small [ngClass]="message.value.length < 50 ? 'text-danger' : 'text-success'">
+              <em *ngIf="message.value.length < 50 " class="fa fa-close"></em>
+              <em *ngIf="message.value.length >= 50" class="fa fa-check"></em>
+              Caracteres m&iacute;nimos del comentario 50
+            </small>
+          </span>
+        </p>
       </div>
     </div>
     <br>
