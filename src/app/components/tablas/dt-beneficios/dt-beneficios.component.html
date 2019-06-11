@@ -14,8 +14,8 @@
         </thead>
         <tbody>
           <tr *ngFor="let row of rows" [class.selected]="row.selected" (click)="onCellClick(row)">
-            <td > {{row.tipoBeneficio?.tipoBeneficio}} </td>
-            <td class="text-lenght"> {{row.cantidad | currency:"MX $"}}</td>
+            <td  > {{row.tipoBeneficio}} </td>
+            <td class="text-lenght"> {{row.cantidad |currency: "MXN":"$"}}</td>
             <td > {{row.observaciones}}</td>
           </tr>
         </tbody>

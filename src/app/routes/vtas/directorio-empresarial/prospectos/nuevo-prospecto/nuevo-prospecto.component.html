@@ -595,22 +595,6 @@
                         [class.selected]="rowc.selectedC">
                         <td class="text-center">{{rowc.calle}}</td>
                         <td class="text-center">{{rowc.email}}</td>
-                        <!-- <td class="text-center">
-                      <small *ngIf="rowc.activo else InactivoC">
-                        SI
-                      </small>
-                      <ng-template #InactivoC>
-                        <small>NO</small>
-                      </ng-template>
-                    </td> -->
-                        <!-- <td class="text-center">
-                      <small *ngIf="rowc.activo else IsActivoC">
-                        SI
-                      </small>
-                      <ng-template #IsActivoC>
-                        <small>NO</small>
-                      </ng-template>
-                    </td> -->
                       </tr>
                     </tbody>
                   </table>
@@ -653,32 +637,44 @@
                 </mat-form-field>
               </div>
             </div>
-            <div class="row" #DatosContacto>
-              <div class="col-sm-12 col-md-3 col-lg-3">
-                <mat-form-field>
-                  <input matInput #nombreC formControlName="Nombre" placeholder="Nombre (s)" maxlength="50" required />
-                  <mat-hint align="end">{{nombreC.value.length}} / 50</mat-hint>
-                </mat-form-field>
+            <div #DatosContacto>
+              <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                  <mat-form-field>
+                    <input matInput #nombreC formControlName="Nombre" placeholder="Nombre (s)" maxlength="50"
+                      required />
+                    <mat-hint align="end">{{nombreC.value.length}} / 50</mat-hint>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                  <mat-form-field>
+                    <input matInput #apellidoPC formControlName="ApellidoPaterno" placeholder="Apellido Paterno"
+                      maxlength="50" required />
+                    <mat-hint align="end">{{apellidoPC.value.length}} / 50</mat-hint>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                  <mat-form-field>
+                    <input matInput #apellidoMC formControlName="ApellidoMaterno" placeholder="Apellido Materno"
+                      maxlength="50" />
+                    <mat-hint align="end">{{apellidoMC.value.length}} / 50</mat-hint>
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-3">
+                  <mat-form-field>
+                    <input matInput #puesto formControlName="Puesto" placeholder="Puesto" maxlength="100" required />
+                    <mat-hint align="end">{{puesto.value.length}} / 100</mat-hint>
+                  </mat-form-field>
+                </div>
               </div>
-              <div class="col-sm-12 col-md-3 col-lg-3">
-                <mat-form-field>
-                  <input matInput #apellidoPC formControlName="ApellidoPaterno" placeholder="Apellido Paterno"
-                    maxlength="50" required />
-                  <mat-hint align="end">{{apellidoPC.value.length}} / 50</mat-hint>
-                </mat-form-field>
-              </div>
-              <div class="col-sm-12 col-md-3 col-lg-3">
-                <mat-form-field>
-                  <input matInput #apellidoMC formControlName="ApellidoMaterno" placeholder="Apellido Materno"
-                    maxlength="50" />
-                  <mat-hint align="end">{{apellidoMC.value.length}} / 50</mat-hint>
-                </mat-form-field>
-              </div>
-              <div class="col-sm-12 col-md-3 col-lg-3">
-                <mat-form-field>
-                  <input matInput #puesto formControlName="Puesto" placeholder="Puesto" maxlength="100" required />
-                  <mat-hint align="end">{{puesto.value.length}} / 100</mat-hint>
-                </mat-form-field>
+              <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                  <mat-form-field>
+                    <textarea matInput rows="4" #infoAdicional formControlName="InfoAdicional"
+                      placeholder="Información Adicional" maxlength="250"></textarea>
+                    <mat-hint align="end">{{infoAdicional.value.length}} / 250</mat-hint>
+                  </mat-form-field>
+                </div>
               </div>
             </div>
           </form>
@@ -885,8 +881,9 @@
           <div class="modal-footer">
             <button type="button" class="md-1 btn btn-xs btn-outline-danger"
               (click)="(addContacto = ! addContacto) ; cancelarContacto()">Cancelar</button>
-            <button type="button" [disabled]="!formContactos.valid" class="md-1 btn btn-xs btn-outline-success"
-              (click)="AddContacto()">{{textbtnContacto}}</button>
+            <button type="button" [disabled]="!formContactos.valid || Telefonos.length === 0 || Emails.length === 0"
+              [ngClass]="!formContactos.valid || Telefonos.length === 0 || Emails.length === 0 ? 'disabled' : 'btn-outline-success'"
+              class="md-1 btn btn-xs" (click)="AddContacto()">{{textbtnContacto}}</button>
           </div>
 
         </div>
@@ -945,18 +942,19 @@
                         <td>{{rowcn.puesto}}</td>
                         <td>
                           <p *ngFor="let t of rowcn.telefonos">
-                              {{t.tipoTelefonos}}:
-                              +{{t.clavePais}} ({{t.claveLada}})
-                              {{t.telefono |
+                            {{t.tipoTelefonos}}:
+                            +{{t.clavePais}} ({{t.claveLada}})
+                            {{t.telefono |
                                       slice:0:4}}-{{t.telefono | slice:4:8}}
-                              <span *ngIf="t.tipoTelefonoId == 4 && t.extension != ''">
-                                Ext. {{t.extension}}
-                              </span>
+                            <span *ngIf="t.tipoTelefonoId == 4 && t.extension != ''">
+                              Ext. {{t.extension}}
+                            </span>
                           </p>
                         </td>
                         <td>
                           <p *ngFor="let e of rowcn.emails">{{e.email}}</p>
                         </td>
+                        <td>{{rowcn.infoAdicional}}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -981,12 +979,12 @@
   <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-12">
       <button type="reset" [disabled]="loading" [ngClass]="loading ? 'disabled': 'btn-outline-danger'"
-        class="btn btn-block" [routerLink]="['/ventas/directorio']">Cancel</button>
+        class="btn btn-block" [routerLink]="['/ventas/directorio']">Cancelar</button>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-12">
       <button type="submit" *ngIf="!loading"
-        [disabled]="!formGeneral.valid || DireccionesNew.length === 0 || TelefonosNew.length === 0 || CorreosNew.length === 0 || ContactosNew.length === 0"
-        [ngClass]="!formGeneral.valid || DireccionesNew.length === 0 || TelefonosNew.length === 0 || CorreosNew.length === 0 || ContactosNew.length === 0 ? 'disabled' : 'btn-outline-success'"
+        [disabled]="!formGeneral.valid || DireccionesNew.length === 0 || ContactosNew.length === 0"
+        [ngClass]="!formGeneral.valid || DireccionesNew.length === 0 || ContactosNew.length === 0 ? 'disabled' : 'btn-outline-success'"
         class="btn btn-block" (click)="GuardarProspecto()">Guardar</button>
       <img *ngIf="loading"
         src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">

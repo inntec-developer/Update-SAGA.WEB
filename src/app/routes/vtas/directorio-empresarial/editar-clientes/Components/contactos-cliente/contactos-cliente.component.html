@@ -1,7 +1,4 @@
 <div class="dt-container ">
-  <!-- <div class="card-header">
-    <em class="fa fa-users"></em> Contactos
-  </div> -->
   <div class="card-body">
     <div *ngIf="addContacto">
       <form [formGroup]="formContactos">
@@ -23,175 +20,340 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="row" #DatosContacto>
-          <div class="col-sm-12 col-md-3 col-lg-3">
-            <mat-form-field>
-              <input matInput #nombreC formControlName="Nombre" placeholder="Nombre (s)" maxlength="50" required />
-              <mat-hint align="end">{{nombreC.value.length}} / 50</mat-hint>
-            </mat-form-field>
-          </div>
-          <div class="col-sm-12 col-md-3 col-lg-3">
-            <mat-form-field>
-              <input matInput #apellidoPC formControlName="ApellidoPaterno" placeholder="Apellido Paterno"
-                maxlength="50" required />
-              <mat-hint align="end">{{apellidoPC.value.length}} / 50</mat-hint>
-            </mat-form-field>
-          </div>
-          <div class="col-sm-12 col-md-3 col-lg-3">
-            <mat-form-field>
-              <input matInput #apellidoMC formControlName="ApellidoMaterno" placeholder="Apellido Materno"
-                maxlength="50" />
-              <mat-hint align="end">{{apellidoMC.value.length}} / 50</mat-hint>
-            </mat-form-field>
-          </div>
-          <div class="col-sm-12 col-md-3 col-lg-3">
-            <mat-form-field>
-              <input matInput #puesto formControlName="Puesto" placeholder="Puesto" maxlength="100" required />
-              <mat-hint align="end">{{puesto.value.length}} / 100</mat-hint>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row" #TelefonoContacto>
-          <div class="col-md-4 col-lg-4 col-sm-12">
-            <mat-form-field>
-              <mat-select placeholder="Tipo Teléfono" formControlName="TipoTelefono"
-                (selectionChange)="getTipoTelefonoContacto()" required>
-                <mat-option *ngFor="let x of tipoTelefonos" [value]="x.id">
-                  <span>{{x.tipo}}</span>
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-md-6 col-lg-6 col-sm-12 form-row">
-            <div class="col-md-2 col-lg-2 col-sm-12">
+        <div #DatosContacto>
+          <div class="row">
+            <div class="col-sm-12 col-md-3 col-lg-3">
               <mat-form-field>
-                <span matPrefix>+&nbsp;</span>
-                <input matInput #ladaPaisC type="phone" formControlName="LadaPais" maxlength="3"
-                  name="LadaPais-Contacto" placeholder="País" required />
-                <mat-hint align="end">{{ladaPaisC.value.length}} / 3</mat-hint>
+                <input matInput #nombreC formControlName="Nombre" placeholder="Nombre (s)" maxlength="50" required />
+                <mat-hint align="end">{{nombreC.value.length}} / 50</mat-hint>
               </mat-form-field>
             </div>
-            <div class="col-md-2 col-lg-2 col-sm-12">
+            <div class="col-sm-12 col-md-3 col-lg-3">
               <mat-form-field>
-                <input matInput #ladaC type="phone" formControlName="Lada" maxlength="3" name="Lada-Contacto"
-                  placeholder="Lada" required />
-                <mat-hint align="end">{{ladaC.value.length}} / 3</mat-hint>
+                <input matInput #apellidoPC formControlName="ApellidoPaterno" placeholder="Apellido Paterno"
+                  maxlength="50" required />
+                <mat-hint align="end">{{apellidoPC.value.length}} / 50</mat-hint>
               </mat-form-field>
             </div>
-            <div class="col-md-6 col-lg-6 col-sm-12">
+            <div class="col-sm-12 col-md-3 col-lg-3">
               <mat-form-field>
-                <input matInput #numeroC type="phone" formControlName="Numero" maxlength="8" name="Numero-Contacto"
-                  placeholder="Número" required />
-                <mat-hint align="end">{{numeroC.value.length}} / 8</mat-hint>
+                <input matInput #apellidoMC formControlName="ApellidoMaterno" placeholder="Apellido Materno"
+                  maxlength="50" />
+                <mat-hint align="end">{{apellidoMC.value.length}} / 50</mat-hint>
               </mat-form-field>
             </div>
-            <div class="col-md-2 col-lg-2 col-sm-12" *ngIf="esOficinaContacto === 4">
+            <div class="col-sm-12 col-md-3 col-lg-3">
               <mat-form-field>
-                <input matInput #extencionC type="phone" formControlName="Extension" maxlength="5"
-                  name="Extension-Contacto" placeholder="Ext." />
-                <mat-hint align="end">{{extencionC.value.length}} / 5</mat-hint>
+                <input matInput #puesto formControlName="Puesto" placeholder="Puesto" maxlength="100" required />
+                <mat-hint align="end">{{puesto.value.length}} / 100</mat-hint>
               </mat-form-field>
             </div>
           </div>
-        </div>
-        <div class="row" #Emailcontacto>
-          <div class="col-sm -12 col-md-4 col-lg-4">
-            <mat-form-field>
-              <input matInput #correoElectronicoC type="email" formControlName="Email" maxlength="100" name="Email"
-                placeholder="Correo Electronico" />
-              <mat-hint align="end">{{correoElectronicoC.value.length}} / 100</mat-hint>
-            </mat-form-field>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <mat-form-field>
+                <textarea matInput rows="4" #infoAdicional formControlName="InfoAdicional"
+                  placeholder="Información Adicional" maxlength="250"></textarea>
+                <mat-hint align="end">{{infoAdicional.value.length}} / 250</mat-hint>
+              </mat-form-field>
+            </div>
           </div>
-        </div>
-        <br>
-        <div class="modal-footer">
-          <button type="button" class="md-1 btn btn-xs btn-outline-danger"
-            (click)="(addContacto = ! addContacto) ; cancelarContacto()">Cancelar</button>
-          <button type="button" [disabled]="!formContactos.valid" class="md-1 btn btn-xs btn-outline-success"
-            (click)="AddContacto()">{{textbtnContacto}}</button>
         </div>
       </form>
-    </div>
-    <div class="butoonAction clearfix p-2 bg-light">
-      <div class="contenedor">
-        <div class="aling-div">
-          <button class="mb-1 btn btn-xs btn-outline-primary margen" *ngIf="!addContacto" container="body"
-            placement="bottom" tooltip="Agregar" (click)="addContacto = true; textbtnContacto = 'Agregar'">
-            <em class="fa fa-plus"></em>
-          </button>
-        </div>
-        <div class="aling-div" *ngIf="!EditContacto">
-          <button *ngIf="Contactos.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
-            tooltip="Editar" [disabled]="!elementCn" [ngClass]="(!elementCn) ? 'disabled' : 'btn-outline-primary'"
-            (click)="UpContactos(); textbtnContacto = 'Editar'">
-            <em class="fa fa-pencil"></em>
-          </button>
-          <button *ngIf="Contactos.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
-            tooltip="Eliminar" [disabled]="!elementCn" [ngClass]="(!elementCn) ? 'disabled' : 'btn-outline-danger'"
-            (click)="sweetalertEliminarContacto()">
-            <em class="fa fa-trash"></em>
-          </button>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="Contactos.length > 0">
-      <div class="card media">
-        <div class="card-body">
-          <div class="row" #TableContactos>
-            <div class="col-sm-12 col-md-12 table-responsive clearfix">
-              <div>
-                <span *ngIf="config.paging" class="float-right">Total Registros: {{registrosCn}}</span>
+      <br>
+      <p *ngIf="elementCn">
+        <alert type="info" [dismissible]="true" [hidden]="showAlert" (onClosed)="onClosed()">
+          <strong>{{msg}}</strong>
+        </alert>
+      </p>
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12" #TelefonoContacto>
+          <h4 class="text-success ">Tel&eacute;fonos
+            <span class="pull-right">
+              <em style="margin-left: 10px;" class="fa fa-phone"></em>
+            </span>
+          </h4>
+          <mat-divider></mat-divider>
+          <div *ngIf="addContactoTelefono">
+            <form [formGroup]="formContactoTelefonos" class="form-row">
+              <div class="col-md-2 col-lg-2 col-sm-12">
+                <mat-form-field>
+                  <mat-select placeholder="Tipo Teléfono" formControlName="TipoTelefono"
+                    (selectionChange)="getTipoTelefonoContacto()">
+                    <mat-option *ngFor="let x of tipoTelefonos" [value]="x.id">
+                      <span>{{x.tipo}}</span>
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
               </div>
-              <table id="ContactosNuevos" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+              <div class="col-md-2 col-lg-2 col-sm-12">
+                <mat-form-field>
+                  <span matPrefix>+&nbsp;</span>
+                  <input matInput #ladaPaisC type="phone" formControlName="LadaPais" maxlength="3"
+                    name="LadaPais-Contacto" placeholder="País" required />
+                  <mat-hint align="end">{{ladaPaisC.value.length}} / 3</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2 col-lg-2 col-sm-12">
+                <mat-form-field>
+                  <input matInput #ladaC type="phone" formControlName="Lada" maxlength="3" name="Lada-Contacto"
+                    placeholder="Lada" required />
+                  <mat-hint align="end">{{ladaC.value.length}} / 3</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 col-lg-4 col-sm-12">
+                <mat-form-field>
+                  <input matInput #numeroC type="phone" formControlName="Numero" maxlength="8" minlength="8"
+                    name="Numero-Contacto" placeholder="Número" required />
+                  <mat-hint align="end">{{numeroC.value.length}} / 8</mat-hint>
+                </mat-form-field>
+              </div>
+              <div class="col-md-2 col-lg-2 col-sm-12" *ngIf="esOficinaContacto === 4">
+                <mat-form-field>
+                  <input matInput #extencionC type="phone" formControlName="Extension" maxlength="5"
+                    name="Extension-Contacto" placeholder="Ext." />
+                  <mat-hint align="end">{{extencionC.value.length}} / 5</mat-hint>
+                </mat-form-field>
+              </div>
+            </form>
+            <div class="modal-footer">
+              <em class="fa fa-close text-danger em-button" (click)="cancelarContactoTelefono()"></em>
+              <em *ngIf="formContactoTelefonos.valid" class="fa fa-check text-success em-button"
+                (click)="AddContactoTelefono()"></em>
+            </div>
+          </div>
+          <br>
+          <div class="clearfix">
+            <div class="aling-div" *ngIf="!addContactoTelefono">
+              <button (click)="addContactoTelefono = true" class="mb-1 btn btn-xs btn-outline-primary margen">
+                <em class="fa fa-plus"></em>
+              </button>
+            </div>
+            <div class="aling-div" *ngIf="!EditContactoTelefono">
+              <button *ngIf="Telefonos.length > 0" class="mb-1 btn btn-xs margen" [disabled]="!elementCnT"
+                [ngClass]="(!elementCnT) ? 'disabled' : 'btn-outline-primary'" (click)="UdContactoTelefono()">
+                <em class="fa fa-pencil"></em>
+              </button>
+              <button *ngIf="Telefonos.length > 0" class="mb-1 btn btn-xs margen" [disabled]="!elementCnT"
+                [ngClass]="(!elementCnT) ? 'disabled' : 'btn-outline-danger'" (click)="sweetAlertEliminarTelefonoC()">
+                <em class="fa fa-trash"></em>
+              </button>
+            </div>
+          </div>
+          <div class="row" *ngIf="Telefonos.length > 0">
+            <div class="col-lg-12 col-md-12 col-sm-12 table-responsive">
+              <div>
+                <span *ngIf="config.paging" class="float-right">Total Registros: {{lengthCnT}}</span>
+              </div>
+              <table id="ContactoTelefonosNuevos" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
                 <thead>
                   <tr>
-                    <th *ngFor="let column of columnsCn" ngClass="{{column.className || ''}}">
+                    <th *ngFor="let column of columnsCnT" ngClass="{{column.className || ''}}">
                       {{column.title | uppercase}}
                     </th>
                   </tr>
-                  <tr *ngIf="showFilterRowCn">
-                    <td *ngFor="let column of columnsCn">
-                      <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
-                        [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTableCn(config)"
-                        class="form-control form-control-sm" id="{{column.name}}">
-                    </td>
-                  </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let rowcn of rowsCn; let i=index" (click)="onCellClickCn(rowcn, rowcn.id)"
-                    [class.selected]="rowcn.selectedCn">
-                    <td>{{rowcn.calle}}</td>
-                    <td>{{rowcn.nombre}} {{rowcn.apellidoPaterno}} {{rowcn.apellidoMaterno}}
-                    </td>
-                    <td>{{rowcn.puesto}}</td>
+                  <tr *ngFor="let rowcnt of rowsCnT;let i = index" [class.selected]="rowcnt.selectedCnT"
+                    (click)="onCellClickCnT(rowcnt)">
                     <td>
-                      <p *ngFor="let t of rowcn.telefonos">
-                        {{t.tipoTelefono}}:
-                        +{{t.clavePais}} ({{t.claveLada}})
-                        {{t.telefono |
-                              slice:0:4}}-{{t.telefono | slice:4:8}}
-                        <span *ngIf="t.tipoTelefonoId == 4 && t.extension != ''">
-                          Ext. {{t.extension}}
+                      <span>
+                        {{rowcnt.tipoTelefono}}
+                      </span>
+                    </td>
+                    <td>
+                      <span>+{{rowcnt.clavePais}}
+                        ({{rowcnt.claveLada}})
+                        {{rowcnt.telefono | slice:0:4}}-{{rowcnt.telefono | slice:4:8}}
+                        <span *ngIf="rowcnt.tipoTelefonoId == 4 && rowcnt.extension != ''">
+                          Ext.{{rowcnt.extension}}
                         </span>
-                      </p>
-                    </td>
-                    <td>
-                      <p *ngFor="let e of rowcn.emails">{{e.email}}</p>
+                      </span>
                     </td>
                   </tr>
                 </tbody>
               </table>
-              <mat-divider></mat-divider>
+              <br />
               <div class="text-right">
-                <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="pageCn" [totalItems]="lengthCn"
-                  [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
-                  (pageChanged)="onChangeTableCn(config, $event)" (numPages)="numPagesCn = $event">
+                <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="pageCnT"
+                  [totalItems]="lengthCnT" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true"
+                  previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [rotate]="false"
+                  (pageChanged)="nextPageCnT({page: $event, itemsPerPage: itemsPerPage })"
+                  (numPages)="numPagesCnT = $event">
+                </pagination>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6  col-md-6 col-sm-12" #Emailcontacto>
+          <h4 class="text-success ">Correos Electr&oacute;nicos,
+            <span class="pull-right">
+              <em style="margin-left: 10px;" class="fa fa-envelope-o"></em>
+            </span>
+          </h4>
+          <mat-divider></mat-divider>
+          <div *ngIf="addContactoCorreo">
+            <form [formGroup]="formContactoCorreo">
+              <mat-form-field>
+                <input matInput #correoElectronicoC type="email" formControlName="Email" maxlength="100" name="Email"
+                  placeholder="Correo Electronico" />
+                <mat-hint align="end">{{correoElectronicoC.value.length}} / 100</mat-hint>
+              </mat-form-field>
+            </form>
+            <div class="modal-footer">
+              <em class="fa fa-close text-danger em-button" (click)="cancelarContactoCorreo()"></em>
+              <em *ngIf="formContactoCorreo.valid" class="fa fa-check text-success em-button"
+                (click)="AddContactoCorreo()"></em>
+            </div>
+          </div>
+          <br>
+          <div class="clearfix">
+            <div class="aling-div" *ngIf="!addContactoCorreo">
+              <button (click)="addContactoCorreo = true" class="mb-1 btn btn-xs btn-outline-primary margen">
+                <em class="fa fa-plus"></em>
+              </button>
+            </div>
+            <div class="aling-div" *ngIf="!EditContactoCorreo">
+              <button *ngIf="Emails.length > 0" class="mb-1 btn btn-xs margen" [disabled]="!elementCnC"
+                [ngClass]="(!elementCnC) ? 'disabled' : 'btn-outline-primary'" (click)="UdContactoCorreo()">
+                <em class="fa fa-pencil"></em>
+              </button>
+              <button *ngIf="Emails.length > 0" class="mb-1 btn btn-xs margen" [disabled]="!elementCnC"
+                [ngClass]="(!elementCnC) ? 'disabled' : 'btn-outline-danger'" (click)="sweetAlertEliminarCorreoC()">
+                <em class="fa fa-trash"></em>
+              </button>
+            </div>
+          </div>
+          <div class="row" *ngIf="Emails.length > 0">
+            <div class="col-lg-12 col-md-12 col-sm-12 table-responsive">
+              <div>
+                <span *ngIf="config.paging" class="float-right">Total Registros: {{lengthCnC}}</span>
+              </div>
+              <table id="ContactoCorreosNuevos" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th *ngFor="let column of columnsCnC" ngClass="{{column.className || ''}}">
+                      {{column.title | uppercase}}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let rowcnc of rowsCnC;let i = index" [class.selected]="rowcnc.selectedCnC"
+                    (click)="onCellClickCnC(rowcnc)">
+                    <td>
+                      <span>
+                        {{rowcnc.email}}
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <br />
+              <div class="text-right">
+                <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="pageCnC"
+                  [totalItems]="lengthCnC" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true"
+                  previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [rotate]="false"
+                  (pageChanged)="nextPageCnC({page: $event, itemsPerPage: itemsPerPage })"
+                  (numPages)="numPagesCnC = $event">
                 </pagination>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-xs btn-outline-danger"
+          (click)="(addContacto = ! addContacto) ; cancelarContacto()">Cancelar</button>
+        <button type="button" [disabled]="!formContactos.valid || Telefonos.length === 0 || Emails.length === 0"
+          [ngClass]="!formContactos.valid || Telefonos.length === 0 || Emails.length === 0 ? 'disabled' : 'btn-outline-success'"
+          class="md-1 btn btn-xs" (click)="AddContacto()">{{textbtnContacto}}</button>
+      </div>
     </div>
+    <div *ngIf="!addContacto">
+      <div class="butoonAction clearfix p-2 bg-light">
+        <div class="contenedor">
+          <div class="aling-div">
+            <button class="mb-1 btn btn-xs btn-outline-primary margen" *ngIf="!addContacto" container="body"
+              placement="bottom" tooltip="Agregar" (click)="newContaco()">
+              <em class="fa fa-plus"></em>
+            </button>
+          </div>
+          <div class="aling-div" *ngIf="!EditContacto">
+            <button *ngIf="Contactos.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
+              tooltip="Editar" [disabled]="!elementCn" [ngClass]="(!elementCn) ? 'disabled' : 'btn-outline-primary'"
+              (click)="UpContactos(); textbtnContacto = 'Editar'">
+              <em class="fa fa-pencil"></em>
+            </button>
+            <button *ngIf="Contactos.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
+              tooltip="Eliminar" [disabled]="!elementCn" [ngClass]="(!elementCn) ? 'disabled' : 'btn-outline-danger'"
+              (click)="sweetalertEliminarContacto()">
+              <em class="fa fa-trash"></em>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="Contactos.length > 0">
+        <div class="card media">
+          <div class="card-body">
+            <div class="row" #TableContactos>
+              <div class="col-sm-12 col-md-12 table-responsive clearfix">
+                <div>
+                  <span *ngIf="config.paging" class="float-right">Total Registros: {{registrosCn}}</span>
+                </div>
+                <table id="ContactosNuevos" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+                  <thead>
+                    <tr>
+                      <th *ngFor="let column of columnsCn" ngClass="{{column.className || ''}}">
+                        {{column.title | uppercase}}
+                      </th>
+                    </tr>
+                    <tr *ngIf="showFilterRowCn">
+                      <td *ngFor="let column of columnsCn">
+                        <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
+                          [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTableCn(config)"
+                          class="form-control form-control-sm" id="{{column.name}}">
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let rowcn of rowsCn; let i=index" (click)="onCellClickCn(rowcn, rowcn.id)"
+                      [class.selected]="rowcn.selectedCn">
+                      <td>{{rowcn.calle}}</td>
+                      <td>{{rowcn.nombre}} {{rowcn.apellidoPaterno}} {{rowcn.apellidoMaterno}}
+                      </td>
+                      <td>{{rowcn.puesto}}</td>
+                      <td>
+                        <p *ngFor="let t of rowcn.telefonos">
+                          {{t.tipoTelefono}}:
+                          +{{t.clavePais}} ({{t.claveLada}})
+                          {{t.telefono |
+                              slice:0:4}}-{{t.telefono | slice:4:8}}
+                          <span *ngIf="t.tipoTelefonoId == 4 && t.extension != ''">
+                            Ext. {{t.extension}}
+                          </span>
+                        </p>
+                      </td>
+                      <td>
+                        <p *ngFor="let e of rowcn.emails">{{e.email}}</p>
+                      </td>
+                      <td>{{rowcn.infoAdicional}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <mat-divider></mat-divider>
+                <div class="text-right">
+                  <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="pageCn" [totalItems]="lengthCn"
+                    [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+                    (pageChanged)="onChangeTableCn(config, $event)" (numPages)="numPagesCn = $event">
+                  </pagination>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
+<toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>

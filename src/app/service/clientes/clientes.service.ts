@@ -49,6 +49,9 @@ export class ClientesService {
   private UrlEditContactoCliente = ApiConection.ServiceUrl + ApiConection.EditContactoCliente;
   private UrlDeleteContacocliente = ApiConection.ServiceUrl + ApiConection.DeleteContactoCliente;
 
+  private UrlCRUDTelefonContacto = ApiConection.ServiceUrl + ApiConection.CRUDTelefonContacto;
+
+  private UrlCRUDContactoCorreo = ApiConection.ServiceUrl + ApiConection.CRUDContactoCorreo;
 
 
 
@@ -102,36 +105,45 @@ export class ClientesService {
 
   deleteTelefono(telefonoId): Observable<any> {
     let params = new HttpParams().set('TelefonoId', telefonoId)
-    return this._httpClient.get(this.UrlDeleteTelefonoCliente, {params: params});
+    return this._httpClient.get(this.UrlDeleteTelefonoCliente, { params: params });
   }
 
-  addCorreo(data): Observable<any>{
+  addCorreo(data): Observable<any> {
     return this._httpClient.post(this.UrlAddCorreoCliente, data, httpOptions);
   }
 
-  editCorreo(data): Observable<any>{
+  editCorreo(data): Observable<any> {
     return this._httpClient.post(this.UrlEditCorreoCliente, data, httpOptions);
   }
 
-  deleteCorreo(CorreoId): Observable <any>{
+  deleteCorreo(CorreoId): Observable<any> {
     let params = new HttpParams().set('EmailId', CorreoId);
-    return this._httpClient.get(this.UrlDeleteCorreoCliente, {params: params})
+    return this._httpClient.get(this.UrlDeleteCorreoCliente, { params: params })
   }
 
-  addContacto(data) : Observable<any>{
+  addContacto(data): Observable<any> {
     return this._httpClient.post(this.UrlAddContactoCliente, data, httpOptions)
-    .pipe(catchError((error: HttpErrorResponse) => throwError(error)));
+      .pipe(catchError((error: HttpErrorResponse) => throwError(error)));
   }
 
-  editContacto(data) : Observable<any>{
+  editContacto(data): Observable<any> {
     return this._httpClient.post(this.UrlEditContactoCliente, data, httpOptions)
-    .pipe(catchError((error: HttpErrorResponse) => throwError(error)));;
+      .pipe(catchError((error: HttpErrorResponse) => throwError(error)));
   }
 
-  deleteContacto(ContactoId): Observable<any>{
+  deleteContacto(ContactoId): Observable<any> {
     let params = new HttpParams().set('ContactoId', ContactoId);
-    return this._httpClient.get(this.UrlDeleteContacocliente, {params:  params})
-    .pipe(catchError((error: HttpErrorResponse) => throwError(error)));;
+    return this._httpClient.get(this.UrlDeleteContacocliente, { params: params })
+      .pipe(catchError((error: HttpErrorResponse) => throwError(error)));
   }
 
+  crudTelefonContacto(data: any): Observable<any> {
+    return this._httpClient.post(this.UrlCRUDTelefonContacto, data, httpOptions)
+      .pipe(catchError((error: HttpErrorResponse) => throwError(error)));
+  }
+
+  crudCorreoContacto(data: any): Observable<any> {
+    return this._httpClient.post(this.UrlCRUDContactoCorreo, data, httpOptions)
+      .pipe(catchError((error: HttpErrorResponse) => throwError(error)));
+  }
 }

@@ -13,7 +13,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let row of rows" [class.selected]="row.selected" (click)="onCellClick(row)">
-              <td class="text-center"> {{row.tipoTelefono?.tipo}}</td>
+              <td class="text-center"> {{row.tipo}}</td>
               <td class="text-center"> {{row.clavePais}} - {{row.claveLada}} - {{row.telefono}}</td>
               <td class="text-center"> {{row.extension}}</td>
               <td class="text-center">
