@@ -228,6 +228,7 @@ export class ApiConection {
   public static getFiles = 'admin/getFiles';
   public static sendEmailRegister = 'admin/sendEmailRegister';
   public static downloadFiles = 'admin/downloadFiles';
+  public static deleteFiles = 'admin/deleteFiles';
   public static viewFile = 'admin/viewFile';
   public static uploadFile = 'admin/uploadFile';
   public static updateActivo = 'admin/updateActivo';
@@ -270,6 +271,7 @@ export class ApiConection {
   public static GetExamen = 'examenes/getExamen'
   public static InsertRelacion = 'examenes/insertRelacion'
   public static InsertRespCandidato = 'examenes/insertRespCandidato'
+  public static InsertResultMedico = 'examenes/insertResultMedico'
   public static GetCandidatosExamen = 'examenes/getCandidatos'
   public static GetRespuestasCandidato = 'examenes/getRespCandidatos'
   public static ActualizarResultado = 'examenes/actualizarResultado'
@@ -282,6 +284,7 @@ export class ApiConection {
   public static GetClaves = 'examenes/getClaves'
   public static GetClaveCandidatos = 'examenes/getClaveCandidatos'
   public static GetClavesCandidatos = 'examenes/getClavesCandidatos'
+  public static GetExamenesMedicos = 'examenes/examenesMedicos'
 
   /*Reportes */
   public static GetInforme = 'reporte/Informe'

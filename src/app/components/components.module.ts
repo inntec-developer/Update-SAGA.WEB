@@ -135,6 +135,7 @@ import { ToolsModule } from '../tools/tools.module';
 import { TpNominaComponent } from './catalogos/tp-nomina/tp-nomina.component';
 import { TpPsicometriaComponent } from './catalogos/tp-psicometria/tp-psicometria.component';
 import { DlgRegistroMasivoComponent } from './dlg-registro-masivo/dlg-registro-masivo.component';
+import { DlgResultadosMedicosComponent } from './dlg-resultados-medicos/dlg-resultados-medicos.component';
 
 @NgModule({
   imports: [
@@ -275,7 +276,8 @@ import { DlgRegistroMasivoComponent } from './dlg-registro-masivo/dlg-registro-m
     IndicadorCandidatosEstatusComponent,
     IndicadorPosicionesActivasComponent,
     DlgRegistroMasivoComponent,
-    CURPValidator
+    CURPValidator,
+    DlgResultadosMedicosComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -366,9 +368,10 @@ import { DlgRegistroMasivoComponent } from './dlg-registro-masivo/dlg-registro-m
     IndicadorCandidatosComponent,
     IndicadorCandidatosEstatusComponent,
     IndicadorPosicionesActivasComponent,
-    DlgRegistroMasivoComponent
+    DlgRegistroMasivoComponent,
+    DlgResultadosMedicosComponent
   ],
-  entryComponents: [ DlgRegistroMasivoComponent, RegistroReclutadorComponent, TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
+  entryComponents: [ DlgResultadosMedicosComponent, DlgRegistroMasivoComponent, RegistroReclutadorComponent, TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
 
 
 })

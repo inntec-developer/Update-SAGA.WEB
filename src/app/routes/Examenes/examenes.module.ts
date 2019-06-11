@@ -12,6 +12,7 @@ import { RequisicionesService } from '../../service';
 import { RevisarExamenesComponent } from './revisar-examenes/revisar-examenes.component';
 import { SharedModule } from './../../shared/shared.module';
 import { ToolsModule } from '../../tools/tools.module';
+import { AgregarResultMedicosComponent } from './agregar-result-medicos/agregar-result-medicos.component';
 
 const routes: Routes = [
   { path: 'addexamen', component: AddExamenComponent },
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'revisar', component: RevisarExamenesComponent },
   { path: 'asignarClaves', component: AsignarPsicometricosComponent },
   { path: 'agregarResultPsico', component: AgregarResultadosPsicoComponent },
-  { path: 'historialClaves', component: HistorialClavesComponent }
+  { path: 'historialClaves', component: HistorialClavesComponent },
+  { path: 'examenesMedicos', component: AgregarResultMedicosComponent }
 
 ];
 
@@ -39,6 +41,7 @@ const routes: Routes = [
     AgregarResultadosPsicoComponent,
     HistorialClavesComponent,
     RevisarExamenesComponent,
+    AgregarResultMedicosComponent,
     // DlgRevisarExamenesComponent
   ],
   exports: [

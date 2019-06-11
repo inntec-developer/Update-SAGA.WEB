@@ -11,6 +11,13 @@ export class FilesContratadosComponent implements OnInit {
 
   registrosInfo: number;
   filemanager = false;
+    //scroll
+    public disabled = false;
+    public invertX = false;
+    public compact = false;
+    public invertY = false;
+    public shown = 'hover';
+
   public dataInfoRequi: Array<any> = [];
   public pageInfo: number = 1;
   public itemsPerPageInfo: number = 20;
@@ -21,12 +28,12 @@ export class FilesContratadosComponent implements OnInit {
 
   public rowsInfo: Array<any> = [];
   public columns: Array<any> = [
-    { title: 'Folio', className: 'text-primary', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
-    { title: 'Vacante', className: 'text-primary', name: 'vbtra', filtering: { filterString: '', placeholder: 'Vacante' } },
-    { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
-    { title: 'edad', className: 'text-primary', name: 'edad', filtering: { filterString: '', placeholder: 'Edad' } },
-    { title: 'Nombre', className: 'text-primary', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
-    { title: 'Fecha', className: 'text-primary', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'Fecha' } }
+    { title: 'Folio', className: 'text-primary text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+    { title: 'Vacante', className: 'text-primary text-center', name: 'vbtra', filtering: { filterString: '', placeholder: 'Vacante' } },
+    { title: 'CURP', className: 'text-success text-center', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
+    { title: 'edad', className: 'text-primary text-center', name: 'edad', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Nombre', className: 'text-primary text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
+    { title: 'Fecha', className: 'text-primary text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'Fecha' } }
   ]
 
   constructor(private service: CandidatosService, private spinner: NgxSpinnerService) { }
@@ -40,7 +47,7 @@ export class FilesContratadosComponent implements OnInit {
   {
     this.service.GetInfoContratados().subscribe(result =>{
       this.dataInfoRequi = result;
-      this.rowsInfo = result;
+      this.onChangeTableInfo(this.config)
     });
   }
 
@@ -68,7 +75,7 @@ export class FilesContratadosComponent implements OnInit {
 
     this.registrosInfo = this.dataInfoRequi.length;
     this.rowsInfo = this.dataInfoRequi;
-    let filteredData = this.changeFilterInfo(this.dataInfoRequi, this.config);
+    let filteredData = this.changeFilterInfo(this.rowsInfo, this.config);
     //let sortedData = this.changeSort(filteredData, this.config);
     this.rowsInfo = page && config.paging ? this.changePageInfo(page, filteredData) : filteredData;
     this.lengthInfo =  filteredData.length;
@@ -134,6 +141,17 @@ export class FilesContratadosComponent implements OnInit {
     let start = (page.page - 1) * page.itemsPerPage;
     let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
+  }
+
+  
+  public clearfilters() {
+    this.clearFilter = false;
+    // (<HTMLInputElement>document.getElementById('filterInput')).value = '';
+    this.columns.forEach(element => {
+      element.filtering.filterString = '';
+      (<HTMLInputElement>document.getElementById(element.name)).value = '';
+    });
+    this.onChangeTableInfo(this.config);
   }
 
 }

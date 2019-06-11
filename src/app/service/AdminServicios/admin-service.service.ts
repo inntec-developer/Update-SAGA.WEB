@@ -61,6 +61,7 @@ export class AdminServiceService {
   private UrlGetImage = ApiConection.ServiceUrl+ApiConection.getImage;
   private UrlSendEmailRegister = ApiConection.ServiceUrl+ApiConection.sendEmailRegister;
   private UrlDownloadFiles = ApiConection.ServiceUrl+ApiConection.downloadFiles;
+  private UrlDeleteFiles = ApiConection.ServiceUrl+ApiConection.deleteFiles;
   private UrlViewFile = ApiConection.ServiceUrl + ApiConection.viewFile;
   private UrlUploadFile = ApiConection.ServiceUrl + ApiConection.uploadFile;
   private UrlGetLideres = ApiConection.ServiceUrl + ApiConection.getLideres;
@@ -121,7 +122,11 @@ export class AdminServiceService {
     let params = new HttpParams().set('file', ruta);
     return this._httpClient.get(this.UrlDownloadFiles, {params: params, responseType: 'blob'});
   }
-
+  DeleteFiles(ruta) : Observable<any>
+  {
+    let params = new HttpParams().set('file', ruta);
+    return this._httpClient.get(this.UrlDeleteFiles, {params: params});
+  }
   UploadFile( file: File, candidatoId ) : Observable<any>
   {
     let formData = new FormData();

@@ -1,28 +1,40 @@
-<div class="row">
+<div *ngIf="dataSource.length > 0 else NotCandidatos" class="row">
+  <div class="col-sm-12 col-md-12">
+    <button type="button" class="btn btn-xs btn-outline-success float-right" (click)="refreshTable()" container="body"
+    placement="bottom" tooltip="Actualizar" container="body">
+    <em class="icon-refresh"></em>
+  </button>
+  <button (click)="clearfilters()" class="btn btn-xs btn-outline-primary float-right mr-2" container="body" placement="bottom" tooltip="Limpiar Filtros"
+  container="body">
+  <em class="fa fa-eraser"></em>
+</button>
+  <br/>
+  <br/>
+</div>
+
+
     <div class="col-sm-12 col-md-12 table-responsive clearfix">
-      <div class="mt-3 ">
+      <div class="mt-3">
           <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total posiciones cubiertas
               <span class="badge badge-pill badge-success ml-1">{{totalContratados}}</span></span>
 
         <span class="text-muted font-weight-bold float-right text-uppercase mb-3 ">Total de Folios <span
             class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span></span>
+    
       </div>
 
-      <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table border-top" style="width: 100%;">
+      <table ngClass="{{config.className || ''}}" class="table border-top" style="width: 100%;">
         <thead>
           <tr>
             <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
               <small>{{column.title | uppercase}}</small>
-              <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)"
-                [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
-              </i>
             </th>
           </tr>
-          <tr *ngIf="showFilterRow">
+          <tr>
             <th *ngFor="let column of columns">
               <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
                 [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
-                class="form-control form-control-sm" id="{{column.name}}">
+                class="form-control form-control-sm" id="{{column.name}}1">
             </th>
 
           </tr>
@@ -123,14 +135,26 @@
           </ng-scrollbar>
         </tbody>
       </table>
-    </div>
-    <div class="row mt-2">
-        <div class="col-md-12 col-sm-12 clearfix">
-          <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
-            [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
-            (numPages)="numPages = $event">
-          </pagination>
-          <!-- <pre *ngIf="config.paging" class="text-muted float-right">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre> -->
+      <div class="row mt-2">
+          <div class="col-md-12 col-sm-12 clearfix">
+            <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
+              [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
+              (numPages)="numPages = $event">
+            </pagination>
+            <!-- <pre *ngIf="config.paging" class="text-muted float-right">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre> -->
+          </div>
         </div>
       </div>
     </div>
+  
+
+          <!--mensaje cuando esta vacio la tabla-->
+<ng-template #NotCandidatos>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <alert type="info">
+          <strong>Oops!</strong> A&uacute;n no cuentas con requisiciones cubiertas.
+        </alert>
+      </div>
+    </div>
+  </ng-template>

@@ -47,9 +47,9 @@
         <hr>
         <ng-container *ngFor="let p of examen; let ind = index">
           <p class="list-group text-primary">{{( ind + 1) + '.- ' + p.pregunta}}</p>
-          <ul class="respStyle">
+          <!-- <ul class="respStyle">
             <li [ngClass]="r.value == 1 ? 'text-success' : 'text-warning'" *ngFor="let r of p.respuestas">{{r.resp}}</li>
-          </ul>
+          </ul> -->
         </ng-container>
 
 
@@ -156,25 +156,29 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 id="dialog-sizes-name1" class="modal-title pull-left text-success">{{examenRequi[0].nombre | uppercase}}</h4>
+        <h4 class="modal-title pull-left text-success"><i class="fa fa-file-text-o mr-1" aria-hidden="true"></i>{{examenRequi[0].nombre | uppercase}}</h4>
         <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal.hide();closeModal()">
           <i class="fa fa-times"></i>
         </button>
-
       </div>
       <div class="modal-body">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body mat-elevation-z8">
             <!-- <h5 class="card-title text-info">VISUALIZAR
               <span *ngIf="nomExamen">- Examen de {{nom}} / {{nomExamen}}</span>
-            </h5>
+            </h5>[ngClass]="r.value == 1 ? 'text-success' : 'text-warning'"
             <hr> -->
-            <ng-container *ngFor="let p of examenRequi; let ind = index">
-              <p class="list-group text-primary">{{( ind + 1) + '.- ' + p.pregunta}}</p>
-              <ul class="respStyle">
-                <li [ngClass]="r.value == 1 ? 'text-success' : 'text-warning'" *ngFor="let r of p.respuestas">{{r.resp}}</li>
-              </ul>
-            </ng-container>
+            <ng-scrollbar #scrollable [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+              [disabled]="disabled">
+              <div style="height: 400px;">
+                <ng-container *ngFor="let p of examenRequi; let ind = index">
+                  <p class="list-group text-primary">{{( ind + 1) + '.- ' + p.pregunta}}</p>
+                  <ul class="respStyle">
+                    <li class="text-muted" *ngFor="let r of p.respuestas">{{r.resp}}</li>
+                  </ul>
+                </ng-container>
+              </div>
+            </ng-scrollbar>
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { ToolsModule } from './../../../../../tools/tools.module';
 import { Component, OnInit } from '@angular/core';
 import { RequisicionesService } from '../../../../../service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -31,6 +32,7 @@ export class DTHistorialComponent implements OnInit {
   showFilterRow: boolean;
   registros: number;
   totalContratados: number = 0;
+  clearFilter: boolean = false;
 
   constructor( private service: RequisicionesService, private spinner: NgxSpinnerService, private settings: SettingsService) { }
 
@@ -84,40 +86,8 @@ export class DTHistorialComponent implements OnInit {
     return data.slice(start, end);
   }
 
-  public changeSort(data: any, config: any): any {
-    if (!config.sorting) {
-      return data;
-    }
-
-    let columns = this.config.sorting.columns || [];
-    let columnName: string = void 0;
-    let sort: string = void 0;
-
-    for (let i = 0; i < columns.length; i++) {
-      if (columns[i].sort !== '' && columns[i].sort !== false) {
-        columnName = columns[i].name;
-        sort = columns[i].sort;
-      }
-    }
-
-    if (!columnName) {
-      return data;
-    }
-
-    // simple sorting
-    return data.sort((previous: any, current: any) => {
-      if (previous[columnName] > current[columnName]) {
-        return sort === 'desc' ? -1 : 1;
-      } else if (previous[columnName] < current[columnName]) {
-        return sort === 'asc' ? -1 : 1;
-      }
-      return 0;
-    });
-  }
-
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
-
     this.columns.forEach((column: any) => {
       if (column.filtering) {
         this.showFilterRow = true;
@@ -203,5 +173,27 @@ export class DTHistorialComponent implements OnInit {
     this.length = filteredData.length;
     this.registros = this.rows.length;
     this.spinner.hide();
+  }
+
+  public refreshTable() {
+    this.spinner.show();
+    this.getRequisiciones();
+
+    setTimeout(() => {
+      this.columns.forEach(element => {
+        element.filtering.filterString = '';
+        (<HTMLInputElement>document.getElementById(element.name + '1')).value = '';
+      });
+      this.spinner.hide();
+    }, 800);
+  }
+
+  public clearfilters() {
+    this.columns.forEach(element => {
+      element.filtering.filterString = '';
+      (<HTMLInputElement>document.getElementById(element.name + '1')).value = '';
+    });
+    this.onChangeTable(this.config);
+
   }
 }

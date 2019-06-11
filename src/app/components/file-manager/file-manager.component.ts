@@ -1,9 +1,7 @@
 import { saveAs } from 'file-saver';
-
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { AdminServiceService } from '../../service/AdminServicios/admin-service.service';
-
-
+const swal = require('sweetalert');
 
 @Component({
   selector: 'app-file-manager',
@@ -121,6 +119,44 @@ onClosed(): void {
     this.service.DownloadFiles(ruta + datos.nom).subscribe( res =>{
       saveAs(res, datos.nom)
     })
+  
+  }
+
+  deleteFile(datos)
+  {
+    swal({
+      title: "¿ESTÁS SEGURO?",
+      text: "¡Se borrara el archivo " + datos.nom + "!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ec2121",
+      confirmButtonText: "¡Si, borrar!",
+      cancelButtonColor: "#ec2121",
+      cancelButtonText: "¡No, cancelar!",
+      closeOnConfirm: true,
+      closeOnCancel: true
+    }, (isConfirm) => {
+      window.onkeydown = null;
+      window.onfocus = null;
+      if (isConfirm) {
+        var ruta = '/utilerias/Files/users/' + this.candidatoId + '/';
+        this.service.DeleteFiles(ruta + datos.nom).subscribe( res =>{
+          if(res == 200)
+          { 
+            swal('Borrar Archivo', 'El archivo se borró con éxito', 'success')
+            this.ngOnInit();
+          }
+          else
+          {
+            swal('Borrar Archivo', 'Ocurrio un error al intentar borrar archivo', 'error')
+          }
+        });
+      }
+      else
+      {
+        swal("Cancelado", "No se realizó ningún cambio", "error");
+      }
+});
   
   }
 

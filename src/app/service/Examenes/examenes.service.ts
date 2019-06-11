@@ -16,6 +16,7 @@ export class ExamenesService {
   URLGetExamen = ApiConection.ServiceUrl + ApiConection.GetExamen;
   URLInsertRelacion = ApiConection.ServiceUrl + ApiConection.InsertRelacion;
   URLInsertRespCandidato = ApiConection.ServiceUrl + ApiConection.InsertRespCandidato;
+  URLInsertResultMedico = ApiConection.ServiceUrl + ApiConection.InsertResultMedico;
   URLGetCandidatosExamenes = ApiConection.ServiceUrl + ApiConection.GetCandidatosExamen;
   URLGetRespuestasCandidatos = ApiConection.ServiceUrl + ApiConection.GetRespuestasCandidato;
   URLActualizarResultado = ApiConection.ServiceUrl + ApiConection.ActualizarResultado;
@@ -29,6 +30,7 @@ export class ExamenesService {
   URLGetClaveCandidatos = ApiConection.ServiceUrl + ApiConection.GetClaveCandidatos;
   URLGetClavesCandidatos = ApiConection.ServiceUrl + ApiConection.GetClavesCandidatos;
   URLAsignarClaveCandidato = ApiConection.ServiceUrl +ApiConection.AsignarClaveCandidato;
+  URLGetExamenesMedicos = ApiConection.ServiceUrl + ApiConection.GetExamenesMedicos;
 
   constructor(private _httpClient: HttpClient) { }
 
@@ -73,6 +75,17 @@ export class ExamenesService {
     };
 
     return this._httpClient.post(this.URLInsertRespCandidato, resultado, httpOptions)
+  }
+
+  InsertResultMedico(resultado): Observable<any>
+  {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+
+    return this._httpClient.post(this.URLInsertResultMedico, resultado, httpOptions)
   }
 
   InsertClaves(claves): Observable<any>
@@ -131,6 +144,10 @@ export class ExamenesService {
   {
     let params = new HttpParams().set('tipoexamenId', tipoexamenId);
     return this._httpClient.get(this.URLGetExamenes, {params:params});
+  }
+  GetExamenesMedicos() : Observable<any>
+  {
+    return this._httpClient.get(this.URLGetExamenesMedicos);
   }
   GetExamen(examenId) : Observable<any>
   {

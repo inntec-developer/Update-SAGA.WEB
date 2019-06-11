@@ -1,0 +1,129 @@
+<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
+<div class="content-heading">
+    <div>
+      <span class="text-sm d-none d-sm-block">Administraci&oacute;n de ex&aacute;menes.</span>
+    </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/home']">Inicio</a>
+      </li>
+      <li class="breadcrumb-item active">Examenes</li>
+    </ol>
+  </div>
+  
+  <div class="card">
+    <div class="card-body">
+        <div class="row bg-light">
+          <div class="col-sm-8 col-md-8">
+            <h5 class="card-title text-warning mt-2">
+              <em class="fa fa-pencil"></em> EXAMENES MEDICOS</h5>
+          </div>
+          <div class="col-sm-4 col-md-4">
+            <div class="input-group input-group-sm float-right mt-1 mb-1 with-focus">
+  
+              <input (input)="Search($event)" class="form-control form-control-sm border-right-0" type="text" placeholder="Filtrar"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text fa fa-search text-info bg-transparent border-left-0"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+     <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+     [disabled]="disabled">
+     <div style="height: 300px;">
+     <div id="accordion">
+        <div class="card" *ngFor="let row of rows; let rowIndex = index">
+          <a class="card-header" [class.collapsed]="row.verRow"  (click)="row.verRow = !row.verRow">
+            <h5>
+                  <span class="text-primary float-left "><em class="fa fa-file-text-o"></em> {{row.cliente | uppercase}} - {{row.razon | uppercase}} <span class="text-warning">({{row.candidatos[0].length}})</span></span>
+  
+              <i *ngIf="!row.verRow" class="fa fa-caret-down float-right text-muted" aria-hidden="true"></i>
+              <i *ngIf="row.verRow" class="fa fa-caret-up float-right text-muted" aria-hidden="true"></i>
+            </h5>
+  
+          </a>
+  
+          <div *ngIf="row.verRow" id="collapseOne" class="collapse show">
+            <div class="card-body">
+                <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+                [disabled]="disabled">
+                <div style="height: 300px;">
+                <table class="table">
+                  <thead>
+                    <th class="text-center text-info">CANDIDATO</th>
+                    <th class="text-center text-info">EXAMEN</th>
+                    <th class="text-center text-info">RESULTADO</th>
+                    <th class="text-center text-info">FACTURAR</th>
+                  </thead>
+                    <tbody>
+                        <ng-container *ngIf="row.candidatos.length > 0 else NotCandidatos">
+                      <tr class="rowHover" *ngFor="let r of row.candidatos[0]; let rowIndex = index">
+  
+                        <td class="text-center text-success">
+                          <em class="fa fa-user mr-2"></em> {{ r.nombre | uppercase}}</td>
+  
+                        <td class="text-center">
+                            <ul class="list-group list-group-flush mx-auto" *ngFor="let r of row.examenes[0]">
+                                <li class="list-group-item text-muted">
+                                  {{r.examen | uppercase}}
+                                </li>
+                          </ul>
+                        </td>
+                        <td class="text-center">
+                            <mat-form-field >
+                                <mat-select [disabled]="!r.verSel" placeholder="SELECCIONAR RESULTADO">
+                                  <mat-option *ngFor="let c of catalogo" [value]="c" (click)="r.resultado = c; sel=true">
+                                    {{c}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check mb-2">
+                                <input type="checkbox" class="form-check-input" (change)="r.verSel=!r.verSel;">
+                              </div>
+                        </td>
+
+                      </tr>
+                    </ng-container>
+                    </tbody>
+                  </table>
+                  <br/>
+                  <button type="button" [disabled]="!sel" class="btn btn-success btn-labeled mat-elevation-z8 d-flex justify-content-between float-right" container="body" placement="bottom" tooltip="Agregar Resultado - Facturar"
+                  (click)="Facturar(row)"><span class="btn-label"><em class="fa fa-check"></em></span><span class="align-self-center font-weight-bold">ACEPTAR</span>
+                </button>
+                </div>
+                </ng-scrollbar>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+  
+      </ng-scrollbar>
+      <br/>
+      <div class="text-right">
+          <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
+          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+          (pageChanged)="changePage({ page: page, itemsPerPage: itemsPerPage })"
+          (numPages)="numPages = $event">
+        </pagination>
+          <pre class="card card-block card-header text-muted">Total Registros: {{dataSource.length}}</pre>
+          </div>
+  </div>
+  </div>
+    <!--mensaje cuando esta vacio la tabla-->
+  <ng-template #NotCandidatos>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <alert type="info">
+                <strong>Oops!</strong> A&uacute;n no cuentas con examenes para revisar.
+              </alert>
+        </div>
+      </div>
+    </ng-template>
+  
+   
