@@ -75,7 +75,6 @@ export class InfoVacanteComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.Folios && !changes.Folios.isFirstChange() || changes.Requisicion && !changes.Requisicion.isFirstChange()) {
       if (this.Folios != null && this.Requisicion != null) {
-        debugger;
         this.getInitialData();
         this.GetDataRequi();
       }
@@ -98,7 +97,7 @@ export class InfoVacanteComponent implements OnInit {
         this.vacantes = DataRequisicion.vacantes;
         this.solicitante = DataRequisicion.solicitante || "SIN ASIGNAR";
         this.coordinador = DataRequisicion.coordinador || "SIN ASIGNAR";
-        this.asignados = DataRequisicion.asignadosN;
+        this.asignados = DataRequisicion.asignadosN || "SIN ASIGNAR";
         this.vBtra = DataRequisicion.vBtra;
         this.EstatusId.emit(this.estatusId);
       });
@@ -121,7 +120,6 @@ export class InfoVacanteComponent implements OnInit {
   GetDataRequi() {
     this.serviceRequisicion.getNewRequi(this.Requisicion)
       .subscribe(data => {
-        debugger;
         this.requisicion = data;
         console.log(this.requisicion);
         this.cliente = data['cliente'];

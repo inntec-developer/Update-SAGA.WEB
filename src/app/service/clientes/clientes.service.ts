@@ -30,28 +30,22 @@ export class ClientesService {
   private UrlAddProspecto = ApiConection.ServiceUrl + ApiConection.AddProspectos;
   private UrlHacerCliente = ApiConection.ServiceUrl + ApiConection.HacerCliente;
   private UrlGetCliente = ApiConection.ServiceUrl + ApiConection.GetCliente;
-
   private UrlEditInfoGeneral = ApiConection.ServiceUrl + ApiConection.EditInfoGeneral;
-
   private UrlAddDireccionCliente = ApiConection.ServiceUrl + ApiConection.AddDireccionCliente;
   private UrlEditDireccionCliente = ApiConection.ServiceUrl + ApiConection.EditDireccionCliente;
   private UrlDeleteDireccionCliente = ApiConection.ServiceUrl + ApiConection.DeleteDireccionCliente;
-
   private UrlAddTelefonoCliente = ApiConection.ServiceUrl + ApiConection.AddTelefonoCliente;
   private UrlEditTelefonoCliente = ApiConection.ServiceUrl + ApiConection.EditTelefonoCliente;
   private UrlDeleteTelefonoCliente = ApiConection.ServiceUrl + ApiConection.DeleteTelefonoCliente;
-
   private UrlAddCorreoCliente = ApiConection.ServiceUrl + ApiConection.AddEmailCliente;
   private UrlEditCorreoCliente = ApiConection.ServiceUrl + ApiConection.EditEmailCliente;
   private UrlDeleteCorreoCliente = ApiConection.ServiceUrl + ApiConection.DeleteEmailCliente;
-
   private UrlAddContactoCliente = ApiConection.ServiceUrl + ApiConection.AddContactoCliente;
   private UrlEditContactoCliente = ApiConection.ServiceUrl + ApiConection.EditContactoCliente;
   private UrlDeleteContacocliente = ApiConection.ServiceUrl + ApiConection.DeleteContactoCliente;
-
   private UrlCRUDTelefonContacto = ApiConection.ServiceUrl + ApiConection.CRUDTelefonContacto;
-
   private UrlCRUDContactoCorreo = ApiConection.ServiceUrl + ApiConection.CRUDContactoCorreo;
+  private UrlCoincidenciaCliente = ApiConection.ServiceUrl + ApiConection.CoincidenciaCliente;
 
 
 
@@ -144,6 +138,11 @@ export class ClientesService {
 
   crudCorreoContacto(data: any): Observable<any> {
     return this._httpClient.post(this.UrlCRUDContactoCorreo, data, httpOptions)
+      .pipe(catchError((error: HttpErrorResponse) => throwError(error)));
+  }
+
+  coincidenciaCliente(data: any): Observable<any> {
+    return this._httpClient.post(this.UrlCoincidenciaCliente, data, httpOptions)
       .pipe(catchError((error: HttpErrorResponse) => throwError(error)));
   }
 }

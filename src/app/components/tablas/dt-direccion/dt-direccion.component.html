@@ -1,4 +1,4 @@
-<div class="dt-container mat-elevation-z8">
+<!-- <div class="dt-container mat-elevation-z8"> -->
   <div class="title-headre-view">
     <h4>Direcciones</h4>
   </div>
@@ -14,12 +14,12 @@
         <tbody>
           <tr (click)="onCellClick(row)" *ngFor="let row of rows" [class.selected]="row.selected">
             <td class="text-center">
-              {{row.tipoDireccion?.tipoDireccion}}
+              {{row.tipoDireccion}}
             </td>
-            <td class="text-center"> {{row.pais?.pais}}</td>
-            <td class="text-center"> {{row.estado?.estado}}</td>
-            <td class="text-center"> {{row.municipio?.municipio}}</td>
-            <td class="text-center"> {{row.colonia?.colonia}}</td>
+            <td class="text-center"> {{row.pais}}</td>
+            <td class="text-center"> {{row.estado}}</td>
+            <td class="text-center"> {{row.municipio}}</td>
+            <td class="text-center"> {{row.colonia}}</td>
             <td class="text-center"> {{row.calle}}</td>
             <td class="text-center"> {{row.numeroExterior}}</td>
             <td class="text-center"> {{row.numeroInterior}}</td>
@@ -45,4 +45,4 @@
       </table>
     </div>
   <!-- </div> -->
-</div>
+<!-- </div> -->

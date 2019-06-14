@@ -8,6 +8,43 @@
   align-items: center;
 }
 
-small{
+small {
   font-size: 11px;
+}
+
+
+.contenedor-firmas {
+  height: 100px;
+}
+
+.card {
+  border: 1px;
+}
+
+
+.firmas-header {
+  border-bottom: 0;
+  padding: 0.625rem 0.9375rem;
+  background-color: rgb(119, 112, 117);
+  color: #ffff;
+}
+
+.firmas-margin-top {
+  margin-top: -20px;
+}
+
+img {
+  display: block;
+  width: 100%;
+  margin-left: 15px;
+}
+
+
+.padding-clave{
+  padding-top: 50px;
+  padding-right: 20p
+}
+
+.padding-titulo{
+  padding-top: 30px;
 }

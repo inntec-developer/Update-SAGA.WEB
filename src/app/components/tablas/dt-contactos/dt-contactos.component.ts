@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-dt-contactos',
@@ -15,8 +15,8 @@ export class DtContactosComponent implements OnInit {
   ngOnInit() {
   }
 
-  ngAfterContentChecked(){
-    if(this.Contactos != null){
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes.Contactos && !changes.Contactos.isFirstChange()){
       this.cargarContactos(this.Contactos);
     }
   }
@@ -28,10 +28,10 @@ export class DtContactosComponent implements OnInit {
     }
   }
   public columns: Array<any> = [
-    {title: 'Nombre', className: 'text-info text-center'},
-    {title: 'Puesto', className: 'text-info text-center'},
-    {title: 'Teléfono', className: 'text-info text-center'},
-    {title: 'Email', className: 'text-info text-center'},
+    {title: 'Nombre', className: 'text-info'},
+    {title: 'Puesto', className: 'text-info'},
+    {title: 'Teléfono', className: 'text-info'},
+    {title: 'Email', className: 'text-info'},
   ]
   public config: any = {
     className: ['table-striped table-bordered mb-0 d-table-fixed']

@@ -1,12 +1,7 @@
-<div class="dt-container  mat-elevation-z8">
-    <div class="card-header">
-      <em class="fa fa-list-alt"></em>  Documentos Cliente
-    </div>
-    <div class="card-body">
-      <ol>
-        <li *ngFor="let x of Documentos">
-          <label class="card-text"> {{x.documento}}</label>
-        </li>
-      </ol>
-    </div>
-  </div>
+<h5 class="card-title"><strong class="text-info">Documentos Cliente</strong></h5>
+<mat-divider></mat-divider>
+<ol>
+  <li *ngFor="let x of Documentos">
+    <label class="card-text"> {{x.documento}}</label>
+  </li>
+</ol>

@@ -154,7 +154,7 @@ export class ContactosClienteComponent implements OnInit {
   }
 
   AddContacto() {
-    debugger;
+
     let idDireccion = this.formContactos.get('ContactoDireccion').value;
     let idxDireccion = this.Direcciones.findIndex(x => x.id == idDireccion);
 
@@ -186,7 +186,7 @@ export class ContactosClienteComponent implements OnInit {
     if (!this.EditContacto) {
       this._ClienteService.addContacto(data).subscribe(result => {
         if (result != 404) {
-          debugger;
+
           data['id'] = result['id'];
           data['idDCn'] = result['idDCn'];
           data['telefonos'] = result['telefonos'];
@@ -224,7 +224,7 @@ export class ContactosClienteComponent implements OnInit {
   }
 
   UpContactos() {
-    debugger;
+
     this.addContacto = true;
     this.EditContacto = true;
     this.formContactos.controls['ContactoDireccion'].setValue(this.Contactos[this.indexContacto]['direccionId']);
@@ -349,7 +349,7 @@ export class ContactosClienteComponent implements OnInit {
   }
 
   public changeFilterCn(data: any, config: any): any {
-    debugger;
+
     let filteredData: Array<any> = data;
     this.columnsCn.forEach((column: any) => {
       if (column.filtering) {
@@ -461,7 +461,7 @@ export class ContactosClienteComponent implements OnInit {
   //#region ACCIONES PARA TELEFONOS
 
   AddContactoTelefono() {
-    debugger;
+
     let tipoTeledonoId = this.formContactoTelefonos.get('TipoTelefono').value;
     if (tipoTeledonoId != 4) {
       this.formContactoTelefonos.controls['Extension'].setValue('');
@@ -603,7 +603,7 @@ export class ContactosClienteComponent implements OnInit {
   }
 
   UdContactoTelefono() {
-    debugger;
+
     this.addContactoTelefono = true;
     this.EditContactoTelefono = true;
     this.formContactoTelefonos.controls['TipoTelefono'].setValue(this.Telefonos[this.indexContactoTelefonos]['tipoTelefonoId']);
@@ -789,7 +789,7 @@ export class ContactosClienteComponent implements OnInit {
   }
 
   UdContactoCorreo() {
-    debugger;
+
     this.addContactoCorreo = true;
     this.EditContactoCorreo = true; 11
     this.formContactoCorreo.controls['Email'].setValue(this.Emails[this.indexContactoCorreos]['email']);
@@ -872,9 +872,9 @@ export class ContactosClienteComponent implements OnInit {
   }
 
   onCellClickCnT(data: any) {
-    debugger;
+
     if (!this.EditContactoTelefono) {
-      debugger;
+
       data['selectedCnT'] ? data['selectedCnT'] = false : data['selectedCnT'] = true;
       this.elementCnT = data;
 
