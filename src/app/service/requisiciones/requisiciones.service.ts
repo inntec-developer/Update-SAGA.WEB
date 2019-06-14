@@ -94,9 +94,8 @@ export class RequisicionesService {
   }
   // Recupera la información completa del DAMFO-290 que se requiera.
   getDamfoById(damfoId: string) {
-    return this.http.get(this.urlGetDamfoById + damfoId)
-      .map(result => result.json())
-      .catch(this.handleError);
+    let params = new HttpParams().set('id', damfoId)
+    return this._httpClient.get<any>(this.urlGetDamfoById, {params: params});
   }
   // Recuperar las rutas de camiones de las direccionaes relacionadas con el damfo - cliente
   getDamfoRutasCamion(clienteId: string): Observable<any> {

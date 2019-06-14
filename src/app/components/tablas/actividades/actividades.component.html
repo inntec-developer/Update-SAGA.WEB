@@ -1,12 +1,7 @@
-<div class="dt-container  mat-elevation-z8">
-    <div class="card-header">
-      <em class="fa fa-list-alt"></em>  Actividades
-    </div>
-    <div class="card-body">
-      <ol>
-        <li *ngFor="let x of Actividades">
-          <label class="card-text"> {{x.actividades}}</label>
-        </li>
-      </ol>
-    </div>
-  </div>
+<h5 class="card-title"><strong class="text-info">Actividades</strong></h5>
+<mat-divider></mat-divider>
+<ol>
+  <li *ngFor="let x of Actividades">
+    <label class="card-text"> {{x.actividades}}</label>
+  </li>
+</ol>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-dt-beneficios',
@@ -15,8 +15,9 @@ export class DtBeneficiosComponent implements OnInit {
   ngOnInit() {
   }
 
-  ngAfterContentChecked(){
-    if(this.Beneficios != null){
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes.Beneficios && !changes.Beneficios.isFirstChange()){
       this.cargarBeneficios(this.Beneficios);
     }
   }
@@ -29,9 +30,9 @@ export class DtBeneficiosComponent implements OnInit {
   }
 
   public columns: Array<any> = [
-    {title: 'Beneficio', className: 'text-info text-center'},
-    {title: 'Cantidad', className: 'text-info text-center'},
-    {title: 'Observaciones', className: 'text-info text-center'},
+    {title: 'Beneficio', className: 'text-info'},
+    {title: 'Cantidad', className: 'text-info'},
+    {title: 'Observaciones', className: 'text-info'},
   ];
 
   public config: any = {

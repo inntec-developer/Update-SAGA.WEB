@@ -65,7 +65,7 @@ export class ApiConection {
   public static GetTipoBase = 'Catalogos/getTipoBase';
 
   /* Reclutamiento */
-  public static Damfo290GetById = 'Damfo290/getById?id=';
+  public static Damfo290GetById = 'Damfo290/getById';
   public static GetDamfoRutasCamion = 'Damfo290/getDamfoRutasCamion';
   public static GetViewDamfos = "Damfo290/getViewDamfos";
   public static GetVacantesDamfo = "Damfo290/getVacantesDamfo";
@@ -130,8 +130,9 @@ export class ApiConection {
   public static EditContactoCliente = 'Directorio/EditContactoCliente';
 
   public static CRUDTelefonContacto = 'Directorio/CRUDTelefonContacto';
-
   public static CRUDContactoCorreo = 'Directorio/CRUDContactoCorreo';
+
+  public static CoincidenciaCliente = 'Directorio/CoincidenciaCliente';
 
   /* Candidatos */
   public static filtropaises = 'Candidatos/get';

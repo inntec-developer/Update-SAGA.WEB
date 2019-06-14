@@ -29,7 +29,7 @@
           </div>
           <mat-form-field>
             <input #empresa matInput formControlName="Empresa" name="empresa" placeholder="Empresa" autofocus
-              maxlength="100" focus required />
+              maxlength="100" focus required (blur)="showModalCoincidencias()" />
             <mat-hint align="end">{{empresa.value.length}} / 100</mat-hint>
           </mat-form-field>
 
@@ -995,3 +995,48 @@
 
 <!-- Mensajes informativos -->
 <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
+
+
+<!-- Modal para mostar conicidencias con clientes o prospectos -->
+<div *ngIf="coincidenciaCliente " [config]="{show: true, ignoreBackdropClick: true, keyboard: false}" bsModal
+  #CoincidenciaModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="float-right text-info"><em class="fa fa-users fa-x2"></em> <span class="text-warning"> Coincidencias
+            de Clientes /
+            Prospectos</span></h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right"
+          (click)="coincidenciaCliente=false; CoincidenciaModal.hide();"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+            <small class="badge badge-pill badge-success">Cliente </small>
+          </div>
+          <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2"><small class="badge badge-pill badge-warning">Prospecto
+            </small></div>
+          <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2"><small class="badge badge-pill badge-primary">Razon
+              Social </small></div>
+          <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2"><small class="badge badge-pill badge-info">Nombre
+              Cómercial</small></div>
+          <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2"><small class="badge badge-pill badge-green">RFC </small>
+          </div>
+        </div><br>
+        <mat-divider></mat-divider>
+        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+          [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+          <div>
+            <p *ngFor="let x of coincidencias">
+              <small *ngIf="x.esCliente" class="badge badge-pill badge-success">Cliente </small>
+              <small *ngIf="!x.esCliente" class="badge badge-pill badge-warning">Prospecto </small>
+              <small *ngIf="x.esCliente" class="badge badge-pill badge-primary">{{x.razonSocial}} </small>
+              <small class="badge badge-pill badge-info">{{x.nombrecomercial}} </small>
+              <small *ngIf="x.esCliente" class="badge badge-pill badge-green">{{x.rfc}} </small>
+            </p>
+          </div>
+        </ng-scrollbar>
+      </div>
+    </div>
+  </div>
+</div>

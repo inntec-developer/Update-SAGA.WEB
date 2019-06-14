@@ -1,23 +1,23 @@
-<div class="dt-container mat-elevation-z8">
-  <div class="title-headre-view d-flex justify-content-between">
-    <h4>Psicometr&iacute;as Damsa</h4>
-  </div>
-  <!-- <div class="card card-default"> -->
-    <div class="table-responsive">
-      <table ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
-        <thead>
-          <tr>
-            <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let row of rows" [class.selected]="row.selected" (click)="onCellClick(row)">
-            <td class="text-center"> {{row.tipoPsicometria}} </td>
-            <td class="text-center"> {{row.descripcion}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  <!-- </div> -->
+<!-- <div class="dt-container mat-elevation-z8"> -->
+<div class="title-headre-view d-flex justify-content-between">
+  <h4>Psicometr&iacute;as Damsa</h4>
 </div>
+<!-- <div class="card card-default"> -->
+<div class="table-responsive">
+  <table ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of rows" [class.selected]="row.selected" (click)="onCellClick(row)">
+        <td class="text-center"> {{row.tipoPsicometria}} </td>
+        <td class="text-center"> {{row.descripcion}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- </div> -->
+<!-- </div> -->
