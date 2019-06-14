@@ -101,6 +101,7 @@ export class ApiConection {
   public static AddDatosFactura = 'Requisiciones/insertDtosFactura';
   public static GetReporte70 = 'Requisiciones/getReporte70';
   public static GetRepoteCandidatos = 'Candidatos/getRPTCandidatosVacante'
+  public static GetRequisPendientes = 'Requisiciones/getRequisPendientes'
 
   /* Clientes / Prospectos */
   public static GetProspectos = 'Directorio/getProspectos';

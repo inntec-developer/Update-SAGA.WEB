@@ -205,6 +205,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
         (<HTMLInputElement>document.getElementById(element.name)).value = '';
       });
       this.resetSelect();
+      this.onChangeTable(this.config)
     }, 1000);
   }
 
@@ -220,17 +221,16 @@ export class DtRequisicionReclPuroComponent implements OnInit {
   public onCellClick(data: any): any {
 
     data.selected ? data.selected = false : data.selected = true;
-    data.selected ? this.ValidarEstatus(data.estatusId, data.vacantes) : this.ValidarEstatus(0, data.vacantes);
+    // data.selected ? this.ValidarEstatus(data.estatusId, data.vacantes) : this.ValidarEstatus(0, data.vacantes);
 
     this.RequisicionId = data.id
     this.estatusId = data.estatusId;
     this.Folio = data.folio;
     this.Vacante  = data.vBtra;
     this.element = data;
-
     this.row = data;
 
-    // this.ValidarEstatus(data.estatusId);
+    this.ValidarEstatus(data.estatusId, data.vacantes);
 
 
     if (this.rowAux.length == 0) {
@@ -278,7 +278,15 @@ export class DtRequisicionReclPuroComponent implements OnInit {
       this.borrar = false;
       this.autorizar = false;
     }
-    else if (estatusId == 43) {
+    else if (estatusId == 43 && this.element.porcentaje > 0 && this.element.porcentaje < 50 ) {
+      this.view = true;
+      this.coment = true;
+      this.facturar = false;
+      this.cancelar = true;
+      this.borrar = true;
+      this.autorizar = false;
+    }
+    else if (estatusId == 43 && this.element.porcentaje == 0 ) {
       this.view = true;
       this.coment = true;
       this.facturar = true;
@@ -373,21 +381,31 @@ export class DtRequisicionReclPuroComponent implements OnInit {
     });
     var window: Window
     dialogDlt.afterClosed().subscribe(result => {
-      if (result.Ok == 200) {
-        this.postulacionservice.SetProcesoVacante({ estatusId: result.estatus, requisicionId: this.RequisicionId }).subscribe(data => {
+      debugger;
+      if (result.Ok == 200) 
+      {
+        if (result.porcentaje < 50) {
+          this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito. El estatus no cambia debido porcentaje');
+          this.refreshTable();
+          this.SendEmail();
+        }
+        else {
+          this.postulacionservice.SetProcesoVacante({ estatusId: result.estatus, requisicionId: this.RequisicionId }).subscribe(data => {
 
-          if (data == 201) {
-            this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
-            this.refreshTable();
-            this.SendEmail();
-          }
-          else {
-            this.popToast('error', 'Estatus', 'Ocurrio un error al intentar actualizar datos');
-          }
-
-        })
-
+            if (data == 201) {
+              this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+              this.refreshTable();
+              this.SendEmail();
+            }
+            else {
+              this.popToast('error', 'Estatus', 'Ocurrio un error al intentar actualizar datos');
+            }
+          })
+        }
       }
+      else
+        this.popToast('error', 'Estatus', 'Ocurrio un error al intentar actualizar datos');
+
     });
   }
 

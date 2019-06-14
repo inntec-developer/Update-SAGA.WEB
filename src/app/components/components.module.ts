@@ -136,6 +136,7 @@ import { TpNominaComponent } from './catalogos/tp-nomina/tp-nomina.component';
 import { TpPsicometriaComponent } from './catalogos/tp-psicometria/tp-psicometria.component';
 import { DlgRegistroMasivoComponent } from './dlg-registro-masivo/dlg-registro-masivo.component';
 import { DlgResultadosMedicosComponent } from './dlg-resultados-medicos/dlg-resultados-medicos.component';
+import { AutorizarFacturasPuroComponent } from './tablas/autorizar-facturas-puro/autorizar-facturas-puro.component';
 
 @NgModule({
   imports: [
@@ -277,7 +278,8 @@ import { DlgResultadosMedicosComponent } from './dlg-resultados-medicos/dlg-resu
     IndicadorPosicionesActivasComponent,
     DlgRegistroMasivoComponent,
     CURPValidator,
-    DlgResultadosMedicosComponent
+    DlgResultadosMedicosComponent,
+    AutorizarFacturasPuroComponent
   ],
   exports: [
     DtDireccionComponent,

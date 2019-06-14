@@ -60,6 +60,7 @@ export class RequisicionesService {
   private URLGetReporte70 = ApiConection.ServiceUrl + ApiConection.GetReporte70;
   private URLGetAsignados = ApiConection.ServiceUrl + ApiConection.GetAsignados;
   private UrlGetRequisicionesHistorial = ApiConection.ServiceUrl + ApiConection.getRequisicionesHistorial;
+  private URLGetRequisPendientes = ApiConection.ServiceUrl + ApiConection.GetRequisPendientes;
 
   constructor(private http: Http, private _httpClient: HttpClient) { }
   // Recupera todos los damfos que esten dados de alta y se encuentren activos
@@ -143,7 +144,9 @@ export class RequisicionesService {
     let params = new HttpParams().set('IdUsuario', usuario);
     return this._httpClient.get(this.URLGetRequiEstadisticos, { params: params });
   }
-
+  GetRequisPendientes(): Observable<any> {
+    return this._httpClient.get(this.URLGetRequisPendientes);
+  }
   // ---------------------------------------------------------------------------------------------------------------
   // Crud para rutas de Camiones dentro de la requisición.
   getRequiRutasCamion(id: string): Observable<any> {
