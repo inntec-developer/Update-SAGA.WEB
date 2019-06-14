@@ -38,7 +38,7 @@ export class ChkButtonsDirective implements AfterViewInit {
       //   var idx = row.accion.lastIndexOf("/");
       //   ruta = row.accion.substring(idx + 1, row.accion.length).toUpperCase();
       // }
-      return row.tipoEstructuraId === 4 && row.nombre.toLowerCase() == ruta.toLowerCase()
+      return row.TipoEstructuraId === 4 && row.Nombre.toLowerCase() == ruta.toLowerCase()
     });
 
     campos.forEach(campo => {

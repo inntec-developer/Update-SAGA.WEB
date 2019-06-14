@@ -52,7 +52,6 @@ onClosed(): void {
 
   GuardarCambios()
   {
-    debugger;
     var privilegios = this.grid.privilegios;
     if (this.grid.privilegios.length > 0) {
       if(this.nomRol != '' && this.nuevoRol == true)

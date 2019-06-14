@@ -14,16 +14,21 @@ export class AddExamenComponent implements OnInit {
   nom:any;
   catalogo = [];
   respuestas = [];
-  respImgs = [];
+
   examen = [];
   tipoexamenId = "0";
   preguntas = "";
+
   resp1="";
   pa;
   nomExamen = "";
   respInc = "";
   msg: string = "";
   img : boolean = false;
+  respVal: boolean;
+  imgPregunta = { Pregunta: "", file:"", name: "", type: ""};
+
+
   constructor(private service: ExamenesService, private toasterService: ToasterService) { }
 
   ngOnInit() {
@@ -45,18 +50,21 @@ export class AddExamenComponent implements OnInit {
         this.respuestas = this.respuestas.filter(function (item) {
           if (item.value === 1) {
             item.resp = resp;
+            item.file = "";
+            item.name = ""
+            item.type = ""
             aux = true;
           }
           return item;
         });
 
         if (!aux) {
-          this.respuestas.push({ resp: resp, value: value });
+          this.respuestas.push({ resp: resp, value: value, file: "", name: "", type: "" });
         }
 
       }
       else if (value != 3) {
-        this.respuestas.push({ resp: resp, value: value });
+        this.respuestas.push({ resp: resp, value: value, file: "", name: "", type: "" });
       }
       else {
         this.respuestas = [];
@@ -69,137 +77,162 @@ export class AddExamenComponent implements OnInit {
 
   AgregarPregunta()
   {
+    if(this.imgPregunta.file.length == 0)
+    {
+      this.imgPregunta = {Pregunta: this.preguntas, file: '', name: '', type: ''}
+    }
+
     if(this.respuestas.length > 3)
     {
-      this.examen.push({Pregunta: this.preguntas, Tipo: 2, Respuestas: this.respuestas, TipoExamen: {Id: this.tipoexamenId, Nombre: this.nomExamen}})
+      this.examen.push({Pregunta:this.imgPregunta, Tipo: 2, Respuestas: this.respuestas, TipoExamen: {Id: this.tipoexamenId, Nombre: this.nomExamen}})
 
       this.preguntas = "";
       this.respuestas = [];
-      this.respImgs = [];
       this.resp1 = "";
       this.pa = 0;
       this.respInc = "";
       this.msg = "";
+      this.img = false;
+      this.respVal = false;
+      this.imgPregunta = { Pregunta: "", file:"", name: "", type: ""};
     }
-    else if(this.respuestas.length == 0 && this.respImgs.length == 0)
+    else if(this.respuestas.length == 0)
     {
-      this.examen.push({Pregunta: this.preguntas, Tipo: 1, Respuestas: this.respuestas, TipoExamen: {Id: this.tipoexamenId, Nombre: this.nomExamen}})
+      this.examen.push({Pregunta:this.imgPregunta, Tipo: 1, Respuestas: this.respuestas, TipoExamen: {Id: this.tipoexamenId, Nombre: this.nomExamen}})
 
       this.preguntas = "";
       this.respuestas = [];
-      this.respImgs = [];
       this.resp1 = "";
       this.pa = 0;
       this.respInc = "";
       this.msg = "";
-    }
-    else if(this.respuestas.length == 0 && this.respImgs.length > 0)
-    {
-      this.examen.push({Pregunta: this.preguntas, Tipo: 1, Respuestas: this.respImgs, TipoExamen: {Id: this.tipoexamenId, Nombre: this.nomExamen}})
-
-      this.preguntas = "";
-      this.respuestas = [];
-      this.respImgs = [];
-      this.resp1 = "";
-      this.pa = 0;
-      this.respInc = "";
-      this.msg = "";
+      this.img = false;
+      this.respVal = false;
+      this.imgPregunta = { Pregunta: "", file:"", name: "", type: ""};
     }
     else
     {
       this.msg = "Debe agregar mas de una opción de respuesta para la pregunta";
     }
+    console.log(this.examen)
   }
 
-  UpdatePregunta(value, index)
+  UpdatePregunta(value, index, $event)
   {
-    this.examen[index].Pregunta = value;
+    var self = this;
 
+    if ($event) {
+      let file: File = $event.target.files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+     
+      reader.onload = function () {
+        self.examen[index].Pregunta[0].Pregunta = value;
+        self.examen[index].Pregunta[0].file = reader.result;
+        self.examen[index].Pregunta[0].name = file.name;
+        self.examen[index].Pregunta[0].type = file.type;
+      }
+    }
+    else {
+      self.examen[index].Pregunta[0].Pregunta = value;
+      self.examen[index].Pregunta[0].file = "";
+      self.examen[index].Pregunta[0].name = "";
+      self.examen[index].Pregunta[0].type = "";
+    }
   }
 
-  UpdateResp(value, index)
+  UpdateResp(value, index1, index2, $event)
   {
-    this.examen[index].resp = value;
-  }
+    if ($event) {
+      let file: File = $event.target.files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      var self = this;
 
-  UpdateRespImg(value,index1, index2, $event)
-  {
-    let file: File = $event.target.files[0];
+      reader.onload = function () {
+        self.examen[index1].Respuestas[index2].resp = value;
+        self.examen[index1].Respuestas[index2].file = reader.result;
+        self.examen[index1].Respuestas[index2].name = file.name;
+        self.examen[index1].Respuestas[index2].type = file.type;
+      }
+    }
+    else {
 
-    let formData = new FormData();
-    formData.append('file', file, file.name);
-
-    this.examen[index1].Respuestas[index2].resp = file.name;
-    this.examen[index1].Respuestas[index2].ruta = formData;
+      self.examen[index1].Respuestas[index2].resp = value;
+      self.examen[index1].Respuestas[index2].file = "";
+      self.examen[index1].Respuestas[index2].name = "";
+      self.examen[index1].Respuestas[index2].type = "";
+    }
   }
   AgregarExamen()
   {
-    console.log(this.examen)
-    // this.service.InsertExamenes(this.examen).subscribe( data => {
+    this.service.InsertExamenes(this.examen).subscribe( data => {
 
-    //   if(data == 200)
-    //   {
-    //     this.popToast('success', 'Generar Examen', 'El examen se generó con éxito');
-    //     this.Borrar();
-    //   }
-    //   else
-    //   {
-    //     this.popToast('error', 'Generar Examen', 'Ocurrió un error al intentar generar examen');
+      if(data == 200)
+      {
+        this.popToast('success', 'Generar Examen', 'El examen se generó con éxito');
+        this.Borrar();
+      }
+      else
+      {
+        this.popToast('error', 'Generar Examen', 'Ocurrió un error al intentar generar examen');
 
-    //   }
-    // })
+      }
+    })
   }
 
-  fileChangeListener($event, value) 
+
+  fileChangeListener($event, resp, value, prVal) 
   {
     let file: File = $event.target.files[0];
 
-    let formData = new FormData();
-    formData.append('file', file, file.name);
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    var self = this;
+  
+    resp = resp || file.name;
 
-    if (this.preguntas != "") {
-      if (value == 1 && this.respuestas.length > 0) {
-        var aux = false;
-        this.respuestas = this.respuestas.filter(function (item) {
-          if (item.value === 1) {
-            item.resp = file.name;
-            item.ruta = formData;
-            aux = true;
-          }
-          return item;
-        });
-
-        if (!aux) {
-          this.respuestas.push({ resp: file.name, value: value, ruta: formData });
+    reader.onload = function () {
+      // self.base64textString = reader.result;
+      if (self.preguntas != "") {
+        if (prVal == 1) {
+          self.imgPregunta = { Pregunta: self.preguntas, file: reader.result, name: file.name, type: file.type };
         }
+        else {
+          if (value == 1) {
+            var aux = false; // por si aun no se agrego respuesta correcta - esto no sera necesario revisar mas adelante
+            if (self.respuestas.length > 0) {
+              self.respuestas = self.respuestas.filter(function (item) {
+                if (item.value === 1) {
+                  item.resp = resp;
+                  item.file = reader.result;
+                  item.name = file.name;
+                  item.type = file.type;
+                  aux = true;
+                }
+                return item;
+              });
 
+              if (!aux) {
+                self.respuestas.push({ resp: resp, value: value, file: reader.result, name: file.name, type: file.type });
+              }
+            }
+            else
+            {
+              self.respuestas.push({ resp: resp, value: value, file: reader.result, name: file.name, type: file.type });
+            }
+          }
+          else if (value != 3) {
+            self.respuestas.push({ resp: resp, value: value, file: reader.result, name: file.name, type: file.type });
+          }
+          else {
+            self.respuestas = [];
+            self.resp1 = "";
+          }
+          self.respInc = "";
+        }
       }
-      else if (value != 3) {
-        this.respuestas.push({ resp: file.name, value: value, ruta: formData });
-      }
-      else {
-        this.respuestas = [];
-        this.resp1 = "";
-      }
-
-      this.respInc = "";
-    }
-
-    // this.service.UploadFile(file, this.candidatoId).subscribe(result => {
-    //   if(result === 201)
-    //   {
-    //     this.ngOnInit();
-    //     this.alerts[0]['msg'] = "El archivo " + file.name + " se subió con éxito";
-    //     this.alert = this.alerts[0];
-    //     this.verMsj = true;
-    //   }
-    //   else
-    //   {
-    //     this.alerts[1]['msg'] = "Ocurrió un error al intentar subir archivo " + file.name;
-    //     this.alert = this.alerts[1];
-    //     this.verMsj = true;
-    //   }
-    // });
+    };
 
   }
 
@@ -214,6 +247,8 @@ export class AddExamenComponent implements OnInit {
     this.tipoexamenId = "0";
     this.nomExamen = "";
     this.se.setValue('');
+    this.imgPregunta = null;
+    this.img = false;
 
   }
 
