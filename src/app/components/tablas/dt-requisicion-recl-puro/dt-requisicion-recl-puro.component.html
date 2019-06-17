@@ -169,16 +169,13 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Vacante: {{Vacante}} {{Folio}}</h4>
-        <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">VACANTE: {{Vacante}} {{Folio}}</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal.hide()" aria-label="Close">
+            <i class="fa fa-times"></i>
         </button>
       </div>
       <div class="modal-body">
         <comentario-vacante [RequisicionId]="RequisicionId" [MotivoId]="7"></comentario-vacante>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-xs btn-outline-danger" (click)="lgModal.hide()">Cerrar</button>
       </div>
     </div>
   </div>
