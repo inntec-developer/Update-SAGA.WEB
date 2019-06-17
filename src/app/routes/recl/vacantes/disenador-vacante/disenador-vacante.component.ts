@@ -10,6 +10,7 @@ import { Http } from '@angular/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../service/requisiciones/requisiciones.service';
 import { DOCUMENT } from '@angular/common';
+import { id } from '@swimlane/ngx-datatable/release/utils';
 
 // Modelos
 
@@ -132,21 +133,31 @@ export class DisenadorVacanteComponent implements OnInit {
       });
   }
 
+  hola(){
+    debugger;
+  }
+
   Publicar() {
+
     this.spinner.show();
+    debugger;
     for (const item of this.ListaCampo) {
       const r = document.getElementById('Resumen_' + item.id);
-      const res = r.lastElementChild.firstElementChild.firstElementChild['checked'];
-      const d = document.getElementById('Detalle_' + item.id);
-      const det = d.lastElementChild.firstElementChild.firstElementChild['checked'];
-      const config = {
-        detalle: det,
-        resumen: res,
-        idCampo: item.id,
-        nombre: item.nombre,
-        id: this.Requi
+      console.log(item.id);
+      if (r != null){
+        const res = r.lastElementChild.firstElementChild.firstElementChild['checked'];
+        console.log(res);
+        const d = document.getElementById('Detalle_' + item.id);
+        const det = d.lastElementChild.firstElementChild.firstElementChild['checked'];
+        const config = {
+          detalle: det,
+          resumen: res,
+          idCampo: item.id,
+          nombre: item.nombre,
+          id: this.Requi
+        };
+        this.ListaCon.push(config);
       }
-      this.ListaCon.push(config);
     }
 
     this.Config.UpdatePublicar(this.ListaCon, '')
