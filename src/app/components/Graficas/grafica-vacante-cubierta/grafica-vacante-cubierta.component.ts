@@ -23,8 +23,10 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
   Chart: Chart;
   Data: any;
   private UsuarioId: any;
-
   public NumeroVacantes: number;
+  public EstadoVacante: string;
+  public ShowModal: boolean;
+  
   ngOnInit() {
     this.UsuarioId = this.settings.user['id'];
     this._ServiceComponente.getVCubierta(this.UsuarioId).subscribe(result => {
@@ -68,6 +70,7 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
       title: { text: 'Seguimiento de Vacantes' },
       data: this.Data,
       options: {
+        onClick: this.detectedClick.bind(this),
         legend: {
           position: 'right',
           display: true,
@@ -82,8 +85,16 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
     });
 
   });
+  }
 
-
-
+  detectedClick(evt: any) {
+    let ActivatEvent = this.Chart.getElementAtEvent(evt);
+    if (ActivatEvent[0]) {
+      var chartData = ActivatEvent[0]['_chart'].config.data;
+      var idx = ActivatEvent[0]['_index'];
+      this.EstadoVacante = chartData.labels[idx];
+      this.NumeroVacantes = chartData.datasets[0].data[idx];
+      this.ShowModal = true;
+    }
   }
 }
