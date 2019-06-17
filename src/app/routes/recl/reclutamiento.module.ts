@@ -19,6 +19,7 @@ import { VacantesComponent } from './vacantes/vacantes.component';
 import { VacantesPostulateComponent } from './vacantes/vacantes/vacantes-postulate/vacantes-postulate.component';
 import { VacantesReclutadorComponent } from './vacantes/vacantes/vacantes-reclutador/vacantes-reclutador.component';
 import { VentaModule } from '../vtas/ventas.module';
+import { AutorizarFacturasPuroComponent } from '../../components/tablas/autorizar-facturas-puro/autorizar-facturas-puro.component';
 
 const routes: Routes = [
   { path: '290', component: Damfo290Component },
@@ -28,7 +29,9 @@ const routes: Routes = [
   { path: 'configuracionVacante/:Requi/:Folio/:VBtra', component: DisenadorVacanteComponent },
   { path: 'vacantesReclutador', component: VacantesReclutadorComponent, data: { componente: 'Vacantes' } },
   { path: 'postulados/:VacanteId/:Folio/:VBtra', component: VacantesPostulateComponent, data: { componente: 'Vacantes' } },
-  { path: 'gestionVacante/:VacanteId/:Folio/:VBtra/:ClienteId/:enProceso/:estatusId', component: SeguimientoVacanteComponent, data: { componente: 'Vacantes' } }
+  { path: 'gestionVacante/:VacanteId/:Folio/:VBtra/:ClienteId/:enProceso/:estatusId', component: SeguimientoVacanteComponent, data: { componente: 'Vacantes' } },
+  { path: 'autorizarRequi', component: AutorizarFacturasPuroComponent}
+
 ];
 
 @NgModule({

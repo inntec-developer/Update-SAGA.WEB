@@ -20,12 +20,12 @@
               [routerLink]="['/ventas/crearRequisicion']">
               <em class="fa fa-plus"></em>
             </button> -->
-        <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="ml-2 mr-2 btn btn-xs" [disabled]="!view"
+        <button id="read" chkPrivilegiosButtons (click)="showRequi()" class="ml-2 mr-2 btn btn-xs" [disabled]="!view"
           [ngClass]="(!view) ? 'disabled' : 'btn-outline-warning'" container="body" placement="bottom" tooltip="Visualizar">
           <em class="fa fa-eye"></em>
         </button>
 
-        <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-2 btn btn-xs"
+        <button id="read" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-2 btn btn-xs"
           [disabled]="!coment" [ngClass]="(!coment) ? 'disabled' : 'btn-outline-dark'" container="body" placement="bottom"
           tooltip="Comentarios">
           <em class="fa fa-comments-o"></em>
@@ -35,7 +35,7 @@
           <em class="fa fa-file-text-o"></em>
         </button>
         <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs" [disabled]="!autorizar"
-          [ngClass]="!autorizar ? 'btn disabled' : 'btn btn-outline-success'" container="body" placement="bottom"
+          [ngClass]="!autorizar ? 'disabled' : 'btn-outline-success'" container="body" placement="bottom"
           tooltip="Autorizar" (click)="updataStatus(46, 'Pendiente asignar')">
           <i class="fa fa-check"></i>
         </button>
