@@ -22,7 +22,7 @@
         <br>
         <!-- Card de botones -->
         <mat-card>
-            <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-green mb-1" type="button" (click)="New()" container="body" placement="bottom" tooltip="Nuevo catalogo">
+            <button [disabled]="Edicion" style="margin-left: 10px; " class="btn btn-labeled btn-outline-green mb-1" type="button" (click)="New()" container="body" placement="bottom" tooltip="Nuevo catalogo">
                               <span class="btn-label ">
                                 <i class="fa fa-file-text-o"></i>
                               </span>Nuevo
@@ -32,12 +32,12 @@
                               <i class="fa fa-pencil"></i>
                             </span>Editar
                           </button> -->
-            <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-dark mb-1" type="button" (click)="Save()" container="body" placement="bottom" tooltip="Guardar los datos">
+            <button [disabled]="!Edicion" style="margin-left: 10px; " class="btn btn-labeled btn-outline-dark mb-1" type="button" (click)="Save()" container="body" placement="bottom" tooltip="Guardar los datos">
                             <span class="btn-label ">
                               <i class="fa fa-floppy-o"></i>
                             </span>Guardar
                           </button>
-            <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="Limpiar()" container="body" placement="bottom" tooltip="Limpia todo los filtros">
+            <button [disabled]="!Edicion" style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="Limpiar()" container="body" placement="bottom" tooltip="Limpia todo los filtros">
                               <span class="btn-label ">
                                 <i class="fa fa-eraser"></i>
                               </span>Limpiar

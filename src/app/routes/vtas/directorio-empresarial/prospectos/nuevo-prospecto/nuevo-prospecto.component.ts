@@ -1832,34 +1832,40 @@ export class NuevoProspectoComponent implements OnInit {
     }
     this.toasterService.pop(toast);
   }
-
-  TelefonosContactosPruebas = [
-    {
-      idAux: 1,
-      activo: true,
-      claveLada: "33",
-      clavePais: "52",
-      esPrincipal: false,
-      extension: "",
-      tTelefono: "Recados",
-      telefono: "31441648",
-      tipoTelefonoId: 3,
-      usuarioAlta: "DAL2789",
-    },
-    {
-      idAux: 2,
-      activo: true,
-      claveLada: "33",
-      clavePais: "52",
-      esPrincipal: false,
-      extension: "254",
-      tipoTelefonos: "Oficina",
-      telefono: "36011746",
-      tipoTelefonoId: 4,
-      usuarioAlta: "DAL2789",
-    }
-  ]
   //#endregion
+
+  //#region FUNCIONAMIENTO DE MODAL Y CONTROL DE MODAL DE SIMILITUDES.
+  coincidenciaCliente: boolean = false;
+  coincidencias: any;
+  cliente: any;
+
+  //Scroll
+  disabled = false;
+  compact = false;
+  invertX = true;
+  invertY = true;
+  shown = 'hover';
+
+  showModalCoincidencias() {
+    this.cliente = this.formGeneral.get('Empresa').value.substring(0, 15);
+    if (this.cliente.length > 0) {
+      var obj = {
+        cliente: this.cliente
+      };
+
+      this._ClienteService.coincidenciaCliente(obj).subscribe(result => {
+        if (result != 404) {
+          if (result.length > 0) {
+            this.coincidenciaCliente = true;
+            this.coincidencias = result;
+          }
+        }
+      });
+    }
+  }
+  //#endregion
+
+
 }
 
 //#region Codigo Comentado ParaPruebas

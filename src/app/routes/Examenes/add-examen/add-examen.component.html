@@ -35,35 +35,39 @@
 
       <div class="card">
         <div class="card-body mat-elevation-z8">
-            <h5 class="card-title text-info"><em class="fa fa-plus"></em> AGREGAR PREGUNTA - RESPUESTAS </h5>
+            <h5 class="card-title text-info"><em class="fa fa-plus mr-1"></em>AGREGAR PREGUNTA - RESPUESTAS</h5>
             <hr>
           <form>
             <div class="form-group">
-              <label class="text-muted">Pregunta</label>
-              <div class="input-group">
+                <label class="text-muted">Pregunta</label>
+                <div class="input-group">
+             
               <input name="pregunta" class="form-control form-control-sm" type="text" placeholder="Pregunta" ngModel required #pregunta="ngModel" [(ngModel)]="preguntas">
-              <!-- <div class="input-group-append">
-              <button [disabled]="!resp1 && !pa" type="button" class="btn btn-xs btn-outline-success float-right" (click)="AgregarPregunta()" container="body" placement="bottom" tooltip="Agregar nueva pregunta">
-                  <em class="fa fa-plus"></em>
-              </button>
-            </div> -->
+              <div class="input-group-append">
+                  <label for="image-pregunta" class="file-upload input-group-text">
+                    <em class="fa fa-file-image-o fa-fw text-warning"></em>
+                    <input class="form-control form-control-sm altura" id="image-pregunta" type="file" #fileInputP (change)="fileChangeListener($event, '', 1, 1)" [accept]="['image/png', 'image/jpeg', 'image/jpg']">
+                  </label>
+                </div>
+   
               </div>
               <small *ngIf="!pregunta.valid" class="form-text text-muted text-danger">Debe agregar pregunta</small>
+              <small *ngIf="imgPregunta.name.length > 0" class="form-text text-muted text-danger">{{imgPregunta.name}}</small>
             </div>
             <div *ngIf="!pa" class="form-group">
               <label class="text-muted">Respuesta Correcta</label> 
-                <input ngModel required #respCorr="ngModel" name="respCorr" type="text" class="form-control form-control-sm" placeholder="Respuesta correcta" (blur)="AgregarRespuesta(resp1, 1); img=false;" [(ngModel)]="resp1">
+                <input [disabled]="respVal" ngModel required #respCorr="ngModel" name="respCorr" type="text" class="form-control form-control-sm" placeholder="Respuesta correcta" (blur)="AgregarRespuesta(resp1, 1); respVal=true;" [(ngModel)]="resp1">
               <small *ngIf="!respCorr.valid" class="form-text text-muted text-danger">Debe agregar respuesta</small>
             </div>
             <div class="input-group d-flex justify-content-between">
             <label for="image-input" class="file-upload text-muted">
-                <button class="btn btn-xs btn-info mr-1">
+                <button class="btn btn-xs btn-info mr-1" [disabled]="respVal && resp1.length > 1">
                     <em class="fa fa-file-image-o"></em></button>Respuesta con imagen
-              <input id="image-input" type="file" #fileInput (change)="fileChangeListener($event, 1); resp1 = $event.target.files[0].name; img=true;" [accept]="['image/png', 'image/jpeg', 'image/jpg']">
+              <input id="image-input" [disabled]="respVal && resp1.length > 1" type="file" #fileInput (change)="fileChangeListener($event, resp1, 1, 0); img=true; respVal=true;" [accept]="['image/png', 'image/jpeg', 'image/jpg']">
             </label>  
             <div class="form-group">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" [(ngModel)]="pa" name="pa" value="" (change)="AgregarRespuesta('Pregunta abierta', 3)" >
+                <input class="form-check-input" type="checkbox" [(ngModel)]="pa" name="pa" value="" (change)="AgregarRespuesta('Pregunta abierta', 3); img=true; respVal=true;" >
                 <label class="form-check-label text-muted">
                  Es pregunta abierta
                 </label>
@@ -86,18 +90,18 @@
                     <div class="input-group-append">
                       <label for="image-input" class="file-upload input-group-text">
                         <em class="fa fa-file-image-o fa-fw text-warning"></em>
-                        <input class="form-control form-control-sm altura" id="image-input" type="file" #fileInput (change)="fileChangeListener($event)" [accept]="['image/png', 'image/jpeg', 'image/jpg']">
+                        <input class="form-control form-control-sm altura" id="image-input" type="file" #fileInput (change)="fileChangeListener($event, respInc, 0, 0)" [accept]="['image/png', 'image/jpeg', 'image/jpg']">
                       </label>
                     </div>
                 </div>
               </div>
               <br/>
               <ul class="list-group">
-                  <li *ngFor="let item of respuestas" class="list-group-item" [ngClass]="item.value == 1 ? 'text-success' : 'text-warning'">{{item.resp}}</li>
+                  <li *ngFor="let item of respuestas" class="list-group-item" [ngClass]="item.value == 1 ? 'text-success' : 'text-warning'">{{item.resp || item.name}}</li>
               </ul>
               <small class="text-danger">{{msg}}</small>
    <br/>
-              <button [disabled]="!resp1 && !pa" type="button" [ngClass]="!resp1 && !pa ? 'btn btn-xs float-right disabled' : 'btn btn-xs btn-outline-success float-right'" (click)="AgregarPregunta()" container="body" placement="bottom" tooltip="Agregar pregunta">
+              <button [disabled]="respuestas.length < 4" type="button" [ngClass]="respuestas.length < 4 ? 'btn btn-xs float-right disabled' : 'btn btn-xs btn-outline-success float-right'" (click)="AgregarPregunta()" container="body" placement="bottom" tooltip="Agregar pregunta">
                   <em class="fa fa-check"></em>
               </button>
       
@@ -122,13 +126,16 @@
         <hr>    
         <ng-container *ngFor="let p of examen; let ind = index">
         <div class="list-group">
-          <span *ngIf="!editPregunta" class="text-primary" >{{( ind + 1)  + '.- ' + p.Pregunta}}   
-            <button class="btn btn-xs btn-outline-warning float-right mr-1" type="button" (click)="editPregunta = true;">
+          <span *ngIf="!editPregunta" class="text-primary" >{{( ind + 1)  + '.- ' + p.Pregunta.Pregunta}}   
+            <button class="btn btn-xs btn-outline-warning float-right mr-1 mat-elevation-z8" type="button" (click)="editPregunta = true;">
               <i class="fa fa-pencil"></i>
             </button>
           </span>
+          <div *ngIf="p.Pregunta.file.length > 0" class="media">
+          <img class="img-fluid" src={{p.Pregunta.file}} alt="Image" style="width: 200px; height: 100px;" />
+        </div>
           <div *ngIf="editPregunta" class="input-group">
-            <input class="form-control form-control-sm" type="text" placeholder="Pregunta" [(ngModel)]="p.Pregunta">
+            <input class="form-control form-control-sm" type="text" placeholder="Pregunta" [(ngModel)]="p.Pregunta.Pregunta">
             <div class="input-group-append">
               <button type="button" class="btn btn-xs btn-outline-success float-right" (click)="editPregunta=false;" container="body" placement="bottom" tooltip="Actualizar pregunta">
                 <em class="fa fa-check"></em>
@@ -140,24 +147,22 @@
         <ul class="list-group respStyle">
           <li *ngFor="let r of p.Respuestas; let ind2 = index" class="list-group-item">
             <span *ngIf="!r.update" [ngClass]="r.value === 1 ? ' text-success' : 'text-warning'">{{r.resp}}
-                <label for="image-input" class="file-upload float-right">
-                    <button class="btn btn-outline-warning btn-xs mat-elevation-z8">
-                        <em class="fa fa-pencil"></em></button>
-                    <!-- <em class="fa fa-file-image-o fa-fw text-warning"></em> -->
-                    <input class="form-control form-control-sm altura" id="image-input" type="file" #fileInput (change)="UpdateRespImg(r.resp, ind, ind2, $event)" [accept]="['image/png', 'image/jpeg', 'image/jpg']">
-                  </label>
-              <!-- <button class="btn btn-xs btn-outline-warning float-right" type="button" (click)="r.update=true">
+              <button class="btn btn-xs btn-outline-warning float-right" type="button" (click)="r.update=true">
                 <em class="fa fa-pencil"></em>
-              </button> -->
+              </button>
             </span>
-            <!-- <div *ngIf="r.update" class="input-group">
+              <div *ngIf="r.update" class="input-group">
               <input class="form-control form-control-sm" type="text" [(ngModel)]="r.resp">
               <div class="input-group-append">
-                <button type="button" class="btn btn-xs btn-outline-success float-right" (click)="UpdateRespImg(r.resp); r.update = false;" container="body" placement="bottom" tooltip="Actualizar respuesta">
+                <button type="button" class="btn btn-xs btn-outline-success float-right" (click)="r.update = false;" container="body" placement="bottom" tooltip="Actualizar respuesta">
                   <em class="fa fa-check"></em>
                 </button>
             </div>
-           </div> -->
+           </div>
+            <a *ngIf="r.file.length > 0" class="file-upload" container="body" placement="bottom" tooltip="Click para editar"><img class="img-fluid media" src={{r.file}} alt="Image" style="width: 200px; height: 100px;"/>
+              <input class="form-control form-control-sm altura" id="image-input" type="file" #fileInput (change)="UpdateResp(r.resp, ind, ind2, $event)" [accept]="['image/png', 'image/jpeg', 'image/jpg']">
+            </a>
+  
           </li>
        </ul>
         <br/>

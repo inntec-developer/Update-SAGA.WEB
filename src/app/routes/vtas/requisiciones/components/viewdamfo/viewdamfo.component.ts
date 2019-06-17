@@ -27,18 +27,9 @@ export class ViewdamfoComponent implements OnInit {
   public damfo290: any;
 
   public data: any;
+  public ClienteInfo: any;
   public periodoPagoId: any;
   public cliente: any;
-  public claseReclutamiento: any;
-  public tipoReclutamiento: any;
-  public nombrePerfil: any;
-  public sueldoMinimo: any;
-  public sueldoMaximo: any;
-  public nombreComercial: any;
-  public razonSocial: any;
-  public rfc: any;
-  public giroEmpresa: any;
-  public actividadEmpresa: any;
 
   public imprimir: boolean;
 
@@ -67,22 +58,14 @@ export class ViewdamfoComponent implements OnInit {
         this.damfoId = params['IdDamfo'];
         this.serviceRequisiciones.getDamfoById(this.damfoId)
             .subscribe(data => {
+              debugger;
               if(data.TipoContratoId == null)
               {
                 data.TipoContratoId = 0;
               }
-              this.periodoPagoId = data.periodoPagoId
+              this.ClienteInfo = data['cliente'];
+              this.periodoPagoId = data.periodoPagoId;
               this.damfo290 = data;
-              this.nombreComercial = data.cliente.nombrecomercial;
-              this.razonSocial = data.cliente.razonSocial;
-              this.rfc = data.cliente.rfc;
-              this.giroEmpresa = data.cliente.giroEmpresas.giroEmpresa;
-              this.actividadEmpresa = data.cliente.actividadEmpresas.actividadEmpresa;
-              this.nombrePerfil = data.nombrePerfil;
-              this.sueldoMinimo = data.sueldoMinimo;
-              this.sueldoMaximo = data.sueldoMaximo;
-              this.claseReclutamiento = data.claseReclutamiento.clasesReclutamiento;
-              this.tipoReclutamiento = data.tipoReclutamiento.tipoReclutamiento;
               this.spinner.hide();
             });
 
@@ -95,12 +78,12 @@ export class ViewdamfoComponent implements OnInit {
 
   openDialog(){
     this.data  = {
-      cliente: this.nombreComercial,
-      claseReclutamiento: this.claseReclutamiento,
-      tipoReclutamiento: this.tipoReclutamiento,
-      sueldoMinimo: this.sueldoMinimo,
-      sueldoMaximo: this.sueldoMaximo,
-      nombrePerfil: this.nombrePerfil,
+      cliente: this.ClienteInfo['nombreComercial'],
+      claseReclutamiento: this.damfo290['claseReclutamiento'],
+      tipoReclutamiento: this.damfo290['tipoReclutamiento'],
+      sueldoMinimo: this.damfo290['sueldoMinimo'],
+      sueldoMaximo: this.damfo290['sueldoMaximo'],
+      nombrePerfil: this.damfo290['nombrePerfil'],
       id: this.damfoId
     }
     let dialogRef = this.dialog.open(DialogdamfoComponent,{
@@ -119,8 +102,11 @@ export class ViewdamfoComponent implements OnInit {
         this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
     }
     setTimeout(() => {
-      document.getElementById('content').style.marginLeft = "60px";
-      document.getElementById('content').style.marginTop = "25px";
+      document.getElementById('content').style.marginLeft = "70px";
+      document.getElementById('content').style.marginTop = "15px";
+      document.getElementById('content').style.marginRight = "0px";
+      document.getElementById('content').style.marginBottom = "15px";
+
       window.print();
     }, 500);
     setTimeout(() => {

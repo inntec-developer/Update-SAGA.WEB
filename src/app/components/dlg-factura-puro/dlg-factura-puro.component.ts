@@ -37,7 +37,7 @@ export class DlgFacturaPuroComponent implements OnInit {
       }
     this.service.AddDatosFactura(dtos).subscribe(data =>{
       this.loading = false;
-        this.dialog.close({Ok: data, estatus: estatus});
+        this.dialog.close({Ok: data, estatus: estatus, porcentaje: this.porcentaje});
       
     });
     

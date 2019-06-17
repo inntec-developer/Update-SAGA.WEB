@@ -1,8 +1,8 @@
-<h4>Selecciona el catalogo</h4>
+<h4>Selecciona el catálogo</h4>
 <div class="row">
     <div class="col-md-10">
         <mat-form-field>
-            <mat-label>Selección de catalogos</mat-label>
+            <mat-label>Selección de catálogos</mat-label>
             <mat-select [(ngModel)]="selectedValue" name="cHdr">
                 <mat-optgroup *ngFor="let group of catalogosGroup" [label]="group.nombre">
                     <mat-option *ngFor="let catalogo of group.catalogos" [value]="catalogo.id">

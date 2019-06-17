@@ -38,11 +38,11 @@ export class ChkButtonsDirective implements AfterViewInit {
       //   var idx = row.accion.lastIndexOf("/");
       //   ruta = row.accion.substring(idx + 1, row.accion.length).toUpperCase();
       // }
-      return row.tipoEstructuraId === 4 && row.nombre.toLowerCase() == ruta.toLowerCase()
+      return row.TipoEstructuraId === 4 && row.Nombre.toLowerCase() == ruta.toLowerCase()
     });
 
     campos.forEach(campo => {
-      if (btncreate.length > 0 && !campo.create) {
+      if (btncreate.length > 0 && !campo.Create) {
         for (var i = 0; i < btncreate.length; i++) {
           btncreate[i].setAttribute('hidden', 'true')
           if (btncreate[i].childElementCount > 0) {
@@ -50,7 +50,7 @@ export class ChkButtonsDirective implements AfterViewInit {
           }
         }
       }
-      else if (btncreate.length > 0 && campo.create) {
+      else if (btncreate.length > 0 && campo.Create) {
         for (var i = 0; i < btncreate.length; i++) {
           btncreate[i].removeAttribute('hidden')
           if (btncreate[i].childElementCount > 0) {
@@ -58,7 +58,7 @@ export class ChkButtonsDirective implements AfterViewInit {
           }
         }
       }
-      if (btnupdate.length > 0 && !campo.update) {
+      if (btnupdate.length > 0 && !campo.Update) {
         for (var i = 0; i < btnupdate.length; i++) {
           btnupdate[i].setAttribute('hidden', 'true')
           if (btnupdate[i].childElementCount > 0) {
@@ -67,7 +67,7 @@ export class ChkButtonsDirective implements AfterViewInit {
 
         }
       }
-      else if (btnupdate.length > 0 && campo.update) {
+      else if (btnupdate.length > 0 && campo.Update) {
         for (var i = 0; i < btnupdate.length; i++) {
           btnupdate[i].removeAttribute('hidden')
           if (btnupdate[i].childElementCount > 0) {
@@ -76,7 +76,7 @@ export class ChkButtonsDirective implements AfterViewInit {
         }
 
       }
-      if (btndelete.length > 0 && !campo.delete) {
+      if (btndelete.length > 0 && !campo.Delete) {
 
         for (var i = 0; i < btndelete.length; i++) {
           btndelete[i].setAttribute('hidden', 'true')
@@ -85,7 +85,7 @@ export class ChkButtonsDirective implements AfterViewInit {
           }
         }
       }
-      else if (btndelete.length > 0 && campo.delete) {
+      else if (btndelete.length > 0 && campo.Delete) {
         for (var i = 0; i < btndelete.length; i++) {
           btndelete[i].removeAttribute('hidden')
           if (btndelete[i].childElementCount > 0) {
@@ -94,7 +94,7 @@ export class ChkButtonsDirective implements AfterViewInit {
         }
 
       }
-      if (btnspecial.length > 0 && !campo.especial) {
+      if (btnspecial.length > 0 && !campo.Especial) {
         for (var i = 0; i < btnspecial.length; i++) {
           btnspecial[i].setAttribute('hidden', 'true')
           if (btnspecial[i].childElementCount > 0) {
@@ -102,7 +102,7 @@ export class ChkButtonsDirective implements AfterViewInit {
           }
         }
       }
-      else if (btnspecial.length > 0 && campo.especial) {
+      else if (btnspecial.length > 0 && campo.Especial) {
         for (var i = 0; i < btnspecial.length; i++) {
           btnspecial[i].removeAttribute('hidden')
           if (btnspecial[i].childElementCount > 0) {

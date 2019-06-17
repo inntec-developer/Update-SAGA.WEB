@@ -65,7 +65,7 @@ export class ApiConection {
   public static GetTipoBase = 'Catalogos/getTipoBase';
 
   /* Reclutamiento */
-  public static Damfo290GetById = 'Damfo290/getById?id=';
+  public static Damfo290GetById = 'Damfo290/getById';
   public static GetDamfoRutasCamion = 'Damfo290/getDamfoRutasCamion';
   public static GetViewDamfos = "Damfo290/getViewDamfos";
   public static GetVacantesDamfo = "Damfo290/getVacantesDamfo";
@@ -101,6 +101,7 @@ export class ApiConection {
   public static AddDatosFactura = 'Requisiciones/insertDtosFactura';
   public static GetReporte70 = 'Requisiciones/getReporte70';
   public static GetRepoteCandidatos = 'Candidatos/getRPTCandidatosVacante'
+  public static GetRequisPendientes = 'Requisiciones/getRequisPendientes'
 
   /* Clientes / Prospectos */
   public static GetProspectos = 'Directorio/getProspectos';
@@ -130,8 +131,9 @@ export class ApiConection {
   public static EditContactoCliente = 'Directorio/EditContactoCliente';
 
   public static CRUDTelefonContacto = 'Directorio/CRUDTelefonContacto';
-
   public static CRUDContactoCorreo = 'Directorio/CRUDContactoCorreo';
+
+  public static CoincidenciaCliente = 'Directorio/CoincidenciaCliente';
 
   /* Candidatos */
   public static filtropaises = 'Candidatos/get';

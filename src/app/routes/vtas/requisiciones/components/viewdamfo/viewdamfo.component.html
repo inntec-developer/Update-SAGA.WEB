@@ -39,10 +39,27 @@
 </div>
 <br *ngIf="!imprimir" />
 <div id="content">
-  <div class="dt-container  mat-elevation-z8">
-    <div class="card-header">
-      <em class="fa fa-user"></em> Informaci&oacute;n General
+  <div class="row justify-content-between" *ngIf="imprimir">
+    <div class="col-2">
+      <img class="huerotate" src="assets/img/damsa/logoDamfo_.png" alt="" />
     </div>
+    <div class="col-8">
+      <div class="text-center">
+        <h4>PERFIL PARA SOLICITAR RECLUTAMIENTO</h4>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="float-right">
+        <small><strong>Clave: </strong>DAM-FO-290</small>
+        <br>
+        <small><strong>Revisi&oacute;n: </strong>02</small>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="dt-container  mat-elevation-z8"> -->
+    <!-- <div *ngIf="!imprimir" class="card-header">
+      <em class="fa fa-user"></em> Informaci&oacute;n General
+    </div> -->
     <div class="card-body">
       <div class="row">
         <div class="col-md-3 col-sm-12 col-xs-12">
@@ -50,23 +67,23 @@
           <mat-divider></mat-divider>
           <p>
             <strong>Nombre Comercial: </strong>
-            <label id="nombre" class="card-text"> {{nombreComercial}}</label>
+            <label id="nombre" class="card-text"> {{ClienteInfo?.nombreComercial}}</label>
           </p>
           <p>
             <strong>Raz&oacute;n Social: </strong>
-            <label class="card-text"> {{razonSocial}}</label>
+            <label class="card-text"> {{ClienteInfo?.razonSocial}}</label>
           </p>
           <p>
             <strong>RFC: </strong>
-            <label class="card-text"> {{rfc}}</label>
+            <label class="card-text"> {{ClienteInfo?.rfc}}</label>
           </p>
           <p>
             <strong>Giro Empresa: </strong>
-            <label class="card-text"> {{giroEmpresa}}</label>
+            <label class="card-text"> {{ClienteInfo?.giroEmpresa}}</label>
           </p>
           <p>
             <strong>Actividad Empresa: </strong>
-            <label class="card-text"> {{actividadEmpresa}}</label>
+            <label class="card-text"> {{ClienteInfo?.actividadEmpresa}}</label>
           </p>
         </div>
         <div class="col-md-3 col-sm-12 col-xs-12">
@@ -74,21 +91,21 @@
           <mat-divider></mat-divider>
           <p>
             <strong>Tipo: </strong>
-            <label class="card-text"> {{tipoReclutamiento}}</label>
+            <label class="card-text"> {{damfo290?.tipoReclutamiento}}</label>
           </p>
           <p>
             <strong>Clase: </strong>
-            <label class="card-text"> {{claseReclutamiento}}</label>
+            <label class="card-text"> {{damfo290?.claseReclutamiento}}</label>
           </p>
           <h5 class="card-title">Contrato</h5>
           <mat-divider></mat-divider>
           <p>
             <strong>Tipo: </strong>
-            <label class="card-text"> {{damfo290?.contratoInicial?.tipoContrato}}</label>
+            <label class="card-text"> {{damfo290?.tipoContrato}}</label>
           </p>
           <p *ngIf="damfo290?.contratoInicial?.periodoPrueba == true">
             <strong>D&iacute;as de Prueba: </strong>
-            <label class="card-text"> {{damfo290?.tiempoContrato?.tiempo}}</label>
+            <label class="card-text"> {{damfo290?.tiempo}}</label>
           </p>
         </div>
         <div class="col-md-3 col-sm-12 col-xs-12">
@@ -100,11 +117,11 @@
           </p>
           <p>
             <strong>&Aacute;rea: </strong>
-            <label class="card-text"> {{damfo290?.area?.areaExperiencia}}</label>
+            <label class="card-text"> {{damfo290?.areaExperiencia}}</label>
           </p>
           <p>
             <strong>G&eacute;nero: </strong>
-            <label class="card-text"> {{damfo290?.genero?.genero}}</label>
+            <label class="card-text"> {{damfo290?.genero}}</label>
           </p>
           <p>
             <strong>Edad: </strong>
@@ -112,7 +129,7 @@
           </p>
           <p>
             <strong>Estado Civil: </strong>
-            <label class="card-text"> {{damfo290?.estadoCivil?.estadoCivil}}</label>
+            <label class="card-text"> {{damfo290?.estadoCivil}}</label>
           </p>
         </div>
         <div class="col-md-3 col-sm-12 col-xs-12">
@@ -127,7 +144,7 @@
               </p>
               <p>
                 <strong>Semanal: </strong>
-                <label class="card-text"> {{(damfo290.sueldoMinimo / 30) * 7 | currency:"$"}}</label>
+                <label class="card-text"> {{(damfo290?.sueldoMinimo / 30) * 7 | currency:"$"}}</label>
               </p>
               <p>
                 <strong>Diario: </strong>
@@ -153,34 +170,34 @@
         </div>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
   <br *ngIf="!imprimir">
-  <div class="dt-container  mat-elevation-z8">
-    <div class="card-header">
+  <!-- <div class="dt-container  mat-elevation-z8"> -->
+    <!-- <div *ngIf="!imprimir" class="card-header">
       <em class="fa fa-user"></em> Vacantes por Horarios
-    </div>
-    <div class="card-body">
+    </div> -->
+    <!-- <div class="card-body"> -->
       <div class="row">
         <div class="col-md-12">
           <!-- HORARIOS -->
-          <app-dt-horarios [Horarios]="damfo290?.horariosPerfil" [Requi]='false'></app-dt-horarios>
+          <app-dt-horarios [Horarios]="damfo290?.horarios" [Requi]='false'></app-dt-horarios>
         </div>
       </div>
-    </div>
-  </div>
+    <!-- </div> -->
+  <!-- </div> -->
   <br *ngIf="!imprimir">
-  <div class="dt-container  mat-elevation-z8">
-    <div class="card-header">
+  <!-- <div class="dt-container  mat-elevation-z8">
+    <div *ngIf="!imprimir" class="card-header">
       <em class="fa fa-id-badge"></em> Informaci&oacute;n Adicional del Perfil
-    </div>
+    </div> -->
     <div class="card-body">
       <div class="row">
         <div class="col-md-3 col-sm-12 col-xs-12">
           <h5 class="card-title">Estudios / Escolaridades</h5>
           <mat-divider></mat-divider>
           <ol>
-            <li *ngFor="let x of damfo290?.escolardadesPerfil">
-              <label class="card-text"> {{x?.escolaridad?.gradoEstudio}} - {{x?.estadoEstudio?.estadoEstudio}}</label>
+            <li *ngFor="let x of damfo290?.escolaridades">
+              <label class="card-text"> {{x?.gradoEstudio}} - {{x?.estadoEstudio}}</label>
             </li>
           </ol>
         </div>
@@ -188,8 +205,8 @@
           <h5 class="card-title">Aptitudes</h5>
           <mat-divider></mat-divider>
           <ol>
-            <li *ngFor="let x of damfo290?.aptitudesPerfil">
-              <label class="card-text"> {{x?.aptitud?.aptitud}}</label>
+            <li *ngFor="let x of damfo290?.aptitudes">
+              <label class="card-text"> {{x?.aptitud}}</label>
             </li>
           </ol>
         </div>
@@ -203,19 +220,19 @@
           <mat-divider></mat-divider>
           <p>
             <strong>D&iacute;as Corte: </strong>
-            <label class="card-text"> {{damfo290?.diaCorte?.diaSemana}}</label>
+            <label class="card-text"> {{damfo290?.diaCorte}}</label>
           </p>
           <p>
             <strong>Tipo Nomina: </strong>
-            <label class="card-text"> {{damfo290?.tipoNomina?.tipoDeNomina}}</label>
+            <label class="card-text"> {{damfo290?.tipoDeNomina}}</label>
           </p>
           <p>
             <strong>D&iacute;as Pago: </strong>
-            <label class="card-text"> {{damfo290?.diaPago?.diaSemana}}</label>
+            <label class="card-text"> {{damfo290?.diaPago}}</label>
           </p>
           <p>
             <strong>Periodo de Pago: </strong>
-            <label class="card-text"> {{damfo290?.periodoPago?.periodoPago}}</label>
+            <label class="card-text"> {{damfo290?.periodoPago}}</label>
           </p>
           <p *ngIf="periodoPagoId == 0">
             <strong>Especifique: </strong>
@@ -224,7 +241,7 @@
         </div>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
   <br *ngIf="!imprimir" />
   <div class="row">
     <div class="col-md-12">
@@ -255,23 +272,23 @@
   <div class="row">
     <div class="col-md-12">
       <!-- BENEFICIOS -->
-      <app-dt-beneficios [Beneficios]="damfo290?.beneficiosPerfil"></app-dt-beneficios>
+      <app-dt-beneficios [Beneficios]="damfo290?.beneficios"></app-dt-beneficios>
     </div>
   </div>
   <br *ngIf="!imprimir" />
   <div class="row">
     <div class="col-md-4">
       <!-- ACTIVIDADES -->
-      <app-actividades [Actividades]="damfo290?.actividadesPerfil"></app-actividades>
+      <app-actividades [Actividades]="damfo290?.actividades"></app-actividades>
     </div>
     <div class="col-md-4">
       <!-- OBSERVACIONES -->
       <!-- damfo290?.observacionesPerfil -->
-      <app-observaciones [Observaciones]="damfo290?.observacionesPerfil"></app-observaciones>
+      <app-observaciones [Observaciones]="damfo290?.observaciones"></app-observaciones>
     </div>
     <div class="col-md-4">
       <!-- PROCESO -->
-      <app-procesos [Proceso]="damfo290?.procesoPerfil"></app-procesos>
+      <app-procesos [Proceso]="damfo290?.procesos"></app-procesos>
     </div>
   </div>
   <br *ngIf="!imprimir" />
@@ -308,16 +325,85 @@
   <div class="row">
     <div class="col-md-4 col-lg-4">
       <!-- COMPTENCIAS CARDINALES -->
-      <app-dt-competencia-cardinal [Competencias]="damfo290?.competenciasCardinalPerfil"></app-dt-competencia-cardinal>
+      <app-dt-competencia-cardinal [Competencias]="damfo290?.competenciasCardinal"></app-dt-competencia-cardinal>
     </div>
     <div class="col-md-4 col-lg-4">
       <!-- COMPETENCIAS POR AREA -->
-      <app-dt-competencia-area [Competencias]="damfo290?.competenciasAreaPerfil"></app-dt-competencia-area>
+      <app-dt-competencia-area [Competencias]="damfo290?.competenciasArea"></app-dt-competencia-area>
     </div>
     <div class="col-md-4 col-lg-4">
       <!-- COMPETENCIAS GERENCIALES -->
-      <app-dt-competencia-gerencial [Competencias]="damfo290?.competetenciasGerencialPerfil">
+      <app-dt-competencia-gerencial [Competencias]="damfo290?.competenciasGerencial">
       </app-dt-competencia-gerencial>
+    </div>
+  </div>
+
+  <br *ngIf="imprimir" />
+  <div class="row" *ngIf="imprimir">
+    <div class="col-4">
+      <div class="card text-center">
+        <div class="firmas-header">
+          DAMSA OPERACIONES / VENTAS
+        </div>
+        <div class="card-body contenedor-firmas">
+
+        </div>
+        <div class="card-footer text-muted">
+          Elaboró (Nombre / Firma)
+        </div>
+      </div>
+      <div class="card text-center firmas-margin-top">
+        <div class="card-body contenedor-firmas">
+
+        </div>
+        <div class="card-footer text-muted">
+          Autorizó (Nombre / Firma)
+        </div>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <div class="card text-center">
+        <div class="firmas-header">
+          DAMSA RECLUTAMIENTO
+        </div>
+        <div class="card-body contenedor-firmas">
+
+        </div>
+        <div class="card-footer text-muted">
+          Elaboró (Nombre / Firma)
+        </div>
+      </div>
+      <div class="card text-center firmas-margin-top">
+        <div class="card-body contenedor-firmas">
+
+        </div>
+        <div class="card-footer text-muted">
+          Autorizó (Nombre / Firma)
+        </div>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <div class="card text-center ">
+        <div class="firmas-header">
+          CLIENTE
+        </div>
+        <div class="card-body contenedor-firmas">
+
+        </div>
+        <div class="card-footer text-muted">
+          Elaboró (Nombre / Firma)
+        </div>
+      </div>
+      <div class="card text-center firmas-margin-top">
+        <div class="card-body contenedor-firmas">
+
+        </div>
+        <div class="card-footer text-muted">
+          Autorizó (Nombre / Firma)
+        </div>
+      </div>
     </div>
   </div>
 </div>

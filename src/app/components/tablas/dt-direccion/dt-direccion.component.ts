@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges, } from '@angular/core';
 
 declare var $: any;
 @Component({
@@ -14,9 +14,10 @@ export class DtDireccionComponent implements OnInit {
 
   ngOnInit() {
   }
-  
-  ngAfterContentChecked(){
-    if(this.Direcciones != null){
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes.Direcciones && !changes.Direcciones.isFirstChange()){
+      debugger;
       this.cargarDirecciones(this.Direcciones);
     }
   }
@@ -24,12 +25,12 @@ export class DtDireccionComponent implements OnInit {
   cargarDirecciones(data){
     if(!this.getAddress){
         this.rows = data;
-        this.getAddress = true;        
+        this.getAddress = true;
     }
   }
 
-  
-  
+
+
   public columns: Array<any> = [
     {title: 'Tipo Dirección', className: 'text-info text-center'},
     {title: 'País', className: 'text-info text-center'},
