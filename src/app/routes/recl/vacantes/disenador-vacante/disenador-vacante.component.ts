@@ -99,7 +99,6 @@ export class DisenadorVacanteComponent implements OnInit {
   ngOnInit() {
     this.service.getGeneral(this.Requi)
       .subscribe(data => {
-        debugger;
         this.General = data;
         this.ViewRequi = data[0].requi;
         this.contactos = data[0].requi.contactos[0];

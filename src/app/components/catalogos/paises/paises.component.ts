@@ -5,6 +5,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { catalogos } from '../../../models/catalogos/catalogos';
+import { log } from 'util';
 
 // Servicios
 
@@ -23,6 +24,7 @@ export class PaisesComponent implements OnInit, OnChanges {
   @Input() Log: any;
   @Output() UpPaises = new EventEmitter<number>(); // Id de País para actualizar tabla.
   formPaises: FormGroup;
+  Edicion: boolean;
 
   displayedColumns: string[] = ['id', 'usuario', 'fechaAct', 'tpMov'];
   dataSource: MatTableDataSource<any>;
@@ -42,6 +44,11 @@ export class PaisesComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    debugger;
+    if (this.SelectedPais === undefined) {
+      this.formPaises.reset();
+      this.Edicion = true;
+    }
     if (this.SelectedPais !== undefined) {
       this.Habilita(false);
       this.formPaises.get('id').setValue(this.SelectedPais.id);
@@ -58,12 +65,12 @@ export class PaisesComponent implements OnInit, OnChanges {
   New() {
     this.formPaises.reset();
     this.Habilita(false);
-    this.SelectedPais = '';
+    this.SelectedPais = undefined;
   }
 
   Save() {
     const catalogo: catalogos = new catalogos();
-    this.SelectedPais !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
+    this.SelectedPais !== '' && this.SelectedPais !== undefined ? catalogo.opt = 2 : catalogo.opt = 1;
     catalogo.usuario = this.settings.user['usuario'];
     catalogo.Catalogos = {
       Id: 1,
@@ -80,18 +87,25 @@ export class PaisesComponent implements OnInit, OnChanges {
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
       result ? this.UpPaises.emit(catalogo.Catalogos.Id) : console.log(result);
+      this.Edicion = true;
+      debugger;
       this.Habilita(true);
+      this.formPaises.reset();
     });
   }
 
   Limpiar() {
     this.formPaises.reset();
+    this.Habilita(true);
+    this.Edicion = false;
+    this.SelectedPais = '';
   }
 
   Habilita(opt: boolean) {
     if (!opt) {
       this.formPaises.get('pais').enable();
       this.formPaises.get('activo').enable();
+      this.Edicion = true;
     } else {
       this.formPaises.get('pais').disable();
       this.formPaises.get('activo').disable();
