@@ -13,6 +13,7 @@ import { TablaReporteComponent } from './tabla-reporte/tabla-reporte.component';
 import { ToolsModule } from '../../tools/tools.module';
 import { ProductividadComponent } from './productividad/productividad.component';
 import { DetallereclutaComponent } from './detallerecluta/detallerecluta.component';
+import { DetallecordinaComponent } from './detallecordina/detallecordina.component';
 
 //import { DatePipe } from '@angular/common';
 
@@ -28,7 +29,7 @@ const routes:Routes =[
     RouterModule.forChild(routes),
     ComponentsModule,
   ],
-  declarations: [InformeComponent, TablaReporteComponent, ReporteGeneralComponent, IndicadoresComponent, ProductividadComponent, DetallereclutaComponent],
+  declarations: [InformeComponent, TablaReporteComponent, ReporteGeneralComponent, IndicadoresComponent, ProductividadComponent, DetallereclutaComponent, DetallecordinaComponent],
   providers: [ReportesService,ExcelService,ComponentsService]
 })
 export class ReportesModule { }

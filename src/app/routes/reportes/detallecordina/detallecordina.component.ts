@@ -4,11 +4,11 @@ import { ReportesService } from '../../../service/Reporte/reportes.service';
 import { ExcelService } from '../../../service/ExcelService/excel.service';
 
 @Component({
-  selector: 'app-detallerecluta',
-  templateUrl: './detallerecluta.component.html',
-  styleUrls: ['./detallerecluta.component.scss']
+  selector: 'app-detallecordina',
+  templateUrl: './detallecordina.component.html',
+  styleUrls: ['./detallecordina.component.scss']
 })
-export class DetallereclutaComponent implements OnInit {
+export class DetallecordinaComponent implements OnInit {
 
   public General : any[];
   public palabra :string;
@@ -61,11 +61,11 @@ export class DetallereclutaComponent implements OnInit {
 
   Generar(reclutador,cordina){
     this.spinner.show();
-    document.getElementById('DivDetalleReclu').classList.remove('ocultar');
+    document.getElementById('DivDetalleCordi').classList.remove('ocultar');
+    document.getElementById('DivDetalleReclu').classList.add('ocultar');
     document.getElementById('Divprincipal').classList.add('ocultar');
     document.getElementById('DivReportefil').classList.add('ocultar');
     document.getElementById('DivProacti').classList.add('ocultar');
-    document.getElementById('DivDetalleCordi').classList.add('ocultar');
 
     var rec = '';
     var coo = '';
@@ -280,6 +280,5 @@ public clearfilters() {
   this.onChangeTable(this.config);
 
 }
-
 
 }

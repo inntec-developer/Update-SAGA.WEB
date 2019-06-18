@@ -34,6 +34,7 @@ export class DtVacantesGraficaPAComponent implements OnInit {
   public registros: number;
 
   public totalPos = 0;
+  public bandera = true;
   totalContratados: number = 0;
 
   constructor(private _ComponentService: ComponentsService, private settings: SettingsService) { }
@@ -54,6 +55,10 @@ export class DtVacantesGraficaPAComponent implements OnInit {
 
   ngOnInit() {
     this.UsuarioId = this.settings.user['id'];
+    let estado2 = this.EstadoVacante.split(':', 1);
+    this.bandera = estado2 == 'Cubiertas parcialmente' || estado2 == 'Cubiertas' 
+    || estado2 == 'Cubiertas por medios'|| estado2 == 'Cubiertas por el cliente'?false:true;
+   
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -72,6 +77,10 @@ export class DtVacantesGraficaPAComponent implements OnInit {
       this.dataSource.forEach(r => {
         if(r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37))
         {
+          this.totalPos += r.vacantes;
+          this.totalContratados += r.contratados;
+        }
+        if(this.bandera == false){
           this.totalPos += r.vacantes;
           this.totalContratados += r.contratados;
         }
