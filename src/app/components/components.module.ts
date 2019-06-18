@@ -371,7 +371,8 @@ import { AutorizarFacturasPuroComponent } from './tablas/autorizar-facturas-puro
     IndicadorCandidatosEstatusComponent,
     IndicadorPosicionesActivasComponent,
     DlgRegistroMasivoComponent,
-    DlgResultadosMedicosComponent
+    DlgResultadosMedicosComponent,
+    AutorizarFacturasPuroComponent
   ],
   entryComponents: [ DlgResultadosMedicosComponent, DlgRegistroMasivoComponent, RegistroReclutadorComponent, TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
 
