@@ -14,7 +14,8 @@ import { Observable } from 'rxjs/Rx';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + sessionStorage.getItem('valation-token')
   })
 };
 
@@ -23,7 +24,7 @@ const httpOptions = {
 })
 export class ComentariosService {
   /**
-   * 
+   *
    */
   private UrlComentariosCandidato = ApiConection.ServiceUrl + ApiConection.ComentariosCandidato;
   private UrlAddComentarioCandidato = ApiConection.ServiceUrl + ApiConection.AddComentariosCandidato;
@@ -38,12 +39,12 @@ export class ComentariosService {
 
   getComentariosCandidato(Id: any): Observable<any> {
     let params = new HttpParams().set('Id', Id)
-    return this._http.get(this.UrlComentariosCandidato, { params: params });
+    return this._http.get(this.UrlComentariosCandidato, { params: params, headers: httpOptions.headers });
   }
 
   getComentariosVacante(Id: any): Observable<any> {
     let params = new HttpParams().set('Id', Id);
-    return this._http.get(this.UrlComentariosVacante, { params: params });
+    return this._http.get(this.UrlComentariosVacante, { params: params, headers: httpOptions.headers });
   }
 
   addComentarioCandidato(data: any): Observable<any> {
@@ -55,22 +56,10 @@ export class ComentariosService {
   }
 
   AddComentariosNR(data) : Observable<any> {
-    const httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type':  'application/json'
-        })
-      };
-
     return this._http.post(this.URLAddComentariosNR, data, httpOptions );
 }
 
   AddRespuesta(data) : Observable<any> {
-  const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-
     return this._http.post(this.URLAddRespuesta, data, httpOptions );
   }
 }

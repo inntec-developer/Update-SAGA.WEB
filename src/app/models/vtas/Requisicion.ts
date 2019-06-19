@@ -4,6 +4,7 @@ export class CreateRequisicion{
   Usuario: string;
   UsuarioId: string;
   IdEstatus: number;
+  Confidencial: boolean;
 }
 
 export class UpdateRequisicion{

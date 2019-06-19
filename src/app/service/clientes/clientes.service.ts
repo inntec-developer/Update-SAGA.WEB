@@ -19,7 +19,8 @@ import { throwError } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + sessionStorage.getItem('valation-token')
   })
 };
 
@@ -52,11 +53,11 @@ export class ClientesService {
   constructor(private _httpClient: HttpClient) { }
 
   getProspectos(): Observable<any> {
-    return this._httpClient.get(this.UrlGetProspectos);
+    return this._httpClient.get(this.UrlGetProspectos, httpOptions);
   }
 
   getClientes(): Observable<any> {
-    return this._httpClient.get(this.UrlGetClientes);
+    return this._httpClient.get(this.UrlGetClientes, httpOptions);
   }
 
   addProspecto(data: any): Observable<any> {
@@ -69,7 +70,7 @@ export class ClientesService {
 
   getCliente(clienteId: any): Observable<any> {
     let params = new HttpParams().set('ClienteId', clienteId);
-    return this._httpClient.get(this.UrlGetCliente, { params: params });
+    return this._httpClient.get(this.UrlGetCliente, { params: params, headers: httpOptions.headers });
   }
 
   editInfoGeneral(data): Observable<any> {
@@ -86,7 +87,7 @@ export class ClientesService {
 
   deleteDireccion(direccionId): Observable<any> {
     let params = new HttpParams().set('DireccionId', direccionId);
-    return this._httpClient.get(this.UrlDeleteDireccionCliente, { params: params });
+    return this._httpClient.get(this.UrlDeleteDireccionCliente, { params: params, headers: httpOptions.headers });
   }
 
   addTelefono(data): Observable<any> {
@@ -99,7 +100,7 @@ export class ClientesService {
 
   deleteTelefono(telefonoId): Observable<any> {
     let params = new HttpParams().set('TelefonoId', telefonoId)
-    return this._httpClient.get(this.UrlDeleteTelefonoCliente, { params: params });
+    return this._httpClient.get(this.UrlDeleteTelefonoCliente, { params: params, headers: httpOptions.headers });
   }
 
   addCorreo(data): Observable<any> {
@@ -112,7 +113,7 @@ export class ClientesService {
 
   deleteCorreo(CorreoId): Observable<any> {
     let params = new HttpParams().set('EmailId', CorreoId);
-    return this._httpClient.get(this.UrlDeleteCorreoCliente, { params: params })
+    return this._httpClient.get(this.UrlDeleteCorreoCliente, { params: params, headers: httpOptions.headers })
   }
 
   addContacto(data): Observable<any> {
@@ -127,7 +128,7 @@ export class ClientesService {
 
   deleteContacto(ContactoId): Observable<any> {
     let params = new HttpParams().set('ContactoId', ContactoId);
-    return this._httpClient.get(this.UrlDeleteContacocliente, { params: params })
+    return this._httpClient.get(this.UrlDeleteContacocliente, { params: params, headers: httpOptions.headers })
       .pipe(catchError((error: HttpErrorResponse) => throwError(error)));
   }
 

@@ -2,7 +2,7 @@
   <div class="card-header">
     <em class="fa fa-user"></em> Vacantes por Horarios
   </div> -->
-<div class="card-body">
+<div class="card-body" *ngIf="!CreateRequi">
   <div class="row">
     <div class="col-md-12">
       <app-dt-horarios [Horarios]="requisicion?.horarios" [Requi]="false" [EstatusRequi]="EstatusRequi">
@@ -93,7 +93,7 @@
       <mat-divider></mat-divider>
       <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-6">
-          <h5 class="card-title">M&iacute;nimo</h5>
+          <h5 class="text-warning">M&iacute;nimo</h5>
           <p>
             <strong>Mensual: </strong>
             <label class="card-text"> {{requisicion?.sueldoMinimo | currency: "$"}}</label>
@@ -108,7 +108,7 @@
           </p>
         </div>
         <div class="col-md-6 col-sm-6 col-xs-6">
-          <h5 class="card-title">M&aacute;ximo</h5>
+          <h5 class="text-warning">M&aacute;ximo</h5>
           <p>
             <strong>Mensual: </strong>
             <label class="card-text"> {{requisicion?.sueldoMaximo | currency: "$"}}</label>

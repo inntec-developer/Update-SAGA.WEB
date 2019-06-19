@@ -29,6 +29,7 @@ export class RequisicionNuevaComponent implements OnInit {
   public EstatusRequi: any;
   public estatusId: any;
   public TipoReclutamiento: any;
+  public confidencial:boolean = false ;
 
   constructor(
     private settings: SettingsService,
@@ -39,12 +40,15 @@ export class RequisicionNuevaComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private fb: FormBuilder) {
     //Recupera la informacion que se manda en los parametros.
-    this.spinner.show();
+
     this._Route.params.subscribe(params => {
       if (params['IdDamfo'] != null && params['IdDireccion'] != null) {
         this.damfoId = params['IdDamfo'];
         this.direccionId = params['IdDireccion'];
         this.estatusId = params['IdEstatus']
+        this.confidencial = params['Confidencial'];
+        this.spinner.show();
+
         this.createRequi = true;
       } else {
         this.createRequi = false;
@@ -57,6 +61,7 @@ export class RequisicionNuevaComponent implements OnInit {
         datas.IdEstatus = this.estatusId;
         datas.Usuario = this.settings.user['usuario'];
         datas.UsuarioId = this.settings.user['id'];
+        datas.Confidencial = this.confidencial;
         this.serviceRequisiciones.createNewRequi(datas).subscribe(data => {
           if (data != 404) {
             swal('Requisición Generada!', 'Capture número de vacantes y asigne un Coordinador.', 'success');
@@ -65,8 +70,10 @@ export class RequisicionNuevaComponent implements OnInit {
             this.Horarios = data.horariosRequi;
             this.EstatusRequi = data.estatusId
             this.TipoReclutamiento = data.tipoReclutamientoId;
+            this.spinner.hide();
           }
           else {
+            this.spinner.hide();
             swal('Ups!', 'Algo salio mal al intentar generar la requisición.', 'error');
             this._Router.navigate(['/ventas/crearRequisicion']);
           }

@@ -1,7 +1,6 @@
 <h3 class="text-primary text-center" mat-dialog-title> Generar Nueva Requisici&oacute;n</h3>
 <mat-divider></mat-divider>
 <mat-dialog-content>
-  <br>
   <div class="row">
     <div class="col-sm-12">
       <h5><strong class="text-primary">Cliente: </strong> {{data.cliente}}</h5>
@@ -26,10 +25,29 @@
       <h5><strong class="text-primary">Tipo Reclutamiento: </strong>{{data.tipoReclutamiento}}</h5>
     </div>
   </div>
-  <br>
+  <mat-divider></mat-divider>
+  <div class="row">
+    <div class="col-4">
+      <mat-slide-toggle class="example-margin" [color]="warn" [(ngModel)]="confidencial">
+        Vacante Confidencial
+      </mat-slide-toggle>
+    </div>
+    <div class="col-6">
+      <h5 class=text-warning>Especifique si la requisici&oacute;n es confidencial o no. </h5>
+    </div>
+    <div class="col-2">
+      <span *ngIf="confidencial" class="text-info">
+        <strong> Confidencial</strong>
+      </span>
+      <span *ngIf="!confidencial" class="text-success">
+        <strong> No confidencial</strong>
+      </span>
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-12 col-sm-12">
-      <app-direccionauto [Damfo]='IdDamfo' [IdDireccion]='IdDireccion' (change)='FiltroDireccion($event)'></app-direccionauto>
+      <app-direccionauto [Damfo]='IdDamfo' [IdDireccion]='IdDireccion' (change)='FiltroDireccion($event)'>
+      </app-direccionauto>
     </div>
   </div>
 
@@ -42,12 +60,10 @@
       <i class="fa fa-times"></i>
     </span> Cancelar
   </button>
-  <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-1 margin"
-    (click)="createRequisicion()"
+  <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-1 margin" (click)="createRequisicion()"
     [disabled]="DisabledButton">
     <span class="btn-label">
       <i class="fa fa-check"></i>
     </span> Aceptar
   </button>
 </mat-dialog-actions>
-

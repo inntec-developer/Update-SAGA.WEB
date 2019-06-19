@@ -3,7 +3,7 @@
     margin-left: 10px;
 }
 
-.modal-lg 
+.modal-lg
 {
     max-width: 60% !important;
 }
@@ -13,3 +13,26 @@
     max-height: 500px !important;
     overflow: auto;
 }
+
+.mat-input-element:disabled{
+  color: orangered !important;
+  font-size: initial !important;
+}
+.mat-input-element{
+  font-size: initial !important;
+  color: orangered !important;
+}
+
+.important-element.mat-selected {
+  color: orangered !important;
+}
+
+:host /deep/ .mat-select-value-text {
+  color: orangered !important;
+}
+
+.ng-star-inserted {
+  font-size: initial !important;
+}
+
+

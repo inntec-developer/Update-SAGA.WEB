@@ -95,12 +95,10 @@
       <div *ngIf="estatusId == 4">
         <span>SIN ASIGNAR</span>
       </div>
-
     </ol>
   </div>
 </div>
 <!-- </div> -->
-<br>
 <!-- <div class="dt-container  mat-elevation-z8">
   <div class="card-header">
     <em class="fa fa-user"></em> Vacantes por Horarios
@@ -196,7 +194,7 @@
       <mat-divider></mat-divider>
       <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-6">
-          <h5 class="card-title">M&iacute;nimo</h5>
+          <h5 class="text-warning">M&iacute;nimo</h5>
           <p>
             <strong>Mensual: </strong>
             <label class="card-text"> {{requisicion?.sueldoMinimo | currency:"$"}}</label>
@@ -211,7 +209,7 @@
           </p>
         </div>
         <div class="col-md-6 col-sm-6 col-xs-6">
-          <h5 class="card-title">M&aacute;ximo</h5>
+          <h5 class="text-warning">M&aacute;ximo</h5>
           <p>
             <strong>Mensual: </strong>
             <label class="card-text"> {{requisicion?.sueldoMaximo | currency:"$"}}</label>
@@ -269,7 +267,7 @@
       </p>
       <p>
         <strong>Tipo Nomina: </strong>
-        <label class="card-text"> {{requisicion?.tipoNomina}}</label>
+        <label class="card-text"> {{requisicion?.tipoDeNomina}}</label>
       </p>
       <p>
         <strong>D&iacute;as Pago: </strong>

@@ -14,28 +14,33 @@
 <!-- Botones superiores Izquierdos -->
 <div class="row">
   <div class="col-md-12 text-right">
-    <button container="body" placement="bottom" tooltip="Regresar" class="mr-1 btn btn-xs btn-outline-warning" type="button"
-      [routerLink]="['/ventas/requisicion']">
+    <button container="body" placement="bottom" tooltip="Regresar" class="mr-1 btn btn-xs btn-outline-warning"
+      type="button" [routerLink]="['/ventas/requisicion']">
       <em class="icon-action-undo"></em>
     </button>
   </div>
 </div>
-<br />
-<div class="dt-container  mat-elevation-z8">
+<!-- <div class="dt-container  mat-elevation-z8">
   <div class="card-header">
     <em class="fa fa-user"></em> Vacantes por Horarios
-  </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md-12">
-        <app-dt-horarios [Horarios]="Horarios" [Requi]="true" [EstatusRequi]="EstatusRequi" [TipoReclutamiento]="TipoReclutamiento" (NumeroVacantes)="NumeroVacantes = $event"></app-dt-horarios>
-      </div>
+  </div> -->
+<mat-divider></mat-divider>
+<div class="card-body">
+  <div class="row">
+    <div class="col-md-12">
+      <app-dt-horarios [Horarios]="Horarios" [Requi]="true" [EstatusRequi]="EstatusRequi"
+        [TipoReclutamiento]="TipoReclutamiento" (NumeroVacantes)="NumeroVacantes = $event"></app-dt-horarios>
     </div>
   </div>
 </div>
-<br>
-<app-update-info-requi [Folios]="folio" [NumeroVacantes]="NumeroVacantes"></app-update-info-requi>
-<br />
+<!-- </div> -->
+<div class="card-body">
+  <div class="row">
+    <div class="col-md-12">
+      <app-update-info-requi [Folios]="folio" [NumeroVacantes]="NumeroVacantes"></app-update-info-requi>
+    </div>
+  </div>
+</div>
 <app-view-cuerpo-requi [Requisicion]="requiId"></app-view-cuerpo-requi>
 
 <!-- <app-update-info-requi [Folios]="folio" [NumeroVacantes]= "NumeroVacantes"></app-update-info-requi>

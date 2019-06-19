@@ -275,9 +275,9 @@ export class UpdateInfoRequiComponent implements OnInit {
             this.serviceRequisicion.SendEmailRequiPuro(update.id).subscribe(email => {
               if(email == 200){
                 this.popToast('success', 'Reclutamiento Puro', 'Se a notificado por correo electrónico al Gerente de Ventas, para revisión de la vacante.');
-                setTimeout(() => {
-                  this._Router.navigate(['/ventas/requisicion']);
-                }, 500);
+                // setTimeout(() => {
+                //   this._Router.navigate(['/ventas/requisicion']);
+                // }, 500);
               } else{
                 this.popToast('error', 'Error', 'Error inesperado al intentar notificar al Gerente de Ventas sobre la vanate de Reclutamiento Puro.')
               }

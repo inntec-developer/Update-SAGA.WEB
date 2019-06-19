@@ -15,6 +15,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class ViewCuerpoRequiComponent implements OnInit {
   @Input('Requisicion') Requisicion: string;
   @Input('ShowRequi') ShowRequi: boolean;
+  @Input('CreateRequi') CreateRequi: boolean;
   public requisicion: any;
   public checked: boolean = false;
   public EstatusRequi: any;

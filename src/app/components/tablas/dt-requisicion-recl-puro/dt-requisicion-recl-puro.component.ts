@@ -269,6 +269,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
 
 
   ValidarEstatus(estatusId, vacantes) {
+    debugger;
     if(vacantes == 0)
     {
       this.view = true;
@@ -382,7 +383,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
     var window: Window
     dialogDlt.afterClosed().subscribe(result => {
       debugger;
-      if (result.Ok == 200) 
+      if (result.Ok == 200)
       {
         if (result.porcentaje < 50) {
           this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito. El estatus no cambia debido porcentaje');
