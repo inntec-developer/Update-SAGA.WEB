@@ -52,15 +52,15 @@ export class ReportesService {
         return this._httpClient.get(this.UrlDetalleReclu, {params: params});
         }
 
-    getDetalleCordi(fini:string,ffin:string,stus:string): Observable<any> {
-        let params = new HttpParams().set('fini', fini).set('ffin', ffin).set('stus', stus);
-        return this._httpClient.get(this.UrlCoordinacion, {params: params});
-        }
-
-    getCoordinacion(fini:string,ffin:string,aprob:string,cor:string): Observable<any> {
-        let params = new HttpParams().set('fini', fini).set('ffin', ffin).set('aprob', aprob).set('cor', cor);
-        return this._httpClient.get(this.UrlDetalleCordi, {params: params});
-        }
+    getCoordinacion(fini:string,ffin:string,stus:string): Observable<any> {
+    let params = new HttpParams().set('fini', fini).set('ffin', ffin).set('stus', stus);
+    return this._httpClient.get(this.UrlCoordinacion, {params: params});
+    }
+    
+    getDetalleCordi(fini:string,ffin:string,aprob:string,cor:string): Observable<any> {
+    let params = new HttpParams().set('fini', fini).set('ffin', ffin).set('aprob', aprob).set('cor', cor);
+    return this._httpClient.get(this.UrlDetalleCordi, {params: params});
+    }
 
 getVRadial(data: any) : Observable<any>{
     let params = new HttpParams().set('usuario', data);

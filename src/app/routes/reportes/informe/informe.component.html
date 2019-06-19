@@ -72,6 +72,7 @@ type="square-jelly-box"
           <option value="4">Productividad</option>
           <option value="5">Detalle Reclutador</option>
           <option value="6">Detalle Coordinador</option>
+          <option value="7">Coordinacion</option>
           <!-- <option value="3">Movimientos Vacantes </option>
           <option value="5">Fecha Estatus Grupal</option>
           <option value="6">Reporte General </option> -->
@@ -198,13 +199,39 @@ type="square-jelly-box"
       </div>
 
 
+      <div class="col-xl-4 ocultar" id="divestatus2">
+        <div class="form-group input-sm" style="z-index: 100px !important">
+          <label for="sel1"></label>
+          <form [formGroup]="FormEstatus">
+              <ngx-select
+             [allowClear]="true"
+             autoClearSearch="true"
+             placeholder="Estatus..."
+             formControlName = "EstatusControl"
+             (data)="(value)"
+             [multiple]="true"
+             [items]="Estatus"
+             size="small"
+             optionValueField="id"
+             optionTextField="descripcion"
+             (remove)="estatusChange()"
+             (select)="estatusChange()">
+             <ng-template ngx-select-option-selected let-option  >
+               <span style="font-size: 10px !important" >{{ option.data.descripcion }}</span>
+             </ng-template>
+             <ng-template ngx-select-option-not-found>
+                <span style="font-size: 11px">No se encontraron resultados...</span>
+              </ng-template>
+           </ngx-select>
+           </form>
+        </div>
+    </div>
 
       <div class="col-xl-2" id="divestatus">
           <div class="form-group input-sm" style="z-index: 100px !important">
             <label for="sel1"></label>
             <form [formGroup]="FormEstatus">
                 <ngx-select
-
                [allowClear]="true"
                autoClearSearch="true"
                placeholder="Estatus..."
@@ -217,14 +244,12 @@ type="square-jelly-box"
                optionTextField="descripcion"
                (remove)="estatusChange()"
                (select)="estatusChange()">
-
                <ng-template ngx-select-option-selected let-option  >
                  <span style="font-size: 10px !important" >{{ option.data.descripcion }}</span>
                </ng-template>
                <ng-template ngx-select-option-not-found>
                   <span style="font-size: 11px">No se encontraron resultados...</span>
                 </ng-template>
-
              </ngx-select>
              </form>
           </div>
@@ -429,6 +454,9 @@ type="square-jelly-box"
             <button id="exelDetalleCordi" tooltip="Exportar" style="right: auto;" (click)="DetalleCordi.Exportar()" class="ocultar btn btn-sm btn-outline-warning btnReport">
               <em  class="fa fa-download"></em>
             </button>
+            <button id="exelCoordinacion" tooltip="Exportar" style="right: auto;" (click)="Cordinacion.Exportar()" class="ocultar btn btn-sm btn-outline-warning btnReport">
+              <em  class="fa fa-download"></em>
+            </button>
 
 
 
@@ -446,6 +474,9 @@ type="square-jelly-box"
             <em  class="fa fa-bar-chart"></em>
           </button>
           <button class="ocultar btn btn-sm btn-outline-success btnReport" style="right: auto;" (click)="DetalleCordi.Generar(objusercoo,objtipocordi)" tooltip="Generar Reporte" id="repDetalleCordina"  >
+            <em  class="fa fa-bar-chart"></em>
+          </button>
+          <button class="ocultar btn btn-sm btn-outline-success btnReport" style="right: auto;" (click)="Cordinacion.Generar(objstatus)" tooltip="Generar Reporte" id="repCoordinacion"  >
             <em  class="fa fa-bar-chart"></em>
           </button>
       </div>
@@ -466,4 +497,7 @@ type="square-jelly-box"
 <app-detallerecluta id="DivDetalleReclu" #DetalleReclu > </app-detallerecluta>
 
 <app-detallecordina id="DivDetalleCordi" #DetalleCordi></app-detallecordina>
+
+<app-coordinacion  id="DivCoordinacion" #Cordinacion></app-coordinacion>
 </div>
+
