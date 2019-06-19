@@ -300,7 +300,7 @@ export class ApiConection {
   public static GetProActividad = 'reporte/actividad'
   public static GetDetalleReclu = 'reporte/detallerecluta'
   public static GetDetalleCordi = 'reporte/detallecordina'
-
+  public static GetCoordinacion = 'reporte/coordinacion'
 
   /*SistTickets */
 
