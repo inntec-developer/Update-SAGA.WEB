@@ -92,7 +92,7 @@
         </ng-scrollbar>
       </tbody>
     </table>
-    <div class="p-1 bg-light mt-2">
+    <div class="mt-2">
       <pagination *ngIf="config.paging" class="pagination-sm float-left mt-2" [(ngModel)]="pageInfo" [totalItems]="lengthInfo"
         [itemsPerPage]="itemsPerPageInfo" [maxSize]="maxSizeInfo" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTableInfo(config, $event)"
         (numPages)="numPagesInfo = $event">

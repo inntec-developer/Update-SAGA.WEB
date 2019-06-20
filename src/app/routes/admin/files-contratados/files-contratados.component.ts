@@ -11,6 +11,8 @@ export class FilesContratadosComponent implements OnInit {
 
   registrosInfo: number;
   filemanager = false;
+  candidatoId: any;
+  nom = "";
     //scroll
     public disabled = false;
     public invertX = false;

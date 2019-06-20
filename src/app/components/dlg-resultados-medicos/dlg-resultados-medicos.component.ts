@@ -7,6 +7,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
   styleUrls: ['./dlg-resultados-medicos.component.scss']
 })
 export class DlgResultadosMedicosComponent implements OnInit {
+   //scroll
+   public disabled = false;
+   public invertX = false;
+   public compact = false;
+   public invertY = false;
+   public shown = 'hover';
+   
 
   catalogo: string[] = ['APTO','NO APTO'];
 total = 0;
