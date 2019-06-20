@@ -1,6 +1,6 @@
 export class ApiConection {
   public static ServiceUrl = 'http://localhost:33333/api/';
-
+  public static ServiceUrlImgExamenes = 'http://localhost:33333/';
   // //Produccion
   // public static ServiceUrlWeb = 'https://weberp.damsa.com.mx/';
   // public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';

@@ -5,18 +5,19 @@
 </div>
 </div>
 <div class="card">
-  <div class="card-body">
+  <div class="card-body mat-elevation-z8">
     <div class="row">
-      <div class="col clearfix">
-        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" [disabled]="!clearFilter" class="btn btn-xs btn-outline-info float-right mb-1 mr-1">
+      <div class="col-sm-12 mb-2 clearfix">
+          <button (click)="refreshTableInfo()" container="body" placement="bottom" tooltip="Actualizar" container="body" class="btn btn-xs btn-success float-right mb-1 mr-2 mat-elevation-z8">
+              <em class="fa fa-refresh"></em>
+           </button>
+        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" [disabled]="!clearFilter" class="btn btn-xs btn-info float-right mb-1 mr-1 mat-elevation-z8">
           <em class="fa fa-eraser"></em>
        </button>
-       <button (click)="refreshTableInfo()" container="body" placement="bottom" tooltip="Actualizar" container="body" class="btn btn-xs btn-outline-success float-right mb-1 mr-1">
-        <em class="fa fa-refresh"></em>
-     </button>
+       
       </div>
     </div>
-    <table class="table table-responsive mat-elevation-z8">
+    <table class="table">
       <thead>
         <tr>
           <th *ngFor="let column of columnsInfo" ngClass="{{column.className || ''}}">

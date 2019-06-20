@@ -1,23 +1,27 @@
-<div class="card-body mat-elevation-z8">
-  <div class="row">
-    <div class="col-sm-12 col-md-12 clearfix">
-      <button  *ngIf="Liberar"  [disabled]="!candidatos" [ngClass]="!candidatos ? 'disabled':' btn-outline-danger'" container="body"
-        class="mr-1 mb-1 btn btn-xs" placement="bottom" tooltip="Desapartar" (click)="openDialogLiberar()">
+<div class="card">
+<div class="card-body">
+  <div class="row p-1 bg-light">
+    <div class="col-sm-12 col-md-12">
+      <button *ngIf="Liberar" [disabled]="!candidatos" [ngClass]="!candidatos ? 'disabled':' btn-outline-danger'" container="body"
+        class="ml-1 btn btn-xs" placement="bottom" tooltip="Desapartar" (click)="openDialogLiberar()">
         <em class="fa fa-thumbs-o-down"></em>
       </button>
-      <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="mr-1 mb-1 btn btn-xs btn-outline-primary">
-        <em class="fa fa-eraser"></em>
-      </button>
-      <button class="mr-1 mb-1 btn btn-xs btn-outline-success" type="button" (click)="refresh()" container="body"
-        placement="bottom" tooltip="Actualizar">
+      <button class="mr-1 btn btn-xs btn-outline-success float-right" type="button" (click)="refresh()" container="body" placement="bottom"
+        tooltip="Actualizar">
         <em class="icon-refresh"></em>
       </button>
-     
+      <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="mr-2 btn btn-xs btn-outline-primary float-right">
+        <em class="fa fa-eraser"></em>
+      </button>
+      <span class="text-muted font-weight-bold float-right text-uppercase float-right mr-4 float-right">Total de Candidatos
+        <span class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span>
+      </span>
     </div>
+    <br/>
   </div>
   <div class="row">
-    <div class="col-sm-12 col-md-12 table-responsive">
-      <table *ngIf="rows.length > 0 else NotCandidatos" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
+    <div *ngIf="dataSource.length > 0 else NotCandidatos" class="col-sm-12 col-md-12">
+      <table class="table">
         <thead>
           <tr>
             <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
@@ -37,7 +41,7 @@
             <div>
               <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of rows" [class.selected]="row.selected">
                 <td class="text-center"> {{row.nombre | uppercase}}</td>
-                <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
+                <td class="text-center"> {{row.edad | date: 'yyyy-MM-dd'}} </td>
                 <td class="text-center"> {{row.curp | uppercase }}</td>
                 <td class="text-center"> {{row.rfc | uppercase }}</td>
                 <td class="text-center"> {{row.nss | uppercase }}</td>
@@ -65,12 +69,11 @@
         [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
         (numPages)="numPages = $event"></pagination>
 
-      <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}} Registros: {{registros}}</small></pre>
     </div>
   </div>
 </div>
 
-
+</div>
 
 
 

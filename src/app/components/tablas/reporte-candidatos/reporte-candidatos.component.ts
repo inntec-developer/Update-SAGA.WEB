@@ -97,6 +97,7 @@ export class ReporteCandidatosComponent implements OnInit {
 
   public refresh() {
     this.getCandidatos();
+    this.candidatos = false;
     setTimeout(() => {
       this.columns.forEach(element => {
         (<HTMLInputElement>document.getElementById(element.name)).value = '';
@@ -187,7 +188,7 @@ export class ReporteCandidatosComponent implements OnInit {
   public rows: Array<any> = []
   public columns: Array<any> = [
     { title: 'Nombre Candidato', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
-    { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad', filtering: { filterString: '', placeholder: 'Fecha Nacimiento' } },
+    { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'CURP', className: 'text-success text-center', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
     { title: 'RFC', className: 'text-success text-center', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
     { title: 'NSS', className: 'text-success text-center', name: 'nss', filtering: { filterString: '', placeholder: 'NSS' } },

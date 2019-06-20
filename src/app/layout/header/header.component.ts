@@ -42,6 +42,7 @@ export class HeaderComponent implements OnInit {
   compact = false;
   invertX = false;
   invertY = false;
+  tipoUsuario = this.settings.user['tipoUsuarioId'];
 
   constructor(
     public menu: MenuService,

@@ -381,7 +381,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
     });
     var window: Window
     dialogDlt.afterClosed().subscribe(result => {
-      debugger;
+
       if (result.Ok == 200) 
       {
         if (result.porcentaje < 50) {

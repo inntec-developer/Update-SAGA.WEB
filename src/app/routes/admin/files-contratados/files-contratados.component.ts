@@ -33,8 +33,10 @@ export class FilesContratadosComponent implements OnInit {
     { title: 'CURP', className: 'text-success text-center', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
     { title: 'edad', className: 'text-primary text-center', name: 'edad', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'Nombre', className: 'text-primary text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
-    { title: 'Fecha', className: 'text-primary text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'Fecha' } }
+    { title: 'Fecha', className: 'text-primary text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } }
   ]
+  element: any = [];
+  rowAux: any = [];
 
   constructor(private service: CandidatosService, private spinner: NgxSpinnerService) { }
 
@@ -143,7 +145,24 @@ export class FilesContratadosComponent implements OnInit {
     return data.slice(start, end);
   }
 
-  
+  public onCellClick(data: any): any {
+
+    data.selected ? data.selected = false : data.selected = true;
+
+    this.element = data;
+
+    if (this.rowAux.length == 0) {
+      this.rowAux = data;
+    }
+    else if (data.selected && this.rowAux != []) {
+      var aux = data;
+      data = this.rowAux;
+      data.selected = false;
+      aux.selected = true;
+      this.rowAux = aux;
+    }
+
+  }
   public clearfilters() {
     this.clearFilter = false;
     // (<HTMLInputElement>document.getElementById('filterInput')).value = '';

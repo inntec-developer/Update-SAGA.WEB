@@ -118,7 +118,7 @@
           container="body" placement="bottom" tooltip="Postulados">
           <i class="fa fa-users" aria-hidden="true"></i>
         </button>
-        <button class="mr-1 float-right" [disabled]="element.length == 0" (click)="openDialogRegistro()" [ngClass]="element.length == 0 ? 'btn btn-xs disabled':'btn btn-xs btn-outline-success'"
+        <button class="mr-1 float-right" [disabled]="element.claseReclutamientoId != 3" (click)="openDialogRegistro()" [ngClass]="element.claseReclutamientoId != 3 ? 'btn btn-xs disabled':'btn btn-xs btn-outline-success'"
         container="body" placement="bottom" tooltip="Registro Masivo">
         <i class="fa fa-user-plus" aria-hidden="true"></i>
       </button>
@@ -205,10 +205,10 @@
                           </div>
                         </ng-template>
       
-                        <span *ngIf="row.reclutadores.length == 0 && row.estatusId == 4">SIN ASIGNAR</span>
+                        <span *ngIf="row.reclutadores.length == 0 && row.estatusId == 4" class="text-warning">SIN ASIGNAR</span>
                         <small class="text-center badge badge-pill badge-danger" *ngIf="row.reclutadores.length > 1 && row.estatusId == 4" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</small>
                         <span class="text-left" *ngIf="row.reclutadores.length == 1 && row.estatusId == 4">{{row.reclutadores[0]}}</span>
-                        <span *ngIf = "row.estatusId != 4">{{row.coordinador || "SIN REGISTRO" | uppercase}}</span></td>
+                        <span *ngIf = "row.estatusId != 4" [class.text-warning] = "row.coordinador === 'SIN ASIGNAR'">{{row.coordinador | uppercase}}</span></td>
                   <td class="text-center">
                   <ng-template #popTemplate>
                     <div class="card">
@@ -220,7 +220,7 @@
                     </div>
                   </ng-template>
 
-                  <span *ngIf="row.reclutadores.length == 0 || row.estatusId == 4">SIN ASIGNAR</span>
+                  <span *ngIf="row.reclutadores.length == 0 || row.estatusId == 4" class="text-warning">SIN ASIGNAR</span>
                   <small class="text-center badge badge-pill badge-danger" *ngIf="row.reclutadores.length > 1 && row.estatusId != 4" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</small>
                   <span class="text-left" *ngIf="row.reclutadores.length == 1 && row.estatusId != 4">{{row.reclutadores[0]}}</span>
                 </td>

@@ -8,21 +8,41 @@
     </div>
   </div>
   <mat-divider></mat-divider>
-<br/>
 
+<mat-dialog-content>
 <div class="card text-center">
   <div class="card-header text-warning">
         {{data.cliente | uppercase}}
   </div>
   <div class= "card-body">
+      <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+                [disabled]="disabled">
+                <div style="height: 140px;">
     <ul class="list-group mx-auto" *ngFor="let r of data.examenes[0]">
         <li class="list-group-item d-flex justify-content-between align-items-center text-muted">
           <span>{{r.examen | uppercase}}</span><span>$ {{r.costo}}</span>
         </li>
     </ul>
-    <br/>
+    </div>
+    </ng-scrollbar>
     <mat-divider></mat-divider>
   <div class="card-footer text-info d-flex justify-content-between align-items-center">
     <span>TOTAL CANDIDATOS: {{data.candidatos}}</span><span>TOTAL FACTURAR: $ {{total}}</span>
   </div>
+
 </div>
+</div>
+</mat-dialog-content>
+<mat-dialog-actions class="float-right">
+
+    <button type="button" class="btn btn-lg btn-labeled btn-danger float-right ml-2 mat-elevation-z8" mat-dialog-close>
+   <span class="btn-label">
+     <i class="fa fa-ban"></i>
+   </span> CANCELAR
+  </button>
+    <button type="button" class="btn btn-lg btn-labeled btn-success float-right ml-2 mat-elevation-z8"  (click)="Close()">
+   <span class="btn-label">
+     <i class="fa fa-check"></i>
+   </span> ACEPTAR
+  </button>
+  </mat-dialog-actions>

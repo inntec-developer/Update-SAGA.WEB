@@ -47,6 +47,9 @@
         <hr>
         <ng-container *ngFor="let p of examen; let ind = index">
           <p class="list-group text-primary">{{( ind + 1) + '.- ' + p.pregunta}}</p>
+          <div *ngIf="p.file.length > 0" class="media">
+            <img class="img-fluid" src={{p.file}} alt="Image" style="width: 200px; height: 100px;" />
+          </div>
           <!-- <ul class="respStyle">
             <li [ngClass]="r.value == 1 ? 'text-success' : 'text-warning'" *ngFor="let r of p.respuestas">{{r.resp}}</li>
           </ul> -->
@@ -81,27 +84,43 @@
       </div> -->
 
         <div class="mat-elevation-z8">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 mt-3">
+                  <button type="button" class="btn btn-xs btn-outline-success float-right mr-2" (click)="refreshTable()" container="body"
+                  placement="bottom" tooltip="Actualizar" container="body">
+                  <em class="icon-refresh"></em>
+                </button>
+                <button (click)="clearfilters()" class="btn btn-xs btn-outline-primary float-right mr-2" container="body" placement="bottom" tooltip="Limpiar Filtros"
+                container="body">
+                <em class="fa fa-eraser"></em>
+              </button>
+              <span class="text-muted font-weight-bold float-right text-uppercase float-right mr-4">Total de Folios <span
+                class="badge badge-pill badge-success ml-1">{{requisiciones.length}}</span></span>
+                <br/>
+                <br/>
+              </div>
+              </div>
           <table class="table" container="body" placement="bottom" tooltip="click para seleccionar">
             <thead>
               <tr>
 
                 <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
                   <small>{{column.title | uppercase}}</small>
-
                 </th>
+                <th></th>
               </tr>
               <tr>
                 <th *ngFor="let column of columns">
                   <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
                     class="form-control form-control-sm" id="{{column.name}}">
                 </th>
-
+                <th> <input class="form-control form-control-sm" disabled></th>
               </tr>
             </thead>
             <tbody>
               <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
                 [disabled]="disabled">
-                <div style="height: 300px;">
+                <div style="height: 250px;">
                   <tr *ngFor="let row of rows" [class.unselectable]="row.examen" [class.select]="row.selected" (click)="onSelect(row)">
                     <td class="text-center">
                       {{row.folio}}
@@ -122,29 +141,40 @@
             </tbody>
           </table>
           <br/>
-          <div class="text-right">
-            <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+          <br/>
+          <div class="mt-1">
+            <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
               [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
             </pagination>
-            <pre class="card card-block card-header text-muted">Total Registros: {{requisiciones.length}}</pre>
+            <br/>
           </div>
-
         </div>
 
         <hr>
         <br/>
-        <div class="lon">
-          <ul *ngIf="requiselect.length > 0" class="list-group">
-            <li *ngFor="let item of requiselect" class="list-group-item">{{item.folio + ' - ' + item.vBtra}}</li>
-          </ul>
-        </div>
-        <small *ngIf="examenId == 0" class="form-text text-muted text-danger">Debe seleccionar examen</small>
-        <button [disabled]="requiselect.length == 0 || examenId == 0" type="button" class="btn btn-outline-success float-right" container="body"
-          placement="bottom" tooltip="Asignar Examen" (click)="AgregarRelacion()">
-          <em class="fa fa-check"></em>
-        </button>
-
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card">
+              <div *ngIf="requiselect.length > 0" class="card-body mat-elevation-z8">
+                <h5 class="card-title text-warning ">
+                  REQUISICIONES SELECCIONADAS</h5>  
+                  <ul  class="list-group">
+                    <li *ngFor="let item of requiselect" class="list-group-item">{{item.folio + ' - ' + item.vBtra}}</li>
+                  </ul>
+              </div>
+              <small *ngIf="examenId == 0" class="form-text text-muted text-danger">Debe seleccionar examen</small>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <button [disabled]="requiselect.length == 0 || examenId == 0" type="button" class="btn btn-lg btn-labeled btn-outline-success float-right ml-2 mat-elevation-z8" container="body"
+               placement="bottom" tooltip="Asignar Examen" (click)="AgregarRelacion()">
+              <span class="btn-label">
+                <i class="fa fa-check"></i>
+              </span> Aceptar
+            </button>
+          </div>
       </div>
+    </div>
 
     </div>
   </div>
@@ -173,9 +203,16 @@
               <div style="height: 400px;">
                 <ng-container *ngFor="let p of examenRequi; let ind = index">
                   <p class="list-group text-primary">{{( ind + 1) + '.- ' + p.pregunta}}</p>
-                  <ul class="respStyle">
-                    <li class="text-muted" *ngFor="let r of p.respuestas">{{r.resp}}</li>
-                  </ul>
+                  <div *ngIf="p.file.length > 0" class="media">
+                    <img class="img-fluid" src={{p.file}} alt="Image" style="width: 200px; height: 100px;" />
+                  </div>
+                  <!-- <ul class="respStyle">
+                    <li class="text-muted" *ngFor="let r of p.respuestas"><p>{{r.resp}}</p>
+                      <div *ngIf="p.file.length > 0" class="media">
+                        <img class="img-fluid" src={{r.file}} alt="Image" style="width: 200px; height: 100px;" />
+                      </div>
+                    </li>
+                  </ul> -->
                 </ng-container>
               </div>
             </ng-scrollbar>
