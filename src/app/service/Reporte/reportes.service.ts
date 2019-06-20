@@ -26,6 +26,7 @@ export class ReportesService {
   private UrlProActividad = ApiConection.ServiceUrl+ApiConection.GetProActividad;
   private UrlDetalleReclu = ApiConection.ServiceUrl+ApiConection.GetDetalleReclu;
   private UrlDetalleCordi = ApiConection.ServiceUrl+ApiConection.GetDetalleCordi;
+  private UrlCoordinacion = ApiConection.ServiceUrl+ApiConection.GetCoordinacion;
 
   constructor(private http: Http,private _httpClient : HttpClient) {  }
   
@@ -51,10 +52,15 @@ export class ReportesService {
         return this._httpClient.get(this.UrlDetalleReclu, {params: params});
         }
 
+    getCoordinacion(fini:string,ffin:string,stus:string): Observable<any> {
+    let params = new HttpParams().set('fini', fini).set('ffin', ffin).set('stus', stus);
+    return this._httpClient.get(this.UrlCoordinacion, {params: params});
+    }
+    
     getDetalleCordi(fini:string,ffin:string,aprob:string,cor:string): Observable<any> {
-        let params = new HttpParams().set('fini', fini).set('ffin', ffin).set('aprob', aprob).set('cor', cor);
-        return this._httpClient.get(this.UrlDetalleCordi, {params: params});
-        }
+    let params = new HttpParams().set('fini', fini).set('ffin', ffin).set('aprob', aprob).set('cor', cor);
+    return this._httpClient.get(this.UrlDetalleCordi, {params: params});
+    }
 
 getVRadial(data: any) : Observable<any>{
     let params = new HttpParams().set('usuario', data);

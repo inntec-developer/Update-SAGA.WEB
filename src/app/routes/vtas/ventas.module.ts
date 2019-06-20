@@ -1,5 +1,4 @@
-﻿
-import { RouterModule, Routes } from '@angular/router';
+﻿import { RouterModule, Routes } from '@angular/router';
 
 import { ComponentsModule } from '../../components/components.module';
 import { ContactosClienteComponent } from './directorio-empresarial/editar-clientes/Components/contactos-cliente/contactos-cliente.component';
@@ -42,7 +41,7 @@ const routes: Routes = [
   { path: 'visualizarCliente/:ClienteId', component: VerClienteComponent },
   { path: 'requisicion', component: RequisicionComponent, data: { componente: 'Requisiciones' } },
   { path: 'crearRequisicion', component: DtCrearRequisicionComponent },
-  { path: 'requisicionNueva/:IdDamfo/:IdDireccion/:IdEstatus', component: RequisicionNuevaComponent },
+  { path: 'requisicionNueva/:IdDamfo/:IdDireccion/:IdEstatus/:Confidencial', component: RequisicionNuevaComponent },
   { path: 'visualizarDamfo290/:IdDamfo', component: ViewdamfoComponent, data: { componente: 'Formato 290' } },
   { path: 'visualizarRequisicion/:IdRequi/:Folio/:Vacante/:TipoReclutamientoId', component: ViewRequisicionComponent, data: { componente: 'Requisiciones' } },
   { path: 'edicionRequisicion/:IdRequi/:Folio/:EstatusId/:TipoReclutamientoId', component: UpdateRequisicionComponent },

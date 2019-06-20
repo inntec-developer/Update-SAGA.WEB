@@ -269,6 +269,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
 
 
   ValidarEstatus(estatusId, vacantes) {
+    debugger;
     if(vacantes == 0)
     {
       this.view = true;

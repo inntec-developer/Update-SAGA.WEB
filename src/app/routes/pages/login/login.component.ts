@@ -16,10 +16,6 @@ import { log } from 'util';
 import { password } from '../../../models/admin/password';
 
 //Modelos
-
-
-
-
 export interface DialogData {
   user: string;
 }
@@ -80,7 +76,8 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           if (data !== 404 && data !== 406) {
-            sessionStorage.setItem('access-token', data['token'])
+            sessionStorage.setItem('access-token', data['dataUser'])
+            sessionStorage.setItem('valation-token', data['token'])
             var decode = this.getDecodedAccessToken(sessionStorage.getItem('access-token'));
             this.Priv = JSON.parse(decode['Privilegios'])
             this.settings.user['id'] = decode['IdUsuario'];
@@ -97,6 +94,7 @@ export class LoginComponent implements OnInit {
             this.settings.user['liderId'] = decode['LiderId'];
             this.settings.user['departamentoId'] = decode['DepartamentoId'];
             this.settings.user['departamento'] = decode['Departamento'];
+            debugger;
             this.router.navigate(['/home']);
           }
           if (data === 404) {

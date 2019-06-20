@@ -64,7 +64,10 @@ export class ProductividadComponent implements OnInit {
   
     document.getElementById('Divprincipal').classList.add('ocultar');
     document.getElementById('DivReportefil').classList.add('ocultar');
+    document.getElementById('DivDetalleCordi').classList.add('ocultar');
+    document.getElementById('DivDetalleReclu').classList.add('ocultar');
     document.getElementById('DivProacti').classList.remove('ocultar');
+    
 
     var rec = '';
     var coo = '';

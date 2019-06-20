@@ -65,7 +65,10 @@ export class TablaReporteComponent implements OnInit {
   Generar(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor,usercoo){
     this.spinner.show();
     document.getElementById('DivReportefil').classList.remove('ocultar');
-  document.getElementById('Divprincipal').classList.add('ocultar');
+    document.getElementById('Divprincipal').classList.add('ocultar');
+    document.getElementById('DivDetalleCordi').classList.add('ocultar');
+    document.getElementById('DivDetalleReclu').classList.add('ocultar');
+    document.getElementById('DivProacti').classList.add('ocultar');
   var ofc = '';
   var sol = '';
   var rec = '';
@@ -165,14 +168,14 @@ ucor = ucor == undefined?'0':ucor;
         'EMPRESA': item.empresa,
         'PUESTO' : item.vBtra,
         'ESTADO': item.estado,
-        'RECLUTADOR'  : item.nombreReclutado == ''?'SIN ASIGNAR':item.nombreReclutado,
+        'RECLUTADOR'  : item.nombreReclutado == '' || item.estatusId == 4?'SIN ASIGNAR':item.nombreReclutado,
         'NO.'	: item.numero,
         'CUBIERTA':item.cubierta,
         'CUMPLIMIENTO'	: item.porcentaje + '%',
         'ESTATUS': item.estatus,
         'FECHA ESTATUS': this.convertDateTime(item.fch_Modificacion),
         'COORDINACÍON ': item.clasesReclutamiento,
-        'COORDINADOR':item.cordinador2 == ''?'SIN ASIGNAR':item.cordinador2,
+        'COORDINADOR':item.estatusId == 4? item.nombreReclutado == ''?'SIN ASIGNAR':item.nombreReclutado : item.cordinador2 == ''?'SIN ASIGNAR':item.cordinador2,
         'SOLICITA': item.nombreApellido,
       })
      });

@@ -26,6 +26,8 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
   HorariosVacantes: any;
   requisicionId: any;
   IdEstatus: number;
+  confidencial: boolean;
+  warn:string = 'warn';
 
   constructor(
     public dialogRef: MatDialogRef<DialogdamfoComponent>,
@@ -102,11 +104,8 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
       else {
         this.IdEstatus = 4;
       }
-      this._Router.navigate(['/ventas/requisicionNueva', this.IdDamfo, this.IdDireccion, this.IdEstatus], { skipLocationChange: true });
+      this._Router.navigate(['/ventas/requisicionNueva', this.IdDamfo, this.IdDireccion, this.IdEstatus, this.confidencial], { skipLocationChange: true });
       this.onNoClick();
-
-
-
     } else {
       this.popToast('error', 'Oops!!', 'Seleccione una dirección para continuar');
       this.DisabledButton = false;

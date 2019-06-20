@@ -4,11 +4,11 @@ import { ReportesService } from '../../../service/Reporte/reportes.service';
 import { ExcelService } from '../../../service/ExcelService/excel.service';
 
 @Component({
-  selector: 'app-detallerecluta',
-  templateUrl: './detallerecluta.component.html',
-  styleUrls: ['./detallerecluta.component.scss']
+  selector: 'app-coordinacion',
+  templateUrl: './coordinacion.component.html',
+  styleUrls: ['./coordinacion.component.scss']
 })
-export class DetallereclutaComponent implements OnInit {
+export class CoordinacionComponent implements OnInit {
 
   public General : any[];
   public palabra :string;
@@ -34,67 +34,58 @@ export class DetallereclutaComponent implements OnInit {
   registros: any;
   showFilterRow: boolean;
 
-  constructor(private servicio:ReportesService, 
-              private spinner:NgxSpinnerService,
-              private Exel: ExcelService,
-            ) { }
+  constructor(
+    private servicio:ReportesService, 
+    private spinner:NgxSpinnerService,
+    private Exel: ExcelService
+  ) { }
 
   ngOnInit() {
-    
   }
-
 
   Exportar(){
     var obj = [];
    
     this.General.forEach(item => {
       obj.push({
-        'Reclutadores': item.nombre,
-        'Folios': item.vacantes,
-        'Posiciones': item.numeropos,
-        'Cubiertos' : item.cubiertas,
-        'Avance %': item.porcentaje,
+        'Estatus': item.descripcion,
+        'Masivo': item.masivo,
+        'Operativo': item.operativo,
+        'Ezpecial' : item.ezpecial,
       })
      });
      this.Exel.exportAsExcelFile(obj,'Reporte')
   }
 
-  Generar(reclutador,cordina){
+  Generar(estatus){
     this.spinner.show();
-    document.getElementById('DivDetalleReclu').classList.remove('ocultar');
-    document.getElementById('Divprincipal').classList.add('ocultar');
-    document.getElementById('DivReportefil').classList.add('ocultar');
-    document.getElementById('DivProacti').classList.add('ocultar');
-    document.getElementById('DivDetalleCordi').classList.add('ocultar');
+    document.getElementById('DivCoordinacion').classList.remove('ocultar');
+    // document.getElementById('DivDetalleReclu').classList.add('ocultar');
+    // document.getElementById('Divprincipal').classList.add('ocultar');
+    // document.getElementById('DivReportefil').classList.add('ocultar');
+    // document.getElementById('DivProacti').classList.add('ocultar');
 
-    var rec = '';
-    var coo = '';
+    var est = '';
+   
     // let pal = document.getElementById('palabra');
     let inc = document.getElementById('fechaInicial');
     let fin = document.getElementById('fechaFinal');
 
-    if(reclutador != undefined){
-      for (let item of reclutador) {
-        rec += item +',';
+    if(estatus != undefined){
+      for (let item of estatus) {
+        est += item +',';
       }
     }
 
-    if(cordina != undefined){
-      for (let item of cordina) {
-        coo += item +',';
-      }
-    }
-
-    coo = cordina == undefined?'0':coo;
-    rec = reclutador == undefined?'0':rec;
-
+    est = estatus == undefined?'0':estatus;
+   
     // var palabra = pal['value'];
     var inicio = inc['value'];
     var final = fin['value'];
    
     let tipo = document.getElementById('TipoReporte')['value'];
     
-    this.servicio.getDetalleReclu(inicio,final,rec,coo)
+    this.servicio.getCoordinacion(inicio,final,est)
     .subscribe( data => {
     // this.popGenerico(data.mensaje,data.bandera,'Publicacion');
     this.requisiciones = data;
@@ -107,12 +98,10 @@ export class DetallereclutaComponent implements OnInit {
 
 
 public columns: Array<any> = [
-  { title: 'RECLUTADORES', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'nombre' } },
-  { title: 'FOLIOS', className: 'text-success text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'Folio' } },
-  { title: 'POSICIONES', className: 'text-success text-center', name: 'numeropos', filtering: { filterString: '', placeholder: 'Folio' } },
-  { title: 'CUBIERTOS', className: 'text-success text-center', name: 'cubiertas', filtering: { filterString: '', placeholder: 'cubiertas' } },
-  { title: 'AVANCE', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'puntos' } },
- 
+  { title: 'Estatus', className: 'text-info text-center', name: 'descripcion', filtering: { filterString: '', placeholder: 'descripcion' } },
+  { title: 'Masivo', className: 'text-success text-center', name: 'masivo', filtering: { filterString: '', placeholder: 'masivo' } },
+  { title: 'Operativo', className: 'text-success text-center', name: 'Operativo', filtering: { filterString: '', placeholder: 'Operativo' } },
+  { title: 'Ezpecial', className: 'text-success text-center', name: 'ezpecial', filtering: { filterString: '', placeholder: 'ezpecial' } }
 ];
 
 
@@ -173,16 +162,7 @@ public changeFilter(data: any, config: any): any {
           if(!Array.isArray(item[column.name]))
           {
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
-            // if(item[column.name].length > 0)
-            // {
-            //   var aux = item[column.name];
-            //   aux.filter(r => {
-            //     return r.toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
-            //   })
 
-            //   return aux;
-              // var mocos = Object.keys(aux[0])
-            // }
           }
           else
           {
@@ -269,7 +249,7 @@ public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: t
 
 
 public refreshTable(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor,usercoo) {
-  this.Generar(reclutador,tipocor);
+  this.Generar(estatus);
 }
 
 public clearfilters() {
@@ -280,6 +260,7 @@ public clearfilters() {
   this.onChangeTable(this.config);
 
 }
+
 
 
 }

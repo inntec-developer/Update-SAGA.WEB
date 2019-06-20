@@ -16,9 +16,9 @@ import { Response } from '@angular/http';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + sessionStorage.getItem('valation-token')
   })
 };
-const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Bearer ' + localStorage.getItem('access-token'));
 
 @Injectable()
 export class ComponentsService {
@@ -63,24 +63,24 @@ export class ComponentsService {
 
   getVResumen(data: any): Observable<any> {
     let params = new HttpParams().set('usuario', data);
-    return this._httpClient.get(this.UrlVacanteResumen, { params: params });
+    return this._httpClient.get(this.UrlVacanteResumen, { params: params, headers: httpOptions.headers});
   }
 
   getVCubierta(data: any): Observable<any> {
     let params = new HttpParams().set('usuario', data);
-    return this._httpClient.get(this.UrlVacanteCubierta, { params: params });
+    return this._httpClient.get(this.UrlVacanteCubierta, { params: params, headers: httpOptions.headers});
   }
   getVActiva(data: any): Observable<any> {
     let params = new HttpParams().set('usuario', data);
-    return this._httpClient.get(this.UrlVacanteActiva, { params: params });
+    return this._httpClient.get(this.UrlVacanteActiva, { params: params, headers: httpOptions.headers});
   }
   getVPorVencer(data: any): Observable<any> {
     let params = new HttpParams().set('usuario', data);
-    return this._httpClient.get(this.UrlVacantePorVencer, { params: params });
+    return this._httpClient.get(this.UrlVacantePorVencer, { params: params, headers: httpOptions.headers});
   }
   getVVencida(data: any): Observable<any> {
     let params = new HttpParams().set('usuario', data);
-    return this._httpClient.get(this.UrlVacanteVencida, { params: params });
+    return this._httpClient.get(this.UrlVacanteVencida, { params: params, headers: httpOptions.headers});
   }
 
   getUserGroup(): Observable<any> {
@@ -93,7 +93,7 @@ export class ComponentsService {
 
   getCalendarEvent(data: any): Observable<any> {
     let params = new HttpParams().set('userId', data);
-    return this._httpClient.get(this.urlGetCalendarEvent, { params: params });
+    return this._httpClient.get(this.urlGetCalendarEvent, { params: params, headers: httpOptions.headers});
   }
 
   addCalendarEvent(data: any): Observable<any> {
@@ -110,81 +110,69 @@ export class ComponentsService {
 
   culminarElement(data: any): Observable<any> {
     let params = new HttpParams().set('Id', data);
-    return this._httpClient.get(this.UrlCulminarEvent, { params: params });
+    return this._httpClient.get(this.UrlCulminarEvent, { params: params, headers: httpOptions.headers});
   }
 
   getAlertStm(data: string): Observable<any> {
     let params = new HttpParams().set('Id', data);
-    return this._httpClient.get<any>(this.UrlGetAlertStm, { params: params });
+    return this._httpClient.get<any>(this.UrlGetAlertStm, { params: params, headers: httpOptions.headers});
   }
 
   getAllAlertStm(data: string): Observable<any> {
     let params = new HttpParams().set('Id', data);
-    return this._httpClient.get(this.UrlGetAllAletStm, { params: params });
+    return this._httpClient.get(this.UrlGetAllAletStm, { params: params, headers: httpOptions.headers});
   }
 
   deleteAlertStm(Id: any, all: any): Observable<any> {
     let params = new HttpParams().set('Id', Id).set('all', all);
-    return this._httpClient.get(this.UrlDeleteAlertStm, { params: params });
+    return this._httpClient.get(this.UrlDeleteAlertStm, { params: params, headers: httpOptions.headers});
   }
 
   getGraficaVPA(data: any): Observable<any> {
     let params = new HttpParams().set('UsuarioId', data);
-    return this._httpClient.get(this.UrlGetVacantesInicioPA, { params: params })
+    return this._httpClient.get(this.UrlGetVacantesInicioPA, { params: params, headers: httpOptions.headers})
       .map(result => result);
   }
 
   getRequiGraficaPA(estado: any, usuarioId: any): Observable<any> {
     let params = new HttpParams().set('estado', estado).set('UsuarioId', usuarioId);
-    return this._httpClient.get(this.UrlGetRequisicionesGPA, { params: params })
+    return this._httpClient.get(this.UrlGetRequisicionesGPA, { params: params, headers: httpOptions.headers})
       .map(result => result);
   }
 
   getRPTCandVacante(vacateId: any): Observable<any> {
     let params = new HttpParams().set('VacanteId', vacateId);
-    return this._httpClient.get(this.UrlGetRPTCandidatoVacante, { params: params })
+    return this._httpClient.get(this.UrlGetRPTCandidatoVacante, { params: params, headers: httpOptions.headers})
       .map(result => result);
   }
 
   getPerfiles(): Observable<any> {
-    return this._httpClient.post(this.UrlGetPerfil, httpOptions)
+    return this._httpClient.get(this.UrlGetPerfil, httpOptions)
       .map(result => result);
   }
 
-  getFolios(usuario: any): Observable<any>{
+  getFolios(usuario: any): Observable<any> {
     return this._httpClient.post(this.UrlGetFolios, usuario, httpOptions)
-    .map(result => result);
+      .map(result => result);
   }
 
-  getPosiciones(usuario: any): Observable<any>{
+  getPosiciones(usuario: any): Observable<any> {
     return this._httpClient.post(this.UrlGetPosiciones, usuario, httpOptions)
-    .map(result => result);
+      .map(result => result);
   }
 
-  getPosicionesActivas(usuario: any): Observable<any>{
+  getPosicionesActivas(usuario: any): Observable<any> {
     return this._httpClient.post(this.UrlGetPosicionesActivas, usuario, httpOptions)
-    .map(result => result);
+      .map(result => result);
   }
 
-  getCandidatos(): Observable<any>{
-    return this._httpClient.post(this.UrlGetCandidatos, httpOptions)
-    .map(result => result);
+  getCandidatos(): Observable<any> {
+    return this._httpClient.get(this.UrlGetCandidatos, httpOptions)
+      .map(result => result);
   }
 
-  getCandidatosInicio(): Observable<any>{
-    return this._httpClient.post(this.UrlGetCandidatosIncio, httpOptions)
-    .map(result => result);
+  getCandidatosInicio(): Observable<any> {
+    return this._httpClient.get(this.UrlGetCandidatosIncio, httpOptions)
+      .map(result => result);
   }
-
-  //Muestra un error en consola y regresa el mismo al Frond-End en caso de que se genere el mismo.
-  public handleError(error: any) {
-    console.log('Error Internar Server', error);
-    if (error instanceof Response) {
-      return Observable.throw(error.json().error || 'Back-End server error');
-    }
-    return Observable.throw(error || 'Back-End server error');
-  }
-
-
-
 }

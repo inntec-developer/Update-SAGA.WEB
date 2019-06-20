@@ -26,15 +26,16 @@ export class SettingsService {
             foto: '',
             liderId: '',
             lider: '',
-            deparamentoId: '',
-            departamento: ''
+            departamentoId: '',
+            departamento: '',
+            token: ''
         };
 
         // App Settings
         // -----------------------------------
         this.app = {
-            vertionTime: '2019006011_1630_DVP-SBI610/20190611_1630_DVP-SBI611',
-            vertion: 'v1.0.49 BETA AoT',
+            vertionTime: '201900619_1230_DVP-SBI610/20190619_1230_DVP-SBI611',
+            vertion: 'v1.0.52 BETA AoT',
             name: 'SAGA - Inntec',
             description: 'Sistema Administrativo de Gestión Avanzada',
             year: ((new Date()).getFullYear()),

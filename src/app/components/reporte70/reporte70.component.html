@@ -46,7 +46,8 @@
                       <small placement="bottom" tooltip="{{row.domicilio_trabajo | uppercase}}" container='body'> {{row.domicilio_trabajo | slice:0:10 | uppercase }} ...</small>
                     </ng-template>
                   </td>
-                  <td>
+                  <td class="text-center" *ngIf="row.estatusId == '4'"><span>SIN ASIGNAR</span></td>
+                  <td *ngIf="row.estatusId != '4'">
                     <ng-template #popTemplate>
                       <div class="card">
                         <div class="card-body">
@@ -201,7 +202,23 @@
                       </div>
                     </ng-template>
                   </td>
-                  <td> {{row.coordinador}}</td>
+                  <td *ngIf="row.estatusId == '4'">
+                    <ng-template #popTemplate>
+                      <div class="card">
+                        <div class="card-body">
+                          <ul class="list-group list-group-flush">
+                            <li *ngFor="let r of row.reclutadores" class="list-group-item text-muted">{{r}}</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </ng-template>
+
+                    <span *ngIf="row.reclutadores.length == 0">SIN ASIGNAR</span>
+                    <small class="text-center badge badge-pill badge-danger" *ngIf="row.reclutadores.length > 1" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</small>
+                    <span class="text-left" *ngIf="row.reclutadores.length == 1">{{row.reclutadores[0]}}</span>
+
+                  </td>
+                  <td *ngIf="row.estatusId != '4'"> {{row.coordinador}}</td>
                   <td class="text-center">
                     <span class="badge badge-pill badge-info" *ngIf="row.comentarios_coord.length == 0">0</span>
                     <small role="button" class="badge badge-pill badge-warning" *ngIf="row.comentarios_coord.length > 0" [popover]="popTemplateComenCoord" #popC="bs-popover" [outsideClick]="true" placement="left"

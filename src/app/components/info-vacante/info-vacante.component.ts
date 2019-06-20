@@ -121,7 +121,6 @@ export class InfoVacanteComponent implements OnInit {
     this.serviceRequisicion.getNewRequi(this.Requisicion)
       .subscribe(data => {
         this.requisicion = data;
-        console.log(this.requisicion);
         this.cliente = data['cliente'];
         this.horariosRequi = data['horarios'];
         this.spinner.hide();

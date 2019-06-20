@@ -453,7 +453,7 @@ public refreshTable() {
           'COORDINACION': row.claseReclutamiento,
           'COMENTARIOS SOLICITANTE': comentariosSol,
           'COMENTARIOS RECLUTADORES': comentariosRecl,
-          COORDINADOR: row.coordinador,
+          COORDINADOR: row.estatusId == 4?reclutador:row.coordinador,
           'COMENTARIOS COORDINADOR': comentariosCoord,
           SOLICITA: row.solicita,
         })
