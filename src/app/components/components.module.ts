@@ -137,6 +137,7 @@ import { TpPsicometriaComponent } from './catalogos/tp-psicometria/tp-psicometri
 import { DlgRegistroMasivoComponent } from './dlg-registro-masivo/dlg-registro-masivo.component';
 import { DlgResultadosMedicosComponent } from './dlg-resultados-medicos/dlg-resultados-medicos.component';
 import { AutorizarFacturasPuroComponent } from './tablas/autorizar-facturas-puro/autorizar-facturas-puro.component';
+import { DlgCubiertasComponent } from './dlg-cubiertas/dlg-cubiertas.component';
 
 @NgModule({
   imports: [
@@ -279,7 +280,8 @@ import { AutorizarFacturasPuroComponent } from './tablas/autorizar-facturas-puro
     DlgRegistroMasivoComponent,
     CURPValidator,
     DlgResultadosMedicosComponent,
-    AutorizarFacturasPuroComponent
+    AutorizarFacturasPuroComponent,
+    DlgCubiertasComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -372,9 +374,10 @@ import { AutorizarFacturasPuroComponent } from './tablas/autorizar-facturas-puro
     IndicadorPosicionesActivasComponent,
     DlgRegistroMasivoComponent,
     DlgResultadosMedicosComponent,
-    AutorizarFacturasPuroComponent
+    AutorizarFacturasPuroComponent,
+    DlgCubiertasComponent
   ],
-  entryComponents: [ DlgResultadosMedicosComponent, DlgRegistroMasivoComponent, RegistroReclutadorComponent, TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
+  entryComponents: [ DlgCubiertasComponent, DlgResultadosMedicosComponent, DlgRegistroMasivoComponent, RegistroReclutadorComponent, TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
 
 
 })

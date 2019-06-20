@@ -1,5 +1,19 @@
-<div class="card media">
+<div class="card">
   <div class="card-body mat-elevation-z8">
+      <div class="row">
+          <div class="col-sm-12 col-md-12">
+            <button type="button" class="btn btn-xs btn-outline-success float-right" (click)="refreshTable()" container="body"
+            placement="bottom" tooltip="Actualizar" container="body">
+            <em class="icon-refresh"></em>
+          </button>
+          <button (click)="clearfilters()" class="btn btn-xs btn-outline-primary float-right mr-2" container="body" placement="bottom" tooltip="Limpiar Filtros"
+          container="body">
+          <em class="fa fa-eraser"></em>
+        </button>
+          <br/>
+          <br/>
+        </div>
+        </div>
     <div class="row" #tableContainer>
       <div class="col-sm-12 col-md-12 table-responsive clearfix">
         <div>

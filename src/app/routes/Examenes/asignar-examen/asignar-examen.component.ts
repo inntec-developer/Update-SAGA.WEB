@@ -4,6 +4,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { ExamenesService } from './../../../service/Examenes/examenes.service';
 import { RequisicionesService } from './../../../service/requisiciones/requisiciones.service';
+import { ApiConection } from '../../../service/api-conection.service';
 
 @Component({
   selector: 'app-asignar-examen',
@@ -29,10 +30,8 @@ export class AsignarExamenComponent implements OnInit {
   requiselect = [];
   requisiciones = [];
   rows = [];
-  registros = 0;
   examenId = 0;
   verExamen = false;
-  filterData = [];
 
   public page: number = 1;
   public itemsPerPage: number = 20;
@@ -149,15 +148,10 @@ export class AsignarExamenComponent implements OnInit {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
 
-    if (config.sorting) {
-      (<any>Object).assign(this.config.sorting, config.sorting);
-    }
-
     this.rows = this.requisiciones;
     let filteredData = this.changeFilter(this.requisiciones, this.config);
     //let sortedData = this.changeSort(filteredData, this.config);
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
-    this.registros = this.rows.length;
     this.length = filteredData.length;
 
   }
@@ -172,6 +166,8 @@ export class AsignarExamenComponent implements OnInit {
   {
     this.service.GetExamenes(tipoexamenId).subscribe(data => {
       this.examenes = data;
+
+     
     })
   }
 
@@ -179,6 +175,15 @@ export class AsignarExamenComponent implements OnInit {
   {
     this.service.GetExamen(ExamenId).subscribe(data => {
       this.examen = data;
+   
+      this.examen.forEach(element => {
+        if(element.file != "")
+        {
+        element.file = ApiConection.ServiceUrlImgExamenes + element.file;
+        }
+      });
+
+      console.log(this.examen)
     })
   }
 
@@ -186,8 +191,6 @@ export class AsignarExamenComponent implements OnInit {
   {
     this.service.GetRequisicionesEstatus(4).subscribe(data => {
       this.requisiciones = data;
-      this.filterData = data;
-
       this.onChangeTable(this.config)
     })
   }
@@ -260,25 +263,33 @@ export class AsignarExamenComponent implements OnInit {
     }
 
   }
-  public Search(data: any) {
-    let tempArray: Array<any> = [];
-    let colFiltar: Array<any> = [{ title: "folio" }, {title: "vBtra"}];
+  public refreshTable() {
 
-    this.filterData.forEach(function (item) {
-      let flag = false;
-      colFiltar.forEach(function (c) {
-        if (item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
-          flag = true;
-        }
-      });
-
-      if (flag) {
-        tempArray.push(item)
-      }
+    this.columns.forEach(element => {
+      element.filtering.filterString = '';
+      (<HTMLInputElement>document.getElementById(element.name)).value = '';
     });
+    this.rows.forEach(e => {
+      e.selected = false;
+    })
 
-    this.requisiciones = tempArray;
-  }
+    this.requiselect = [];
+    
+    this.onChangeTable(this.config);
+}
+
+public clearfilters() {
+
+  this.columns.forEach(element => {
+    element.filtering.filterString = '';
+    (<HTMLInputElement>document.getElementById(element.name)).value = '';
+  });
+
+
+
+  this.onChangeTable(this.config);
+
+}
 
 
    /**

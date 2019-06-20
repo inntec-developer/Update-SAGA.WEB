@@ -33,11 +33,11 @@
 
         <!--estatus melina-->
         <button id="update" chkPrivilegiosButtons [disabled]="cubierta" class="mr-2 btn btn-xs"
-          [ngClass]="cubierta ? 'disabled' : 'btn-outline-warning'" type="button" (click)="updataStatus(34, 'Cubierta')"
-          container="body" placement="bottom" tooltip="Cubierta">
+          [ngClass]="cubierta ? 'disabled' : 'btn-outline-warning'" type="button" (click)="openDialogCubrir()"
+          container="body" placement="bottom" tooltip="Cubrir Folio">
           <em class="fa fa fa-shield"></em>
         </button>
-        <button id="update" chkPrivilegiosButtons [disabled]="cp" class="mr-2 btn btn-xs"
+        <!-- <button id="update" chkPrivilegiosButtons [disabled]="cp" class="mr-2 btn btn-xs"
           [ngClass]="cp ? 'disabled' : 'btn-outline-warning'" type="button"
           (click)="updataStatus(35, 'Cubierta Parcialmente')" container="body" placement="bottom"
           tooltip="Cubierta Parcialmente">
@@ -54,7 +54,7 @@
           (click)="updataStatus(37, 'Cubierta por Cliente')" container="body" placement="bottom"
           tooltip="Cubierta por Cliente">
           <em class="fa fa fa-magic"></em>
-        </button>
+        </button> -->
         <button id='delete' chkPrivilegiosButtons [disabled]="cancelar" class="mr-2 btn btn-xs"
           [ngClass]="cancelar ? 'disabled' : 'btn-outline-danger'" container="body" placement="bottom"
           tooltip="Cancelar" (click)="openDialogCancel();">
@@ -71,10 +71,10 @@
               (click)="historial=true;" container="body" placement="bottom" tooltip="Historial">
               <i class="fa fa-area-chart"></i>
             </button>
-            <button class="btn mr-1" [ngClass]="element.length == 0 ? 'btn-xs disable' : 'btn-xs btn-outline-purple'" [disabled]="element.length == 0" id='special' chkPrivilegiosButtons type="button" (click)="openDialogTransfer()" container="body" placement="bottom"
+            <button *ngIf="tipoUsuarioId != 8" class="btn mr-1" [ngClass]="element.length == 0 ? 'btn-xs disable' : 'btn-xs btn-outline-purple'" [disabled]="element.length == 0" id='special' chkPrivilegiosButtons type="button" (click)="openDialogTransfer()" container="body" placement="bottom"
             tooltip="Transferir folio"><i class="fa fa-exchange"></i>
           </button>
-        <button id="special" chkPrivilegiosButtons type="button" [disabled]="rows.length == 0" class="mr-2 btn  btn-xs" [ngClass]="rows.length == 0 ? 'disable' : 'btn-outline-success'"
+        <button id="view" chkPrivilegiosButtons type="button" [disabled]="rows.length == 0" class="mr-2 btn  btn-xs" [ngClass]="rows.length == 0 ? 'disable' : 'btn-outline-success'"
           (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
           <i class="fa fa-download"></i>
         </button>
@@ -120,12 +120,9 @@
             <tr>
               <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
                 <small>{{column.title | uppercase}}</small>
-                <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)"
-                  [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
-                </i>
               </th>
             </tr>
-            <tr *ngIf="showFilterRow">
+            <tr>
               <th *ngFor="let column of columns">
                 <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
                   [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
@@ -193,23 +190,23 @@
                       </div>
                     </ng-template>
 
-                    <span class="text-center" *ngIf="row.reclutadores.length == 0 && row.estatusId == 4">SIN
+                    <span class="text-center text-warning" *ngIf="row.reclutadores.length == 0 && row.estatusId == 4">SIN
                       ASIGNAR</span>
                     <a class="badge badge-pill badge-primary text-white text-center"
                       *ngIf="row.reclutadores.length > 1 && row.estatusId == 4" [popover]="popTemplate" placement="left"
                       container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
-                    <span class="text-center"
+                    <span class="text-center" [class.text-warning] = "row.reclutadores[0] == 'SIN ASIGNAR'"
                       *ngIf="row.reclutadores.length == 1 && row.estatusId == 4">{{row.reclutadores[0] | uppercase}}</span>
-                    <span class="text-center" *ngIf="row.estatusId != 4">{{row.coordinador | uppercase}}</span>
+                    <span class="text-center" [class.text-warning] = "row.coordinador == 'SIN ASIGNAR'" *ngIf="row.estatusId != 4">{{row.coordinador | uppercase}}</span>
                   </td>
-                  <td> {{row.propietario | uppercase}}</td>
+                  <td [class.text-warning] = "row.propietario == 'SIN ASIGNAR'"> {{row.propietario | uppercase}}</td>
                   <td class="text-center">
                     <ng-template #popTemplate>
                       <div class="row">
                         <div class="col-md-12">
                           <div class="popover-body">
                             <ul *ngFor="let r of row.reclutadores">
-                              <li class="text-muted">{{r | uppercase}}</li>
+                              <li class="text-muted" >{{r | uppercase}}</li>
                             </ul>
 
                           </div>
@@ -217,12 +214,12 @@
                       </div>
                     </ng-template>
 
-                    <span class="text-center" *ngIf="row.reclutadores.length == 0 || row.estatusId == 4">SIN
+                    <span class="text-center text-warning" *ngIf="row.reclutadores.length == 0 || row.estatusId == 4">SIN
                       ASIGNAR</span>
                     <a class="badge badge-pill badge-primary text-white text-center"
                       *ngIf="row.reclutadores.length > 1 && row.estatusId != 4" [popover]="popTemplate" placement="left"
                       container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
-                    <span class="text-center"
+                    <span class="text-center" [class.text-warning] = "row.reclutadores[0] == 'SIN ASIGNAR'"
                       *ngIf="row.reclutadores.length == 1 && row.estatusId != 4">{{row.reclutadores[0] | uppercase}}</span>
 
                   </td>

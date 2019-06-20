@@ -1,32 +1,53 @@
 
-<div class="table-responsive">
+<div class="card card-body">
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+          <button type="button" class="btn btn-xs btn-outline-success float-right mr-1" (click)="refreshTable()" container="body"
+          placement="bottom" tooltip="Actualizar" container="body">
+          <em class="icon-refresh"></em>
+        </button>
+        <button (click)="clearfilters()" class="btn btn-xs btn-outline-primary float-right mr-2" container="body" placement="bottom" tooltip="Limpiar Filtros"
+        container="body">
+        <em class="fa fa-eraser"></em>
+      </button>
+      <span class="text-muted font-weight-bold float-right text-uppercase float-right mr-4">Total de Folios <span
+        class="badge badge-pill badge-success ml-1">{{requis.length}}</span></span>
+        <br/>
+        <br/>
+      </div>
+      </div>
   <table *ngIf="requis.length > 0 else NotRequis" class="table">
     <thead>
       <tr>
-        
-        <th class="text-center text-info">FOLIO</th>
-        <th class="text-center text-info">VACANTE</th>
-        <th class="text-center text-info">RECLUTADOR</th>
-        <th class="text-center text-info">SOLICITANTE</th>
-        <th class="text-center text-info">COORDINADOR</th>
-        <th class="text-center text-info">MOTIVO</th>
-        <th class="text-center text-info">FECHA REPORTE</th>
-        <th class="text-center text-info">ESTATUS</th>
-        <th class="text-center text-info">DESCRIPCI&Oacute;N REPORTE</th>
-        <th class="text-center text-info">RESULTADO REPORTE</th>
+        <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+          <small>{{column.title | uppercase}}</small>
+        </th>
+        <th class="text-center text-info"><small>RESULTADO REPORTE</small></th>
+        <th></th>
+      </tr>
+      <tr *ngIf="showFilterRow">
+        <th *ngFor="let column of columns">
+          <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
+            (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.filtering.columnName}}_1">
+        </th>
+        <th class="text-center text-info">
+            <input class="form-control form-control-sm" disabled>
+        </th>
         <th class="text-center text-info"></th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let row of requis; let rowIndex = index" [class.selected]="row.selected">
+        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+              [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+              <div>
+      <tr *ngFor="let row of rows; let rowIndex = index" [class.selected]="row.selected">
         <td class="text-center"> {{row.folio}}</td>
-        <td class="text-center"> {{row.vBtra}}</td>
-        <td class="text-center"> {{row.comentarioReclutador.reclutador}}</td>
-        <td class="text-center"> {{row.solicita}}</td>
-        <td class="text-center"> {{row.coordinador}}</td>
+        <td class="text-center"> {{row.vBtra | uppercase}}</td>
+        <td class="text-center"> {{row.comentarioReclutador.reclutador | uppercase}}</td>
+        <td class="text-center"> {{row.solicita | uppercase}}</td>
+        <td class="text-center"> {{row.coordinador | uppercase}}</td>
         <td class="text-center">{{row.comentarioReclutador.motivo}}</td>
         <td class="text-center"> {{row.comentarioReclutador.fecha | date:'dd/MM/yyyy'}}</td>
-        <td class="text-center">{{row.estatus}}</td>
         <td class="text-center"> {{row.comentarioReclutador.comentario}}</td>
 <td class="text-center">
 
@@ -44,9 +65,19 @@
         </td>
         
       </tr>
+      </div>
+      </ng-scrollbar>
     </tbody>
   </table>
-
+  <div class="row mt-3">
+      <div class="col-md-12 col-sm-12">
+        <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
+          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
+          (numPages)="numPages = $event">
+        </pagination>
+        
+      </div>
+    </div>
   <div *ngIf="loading" >
       <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
   </div>

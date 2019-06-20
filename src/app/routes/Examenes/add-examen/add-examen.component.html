@@ -56,18 +56,18 @@
             </div>
             <div *ngIf="!pa" class="form-group">
               <label class="text-muted">Respuesta Correcta</label> 
-                <input [disabled]="respVal" ngModel required #respCorr="ngModel" name="respCorr" type="text" class="form-control form-control-sm" placeholder="Respuesta correcta" (blur)="AgregarRespuesta(resp1, 1); respVal=true;" [(ngModel)]="resp1">
+                <input ngModel required #respCorr="ngModel" name="respCorr" type="text" class="form-control form-control-sm" placeholder="Respuesta correcta" (keydown.enter)="AgregarRespuesta(resp1, 1); respVal=true;" [(ngModel)]="resp1">
               <small *ngIf="!respCorr.valid" class="form-text text-muted text-danger">Debe agregar respuesta</small>
             </div>
             <div class="input-group d-flex justify-content-between">
-            <label for="image-input" class="file-upload text-muted">
+            <label *ngIf="!pa" for="image-input" class="file-upload text-muted">
                 <button class="btn btn-xs btn-info mr-1" [disabled]="respVal && resp1.length > 1">
                     <em class="fa fa-file-image-o"></em></button>Respuesta con imagen
               <input id="image-input" [disabled]="respVal && resp1.length > 1" type="file" #fileInput (change)="fileChangeListener($event, resp1, 1, 0); img=true; respVal=true;" [accept]="['image/png', 'image/jpeg', 'image/jpg']">
             </label>  
             <div class="form-group">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" [(ngModel)]="pa" name="pa" value="" (change)="AgregarRespuesta('Pregunta abierta', 3); img=true; respVal=true;" >
+                <input class="form-check-input" type="checkbox" [(ngModel)]="pa" name="pa" value="" (change)="AgregarRespuesta('Pregunta abierta', 3);" >
                 <label class="form-check-label text-muted">
                  Es pregunta abierta
                 </label>
@@ -101,7 +101,7 @@
               </ul>
               <small class="text-danger">{{msg}}</small>
    <br/>
-              <button [disabled]="respuestas.length < 4" type="button" [ngClass]="respuestas.length < 4 ? 'btn btn-xs float-right disabled' : 'btn btn-xs btn-outline-success float-right'" (click)="AgregarPregunta()" container="body" placement="bottom" tooltip="Agregar pregunta">
+              <button [disabled]="respuestas.length < 4 && !pa" type="button" [ngClass]="respuestas.length < 4 && !pa ? 'btn btn-xs float-right disabled' : 'btn btn-xs btn-outline-success float-right'" (click)="AgregarPregunta()" container="body" placement="bottom" tooltip="Agregar pregunta">
                   <em class="fa fa-check"></em>
               </button>
       
@@ -176,4 +176,5 @@
 </div>
 
 <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
+
 

@@ -47,7 +47,7 @@ export class AgregarResultMedicosComponent implements OnInit {
   ngOnInit() {
     this.GetCandidatosExamen();
   }
-
+//#region paginador
  public config: any = {
     paging: true,
     //sorting: { columns: this.columns },
@@ -61,6 +61,7 @@ export class AgregarResultMedicosComponent implements OnInit {
     this.rows = data.slice(start, end);
     return data.slice(start, end);
   }
+  //#endregion
 
   GetCandidatosExamen()
   {
@@ -116,51 +117,55 @@ export class AgregarResultMedicosComponent implements OnInit {
         var aux = [];
 
         row.candidatos[0].forEach(c => {
-          if(c.resultado)
-          {
-          aux.push({
-            CandidatoId: c.candidatoId,
-            Facturado: true,
-            Resultado: c.resultado == 'APTO' ? 1 : 0,
-            ClienteId: row.clienteId
-          });
-        }
+          if (c.resultado) {
+            aux.push({
+              CandidatoId: c.candidatoId,
+              Facturado: true,
+              Resultado: c.resultado == 'APTO' ? 1 : 0,
+              ClienteId: row.clienteId
+            });
+          }
         });
+        this.spinner.hide();
 
-        this._service.InsertResultMedico(aux).subscribe(result => {
-          if(result == 200)
-          {
-            this.spinner.hide();
-           
-            let dialog = this.dialog.open(DlgResultadosMedicosComponent, {
-                  width: '60%',
-                  height: '50%',
-                  data: {cliente: this.dataSource[0].cliente + " " + this.dataSource[0].razon, examenes: this.dataSource[0].examenes, candidatos: aux.length}
-                });
-                dialog.afterClosed().subscribe(result => {
-                  aux = [];
-                  this.GetCandidatosExamen();
-
-                 
-                });
+        let dialog = this.dialog.open(DlgResultadosMedicosComponent, {
+          width: '60%',
+          height: '50%',
+          data: { cliente: this.dataSource[0].cliente + " " + this.dataSource[0].razon, examenes: this.dataSource[0].examenes, candidatos: aux.length }
+        });
+        dialog.afterClosed().subscribe(result => {
+          if (result == "Ok") {
+            this.spinner.show();
+            this._service.InsertResultMedico(aux).subscribe(result => {
+              if (result == 200) {
+                aux = [];
+                this.GetCandidatosExamen();
+                this.spinner.hide();
+              }
+              else {
+                this.spinner.hide();
+                swal("FACTURA", "Ocurrió un error al intentar registrar resultados", "error");
+              }
+            });
           }
           else
           {
-            this.spinner.hide();
-            swal("REGISTRO", "Ocurrió un error al intentar registrar resultados", "error");
+            swal("FACTURA", "No se realizó ningun cambio", "warning");
           }
         });
+      }
+      else {
+        this.spinner.hide();
+        swal("Cancelado", "No se realizó ningún cambio", "error");
+      }
+    });
   }
-  else {
-    this.spinner.hide();
-    swal("Cancelado", "No se realizó ningún cambio", "error");
-  }
-});
-
-  }
 
 
-
+refreshTable()
+{
+  this.GetCandidatosExamen();
+}
   // OpenDialogRevisar(row, examenes)
   // {
   // 

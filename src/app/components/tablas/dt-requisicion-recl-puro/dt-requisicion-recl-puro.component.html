@@ -48,10 +48,13 @@
           container="body" placement="bottom" tooltip="Eliminar" (click)="openDialogDelete()">
           <em class="icon-trash"></em>
         </button>
-        <button class="btn btn-xs btn-outline-success float-right mr-2" type="button" (click)="refreshTable()"
+        <button class="btn btn-xs btn-outline-success float-right ml-2" type="button" (click)="refreshTable()"
           container="body" placement="bottom" tooltip="Actualizar">
           <em class="icon-refresh"></em>
         </button>
+        <button (click)="clearfilters()" class="btn btn-xs btn-outline-info float-right" container="body" placement="bottom" tooltip="Borrar Filtros">
+            <em class="fa fa-eraser"></em>
+          </button>
       </div>
     </div>
     <hr>

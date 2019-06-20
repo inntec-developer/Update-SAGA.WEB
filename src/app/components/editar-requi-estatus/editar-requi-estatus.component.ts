@@ -21,6 +21,36 @@ export class EditarRequiEstatusComponent implements OnInit {
   editing = {};
   comentario: string = "";
   loading = false;
+
+  //scroll
+  public disabled = false;
+  public invertX = false;
+  public compact = false;
+  public invertY = false;
+  public shown = 'hover';
+
+  // Varaibles del paginador
+  public page: number = 1;
+  public itemsPerPage: number = 20;
+  public maxSize: number = 5;
+  public numPages: number = 1;
+  public length: number = 0;
+
+  showFilterRow: boolean = true;
+  registros: number;
+
+  public rows: Array<any> = [];
+  public columns: Array<any> = [
+    { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio', columnName: "folio" } },
+    { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil', columnName: "perfil" } },
+    { title: 'Reclutador', className: 'text-info text-center', name: 'comentarioReclutador', filtering: { filterString: '', placeholder: 'Reclutador', columnName: "reclutador" } },
+    { title: 'Solicitante', className: 'text-info text-center', name: 'solicita', filtering: { filterString: '', placeholder: 'Solicitante', columnName: "solicitante" } },
+    { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador', filtering: { filterString: '', placeholder: 'Coordinador', columnName: "coordinador" } },
+    { title: 'Motivo', className: 'text-info text-center', name: 'comentarioReclutador', filtering: { filterString: '', placeholder: 'Motivo', columnName: "motivo" } },
+    { title: 'Fecha Reporte.', className: 'text-info text-center', name: 'comentarioReclutador', filtering: { filterString: '', placeholder: 'aaaa-mm-dd', columnName: "fecha" } },
+    { title: 'Descripción Reporte', className: 'text-info text-center', name: 'comentarioReclutador', filtering: { filterString: '', placeholder: 'Descripción', columnName: "comentario" } }
+  ];
+
   constructor(
     private spinner: NgxSpinnerService,
     private service: RequisicionesService,
@@ -30,6 +60,7 @@ export class EditarRequiEstatusComponent implements OnInit {
     private settings: SettingsService) { }
 
   ngOnInit() {
+    this.onChangeTable(this.config);
     // this.spinner.show();
     // setTimeout(() => {
     //   this.spinner.hide();
@@ -45,6 +76,111 @@ export class EditarRequiEstatusComponent implements OnInit {
   //   })
   // }
 
+  //#region paginador
+  public config: any = {
+    paging: true,
+    //sorting: { columns: this.columns },
+    filtering: { filterString: '' },
+    className: ['table-hover mb-0 ']
+  };
+
+  public changePage(page: any, data: Array<any> = this.requis): Array<any> {
+    let start = (page.page - 1) * page.itemsPerPage;
+    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    return data.slice(start, end);
+  }
+
+  public changeFilter(data: any, config: any): any {
+    let filteredData: Array<any> = data;
+    this.columns.forEach((column: any) => {
+      if (column.filtering && column.filtering.filterString.toLowerCase() != "") {
+        filteredData = filteredData.filter((item: any) => {
+            if(!Array.isArray(item[column.name]) && typeof item[column.name] !== 'object')
+            {
+              return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+            }
+            else
+            {
+                let aux = item[column.name];
+                let flag = false;
+                if(aux[column.filtering.columnName].toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
+                {
+                  return item[column.name];
+                }
+            }
+          }
+      
+        );
+      }
+    });
+
+    // if (!config.filtering) {
+    //   return filteredData;
+    // }
+
+    // if (config.filtering.columnName) {
+    //   return filteredData.filter((item: any) =>
+    //     item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
+    // }
+
+    // let tempArray: Array<any> = [];
+    // filteredData.forEach((item: any) => {
+    //   let flag = false;
+    //   this.columns.forEach((column: any) => {
+    //     if (item[column.name] == null) {
+    //       flag = true;
+    //     } else {
+    //       if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
+    //         flag = true;
+    //       }
+    //     }
+    //   });
+    //   if (flag) {
+
+    //     tempArray.push(item);
+    //   }
+    // });
+    // filteredData = tempArray;
+
+    return filteredData;
+  }
+
+  //#endregion
+
+  public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
+    if (config.filtering) {
+      (<any>Object).assign(this.config.filtering, config.filtering);
+    }
+
+    this.rows = this.requis;
+    let filteredData = this.changeFilter(this.rows, this.config);
+
+    this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
+    this.length = filteredData.length;
+  }
+
+  public refreshTable() {
+
+      this.columns.forEach(element => {
+        element.filtering.filterString = '';
+        (<HTMLInputElement>document.getElementById(element.filtering.columnName + "_1")).value = '';
+      });
+
+      this.rows.forEach(e => {
+        e.activar = false;
+      })
+      this.onChangeTable(this.config)
+  }
+
+  public clearfilters() {
+    // (<HTMLInputElement>document.getElementById('filterInput')).value = '';
+    this.columns.forEach(element => {
+      element.filtering.filterString = '';
+      (<HTMLInputElement>document.getElementById(element.filtering.columnName + "_1")).value = '';
+    });
+    this.onChangeTable(this.config);
+  }
+
   onSelect(row, rowIndex) {
 
     row.selected ? row.selected = false : row.selected = true;
@@ -55,15 +191,15 @@ export class EditarRequiEstatusComponent implements OnInit {
 
     var aux;
     if (event.target.value !== '') {
-      aux = this.requis[rowIndex]['comentarioReclutador'];
+      aux = this.rows[rowIndex]['comentarioReclutador'];
       aux.respuesta = event.target.value;
-      this.requis[rowIndex]['comentarioReclutador'] = aux;
+      this.rows[rowIndex]['comentarioReclutador'] = aux;
       this.comentario = event.target.value;
-      this.requis[rowIndex]['activar'] = true;
+      this.rows[rowIndex]['activar'] = true;
     }
 
     this.editing[rowIndex + '-' + cell] = false;
-    this.requis = [...this.requis];
+    this.rows = [...this.rows];
   }
 
   //estatus vacantes
@@ -95,8 +231,11 @@ export class EditarRequiEstatusComponent implements OnInit {
         this.postulateService.SetProcesoVacante(datos).subscribe(data => {
           if (data == 201) {
 
-            this.requis[rowIndex]['estatus'] = estatus;
-            this.requis[rowIndex]['estatusId'] = estatusId;
+            this.requis.splice(rowIndex, 1);
+
+            // this.requis[rowIndex]['estatus'] = estatus;
+            // this.requis[rowIndex]['estatusId'] = estatusId;
+           this.refreshTable();
             this.loading = false;
             this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
 

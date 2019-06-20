@@ -250,7 +250,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     let filteredData: Array<any> = data;
     this.columns.forEach((column: any) => {
       this.clearFilter = true;
-      if (column.filtering) {
+      if (column.filtering.filterString != "") {
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
           {
@@ -283,41 +283,38 @@ export class DtVacantesReclutadorComponent implements OnInit {
               }
             }
           }
-          else
-          {
-            return 'sin asignar'
-          }
+         
         });
       }
     });
 
-    if (!config.filtering) {
-      return filteredData;
-    }
+    // if (!config.filtering) {
+    //   return filteredData;
+    // }
 
-    if (config.filtering.columnName) {
-      return filteredData.filter((item: any) =>
-        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-    }
+    // if (config.filtering.columnName) {
+    //   return filteredData.filter((item: any) =>
+    //     item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
+    // }
 
-    let tempArray: Array<any> = [];
-    filteredData.forEach((item: any) => {
-      let flag = false;
-      this.columns.forEach((column: any) => {
-        if (item[column.name] == null) {
-          flag = true;
-        } else {
-          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-            flag = true;
-          }
-        }
-      });
-      if (flag) {
+    // let tempArray: Array<any> = [];
+    // filteredData.forEach((item: any) => {
+    //   let flag = false;
+    //   this.columns.forEach((column: any) => {
+    //     if (item[column.name] == null) {
+    //       flag = true;
+    //     } else {
+    //       if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
+    //         flag = true;
+    //       }
+    //     }
+    //   });
+    //   if (flag) {
 
-        tempArray.push(item);
-      }
-    });
-    filteredData = tempArray;
+    //     tempArray.push(item);
+    //   }
+    // });
+    // filteredData = tempArray;
 
     return filteredData;
   }
@@ -799,6 +796,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.editarNR = false;
       this.GetCandidatosNR();
       this.GetRequisicionesPausa();
+      this.onChangeTable(this.config);
     }
 
   }

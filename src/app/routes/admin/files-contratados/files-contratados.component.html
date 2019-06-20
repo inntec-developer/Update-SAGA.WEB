@@ -16,9 +16,16 @@
 
 <div class="card-body mat-elevation-z8">
     <div>
-        <button type="button" class="btn btn-xs btn-outline-success float-right mr-2" (click)="refreshTableInfo()" container="body" placement="bottom" tooltip="Actualizar" container="body">
+        <button type="button" class="btn btn-xs btn-outline-success float-right mat-elevation-z8" (click)="refreshTableInfo()" container="body" placement="bottom" tooltip="Actualizar" container="body">
         <em class="icon-refresh"></em>
         </button>
+        <button (click)="clearfilters()" class="float-right mr-2 mat-elevation-z8" container="body" placement="bottom" tooltip="Limpiar Filtros"
+            container="body" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'btn btn-xs disabled':'btn btn-xs btn-outline-info'">
+            <em class="fa fa-eraser"></em>
+          </button>
+        <button [disabled]="element.length == 0" [ngClass]="element.length == 0 ? 'disabled' : 'btn-outline-warning'" class="mb-1 btn btn-xs  mat-elevation-z8 float-right mr-2" type="button" container="body" placement="bottom" tooltip="Cargar Archivos" (click)="candidatoId = element.candidatoId; nom = element.nombre; filemanager=true;">
+            <em class="fa fa-upload"></em>
+          </button>
         </div>
         <br/>
   <table *ngIf="dataInfoRequi.length > 0 else NotCandidatos" class="table">
@@ -27,19 +34,11 @@
         <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
           <small class="text-center">{{column.title | uppercase}}</small>
         </th>
-        <th></th>
       </tr>
       <tr>
         <th *ngFor="let column of columns">
           <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
              (tableChanged)="onChangeTableInfo(config)" class="form-control form-control-sm" id="{{column.name}}">
-        </th>
-        <th>
-            <button (click)="clearfilters()" class="float-right mb-1" container="body" placement="bottom" tooltip="Limpiar Filtros"
-            container="body" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'btn btn-xs disabled':'btn btn-xs btn-outline-primary'">
-            <em class="fa fa-eraser"></em>
-          </button>
-          
         </th>
       </tr>
     </thead>
@@ -47,18 +46,13 @@
       <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
         [disabled]="disabled">
         <div style="height: 350px;">
-          <tr *ngFor="let row of rowsInfo; let rowIndex = index">
+          <tr *ngFor="let row of rowsInfo; let rowIndex = index" (click)="onCellClick(row)" [class.bg-primary]="row.selected">
             <td class="text-center">{{row.folio}}</td>
-            <td class="text-center">{{row.vbtra}}</td>
+            <td class="text-center">{{row.vbtra | uppercase}}</td>
             <td class="text-center">{{row.curp | uppercase}}</td>
               <td class="text-center">{{row.edad | date:'yyyy-MM-dd'}}</td>
-              <td class="text-center">{{row.nombre}}</td>
-              <td class="text-center">{{row.fch_Creacion | date:'dd-MM-yyyy'}}</td>
-              <td class="text-center">
-                <button class="mb-1 btn btn-xs btn-outline-success" type="button" container="body" placement="bottom" tooltip="Cargar Archivos" (click)="candidatoId = row.candidatoId; nom = row.nombre; filemanager=true;">
-                  <em class="fa fa-upload"></em>
-                </button>
-              </td>
+              <td class="text-center">{{row.nombre | uppercase}}</td>
+              <td class="text-center">{{row.fch_Creacion | date:'yyyy-MM-dd'}}</td>
           </tr>
         </div>
       </ng-scrollbar>

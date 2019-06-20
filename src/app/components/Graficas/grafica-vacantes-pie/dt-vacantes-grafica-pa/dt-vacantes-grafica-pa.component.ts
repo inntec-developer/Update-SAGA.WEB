@@ -220,4 +220,24 @@ export class DtVacantesGraficaPAComponent implements OnInit {
     this.registros = this.rows.length;
   }
 
+  public refreshTable() {
+    this.getRequisiciones();
+
+    setTimeout(() => {
+      this.columns.forEach(element => {
+        element.filtering.filterString = '';
+        (<HTMLInputElement>document.getElementById(element.name)).value = '';
+      });
+    }, 800);
+  }
+
+  public clearfilters() {
+    this.columns.forEach(element => {
+      element.filtering.filterString = '';
+      (<HTMLInputElement>document.getElementById(element.name)).value = '';
+    });
+    this.onChangeTable(this.config);
+
+  }
+
 }
