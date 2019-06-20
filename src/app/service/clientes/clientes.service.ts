@@ -20,7 +20,7 @@ import { throwError } from 'rxjs';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + sessionStorage.getItem('valation-token')
+    // 'Authorization': 'Bearer ' + sessionStorage.getItem('valation-token')
   })
 };
 
