@@ -1,10 +1,8 @@
-import { forEach } from '@angular/router/src/utils/collection';
-
-import { Component, OnInit, ViewEncapsulation, Input, AfterViewInit } from '@angular/core';
-import { AdminServiceService } from '../../../../service/AdminServicios/admin-service.service';
+import { AfterViewInit, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-
+import { AdminServiceService } from '../../../../service/AdminServicios/admin-service.service';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'grid-roles',
@@ -24,7 +22,7 @@ alert = '';
 listAux = [];
 children = [];
   constructor(private service: AdminServiceService ,public fb: FormBuilder) {
-   
+
    }
 
    descendantsChecked($event, node, title) {
@@ -75,13 +73,13 @@ children = [];
 
   ChangeCollapsed(node) {
     node.collapsed = !node.collapsed;
- 
+
      if (node.children.length > 0) {
        node.children.forEach(element => {
          this.ChangeCollapsed(element)
        });
      }
- 
+
    }
 
   GetNodes( node, i)
@@ -95,39 +93,39 @@ children = [];
     }
    // this.CrearArbol(node)
    // this.collapsed[i] = !this.collapsed[i];
-  
 
-    //  Object.entries(node.children).forEach(([k, v]) => { 
+
+    //  Object.entries(node.children).forEach(([k, v]) => {
     //   this.CrearEstructura(v);
-    
+
     // })
-    
-    // node.children.forEach(element => { 
+
+    // node.children.forEach(element => {
 
     //   this.CrearEstructura(element);
-    
+
     //  })
-    
+
     // this.children = node.children;
     // this.listAux = [];
   }
 
-  saveData() {
-   
-    if (this.privilegios.length > 0) {
-      this.service.AddSeccion(this.privilegios)
-        .subscribe(data => {
-          this.alert = data;
-        });
-    }
-    else {
-      alert('No se ha seleccionado Estructuras')
-    }
-  }
+  // saveData() {
+
+  //   if (this.privilegios.length > 0) {
+  //     this.service.AddSeccion(this.privilegios)
+  //       .subscribe(data => {
+  //         this.alert = data;
+  //       });
+  //   }
+  //   else {
+  //     alert('No se ha seleccionado Estructuras')
+  //   }
+  // }
   ngOnInit() {
     this.nodes = [];
     this.collapsed = [];
   }
-  
+
 
 }

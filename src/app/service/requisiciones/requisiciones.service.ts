@@ -22,6 +22,12 @@ const httpOptions = {
 
 @Injectable()
 export class RequisicionesService {
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+
   private urlGetViewDamfos = ApiConection.ServiceUrl + ApiConection.GetViewDamfos;
   private urlAddress = ApiConection.ServiceUrl + ApiConection.AddressCliente;
   private urlCreateRequi = ApiConection.ServiceUrl + ApiConection.CreateRequi;
@@ -244,7 +250,7 @@ export class RequisicionesService {
   GetAsignados(requisicionId: any): Observable<any>
   {
     let params = new HttpParams().set('requisicionId', requisicionId);
-    return this._httpClient.get(this.URLGetAsignados, { params: params });
+    return this._httpClient.get(this.URLGetAsignados, { params: params, headers: this.httpOptions.headers});
   }
 
   GetRequiTipoRecl(propietarioId: any, tipo): Observable<any> {

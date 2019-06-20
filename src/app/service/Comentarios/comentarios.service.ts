@@ -15,7 +15,7 @@ import { Observable } from 'rxjs/Rx';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + sessionStorage.getItem('valation-token')
+    // 'Authorization': 'Bearer ' + sessionStorage.getItem('valation-token')
   })
 };
 

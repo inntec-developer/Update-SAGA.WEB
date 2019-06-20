@@ -14,15 +14,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { saveAs } from 'file-saver';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-};
-
 @Injectable()
 export class AdminServiceService {
-
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + sessionStorage.getItem('validation-token'),
+      'Accept': 'application/json, text/plain */*'
+    })
+  };
   // Url de servicios.
   private Url = ApiConection.ServiceUrl+ApiConection.getDtosPersonal;
   private UrlGetEntidadesUG = ApiConection.ServiceUrl+ApiConection.getEntidadesUG;
@@ -55,7 +55,6 @@ export class AdminServiceService {
   private UrlDeleteUserRol = ApiConection.ServiceUrl+ApiConection.deleteUserRol;
   private UrlGetStruct = ApiConection.ServiceUrl+ApiConection.getStruct;
   private UrlUploadImage = ApiConection.ServiceUrl+ApiConection.uploadImage;
-  private UrlAddSeccion = ApiConection.ServiceUrl+ApiConection.addSeccion;
   private UrlValidarEmail = ApiConection.ServiceUrl+ApiConection.validarEmail;
   private UrlGetFiles = ApiConection.ServiceUrl+ApiConection.getFiles;
   private UrlGetImage = ApiConection.ServiceUrl+ApiConection.getImage;
@@ -69,18 +68,7 @@ export class AdminServiceService {
   private UrlGetByUsuario = ApiConection.ServiceUrl + ApiConection.GetByUsuario;
   private UrlSendEmail = ApiConection.ServiceUrl + ApiConection.EnviaCorreo;
   private UrlUpdatePassword = ApiConection.ServiceUrl + ApiConection.updatePassword;
-
-  // Error.
-  private handleError(error: any) {
-         console.log('sever error:', error);
-         if (error instanceof Response) {
-             return Observable.throw(error.json().error || 'backend server error');
-         }
-         return Observable.throw(error || 'backend server error');
-     }
-
-
-  constructor(private http: Http, private _httpClient: HttpClient ) {
+  constructor(private _httpClient: HttpClient ) {
 
   }
 
@@ -88,10 +76,7 @@ export class AdminServiceService {
   {
     let formData = new FormData();
     formData.append('image', file, name );
-    let headers = new Headers({'Content-Type': 'image/*.*'});
-    let options = new RequestOptions({headers: headers});
-
-    return this.http.post(this.UrlUploadImage, formData ).map(result => result.json());
+    return this._httpClient.post(this.UrlUploadImage, formData );
   }
 
   GetFiles(candidatoId): Observable<any>
@@ -104,11 +89,6 @@ export class AdminServiceService {
      let params = new HttpParams().set('entidadId', candidatoId)
 
      return this._httpClient.get(this.UrlGetFiles, {params: params});
-  }
-
-  GetImage(ruta): string
-  {
-    return ApiConection.ServiceUrlFileManager + 'Files/users/' + ruta;
   }
 
   GetPdf(ruta): Observable<any>
@@ -131,296 +111,187 @@ export class AdminServiceService {
   {
     let formData = new FormData();
     formData.append('file', file, file.name + '_' + candidatoId );
-
-    return this.http.post(this.UrlUploadFile, formData ).map(result => result.json());
+    return this._httpClient.post(this.UrlUploadFile, formData );
   }
 
   downloadImage(ruta): Observable<any>
   {
-    // let ruta = "utilerias/img/user/08155cc8-3568-e811-80e1-9e274155325e.jpeg";
-
     let httpHeaders = new HttpHeaders({
      'Access-Control-Allow-Origin': 'https://websb.damsa.com.mx',
      'Content-Type': 'image/*.*'
     })
 
     let params = new HttpParams().set('ruta', ruta);
-    //let options = new RequestOptions({headers: httpHeaders, params: params, responseType: ResponseContentType.Blob });
-      // return this.http.get(ruta, options)
-      // .map(res => res.blob())
-      //   .catch(this.handleError)
-
-
      return this._httpClient.get(ApiConection.ServiceUrlFileManager + '/img/user/' + ruta, {headers: httpHeaders, responseType: "blob"});
-    //  return this._httpClient.get(ApiConection.ServiceUrlFoto + ruta, {responseType: "blob"});
-
-
-    // return this._httpClient.get(this.UrlGetImage, { headers: httpHeaders,
-    //   params: params
-    //   })
-
   }
 
   downloadPDF(url):  Observable<any> {
     return this._httpClient.get(ApiConection.ServiceUrlFileManager + 'pdf/' + url, {responseType: "blob"});
   }
 
+  GetImage(ruta): string
+  {
+    return ApiConection.ServiceUrlFileManager + 'Files/users/' + ruta;
+  }
+
   getPersonas(user: any): Observable<any>
   {
       let params = new HttpParams().set('user', user);
-     return this._httpClient.get(this.Url, {params: params});
+     return this._httpClient.get(this.Url, {params: params, headers: this.httpOptions.headers});
   }
 
   SendEmailRegister(data: any): Observable<any>{
-
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    return this.http.post(this.UrlSendEmailRegister, JSON.stringify(data), options)
-            .map(result => result.json())
-            .catch(this.handleError);
+    return this._httpClient.post(this.UrlSendEmailRegister, JSON.stringify(data), this.httpOptions);
   }
 
   GetEntidades(): Observable<any>
   {
-     return this.http.get(this.UrlGetEntidades)
-         .map(result => result.json())
-         .catch(this.handleError);
+     return this._httpClient.get(this.UrlGetEntidades, {headers:  this.httpOptions.headers});
   }
 
   GetEntidadesUG(id): Observable<any>
   {
-     return this.http.get(this.UrlGetEntidadesUG + '?id=' + id)
-         .map(result => result.json())
-         .catch(this.handleError);
+    let params =  new HttpParams().set('id', id);
+     return this._httpClient.get(this.UrlGetEntidadesUG, {params: params, headers: this.httpOptions.headers});
   }
+
   getDepas(): Observable<any>
   {
-     return this.http.get(this.UrlGetDepas)
-         .map(result => result.json())
-         .catch(this.handleError);
+     return this._httpClient.get(this.UrlGetDepas);
   }
 
   getTipos(): Observable<any>
   {
-     return this.http.get(this.UrlTiposUsuarios)
-         .map(result => result.json())
-         .catch(this.handleError);
+     return this._httpClient.get(this.UrlTiposUsuarios);
   }
 
   getGrupos(): Observable<any>
   {
-     return this.http.get(this.UrlGetGrupos)
-         .map(result => result.json())
-         .catch(this.handleError);
+     return this._httpClient.get(this.UrlGetGrupos, {headers: this.httpOptions.headers});
   }
 
   UpdateActivo(cell): Observable<any>
   {
-    let params = new HttpParams().set('Id', cell.id);
-
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-
-    return this.http.post(this.UrlUpdateActivo, JSON.stringify(cell), options)
-    .map(result => result.json())
-    .catch(this.handleError);
-
-
+    return this._httpClient.post(this.UrlUpdateActivo, JSON.stringify(cell), this.httpOptions);
   }
 
   getGruposRoles(): Observable<any>
   {
-     return this.http.get(this.UrlGetGruposRoles)
-         .map(result => result.json())
-         .catch(this.handleError);
+     return this._httpClient.get(this.UrlGetGruposRoles);
   }
 
   getRoles(): Observable<any>
   {
-     return this.http.get(this.UrlGetRoles)
-         .map(result => result.json())
-         .catch(this.handleError);
+     return this._httpClient.get(this.UrlGetRoles, {headers: this.httpOptions.headers});
   }
 
   GetSession(mail :any, pass: any): Observable<any>{
-    return this.http.get(this.UrlLogIn + '?p='+ pass + '&e=' + mail)
-            .map(result => result.json())
-            .catch(this.handleError);
+    let params = new HttpParams().set('p', pass).set('e', mail);
+    return this._httpClient.get(this.UrlLogIn, {params: params});
   }
 
   GetUsuarioByGrupo(GrupoId: string): Observable<any>{
-    return this.http.get(this.UrlGetUsuarioByGrupo + '?id='+ GrupoId)
-            .map(result => result.json())
-            .catch(this.handleError);
+    let params = new HttpParams().set('id', GrupoId)
+    return this._httpClient.get(this.UrlGetUsuarioByGrupo, {params: params, headers: this.httpOptions.headers});
   }
 
   GetTreeRoles(): Observable<any>
   {
-     return this.http.get(this.UrlGetTreeRoles)
-         .map(result => result.json())
-         .catch(this.handleError);
+     return this._httpClient.get(this.UrlGetTreeRoles, {headers: this.httpOptions.headers});
   }
 
   GetStruct(): Observable<any>
   {
-     return this.http.get(this.UrlGetStruct)
-         .map(result => result.json())
-         .catch(this.handleError);
+     return this._httpClient.get(this.UrlGetStruct);
   }
 
   GetEstructuraRoles( rol ): Observable<any>
   {
-     return this.http.get(this.UrlGetEstructuraRoles + '?rol=' + rol)
-         .map(result => result.json())
-         .catch(this.handleError);
+    let params = new HttpParams().set('rol', rol);
+     return this._httpClient.get(this.UrlGetEstructuraRoles, {params: params, headers: this.httpOptions.headers});
   }
 
   GetPrivilegios( id: any): Observable<any>
   {
-     return this.http.get(this.UrlGetPrivilegios + '?idUser='+ id)
-         .map(result => result.json())
-         .catch(this.handleError);
+    let params = new HttpParams().set('idUser', id);
+     return this._httpClient.get(this.UrlGetPrivilegios, {params: params, headers: this.httpOptions.headers});
   }
 
   GetUsuariosByDepa(id :any): Observable<any>{
-    return this.http.get(this.UrlGetByDepa + '?id='+ id)
-            .map(result => result.json())
-            .catch(this.handleError);
+    let params = new HttpParams().set('id', id);
+    return this._httpClient.get(this.UrlGetByDepa, {params: params, headers: this.httpOptions.headers});
   }
 
   addGrupos(data: any): Observable<any>{
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    return this.http.post(this.UrlAddGrupo, JSON.stringify(data), options)
-            .map(result => result.json())
-            .catch(this.handleError);
-  }
-
-  AddSeccion(data: any): Observable<any>{
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    return this.http.post(this.UrlAddSeccion, JSON.stringify(data), options)
-            .map(result => result.json())
-            .catch(this.handleError);
+    return this._httpClient.post(this.UrlAddGrupo, JSON.stringify(data), this.httpOptions);
   }
 
   addUserGroup(data: any): Observable<any>{
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    return this.http.post(this.UrlAddUserGroup, JSON.stringify(data), options)
-            .map(result => result.json())
-            .catch(this.handleError);
+    return this._httpClient.post(this.UrlAddUserGroup, JSON.stringify(data), this.httpOptions);
   }
 
   AddGroupRol(data: any): Observable<any>{
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
-    return this.http.post(this.UrlAddGroupRol, JSON.stringify(data), options)
-            .map(result => result.json())
-            .catch(this.handleError);
+    return this._httpClient.post(this.UrlAddGroupRol, JSON.stringify(data), this.httpOptions);
   }
 
   AddRoles(data: any): Observable<any>{
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    return this.http.post(this.UrlAddRol, JSON.stringify(data), options)
-            .map(result => result.json())
-            .catch(this.handleError);
+    return this._httpClient.post(this.UrlAddRol, JSON.stringify(data), this.httpOptions)
   }
 
   AddUsers(data: any): Observable<any>{
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    return this.http.post(this.UrlAddUser, JSON.stringify(data), options)
-            .map(result => result.json())
-            .catch(this.handleError);
+    return this._httpClient.post(this.UrlAddUser, JSON.stringify(data), this.httpOptions);
   }
 
   UDActivoUsers(id :any, v: any): Observable<any>{
-    return this.http.get(this.UrlUdActivo + '?id='+ id + '&v=' + v)
-            .map(result => result.json())
-            .catch(this.handleError);
+    let params = new HttpParams().set('id', id).set('v', v)
+    return this._httpClient.get(this.UrlUdActivo, {params: params, headers: this.httpOptions.headers});
   }
 
   UpdateUsuario(data: any) : Observable<any>
   {
-    console.log(data)
-    let params = new HttpParams().set('datos', data)
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-
-    return this._httpClient.post(this.UrlUpdateUsuario, JSON.stringify(data), httpOptions )
-
-    // let headers = new Headers({'Content-Type': 'application/json'});
-    // let options = new RequestOptions({headers: headers});
-    // return this.http.post(this.UrlUpdateUsuario, JSON.stringify(data), options)
-    //         .map(result => result.json())
-    //         .catch(this.handleError);
+    return this._httpClient.post(this.UrlUpdateUsuario, JSON.stringify(data), this.httpOptions )
 
   }
 
   UpdateGrupo(data: any) : Observable<any>
   {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    return this._httpClient.post(this.UrlUpdateGrupo, data, httpOptions);
+    return this._httpClient.post(this.UrlUpdateGrupo, data, this.httpOptions);
 
   }
   UpdateRoles(data: any) : Observable<any>
   {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    return this.http.post(this.UrlUpdateRoles, JSON.stringify(data), options)
-            .map(result => result.json())
-            .catch(this.handleError);
-
+    return this._httpClient.post(this.UrlUpdateRoles, JSON.stringify(data), this.httpOptions);
   }
 
   UpdatePrivilegios(data: any) : Observable<any>
   {
-    return this._httpClient.post(this.UrlUpdatePrivilegios, data, httpOptions);
+    return this._httpClient.post(this.UrlUpdatePrivilegios, data, this.httpOptions);
   }
+
   DeleteGrupo(data: any) : Observable<any>
   {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    return this.http.post(this.UrlDeleteGrupo, JSON.stringify(data), options)
-            .map(result => result.json())
-            .catch(this.handleError);
-
+    return this._httpClient.post(this.UrlDeleteGrupo, JSON.stringify(data), this.httpOptions);
   }
   DeleteRoles(data: any) : Observable<any>
   {
-    return this.http.get(this.UrlDeleteRoles + '?id=' + data)
-            .map(result => result.json())
-            .catch(this.handleError);
+    let params =  new HttpParams().set('id', data);
+    return this._httpClient.get(this.UrlDeleteRoles, {params: params, headers: this.httpOptions.headers});
   }
 
   DeleteUserGroup(data: any) : Observable<any>
   {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    return this.http.post(this.UrlDeleteUserGroup, JSON.stringify(data), options)
-            .map(result => result.json())
-            .catch(this.handleError);
-
+    return this._httpClient.post(this.UrlDeleteUserGroup, JSON.stringify(data), this.httpOptions);
   }
   DeleteUserRol(data: any) : Observable<any>
   {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    return this.http.post(this.UrlDeleteUserRol, JSON.stringify(data), options)
-            .map(result => result.json())
-            .catch(this.handleError);
-
+    return this._httpClient.post(this.UrlDeleteUserRol, JSON.stringify(data), this.httpOptions)
   }
 
   GetByUsuario(tipo: number): Observable<any>{
     let params = new HttpParams().set('tipo', tipo.toString());
-    return this._httpClient.get(this.UrlGetByUsuario, {params: params});
+    return this._httpClient.get(this.UrlGetByUsuario, {params: params, headers: this.httpOptions.headers});
   }
   GetLideres() : Observable<any>
   {
@@ -432,13 +303,7 @@ export class AdminServiceService {
   }
 
   UpdatePassword(data: any): Observable<any> {
-    const params = new HttpParams().set('datos', data)
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-    return this._httpClient.post(this.UrlUpdatePassword, JSON.stringify(data), httpOptions);
+    return this._httpClient.post(this.UrlUpdatePassword, JSON.stringify(data), this.httpOptions);
   }
   EnviaCorreo(correo: string, pass: string): Observable<any> {
     let params = new HttpParams().set('correo', correo).set('pass', pass);

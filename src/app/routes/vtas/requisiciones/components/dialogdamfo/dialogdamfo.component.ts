@@ -26,7 +26,7 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
   HorariosVacantes: any;
   requisicionId: any;
   IdEstatus: number;
-  confidencial: boolean;
+  confidencial: boolean = false;;
   warn:string = 'warn';
 
   constructor(
