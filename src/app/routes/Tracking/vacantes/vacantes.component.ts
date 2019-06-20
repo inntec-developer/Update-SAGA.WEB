@@ -37,7 +37,7 @@ export class VacantesComponent implements OnInit {
     { title: 'FOLIO', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'FOLIO' } },
     { title: 'PERFIL', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'PERFIL' } },
     // { title: 'CLIENTE', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'CLIENTE' } },
-    { title: 'FECHA LÍMITE', className: 'text-info text-center', name: 'fch_limite', filtering: { filterString: '', placeholder: 'FECHA LIMITE' } },
+    { title: 'FECHA LÍMITE', className: 'text-info text-center', name: 'fch_limite', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'ESTATUS', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'ESTATUS' } },
     { title: '# POSICIONES', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: '# POSICIONES' } },
     { title: '% AVANCE', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: '% AVANCE' } },
