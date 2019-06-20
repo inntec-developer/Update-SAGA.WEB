@@ -32,7 +32,7 @@
              <td>ENVIO A FACTURAR</td>
              <td>
                 <div class="input-group input-group-sm mb-3">
-                    <input type="number" min="0" class="form-control" [(ngModel)]="porcentaje" (ngModelChange)="monto = porcentaje * (data.sueldoMaximo * data.vacantes) / 100; perContratado = 100 - porcentaje; montoContratado = (data.sueldoMaximo * data.vacantes) - monto">
+                    <input type="number" min="0.01" class="form-control" [(ngModel)]="porcentaje" (ngModelChange)="monto = porcentaje * (data.sueldoMaximo * data.vacantes) / 100; perContratado = 100 - porcentaje; montoContratado = (data.sueldoMaximo * data.vacantes) - monto">
                     <div class="input-group-append">
                       <span class="input-group-text">%</span>
                     </div>
@@ -43,7 +43,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                       </div>
-                    <input type="number" min="0" class="form-control" [(ngModel)]="monto" disabled>
+                    <input type="number" min="0.01" class="form-control" [(ngModel)]="monto" disabled>
 
                   </div>
              </td>
@@ -52,7 +52,7 @@
               <td>CUBIERTO</td>
               <td>
                  <div class="input-group input-group-sm mb-3">
-                     <input type="number" min="0" class="form-control" [(ngModel)]="perContratado" disabled>
+                     <input type="number" min="0.01" class="form-control" [(ngModel)]="perContratado" disabled>
                      <div class="input-group-append">
                        <span class="input-group-text">%</span>
                      </div>

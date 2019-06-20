@@ -269,7 +269,6 @@ export class DtRequisicionReclPuroComponent implements OnInit {
 
 
   ValidarEstatus(estatusId, vacantes) {
-    debugger;
     if(vacantes == 0)
     {
       this.view = true;
@@ -279,7 +278,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
       this.borrar = false;
       this.autorizar = false;
     }
-    else if (estatusId == 43 && this.element.porcentaje > 0 && this.element.porcentaje < 50 ) {
+    else if (estatusId == 46 ) {
       this.view = true;
       this.coment = true;
       this.facturar = false;
@@ -287,7 +286,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
       this.borrar = true;
       this.autorizar = false;
     }
-    else if (estatusId == 43 && this.element.porcentaje == 0 ) {
+    else if (estatusId == 43 ) {
       this.view = true;
       this.coment = true;
       this.facturar = true;
@@ -317,14 +316,6 @@ export class DtRequisicionReclPuroComponent implements OnInit {
       this.facturar = false;
       this.cancelar = false;
       this.borrar = true;
-      this.autorizar = false;
-    }
-    else if (estatusId == 46) {
-      this.view = true;
-      this.coment = true;
-      this.facturar = false;
-      this.cancelar = false;
-      this.borrar = false;
       this.autorizar = false;
     }
     else
@@ -382,15 +373,11 @@ export class DtRequisicionReclPuroComponent implements OnInit {
     });
     var window: Window
     dialogDlt.afterClosed().subscribe(result => {
-
-      if (result.Ok == 200) 
+      if(result != "")
       {
-        if (result.porcentaje < 50) {
-          this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito. El estatus no cambia debido porcentaje');
-          this.refreshTable();
-          this.SendEmail();
-        }
-        else {
+        if (result.Ok == 200) 
+        {
+        
           this.postulacionservice.SetProcesoVacante({ estatusId: result.estatus, requisicionId: this.RequisicionId }).subscribe(data => {
 
             if (data == 201) {
@@ -403,10 +390,9 @@ export class DtRequisicionReclPuroComponent implements OnInit {
             }
           })
         }
+        else
+          this.popToast('error', 'Estatus', 'Ocurrio un error al intentar actualizar datos');
       }
-      else
-        this.popToast('error', 'Estatus', 'Ocurrio un error al intentar actualizar datos');
-
     });
   }
 

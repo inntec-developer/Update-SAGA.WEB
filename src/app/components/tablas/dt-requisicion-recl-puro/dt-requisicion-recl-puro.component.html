@@ -20,39 +20,39 @@
               [routerLink]="['/ventas/crearRequisicion']">
               <em class="fa fa-plus"></em>
             </button> -->
-        <button id="read" chkPrivilegiosButtons (click)="showRequi()" class="ml-2 mr-2 btn btn-xs" [disabled]="!view"
-          [ngClass]="(!view) ? 'disabled' : 'btn-outline-warning'" container="body" placement="bottom" tooltip="Visualizar">
+        <button id="read" chkPrivilegiosButtons (click)="showRequi()" class="ml-2 mr-2 btn btn-xs mat-elevation-z8" [disabled]="!view"
+          [ngClass]="(!view) ? 'disabled' : 'btn-warning'" container="body" placement="bottom" tooltip="Visualizar">
           <em class="fa fa-eye"></em>
         </button>
 
-        <button id="read" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-2 btn btn-xs"
-          [disabled]="!coment" [ngClass]="(!coment) ? 'disabled' : 'btn-outline-dark'" container="body" placement="bottom"
+        <button id="read" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-2 btn btn-xs mat-elevation-z8"
+          [disabled]="!coment" [ngClass]="(!coment) ? 'disabled' : 'btn-dark'" container="body" placement="bottom"
           tooltip="Comentarios">
           <em class="fa fa-comments-o"></em>
         </button>
-        <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs" [disabled]="!facturar" [ngClass]="!facturar ? 'btn disabled' : 'btn btn-outline-warning'"
+        <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8" [disabled]="!facturar" [ngClass]="!facturar ? 'btn disabled' : 'btn btn-info'"
           container="body" placement="bottom" tooltip="Enviar a factura" (click)="openDialogFactura()">
           <em class="fa fa-file-text-o"></em>
         </button>
-        <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs" [disabled]="!autorizar"
-          [ngClass]="!autorizar ? 'disabled' : 'btn-outline-success'" container="body" placement="bottom"
-          tooltip="Autorizar" (click)="updataStatus(46, 'Pendiente asignar')">
+        <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8" [disabled]="!autorizar"
+          [ngClass]="!autorizar ? 'disabled' : 'btn-success'" container="body" placement="bottom"
+          tooltip="Autorizar" (click)="updataStatus(4, 'Nueva')">
           <i class="fa fa-check"></i>
         </button>
 
-        <button id='delete' chkPrivilegiosButtons class="mr-2 btn-xs" [disabled]="!cancelar" [ngClass]="!cancelar ? 'btn disabled' : 'btn btn-outline-danger'"
+        <button id='delete' chkPrivilegiosButtons class="mr-2 btn-xs mat-elevation-z8" [disabled]="!cancelar" [ngClass]="!cancelar ? 'btn disabled' : 'btn btn-danger'"
           container="body" placement="bottom" tooltip="Cancelar" (click)="openDialogCancel();">
           <em class="icon-ban"></em>
         </button>
-        <button id='delete' chkPrivilegiosButtons class="mr-2 btn-xs" [disabled]="!borrar" [ngClass]="!borrar ? 'btn disabled' : 'btn btn-outline-danger'"
+        <button id='delete' chkPrivilegiosButtons class="mr-2 btn-xs mat-elevation-z8" [disabled]="!borrar" [ngClass]="!borrar ? 'btn disabled' : 'btn btn-danger'"
           container="body" placement="bottom" tooltip="Eliminar" (click)="openDialogDelete()">
           <em class="icon-trash"></em>
         </button>
-        <button class="btn btn-xs btn-outline-success float-right ml-2" type="button" (click)="refreshTable()"
+        <button class="btn btn-xs btn-success float-right ml-2 mat-elevation-z8" type="button" (click)="refreshTable()"
           container="body" placement="bottom" tooltip="Actualizar">
           <em class="icon-refresh"></em>
         </button>
-        <button (click)="clearfilters()" class="btn btn-xs btn-outline-info float-right" container="body" placement="bottom" tooltip="Borrar Filtros">
+        <button (click)="clearfilters()" class="btn btn-xs btn-info float-right mat-elevation-z8" container="body" placement="bottom" tooltip="Borrar Filtros">
             <em class="fa fa-eraser"></em>
           </button>
       </div>
@@ -103,17 +103,14 @@
               <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
               <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
               <td class="text-center">
-                <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info"
-                  [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
-                  [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29" [class.badge-success]="row.estatusId  === 7"
-                  [class.badge-danger]="row.estatusId  === 8">
+                <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-success"
+                  [class.badge-warning]="row.estatusId  === 43">
                   {{row.estatus | uppercase}}
                 </small>
 
                 <ng-template #toLength>
-                  <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
-                    [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
-                    [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8" placement="bottom"
+                  <small class="badge badge-pill badge-success" [class.badge-warning]="row.estatusId  === 43"
+                  container="body" placement="bottom"
                     tooltip="{{row.estatus | uppercase}}"> {{row.estatus | slice:0:8 | uppercase }} ...
                   </small>
                 </ng-template>

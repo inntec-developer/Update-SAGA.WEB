@@ -4,23 +4,23 @@
     <div class="row">
       <div class="col-12 p-2 bg-light">
       <button (click)="lgModal2.show()" class="ml-2 mr-2 btn btn-xs float-left mat-elevation-z8" [disabled]="!view"
-      [ngClass]="(!view) ? 'disabled' : 'btn-outline-warning'" container="body" placement="bottom" tooltip="Visualizar">
+      [ngClass]="(!view) ? 'disabled' : 'btn-warning'" container="body" placement="bottom" tooltip="Visualizar">
       <em class="fa fa-eye"></em>
     </button>
 
     <button (click)="lgModal.show()" class="mr-2 btn btn-xs float-left mat-elevation-z8"
-      [disabled]="!comment" [ngClass]="(!comment) ? 'disabled' : 'btn-outline-dark'" container="body" placement="bottom"
+      [disabled]="!comment" [ngClass]="(!comment) ? 'disabled' : 'btn-dark'" container="body" placement="bottom"
       tooltip="Comentarios">
       <em class="fa fa-comments-o"></em>
     </button>
     <button class="btn btn-xs float-left mat-elevation-z8" type="button" (click)="Autorizar()" [disabled]="!autorizar"
-    [ngClass]="!autorizar ? 'disabled' : 'btn-outline-success'" container="body" placement="bottom" tooltip="Autorizar">
+    [ngClass]="!autorizar ? 'disabled' : 'btn-success'" container="body" placement="bottom" tooltip="Autorizar">
     <em class="fa fa-check"></em></button>
-    <button class="btn btn-xs btn-outline-success float-right mat-elevation-z8 ml-2 mr-1" type="button" (click)="refreshTable()"
+    <button class="btn btn-xs btn-success float-right mat-elevation-z8 ml-2 mr-1" type="button" (click)="refreshTable()"
     container="body" placement="bottom" tooltip="Actualizar">
     <em class="icon-refresh"></em>
   </button>
-  <button (click)="clearfilters()" class="btn btn-xs btn-outline-info float-right mat-elevation-z8" container="body" placement="bottom" tooltip="Borrar Filtros">
+  <button (click)="clearfilters()" class="btn btn-xs btn-info float-right mat-elevation-z8" container="body" placement="bottom" tooltip="Borrar Filtros">
       <em class="fa fa-eraser"></em>
     </button>
    

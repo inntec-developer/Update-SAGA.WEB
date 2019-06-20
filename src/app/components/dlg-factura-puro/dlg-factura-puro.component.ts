@@ -9,10 +9,10 @@ import { RequisicionesService } from '../../service';
 })
 export class DlgFacturaPuroComponent implements OnInit {
 
-  porcentaje = 100;
-  monto = 0;
-  perContratado = 0;
-  montoContratado = 0;
+  porcentaje = 0.01;
+  monto = 0.01;
+  perContratado = 0.01;
+  montoContratado = 0.01;
   loading = false;
   asignar = false;
   constructor( @Inject(MAT_DIALOG_DATA) public data: any, private service: RequisicionesService,
@@ -20,7 +20,7 @@ export class DlgFacturaPuroComponent implements OnInit {
 
   ngOnInit() {
     
-    this.monto = this.data.sueldoMaximo * this.data.vacantes;
+    //this.monto = this.data.sueldoMaximo * this.data.vacantes;
   }
 
   AddDtosFactura()
@@ -31,10 +31,11 @@ export class DlgFacturaPuroComponent implements OnInit {
        Monto: this.monto, PerContratado: this.perContratado,
         MontoContratado: this.montoContratado };
     
-      if(this.asignar)
+      if(this.porcentaje < 50)
       {
-        estatus = 45;
+        estatus = 46;
       }
+  
     this.service.AddDatosFactura(dtos).subscribe(data =>{
       this.loading = false;
         this.dialog.close({Ok: data, estatus: estatus, porcentaje: this.porcentaje});
