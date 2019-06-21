@@ -16,7 +16,7 @@ export class AddExamenComponent implements OnInit {
   respuestas = [];
 
   examen = [];
-  tipoexamenId = "0";
+  tipoexamenId = 0;
   preguntas = "";
 
   resp1="";
@@ -85,9 +85,18 @@ export class AddExamenComponent implements OnInit {
     }
   }
 
+  updateTipoExamen()
+  {
+    if(this.examen.length > 0)
+    {
+      this.examen.forEach(e => {
+        e.TipoExamen.Id = this.tipoexamenId;
+      });
+    }
+  }
+
   AgregarPregunta()
   {
-
     if(this.respuestas.length > 3)
     {
       if(this.imgPregunta.file.length == 0)
@@ -138,11 +147,11 @@ export class AddExamenComponent implements OnInit {
     {
       this.msg = "Debe agregar mas de una opción de respuesta para la pregunta";
     }
-    console.log(this.examen)
   }
 
   UpdatePregunta(value, index, $event)
   {
+    debugger;
     var self = this;
 
     if ($event) {
@@ -151,17 +160,17 @@ export class AddExamenComponent implements OnInit {
       reader.readAsDataURL(file);
      
       reader.onload = function () {
-        self.examen[index].Pregunta[0].Pregunta = value;
-        self.examen[index].Pregunta[0].file = reader.result;
-        self.examen[index].Pregunta[0].name = file.name;
-        self.examen[index].Pregunta[0].type = file.type;
+        self.examen[index].Pregunta.Pregunta = value;
+        self.examen[index].Pregunta.file = reader.result;
+        self.examen[index].Pregunta.name = file.name;
+        self.examen[index].Pregunta.type = file.type;
       }
     }
     else {
-      self.examen[index].Pregunta[0].Pregunta = value;
-      self.examen[index].Pregunta[0].file = "";
-      self.examen[index].Pregunta[0].name = "";
-      self.examen[index].Pregunta[0].type = "";
+      self.examen[index].Pregunta.Pregunta = value;
+      self.examen[index].Pregunta.file = "";
+      self.examen[index].Pregunta.name = "";
+      self.examen[index].Pregunta.type = "";
     }
   }
 
@@ -190,6 +199,7 @@ export class AddExamenComponent implements OnInit {
   }
   AgregarExamen()
   {
+    console.log(this.examen)
     this.service.InsertExamenes(this.examen).subscribe( data => {
       if(data == 200)
       {
@@ -209,6 +219,8 @@ export class AddExamenComponent implements OnInit {
   {
     let file: File = $event.target.files[0];
 
+    if(this.isImage(file.type))
+    {
     var reader = new FileReader();
     reader.readAsDataURL(file);
     var self = this;
@@ -223,7 +235,7 @@ export class AddExamenComponent implements OnInit {
         }
         else {
           if (value == 1) {
-            var aux = false; // por si aun no se agrego respuesta correcta - esto no sera necesario revisar mas adelante
+            var aux = false; 
             if (self.respuestas.length > 0) {
               self.respuestas = self.respuestas.filter(function (item) {
                 if (item.value === 1) {
@@ -256,7 +268,11 @@ export class AddExamenComponent implements OnInit {
         }
       }
     };
-
+  }
+  else
+  {
+    this.popToast('error', 'Generar Examen', 'Solo puede agregar imágenes');
+  }
   }
 
   Borrar()
@@ -267,13 +283,24 @@ export class AddExamenComponent implements OnInit {
     this.resp1 = "";
     this.pa = false;
     this.respInc = "";
-    this.tipoexamenId = "0";
+    this.tipoexamenId = 0;
     this.nomExamen = "";
     this.se.setValue('');
     this.imgPregunta = { Pregunta: "", Tipo: 0,  file:"", name: "", type: ""};
     this.img = false;
 
   }
+
+   /**
+   * Check file is image
+   *
+   * @param {*} fileType
+   * @returns {boolean}
+   */
+  public isImage(fileType: any): boolean {
+    return /^image\/(.*)$/.test(fileType);
+  }
+
 
    /**
   * configuracion para mensajes de acciones.

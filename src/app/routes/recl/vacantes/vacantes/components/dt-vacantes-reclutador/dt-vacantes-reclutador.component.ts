@@ -401,7 +401,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
     }
 
     if (!data.selected) {
-      this._reinciar();
+      this.ValidarEstatus(9999)
+      // this._reinciar();
       this.selected = false;
     } else {
       this.selected = true;
