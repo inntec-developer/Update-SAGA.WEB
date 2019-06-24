@@ -142,9 +142,9 @@ export class DtRequisicionComponent implements OnInit {
     { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
-    { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador', filtering: { filterString: '', placeholder: 'Coordinador' } },
+    { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador', filtering: { filterString: '', placeholder: 'Coordinador', columnName: 'reclutadores' } },
     { title: 'Solicitante', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Solicitante' } },
-    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador' } },
+    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador', columnName: 'reclutadores' } },
   ];
 
   ValidarEstatus(estatusId)
@@ -166,9 +166,16 @@ export class DtRequisicionComponent implements OnInit {
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = false;
+      if(this.element.contratados == 0)
+      {
       this.cubiertas.push({id: 37, descripcion: "Cubierta por el cliente" },
       {id: 47, descripcion: "Promoción interna" },
       {id: 48, descripcion: "Operaciones" });
+      }
+      else
+      {
+        this.cubiertas.push({id: 37, descripcion: "Cubierta por el cliente" });
+      }
       this.cc = false; //cubierta por el cliente
       this.crm = true; //cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
@@ -240,9 +247,7 @@ export class DtRequisicionComponent implements OnInit {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = false;
       this.cc = false; //cubierta por el cliente
-      this.cubiertas.push({id: 35, descripcion: "Cubierta parcialmente" },{id: 37, descripcion: "Cubierta por el cliente" },
-      {id: 47, descripcion: "Promoción interna" },
-      {id: 48, descripcion: "Operaciones" });
+      this.cubiertas.push({id: 35, descripcion: "Cubierta parcialmente" },{id: 37, descripcion: "Cubierta por el cliente" })
 
       this.crm = true; //cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
@@ -320,9 +325,7 @@ export class DtRequisicionComponent implements OnInit {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = false;
       this.cc = false; //cubierta por el cliente
-      this.cubiertas.push({id: 35, descripcion: "Cubierta parcialmente" },{id: 37, descripcion: "Cubierta por el cliente" },
-      {id: 47, descripcion: "Promoción interna" },
-      {id: 48, descripcion: "Operaciones" });
+      this.cubiertas.push({id: 35, descripcion: "Cubierta parcialmente" },{id: 37, descripcion: "Cubierta por el cliente" })
 
       this.crm = true; //cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
@@ -418,10 +421,18 @@ export class DtRequisicionComponent implements OnInit {
             {
               if(item[column.name].length > 0)
               {
-                let aux = item[column.name];
+                let aux = [];
+                if(column.filtering.columnName)
+                {
+                  aux = item[column.filtering.columnName];
+                }
+                else
+                {
+                  aux = item[column.name];
+                }
                 let mocos = false;
                
-                  item[column.name].forEach(element => {
+                  aux.forEach(element => {
                     if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
                     {
                       mocos = true;
@@ -433,10 +444,6 @@ export class DtRequisicionComponent implements OnInit {
                   {
                     return item[column.name];
                   }
-              }
-              else
-              {
-                  return item[column.name];
               }
             }
           }
@@ -697,12 +704,12 @@ export class DtRequisicionComponent implements OnInit {
   openDialogCubrir() {
     let dialogCnc = this.dialog.open(DlgCubiertasComponent, {
       width: '35%',
-      height: '45%',
+      height: 'auto',
       data: this.cubiertas,
       disableClose: true
     });
     dialogCnc.afterClosed().subscribe(result => {
-      if(result)
+      if(result != 0)
       {
         this.updataStatus(result.id, result.descripcion);
         this.ValidarEstatus(result.id);

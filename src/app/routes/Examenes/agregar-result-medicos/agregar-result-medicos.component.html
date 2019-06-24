@@ -38,7 +38,7 @@
         <div class="card" *ngFor="let row of rows; let rowIndex = index">
           <a class="card-header" [class.collapsed]="row.verRow"  (click)="row.verRow = !row.verRow">
             <h5>
-                  <span class="text-primary float-left "><em class="fa fa-file-text-o"></em> {{row.cliente | uppercase}} - {{row.razon | uppercase}} <span class="text-warning">({{row.candidatos[0].length}})</span></span>
+                  <span class="text-primary float-left "><em class="fa fa-file-text-o"></em> {{row.cliente | uppercase}} - {{row.razon | uppercase}} <span class="text-warning">({{row.total}})</span></span>
   
               <i *ngIf="!row.verRow" class="fa fa-caret-down float-right text-muted" aria-hidden="true"></i>
               <i *ngIf="row.verRow" class="fa fa-caret-up float-right text-muted" aria-hidden="true"></i>
@@ -47,23 +47,26 @@
           </a>
   
           <div *ngIf="row.verRow" id="collapseOne" class="collapse show">
-            <div class="card-body">
+            <div *ngIf="row.candidatos.length > 0 else NotCandidatos" class="card-body">
                 <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
                 [disabled]="disabled">
-                <div style="height: 300px;">
+                <div style="height: 400px;">
                 <table class="table">
                   <thead>
-                    <th class="text-center text-info">CANDIDATO</th>
+                    <th class="text-center text-success"><em class="fa fa-file-text-o mr-2"></em>FOLIO</th>
+                    <th class="text-center text-success">PERFIL</th>
+                    <th class="text-center text-warning"><em class="fa fa-user mr-2"></em>CANDIDATO</th>
                     <th class="text-center text-info">EXAMEN</th>
                     <th class="text-center text-info">RESULTADO</th>
                     <th class="text-center text-info">FACTURAR</th>
                   </thead>
-                    <tbody>
-                        <ng-container *ngIf="row.candidatos.length > 0 else NotCandidatos">
-                      <tr class="rowHover" *ngFor="let r of row.candidatos[0]; let rowIndex = index">
-  
-                        <td class="text-center text-success">
-                          <em class="fa fa-user mr-2"></em> {{ r.nombre | uppercase}}</td>
+                  <tbody>
+                      <ng-container   >
+                        <ng-container *ngFor="let r of row.candidatos;" >
+                      <tr class="rowHover" *ngFor="let rr of r.candidatos; let rowIndex = index">
+                        <td class="text-center text-success">{{ r.folio }}</td>
+                        <td class="text-center text-success">{{ r.vBtra | uppercase}}</td>
+                        <td class="text-center text-warning">{{ rr.nombre | uppercase}}</td>
   
                         <td class="text-center">
                             <ul class="list-group list-group-flush mx-auto" *ngFor="let r of row.examenes[0]">
@@ -74,8 +77,8 @@
                         </td>
                         <td class="text-center">
                             <mat-form-field >
-                                <mat-select [disabled]="!r.verSel" placeholder="SELECCIONAR RESULTADO">
-                                  <mat-option *ngFor="let c of catalogo" [value]="c" (click)="r.resultado = c; sel=true">
+                                <mat-select placeholder="SELECCIONAR RESULTADO">
+                                  <mat-option *ngFor="let c of catalogo" [value]="c" (click)="rr.resultado = c; sel=true">
                                     {{c}}
                                   </mat-option>
                                 </mat-select>
@@ -83,16 +86,17 @@
                         </td>
                         <td class="text-center">
                             <div class="form-check mb-2">
-                                <input type="checkbox" class="form-check-input" (change)="r.verSel=!r.verSel;">
+                                <input type="checkbox" [disabled]="!sel" class="form-check-input" (change)="AddCandidato($event, rr, row)">
                               </div>
                         </td>
 
                       </tr>
                     </ng-container>
+                  </ng-container>
                     </tbody>
                   </table>
                   <br/>
-                  <button type="button" [disabled]="!sel" class="btn btn-success btn-labeled mat-elevation-z8 d-flex justify-content-between float-right" container="body" placement="bottom" tooltip="Agregar Resultado - Facturar"
+                  <button type="button" [disabled]="candidatos.length == 0" class="btn btn-success btn-labeled mat-elevation-z8 d-flex justify-content-between float-right" container="body" placement="bottom" tooltip="Agregar Resultado - Facturar"
                   (click)="Facturar(row)"><span class="btn-label"><em class="fa fa-check"></em></span><span class="align-self-center font-weight-bold">ACEPTAR</span>
                 </button>
                 </div>

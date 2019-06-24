@@ -1,4 +1,4 @@
-import { log } from 'util';
+
 import { ExamenesService } from './../../../service/Examenes/examenes.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
@@ -15,9 +15,10 @@ export class AgregarResultMedicosComponent implements OnInit {
 
   dataSource = [];
   filteredData: any = [];
+  candidatos = [];
   rows = [];
   search = "";
-
+total = 0;
   catalogo: string[] = ['APTO','NO APTO'];
   public disabled = false;
   public compact = false;
@@ -66,7 +67,16 @@ export class AgregarResultMedicosComponent implements OnInit {
   GetCandidatosExamen()
   {
     this._service.GetExamenesMedicos().subscribe(data => {
+      var total = 0;
       this.dataSource = data;
+      this.dataSource.forEach(x => {
+        total = 0;
+        x.candidatos.forEach(element => {
+          total += element.candidatos.length;
+        });
+       x.total = total
+      })
+
       this.rows = this.changePage({ page: this.page, itemsPerPage: this.itemsPerPage })
 
     });
@@ -96,11 +106,34 @@ export class AgregarResultMedicosComponent implements OnInit {
 
   }
 
+  AddCandidato($event, r, cliente)
+  {
+    if($event.srcElement.checked)
+    {
+      this.candidatos.push({
+        candidatoId: r.candidatoId,
+        facturado: true,
+        resultado: r.resultado == 'APTO' ? 1 : 0,
+        clienteId: cliente.clienteId
+      });
+    }
+    else
+    {
+      this.candidatos = this.candidatos.filter(x => {
+        if(x.candidatoId != r.candidatoId)
+        {
+          return x;
+        }
+      })
+    }
+
+  }
+
   Facturar(row)
   {
     swal({
       title: "¿ESTÁS SEGURO?",
-      text: "¡Se enviarán (" + row.candidatos[0].length.toString() + ") resultados a facturar al cliente " + row.cliente + " - " + row.razon,
+      text: "¡Se enviarán (" + this.candidatos.length.toString() + ") resultados a facturar al cliente " + row.cliente + " - " + row.razon,
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: "#ec2121",
@@ -113,32 +146,32 @@ export class AgregarResultMedicosComponent implements OnInit {
       window.onkeydown = null;
       window.onfocus = null;
       if (isConfirm) {
-        this.spinner.show();
-        var aux = [];
+        // this.spinner.show();
+        // var aux = [];
 
-        row.candidatos[0].forEach(c => {
-          if (c.resultado) {
-            aux.push({
-              CandidatoId: c.candidatoId,
-              Facturado: true,
-              Resultado: c.resultado == 'APTO' ? 1 : 0,
-              ClienteId: row.clienteId
-            });
-          }
-        });
-        this.spinner.hide();
+        // row.candidatos[0].forEach(c => {
+        //   if (c.resultado) {
+        //     aux.push({
+        //       CandidatoId: c.candidatoId,
+        //       Facturado: true,
+        //       Resultado: c.resultado == 'APTO' ? 1 : 0,
+        //       ClienteId: row.clienteId
+        //     });
+        //   }
+        // });
+        // this.spinner.hide();
 
         let dialog = this.dialog.open(DlgResultadosMedicosComponent, {
           width: '60%',
           height: '50%',
-          data: { cliente: this.dataSource[0].cliente + " " + this.dataSource[0].razon, examenes: this.dataSource[0].examenes, candidatos: aux.length }
+          data: { cliente: this.dataSource[0].cliente + " " + this.dataSource[0].razon, examenes: this.dataSource[0].examenes, candidatos: this.candidatos.length }
         });
         dialog.afterClosed().subscribe(result => {
           if (result == "Ok") {
             this.spinner.show();
-            this._service.InsertResultMedico(aux).subscribe(result => {
+            this._service.InsertResultMedico(this.candidatos).subscribe(result => {
               if (result == 200) {
-                aux = [];
+                this.candidatos = [];
                 this.GetCandidatosExamen();
                 this.spinner.hide();
               }

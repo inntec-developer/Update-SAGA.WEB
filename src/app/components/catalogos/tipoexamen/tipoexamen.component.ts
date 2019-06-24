@@ -2,14 +2,12 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
+// Servicios
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 import { SettingsService } from '../../../core/settings/settings.service';
-import { catalogos } from '../../../models/catalogos/catalogos';
-
-// Servicios
 
 // Modelos
-
+import { catalogos } from '../../../models/catalogos/catalogos';
 
 @Component({
   selector: 'app-tipoexamen',
