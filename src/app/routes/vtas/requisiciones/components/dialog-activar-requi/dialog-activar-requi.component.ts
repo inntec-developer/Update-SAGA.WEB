@@ -66,17 +66,17 @@ export class DialogActivarRequiComponent implements OnInit {
   }
 
   reActivarRequisicion(){
-    this.loading = true;
-    this.service.reActivarRequisicion(this.infoReactivarRequi)
-    .subscribe(data => {
-      if(data == 200){
-        this.dialogReActivar.close();
-      }
-      else{
-        this.popToast('danger', 'Requisición','Oops!! No se puedo cancelar la requisición ' + this.folio);
-        this.loading = false;
-      }
-    })
+    // this.loading = true;
+    // this.service.reActivarRequisicion(this.infoReactivarRequi)
+    // .subscribe(data => {
+    //   if(data == 200){
+    //     this.dialogReActivar.close();
+    //   }
+    //   else{
+    //     this.popToast('danger', 'Requisición','Oops!! No se puedo cancelar la requisición ' + this.folio);
+    //     this.loading = false;
+    //   }
+    // })
   }
 
   onCloseDialog(){

@@ -22,7 +22,6 @@ export class ApiConection {
   // public static ServiceUrl = 'https://apisb.damsa.com.mx/api/';
   // public static ServiceUrlImgExamenes = 'https://apisb.damsa.com.mx';
   public static ServiceUrlFileManager = 'https://apisb.damsa.com.mx/utilerias/';
-  public static ServiceUrlImgExamenes = 'http://apisb.damsa.com.mx/';
   public static ServiceUrlFoto = 'https://apisb.damsa.com.mx/';
   public static ServiceUrlBolsa = 'https://btapi.damsa.com.mx';
   public static ServiceUrlLoginBolsa = 'https://btweb.damsa.com.mx';
@@ -86,7 +85,6 @@ export class ApiConection {
   public static UpdateRequisicion = "Requisiciones/updateRequisiciones";
   public static DeleteRequisicion = "Requisiciones/deleteRequisiciones";
   public static CancelRequisicion = 'Requisiciones/cancelRequisiciones';
-  public static ReActivarRequisicion = 'Requisiciones/reActivarRequisiciones';
   public static GetUserGroups = 'Requisiciones/getUserGroups'
   public static GetRequiReclutador = 'Requisiciones/getRequiReclutador';
   public static AsignarRequisicion = 'Requisiciones/asignacionRequisiciones'
@@ -96,7 +94,7 @@ export class ApiConection {
   public static UpdateRutaCamion = 'Requisiciones/updateRutaCamion';
   public static DeleteRutaCamion = 'Requisiciones/deleteRutaCamion';
   public static UpdateVacantes = 'Requisiciones/upadateVacantes';
-  public static GetHorariosRequi = 'Requisiciones/getHorariosRequisicion?id=';
+  public static GetHorariosRequi = 'Requisiciones/getHorariosRequisicion';
   public static GetHorariosRequiConteo = 'Requisiciones/getHorariosRequiConteo';
   public static GetRequisicioneEstatus = 'Requisiciones/getRequisicionesEstatus';
   public static GetInformeRequisiciones = 'Requisiciones/getInformeVacantes';

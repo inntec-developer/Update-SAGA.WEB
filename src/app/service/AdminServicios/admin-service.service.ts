@@ -19,8 +19,7 @@ export class AdminServiceService {
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + sessionStorage.getItem('validation-token'),
-      'Accept': 'application/json, text/plain */*'
+      'Authorization': 'Bearer ' + sessionStorage.getItem('validation-token')
     })
   };
   // Url de servicios.
@@ -303,7 +302,12 @@ export class AdminServiceService {
   }
 
   UpdatePassword(data: any): Observable<any> {
-    return this._httpClient.post(this.UrlUpdatePassword, JSON.stringify(data), this.httpOptions);
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    return this._httpClient.post(this.UrlUpdatePassword, JSON.stringify(data), httpOptions);
   }
   EnviaCorreo(correo: string, pass: string): Observable<any> {
     let params = new HttpParams().set('correo', correo).set('pass', pass);
