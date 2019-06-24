@@ -159,7 +159,7 @@ export class RequisicionesService {
   // ---------------------------------------------------------------------------------------------------------------
   getRequiHorarios(requisicionId: string) {
     let params = new HttpParams().set('id', requisicionId)
-    return this._httpClient.get(this.urlGetHorariosReequisicion {params: params, headers: this.httpOptions.headers});
+    return this._httpClient.get(this.urlGetHorariosReequisicion, {params: params, headers: this.httpOptions.headers});
   }
 
   getVacantesDamfo(damfoId: string): Observable<any> {
@@ -220,12 +220,12 @@ export class RequisicionesService {
   }
 
   SendEmailRedesSociales(data: any): Observable<any>{
-    return this._httpClient.post(this.URLSendEmailRedesSociales, data, httpOptions);
+    return this._httpClient.post(this.URLSendEmailRedesSociales, data, this.httpOptions);
   }
 
   AddDatosFactura(datos):Observable<any>
   {
-    return this._httpClient.post(this.URLAddDtosFactura, datos, httpOptions);
+    return this._httpClient.post(this.URLAddDtosFactura, datos, this.httpOptions);
   }
 
   ExecProcedurePause(): Observable<any> {
