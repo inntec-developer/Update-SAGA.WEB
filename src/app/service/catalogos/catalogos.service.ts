@@ -6,25 +6,23 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
 
-import { Headers, Http, HttpModule, RequestOptions, Response } from '@angular/http';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { ApiConection } from './../api-conection.service';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { HttpParamsOptions } from '@angular/common/http/src/params';
+import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { debug } from 'util';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-};
 
 @Injectable()
 export class CatalogosService {
+
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Cache-Control': 'no-cache',
+      'Authorization': 'Bearer ' + sessionStorage.getItem('validation-token')
+    })
+  };
 
   private urlGetDocumentosDamsa = ApiConection.ServiceUrl + ApiConection.GetDocumentosDamsa;
   private urlGetPrestacionesLey = ApiConection.ServiceUrl + ApiConection.GetPrestacionesLey;
@@ -76,17 +74,17 @@ export class CatalogosService {
 
   getOficinaMunicipio(mun: string, es: string): Observable<any> {
     let params = new HttpParams().set('estado', es).set('municipio', mun);
-    return this._httpClient.get(this.UrlGetMunicipioOfi, {params: params});
+    return this._httpClient.get(this.UrlGetMunicipioOfi, {params: params, headers: this.httpOptions.headers});
   }
 
   getOficinaColonia(col: string, mun: string): Observable<any> {
     let params = new HttpParams().set('municipio', mun).set('colonia', col);
-    return this._httpClient.get(this.UrlGetColoniaOfi, {params: params});
+    return this._httpClient.get(this.UrlGetColoniaOfi, {params: params, headers: this.httpOptions.headers});
   }
 
   getOficinaEstado(id: string): Observable<any> {
     let params = new HttpParams().set('id', id);
-    return this._httpClient.get(this.UrlGetEstadoOfi, {params: params});
+    return this._httpClient.get(this.UrlGetEstadoOfi, {params: params, headers: this.httpOptions.headers});
   }
 
   GuardarOficina(nom:string,est:string,mun:string,col:string,cp:string,calle:string,num:string,tel:string
@@ -104,7 +102,7 @@ export class CatalogosService {
     ('latitud',lat).set
     ('longitud',lon).set
     ('tipoOfi',tipo);
-    return this._httpClient.get(this.UrlGetAgregarOfi, {params: params});
+    return this._httpClient.get(this.UrlGetAgregarOfi, {params: params, headers: this.httpOptions.headers});
   }
 
   EditarOficina(nom:string,est:string,mun:string,col:string,cp:string,calle:string,num:string,tel:string
@@ -124,150 +122,134 @@ export class CatalogosService {
       ('tipoOfi',tipo).set
       ('activo',activo).set
       ('id',id);
-      return this._httpClient.get(this.UrlAlterOficina, {params: params});
+      return this._httpClient.get(this.UrlAlterOficina, {params: params, headers: this.httpOptions.headers});
     }
 
   EliminarOficina(id: string): Observable<any>{
     let params = new HttpParams().set('id', id);
-    return this._httpClient.get(this.UrlDeleteOficina , {params: params})
+    return this._httpClient.get(this.UrlDeleteOficina , {params: params, headers: this.httpOptions.headers})
   }
 
   getSucursales(fil: string): Observable<any>{
     let params = new HttpParams().set('filtro', fil);
-    return this._httpClient.get(this.UrlGetSucursal , {params: params})
+    return this._httpClient.get(this.UrlGetSucursal , {params: params, headers: this.httpOptions.headers})
   }
 
   getPreguntasFrecuentes(): Observable<any>{
-    return this._httpClient.get(this.UrlGetPreguntasFrecuentes)
+    return this._httpClient.get(this.UrlGetPreguntasFrecuentes, {headers: this.httpOptions.headers})
   }
 
   addPreguntasFrecuentes(pregunta:string,repuesta:string) : Observable<any>{
     let params = new HttpParams().set('pregunta', pregunta).set('repuesta',repuesta);
-    return this._httpClient.get(this.UrlAddPreguntasFrecuentes, {params: params});
+    return this._httpClient.get(this.UrlAddPreguntasFrecuentes, {params: params, headers: this.httpOptions.headers});
   }
 
   GuardarPreguntasFrecuentes(id:string,pregunta:string,repuesta:string,activo:string) : Observable<any>{
     let params = new HttpParams().set('pregunta', pregunta).set('repuesta',repuesta).set('activo',activo).set('id',id);
-    return this._httpClient.get(this.UrlalterPreguntasFrecuentes, {params: params});
+    return this._httpClient.get(this.UrlalterPreguntasFrecuentes, {params: params, headers: this.httpOptions.headers});
   }
 
   EliminarPreguntasFrecuentes(id:string) : Observable<any>{
     let params = new HttpParams().set('id', id);
-    return this._httpClient.get(this.UrlDeletePreguntasFrecuentes, {params: params});
+    return this._httpClient.get(this.UrlDeletePreguntasFrecuentes, {params: params, headers: this.httpOptions.headers});
   }
 
   getDocumentosDamsa() : Observable<any>{
-    return this._httpClient.get(this.urlGetDocumentosDamsa)
+    return this._httpClient.get(this.urlGetDocumentosDamsa, {headers: this.httpOptions.headers})
   }
 
   getPrestacionesLey() : Observable<any>{
-    return this._httpClient.get(this.urlGetPrestacionesLey);
+    return this._httpClient.get(this.urlGetPrestacionesLey, {headers: this.httpOptions.headers});
   }
 
   getPrioridades() : Observable<any>{
-    return this._httpClient.get(this.UrlGetPrioridades);
+    return this._httpClient.get(this.UrlGetPrioridades, {headers: this.httpOptions.headers});
   }
 
   getEstatusRequi(tipoMov : any) : Observable<any>{
     let params = new HttpParams().set('tipoMov', tipoMov);
-    return this._httpClient.get(this.UrlGetEstatusRequi, {params: params});
+    return this._httpClient.get(this.UrlGetEstatusRequi, {params: params, headers: this.httpOptions.headers});
   }
 
   getMotivosLiberacion() : Observable<any>{
-    return this._httpClient.get(this.UrlGetMotivosLiberacion);
+    return this._httpClient.get(this.UrlGetMotivosLiberacion, {headers: this.httpOptions.headers});
   }
 
   getActividadesReclutador() : Observable<any>{
-    return this._httpClient.get(this.UrlActividadesReclutador);
+    return this._httpClient.get(this.UrlActividadesReclutador, {headers: this.httpOptions.headers});
   }
 
   getTipoTelefono() : Observable<any>{
-    return this._httpClient.get(this.UrlGetTipoTelefono);
+    return this._httpClient.get(this.UrlGetTipoTelefono, {headers: this.httpOptions.headers});
   }
 
   getTipoDireccion() : Observable<any>{
-return this._httpClient.get(this.UrlGetTipoDireccion);
+return this._httpClient.get(this.UrlGetTipoDireccion, {headers: this.httpOptions.headers});
   }
 
   /* Catalogos para Prospectos / Clientes */
 
   getGiroEmp(): Observable<any>{
-    return this._httpClient.get(this.UrlGetGiroEmpresa);
+    return this._httpClient.get(this.UrlGetGiroEmpresa, {headers : this.httpOptions.headers});
   }
 
   getActividadEmp(giroId: any): Observable<any>{
     let params= new HttpParams().set('GiroId', giroId);
-    return this._httpClient.get(this.UrlGetActividadEmpresa, {params: params});
+    return this._httpClient.get(this.UrlGetActividadEmpresa, {params: params, headers: this.httpOptions.headers});
   }
 
   getTamanioEmp(): Observable<any>{
-    return this._httpClient.get(this.UrlGetTamanioEmpresa);
+    return this._httpClient.get(this.UrlGetTamanioEmpresa, {headers: this.httpOptions.headers});
   }
 
   getTipoEmp(): Observable<any>{
-    return this._httpClient.get(this.UrlGetTipoEmpresa);
+    return this._httpClient.get(this.UrlGetTipoEmpresa, {headers: this.httpOptions.headers});
   }
 
   getTipoBase(): Observable<any>{
-    return this._httpClient.get(this.UrlGetTipoBase);
+    return this._httpClient.get(this.UrlGetTipoBase, {headers: this.httpOptions.headers});
   }
 
   /* Catalogos de locasiones */
   getPais(): Observable<any>{
-    return this._httpClient.get(this.UrlGetPais);
+    return this._httpClient.get(this.UrlGetPais, {headers: this.httpOptions.headers});
   }
 
   getEstado(PaisId: any): Observable<any>{
     let params= new HttpParams().set('PaisId', PaisId);
-    return this._httpClient.get(this.UrlGetEstado, {params: params});
+    return this._httpClient.get(this.UrlGetEstado, {params: params, headers: this.httpOptions.headers});
   }
 
   getMunicipio(EstadoId: any): Observable<any>{
     let params= new HttpParams().set('EstadoId', EstadoId);
-    return this._httpClient.get(this.UrlGetMunicipio, {params: params});
+    return this._httpClient.get(this.UrlGetMunicipio, {params: params, headers: this.httpOptions.headers});
   }
 
   getColonias(MunicipioId: any): Observable<any>{
     let params= new HttpParams().set('MunicipioId', MunicipioId);
-    return this._httpClient.get(this.UrlGetColonia, {params: params});
+    return this._httpClient.get(this.UrlGetColonia, {params: params, headers: this.httpOptions.headers});
   }
 
   getForCP(cp: any): Observable<any>{
     let params = new HttpParams().set('CP', cp);
-    return this._httpClient.get(this.UrlGetForCP, {params: params});
+    return this._httpClient.get(this.UrlGetForCP, {params: params, headers: this.httpOptions.headers});
   }
 
   getCatalogos(): Observable<any>{
-    return this._httpClient.get(this.UrlMenuCatalogos);
+    return this._httpClient.get(this.UrlMenuCatalogos, {headers: this.httpOptions.headers});
   }
 
   getCatalogo(IdCatalogo: any): Observable<any> {
     let params= new HttpParams().set('IdCatalogo', IdCatalogo);
-    return this._httpClient.get(this.UrlCatalogos, {params: params});
+    return this._httpClient.get(this.UrlCatalogos, {params: params, headers: this.httpOptions.headers});
   }
 
   getCatalogoFilter(Params: any): Observable<any> {
-    let httpHeaders = new HttpHeaders({
-      'Content-Type' : 'application/json',
-      'Cache-Control': 'no-cache'
-    });
-
-    let options = {
-      headers: httpHeaders
-    };
-    return this._httpClient.post<any>(this.UrlCatalogoFilter, Params, options);
+    return this._httpClient.post<any>(this.UrlCatalogoFilter, Params, this.httpOptions);
   }
 
   GuardaCatalogo(Catalogo: any): Observable<any> {
-    let httpHeaders = new HttpHeaders({
-      'Content-Type' : 'application/json',
-      'Cache-Control': 'no-cache'
-    });
-
-    let options = {
-      headers: httpHeaders
-    };
-    return this._httpClient.post<any>(this.UrlCatalogoCrud , Catalogo, options);
+    return this._httpClient.post<any>(this.UrlCatalogoCrud , Catalogo, this.httpOptions);
   }
 
   EditCatalogo(): Observable<any> {

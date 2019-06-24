@@ -6,41 +6,36 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
 
-import { ApplicationRef, Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions, Response } from '@angular/http';
-import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
-import { catchError, tap } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { ApiConection } from './../api-conection.service';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-};
 
 @Injectable()
 export class RequisicionesService {
   private httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + sessionStorage.getItem('validation-token')
     })
   };
 
   private urlGetViewDamfos = ApiConection.ServiceUrl + ApiConection.GetViewDamfos;
+  private urlGetDamfoById = ApiConection.ServiceUrl + ApiConection.Damfo290GetById;
+  private urlGetDamfoRutasCamion = ApiConection.ServiceUrl + ApiConection.GetDamfoRutasCamion;
+  private urleGetVacantesDamgfo = ApiConection.ServiceUrl + ApiConection.GetVacantesDamfo;
+
   private urlAddress = ApiConection.ServiceUrl + ApiConection.AddressCliente;
   private urlCreateRequi = ApiConection.ServiceUrl + ApiConection.CreateRequi;
   private urlGetRequisicionById = ApiConection.ServiceUrl + ApiConection.GetRequisicionById;
   private urlGetRequisicionByFolio = ApiConection.ServiceUrl + ApiConection.GetRequisicionByFolio;
-  private urlGetDamfoById = ApiConection.ServiceUrl + ApiConection.Damfo290GetById;
-  private urlGetDamfoRutasCamion = ApiConection.ServiceUrl + ApiConection.GetDamfoRutasCamion;
   private urlGetRequisicionesAll = ApiConection.ServiceUrl + ApiConection.GetRequisicionesAll;
   private urlGetRequiReclutador = ApiConection.ServiceUrl + ApiConection.GetRequiReclutador;
   private urlUpdateRequisicion = ApiConection.ServiceUrl + ApiConection.UpdateRequisicion;
   private urlDeleteRequisicion = ApiConection.ServiceUrl + ApiConection.DeleteRequisicion;
   private urlCancelRequisicion = ApiConection.ServiceUrl + ApiConection.CancelRequisicion;
-  private urlReActivarRequisicion = ApiConection.ServiceUrl + ApiConection.ReActivarRequisicion;
   private urlAsignarRequisicion = ApiConection.ServiceUrl + ApiConection.AsignarRequisicion;
   private urlGetDireccionRequisicion = ApiConection.ServiceUrl + ApiConection.GetDireccionRequisicion;
   private urlGetRutasCamionRequi = ApiConection.ServiceUrl + ApiConection.GetRutasCamionRequisicion;
@@ -49,7 +44,6 @@ export class RequisicionesService {
   private urlDeleteRutaCamion = ApiConection.ServiceUrl + ApiConection.DeleteRutaCamion;
   private urlUpdateVacantes = ApiConection.ServiceUrl + ApiConection.UpdateVacantes;
   private urlGetHorariosReequisicion = ApiConection.ServiceUrl + ApiConection.GetHorariosRequi;
-  private urleGetVacantesDamgfo = ApiConection.ServiceUrl + ApiConection.GetVacantesDamfo;
   private urlGetHorariosRequiConteo = ApiConection.ServiceUrl + ApiConection.GetHorariosRequiConteo;
   private URLGetRequisicionesEstatus = ApiConection.ServiceUrl + ApiConection.GetRequisicioneEstatus;
   private URLGetInformeRequisiciones = ApiConection.ServiceUrl + ApiConection.GetInformeRequisiciones;
@@ -71,116 +65,106 @@ export class RequisicionesService {
   constructor(private http: Http, private _httpClient: HttpClient) { }
   // Recupera todos los damfos que esten dados de alta y se encuentren activos
   getDamgo290(): Observable<any> {
-    return this.http.get(this.urlGetViewDamfos)
-      .map(result => result.json())
-      .catch(this.handleError);
+    return this._httpClient.get(this.urlGetViewDamfos, {headers: this.httpOptions.headers});
   }
   // Recupera las direcciones del cliente que se seleccione para generar Requisicion
   getAddress(damfoId: string): Observable<any> {
-    return this.http.get(this.urlAddress + damfoId)
-      .map(result => result.json())
-      .catch(this.handleError);
+    let params = new HttpParams().set('Id', damfoId)
+    return this._httpClient.get(this.urlAddress, {params: params, headers: this.httpOptions.headers});
   }
   // Generea una nueva requisicion y posteriormente regresa el ID de la nueva requisicion.
   createNewRequi(data: any): Observable<any> {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.urlCreateRequi, JSON.stringify(data), options)
-      .map(result => result.json())
-      .catch(this.handleError);
+    return this._httpClient.post(this.urlCreateRequi, JSON.stringify(data), this.httpOptions);
   }
   // Recupera la informacion completa de la requisicion que se requiera
   getNewRequi(requisicionId: string): Observable<any> {
-    return this.http.get(this.urlGetRequisicionById + requisicionId)
-      .map(result => result.json())
-      .catch(this.handleError);
+    let params = new HttpParams().set('Id', requisicionId);
+    return this._httpClient.get(this.urlGetRequisicionById, {params: params, headers: this.httpOptions.headers});
   }
   getRequiFolio(folio: any): Observable<any> {
     let params = new HttpParams().set('folio', folio)
-    return this._httpClient.get(this.urlGetRequisicionByFolio, {params: params});
+    return this._httpClient.get(this.urlGetRequisicionByFolio, {params: params, headers: this.httpOptions.headers});
   }
   // Recupera la información completa del DAMFO-290 que se requiera.
   getDamfoById(damfoId: string) {
     let params = new HttpParams().set('id', damfoId)
-    return this._httpClient.get<any>(this.urlGetDamfoById, {params: params});
+    return this._httpClient.get<any>(this.urlGetDamfoById, {params: params, headers: this.httpOptions.headers});
   }
   // Recuperar las rutas de camiones de las direccionaes relacionadas con el damfo - cliente
   getDamfoRutasCamion(clienteId: string): Observable<any> {
     let params = new HttpParams().set('Id', clienteId);
-    return this._httpClient.get(this.urlGetDamfoRutasCamion, { params: params });
+    return this._httpClient.get(this.urlGetDamfoRutasCamion, { params: params, headers: this.httpOptions.headers });
   }
 
   // Recupera la información de las requisiciones que se han generado.
   getRequisiciones(user: string): Observable<any> {
-    return this.http.get(this.urlGetRequisicionesAll + user)
-      .map(result => result.json())
-      .catch(this.handleError);
+    let params = new HttpParams().set('propietario', user)
+    return this._httpClient.get(this.urlGetRequisicionesAll, {params:  params, headers: this.httpOptions.headers});
   }
 
   GetRequisicionesHistorial(propietario): Observable<any> {
     let params = new HttpParams().set('propietario', propietario);
-    return this._httpClient.get(this.UrlGetRequisicionesHistorial, { params: params });
+    return this._httpClient.get(this.UrlGetRequisicionesHistorial, { params: params, headers: this.httpOptions.headers });
   }
 
 
   // Recupera la información de las requisiciones que se han asignado al reclutador.
   getRequiReclutador(user: string): Observable<any> {
     let params = new HttpParams().set('IdUsuario', user);
-    return this._httpClient.get(this.urlGetRequiReclutador, {params: params});
+    return this._httpClient.get(this.urlGetRequiReclutador, {params: params, headers: this.httpOptions.headers});
   }
 
   // Recuperar la direccion que se registro en la requisicion.
   getRequiDireccion(id: string): Observable<any> {
     let params = new HttpParams().set('id', id)
-    return this._httpClient.get(this.urlGetDireccionRequisicion, { params: params });
+    return this._httpClient.get(this.urlGetDireccionRequisicion, { params: params, headers: this.httpOptions.headers });
   }
 
   GetRequisicionesEstatus(estatus, usuario): Observable<any> {
     let params = new HttpParams().set('estatus', estatus).set('ReclutadorId', usuario);
-    return this._httpClient.get(this.URLGetRequisicionesEstatus, { params: params });
+    return this._httpClient.get(this.URLGetRequisicionesEstatus, { params: params, headers: this.httpOptions.headers });
   }
 
   GetUltimoEstatusRequi(RequisicionId): Observable<any> {
     let params = new HttpParams().set('RequisicionId', RequisicionId);
-    return this._httpClient.get(this.URLGetUltimoEstatusRequi, { params: params });
+    return this._httpClient.get(this.URLGetUltimoEstatusRequi, { params: params, headers: this.httpOptions.headers });
   }
 
 
   GetRequiEstadisticos(usuario): Observable<any> {
     let params = new HttpParams().set('IdUsuario', usuario);
-    return this._httpClient.get(this.URLGetRequiEstadisticos, { params: params });
+    return this._httpClient.get(this.URLGetRequiEstadisticos, { params: params, headers: this.httpOptions.headers });
   }
   GetRequisPendientes(): Observable<any> {
-    return this._httpClient.get(this.URLGetRequisPendientes);
+    return this._httpClient.get(this.URLGetRequisPendientes, {headers: this.httpOptions.headers});
   }
   // ---------------------------------------------------------------------------------------------------------------
   // Crud para rutas de Camiones dentro de la requisición.
   getRequiRutasCamion(id: string): Observable<any> {
     let params = new HttpParams().set('Id', id);
-    return this._httpClient.get(this.urlGetRutasCamionRequi, { params: params });
+    return this._httpClient.get(this.urlGetRutasCamionRequi, { params: params, headers: this.httpOptions.headers });
   }
 
   addRutaCamion(data: any): Observable<any> {
-    return this._httpClient.post(this.urlAddRutaCamion, data, httpOptions);
+    return this._httpClient.post(this.urlAddRutaCamion, data, this.httpOptions);
   }
 
   updateRutaCamion(data: any): Observable<any> {
-    return this._httpClient.post(this.urlUpdateRutaCamion, data, httpOptions);
+    return this._httpClient.post(this.urlUpdateRutaCamion, data, this.httpOptions);
   }
 
   deleteRutaCamion(data: any): Observable<any> {
-    return this._httpClient.post(this.urlDeleteRutaCamion, data, httpOptions);
+    return this._httpClient.post(this.urlDeleteRutaCamion, data, this.httpOptions);
   }
   // ---------------------------------------------------------------------------------------------------------------
   getRequiHorarios(requisicionId: string) {
-    return this.http.get(this.urlGetHorariosReequisicion + requisicionId)
-      .map(result => result.json())
-      .catch(this.handleError);
+    let params = new HttpParams().set('id', requisicionId)
+    return this._httpClient.get(this.urlGetHorariosReequisicion {params: params, headers: this.httpOptions.headers});
   }
 
   getVacantesDamfo(damfoId: string): Observable<any> {
     let params = new HttpParams().set('Id', damfoId);
-    return this._httpClient.get(this.urleGetVacantesDamgfo, { params: params });
+    return this._httpClient.get(this.urleGetVacantesDamgfo, { params: params, headers: this.httpOptions.headers });
   }
   logError(urleGetVacantesDamgfo: string, error: any): any {
     throw new Error("Method not implemented.");
@@ -190,51 +174,23 @@ export class RequisicionesService {
   }
 
   updateRequisicion(requi: any): Observable<any> {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.urlUpdateRequisicion, JSON.stringify(requi), options)
-      .map(result => result.json())
-      .catch(this.handleError);
+    return this._httpClient.post(this.urlUpdateRequisicion, JSON.stringify(requi), this.httpOptions);
   }
 
   updateVacanates(vacantes: any): Observable<any> {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.urlUpdateVacantes, JSON.stringify(vacantes), options)
-      .map(result => result.json())
-      .catch(this.handleError);
+    return this._httpClient.post(this.urlUpdateVacantes, JSON.stringify(vacantes), this.httpOptions);
   }
 
   deleteRequisicion(requi: any): Observable<any> {
-    let header = new Headers({ 'content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: header });
-    return this.http.post(this.urlDeleteRequisicion, JSON.stringify(requi), options)
-      .map(result => result.json())
-      .catch(this.handleError);
+    return this._httpClient.post(this.urlDeleteRequisicion, JSON.stringify(requi), this.httpOptions);
   }
 
   cancelRequisicion(requi: any): Observable<any> {
-    let header = new Headers({ 'content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: header });
-    return this.http.post(this.urlCancelRequisicion, JSON.stringify(requi), options)
-      .map(result => result.json())
-      .catch(this.handleError);
-  }
-
-  reActivarRequisicion(requi: any): Observable<any> {
-    let header = new Headers({ 'content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: header });
-    return this.http.post(this.urlReActivarRequisicion, JSON.stringify(requi), options)
-      .map(result => result.json())
-      .catch(this.handleError);
+    return this._httpClient.post(this.urlCancelRequisicion, JSON.stringify(requi), this.httpOptions);
   }
 
   asignarRequisicion(asignar: any): Observable<any> {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.urlAsignarRequisicion, JSON.stringify(asignar), options)
-      .map(result => result.json())
-      .catch(this.handleError);
+    return this._httpClient.post(this.urlAsignarRequisicion, JSON.stringify(asignar), this.httpOptions);
   }
 
   GetHorariosRequiConteo(requisicionId: any): Observable<any> {

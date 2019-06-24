@@ -162,7 +162,7 @@ export class AdminServiceService {
 
   getTipos(): Observable<any>
   {
-     return this._httpClient.get(this.UrlTiposUsuarios);
+     return this._httpClient.get(this.UrlTiposUsuarios, {headers: this.httpOptions.headers});
   }
 
   getGrupos(): Observable<any>
@@ -177,7 +177,7 @@ export class AdminServiceService {
 
   getGruposRoles(): Observable<any>
   {
-     return this._httpClient.get(this.UrlGetGruposRoles);
+     return this._httpClient.get(this.UrlGetGruposRoles, {headers: this.httpOptions.headers});
   }
 
   getRoles(): Observable<any>
