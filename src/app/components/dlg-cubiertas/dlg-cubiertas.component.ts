@@ -55,6 +55,6 @@ export class DlgCubiertasComponent implements OnInit {
 
   CloseDlg()
   {
-    this.dialog.close();
+    this.dialog.close(0);
   }
 }
