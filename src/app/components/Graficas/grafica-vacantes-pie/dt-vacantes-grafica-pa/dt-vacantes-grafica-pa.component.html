@@ -2,11 +2,11 @@
   <div class="card-body mat-elevation-z8">
       <div class="row">
           <div class="col-sm-12 col-md-12">
-            <button type="button" class="btn btn-xs btn-outline-success float-right" (click)="refreshTable()" container="body"
+            <button type="button" class="btn btn-xs btn-success float-right mat-elevation-z8" (click)="refreshTable()" container="body"
             placement="bottom" tooltip="Actualizar" container="body">
             <em class="icon-refresh"></em>
           </button>
-          <button (click)="clearfilters()" class="btn btn-xs btn-outline-primary float-right mr-2" container="body" placement="bottom" tooltip="Limpiar Filtros"
+          <button (click)="clearfilters()" class="btn btn-xs btn-primary float-right mr-2 mat-elevation-z8" container="body" placement="bottom" tooltip="Limpiar Filtros"
           container="body">
           <em class="fa fa-eraser"></em>
         </button>
@@ -115,3 +115,4 @@
     </div>
   </div>
 </div>
+<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>

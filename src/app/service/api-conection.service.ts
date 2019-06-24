@@ -22,6 +22,7 @@ export class ApiConection {
   // public static ServiceUrl = 'https://apisb.damsa.com.mx/api/';
   // public static ServiceUrlImgExamenes = 'https://apisb.damsa.com.mx';
   public static ServiceUrlFileManager = 'https://apisb.damsa.com.mx/utilerias/';
+  public static ServiceUrlImgExamenes = 'http://apisb.damsa.com.mx/';
   public static ServiceUrlFoto = 'https://apisb.damsa.com.mx/';
   public static ServiceUrlBolsa = 'https://btapi.damsa.com.mx';
   public static ServiceUrlLoginBolsa = 'https://btweb.damsa.com.mx';
