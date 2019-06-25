@@ -49,24 +49,25 @@ export class CandidatobolsaComponent implements OnInit {
    
     this.General.forEach(item => {
       obj.push({
-        'nombre': item.nombre,
-        'estado': item.estado,
-        'edad': item.edad,
-        'Genero' : item.genero,
-        'estatus' : item.estatus,
-        'curp' : item.curp,
-        'rfc' : item.rfc,
+        'NOMBRE': item.nombre,
+        'ESTADO': item.estado,
+        'EDAD': item.edad,
+        'GENERO' : item.genero,
+        'ESTATUS' : item.estatus,
+        'CURP' : item.curp,
+        'RFC' : item.rfc,
       })
      });
      this.Exel.exportAsExcelFile(obj,'Reporte')
   }
 
-  Generar(estado){
+  Generar(estado,estatus){
     this.spinner.show();
     document.getElementById('DivCandidato').classList.remove('ocultar');
 
 
-    var esta = '';
+    var est = '';
+    var stus = '';
    
     // let pal = document.getElementById('palabra');
     let inc = document.getElementById('fechaInicial');
@@ -76,11 +77,18 @@ export class CandidatobolsaComponent implements OnInit {
 
     if(estado != undefined){
       for (let item of estado) {
-        esta += item +',';
+        est += item +',';
       }
     }
 
-    esta = esta == undefined?'0':esta;
+    if(estatus != undefined){
+      for (let item of estatus) {
+        stus += item +',';
+      }
+    }
+
+    est = est == undefined?'0':est;
+    stus = stus == undefined?'0':stus;
    
     // var palabra = pal['value'];
     var inicio = inc['value'];
@@ -90,7 +98,7 @@ export class CandidatobolsaComponent implements OnInit {
    
     let tipo = document.getElementById('TipoReporte')['value'];
     
-    this.servicio.getCandidatos(inicio,final,edadC,generoC,esta)
+    this.servicio.getCandidatos(inicio,final,edadC,generoC,est,stus)
     .subscribe( data => {
     // this.popGenerico(data.mensaje,data.bandera,'Publicacion');
     this.requisiciones = data;
@@ -255,8 +263,8 @@ public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: t
 }
 
 
-public refreshTable(estado) {
-  this.Generar(estado);
+public refreshTable(estado,estatus) {
+  this.Generar(estado,estatus);
 }
 
 public clearfilters() {

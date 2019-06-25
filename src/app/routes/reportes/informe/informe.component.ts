@@ -139,7 +139,7 @@ export class InformeComponent implements OnInit {
       {id:1,nombre:'Guadalajara'},{id:2,nombre:'México'},{id:3,nombre:'Monterrey'}]
     })
 
-    this.Servicio.GetEstatusRep().subscribe(item =>{
+    this.Servicio.GetEstatusRep("").subscribe(item =>{
       this.Estatus = item;
     })
 
@@ -175,6 +175,12 @@ GenerarEstados(){
   this.estados.getEstado(42).subscribe(item =>{
     this.ListaEstado = item;
     console.log(this.ListaEstado);
+  })
+}
+
+GeneraEstatusBolsa(){
+  this.Servicio.GetEstatusRep("1").subscribe(item =>{
+    this.Estatus = item;
   })
 }
 
@@ -255,6 +261,7 @@ GenerarEstados(){
   document.getElementById('divEstado').classList.add('ocultar');
   document.getElementById('divEdad').classList.add('ocultar');
   document.getElementById('divgenero').classList.add('ocultar');
+  document.getElementById('Divdiv').classList.remove('ocultar');
 
   let tipo = document.getElementById('TipoReporte')['value'];
   if(tipo == 3){
@@ -275,7 +282,7 @@ GenerarEstados(){
   }else if(tipo == 8){
     document.getElementById('repCandidato').classList.remove('ocultar');
     document.getElementById('exelCandidato').classList.remove('ocultar');
-
+    this.GeneraEstatusBolsa();
   }else{
     document.getElementById('report1').classList.remove('ocultar');
     document.getElementById('exel1').classList.remove('ocultar');
@@ -311,12 +318,13 @@ GenerarEstados(){
     document.getElementById('divBusCoordina').classList.add('ocultar');
     document.getElementById('divBusCoordina2').classList.add('ocultar');
   }else if(tipo == 8){
+    document.getElementById('Divdiv').classList.add('ocultar');
     document.getElementById('divEstado').classList.remove('ocultar');
     document.getElementById('divEdad').classList.remove('ocultar');
     document.getElementById('divgenero').classList.remove('ocultar');
     document.getElementById('divTipoReclu').classList.add('ocultar');
     document.getElementById('divestatus').classList.add('ocultar');
-    document.getElementById('divestatus2').classList.add('ocultar');
+    document.getElementById('divestatus2').classList.remove('ocultar');
     document.getElementById('divcordinacion').classList.add('ocultar');
     document.getElementById('divSolicitante').classList.add('ocultar');
     document.getElementById('divreclutador').classList.add('ocultar');

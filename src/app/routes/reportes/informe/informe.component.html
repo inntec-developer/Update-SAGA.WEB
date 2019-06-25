@@ -467,7 +467,7 @@ type="square-jelly-box"
     </div>
 </div>
 
-<div class="col-xl-4"></div>
+<div class="col-xl-4" id="Divdiv"></div>
   <div class="col-xl-2 " style="margin-top: 23px;">
       <div class="form-group ocultar">
           <div class="input-group input-sm">
@@ -530,7 +530,7 @@ type="square-jelly-box"
           <button class="ocultar btn btn-sm btn-outline-success btnReport" style="right: auto;" (click)="Cordinacion.Generar(objstatus)" tooltip="Generar Reporte" id="repCoordinacion"  >
             <em  class="fa fa-bar-chart"></em>
           </button>
-          <button class="ocultar btn btn-sm btn-outline-success btnReport" style="right: auto;" (click)="Candidato.Generar(objestado)" tooltip="Generar Reporte" id="repCandidato"  >
+          <button class="ocultar btn btn-sm btn-outline-success btnReport" style="right: auto;" (click)="Candidato.Generar(objestado,objstatus)" tooltip="Generar Reporte" id="repCandidato"  >
               <em  class="fa fa-bar-chart"></em>
             </button>
           
