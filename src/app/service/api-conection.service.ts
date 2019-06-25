@@ -1,7 +1,7 @@
 export class ApiConection {
   public static ServiceUrl = 'http://localhost:33333/api/';
   public static ServiceUrlImgExamenes = 'http://localhost:33333/';
-
+public static ServiceUrlWeb = "http://localhost:4200/"
   // public static ServiceUrl = 'http://10.10.12.31:333/api/';
   // public static ServiceUrlImgExamenes = 'http://10.10.12.31:333/api/';
 
@@ -17,7 +17,7 @@ export class ApiConection {
   // public static ServicioUrl290 = 'https://webpfrc.damsa.com.mx/Home/';
 
   // // Pruebas
-  public static ServiceUrlWeb = 'https://websb.damsa.com.mx/';
+  // public static ServiceUrlWeb = 'https://websb.damsa.com.mx/';
   public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
   // public static ServiceUrl = 'https://apisb.damsa.com.mx/api/';
   // public static ServiceUrlImgExamenes = 'https://apisb.damsa.com.mx';
