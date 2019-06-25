@@ -509,7 +509,7 @@ export class DtRequisicionComponent implements OnInit {
       this.ValidarEstatus(9999)
       this.selected = false;
       this.element = [];
-      // this._reinciar();
+       this._reinciar();
     } else {
       this.selected = true;
       this.view = true;
