@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit {
   alertAllIndex: number;
   private subscription: Subscription;
   UserId: string;
-  admin;
+
   text = renderActualizaciones;
   disabled = false;
   compact = false;
