@@ -13,8 +13,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let row of rows" [class.selected]="row.selected" (click)="onCellClick(row)">
-        <td class="text-center"> {{row.tipoPsicometria}} </td>
-        <td class="text-center"> {{row.descripcion}}</td>
+        <td class="text-center"> {{row.tipoPsicometria | uppercase}} </td>
+        <td class="text-center"> {{row.descripcion | uppercase}}</td>
       </tr>
     </tbody>
   </table>

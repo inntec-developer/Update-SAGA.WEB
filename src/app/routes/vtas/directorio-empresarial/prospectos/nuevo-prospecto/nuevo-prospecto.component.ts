@@ -467,19 +467,39 @@ export class NuevoProspectoComponent implements OnInit {
       if (x.id == this.formDirecciones.get('TipoDireccion').value) {
         return x.tipoDireccion
       }
+      this.auxPais = this.paises.filter(x => {
+        if(x.id == this.formDirecciones.get('Paises').value){
+          return x.pais;
+        }
+      });
+      this.auxEstado = this.estados.filter(x => {
+        if(x.id == this.formDirecciones.get('Estados').value){
+          return x.estado;
+        }
+      });
+      this.auxMunicipio = this.municipios.filter(x => {
+        if(x.id == this.formDirecciones.get('Municipios').value){
+          return x.municipio;
+        }
+      });
+      this.auxColonia = this.colonias.filter(x => {
+        if(x.id == this.formDirecciones.get('Colonias').value){
+          return x.colonia;
+        }
+      });
     });
     let data = {
       idAux: this.idAuxD,
       tipoDireccionId: this.formDirecciones.get('TipoDireccion').value,
-      tipoDireccion: this.auxTipoDireccion[0].tipoDireccion,
+      tipoDireccion: this.auxTipoDireccion[0]['tipoDireccion'],
       paisId: this.formDirecciones.get('Paises').value,
-      pais: this.auxPais,
+      pais: this.auxPais[0]['pais'],
       estadoId: this.formDirecciones.get('Estados').value,
-      estado: this.auxEstado,
+      estado: this.auxEstado[0]['estado'],
       municipioId: this.formDirecciones.get('Municipios').value,
-      municipio: this.auxMunicipio,
+      municipio: this.auxMunicipio[0]['municipio'],
       coloniaId: this.formDirecciones.get('Colonias').value,
-      colonia: this.auxColonia,
+      colonia: this.auxColonia[0]['colonia'],
       codigoPostal: this.formDirecciones.get('CodigoPostal').value,
       calle: this.formDirecciones.get('Calle').value,
       numeroExterior: this.formDirecciones.get('Exterior').value,

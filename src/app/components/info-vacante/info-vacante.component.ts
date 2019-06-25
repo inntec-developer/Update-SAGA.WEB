@@ -120,6 +120,7 @@ export class InfoVacanteComponent implements OnInit {
   GetDataRequi() {
     this.serviceRequisicion.getNewRequi(this.Requisicion)
       .subscribe(data => {
+        debugger;
         this.requisicion = data;
         this.cliente = data['cliente'];
         this.horariosRequi = data['horarios'];

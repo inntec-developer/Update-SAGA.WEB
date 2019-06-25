@@ -106,30 +106,52 @@ export class DireccionesClienteComponent implements OnInit {
   }
 
   AddDireccion() {
+    debugger;
     this.auxTipoDireccion = this.tipoDireccion.filter(x => {
       if (x.id == this.formDirecciones.get('TipoDireccion').value) {
         return x.tipoDireccion
       }
     });
+    this.auxPais = this.paises.filter(x => {
+      if(x.id == this.formDirecciones.get('Paises').value){
+        return x.pais;
+      }
+    });
+    this.auxEstado = this.estados.filter(x => {
+      if(x.id == this.formDirecciones.get('Estados').value){
+        return x.estado;
+      }
+    });
+    this.auxMunicipio = this.municipios.filter(x => {
+      if(x.id == this.formDirecciones.get('Municipios').value){
+        return x.municipio;
+      }
+    });
+    this.auxColonia = this.colonias.filter(x => {
+      if(x.id == this.formDirecciones.get('Colonias').value){
+        return x.colonia;
+      }
+    });
+
     let data = {
       activo: this.formDirecciones.get('Activo').value,
       calle: this.formDirecciones.get('Calle').value,
       codigoPostal: this.formDirecciones.get('CodigoPostal').value,
-      colonia: this.auxColonia,
+      colonia: this.auxColonia[0]['colonia'],
       coloniaId: this.formDirecciones.get('Colonias').value,
       entidadId: this.EntidadId,
       esPrincipal: this.formDirecciones.get('Principal').value,
-      estado: this.auxEstado,
+      estado: this.auxEstado[0]['estado'],
       estadoId: this.formDirecciones.get('Estados').value,
       id: '',
-      municipio: this.auxMunicipio,
+      municipio: this.auxMunicipio[0]['municipio'],
       municipioId: this.formDirecciones.get('Municipios').value,
       numeroExterior: this.formDirecciones.get('Exterior').value,
       numeroInterior: this.formDirecciones.get('Interior').value || '',
-      pais: this.auxPais,
+      pais: this.auxPais[0]['pais'],
       paisId: this.formDirecciones.get('Paises').value,
       referencia: this.formDirecciones.get('Referencia').value || 'SIN REFERENCIA',
-      tipoDireccion: this.auxTipoDireccion[0].tipoDireccion,
+      tipoDireccion: this.auxTipoDireccion[0]['tipoDireccion'],
       tipoDireccionId: this.formDirecciones.get('TipoDireccion').value,
       usuario: this.Usuario,
     }

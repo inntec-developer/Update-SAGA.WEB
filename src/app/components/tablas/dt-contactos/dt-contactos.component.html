@@ -13,8 +13,8 @@
           </thead>
           <tbody>
             <tr *ngFor="let row of rows" [class.selected]="row.selected" (click)="onCellClick(row)">
-              <td> {{row.nombre}} {{row.apellidoPaterno}} {{row.apellidoMaterno}}</td>
-              <td> {{row.puesto}}</td>
+              <td> {{row.nombre | uppercase}} {{row.apellidoPaterno | uppercase}} {{row.apellidoMaterno | uppercase}}</td>
+              <td> {{row.puesto | uppercase}}</td>
               <td>
                 <p *ngFor="let t of row.telefonos">
                   {{t.tipo}}:
@@ -27,7 +27,7 @@
                 </p>
               </td>
               <td>
-                <p *ngFor="let e of row.email">{{e.email}}</p>
+                <p *ngFor="let e of row.email">{{e.email | uppercase}}</p>
               </td>
             </tr>
             <tr *ngIf="!rows">

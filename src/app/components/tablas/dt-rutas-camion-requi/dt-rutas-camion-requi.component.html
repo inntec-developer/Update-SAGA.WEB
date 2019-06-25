@@ -27,8 +27,8 @@
         </thead>
         <tbody>
           <tr (click)="onCellClick(row)" *ngFor="let row of rows" [class.selected]="row.selected">
-            <td class="text-center"> {{row.ruta}} </td>
-            <td class="text-center"> {{row.via}}</td>
+            <td class="text-center"> {{row.ruta | uppercase}} </td>
+            <td class="text-center"> {{row.via | uppercase}}</td>
           </tr>
         </tbody>
       </table>
@@ -50,9 +50,9 @@
         </thead>
         <tbody>
           <tr (click)="onCellClick(row)" *ngFor="let row of rows" [class.selected]="row.selected">
-            <td class="text-center"> {{row.direccion}}</td>
-            <td class="text-center"> {{row.ruta}} </td>
-            <td class="text-center"> {{row.via}}</td>
+            <td class="text-center"> {{row.direccion | uppercase}}</td>
+            <td class="text-center"> {{row.ruta | uppercase}} </td>
+            <td class="text-center"> {{row.via | uppercase}}</td>
           </tr>
         </tbody>
       </table>

@@ -2,6 +2,6 @@
 <mat-divider></mat-divider>
 <ol>
   <li *ngFor="let x of prestacionesLey">
-    <label class="card-text"> {{x.prestacionLey}}</label>
+    <label class="card-text"> {{x.prestacionLey | uppercase}}</label>
   </li>
 </ol>
