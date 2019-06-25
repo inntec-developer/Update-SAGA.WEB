@@ -240,7 +240,12 @@ export class AdminServiceService {
   }
 
   AddUsers(data: any): Observable<any>{
-    return this._httpClient.post(this.UrlAddUser, JSON.stringify(data), this.httpOptions);
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    return this._httpClient.post(this.UrlAddUser, JSON.stringify(data), httpOptions);
   }
 
   UDActivoUsers(id :any, v: any): Observable<any>{

@@ -62,7 +62,6 @@ type="square-jelly-box"
     </div>
 
 <div class="col-xl-2">
-
     <div class="form-group divtiporeport">
       <label for="TipoReporte"></label>
       <select  (change)="Ocultar()" class="form-control" id="TipoReporte">
@@ -73,6 +72,7 @@ type="square-jelly-box"
           <option value="5">Detalle Reclutador</option>
           <option value="6">Detalle Coordinador</option>
           <option value="7">Coordinacion</option>
+          <option value="8">Candidato Bolsa</option>
           <!-- <option value="3">Movimientos Vacantes </option>
           <option value="5">Fecha Estatus Grupal</option>
           <option value="6">Reporte General </option> -->
@@ -83,8 +83,10 @@ type="square-jelly-box"
         <option>Fecha de Solicitud</option> -->
       </select>
     </div>
-
 </div>
+
+
+  
 <div class="col-xl-2">
 
   <div class="form-group">
@@ -119,24 +121,73 @@ type="square-jelly-box"
             <mat-datepicker #fechaFinal></mat-datepicker>
           </mat-form-field>
       </div>
+</div>
 
-        <!-- <div class="form-group">
-          <label for="sel3">Fecha Fin</label>
-          <input
-            class="form-control input-sm"
-            type="date"
-            lang="es"
-            id="fechaFinal"
-            name="fecha"
-            size="12"
-            max="{{ano}}-{{mes}}-{{dia}}"
-          />
-        </div> -->
+<div class="col-xl-2 ocultar" id="divEdad">
+    <div class="form-group ">
+      <label for="TipoReporte"></label>
+      <select  (change)="Ocultar()" class="form-control" id="EdadReporte">
+          <option value="0">Edad, Todos</option>
+          <option value="16">16 - 20</option>
+          <option value="21">21 - 25</option>
+          <option value="26">26 - 30</option>
+          <option value="31">31 - 35</option>
+          <option value="36">36 - 40</option>
+          <option value="41">41 - 45</option>
+          <option value="46">46 - 50</option>
+          <option value="51">51 - 55</option>
+          <option value="56">56 - 60</option>
+          <option value="61">61 - 65</option>
+          <option value="66">66 - 70</option>
+          <option value="71">71 - 75</option>
+          <option value="76">mas de 76 </option>
+         
+      </select>
+    </div>
+  </div>
+
+  <div class="col-xl-2 ocultar" id="divgenero">
+      <div class="form-group ">
+        <label for="TipoReporte"></label>
+        <select  (change)="Ocultar()" class="form-control" id="GeneroReporte">
+            <option value="0">Genero, Todos</option>
+            <option value="1">Hombre</option>
+            <option value="2">Mujer</option>
+        </select>
+      </div>
+    </div>
+
+<div class="col-xl-2 ocultar" id="divEstado">
+    <div class="form-group">
+        <label ></label>
+            <form  [formGroup]="FormEstado">
+                <ngx-select
+                [allowClear]="true"
+                autoClearSearch="true"
+               placeholder="Entidad federativa..."
+               formControlName = "EstadoControl"
+               (data)="(value)"
+               [multiple]="true"
+               [items]="ListaEstado"
+               size="small"
+               optionValueField="id"
+               optionTextField="estado"
+               (remove)="EstadoChange()"
+               (select)="EstadoChange()"
+             >
+               <ng-template  ngx-select-option-selected let-option >
+                 <span >{{ option.data.estado }}</span>
+               </ng-template>
+               <ng-template ngx-select-option-not-found>
+                  <span style="font-size: 11px">No se encontraron resultados...</span>
+                </ng-template>
+             </ngx-select>
+             </form>
+      </div>
 </div>
 
 
 <div class="col-xl-2" id="divTipoReclu">
-
     <div class="form-group">
         <label ></label>
             <form  [formGroup]="FormTipoReclu">
@@ -163,8 +214,6 @@ type="square-jelly-box"
              </ngx-select>
              </form>
       </div>
-
-
 </div>
 
     <div class="col-xl-2" id="divcordinacion">
@@ -418,7 +467,7 @@ type="square-jelly-box"
     </div>
 </div>
 
-<div class="col-xl-4"></div>
+<div class="col-xl-4" id="Divdiv"></div>
   <div class="col-xl-2 " style="margin-top: 23px;">
       <div class="form-group ocultar">
           <div class="input-group input-sm">
@@ -457,7 +506,9 @@ type="square-jelly-box"
             <button id="exelCoordinacion" tooltip="Exportar" style="right: auto;" (click)="Cordinacion.Exportar()" class="ocultar btn btn-sm btn-outline-warning btnReport">
               <em  class="fa fa-download"></em>
             </button>
-
+            <button id="exelCandidato" tooltip="Exportar" style="right: auto;" (click)="Candidato.Exportar()" class="ocultar btn btn-sm btn-outline-warning btnReport">
+              <em  class="fa fa-download"></em>
+            </button>
 
 
 
@@ -479,6 +530,11 @@ type="square-jelly-box"
           <button class="ocultar btn btn-sm btn-outline-success btnReport" style="right: auto;" (click)="Cordinacion.Generar(objstatus)" tooltip="Generar Reporte" id="repCoordinacion"  >
             <em  class="fa fa-bar-chart"></em>
           </button>
+          <button class="ocultar btn btn-sm btn-outline-success btnReport" style="right: auto;" (click)="Candidato.Generar(objestado,objstatus)" tooltip="Generar Reporte" id="repCandidato"  >
+              <em  class="fa fa-bar-chart"></em>
+            </button>
+          
+          
       </div>
 
 
@@ -499,5 +555,7 @@ type="square-jelly-box"
 <app-detallecordina id="DivDetalleCordi" #DetalleCordi></app-detallecordina>
 
 <app-coordinacion  id="DivCoordinacion" #Cordinacion></app-coordinacion>
+
+<app-candidatobolsa id="DivCandidato" #Candidato ></app-candidatobolsa>
 </div>
 

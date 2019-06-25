@@ -27,6 +27,7 @@ export class ReportesService {
   private UrlDetalleReclu = ApiConection.ServiceUrl+ApiConection.GetDetalleReclu;
   private UrlDetalleCordi = ApiConection.ServiceUrl+ApiConection.GetDetalleCordi;
   private UrlCoordinacion = ApiConection.ServiceUrl+ApiConection.GetCoordinacion;
+  private UrlCandidato = ApiConection.ServiceUrl+ApiConection.GetCandidatoRep;
 
   constructor(private http: Http,private _httpClient : HttpClient) {  }
   
@@ -62,6 +63,12 @@ export class ReportesService {
     return this._httpClient.get(this.UrlDetalleCordi, {params: params});
     }
 
+    getCandidatos(fini:string,ffin:string,edad:string,genero:string,estadoID:string,estatus:string): Observable<any> {
+        let params = new HttpParams().set('fini', fini).set('ffin', ffin)
+        .set('edad', edad).set('genero', genero).set('estadoID', estadoID).set('estatus',estatus);
+        return this._httpClient.get(this.UrlCandidato, {params: params});
+        }
+
 getVRadial(data: any) : Observable<any>{
     let params = new HttpParams().set('usuario', data);
     return this._httpClient.get(this.UrlRadial, {params: params});
@@ -91,9 +98,8 @@ return this.http.get(this.UrlUsuario + '?cor='+cor)
     .catch(this.handleError);
 }
 
-GetEstatusRep(): Observable<any> {
-   
-return this.http.get(this.UrlEstatu)
+GetEstatusRep(bandera:string): Observable<any> {
+return this.http.get(this.UrlEstatu + '?bandera='+bandera)
     .map(result => result.json())
     .catch(this.handleError);
 }

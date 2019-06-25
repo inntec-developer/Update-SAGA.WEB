@@ -15,6 +15,8 @@ import { ProductividadComponent } from './productividad/productividad.component'
 import { DetallereclutaComponent } from './detallerecluta/detallerecluta.component';
 import { DetallecordinaComponent } from './detallecordina/detallecordina.component';
 import { CoordinacionComponent } from './coordinacion/coordinacion.component';
+import { CandidatobolsaComponent } from './candidatobolsa/candidatobolsa.component';
+import { CatalogosService } from '../../service/catalogos/catalogos.service';
 
 //import { DatePipe } from '@angular/common';
 
@@ -30,7 +32,7 @@ const routes:Routes =[
     RouterModule.forChild(routes),
     ComponentsModule,
   ],
-  declarations: [InformeComponent, TablaReporteComponent, ReporteGeneralComponent, IndicadoresComponent, ProductividadComponent, DetallereclutaComponent, DetallecordinaComponent, CoordinacionComponent],
-  providers: [ReportesService,ExcelService,ComponentsService]
+  declarations: [InformeComponent, TablaReporteComponent, ReporteGeneralComponent, IndicadoresComponent, ProductividadComponent, DetallereclutaComponent, DetallecordinaComponent, CoordinacionComponent, CandidatobolsaComponent],
+  providers: [ReportesService,ExcelService,ComponentsService,CatalogosService]
 })
 export class ReportesModule { }

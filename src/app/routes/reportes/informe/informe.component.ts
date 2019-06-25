@@ -14,6 +14,7 @@ import {Http} from '@angular/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ReportesService } from '../../../service/Reporte/reportes.service';
 import { daLocale } from 'ngx-bootstrap/chronos/i18n/da';
+import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 
 //import {ToasterConfig, ToasterService} from 'angular2-toaster';
 
@@ -38,6 +39,7 @@ export class InformeComponent implements OnInit {
 
 
 
+
   public value: any;
   public Empresas : any[];
   public Estatus : any[];
@@ -51,7 +53,9 @@ export class InformeComponent implements OnInit {
   public objtipocordi : any[];
   public objtiporeclu : any[];
   public objusercoo : any[];
+  public objestado : any[];
   public UsuarioCor : any[];
+  public ListaEstado : any[];
 
   public reclutaList:any;
   public cordinaList:any;
@@ -64,6 +68,7 @@ export class InformeComponent implements OnInit {
   public FormCordina: FormGroup;
   public FormTipoReclu: FormGroup;
   public FormUserCor: FormGroup;
+  public FormEstado: FormGroup;
 
    public myDate: any = new Date();
   date = new FormControl(new Date());
@@ -76,7 +81,8 @@ export class InformeComponent implements OnInit {
     private router: Router,
     private adapter: DateAdapter<any>,
  //   private toasterService: ToasterService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private estados: CatalogosService
   ) {
   //  this.toasterService = toasterService;
     this.FormEmpresas = new FormGroup({
@@ -105,6 +111,10 @@ export class InformeComponent implements OnInit {
       UserCorControl: new FormControl({ value: '', disabled: false })
     });
 
+    this.FormEstado = new FormGroup({
+      EstadoControl: new FormControl({ value: '', disabled: false })
+    });
+
 
    }
 
@@ -129,7 +139,7 @@ export class InformeComponent implements OnInit {
       {id:1,nombre:'Guadalajara'},{id:2,nombre:'México'},{id:3,nombre:'Monterrey'}]
     })
 
-    this.Servicio.GetEstatusRep().subscribe(item =>{
+    this.Servicio.GetEstatusRep("").subscribe(item =>{
       this.Estatus = item;
     })
 
@@ -140,6 +150,9 @@ export class InformeComponent implements OnInit {
     this.Servicio.GetUsuario('1').subscribe(item =>{
       this.UsuarioCor = item;
     })
+    this.GenerarEstados();
+
+
 
     document.oncontextmenu=null
   }
@@ -156,6 +169,20 @@ export class InformeComponent implements OnInit {
       return (fecha);
     }
   }
+
+
+GenerarEstados(){
+  this.estados.getEstado(42).subscribe(item =>{
+    this.ListaEstado = item;
+    console.log(this.ListaEstado);
+  })
+}
+
+GeneraEstatusBolsa(){
+  this.Servicio.GetEstatusRep("1").subscribe(item =>{
+    this.Estatus = item;
+  })
+}
 
   empresaChange() {
      this.objempresa = this.FormEmpresas.get('ClientesControl').value;
@@ -195,6 +222,11 @@ export class InformeComponent implements OnInit {
     
   }
 
+  EstadoChange(){
+    this.objestado = this.FormEstado.get('EstadoControl').value;
+    console.log(this.ListaEstado)
+  }
+
   
 
  Ocultar(){
@@ -204,90 +236,56 @@ export class InformeComponent implements OnInit {
   document.getElementById('DivDetalleReclu').classList.add('ocultar');
   document.getElementById('DivDetalleCordi').classList.add('ocultar');
   document.getElementById('DivCoordinacion').classList.add('ocultar');
+  document.getElementById('DivCandidato').classList.add('ocultar');
+
+
+  document.getElementById('report1').classList.add('ocultar');
+  document.getElementById('repProActi').classList.add('ocultar');
+  document.getElementById('report2').classList.add('ocultar');
+  document.getElementById('exel2').classList.add('ocultar');
+  document.getElementById('exel1').classList.add('ocultar');
+  document.getElementById('exelProact').classList.add('ocultar');
+  document.getElementById('repDetalleReclu').classList.add('ocultar');
+  document.getElementById('exelDetalleReclu').classList.add('ocultar');
+  document.getElementById('repDetalleCordina').classList.add('ocultar');
+  document.getElementById('exelDetalleCordi').classList.add('ocultar');
+  document.getElementById('repCoordinacion').classList.add('ocultar');
+  document.getElementById('exelCoordinacion').classList.add('ocultar');
+  document.getElementById('repCandidato').classList.add('ocultar');
+  document.getElementById('exelCandidato').classList.add('ocultar');
+
 
   document.getElementById('divBusCoordina2').classList.add('ocultar');
   document.getElementById('divreclutador').classList.remove('ocultar');
-   document.getElementById('divestatus2').classList.add('ocultar');
+  document.getElementById('divestatus2').classList.add('ocultar');
+  document.getElementById('divEstado').classList.add('ocultar');
+  document.getElementById('divEdad').classList.add('ocultar');
+  document.getElementById('divgenero').classList.add('ocultar');
+  document.getElementById('Divdiv').classList.remove('ocultar');
 
   let tipo = document.getElementById('TipoReporte')['value'];
   if(tipo == 3){
-    document.getElementById('report1').classList.add('ocultar');
-    document.getElementById('repProActi').classList.add('ocultar');
     document.getElementById('report2').classList.remove('ocultar');
     document.getElementById('exel2').classList.remove('ocultar');
-    document.getElementById('exel1').classList.add('ocultar');
-    document.getElementById('exelProact').classList.add('ocultar');
-    document.getElementById('repDetalleReclu').classList.add('ocultar');
-    document.getElementById('exelDetalleReclu').classList.add('ocultar');
-    document.getElementById('repDetalleCordina').classList.add('ocultar');
-    document.getElementById('exelDetalleCordi').classList.add('ocultar');
-    document.getElementById('repCoordinacion').classList.add('ocultar');
-    document.getElementById('exelCoordinacion').classList.add('ocultar');
   }else if(tipo == 4){
-    document.getElementById('report1').classList.add('ocultar');
-    document.getElementById('report2').classList.add('ocultar');
     document.getElementById('repProActi').classList.remove('ocultar');
     document.getElementById('exelProact').classList.remove('ocultar');
-    document.getElementById('exel1').classList.add('ocultar');
-    document.getElementById('exel2').classList.add('ocultar');
-    document.getElementById('repDetalleReclu').classList.add('ocultar');
-    document.getElementById('exelDetalleReclu').classList.add('ocultar');
-    document.getElementById('repDetalleCordina').classList.add('ocultar');
-    document.getElementById('exelDetalleCordi').classList.add('ocultar');
-    document.getElementById('repCoordinacion').classList.add('ocultar');
-    document.getElementById('exelCoordinacion').classList.add('ocultar');
   }else if(tipo == 5){
-    document.getElementById('report1').classList.add('ocultar');
-    document.getElementById('report2').classList.add('ocultar');
     document.getElementById('repDetalleReclu').classList.remove('ocultar');
     document.getElementById('exelDetalleReclu').classList.remove('ocultar');
-    document.getElementById('exel1').classList.add('ocultar');
-    document.getElementById('exel2').classList.add('ocultar');
-    document.getElementById('repProActi').classList.add('ocultar');
-    document.getElementById('exelProact').classList.add('ocultar');
-    document.getElementById('repDetalleCordina').classList.add('ocultar');
-    document.getElementById('exelDetalleCordi').classList.add('ocultar');
-    document.getElementById('repCoordinacion').classList.add('ocultar');
-    document.getElementById('exelCoordinacion').classList.add('ocultar');
   }else if(tipo == 6){
-    document.getElementById('report1').classList.add('ocultar');
-    document.getElementById('report2').classList.add('ocultar');
-    document.getElementById('repDetalleReclu').classList.add('ocultar');
-    document.getElementById('exelDetalleReclu').classList.add('ocultar');
-    document.getElementById('exel1').classList.add('ocultar');
-    document.getElementById('exel2').classList.add('ocultar');
-    document.getElementById('repProActi').classList.add('ocultar');
-    document.getElementById('exelProact').classList.add('ocultar');
     document.getElementById('repDetalleCordina').classList.remove('ocultar');
     document.getElementById('exelDetalleCordi').classList.remove('ocultar');
-    document.getElementById('repCoordinacion').classList.add('ocultar');
-    document.getElementById('exelCoordinacion').classList.add('ocultar');
   }else if(tipo == 7){
-    document.getElementById('report1').classList.add('ocultar');
-    document.getElementById('report2').classList.add('ocultar');
-    document.getElementById('repDetalleReclu').classList.add('ocultar');
-    document.getElementById('exelDetalleReclu').classList.add('ocultar');
-    document.getElementById('exel1').classList.add('ocultar');
-    document.getElementById('exel2').classList.add('ocultar');
-    document.getElementById('repProActi').classList.add('ocultar');
-    document.getElementById('exelProact').classList.add('ocultar');
-    document.getElementById('repDetalleCordina').classList.add('ocultar');
-    document.getElementById('exelDetalleCordi').classList.add('ocultar');
     document.getElementById('repCoordinacion').classList.remove('ocultar');
     document.getElementById('exelCoordinacion').classList.remove('ocultar');
+  }else if(tipo == 8){
+    document.getElementById('repCandidato').classList.remove('ocultar');
+    document.getElementById('exelCandidato').classList.remove('ocultar');
+    this.GeneraEstatusBolsa();
   }else{
-    document.getElementById('report2').classList.add('ocultar');
-    document.getElementById('repProActi').classList.add('ocultar');
     document.getElementById('report1').classList.remove('ocultar');
     document.getElementById('exel1').classList.remove('ocultar');
-    document.getElementById('exel2').classList.add('ocultar');
-    document.getElementById('exelProact').classList.add('ocultar');
-    document.getElementById('repDetalleReclu').classList.add('ocultar');
-    document.getElementById('exelDetalleReclu').classList.add('ocultar');
-    document.getElementById('repDetalleCordina').classList.add('ocultar');
-    document.getElementById('exelDetalleCordi').classList.add('ocultar');
-    document.getElementById('repCoordinacion').classList.add('ocultar');
-    document.getElementById('exelCoordinacion').classList.add('ocultar');
   }
 
   if(tipo == 4 || tipo == 5){
@@ -309,6 +307,21 @@ export class InformeComponent implements OnInit {
     document.getElementById('divBusCoordina').classList.add('ocultar');
     document.getElementById('divBusCoordina2').classList.remove('ocultar');
   }else if(tipo == 7){
+    document.getElementById('divTipoReclu').classList.add('ocultar');
+    document.getElementById('divestatus').classList.add('ocultar');
+    document.getElementById('divestatus2').classList.remove('ocultar');
+    document.getElementById('divcordinacion').classList.add('ocultar');
+    document.getElementById('divSolicitante').classList.add('ocultar');
+    document.getElementById('divreclutador').classList.add('ocultar');
+    document.getElementById('divEmpresas').classList.add('ocultar');
+    document.getElementById('divSucursal').classList.add('ocultar');
+    document.getElementById('divBusCoordina').classList.add('ocultar');
+    document.getElementById('divBusCoordina2').classList.add('ocultar');
+  }else if(tipo == 8){
+    document.getElementById('Divdiv').classList.add('ocultar');
+    document.getElementById('divEstado').classList.remove('ocultar');
+    document.getElementById('divEdad').classList.remove('ocultar');
+    document.getElementById('divgenero').classList.remove('ocultar');
     document.getElementById('divTipoReclu').classList.add('ocultar');
     document.getElementById('divestatus').classList.add('ocultar');
     document.getElementById('divestatus2').classList.remove('ocultar');
