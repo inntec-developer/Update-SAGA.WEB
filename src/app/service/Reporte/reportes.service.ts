@@ -27,6 +27,7 @@ export class ReportesService {
   private UrlDetalleReclu = ApiConection.ServiceUrl+ApiConection.GetDetalleReclu;
   private UrlDetalleCordi = ApiConection.ServiceUrl+ApiConection.GetDetalleCordi;
   private UrlCoordinacion = ApiConection.ServiceUrl+ApiConection.GetCoordinacion;
+  private UrlCandidato = ApiConection.ServiceUrl+ApiConection.GetCandidatoRep;
 
   constructor(private http: Http,private _httpClient : HttpClient) {  }
   
@@ -61,6 +62,12 @@ export class ReportesService {
     let params = new HttpParams().set('fini', fini).set('ffin', ffin).set('aprob', aprob).set('cor', cor);
     return this._httpClient.get(this.UrlDetalleCordi, {params: params});
     }
+
+    getCandidatos(fini:string,ffin:string,edad:string,genero:string,estadoID:string): Observable<any> {
+        let params = new HttpParams().set('fini', fini)
+        .set('ffin', ffin).set('edad', edad).set('genero', genero).set('estadoID', estadoID);
+        return this._httpClient.get(this.UrlCandidato, {params: params});
+        }
 
 getVRadial(data: any) : Observable<any>{
     let params = new HttpParams().set('usuario', data);

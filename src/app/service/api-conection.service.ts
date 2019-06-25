@@ -305,6 +305,7 @@ export class ApiConection {
   public static GetDetalleReclu = 'reporte/detallerecluta'
   public static GetDetalleCordi = 'reporte/detallecordina'
   public static GetCoordinacion = 'reporte/coordinacion'
+  public static GetCandidatoRep = 'reporte/candidatos'
 
   /*SistTickets */
 
