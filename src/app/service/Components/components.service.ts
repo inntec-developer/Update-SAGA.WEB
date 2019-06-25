@@ -48,6 +48,7 @@ export class ComponentsService {
   private UrlVacantePorVencer = ApiConection.ServiceUrl + ApiConection.getPorvencerG;
   private UrlVacanteVencida = ApiConection.ServiceUrl + ApiConection.getVencidasG;
   private UrlVacanteResumen = ApiConection.ServiceUrl + ApiConection.getResumenG;
+  private UrlContratadoCaptado = ApiConection.ServiceUrl + ApiConection.getcontracaptado;
 
   //Indicadores de Inicio
 
@@ -60,10 +61,15 @@ export class ComponentsService {
 
   constructor(private _httpClient: HttpClient) { }
 
-
-  getVResumen(data: any): Observable<any> {
+  getCaptadoContratado(data: any): Observable<any> {
     let params = new HttpParams().set('usuario', data);
     return this._httpClient.get(this.UrlVacanteResumen, { params: params, headers: this.httpOptions.headers});
+  }
+
+
+  getResumen(data: any): Observable<any> {
+    let params = new HttpParams().set('usuario', data);
+    return this._httpClient.get(this.UrlContratadoCaptado, { params: params, headers: this.httpOptions.headers});
   }
 
   getVCubierta(data: any): Observable<any> {

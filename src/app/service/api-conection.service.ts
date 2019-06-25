@@ -367,6 +367,7 @@ public static ServiceUrlWeb = "http://localhost:4200/"
   public static getVencidasG = 'indicador/vvencida'
   public static getResumenG = 'indicador/resumen'
   public static getRadialG = 'indicador/radial'
+  public static getcontracaptado = 'indicador/captadocontra'
 
   /* Contadores */
   public static getPerfiles = 'contadores/perfiles';
