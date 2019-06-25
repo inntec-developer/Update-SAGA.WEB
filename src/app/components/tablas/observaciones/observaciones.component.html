@@ -2,6 +2,6 @@
 <mat-divider></mat-divider>
 <ol>
   <li *ngFor="let x of Observaciones">
-    <label class="card-text"> {{x.observaciones}}</label>
+    <label class="card-text"> {{x.observaciones | uppercase}}</label>
   </li>
 </ol>

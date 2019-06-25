@@ -9,7 +9,7 @@
       <label class="badge badge-pill badge-info">{{vacantes}}</label>
     </h4>
     <h4>
-      <strong> {{vBtra}} </strong>
+      <strong> {{vBtra }} </strong>
     </h4>
     <h4>
       <strong>Folio: </strong> {{folio}}
@@ -37,7 +37,7 @@
         <strong>Prioridad: </strong>
         <label class="badge badge-pill" [class.badge-danger]="prioridadId  === 1"
           [class.badge-warning]="prioridadId  === 2">
-          {{prioridad}} </label>
+          {{prioridad | uppercase}} </label>
       </h5>
     </div>
     <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
@@ -152,7 +152,7 @@
       </p>
       <p>
         <strong>Clase: </strong>
-        <label class="card-text"> {{requisicion?.clasesReclutamiento | uppercase}}</label>
+        <label class="card-text"> {{requisicion?.claseReclutamiento | uppercase}}</label>
       </p>
       <h5 class="card-title"><strong class="text-info">Contrato</strong></h5>
       <mat-divider></mat-divider>
@@ -170,15 +170,15 @@
       <mat-divider></mat-divider>
       <p>
         <strong>Nombre del Perfil: </strong>
-        <label class="card-text"> {{vBtra}}</label>
+        <label class="card-text"> {{vBtra | uppercase}}</label>
       </p>
       <p>
         <strong>&Aacute;rea: </strong>
-        <label class="card-text"> {{requisicion?.areaExperiencia}}</label>
+        <label class="card-text"> {{requisicion?.areaExperiencia | uppercase}}</label>
       </p>
       <p>
         <strong>G&eacute;nero: </strong>
-        <label class="card-text"> {{requisicion?.genero}}</label>
+        <label class="card-text"> {{requisicion?.genero | uppercase}}</label>
       </p>
       <p>
         <strong>Edad: </strong>
@@ -186,7 +186,7 @@
       </p>
       <p>
         <strong>Estado Civil: </strong>
-        <label class="card-text"> {{requisicion?.estadoCivil}}</label>
+        <label class="card-text"> {{requisicion?.estadoCivil | uppercase}}</label>
       </p>
     </div>
     <div class="col-md-3 col-sm-12 col-xs-12">
@@ -240,7 +240,7 @@
       <mat-divider></mat-divider>
       <ol>
         <li *ngFor="let x of requisicion?.escolaridades">
-          <label class="card-text"> {{x.gradoEstudio}} - {{x.estadoEstudio}}</label>
+          <label class="card-text"> {{x.gradoEstudio | uppercase}} - {{x.estadoEstudio | uppercase}}</label>
         </li>
       </ol>
     </div>
@@ -249,37 +249,37 @@
       <mat-divider></mat-divider>
       <ol>
         <li *ngFor="let x of requisicion?.aptitudes">
-          <label class="card-text"> {{x.aptitud}}</label>
+          <label class="card-text"> {{x.aptitud | uppercase}}</label>
         </li>
       </ol>
     </div>
     <div class="col-md-3 col-sm-12 col-xs-12">
       <h5 class="card-title"><strong class="text-info">Experiencia</strong></h5>
       <mat-divider></mat-divider>
-      <label class="card-text">{{requisicion?.experiencia}}</label>
+      <label class="card-text">{{requisicion?.experiencia | uppercase}}</label>
     </div>
     <div class="col-md-3 col-sm-12 col-xs-12">
       <h5 class="card-title"><strong class="text-info">Informaci&oacute;n de Pagos</strong></h5>
       <mat-divider></mat-divider>
       <p>
         <strong>D&iacute;as Corte: </strong>
-        <label class="card-text"> {{requisicion?.diaCorte}}</label>
+        <label class="card-text"> {{requisicion?.diaCorte | uppercase}}</label>
       </p>
       <p>
         <strong>Tipo Nomina: </strong>
-        <label class="card-text"> {{requisicion?.tipoDeNomina}}</label>
+        <label class="card-text"> {{requisicion?.tipoDeNomina | uppercase}}</label>
       </p>
       <p>
         <strong>D&iacute;as Pago: </strong>
-        <label class="card-text"> {{requisicion?.diaPago}}</label>
+        <label class="card-text"> {{requisicion?.diaPago | uppercase}}</label>
       </p>
       <p>
         <strong>Periodo de Pago: </strong>
-        <label class="card-text"> {{requisicion?.periodoPago}}</label>
+        <label class="card-text"> {{requisicion?.periodoPago | uppercase}}</label>
       </p>
-      <p *ngIf="requisicion?.periodoPago?.id == 0">
+      <p *ngIf="requisicion?.periodoPagoId == 0">
         <strong>Especifique: </strong>
-        <label class="card-text"> {{requisicion?.especifique}}</label>
+        <label class="card-text"> {{requisicion?.especifique | uppercase}}</label>
       </p>
     </div>
   </div>

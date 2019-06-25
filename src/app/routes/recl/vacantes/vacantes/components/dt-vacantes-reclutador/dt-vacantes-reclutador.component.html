@@ -118,7 +118,7 @@
           container="body" placement="bottom" tooltip="Postulados">
           <i class="fa fa-users" aria-hidden="true"></i>
         </button>
-        <button class="mr-1 float-right" [disabled]="element.claseReclutamientoId != 3" (click)="openDialogRegistro()" [ngClass]="element.claseReclutamientoId != 3 ? 'btn btn-xs disabled':'btn btn-xs btn-outline-success'"
+        <button id="update" chkPrivilegiosButtons class="mr-1 float-right" [disabled]="element.claseReclutamientoId != 3" (click)="openDialogRegistro()" [ngClass]="element.claseReclutamientoId != 3 ? 'btn btn-xs disabled':'btn btn-xs btn-outline-success'"
         container="body" placement="bottom" tooltip="Registro Masivo">
         <i class="fa fa-user-plus" aria-hidden="true"></i>
       </button>

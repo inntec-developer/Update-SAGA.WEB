@@ -20,7 +20,7 @@
               [routerLink]="['/ventas/crearRequisicion']">
               <em class="fa fa-plus"></em>
             </button> -->
-        <button id="read" chkPrivilegiosButtons (click)="showRequi()" class="ml-2 mr-2 btn btn-xs mat-elevation-z8" [disabled]="!view"
+        <button id="read" chkPrivilegiosButtons (click)="lgModal15.show()" class="ml-2 mr-2 btn btn-xs mat-elevation-z8" [disabled]="!view"
           [ngClass]="(!view) ? 'disabled' : 'btn-warning'" container="body" placement="bottom" tooltip="Visualizar">
           <em class="fa fa-eye"></em>
         </button>
@@ -87,7 +87,7 @@
               <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
               [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
               <div>
-            <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial"
+            <tr (click)="onCellClick(row)" (dblclick)="lgModal15.show()" *ngFor="let row of rows" [class.confident]="row.confidencial"
               [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
               <td class="text-center">
                 {{row.folio}}
@@ -169,13 +169,32 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 id="dialog-sizes-name1" class="modal-title pull-left">VACANTE: {{Vacante}} {{Folio}}</h4>
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left text-warning">VACANTE: {{Vacante}} {{Folio}}</h4>
         <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal.hide()" aria-label="Close">
             <i class="fa fa-times"></i>
         </button>
       </div>
       <div class="modal-body">
         <comentario-vacante [RequisicionId]="RequisicionId" [MotivoId]="7"></comentario-vacante>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #lgModal15="bs-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Informaci&oacute;n de la Vacante</h4>
+        <button  type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal15.hide()" aria-label="Close">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-info-vacante [Folios]="Folio" [Requisicion]="RequisicionId"></app-info-vacante>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-xs btn-outline-danger" (click)="lgModal15.hide()">Cerrar</button>
       </div>
     </div>
   </div>

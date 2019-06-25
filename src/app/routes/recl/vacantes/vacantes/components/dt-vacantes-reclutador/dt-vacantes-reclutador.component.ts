@@ -85,7 +85,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
   totalPos: any = 0;
   totalContratados: number = 0;
 
-
   constructor(
     private service: RequisicionesService,
     private postulateservice: PostulateService,

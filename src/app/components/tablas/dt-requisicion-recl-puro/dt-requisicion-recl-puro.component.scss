@@ -25,7 +25,7 @@
   table tbody div {
     height: 300px;
   }
-  
+
   tbody tr:hover {
     font-size: 14.5px;
     box-shadow: 1px 20px 60px rgba(0, 0, 0, .23);
@@ -36,4 +36,8 @@
     --scrollbar-thumb-color: rgb(94, 175, 255);
     --scrollbar-thumb-hover-color: dodgerblue;
     --scrollbar-border-radius: 4px;
+  }
+
+  .modal-lg .long {
+    max-height: 100% !important;
   }

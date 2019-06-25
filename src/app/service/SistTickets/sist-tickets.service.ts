@@ -1,13 +1,12 @@
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { ApiConection } from './../api-conection.service';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   })
 };
 
@@ -17,6 +16,12 @@ const httpOptions = {
 
 
 export class SistTicketsService {
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + sessionStorage.getItem('validation-token')
+    })
+  };
   // Url de servicios.
   private UrlInsertTicket = ApiConection.ServiceUrl + ApiConection.InsertTicket;
   private UrlUpdateStatus = ApiConection.ServiceUrl + ApiConection.UpdateStatusTicket;
@@ -50,23 +55,23 @@ export class SistTicketsService {
   GetEstados() :Observable<any>
   {
     let params = new HttpParams().set('PaisId', '42');
-    return this._httpClient.get(this.UrlGetEstados, {params: params})
-  
+    return this._httpClient.get(this.UrlGetEstados, {params: params, headers: this.httpOptions.headers})
+
   }
 
   GetMunicipio(estadoId) :Observable<any>
-  { 
-    let params = new HttpParams().set('EstadoId', estadoId);  
-    return this._httpClient.get(this.UrlGetMunicipioByEstado, {params: params})
+  {
+    let params = new HttpParams().set('EstadoId', estadoId);
+    return this._httpClient.get(this.UrlGetMunicipioByEstado, {params: params, headers: this.httpOptions.headers})
 
   }
 
   RegistrarCandidato(datos) :Observable<any>
   {
     let params = new HttpParams().set('datos', datos);
-    return this._httpClient.post(this.UrlRegistrarCandidato, datos)
+    return this._httpClient.post(this.UrlRegistrarCandidato, datos, this.httpOptions)
   }
-  
+
   LoginBolsa(usuario, pass) :Observable<any>
   {
     let params = new HttpParams().set('usuario', usuario).set('pass', pass);
@@ -81,13 +86,13 @@ export class SistTicketsService {
   UpdateStatusTicket(ticketId, estatus, modulo) : Observable<any>
   {
     let params = new HttpParams().set('ticketId', ticketId).set('estatus', estatus).set('moduloId', modulo);
-    return this._httpClient.get(this.UrlUpdateStatus, {params:params})
+    return this._httpClient.get(this.UrlUpdateStatus, {params:params, headers: this.httpOptions.headers})
   }
 
   UpdateRequiTicket(ticketId, requisicionId)
   {
     let params = new HttpParams().set('ticketId', ticketId).set('requisicionId', requisicionId);
-    return this._httpClient.get(this.UrlUpdateRequiTicket, {params:params})
+    return this._httpClient.get(this.UrlUpdateRequiTicket, {params:params, headers: this.httpOptions.headers})
   }
 
   UpdateCandidatoTicket(ticketId, candidatoId)
@@ -99,51 +104,43 @@ export class SistTicketsService {
   GetFilaTickets(estatus, reclutador) :Observable<any>
   {
     let params = new HttpParams().set('estatus', estatus).set('reclutadorId', reclutador);
-    return this._httpClient.get(this.UrlGetFilaTickets, {params:params})
-  
+    return this._httpClient.get(this.UrlGetFilaTickets, {params:params, headers: this.httpOptions.headers})
+
   }
   GetTicketEnAtencion() :Observable<any>
   {
-
     return this._httpClient.get(this.UrlGetTicketEnAtencion)
-  
   }
   GetTicketsGenerados() :Observable<any>
   {
-
     return this._httpClient.get(this.UrlGetTicketsGenerados)
-  
   }
   GetRportAtencion() :Observable<any>
   {
-
     return this._httpClient.get(this.UrlGetRportAtencion)
-  
   }
   GetTicketPrioridad(reclutadorId, modulo) :Observable<any>
   {
     let params = new HttpParams().set('reclutadorId', reclutadorId).set('ModuloId', modulo);
     return this._httpClient.get(this.UrlGetTicketPrioridad, {params: params})
-  
   }
   GetCitas(reclutadorId, modulo) :Observable<any>
   {
     let params = new HttpParams().set('reclutadorId', reclutadorId).set('ModuloId', modulo);
     return this._httpClient.get(this.UrlGetCitas, {params: params})
-  
   }
   GetTicketRecl(ticket, recl) :Observable<any>
   {
      let params = new HttpParams().set('Ticket', ticket).set('ReclutadorId', recl);
     return this._httpClient.get(this.UrlGetTicketRecl, {params: params})
-  
+
   }
 
   GetTicketExamen(ticket) :Observable<any>
   {
      let params = new HttpParams().set('Ticket', ticket);
     return this._httpClient.get(this.UrlGetTicketExamen, {params: params})
-  
+
   }
 
   PostularCandidato(candidatoId, requisicionId) : Observable<any>
@@ -187,7 +184,7 @@ export class SistTicketsService {
   }
   SetExamen(objeto) : Observable<any>
   {
-    return this._httpClient.post(this.UrlSetExamen, objeto, httpOptions);
+    return this._httpClient.post(this.UrlSetExamen, objeto, this.httpOptions);
   }
 
   GetTicketConCita(folio) : Observable<any>

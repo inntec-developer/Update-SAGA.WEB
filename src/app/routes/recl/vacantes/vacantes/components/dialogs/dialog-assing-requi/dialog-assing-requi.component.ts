@@ -202,22 +202,27 @@ export class DialogAssingRequiComponent implements OnInit {
               }
               this.serviceRequisicion.SendEmailRedesSociales(oficio).subscribe(result => {
                 if (result != 404) {
-                  swal({
-                    title: 'Se a notificado al departamento de medios.',
-                    text: 'Desea diseñar la Vacante para Publicar en Bolsa DAMSA ?',
-                    type: 'success',
-                    showCancelButton: true,
-                    confirmButtonText: 'SI, Diseñar',
-                    cencelButtomText: 'No',
-                    closeOnConfirm: true,
-                    showLoaderOnConfirm: true
-                  }, (isConfirm: any) => {
-                    window.onkeydown = null;
-                    window.onfocus = null;
-                    if (isConfirm) {
-                      this._Router.navigate(['/reclutamiento/configuracionVacante/', this.RequiId, this.data.folio, this.data.vBtra], { skipLocationChange: true });
-                    }
-                  });
+                  if (!this.Confidencial) {
+                    swal({
+                      title: 'Se a notificado al departamento de medios.',
+                      text: 'Desea diseñar la Vacante para Publicar en Bolsa DAMSA ?',
+                      type: 'success',
+                      showCancelButton: true,
+                      confirmButtonText: 'SI, Diseñar',
+                      cencelButtomText: 'No',
+                      closeOnConfirm: true,
+                      showLoaderOnConfirm: true
+                    }, (isConfirm: any) => {
+                      window.onkeydown = null;
+                      window.onfocus = null;
+                      if (isConfirm) {
+                        this._Router.navigate(['/reclutamiento/configuracionVacante/', this.RequiId, this.data.folio, this.data.vBtra], { skipLocationChange: true });
+                      }
+                    });
+                  }
+                  else{
+                    swal('Medios / Redes sociales', 'Se a notificado al departamento de medios.', 'success');
+                  }
 
                   this.dialogAssing.close(true);
                   this.formRS.reset();
@@ -231,22 +236,27 @@ export class DialogAssingRequiComponent implements OnInit {
             else {
               this.dialogAssing.close(true);
               this.loading = false;
-              swal({
-                title: 'Diseñador de Vacante',
-                text: 'Desea diseñar la vacante para su publicación en Bolsa DAMSA?',
-                type: 'success',
-                showCancelButton: true,
-                confirmButtonText: 'SI, Diseñar',
-                cencelButtomText: 'No',
-                closeOnConfirm: true,
-                showLoaderOnConfirm: true
-              }, (isConfirm: any) => {
-                window.onkeydown = null;
-                window.onfocus = null;
-                if (isConfirm) {
-                  this._Router.navigate(['/reclutamiento/configuracionVacante/', this.RequiId, this.data.folio, this.data.vBtra], { skipLocationChange: true });
-                }
-              });
+              if (!this.Confidencial){
+                swal({
+                  title: 'Diseñador de Vacante',
+                  text: 'Desea diseñar la vacante para su publicación en Bolsa DAMSA?',
+                  type: 'success',
+                  showCancelButton: true,
+                  confirmButtonText: 'SI, Diseñar',
+                  cencelButtomText: 'No',
+                  closeOnConfirm: true,
+                  showLoaderOnConfirm: true
+                }, (isConfirm: any) => {
+                  window.onkeydown = null;
+                  window.onfocus = null;
+                  if (isConfirm) {
+                    this._Router.navigate(['/reclutamiento/configuracionVacante/', this.RequiId, this.data.folio, this.data.vBtra], { skipLocationChange: true });
+                  }
+                });
+              }
+              else{
+                swal('Asignación', 'La asignacion se a realizado con exito', 'success');
+              }
             }
 
             if (!this.redesSociales && !this.data.confidencial) {
