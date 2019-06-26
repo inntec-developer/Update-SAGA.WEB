@@ -67,7 +67,7 @@ export class ComponentsService {
   }
 
 
-  getResumen(data: any): Observable<any> {
+  getVResumen(data: any): Observable<any> {
     let params = new HttpParams().set('usuario', data);
     return this._httpClient.get(this.UrlContratadoCaptado, { params: params, headers: this.httpOptions.headers});
   }
