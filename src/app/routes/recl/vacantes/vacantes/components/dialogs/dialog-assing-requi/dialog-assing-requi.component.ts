@@ -280,12 +280,12 @@ export class DialogAssingRequiComponent implements OnInit {
               }
             }
           } else if (this.return == 300) {
-            swal('Aprobaciónn / Asignación Requisición', 'Este folio ya fue aprobado por otro usuario, actualice la tabla de Vacantes.', 'info');
+            swal('Aprobación / Asignación Requisición', 'Este folio ya fue aprobado por otro usuario, actualice la tabla de Vacantes.', 'info');
             this.loading = false;
             this.dialogAssing.close(true);
           }
           else {
-            swal('Aprobaciónn / Asignación Requisición', 'Algo Salio mal intentear actualizar la información.', 'error');
+            swal('Aprobación / Asignación Requisición', 'Algo Salio mal intentear actualizar la información.', 'error');
             this.loading = false;
           }
         });
