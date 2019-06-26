@@ -18,6 +18,11 @@ import { SettingsService } from '../../../core/settings/settings.service';
   providers: [RequisicionesService]
 })
 export class DtRequisicionReclPuroComponent implements OnInit {
+  public estado: any;
+  public mty = [6, 7, 10, 19, 28, 24];
+  public gdl = [1, 3, 8, 10, 11, 14, 16, 18, 2, 25, 26, 32];
+  public mx = [4, 5, 9, 12, 13, 15, 17, 20, 21, 22, 23, 27, 29, 30, 31];
+
   public disabled = false;
   public compact = false;
   public invertX = false;
@@ -43,6 +48,8 @@ export class DtRequisicionReclPuroComponent implements OnInit {
   public RequisicionId: any;
   public estatusId: any;
   public Folio: any;
+  public UnidadNegocioId: any;
+  public isDurango: boolean;
   public row = [];
   public rowAux: any = [];
 
@@ -223,13 +230,54 @@ export class DtRequisicionReclPuroComponent implements OnInit {
     data.selected ? data.selected = false : data.selected = true;
     // data.selected ? this.ValidarEstatus(data.estatusId, data.vacantes) : this.ValidarEstatus(0, data.vacantes);
 
+
     this.RequisicionId = data.id
     this.estatusId = data.estatusId;
     this.Folio = data.folio;
-    this.Vacante  = data.vBtra;
+    this.Vacante = data.vBtra;
     this.element = data;
     this.row = data;
 
+    this.estado = data.estadoId
+
+
+    if (this.estado == 10) {
+      this.isDurango = true;
+    }
+    else {
+      this.isDurango = false;
+    }
+
+    if (!this.isDurango) {
+      if (this.mty.find(x => x == this.estado)) {
+        this.UnidadNegocioId = 3
+      }
+      if (this.gdl.find(x => x == this.estado)) {
+        this.UnidadNegocioId = 1
+      }
+      if (this.mx.find(x => x == this.estado)) {
+        this.UnidadNegocioId = 2
+      }
+
+
+      // this.UnidadNegocioId = this.mty.find( function(element, estado = this.estado){
+      //   if ( element == estado ){
+      //     return 3
+      //   }
+      // });
+
+      // this.UnidadNegocioId = this.gdl.find(function(element, estado = this.estado) {
+      //   if ( element == estado ){
+      //     return 1
+      //   }
+      // });
+
+      // this.UnidadNegocioId = this.mx.find(function(element, estado = this.estado) {
+      //   if ( element == estado ){
+      //     return 2
+      //   }
+      // });
+    }
     this.ValidarEstatus(data.estatusId, data.vacantes);
 
 
@@ -269,8 +317,11 @@ export class DtRequisicionReclPuroComponent implements OnInit {
 
 
   ValidarEstatus(estatusId, vacantes) {
-    if(vacantes == 0)
-    {
+    if (this.isDurango && (this.settings['user']['unidadNegocioId'] == 3 || this.settings['user']['unidadNegocioId'] == 1)) {
+      this.validation(estatusId, vacantes)
+    } else if (this.UnidadNegocioId == this.settings['user']['unidadNegocioId']) {
+      this.validation(estatusId, vacantes);
+    } else {
       this.view = true;
       this.coment = true;
       this.facturar = false;
@@ -278,7 +329,21 @@ export class DtRequisicionReclPuroComponent implements OnInit {
       this.borrar = false;
       this.autorizar = false;
     }
-    else if (estatusId == 46 ) {
+
+
+
+  }
+
+  validation(estatusId, vacantes) {
+    if (vacantes == 0) {
+      this.view = true;
+      this.coment = true;
+      this.facturar = false;
+      this.cancelar = false;
+      this.borrar = false;
+      this.autorizar = false;
+    }
+    else if (estatusId == 46) {
       this.view = true;
       this.coment = true;
       this.facturar = false;
@@ -286,7 +351,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
       this.borrar = true;
       this.autorizar = false;
     }
-    else if (estatusId == 43 ) {
+    else if (estatusId == 43) {
       this.view = true;
       this.coment = true;
       this.facturar = true;
@@ -318,15 +383,13 @@ export class DtRequisicionReclPuroComponent implements OnInit {
       this.borrar = true;
       this.autorizar = false;
     }
-    else
-    {
+    else {
       this.view = true;
       this.coment = true;
       this.facturar = false;
       this.cancelar = false;
       this.borrar = false;
       this.autorizar = false;
-
     }
   }
 
@@ -370,10 +433,8 @@ export class DtRequisicionReclPuroComponent implements OnInit {
     });
     var window: Window
     dialogDlt.afterClosed().subscribe(result => {
-      if(result != "")
-      {
-        if (result.Ok == 200)
-        {
+      if (result != "") {
+        if (result.Ok == 200) {
 
           this.postulacionservice.SetProcesoVacante({ estatusId: result.estatus, requisicionId: this.RequisicionId }).subscribe(data => {
 

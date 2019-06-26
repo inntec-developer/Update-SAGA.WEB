@@ -94,6 +94,7 @@ export class LoginComponent implements OnInit {
             this.settings.user['liderId'] = decode['LiderId'];
             this.settings.user['departamentoId'] = decode['DepartamentoId'];
             this.settings.user['departamento'] = decode['Departamento'];
+            this.settings.user['unidadNegocioId'] = decode['UnidadNegocioId'];
             this.router.navigate(['/home']);
           }
           if (data === 404) {

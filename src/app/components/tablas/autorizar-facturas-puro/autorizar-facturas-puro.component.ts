@@ -1,8 +1,12 @@
-import { PostulateService } from './../../../service/SeguimientoVacante/postulate.service';
 import { Component, OnInit } from '@angular/core';
-import { RequisicionesService } from '../../../service';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+
+import { DialogCancelRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-cancel-requi/dialog-cancel-requi.component';
+import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { PostulateService } from './../../../service/SeguimientoVacante/postulate.service';
+import { RequisicionesService } from '../../../service';
+
 const swal = require('sweetalert');
 @Component({
   selector: 'app-autorizar-facturas-puro',
@@ -19,6 +23,7 @@ export class AutorizarFacturasPuroComponent implements OnInit {
 
   public dataSource = [];
   public Vacantes: number = 0;
+
   // Varaibles del paginador
   public page: number = 1;
   public itemsPerPage: number = 20;
@@ -49,9 +54,10 @@ export class AutorizarFacturasPuroComponent implements OnInit {
   element: any = [];
   comment: boolean = false;
   view: boolean = false;
+  cancelar: boolean = false;
 
   constructor(private service: RequisicionesService,
-     private postulacionservice: PostulateService, private spinner: NgxSpinnerService, private toasterService: ToasterService) { }
+     private postulacionservice: PostulateService, private spinner: NgxSpinnerService, private toasterService: ToasterService, private dialog: MatDialog,) { }
 
   ngOnInit() {
     this.GetRequisiciones();
@@ -77,7 +83,7 @@ export class AutorizarFacturasPuroComponent implements OnInit {
     return data.slice(start, end);
   }
 
-  
+
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
     this.columns.forEach((column: any) => {
@@ -145,7 +151,7 @@ export class AutorizarFacturasPuroComponent implements OnInit {
       this.comment = false;
       this.view = false;
     }, 1000);
-    
+
   }
 
   public clearfilters() {
@@ -173,8 +179,8 @@ export class AutorizarFacturasPuroComponent implements OnInit {
       }, (isConfirm) => {
         window.onkeydown = null;
         window.onfocus = null;
-        if (isConfirm) 
-        {  
+        if (isConfirm)
+        {
           this.spinner.show();
           this.postulacionservice.SetProcesoVacante({ estatusId: 44, requisicionId: this.element.requisicionId }).subscribe(data => {
             if (data == 201) {
@@ -188,23 +194,36 @@ export class AutorizarFacturasPuroComponent implements OnInit {
               this.spinner.hide();
             }
           })
-  
+
         }
         else {
           swal("Cancelado", "No se realizó ningún cambio", "error");
         }
       });
-    
+
   }
 
   public onCellClick(data: any): any {
-
     data.selected ? data.selected = false : data.selected = true;
 
     this.element = data;
     this.autorizar = true;
     this.comment = true;
     this.view = true;
+    this.cancelar = true;
+
+    if (!data.selected) {
+      this.autorizar = false;
+      this.comment = false;
+      this.view = false;
+      this.cancelar = false;
+    } else {
+      this.autorizar = true;
+      this.comment = true;
+      this.view = true;
+      this.cancelar = true;
+    }
+
     if (this.rowAux.length == 0) {
       this.rowAux = data;
     }
@@ -218,7 +237,7 @@ export class AutorizarFacturasPuroComponent implements OnInit {
 
   }
 
-  
+
   SendEmail(requisicionId) {
     this.service.SendEmailRequiPuro(requisicionId).subscribe(email => {
       if (email == 200) {
@@ -228,6 +247,26 @@ export class AutorizarFacturasPuroComponent implements OnInit {
       }
     });
   }
+
+  openDialogCancel() {
+    this.element.motivoId = 17;
+    this.element['id'] = this.element['requisicionId'];
+    let dialogCnc = this.dialog.open(DialogCancelRequiComponent, {
+      data: this.element
+    });
+    var window: Window
+    dialogCnc.afterClosed().subscribe(result => {
+      if (result == 200) {
+        this.refreshTable();
+        this.SendEmail(this.element.requisicionId);
+        this.autorizar = false;
+        this.comment = false;
+        this.view = false;
+        this.cancelar = false;
+      }
+    })
+  }
+
 
   /*
   * Creacion de mensajes

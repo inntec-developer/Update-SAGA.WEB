@@ -3,29 +3,35 @@
   <div class="card-body mat-elevation-z8">
     <div class="row">
       <div class="col-12 p-2 bg-light">
-      <button (click)="lgModal2.show()" class="ml-2 mr-2 btn btn-xs float-left mat-elevation-z8" [disabled]="!view"
-      [ngClass]="(!view) ? 'disabled' : 'btn-warning'" container="body" placement="bottom" tooltip="Visualizar">
-      <em class="fa fa-eye"></em>
-    </button>
+        <button (click)="lgModal2.show()" class="ml-2 mr-2 btn btn-xs float-left mat-elevation-z8" [disabled]="!view"
+          [ngClass]="(!view) ? 'disabled' : 'btn-warning'" container="body" placement="bottom" tooltip="Visualizar">
+          <em class="fa fa-eye"></em>
+        </button>
 
-    <button (click)="lgModal.show()" class="mr-2 btn btn-xs float-left mat-elevation-z8"
-      [disabled]="!comment" [ngClass]="(!comment) ? 'disabled' : 'btn-dark'" container="body" placement="bottom"
-      tooltip="Comentarios">
-      <em class="fa fa-comments-o"></em>
-    </button>
-    <button class="btn btn-xs float-left mat-elevation-z8" type="button" (click)="Autorizar()" [disabled]="!autorizar"
-    [ngClass]="!autorizar ? 'disabled' : 'btn-success'" container="body" placement="bottom" tooltip="Autorizar">
-    <em class="fa fa-check"></em></button>
-    <button class="btn btn-xs btn-success float-right mat-elevation-z8 ml-2 mr-1" type="button" (click)="refreshTable()"
-    container="body" placement="bottom" tooltip="Actualizar">
-    <em class="icon-refresh"></em>
-  </button>
-  <button (click)="clearfilters()" class="btn btn-xs btn-info float-right mat-elevation-z8" container="body" placement="bottom" tooltip="Borrar Filtros">
-      <em class="fa fa-eraser"></em>
-    </button>
-   
-  </div>
-</div>
+        <button (click)="lgModal.show()" class="mr-2 btn btn-xs float-left mat-elevation-z8" [disabled]="!comment"
+          [ngClass]="(!comment) ? 'disabled' : 'btn-dark'" container="body" placement="bottom" tooltip="Comentarios">
+          <em class="fa fa-comments-o"></em>
+        </button>
+        <button class="mr-2 btn btn-xs float-left mat-elevation-z8" type="button" (click)="Autorizar()"
+          [disabled]="!autorizar" [ngClass]="!autorizar ? 'disabled' : 'btn-success'" container="body"
+          placement="bottom" tooltip="Autorizar">
+          <em class="fa fa-check"></em></button>
+        <button id='delete' chkPrivilegiosButtons class="btn btn-xs float-left mat-elevation-z8" [disabled]="!cancelar"
+          [ngClass]="!cancelar ? 'btn disabled' : 'btn btn-danger'" container="body" placement="bottom"
+          tooltip="Cancelar" (click)="openDialogCancel();">
+          <em class="icon-ban"></em>
+        </button>
+        <button class="btn btn-xs btn-success float-right mat-elevation-z8 ml-2 mr-1" type="button"
+          (click)="refreshTable()" container="body" placement="bottom" tooltip="Actualizar">
+          <em class="icon-refresh"></em>
+        </button>
+        <button (click)="clearfilters()" class="btn btn-xs btn-info float-right mat-elevation-z8" container="body"
+          placement="bottom" tooltip="Borrar Filtros">
+          <em class="fa fa-eraser"></em>
+        </button>
+
+      </div>
+    </div>
     <table class="table">
       <thead>
         <tr>
@@ -35,24 +41,26 @@
         </tr>
         <tr *ngIf="showFilterRow">
           <th *ngFor="let column of columns">
-            <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+            <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
+              [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
               class="form-control form-control-sm" id="{{column.name}}">
           </th>
         </tr>
       </thead>
       <tbody>
-        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
-          [disableOnBreakpoints]="false" [disabled]="disabled">
+        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+          [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
           <div>
-            <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of rows" [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8"
-              [class.selected]="row.selected">
+            <tr (click)="onCellClick(row)" (dblclick)="showRequi()" *ngFor="let row of rows"
+              [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
               <td class="text-center">
                 {{row.folio}}
               </td>
               <td><span *ngIf="row.cliente.length < 10 else toLengthCliente">{{row.cliente | uppercase}}</span>
-                  <ng-template #toLengthCliente>
-                      <span placement="bottom" tooltip="{{row.cliente | uppercase}}"> {{row.cliente | slice:0:10 | uppercase }} ... </span>
-                    </ng-template>
+                <ng-template #toLengthCliente>
+                  <span placement="bottom" tooltip="{{row.cliente | uppercase}}">
+                    {{row.cliente | slice:0:10 | uppercase }} ... </span>
+                </ng-template>
               </td>
               <td class="text-center"> {{row.vBtra | uppercase}}</td>
               <td class="text-center">
@@ -64,16 +72,20 @@
               <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
               <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
               <td class="text-center">
-                <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
-                  [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
+                <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info"
+                  [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
+                  [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
                   [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
                   {{row.estatus | uppercase}}
                 </small>
 
                 <ng-template #toLength>
-                  <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
-                    [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29" [class.badge-success]="row.estatusId  === 7"
-                    [class.badge-danger]="row.estatusId  === 8" placement="bottom" tooltip="{{row.estatus | uppercase}}"> {{row.estatus | slice:0:8 | uppercase }} ...
+                  <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
+                    [class.badge-primary]="row.estatusId  === 5"
+                    [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
+                    [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8"
+                    placement="bottom" tooltip="{{row.estatus | uppercase}}"> {{row.estatus | slice:0:8 | uppercase }}
+                    ...
                   </small>
                 </ng-template>
               </td>
@@ -85,72 +97,83 @@
       </tbody>
     </table>
   </div>
-  <br/>
+  <br />
   <div class="row">
-      <div class="col-md-12 clearfix">
-        <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
-          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
-          (numPages)="numPages = $event"></pagination>
-        <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre>
-      </div>
+    <div class="col-md-12 clearfix">
+      <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
+        [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+        (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
+      <pre *ngIf="config.paging"
+        class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre>
     </div>
+  </div>
 </div>
 <!--Mensajes del sistema-->
 <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
 
 <!--Modal de Comentarios-->
 <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">FOLIO: {{element.folio}}</h4>
-          <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal.hide()" aria-label="Close">
-              <i class="fa fa-times"></i>
-          </button>
-        </div>
-        <div class="modal-body">
-          <comentario-vacante [RequisicionId]="element.requisicionId" [MotivoId]="7"></comentario-vacante>
-        </div>
-      
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">FOLIO: {{element.folio}}</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal.hide()"
+          aria-label="Close">
+          <i class="fa fa-times"></i>
+        </button>
       </div>
-    </div>
-  </div>
+      <div class="modal-body">
+        <comentario-vacante [RequisicionId]="element.requisicionId" [MotivoId]="7"></comentario-vacante>
+      </div>
 
-  <!--Modal de datos factura-->
-<div bsModal #lgModal2="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title"><i class="fa fa-file-text-o mr-2" aria-hidden="true"></i>DATOS FACTURACION</h4>
-          <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal2.hide()" aria-label="Close">
-              <i class="fa fa-times"></i>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div class="card">
-                <div class="card-body">
-                    <ul class="list-group list-group-flush mb-2">
-                        <li class="list-group-item text-muted">EMPRESA: <span class="text-primary">{{element.cliente | uppercase}}</span></li>
-                        <li class="list-group-item text-muted">PUESTO: <span class="text-primary">{{element.vBtra | uppercase }} </span></li>
-                        <li class="list-group-item text-muted"><span class="mr-1">FOLIO:</span><span class="text-success mr-3">{{element.folio}}</span>
-                          <span class="mr-1">NO:</span><span class="text-primary mr-3">{{element.vacantes }}</span>
-                          <span class="mr-1">SUELDO FINAL:</span><span class="text-primary mr-3">{{element.sueldoMaximo}}</span>
-                          <span class="mr-1">TOTAL:</span><span class="text-primary"> {{element.sueldoMaximo * element.vacantes}}</span></li>
-                        <li class="list-group-item text-muted"><span class="mr-1">PORCENTAJE DE PAGO:</span><span class="text-primary mr-3">{{element.porcentaje}} %</span>
-                            <span class="mr-1">MONTO A FACTURAR:</span><span class="text-primary mr-3">$ {{element.monto}}</span></li>
-                      </ul>
-                      <div class="p-3 mb-2 bg-light">
-                      <ul class="list-group list-group-flush">
-                          <li class="text-muted p-2 mb-1 bg-light">RAZON SOCIAL:<span class="text-primary ml-1">{{element.razon | uppercase}}</span></li>
-                          <li class="text-muted p-2 bg-light">EMPRESA FACTURADORA:<span class="text-primary ml-1">{{element.razon | uppercase}}</span> </li>
-                        </ul>
-                      </div>
-          
-            
-                </div>
-              </div>
-        </div>
-   
-      </div>
     </div>
   </div>
+</div>
+
+<!--Modal de datos factura-->
+<div bsModal #lgModal2="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><i class="fa fa-file-text-o mr-2" aria-hidden="true"></i>DATOS FACTURACION</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal2.hide()"
+          aria-label="Close">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card">
+          <div class="card-body">
+            <ul class="list-group list-group-flush mb-2">
+              <li class="list-group-item text-muted">EMPRESA: <span
+                  class="text-primary">{{element.cliente | uppercase}}</span></li>
+              <li class="list-group-item text-muted">PUESTO: <span class="text-primary">{{element.vBtra | uppercase }}
+                </span></li>
+              <li class="list-group-item text-muted"><span class="mr-1">FOLIO:</span><span
+                  class="text-success mr-3">{{element.folio}}</span>
+                <span class="mr-1">NO:</span><span class="text-primary mr-3">{{element.vacantes }}</span>
+                <span class="mr-1">SUELDO FINAL:</span><span class="text-primary mr-3">{{element.sueldoMaximo}}</span>
+                <span class="mr-1">TOTAL:</span><span class="text-primary">
+                  {{element.sueldoMaximo * element.vacantes}}</span></li>
+              <li class="list-group-item text-muted"><span class="mr-1">PORCENTAJE DE PAGO:</span><span
+                  class="text-primary mr-3">{{element.porcentaje}} %</span>
+                <span class="mr-1">MONTO A FACTURAR:</span><span class="text-primary mr-3">$ {{element.monto}}</span>
+              </li>
+            </ul>
+            <div class="p-3 mb-2 bg-light">
+              <ul class="list-group list-group-flush">
+                <li class="text-muted p-2 mb-1 bg-light">RAZON SOCIAL:<span
+                    class="text-primary ml-1">{{element.razon | uppercase}}</span></li>
+                <li class="text-muted p-2 bg-light">EMPRESA FACTURADORA:<span
+                    class="text-primary ml-1">{{element.razon | uppercase}}</span> </li>
+              </ul>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

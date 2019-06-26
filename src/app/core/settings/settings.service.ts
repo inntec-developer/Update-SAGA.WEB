@@ -28,7 +28,7 @@ export class SettingsService {
             lider: '',
             departamentoId: '',
             departamento: '',
-            token: ''
+            unidadNegocioId: ''
         };
 
         // App Settings

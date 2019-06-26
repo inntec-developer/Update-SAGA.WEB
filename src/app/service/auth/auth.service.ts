@@ -71,6 +71,9 @@ export class AuthService {
         this.settings.user['foto'] = ApiConection.ServiceUrlFotoUser + decode['Clvave'] + '.jpg';
         this.settings.user['lider'] = decode['Lider'];
         this.settings.user['liderId'] = decode['LiderId'];
+        this.settings.user['departamentoId'] = decode['DepartamentoId'];
+        this.settings.user['departamento'] = decode['Departamento'];
+        this.settings.user['unidadNegocioId'] = decode['UnidadNegocioId'];
         this.settings.user['privilegios'] = this.Priv;
       }
       return true;
