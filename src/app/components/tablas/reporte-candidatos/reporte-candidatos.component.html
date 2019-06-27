@@ -1,23 +1,22 @@
 <div class="card">
 <div class="card-body">
-  <div class="row p-1 bg-light">
+  <div class="row p-1 bg-light mb-3">
     <div class="col-sm-12 col-md-12">
-      <button *ngIf="Liberar" [disabled]="!candidatos" [ngClass]="!candidatos ? 'disabled':' btn-outline-danger'" container="body"
-        class="ml-1 btn btn-xs" placement="bottom" tooltip="Desapartar" (click)="openDialogLiberar()">
+      <button *ngIf="Liberar" [disabled]="!candidatos" [ngClass]="!candidatos ? 'disabled':' btn-danger'" container="body"
+        class="ml-1 btn btn-xs mat-elevation-z8" placement="bottom" tooltip="Desapartar" (click)="openDialogLiberar()">
         <em class="fa fa-thumbs-o-down"></em>
       </button>
-      <button class="mr-1 btn btn-xs btn-outline-success float-right" type="button" (click)="refresh()" container="body" placement="bottom"
+      <button class="mr-1 btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="refresh()" container="body" placement="bottom"
         tooltip="Actualizar">
         <em class="icon-refresh"></em>
       </button>
-      <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="mr-2 btn btn-xs btn-outline-primary float-right">
+      <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="mr-2 btn btn-xs btn-info mat-elevation-z8 float-right">
         <em class="fa fa-eraser"></em>
       </button>
       <span class="text-muted font-weight-bold float-right text-uppercase float-right mr-4 float-right">Total de Candidatos
         <span class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span>
       </span>
     </div>
-    <br/>
   </div>
   <div class="row">
     <div *ngIf="dataSource.length > 0 else NotCandidatos" class="col-sm-12 col-md-12">
@@ -31,7 +30,7 @@
           <tr *ngIf="showFilterRow">
             <th *ngFor="let column of columns">
               <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
+                (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}_1">
             </th>
           </tr>
         </thead>

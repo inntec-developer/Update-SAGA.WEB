@@ -61,15 +61,15 @@ export class DtMisCandidatosComponent implements OnInit {
   public columns: Array<any> = [
     { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
-    { title: 'Vacante', className: 'text-info', name: 'vBtra', filtering: { filterString: '', placeholder: 'Vacante' } },
-    { title: 'Nombre Candidato', className: 'text-info', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
-    { title: 'Área Experiencia', className: 'text-info', name: 'areaExp', filtering: { filterString: '', placeholder: 'Experiencia' } },
-    { title: 'Área Interes', className: 'text-info', name: 'areaInt', filtering: { filterString: '', placeholder: 'Interes' } },
-    { title: 'Localidad', className: 'text-info', name: 'localidad', filtering: { filterString: '', placeholder: 'Localidad' } },
+    { title: 'Vacante', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Vacante' } },
+    { title: 'Nombre Candidato', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
+    { title: 'Área Experiencia', className: 'text-info text-center', name: 'areaExp', filtering: { filterString: '', placeholder: 'Experiencia' } },
+    { title: 'Área Interes', className: 'text-info text-center', name: 'areaInt', filtering: { filterString: '', placeholder: 'Interes' } },
+    { title: 'Localidad', className: 'text-info text-center', name: 'localidad', filtering: { filterString: '', placeholder: 'Localidad' } },
     { title: 'Sueldo Aceptable', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo aceptable' } },
     { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad', filtering: { filterString: '', placeholder: 'Fecha Nacimiento' } },
-    { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
-    { title: 'RFC', className: 'text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
+    { title: 'CURP', className: 'text-success text-center', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
+    { title: 'RFC', className: 'text-success text-center', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
   ]
 
   public config: any = {

@@ -48,13 +48,13 @@
                 <td>
                   {{row.nombre}}
                 </td>
-                <td> {{row.areaExp}}</td>
-                <td> {{row.areaInt}}</td>
-                <td> {{row.localidad}} </td>
+                <td class="text-center"> {{row.areaExp}}</td>
+                <td class="text-center"> {{row.areaInt}}</td>
+                <td class="text-center"> {{row.localidad}} </td>
                 <td class="text-right"> {{row.sueldoMinimo | currency : '$'}} </td>
                 <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
-                <td> {{row.curp}}</td>
-                <td> {{row.rfc}}</td>
+                <td class="text-center"> {{row.curp}}</td>
+                <td class="text-center"> {{row.rfc}}</td>
               </tr>
             </div>
           </ng-scrollbar>

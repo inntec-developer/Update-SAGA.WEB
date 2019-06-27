@@ -9,7 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CardVacanteComponent implements OnInit {
 
-  @Input() ClientId;
+  @Input() ClienteId;
   @Input() RequisicionId;
 
   logo = ApiConection.ServiceUrlFoto + 'utilerias/img/user/WorkTeam.jpg'
@@ -21,7 +21,7 @@ export class CardVacanteComponent implements OnInit {
   GetDtosCard()
   {
     var ext = [];
-    this._service.GetDtosCard(this.ClientId, this.RequisicionId).subscribe( data =>
+    this._service.GetDtosCard(this.ClienteId, this.RequisicionId).subscribe( data =>
       {
         this.Datos = data;
         this.Datos[0]['asignados'].forEach(element =>{
@@ -53,7 +53,7 @@ export class CardVacanteComponent implements OnInit {
   }
   ngOnInit() {
 
-if(this.ClientId)
+if(this.ClienteId)
 {
       this.GetDtosCard();
 }
