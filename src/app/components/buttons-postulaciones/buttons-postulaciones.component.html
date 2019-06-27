@@ -147,7 +147,7 @@
                   *ngIf="row.estatusId != 12 && row.estatusId != 17 && row.estatusId != 27 else sinAsignar">{{row.horario | uppercase}}</span>
               </td>
               <ng-template #sinAsignar>
-                <span>SIN ASIGNAR</span>
+                <span>SIN ASIGNAR</span> 
               </ng-template>
               <td class="text-center"> {{row.nombre | uppercase}} {{ row.apellidoPaterno | uppercase }} {{row.apellidoMaterno | uppercase}}</td>
               <td class="text-center"> {{row.areaExp | uppercase}}</td>
@@ -159,7 +159,7 @@
               <td class="text-center"> {{row.rfc | uppercase }}</td>
               <td class="text-center"> {{row.nss | uppercase }}</td>
               <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength"
-                  class='px-1 mr-1 badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42"
+                  class='mr-1 badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42"
                   [class.badge-danger]="row.estatusId == 28">
                   <span *ngIf="row.estatusId != 28"> {{row.estatus | uppercase }}</span>
                   <span *ngIf="row.estatusId == 28">POSTULADO</span>
