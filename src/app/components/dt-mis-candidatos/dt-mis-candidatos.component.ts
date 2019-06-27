@@ -116,14 +116,34 @@ export class DtMisCandidatosComponent implements OnInit {
     });
   }
 
+  public getCleanedString(cadena: string) : string
+{
+  cadena = cadena.replace(/á/gi,"a");
+  cadena = cadena.replace(/é/gi,"e");
+  cadena = cadena.replace(/í/gi,"i");
+  cadena = cadena.replace(/ó/gi,"o");
+  cadena = cadena.replace(/ú/gi,"u");
+  cadena = cadena.replace(/ñ/gi,"n");
+
+  return cadena;
+}
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
+    this.showFilterRow = true;
     this.columns.forEach((column: any) => {
-      if (column.filtering) {
-        this.showFilterRow = true;
+      if (column.filtering.filterString != "") {
+  
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
-            return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+          if (item[column.name] != null){
+
+          let itemAux = this.getCleanedString(item[column.name].toString().toLowerCase());
+          let itemAux2 = this.getCleanedString(column.filtering.filterString.toLowerCase());
+
+          if(itemAux.match(itemAux2))
+          {
+            return item;
+          }
+        }
         });
       }
     });
