@@ -247,7 +247,7 @@ export class DtRequisicionComponent implements OnInit {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = false;
       this.cc = false; //cubierta por el cliente
-      this.cubiertas.push({id: 35, descripcion: "Cubierta parcialmente" },{id: 36, descripcion: "Cubierta por medios" })
+      this.cubiertas.push({id: 35, descripcion: "Cubierta parcialmente" })
 
       this.crm = true; //cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
@@ -320,12 +320,12 @@ export class DtRequisicionComponent implements OnInit {
       this.editar = true;
       this.candidatos = false;
     }
-    else if(estatusId == 38 && this.element.vacantes > 0 && this.element.contratados > 0 && this.element.contratados <= this.element.vacantes)
+    else if(estatusId == 38 && this.element.vacantes > 0 && this.element.contratados > 0 && this.element.contratados < this.element.vacantes)
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = false;
       this.cc = false; //cubierta por el cliente
-      this.cubiertas.push({id: 35, descripcion: "Cubierta parcialmente" },{id: 36, descripcion: "Cubierta por medios" })
+      this.cubiertas.push({id: 35, descripcion: "Cubierta parcialmente" })
 
       this.crm = true; //cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
