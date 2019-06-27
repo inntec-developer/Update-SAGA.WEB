@@ -1,4 +1,3 @@
-import { DlgCubiertasComponent } from './../../dlg-cubiertas/dlg-cubiertas.component';
 import { Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -6,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { DialogActivarRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-activar-requi/dialog-activar-requi.component';
 import { DialogCancelRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-cancel-requi/dialog-cancel-requi.component';
 import { DialogDeleteRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-delete-requi/dialog-delete-requi.component';
+import { DlgCubiertasComponent } from './../../dlg-cubiertas/dlg-cubiertas.component';
 import { DlgTransferComponent } from './../../../routes/vtas/requisiciones/components/dlg-transfer/dlg-transfer.component';
 import { ExcelService } from './../../../service/ExcelService/excel.service';
 import { MatDialog } from '@angular/material';
@@ -431,7 +431,7 @@ export class DtRequisicionComponent implements OnInit {
                   aux = item[column.name];
                 }
                 let mocos = false;
-               
+
                   aux.forEach(element => {
                     if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
                     {
@@ -688,6 +688,7 @@ export class DtRequisicionComponent implements OnInit {
   }
   openDialogTransfer() {
     this.element.usuario = 10;
+    this.element.depto = 'Vtas'
     let dialogCnc = this.dialog.open(DlgTransferComponent, {
       width: '50%',
       height: '95%',
