@@ -224,7 +224,7 @@ export class DlgTransferComponent implements OnInit {
       }
       swal({
         title: "¿ESTÁS SEGURO?",
-        text: "¡Se asignara la vacante con folio " + this.data.folio + " a coordinador " + this.coordNom + "!",
+        text: "¡Se asignara la vacante con folio " + this.data.folio + " a " + this.coordNom + "!",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#ec2121",
