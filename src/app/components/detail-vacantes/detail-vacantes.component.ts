@@ -9,11 +9,11 @@ import { DetailService } from '../../service/SeguimientoVacante/DetailService.se
   styleUrls: ['./detail-vacantes.component.scss']
 })
 export class DetailVacantesComponent implements OnInit {
-
+  @Input('ClienteId') ClienteId;
   @Input('RequisicionId') RequisicionId;
   public Datos = [];
   public observacionesRequi: any;
-   step = 0;
+   step = 1;
 
 
   setStep(index: number) {

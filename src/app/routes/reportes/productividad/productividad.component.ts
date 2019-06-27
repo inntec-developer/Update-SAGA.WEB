@@ -108,11 +108,11 @@ export class ProductividadComponent implements OnInit {
 
 
 public columns: Array<any> = [
-  { title: 'Reclutadores', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'nombre' } },
+  { title: 'Reclutadores', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Reclutadores' } },
   { title: 'Folios', className: 'text-success text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'Folios' } },
   { title: 'Posiciones', className: 'text-success text-center', name: 'numeropos', filtering: { filterString: '', placeholder: 'Posiciones' } },
-  { title: 'Cubiertos', className: 'text-success text-center', name: 'cubiertas', filtering: { filterString: '', placeholder: 'cubiertas' } },
-  { title: 'Puntaje', className: 'text-info text-center', name: 'puntaje', filtering: { filterString: '', placeholder: 'puntos' } },
+  { title: 'Cubiertos', className: 'text-success text-center', name: 'cubiertas', filtering: { filterString: '', placeholder: 'Cubiertos' } },
+  { title: 'Puntaje', className: 'text-info text-center', name: 'puntaje', filtering: { filterString: '', placeholder: 'Puntaje' } },
  
 ];
 

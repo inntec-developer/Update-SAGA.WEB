@@ -5,7 +5,7 @@
         <em class="fa fa-user-circle-o"></em>
         <label> Informaci&oacute;n Principal</label>
         <button *ngIf="examen.tecnicos.length > 0 || examen.psicometricos.length > 0"
-          class="btn btn-xs btn-success round float-right" (click)="modalExamen=true;" container="body"
+          class="btn btn-xs btn-warning float-right mat-elevation-z8" (click)="modalExamen=true;" container="body"
           placement="bottom" tooltip="Examenes Realizados">
           <i class="fa fa-pencil"></i></button>
 
@@ -683,35 +683,35 @@
                         </mat-form-field> -->
               <div class="row">
                 <div class="col-sm-12 col-md-12 p-2 bg-light clearfix">
-                  <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-xs btn-acciones"
+                  <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-xs mat-elevation-z8"
                     [disabled]="!infoRequiId && !infoFolio"
-                    [ngClass]="(!infoRequiId && !infoFolio) ? 'disabled' : 'btn-outline-warning'" container="body"
+                    [ngClass]="(!infoRequiId && !infoFolio) ? 'disabled' : 'btn-warning'" container="body"
                     placement="bottom" tooltip="Visualizar">
                     <em class="fa fa-eye"></em>
                   </button>
 
-                  <button id="apartarCandidato" class="mr-1 btn btn-xs btn-acciones"
+                  <button id="apartarCandidato" class="mr-1 btn btn-xs mat-elevation-z8"
                     [disabled]="loading || auxestatus"
-                    [ngClass]="loading || auxestatus ? 'disabled' : 'btn-outline-success'"
+                    [ngClass]="loading || auxestatus ? 'disabled' : 'btn-success'"
                     container="body" placement="bottom" tooltip="Apartar" (click)="_apartarCandidato()">
                     <em class="fa fa-thumbs-o-up"></em>
                   </button>
-                  <button id="desapartarCandidato" class="mr-1 btn btn-xs btn-acciones"
+                  <button id="desapartarCandidato" class="mr-1 btn btn-xs mat-elevation-z8"
                     [disabled]="desapartar || loading"
-                    [ngClass]="desapartar || loading ? 'disabled':'btn-outline-danger'"
+                    [ngClass]="desapartar || loading ? 'disabled':'btn-danger'"
                     container="body" placement="bottom" tooltip="Desapartar" (click)="openDialogLiberar()">
                     <em class="fa fa-thumbs-o-down"></em>
                   </button>
 
-
+                  <button class="mr-1 btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="refreshTable_v()"
+                  container="body" placement="bottom" tooltip="Actualizar">
+                  <em class="icon-refresh"></em>
+                </button>
                   <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
-                    class="mr-1 btn btn-xs btn-outline-primary float-right">
+                    class="mr-1 btn btn-xs btn-info float-right mat-elevation-z8">
                     <em class="fa fa-eraser"></em>
                   </button>
-                  <button class="mr-1 btn btn-xs btn-outline-success float-right" type="button" (click)="refreshTable_v()"
-                    container="body" placement="bottom" tooltip="Actualizar">
-                    <em class="icon-refresh"></em>
-                  </button>
+                 
                 </div>
 
               </div>

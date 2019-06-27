@@ -1,27 +1,26 @@
 <!-- <ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner> -->
 <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
-<div class="dt-container mat-elevation-z8">
+<div class="dt-container mat-elevation-z8 mt-2">
   <div class="dt-header">
-    <mat-form-field>
+    <!-- <mat-form-field>
       <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
         (tableChanged)="onChangeTable(config)">
-    </mat-form-field>
-    <div class="row justify-content-between">
-      <div class="d-flex align-items-stretch ">
-      </div>
-      <div>
-        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary">
+    </mat-form-field> -->
+    <div class="row justify-content-end">
+        <span class="text-muted font-weight-bold float-right text-uppercase mt-1 mr-4 float-right">Total de Candidatos
+            <span class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span>
+          </span>
+        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="mr-2 mb-2 btn btn-xs btn-primary mat-elevation-z8">
           <em class="fa fa-eraser"></em>
         </button>
-        <button class="mb-1  btn btn-outline-success margen" type="button" (click)="refreshTable()" placement="bottom"
+        <button class="mb-2 btn btn-xs btn-success mat-elevation-z8" type="button" (click)="refreshTable()" placement="bottom"
           tooltip="Actualizar">
           <em class="icon-refresh"></em>
         </button>
-      </div>
     </div>
   </div>
   <div class="card">
-    <div #tableContainer>
+    <div class="card-body">
       <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
         <thead>
           <tr>
@@ -43,15 +42,15 @@
             [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8" [ngClass]="{'bg-warning' : row.estatusId != 27 && row.estatusId != 0 && row.estatusId != 28, 'bg-danger' : row.estatusId == 28 }"
             [class.selected]="row.selected">
             <td>
-              {{row.nombre}}
+              {{row.nombre | uppercase}}
             </td>
-            <td> {{row.areaExp}}</td>
-            <td> {{row.areaInt}}</td>
-            <td> {{row.localidad}} </td>
+            <td class="text-center"> {{row.areaExp | uppercase}}</td>
+            <td class="text-center"> {{row.areaInt | uppercase}}</td>
+            <td class="text-center"> {{row.localidad | uppercase}} </td>
             <td class="text-right"> {{row.sueldoMinimo | currency : '$'}} </td>
             <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
-            <td> {{row.curp}}</td>
-            <td> {{row.rfc}}</td>
+            <td class="text-center"> {{row.curp}}</td>
+            <td class="text-center"> {{row.rfc}}</td>
           </tr>
         </tbody>
         <ng-template #Loading>
@@ -69,7 +68,6 @@
       (numPages)="numPages = $event">
     </pagination>
   </div>
-  <pre *ngIf="config.paging" class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
 
 </div>
 
@@ -91,7 +89,7 @@
         <app-info-candidato [IdCandidato]="idCandidato"></app-info-candidato>
       </div>
       <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-outline-success" (click)="closeModal()">Cerrar</button>
+        <button type="button" class="btn btn-success mat-elevation-z8" (click)="closeModal()">Cerrar</button>
       </div>
     </div>
   </div>
