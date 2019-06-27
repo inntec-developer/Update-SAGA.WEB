@@ -58,7 +58,9 @@ export class DtVacantesGraficaPAComponent implements OnInit {
     this.UsuarioId = this.settings.user['id'];
     let estado2 = this.EstadoVacante.split(':', 1);
     this.bandera = estado2 == 'Cubiertas parcialmente' || estado2 == 'Cubiertas' 
-    || estado2 == 'Cubiertas por medios'|| estado2 == 'Cubiertas por el cliente'?false:true;
+    || estado2 == 'Cubiertas por medios'|| estado2 == 'Cubiertas por el cliente'
+    || estado2 == 'Captado'|| estado2 == 'Contratado' || estado2 == 'Masivo'
+    || estado2 == 'Operativo' || estado2 == 'Especial'?false:true;
    
   }
 

@@ -4,20 +4,20 @@ import { ComponentsService } from './../../../service/Components/components.serv
 import { SettingsService } from '../../../core/settings/settings.service';
 
 @Component({
-  selector: 'app-grafica-captado-contratado',
-  templateUrl: './grafica-captado-contratado.component.html',
-  styleUrls: ['./grafica-captado-contratado.component.scss']
+  selector: 'app-grafica-coordinacion',
+  templateUrl: './grafica-coordinacion.component.html',
+  styleUrls: ['./grafica-coordinacion.component.scss']
 })
-export class GraficaCaptadoContratadoComponent implements OnInit {
-
+export class GraficaCoordinacionComponent implements OnInit {
   Chart: Chart;
   Data: any;
   private UsuarioId: any;
   public NumeroVacantes: number;
   public EstadoVacante: string;
   public ShowModal: boolean;
-  public captado : number;
-  public contratado : number;
+  public masivo : number;
+  public especial : number;
+  public operativo : number;
 
   constructor(
     private servicio:ComponentsService,
@@ -27,28 +27,32 @@ export class GraficaCaptadoContratadoComponent implements OnInit {
   ngOnInit() {
     this.UsuarioId = this.settings.user['id'];
      document.oncontextmenu=null
-  this.servicio.getCaptadoContratado(this.UsuarioId).subscribe(item =>{
+  this.servicio.getCoordinacion(this.UsuarioId).subscribe(item =>{
  
-    this.captado = item['captado'];
-    this.contratado = item['contratado'];
+    this.masivo = item['masivo'];
+    this.operativo = item['operativo'];
+    this.especial = item['ezpecial'];
    
    this.Data = {
      datasets: [{
        backgroundColor: [
-                       '#FF8F35',
-                       '#3cba9f',
+                       '#8e5ea2',
+                       '#BA49FF',
+                       '#FF358F',
                         ],
        data: [
-          this.captado,
-          this.contratado 
+          this.masivo,
+          this.operativo, 
+          this.especial 
        ]
      }],
      labels: [
-       'Captado',
-       'Contratado',
+       'Masivo',
+       'Operativo',
+       'Especial',
      ]
    }
-   this.Chart = new Chart('captadoContratado', {
+   this.Chart = new Chart('coordinacion', {
      type: 'pie',
      title: { text: 'Seguimiento de Vacantes' },
      data: this.Data,
@@ -70,6 +74,7 @@ export class GraficaCaptadoContratadoComponent implements OnInit {
   })
   }
 
+
   detectedClick(evt: any) {
     let ActivatEvent = this.Chart.getElementAtEvent(evt);
     if (ActivatEvent[0]) {
@@ -80,5 +85,6 @@ export class GraficaCaptadoContratadoComponent implements OnInit {
       this.ShowModal = true;
     }
   }
+
 
 }

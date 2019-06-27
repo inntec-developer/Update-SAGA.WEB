@@ -49,6 +49,8 @@ export class ComponentsService {
   private UrlVacanteVencida = ApiConection.ServiceUrl + ApiConection.getVencidasG;
   private UrlVacanteResumen = ApiConection.ServiceUrl + ApiConection.getResumenG;
   private UrlContratadoCaptado = ApiConection.ServiceUrl + ApiConection.getcontracaptado;
+  private UrlCoordinacion = ApiConection.ServiceUrl + ApiConection.getCoordinaciongraf;
+  private UrlProductividad = ApiConection.ServiceUrl + ApiConection.getProductividadGraf;
 
   //Indicadores de Inicio
 
@@ -61,15 +63,25 @@ export class ComponentsService {
 
   constructor(private _httpClient: HttpClient) { }
 
+  getProductividad(data: any): Observable<any> {
+    let params = new HttpParams().set('usuario', data);
+    return this._httpClient.get(this.UrlProductividad, { params: params, headers: this.httpOptions.headers});
+  }
+
+  getCoordinacion(data: any): Observable<any> {
+    let params = new HttpParams().set('usuario', data);
+    return this._httpClient.get(this.UrlCoordinacion, { params: params, headers: this.httpOptions.headers});
+  }
+
   getCaptadoContratado(data: any): Observable<any> {
     let params = new HttpParams().set('usuario', data);
-    return this._httpClient.get(this.UrlVacanteResumen, { params: params, headers: this.httpOptions.headers});
+    return this._httpClient.get(this.UrlContratadoCaptado, { params: params, headers: this.httpOptions.headers});
   }
 
 
   getVResumen(data: any): Observable<any> {
     let params = new HttpParams().set('usuario', data);
-    return this._httpClient.get(this.UrlContratadoCaptado, { params: params, headers: this.httpOptions.headers});
+    return this._httpClient.get(this.UrlVacanteResumen, { params: params, headers: this.httpOptions.headers});
   }
 
   getVCubierta(data: any): Observable<any> {

@@ -139,6 +139,8 @@ import { DlgResultadosMedicosComponent } from './dlg-resultados-medicos/dlg-resu
 import { AutorizarFacturasPuroComponent } from './tablas/autorizar-facturas-puro/autorizar-facturas-puro.component';
 import { DlgCubiertasComponent } from './dlg-cubiertas/dlg-cubiertas.component';
 import { GraficaCaptadoContratadoComponent } from './Graficas/grafica-captado-contratado/grafica-captado-contratado.component';
+import { GraficaCoordinacionComponent } from './Graficas/grafica-coordinacion/grafica-coordinacion.component';
+import { GraficaProductividadComponent } from './Graficas/grafica-productividad/grafica-productividad.component';
 
 @NgModule({
   imports: [
@@ -283,7 +285,9 @@ import { GraficaCaptadoContratadoComponent } from './Graficas/grafica-captado-co
     DlgResultadosMedicosComponent,
     AutorizarFacturasPuroComponent,
     DlgCubiertasComponent,
-    GraficaCaptadoContratadoComponent
+    GraficaCaptadoContratadoComponent,
+    GraficaCoordinacionComponent,
+    GraficaProductividadComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -378,7 +382,9 @@ import { GraficaCaptadoContratadoComponent } from './Graficas/grafica-captado-co
     DlgResultadosMedicosComponent,
     AutorizarFacturasPuroComponent,
     DlgCubiertasComponent,
-    GraficaCaptadoContratadoComponent
+    GraficaCaptadoContratadoComponent,
+    GraficaCoordinacionComponent,
+    GraficaProductividadComponent
   ],
   entryComponents: [ DlgCubiertasComponent, DlgResultadosMedicosComponent, DlgRegistroMasivoComponent, RegistroReclutadorComponent, TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
 

@@ -38,26 +38,26 @@ export class IndicadoresComponent implements OnInit {
     this.spinner.show();
     this.UsuarioId = this.settings.user['id'];
 
-    this.service.getVRadial(this.UsuarioId).subscribe(item =>{
+    // this.service.getVRadial(this.UsuarioId).subscribe(item =>{
 
-      this.Entrevistado = item['entrevi'];
-      this.Entrevistadopor = item['entrevTotal'];
+    //   this.Entrevistado = item['entrevi'];
+    //   this.Entrevistadopor = item['entrevTotal'];
 
-      this.Finalista = item['finalista'];
-      this.Finalistapor = item['finaTotal'];
+    //   this.Finalista = item['finalista'];
+    //   this.Finalistapor = item['finaTotal'];
 
-      this.Enviado = item['enviado'];
-      this.Enviadopor = item['enviadoTotal'];
+    //   this.Enviado = item['enviado'];
+    //   this.Enviadopor = item['enviadoTotal'];
 
-      this.Aceptado = item['aceptado'];
-      this.Aceptadopor = item['acepTotal'];
+    //   this.Aceptado = item['aceptado'];
+    //   this.Aceptadopor = item['acepTotal'];
 
-      this.Rechazado = item['recha'];
-      this.Rechazadopor = item['rechaTotal'];
+    //   this.Rechazado = item['recha'];
+    //   this.Rechazadopor = item['rechaTotal'];
 
-      this.Contratado = item['contrata'];
-      this.Contratadopor = item['contraTotal'];
-    })
+    //   this.Contratado = item['contrata'];
+    //   this.Contratadopor = item['contraTotal'];
+    // })
 
   }
 

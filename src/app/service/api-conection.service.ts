@@ -370,6 +370,8 @@ export class ApiConection {
   public static getResumenG = 'indicador/resumen'
   public static getRadialG = 'indicador/radial'
   public static getcontracaptado = 'indicador/captadocontra'
+  public static getCoordinaciongraf = 'indicador/Coordinacion'
+  public static getProductividadGraf = 'indicador/productividad'
 
   /* Contadores */
   public static getPerfiles = 'contadores/perfiles';
