@@ -1,27 +1,27 @@
 <div class="dt-container" *ngIf="registros > 0 else NotCandidatos">
   <div class="dt-header">
-    <mat-form-field>
+    <!-- <mat-form-field>
       <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
         (tableChanged)="onChangeTable(config)">
-    </mat-form-field>
-    <div class="row justify-content-between">
-      <div class="d-flex align-items-stretch ">
-        <!-- <btn-view (click)="openDialogShowRequi(element.id, element.folio)"  container="body" placement="bottom" tooltip="Ver Requisición"></btn-view> -->
-      </div>
-      <div>
-        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary">
+    </mat-form-field> -->
+    <div class="row justify-content-end">
+      <!-- <div class="d-flex align-items-stretch ">
+     <btn-view (click)="openDialogShowRequi(element.id, element.folio)"  container="body" placement="bottom" tooltip="Ver Requisición"></btn-view> 
+      </div> -->
+
+        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="mr-1 mb-1 btn btn-primary mat-elevation-z8">
           <em class="fa fa-eraser"></em>
         </button>
-        <button class="mb-1  btn btn-outline-success margen" type="button" (click)="refreshTable()" container="body"
+        <button class="mr-1 mb-1 btn btn-success mat-elevation-z8" type="button" (click)="refreshTable()" container="body"
           placement="bottom" tooltip="Actualizar">
           <em class="icon-refresh"></em>
         </button>
-      </div>
     </div>
   </div>
+
   <div class="card">
     <div #tableContainer>
-      <table id="misCandidatos" ngClass="{{config.className || ''}}" role="grid" class="table" style="width: 100%;">
+      <table id="misCandidatos" ngClass="{{config.className || ''}}" role="grid" class="table border-top" style="width: 100%;">
         <thead>
           <tr>
             <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">

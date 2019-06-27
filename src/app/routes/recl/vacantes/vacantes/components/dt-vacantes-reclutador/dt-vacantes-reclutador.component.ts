@@ -1,20 +1,19 @@
-import { DlgRegistroMasivoComponent } from './../../../../../../components/dlg-registro-masivo/dlg-registro-masivo.component';
 import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { CandidatosService } from './../../../../../../service/Candidatos/candidatos.service';
 import { DatePipe } from '@angular/common';
 import { DialogAssingRequiComponent } from '../dialogs/dialog-assing-requi/dialog-assing-requi.component';
+import { DlgRegistroMasivoComponent } from './../../../../../../components/dlg-registro-masivo/dlg-registro-masivo.component';
 import { DlgRequisicionPausaComponent } from './../../../../../../components/dlg-requisicion-pausa/dlg-requisicion-pausa.component';
+import { DlgTransferComponent } from '../../../../../vtas/requisiciones/components/dlg-transfer/dlg-transfer.component';
 import { ExcelService } from '../../../../../../service/ExcelService/excel.service';
 import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../../../../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../../../../../service';
 import { Router } from '@angular/router';
-import { DlgTransferComponent } from '../../../../../vtas/requisiciones/components/dlg-transfer/dlg-transfer.component';
 import { SettingsService } from '../../../../../../core/settings/settings.service';
-
 
 const swal = require('sweetalert');
 
@@ -124,7 +123,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
           this.totalPos += r.vacantes;
           this.totalContratados += r.contratados;
         }
-       
+
       })
       this.rows = this.dataSource.slice(0, this.itemsPerPage);
       this.registros = this.rows.length;
@@ -290,7 +289,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
               }
             }
           }
-         
+
         });
       }
     });
@@ -729,6 +728,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   openDialogTransfer() {
     this.element.usuario = 4;
+    this.element.depto = 'Recl';
     let dialogCnc = this.dialog.open(DlgTransferComponent, {
       width: '50%',
       height: '95%',
@@ -741,7 +741,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       }
     })
   }
-  
+
   OpenDialogRequiPausa(estatusId: any, estatus: any) {
     var aux = { requisicionId: this.requi.id, folio: this.requi.folio, cliente: this.requi.vacante, vacante: this.vBtra }
     let dialog = this.dialog.open(DlgRequisicionPausaComponent, {
@@ -779,12 +779,12 @@ export class DtVacantesReclutadorComponent implements OnInit {
       height: '600px',
       data: { requisicionId: this.requi.id, folio: this.requi.folio, cliente: this.element.cliente, vacante: this.vBtra },
       disableClose: true
-      
+
     });
 
     dialogDlt.afterClosed().subscribe(result => {
       if (result == 200) {
-    
+
             this.popToast('success', 'Seguimiento', 'El registro se realizó correctamente');
 
 

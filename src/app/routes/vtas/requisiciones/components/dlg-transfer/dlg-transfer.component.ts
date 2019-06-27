@@ -86,11 +86,19 @@ export class DlgTransferComponent implements OnInit {
   }
   GetCoordinadores()
   {
-    this._sevice.GetByUsuario(this.data.usuario).subscribe(data => {
+    this._sevice.GetByUsuario(this.data.depto).subscribe(data => {
       this.coord = data;
       if(this.data.usuario == 4)
       {
         this.titulo = "Coordinador";
+      }
+      else if(this.data.usuario == 5)
+      {
+        this.titulo = "Lider";
+      }
+      else if(this.data.usuario == 10)
+      {
+        this.titulo = "Ejecutivo de cuenta";
       }
       else if(this.data.usuario == 11)
       {

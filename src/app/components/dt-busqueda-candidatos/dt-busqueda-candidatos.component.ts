@@ -54,15 +54,15 @@ export class DtBusquedaCandidatosComponent implements OnInit {
 
   public rows: Array<any> = []
   public columns: Array<any> = [
-    { title: 'Estatus', className: 'text-success', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
-    { title: 'Nombre Candidato', className: 'text-info', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
-    { title: 'Área Experiencia', className: 'text-info', name: 'areaExp', filtering: { filterString: '', placeholder: 'Experiencia' } },
-    { title: 'Área Interes', className: 'text-info', name: 'areaInt', filtering: { filterString: '', placeholder: 'Interes' } },
-    { title: 'Localidad', className: 'text-info', name: 'localidad', filtering: { filterString: '', placeholder: 'Localidad' } },
+    { title: 'Estatus', className: 'text-center text-success', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
+    { title: 'Nombre Candidato', className: 'text-center text-info', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
+    { title: 'Área Experiencia', className: 'text-center text-info', name: 'areaExp', filtering: { filterString: '', placeholder: 'Experiencia' } },
+    { title: 'Área Interes', className: 'text-center text-info', name: 'areaInt', filtering: { filterString: '', placeholder: 'Interes' } },
+    { title: 'Localidad', className: 'text-center text-info', name: 'localidad', filtering: { filterString: '', placeholder: 'Localidad' } },
     { title: 'Sueldo Aceptable', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo aceptable' } },
     { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad', filtering: { filterString: '', placeholder: 'Fecha Nacimiento' } },
-    { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
-    { title: 'RFC', className: 'text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
+    { title: 'CURP', className: 'text-center text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
+    { title: 'RFC', className: 'text-center text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
   ]
 
 
@@ -109,45 +109,64 @@ export class DtBusquedaCandidatosComponent implements OnInit {
       return 0;
     });
   }
+public getCleanedString(cadena: string) : string
+{
+  cadena = cadena.replace(/á/gi,"a");
+  cadena = cadena.replace(/é/gi,"e");
+  cadena = cadena.replace(/í/gi,"i");
+  cadena = cadena.replace(/ó/gi,"o");
+  cadena = cadena.replace(/ú/gi,"u");
+  cadena = cadena.replace(/ñ/gi,"n");
 
+  return cadena;
+}
   public changeFilter(data: any, config: any): any {
+
     let filteredData: Array<any> = data;
+    this.showFilterRow = true;
     this.columns.forEach((column: any) => {
-      if (column.filtering) {
-        this.showFilterRow = true;
+      if (column.filtering.filterString != "") {
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
-            return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+          {
+            let itemAux = this.getCleanedString(item[column.name].toString().toLowerCase());
+            let itemAux2 = this.getCleanedString(column.filtering.filterString.toLowerCase());
+
+            if(itemAux.match(itemAux2))
+            {
+              return item;
+            }
+          }
         });
       }
     });
 
-    if (!config.filtering) {
-      return filteredData;
-    }
+    // if (!config.filtering) {
+    //   return filteredData;
+    // }
 
-    if (config.filtering.columnName) {
-      return filteredData.filter((item: any) =>
-        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-    }
+    // if (config.filtering.columnName) {
+    //   return filteredData.filter((item: any) =>
+    //     item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
+    // }
 
-    let tempArray: Array<any> = [];
-    filteredData.forEach((item: any) => {
-      let flag = false;
-      this.columns.forEach((column: any) => {
-        if (item[column.name] == null) {
-          flag = true;
-        } else {
-          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-            flag = true;
-          }
-        }
-      });
-      if (flag) {
-        tempArray.push(item);
-      }
-    });
-    filteredData = tempArray;
+    // let tempArray: Array<any> = [];
+    // filteredData.forEach((item: any) => {
+    //   let flag = false;
+    //   this.columns.forEach((column: any) => {
+    //     if (item[column.name] == null) {
+    //       flag = true;
+    //     } else {
+    //       if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
+    //         flag = true;
+    //       }
+    //     }
+    //   });
+    //   if (flag) {
+    //     tempArray.push(item);
+    //   }
+    // });
+    // filteredData = tempArray;
 
     return filteredData;
   }

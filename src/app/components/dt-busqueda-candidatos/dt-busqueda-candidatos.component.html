@@ -1,22 +1,18 @@
 <div class="dt-container">
   <div class="dt-header">
-    <mat-form-field>
+    <!-- <mat-form-field>
       <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
         (tableChanged)="onChangeTable(config)">
-    </mat-form-field>
-    <div class="row justify-content-between">
-      <div class="d-flex align-items-stretch ">
-      </div>
-      <div>
-        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="margen mb-1 btn btn-outline-primary">
+    </mat-form-field> -->
+    <div class="row justify-content-end">
+        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="btn btn-primary mat-elevation-z8">
           <em class="fa fa-eraser"></em>
         </button>
-      </div>
     </div>
   </div>
   <div class="card">
     <div #tableContainer>
-      <table id="resultBusqueda" ngClass="{{config.className || ''}}" role="grid" class="table" style="width: 100%;">
+      <table id="resultBusqueda" ngClass="{{config.className || ''}}" role="grid" class="table border-top" style="width: 100%;">
         <thead>
           <tr>
             <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
@@ -52,13 +48,13 @@
                 <td>
                   {{row.nombre}}
                 </td>
-                <td> {{row.areaExp}}</td>
-                <td> {{row.areaInt}}</td>
-                <td> {{row.localidad}} </td>
+                <td class="text-center"> {{row.areaExp}}</td>
+                <td class="text-center"> {{row.areaInt}}</td>
+                <td class="text-center"> {{row.localidad}} </td>
                 <td class="text-right"> {{row.sueldoMinimo | currency : '$'}} </td>
                 <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
-                <td> {{row.curp}}</td>
-                <td> {{row.rfc}}</td>
+                <td class="text-center"> {{row.curp}}</td>
+                <td class="text-center"> {{row.rfc}}</td>
               </tr>
             </div>
           </ng-scrollbar>

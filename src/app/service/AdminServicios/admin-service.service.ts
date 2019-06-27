@@ -293,8 +293,8 @@ export class AdminServiceService {
     return this._httpClient.post(this.UrlDeleteUserRol, JSON.stringify(data), this.httpOptions)
   }
 
-  GetByUsuario(tipo: number): Observable<any>{
-    let params = new HttpParams().set('tipo', tipo.toString());
+  GetByUsuario(depto: string): Observable<any>{
+    let params = new HttpParams().set('depto', depto);
     return this._httpClient.get(this.UrlGetByUsuario, {params: params, headers: this.httpOptions.headers});
   }
   GetLideres() : Observable<any>

@@ -20,14 +20,14 @@
     <btn-view (click)="showDamfo()"  container="body" placement="bottom" tooltip="Ver DAM-FO-290"></btn-view> -->
   </div>
   <div>
-    <button container="body" placement="bottom" tooltip="Regresar" class="mb-1 btn btn-outline-warning" type="button"
+    <button container="body" placement="bottom" tooltip="Regresar" class="mb-3 btn btn-warning mat-elevation-z8" type="button"
       [routerLink]="['/reclutamiento/vacantesReclutador']">
       <em class="icon-action-undo"></em>
     </button>
   </div>
 </div>
 
-<div class="row">
+<!-- <div class="row">
   <div class="col-md-12">
     <div class="panel panel-default">
       <app-card-vacante [ClientId]="ClienteId" [RequisicionId]="RequisicionId"></app-card-vacante>
@@ -35,15 +35,15 @@
       <br />
     </div>
   </div>
-</div>
+</div> -->
 <div class="row">
   <div class="col-md-12">
     <div class="panel panel-default">
-      <app-buttons-postulaciones [RequisicionId]="RequisicionId" [vacante]="Vacante" [clienteId]="ClienteId" [estatusVacante] = "estatusVacante"></app-buttons-postulaciones>
-      <br />
-      <app-detail-vacantes [RequisicionId]="RequisicionId"></app-detail-vacantes>
+      <app-buttons-postulaciones [RequisicionId]="RequisicionId" [vacante]="Vacante" [clienteId]="ClienteId" [estatusVacante] = "estatusVacante"></app-buttons-postulaciones>     
     </div>
   </div>
 </div>
-<br>
+<br/>
 <comentario-vacante [RequisicionId]="RequisicionId" [MotivoId]="7"></comentario-vacante>
+<br/>
+<app-detail-vacantes [RequisicionId]="RequisicionId" [ClienteId]="ClienteId"></app-detail-vacantes>

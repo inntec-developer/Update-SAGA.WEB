@@ -18,17 +18,17 @@
       </thead>
       <tbody>
         <tr *ngFor="let row of conteo">
-          <td class="text-center"> {{row.horario}}</td>
-          <td class="text-center"> {{row.vacantes}}</td>
-          <td class="text-center"> {{row.porcentaje}}</td>
-          <td class="text-center"> {{row.enProcesoEnt}} </td>
-          <td class="text-center"> {{row.abandono}} </td>
-          <td class="text-center"> {{row.descartados}}</td>
-          <td class="text-center"> {{row.enProcesoFR}}</td>
-          <td class="text-center"> {{row.entCliente}} </td>
-          <td class="text-center"> {{row.enProcesoFC}} </td>
-          <td class="text-center"> {{row.rechazados}}</td>
-          <td class="text-center"> {{row.contratados}}</td>
+          <td class="text-center"> {{row.horario | uppercase}}</td>
+          <td class="text-center"><span class="badge badge-pill badge-info">{{row.vacantes}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-info">{{row.porcentaje}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-info">{{row.enProcesoEnt}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-info">{{row.abandono}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-info">{{row.descartados}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-info">{{row.enProcesoFR}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-info">{{row.entCliente}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-info">{{row.enProcesoFC}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-info">{{row.rechazados}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-info">{{row.contratados}}</span></td>
         </tr>
       </tbody>
     </table>
@@ -38,158 +38,82 @@
 <br />
 <div class="dt-container mat-elevation-z8">
   <div class="dt-header">
-    <div class="box">
-      <span>
-        <ul>
+        <button [ngClass]="pst ? 'btn btn-xs disabled' : 'btn btn-xs btn-success'" class="mr-2 mat-elevation-z8" [disabled]="pst"
+          type="button" (click)="SetProceso(12, 'Apartado')" placement="bottom" tooltip="Apartar" container="body">
+          <em class="fa fa-thumbs-o-up"></em>
+        </button>
+        <button [ngClass]="liberado ? 'btn btn-xs disabled' : 'btn btn-xs btn-danger'" class="mr-2 mat-elevation-z8" [disabled]="liberado"
+          type="button" (click)="SetProceso(27, 'Liberado')" container="body" placement="bottom" tooltip="Desapartar">
+          <em class="fa fa-thumbs-o-down"></em>
+        </button>
+        <em class="vl mr-2"></em>
+        <button [disabled]="cr" [ngClass]="cr ? 'btn btn-xs disabled' : 'btn btn-xs btn-warning'" type="button" (click)="SetProceso(17, 'Cita Reclutamiento')"
+          container="body" placement="bottom" class="mr-2 mat-elevation-z8" tooltip="Cita Reclutamiento">
+          <em class="fa fa-address-book"></em>
+        </button>
+        <button [ngClass]="enr ? 'btn btn-xs disabled' : 'btn btn-xs btn-warning'" [disabled]="enr" type="button" (click)="SetProceso(18, 'Entrevista Reclutamiento')"
+          container="body" class="mr-2 mat-elevation-z8" placement="bottom" tooltip="Entrevista Reclutamiento">
+          <em class="fa fa-microphone"></em>
+        </button>
+        <em class="vl mr-2"></em>
+        <button [disabled]="evt" [ngClass]="evt ? 'btn btn-xs disabled' : 'btn btn-xs btn-green'" type="button" class="mr-2 mat-elevation-z8"
+          (click)="SetProceso(13, 'Evaluaci&oacute;n T&eacute;cnica')" container="body" placement="bottom" tooltip="Evaluaci&oacute;n T&eacute;cnica">
+          <em class="fa fa-search"></em>
+        </button>
+        <button [disabled]="evps" [ngClass]="evps ? 'btn btn-xs disabled' : 'btn btn-xs btn-green'" type="button" class="mr-2 mat-elevation-z8"
+          (click)="SetProceso(14, 'Evaluaci&oacute;n Psicom&eacute;trica')" container="body" placement="bottom" tooltip="Evaluaci&oacute;n Psicom&eacute;trica">
+          <em class="fa fa-users"></em>
+        </button>
+        <button [disabled]="evm" [ngClass]="evm ? 'btn btn-xs disabled' : 'btn btn-xs btn-green'" type="button" class="mr-2 mat-elevation-z8"
+          (click)="SetProceso(15, 'Evaluaci&oacute;n M&eacute;dica')" container="body" placement="bottom" tooltip="Evaluaci&oacute;n M&eacute;dica">
+          <em class="fa fa-user-md"></em>
+        </button>
+        <em class="vl mr-2"></em>
+        <button [disabled]="fr" [ngClass]="fr ? 'btn btn-xs disabled' : 'btn btn-xs btn-warning'" type="button" class="mr-2 mat-elevation-z8"
+          (click)="SetProceso(21, 'Finalista Reclutamiento')" container="body" placement="bottom" tooltip="Finalista Reclutamiento">
+          <em class="fa fa-user-circle-o"></em>
+        </button>
+        <button [disabled]="enc" [ngClass]="enc ? 'btn btn-xs disabled' : 'btn btn-xs btn-info'" type="button" class="mr-2 mat-elevation-z8"
+          (click)="SetProceso(22, 'Entrevista Cliente')" container="body" placement="bottom" tooltip="Entrevista Cliente">
+          <em class="fa fa-microphone"></em>
+        </button>
+        <button [disabled]="fc" [ngClass]="fc ? 'btn btn-xs disabled' : 'btn btn-xs btn-info'" type="button" class="mr-2 mat-elevation-z8"
+          (click)="SetProceso(23, 'Finalista Cliente')" container="body" placement="bottom" tooltip="Finalista Cliente">
+          <em class="fa fa-user-circle-o"></em>
+        </button>
+        <button [disabled]="contratado" [ngClass]="contratado ? 'btn btn-xs disabled' : 'btn btn-xs btn-success'" class="mr-2 mat-elevation-z8"
+          type="button" (click)="SetProceso(24, 'Cubierto')" container="body" placement="bottom" tooltip="Cubierto">
+          <em class="fa fa-user-plus"></em>
+        </button>
+        <!-- <li><a><em class="vl"></em></a></li>
+                      <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(28)"  container="body" placement="bottom" tooltip="Cancelada">-->
+        
+        <button [disabled]="rechazado" [ngClass]="rechazado ? 'btn btn-xs disabled' : 'btn btn-xs btn-danger'" type="button"
+          class="mr-2 mat-elevation-z8" (click)="SetProceso(40, 'Rechazado por Cliente')" container="body" placement="bottom" tooltip="Rechazado por Cliente">
+          <em class="fa fa-user-times"></em>
+        </button>
+        <button [disabled]="nr" [ngClass]="nr ? 'btn btn-xs disabled' : 'btn btn-xs btn-danger'" type="button" class="mat-elevation-z8"
+          (click)="SetProceso(42, 'NR')" container="body" placement="bottom" tooltip="NR">
+          <em class="fa fa-flag"></em>
+        </button>
+        
+        <button class="btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="refresh()" container="body" placement="bottom"
+          tooltip="Actualizar">
+          <em class="icon-refresh"></em>
+        </button>
+        
+        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" class="mr-2 btn btn-xs float-right mat-elevation-z8"
+          [disabled]="!showFilterRow" [ngClass]="(!showFilterRow) ? 'disabled':'btn-info'">
+          <em class="fa fa-eraser"></em>
+        </button>
 
-          <!-- <li><a>
-              <button class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="VerCandidato()"  container="body" placement="bottom" tooltip="Ver Candidato">
-                  <em class="fa fa-eye"></em>
-                </button>
-              </a></li> -->
-          <li><a>
-              <button [ngClass]="pst ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'"
-                [disabled]="pst" type="button" (click)="SetProceso(12, 'Apartado')" placement="bottom" tooltip="Apartar"
-                container="body">
-                <em class="fa fa-thumbs-o-up"></em>
-              </button>
-            </a></li>
-          <li><a>
-              <button [ngClass]="liberado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'"
-                [disabled]="liberado" type="button" (click)="SetProceso(27, 'Liberado')" container="body"
-                placement="bottom" tooltip="Desapartar">
-                <em class="fa fa-thumbs-o-down"></em>
-              </button>
-            </a></li>
-          <li><a><em class="vl"></em></a></li>
-          <!-- <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button" (click)="SetProceso(16)"  container="body" placement="bottom" tooltip="Cita Candidato">
-                <em class="fa fa-address-book"></em>
-              </button></a></li> -->
-          <li><a><button [disabled]="cr"
-                [ngClass]="cr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'" type="button"
-                (click)="SetProceso(17, 'Cita Reclutamiento')" container="body" placement="bottom"
-                tooltip="Cita Reclutamiento">
-                <em class="fa fa-address-book"></em>
-              </button></a></li>
-          <li><a><button [ngClass]="enr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'"
-                [disabled]="enr" type="button" (click)="SetProceso(18, 'Entrevista Reclutamiento')" container="body"
-                placement="bottom" tooltip="Entrevista Reclutamiento">
-                <em class="fa fa-microphone"></em>
-              </button></a></li>
-          <li><a><em class="vl"></em></a></li>
-          <li><a><button [disabled]="evt"
-                [ngClass]="evt ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'" type="button"
-                (click)="SetProceso(13, 'Evaluaci&oacute;n T&eacute;cnica')" container="body" placement="bottom"
-                tooltip="Evaluaci&oacute;n T&eacute;cnica">
-                <em class="fa fa-search"></em>
-              </button></a></li>
-          <li><a><button [disabled]="evps"
-                [ngClass]="evps ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'" type="button"
-                (click)="SetProceso(14, 'Evaluaci&oacute;n Psicom&eacute;trica')" container="body" placement="bottom"
-                tooltip="Evaluaci&oacute;n Psicom&eacute;trica">
-                <em class="fa fa-users"></em>
-              </button></a></li>
-          <li><a><button [disabled]="evm"
-                [ngClass]="evm ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-green'" type="button"
-                (click)="SetProceso(15, 'Evaluaci&oacute;n M&eacute;dica')" container="body" placement="bottom"
-                tooltip="Evaluaci&oacute;n M&eacute;dica">
-                <em class="fa fa-user-md"></em>
-              </button></a></li>
-          <li><a><em class="vl"></em></a></li>
-          <li><a><button [disabled]="fr"
-                [ngClass]="fr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-warning'" type="button"
-                (click)="SetProceso(21, 'Finalista Reclutamiento')" container="body" placement="bottom"
-                tooltip="Finalista Reclutamiento">
-                <em class="fa fa-user-circle-o"></em>
-              </button></a></li>
-          <li><a><button [disabled]="enc"
-                [ngClass]="enc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'" type="button"
-                (click)="SetProceso(22, 'Entrevista Cliente')" container="body" placement="bottom"
-                tooltip="Entrevista Cliente">
-                <em class="fa fa-microphone"></em>
-              </button></a></li>
-          <li><a><button [disabled]="fc"
-                [ngClass]="fc ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-info'" type="button"
-                (click)="SetProceso(23, 'Finalista Cliente')" container="body" placement="bottom"
-                tooltip="Finalista Cliente">
-                <em class="fa fa-user-circle-o"></em>
-              </button></a></li>
-          <li><a><button [disabled]="contratado"
-                [ngClass]="contratado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'"
-                type="button" (click)="SetProceso(24, 'Cubierto')" container="body" placement="bottom"
-                tooltip="Cubierto">
-                <em class="fa fa-user-plus"></em>
-              </button></a></li>
-          <!-- <li><a><em class="vl"></em></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(28)"  container="body" placement="bottom" tooltip="Cancelada">-->
-
-          <li><a><button [disabled]="rechazado"
-                [ngClass]="rechazado ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" type="button"
-                (click)="SetProceso(40, 'Rechazado por Cliente')" container="body" placement="bottom"
-                tooltip="Rechazado por Cliente">
-                <em class="fa fa-user-times"></em>
-              </button></a></li>
-
-          <li><a><button [disabled]="nr"
-                [ngClass]="nr ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-danger'" type="button"
-                (click)="SetProceso(42, 'NR')" container="body" placement="bottom" tooltip="NR">
-                <em class="fa fa-flag"></em>
-              </button></a></li>
-
-          <!-- <li><a><button class="mb-1 btn btn-xs btn-outline-primary"  type="button">
-                <em class="fa fa-phone"></em>
-              </button></a></li>
-              <li><a><button class="mb-1 btn btn-xs btn-outline-info"  type="button">
-                <em class="fa fa-phone"></em>
-              </button></a></li> -->
-
-
-          <!-- <li><a>
-                <button [disabled]="cv" class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="SetProceso(11)"  container="body" placement="bottom" tooltip="CV Visto">
-                    <em class="fa fa-file-text-o"></em>
-                  </button>
-                </a></li> -->
-
-
-
-
-
-
-          <!-- <li><a><em class="vl"></em></a></li>
-
-              <li><a><button class="mb-1 btn btn-xs btn-outline-warning"  type="button" (click)="SetProceso(23)"  container="body" placement="bottom" tooltip="Transferir">
-                <em class="fa fa-exchange"></em>
-              </button></a></li>
-          -->
-          <!-- <li><a><button class="mb-1 btn btn-xs btn-outline-success"  type="button">
-                <em class="fa fa-unlock"></em>
-              </button></a></li>
- -->
-
-
-        </ul>
-      </span>
-      <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body"
-        class="margen mr-1 btn btn-xs btn-acciones float-right" [disabled]="!showFilterRow"
-        [ngClass]="(!showFilterRow) ? 'disabled':'btn-outline-primary'">
-        <em class="fa fa-eraser"></em>
-      </button>
-      <button class="mb-1  btn btn-xs btn-outline-success float-right margen" type="button" (click)="refresh()"
-        container="body" placement="bottom" tooltip="Actualizar">
-        <em class="icon-refresh"></em>
-      </button>
-
-      <!-- <button [ngClass]="flagContratados ? 'mb-1 btn disabled' : 'mb-1 btn btn-outline-warning'" [disabled] = "flagContratados" class="float-right margen {{activeClass}}" type="button" (click)="OpenEditarComponent()" container="body" placement="bottom" tooltip="Editar Contratados">
-                <em class="fa fa-pencil"></em>
-              </button> -->
-    </div>
-    <br />
+    <!-- <br />
 
     <mat-form-field>
       <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
         (tableChanged)="onChangeTable(config)">
     </mat-form-field>
-    <br />
+    <br /> -->
 
   </div>
   <div class="card">
@@ -220,15 +144,15 @@
               [class.selected]="row.selected" placement="bottom"
               tooltip="click para seleccionar - dblclick para visualizar" container="body">
               <td class="text-center"><span
-                  *ngIf="row.estatusId != 12 && row.estatusId != 17 && row.estatusId != 27 else sinAsignar">{{row.horario}}</span>
+                  *ngIf="row.estatusId != 12 && row.estatusId != 17 && row.estatusId != 27 else sinAsignar">{{row.horario | uppercase}}</span>
               </td>
               <ng-template #sinAsignar>
                 <span>SIN ASIGNAR</span>
               </ng-template>
-              <td class="text-center"> {{row.nombre}} {{ row.apellidoPaterno }} {{row.apellidoMaterno}}</td>
-              <td class="text-center"> {{row.areaExp }}</td>
-              <td class="text-center"> {{row.areaInt }}</td>
-              <td class="text-center"> {{row.localidad }} </td>
+              <td class="text-center"> {{row.nombre | uppercase}} {{ row.apellidoPaterno | uppercase }} {{row.apellidoMaterno | uppercase}}</td>
+              <td class="text-center"> {{row.areaExp | uppercase}}</td>
+              <td class="text-center"> {{row.areaInt | uppercase}}</td>
+              <td class="text-center"> {{row.localidad | uppercase}} </td>
               <td class="text-center"> {{row.sueldoMinimo | currency : '$'}} </td>
               <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
               <td class="text-center"> {{row.curp | uppercase }}</td>

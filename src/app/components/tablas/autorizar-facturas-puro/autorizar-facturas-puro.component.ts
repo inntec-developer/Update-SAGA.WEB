@@ -150,6 +150,8 @@ export class AutorizarFacturasPuroComponent implements OnInit {
       this.autorizar = false;
       this.comment = false;
       this.view = false;
+      this.cancelar = false;
+      this.element = null;
     }, 1000);
 
   }
@@ -263,6 +265,7 @@ export class AutorizarFacturasPuroComponent implements OnInit {
         this.comment = false;
         this.view = false;
         this.cancelar = false;
+        this.element = null;
       }
     })
   }

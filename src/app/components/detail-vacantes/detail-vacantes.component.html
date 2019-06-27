@@ -1,5 +1,22 @@
 <mat-accordion *ngIf="Datos.length > 0" class="example-headers-align">
-  <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="text-warning">
+            Datos del Cliente
+          </mat-panel-title>
+          <mat-panel-description>
+    
+          </mat-panel-description>
+          <i class="fa fa-handshake-o" style="color: #2874A6;"></i>
+        </mat-expansion-panel-header>
+        <div class="row mb-3">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+              <app-card-vacante [ClienteId]="ClienteId" [RequisicionId]="RequisicionId"></app-card-vacante>
+            </div>
+          </div>
+      </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title class="text-warning">
         Datos de la Vacante
@@ -9,7 +26,6 @@
       </mat-panel-description>
       <mat-icon style="color: #2874A6;">info</mat-icon>
     </mat-expansion-panel-header>
-
     <div class="row">
       <div class="col-md-4 text-muted">
         <strong class="text-primary">Folio: </strong> {{Datos.requisicion?.folio}}
@@ -54,7 +70,7 @@
     </mat-action-row>
   </mat-expansion-panel>
 
-  <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+  <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title class="text-warning">
         Reclutamiento
@@ -86,7 +102,7 @@
     </mat-action-row>
   </mat-expansion-panel>
 
-  <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+  <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title class="text-warning">
         Beneficios
@@ -115,7 +131,7 @@
     </mat-action-row>
   </mat-expansion-panel>
 
-  <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+  <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title class="text-warning">
         Puesto
@@ -152,7 +168,7 @@
     </mat-action-row>
   </mat-expansion-panel>
 
-  <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle>
+  <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title class="text-warning">
         Sueldos
@@ -212,7 +228,7 @@
     </mat-action-row>
   </mat-expansion-panel>
 
-  <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)" hideToggle>
+  <mat-expansion-panel [expanded]="step === 6" (opened)="setStep(6)" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title class="text-warning">
         Documentación
@@ -249,7 +265,7 @@
     </mat-action-row>
   </mat-expansion-panel>
 
-  <mat-expansion-panel [expanded]="step === 6" (opened)="setStep(6)" hideToggle>
+  <mat-expansion-panel [expanded]="step === 7" (opened)="setStep(7)" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title class="text-warning">
         Prestaciones
@@ -286,7 +302,7 @@
     </mat-action-row>
   </mat-expansion-panel>
 
-  <mat-expansion-panel [expanded]="step === 7" (opened)="setStep(7)" hideToggle>
+  <mat-expansion-panel [expanded]="step === 8" (opened)="setStep(8)" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title class="text-warning">
         Psicometrias
@@ -323,7 +339,7 @@
     </mat-action-row>
   </mat-expansion-panel>
 
-  <mat-expansion-panel [expanded]="step === 8" (opened)="setStep(8)" hideToggle>
+  <mat-expansion-panel [expanded]="step === 9" (opened)="setStep(9)" hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title class="text-warning">
         Competencias
