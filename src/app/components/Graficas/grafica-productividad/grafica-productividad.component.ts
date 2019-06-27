@@ -29,6 +29,7 @@ export class GraficaProductividadComponent implements OnInit {
     var Onombre = [];
     var Opos = [];
     var Ocub = [];
+    var Opunta = [];
     var cadena = "";
     this.UsuarioId = this.settings.user['id'];
      document.oncontextmenu=null
@@ -40,6 +41,7 @@ export class GraficaProductividadComponent implements OnInit {
       Onombre.push(item2.nombre)
       Opos.push(item2.numeropos)
       Ocub.push(item2.cubiertas)
+      Opunta.push(item2.puntaje)
       // this.nombres += '"'+ item2.nombre +'"'+',';
       //  this.posiciones += item2.numeropos+',';
       //  this.cubiertas += item2.cubiertas+',';
@@ -57,12 +59,17 @@ export class GraficaProductividadComponent implements OnInit {
       datasets: [
         {
           label: "N. Posiciones",
-          backgroundColor: "#FFA81E",
+          backgroundColor: "#6087FF",
           data: Opos
         }, {
           label: "Cubiertas",
-          backgroundColor: "#0FFF5B",
+          backgroundColor: "#FF4571",
           data: Ocub
+        }
+        , {
+          label: "Puntaje",
+          backgroundColor: "#0FFF5B",
+          data: Opunta
         }
       ]
     }

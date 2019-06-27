@@ -26,7 +26,7 @@ export class CoordinacionComponent implements OnInit {
 
   // Varaibles del paginador
   public page: number = 1;
-  public itemsPerPage: number = 20;
+  public itemsPerPage: number = 25;
   public maxSize: number = 5;
   public numPages: number = 1;
   public length: number = 0;
@@ -98,10 +98,10 @@ export class CoordinacionComponent implements OnInit {
 
 
 public columns: Array<any> = [
-  { title: 'Estatus', className: 'text-info text-center', name: 'descripcion', filtering: { filterString: '', placeholder: 'descripcion' } },
-  { title: 'Masivo', className: 'text-success text-center', name: 'masivo', filtering: { filterString: '', placeholder: 'masivo' } },
+  { title: 'Estatus', className: 'text-info text-center', name: 'descripcion', filtering: { filterString: '', placeholder: 'Descripcion' } },
+  { title: 'Masivo', className: 'text-success text-center', name: 'masivo', filtering: { filterString: '', placeholder: 'Masivo' } },
   { title: 'Operativo', className: 'text-success text-center', name: 'Operativo', filtering: { filterString: '', placeholder: 'Operativo' } },
-  { title: 'Ezpecial', className: 'text-success text-center', name: 'ezpecial', filtering: { filterString: '', placeholder: 'ezpecial' } }
+  { title: 'Especializado', className: 'text-success text-center', name: 'ezpecial', filtering: { filterString: '', placeholder: 'Especial' } }
 ];
 
 
