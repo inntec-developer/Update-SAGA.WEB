@@ -24,19 +24,19 @@ export class CardVacanteComponent implements OnInit {
     this._service.GetDtosCard(this.ClienteId, this.RequisicionId).subscribe( data =>
       {
         this.Datos = data;
-        this.Datos[0]['asignados'].forEach(element =>{
-          var aux = element.data;
-          element.foto = ApiConection.ServiceUrlFoto + element.foto;
-          aux.forEach(e => {
-            e.foto = ApiConection.ServiceUrlFoto + e.foto;
-          });
+        // this.Datos[0]['asignados'].forEach(element =>{
+        //   var aux = element.data;
+        //   element.foto = ApiConection.ServiceUrlFoto + element.foto;
+        //   aux.forEach(e => {
+        //     e.foto = ApiConection.ServiceUrlFoto + e.foto;
+        //   });
       
-          element.data = aux;
+        //   element.data = aux;
         });
       }
-    )
+    
 
-  }
+  
 
   GetUserData(user)
   {
