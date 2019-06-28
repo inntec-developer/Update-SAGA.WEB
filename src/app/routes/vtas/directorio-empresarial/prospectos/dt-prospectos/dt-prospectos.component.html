@@ -2,30 +2,30 @@
   <div class="card-body mat-elevation-z8">
     <div class="row">
       <div class="col-sm-12 col-md-12 clearfix p-2 bg-light">
-        <button id="add" #add class="margen mr-1 btn btn-xs btn-outline-primary btn-acciones" type="button" [routerLink]="['/ventas/nuevoProspecto']"
+        <button id="add" #add class="margen mr-1 btn btn-xs btn-primary btn-acciones mat-elevation-z8" type="button" [routerLink]="['/ventas/nuevoProspecto']"
           container="body" placement="bottom" tooltip="Agregar Prospecto">
           <em class="fa fa-plus"></em>
         </button>
         <em class="vl"></em>
-        <button id="view" #view class="margen mr-1 btn btn-xs btn-acciones"
+        <button id="view" #view class="margen mr-1 btn btn-xs btn-acciones mat-elevation-z8"
           (click)="visualizarProspecto()" placement="bottom" tooltip="Ver Cliente"
-          [disabled]="!element" [ngClass]="(!element) ? 'disabled':'btn-outline-warning'">
+          [disabled]="!element" [ngClass]="(!element) ? 'disabled':'btn-warning'">
           <em class="fa fa-eye"></em></button>
-        <button id="edit" #edit class="margen mr-1 btn btn-xs btn-acciones" chkPrivilegiosButtons
-          (click)="editarProspecto()" [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-outline-info'"
+        <button id="edit" #edit class="margen mr-1 btn btn-xs btn-acciones mat-elevation-z8" chkPrivilegiosButtons
+          (click)="editarProspecto()" [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-info'"
           container="body" placement="bottom" tooltip="Editar"><em class="fa fa-pencil"></em></button>
         <em class="vl"></em>
-        <button id="hacerCliente" #hacerCliente class="margen mr-1 btn btn-xs btn-acciones" chkPrivilegiosButtons
+        <button id="hacerCliente" #hacerCliente class="margen mr-1 btn btn-xs btn-acciones mat-elevation-z8" chkPrivilegiosButtons
           (click)="HacerClienteModal.show()" [disabled]="!element"
-          [ngClass]="(!element) ? 'disabled' : 'btn-outline-success'" container="body" placement="bottom"
+          [ngClass]="(!element) ? 'disabled' : 'btn-success'" container="body" placement="bottom"
           tooltip="Hacer Cliente">
           <em class="fa  fa fa-handshake-o"></em></button>
         <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body"
-          class="margen mr-1 btn btn-xs btn-acciones float-right" [disabled]="!clearFilter"
-          [ngClass]="(!clearFilter) ? 'disabled':'btn-outline-primary'">
+          class="margen mr-1 btn btn-xs btn-acciones float-right mat-elevation-z8" [disabled]="!clearFilter"
+          [ngClass]="(!clearFilter) ? 'disabled':'btn-primary'">
           <em class="fa fa-eraser"></em>
         </button>
-        <button type="button" class="margen mr-1 btn btn-xs btn-acciones btn-outline-success float-right"
+        <button type="button" class="margen mr-1 btn btn-xs btn-acciones btn-success float-right mat-elevation-z8"
           (click)="refreshTable()" container="body" placement="bottom" tooltip="Actualizar" container="body">
           <em class="icon-refresh"></em>
         </button>
@@ -155,11 +155,11 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-xs btn-outline-danger" (click)="HacerClienteModal.hide(); formCliente.reset()">Cancelar
+        <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8" (click)="HacerClienteModal.hide(); formCliente.reset()">Cancelar
         </button>
-        <button type="button" class="md-1 btn btn-xs"
+        <button type="button" class="md-1 btn btn-xs mat-elevation-z8"
           [disabled]="!formCliente.valid"
-          [ngClass]="!formCliente.valid ? 'disabled' : 'btn-outline-success'"
+          [ngClass]="!formCliente.valid ? 'disabled' : 'btn-success'"
           (click)="HacerClienteModal.hide(); createCliente(); formCliente.reset()">Aceptar
         </button>
       </div>

@@ -2,21 +2,21 @@
   <div class="card-body mat-elevation-z8">
     <div class="row">
       <div class="col-sm-12 col-md-12 clearfix p-2 bg-light">
-        <button id="view" chkPrivilegiosButtons (click)="showDamfo()" class="mr-1 btn btn-xs btn-acciones margen"
-          [disabled]="!selected" [ngClass]="(!selected) ? 'disabled' : 'btn-outline-warning'" container="body"
+        <button id="view" chkPrivilegiosButtons (click)="showDamfo()" class="mr-2 btn btn-xs mat-elevation-z8"
+          [disabled]="!selected" [ngClass]="(!selected) ? 'disabled' : 'btn-warning'" container="body"
           placement="bottom" tooltip="Visualizar">
           <em class="fa fa-eye"></em></button>
-        <button id="view" chkPrivilegiosButtons (click)="openDialog()" class="mr-1 btn btn-xs btn-acciones margen"
-          [disabled]="!selected" [ngClass]="(!selected) ? 'disabled' : 'btn-outline-success'" container="body"
+        <button id="view" chkPrivilegiosButtons (click)="openDialog()" class="mr-2 btn btn-xs mat-elevation-z8"
+          [disabled]="!selected" [ngClass]="(!selected) ? 'disabled' : 'btn-success'" container="body"
           placement="bottom" tooltip="Crear Requisición">
           <em class="icon-docs"></em></button>
-        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
-          class="mr-1 btn btn-xs btn-acciones margen btn-outline-primary">
-          <em class="fa fa-eraser"></em></button>
-        <button container="body" placement="bottom" tooltip="Regresar"
-          class="mr-1 btn btn-xs btn-acciones margen btn-outline-warning float-right" type="button"
+          <button container="body" placement="bottom" tooltip="Regresar"
+          class="mr-2 btn btn-xs btn-warning float-right mat-elevation-z8" type="button"
           [routerLink]="['/ventas/requisicion']">
           <em class="icon-action-undo"></em></button>
+        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
+           class="mr-2 btn btn-xs btn-info float-right mat-elevation-z8">
+          <em class="fa fa-eraser"></em></button>
       </div>
     </div>
     <div class="row" #tableContainer>
@@ -56,8 +56,8 @@
                   <td class="text-center">
                     <span class="px-1 mr-1  badge  badge-pill badge-info"> {{row.vacantes}}</span>
                   </td>
-                  <td class="text-right"> {{row.sueldoMinimo | currency: $}}</td>
-                  <td class="text-right"> {{row.sueldoMaximo | currency: $}}</td>
+                  <td class="text-right"> ${{row.sueldoMinimo | currency: 'MXN'}}</td>
+                  <td class="text-right"> ${{row.sueldoMaximo | currency: 'MXN'}}</td>
                   <td class="text-center">{{row.tipoReclutamiento }}</td>
                   <td class="text-center">{{row.claseReclutamiento}}</td>
                   <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>

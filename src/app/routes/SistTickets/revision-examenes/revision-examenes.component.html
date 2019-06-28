@@ -42,13 +42,13 @@
       </div>
     </div>
     <div class="mt-2 d-flex flex-row justify-content-end">
-      <button type="button" [disabled]="fila.length == 0 || atender" [ngClass]="fila.length == 0 || atender ? 'btn disable' : 'btn btn-outline-success mat-elevation-z8'"
+      <button type="button" [disabled]="fila.length == 0 || atender" [ngClass]="fila.length == 0 || atender ? 'btn disable' : 'btn btn-success mat-elevation-z8'" class=" mat-elevation-z8"
         (click)="GetTicket()" tooltip="ATENDER">
 
         <i class="fa fa-play"></i>
       </button>
 
-      <button type="button" *ngIf="ticket.length > 0" [disabled]="ticket[0].estado == 4" [ngClass]="ticket[0].estado == 4 ? 'btn disable ml-2' : 'btn btn-outline-danger mat-elevation-z8 ml-2'"
+      <button type="button" *ngIf="ticket.length > 0" [disabled]="ticket[0].estado == 4" [ngClass]="ticket[0].estado == 4 ? 'btn disable ml-2' : 'btn btn-danger mat-elevation-z8 ml-2'" class=" mat-elevation-z8"
         (click)="Finalizar(ticket[0].ticketId, 4)" tooltip="FINALIZAR">
 
         <i class="fa fa-stop"></i>
@@ -150,7 +150,7 @@
                     <hr>
                     <h5 class="card-title text-info">EXAMEN -
                       <span>{{examen[0].nombre | uppercase}}</span>
-                      <button type="button" class="mb-1 btn btn-xs btn-outline-warning float-right" container="body" placement="bottom" tooltip="Revisar examen"
+                      <button type="button" class="mb-1 btn btn-xs btn-warning float-right mat-elevation-z8" container="body" placement="bottom" tooltip="Revisar examen"
                         (click)="OpenDialogRevisar()">
                         <em class="fa fa-pencil"></em>
                       </button>
@@ -178,7 +178,7 @@
                         <input type="text" class="form-control form-control-sm" [(ngModel)]="clave" name="claves" (keydown.enter)="AgregarClave(clave)"
                           minlength="16" maxlength="16">
                         <div class="input-group-append">
-                          <button [disabled]="clave.length < 16" class="btn btn-xs btn-outline-success" type="button" (click)="AgregarClave(clave)">
+                          <button [disabled]="clave.length < 16" class="btn btn-xs btn-success mat-elevation-z8" type="button" (click)="AgregarClave(clave)">
                             <em class="fa fa-plus"></em>
                           </button>
                         </div>
@@ -191,10 +191,10 @@
                       <ul *ngIf="clavesRequi[0].claves.length > 0" class="list-group">
                         <li *ngFor="let item of clavesRequi[0].claves; let ind = index;" class="list-group-item">
                           <span [ngClass]="(item.activo === 0) ? 'text-success' : 'text-muted'">{{ind + 1}}. {{item.clave}}
-                            <button *ngIf="item.nueva" class="btn btn-xs btn-outline-danger float-right ml-1" type="button" (click)="PopClave(item.clave)">
+                            <button *ngIf="item.nueva" class="btn btn-xs btn-danger float-right ml-1 mat-elevation-z8" type="button" (click)="PopClave(item.clave)">
                               <em class="fa fa-times"></em>
                             </button>
-                            <button *ngIf="item.nueva" class="btn btn-xs btn-outline-success float-right" type="button" (click)="Agregar(item.clave)">
+                            <button *ngIf="item.nueva" class="btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="Agregar(item.clave)">
                               <em class="fa fa-check"></em>
                             </button>
                             <div *ngIf="!item.nueva && item.activo == 0" class="radio float-right">

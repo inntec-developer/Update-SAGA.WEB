@@ -87,7 +87,7 @@
           <div class="p-2 mb-2">
             <app-comentario-candidato [CandidatoId]="ticket[0].candidato[0].candidatoId" [RequisicionId]="" [ProcesoCandidatoId]=""></app-comentario-candidato>
           </div>
-      
+
       </ng-container>
       <div *ngIf="ticket[0].candidato.length == 0">
         <span>Debe registrar al candidato para seguir con su proceso</span>
@@ -100,13 +100,13 @@
       </div>
     </div>
       <div class="mt-2 d-flex flex-row justify-content-end">
-        <button type="button" [disabled]="fila.length == 0 || atender" [ngClass]="fila.length == 0 || atender ? 'btn disable' : 'btn btn-outline-success mat-elevation-z8'" (click)="Atender()" tooltip="ATENDER">
+        <button type="button" [disabled]="fila.length == 0 || atender" [ngClass]="fila.length == 0 || atender ? 'btn disable' : 'btn btn-success mat-elevation-z8'" (click)="Atender()" tooltip="ATENDER">
           <i class="fa fa-play"></i>
         </button>
-        <button type="button" *ngIf="ticket.length > 0" [disabled]="ticket[0].candidato.length == 0 || ticket[0].candidato[0].estatusId == 27 || ticket[0].estado != 2 || (exaTecnico && exaPsico)" [ngClass]="ticket[0].candidato.length == 0 || ticket[0].candidato[0].estatusId == 27 || ticket[0].estado != 2 || (exaTecnico && exaPsico) ? 'btn disable ml-2' : 'btn btn-outline-warning mat-elevation-z8 ml-2'" (click)="GetHorarioRequis(3)" tooltip="EXAMENES">
+        <button type="button" *ngIf="ticket.length > 0" [disabled]="ticket[0].candidato.length == 0 || ticket[0].candidato[0].estatusId == 27 || ticket[0].estado != 2 || (exaTecnico && exaPsico)" [ngClass]="ticket[0].candidato.length == 0 || ticket[0].candidato[0].estatusId == 27 || ticket[0].estado != 2 || (exaTecnico && exaPsico) ? 'btn disable ml-2' : 'btn btn-warning mat-elevation-z8 ml-2'" (click)="GetHorarioRequis(3)" tooltip="EXAMENES">
           <i class="fa fa-file-text-o"></i>
         </button>
-        <button type="button"  *ngIf="ticket.length > 0" [disabled]="ticket[0].estado == 4" [ngClass]="ticket[0].estado == 4 ? 'btn disable ml-2' : 'btn btn-outline-danger mat-elevation-z8 ml-2'" (click)="GetHorarioRequis(4);" tooltip="FINALIZAR">
+        <button type="button"  *ngIf="ticket.length > 0" [disabled]="ticket[0].estado == 4" [ngClass]="ticket[0].estado == 4 ? 'btn disable ml-2' : 'btn btn-danger mat-elevation-z8 ml-2'" (click)="GetHorarioRequis(4);" tooltip="FINALIZAR">
           <i class="fa fa-stop"></i>
         </button>
       </div>
@@ -128,7 +128,7 @@
           </ul>
         </div>
       </div>
-   
+
 </div>
     <div class="col-sm-8 col-md-8" *ngIf="ticket.length > 0">
       <div class="card" *ngIf="ticket[0].candidato.length > 0">
@@ -144,16 +144,16 @@
                           <span class="input-group-text text-info"><i class="fa fa-search" aria-hidden="true"></i></span>
                         </div>
                   <input (input)="Search($event,1, filteredDataPos)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
-                  
+
                   </div> -->
                 </div>
                 </div>
-         
+
           <div class="justify-content-between">
             <ul class="list-group mb-2">
               <li *ngFor="let item of postulaciones; let ind = index;" class="list-group-item" [ngClass]="item.id == ticket[0].requisicionId && postulaciones.length > 1? 'bg-info' : ''">
                 <span class="text-info">
-                  <button (click)="openDialogShowRequi(item)" class="btn btn-xs btn-outline-warning float-left mr-1" container="body" placement="bottom"
+                  <button (click)="openDialogShowRequi(item)" class="btn btn-xs btn-warning float-left mr-1 mat-elevation-z8" container="body" placement="bottom"
                     tooltip="Visualizar">
                     <em class="fa fa-eye"></em>
                   </button>
@@ -184,17 +184,17 @@
                   </ng-template>
 
 
-                  <!-- <button *ngIf="ticket[0].candidato.estatusId != 27 && requisicionId == item.id" (click)="_liberarCandidato(item, ticket[0])" class="btn btn-xs btn-outline-danger float-right"
+                  <!-- <button *ngIf="ticket[0].candidato.estatusId != 27 && requisicionId == item.id" (click)="_liberarCandidato(item, ticket[0])" class="btn btn-xs btn-danger float-right"
                     container="body" placement="bottom" tooltip="Liberar">
                     <em class="fa fa-thumbs-o-down"></em>
                   </button>
 
-                  <button *ngIf="ticket[0].candidato.estatusId == 27" (click)="_apartarCandidato(item, ticket[0])" [ngClass]="apartar ? 'btn-outline-success' : 'btn-outline-danger'"
+                  <button *ngIf="ticket[0].candidato.estatusId == 27" (click)="_apartarCandidato(item, ticket[0])" [ngClass]="apartar ? 'btn-success' : 'btn-danger'"
                     class="btn btn-xs  float-right" container="body" placement="bottom" tooltip="Apartar">
                     <em class="fa fa-thumbs-o-up"></em>
                   </button> -->
 
-                  <!-- <button (click)="openDialogShowRequi(item)" class="btn btn-xs btn-outline-warning float-right mr-1" container="body" placement="bottom" tooltip="Visualizar">
+                  <!-- <button (click)="openDialogShowRequi(item)" class="btn btn-xs btn-warning float-right mr-1" container="body" placement="bottom" tooltip="Visualizar">
                       <em class="fa fa-eye"></em>
                     </button> -->
 
@@ -209,7 +209,7 @@
              </div>
              <div class="col-sm-6 col-md-6">
                 <div class="input-group input-group-sm float-right mb-2 with-focus">
-                    
+
                 <input (input)="Search($event, 2, filteredData)" class="form-control form-control-sm border-right-0" type="text" placeholder="Filtrar" />
                 <div class="input-group-append">
                   <span class="input-group-text fa fa-search text-info bg-transparent border-left-0"></span>
@@ -223,7 +223,7 @@
               <ul class="list-group long">
                 <li *ngFor="let item of dataSource; let ind = index;" class="list-group-item">
                   <span class="text-info">
-                    <button (click)="openDialogShowRequi(item)" class="btn btn-xs btn-outline-warning float-left mr-1" container="body" placement="bottom"
+                    <button (click)="openDialogShowRequi(item)" class="btn btn-xs btn-warning float-left mr-1 mat-elevation-z8" container="body" placement="bottom"
                       tooltip="Visualizar">
                       <em class="fa fa-eye"></em>
                     </button>
@@ -236,22 +236,22 @@
                     <!-- <span class="text-sm font-weight-bold mr-1">PROPIETARIO</span>
                     <span class="text-muted mr-2">{{item.reclutador}}</span>  -->
 
-                    <!-- <button (click)="openDialogShowRequi(item)" class="btn btn-xs btn-outline-danger float-right" container="body" placement="bottom" tooltip="Liberar">
+                    <!-- <button (click)="openDialogShowRequi(item)" class="btn btn-xs btn-danger float-right" container="body" placement="bottom" tooltip="Liberar">
                       <em class="fa fa-thumbs-o-down"></em>
                     </button> -->
 
-                    <button *ngIf="item.id == ticket[0].candidato[0].requisicionId && ticket[0].candidato[0].estatusId != 27 && ticket[0].estado != 4" (click)="openDialogLiberar(item, ticket[0])" class="btn btn-xs btn-outline-danger float-right"
+                    <button *ngIf="item.id == ticket[0].candidato[0].requisicionId && ticket[0].candidato[0].estatusId != 27 && ticket[0].estado != 4" (click)="openDialogLiberar(item, ticket[0])" class="btn btn-xs btn-oline-danger float-right mat-elevation-z8"
                       container="body" placement="bottom" tooltip="Liberar">
                       <em class="fa fa-thumbs-o-down"></em>
                     </button>
 
                     <button *ngIf="ticket[0].candidato[0].estatusId == 27 && ticket[0].estado != 4" (click)="item.reclutadores = [];_apartarCandidato(item, ticket[0])"
-                      [ngClass]="apartar ? 'btn-outline-success' : 'btn-outline-danger'" class="btn btn-xs  float-right" container="body"
+                      [ngClass]="apartar ? 'btn-success' : 'btn-danger'" class="btn btn-xs  float-right" container="body" class="mat-elevation-z8"
                       placement="bottom" tooltip="Apartar">
                       <em class="fa fa-thumbs-o-up"></em>
                     </button>
 
-                    <!-- <button (click)="openDialogShowRequi(item)" class="btn btn-xs btn-outline-warning float-right mr-1" container="body" placement="bottom" tooltip="Visualizar">
+                    <!-- <button (click)="openDialogShowRequi(item)" class="btn btn-xs btn-warning float-right mr-1" container="body" placement="bottom" tooltip="Visualizar">
                         <em class="fa fa-eye"></em>
                       </button> -->
 
@@ -280,12 +280,12 @@
           <app-dialog-liberar-candidato [objLiberar]="objLiberar" (close)="onClose($event)"></app-dialog-liberar-candidato>
         </div>
         <!-- <div class="modal-footer">
-          <button type="button" class="md-1 btn btn-outline-success" (click)="modallib.hide()">Cerrar</button>
+          <button type="button" class="md-1 btn btn-success" (click)="modallib.hide()">Cerrar</button>
         </div> -->
       </div>
     </div>
   </div>
-  
+
   <!-- Modal examenes -->
 <div *ngIf="modalExamen" [config]="{ show: true, ignoreBackdropClick: true, backdrop: 'static', keyboard: false }"
 bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">

@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
-      <button class="btn btn-xs float-right mb-3" (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
-      container="body" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'disabled':'btn-outline-primary'">
+      <button class="btn btn-xs float-right mb-3 mat-elevation-z8" (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
+      container="body" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'disabled':'btn-primary'">
       <em class="fa fa-eraser"></em>
     </button>
 
@@ -12,7 +12,7 @@
             <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
               <small>{{column.title | uppercase}}</small>
             </th>
-          
+
           </tr>
           <tr *ngIf="showFilterRow">
             <td *ngFor="let column of columns">

@@ -1,92 +1,96 @@
 <mat-tab-group>
-    <mat-tab>
-        <div [formGroup]="formDiscapacidades">
-            <ng-template mat-tab-label>
-                <mat-icon class="example-tab-icon">assignment</mat-icon>
-                Formulario
-            </ng-template>
-            <div class="row">
-                <div class="col-md-2 m-5">
-                    <mat-form-field>
-                        <input matInput placeholder="Discapacidad" formControlName="tipodiscapacidad" required>
-                        <mat-error *ngIf="formDiscapacidades.controls['tipodiscapacidad'].hasError('required')">Agrega una discapacidad válida</mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="col-md-1 m-5">
-                    <section class="example-section">
-                        <mat-checkbox formControlName="activo">Activo</mat-checkbox>
-                    </section>
-                </div>
-            </div>
+  <mat-tab>
+    <div [formGroup]="formDiscapacidades">
+      <ng-template mat-tab-label>
+        <mat-icon class="example-tab-icon">assignment</mat-icon>
+        Formulario
+      </ng-template>
+      <div class="row">
+        <div class="col-md-2 m-5">
+          <mat-form-field>
+            <input matInput placeholder="Discapacidad" formControlName="tipodiscapacidad" required>
+            <mat-error *ngIf="formDiscapacidades.controls['tipodiscapacidad'].hasError('required')">Agrega una
+              discapacidad válida</mat-error>
+          </mat-form-field>
         </div>
-        <br>
-        <!-- Card de botones -->
-        <mat-card>
-            <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-green mb-1" type="button" (click)="New()" container="body" placement="bottom" tooltip="Nuevo catalogo">
-                              <span class="btn-label ">
-                                <i class="fa fa-file-text-o"></i>
-                              </span>Nuevo
-                            </button>
-            <!-- <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-warning mb-1" type="button" (click)="LimpiarFiltro()" container="body" placement="bottom" tooltip="Editar catalogo">
+        <div class="col-md-1 m-5">
+          <section class="example-section">
+            <mat-checkbox formControlName="activo">Activo</mat-checkbox>
+          </section>
+        </div>
+      </div>
+    </div>
+    <br>
+    <!-- Card de botones -->
+    <mat-card>
+      <button style="margin-left: 10px; " class="btn btn-labeled btn-green mb-1 mat-elevation-z8" type="button"
+        (click)="New()" container="body" placement="bottom" tooltip="Nuevo catalogo">
+        <span class="btn-label ">
+          <i class="fa fa-file-text-o"></i>
+        </span>Nuevo
+      </button>
+      <!-- <button style="margin-left: 10px; " class="btn btn-labeled btn-warning mb-1" type="button" (click)="LimpiarFiltro()" container="body" placement="bottom" tooltip="Editar catalogo">
                             <span class="btn-label ">
                               <i class="fa fa-pencil"></i>
                             </span>Editar
                           </button> -->
-            <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-dark mb-1" type="button" (click)="Save()" container="body" placement="bottom" tooltip="Guardar los datos">
-                            <span class="btn-label ">
-                              <i class="fa fa-floppy-o"></i>
-                            </span>Guardar
-                          </button>
-            <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="Limpiar()" container="body" placement="bottom" tooltip="Limpia todo los filtros">
-                              <span class="btn-label ">
-                                <i class="fa fa-eraser"></i>
-                              </span>Limpiar
-                            </button>
-        </mat-card>
-    </mat-tab>
+      <button style="margin-left: 10px; " class="btn btn-labeled btn-dark mb-1 mat-elevation-z8" type="button"
+        (click)="Save()" container="body" placement="bottom" tooltip="Guardar los datos">
+        <span class="btn-label ">
+          <i class="fa fa-floppy-o"></i>
+        </span>Guardar
+      </button>
+      <button style="margin-left: 10px; " class="btn btn-labeled btn-info mb-1 mat-elevation-z8" type="button"
+        (click)="Limpiar()" container="body" placement="bottom" tooltip="Limpia todo los filtros">
+        <span class="btn-label ">
+          <i class="fa fa-eraser"></i>
+        </span>Limpiar
+      </button>
+    </mat-card>
+  </mat-tab>
 
-    <mat-tab>
-        <ng-template mat-tab-label>
-            <mat-icon class="example-tab-icon">history</mat-icon>
-            Historico
-        </ng-template>
-        <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-        </mat-form-field>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">history</mat-icon>
+      Historico
+    </ng-template>
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
 
-        <div class="mat-elevation-z8">
-            <table style="width: 100%;" mat-table [dataSource]="dataSource" matSort>
+    <div class="mat-elevation-z8">
+      <table style="width: 100%;" mat-table [dataSource]="dataSource" matSort>
 
-                <!-- ID Column -->
-                <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                    <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-                </ng-container>
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+          <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+        </ng-container>
 
-                <!-- Progress Column -->
-                <ng-container matColumnDef="usuario">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
-                    <td mat-cell *matCellDef="let row"> {{row.usuario | uppercase}} </td>
-                </ng-container>
+        <!-- Progress Column -->
+        <ng-container matColumnDef="usuario">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
+          <td mat-cell *matCellDef="let row"> {{row.usuario | uppercase}} </td>
+        </ng-container>
 
-                <!-- Name Column -->
-                <ng-container matColumnDef="fechaAct">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Actualización </th>
-                    <td mat-cell *matCellDef="let row"> {{ row.fechaAct | date:'d MMM, y, h:mm'}} </td>
-                </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="fechaAct">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Actualización </th>
+          <td mat-cell *matCellDef="let row"> {{ row.fechaAct | date:'d MMM, y, h:mm'}} </td>
+        </ng-container>
 
-                <!-- Color Column -->
-                <ng-container matColumnDef="tpMov">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Movimiento </th>
-                    <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.tpMov}} </td>
-                </ng-container>
+        <!-- Color Column -->
+        <ng-container matColumnDef="tpMov">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Movimiento </th>
+          <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.tpMov}} </td>
+        </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-                </tr>
-            </table>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+      </table>
 
-            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-        </div>
-    </mat-tab>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </mat-tab>
 </mat-tab-group>

@@ -19,13 +19,13 @@
 <div class="row">
   <div class="col-md-12">
     <div class="d-flex justify-content-between">
-      <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-xs btn-acciones" [disabled]="estatusId != 4"
-        [ngClass]="(estatusId != 4) ? 'disabled' : 'btn-outline-primary'" container="body" placement="bottom" tooltip="Editar"
+      <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-xs btn-acciones mat-elevation-z8" [disabled]="estatusId != 4"
+        [ngClass]="(estatusId != 4) ? 'disabled' : 'btn-primary'" container="body" placement="bottom" tooltip="Editar"
         (click)="editRequi()">
         <em class="icon-pencil"></em></button>
-      <!-- <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones btn-outline-dark"
+      <!-- <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones btn-dark"
         container="body" placement="bottom" tooltip="Comentarios"><em class="fa fa-comments-o"></em></button> -->
-      <button container="body" placement="bottom" tooltip="Regresar" class="mr-1 btn btn-xs btn-outline-warning" type="button" [routerLink]="['/ventas/requisicion']">
+      <button container="body" placement="bottom" tooltip="Regresar" class="mr-1 btn btn-xs btn-warning mat-elevation-z8" type="button" [routerLink]="['/ventas/requisicion']">
         <em class="icon-action-undo"></em>
       </button>
     </div>
@@ -48,7 +48,7 @@
         <comentario-vacante [RequisicionId]="RequisicionId"></comentario-vacante>
       </div>
       <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide()">Cerrar</button>
+        <button type="button" class="md-1 btn btn-success mat-elevation-z8" (click)="lgModal.hide()">Cerrar</button>
       </div>
     </div>
   </div>

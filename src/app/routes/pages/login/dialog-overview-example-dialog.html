@@ -25,10 +25,10 @@
 </ng-container>
 <br>
 <div class="row">
-    <button *ngIf="!Codigo" class="btn btn-outline-green btn-lg btn-block" type="button" (click)="Enviar()" container="body" placement="bottom" tooltip="Guardar contraseña">
+    <button *ngIf="!Codigo" class="btn btn-green btn-lg btn-block mat-elevation-z8" type="button" (click)="Enviar()" container="body" placement="bottom" tooltip="Guardar contraseña">
         Guardar
     </button>
-    <button *ngIf="Codigo" class="btn btn-outline-info btn-lg btn-block" type="button" (click)="Confirmar()" container="body" placement="bottom" tooltip="Confirma el código ingresado">
+    <button *ngIf="Codigo" class="btn btn-info btn-lg btn-block mat-elevation-z8" type="button" (click)="Confirmar()" container="body" placement="bottom" tooltip="Confirma el código ingresado">
         Confirmar
     </button>
 </div>

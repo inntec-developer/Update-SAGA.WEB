@@ -16,14 +16,14 @@
 
 <div class="card-body mat-elevation-z8">
     <div>
-        <button type="button" class="btn btn-xs btn-outline-success float-right mat-elevation-z8" (click)="refreshTableInfo()" container="body" placement="bottom" tooltip="Actualizar" container="body">
+        <button type="button" class="btn btn-xs btn-success float-right mat-elevation-z8" (click)="refreshTableInfo()" container="body" placement="bottom" tooltip="Actualizar" container="body">
         <em class="icon-refresh"></em>
         </button>
         <button (click)="clearfilters()" class="float-right mr-2 mat-elevation-z8" container="body" placement="bottom" tooltip="Limpiar Filtros"
-            container="body" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'btn btn-xs disabled':'btn btn-xs btn-outline-info'">
+            container="body" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'btn btn-xs disabled':'btn btn-xs btn-info'">
             <em class="fa fa-eraser"></em>
           </button>
-        <button [disabled]="element.length == 0" [ngClass]="element.length == 0 ? 'disabled' : 'btn-outline-warning'" class="mb-1 btn btn-xs  mat-elevation-z8 float-right mr-2" type="button" container="body" placement="bottom" tooltip="Cargar Archivos" (click)="candidatoId = element.candidatoId; nom = element.nombre; filemanager=true;">
+        <button [disabled]="element.length == 0" [ngClass]="element.length == 0 ? 'disabled' : 'btn-warning'" class="mb-1 btn btn-xs  mat-elevation-z8 float-right mr-2" type="button" container="body" placement="bottom" tooltip="Cargar Archivos" (click)="candidatoId = element.candidatoId; nom = element.nombre; filemanager=true;">
             <em class="fa fa-upload"></em>
           </button>
         </div>
@@ -82,7 +82,7 @@
         <app-file-manager [candidatoId]="candidatoId"></app-file-manager>
       </div>
       <!-- <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal2.hide()">Cerrar</button>
+        <button type="button" class="md-1 btn btn-success" (click)="lgModal2.hide()">Cerrar</button>
       </div> -->
     </div>
   </div>

@@ -214,9 +214,9 @@
 
             <!-- Botones de funcion sobre Direcciones -->
             <div class="modal-footer">
-              <button type="button" class="md-1 btn btn-xs btn-outline-danger"
+              <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8"
                 (click)="(addDireccion = ! addDireccion) ; cancelarDireccion()">Cancelar</button>
-              <button type="button" [disabled]="!formDirecciones.valid" class="md-1 btn btn-xs btn-outline-success"
+              <button type="button" [disabled]="!formDirecciones.valid" class="md-1 btn btn-xs btn-success mat-elevation-z8"
                 (click)="AddDireccion()">{{textbtnDirecciones}}</button>
             </div>
 
@@ -227,21 +227,21 @@
         <div class="butoonAction clearfix p-2 bg-light">
           <div class="contenedor">
             <div class="aling-div">
-              <button class="mb-1 btn btn-xs btn-outline-primary margen" *ngIf="!addDireccion" container="body"
+              <button class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8" *ngIf="!addDireccion" container="body"
                 placement="bottom" tooltip="Agregar" (click)="addDireccion = true; textbtnDirecciones = 'Agregar'">
                 <em class="fa fa-plus"></em>
               </button>
             </div>
             <div class="aling-div" *ngIf="!EditDireccion">
-              <button *ngIf="DireccionesNew.length > 0" class="mb-1 btn btn-xs margen" container="body"
+              <button *ngIf="DireccionesNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body"
                 placement="bottom" tooltip="Editar" [disabled]="!elementD"
-                [ngClass]="(!elementD) ? 'disabled' : 'btn-outline-primary'"
+                [ngClass]="(!elementD) ? 'disabled' : 'btn-primary'"
                 (click)="UpDireccion();  textbtnDirecciones = 'Editar'">
                 <em class="fa fa-pencil"></em>
               </button>
-              <button *ngIf="DireccionesNew.length > 0" class="mb-1 btn btn-xs margen" container="body"
+              <button *ngIf="DireccionesNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body"
                 placement="bottom" tooltip="Eliminar" [disabled]="!elementD"
-                [ngClass]="(!elementD) ? 'disabled' : 'btn-outline-danger'" (click)="DtDireccion()">
+                [ngClass]="(!elementD) ? 'disabled' : 'btn-danger'" (click)="DtDireccion()">
                 <em class="fa fa-trash"></em>
               </button>
             </div>
@@ -408,9 +408,9 @@
             </div>
             <br>
             <div class="modal-footer">
-              <button type="button" class="md-1 btn btn-xs btn-outline-danger"
+              <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8"
                 (click)="(addTelefono = ! addTelefono) ; cancelarTelefono()">Cancelar</button>
-              <button type="button" [disabled]="!formTelefonos.valid" class="md-1 btn btn-xs btn-outline-success"
+              <button type="button" [disabled]="!formTelefonos.valid" class="md-1 btn btn-xs btn-success mat-elevation-z8"
                 (click)="AddTelefono()">{{textbtnTelefono}}</button>
             </div>
           </form>
@@ -418,19 +418,19 @@
         <div class="butoonAction clearfix p-2 bg-light">
           <div class="contenedor">
             <div class="aling-div">
-              <button class="mb-1 btn btn-xs btn-outline-primary margen" *ngIf="!addTelefono" container="body"
+              <button class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8" *ngIf="!addTelefono" container="body"
                 placement="bottom" tooltip="Agregar" (click)="addTelefono = true; textbtnTelefono = 'Agregar'">
                 <em class="fa fa-plus"></em>
               </button>
             </div>
             <div class="aling-div" *ngIf="!EditTelefono">
-              <button *ngIf="TelefonosNew.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
-                tooltip="Editar" [disabled]="!elementT" [ngClass]="(!elementT)? 'disabled' : 'btn-outline-primary'"
+              <button *ngIf="TelefonosNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body" placement="bottom"
+                tooltip="Editar" [disabled]="!elementT" [ngClass]="(!elementT)? 'disabled' : 'btn-primary'"
                 (click)="UpTelefono(); textbtnTelefono = 'Editar'">
                 <em class="fa fa-pencil"></em>
               </button>
-              <button *ngIf="TelefonosNew.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
-                tooltip="Eliminar" [disabled]="!elementT" [ngClass]="(!elementT)? 'disabled' : 'btn-outline-danger'"
+              <button *ngIf="TelefonosNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body" placement="bottom"
+                tooltip="Eliminar" [disabled]="!elementT" [ngClass]="(!elementT)? 'disabled' : 'btn-danger'"
                 (click)="DtTelefono()">
                 <em class="fa fa-trash"></em>
               </button>
@@ -538,9 +538,9 @@
             </div>
             <br>
             <div class="modal-footer">
-              <button type="button" class="md-1 btn btn-xs btn-outline-danger"
+              <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8"
                 (click)="(addCorreo = ! addCorreo) ; cancelarCorreo()">Cancelar</button>
-              <button type="button" [disabled]="!formCorreos.valid" class="md-1 btn btn-xs btn-outline-success"
+              <button type="button" [disabled]="!formCorreos.valid" class="md-1 btn btn-xs btn-success mat-elevation-z8"
                 (click)="AddEmail()">{{textbtnCorreo}}</button>
             </div>
           </form>
@@ -548,20 +548,20 @@
         <div class="butoonAction clearfix p-2 bg-light">
           <div class="contenedor">
             <div class="aling-div">
-              <button class="mb-1 btn btn-xs btn-outline-primary margen" *ngIf="!addCorreo" container="body"
+              <button class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8" *ngIf="!addCorreo" container="body"
                 placement="bottom" tooltip="Agregar" (click)="addCorreo = true; textbtnCorreo = 'Agregar'">
                 <em class="fa fa-plus"></em>
               </button>
             </div>
             <div class="aling-div" *ngIf="!EditCorreo">
-              <button *ngIf="CorreosNew.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
-                tooltip="Editar" [disabled]="!elementC" [ngClass]="(!elementC) ? 'disabled' : 'btn-outline-primary'"
+              <button *ngIf="CorreosNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body" placement="bottom"
+                tooltip="Editar" [disabled]="!elementC" [ngClass]="(!elementC) ? 'disabled' : 'btn-primary'"
                 (click)="UpEmail(); textbtnCorreo = 'Editar'">
                 <em class="fa fa-pencil"></em>
               </button>
-              <button *ngIf="CorreosNew.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
+              <button *ngIf="CorreosNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body" placement="bottom"
                 placement="bottom" tooltip="Eliminar" [disabled]="!elementC"
-                [ngClass]="(!elementC)? 'disabled' : 'btn-outline-danger'" (click)="DtEmail()">
+                [ngClass]="(!elementC)? 'disabled' : 'btn-danger'" (click)="DtEmail()">
                 <em class="fa fa-trash"></em>
               </button>
             </div>
@@ -739,17 +739,17 @@
               <br>
               <div class="clearfix">
                 <div class="aling-div" *ngIf="!addContactoTelefono">
-                  <button (click)="addContactoTelefono = true" class="mb-1 btn btn-xs btn-outline-primary margen">
+                  <button (click)="addContactoTelefono = true" class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8">
                     <em class="fa fa-plus"></em>
                   </button>
                 </div>
                 <div class="aling-div" *ngIf="!EditContactoTelefono">
-                  <button *ngIf="Telefonos.length > 0" class="mb-1 btn btn-xs margen" [disabled]="!elementCnT"
-                    [ngClass]="(!elementCnT) ? 'disabled' : 'btn-outline-primary'" (click)="UdContactoTelefono()">
+                  <button *ngIf="Telefonos.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" [disabled]="!elementCnT"
+                    [ngClass]="(!elementCnT) ? 'disabled' : 'btn-primary'" (click)="UdContactoTelefono()">
                     <em class="fa fa-pencil"></em>
                   </button>
-                  <button *ngIf="Telefonos.length > 0" class="mb-1 btn btn-xs margen" [disabled]="!elementCnT"
-                    [ngClass]="(!elementCnT) ? 'disabled' : 'btn-outline-danger'" (click)="DtContactoTelefono()">
+                  <button *ngIf="Telefonos.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" [disabled]="!elementCnT"
+                    [ngClass]="(!elementCnT) ? 'disabled' : 'btn-danger'" (click)="DtContactoTelefono()">
                     <em class="fa fa-trash"></em>
                   </button>
                 </div>
@@ -824,17 +824,17 @@
               <br>
               <div class="clearfix">
                 <div class="aling-div" *ngIf="!addContactoCorreo">
-                  <button (click)="addContactoCorreo = true" class="mb-1 btn btn-xs btn-outline-primary margen">
+                  <button (click)="addContactoCorreo = true" class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8">
                     <em class="fa fa-plus"></em>
                   </button>
                 </div>
                 <div class="aling-div" *ngIf="!EditContactoCorreo">
-                  <button *ngIf="Emails.length > 0" class="mb-1 btn btn-xs margen" [disabled]="!elementCnC"
-                    [ngClass]="(!elementCnC) ? 'disabled' : 'btn-outline-primary'" (click)="UdContactoCorreo()">
+                  <button *ngIf="Emails.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" [disabled]="!elementCnC"
+                    [ngClass]="(!elementCnC) ? 'disabled' : 'btn-primary'" (click)="UdContactoCorreo()">
                     <em class="fa fa-pencil"></em>
                   </button>
-                  <button *ngIf="Emails.length > 0" class="mb-1 btn btn-xs margen" [disabled]="!elementCnC"
-                    [ngClass]="(!elementCnC) ? 'disabled' : 'btn-outline-danger'" (click)="DtContactoCorreo()">
+                  <button *ngIf="Emails.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" [disabled]="!elementCnC"
+                    [ngClass]="(!elementCnC) ? 'disabled' : 'btn-danger'" (click)="DtContactoCorreo()">
                     <em class="fa fa-trash"></em>
                   </button>
                 </div>
@@ -879,10 +879,10 @@
           </div>
           <br>
           <div class="modal-footer">
-            <button type="button" class="md-1 btn btn-xs btn-outline-danger"
+            <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8"
               (click)="(addContacto = ! addContacto) ; cancelarContacto()">Cancelar</button>
-            <button type="button" [disabled]="!formContactos.valid || Telefonos.length === 0 || Emails.length === 0"
-              [ngClass]="!formContactos.valid || Telefonos.length === 0 || Emails.length === 0 ? 'disabled' : 'btn-outline-success'"
+            <button type="button" class="mat-elevation-z8" [disabled]="!formContactos.valid || Telefonos.length === 0 || Emails.length === 0"
+              [ngClass]="!formContactos.valid || Telefonos.length === 0 || Emails.length === 0 ? 'disabled' : 'btn-success'"
               class="md-1 btn btn-xs" (click)="AddContacto()">{{textbtnContacto}}</button>
           </div>
 
@@ -890,20 +890,20 @@
         <div class="butoonAction clearfix p-2">
           <div class="contenedor">
             <div class="aling-div">
-              <button class="mb-1 btn btn-xs btn-outline-primary margen" *ngIf="!addContacto" container="body"
+              <button class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8" *ngIf="!addContacto" container="body"
                 placement="bottom" tooltip="Agregar"
                 (click)="addContacto = true; textbtnContacto = 'Agregar'; Emails = []; Telefonos = []; idAuxCnT = 1">
                 <em class="fa fa-plus"></em>
               </button>
             </div>
             <div class="aling-div" *ngIf="!EditContacto">
-              <button *ngIf="ContactosNew.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
-                tooltip="Editar" [disabled]="!elementCn" [ngClass]="(!elementCn) ? 'disabled' : 'btn-outline-primary'"
+              <button *ngIf="ContactosNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body" placement="bottom"
+                tooltip="Editar" [disabled]="!elementCn" [ngClass]="(!elementCn) ? 'disabled' : 'btn-primary'"
                 (click)="UpContactos(); textbtnContacto = 'Editar'">
                 <em class="fa fa-pencil"></em>
               </button>
-              <button *ngIf="ContactosNew.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
-                tooltip="Eliminar" [disabled]="!elementCn" [ngClass]="(!elementCn) ? 'disabled' : 'btn-outline-danger'"
+              <button *ngIf="ContactosNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body" placement="bottom"
+                tooltip="Eliminar" [disabled]="!elementCn" [ngClass]="(!elementCn) ? 'disabled' : 'btn-danger'"
                 (click)="DtContacto()">
                 <em class="fa fa-trash"></em>
               </button>
@@ -978,14 +978,14 @@
 <div class="form-group">
   <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-12">
-      <button type="reset" [disabled]="loading" [ngClass]="loading ? 'disabled': 'btn-outline-danger'"
-        class="btn btn-block" [routerLink]="['/ventas/directorio']">Cancelar</button>
+      <button type="reset" [disabled]="loading" [ngClass]="loading ? 'disabled': 'btn-danger'"
+        class="btn btn-block mat-elevation-z8" [routerLink]="['/ventas/directorio']">Cancelar</button>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-12">
       <button type="submit" *ngIf="!loading"
         [disabled]="!formGeneral.valid || DireccionesNew.length === 0 || ContactosNew.length === 0"
-        [ngClass]="!formGeneral.valid || DireccionesNew.length === 0 || ContactosNew.length === 0 ? 'disabled' : 'btn-outline-success'"
-        class="btn btn-block" (click)="GuardarProspecto()">Guardar</button>
+        [ngClass]="!formGeneral.valid || DireccionesNew.length === 0 || ContactosNew.length === 0 ? 'disabled' : 'btn-success'"
+        class="btn btn-block mat-elevation-z8" (click)="GuardarProspecto()">Guardar</button>
       <img *ngIf="loading"
         src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
     </div>

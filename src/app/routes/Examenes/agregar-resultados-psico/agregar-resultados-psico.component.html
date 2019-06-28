@@ -62,11 +62,11 @@
                     </mat-form-field>
               </td>
               <td class="text-center">
-                  <button [disabled]="!row.resVal" [ngClass]="!row.resVal ? 'btn btn-xs enabled' : 'btn btn-xs btn-outline-success'" type="button" (click)="AgregarResultado(row)">
+                  <button [disabled]="!row.resVal" [ngClass]="!row.resVal ? 'btn btn-xs enabled' : 'btn btn-xs btn-success mat-elevation-z8'" type="button" (click)="AgregarResultado(row)">
                       <em class="fa fa-check"></em>
                   </button>
               </td>
-   
+
             </tr>
           </div>
           </ng-scrollbar>
@@ -75,7 +75,7 @@
        </div>
      </div>
      <div class="text-right">
-      
+
         <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
           [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
         </pagination>
@@ -91,10 +91,10 @@
             <alert type="info">
                 <strong>Oops!</strong> A&uacute;n no cuentas con examenes para revisar.
                 </alert>
-  
+
         </div>
       </div>
     </ng-template>
 
-    
+
   <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>

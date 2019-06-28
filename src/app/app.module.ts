@@ -1,4 +1,5 @@
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AppComponent } from './app.component';
@@ -9,10 +10,11 @@ import { CoreModule } from './core/core.module';
 import { DetailService } from './service/SeguimientoVacante/DetailService.service';
 import { HttpModule } from '@angular/http';
 import { LayoutModule } from './layout/layout.module';
-import { NgModule } from '@angular/core';
 import { RoutesModule } from './routes/routes.module';
 import { SharedModule } from './shared/shared.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+// registrar los locales con el nombre que quieras utilizar a la hora de proveer
 
 // https://github.com/ocombe/ng2-translate/issues/218
 export function createTranslateLoader(http: HttpClient) {

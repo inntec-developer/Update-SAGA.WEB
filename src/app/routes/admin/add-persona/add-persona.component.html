@@ -32,11 +32,11 @@
       </div>
       <div>
         <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body"
-          class="margen mr-2 btn btn-xs" [disabled]="!clearFilter"
-          [ngClass]="(!clearFilter) ? 'disabled':'btn-outline-primary'">
+          class="margen mr-2 btn btn-xs mat-elevation-z8" [disabled]="!clearFilter"
+          [ngClass]="(!clearFilter) ? 'disabled':'btn-primary'">
           <em class="fa fa-eraser"></em>
         </button>
-        <button type="button" class="margen mr-2 btn btn-xs btn-outline-success" (click)="refreshTable()" container="body"
+        <button type="button" class="margen mr-2 btn btn-xs btn-success mat-elevation-z8" (click)="refreshTable()" container="body"
           placement="bottom" tooltip="Actualizar" container="body">
           <em class="icon-refresh"></em>
         </button>
@@ -179,12 +179,12 @@
             </td>
             <td class="action-width">
               <button id='update' chkPrivilegiosButtons class="margin-butto
-                  mb-1 btn btn-xs btn-outline-success float-right" (click)="updateUser(p, rowIndex)" container="body"
+                  mb-1 btn btn-xs btn-success float-right mat-elevation-z8" (click)="updateUser(p, rowIndex)" container="body"
                 placement="bottom" tooltip="Guardar Cambios">
                 <em class="fa fa-check"></em>
               </button>
               <button id='email' chkPrivilegiosButtons class="margin-butto
-                  ms-1 btn btn-xs btn-outline-warning" (click)="SendEmail(p)" container="body" placement="bottom"
+                  ms-1 btn btn-xs btn-warning mat-elevation-z8" (click)="SendEmail(p)" container="body" placement="bottom"
                 tooltip="Enviar Correo">
                 <em class="fa fa-envelope"></em>
               </button>

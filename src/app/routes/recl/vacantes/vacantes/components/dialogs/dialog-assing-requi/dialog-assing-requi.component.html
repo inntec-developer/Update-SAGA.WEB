@@ -20,7 +20,7 @@
       </div>
       <div class="col-md-4">
         <strong class="text-primary">SUELDO: </strong>
-        <p>De {{data?.sueldoMinimo | currency:"$"}} a {{data?.sueldoMaximo | currency:"$"}}</p>
+        <p>De ${{data?.sueldoMinimo | currency: 'MXN'}} a ${{data?.sueldoMaximo | currency:'MXN'}}</p>
       </div>
     </div>
     <br>
@@ -92,21 +92,21 @@
 <mat-divider></mat-divider>
 <mat-dialog-actions>
 
-  <button type="button" class="btn btn-xs btn-labeled btn-outline-danger mb-1 margen float-right"
+  <button type="button" class="btn btn-xs btn-labeled btn-danger mb-1 margen float-right mat-elevation-z8"
     (click)="onCloseDialog()">
     <span class="btn-label">
       <i class="fa fa-times"></i>
     </span> Cancelar
   </button>
   <button type="button" [disabled]="!formAsignaciones.valid || loading ||  alertAssing"
-    *ngIf="!redesSociales && !loading" class="btn btn-xs btn-labeled btn-outline-success mb-1 margen float-right"
+    *ngIf="!redesSociales && !loading" class="btn btn-xs btn-labeled btn-success mb-1 margen float-right mat-elevation-z8"
     (click)="Save()">
     <span class="btn-label">
       <i class="fa fa-check"></i>
     </span> Aceptar
   </button>
   <button type="button" [disabled]="!formAsignaciones.valid || !formRS.valid ||  alertAssing"
-    *ngIf="redesSociales && !loading" class="btn btn-xs btn-labeled btn-outline-success mb-1 margen float-right"
+    *ngIf="redesSociales && !loading" class="btn btn-xs btn-labeled btn-success mb-1 margen float-right mat-elevation-z8"
     (click)="Save()">
     <span class="btn-label">
       <i class="fa fa-check"></i>

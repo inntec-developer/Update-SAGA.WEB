@@ -22,7 +22,7 @@
         <td class="text-center">{{row.fecha | date:'dd/MM/yyyy'}}</td>
         <td class="text-center"> {{row.candidato}}</td>
         <!-- <td class="text-center">{{row.direccion}}</td> -->
-        <td class="text-center"> 
+        <td class="text-center">
           <span *ngIf="row.estatus === 'NR'">POSIBLE {{row.estatus}}</span>
           <span *ngIf="row.estatus !== 'NR'">{{row.estatus}}</span>
         </td>
@@ -39,14 +39,14 @@
           </ng-template>
         </ng-container>
           <textarea [(ngModel)]="comentario" class="form-control-sm" autofocus (blur)="updateValue($event, 'respuesta', rowIndex);" *ngIf="editing[rowIndex + '-respuesta']" rows="4" cols="50" [value]="row.respuesta"></textarea>
-    
+
         </td>
-       
+
         <td width="10%" class="text-center">
-            <button [disabled]="!row.activar" [ngClass]="!row.activar ? 'btn btn-xs disabled' : 'btn btn-xs btn-outline-warning'"  (click)="Confirmar(row, 28, 1)" type="button" container="body" placement="bottom" tooltip="Incidencia v&aacute;lida">
+            <button [disabled]="!row.activar" [ngClass]="!row.activar ? 'btn btn-xs disabled' : 'btn btn-xs btn-warning mat-elevation-z8'"  (click)="Confirmar(row, 28, 1)" type="button" container="body" placement="bottom" tooltip="Incidencia v&aacute;lida">
                 <i class="fa fa-ban" aria-hidden="true"></i>
             </button>
-            <button [disabled]="!row.activar" [ngClass]="!row.activar ? 'ml-1 btn btn-xs disabled' : 'ml-1 btn btn-xs btn-outline-info'" (click)="Confirmar(row, 27, 2)"  type="button" container="body" placement="bottom" tooltip="Incidencia no v&aacute;lida">
+            <button [disabled]="!row.activar" [ngClass]="!row.activar ? 'ml-1 btn btn-xs disabled' : 'ml-1 btn btn-xs btn-info mat-elevation-z8'" (click)="Confirmar(row, 27, 2)"  type="button" container="body" placement="bottom" tooltip="Incidencia no v&aacute;lida">
               <em class="fa fa-times"></em>
           </button>
         </td>
@@ -66,7 +66,7 @@
     </div>
   </div>
 </ng-template>
-<!-- 
+<!--
 
 
 <div *ngIf="confirmar" [config]="{ show: true, ignoreBackdropClick: true }" class="modal fade" bsModal #lgModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">

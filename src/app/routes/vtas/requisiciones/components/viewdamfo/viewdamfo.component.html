@@ -22,15 +22,15 @@
 
   <div class="col-md-12">
     <div class="d-flex justify-content-between">
-      <button placement="right" tooltip="Generar Requisición" class="mr-1 btn btn-xs btn-outline-success"
+      <button placement="right" tooltip="Generar Requisición" class="mr-1 btn btn-xs btn-success mat-elevation-z8"
         (click)="openDialog()">
         <em class="icon-docs"></em>
       </button>
-      <button placement="right" tooltip="Imprimir Requisición" class="mr-1 btn btn-xs btn-outline-info"
+      <button placement="right" tooltip="Imprimir Requisición" class="mr-1 btn btn-xs btn-info mat-elevation-z8"
         (click)="print()">
         <em class="fa fa-print"></em>
       </button>
-      <button container="body" placement="bottom" tooltip="Regresar" class="mr-1 btn btn-xs btn-outline-warning"
+      <button container="body" placement="bottom" tooltip="Regresar" class="mr-1 btn btn-xs btn-warning mat-elevation-z8"
         type="button" [routerLink]="['/ventas/crearRequisicion']">
         <em class="icon-action-undo"></em>
       </button>
@@ -140,30 +140,30 @@
               <h5 class="card-title">M&iacute;nimo</h5>
               <p>
                 <strong>Mensual: </strong>
-                <label class="card-text"> {{damfo290?.sueldoMinimo | currency:"$"}}</label>
+                <label class="card-text"> ${{damfo290?.sueldoMinimo | currency: 'MXN'}}</label>
               </p>
               <p>
                 <strong>Semanal: </strong>
-                <label class="card-text"> {{(damfo290?.sueldoMinimo / 30) * 7 | currency:"$"}}</label>
+                <label class="card-text"> ${{(damfo290?.sueldoMinimo / 30) * 7 | currency: 'MXN'}}</label>
               </p>
               <p>
                 <strong>Diario: </strong>
-                <label class="card-text"> {{damfo290?.sueldoMinimo / 30 | currency:"$"}}</label>
+                <label class="card-text"> ${{damfo290?.sueldoMinimo / 30 | currency: 'MXN'}}</label>
               </p>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
               <h5 class="card-title">M&aacute;ximo</h5>
               <p>
                 <strong>Mensual: </strong>
-                <label class="card-text"> {{damfo290?.sueldoMaximo | currency:"$"}}</label>
+                <label class="card-text"> ${{damfo290?.sueldoMaximo | currency: 'MXN'}}</label>
               </p>
               <p>
                 <strong>Semanal: </strong>
-                <label class="card-text"> {{(damfo290.sueldoMaximo / 30) * 7 | currency:"$"}}</label>
+                <label class="card-text"> ${{(damfo290.sueldoMaximo / 30) * 7 | currency: 'MXN'}}</label>
               </p>
               <p>
                 <strong>Diario: </strong>
-                <label class="card-text"> {{damfo290?.sueldoMaximo / 30 | currency:"$"}}</label>
+                <label class="card-text"> ${{damfo290?.sueldoMaximo / 30 | currency: 'MXN'}}</label>
               </p>
             </div>
           </div>

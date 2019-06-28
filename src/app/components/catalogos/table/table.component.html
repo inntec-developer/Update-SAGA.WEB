@@ -31,7 +31,7 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let element">
                 <ng-container *ngIf="colName == 'id'">
-                    <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="selectEdit(element[colName])" container="body" placement="bottom" tooltip="Buscar catalogo seleccionado">
+                    <button style="margin-left: 10px; " class="btn btn-labeled btn-info mb-1 mat-elevation-z8" type="button" (click)="selectEdit(element[colName])" container="body" placement="bottom" tooltip="Buscar catalogo seleccionado">
                             <i class="fa fa-pencil"></i>
                     </button>
                 </ng-container>

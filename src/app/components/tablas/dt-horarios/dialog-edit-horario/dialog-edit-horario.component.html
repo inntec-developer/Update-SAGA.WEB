@@ -35,12 +35,12 @@
 
 
 <mat-dialog-actions>
-  <button type="button" class="btn btn-xs btn-labeled btn-outline-danger mb-1 margin" (click)="onCloseDialog()">
+  <button type="button" class="btn btn-xs btn-labeled btn-danger mb-1 margin mat-elevation-z8" (click)="onCloseDialog()">
     <span class="btn-label">
       <i class="fa fa-times"></i>
     </span> Cancelar
   </button>
-  <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-1 margin" (click)="updateVacante()" [disabled]="vacanteN <= 0 || vacanteN > 255">
+  <button type="button" class="btn btn-xs btn-labeled btn-success mb-1 margin mat-elevation-z8" (click)="updateVacante()" [disabled]="vacanteN <= 0 || vacanteN > 255">
     <span class="btn-label">
       <i class="fa fa-check"></i>
     </span> Aceptar

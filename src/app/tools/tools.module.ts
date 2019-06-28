@@ -129,7 +129,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
   providers:[
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
     { provide: PaginationConfig, useValue: getSpanishPaginatorBtp() },
-    { provide: MAT_DATE_LOCALE, useValue: 'en-MX' },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-MX'},
     ToasterService
   ],
   exports:[

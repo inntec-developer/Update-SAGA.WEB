@@ -11,10 +11,10 @@
       <h5><strong class="text-primary">Puesto: </strong>{{data.nombrePerfil}}</h5>
     </div>
     <div class="col-md-4 col-sm-4">
-      <h5><strong class="text-primary">Sueldo M&iacute;nimo: </strong>{{data.sueldoMinimo | currency: '$'}}</h5>
+      <h5><strong class="text-primary">Sueldo M&iacute;nimo: </strong>${{data.sueldoMinimo | currency: 'MXN'}}</h5>
     </div>
     <div class="col-md-4 col-sm-4">
-      <h5><strong class="text-primary">Sueldo M&aacute;ximo: </strong>{{data.sueldoMaximo | currency: '$'}}</h5>
+      <h5><strong class="text-primary">Sueldo M&aacute;ximo: </strong>${{data.sueldoMaximo | currency: 'MXN'}}</h5>
     </div>
   </div>
   <div class="row">
@@ -55,12 +55,12 @@
 </mat-dialog-content>
 <br>
 <mat-dialog-actions>
-  <button type="button" (click)="onNoClick()" class="btn btn-xs btn-labeled btn-outline-danger mb-1 margin">
+  <button type="button" (click)="onNoClick()" class="btn btn-xs btn-labeled btn-danger mb-1 margin mat-elevation-z8">
     <span class="btn-label">
       <i class="fa fa-times"></i>
     </span> Cancelar
   </button>
-  <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-1 margin" (click)="createRequisicion()"
+  <button type="button" class="btn btn-xs btn-labeled btn-success mb-1 margin mat-elevation-z8" (click)="createRequisicion()"
     [disabled]="DisabledButton">
     <span class="btn-label">
       <i class="fa fa-check"></i>

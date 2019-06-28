@@ -2,16 +2,16 @@
   <div class="title-headre-view d-flex justify-content-between">
     <h4>Rutas de Camiones</h4>
     <div *ngIf="DireccionId">
-      <button id="update" class="mb-1 btn btn-xs btn-outline-success margen" (click)="agregarRutasCamion()"
+      <button id="update" class="mb-1 btn btn-xs btn-success margen mat-elevation-z8" (click)="agregarRutasCamion()"
         chkPrivilegiosButtons tooltip="Agregar Ruta" placement="bottom">
         <em class="fa fa-plus"></em>
       </button>
-      <button id="update" class="mb-1 btn btn-xs margen" [disabled]="!ruta" (click)="updateRutasCamion()"
-        chkPrivilegiosButtons tooltip="Editar Ruta" placement="bottom" [ngClass]="(!ruta) ? 'disabled' : 'btn-outline-info'">
+      <button id="update" class="mb-1 btn btn-xs margen mat-elevation-z8" [disabled]="!ruta" (click)="updateRutasCamion()"
+        chkPrivilegiosButtons tooltip="Editar Ruta" placement="bottom" [ngClass]="(!ruta) ? 'disabled' : 'btn-info'">
         <em class="icon-pencil"></em>
       </button>
-      <button id="update" class="mb-1 btn btn-xs margen " [disabled]="!ruta" (click)="sweetalertDeleteRuta()"
-        chkPrivilegiosButtons tooltip="Eliminar Ruta" placement="bottom" [ngClass]="(!ruta) ? 'disabled' : 'btn-outline-danger'">
+      <button id="update" class="mb-1 btn btn-xs margen mat-elevation-z8" [disabled]="!ruta" (click)="sweetalertDeleteRuta()"
+        chkPrivilegiosButtons tooltip="Eliminar Ruta" placement="bottom" [ngClass]="(!ruta) ? 'disabled' : 'btn-danger'">
         <em class="icon-trash"></em>
       </button>
     </div>

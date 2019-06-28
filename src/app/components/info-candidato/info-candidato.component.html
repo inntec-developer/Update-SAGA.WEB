@@ -75,7 +75,7 @@
           </div>
         </div>
         <div *ngIf="procesoCandidatoId == 24 && candidato.propietarioId == usuarioId">
-          <button id="delete" chkPrivilegiosButtons class="btn btn-xs btn-outline-danger float-right"
+          <button id="delete" chkPrivilegiosButtons class="btn btn-xs btn-danger float-right mat-elevation-z8"
             (click)="LiberarPermisoEjecutivo()"><i class="fa fa-thumbs-o-down"></i></button>
         </div>
       </div>
@@ -280,7 +280,7 @@
                     <div>
                       <strong class="text-primary">Salario Aceptable: </strong>
                       <label *ngIf="candidato?.about?.salarioAceptable else NotSalarioA" class="text-muted">
-                        {{candidato?.about?.salarioAceptable | currency: '$'}}</label>
+                        ${{candidato?.about?.salarioAceptable | currency: 'MXN'}}</label>
                       <ng-template #NotSalarioA>
                         <label class="text-muted"> Sin Registro</label>
                       </ng-template>
@@ -288,7 +288,7 @@
                     <div>
                       <strong class="text-primary">Salario Deseado: </strong>
                       <label *ngIf="candidato?.about?.salarioDeseado else NotSalarioD" class="text-muted">
-                        {{candidato?.about?.salarioDeseado | currency: '$'}}</label>
+                        ${{candidato?.about?.salarioDeseado | currency: 'MXN'}}</label>
                       <ng-template #NotSalarioD>
                         <label class="text-muted"> Sin Registro</label>
                       </ng-template>
@@ -458,7 +458,7 @@
                     </div>
                     <div>
                       <strong class="text-primary">Salario: </strong>
-                      <label class="text-muted">{{x?.salario | currency: '$'}}</label>
+                      <label class="text-muted">${{x?.salario | currency: 'MXN'}}</label>
                     </div>
                   </div>
                 </div>
@@ -711,7 +711,7 @@
                     class="mr-1 btn btn-xs btn-info float-right mat-elevation-z8">
                     <em class="fa fa-eraser"></em>
                   </button>
-                 
+
                 </div>
 
               </div>
@@ -804,7 +804,7 @@
         <app-info-vacante [Folios]="infoFolio" [Requisicion]="infoRequiId"></app-info-vacante>
       </div>
       <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-xs btn-outline-danger" (click)="lgModal.hide()">Cerrar</button>
+        <button type="button" class="md-1 btn btn-xs btn-danger  mat-elevation-z8" (click)="lgModal.hide()">Cerrar</button>
       </div>
     </div>
   </div>
@@ -825,7 +825,7 @@
         </app-dialog-liberar-candidato>
       </div>
       <!-- <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-outline-success" (click)="modallib.hide()">Cerrar</button>
+        <button type="button" class="md-1 btn btn-success" (click)="modallib.hide()">Cerrar</button>
       </div> -->
     </div>
   </div>
@@ -842,7 +842,7 @@
       <div class="modal-header">
         <h5 id="dialog-sizes-name1" class="modal-title pull-left text-success"><em class="fa fa-pencil"></em> EXAMENES
           REALIZADOS</h5>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right"
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right  mat-elevation-z8"
           (click)="lgModal.hide();closeModal(2)"><i class="fa fa-times"></i></button>
 
       </div>

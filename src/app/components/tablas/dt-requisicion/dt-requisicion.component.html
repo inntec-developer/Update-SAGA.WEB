@@ -28,7 +28,7 @@
         </button>
         <em class="vl mr-2"></em>
         <!-- <button id='update' chkPrivilegiosButtons class="mb-1 btn btn-acciones margen"
-                       container="body" placement="bottom" tooltip="Activar" [ngClass]="(estatusId != 8 || !element) ? 'disabled' : 'btn-outline-success'" (click)="openDialogReActivar()"><em
+                       container="body" placement="bottom" tooltip="Activar" [ngClass]="(estatusId != 8 || !element) ? 'disabled' : 'btn-success'" (click)="openDialogReActivar()"><em
                         class="icon-refresh"></em></button> -->
 
         <!--estatus melina-->
@@ -38,19 +38,19 @@
           <em class="fa fa fa-shield"></em>
         </button>
         <!-- <button id="update" chkPrivilegiosButtons [disabled]="cp" class="mr-2 btn btn-xs"
-          [ngClass]="cp ? 'disabled' : 'btn-outline-warning'" type="button"
+          [ngClass]="cp ? 'disabled' : 'btn-warning'" type="button"
           (click)="updataStatus(35, 'Cubierta Parcialmente')" container="body" placement="bottom"
           tooltip="Cubierta Parcialmente">
           <em class="fa fa-star-half-o"></em>
         </button>
         <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs"
-          [ngClass]="crm ? 'disabled' : 'btn-outline-warning'" [disabled]="crm" type="button"
+          [ngClass]="crm ? 'disabled' : 'btn-warning'" [disabled]="crm" type="button"
           (click)="updataStatus(36, 'Cubierta por Medios')" container="body" placement="bottom"
           tooltip="Cubierta por Reclutamiento Medios">
           <em class="fa fa-star"></em>
         </button>
         <button id="update" chkPrivilegiosButtons [disabled]="cc" class="mr-2 btn btn-xs"
-          [ngClass]="cc ? 'disabled' : 'btn-outline-info'" type="button"
+          [ngClass]="cc ? 'disabled' : 'btn-info'" type="button"
           (click)="updataStatus(37, 'Cubierta por Cliente')" container="body" placement="bottom"
           tooltip="Cubierta por Cliente">
           <em class="fa fa fa-magic"></em>
@@ -255,7 +255,7 @@
         <comentario-vacante [RequisicionId]="RequisicionId" [MotivoId]="7"></comentario-vacante>
       </div>
       <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide()">Cerrar</button>
+        <button type="button" class="md-1 btn btn-success" (click)="lgModal.hide()">Cerrar</button>
       </div>
     </div>
   </div>
