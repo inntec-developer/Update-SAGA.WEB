@@ -32,15 +32,19 @@ export class PostulateService {
   private UrlSendEmailsNoContrado = ApiConection.ServiceUrl + ApiConection.sendEmailNoContratado;
   private UrlGetConteoVacante = ApiConection.ServiceUrl + ApiConection.getConteoVacante;
   private UrlRegistrarCandidatos = ApiConection.ServiceUrl + ApiConection.registrarCandidatos;
+  private UrlValidarEmailCandidato = ApiConection.ServiceUrl + ApiConection.validarEmailCandidato;
 
   constructor(private _HttpClient: HttpClient) { }
 
+  ValidarEmailCandidato(email: string) : Observable<any>
+  {
+    let params = new HttpParams().set('email', email);
+    return this._HttpClient.get(this.UrlValidarEmailCandidato, {params: params, headers: this.httpOptions.headers })
+  }
   RegistrarCandidatos(data)
   {
     return this._HttpClient.post(this.UrlRegistrarCandidatos, data, this.httpOptions )
   }
-
-
   getPostulados(VacanteId : string) : Observable<any>{
     let params = new HttpParams().set('VacanteId', VacanteId);
     return this._HttpClient.get(this.UrlGetPostulados, { params: params, headers: this.httpOptions.headers })

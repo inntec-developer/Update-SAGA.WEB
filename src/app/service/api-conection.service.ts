@@ -273,6 +273,7 @@ export class ApiConection {
   public static execProcedureVencidas = 'Requisiciones/execProcedureVencidas'
   public static getRequisicionesHistorial = 'Requisiciones/getRequisicionesHistorial'
   public static registrarCandidatos = 'reclutamiento/seguimientovacante/registrarCandidatos'
+  public static validarEmailCandidato = 'reclutamiento/seguimientovacante/validarEmailCandidato'
 
 
   /*Examenes */

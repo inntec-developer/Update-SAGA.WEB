@@ -75,7 +75,7 @@ export class DlgRegistroMasivoComponent implements OnInit {
   date: Date;
   editing = {};
   model = { options: '0' };
-
+valEmail = '';
   public columns: Array<any> = [
     { title: 'CURP', className: 'text-success text-center', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
     { title: 'Nombre', className: 'text-center', name: 'Nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
@@ -328,6 +328,20 @@ this.curp = curp;
     this.BorrarCampos();
   }
 
+  ValidarEmail(email)
+  {
+    this.postulateservice.ValidarEmailCandidato(email).subscribe(data => {
+      if(data==302)
+      {
+        this.valEmail = "el email " + email + " ya se encuentra registrado"
+        this.email = "";
+      }
+      else
+      {
+        this.valEmail = "";
+      }
+    })
+  }
   registrar()
   {
     swal({
