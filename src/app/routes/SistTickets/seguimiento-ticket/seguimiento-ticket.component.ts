@@ -33,7 +33,7 @@ export class SeguimientoTicketComponent implements OnInit {
   shown = 'hover';
 
   modulo = sessionStorage.getItem('modulo');
-  moduloId;
+  tipoModulo;
   fila = [];
   ticket = [];
   finalizar = false;
@@ -93,14 +93,14 @@ export class SeguimientoTicketComponent implements OnInit {
   }
   ngOnInit() {
     this.modalExamen = false;
-    this.moduloId = sessionStorage.getItem('moduloId');
+    this.tipoModulo = sessionStorage.getItem('tipoModulo');
     this.GetFilaTickets();
 
   }
 
   public GetFilaTickets()
   {
-    this._service.GetFilaTickets(1, this.settings.user['id']).subscribe( data => {
+    this._service.GetFilaTickets(this.tipoModulo, this.settings.user['id']).subscribe( data => {
         this.fila = data;
     })
   }
