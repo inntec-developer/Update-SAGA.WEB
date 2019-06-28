@@ -271,6 +271,13 @@ this.curp = curp;
   }
   AgregarCandidato()
   {
+    let count = this.data.nv - this.data.contratados + this.dataSource.length;
+    if(count == 0)
+    {
+      swal("Registro", "Ya se cubrió el total de vacantes", "warning");
+    }
+    else
+    {
     // let email = [{ email: this.email.trim(), UsuarioAlta: 'INNTEC' }];
     let estado = this.estados.filter(item => {
       if(item.id == this.estadoId)
@@ -301,6 +308,7 @@ this.curp = curp;
     this.dataSource.push(candidato);
     this.onChangeTable(this.config);
     this.BorrarCampos();
+  }
   }
 
   EditarCandidato()

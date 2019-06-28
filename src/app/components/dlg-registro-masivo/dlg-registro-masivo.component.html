@@ -116,6 +116,14 @@
      
         <div class="col">
             <div class="card card-body mat-elevation-z8">
+                <div class="d-flex justify-content-end mb-2">
+                    <span class="text-muted font-weight-bold float-right text-uppercase mr-4">Cubiertos/Vacantes
+                            <span class="badge badge-pill badge-success ml-1">{{data.contratados + dataSource.length}} / {{data.nv}}</span>
+                          </span>
+                    <span class="text-muted font-weight-bold float-right text-uppercase">Total de Candidatos
+                            <span class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span>
+                          </span>
+                        </div>
                 <table *ngIf="rows.length > 0 else NotCandidatos" class="table">
                         <thead>
                           <tr>
