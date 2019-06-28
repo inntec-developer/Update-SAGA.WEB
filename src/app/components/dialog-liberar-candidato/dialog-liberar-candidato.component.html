@@ -32,7 +32,7 @@
       <small [ngClass]="liberar.comentario.length < 30 ? 'text-danger' : 'text-success'">
         <em *ngIf="liberar.comentario.length < 30 " class="fa fa-close"></em>
         <em *ngIf="liberar.comentario.length > 30" class="fa fa-check"></em>
-        Caracteres m&iacute;nimos del comentario 30 
+        Caracteres m&iacute;nimos del comentario 30
       </small>
     </span>
   </p>
@@ -40,12 +40,12 @@
 </mat-dialog-content>
 <br/>
 <mat-dialog-actions>
-  <button class="btn btn-xs btn-labeled btn-outline-danger mb-1 margin" (click)="onCloseDialog()">
+  <button class="btn btn-xs btn-labeled btn-danger mb-1 margin mat-elevation-z8" (click)="onCloseDialog()">
     <span class="btn-label">
       <i class="fa fa-times"></i>
     </span> Cancelar
   </button>
-  <button type="button" [disabled]="!liberar.motivo || liberar.comentario.length <= 30" class="btn btn-xs btn-labeled btn-outline-success mb-1 margin" (click)="_liberarCandidato()">
+  <button type="button" [disabled]="!liberar.motivo || liberar.comentario.length <= 30" class="btn btn-xs btn-labeled btn-success mb-1 margin mat-elevation-z8" (click)="_liberarCandidato()">
     <span class="btn-label">
       <i class="fa fa-check"></i>
     </span> Aceptar

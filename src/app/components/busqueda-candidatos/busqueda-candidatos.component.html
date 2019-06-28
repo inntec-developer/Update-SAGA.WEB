@@ -251,14 +251,14 @@
     <!-- <div class="container"> -->
     <div class="row">
       <div class="col-12">
-        <button style="margin-left: 10px; " class="btn btn-labeled mb-1" type="button" (click)="Buscar()" [disabled]='loading'
-        [ngClass]="loading ? 'disabled' : 'btn-outline-info'"
+        <button style="margin-left: 10px; " class="btn btn-labeled mb-1 mat-elevation-z8" type="button" (click)="Buscar()" [disabled]='loading'
+        [ngClass]="loading ? 'disabled' : 'btn-info'"
         container="body" placement="bottom" tooltip="Busca candidatos">
           <span class="btn-label ">
             <i class="fa fa-search "></i>
           </span>Buscar
         </button>
-        <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-green mb-1" type="button" (click)="LimpiarFiltro()"
+        <button style="margin-left: 10px; " class="btn btn-labeled btn-green mb-1 mat-elevation-z8" type="button" (click)="LimpiarFiltro()"
         container="body" placement="bottom" tooltip="Limpia todo los filtros">
           <span class="btn-label ">
             <i class="fa fa-eraser "></i>

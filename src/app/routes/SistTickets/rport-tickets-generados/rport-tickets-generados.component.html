@@ -3,14 +3,16 @@
     <div class="row p-1 bg-light">
       <div class="col clearfix">
         <h5 class="text-warning float-left mt-2">REPORTE TURNOS GENERADOS</h5>
-        <button class="float-right mt-1" (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Descargar reporte"
-          container="body" [disabled]="result.length == 0" [ngClass]="result.length == 0 ? 'btn btn-xs disabled':'btn btn-xs btn-outline-success'">
+        <button class="float-right mt-1 mat-elevation-z8" (click)="exportAsXLSX()" container="body" placement="bottom"
+          tooltip="Descargar reporte" container="body" [disabled]="result.length == 0"
+          [ngClass]="result.length == 0 ? 'btn btn-xs disabled':'btn btn-xs btn-success'">
           <em class="fa fa-download"></em>
         </button>
-        <button class="float-right mt-1 mr-1" (click)="clearfilters()" container="body" placement="bottom" tooltip="Actualizar"
-        container="body" [disabled]="result.length == 0" [ngClass]="result.length == 0 ? 'btn btn-xs disabled':'btn btn-xs btn-outline-success'">
-        <em class="fa fa-refresh"></em>
-      </button>
+        <button class="float-right mt-1 mr-1 mat-elevation-z8" (click)="clearfilters()" container="body"
+          placement="bottom" tooltip="Actualizar" container="body" [disabled]="result.length == 0"
+          [ngClass]="result.length == 0 ? 'btn btn-xs disabled':'btn btn-xs btn-success'">
+          <em class="fa fa-refresh"></em>
+        </button>
       </div>
     </div>
     <hr>
@@ -24,19 +26,22 @@
         </tr>
         <tr>
           <th *ngFor="let column of columns">
-            <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-              (tableChanged)="onChangeTable(config, {page: page, itemsPerPage: itemsPerPage}, column.name)" class="form-control form-control-sm" id="{{column.name}}">
+            <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
+              [ngTableFiltering]="column.filtering"
+              (tableChanged)="onChangeTable(config, {page: page, itemsPerPage: itemsPerPage}, column.name)"
+              class="form-control form-control-sm" id="{{column.name}}">
           </th>
-          <th width="3%"> <button class="float-left mb-1" (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
-            container="body" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'btn btn-xs disabled':'btn btn-xs btn-outline-primary'">
-            <em class="fa fa-eraser"></em>
-          </button></th>
+          <th width="3%"> <button class="float-left mb-1 mat-elevation-z8" (click)="clearfilters()" container="body"
+              placement="bottom" tooltip="Limpiar Filtros" container="body" [disabled]="!clearFilter"
+              [ngClass]="(!clearFilter) ? 'btn btn-xs disabled':'btn btn-xs btn-primary'">
+              <em class="fa fa-eraser"></em>
+            </button></th>
         </tr>
       </thead>
       <tbody>
         <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
           [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
-          <div> 
+          <div>
             <tr *ngFor="let r of rows">
               <td class="text-center">{{r.fecha | date:'dd/MM/yyyy' }}</td>
               <td class="text-center"><small class="badge badge-pill badge-success"> {{r.total }}</small></td>
@@ -46,14 +51,15 @@
               <td width="1%"></td>
             </tr>
           </div>
-          </ng-scrollbar>
+        </ng-scrollbar>
       </tbody>
     </table>
-    <br/>
+    <br />
     <div class="row">
       <div class="col-md-12">
-        <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
-          [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
+        <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
+          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+          (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
       </div>
     </div>
   </div>

@@ -11,7 +11,7 @@
       <li class="breadcrumb-item active">Examenes</li>
     </ol>
   </div>
-  
+
   <div class="card">
     <div class="card-body">
         <h5 class="card-title text-warning mt-2">
@@ -24,7 +24,7 @@
               </div>
             </div>
             <div class="mr-2 mt-2">
-            <button type="button" class="btn btn-xs btn-outline-success" (click)="refreshTable()" container="body"
+            <button type="button" class="btn btn-xs btn-success mat-elevation-z8" (click)="refreshTable()" container="body"
             placement="bottom" tooltip="Actualizar" container="body">
             <em class="icon-refresh"></em>
           </button>
@@ -39,13 +39,13 @@
           <a class="card-header" [class.collapsed]="row.verRow"  (click)="row.verRow = !row.verRow">
             <h5>
                   <span class="text-primary float-left "><em class="fa fa-file-text-o"></em> {{row.cliente | uppercase}} - {{row.razon | uppercase}} <span class="text-warning">({{row.total}})</span></span>
-  
+
               <i *ngIf="!row.verRow" class="fa fa-caret-down float-right text-muted" aria-hidden="true"></i>
               <i *ngIf="row.verRow" class="fa fa-caret-up float-right text-muted" aria-hidden="true"></i>
             </h5>
-  
+
           </a>
-  
+
           <div *ngIf="row.verRow" id="collapseOne" class="collapse show">
             <div *ngIf="row.candidatos.length > 0 else NotCandidatos" class="card-body">
                 <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
@@ -67,7 +67,7 @@
                         <td class="text-center text-success">{{ r.folio }}</td>
                         <td class="text-center text-success">{{ r.vBtra | uppercase}}</td>
                         <td class="text-center text-warning">{{ rr.nombre | uppercase}}</td>
-  
+
                         <td class="text-center">
                             <ul class="list-group list-group-flush mx-auto" *ngFor="let r of row.examenes[0]">
                                 <li class="list-group-item text-muted">
@@ -106,7 +106,7 @@
         </div>
         </div>
       </div>
-  
+
       </ng-scrollbar>
       <br/>
       <div class="text-right">
@@ -129,5 +129,4 @@
         </div>
       </div>
     </ng-template>
-  
-   
+

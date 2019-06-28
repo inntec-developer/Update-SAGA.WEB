@@ -11,7 +11,7 @@
       <li class="breadcrumb-item active">Privilegios</li>
     </ol>
   </div>
-  
+
 <div class="panel panel-default panel-flat mat-elevation-z8">
   <div class="panel-body">
     <br/>
@@ -25,7 +25,7 @@
         <div *ngIf="nuevoRol" class="input-group mb-3 select">
             <input type="text" class="form-control" placeholder="Nombre" aria-label="" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="nomRol">
             <div class="input-group-prepend">
-                <button class="btn btn-outline-secondary" (click)="GetTreeRoles();nuevoRol=false;" type="button"> <span aria-hidden="true">&times;</span></button>
+                <button class="btn btn-secondary mat-elevation-z8" (click)="GetTreeRoles();nuevoRol=false;" type="button"> <span aria-hidden="true">&times;</span></button>
             </div>
             <btn-check id='create' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="GuardarCambios()"  container="body" placement="bottom" tooltip="Guardar Cambios"></btn-check>
         </div>
@@ -90,7 +90,7 @@
                   <td><img class="center-block media img-responsive img-fluid circle thumb32" src="{{e.fotoAux}}" alt="" /></td>
                   <td class="text-center">{{e.nombre + ' ' + e.apellidoPaterno + ' ' + e.apellidoMaterno}}</td>
                   <td class="text-center">{{e.descripcion}}</td>
-                  <!-- <td><btn-delete id='delete' chkPrivilegiosButtons  container="body" placement="bottom" tooltip="Borrar Usuario de Grupo" class="pull-right" (click)="DeleteUserRoles(e.entidadId, id)"> 
+                  <!-- <td><btn-delete id='delete' chkPrivilegiosButtons  container="body" placement="bottom" tooltip="Borrar Usuario de Grupo" class="pull-right" (click)="DeleteUserRoles(e.entidadId, id)">
                     </btn-delete></td> -->
                 </tr>
               </tbody>
@@ -106,7 +106,7 @@
      </div>
      </div>
 
-     
+
     <!-- Modal Nodes -->
 
     <div class="modal fade" bsModal #modalNodes="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -135,7 +135,7 @@
         <thead><tr><td *ngFor="let c of columns" class="text-center">{{c.title}}</td></tr></thead>
           <tbody>
             <tr *ngFor="let r of filteredData; let rowIndex = index">
-              
+
               <td class="text-center">
                   {{r['rol']}} -->
                 <!-- <span  container="body" placement="bottom" tooltip="Double click to edit" (dblclick)="editing[rowIndex + '-' + 'rol'] = true" *ngIf="!editing[rowIndex + '-' + 'rol']">
@@ -149,7 +149,7 @@
                     {{r['nombre']}}
                   </span>
                   <input autofocus (blur)="updateValue($event, 'nombre', rowIndex)" *ngIf="editing[rowIndex + '-' + 'nombre']" type="text" [value] = "r['nombre']" />  -->
-            
+
               <!--   </td><td class="center">
                 <mat-checkbox #crear id="{{ 'C-' + rowIndex}}" (change)="r['create'] = crear.checked" class="checkbox" [checked]="r.create" [disabled] = "hiddenSelect"></mat-checkbox><span></span>
               </td>

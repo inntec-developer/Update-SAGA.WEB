@@ -198,7 +198,7 @@
           <td class="text-center">{{row.usuario}}</td>
           <td class="text-center">{{row.fecha | date:'dd-MM-yyyy'}}</td>
           <td class="text-center">
-            <button [disabled]="row.curp.length < 18 || row.nombre.length < 1 || row.apellidoPaterno.length < 1 || row.apellidoMaterno < 1" class="mb-1 btn btn-xs btn-outline-success" type="button" (click)="UpdateData(row)" container="body" placement="bottom" tooltip="Actualizar">
+            <button [disabled]="row.curp.length < 18 || row.nombre.length < 1 || row.apellidoPaterno.length < 1 || row.apellidoMaterno < 1" class="mb-1 btn btn-xs btn-success mat-elevation-z8" type="button" (click)="UpdateData(row)" container="body" placement="bottom" tooltip="Actualizar">
               <em class="fa fa-check"></em>
             </button>
           </td>
@@ -216,18 +216,18 @@
 <p class="text-warning" *ngIf="etiqueta">Es necesario completar CURP (con los 2 ultimos digitos validadores), RFC y NSS, </p>
 <div class="float-right">
 
-  <!-- <button class="btn btn-xs btn-labeled btn-outline-danger mb-2 margen" mat-dialog-close>
+  <!-- <button class="btn btn-xs btn-labeled btn-danger mb-2 margen" mat-dialog-close>
     <span class="btn-label">
         <i class="fa fa-times"></i>
       </span> Cancelar
   </button> -->
-  <a class="btn btn-xs btn-labeled btn-outline-warning mb-2 margen" href="https://www.gob.mx/curp/" target="_blank" >
+  <a class="btn btn-xs btn-labeled btn-warning mb-2 margen mat-elevation-z8" href="https://www.gob.mx/curp/" target="_blank" >
     <span class="btn-label">
       <i class="fa fa-file-text-o"></i>
     </span> Validar CURP
   </a>
 
-  <button [disabled]="data.length==0" type="button" class="btn btn-xs btn-labeled btn-outline-success mb-2 margen" (click)="exportAsXLSX()">
+  <button [disabled]="data.length==0" type="button" class="btn btn-xs btn-labeled btn-success mb-2 margen mat-elevation-z8" (click)="exportAsXLSX()">
     <span class="btn-label">
       <i class="fa fa-download"></i>
     </span> Descargar

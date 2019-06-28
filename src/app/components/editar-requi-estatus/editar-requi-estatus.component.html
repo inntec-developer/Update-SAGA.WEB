@@ -2,11 +2,11 @@
 <div class="card card-body">
     <div class="row">
         <div class="col-sm-12 col-md-12">
-          <button type="button" class="btn btn-xs btn-outline-success float-right mr-1" (click)="refreshTable()" container="body"
+          <button type="button" class="btn btn-xs btn-success float-right mr-1 mat-elevation-z8" (click)="refreshTable()" container="body"
           placement="bottom" tooltip="Actualizar" container="body">
           <em class="icon-refresh"></em>
         </button>
-        <button (click)="clearfilters()" class="btn btn-xs btn-outline-primary float-right mr-2" container="body" placement="bottom" tooltip="Limpiar Filtros"
+        <button (click)="clearfilters()" class="btn btn-xs btn-primary float-right mr-2 mat-elevation-z8" container="body" placement="bottom" tooltip="Limpiar Filtros"
         container="body">
         <em class="fa fa-eraser"></em>
       </button>
@@ -56,14 +56,14 @@
     </span>
     <input [(ngModel)]="comentario" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'respuesta', rowIndex);" *ngIf="editing[rowIndex + '-respuesta']" type="text" [value]="row.comentarioReclutador.respuesta"
     />
-    
+
         </td>
         <td class="text-center">
-            <button [disabled]="!row.activar && !loading" [ngClass]="!row.activar && loading ? 'mb-1 btn btn-xs disabled' : 'mb-1 btn btn-xs btn-outline-success'"  type="button" (click)="AddComentario(row, rowIndex)"  container="body" placement="bottom" tooltip="Cambiar Estatus">
+            <button [disabled]="!row.activar && !loading" [ngClass]="!row.activar && loading ? 'mb-1 btn btn-xs disabled  mat-elevation-z8' : 'mb-1 btn btn-xs btn-success mat-elevation-z8'"  type="button" (click)="AddComentario(row, rowIndex)"  container="body" placement="bottom" tooltip="Cambiar Estatus">
                 <em class="fa fa-check"></em>
             </button>
         </td>
-        
+
       </tr>
       </div>
       </ng-scrollbar>
@@ -75,7 +75,7 @@
           [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
           (numPages)="numPages = $event">
         </pagination>
-        
+
       </div>
     </div>
   <div *ngIf="loading" >

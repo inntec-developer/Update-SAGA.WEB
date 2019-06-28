@@ -20,21 +20,21 @@
            <input class="form-control" id="addRepuesta" type="text" placeholder="Escriba la repuesta">
         </div>
         <div class="col-xl-2">
-            <button title="Agregar pregunta" style="margin-right: 20px" class="mb-1 btn btn-sm btn-outline-success" (click)="Agregar()" type="button"   >
+            <button title="Agregar pregunta" style="margin-right: 20px" class="mb-1 btn btn-sm btn-success mat-elevation-z8" (click)="Agregar()" type="button"   >
                 <em _ngcontent-c34="" class="fa fa-plus"></em>
               </button>
-       
+
        </div>
-     
- 
 
 
 
-<!-- 
+
+
+<!--
 <table class="table table-striped" style="margin-top: 20px">
   <thead class="thead-dark">
     <tr>
-     
+
       <th scope="col">pregunta</th>
       <th scope="col">respuesta</th>
       <th scope="col">activo</th>
@@ -43,13 +43,13 @@
   </thead>
   <tbody>
     <tr *ngFor="let item of Pregunta">
-     
+
       <td><textarea class="ancho">{{item.pregunta}}</textarea> </td>
       <td><textarea class="ancho">{{item.respuesta}}</textarea></td>
       <td>{{this.activo}}</td>
       <td><button class="btn btn-primary">Guardar</button></td>
     </tr>
-   
+
   </tbody>
 </table>
 </div> -->
@@ -64,7 +64,7 @@
       </mat-form-field>
     </div>
     <div  class="table table-hover table-bordered ">
-  
+
     </div>
     <mat-table #table [dataSource]="dataSource" >
       <!-- Cliente <Razon Social> Column -->
@@ -80,7 +80,7 @@
             <textarea id="Ptex_{{element?.id}}"  class="ocultar ancho">{{element.pregunta}}</textarea>
          </mat-cell>
       </ng-container>
-  
+
       <!-- Giro Empresas <Experiencia Solicitada> Column -->
       <ng-container matColumnDef="respuesta">
         <mat-header-cell *matHeaderCellDef> Respuesta</mat-header-cell>
@@ -89,7 +89,7 @@
           <textarea id="tex_{{element?.id}}"  class="ocultar ancho">{{element.respuesta}}</textarea>
         </mat-cell>
       </ng-container>
-  
+
       <!-- Actividad Empresas <Area Nombre> Column -->
       <ng-container matColumnDef="activo">
         <mat-header-cell *matHeaderCellDef> Activo</mat-header-cell>
@@ -99,22 +99,22 @@
           <!-- <input type="checkbox" class="mat-checkbox" checked="{{element?.activo}}">   -->
         </mat-cell>
       </ng-container>
-  
-  
+
+
       <!-- Accion -->
       <ng-container matColumnDef="accion">
         <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
           <mat-cell *matCellDef="let element" (click)="Ocultar(element?.id)" (click)="POcultar(element?.id)">
-              
-              <button title="Guardar pregunta" style="margin-right: 20px" class="mb-1 btn btn-sm btn-outline-success" (click)="Guardar(element.id,$event)" type="button"   >
+
+              <button title="Guardar pregunta" style="margin-right: 20px" class="mb-1 btn btn-sm btn-success mat-elevation-z8" (click)="Guardar(element.id,$event)" type="button"   >
                   <em _ngcontent-c34="" class="fa fa-save"></em>
                 </button>
-            <button title="Eliminar pregunta" class="mb-1 btn btn-sm btn-outline-danger" (click)="Eliminar(element.id)" type="button"  >
+            <button title="Eliminar pregunta" class="mb-1 btn btn-sm btn-danger mat-elevation-z8" (click)="Eliminar(element.id)" type="button"  >
                 <em _ngcontent-c34="" class="fa fa-trash"></em>
             </button>
         </mat-cell>
       </ng-container>
-  
+
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>

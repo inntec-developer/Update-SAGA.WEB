@@ -87,7 +87,7 @@
         </button>
         <!-- <li><a><em class="vl"></em></a></li>
                       <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(28)"  container="body" placement="bottom" tooltip="Cancelada">-->
-        
+
         <button [disabled]="rechazado" [ngClass]="rechazado ? 'btn btn-xs disabled' : 'btn btn-xs btn-danger'" type="button"
           class="mr-2 mat-elevation-z8" (click)="SetProceso(40, 'Rechazado por Cliente')" container="body" placement="bottom" tooltip="Rechazado por Cliente">
           <em class="fa fa-user-times"></em>
@@ -96,12 +96,12 @@
           (click)="SetProceso(42, 'NR')" container="body" placement="bottom" tooltip="NR">
           <em class="fa fa-flag"></em>
         </button>
-        
+
         <button class="btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="refresh()" container="body" placement="bottom"
           tooltip="Actualizar">
           <em class="icon-refresh"></em>
         </button>
-        
+
         <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" class="mr-2 btn btn-xs float-right mat-elevation-z8"
           [disabled]="!showFilterRow" [ngClass]="(!showFilterRow) ? 'disabled':'btn-info'">
           <em class="fa fa-eraser"></em>
@@ -147,7 +147,7 @@
                   *ngIf="row.estatusId != 12 && row.estatusId != 17 && row.estatusId != 27 else sinAsignar">{{row.horario | uppercase}}</span>
               </td>
               <ng-template #sinAsignar>
-                <span>SIN ASIGNAR</span> 
+                <span>SIN ASIGNAR</span>
               </ng-template>
               <td class="text-center"> {{row.nombre | uppercase}} {{ row.apellidoPaterno | uppercase }} {{row.apellidoMaterno | uppercase}}</td>
               <td class="text-center"> {{row.areaExp | uppercase}}</td>
@@ -202,7 +202,7 @@
         </app-info-candidato>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-success" (click)="closeModal(1)">Cerrar</button>
+        <button type="button" class="btn btn-success mat-elevation-z8" (click)="closeModal(1)">Cerrar</button>
       </div>
     </div>
   </div>

@@ -11,7 +11,7 @@
       <li class="breadcrumb-item active">Examenes</li>
     </ol>
   </div>
-  
+
 <div class="row">
   <div class="col-lg-6">
       <div class="card">
@@ -23,10 +23,10 @@
                <table class="table">
                   <thead>
                       <tr>
-        
+
                         <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
                           <small>{{column.title | uppercase}}</small>
-        
+
                         </th>
                       </tr>
                       <tr>
@@ -34,7 +34,7 @@
                           <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
                             class="form-control form-control-sm" id="{{column.name}}">
                         </th>
-        
+
                       </tr>
                     </thead>
                 <tbody>
@@ -49,7 +49,7 @@
                         <li class="estilo text-muted" *ngFor="let r of row.psicometricos">{{r.nombre | uppercase}}</li>
                       </ul></td>
                     <td class="text-center">
-                        <button [disabled]="row.claves == 0" [ngClass]="(row.claves === 0) ? 'btn btn-xs enabled' : 'btn btn-xs btn-outline-warning'" type="button"  (click)="GetClaves(row);verClaves=true;requi = row.vBtra">
+                        <button [disabled]="row.claves == 0" [ngClass]="(row.claves === 0) ? 'btn btn-xs enabled' : 'btn btn-xs btn-warning'" class=" mat-elevation-z8" type="button"  (click)="GetClaves(row);verClaves=true;requi = row.vBtra">
                             {{row.claves}}
                         </button>
                     </td>
@@ -61,16 +61,16 @@
            </div>
            <br/>
            <div class="text-right">
-      
+
                   <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
                     [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
                   </pagination>
                   <pre class="card card-block card-header text-muted">Total Registros: {{requisiciones.length}}</pre>
-  
+
               </div>
 
         </div>
-    
+
   </div>
 
   <div class="col-lg-6">
@@ -86,9 +86,9 @@
             <hr>
               <label class="text-warning">CLAVE</label>
               <div class="input-group">
-                <input type="text" class="form-control form-control-sm" [(ngModel)]="clave" name="claves" (keydown.enter)="AgregarClave(clave)" minlength="16" maxlength="16"> 
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="clave" name="claves" (keydown.enter)="AgregarClave(clave)" minlength="16" maxlength="16">
                 <div class="input-group-append">
-                  <button [disabled]="clave.length < 16" class="btn btn-xs btn-outline-success" type="button"  (click)="AgregarClave(clave)">
+                  <button [disabled]="clave.length < 16" class="btn btn-xs btn-success  mat-elevation-z8" type="button"  (click)="AgregarClave(clave)">
                     <em class="fa fa-plus"></em>
                   </button>
                 </div>
@@ -99,7 +99,7 @@
               <ul class="list-group long">
                   <li *ngFor="let item of listClaves; let ind = index;" class="list-group-item">
                       <span class="text-success">{{ind + 1}}. {{item}}
-                          <button class="btn btn-xs btn-outline-danger float-right" type="button" (click)="PopClave(item)">
+                          <button class="btn btn-xs btn-danger float-right mat-elevation-z8" type="button" (click)="PopClave(item)">
                               <em class="fa fa-times"></em>
                           </button>
 
@@ -108,16 +108,16 @@
               </ul>
 
 
-                    <button *ngIf="seleccionados.length > 0" [disabled]="spinner" class="btn btn-xs btn-outline-success float-right" type="button"  (click)="Agregar()" container="body" placement="bottom" tooltip="Asignar Claves">
+                    <button *ngIf="seleccionados.length > 0" [disabled]="spinner" class="btn btn-xs btn-success float-right mat-elevation-z8" type="button"  (click)="Agregar()" container="body" placement="bottom" tooltip="Asignar Claves">
                       <em *ngIf="!spinner" class="fa fa-check"></em>
                       <span *ngIf="spinner">
                           <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
                       </span>
                     </button>
-                  
+
             </div>
             <br/>
-        
+
               <!-- <div class="margin">
                   <p class="list-group text-warning" *ngFor="let r of seleccionados"><em class="fa fa-file-text-o">  {{r.folio}} - {{r.vBtra | uppercase}}</em></p>
                 </div>
@@ -143,7 +143,7 @@
         </div>
         <div class="modal-footer">
             <div class="text-right">
-           
+
                 <pre class="card card-block card-header text-muted">Total Claves: {{clavesRequi[0].claves.length}}</pre>
                 </div>
 
@@ -151,10 +151,10 @@
       </div>
     </div>
   </div>
-  
+
 
 <!-- <ng-container *ngFor="let row of requisiciones; let ind = index">
-      
+
     <div class="margin">
       <p *ngIf="requisiciones.length > 0 else NotRequi" class="list-group text-warning"><em class="fa fa-file-text-o">  {{row.folio}} - {{row.vBtra | uppercase}}</em></p>
     </div>

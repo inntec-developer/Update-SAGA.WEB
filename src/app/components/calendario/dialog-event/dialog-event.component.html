@@ -68,13 +68,13 @@
         </mat-form-field>
       </section>
       <mat-dialog-actions>
-        <button type="button" class="btn btn-xs btn-labeled btn-outline-danger mb-1 margen" (click)="onCloseDialog()">
+        <button type="button" class="btn btn-xs btn-labeled btn-danger mb-1 margen mat-elevation-z8" (click)="onCloseDialog()">
           <span class="btn-label">
             <i class="fa fa-times"></i>
           </span> Cancelar
         </button>
-        <button [disabled]="!formEvent.valid" type="button" [ngClass]="!formEvent.valid ? 'disabled' : 'btn-outline-success '"
-          class="mb-1 btn btn-xs btn-labeled margen" (click)="onCloseDialogInfo()">
+        <button [disabled]="!formEvent.valid" type="button" [ngClass]="!formEvent.valid ? 'disabled' : 'btn-success '"
+          class="mb-1 btn btn-xs btn-labeled margen mat-elevation-z8" (click)="onCloseDialogInfo()">
           <span class="btn-label">
             <i class="fa fa-check"></i>
           </span> Aceptar

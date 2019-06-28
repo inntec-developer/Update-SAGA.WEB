@@ -15,12 +15,12 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions class="float-right">
-    <button type="button" class="btn btn-xs btn-labeled btn-outline-danger float-right" (click)="CloseDlg()">
+    <button type="button" class="btn btn-xs btn-labeled btn-danger float-right mat-elevation-z8" (click)="CloseDlg()">
         <span class="btn-label">
         <i class="fa fa-times"></i>
       </span> Cancelar
     </button>
-    <button type="button" class="btn btn-xs btn-labeled btn-outline-success float-right ml-2" (click)="CubrirFolio()" [disabled]="seleccion == 0">
+    <button type="button" class="btn btn-xs btn-labeled btn-success float-right ml-2 mat-elevation-z8" (click)="CubrirFolio()" [disabled]="seleccion == 0">
       <span class="btn-label">
         <i class="fa fa-check"></i>
       </span> Aceptar

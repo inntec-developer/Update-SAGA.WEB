@@ -20,7 +20,7 @@
     <div *ngFor="let r of data" class="form-check">
         <input class="form-check-input" type="radio" name="mode" [(ngModel)]="seleccion" [value]="r.id">{{r.nombre}}
     </div>
-    <div *ngIf="seleccion > 0" [ngStyle]="{'color':'red'}"> 
+    <div *ngIf="seleccion > 0" [ngStyle]="{'color':'red'}">
       Debe seleccionar un horario.
   </div>
 </div>
@@ -28,14 +28,14 @@
  <br/>
 <mat-divider></mat-divider>
 <mat-dialog-actions class="pull-right">
-  <button class="btn btn-xs btn-labeled btn-outline-danger mb-2 margin" mat-dialog-close>
+  <button class="btn btn-xs btn-labeled btn-danger mb-2 margin mat-elevation-z8" mat-dialog-close>
     <span class="btn-label">
         <i class="fa fa-times"></i>
       </span> Cancelar
   </button>
   <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-  <!-- <button class="btn btn-xs btn-outline-success mb-1 float-right" [disabled]="!seleccion" mat-button [mat-dialog-close]="seleccion">Aceptar</button> -->
-  <button type="button" [disabled]="!seleccion" class="btn btn-xs btn-labeled btn-outline-success mb-2 margin" (click)="EnviarDatos()">
+  <!-- <button class="btn btn-xs btn-success mb-1 float-right" [disabled]="!seleccion" mat-button [mat-dialog-close]="seleccion">Aceptar</button> -->
+  <button type="button" [disabled]="!seleccion" class="btn btn-xs btn-labeled btn-success mb-2 margin mat-elevation-z8" (click)="EnviarDatos()">
     <span class="btn-label">
       <i class="fa fa-check"></i>
     </span> Aceptar

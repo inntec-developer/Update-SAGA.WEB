@@ -79,9 +79,9 @@
         </div>
         <br>
         <div class="modal-footer">
-          <button type="button" class="md-1 btn btn-xs btn-outline-danger"
+          <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8"
             (click)="(addTelefono = ! addTelefono) ; cancelarTelefono()">Cancelar</button>
-          <button type="button" [disabled]="!formTelefonos.valid" class="md-1 btn btn-xs btn-outline-success"
+          <button type="button" [disabled]="!formTelefonos.valid" class="md-1 btn btn-xs btn-success mat-elevation-z8"
             (click)="AddTelefono()">{{textbtnTelefono}}</button>
         </div>
       </form>
@@ -89,19 +89,19 @@
     <div class="butoonAction clearfix p-2 bg-light">
       <div class="contenedor">
         <div class="aling-div">
-          <button class="mb-1 btn btn-xs btn-outline-primary margen" *ngIf="!addTelefono" container="body"
+          <button class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8" *ngIf="!addTelefono" container="body"
             placement="bottom" tooltip="Agregar" (click)="addTelefono = true; textbtnTelefono = 'Agregar'">
             <em class="fa fa-plus"></em>
           </button>
         </div>
         <div class="aling-div" *ngIf="!EditTelefono">
-          <button *ngIf="Telefonos.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
-            tooltip="Editar" [disabled]="!elementT" [ngClass]="(!elementT)? 'disabled' : 'btn-outline-primary'"
+          <button *ngIf="Telefonos.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body" placement="bottom"
+            tooltip="Editar" [disabled]="!elementT" [ngClass]="(!elementT)? 'disabled' : 'btn-primary'"
             (click)="UpTelefono(); textbtnTelefono = 'Editar'">
             <em class="fa fa-pencil"></em>
           </button>
-          <button *ngIf="Telefonos.length > 0" class="mb-1 btn btn-xs margen" container="body" placement="bottom"
-            tooltip="Eliminar" [disabled]="!elementT" [ngClass]="(!elementT)? 'disabled' : 'btn-outline-danger'"
+          <button *ngIf="Telefonos.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body" placement="bottom"
+            tooltip="Eliminar" [disabled]="!elementT" [ngClass]="(!elementT)? 'disabled' : 'btn-danger'"
             (click)="sweetalertEliminarTelefono()">
             <em class="fa fa-trash"></em>
           </button>

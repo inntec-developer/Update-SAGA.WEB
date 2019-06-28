@@ -16,15 +16,15 @@
 <div class="row" *ngIf="!imprimir">
   <div class="col-md-12">
     <div class="d-flex justify-content-between">
-      <button placement="right" tooltip="Editar" class="mr-1 btn btn-xs btn-outline-primary paddin-buttom"
+      <button placement="right" tooltip="Editar" class="mr-1 btn btn-xs btn-primary paddin-buttom mat-elevation-z8"
       (click)="editarCliente()">
         <em class="fa fa-pencil"></em>
       </button>
-      <!-- <button placement="right" tooltip="Imprimir" class="mr-1 btn btn-xs btn-outline-info paddin-buttom" (click)="print()">
+      <!-- <button placement="right" tooltip="Imprimir" class="mr-1 btn btn-xs btn-info paddin-buttom" (click)="print()">
         <em class="fa fa-print"></em>
       </button> -->
       <button container="body" placement="bottom" tooltip="Regresar"
-        class="mr-1 btn btn-xs btn-outline-warning paddin-buttom" type="button" [routerLink]="['/ventas/directorio']">
+        class="mr-1 btn btn-xs btn-warning paddin-buttom mat-elevation-z8" type="button" [routerLink]="['/ventas/directorio']">
         <em class="fa fa-arrow-left"></em>
       </button>
     </div>

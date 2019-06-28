@@ -31,17 +31,17 @@
                 </div>
               <input type="text" class="form-control long" placeholder="{{examen[0].resultado}}" ngModel required #pregunta="ngModel" [(ngModel)]="resultado">
               <div class="input-group-append">
-              <button type="button" [disabled]="resultado == 0" [ngClass]="resultado == 0 ? 'btn btn-xs enabled float-right' : 'btn btn-xs btn-outline-success float-right'" container="body" placement="bottom" tooltip="Actualizar Resultado" (click)="ActualizarResultado()">
+              <button type="button" [disabled]="resultado == 0" [ngClass]="resultado == 0 ? 'btn btn-xs enabled float-right' : 'btn btn-xs btn-success float-right mat-elevation-z8'" container="body" placement="bottom" tooltip="Actualizar Resultado" (click)="ActualizarResultado()">
                   <em class="fa fa-check"></em>
               </button>
             </div>
           </div>
-            
+
           <div class="input-group" *ngIf="examen[0].resultado > 0">
 
                   <span class="input-group-text" id="">CALIFICACI&Oacute;N: {{examen[0].resultado}}</span>
 
-             
+
             </div>
 
       </div>

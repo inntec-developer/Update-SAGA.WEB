@@ -81,12 +81,12 @@
   <span></span>
 </mat-dialog-content>
 <mat-dialog-actions class="float-right">
-    <button type="button" class="btn btn-xs btn-labeled btn-outline-danger mb-1 margin float-right" mat-dialog-close>
+    <button type="button" class="btn btn-xs btn-labeled btn-danger mb-1 margin float-right mat-elevation-z8" mat-dialog-close>
       <span class="btn-label">
         <i class="fa fa-times"></i>
       </span> Cancelar
     </button>
-    <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-1 margin float-right" (click)="AddDtosFactura()" [disabled]="monto < 0">
+    <button type="button" class="btn btn-xs btn-labeled btn-success mb-1 margin float-right mat-elevation-z8" (click)="AddDtosFactura()" [disabled]="monto < 0">
       <span class="btn-label">
         <i class="fa fa-check"></i>
       </span> Aceptar

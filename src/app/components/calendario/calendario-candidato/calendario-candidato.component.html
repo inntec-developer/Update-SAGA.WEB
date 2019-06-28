@@ -95,8 +95,8 @@
                   <mat-dialog-actions>
                     <mat-divider></mat-divider>
                     <section>
-                      <button class="md-1 btn btn-xs btn-outline-danger margin" (click)="EditEventAction = false">Cancelar</button>
-                      <button type="submit" [disabled]="!formEvent.valid" class="md-1 btn btn-xs btn-outline-success margin">Actualizar</button>
+                      <button class="md-1 btn btn-xs btn-danger margin mat-elevation-z8" (click)="EditEventAction = false">Cancelar</button>
+                      <button type="submit" [disabled]="!formEvent.valid" class="md-1 btn btn-xs btn-success margin mat-elevation-z8">Actualizar</button>
                       <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
                     </section>
 
@@ -166,8 +166,8 @@
         <p><strong>Comentario: </strong><span class="text-primary">{{selectedEvent?.message}}</span></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-xs btn-outline-danger" (click)="EliminarEventModal.hide()">Cancelar</button>
-        <button type="button" class="md-1 btn btn-xs btn-outline-success" (click)="EliminarEventModal.hide();DeleteEvent(selectedEvent)">Aceptar</button>
+          <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8" (click)="EliminarEventModal.hide()">Cancelar</button>
+        <button type="button" class="md-1 btn btn-xs btn-success mat-elevation-z8" (click)="EliminarEventModal.hide();DeleteEvent(selectedEvent)">Aceptar</button>
       </div>
     </div>
   </div>
@@ -198,8 +198,8 @@
         <p><strong>Comentario: </strong><span class="text-primary">{{selectedEvent?.message}}</span></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-xs btn-outline-danger" (click)="CulminarEventModal.hide()">Cancelar</button>
-        <button type="button" class="md-1 btn btn-xs btn-outline-success" (click)="CulminarEventModal.hide();CulminarEvent(selectedEvent)">Aceptar</button>
+        <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8" (click)="CulminarEventModal.hide()">Cancelar</button>
+        <button type="button" class="md-1 btn btn-xs btn-success mat-elevation-z8" (click)="CulminarEventModal.hide();CulminarEvent(selectedEvent)">Aceptar</button>
       </div>
     </div>
   </div>

@@ -16,7 +16,7 @@
     <div class="col-md-4 col-sm-4">
 
       <strong class="text-primary">Sueldo M&iacute;nimo: </strong>
-      <p>{{data.sueldoMinimo | currency: '$'}}</p>
+      <p>${{data.sueldoMinimo | currency: 'MXN'}}</p>
     </div>
     <div class="col-md-4 col-sm-4">
 
@@ -62,12 +62,12 @@
       <h4 class="alert-heading">Advertencia!</h4>
       <p>Todos los usuarios o células que se encuentren asignadas a esta requisición serán eliminados de la misma.</p>
     </div>
-    <button type="button" class="btn btn-xs btn-labeled btn-outline-danger mb-1 margen" (click)="onCloseDialog()">
+    <button type="button" class="btn btn-xs btn-labeled btn-danger mb-1 margen mat-elevation-z8" (click)="onCloseDialog()">
       <span class="btn-label">
         <i class="fa fa-times"></i>
       </span> Cancelar
     </button>
-    <button type="button" [disabled]="!formComentario.valid || loading" class="btn btn-xs btn-labeled btn-outline-success mb-1 margen"
+    <button type="button" [disabled]="!formComentario.valid || loading" class="btn btn-xs btn-labeled btn-success mb-1 margen mat-elevation-z8"
       type="submit">
       <span class="btn-label">
         <i class="fa fa-check"></i>

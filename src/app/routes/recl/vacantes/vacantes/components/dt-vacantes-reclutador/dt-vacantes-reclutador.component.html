@@ -90,7 +90,7 @@
         <button class="btn mr-1 mat-elevation-z8" [ngClass]="element.length == 0 ? 'btn-xs disable' : 'btn-xs btn-purple'" [disabled]="element.length == 0" id='special' chkPrivilegiosButtons type="button" (click)="openDialogTransfer()" container="body" placement="bottom"
         tooltip="Transferir folio"><i class="fa fa-exchange"></i>
       </button>
-        <!-- <button id='special' chkPrivilegiosButtons type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-outline-warning'"
+        <!-- <button id='special' chkPrivilegiosButtons type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-warning'"
           (click)="reporte70=true;" container="body" placement="bottom" tooltip="Reporte 70">
           <i class="fa fa-file-text-o"></i>
         </button> -->
@@ -134,7 +134,7 @@
             </div>
               <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total de Posiciones activas <span class="ml-1 badge badge-pill badge-success">{{totalPos}}</span></span>
               <span class="text-muted font-weight-bold float-right text-uppercase mb-3">Total de Folios <span class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span></span>
-            
+
         <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table border-top" style="width: 100%;">
           <thead>
             <tr>
@@ -194,7 +194,7 @@
                       </small>
                     </ng-template>
                   </td>
-                  <td class="text-center"> 
+                  <td class="text-center">
                       <ng-template #popTemplate>
                           <div class="card">
                             <div class="card-body">
@@ -204,7 +204,7 @@
                             </div>
                           </div>
                         </ng-template>
-      
+
                         <span *ngIf="row.reclutadores.length == 0 && row.estatusId == 4" class="text-warning">SIN ASIGNAR</span>
                         <small class="text-center badge badge-pill badge-danger" *ngIf="row.reclutadores.length > 1 && row.estatusId == 4" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</small>
                         <span class="text-left" *ngIf="row.reclutadores.length == 1 && row.estatusId == 4">{{row.reclutadores[0]}}</span>
@@ -268,7 +268,7 @@
         <comentario-vacante [RequisicionId]="id" [MotivoId]="7"></comentario-vacante>
       </div>
       <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal.hide(); closeModal(0);">Cerrar</button>
+        <button type="button" class="md-1 btn btn-success mat-elevation-z8" (click)="lgModal.hide(); closeModal(0);">Cerrar</button>
       </div>
     </div>
   </div>
@@ -306,7 +306,7 @@
         <app-editar-requi-estatus [requisPausa] = "requisPausa" [estatusId]="39" [usuarioId]="usuarioId"></app-editar-requi-estatus>
       </div>
       <!-- <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal2.hide()">Cerrar</button>
+        <button type="button" class="md-1 btn btn-success" (click)="lgModal2.hide()">Cerrar</button>
       </div> -->
     </div>
   </div>
@@ -327,7 +327,7 @@
         <app-editar-candidato-estatus [candidatosNR]="candidatosNR" [estatusId]=28></app-editar-candidato-estatus>
       </div>
       <!-- <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-outline-success" (click)="lgModal2.hide()">Cerrar</button>
+        <button type="button" class="md-1 btn btn-success" (click)="lgModal2.hide()">Cerrar</button>
       </div> -->
     </div>
   </div>
@@ -385,7 +385,7 @@
         <app-info-vacante [Folios]="folio" [Requisicion]="id"></app-info-vacante>
       </div>
       <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-xs btn-outline-danger" (click)="lgModal15.hide()">Cerrar</button>
+        <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8" (click)="lgModal15.hide()">Cerrar</button>
       </div>
     </div>
   </div>
