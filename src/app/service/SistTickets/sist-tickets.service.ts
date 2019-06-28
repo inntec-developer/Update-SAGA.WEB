@@ -101,9 +101,9 @@ export class SistTicketsService {
     return this._httpClient.get(this.UrlUpdateCandidatoTicket, {params:params})
   }
 
-  GetFilaTickets(estatus, reclutador) :Observable<any>
+  GetFilaTickets(modulo, reclutador) :Observable<any>
   {
-    let params = new HttpParams().set('estatus', estatus).set('reclutadorId', reclutador);
+    let params = new HttpParams().set('modulo', modulo).set('reclutadorId', reclutador);
     return this._httpClient.get(this.UrlGetFilaTickets, {params:params, headers: this.httpOptions.headers})
 
   }
