@@ -86,11 +86,11 @@
         <div class="mat-elevation-z8">
             <div class="row">
                 <div class="col-sm-12 col-md-12 mt-3">
-                  <button type="button" class="btn btn-xs btn-outline-success float-right mr-2" (click)="refreshTable()" container="body"
+                  <button type="button" class="btn btn-xs btn-success float-right mr-2 mat-elevation-z8" (click)="refreshTable()" container="body"
                   placement="bottom" tooltip="Actualizar" container="body">
                   <em class="icon-refresh"></em>
                 </button>
-                <button (click)="clearfilters()" class="btn btn-xs btn-outline-primary float-right mr-2" container="body" placement="bottom" tooltip="Limpiar Filtros"
+                <button (click)="clearfilters()" class="btn btn-xs btn-info float-right mr-2 mat-elevation-z8" container="body" placement="bottom" tooltip="Limpiar Filtros"
                 container="body">
                 <em class="fa fa-eraser"></em>
               </button>
@@ -166,7 +166,7 @@
             </div>
           </div>
           <div class="col-md-4">
-            <button [disabled]="requiselect.length == 0 || examenId == 0" type="button" class="btn btn-lg btn-labeled btn-outline-success float-right ml-2 mat-elevation-z8" container="body"
+            <button [disabled]="requiselect.length == 0 || examenId == 0" type="button" class="btn btn-lg btn-labeled btn-success float-right ml-2 mat-elevation-z8" container="body"
                placement="bottom" tooltip="Asignar Examen" (click)="AgregarRelacion()">
               <span class="btn-label">
                 <i class="fa fa-check"></i>

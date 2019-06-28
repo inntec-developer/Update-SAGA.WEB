@@ -183,10 +183,19 @@ export class AddExamenComponent implements OnInit {
       var self = this;
 
       reader.onload = function () {
-        self.examen[index1].Respuestas[index2].resp = value;
-        self.examen[index1].Respuestas[index2].file = reader.result;
-        self.examen[index1].Respuestas[index2].name = file.name;
-        self.examen[index1].Respuestas[index2].type = file.type;
+        if(index1 == -1)
+        {
+          self.respuestas[index2].file = reader.result;
+          self.respuestas[index2].name = file.name;
+          self.respuestas[index2].type = file.type;
+        }
+        else
+        {
+          self.examen[index1].Respuestas[index2].resp = value;
+          self.examen[index1].Respuestas[index2].file = reader.result;
+          self.examen[index1].Respuestas[index2].name = file.name;
+          self.examen[index1].Respuestas[index2].type = file.type;
+        }
       }
     }
     else {
