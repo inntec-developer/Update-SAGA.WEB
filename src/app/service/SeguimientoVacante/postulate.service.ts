@@ -1,4 +1,3 @@
-import { ApiConection } from './../api-conection.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -7,8 +6,9 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
 
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
+import { ApiConection } from './../api-conection.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -16,6 +16,13 @@ import { Observable } from 'rxjs/Observable';
   providedIn: 'root'
 })
 export class PostulateService {
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + sessionStorage.getItem('validation-token')
+    })
+  };
+
   private UrlGetPostulados = ApiConection.ServiceUrl + ApiConection.getPostulados;
   private UrlGetProceso = ApiConection.ServiceUrl + ApiConection.getProcesoPostulados;
   private UrlSetProceso = ApiConection.ServiceUrl + ApiConection.setProcesoPostulado;
@@ -30,25 +37,18 @@ export class PostulateService {
 
   RegistrarCandidatos(data)
   {
-    let params = new HttpParams().set('datos', data)
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-
-    return this._HttpClient.post(this.UrlRegistrarCandidatos, data, httpOptions )
+    return this._HttpClient.post(this.UrlRegistrarCandidatos, data, this.httpOptions )
   }
 
 
   getPostulados(VacanteId : string) : Observable<any>{
     let params = new HttpParams().set('VacanteId', VacanteId);
-    return this._HttpClient.get(this.UrlGetPostulados, { params: params })
+    return this._HttpClient.get(this.UrlGetPostulados, { params: params, headers: this.httpOptions.headers })
   }
 
   GetProceso(VacanteId, ReclutadorId) : Observable<any>{
     let params = new HttpParams().set('VacanteId', VacanteId).set('ReclutadorId', ReclutadorId);
-    return this._HttpClient.get(this.UrlGetProceso, { params: params })
+    return this._HttpClient.get(this.UrlGetProceso, { params: params, headers: this.httpOptions.headers })
   }
 
   GetConteoVacante(VacanteId, ClienteId) : Observable<any>{
@@ -58,64 +58,27 @@ export class PostulateService {
 
   SetProcesoVacante(data)
   {
-    let params = new HttpParams().set('datos', data)
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-
-    return this._HttpClient.post(this.UrlSetProcesoVacante, data, httpOptions )
+    return this._HttpClient.post(this.UrlSetProcesoVacante, data, this.httpOptions )
   }
 
   SetProceso(data)
   {
-    let params = new HttpParams().set('datos', data)
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-
-    return this._HttpClient.post(this.UrlSetProceso, data, httpOptions )
+    return this._HttpClient.post(this.UrlSetProceso, data, this.httpOptions )
   }
 
   SetStatusBolsa(data)
   {
-    let params = new HttpParams().set('datos', data)
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-
-    return this._HttpClient.post(this.UrlSetStatusBolsa, data, httpOptions )
+    return this._HttpClient.post(this.UrlSetStatusBolsa, data, this.httpOptions )
   }
 
   SendEmailCandidato(data)
   {
-    let params = new HttpParams().set('datos', data)
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-
-    return this._HttpClient.post(this.UrlSendEmailCandidato, data, httpOptions )
-
+    return this._HttpClient.post(this.UrlSendEmailCandidato, data, this.httpOptions )
   }
 
   SendEmailsNoContratado(data)
   {
-    let params = new HttpParams().set('datos', data)
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-
-    return this._HttpClient.post(this.UrlSendEmailsNoContrado, data, httpOptions )
-
+    return this._HttpClient.post(this.UrlSendEmailsNoContrado, data, this.httpOptions )
   }
 
 }

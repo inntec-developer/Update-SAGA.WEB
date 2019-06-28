@@ -10,7 +10,6 @@ import { GridRolesComponent } from './add-roles/grid-roles/grid-roles.component'
 import { JobRequiPauseComponent } from './job-requi-pause/job-requi-pause.component';
 import { NgModule } from '@angular/core';
 import { PopupModalComponent } from './popup-modal/popup-modal.component';
-import { RegistroComponent } from './registro/registro.component';
 import { RolGrupoComponent } from './rol-grupo/rol-grupo.component';
 import { RollsStructComponent } from './rolls-struct/rolls-struct.component';
 import { SharedModule } from '../../shared/shared.module';
@@ -24,7 +23,6 @@ const routes: Routes = [
     { path: 'grupoAdd', component: AddGrupoComponent, data: {'componente':'Grupos'} },
     { path: 'rol', component: RolGrupoComponent, data: {'componente':'Grupos a roles'} },
     { path: 'privilegios', component: RollsStructComponent, data: {'componente':'Privilegios'}},
-    { path: 'registro', component: RegistroComponent},
     { path: 'filesContratados', component: FilesContratadosComponent},
     {path: 'jobPause', component:JobRequiPauseComponent}
 ];
@@ -46,7 +44,6 @@ const routes: Routes = [
       RolGrupoComponent,
       UploadImgsComponent,
       RollsStructComponent,
-      RegistroComponent,
       GridRolesComponent ,
       UploadImgsComponent,
       FilesContratadosComponent,
