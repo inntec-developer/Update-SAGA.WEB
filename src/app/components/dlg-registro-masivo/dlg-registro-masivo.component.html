@@ -78,7 +78,8 @@
                     <label class="text-muted" for="email">EMAIL</label>
                             <!-- <div class="input-group"> -->
                     <input type="email" class="form-control form-control-sm" placeholder="Email *" name="email" [(ngModel)]="email" ngModel required
-                            [class.requerido]="email.length == 0" [class.valido]="email.length >= 1" />
+                            [class.requerido]="email.length == 0" [class.valido]="email.length >= 1" (blur)="ValidarEmail(email)" />
+                            <small class="text-danger">{{valEmail}}</small>
                             <!-- <div class="input-group-append">
                                         <div class="input-group-text" tooltip="Registrar con Email" placement="top" container="body">
                                             <input type="radio" [(ngModel)]="opcRegistro1" name="opc1" value=1 (click)="opcRegistro2=0">
