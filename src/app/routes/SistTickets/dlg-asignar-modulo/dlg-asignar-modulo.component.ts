@@ -14,6 +14,7 @@ export class DlgAsignarModuloComponent implements OnInit {
   modulos = [];
   reclutador = this.settings.user['nombre'];
   tipoModulo = '';
+  moduloId;
   mod: any;
   tipo: any;
   constructor(private _Router: Router, private _service: SistTicketsService, private settings: SettingsService) { }
@@ -32,9 +33,9 @@ export class DlgAsignarModuloComponent implements OnInit {
 
   Iniciar(tipo, mod)
   {
-
+    sessionStorage.setItem('moduloId', this.moduloId);
     sessionStorage.setItem('modulo', mod);
-    sessionStorage.setItem('tipoModulo', this.tipoModulo)
+    sessionStorage.setItem('tipoModulo', tipo)
 
     if(tipo == 1 || tipo == 2)
     {
