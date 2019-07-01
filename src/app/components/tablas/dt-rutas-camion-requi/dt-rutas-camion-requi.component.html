@@ -1,7 +1,7 @@
 <!-- <div class="dt-container mat-elevation-z8"> -->
   <div class="title-headre-view d-flex justify-content-between">
     <h4>Rutas de Camiones</h4>
-    <div *ngIf="DireccionId">
+    <div *ngIf="DireccionId && !ShowRequi">
       <button id="update" class="mb-1 btn btn-xs btn-success margen mat-elevation-z8" (click)="agregarRutasCamion()"
         chkPrivilegiosButtons tooltip="Agregar Ruta" placement="bottom">
         <em class="fa fa-plus"></em>

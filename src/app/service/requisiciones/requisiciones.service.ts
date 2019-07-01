@@ -195,12 +195,12 @@ export class RequisicionesService {
 
   GetHorariosRequiConteo(requisicionId: any): Observable<any> {
     let params = new HttpParams().set('requisicionId', requisicionId);
-    return this._httpClient.get(this.urlGetHorariosRequiConteo, { params: params });
+    return this._httpClient.get(this.urlGetHorariosRequiConteo, { params: params, headers: this.httpOptions.headers });
   }
 
   GetInformeRequisiciones(reclutadorId: any): Observable<any> {
     let params = new HttpParams().set('reclutadorId', reclutadorId);
-    return this._httpClient.get(this.URLGetInformeRequisiciones, { params: params });
+    return this._httpClient.get(this.URLGetInformeRequisiciones, { params: params, headers: this.httpOptions.headers });
   }
 
   GetAsignados(requisicionId: any): Observable<any>
@@ -211,7 +211,7 @@ export class RequisicionesService {
 
   GetRequiTipoRecl(propietarioId: any, tipo): Observable<any> {
     let params = new HttpParams().set('propietario', propietarioId).set('tipo', tipo);
-    return this._httpClient.get(this.URLGetRequiTipoRecl, { params: params });
+    return this._httpClient.get(this.URLGetRequiTipoRecl, { params: params, headers: this.httpOptions.headers });
   }
 
   SendEmailRequiPuro(IdRequisicion: any): Observable<any>{
@@ -229,21 +229,17 @@ export class RequisicionesService {
   }
 
   ExecProcedurePause(): Observable<any> {
-
     return this._httpClient.get(this.URLExecProcedurePause);
   }
 
   ExecProcedureSinCambios(): Observable<any> {
-
     return this._httpClient.get(this.URLExecProcedureSinCambios);
   }
 
   ExecProcedureSinAsignar(): Observable<any> {
-
     return this._httpClient.get(this.URLExecProcedureSinAsignar);
   }
   ExecProcedureVencidas(): Observable<any> {
-
     return this._httpClient.get(this.URLExecProcedureVencidas);
   }
 

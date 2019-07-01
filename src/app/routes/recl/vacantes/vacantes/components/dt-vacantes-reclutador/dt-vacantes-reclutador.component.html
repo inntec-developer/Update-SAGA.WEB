@@ -7,21 +7,24 @@
           (tableChanged)="onChangeTable(config)">
       </mat-form-field> -->
 
-<div class="card">
+<div class="card" *ngIf="!imprimir">
   <div class="card-body mat-elevation-z8">
     <div class="row p-2 bg-light clearfix">
       <div class="col-sm-12 col-md-12">
         <button id="view" (click)="lgModal15.show()" placement="bottom" tooltip="Ver Requisición"
-          class="mr-1 mat-elevation-z8" [disabled]="!element" [ngClass]="(!element) ? 'btn btn-xs disabled':'btn btn-xs btn-warning'">
+          class="mr-1 mat-elevation-z8" [disabled]="!element"
+          [ngClass]="(!element) ? 'btn btn-xs disabled':'btn btn-xs btn-warning'">
           <em class="fa fa-eye"></em></button>
-        <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-xs mat-elevation-z8" [disabled]="!element"
-          [ngClass]="(!element) ? 'disabled' : 'btn-dark'" container="body" placement="bottom" tooltip="Comentarios"><em
-            class="fa fa-comments-o"></em></button>
+        <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-xs mat-elevation-z8"
+          [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-dark'" container="body" placement="bottom"
+          tooltip="Comentarios"><em class="fa fa-comments-o"></em></button>
         <button id="create" chkPrivilegiosButtons (click)="openDialogAssingRequi()" placement="bottom" tooltip="Asignar"
-          container="body" class="mr-1 mat-elevation-z8" [disabled]="asignar" [ngClass]="asignar ? 'btn btn-xs disabled':'btn btn-xs btn-purple'">
+          container="body" class="mr-1 mat-elevation-z8" [disabled]="asignar"
+          [ngClass]="asignar ? 'btn btn-xs disabled':'btn btn-xs btn-purple'">
           <em class="icon-user-follow"></em></button>
         <button type="button" id="special" chkPrivilegiosButtons (click)="openDesignVacante()" class="mat-elevation-z8"
-          container="body" placement="bottom" tooltip="Diseñar Vacante" container="body" [disabled]="disenador || confidencial"
+          container="body" placement="bottom" tooltip="Diseñar Vacante" container="body"
+          [disabled]="disenador || confidencial"
           [ngClass]="(disenador || confidencial) ? 'btn btn-xs disabled':'btn btn-xs btn-primary'">
           <em class="icon-list"></em>
         </button>
@@ -29,36 +32,43 @@
         <em class="vl ml-1 mr-1"></em>
         <!-- estatus de la vacante -->
 
-        <button id="update" chkPrivilegiosButtons class="mr-1 mat-elevation-z8" [disabled]="bc" [ngClass]="bc ? 'btn btn-xs disabled' : 'btn btn-xs btn-green'"
-          type="button" (click)="SetStatus(29, 'B&uacute;squeda Candidatos')" container="body" placement="bottom"
+        <button id="update" chkPrivilegiosButtons class="mr-1 mat-elevation-z8" [disabled]="bc"
+          [ngClass]="bc ? 'btn btn-xs disabled' : 'btn btn-xs btn-green'" type="button"
+          (click)="SetStatus(29, 'B&uacute;squeda Candidatos')" container="body" placement="bottom"
           tooltip="B&uacute;squeda de Candidatos">
           <em class="fa fa-search"></em>
         </button>
-        <button id="update" chkPrivilegiosButtons class="mr-1 mat-elevation-z8" [disabled]="ecc" [ngClass]="ecc ? 'btn btn-xs disabled' : 'btn btn-xs btn-green'"
-          type="button" (click)="SetStatus(30, 'Env&iacute;o a Cliente')" container="body" placement="bottom" tooltip="Env&iacute;o Candidato a Cliente">
+        <button id="update" chkPrivilegiosButtons class="mr-1 mat-elevation-z8" [disabled]="ecc"
+          [ngClass]="ecc ? 'btn btn-xs disabled' : 'btn btn-xs btn-green'" type="button"
+          (click)="SetStatus(30, 'Env&iacute;o a Cliente')" container="body" placement="bottom"
+          tooltip="Env&iacute;o Candidato a Cliente">
           <em class="fa fa-truck"></em>
         </button>
 
-        <button id="update" chkPrivilegiosButtons class="mr-1 mat-elevation-z8" [disabled]="sc" [ngClass]="sc ? 'btn btn-xs disabled' : 'btn btn-xs btn-green'"
-          type="button" (click)="SetStatus(32, 'Socioeconómico')" container="body" placement="bottom" tooltip="Socioeconómico"
+        <button id="update" chkPrivilegiosButtons class="mr-1 mat-elevation-z8" [disabled]="sc"
+          [ngClass]="sc ? 'btn btn-xs disabled' : 'btn btn-xs btn-green'" type="button"
+          (click)="SetStatus(32, 'Socioeconómico')" container="body" placement="bottom" tooltip="Socioeconómico"
           container="body">
           <em class="fa fa-bar-chart"></em>
         </button>
 
 
-        <button id="update" chkPrivilegiosButtons class="mr-1 mat-elevation-z8" [disabled]="ec" [ngClass]="ec ? 'btn btn-xs disabled' : 'btn btn-xs btn-info'"
-          type="button" (click)="SetStatus(33, 'Espera de Ctns')" container="body" placement="bottom" tooltip="En Espera de Contrataci&oacute;n">
+        <button id="update" chkPrivilegiosButtons class="mr-1 mat-elevation-z8" [disabled]="ec"
+          [ngClass]="ec ? 'btn btn-xs disabled' : 'btn btn-xs btn-info'" type="button"
+          (click)="SetStatus(33, 'Espera de Ctns')" container="body" placement="bottom"
+          tooltip="En Espera de Contrataci&oacute;n">
           <em class="fa fa-hourglass-half"></em>
         </button>
 
-        <button id="update" chkPrivilegiosButtons class="mr-1 mat-elevation-z8" [disabled]="pausa" [ngClass]="pausa ? 'btn btn-xs disabled' : 'btn btn-xs btn-info'"
-          type="button" (click)="SetStatus(39, 'Pausada')" container="body" placement="bottom" tooltip="Pausada">
+        <button id="update" chkPrivilegiosButtons class="mr-1 mat-elevation-z8" [disabled]="pausa"
+          [ngClass]="pausa ? 'btn btn-xs disabled' : 'btn btn-xs btn-info'" type="button"
+          (click)="SetStatus(39, 'Pausada')" container="body" placement="bottom" tooltip="Pausada">
           <em class="fa fa-pause-circle-o"></em>
         </button>
 
-        <button id="update" chkPrivilegiosButtons [ngClass]="nbc ? 'btn btn-xs disabled' : 'btn btn-xs btn-primary'" class="mat-elevation-z8"
-          [disabled]="nbc" type="button" (click)="SetStatus(31, 'Nueva Busqueda')" container="body" placement="bottom"
-          tooltip="Nueva Busqueda de Candidatos">
+        <button id="update" chkPrivilegiosButtons [ngClass]="nbc ? 'btn btn-xs disabled' : 'btn btn-xs btn-primary'"
+          class="mat-elevation-z8" [disabled]="nbc" type="button" (click)="SetStatus(31, 'Nueva Busqueda')"
+          container="body" placement="bottom" tooltip="Nueva Busqueda de Candidatos">
           <em class="fa fa-search-plus"></em>
         </button>
 
@@ -67,87 +77,103 @@
         <!-- informes -->
         <em class="vl ml-1 mr-1"></em>
         <button class="mr-1 mat-elevation-z8" type="button" (click)="informeVacante=true;"
-          [disabled]="dataSource.length == 0" [ngClass]="dataSource.length == 0 ? 'btn btn-xs disable' : 'btn btn-xs btn-info'"
-          container="body" placement="bottom" tooltip="Informe Vacantes">
+          [disabled]="dataSource.length == 0"
+          [ngClass]="dataSource.length == 0 ? 'btn btn-xs disable' : 'btn btn-xs btn-info'" container="body"
+          placement="bottom" tooltip="Informe Vacantes">
           <em class="fa fa-file-text-o"></em>
         </button>
-        <button class="mr-1 mat-elevation-z8" id='special' chkPrivilegiosButtons type="button" (click)="editarNR=true" [disabled]="candidatosNR.length == 0"
-          [ngClass]="candidatosNR.length == 0 ? 'mr-1 btn btn-xs disable' : 'mr-1 btn btn-xs btn-danger'" container="body"
-          placement="bottom" tooltip="Visualizar Incidente">
+        <button class="mr-1 mat-elevation-z8" id='special' chkPrivilegiosButtons type="button" (click)="editarNR=true"
+          [disabled]="candidatosNR.length == 0"
+          [ngClass]="candidatosNR.length == 0 ? 'mr-1 btn btn-xs disable' : 'mr-1 btn btn-xs btn-danger'"
+          container="body" placement="bottom" tooltip="Visualizar Incidente">
           <em class="fa fa-male"></em>
           <span *ngIf="candidatosNR.length > 0" class="badge badge-pill badge-warning">{{candidatosNR.length}}</span>
         </button>
-        <button class="mr-1 mat-elevation-z8" id='special' chkPrivilegiosButtons type="button" (click)="editarRequi=true" [disabled]="requisPausa.length == 0"
-          [ngClass]="requisPausa.length == 0 ? 'btn btn-xs disable' : 'btn btn-xs btn-warning'" container="body" placement="bottom"
-          tooltip="Visualizar vacantes en pausa">
+        <button class="mr-1 mat-elevation-z8" id='special' chkPrivilegiosButtons type="button"
+          (click)="editarRequi=true" [disabled]="requisPausa.length == 0"
+          [ngClass]="requisPausa.length == 0 ? 'btn btn-xs disable' : 'btn btn-xs btn-warning'" container="body"
+          placement="bottom" tooltip="Visualizar vacantes en pausa">
           <i class="fa fa-clock-o"></i>
           <span *ngIf="requisPausa.length > 0" class="badge badge-pill badge-warning mr-2">{{requisPausa.length}}</span>
         </button>
-        <button type="button" class ="mr-1 btn btn-xs btn-info mat-elevation-z8"
-        (click)="historial=true;" container="body" placement="bottom" tooltip="Historial">
-        <i class="fa fa-area-chart"></i>
-      </button>
-        <button class="btn mr-1 mat-elevation-z8" [ngClass]="element.length == 0 ? 'btn-xs disable' : 'btn-xs btn-purple'" [disabled]="element.length == 0" id='special' chkPrivilegiosButtons type="button" (click)="openDialogTransfer()" container="body" placement="bottom"
-        tooltip="Transferir folio"><i class="fa fa-exchange"></i>
-      </button>
+        <button type="button" class="mr-1 btn btn-xs btn-info mat-elevation-z8" (click)="historial=true;"
+          container="body" placement="bottom" tooltip="Historial">
+          <i class="fa fa-area-chart"></i>
+        </button>
+        <button class="btn mr-1 mat-elevation-z8"
+          [ngClass]="element.length == 0 ? 'btn-xs disable' : 'btn-xs btn-purple'" [disabled]="element.length == 0"
+          id='special' chkPrivilegiosButtons type="button" (click)="openDialogTransfer()" container="body"
+          placement="bottom" tooltip="Transferir folio"><i class="fa fa-exchange"></i>
+        </button>
         <!-- <button id='special' chkPrivilegiosButtons type="button" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'mr-1 btn disable' : 'mr-1 btn btn-warning'"
           (click)="reporte70=true;" container="body" placement="bottom" tooltip="Reporte 70">
           <i class="fa fa-file-text-o"></i>
         </button> -->
-        <button class="mr-1 mat-elevation-z8" type="button" [disabled]="dataSource.length == 0" [ngClass]="dataSource.length == 0 ? 'btn btn-xs disable' : 'btn btn-xs btn-success'"
-          (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
+        <button class="mr-1 mat-elevation-z8" type="button" [disabled]="dataSource.length == 0"
+          [ngClass]="dataSource.length == 0 ? 'btn btn-xs disable' : 'btn btn-xs btn-success'" (click)="exportAsXLSX()"
+          container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
           <i class="fa fa-download"></i>
         </button>
 
 
         <!-- informes -->
 
-        <button type="button" class="mr-1 btn btn-xs btn-success float-right mat-elevation-z8" (click)="refreshTable()" container="body"
-          placement="bottom" tooltip="Actualizar" container="body">
+        <button type="button" class="mr-1 btn btn-xs btn-success float-right mat-elevation-z8" (click)="refreshTable()"
+          container="body" placement="bottom" tooltip="Actualizar" container="body">
           <em class="icon-refresh"></em>
         </button>
-        <button class="mr-1 float-right mat-elevation-z8" (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
-          container="body" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'btn btn-xs disabled':'btn btn-xs btn-info'">
+        <button class="mr-1 float-right mat-elevation-z8" (click)="clearfilters()" container="body" placement="bottom"
+          tooltip="Limpiar Filtros" container="body" [disabled]="!clearFilter"
+          [ngClass]="(!clearFilter) ? 'btn btn-xs disabled':'btn btn-xs btn-info'">
           <em class="fa fa-eraser"></em>
         </button>
-        <button class="mr-1 float-right mat-elevation-z8" [disabled]="pds" (click)="seguimientoRequi()" [ngClass]="(pds) ? 'btn btn-xs disabled':'btn btn-xs btn-primary'"
-          container="body" placement="bottom" tooltip="En Proceso">
+        <button class="mr-1 float-right mat-elevation-z8" [disabled]="pds" (click)="seguimientoRequi()"
+          [ngClass]="(pds) ? 'btn btn-xs disabled':'btn btn-xs btn-primary'" container="body" placement="bottom"
+          tooltip="En Proceso">
           <i class="fa fa-cogs" aria-hidden="true"></i>
         </button>
-        <button class="mr-1 float-right mat-elevation-z8" [disabled]="postulados <= 0" (click)="openViewPostulados()" [ngClass]="(postulados <= 0 )? 'btn btn-xs disabled':'btn btn-xs btn-warning'"
-          container="body" placement="bottom" tooltip="Postulados">
+        <button class="mr-1 float-right mat-elevation-z8" [disabled]="postulados <= 0" (click)="openViewPostulados()"
+          [ngClass]="(postulados <= 0 )? 'btn btn-xs disabled':'btn btn-xs btn-warning'" container="body"
+          placement="bottom" tooltip="Postulados">
           <i class="fa fa-users" aria-hidden="true"></i>
         </button>
-        <button id="update" chkPrivilegiosButtons class="mr-1 float-right mat-elevation-z8" [disabled]="element.claseReclutamientoId != 3 || element.vacantes <= element.contratados" (click)="openDialogRegistro()" [ngClass]="element.claseReclutamientoId != 3 || element.vacantes <= element.contratados ? 'btn btn-xs disabled':'btn btn-xs btn-success'"
-        container="body" placement="bottom" tooltip="Registro Masivo">
-        <i class="fa fa-user-plus" aria-hidden="true"></i>
-      </button>
+        <button id="update" chkPrivilegiosButtons class="mr-1 float-right mat-elevation-z8"
+          [disabled]="element.claseReclutamientoId != 3 || element.vacantes <= element.contratados"
+          (click)="openDialogRegistro()"
+          [ngClass]="element.claseReclutamientoId != 3 || element.vacantes <= element.contratados ? 'btn btn-xs disabled':'btn btn-xs btn-success'"
+          container="body" placement="bottom" tooltip="Registro Masivo">
+          <i class="fa fa-user-plus" aria-hidden="true"></i>
+        </button>
 
       </div>
     </div>
 
     <div class="row" #tableContainer>
       <div class="col-sm-12 col-md-12 table-responsive clearfix">
-          <div class="mt-3 ">
-              <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total posiciones cubiertas
-                  <span class="badge badge-pill badge-success ml-1">{{totalContratados}}</span></span>
-            </div>
-              <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total de Posiciones activas <span class="ml-1 badge badge-pill badge-success">{{totalPos}}</span></span>
-              <span class="text-muted font-weight-bold float-right text-uppercase mb-3">Total de Folios <span class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span></span>
+        <div class="mt-3 ">
+          <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total posiciones cubiertas
+            <span class="badge badge-pill badge-success ml-1">{{totalContratados}}</span></span>
+        </div>
+        <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total de Posiciones activas <span
+            class="ml-1 badge badge-pill badge-success">{{totalPos}}</span></span>
+        <span class="text-muted font-weight-bold float-right text-uppercase mb-3">Total de Folios <span
+            class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span></span>
 
         <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table border-top" style="width: 100%;">
           <thead>
             <tr>
               <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
                 <small>{{column.title | uppercase}}</small>
-                <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
+                <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)"
+                  [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
                 </i>
               </th>
             </tr>
             <tr *ngIf="showFilterRow">
               <th *ngFor="let column of columns">
-                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                  (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
+                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
+                  [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                  class="form-control form-control-sm" id="{{column.name}}">
               </th>
             </tr>
           </thead>
@@ -156,7 +182,8 @@
               [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
               <div>
                 <tr (click)="onCellClick(row)" (dblclick)="seguimientoRequi()" *ngFor="let row of rows"
-                  [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
+                  [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8"
+                  [class.selected]="row.selected">
                   <td class="text-center">
                     {{row.folio}}
                   </td>
@@ -181,13 +208,14 @@
                   <td class="text-center">
                     <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info"
                       [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
-                      [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20" [class.badge-success]="row.estatusId  === 7"
-                      [class.badge-danger]="row.estatusId  === 8">
+                      [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20"
+                      [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
                       {{row.estatus | uppercase}}
                     </small>
                     <ng-template #toLength>
                       <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
-                        [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20"
+                        [class.badge-primary]="row.estatusId  === 5"
+                        [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20"
                         [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8"
                         placement="bottom" tooltip="{{row.estatus | uppercase}}" container='body'>
                         {{row.estatus | slice:0:8 | uppercase }} ...
@@ -210,20 +238,24 @@
                         <span class="text-left" *ngIf="row.coordinador.length == 1 && row.estatusId == 4">{{row.coordinador[0]}}</span>
                         <span *ngIf = "row.estatusId != 4" [class.text-warning] = "row.coordinador === 'SIN ASIGNAR'">{{row.coordinador | uppercase}}</span></td>
                   <td class="text-center">
-                  <ng-template #popTemplate>
-                    <div class="card">
-                      <div class="card-body">
-                        <ul class="list-group list-group-flush">
-                          <li *ngFor="let r of row.reclutadores" class="list-group-item text-muted">{{r}}</li>
-                        </ul>
+                    <ng-template #popTemplate>
+                      <div class="card">
+                        <div class="card-body">
+                          <ul class="list-group list-group-flush">
+                            <li *ngFor="let r of row.reclutadores" class="list-group-item text-muted">{{r}}</li>
+                          </ul>
+                        </div>
                       </div>
-                    </div>
-                  </ng-template>
+                    </ng-template>
 
-                  <span *ngIf="row.reclutadores.length == 0 || row.estatusId == 4" class="text-warning">SIN ASIGNAR</span>
-                  <small class="text-center badge badge-pill badge-danger" *ngIf="row.reclutadores.length > 1 && row.estatusId != 4" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</small>
-                  <span class="text-left" *ngIf="row.reclutadores.length == 1 && row.estatusId != 4">{{row.reclutadores[0]}}</span>
-                </td>
+                    <span *ngIf="row.reclutadores.length == 0 || row.estatusId == 4" class="text-warning">SIN
+                      ASIGNAR</span>
+                    <small class="text-center badge badge-pill badge-danger"
+                      *ngIf="row.reclutadores.length > 1 && row.estatusId != 4" [popover]="popTemplate" placement="left"
+                      container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</small>
+                    <span class="text-left"
+                      *ngIf="row.reclutadores.length == 1 && row.estatusId != 4">{{row.reclutadores[0]}}</span>
+                  </td>
                   <td class="text-center">
                     <small class="badge  badge-pill badge-warning" [popover]="popTemplatePostulados" container="body"
                       placement="left" triggers="click">
@@ -243,8 +275,8 @@
     <div class="row mt-2">
       <div class="col-md-12 col-sm-12 clearfix">
         <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
-          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
-          (numPages)="numPages = $event">
+          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+          (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
         </pagination>
         <!-- <pre *ngIf="config.paging" class="text-muted float-right">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre> -->
       </div>
@@ -264,25 +296,26 @@
         </button>
       </div>
       <div class="modal-body">
-          <!-- <app-dlg-registro-masivo></app-dlg-registro-masivo> -->
+        <!-- <app-dlg-registro-masivo></app-dlg-registro-masivo> -->
         <comentario-vacante [RequisicionId]="id" [MotivoId]="7"></comentario-vacante>
       </div>
       <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-success mat-elevation-z8" (click)="lgModal.hide(); closeModal(0);">Cerrar</button>
+        <button type="button" class="md-1 btn btn-success mat-elevation-z8"
+          (click)="lgModal.hide(); closeModal(0);">Cerrar</button>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Modal para reporte -->
-<div *ngIf="historial" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #MessageModal="bs-modal" class="modal"
-  tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+<div *ngIf="historial" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #MessageModal="bs-modal"
+  class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="float-left text-warning"><em class="fa fa-area-chart mr-2"></em>HISTORIAL - REQUISICIONES</h4>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="historial=false; lgModal.hide();"><i
-            class="fa fa-times"></i></button>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right"
+          (click)="historial=false; lgModal.hide();"><i class="fa fa-times"></i></button>
       </div>
       <div class="modal-body">
         <app-dthistorial></app-dthistorial>
@@ -292,18 +325,20 @@
 </div>
 
 <!--Editar estatus-->
-<div *ngIf="editarRequi" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal2="bs-modal" class="modal fade"
-  tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+<div *ngIf="editarRequi" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal2="bs-modal"
+  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title pull-left text-warning"><i class="fa fa-file-text-o mr-1" aria-hidden="true"></i>FOLIOS PAUSADOS</h4>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal2.hide();closeModal(0)"><i
-            class="fa fa-times"></i></button>
+        <h4 class="modal-title pull-left text-warning"><i class="fa fa-file-text-o mr-1" aria-hidden="true"></i>FOLIOS
+          PAUSADOS</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right"
+          (click)="lgModal2.hide();closeModal(0)"><i class="fa fa-times"></i></button>
 
       </div>
       <div class="modal-body">
-        <app-editar-requi-estatus [requisPausa] = "requisPausa" [estatusId]="39" [usuarioId]="usuarioId"></app-editar-requi-estatus>
+        <app-editar-requi-estatus [requisPausa]="requisPausa" [estatusId]="39" [usuarioId]="usuarioId">
+        </app-editar-requi-estatus>
       </div>
       <!-- <div class="modal-footer">
         <button type="button" class="md-1 btn btn-success" (click)="lgModal2.hide()">Cerrar</button>
@@ -313,14 +348,15 @@
 </div>
 
 <!--Editar estatus candidatos-->
-<div *ngIf="editarNR" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal3="bs-modal" class="modal fade"
-  tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+<div *ngIf="editarNR" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal3="bs-modal"
+  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title pull-left text-warning"><i class="fa fa-user-times mr-1" aria-hidden="true"></i>REPORTE INCIDENTES</h4>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal3.hide();closeModal(0)"><i
-            class="fa fa-times"></i></button>
+        <h4 class="modal-title pull-left text-warning"><i class="fa fa-user-times mr-1" aria-hidden="true"></i>REPORTE
+          INCIDENTES</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right"
+          (click)="lgModal3.hide();closeModal(0)"><i class="fa fa-times"></i></button>
 
       </div>
       <div class="modal-body">
@@ -335,14 +371,15 @@
 
 
 <!--Informe vacantes-->
-<div *ngIf="informeVacante" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal4="bs-modal" class="modal fade"
-  tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+<div *ngIf="informeVacante" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal4="bs-modal"
+  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-lg long">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title pull-left text-success">
           <i class="fa fa-area-chart mr-1" aria-hidden="true"></i>INFORME VACANTES</h4>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal4.hide(); closeModal(1);">
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right"
+          (click)="lgModal4.hide(); closeModal(1);">
           <i class="fa fa-times"></i>
         </button>
       </div>
@@ -362,8 +399,8 @@
         <h4 class="float-left text-success mt-2 ml-1"><em class="fa fa-users mr-2"></em>CANDIDATOS EN PROCESO </h4>
         <h5 class="text-warning font-weight-bold mt-2">{{folio}} - {{vBtra | uppercase}}</h5>
 
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right mr-1" (click)="procesoCandidato=false; lgModal.hide();"><i
-            class="fa fa-times"></i></button>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right mr-1"
+          (click)="procesoCandidato=false; lgModal.hide();"><i class="fa fa-times"></i></button>
       </div>
       <div class="modal-body">
         <app-candidatos-en-proceso [RequisicionId]="id"></app-candidatos-en-proceso>
@@ -377,7 +414,12 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 id="dialog-sizes-name1" class="modal-title pull-left">Informaci&oacute;n de la Vacante</h4>
-        <button  type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal15.hide()" aria-label="Close">
+        <button placement="right" tooltip="Imprimir Requisición" class="mr-1 btn btn-xs btn-info mat-elevation-z8"
+          (click)="lgModal15.hide(); print()">
+          <em class="fa fa-print"></em>
+        </button>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal15.hide()"
+          aria-label="Close">
           <i class="fa fa-times"></i>
         </button>
       </div>
@@ -385,8 +427,17 @@
         <app-info-vacante [Folios]="folio" [Requisicion]="id"></app-info-vacante>
       </div>
       <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8" (click)="lgModal15.hide()">Cerrar</button>
+        <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8"
+          (click)="lgModal15.hide()">Cerrar</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<div [hidden]="!imprimir" id="content">
+  <div>
+    <div class="modal-body">
+      <app-info-vacante [Folios]="folio" [Requisicion]="id"></app-info-vacante>
     </div>
   </div>
 </div>

@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vacantes-reclutador.component.scss']
 })
 export class VacantesReclutadorComponent implements OnInit {
+  imprimir :boolean = false;
 
   constructor() { }
 

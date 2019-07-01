@@ -75,7 +75,6 @@ export class ActividadEmpresaComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.ActividadEmpresa = [this.formActividades.getRawValue()];
-    console.log(catalogo);
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
       result ? this.UpActividad.emit(catalogo.Catalogos.Id) : console.log(result);

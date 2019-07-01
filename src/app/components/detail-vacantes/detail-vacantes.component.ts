@@ -30,7 +30,6 @@ export class DetailVacantesComponent implements OnInit {
   constructor(private _service: DetailService ) { }
 
   GetDtosDetail() {
-
     this._service.GetDtosDetail(this.RequisicionId).subscribe(data => {
       this.Datos = data;
       this.observacionesRequi = data['requisicion']['observacionesRequi'] || null;

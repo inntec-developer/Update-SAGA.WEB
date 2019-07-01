@@ -1,15 +1,15 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ToasterConfig, ToasterService } from 'angular2-toaster';
 import { views, viewsdtl } from '../../../../models/recl/viewvacantes';
 
 import { ApiConection } from '../../../../service/api-conection.service';
 import { CatalogoConfiguracionService } from '../../../../service/DisenioVacante/catalogo-configuracion.service';
 import { ConfiguracionService } from '../../../../service/DisenioVacante/configuracion.service';
+import { DOCUMENT } from '@angular/common';
 import { Http } from '@angular/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../service/requisiciones/requisiciones.service';
-import { DOCUMENT } from '@angular/common';
 import { id } from '@swimlane/ngx-datatable/release/utils';
 
 // Modelos
@@ -129,7 +129,6 @@ export class DisenadorVacanteComponent implements OnInit {
       .subscribe(data => {
         this.Clasifica = data;
         this.ClasificaD = data;
-        console.log('Clasifica', this.ClasificaD);
       });
   }
 
@@ -143,10 +142,8 @@ export class DisenadorVacanteComponent implements OnInit {
     debugger;
     for (const item of this.ListaCampo) {
       const r = document.getElementById('Resumen_' + item.id);
-      console.log(item.id);
       if (r != null){
         const res = r.lastElementChild.firstElementChild.firstElementChild['checked'];
-        console.log(res);
         const d = document.getElementById('Detalle_' + item.id);
         const det = d.lastElementChild.firstElementChild.firstElementChild['checked'];
         const config = {
@@ -180,7 +177,6 @@ export class DisenadorVacanteComponent implements OnInit {
   }
 
   SetDetalle(id: any, titulo: any, event: any) {
-    console.log(id, titulo, event);
     // let e2 = document.getElementById('Detalle_' + id);
     // let algo = (<HTMLInputElement>e2).checked;
     // let e = document.getElementById('Detalle_' + id);
@@ -193,7 +189,6 @@ export class DisenadorVacanteComponent implements OnInit {
   }
 
   SetResumen(id: any, titulo: any, event: any) {
-    console.log(id, titulo, event);
     // const e = document.getElementById('Resumen_' + id);
     // this.bol = e['checked'];
     this.View(id, event, 'H');

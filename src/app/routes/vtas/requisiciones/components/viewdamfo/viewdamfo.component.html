@@ -26,7 +26,7 @@
         (click)="openDialog()">
         <em class="icon-docs"></em>
       </button>
-      <button placement="right" tooltip="Imprimir Requisición" class="mr-1 btn btn-xs btn-info mat-elevation-z8"
+      <button placement="right" tooltip="Imprimir DAMFO-290" class="mr-1 btn btn-xs btn-info mat-elevation-z8"
         (click)="print()">
         <em class="fa fa-print"></em>
       </button>
@@ -37,7 +37,7 @@
     </div>
   </div>
 </div>
-<br *ngIf="!imprimir" />
+
 <div id="content">
   <div class="row justify-content-between" *ngIf="imprimir">
     <div class="col-2">
@@ -241,15 +241,14 @@
         </div>
       </div>
     </div>
-  <!-- </div> -->
-  <br *ngIf="!imprimir" />
+
   <div class="row">
     <div class="col-md-12">
       <!-- DIRECCIONES -->
       <app-dt-direccion [Direcciones]="damfo290?.cliente?.direcciones"></app-dt-direccion>
     </div>
   </div>
-  <br *ngIf="!imprimir" />
+
   <div class="row">
     <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
       <!-- TELEFONOS -->
@@ -268,14 +267,14 @@
     </div>
   </div>
   <br *ngIf="!imprimir">
-  <br *ngIf="!imprimir" />
+
   <div class="row">
     <div class="col-md-12">
       <!-- BENEFICIOS -->
       <app-dt-beneficios [Beneficios]="damfo290?.beneficios"></app-dt-beneficios>
     </div>
   </div>
-  <br *ngIf="!imprimir" />
+
   <div class="row">
     <div class="col-md-4">
       <!-- ACTIVIDADES -->
@@ -291,7 +290,7 @@
       <app-procesos [Proceso]="damfo290?.procesos"></app-procesos>
     </div>
   </div>
-  <br *ngIf="!imprimir" />
+
   <div class="row">
     <div class="col-md-3">
       <!-- DOCUMENTOS dAMSA -->
@@ -310,7 +309,7 @@
       <app-prestaciones-cliente [Prestaciones]="damfo290?.prestacionesCliente"></app-prestaciones-cliente>
     </div>
   </div>
-  <br *ngIf="!imprimir" />
+
   <div class="row">
     <div class="col-md-6">
       <!-- PSICOMETRIAS DAMSA -->
@@ -321,7 +320,7 @@
       <app-dt-psicometrias-cliente [Psicometrias]="damfo290?.psicometriasCliente"></app-dt-psicometrias-cliente>
     </div>
   </div>
-  <br *ngIf="!imprimir" />
+
   <div class="row">
     <div class="col-md-4 col-lg-4">
       <!-- COMPTENCIAS CARDINALES -->

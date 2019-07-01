@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { CandidatosService } from './../../../../../../service/Candidatos/candidatos.service';
@@ -24,6 +24,9 @@ const swal = require('sweetalert');
   providers: [RequisicionesService, PostulateService, DatePipe, CandidatosService]
 })
 export class DtVacantesReclutadorComponent implements OnInit {
+  @Output('Imprimir') EmImprimir : EventEmitter<any> = new EventEmitter<any>();
+  public imprimir: boolean;
+
   //scroll
   public disabled = false;
   public invertX = false;
@@ -892,6 +895,32 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.refreshTable();
     }
   }
+
+
+
+  print(){
+    this.imprimir = true;
+    this.EmImprimir.emit(this.imprimir);
+    if(!this.settings.layout.isCollapsed){
+        this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
+    }
+    setTimeout(() => {
+      document.getElementById('content').style.marginLeft = "45px";
+      document.getElementById('content').style.marginTop = "15px";
+      document.getElementById('content').style.marginRight = "0px";
+      document.getElementById('content').style.marginBottom = "15px";
+
+      window.print();
+    }, 500);
+    setTimeout(() => {
+      this.imprimir = false;
+      this.EmImprimir.emit(this.imprimir);
+      document.getElementById('content').style.marginTop = "0";
+      document.getElementById('content').style.marginLeft = "0";
+    }, 500);
+  }
+
+
   /**
   * configuracion para mensajes de acciones.
   */

@@ -57,7 +57,7 @@ export class PostulateService {
 
   GetConteoVacante(VacanteId, ClienteId) : Observable<any>{
     let params = new HttpParams().set('RequisicionId', VacanteId).set('ClienteId', ClienteId);
-    return this._HttpClient.get(this.UrlGetConteoVacante, { params: params })
+    return this._HttpClient.get(this.UrlGetConteoVacante, { params: params, headers: this.httpOptions.headers })
   }
 
   SetProcesoVacante(data)

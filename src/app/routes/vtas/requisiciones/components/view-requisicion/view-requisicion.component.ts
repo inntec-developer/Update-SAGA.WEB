@@ -1,6 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
+import { SettingsService } from '../../../../../core/settings/settings.service';
 import { ViewCuerpoRequiComponent } from '../view-cuerpo-requi/view-cuerpo-requi.component';
 import { ViewInforRequiComponent } from '../view-info-requi/view-info-requi.component';
 
@@ -10,6 +11,7 @@ import { ViewInforRequiComponent } from '../view-info-requi/view-info-requi.comp
   styleUrls: ['./view-requisicion.component.scss']
 })
 export class ViewRequisicionComponent implements OnInit {
+  public imprimir: boolean;
 
   public RequisicionId: string;
   public Folio: number;
@@ -20,6 +22,7 @@ export class ViewRequisicionComponent implements OnInit {
   constructor(
     private _Router: Router,
     private _Route: ActivatedRoute,
+    private settings: SettingsService
   ) {
     this._Route.params.subscribe(params => {
       if (params['IdRequi'] != null && params['Folio'] != null) {
@@ -38,5 +41,25 @@ export class ViewRequisicionComponent implements OnInit {
 
   getEstatusRequi(event) {
     this.estatusId = event;
+  }
+
+  print(){
+    this.imprimir = true;
+    if(!this.settings.layout.isCollapsed){
+        this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
+    }
+    setTimeout(() => {
+      document.getElementById('content').style.marginLeft = "60px";
+      document.getElementById('content').style.marginTop = "15px";
+      document.getElementById('content').style.marginRight = "0px";
+      document.getElementById('content').style.marginBottom = "15px";
+
+      window.print();
+    }, 500);
+    setTimeout(() => {
+      this.imprimir = false;
+      document.getElementById('content').style.marginTop = "0";
+      document.getElementById('content').style.marginLeft = "0";
+    }, 500);
   }
 }

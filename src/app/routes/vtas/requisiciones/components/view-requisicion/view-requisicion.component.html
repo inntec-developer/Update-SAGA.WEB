@@ -1,5 +1,4 @@
-<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
-<div class="content-heading">
+<div class="content-heading" [hidden]="imprimir">
   <div>
     Requisiciones
     <span class="text-sm d-none d-sm-block">Visualizaci&oacute;n de Requisici&oacute;n.</span>
@@ -16,24 +15,32 @@
   </ol>
 </div>
 <!-- Botones superiores Izquierdos -->
-<div class="row">
+<div class="row" [hidden]="imprimir">
   <div class="col-md-12">
     <div class="d-flex justify-content-between">
-      <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-xs btn-acciones mat-elevation-z8" [disabled]="estatusId != 4"
-        [ngClass]="(estatusId != 4) ? 'disabled' : 'btn-primary'" container="body" placement="bottom" tooltip="Editar"
-        (click)="editRequi()">
+      <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-xs btn-acciones mat-elevation-z8"
+        [disabled]="estatusId != 4" [ngClass]="(estatusId != 4) ? 'disabled' : 'btn-primary'" container="body"
+        placement="bottom" tooltip="Editar" (click)="editRequi()">
         <em class="icon-pencil"></em></button>
-      <!-- <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mb-1 btn btn-acciones btn-dark"
-        container="body" placement="bottom" tooltip="Comentarios"><em class="fa fa-comments-o"></em></button> -->
-      <button container="body" placement="bottom" tooltip="Regresar" class="mr-1 btn btn-xs btn-warning mat-elevation-z8" type="button" [routerLink]="['/ventas/requisicion']">
+      <button placement="right" tooltip="Imprimir Requisición" class="mr-1 btn btn-xs btn-info mat-elevation-z8"
+        (click)="print()">
+        <em class="fa fa-print"></em>
+      </button>
+      <button container="body" placement="bottom" tooltip="Regresar"
+        class="mr-1 btn btn-xs btn-warning mat-elevation-z8" type="button" [routerLink]="['/ventas/requisicion']">
         <em class="icon-action-undo"></em>
       </button>
     </div>
   </div>
 </div>
 <br />
-<app-view-info-requi [Folios]="Folio" (EstatusId)="getEstatusRequi($event)"></app-view-info-requi>
-<app-view-cuerpo-requi [Requisicion]="RequisicionId" [ShowRequi]="true"></app-view-cuerpo-requi>
+<div id="content">
+  <app-view-info-requi [Folios]="Folio" (EstatusId)="getEstatusRequi($event)"></app-view-info-requi>
+  <app-view-cuerpo-requi [Requisicion]="RequisicionId" [ShowRequi]="true"></app-view-cuerpo-requi>
+</div>
+
+<!-- Spinner para esperar información  -->
+<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
 <!-- Modal para comentarios de la requisicion -->
 <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-lg">

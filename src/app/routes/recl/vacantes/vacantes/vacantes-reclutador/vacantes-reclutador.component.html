@@ -1,4 +1,4 @@
-<div class="content-heading">
+<div *ngIf="!imprimir" class="content-heading">
   <div>
       Vacantes
       <span class="text-sm d-none d-sm-block">Administraci&oacute;n de Vacantes.</span>
@@ -10,4 +10,4 @@
   </ol>
 </div>
 
-<app-dt-vacantes-reclutador></app-dt-vacantes-reclutador> 
+<app-dt-vacantes-reclutador (Imprimir)="imprimir = $event"></app-dt-vacantes-reclutador>

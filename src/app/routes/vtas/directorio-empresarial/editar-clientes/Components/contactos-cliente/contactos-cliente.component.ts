@@ -100,7 +100,6 @@ export class ContactosClienteComponent implements OnInit {
     this.Usuario = this.settings.user['usuario'];
     this.showFilterRowCn = true;
     this.getCatalogos();
-    console.log(this.Contactos);
     this.formContactos = this.fb.group({
       Nombre: ['', [Validators.required]],
       ApellidoPaterno: ['', [Validators.required]],
@@ -127,7 +126,6 @@ export class ContactosClienteComponent implements OnInit {
     if ((changes.Direcciones && !changes.Direcciones.isFirstChange()) ||
       (changes.Direcciones && !changes.Direcciones.isFirstChange())) {
       this.onChangeTableCn(this.config);
-      console.log(this.Contactos);
     }
   }
   getCatalogos() {

@@ -5,6 +5,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatTableDataSource, PageEvent } from '@angular/material';
 
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SettingsService } from '../../../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-view-cuerpo-requi',
@@ -16,6 +17,7 @@ export class ViewCuerpoRequiComponent implements OnInit {
   @Input('Requisicion') Requisicion: string;
   @Input('ShowRequi') ShowRequi: boolean;
   @Input('CreateRequi') CreateRequi: boolean;
+
   public requisicion: any;
   public checked: boolean = false;
   public EstatusRequi: any;
@@ -24,7 +26,7 @@ export class ViewCuerpoRequiComponent implements OnInit {
     private serviceRequisiciones: RequisicionesService,
     private _Router: Router,
     private _Route: ActivatedRoute,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
   ) { }
 
   ngOnInit() {
