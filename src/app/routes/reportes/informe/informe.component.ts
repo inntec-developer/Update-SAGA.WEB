@@ -214,6 +214,7 @@ GeneraEstatusBolsa(){
 
   tiporeclutaChange(){
     this.objtiporeclu = this.FormTipoReclu.get('TiporecluControl').value;
+    console.log(this.objtiporeclu)
   }
 
 
