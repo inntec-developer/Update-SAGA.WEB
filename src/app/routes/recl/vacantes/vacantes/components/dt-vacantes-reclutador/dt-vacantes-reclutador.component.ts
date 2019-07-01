@@ -122,6 +122,12 @@ export class DtVacantesReclutadorComponent implements OnInit {
         {
           this.totalPos += r.vacantes;
           this.totalContratados += r.contratados;
+
+          if(r.estatusId == 4)
+          {
+            r.coordinador = r.reclutadores;
+            r.reclutadores = "SIN ASIGNAR";
+          }
         }
 
       })
@@ -211,39 +217,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
     let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
   }
-
-
-  public changeSort(data: any, config: any): any {
-    if (!config.sorting) {
-      return data;
-    }
-
-    let columns = this.config.sorting.columns || [];
-    let columnName: string = void 0;
-    let sort: string = void 0;
-
-    for (let i = 0; i < columns.length; i++) {
-      if (columns[i].sort !== '' && columns[i].sort !== false) {
-        columnName = columns[i].name;
-        sort = columns[i].sort;
-      }
-    }
-
-    if (!columnName) {
-      return data;
-    }
-
-    // simple sorting
-    return data.sort((previous: any, current: any) => {
-      if (previous[columnName] > current[columnName]) {
-        return sort === 'desc' ? -1 : 1;
-      } else if (previous[columnName] < current[columnName]) {
-        return sort === 'asc' ? -1 : 1;
-      }
-      return 0;
-    });
-  }
-
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
     this.columns.forEach((column: any) => {
@@ -259,14 +232,14 @@ export class DtVacantesReclutadorComponent implements OnInit {
             else
             {
               let aux = [];
-              if(column.filtering.columnName)
-              {
-                aux = item[column.filtering.columnName];
-              }
-              else
-              {
+              // if(column.filtering.columnName)
+              // {
+              //   aux = item[column.filtering.columnName];
+              // }
+              // else
+              // {
                 aux = item[column.name];
-              }
+              // }
                 let flag = false;
                 if(item[column.name].length > 0)
                 {
@@ -283,10 +256,13 @@ export class DtVacantesReclutadorComponent implements OnInit {
                     return item[column.name];
                   }
                 }
-              else
-              {
-                  return item[column.name];
-              }
+                else
+                {
+                  if( 'sin asignar'.match(column.filtering.filterString.toLowerCase()))
+                  {
+                    return item[column.name];
+                  }
+                }
             }
           }
 

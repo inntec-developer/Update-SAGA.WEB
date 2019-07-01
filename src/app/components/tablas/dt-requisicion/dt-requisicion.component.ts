@@ -123,6 +123,11 @@ export class DtRequisicionComponent implements OnInit {
         {
           this.totalPos += r.vacantes;
           this.totalContratados += r.contratados;
+          if(r.estatusId == 4)
+          {
+            r.coordinador = r.reclutadores;
+            r.reclutadores = "SIN ASIGNAR";
+          }
         }
       })
 
@@ -422,14 +427,14 @@ export class DtRequisicionComponent implements OnInit {
               if(item[column.name].length > 0)
               {
                 let aux = [];
-                if(column.filtering.columnName)
-                {
-                  aux = item[column.filtering.columnName];
-                }
-                else
-                {
+                // if(column.filtering.columnName)
+                // {
+                //   aux = item[column.filtering.columnName];
+                // }
+                // else
+                // {
                   aux = item[column.name];
-                }
+                // }
                 let mocos = false;
 
                   aux.forEach(element => {
@@ -444,6 +449,13 @@ export class DtRequisicionComponent implements OnInit {
                   {
                     return item[column.name];
                   }
+              }
+              else
+              {
+                if( 'sin asignar'.match(column.filtering.filterString.toLowerCase()))
+                {
+                  return item[column.name];
+                }
               }
             }
           }

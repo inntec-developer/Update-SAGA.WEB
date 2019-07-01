@@ -1,4 +1,3 @@
-import { ToolsModule } from './../../../../../tools/tools.module';
 import { Component, OnInit } from '@angular/core';
 import { RequisicionesService } from '../../../../../service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -48,9 +47,7 @@ export class DTHistorialComponent implements OnInit {
       this.dataSource = data;
       this.totalContratados = 0;
       this.dataSource.forEach(r => {
-       
-          this.totalContratados += r.contratados;
-      
+        this.totalContratados += r.contratados;
       })
      this.onChangeTable(this.config);
     });
@@ -88,9 +85,9 @@ export class DTHistorialComponent implements OnInit {
 
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
+    this.showFilterRow = true;
     this.columns.forEach((column: any) => {
-      if (column.filtering) {
-        this.showFilterRow = true;
+      if (column.filtering.filterString != "") {
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
           {
@@ -117,42 +114,18 @@ export class DTHistorialComponent implements OnInit {
                     return item[column.name];
                   }
                 }
-              else
-              {
-                  return item[column.name];
-              }
+                else
+                {
+                  if( 'sin asignar'.match(column.filtering.filterString.toLowerCase()))
+                  {
+                    return item[column.name];
+                  }
+                }
             }
           }
         });
       }
     });
-
-    if (!config.filtering) {
-      return filteredData;
-    }
-
-    if (config.filtering.columnName) {
-      return filteredData.filter((item: any) =>
-        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-    }
-
-    let tempArray: Array<any> = [];
-    filteredData.forEach((item: any) => {
-      let flag = false;
-      this.columns.forEach((column: any) => {
-        if (item[column.name] == null) {
-          flag = true;
-        } else {
-          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-            flag = true;
-          }
-        }
-      });
-      if (flag) {
-        tempArray.push(item);
-      }
-    });
-    filteredData = tempArray;
 
     return filteredData;
   }

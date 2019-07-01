@@ -31,11 +31,9 @@
             <tr>
               <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
                 <small>{{column.title | uppercase}}</small>
-                <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
-                </i>
               </th>
             </tr>
-            <tr *ngIf="showFilterRow">
+            <tr>
               <th *ngFor="let column of columns">
                 <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
                   (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
@@ -75,14 +73,12 @@
                       </small>
                     </ng-template>
                   </td>
-                  <td>{{row.coordinador | uppercase}}</td>
-                  <td> {{row.propietario | uppercase}}</td>
                   <td class="text-center">
                     <ng-template #popTemplate>
                       <div class="row">
                         <div class="col-md-12">
                           <div class="popover-body">
-                            <ul *ngFor="let r of row.reclutadores">
+                            <ul *ngFor="let r of row.coordinador">
                               <li class="text-muted">{{r | uppercase}}</li>
                             </ul>
 
@@ -90,10 +86,37 @@
                         </div>
                       </div>
                     </ng-template>
-                    <span class="text-center" *ngIf="row.reclutadores.length == 0">SIN ASIGNAR</span>
-                    <a class="badge badge-pill badge-primary text-white text-center" *ngIf="row.reclutadores.length > 1" [popover]="popTemplate" placement="left"
+
+                    <span class="text-center text-warning" *ngIf="row.coordinador.length == 0 && row.estatusId == 4">SIN ASIGNAR</span>
+                    <a class="badge badge-pill badge-primary text-white text-center"
+                      *ngIf="row.coordinador.length > 1 && row.estatusId == 4" [popover]="popTemplate" placement="left"
+                      container="body" triggers="mouseenter:mouseleave">{{row.coordinador.length}}</a>
+                    <span class="text-center" [class.text-warning] = "row.coordinador[0] == 'SIN ASIGNAR'"
+                      *ngIf="row.coordinador.length == 1 && row.estatusId == 4">{{row.coordinador[0] | uppercase}}</span>
+                    <span class="text-center" [class.text-warning] = "row.coordinador == 'SIN ASIGNAR'" *ngIf="row.estatusId != 4">{{row.coordinador | uppercase}}</span>
+                  </td>
+                  <td> {{row.propietario | uppercase}}</td>
+                  <td class="text-center">
+                    <ng-template #popTemplate>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="popover-body">
+                            <ul *ngFor="let r of row.reclutadores">
+                              <li class="text-muted" >{{r | uppercase}}</li>
+                            </ul>
+
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+
+                    <span class="text-center text-warning" *ngIf="row.reclutadores.length == 0 || row.estatusId == 4">SIN
+                      ASIGNAR</span>
+                    <a class="badge badge-pill badge-primary text-white text-center"
+                      *ngIf="row.reclutadores.length > 1 && row.estatusId != 4" [popover]="popTemplate" placement="left"
                       container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
-                    <span class="text-center" *ngIf="row.reclutadores.length == 1">{{row.reclutadores[0] | uppercase}}</span>
+                    <span class="text-center" [class.text-warning] = "row.reclutadores[0] == 'SIN ASIGNAR'"
+                      *ngIf="row.reclutadores.length == 1 && row.estatusId != 4">{{row.reclutadores[0] | uppercase}}</span>
 
                   </td>
                 </tr>
