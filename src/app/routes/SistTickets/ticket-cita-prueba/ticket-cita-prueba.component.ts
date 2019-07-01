@@ -46,7 +46,6 @@ num = '';
   GetMisVacantes() {
     this.service.getRequiReclutador(this.settings.user['id']).subscribe(data => {
       this.dataSource = data;
-      console.log(this.dataSource)
     });
   }
 

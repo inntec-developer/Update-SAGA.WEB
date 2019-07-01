@@ -1,14 +1,14 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
-import { ReportesService } from '../../../service/Reporte/reportes.service';
+import { $ } from 'protractor';
+import { ApiConection } from '../../../service/api-conection.service';
 import { ExcelService } from '../../../service/ExcelService/excel.service';
 import {Http} from '@angular/http';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ApiConection } from '../../../service/api-conection.service';
-import { $ } from 'protractor';
+import { ReportesService } from '../../../service/Reporte/reportes.service';
 
 @Component({
   selector: 'app-tabla-reporte',
@@ -20,7 +20,7 @@ export class TablaReporteComponent implements OnInit {
   @Input('data') valor:any;
   public General : any[];
   public palabra :string;
- 
+
   disabled = false;
   compact = false;
   invertX = true;
@@ -59,7 +59,7 @@ export class TablaReporteComponent implements OnInit {
   }
 
   Prueba(lista){
-   
+
   }
 
   Generar(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor,usercoo){
@@ -81,7 +81,7 @@ export class TablaReporteComponent implements OnInit {
   if(oficina != undefined){
     for (let item of oficina) {
       ofc += item +',';
-    
+
     }
   }
 
@@ -145,22 +145,21 @@ ucor = ucor == undefined?'0':ucor;
     var inicio = inc['value'];
     var final = fin['value'];
     let tipo = document.getElementById('TipoReporte')['value'];
-    
+
     this.Servicio.GetInforme(palabra,ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec,ucor)
     .subscribe( data => {
     // this.popGenerico(data.mensaje,data.bandera,'Publicacion');
     this.requisiciones = data;
     this.General = data;
-    console.log(data);
     this.onChangeTable(this.config);
     this.spinner.hide();
-    
+
     });
   }
 
   Exportar(){
     var obj = [];
-   
+
     this.General.forEach(item => {
       obj.push({
         'FOLIO': item.folio.toString(),
@@ -216,7 +215,7 @@ public columns: Array<any> = [
   { title: 'No.', className: 'text-info text-center', name: 'numero' , filtering: { filterString: '', placeholder: 'No. vacante' } },
   { title: 'Cubierta', className: 'text-info text-center', name: 'cubierta' , filtering: { filterString: '', placeholder: 'Cubiertas..' } },
   { title: 'Cumplimiento', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'Cumplimiento..' } },
- 
+
   { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
   { title: 'Fecha Estatus', className: 'text-info text-center', name: 'fch_Modificacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
   { title: 'Coordinación', className: 'text-info text-center', name: 'clasesReclutamiento', filtering: { filterString: '', placeholder: 'Coordinacion' } },

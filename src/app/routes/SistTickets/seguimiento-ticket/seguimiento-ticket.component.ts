@@ -505,7 +505,6 @@ export class SeguimientoTicketComponent implements OnInit {
   }
 
   public Search(data: any, opc, aux) {
-    console.log(aux)
     this.search = data.target.value;
     let tempArray: Array<any> = [];
 

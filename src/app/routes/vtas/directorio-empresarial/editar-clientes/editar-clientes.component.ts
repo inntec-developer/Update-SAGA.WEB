@@ -89,11 +89,6 @@ export class EditarClientesComponent implements OnInit {
         this.Telefonos = result.telefonos;
         this.Emails = result.correos;
         this.Contactos = result.contactos;
-        console.log('Cliente',this.Cliente);
-        console.log('Direcciones', this.Direcciones);
-        console.log('Telefonos', this.Telefonos);
-        console.log('Correos', this.Emails);
-        console.log('Contactos', this.Contactos);
       }
     });
   }

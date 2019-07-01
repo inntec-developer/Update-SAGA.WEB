@@ -1,6 +1,3 @@
-import { ApiConection } from './../api-conection.service';
-
-
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
@@ -12,6 +9,7 @@ import 'rxjs/add/observable/throw';
 import { Headers, Http, HttpModule, RequestOptions, Response } from '@angular/http';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
+import { ApiConection } from './../api-conection.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Injectable } from '@angular/core';
@@ -20,6 +18,12 @@ import { stringify } from 'querystring';
 
 @Injectable()
 export class CandidatosService {
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + sessionStorage.getItem('validation-token')
+    })
+  };
     // Url de servicios.
     private UrlPaises = ApiConection.ServiceUrl + ApiConection.filtropaises;
     private UrlEstados = ApiConection.ServiceUrl + ApiConection.filtroestados;
@@ -72,7 +76,7 @@ export class CandidatosService {
         return this._httpClient.get(this.URLGetMediosRecl);
     }
 
-    GetMotivos(estatus): Observable<any> { 
+    GetMotivos(estatus): Observable<any> {
         let params = new HttpParams().set('estatus', estatus)
         const httpOptions = {
             headers: new HttpHeaders({
@@ -93,7 +97,7 @@ export class CandidatosService {
         return this._httpClient.post(this.URLGetContratados, candidatos, httpOptions);
     }
 
-    GetInfoContratados(): Observable<any> { 
+    GetInfoContratados(): Observable<any> {
         return this._httpClient.get(this.URLGetInfoContratados);
     }
 
@@ -121,7 +125,7 @@ export class CandidatosService {
         return this._httpClient.post(this.URLUpdateFuenteRecl, data, httpOptions)
     }
 
-   
+
     UpdateContratados(data: any): Observable<any> {
 
         let params = new HttpParams().set('datos', data)
@@ -238,9 +242,8 @@ export class CandidatosService {
     }
 
     getvacantesdtl(Id: any) {
-        return this.http.get(this.UrlVacantesDtl + '?IdVacante=' + Id)
-            .map(result => result.json())
-            .catch(this.handleError);
+      let params = new HttpParams().set('IdVacante', Id)
+        return this._httpClient.get<any>(this.UrlVacantesDtl, {params: params, headers: this.httpOptions.headers} );
     }
 
     postApartar(candidato: any): Observable<any> { // Apartar el candidato y ligar a la vacante.

@@ -835,7 +835,6 @@ export class NuevoProspectoComponent implements OnInit {
       this.EditContacto = false;
       this.elementCn = null;
     }
-    console.log(this.ContactosNew);
     this.cancelarContacto();
     this.onChangeTableCn(this.config);
   }

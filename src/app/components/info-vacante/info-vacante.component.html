@@ -3,17 +3,23 @@
     <em class="fa fa-list-alt"></em> Información Principal
   </div> -->
 <div class="card-body">
-  <div class="d-flex justify-content-between">
-    <h4>
-      <strong> Vacantes: </strong>
-      <label class="badge badge-pill badge-info">{{vacantes}}</label>
-    </h4>
-    <h4>
-      <strong> {{vBtra }} </strong>
-    </h4>
-    <h4>
-      <strong>Folio: </strong> {{folio}}
-    </h4>
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-ms-4 col-xs-12">
+      <h4>
+        <strong> Vacantes: </strong>
+        <label class="badge badge-pill badge-info">{{vacantes}}</label>
+      </h4>
+    </div>
+    <div class="col-lg-4 col-md-4 col-ms-4 col-xs-12">
+      <h4 class="text-center">
+        <strong> {{vBtra }} </strong>
+      </h4>
+    </div>
+    <div class="col-lg-4 col-md-4 col-ms-4 col-xs-12">
+      <h4 class="float-right">
+        <strong>Folio: </strong> <span class="text-warning">{{folio}}</span>
+      </h4>
+    </div>
   </div>
   <mat-divider></mat-divider>
   <br>
@@ -111,12 +117,6 @@
     </div>
   </div>
 </div>
-<!-- </div> -->
-<br>
-<!-- <div class="dt-container  mat-elevation-z8">
-  <div class="card-header">
-    <em class="fa fa-user"></em> Informaci&oacute;n General
-  </div> -->
 <div class="card-body">
   <div class="row">
     <div class="col-md-3 col-sm-12 col-xs-12">
@@ -227,12 +227,6 @@
     </div>
   </div>
 </div>
-<!-- </div> -->
-<br>
-<!-- <div class="dt-container  mat-elevation-z8">
-  <div class="card-header">
-    <em class="fa fa-id-badge"></em> Informaci&oacute;n Adicional del Perfil
-  </div> -->
 <div class="card-body">
   <div class="row">
     <div class="col-md-3 col-sm-12 col-xs-12">
@@ -284,91 +278,91 @@
     </div>
   </div>
 </div>
-<!-- </div> -->
 
-<br />
-<div class="row">
-  <div class="col-md-12">
-    <!-- DIRECCIONES -->
-    <app-dt-direcion-requi [DireccionId]="requisicion?.direccionId"></app-dt-direcion-requi>
+<div class="card-body">
+  <div class="row">
+    <div class="col-md-12">
+      <!-- DIRECCIONES -->
+      <app-dt-direcion-requi [DireccionId]="requisicion?.direccionId"></app-dt-direcion-requi>
+    </div>
   </div>
-</div>
-<br />
-<div class="row">
-  <div class="col-md-6">
-    <!-- TELEFONOS -->
-    <app-dt-telefonos [Telefonos]="cliente?.telefonos"></app-dt-telefonos>
+  <br />
+  <div class="row">
+    <div class="col-md-6">
+      <!-- TELEFONOS -->
+      <app-dt-telefonos [Telefonos]="cliente?.telefonos"></app-dt-telefonos>
+    </div>
   </div>
-</div>
-<br />
-<!-- CONTACTOS -->
-<div class="row">
-  <div class="col-md-10">
-    <app-dt-contactos [Contactos]="cliente?.contactos"></app-dt-contactos>
+  <br />
+  <!-- CONTACTOS -->
+  <div class="row">
+    <div class="col-md-10">
+      <app-dt-contactos [Contactos]="cliente?.contactos"></app-dt-contactos>
+    </div>
   </div>
-</div>
-<br />
-<div class="row">
-  <div class="col-md-12">
-    <!-- BENEFICIOS -->
-    <app-dt-beneficios [Beneficios]="requisicion?.beneficios"></app-dt-beneficios>
+  <br />
+  <div class="row">
+    <div class="col-md-12">
+      <!-- BENEFICIOS -->
+      <app-dt-beneficios [Beneficios]="requisicion?.beneficios"></app-dt-beneficios>
+    </div>
   </div>
-</div>
-<br />
-<!-- ACTIVIDADES OBSERVACIONES PROCESO-->
-<div class="row">
-  <div class="col-md-4">
-    <app-actividades [Actividades]="requisicion?.actividades"></app-actividades>
+  <br />
+  <!-- ACTIVIDADES OBSERVACIONES PROCESO-->
+  <div class="row">
+    <div class="col-md-4">
+      <app-actividades [Actividades]="requisicion?.actividades"></app-actividades>
+    </div>
+    <div class="col-md-4">
+      <app-observaciones [Observaciones]="requisicion?.observaciones"></app-observaciones>
+    </div>
+    <div class="col-md-4">
+      <app-procesos [Proceso]="requisicion?.procesos"></app-procesos>
+    </div>
   </div>
-  <div class="col-md-4">
-    <app-observaciones [Observaciones]="requisicion?.observaciones"></app-observaciones>
+  <br />
+  <div class="row">
+    <div class="col-md-3">
+      <!-- DOCUMENTOS dAMSA -->
+      <app-documentos-damsa></app-documentos-damsa>
+    </div>
+    <div class="col-md-3">
+      <!-- DOCUMENTOS CLIENTE -->
+      <app-documentos-cliente [Documentos]="requisicion?.documentosCliente"></app-documentos-cliente>
+    </div>
+    <div class="col-md-3">
+      <!-- PRESTACIONES LEY -->
+      <app-prestaciones-ley></app-prestaciones-ley>
+    </div>
+    <div class="col-md-3">
+      <!-- PRESTACIONES SUPERIORES -->
+      <app-prestaciones-cliente [Prestaciones]="requisicion?.prestacionesCliente"></app-prestaciones-cliente>
+    </div>
   </div>
-  <div class="col-md-4">
-    <app-procesos [Proceso]="requisicion?.procesos"></app-procesos>
+  <br />
+  <div class="row">
+    <div class="col-md-6">
+      <!-- PSICOMETRIAS DAMSA -->
+      <app-dt-psicometrias-damsa [Psicometrias]="requisicion?.psicometriasDamsa"></app-dt-psicometrias-damsa>
+    </div>
+    <div class="col-md-6">
+      <!-- PSICOMETRIA CLIENTE -->
+      <app-dt-psicometrias-cliente [Psicometrias]="requisicion?.psicometriasCliente"></app-dt-psicometrias-cliente>
+    </div>
   </div>
-</div>
-<br />
-<div class="row">
-  <div class="col-md-3">
-    <!-- DOCUMENTOS dAMSA -->
-    <app-documentos-damsa></app-documentos-damsa>
-  </div>
-  <div class="col-md-3">
-    <!-- DOCUMENTOS CLIENTE -->
-    <app-documentos-cliente [Documentos]="requisicion?.documentosCliente"></app-documentos-cliente>
-  </div>
-  <div class="col-md-3">
-    <!-- PRESTACIONES LEY -->
-    <app-prestaciones-ley></app-prestaciones-ley>
-  </div>
-  <div class="col-md-3">
-    <!-- PRESTACIONES SUPERIORES -->
-    <app-prestaciones-cliente [Prestaciones]="requisicion?.prestacionesCliente"></app-prestaciones-cliente>
-  </div>
-</div>
-<br />
-<div class="row">
-  <div class="col-md-6">
-    <!-- PSICOMETRIAS DAMSA -->
-    <app-dt-psicometrias-damsa [Psicometrias]="requisicion?.psicometriasDamsa"></app-dt-psicometrias-damsa>
-  </div>
-  <div class="col-md-6">
-    <!-- PSICOMETRIA CLIENTE -->
-    <app-dt-psicometrias-cliente [Psicometrias]="requisicion?.psicometriasCliente"></app-dt-psicometrias-cliente>
-  </div>
-</div>
-<br />
-<div class="row">
-  <div class="col-md-4 col-lg-4">
-    <!-- COMPTENCIAS CARDINALES -->
-    <app-dt-competencia-cardinal [Competencias]="requisicion?.competenciasCardinal"></app-dt-competencia-cardinal>
-  </div>
-  <div class="col-md-4 col-lg-4">
-    <!-- COMPETENCIAS POR AREA -->
-    <app-dt-competencia-area [Competencias]="requisicion?.competenciasArea"></app-dt-competencia-area>
-  </div>
-  <div class="col-md-4 col-lg-4">
-    <!-- COMPETENCIAS GERENCIALES -->
-    <app-dt-competencia-gerencial [Competencias]="requisicion?.competenciasGerencial"></app-dt-competencia-gerencial>
+  <br />
+  <div class="row">
+    <div class="col-md-4 col-lg-4">
+      <!-- COMPTENCIAS CARDINALES -->
+      <app-dt-competencia-cardinal [Competencias]="requisicion?.competenciasCardinal"></app-dt-competencia-cardinal>
+    </div>
+    <div class="col-md-4 col-lg-4">
+      <!-- COMPETENCIAS POR AREA -->
+      <app-dt-competencia-area [Competencias]="requisicion?.competenciasArea"></app-dt-competencia-area>
+    </div>
+    <div class="col-md-4 col-lg-4">
+      <!-- COMPETENCIAS GERENCIALES -->
+      <app-dt-competencia-gerencial [Competencias]="requisicion?.competenciasGerencial"></app-dt-competencia-gerencial>
+    </div>
   </div>
 </div>

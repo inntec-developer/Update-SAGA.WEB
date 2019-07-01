@@ -73,7 +73,6 @@ export class AreaExpComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.AreaExperiencia = [this.formareaexp.getRawValue()];
-    console.log(catalogo);
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
       result ? this.UpAreaExp.emit(catalogo.Catalogos.Id) : console.log(result);

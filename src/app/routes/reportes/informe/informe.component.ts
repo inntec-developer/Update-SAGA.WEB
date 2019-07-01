@@ -8,13 +8,13 @@ import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-mome
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { ApiConection } from '../../../service/api-conection.service';
+import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 import { FormControl } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import {Http} from '@angular/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ReportesService } from '../../../service/Reporte/reportes.service';
 import { daLocale } from 'ngx-bootstrap/chronos/i18n/da';
-import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 
 //import {ToasterConfig, ToasterService} from 'angular2-toaster';
 
@@ -119,8 +119,8 @@ export class InformeComponent implements OnInit {
    }
 
   ngOnInit() {
-    
-  
+
+
     // let date = new Date();
     // console.log("fecha: "+ date.getDate() +"-"+ date.getMonth());
     // console.log("fecha: "+ (date.setDate(date.getDate() + 1)).toString());
@@ -174,7 +174,6 @@ export class InformeComponent implements OnInit {
 GenerarEstados(){
   this.estados.getEstado(42).subscribe(item =>{
     this.ListaEstado = item;
-    console.log(this.ListaEstado);
   })
 }
 
@@ -219,15 +218,14 @@ GeneraEstatusBolsa(){
 
   UsuarioCorChange(){
     this.objusercoo = this.FormUserCor.get('UserCorControl').value;
-    
+
   }
 
   EstadoChange(){
     this.objestado = this.FormEstado.get('EstadoControl').value;
-    console.log(this.ListaEstado)
   }
 
-  
+
 
  Ocultar(){
   document.getElementById('DivReportefil').classList.add('ocultar');
@@ -341,7 +339,7 @@ GeneraEstatusBolsa(){
     document.getElementById('divEmpresas').classList.remove('ocultar');
     document.getElementById('divSucursal').classList.remove('ocultar');
   }
- 
+
 
  }
 

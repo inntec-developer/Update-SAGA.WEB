@@ -73,7 +73,6 @@ slcClave;
   {
     this._serviceExamen.GetExamenRequi(this.ticket[0].requisicionId).subscribe(data => {
       this.examen = data;
-      console.log(this.examen)
       if(this.examen.length == 0)
       {
         this.examenasignado = false;
@@ -149,11 +148,6 @@ slcClave;
   AsignarClave()
   {
     var objeto = {CandidatoId: this.ticket[0].candidato.candidatoId, RequisicionId: this.ticket[0].requisicionId, RequiClaveId: this.slcClave, Resultado: 'SIN RESULTADO', UsuarioId: this.settings.user['id']};
-
-    console.log(objeto)
-
-
-
     this._serviceExamen.AsignarClaveCandidato(objeto).subscribe(data => {
       if(data == 200)
       {

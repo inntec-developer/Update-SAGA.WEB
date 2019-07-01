@@ -38,7 +38,6 @@ export class VerClienteComponent implements OnInit {
           if (result != null) {
             this.Cliente = result;
             this.esCliente = result['esCliente'];
-            console.log(this.Cliente);
           }
         });
       } else {

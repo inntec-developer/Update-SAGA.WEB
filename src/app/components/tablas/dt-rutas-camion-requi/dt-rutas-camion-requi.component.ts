@@ -18,6 +18,7 @@ const swal = require('sweetalert');
 export class DtRutasCamionRequiComponent implements OnInit {
   @Input('DireccionId') DireccionId: string;
   @Input('DAMFO290Id') DAMFO290Id: string;
+  @Input('ShowRequi') ShowRequi: boolean;
   @ViewChild('RutasModal') ShownModal: ModalDirective;
   rowAux = [];
 

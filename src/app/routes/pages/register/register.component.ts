@@ -183,7 +183,7 @@ export class RegisterComponent implements OnInit {
 
     getLider() {
         this.service.GetLideres()
-        .subscribe(result => { this.Lideres = result; console.log(result);
+        .subscribe(result => { this.Lideres = result
         });
     }
 
