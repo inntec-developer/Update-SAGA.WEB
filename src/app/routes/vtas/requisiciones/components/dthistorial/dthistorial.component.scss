@@ -22,6 +22,10 @@ table tbody div
 {
   height: 350px;
 }
+
+.modal-lg {
+  max-width: 100% !important;
+}
 ng-scrollbar {
   --scrollbar-size: 4px;
   --scrollbar-thumb-color: rgb(94, 175, 255);

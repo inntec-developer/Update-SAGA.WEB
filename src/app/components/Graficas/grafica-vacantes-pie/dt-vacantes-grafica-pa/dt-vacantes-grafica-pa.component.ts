@@ -1,20 +1,21 @@
+import { ExcelService } from './../../../../service/ExcelService/excel.service';
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-
+import { DatePipe } from '@angular/common';
 import { ComponentsService } from './../../../../service/Components/components.service';
 import { SettingsService } from '../../../../core/settings/settings.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { isArray } from 'rxjs/internal/util/isArray';
 
 @Component({
   selector: 'app-dt-vacantes-grafica-pa',
   templateUrl: './dt-vacantes-grafica-pa.component.html',
   styleUrls: ['./dt-vacantes-grafica-pa.component.scss'],
-  providers: [ComponentsService]
+  providers: [ComponentsService,DatePipe ]
 })
 export class DtVacantesGraficaPAComponent implements OnInit {
   @Input('EstadoVacante') EstadoVacante: any;
 
   private UsuarioId: string;
-
   //scroll
   disabled = false;
   compact = false;
@@ -38,7 +39,7 @@ export class DtVacantesGraficaPAComponent implements OnInit {
   public bandera = true;
   totalContratados: number = 0;
 
-  constructor(private _ComponentService: ComponentsService, private settings: SettingsService, private spinner: NgxSpinnerService) { }
+  constructor(private _ComponentService: ComponentsService, private excelService: ExcelService, private settings: SettingsService, private spinner: NgxSpinnerService,  private pipe: DatePipe) { }
 
   public rows: Array<any> = [];
   public columns: Array<any> = [
@@ -167,7 +168,7 @@ export class DtVacantesGraficaPAComponent implements OnInit {
     this.rows = this.dataSource;
     let filteredData = this.changeFilter(this.dataSource, this.config);
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
-    this.length =  this.rows.length;
+    this.length =  filteredData.length;
     this.registros = this.rows.length;
   }
 
@@ -190,6 +191,73 @@ export class DtVacantesGraficaPAComponent implements OnInit {
     });
     this.onChangeTable(this.config);
 
+  }
+
+  exportAsXLSX()
+  {
+
+    if(this.dataSource.length > 0)
+    {
+      var aux = [];
+      var reclutador = "";
+      var coordinador = "";
+      this.dataSource.forEach(row => {
+
+        if(row.reclutadores.length == 0)
+        {
+          reclutador = "SIN ASIGNAR";
+        }
+        else if(row.reclutadores.length > 1)
+        {
+          if(isArray(row.reclutadores))
+          {
+            row.reclutadores.forEach(element => {
+              reclutador = reclutador + element + ', \n'
+            });
+          }
+          else
+          {
+            reclutador = row.reclutadores;
+          }
+        }
+        else
+        {
+          reclutador = row.reclutadores[0];
+        }
+        var d = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
+        var e = this.pipe.transform( new Date(row.fch_Cumplimiento), 'dd/MM/yyyy');
+
+        if(row.estatusId == 4)
+        {
+          coordinador = reclutador;
+          reclutador = "SIN ASIGNAR"
+
+        }
+        else
+        {
+          coordinador = row.coordinador;
+        }
+        aux.push({
+          FOLIO: row.folio.toString(),
+          'FECHA SOLICITUD': d,//new Date(d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString(),
+          'FECHA CUMPLIMIENTO': e,
+          CLIENTE: row.cliente,
+          PERFIL: row.vBtra,
+          VACANTES: row.vacantes,
+          CUBIERTOS: row.contratados,
+          ESTATUS: row.estatus,
+          COORDINADOR: coordinador,
+          SOLICITANTE: row.propietario,
+          RECLUTADOR: reclutador
+        })
+        reclutador = "";
+      });
+
+      //   })
+      // })
+      this.excelService.exportAsExcelFile(aux, 'Solicitud_de_reporte_para_generar_estadisticos');
+
+    }
   }
 
 }
