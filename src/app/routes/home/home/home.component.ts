@@ -14,10 +14,16 @@ declare var $: any;
     providers: []
 })
 export class HomeComponent implements OnInit {
+  public GrtOrAud = [ 1, 3, 8, 12, 13, 14];
+    public isGerenteOrAudito: boolean = false;
     constructor(private settings: SettingsService
     ) {
     }
 
     ngOnInit() {
+      var tipoUsuserio = this.settings['user']['tipoUsuarioId']
+      if (this.GrtOrAud.find(x => x == tipoUsuserio)) {
+        this.isGerenteOrAudito = true
+      }
     }
 }

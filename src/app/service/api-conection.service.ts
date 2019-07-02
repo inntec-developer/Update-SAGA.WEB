@@ -7,17 +7,19 @@ export class ApiConection {
   // public static ServiceUrlImgExamenes = 'http://10.10.12.31:333/api/';
 
 
-  // //Produccion
+  //Produccion
   // public static ServiceUrlWeb = 'https://weberp.damsa.com.mx/';
-  // public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
   // public static ServiceUrl = 'https://apierp.damsa.com.mx/api/';
+  // public static ServiceUrlImgExamenes = 'https://apierp.damsa.com.mx';
+
+  // public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
   // public static ServiceUrlFileManager = 'https://apierp.damsa.com.mx/utilerias/';
   // public static ServiceUrlFoto = 'https://apierp.damsa.com.mx/';
   // public static ServiceUrlBolsa = 'https://aplicapp.damsa.com.mx';
   // public static ServiceUrlLoginBolsa = 'https://bolsa.damsa.com.mx';
   // public static ServicioUrl290 = 'https://webpfrc.damsa.com.mx/Home/';
 
-  // // Pruebas
+  // // // // Pruebas
   // public static ServiceUrlWeb = 'https://websb.damsa.com.mx/';
   // public static ServiceUrl = 'https://apisb.damsa.com.mx/api/';
   // public static ServiceUrlImgExamenes = 'https://apisb.damsa.com.mx';

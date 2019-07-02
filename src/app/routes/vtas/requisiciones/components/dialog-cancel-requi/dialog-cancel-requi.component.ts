@@ -79,7 +79,8 @@ export class DialogCancelRequiComponent implements OnInit {
   cancelRequisicion() {
     var comentarioReclutador = this.formComentario.get('comentario').value.trim();
     this.loading = true;
-    if(comentarioReclutador.length >= 50){
+    debugger;
+    if(comentarioReclutador.length >= 30){
       this.service.cancelRequisicion(this.infoCancelRequi)
       .subscribe(data => {
         if (data == 200) {
@@ -107,7 +108,7 @@ export class DialogCancelRequiComponent implements OnInit {
       });
     }
     else{
-      this.popToast('warning', 'Requisición', 'Los caracteres mínimos del motivo de cancelacion son 50 sin espacios en blanco al final.');
+      this.popToast('warning', 'Requisición', 'Los caracteres mínimos del motivo de cancelacion son 30 sin espacios en blanco al final.');
       this.loading = false;
     }
 

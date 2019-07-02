@@ -65,16 +65,16 @@ export class AuthService {
         this.settings.user['usuario'] = decode['Usuario'];
         this.settings.user['email'] = decode['Email'];
         this.settings.user['clave'] = decode['Clave'];
-        this.settings.user['tipoUsuarioId'] = decode['tipoUsuarioId'];
+        this.settings.user['tipoUsuarioId'] = decode['TipoUsuarioId'];
         this.settings.user['tipo'] = decode['Tipo'];
         this.settings.user['sucursal'] = decode['Sucursal'];
-        this.settings.user['foto'] = ApiConection.ServiceUrlFotoUser + decode['Clvave'] + '.jpg';
+        this.settings.user['foto'] = ApiConection.ServiceUrlFotoUser + decode['Clave'] + '.jpg';
+        this.settings.user['privilegios'] = this.Priv;
         this.settings.user['lider'] = decode['Lider'];
         this.settings.user['liderId'] = decode['LiderId'];
         this.settings.user['departamentoId'] = decode['DepartamentoId'];
         this.settings.user['departamento'] = decode['Departamento'];
         this.settings.user['unidadNegocioId'] = decode['UnidadNegocioId'];
-        this.settings.user['privilegios'] = this.Priv;
       }
       return true;
     }

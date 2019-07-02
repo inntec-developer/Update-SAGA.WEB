@@ -21,7 +21,7 @@
 
         <span class="text-muted font-weight-bold float-right text-uppercase mb-3 ">Total de Folios <span
             class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span></span>
-    
+
       </div>
 
       <table ngClass="{{config.className || ''}}" class="table border-top" style="width: 100%;">
@@ -47,7 +47,7 @@
             [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
             <div>
               <tr (click)="onCellClick(row)" *ngFor="let row of rows" [class.confident]="row.confidencial"
-                [class.cancel]="row.estatusId == 8" [class.selected]="row.selected">
+                [class.cancel]="row.estatusId == 9 || row.estatusId == 8" [class.selected]="row.selected">
                 <td class="text-center">
                   {{row.folio}}
                 </td>
@@ -70,7 +70,7 @@
                   <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info"
                     [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
                     [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
-                    [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
+                    [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8 || row.estatusId  === 9">
                     {{row.estatus | uppercase}}
                   </small>
 
@@ -78,7 +78,7 @@
                     <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4"
                       [class.badge-primary]="row.estatusId  === 5"
                       [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
-                      [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8"
+                      [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8 || row.estatusId  === 9"
                       tooltip="{{row.estatus | uppercase}}" placement="top" container="body"> {{row.estatus | slice:0:8 | uppercase
                       }} ...
                     </small>
@@ -144,7 +144,7 @@
       </div>
     </div>
     </div>
-  
+
 
           <!--mensaje cuando esta vacio la tabla-->
 <ng-template #NotCandidatos>

@@ -1,13 +1,13 @@
-<div class="content-heading">
+<!-- <div class="content-heading">
   <div>
     Sistema Administrativo de Gestión Avanzada
     <span class="text-sm d-none d-sm-block">SAGA</span>
-  </div>
-  <!-- Breadcrumb right aligned-->
-  <ol class="breadcrumb ml-auto">
+  </div> -->
+<!-- Breadcrumb right aligned-->
+<!-- <ol class="breadcrumb ml-auto">
     <li class="breadcrumb-item active">Inicio</li>
   </ol>
-</div>
+</div> -->
 
 <div class="row">
   <div class="col-lg-3 col-md-3 col-sm-12">
@@ -23,32 +23,26 @@
     <app-indicador-candidatos></app-indicador-candidatos>
   </div>
 </div>
+<div *ngIf="isGerenteOrAudito" class="row">
+  <div class="col-lg-4 col-md-4 col-sm-12">
+    <app-indicador-und-negocio-mty></app-indicador-und-negocio-mty>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm 12">
+    <app-indicador-und-negocio-gdl></app-indicador-und-negocio-gdl>
+  </div>
+  <div class="col-lg-4 col-md-4 col-sm-12">
+    <app-indicador-und-negocio-mx></app-indicador-und-negocio-mx>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-lg-4 col-md-4 col-sm-12">
-    <div class="card box">
-      <div class="card-body mat-elevation-z8">
-        <label class="text-info"><strong>Folios Activos</strong></label>
-        <br>
-        <app-grafica-vacantes-pie></app-grafica-vacantes-pie>
-      </div>
-    </div>
+    <app-grafica-vacantes-pie></app-grafica-vacantes-pie>
   </div>
   <div class="col-lg-4 col-md-4 col-sm-12">
-      <div class="card box">
-          <div class="card-body mat-elevation-z8">
-            <label class="text-info"><strong>Posiciones Activas</strong></label>
-            <br>
-            <app-indicador-posiciones-activas></app-indicador-posiciones-activas>
-          </div>
-        </div>
+    <app-indicador-posiciones-activas></app-indicador-posiciones-activas>
   </div>
   <div class="col-lg-4 col-md-4 col-sm-12">
-      <div class="card box">
-          <div class="card-body mat-elevation-z8">
-            <label class="text-info"><strong>Candidatos</strong></label>
-            <br>
-            <app-indicador-candidatos-estatus></app-indicador-candidatos-estatus>
-          </div>
-        </div>
+    <app-indicador-candidatos-estatus></app-indicador-candidatos-estatus>
   </div>
 </div>

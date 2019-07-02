@@ -1,5 +1,3 @@
-import { CURPValidator } from './dlg-registro-masivo/GenerarCURP';
-import { DTHistorialComponent } from './../routes/vtas/requisiciones/components/dthistorial/dthistorial.component';
 import { ActividadEmpresaComponent } from './catalogos/actividad-empresa/actividad-empresa.component';
 import { ActividadesComponent } from './tablas/actividades/actividades.component';
 import { ActividadesReclutadorComponent } from './calendario/actividades-reclutador/actividades-reclutador.component';
@@ -9,6 +7,7 @@ import { AreaInteresComponent } from './catalogos/area-interes/area-interes.comp
 import { AreasComponent } from './catalogos/areas/areas.component';
 import { AsignarRequisicionComponent } from './asignar-requisicion/asignar-requisicion.component';
 import { AsignarRequisicionLiderComponent } from './asignar-requisicion-lider/asignar-requisicion-lider.component';
+import { AutorizarFacturasPuroComponent } from './tablas/autorizar-facturas-puro/autorizar-facturas-puro.component';
 import { BusquedaCandidatosComponent } from './busqueda-candidatos/busqueda-candidatos.component';
 import { ButtonAcceptComponent } from './buttons/button-accept/button-accept.component';
 import { ButtonAddComponent } from './buttons/button-add/button-add.component';
@@ -30,6 +29,7 @@ import { ButtonSaveComponent } from './buttons/button-save/button-save.component
 import { ButtonSendComponent } from './buttons/button-send/button-send.component';
 import { ButtonViewComponent } from './buttons/button-view/button-view.component';
 import { ButtonsPostulacionesComponent } from './buttons-postulaciones/buttons-postulaciones.component';
+import { CURPValidator } from './dlg-registro-masivo/GenerarCURP';
 import { CalendarioCandidatoComponent } from './calendario/calendario-candidato/calendario-candidato.component';
 import { CandidatosEnProcesoComponent } from './candidatos-en-proceso/candidatos-en-proceso.component';
 import { CardVacanteComponent } from './card-vacantes/card-vacante.component';
@@ -39,6 +39,7 @@ import { ClockComponent } from './clock/clock.component';
 import { ColoniasComponent } from './catalogos/colonias/colonias.component';
 import { ComentarioCandidatoComponent } from './comentario-candidato/comentario-candidato.component';
 import { ComentarioVacanteComponent } from './comentario-vacante/comentario-vacante.component';
+import { DTHistorialComponent } from './../routes/vtas/requisiciones/components/dthistorial/dthistorial.component';
 import { DepartamentosComponent } from './catalogos/departamentos/departamentos.component';
 import { DetailVacantesComponent } from './detail-vacantes/detail-vacantes.component';
 import { DiaSemanaComponent } from './catalogos/dia-semana/dia-semana.component';
@@ -50,8 +51,11 @@ import { DialogRutasComponent } from './tablas/dt-rutas-camion-requi/dialog-ruta
 import { DiscapacidadesComponent } from './catalogos/discapacidades/discapacidades.component';
 import { DlgAsignarPerfilComponent } from './dlg-asignar-perfil/dlg-asignar-perfil.component';
 import { DlgComentariosNRComponent } from './dlg-comentarios-nr/dlg-comentarios-nr.component';
+import { DlgCubiertasComponent } from './dlg-cubiertas/dlg-cubiertas.component';
 import { DlgFacturaPuroComponent } from './dlg-factura-puro/dlg-factura-puro.component';
+import { DlgRegistroMasivoComponent } from './dlg-registro-masivo/dlg-registro-masivo.component';
 import { DlgRequisicionPausaComponent } from './dlg-requisicion-pausa/dlg-requisicion-pausa.component';
+import { DlgResultadosMedicosComponent } from './dlg-resultados-medicos/dlg-resultados-medicos.component';
 import { DlgRevisarExamenesComponent } from './dlg-revisar-examenes/dlg-revisar-examenes.component';
 import { DocDamsaComponent } from './catalogos/doc-damsa/doc-damsa.component';
 import { DocumentosClienteComponent } from './tablas/documentos-cliente/documentos-cliente.component';
@@ -82,6 +86,9 @@ import { FileManagerComponent } from './file-manager/file-manager.component';
 import { FiltrosComponent } from './catalogos/filtros/filtros.component';
 import { FormsModule } from '@angular/forms';
 import { GiroEmpresaComponent } from './catalogos/giro-empresa/giro-empresa.component';
+import { GraficaCaptadoContratadoComponent } from './Graficas/grafica-captado-contratado/grafica-captado-contratado.component';
+import { GraficaCoordinacionComponent } from './Graficas/grafica-coordinacion/grafica-coordinacion.component';
+import { GraficaProductividadComponent } from './Graficas/grafica-productividad/grafica-productividad.component';
 import { GraficaResumenComponent } from './Graficas/grafica-resumen/grafica-resumen.component';
 import { GraficaVacanteActivaComponent } from './Graficas/grafica-vacante-activa/grafica-vacante-activa.component';
 import { GraficaVacanteCubiertaComponent } from './Graficas/grafica-vacante-cubierta/grafica-vacante-cubierta.component';
@@ -95,6 +102,9 @@ import { IndicadorFoliosComponent } from './Indicadores/indicador-folios/indicad
 import { IndicadorPerfilesComponent } from './Indicadores/indicador-perfiles/indicador-perfiles.component';
 import { IndicadorPosicionesActivasComponent } from './Indicadores/indicador-posiciones-activas/indicador-posiciones-activas.component';
 import { IndicadorPosicionesComponent } from './Indicadores/indicador-posiciones/indicador-posiciones.component';
+import { IndicadorUndNegocioGdlComponent } from './Indicadores/indicador-und-negocio-gdl/indicador-und-negocio-gdl.component';
+import { IndicadorUndNegocioMtyComponent } from './Indicadores/indicador-und-negocio-mty/indicador-und-negocio-mty.component';
+import { IndicadorUndNegocioMxComponent } from './Indicadores/indicador-und-negocio-mx/indicador-und-negocio-mx.component';
 import { InfoCandidatoComponent } from './info-candidato/info-candidato.component';
 import { InfoVacanteComponent } from './info-vacante/info-vacante.component';
 import { InformeVacantesComponent } from './informe-vacantes/informe-vacantes.component';
@@ -134,13 +144,6 @@ import { TipolicenciaComponent } from './catalogos/tipolicencia/tipolicencia.com
 import { ToolsModule } from '../tools/tools.module';
 import { TpNominaComponent } from './catalogos/tp-nomina/tp-nomina.component';
 import { TpPsicometriaComponent } from './catalogos/tp-psicometria/tp-psicometria.component';
-import { DlgRegistroMasivoComponent } from './dlg-registro-masivo/dlg-registro-masivo.component';
-import { DlgResultadosMedicosComponent } from './dlg-resultados-medicos/dlg-resultados-medicos.component';
-import { AutorizarFacturasPuroComponent } from './tablas/autorizar-facturas-puro/autorizar-facturas-puro.component';
-import { DlgCubiertasComponent } from './dlg-cubiertas/dlg-cubiertas.component';
-import { GraficaCaptadoContratadoComponent } from './Graficas/grafica-captado-contratado/grafica-captado-contratado.component';
-import { GraficaCoordinacionComponent } from './Graficas/grafica-coordinacion/grafica-coordinacion.component';
-import { GraficaProductividadComponent } from './Graficas/grafica-productividad/grafica-productividad.component';
 
 @NgModule({
   imports: [
@@ -271,7 +274,7 @@ import { GraficaProductividadComponent } from './Graficas/grafica-productividad/
     TipoContratoComponent,
     DocDamsaComponent,
     PrestLeyComponent,
-    TiempoContratoComponent, 
+    TiempoContratoComponent,
     DTHistorialComponent,
     TiempoContratoComponent,
     IndicadorPerfilesComponent,
@@ -287,7 +290,10 @@ import { GraficaProductividadComponent } from './Graficas/grafica-productividad/
     DlgCubiertasComponent,
     GraficaCaptadoContratadoComponent,
     GraficaCoordinacionComponent,
-    GraficaProductividadComponent
+    GraficaProductividadComponent,
+    IndicadorUndNegocioMtyComponent,
+    IndicadorUndNegocioGdlComponent,
+    IndicadorUndNegocioMxComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -384,7 +390,10 @@ import { GraficaProductividadComponent } from './Graficas/grafica-productividad/
     DlgCubiertasComponent,
     GraficaCaptadoContratadoComponent,
     GraficaCoordinacionComponent,
-    GraficaProductividadComponent
+    GraficaProductividadComponent,
+    IndicadorUndNegocioMtyComponent,
+    IndicadorUndNegocioGdlComponent,
+    IndicadorUndNegocioMxComponent
   ],
   entryComponents: [ DlgCubiertasComponent, DlgResultadosMedicosComponent, DlgRegistroMasivoComponent, RegistroReclutadorComponent, TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
 

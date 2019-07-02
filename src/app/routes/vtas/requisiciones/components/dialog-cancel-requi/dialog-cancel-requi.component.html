@@ -38,7 +38,7 @@
     <div class="row">
       <div class="col-md-12 col-sm-12">
         <mat-form-field>
-          <textarea #message matInput minlength="50" maxlength="500" placeholder="Motivo de cancelación" rows="3"
+          <textarea #message matInput minlength="30" maxlength="500" placeholder="Motivo de cancelación" rows="3"
             formControlName="comentario" required></textarea>
           <mat-hint align="start">
             <strong>Ingresar el motivo de la cancelaci&oacute;n de requisici&oacute;n.</strong>
@@ -47,10 +47,10 @@
         </mat-form-field>
         <p>
           <span>
-            <small [ngClass]="message.value.length < 50 ? 'text-danger' : 'text-success'">
-              <em *ngIf="message.value.length < 50 " class="fa fa-close"></em>
-              <em *ngIf="message.value.length >= 50" class="fa fa-check"></em>
-              Caracteres m&iacute;nimos del comentario 50
+            <small [ngClass]="message.value.length < 30 ? 'text-danger' : 'text-success'">
+              <em *ngIf="message.value.length < 30 " class="fa fa-close"></em>
+              <em *ngIf="message.value.length >= 30" class="fa fa-check"></em>
+              Caracteres m&iacute;nimos del comentario 30
             </small>
           </span>
         </p>
@@ -60,7 +60,7 @@
     <mat-divider></mat-divider>
     <div class="alert alert-warning" role="alert">
       <h4 class="alert-heading">Advertencia!</h4>
-      <p>Todos los usuarios o células que se encuentren asignadas a esta requisición serán eliminados de la misma.</p>
+      <p>Todos los usuarios que se encuentren asignadas a esta requisición permaneceran en la misma, para consultas de historicos.</p>
     </div>
     <button type="button" class="btn btn-xs btn-labeled btn-danger mb-1 margen mat-elevation-z8" (click)="onCloseDialog()">
       <span class="btn-label">
