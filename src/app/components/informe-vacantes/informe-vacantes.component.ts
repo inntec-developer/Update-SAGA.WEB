@@ -73,7 +73,7 @@ export class InformeVacantesComponent implements OnInit {
   public changeFilterInfo(data: any, config: any): any {
     let filteredData: Array<any> = data;
     this.columnsInfo.forEach((column: any) => {
-      if (column.filtering) {
+      if (column.filtering.filterString != "") {
         // this.showFilterRowInfo = true;
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
@@ -81,34 +81,6 @@ export class InformeVacantesComponent implements OnInit {
         });
       }
     });
-
-    if (!config.filtering) {
-      return filteredData;
-    }
-
-    if (config.filtering.columnName) {
-      return filteredData.filter((item: any) =>
-        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-    }
-
-    let tempArray: Array<any> = [];
-    filteredData.forEach((item: any) => {
-      let flag = false;
-      this.columnsInfo.forEach((column: any) => {
-        if (item[column.name] == null) {
-          flag = true;
-        } else {
-          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-            flag = true;
-          }
-        }
-      });
-      if (flag) {
-
-        tempArray.push(item);
-      }
-    });
-    filteredData = tempArray;
 
     return filteredData;
   }
@@ -138,6 +110,7 @@ export class InformeVacantesComponent implements OnInit {
   getInfoVacantes() {
     this.service.GetInformeRequisiciones(this.settings.user['id']).subscribe(data => {
       this.dataInfoRequi = data;
+      console.log(this.dataInfoRequi)
       this.onChangeTableInfo(this.config);
     });
   }

@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body mat-elevation-z8">
-      <div class="row">
+      <div class="row p-1 bg-light">
           <div class="col-sm-12 col-md-12">
             <button type="button" class="btn btn-xs btn-success float-right mat-elevation-z8" (click)="refreshTable()" container="body"
             placement="bottom" tooltip="Actualizar" container="body">
@@ -10,8 +10,10 @@
           container="body">
           <em class="fa fa-eraser"></em>
         </button>
-          <br/>
-          <br/>
+        <button type="button" [disabled]="dataSource.length == 0" class="mr-2 btn btn-xs mat-elevation-z8" [ngClass]="dataSource.length == 0 ? 'disable' : 'btn-success'"
+        (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Descargar">
+        <i class="fa fa-download"></i>
+      </button>
         </div>
         </div>
     <div class="row" #tableContainer>
@@ -128,10 +130,10 @@
     </div>
     <br />
     <div class="row">
-      <div class="col-md-12 clearfix">
-        <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
-          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
-          (numPages)="numPages = $event"></pagination>
+      <div class="col-md-12">
+          <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
+          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+          (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
 
         <!-- <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}} Registros: {{registros}}</small></pre> -->
       </div>

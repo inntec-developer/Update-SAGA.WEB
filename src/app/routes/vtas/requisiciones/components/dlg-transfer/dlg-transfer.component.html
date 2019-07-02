@@ -12,14 +12,28 @@
     <p><strong>FECHA CREACI&Oacute;N: </strong> {{data.fch_Creacion | date:'dd/MM/yyyy'}}</p>
    </div>
     <mat-divider></mat-divider>
-    <br/>
-    <div class="d-flex justify-content-between">
-    <h6 class="text-info">SELECCIONAR {{titulo | uppercase}}</h6>
-      <mat-checkbox (change)="GetReclutadores($event);">Reclutador</mat-checkbox>
+
+    <div class="d-flex justify-content-between mt-4">
+    <h6 class="text-info mt-2">SELECCIONAR {{titulo | uppercase}}</h6>
+      <mat-checkbox *ngIf="data.depto=='Recl'" (change)="GetReclutadores($event);">Reclutador</mat-checkbox>
+      <div *ngIf="data.depto=='Vtas'" class="input-group input-group-sm mb-1 ilong float-left">
+          <input (input)="Search($event, 3, dataSource)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
+          <div class="input-group-append">
+            <span class="input-group-text text-info"><i class="fa fa-search" aria-hidden="true"></i></span>
+          </div>
+        </div>
   </div>
   <div *ngIf="verRecl" class="row">
-      <div *ngIf="listaAsignar.length > 0 else NotCandidatos" class="col-md-6">
-        <span class="text-muted">DE</span>
+      <div *ngIf="dataSource1.length > 0 else NotCandidatos" class="col-md-6">
+        <div class="d-flex justify-content-between">
+          <span class="text-muted mt-1 mr-2">DE</span>
+          <div class="input-group input-group-sm mb-2 ilong">
+            <input (input)="Search($event, 1, dataSource1)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
+            <div class="input-group-append">
+              <span class="input-group-text text-info"><i class="fa fa-search" aria-hidden="true"></i></span>
+            </div>
+          </div>
+        </div>
         <div class="card">
           <div class="card-body mat-elevation-z8">
         <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
@@ -32,8 +46,16 @@
       </div>
       </div>
       </div>
-      <div *ngIf="listaAsignar.length > 0" class="col-md-6">
-        <span class="text-muted">PARA</span>
+      <div *ngIf="dataSource2.length > 0" class="col-md-6">
+          <div class="d-flex justify-content-between">
+              <span class="text-muted mt-1 mr-2">PARA</span>
+              <div class="input-group input-group-sm mb-2 ilong">
+                <input (input)="Search($event, 2, dataSource2)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
+                <div class="input-group-append">
+                  <span class="input-group-text text-info"><i class="fa fa-search" aria-hidden="true"></i></span>
+                </div>
+              </div>
+            </div>
           <div class="card">
               <div class="card-body mat-elevation-z8">
           <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
@@ -49,9 +71,10 @@
         <div *ngIf="asig.length > 0" class="ml-3 p-2 mb-2 bg-success text-white"><span *ngIf="asig.length > 0">Transferir de {{asig[0].nombre }} </span><span class="ml-1" *ngIf="asig2.length > 0"> a {{asig2[0].nombre}}</span></div>
     </div>
     <div *ngIf="!verRecl">
+            
     <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
     [disableOnBreakpoints]="false" [disabled]="disabled">
-    <div class="long">
+    <div class="mt-2 long">
       <div class="list-group" *ngFor="let r of coord; let rowIndex = index;">
         <button type="button" [disabled] = "loading" (click)="Seleccionar(r, rowIndex)" class="list-group-item list-group-item-action text-muted" [class.bg-info] ="r.selected">{{r.nombre}}</button>
     </div>

@@ -2,7 +2,11 @@ import * as jwt_decode from "jwt-decode";
 
 import { Injectable } from '@angular/core';
 import { SettingsService } from "../settings/settings.service";
-
+const CerrarSesion = {
+  text: 'Cerrar Sesión',
+  link: '/login',
+  icon: 'fa fa-power-off',
+};
 @Injectable()
 export class MenuService {
   menuItems: Array<any>;
@@ -89,6 +93,7 @@ export class MenuService {
     });
 
     modules = [];
+    this.menuItems.push(CerrarSesion);
     return this.menuItems;
   }
 
