@@ -32,6 +32,8 @@ export class DTHistorialComponent implements OnInit {
   registros: number;
   totalContratados: number = 0;
   clearFilter: boolean = false;
+  element: any = [];
+  rowAux: any = [];
 
   constructor( private service: RequisicionesService, private spinner: NgxSpinnerService, private settings: SettingsService) { }
 
@@ -148,6 +150,21 @@ export class DTHistorialComponent implements OnInit {
     this.spinner.hide();
   }
 
+  public onCellClick(data: any): any {
+    data.selected ? data.selected = false : data.selected = true;
+    this.element = data;
+
+    if (this.rowAux.length == 0) {
+      this.rowAux = data;
+    }
+    else if (data.selected && this.rowAux != []) {
+      var aux = data;
+      data = this.rowAux;
+      data.selected = false;
+      aux.selected = true;
+      this.rowAux = aux;
+    }
+  }
   public refreshTable() {
     this.spinner.show();
     this.getRequisiciones();

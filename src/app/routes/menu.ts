@@ -80,6 +80,8 @@ const Home = {
 //     ]
 // };
 
+
+
 const headingMain = {
     text: 'Menu Principal',
     heading: true
@@ -87,7 +89,7 @@ const headingMain = {
 
 export const menu = [
     headingMain,
-    Home,
+    Home
     // Reclutamiento,
     // Ventas
 ];

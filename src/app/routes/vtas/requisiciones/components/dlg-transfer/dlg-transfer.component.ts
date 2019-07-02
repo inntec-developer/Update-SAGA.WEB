@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 import { AdminServiceService } from './../../../../../service/AdminServicios/admin-service.service';
@@ -15,18 +15,20 @@ const swal = require('sweetalert');
   providers: [AdminServiceService, ComentariosService, RequisicionesService]
 })
 export class DlgTransferComponent implements OnInit {
-
+  
   disabled = false;
   compact = false;
   invertX = false;
   invertY = false;
   shown = 'hover';
-
+dataSource = [];
   coord = [];
   asig = [];
   asig2 = [];
   listaAsignar = [];
+  dataSource1 = [];
   listaAsignar2 = [];
+  dataSource2 = [];
 
   rowAux;
   coordId;
@@ -56,8 +58,9 @@ export class DlgTransferComponent implements OnInit {
   }
   setLista2()
   {
-   this._requiService.GetAsignados(this.data.id).subscribe(result => {
+   this._sevice.GetByUsuario("Ejv-Recl").subscribe(result => {
         this.listaAsignar2 = result;
+        this.dataSource2 = result;
 
       });
   }
@@ -68,7 +71,9 @@ export class DlgTransferComponent implements OnInit {
     {
       this._requiService.GetAsignados(this.data.id).subscribe(result => {
         this.listaAsignar = result;
-        this.listaAsignar2 = Object.assign([], this.listaAsignar);
+        this.dataSource1 = result;
+        // this.listaAsignar2 = Object.assign([], this.listaAsignar);
+        this.setLista2();
         this.verRecl = true;
       this.usuario = this.data.usuario;
       this.data.usuario = 11;
@@ -88,6 +93,7 @@ export class DlgTransferComponent implements OnInit {
   {
     this._sevice.GetByUsuario(this.data.depto).subscribe(data => {
       this.coord = data;
+      this.dataSource = data;
       if(this.data.usuario == 4)
       {
         this.titulo = "Coordinador";
@@ -224,7 +230,7 @@ export class DlgTransferComponent implements OnInit {
       }
       swal({
         title: "¿ESTÁS SEGURO?",
-        text: "¡Se asignara la vacante con folio " + this.data.folio + " a " + this.coordNom + "!",
+        text: "¡Se asignará la vacante con folio " + this.data.folio + "!",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#ec2121",
@@ -270,4 +276,35 @@ export class DlgTransferComponent implements OnInit {
     }
   }
 
+  public Search(data: any, opc, aux) {
+    let search = data.target.value;
+    let tempArray: Array<any> = [];
+
+    let colFiltar: Array<any> = [{ title: "nombre" }];
+
+    aux.forEach(function (item) {
+      let flag = false;
+      colFiltar.forEach(function (c) {
+        if (item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
+          flag = true;
+        }
+      });
+
+      if (flag) {
+        tempArray.push(item)
+      }
+    });
+
+    if(opc == 1)
+    {
+      this.listaAsignar = tempArray;
+    }
+    else if(opc == 2)
+    {
+      this.listaAsignar2 = tempArray;
+    }
+    else{
+      this.coord = tempArray;
+    }
+  }
 }

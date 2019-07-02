@@ -186,14 +186,14 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title pull-left text-success"><i class="fa fa-file-text-o mr-1" aria-hidden="true"></i>{{examenRequi[0].nombre | uppercase}}</h4>
+        <h4 class="modal-title pull-left text-warning"><i class="fa fa-file-text-o mr-1" aria-hidden="true"></i>{{examenRequi[0].nombre | uppercase}}</h4>
         <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal.hide();closeModal()">
           <i class="fa fa-times"></i>
         </button>
       </div>
       <div class="modal-body">
         <div class="card">
-          <div class="card-body mat-elevation-z8">
+          <div class="card-body">
             <!-- <h5 class="card-title text-info">VISUALIZAR
               <span *ngIf="nomExamen">- Examen de {{nom}} / {{nomExamen}}</span>
             </h5>[ngClass]="r.value == 1 ? 'text-success' : 'text-warning'"
