@@ -90,11 +90,11 @@ type="square-jelly-box"
 <div class="col-xl-2">
 
   <div class="form-group">
-      <label for="sel4"></label>
+      <label for="picker1"></label>
       <mat-form-field style="top: 17px;">
-          <input   matInput [matDatepicker]="picker1" id="fechaInicial"   [formControl]="date2">
-          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
+          <input   matInput [matDatepicker]="fechaInicial" id="fechaInicial"   >
+          <mat-datepicker-toggle matSuffix [for]="fechaInicial"></mat-datepicker-toggle>
+          <mat-datepicker #fechaInicial></mat-datepicker>
         </mat-form-field>
     </div>
         <!-- <div class="form-group">
@@ -318,7 +318,7 @@ type="square-jelly-box"
          formControlName = "SolicitanteControl"
          (data)="(value)"
          [multiple]="true"
-         [items]="Usuario"
+         [items]="UsuarioSol"
          optionValueField="usuario"
          optionTextField="nombre"
          size="small"
