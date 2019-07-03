@@ -91,7 +91,7 @@ export class DtVacantesGraficaPAComponent implements OnInit {
         if(this.bandera == false){
           this.totalPos += r.vacantes;
           this.totalContratados += r.contratados;
-          alert(this.totalPos)
+         
         }
         if(r.estatusId == 4)
         {
