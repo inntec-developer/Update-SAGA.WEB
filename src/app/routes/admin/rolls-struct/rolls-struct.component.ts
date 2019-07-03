@@ -147,7 +147,10 @@ onClosed(): void {
 
   CrearEstructura(node, rolId) {
     node.rolId = rolId;
-    node.collapsed = true;
+    if(node.tipoEstructuraId > 2)
+      node.collapsed = false;
+    else
+      node.collapsed = true;
 
     this.nodesAux.push(node);
 
@@ -170,34 +173,33 @@ onClosed(): void {
 
   }
 
+  ChangeCollapsed(node) {
+    node.collapsed = !node.collapsed;
+
+     if (node.children.length > 0) {
+       node.children.forEach(element => {
+         this.ChangeCollapsed(element)
+       });
+     }
+
+   }
+
+  GetNodes( node )
+  {
+    if(node.children)
+    {
+      node.children.forEach(element => {
+        this.ChangeCollapsed(element);
+      });
+    }
+ 
+  }
+
+
   filtrarTree(rol)
   {
-
-    // var aux = this.StructList.filter( element =>{
-    //    return element.rolId == rol && element.tipoEstructuraId === 2
-    // })
-
-    // aux.forEach(element => {
-    //   this.CrearArbol(element);
-    // })
-
-
-    // aux.forEach(element => {
-    //   var idx = this.nodes.findIndex(x => x.estructuraId === element.estructuraId)
-    //   if(idx >= 0)
-    //   {
-    //     this.nodes.splice(idx, 1);
-    //     this.nodes.push(element);
-    //   }
-    // })
-
-    // this.grid.nodes = this.nodes;
-    // this.StructList = [];
-
-    //
-
-
     this.StructList.forEach(element => {
+
       var idx = this.nodes.findIndex(x => x.estructuraId == element.estructuraId )
       if(idx != -1)
       {
@@ -206,10 +208,10 @@ onClosed(): void {
         this.nodes[idx]['update'] = element.update;
         this.nodes[idx]['delete'] = element.delete;
         this.nodes[idx]['especial'] = element.especial;
-        this.nodes[idx]['collapsed'] = true;
         this.nodes[idx]['rolId'] = rol;
-      //  this.CrearArbol(element)
+        this.GetNodes(this.nodes[idx]);
       }
+
 
     });
 
@@ -254,6 +256,11 @@ onClosed(): void {
               element.update = false;
               element.delete = false;
               element.especial = false;
+
+            if(element.tipoEstructuraId > 2)
+              element.collapsed = false;
+            else
+              element.collapsed = true;
             });
 
             this.StructList = e;
