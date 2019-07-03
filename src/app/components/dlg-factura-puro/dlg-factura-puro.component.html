@@ -1,11 +1,11 @@
-<h5 class="text-warning text-left" mat-dialog-title> <em class="fa fa-file-text-o"></em> VACANTE FACTURA
+<h5 class="text-warning text-left"> <em class="fa fa-file-text-o"></em> DATOS PARA FACTURACI&Oacute;N - RECLUTAMIENTO PURO
     <!-- <button type="button" class="btn btn-xs btn-danger btn-circle float-right" mat-dialog-close ><i class="fa fa-times"></i></button> -->
 </h5>
 <mat-divider></mat-divider>
-<mat-dialog-content>
-  <div class="card">
-    <div class="card-body">
-        <ul class="list-group list-group-flush mb-2">
+<div class="card">
+  <div class="card-body">
+    <mat-dialog-content class="scroll">
+       <ul class="list-group list-group-flush mb-2">
             <li class="list-group-item text-muted">EMPRESA: <span class="text-primary">{{data.cliente}}</span></li>
             <li class="list-group-item text-muted">PUESTO: <span class="text-primary">{{data.vBtra}} </span></li>
             <li class="list-group-item text-muted"><span class="mr-1">FOLIO:</span><span class="text-primary mr-3">{{data.folio }}</span>
@@ -23,16 +23,16 @@
          <thead>
            <tr>
              <th>ESTATUS VACANTE</th>
-             <th class="text-center">PORCENTAJE DE PAGO</th>
-             <th class="text-center">MONTO A FACTURAR</th>
+             <th class="text-muted text-center">PORCENTAJE DE PAGO</th>
+             <th class="text-muted text-center">MONTO A FACTURAR</th>
            </tr>
          </thead>
          <tbody>
            <tr>
-             <td>ENVIO A FACTURAR</td>
+             <td class="text-muted">ENVIO A FACTURAR</td>
              <td>
                 <div class="input-group input-group-sm mb-3">
-                    <input type="number" min="0.01" class="form-control" [(ngModel)]="porcentaje" (ngModelChange)="monto = porcentaje * (data.sueldoMaximo * data.vacantes) / 100; perContratado = 100 - porcentaje; montoContratado = (data.sueldoMaximo * data.vacantes) - monto">
+                    <input type="number" min="0" class="form-control form-control-sm" [(ngModel)]="porcentaje" (ngModelChange)="Calcular()">
                     <div class="input-group-append">
                       <span class="input-group-text">%</span>
                     </div>
@@ -43,16 +43,16 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                       </div>
-                    <input type="number" min="0.01" class="form-control" [(ngModel)]="monto" disabled>
+                    <input type="number" min="0" class="form-control form-control-sm" [(ngModel)]="monto" disabled>
 
                   </div>
              </td>
            </tr>
            <tr>
-              <td>CUBIERTO</td>
+              <td class="text-muted">CUBIERTO</td>
               <td>
                  <div class="input-group input-group-sm mb-3">
-                     <input type="number" min="0.01" class="form-control" [(ngModel)]="perContratado" disabled>
+                     <input type="number" min="0" class="form-control form-control-sm" [(ngModel)]="perContratado" disabled>
                      <div class="input-group-append">
                        <span class="input-group-text">%</span>
                      </div>
@@ -63,33 +63,27 @@
                      <div class="input-group-prepend">
                          <span class="input-group-text">$</span>
                        </div>
-                     <input type="number" min="0" class="form-control" [(ngModel)]="montoContratado" disabled>
+                     <input type="number" min="0" class="form-control form-control-sm" [(ngModel)]="montoContratado" disabled>
 
                    </div>
               </td>
             </tr>
          </tbody>
        </table>
-       <!-- <br/>
-       <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1" [(ngModel)]="asignar">
-          <label class="form-check-label" for="exampleCheck1">ENVIAR A RECLUTAMIENTO (ASIGNAR RECLUTADOR)</label>
-        </div> -->
-
-    </div>
-  </div>
-  <span></span>
-</mat-dialog-content>
+      </mat-dialog-content>
+      <mat-divider></mat-divider>
 <mat-dialog-actions class="float-right">
-    <button type="button" class="btn btn-xs btn-labeled btn-danger mb-1 margin float-right mat-elevation-z8" mat-dialog-close>
+    <button type="button" class="btn btn-xs btn-labeled btn-danger mb-1 mr-2 float-right mat-elevation-z8" mat-dialog-close>
       <span class="btn-label">
         <i class="fa fa-times"></i>
       </span> Cancelar
     </button>
-    <button type="button" class="btn btn-xs btn-labeled btn-success mb-1 margin float-right mat-elevation-z8" (click)="AddDtosFactura()" [disabled]="monto < 0">
+    <button type="button" class="btn btn-xs btn-labeled btn-success mb-1 float-right mat-elevation-z8" (click)="AddDtosFactura()" [disabled]="porcentaje < 0">
       <span class="btn-label">
         <i class="fa fa-check"></i>
       </span> Aceptar
     </button>
     <img class="loading-position" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
   </mat-dialog-actions>
+</div>
+</div>

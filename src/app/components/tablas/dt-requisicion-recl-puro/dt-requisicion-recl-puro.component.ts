@@ -366,6 +366,8 @@ export class DtRequisicionReclPuroComponent implements OnInit {
 
   openDialogFactura() {
     let dialogDlt = this.dialog.open(DlgFacturaPuroComponent, {
+      width: 'auto',
+      height: 'auto',
       disableClose: true,
       data: this.row
     });
