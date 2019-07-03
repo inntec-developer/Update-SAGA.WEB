@@ -3,7 +3,7 @@
       
       <div class="panel-heading" >
           
-                    <p class="text-center pv">ROLES - PRIVILEGIOS</p>
+                    <p class="text-center">ROLES - PRIVILEGIOS</p>
                  <!-- <div class="row">
         <div class="col-md-2 pull-left">
           <div class="input-group">
@@ -16,8 +16,8 @@
             <thead>
                 <tr>
                     <td class="text-center">Estructura</td>
-                    <td class="text-center">idPadre</td>
-                    <td class="text-center">ID</td>
+                    <!-- <td class="text-center">idPadre</td>
+                    <td class="text-center">ID</td> -->
                     <td>C</td>
                     <td>R</td>
                     <td>U</td>
@@ -28,18 +28,17 @@
             <tbody>
                 <ng-container *ngFor="let node of nodes; let i = index">
                    <tr *ngIf="node.collapsed">
-                       <td [ngClass]="{'colorPadres': node.tipoEstructuraId == 2, 
-                            'esparbol': node.tipoEstructuraId == 3,
-                            'esparbol2': node.tipoEstructuraId == 4,
-                            'esparbol3': node.tipoEstructuraId > 4,
-                            'esparbol4': node.tipoEstructuraId >= 6,
-                            'esparbol5': node.tipoEstructuraId >= 7,
-                            'esparbol6': node.tipoEstructuraId >= 8}">
-                            <btn-add [xs]="true" *ngIf="node.tipoEstructuraId==2 && node.children.length > 0" class="float-left" (click)="GetNodes(node, i)"></btn-add>
-                               <span class="col-md-12">{{node.nombre}}</span>
+                       <td  [class.text-info]="node.tipoEstructuraId == 3 || node.tipoEstructuraId == 4" [ngClass]="{'text-muted text-uppercase font-weight-bold': node.tipoEstructuraId == 2, 
+                            'esparbol2' : node.tipoEstructuraId == 3,
+                            'text-warning': node.tipoEstructuraId == 3 && node.accion == null,
+                            'esparbol4': node.tipoEstructuraId == 4}">
+                            <button class="btn btn-xs btn-success mat-elevation-z8 float-left" *ngIf="node.tipoEstructuraId==2 && node.children.length > 0" (click)="GetNodes(node, i)">
+                                    <em class="fa fa-plus"></em>
+                            </button>
+                               <span container="body" placement="bottom" tooltip="{{node.descripcion}}" class="col-md-12">{{node.nombre}}</span>
                        </td>
-                       <td class="text-center">{{node.idPadre}}</td> 
-                       <td class="text-center">{{node.estructuraId}}</td> 
+                       <!-- <td class="text-center">{{node.idPadre}}</td> 
+                       <td class="text-center">{{node.estructuraId}}</td>  -->
                         <td class="block-center"><mat-checkbox id="{{ 'compC-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Create')" [checked]="node.create"  container="body" placement="bottom" tooltip="Create"></mat-checkbox></td>
                            <td class="center"> <mat-checkbox id="{{ 'compR-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Read')" [checked]="node['read']"  container="body" placement="bottom" tooltip="Read"></mat-checkbox></td>
                            <td class="center"><mat-checkbox id="{{ 'compU-' + node.estructuraId}}" (change)="descendantsChecked($event, node, 'Update')" [checked]="node['update']"  container="body" placement="bottom" tooltip="Update"></mat-checkbox></td>

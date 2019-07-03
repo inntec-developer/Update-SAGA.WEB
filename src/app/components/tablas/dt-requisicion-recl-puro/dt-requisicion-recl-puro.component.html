@@ -55,6 +55,9 @@
         <button (click)="clearfilters()" class="btn btn-xs btn-info float-right mat-elevation-z8" container="body" placement="bottom" tooltip="Borrar Filtros">
             <em class="fa fa-eraser"></em>
           </button>
+          <span class="text-muted font-weight-bold float-right text-uppercase mr-4">Total de Folios <span
+            class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span></span>
+
       </div>
     </div>
     <hr>
@@ -152,7 +155,7 @@
         <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
           [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
           (numPages)="numPages = $event"></pagination>
-        <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre>
+        <!-- <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre> -->
       </div>
     </div>
   </div>

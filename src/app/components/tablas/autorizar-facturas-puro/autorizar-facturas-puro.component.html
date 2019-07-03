@@ -29,7 +29,8 @@
           placement="bottom" tooltip="Borrar Filtros">
           <em class="fa fa-eraser"></em>
         </button>
-
+        <span class="text-muted font-weight-bold float-right text-uppercase mr-4">Total de Folios <span
+          class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span></span>
       </div>
     </div>
     <table class="table">
@@ -89,7 +90,8 @@
                   </small>
                 </ng-template>
               </td>
-              <td class="text-center">{{row.porcentaje}} %</td>
+              <td class="text-right">{{row.porcentaje}} %</td>
+              <td class="text-right">{{row.monto | currency:"$"}}</td>
               <td class="text-center"> {{row.propietario }}</td>
             </tr>
           </div>
@@ -103,9 +105,7 @@
       <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
         [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
         (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
-      <pre *ngIf="config.paging"
-        class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre>
-    </div>
+      
   </div>
 </div>
 <!--Mensajes del sistema-->
@@ -144,7 +144,7 @@
       <div class="modal-body">
         <div class="card">
           <div class="card-body">
-            <ul class="list-group list-group-flush mb-2">
+            <ul class="list-group list-group-flush">
               <li class="list-group-item text-muted">EMPRESA: <span
                   class="text-primary">{{element.cliente | uppercase}}</span></li>
               <li class="list-group-item text-muted">PUESTO: <span class="text-primary">{{element.vBtra | uppercase }}

@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
@@ -136,7 +137,6 @@ export class AddRolesComponent implements OnInit {
   CrearEstructura(node, rolId) {
     node.rolId = rolId;
     node.collapsed = true;
-
     this.nodesAux.push(node);
 
     if (node.children.length > 0) {
@@ -161,30 +161,6 @@ export class AddRolesComponent implements OnInit {
   filtrarTree(rol)
   {
 
-    // var aux = this.StructList.filter( element =>{
-    //    return element.rolId == rol && element.tipoEstructuraId === 2
-    // })
-
-    // aux.forEach(element => {
-    //   this.CrearArbol(element);
-    // })
-
- 
-    // aux.forEach(element => {
-    //   var idx = this.nodes.findIndex(x => x.estructuraId === element.estructuraId)
-    //   if(idx >= 0)
-    //   {
-    //     this.nodes.splice(idx, 1);
-    //     this.nodes.push(element);
-    //   }
-    // })
-    
-    // this.grid.nodes = this.nodes;
-    // this.StructList = [];
-   
-    //  
- 
-    
     this.StructList.forEach(element => {
       var idx = this.nodes.findIndex(x => x.estructuraId == element.estructuraId )
       if(idx != -1)
@@ -194,7 +170,7 @@ export class AddRolesComponent implements OnInit {
         this.nodes[idx]['update'] = element.update;
         this.nodes[idx]['delete'] = element.delete;
         this.nodes[idx]['especial'] = element.especial;
-        this.nodes[idx]['collapsed'] = true;
+        this.nodes[idx]['collapsed'] = false;
         this.nodes[idx]['rolId'] = rol;
       //  this.CrearArbol(element)
       }
@@ -214,6 +190,7 @@ export class AddRolesComponent implements OnInit {
           this.grid.ngOnInit();
       
            this.nodes = e;
+           console.log(this.nodes)
            this.StructList = e;
 
            this.nodesAux = [];
@@ -242,6 +219,10 @@ export class AddRolesComponent implements OnInit {
               element.update = false;
               element.delete = false;
               element.especial = false;
+              if(element.tipoEstructuraId > 2)
+              {
+                element.collapsed = false;
+              }
             });
 
             this.StructList = e;

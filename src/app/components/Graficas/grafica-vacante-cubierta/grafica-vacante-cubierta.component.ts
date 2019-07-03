@@ -24,6 +24,7 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
   Data: any;
   private UsuarioId: any;
   public NumeroVacantes: number;
+  public TotalVacantes: number;
   public EstadoVacante: string;
   public ShowModal: boolean;
   
@@ -43,7 +44,7 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
     // Chart.defaults.scale.ticks.beginAtZero = true;
     document.oncontextmenu=null
   this.NumeroVacantes = result['total'];
-
+  this.TotalVacantes = result['total'];
   this.Data = {
     datasets: [{
       backgroundColor: [

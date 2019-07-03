@@ -58,8 +58,8 @@ export class DtVacantesGraficaPAComponent implements OnInit {
   ngOnInit() {
     this.UsuarioId = this.settings.user['id'];
     let estado2 = this.EstadoVacante.split(':', 1);
-    this.bandera = estado2 == 'Cubiertas parcialmente' || estado2 == 'Cubiertas' 
-    || estado2 == 'Cubiertas por medios'|| estado2 == 'Cubiertas por el cliente'
+    this.bandera = estado2 == 'Parcialmente' || estado2 == 'Cubiertas' || estado2 == 'Operaciones'
+    || estado2 == 'Cubiertas por medios'|| estado2 == 'Por el Cliente' || estado2 == 'Promocion Interna'
     || estado2 == 'Captado'|| estado2 == 'Contratado' || estado2 == 'Masivo'
     || estado2 == 'Operativo' || estado2 == 'Especial'?false:true;
    
@@ -90,6 +90,7 @@ export class DtVacantesGraficaPAComponent implements OnInit {
         if(this.bandera == false){
           this.totalPos += r.vacantes;
           this.totalContratados += r.contratados;
+         
         }
         if(r.estatusId == 4)
         {

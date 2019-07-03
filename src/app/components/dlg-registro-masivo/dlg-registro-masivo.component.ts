@@ -271,44 +271,47 @@ this.curp = curp;
   }
   AgregarCandidato()
   {
-    let count = this.data.nv - this.data.contratados + this.dataSource.length;
-    if(count == 0)
-    {
+    let count = this.data.nv - this.data.contratados + this.dataSource.length + 1;
+    if (count < 0) {
       swal("Registro", "Ya se cubrió el total de vacantes", "warning");
     }
-    else
-    {
-    // let email = [{ email: this.email.trim(), UsuarioAlta: 'INNTEC' }];
-    let estado = this.estados.filter(item => {
-      if(item.id == this.estadoId)
-      return item.estado;
-    });
+    else {
+      // let email = [{ email: this.email.trim(), UsuarioAlta: 'INNTEC' }];
+      let estado = this.estados.filter(item => {
+        if (item.id == this.estadoId)
+          return item.estado;
+      });
 
-    // let municipio = this.municipios.filter(item => {
-    //   if(item.id == this.municipioId)
-    //   return item.municipio;
-    // });
+      // let municipio = this.municipios.filter(item => {
+      //   if(item.id == this.municipioId)
+      //   return item.municipio;
+      // });
 
 
-    let candidato = {
-      curp: this.curp,
-      nombre: this.nom,
-      apellidoPaterno: this.ap,
-      apellidoMaterno: this.am,
-      email: this.email.trim(),
-      fechaNac: this.fn.getFullYear().toString() + '/' + (this.fn.getMonth() + 1).toString() + '/' +  this.fn.getDate().toString(),
-      genero: this.model.options == '2' ? 'Mujer' : 'Hombre',
-      EstadoNacimientoId: this.estadoId,
-      estado: estado[0].estado,
-      MunicipioNacimientoId: this.municipioId,
-      // municipio: municipio[0].municipio,
-      telefono: this.txtPhone
-    };
+      let candidato = {
+        curp: this.curp,
+        nombre: this.nom,
+        apellidoPaterno: this.ap,
+        apellidoMaterno: this.am,
+        email: this.email.trim(),
+        fechaNac: this.fn.getFullYear().toString() + '/' + (this.fn.getMonth() + 1).toString() + '/' + this.fn.getDate().toString(),
+        genero: this.model.options == '2' ? 'Mujer' : 'Hombre',
+        EstadoNacimientoId: this.estadoId,
+        estado: estado[0].estado,
+        MunicipioNacimientoId: this.municipioId,
+        // municipio: municipio[0].municipio,
+        telefono: this.txtPhone
+      };
 
-    this.dataSource.push(candidato);
-    this.onChangeTable(this.config);
-    this.BorrarCampos();
-  }
+      this.dataSource.push(candidato);
+      this.onChangeTable(this.config);
+      this.BorrarCampos();
+
+      if(count == 0)
+      {
+        swal("Vacante cubierta", "Se cubrió el total de vacantes, no se podrá agregar más candidatos ", "warning");
+      }
+    }
   }
 
   EditarCandidato()

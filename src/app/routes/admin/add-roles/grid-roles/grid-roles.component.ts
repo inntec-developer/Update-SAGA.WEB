@@ -84,44 +84,14 @@ children = [];
 
   GetNodes( node, i)
   {
-
     if(node.children)
     {
       node.children.forEach(element => {
         this.ChangeCollapsed(element);
       });
     }
-   // this.CrearArbol(node)
-   // this.collapsed[i] = !this.collapsed[i];
-
-
-    //  Object.entries(node.children).forEach(([k, v]) => {
-    //   this.CrearEstructura(v);
-
-    // })
-
-    // node.children.forEach(element => {
-
-    //   this.CrearEstructura(element);
-
-    //  })
-
-    // this.children = node.children;
-    // this.listAux = [];
   }
 
-  // saveData() {
-
-  //   if (this.privilegios.length > 0) {
-  //     this.service.AddSeccion(this.privilegios)
-  //       .subscribe(data => {
-  //         this.alert = data;
-  //       });
-  //   }
-  //   else {
-  //     alert('No se ha seleccionado Estructuras')
-  //   }
-  // }
   ngOnInit() {
     this.nodes = [];
     this.collapsed = [];
