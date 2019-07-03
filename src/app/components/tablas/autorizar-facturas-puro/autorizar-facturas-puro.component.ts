@@ -48,6 +48,7 @@ export class AutorizarFacturasPuroComponent implements OnInit {
     { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
     { title: '% Factura', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'Porcentaje' } },
+    { title: 'Monto a cubrir', className: 'text-info text-center', name: 'monto', filtering: { filterString: '', placeholder: 'Monto' } },
     { title: 'Propietario', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Propietario' } }
   ];
   rowAux: any = [];

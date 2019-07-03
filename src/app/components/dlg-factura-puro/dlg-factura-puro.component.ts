@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { RequisicionesService } from '../../service';
+
 @Component({
   selector: 'app-dlg-factura-puro',
   templateUrl: './dlg-factura-puro.component.html',
@@ -15,23 +16,29 @@ export class DlgFacturaPuroComponent implements OnInit {
   montoContratado = 0;
   loading = false;
   asignar = false;
+
+  
   constructor( @Inject(MAT_DIALOG_DATA) public data: any, private service: RequisicionesService,
-   private dialog: MatDialogRef<DlgFacturaPuroComponent>) { }
+   private dialog: MatDialogRef<DlgFacturaPuroComponent>) {
+     
+    }
 
   ngOnInit() {
     
    this.Calcular();
   }
 
-  Calcular()
+  Calcular() 
   {
     if(this.porcentaje == 0)
     {
       this.porcentaje = 0.00001;
     }
 
-    this.monto = this.porcentaje * (this.data.sueldoMaximo * this.data.vacantes) / 100; this.perContratado = 100 - this.porcentaje; 
-    this.montoContratado = (this.data.sueldoMaximo * this.data.vacantes) - this.monto;
+    this.monto = this.round(this.porcentaje * (this.data.sueldoMaximo * this.data.vacantes) / 100, 4); 
+    this.perContratado = 100 - this.porcentaje; 
+    this.montoContratado = this.round((this.data.sueldoMaximo * this.data.vacantes) - this.monto, 4);
+
   }
   AddDtosFactura()
   {
@@ -54,5 +61,10 @@ export class DlgFacturaPuroComponent implements OnInit {
     
     
   }
+
+  round(value, precision) : any{
+    var rounder = Math.pow(10, precision);
+  return (Math.round(value * rounder) / rounder).toFixed(precision);
+}
 
 }
