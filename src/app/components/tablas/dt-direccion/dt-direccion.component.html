@@ -16,14 +16,14 @@
             <td class="text-center">
               {{row.tipoDireccion | uppercase}}
             </td>
-            <td class="text-center"> {{row.pais}}</td>
-            <td class="text-center"> {{row.estado}}</td>
-            <td class="text-center"> {{row.municipio}}</td>
-            <td class="text-center"> {{row.colonia}}</td>
-            <td class="text-center"> {{row.calle}}</td>
-            <td class="text-center"> {{row.numeroExterior}}</td>
-            <td class="text-center"> {{row.numeroInterior}}</td>
-            <td class="text-center"> {{row.codigoPostal}}</td>
+            <td class="text-center"> {{row.pais | uppercase}}</td>
+            <td class="text-center"> {{row.estado | uppercase}}</td>
+            <td class="text-center"> {{row.municipio | uppercase}}</td>
+            <td class="text-center"> {{row.colonia | uppercase}}</td>
+            <td class="text-center"> {{row.calle | uppercase}}</td>
+            <td class="text-center"> {{row.numeroExterior | uppercase}}</td>
+            <td class="text-center"> {{row.numeroInterior | uppercase}}</td>
+            <td class="text-center"> {{row.codigoPostal | uppercase}}</td>
             <td class="text-center">
               <span *ngIf="row.activo">
                 <em class="fa fa-check-square-o"></em>

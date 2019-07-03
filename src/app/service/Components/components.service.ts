@@ -61,6 +61,11 @@ export class ComponentsService {
   private UrlGetCandidatos = ApiConection.ServiceUrl + ApiConection.getCandidatos;
   private UrlGetCandidatosIncio = ApiConection.ServiceUrl + ApiConection.getCandidatosInicio;
 
+  // Indicadores Unidades de Negocio
+  private UrlGetUnidadNegocioMTY = ApiConection.ServiceUrl + ApiConection.getUnidadNegocioMty;
+  private UrlGetUnidadNegocioGDL = ApiConection.ServiceUrl + ApiConection.getUnidadNegocioGdl;
+  private UrlGetUnidadNegocioMX = ApiConection.ServiceUrl + ApiConection.getUnidadNegocioMx;
+
   constructor(private _httpClient: HttpClient) { }
 
   getProductividad(data: any): Observable<any> {
@@ -193,4 +198,20 @@ export class ComponentsService {
     return this._httpClient.get(this.UrlGetCandidatosIncio, this.httpOptions)
       .map(result => result);
   }
+
+  getUnidadesNegocioMTY(): Observable<any>{
+    return this._httpClient.get(this.UrlGetUnidadNegocioMTY, this.httpOptions)
+      .map(result => result);
+  }
+
+  getUnidadesNegocioGDL(): Observable<any>{
+    return this._httpClient.get(this.UrlGetUnidadNegocioGDL, this.httpOptions)
+      .map(result => result);
+  }
+
+  getUnidadesNegocioMX(): Observable<any>{
+    return this._httpClient.get(this.UrlGetUnidadNegocioMX, this.httpOptions)
+      .map(result => result);
+  }
+
 }

@@ -18,72 +18,55 @@ export class IndicadorUndNegocioMxComponent implements OnInit {
   ) { }
 
   public Chart: Chart;
-  public Data: any;
   public UsuarioId: any;
   public ShowModal: boolean;
   public EstadoVacante: string;
   public NumeroVacantes: number;
   public RegistrosT: number = 0;
+  public Vigentes: number = 0;
+  public PorVencer: number = 0;
+  public Vencidas: number = 0;
   ngOnInit() {
     this.UsuarioId = this.settings.user['id'];
     Chart.defaults.scale.ticks.beginAtZero = true;
-    // this._ServiceComponente.getGraficaVPA(this.UsuarioId).subscribe(result => {
-      let vigentes = 15;
-      let porVecner = 35;
-      let vencidas = 5;
-      this.RegistrosT = vigentes + porVecner + vencidas;
+    this._ServiceComponente.getUnidadesNegocioMX().subscribe(result => {
+      if (result != 404) {
+        this.RegistrosT = result['vigentes'] + result['porVencer'] + result['vencidas'];
+        this.Vigentes = result['vigentes']
+        this.PorVencer = result['porVencer']
+        this.Vencidas = result['vencidas']
+        var marksData = {
+          labels: ["Vigentes", "Por Vencer", "Vencidas"],
+          datasets: [{
+            label: "México",
+            backgroundColor: "rgba(110,0,255,0.5)",
+            data: [this.Vigentes, this.PorVencer, this.Vencidas]
+          }]
+        };
 
-      this.Data = {
-        datasets: [{
-          backgroundColor: ['#00FF00', '#FFCC00', '#FF3300'],
-          borderColor: '#fff',
-          data: [vigentes, porVecner, vencidas]
-        }],
-        // These labels appear in the legend and in the tooltips when hovering different arcs
-        labels: [
-          'Vigentes',
-          'Por Vencer',
-          'Vencidas'
-        ]
-      }
-
-      this.Chart = new Chart('canvasMx', {
-        type: 'pie',
-        data: this.Data,
-        options: {
-          hoverBorderColor: '#00000',
-          responsive: true,
-         // onClick: this.detectedClick.bind(this),
-          // title: {
-          //   text: 'Seguimiento Vacantes'
-          //   display: true,
-          // },
-          // scale: {
-          //   ticks: {
-          //     scaleBeginAtZero: true,
-          //     scaleStartValue: 0,
-          //   },
-          //   display: true,
-          //   scaleShowLine: true,
-          //   reverse: false
-          // },
-          animation: {
-            animateRotate: true,
-            animateScale: true
-          },
-          // startAngle: -Math.PI / -4,
+        var charOptions = {
           legend: {
             position: 'right',
             display: true,
             labels: {
-              fontSize: 10,
+              fontSize: 12,
               boxWidth: 10,
               usePointStyle: true,
-              padding: 3
+              padding: 15
             }
           },
+          scale: {
+            display: true,
+          }
         }
-      });
-    // });
+
+        Chart.defaults.scale.ticks.beginAtZero = true;
+        this.Chart = new Chart('canvasMx', {
+          type: 'radar',
+          data: marksData,
+          options: charOptions
+        });
+      }
+    });
   }
 }

@@ -67,23 +67,23 @@
           <mat-divider></mat-divider>
           <p>
             <strong>Nombre Comercial: </strong>
-            <label id="nombre" class="card-text"> {{ClienteInfo?.nombreComercial}}</label>
+            <label id="nombre" class="card-text"> {{ClienteInfo?.nombrecomercial | uppercase}}</label>
           </p>
           <p>
             <strong>Raz&oacute;n Social: </strong>
-            <label class="card-text"> {{ClienteInfo?.razonSocial}}</label>
+            <label class="card-text"> {{ClienteInfo?.razonSocial | uppercase}}</label>
           </p>
           <p>
             <strong>RFC: </strong>
-            <label class="card-text"> {{ClienteInfo?.rfc}}</label>
+            <label class="card-text"> {{ClienteInfo?.rfc | uppercase}}</label>
           </p>
           <p>
             <strong>Giro Empresa: </strong>
-            <label class="card-text"> {{ClienteInfo?.giroEmpresa}}</label>
+            <label class="card-text"> {{ClienteInfo?.giroEmpresa | uppercase}}</label>
           </p>
           <p>
             <strong>Actividad Empresa: </strong>
-            <label class="card-text"> {{ClienteInfo?.actividadEmpresa}}</label>
+            <label class="card-text"> {{ClienteInfo?.actividadEmpresa | uppercase}}</label>
           </p>
         </div>
         <div class="col-md-3 col-sm-12 col-xs-12">
@@ -91,21 +91,21 @@
           <mat-divider></mat-divider>
           <p>
             <strong>Tipo: </strong>
-            <label class="card-text"> {{damfo290?.tipoReclutamiento}}</label>
+            <label class="card-text"> {{damfo290?.tipoReclutamiento | uppercase}}</label>
           </p>
           <p>
             <strong>Clase: </strong>
-            <label class="card-text"> {{damfo290?.claseReclutamiento}}</label>
+            <label class="card-text"> {{damfo290?.claseReclutamiento | uppercase}}</label>
           </p>
           <h5 class="card-title">Contrato</h5>
           <mat-divider></mat-divider>
           <p>
             <strong>Tipo: </strong>
-            <label class="card-text"> {{damfo290?.tipoContrato}}</label>
+            <label class="card-text"> {{damfo290?.tipoContrato | uppercase}}</label>
           </p>
           <p *ngIf="damfo290?.contratoInicial?.periodoPrueba == true">
             <strong>D&iacute;as de Prueba: </strong>
-            <label class="card-text"> {{damfo290?.tiempo}}</label>
+            <label class="card-text"> {{damfo290?.tiempo | uppercase}}</label>
           </p>
         </div>
         <div class="col-md-3 col-sm-12 col-xs-12">
@@ -113,23 +113,23 @@
           <mat-divider></mat-divider>
           <p>
             <strong>Nombre del Perfil: </strong>
-            <label class="card-text"> {{damfo290?.nombrePerfil}}</label>
+            <label class="card-text"> {{damfo290?.nombrePerfil | uppercase}}</label>
           </p>
           <p>
             <strong>&Aacute;rea: </strong>
-            <label class="card-text"> {{damfo290?.areaExperiencia}}</label>
+            <label class="card-text"> {{damfo290?.areaExperiencia | uppercase}}</label>
           </p>
           <p>
             <strong>G&eacute;nero: </strong>
-            <label class="card-text"> {{damfo290?.genero}}</label>
+            <label class="card-text"> {{damfo290?.genero | uppercase}}</label>
           </p>
           <p>
             <strong>Edad: </strong>
-            <label class="card-text"> {{damfo290?.edadMinima}} años a {{damfo290?.edadMaxima}} años </label>
+            <label class="card-text"> {{damfo290?.edadMinima }} AÑOS A {{damfo290?.edadMaxima}} AÑOS </label>
           </p>
           <p>
             <strong>Estado Civil: </strong>
-            <label class="card-text"> {{damfo290?.estadoCivil}}</label>
+            <label class="card-text"> {{damfo290?.estadoCivil | uppercase}}</label>
           </p>
         </div>
         <div class="col-md-3 col-sm-12 col-xs-12">
@@ -137,7 +137,7 @@
           <mat-divider></mat-divider>
           <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-6">
-              <h5 class="card-title">M&iacute;nimo</h5>
+              <h5 class="card-title text-warning">M&iacute;nimo</h5>
               <p>
                 <strong>Mensual: </strong>
                 <label class="card-text"> ${{damfo290?.sueldoMinimo | currency: 'MXN'}}</label>
@@ -152,7 +152,7 @@
               </p>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6">
-              <h5 class="card-title">M&aacute;ximo</h5>
+              <h5 class="card-title text-warning">M&aacute;ximo</h5>
               <p>
                 <strong>Mensual: </strong>
                 <label class="card-text"> ${{damfo290?.sueldoMaximo | currency: 'MXN'}}</label>
@@ -197,7 +197,7 @@
           <mat-divider></mat-divider>
           <ol>
             <li *ngFor="let x of damfo290?.escolaridades">
-              <label class="card-text"> {{x?.gradoEstudio}} - {{x?.estadoEstudio}}</label>
+              <label class="card-text"> {{x?.gradoEstudio | uppercase}} - {{x?.estadoEstudio | uppercase}}</label>
             </li>
           </ol>
         </div>
@@ -206,37 +206,37 @@
           <mat-divider></mat-divider>
           <ol>
             <li *ngFor="let x of damfo290?.aptitudes">
-              <label class="card-text"> {{x?.aptitud}}</label>
+              <label class="card-text"> {{x?.aptitud | uppercase}}</label>
             </li>
           </ol>
         </div>
         <div class="col-md-3 col-sm-12 col-xs-12">
           <h5 class="card-title">Experiencia</h5>
           <mat-divider></mat-divider>
-          <label class="card-text">{{damfo290?.experiencia}}</label>
+          <label class="card-text">{{damfo290?.experiencia | uppercase}}</label>
         </div>
         <div class="col-md-3 col-sm-12 col-xs-12">
           <h5 class="card-title">Informaci&oacute;n de Pagos</h5>
           <mat-divider></mat-divider>
           <p>
             <strong>D&iacute;as Corte: </strong>
-            <label class="card-text"> {{damfo290?.diaCorte}}</label>
+            <label class="card-text"> {{damfo290?.diaCorte | uppercase}}</label>
           </p>
           <p>
             <strong>Tipo Nomina: </strong>
-            <label class="card-text"> {{damfo290?.tipoDeNomina}}</label>
+            <label class="card-text"> {{damfo290?.tipoDeNomina | uppercase}}</label>
           </p>
           <p>
             <strong>D&iacute;as Pago: </strong>
-            <label class="card-text"> {{damfo290?.diaPago}}</label>
+            <label class="card-text"> {{damfo290?.diaPago | uppercase}}</label>
           </p>
           <p>
             <strong>Periodo de Pago: </strong>
-            <label class="card-text"> {{damfo290?.periodoPago}}</label>
+            <label class="card-text"> {{damfo290?.periodoPago | uppercase}}</label>
           </p>
           <p *ngIf="periodoPagoId == 0">
             <strong>Especifique: </strong>
-            <label class="card-text"> {{damfo290?.especifique}}</label>
+            <label class="card-text"> {{damfo290?.especifique | uppercase}}</label>
           </p>
         </div>
       </div>

@@ -383,6 +383,10 @@ export class ApiConection {
   public static getPosicionesActivas = 'contadores/posicionesActivas';
   public static getCandidatos = 'contadores/candidatos';
   public static getCandidatosInicio = 'contadores/candidatosEstatus';
+  /* Indicadores Unidades de Negocio GERENTES*/
+  public static getUnidadNegocioMty = 'contadores/unidadMty'
+  public static getUnidadNegocioGdl = 'contadores/unidadGdl'
+  public static getUnidadNegocioMx = 'contadores/unidadMx'
 
   /* Menu de Catalogos */
   public static getCatalogos = 'Catalogos/getCatalogos';
