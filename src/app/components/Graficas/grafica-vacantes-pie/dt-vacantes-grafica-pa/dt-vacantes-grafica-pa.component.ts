@@ -82,7 +82,7 @@ export class DtVacantesGraficaPAComponent implements OnInit {
       
       this.dataSource = data;
       this.dataSource.forEach(r => {
-        if(r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37))
+        if(r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37) && this.bandera == true)
         {
           this.totalPos += r.vacantes;
           this.totalContratados += r.contratados;
