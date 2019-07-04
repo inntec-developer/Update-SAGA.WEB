@@ -271,6 +271,7 @@ export class ApiConection {
   public static getConteoVacante = 'Requisiciones/getConteoVacante';
   public static execProcedurePause = 'Requisiciones/execProcedurePause'
   public static execProcedureSinCambios = 'Requisiciones/execProcedureSinCambio'
+  public static execProcedurePendientesPuro = 'Requisiciones/execProcedurePendientesPuro'
   public static execProcedureSinAsignar = 'Requisiciones/execProcedureSinAsignar'
   public static execProcedureVencidas = 'Requisiciones/execProcedureVencidas'
   public static getRequisicionesHistorial = 'Requisiciones/getRequisicionesHistorial'

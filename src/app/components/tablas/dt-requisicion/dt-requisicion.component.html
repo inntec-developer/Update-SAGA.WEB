@@ -6,12 +6,12 @@
           placement="bottom" tooltip="Nuevo" [routerLink]="['/ventas/crearRequisicion']">
           <em class="fa fa-plus"></em>
         </button>
-        <button id="view" chkPrivilegiosButtons (click)="showRequi()" class="mr-2 btn btn-xs mat-elevation-z8"
+        <button (click)="showRequi()" class="mr-2 btn btn-xs mat-elevation-z8"
           [disabled]="!view" [ngClass]="(!view) ? 'disabled' : 'btn-warning'" container="body"
           placement="bottom" tooltip="Visualizar">
           <em class="fa fa-eye"></em>
         </button>
-        <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-2 btn btn-xs mat-elevation-z8"
+        <button (click)="lgModal.show()" class="mr-2 btn btn-xs mat-elevation-z8"
           [disabled]="!coment" [ngClass]="(!coment) ? 'disabled' : 'btn-dark'" container="body"
           placement="bottom" tooltip="Comentarios">
           <em class="fa fa-comments-o"></em>
@@ -74,7 +74,7 @@
             <button *ngIf="tipoUsuarioId != 8" class="btn btn-xs mr-1 mat-elevation-z8" [ngClass]="element.length == 0 ? 'disable' : 'btn-purple'" [disabled]="element.length == 0" id='special' chkPrivilegiosButtons type="button" (click)="openDialogTransfer()" container="body" placement="bottom"
             tooltip="Transferir folio"><i class="fa fa-exchange"></i>
           </button>
-        <button id="view" chkPrivilegiosButtons type="button" [disabled]="rows.length == 0" class="mr-2 btn btn-xs mat-elevation-z8" [ngClass]="rows.length == 0 ? 'disable' : 'btn-success'"
+        <button type="button" [disabled]="rows.length == 0" class="mr-2 btn btn-xs mat-elevation-z8" [ngClass]="rows.length == 0 ? 'disable' : 'btn-success'"
           (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
           <i class="fa fa-download"></i>
         </button>

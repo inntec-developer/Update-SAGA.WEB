@@ -20,12 +20,12 @@
               [routerLink]="['/ventas/crearRequisicion']">
               <em class="fa fa-plus"></em>
             </button> -->
-        <button id="read" chkPrivilegiosButtons (click)="lgModal15.show()" class="ml-2 mr-2 btn btn-xs mat-elevation-z8" [disabled]="!view"
+        <button (click)="lgModal15.show()" class="ml-2 mr-2 btn btn-xs mat-elevation-z8" [disabled]="!view"
           [ngClass]="(!view) ? 'disabled' : 'btn-warning'" container="body" placement="bottom" tooltip="Visualizar">
           <em class="fa fa-eye"></em>
         </button>
 
-        <button id="read" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-2 btn btn-xs mat-elevation-z8"
+        <button (click)="lgModal.show()" class="mr-2 btn btn-xs mat-elevation-z8"
           [disabled]="!coment" [ngClass]="(!coment) ? 'disabled' : 'btn-dark'" container="body" placement="bottom"
           tooltip="Comentarios">
           <em class="fa fa-comments-o"></em>

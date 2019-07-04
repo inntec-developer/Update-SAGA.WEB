@@ -32,13 +32,14 @@ export class ChkButtonsDirective implements AfterViewInit {
       ruta = this.activeRoute.snapshot.routeConfig.path;
     }
     // this.activeRoute.snapshot.routeConfig.path
-    var campos = privilegios.filter(function (row: any) {
+    var campos = privilegios.filter( row => {
       // if(ruta == null)
       // {
       //   var idx = row.accion.lastIndexOf("/");
       //   ruta = row.accion.substring(idx + 1, row.accion.length).toUpperCase();
       // }
-      return row.TipoEstructuraId === 4 && row.Nombre.toLowerCase() == ruta.toLowerCase()
+      if((row.TipoEstructuraId == 3 || row.TipoEstructuraId == 4) && row.Nombre.toLowerCase() == ruta.toLowerCase())
+        return row;
     });
 
     campos.forEach(campo => {

@@ -45,7 +45,7 @@ const routes: Routes = [
   { path: 'visualizarDamfo290/:IdDamfo', component: ViewdamfoComponent, data: { componente: 'Formato 290' } },
   { path: 'visualizarRequisicion/:IdRequi/:Folio/:Vacante/:TipoReclutamientoId', component: ViewRequisicionComponent, data: { componente: 'Requisiciones' } },
   { path: 'edicionRequisicion/:IdRequi/:Folio/:EstatusId/:TipoReclutamientoId', component: UpdateRequisicionComponent },
-  { path: 'requisicionPuro', component: DtRequisicionReclPuroComponent },
+  { path: 'requisicionPuro', component: DtRequisicionReclPuroComponent, data: { componente: 'Puro' } },
 ];
 
 @NgModule({

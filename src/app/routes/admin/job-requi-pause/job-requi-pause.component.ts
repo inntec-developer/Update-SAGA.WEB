@@ -71,6 +71,24 @@ export class JobRequiPauseComponent implements OnInit {
   
     })
   }
+  ExecProcedurePendientesPuro()
+  {
+    this.titulo = "Espera a que te salga el mensaje de confirmación \\m/"
+    this._service.ExecProcedurePendientesPuro().subscribe(data => {
+    
+      if(data == 200)
+      {
+        this.popToast('success', 'JOB - Pendientes Puro', 'El JOB se ejecutó con éxito');
+        this.titulo = ''
+      }
+      else
+      {
+        this.popToast('error', 'JOB - Pendientes Puro', 'Ocurrio un error al intentar ejecutar el JOB');
+        this.titulo = ''
+      }
+  
+    })
+  }
 
   ExecProcedureVencidas()
   {

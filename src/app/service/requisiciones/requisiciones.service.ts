@@ -53,6 +53,7 @@ export class RequisicionesService {
   private URLExecProcedureSinCambios = ApiConection.ServiceUrl + ApiConection.execProcedureSinCambios;
   private URLExecProcedureSinAsignar = ApiConection.ServiceUrl + ApiConection.execProcedureSinAsignar;
   private URLExecProcedureVencidas = ApiConection.ServiceUrl + ApiConection.execProcedureVencidas;
+  private URLExecProcedurePendientesPuro = ApiConection.ServiceUrl + ApiConection.execProcedurePendientesPuro;
   private URLGetRequiTipoRecl = ApiConection.ServiceUrl + ApiConection.GetRequiTipoRecl;
   private URLSendEmailRequiPuro = ApiConection.ServiceUrl + ApiConection.SendEmailRequiPuro;
   private URLSendEmailRedesSociales = ApiConection.ServiceUrl + ApiConection.SendEmailRedesSociales;
@@ -234,6 +235,10 @@ export class RequisicionesService {
 
   ExecProcedureSinCambios(): Observable<any> {
     return this._httpClient.get(this.URLExecProcedureSinCambios);
+  }
+
+  ExecProcedurePendientesPuro(): Observable<any> {
+    return this._httpClient.get(this.URLExecProcedurePendientesPuro);
   }
 
   ExecProcedureSinAsignar(): Observable<any> {
