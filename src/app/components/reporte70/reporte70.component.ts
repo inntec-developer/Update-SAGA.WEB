@@ -78,15 +78,19 @@ export class Reporte70Component implements OnInit {
     // { title: 'Fecha Estatus', className: 'text-info text-center', name: 'fch_Modificacion', filtering: { filterString: '', placeholder: 'dd/mm/yyyy' } },
     { title: 'Tipo Reclutamiento', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo reclutamiento' } },
     { title: 'Coordinación', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Coordinación' } },
-    { title: 'Com. Sol.', className: 'text-info text-center', name: 'comentarios_solicitante' },
-    { title: 'Com. Recl.', className: 'text-info text-center', name: 'comentarios_reclutador' },
+    { title: 'Com. Sol.', className: 'text-info text-center', name: 'comentarios_solicitante', filtering: { filterString: '', disabled: true } },
+    { title: 'Com. Recl.', className: 'text-info text-center', name: 'comentarios_reclutador', filtering: { filterString: '', disabled: true } },
     { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador', filtering: { filterString: '', placeholder: 'Coordinador' } },
-    { title: 'Com. Coord.', className: 'text-info text-center', name: 'comentarios_coord' },
+    { title: 'Com. Coord.', className: 'text-info text-center', name: 'comentarios_coord', filtering: { filterString: '', placeholder: '', disabled: true } },
     { title: 'Solicita', className: 'text-info text-center', name: 'solicita', filtering: { filterString: '', placeholder: 'Solicita' } }
   ];
 
   GetReporte70(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor)
   {
+    var date1 = new Date();
+
+console.log(date1)
+
 
 
     this.objsucursal1 = oficina;
@@ -172,13 +176,19 @@ export class Reporte70Component implements OnInit {
       var final = fin['value'];
       let tipo = document.getElementById('TipoReporte')['value'];
 
-    this._service.GetReporte70(palabra,ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec).subscribe(result => {
+    
+     this._service.GetReporte70(palabra,ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec).subscribe(result => {
+      var date2 = new Date();
+
+      console.log(date2)
       this.requisiciones = result;
-      this.rows = this.requisiciones.slice(0, this.itemsPerPage);
-      this.registros = this.rows.length;
-      this.length = this.requisiciones.length;
-  this.spinner.hide();
-    })
+       this.onChangeTable(this.config);
+
+       var date3 = new Date();
+
+       console.log(date3)
+      
+     })
   }
 
   //#region filtros y paginador
@@ -195,42 +205,11 @@ export class Reporte70Component implements OnInit {
     return data.slice(start, end);
   }
 
-  public changeSort(data: any, config: any): any {
-    if (!config.sorting) {
-      return data;
-    }
-
-    let columns = this.config.sorting.columns || [];
-    let columnName: string = void 0;
-    let sort: string = void 0;
-
-    for (let i = 0; i < columns.length; i++) {
-      if (columns[i].sort !== '' && columns[i].sort !== false) {
-        columnName = columns[i].name;
-        sort = columns[i].sort;
-      }
-    }
-
-    if (!columnName) {
-      return data;
-    }
-
-    // simple sorting
-    return data.sort((previous: any, current: any) => {
-      if (previous[columnName] > current[columnName]) {
-        return sort === 'desc' ? -1 : 1;
-      } else if (previous[columnName] < current[columnName]) {
-        return sort === 'asc' ? -1 : 1;
-      }
-      return 0;
-    });
-  }
-
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
+    this.showFilterRow = true;
     this.columns.forEach((column: any) => {
-      if (column.filtering) {
-        this.showFilterRow = true;
+      if (column.filtering.filterString != "") {
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null )
           {
@@ -240,64 +219,38 @@ export class Reporte70Component implements OnInit {
             }
             else
             {
-                let aux = item[column.name];
-                let mocos = false;
-                if(item[column.name].length > 0)
-                {
-                  item[column.name].forEach(element => {
-                    if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
-                    {
-                      mocos = true;
-                      return;
-                    }
-                  });
-
-                  if(mocos)
+              if(item[column.name].length > 0)
+              {
+                let aux = [];
+                aux = item[column.name];
+                
+                let flag = false;
+                aux.forEach(element => {
+                  if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
                   {
-                    return item[column.name];
+                    flag = true;
+                    return;
                   }
+                });
+
+                if(flag)
+                {
+                  return item[column.name];
                 }
+              }
               else
               {
+                if( 'sin asignar'.match(column.filtering.filterString.toLowerCase()))
+                {
                   return item[column.name];
+                }
               }
             }
-          }
-          else
-          {
-            return 'sin asignar'
           }
         });
       }
 
     });
-
-    if (!config.filtering) {
-      return filteredData;
-    }
-
-    if (config.filtering.columnName) {
-      return filteredData.filter((item: any) =>
-        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-    }
-
-    let tempArray: Array<any> = [];
-    filteredData.forEach((item: any) => {
-      let flag = false;
-      this.columns.forEach((column: any) => {
-        if (item[column.name] == null) {
-          flag = true;
-        } else {
-          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-            flag = true;
-          }
-        }
-      });
-      if (flag) {
-        tempArray.push(item);
-      }
-    });
-    filteredData = tempArray;
 
     return filteredData;
   }
@@ -306,26 +259,19 @@ export class Reporte70Component implements OnInit {
     if (config.filtering) {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
-
-    if (config.sorting) {
-      (<any>Object).assign(this.config.sorting, config.sorting);
-    }
-
     this.registros = this.requisiciones.length;
     this.rows = this.requisiciones;
-    let filteredData = this.changeFilter(this.requisiciones, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
-    this.length = sortedData.length;
-
-
+    let filteredData = this.changeFilter(this.rows, this.config);
+    this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
+    this.length = filteredData.length;
+    this.spinner.hide();
   }
 //#endregion
 
 public refreshTable() {
+  this.spinner.show();
   this.GetReporte70(this.objsucursal1, this.objsolicit1, this.objrecluta1,
     this.objempresa1,this.objstatus1,this.objtiporeclu1,this.objtipocordi1 );
-  this.page = 1;
   }
 
   public clearfilters() {

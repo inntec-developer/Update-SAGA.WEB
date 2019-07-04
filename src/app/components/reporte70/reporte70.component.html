@@ -2,16 +2,23 @@
 
 <div class="card" style="margin-top: 80px" >
   <div class="card-body mat-elevation-z8">
-
-    <button type="button" class="float-right oculta" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'btn btn-xs disable' : 'btn btn-xs btn-success mat-elevation-z8'"
+      <button class="btn btn-xs btn-success float-right mat-elevation-z8 mt-2" type="button" (click)="refreshTable()"
+      container="body" placement="bottom" tooltip="Actualizar">
+      <em class="icon-refresh"></em>
+    </button>
+    <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
+      class="mr-2 btn btn-xs btn-info float-right mat-elevation-z8 mt-2">
+      <em class="fa fa-eraser"></em>
+    </button>
+    <span class="text-muted font-weight-bold float-right text-uppercase mt-2 mr-4">Total de Folios <span
+      class="badge badge-pill badge-success ml-1 mat-elevation-z8">{{requisiciones.length}}</span></span>
+    <!-- <button type="button" class="float-right oculta" [disabled]="rows.length == 0" [ngClass]="rows.length == 0 ? 'btn btn-xs disable' : 'btn btn-xs btn-success mat-elevation-z8'"
       (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Descargar Reporte">
       <i class="fa fa-download"></i>
-    </button>
+    </button> -->
 
     <ng-scrollbar #scrollableP [trackX]="true" [trackY]="false" [invertX]="invertX" [invertY]="invertY" [compact]="compact" [shown]="shown"
       [disableOnBreakpoints]="false" [disabled]="disabled">
-
-
       <div style="width: 3000px; height: 350px; overflow: hidden;">
         <table ngClass="{{config.className || ''}}" class="table">
           <thead>
@@ -22,7 +29,7 @@
             </tr>
             <tr>
               <th *ngFor="let column of columns">
-                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [disabled] = "column.filtering.disabled" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
                   class="form-control form-control-sm" id="{{column.name}}">
               </th>
             </tr>
@@ -250,8 +257,6 @@
       <div class="col-md-12 clearfix">
         <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
           [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
-
-        <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre>
       </div>
     </div>
   </div>

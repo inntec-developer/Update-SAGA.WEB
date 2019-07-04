@@ -204,7 +204,6 @@ dataSource = [];
   {
     if(this.coordNom.length > 0 || this.asig.length > 0)
     {
-
       let tipo = 1; //cambio coordinador
       let usuarioAux = this.settings.user['id'];
       if(this.data.usuario == 10)
@@ -214,7 +213,7 @@ dataSource = [];
       else if(this.data.usuario == 11)
       {
         tipo = 3 //cambio reclutador
-        this.coordId = this.asig2[0].reclutadorId;
+        this.coordId = this.asig2[0].id;
         usuarioAux = this.asig[0].reclutadorId;
       }
     let Comentario = {
