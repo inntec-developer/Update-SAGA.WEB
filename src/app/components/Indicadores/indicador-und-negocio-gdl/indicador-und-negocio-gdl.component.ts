@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 import { Chart } from 'chart.js';
 import { ComponentsService } from '../../../service';
@@ -12,12 +12,14 @@ import { SettingsService } from '../../../core/settings/settings.service';
 })
 export class IndicadorUndNegocioGdlComponent implements OnInit {
 
+
   constructor(
     private _ServiceComponente: ComponentsService,
     private settings: SettingsService
   ) { }
 
   public Chart: Chart;
+  public Data: any;
   public UsuarioId: any;
   public ShowModal: boolean;
   public EstadoVacante: string;
@@ -35,7 +37,7 @@ export class IndicadorUndNegocioGdlComponent implements OnInit {
         this.Vigentes = result['vigentes']
         this.PorVencer = result['porVencer']
         this.Vencidas = result['vencidas']
-        var marksData = {
+        this.Data = {
           labels: ["Vigentes", "Por Vencer", "Vencidas"],
           datasets: [{
             label: "Guadalajara",
@@ -63,9 +65,30 @@ export class IndicadorUndNegocioGdlComponent implements OnInit {
         Chart.defaults.scale.ticks.beginAtZero = true;
         this.Chart = new Chart('canvasGdl', {
           type: 'radar',
-          data: marksData,
+          data: this.Data,
           options: charOptions
         });
+      }
+    });
+  }
+
+  updateChart() {
+    this._ServiceComponente.getUnidadesNegocioGDL().subscribe(result => {
+      if (result != 404) {
+        this.RegistrosT = result['vigentes'] + result['porVencer'] + result['vencidas'];
+        this.Vigentes = result['vigentes']
+        this.PorVencer = result['porVencer']
+        this.Vencidas = result['vencidas']
+        this.Data = {
+          labels: ["Vigentes", "Por Vencer", "Vencidas"],
+          datasets: [{
+            label: "Guadalajara",
+            backgroundColor: "rgba(0,0,255,0.5)",
+            data: [this.Vigentes, this.PorVencer, this.Vencidas]
+          }]
+        };
+        this.Chart.data = this.Data;
+        this.Chart.update();
       }
     });
   }

@@ -1,9 +1,10 @@
-import { ExcelService } from './../../../../service/ExcelService/excel.service';
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
-import { DatePipe } from '@angular/common';
+
 import { ComponentsService } from './../../../../service/Components/components.service';
-import { SettingsService } from '../../../../core/settings/settings.service';
+import { DatePipe } from '@angular/common';
+import { ExcelService } from './../../../../service/ExcelService/excel.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SettingsService } from '../../../../core/settings/settings.service';
 import { isArray } from 'rxjs/internal/util/isArray';
 
 @Component({
@@ -62,7 +63,7 @@ export class DtVacantesGraficaPAComponent implements OnInit {
     || estado2 == 'Cubiertas por medios'|| estado2 == 'Por el Cliente' || estado2 == 'Promocion Interna'
     || estado2 == 'Captado'|| estado2 == 'Contratado' || estado2 == 'Masivo'
     || estado2 == 'Operativo' || estado2 == 'Especial'?false:true;
-   
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -74,12 +75,12 @@ export class DtVacantesGraficaPAComponent implements OnInit {
 
   getRequisiciones() {
     this.spinner.show();
-  
+    debugger;
     var estado = this.EstadoVacante.split(':', 1);
     this._ComponentService.getRequiGraficaPA(estado, this.UsuarioId ).subscribe(data => {
       this.totalPos = 0;
       this.totalContratados = 0;
-      
+
       this.dataSource = data;
       this.dataSource.forEach(r => {
         if(r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37) && this.bandera == true)
@@ -90,7 +91,7 @@ export class DtVacantesGraficaPAComponent implements OnInit {
         if(this.bandera == false){
           this.totalPos += r.vacantes;
           this.totalContratados += r.contratados;
-         
+
         }
         if(r.estatusId == 4)
         {
@@ -100,7 +101,9 @@ export class DtVacantesGraficaPAComponent implements OnInit {
       });
       this.onChangeTable(this.config);
       this.spinner.hide();
-    }, error => this.errorMessage = <any>error);
+    }, error => this.errorMessage = <any>error, function(){
+      this.spinner.hide();
+    });
   }
 
   public config: any = {
@@ -174,7 +177,7 @@ export class DtVacantesGraficaPAComponent implements OnInit {
   }
 
   public refreshTable() {
-    
+
     this.getRequisiciones();
 
     setTimeout(() => {
@@ -256,7 +259,7 @@ export class DtVacantesGraficaPAComponent implements OnInit {
 
       //   })
       // })
-      this.excelService.exportAsExcelFile(aux, 'Solicitud_de_reporte_para_generar_estadisticos');
+      this.excelService.exportAsExcelFile(aux, 'InformacioVacantes'+this.EstadoVacante);
 
     }
   }

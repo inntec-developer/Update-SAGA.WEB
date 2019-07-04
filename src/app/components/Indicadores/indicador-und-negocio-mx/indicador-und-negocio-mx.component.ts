@@ -18,6 +18,7 @@ export class IndicadorUndNegocioMxComponent implements OnInit {
   ) { }
 
   public Chart: Chart;
+  public Data: any;
   public UsuarioId: any;
   public ShowModal: boolean;
   public EstadoVacante: string;
@@ -35,7 +36,7 @@ export class IndicadorUndNegocioMxComponent implements OnInit {
         this.Vigentes = result['vigentes']
         this.PorVencer = result['porVencer']
         this.Vencidas = result['vencidas']
-        var marksData = {
+        this.Data = {
           labels: ["Vigentes", "Por Vencer", "Vencidas"],
           datasets: [{
             label: "México",
@@ -63,9 +64,30 @@ export class IndicadorUndNegocioMxComponent implements OnInit {
         Chart.defaults.scale.ticks.beginAtZero = true;
         this.Chart = new Chart('canvasMx', {
           type: 'radar',
-          data: marksData,
+          data: this.Data,
           options: charOptions
         });
+      }
+    });
+  }
+
+  updateChart() {
+    this._ServiceComponente.getUnidadesNegocioMX().subscribe(result => {
+      if (result != 404) {
+        this.RegistrosT = result['vigentes'] + result['porVencer'] + result['vencidas'];
+        this.Vigentes = result['vigentes']
+        this.PorVencer = result['porVencer']
+        this.Vencidas = result['vencidas']
+        this.Data = {
+          labels: ["Vigentes", "Por Vencer", "Vencidas"],
+          datasets: [{
+            label: "México",
+            backgroundColor: "rgba(110,0,255,0.5)",
+            data: [this.Vigentes, this.PorVencer, this.Vencidas]
+          }]
+        };
+        this.Chart.data = this.Data;
+        this.Chart.update();
       }
     });
   }

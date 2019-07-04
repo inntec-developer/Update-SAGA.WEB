@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 
 import { ComponentsService } from './../../../service/Components/components.service';
 import { SettingsService } from '../../../core/settings/settings.service';
@@ -10,7 +10,7 @@ import { SettingsService } from '../../../core/settings/settings.service';
   providers: [ComponentsService]
 })
 export class IndicadorPosicionesComponent implements OnInit {
-
+@Input('UpdatePosiciones') UpdatePosiciones: any;
   public Posiciones: number;
 
   constructor(
@@ -24,8 +24,16 @@ export class IndicadorPosicionesComponent implements OnInit {
       TipoUsuarioId: this.settings.user['tipoUsuarioId']
     }
     this._ComponentService.getPosiciones(user).subscribe(result => {
+      this.UpdatePosiciones = result;
       this.Posiciones = result;
     }, err => console.error(err));
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    debugger;
+    if (changes.UpdatePosiciones && !changes.UpdatePosiciones.isFirstChange()) {
+      this.Posiciones = this.UpdatePosiciones;
+    }
   }
 
 }

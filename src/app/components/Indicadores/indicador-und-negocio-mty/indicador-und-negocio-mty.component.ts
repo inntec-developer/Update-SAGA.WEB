@@ -18,6 +18,7 @@ export class IndicadorUndNegocioMtyComponent implements OnInit {
   ) { }
 
   public Chart: Chart;
+  public Data: any;
   public UsuarioId: any;
   public ShowModal: boolean;
   public EstadoVacante: string;
@@ -36,7 +37,7 @@ export class IndicadorUndNegocioMtyComponent implements OnInit {
         this.PorVencer = result['porVencer']
         this.Vencidas = result['vencidas']
 
-        var marksData = {
+        this.Data = {
           labels: ["Vigentes", "Por Vencer", "Vencidas"],
           datasets: [{
             label: "Monterrey",
@@ -64,9 +65,30 @@ export class IndicadorUndNegocioMtyComponent implements OnInit {
         Chart.defaults.scale.ticks.beginAtZero = true;
         this.Chart = new Chart('canvasMty', {
           type: 'radar',
-          data: marksData,
+          data: this.Data,
           options: charOptions
         });
+      }
+    });
+  }
+
+  updateChart() {
+    this._ServiceComponente.getUnidadesNegocioMTY().subscribe(result => {
+      if (result != 404) {
+        this.RegistrosT = result['vigentes'] + result['porVencer'] + result['vencidas'];
+        this.Vigentes = result['vigentes']
+        this.PorVencer = result['porVencer']
+        this.Vencidas = result['vencidas']
+        this.Data = {
+          labels: ["Vigentes", "Por Vencer", "Vencidas"],
+          datasets: [{
+            label: "Monterrey",
+            backgroundColor: "rgba(200,0,0,0.5)",
+            data: [this.Vigentes, this.PorVencer, this.Vencidas]
+          }]
+        };
+        this.Chart.data = this.Data;
+        this.Chart.update();
       }
     });
   }

@@ -3,14 +3,14 @@
     <div class="card-body mat-elevation-z8">
       <div class="d-flex justify-content-between">
         <label class="text-info"><strong>Folios Activos</strong></label>
-        <em class="icon-refresh em- text-success" (click)="ngOnInit()"></em>
+        <em class="icon-refresh em- text-success" (click)="updateChart()"></em>
       </div>
       <br>
       <div id="chart">
           <canvas id="cavasFoliosActivos" ></canvas>
           <br>
           <mat-divider></mat-divider>
-          <small><span class="float-right"> Total Folios: <span  class="badge badge-info">{{RegistrosT}}</span></span></small>
+          <small><span (click)="detectedClick('todas')" class="float-right"> Total Folios: <span  class="badge badge-info" >{{RegistrosT}}</span></span></small>
         </div>
     </div>
   </div>

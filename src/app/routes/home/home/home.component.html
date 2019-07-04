@@ -14,10 +14,10 @@
     <app-indicador-perfiles></app-indicador-perfiles>
   </div>
   <div class="col-lg-3 col-md-3 col-sm-12">
-    <app-indicador-folios></app-indicador-folios>
+    <app-indicador-folios [UpdateFolios]="UpdateFolios"></app-indicador-folios>
   </div>
   <div class="col-lg-3 col-md-3 col-sm-12">
-    <app-indicador-posiciones></app-indicador-posiciones>
+    <app-indicador-posiciones [UpdatePosiciones]="UpdatePosiciones"></app-indicador-posiciones>
   </div>
   <div class="col-lg-3 col-md-3 col-sm-12">
     <app-indicador-candidatos></app-indicador-candidatos>
@@ -37,10 +37,10 @@
 
 <div class="row">
   <div class="col-lg-4 col-md-4 col-sm-12">
-    <app-grafica-vacantes-pie></app-grafica-vacantes-pie>
+    <app-grafica-vacantes-pie (ChangeFolios)="changeFolios($event)"></app-grafica-vacantes-pie>
   </div>
   <div class="col-lg-4 col-md-4 col-sm-12">
-    <app-indicador-posiciones-activas></app-indicador-posiciones-activas>
+    <app-indicador-posiciones-activas (ChangePosiciones)="changePosiciones($event)"></app-indicador-posiciones-activas>
   </div>
   <div class="col-lg-4 col-md-4 col-sm-12">
     <app-indicador-candidatos-estatus></app-indicador-candidatos-estatus>

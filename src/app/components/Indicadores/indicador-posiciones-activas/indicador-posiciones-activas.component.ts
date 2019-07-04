@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
@@ -11,6 +11,7 @@ import { SettingsService } from './../../../core/settings/settings.service';
   providers: [ComponentsService]
 })
 export class IndicadorPosicionesActivasComponent implements OnInit {
+  @Output('ChangePosiciones') ChangePosiciones: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private _ComponentService: ComponentsService,
@@ -20,21 +21,22 @@ export class IndicadorPosicionesActivasComponent implements OnInit {
   public Chart: Chart;
   public Data: any;
   public RegistrosT: number = 0;
+  public user: any;
 
   ngOnInit() {
     Chart.defaults.scale.ticks.beginAtZero = true;
-    var user ={
+    this.user = {
       Id: this.settings.user['id'],
       TipoUsuarioId: this.settings.user['tipoUsuarioId']
     }
-    this._ComponentService.getPosicionesActivas(user).subscribe(result => {
+    this._ComponentService.getPosicionesActivas(this.user).subscribe(result => {
       let vacantes = result['vacantes'];
       let contratados = result['contratados'];
       this.RegistrosT = vacantes + contratados;
 
       this.Data = {
         datasets: [{
-          backgroundColor: ['#07B4F0','#EAF10F'],
+          backgroundColor: ['#07B4F0', 'rgba(255,128,0,0.65)'],
           borderColor: '#fff',
           data: [
             contratados,
@@ -43,8 +45,8 @@ export class IndicadorPosicionesActivasComponent implements OnInit {
         }],
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: [
-            'Cubiertos',
-            'No Cubiertos'
+          'Cubiertos',
+          'No Cubiertos'
         ]
       }
 
@@ -71,5 +73,31 @@ export class IndicadorPosicionesActivasComponent implements OnInit {
         }
       });
     }, err => console.log(err));
+  }
+
+  updateChart() {
+    this._ComponentService.getPosicionesActivas(this.user).subscribe(result => {
+      let vacantes = result['vacantes'];
+      let contratados = result['contratados'];
+      this.RegistrosT = vacantes + contratados;
+
+      this.Data = {
+        datasets: [{
+          backgroundColor: ['#07B4F0', '#EAF10F'],
+          borderColor: '#fff',
+          data: [
+            contratados,
+            vacantes,
+          ]
+        }],
+        labels: [
+          'Cubiertos',
+          'No Cubiertos'
+        ]
+      }
+      this.Chart.data = this.Data;
+      this.Chart.update();
+      this.ChangePosiciones.emit(this.RegistrosT);
+    });
   }
 }

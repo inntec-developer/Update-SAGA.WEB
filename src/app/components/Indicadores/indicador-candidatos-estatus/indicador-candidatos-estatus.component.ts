@@ -100,4 +100,48 @@ export class IndicadorCandidatosEstatusComponent implements OnInit {
     }, err => console.log(err));
   }
 
+  updateChart(){
+    this._ComponentService.getCandidatosInicio().subscribe(result => {
+      let Postulado = result['postulado'];
+      let Proceso = result['proceso'];
+      let Entrevista = result['entrevista'];
+      let Finalista = result['finalista'];
+      let ProcesoFinalizado = result['procesoFinalizado'];
+      let Revision = result['revision'];
+      let NR = result['nr'];
+      let Disponible = result['disponible'];
+      this.RegistrosT = Postulado + Proceso + Entrevista + Finalista + ProcesoFinalizado + Revision + NR + Disponible;
+
+      this.Data = {
+        datasets: [{
+          backgroundColor: ['#00FF00', '#33B8FF', '#3361FF', '#E3FF33', '#15C946', '#8172EB', '#FAB637', '#FF0000'],
+          borderColor: '#fff',
+          data: [
+            Disponible,
+            Postulado,
+            Proceso,
+            Entrevista,
+            Finalista,
+            ProcesoFinalizado,
+            Revision,
+            NR
+          ]
+        }],
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+            'Disponible',
+            'Postulado',
+            'Proceso',
+            'Entrevista',
+            'Finalista',
+            'Proceso Finalizado',
+            'Revisión',
+            'NR'
+        ]
+      }
+      this.Chart.data= this.Data;
+      this.Chart.update();
+    });
+  }
+
 }
