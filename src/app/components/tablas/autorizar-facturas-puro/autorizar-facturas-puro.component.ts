@@ -123,7 +123,7 @@ export class AutorizarFacturasPuroComponent implements OnInit {
       this.comment = false;
       this.view = false;
       this.cancelar = false;
-      this.element = null;
+      this.element = [];
     }, 1000);
 
   }
