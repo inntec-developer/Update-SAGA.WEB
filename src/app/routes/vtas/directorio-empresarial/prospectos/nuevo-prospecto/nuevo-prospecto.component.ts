@@ -1866,6 +1866,7 @@ export class NuevoProspectoComponent implements OnInit {
   shown = 'hover';
 
   showModalCoincidencias() {
+    this.formGeneral.controls['ValidarEmpresa'].setValue('');
     this.cliente = this.formGeneral.get('Empresa').value.substring(0, 15);
     if (this.cliente.length > 0) {
       var obj = {

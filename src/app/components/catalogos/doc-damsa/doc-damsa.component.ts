@@ -72,10 +72,10 @@ export class DocDamsaComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.DocDamsa = [this.formDocDamsa.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpDocDamsa.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpDocDamsa.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

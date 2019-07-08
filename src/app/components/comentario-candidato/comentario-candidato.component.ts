@@ -41,7 +41,6 @@ export class ComentarioCandidatoComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-  //   console.log(this.dataNR)
   //   this.CandidatoId = this.dataNR.CandidatoId;
   //  this.RequisicionId = this.dataNR.requisicionId
 

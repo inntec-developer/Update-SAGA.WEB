@@ -85,10 +85,9 @@ export class DepartamentosComponent implements OnInit, OnChanges {
     // catalogo.Municipio = Municipios;
     // const Pais: Array<any> = [];
     // catalogo.Pais = Pais;
-    console.log(catalogo);
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpDepartamentos.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpDepartamentos.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

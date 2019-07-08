@@ -35,6 +35,7 @@ export const routes = [
 
 
     { path: 'login', component: LoginComponent },
+    { path: 'login/:Folio', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'recover', component: RecoverComponent },
     { path: 'lock', component: LockComponent },

@@ -16,7 +16,6 @@ export class ProcesosComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.Proceso && !changes.Proceso.isFirstChange()) {
       this.Proceso = this.Ordenar();
-      console.log(this.Proceso);
     }
 
   }

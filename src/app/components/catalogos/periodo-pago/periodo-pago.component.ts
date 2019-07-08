@@ -72,10 +72,10 @@ export class PeriodoPagoComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.PeriodoPago = [this.formPeriodo.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpPeriodo.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpPeriodo.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

@@ -44,7 +44,6 @@ export class PaisesComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    debugger;
     if (this.SelectedPais === undefined) {
       this.formPaises.reset();
       this.Edicion = true;
@@ -83,12 +82,11 @@ export class PaisesComponent implements OnInit, OnChanges {
     const Municipios: Array<any> = [];
     catalogo.Municipio = Municipios;
     catalogo.Pais = [this.formPaises.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpPaises.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpPaises.emit(catalogo.Catalogos.Id) :  null;
       this.Edicion = true;
-      debugger;
       this.Habilita(true);
       this.formPaises.reset();
     });

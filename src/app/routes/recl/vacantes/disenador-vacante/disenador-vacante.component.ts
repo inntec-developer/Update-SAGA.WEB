@@ -132,14 +132,9 @@ export class DisenadorVacanteComponent implements OnInit {
       });
   }
 
-  hola(){
-    debugger;
-  }
-
   Publicar() {
 
     this.spinner.show();
-    debugger;
     for (const item of this.ListaCampo) {
       const r = document.getElementById('Resumen_' + item.id);
       if (r != null){

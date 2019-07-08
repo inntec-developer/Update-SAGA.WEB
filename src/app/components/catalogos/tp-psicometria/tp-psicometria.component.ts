@@ -74,10 +74,10 @@ export class TpPsicometriaComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.TipoPsicometria = [this.formPsicometria.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpPsicometria.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpPsicometria.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

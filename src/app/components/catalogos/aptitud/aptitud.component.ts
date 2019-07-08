@@ -75,7 +75,7 @@ export class AptitudComponent implements OnInit, OnChanges {
     catalogo.Aptitud = [this.formAptitud.getRawValue()];
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpAptitud.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpAptitud.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

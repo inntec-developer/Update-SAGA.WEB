@@ -33,7 +33,6 @@ export class UserblockComponent implements OnInit {
       lider: this.settings.user['lider'],
       departamento: this.settings.user['departamento']
     };
-    console.log(this.user);
   }
 
 

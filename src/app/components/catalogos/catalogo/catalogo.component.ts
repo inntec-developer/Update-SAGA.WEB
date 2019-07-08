@@ -1,9 +1,13 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-// Servicios
+
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
+import { filtros } from '../../../models/catalogos/catalogos';
+
+// Servicios
+
 
 // Componentes
-import { filtros } from '../../../models/catalogos/catalogos';
+
 
 // Modelos
 
@@ -881,7 +885,6 @@ export class CatalogoComponent implements OnChanges , OnInit {
   }
 
   Save(IdCat: number, event: any) {
-    console.log(IdCat, event);
   }
 
 }

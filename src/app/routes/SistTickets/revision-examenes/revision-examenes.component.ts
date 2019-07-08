@@ -4,7 +4,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { DlgRevisarExamenesComponent } from '../../../components/dlg-revisar-examenes/dlg-revisar-examenes.component';
 import { ExamenesService } from '../../../service/Examenes/examenes.service';
 import { MatDialog } from '@angular/material';
-import {NgbTabsetConfig} from '@ng-bootstrap/ng-bootstrap';
+import { NgbTabsetConfig } from '@ng-bootstrap/ng-bootstrap';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
 
@@ -14,7 +14,7 @@ import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.se
   styleUrls: ['./revision-examenes.component.scss']
 })
 export class RevisionExamenesComponent implements OnInit {
-/* variables scroll */
+  /* variables scroll */
   disabled = false;
   compact = false;
   invertX = false;
@@ -24,10 +24,10 @@ export class RevisionExamenesComponent implements OnInit {
   fila = [];
   ticket = [];
   examen = [];
-clavesRequi = [];
-clave = "";
-activas = false;
-slcClave;
+  clavesRequi = [];
+  clave = "";
+  activas = false;
+  slcClave;
   catalogo: any = [];
   examenes: any = [];
   examenId = 0;;
@@ -45,21 +45,19 @@ slcClave;
     config.justify = 'center';
     config.type = 'pills';
     setInterval(() => this.timeWait(), 60000);
-   }
+  }
 
   ngOnInit() {
     this.GetFilaTickets();
   }
 
-  public GetFilaTickets()
-  {
-    this._service.GetFilaTickets(3, this.settings.user['id']).subscribe( data => {
-        this.fila = data;
+  public GetFilaTickets() {
+    this._service.GetFilaTickets(3, this.settings.user['id']).subscribe(data => {
+      this.fila = data;
     })
   }
 
-  GetTicket()
-  {
+  GetTicket() {
     this._service.GetTicketExamen(this.fila[0].ticketId).subscribe(data => {
       this.ticket = data;
       this.GetExamen();
@@ -69,12 +67,10 @@ slcClave;
     })
   }
 
-  GetExamen()
-  {
+  GetExamen() {
     this._serviceExamen.GetExamenRequi(this.ticket[0].requisicionId).subscribe(data => {
       this.examen = data;
-      if(this.examen.length == 0)
-      {
+      if (this.examen.length == 0) {
         this.examenasignado = false;
         this.GetCatalogoExamenes();
       }
@@ -87,11 +83,10 @@ slcClave;
     this._serviceExamen.GetClaves(this.ticket[0].requisicionId).subscribe(data => {
       this.clavesRequi = data;
       this.clavesRequi[0].claves.filter(item => {
-        if(item.activo == 0)
-        {
+        if (item.activo == 0) {
           this.activas = true;
         }
-      } )
+      })
     })
   }
 
@@ -99,20 +94,19 @@ slcClave;
     var repetida = false;
     if (clave.length == 16) {
       if (this.clavesRequi[0].claves.length > 0) {
-        this.clavesRequi[0].claves.filter(i =>{
+        this.clavesRequi[0].claves.filter(i => {
           i.nueva = false;
-          if(i.clave === clave)
-          {
+          if (i.clave === clave) {
             repetida = true;
           }
         });
 
         if (!repetida) {
-          this.clavesRequi[0].claves.push({clave: clave, activo:0, nueva: true})
+          this.clavesRequi[0].claves.push({ clave: clave, activo: 0, nueva: true })
         }
       }
       else {
-        this.clavesRequi[0].claves.push({clave: clave, activo: 0, nueva:true })
+        this.clavesRequi[0].claves.push({ clave: clave, activo: 0, nueva: true })
 
       }
 
@@ -121,21 +115,19 @@ slcClave;
 
   }
   Agregar(clave) {
-        var aux = [{ RequisicionId: this.ticket[0].requisicionId, UsuarioId: this.settings.user['id'], Clave: clave }];
-        this.activas = true;
-        console.log(aux)
+    var aux = [{ RequisicionId: this.ticket[0].requisicionId, UsuarioId: this.settings.user['id'], Clave: clave }];
+    this.activas = true;
+    this._serviceExamen.InsertClaves(aux).subscribe(data => {
+      if (data == 200) {
+        this.popToast('success', 'Generar Claves', 'Las claves se agregaron con éxito');
+        this.GetClaves();
+      }
+      else {
+        this.popToast('error', 'Generar Claves', 'Ocurrio un error al intentar agregar claves');
 
-      this._serviceExamen.InsertClaves(aux).subscribe(data => {
-        if (data == 200) {
-          this.popToast('success', 'Generar Claves', 'Las claves se agregaron con éxito');
-          this.GetClaves();
-        }
-        else {
-          this.popToast('error', 'Generar Claves', 'Ocurrio un error al intentar agregar claves');
-
-        }
-      })
-    }
+      }
+    })
+  }
 
   PopClave(row) {
     this.clavesRequi[0].claves = this.clavesRequi[0].claves.filter(function (item) {
@@ -145,12 +137,10 @@ slcClave;
     });
   }
 
-  AsignarClave()
-  {
-    var objeto = {CandidatoId: this.ticket[0].candidato.candidatoId, RequisicionId: this.ticket[0].requisicionId, RequiClaveId: this.slcClave, Resultado: 'SIN RESULTADO', UsuarioId: this.settings.user['id']};
+  AsignarClave() {
+    var objeto = { CandidatoId: this.ticket[0].candidato.candidatoId, RequisicionId: this.ticket[0].requisicionId, RequiClaveId: this.slcClave, Resultado: 'SIN RESULTADO', UsuarioId: this.settings.user['id'] };
     this._serviceExamen.AsignarClaveCandidato(objeto).subscribe(data => {
-      if(data == 200)
-      {
+      if (data == 200) {
         this.slcClave = '';
         this.ticket[0].candidato.estatus = 'EVALUACIÓN PSICOMÉTRICA';
         this.ticket[0].candidato.estatusId = 15;
@@ -158,159 +148,145 @@ slcClave;
         this.popToast('success', 'Asignar Clave', 'Los cambios se realizaron con éxito');
         this.GetClaves();
       }
-      else
-      {
+      else {
         this.popToast('error', 'Asignar Clave', 'Ocurrio un error al intentar asignar clave');
 
       }
     })
   }
 
-  GetCatalogoExamenes()
-  {
-    this._serviceExamen.GetCatalogo().subscribe(data =>{
+  GetCatalogoExamenes() {
+    this._serviceExamen.GetCatalogo().subscribe(data => {
       this.catalogo = data;
     })
   }
 
-  GetExamenes(tipoexamenId)
-  {
+  GetExamenes(tipoexamenId) {
     this._serviceExamen.GetExamenes(tipoexamenId).subscribe(data => {
       this.examenes = data;
     })
   }
 
-  VerExamen(ExamenId)
-  {
+  VerExamen(ExamenId) {
     this._serviceExamen.GetExamen(ExamenId).subscribe(data => {
       this.examen = data;
     })
   }
 
-  AsignarExamen()
-  {
+  AsignarExamen() {
 
-      var relacion = [{RequisicionId: this.ticket[0].requisicionId, ExamenId: this.examenId}];
+    var relacion = [{ RequisicionId: this.ticket[0].requisicionId, ExamenId: this.examenId }];
 
-      this._serviceExamen.InsertRelacion(relacion).subscribe(data => {
-        if(data == 200)
-        {
-          this.popToast('success', 'Asignar Examen', 'La relacion requisición examen se genero con éxito');
-          this.GetExamen();
-         this.examenasignado = true;
-        }
-        else
-        {
-          this.popToast('error', 'Asignar Examen', 'Ocurrio un error');
-          this.examenasignado = false;
-        }
-      })
-    }
+    this._serviceExamen.InsertRelacion(relacion).subscribe(data => {
+      if (data == 200) {
+        this.popToast('success', 'Asignar Examen', 'La relacion requisición examen se genero con éxito');
+        this.GetExamen();
+        this.examenasignado = true;
+      }
+      else {
+        this.popToast('error', 'Asignar Examen', 'Ocurrio un error');
+        this.examenasignado = false;
+      }
+    })
+  }
 
-    IniciarExamen()
-    {
-      this.iniciarexamen = true;
+  IniciarExamen() {
+    this.iniciarexamen = true;
 
-        let objeto = { ExamenId: this.examen[0].examenId, CandidatoId: this.ticket[0].candidato.candidatoId, RequisicionId: this.ticket[0].requisicionId, Resultado: 0 };
-        this._service.SetExamen(objeto).subscribe(data => {
-          if (data == 200) {
-            this.examenId = 0;
-            this.ticket[0].candidato.estatus = 'EVALUACIÓN TÉCNICA';
-            this.ticket[0].candidato.estatusId = 13;
-          }
-        })
-    }
+    let objeto = { ExamenId: this.examen[0].examenId, CandidatoId: this.ticket[0].candidato.candidatoId, RequisicionId: this.ticket[0].requisicionId, Resultado: 0 };
+    this._service.SetExamen(objeto).subscribe(data => {
+      if (data == 200) {
+        this.examenId = 0;
+        this.ticket[0].candidato.estatus = 'EVALUACIÓN TÉCNICA';
+        this.ticket[0].candidato.estatusId = 13;
+      }
+    })
+  }
 
-    OpenDialogRevisar()
-    {
-      this._serviceExamen.GetResultadosCandidato(this.ticket[0].candidato.candidatoId, this.ticket[0].requisicionId).subscribe(data => {
-        let aux = data;
-        aux[0].candidatoId = this.ticket[0].candidato.candidatoId;
-        aux[0].requisicionId = this.ticket[0].requisicionId;
+  OpenDialogRevisar() {
+    this._serviceExamen.GetResultadosCandidato(this.ticket[0].candidato.candidatoId, this.ticket[0].requisicionId).subscribe(data => {
+      let aux = data;
+      aux[0].candidatoId = this.ticket[0].candidato.candidatoId;
+      aux[0].requisicionId = this.ticket[0].requisicionId;
 
-        let dialog = this.dialog.open(DlgRevisarExamenesComponent, {
-          width: '60%',
-          height: 'auto',
-          disableClose: true,
-          data: aux
-        });
-        dialog.afterClosed().subscribe(result => {
-
-          this._service.SetEstatusCandidato(this.ticket[0].candidato.candidatoId, this.ticket[0].requisicionId, 13).subscribe(data => {
-            this.ticket[0].candidato.estatus = 'EVALUACIÓN TÉCNICA';
-            this.ticket[0].candidato.estatusId = 13;
-
-          })
-        });
-      })
-    }
-
-    public Finalizar()
-    {
-      this._service.UpdateStatusTicket(this.ticket[0].ticketId, 4, 1).subscribe(data => {
-        if(data == 200)
-        {
-          this.Reiniciar();
-
-        }
+      let dialog = this.dialog.open(DlgRevisarExamenesComponent, {
+        width: '60%',
+        height: 'auto',
+        disableClose: true,
+        data: aux
       });
-    }
+      dialog.afterClosed().subscribe(result => {
 
-    Reiniciar()
-    {
-      this.ticket = [];
-      this.examen = [];
+        this._service.SetEstatusCandidato(this.ticket[0].candidato.candidatoId, this.ticket[0].requisicionId, 13).subscribe(data => {
+          this.ticket[0].candidato.estatus = 'EVALUACIÓN TÉCNICA';
+          this.ticket[0].candidato.estatusId = 13;
+
+        })
+      });
+    })
+  }
+
+  public Finalizar() {
+    this._service.UpdateStatusTicket(this.ticket[0].ticketId, 4, 1).subscribe(data => {
+      if (data == 200) {
+        this.Reiniciar();
+
+      }
+    });
+  }
+
+  Reiniciar() {
+    this.ticket = [];
+    this.examen = [];
     this.clavesRequi = [];
     this.clave = "";
     this.activas = false;
     this.slcClave = '';
-      this.catalogo = [];
-      this.examenes = [];
-      this.examenId = 0;;
-      this.examenasignado = true;
-      this.iniciarexamen = false;
-      this.atender = false;
+    this.catalogo = [];
+    this.examenes = [];
+    this.examenId = 0;;
+    this.examenasignado = true;
+    this.iniciarexamen = false;
+    this.atender = false;
+  }
+  timeWait() {
+    this.GetFilaTickets();
+    let d = new Date();
+    let s = d.getSeconds() * 6;
+    let m = d.getMinutes();
+    if (this.fila.length > 0) {
+      this.fila.forEach(e => {
+        var mocos = new Date(e.fch_Creacion);
+        e.te = m + mocos.getUTCMinutes()
+      })
     }
-    timeWait()
-    {
-      this.GetFilaTickets();
-      let d = new Date();
-      let s = d.getSeconds() * 6;
-      let m = d.getMinutes();
-      if(this.fila.length > 0)
-      {
-        this.fila.forEach(e => {
-          var mocos = new Date(e.fch_Creacion);
-          e.te = m + mocos.getUTCMinutes()
-        })
-      }
 
-    }
+  }
 
 
   /**
 * configuracion para mensajes de acciones.
 */
-toaster: any;
-toasterConfig: any;
-toasterconfig: ToasterConfig = new ToasterConfig({
-  positionClass: 'toast-bottom-right',
-  limit: 7,
-  tapToDismiss: false,
-  showCloseButton: true,
-  mouseoverTimerStop: true,
-  preventDuplicates: true,
-});
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+    preventDuplicates: true,
+  });
 
-popToast(type, title, body) {
-  var toast: Toast = {
-    type: type,
-    title: title,
-    timeout: 4000,
-    body: body
+  popToast(type, title, body) {
+    var toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 4000,
+      body: body
+    }
+    this.toasterService.pop(toast);
+
   }
-  this.toasterService.pop(toast);
-
-}
 
 }

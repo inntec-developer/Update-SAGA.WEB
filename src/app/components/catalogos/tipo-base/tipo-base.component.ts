@@ -71,10 +71,10 @@ export class TipoBaseComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.TiposBase = [this.formtpBase.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpTipoBase.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpTipoBase.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

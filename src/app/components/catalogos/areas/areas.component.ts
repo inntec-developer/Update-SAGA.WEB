@@ -1,10 +1,14 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges, EventEmitter, Output, ViewChild } from '@angular/core';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-// Servicios
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
-// Modelos
 import { catalogos } from '../../../models/catalogos/catalogos';
+
+// Servicios
+
+// Modelos
+
 
 @Component({
   selector: 'app-areas',
@@ -71,10 +75,9 @@ export class AreasComponent implements OnInit, OnChanges {
     // catalogo.Municipio = Municipios;
     // const Pais: Array<any> = [];
     // catalogo.Pais = Pais;
-    console.log(catalogo);
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpAreas.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpAreas.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

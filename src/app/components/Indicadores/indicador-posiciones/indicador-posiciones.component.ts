@@ -30,7 +30,6 @@ export class IndicadorPosicionesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    debugger;
     if (changes.UpdatePosiciones && !changes.UpdatePosiciones.isFirstChange()) {
       this.Posiciones = this.UpdatePosiciones;
     }

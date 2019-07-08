@@ -71,10 +71,10 @@ export class TpNominaComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.TipoNomina = [this.formNomina.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpNomina.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpNomina.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

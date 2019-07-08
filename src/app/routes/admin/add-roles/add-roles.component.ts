@@ -1,8 +1,9 @@
-import { element } from 'protractor';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import { ApiConection } from '../../../service/api-conection.service';
+import { element } from 'protractor';
+
 @Component({
   selector: 'app-add-roles',
   templateUrl: './add-roles.component.html',
@@ -16,7 +17,7 @@ export class AddRolesComponent implements OnInit {
   @Input() public hiddenSelect = false;
   @Output('onItemChanged') public onItemChanged = new EventEmitter();
   @ViewChild('grid') grid;
- 
+
   filteredData: Array<any> = [];
   editing = {};
   listRoles: Array<any> = [];
@@ -33,7 +34,7 @@ export class AddRolesComponent implements OnInit {
   verMsg = false;
   collapsed = false;
   constructor(private service: AdminServiceService) { }
-  
+
   GuardarCambios()
   {
     var privilegios = this.grid.privilegios;
@@ -45,7 +46,7 @@ export class AddRolesComponent implements OnInit {
           item.Nombre = nom;
           return item;
         });
-  
+
         this.service.AddRoles(obj)
           .subscribe(data => {
             if(data == 201)
@@ -55,7 +56,7 @@ export class AddRolesComponent implements OnInit {
               this.haserror = false;
               this.verMsg = true;
               this.grid.privilegios = [];
-              
+
             }
             else
             {
@@ -95,8 +96,8 @@ export class AddRolesComponent implements OnInit {
       this.success = false;
       this.verMsg = true;
     }
-  
-    
+
+
   }
 
   public Search(data: any) {
@@ -124,7 +125,7 @@ export class AddRolesComponent implements OnInit {
 
   }
 
- 
+
   // setData() {
   //   this.onItemChanged.emit(this.StructList);
   // }
@@ -174,23 +175,22 @@ export class AddRolesComponent implements OnInit {
         this.nodes[idx]['rolId'] = rol;
       //  this.CrearArbol(element)
       }
-       
+
     });
 
     this.grid.rol = rol;
     this.grid.nodes = this.nodes;
   }
-  
+
   GetTreeRoles() {
- 
+
     this.service.GetTreeRoles()
       .subscribe(
         e => {
 
           this.grid.ngOnInit();
-      
+
            this.nodes = e;
-           console.log(this.nodes)
            this.StructList = e;
 
            this.nodesAux = [];
@@ -206,12 +206,12 @@ export class AddRolesComponent implements OnInit {
 
   GetTreeByRol(rol) {
     this.verMsg = false;
-    
+
     this.service.GetEstructuraRoles(rol)
         .subscribe(
           e => {
             this.grid.ngOnInit();
-            
+
             //limpio las variables pero no pierdo la estructura
             this.nodes.forEach(element => {
               element.create = false;
@@ -230,14 +230,14 @@ export class AddRolesComponent implements OnInit {
             this.filtrarTree(rol)
           });
 
-        
+
 
     // var aux = [];
     // this.service.GetTreeRoles()
     //   .subscribe(
     //     e => {
     //       aux = e;
-        
+
     //      this.filtrarTree(aux, modulo)
     //     })
   }
@@ -273,7 +273,7 @@ export class AddRolesComponent implements OnInit {
       {
         this.listAux.push(element)
       }
-      
+
     });
   }
 
@@ -306,7 +306,7 @@ export class AddRolesComponent implements OnInit {
     .subscribe(
       e=>{
         this.listRoles = e;
-        
+
       })
   }
   GetEntidades(id)
@@ -333,8 +333,8 @@ export class AddRolesComponent implements OnInit {
 
 
 
-/////////////distinct 
-// this.listRoles = this.StructList.reduce((p, c) => 
+/////////////distinct
+// this.listRoles = this.StructList.reduce((p, c) =>
 // p.findIndex(e => e.rolId === c.rolId)<0 ? [...p,c]: p,[]);
 
 //   formRoles: FormGroup;
@@ -357,7 +357,7 @@ export class AddRolesComponent implements OnInit {
 //   constructor(private service: AdminServiceService
 //     , public fb: FormBuilder) {
 //     this.iniciarForm();
-    
+
 //   }
 
 //   getChildren(node: any) {

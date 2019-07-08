@@ -30,7 +30,6 @@ export class IndicadorFoliosComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    debugger;
     if (changes.UpdateFolios && !changes.UpdateFolios.isFirstChange()) {
       this.Folios = this.UpdateFolios;
     }

@@ -68,10 +68,10 @@ export class NivelestudiosComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.Nivel = [this.formNivel.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpNivel.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpNivel.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

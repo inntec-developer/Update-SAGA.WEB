@@ -90,7 +90,6 @@ export class GraficaVacantesPieComponent implements OnInit {
   }
 
   detectedClick(evt: any) {
-    debugger;
     if (evt == 'todas') {
       this.EstadoVacante = 'Todas';
       this.NumeroVacantes = this.RegistrosT

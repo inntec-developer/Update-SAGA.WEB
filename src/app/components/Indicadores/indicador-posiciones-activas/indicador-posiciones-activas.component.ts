@@ -83,7 +83,7 @@ export class IndicadorPosicionesActivasComponent implements OnInit {
 
       this.Data = {
         datasets: [{
-          backgroundColor: ['#07B4F0', '#EAF10F'],
+          backgroundColor: ['#07B4F0', 'rgba(255,128,0,0.65)'],
           borderColor: '#fff',
           data: [
             contratados,

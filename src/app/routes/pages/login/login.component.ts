@@ -3,7 +3,7 @@ import * as jwt_decode from 'jwt-decode';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import { ApiConection } from '../../../service';
@@ -30,6 +30,9 @@ const swal = require('sweetalert');
 })
 export class LoginComponent implements OnInit {
 
+  Folio: any;
+  showRequi: boolean = false;
+
 
   showPassL: boolean = false;
   valForm: FormGroup;
@@ -38,7 +41,7 @@ export class LoginComponent implements OnInit {
   failLogin: any;
   noAccess: any;
   foto: string;
-  Priv : Array<any> = [];
+  Priv: Array<any> = [];
   email: string;
 
   constructor(
@@ -49,7 +52,12 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthService,
     public dialog: MatDialog) {
-
+    this.route.params.subscribe(params => {
+      if (params['Folio'] != null) {
+        this.Folio = params['Folio'];
+        this.showRequi = true;
+      }
+    });
     this.valForm = fb.group({
       'email': [null, Validators.compose([Validators.required, CustomValidators.email])],
       'password': [null, Validators.required]
@@ -95,7 +103,12 @@ export class LoginComponent implements OnInit {
             this.settings.user['departamentoId'] = decode['DepartamentoId'];
             this.settings.user['departamento'] = decode['Departamento'];
             this.settings.user['unidadNegocioId'] = decode['UnidadNegocioId'];
-            this.router.navigate(['/home']);
+            if(!this.showRequi){
+              this.router.navigate(['/home']);
+            }else{
+              this.router.navigate(['/reclutamiento/showVacanteReclutador/', this.Folio]);
+            }
+
           }
           if (data === 404) {
             this.failLogin = true;
@@ -128,9 +141,9 @@ export class LoginComponent implements OnInit {
 
   getDecodedAccessToken(token: string): any {
     try {
-        return jwt_decode(token);
+      return jwt_decode(token);
     } catch (Error) {
-        return null;
+      return null;
     }
   }
 
@@ -140,13 +153,12 @@ export class LoginComponent implements OnInit {
     } else {
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
         width: '400px',
-        data: {user: this.valForm.get('email').value}
+        data: { user: this.valForm.get('email').value }
       });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    //   this.email = result;
-    // });
+      // dialogRef.afterClosed().subscribe(result => {
+      //   this.email = result;
+      // });
     }
   }
 }
@@ -169,49 +181,49 @@ export class DialogOverviewExampleDialog {
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private service: AdminServiceService) {}
+    private service: AdminServiceService) { }
 
-    passw(value: any) {
-     this.Contrasena = value;
+  passw(value: any) {
+    this.Contrasena = value;
+  }
+
+  passwr(value: any) {
+    this.RContrasena = value;
+  }
+
+  code(value: number) {
+    this.ICodigo = value;
+  }
+
+  Enviar() {
+    if (this.Contrasena !== this.RContrasena) {
+      swal('La contraseñas no coinciden', 'Revisa los datos ingresados', 'error');
+      return;
     }
-
-    passwr(value: any) {
-      this.RContrasena = value;
-     }
-
-    code(value: number) {
-      this.ICodigo = value;
-    }
-
-    Enviar() {
-      if (this.Contrasena !== this.RContrasena) {
-        swal('La contraseñas no coinciden', 'Revisa los datos ingresados', 'error');
-        return;
-      }
-      this.service.EnviaCorreo(this.data.user, this.Contrasena)
+    this.service.EnviaCorreo(this.data.user, this.Contrasena)
       .subscribe(result => {
         this.BCodigo = result;
         this.Codigo = true;
       });
-    }
+  }
 
-    Confirmar(): void {
-      if (this.ICodigo !== this.BCodigo) {
-        swal('El código no es correcto', 'Revisa los datos ingresados', 'error');
-        return;
-      }
-      const datos: password = new password();
-      datos.email = this.data.user;
-      datos.password = this.Contrasena;
-      this.service.UpdatePassword(datos)
+  Confirmar(): void {
+    if (this.ICodigo !== this.BCodigo) {
+      swal('El código no es correcto', 'Revisa los datos ingresados', 'error');
+      return;
+    }
+    const datos: password = new password();
+    datos.email = this.data.user;
+    datos.password = this.Contrasena;
+    this.service.UpdatePassword(datos)
       .subscribe(data => {
-       if (data === 1) {
-        swal('Se ha restablecido correctamente la contraseña', 'Intenta ingresar de nuevo', 'success');
-        this.dialogRef.close();
-       } else {
-        swal('Huo un error la restablecer la contraseña', 'Intenta de nuevo', 'error');
-       }
-    });
+        if (data === 1) {
+          swal('Se ha restablecido correctamente la contraseña', 'Intenta ingresar de nuevo', 'success');
+          this.dialogRef.close();
+        } else {
+          swal('Huo un error la restablecer la contraseña', 'Intenta de nuevo', 'error');
+        }
+      });
   }
 
 }

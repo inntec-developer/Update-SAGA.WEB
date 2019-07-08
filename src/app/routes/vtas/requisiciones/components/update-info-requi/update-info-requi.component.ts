@@ -283,6 +283,7 @@ export class UpdateInfoRequiComponent implements OnInit {
               }
             });
           }
+          this._Router.navigate(['/ventas/requisicion']);
         }
         else {
           this.popToast('error', 'Oops!!', 'Algo salio mal intente de nuevo');

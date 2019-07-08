@@ -72,10 +72,10 @@ export class TamanoEmpresaComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.TamanoEmpresa = [this.formTamano.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpTamano.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpTamano.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

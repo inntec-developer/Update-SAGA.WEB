@@ -1,0 +1,218 @@
+<div class="content-heading" [hidden]="imprimir">
+  <div>
+    Informaci&oacute;n de Vacante
+  </div>
+  <!-- Breadcrumb right aligned-->
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item">
+      <a [routerLink]="['/home']">Inicio</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a [routerLink]="['/reclutamiento/vacantesReclutamiento']">Requisici&oacute;n</a>
+    </li>
+    <li class="breadcrumb-item active">Informaci&oacute;n Vacante</li>
+  </ol>
+</div>
+
+<div class="content">
+  <div class="card-body">
+    <div class="d-flex justify-content-between">
+      <h4>
+        <strong> Vacantes: </strong>
+        <label class="badge badge-pill badge-info">{{requisicion?.vacantes}}</label>
+      </h4>
+      <h4>
+        <strong> {{requisicion?.vBtra}} </strong>
+      </h4>
+      <h4>
+        <strong>Folio: </strong> <label class="text-warning"> {{requisicion?.folio}}</label>
+      </h4>
+    </div>
+    <mat-divider></mat-divider>
+    <br>
+    <div class="row">
+      <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
+        <h5>
+          <strong>Fecha Solicitud: </strong>
+          <label class="card-text"> {{requisicion?.fch_Creacion | date: 'dd/MM/yyyy'}} a las
+            {{requisicion?.fch_Solicitud | date: 'hh:mm'}}
+          </label>
+          <small>{{requisicion?.fch_Solicitud | date: 'a'}}</small>
+        </h5>
+      </div>
+      <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
+        <h5>
+          <strong>Fecha Limite: </strong>
+          <label class="card-text"> {{requisicion?.fch_Limite | date: 'dd/MM/yyyy'}} </label>
+        </h5>
+      </div>
+      <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
+        <h5>
+          <strong>Prioridad: </strong>
+          <label class="badge badge-pill" [class.badge-danger]="requisicion?.prioridadId  === 1"
+            [class.badge-warning]="requisicion?.prioridadId  === 2"> {{requisicion?.prioridad}} </label>
+        </h5>
+      </div>
+      <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
+        <h5>
+          <strong>Fecha Cumplimiento: </strong>
+          <label class="card-text"> {{requisicion?.fch_Cumplimiento | date: 'dd/MM/yyyy'}}</label>
+        </h5>
+      </div>
+      <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
+        <h5>
+          <strong>Estatus: </strong>
+          <label class="badge badge-pill" [class.badge-warning]="requisicion?.estatusId  === 4"
+            [class.badge-primary]="requisicion?.estatusId  === 5" [class.badge-info]="requisicion?.estatusId  === 6"
+            [class.badge-success]="requisicion?.estatusId  === 7" [class.badge-danger]="requisicion?.estatusId  === 8">
+            {{requisicion?.estatus}} </label>
+        </h5>
+      </div>
+      <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
+        <h5>
+          <strong>Confidencial: </strong>
+          <label *ngIf="requisicion?.confidencial" class="badge badge-pill badge-info"> SI</label>
+          <label *ngIf="!requisicion?.confidencial" class="badge badge-pill badge-info"> NO</label>
+        </h5>
+      </div>
+
+    </div>
+    <div class="d-flex flex-row justify-content-between">
+      <h5>
+        <strong>Solicitante</strong><br>
+        <label class="text-muted">{{requisicion?.solicitante}}</label>
+      </h5>
+      <h5>
+        <strong>Coordinador o líder</strong>
+        <br>
+        <label class="text-muted" *ngIf="estatusId != 4">{{requisicion?.coordinador}}</label>
+        <div *ngIf="estatusId == 4">
+          <li class="list-group-item" *ngFor="let x of requisicion?.asignados">
+            <span class="text-muted bg-light">{{x.nombre}} {{x.apellidoPaterno}} {{x.apellidoMaterno}}</span>
+          </li>
+        </div>
+      </h5>
+
+      <ol class="list-group list-group-flush bg-light">
+        <h5>
+          <strong>Reclutadores</strong>
+        </h5>
+        <div *ngIf="estatusId != 4">
+          <li class="list-group-item" *ngFor="let x of requisicion?.asignados">
+            <span class="text-muted bg-light">{{x.nombre}} {{x.apellidoPaterno}} {{x.apellidoMaterno}}</span>
+          </li>
+        </div>
+        <div *ngIf="requisicion?.estatusId == 4">
+          <span>SIN ASIGNAR</span>
+        </div>
+      </ol>
+    </div>
+    <mat-divider></mat-divider>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title"><strong class="text-info">Estudios / Escolaridades</strong></h5>
+        <mat-divider></mat-divider>
+        <ol>
+          <li *ngFor="let x of requisicion?.escolaridades">
+            <label class="card-text"> {{x.gradoEstudio | uppercase}} - {{x.estadoEstudio | uppercase}}</label>
+          </li>
+        </ol>
+      </div>
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title"><strong class="text-info">Aptitudes</strong></h5>
+        <mat-divider></mat-divider>
+        <ol>
+          <li *ngFor="let x of requisicion?.aptitudes">
+            <label class="card-text"> {{x.aptitud | uppercase}}</label>
+          </li>
+        </ol>
+      </div>
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title"><strong class="text-info">Actividades</strong></h5>
+        <mat-divider></mat-divider>
+        <ol>
+          <li *ngFor="let x of requisicion?.actividades">
+            <label class="card-text"> {{x.actividades | uppercase}}</label>
+          </li>
+        </ol>
+      </div>
+      <div class="col-md-3 col-sm-12 col-xs-12">
+        <h5 class="card-title"><strong class="text-info">Experiencia</strong></h5>
+        <mat-divider></mat-divider>
+        <p>
+          <strong>Experiencia: </strong>
+          <label class="card-text">{{requisicion?.experiencia | uppercase}}</label></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-4 col-sm-12 col-xs-12">
+        <app-documentos-damsa></app-documentos-damsa>
+      </div>
+      <div class="col-md-4 col-sm-12 col-xs-12">
+        <h5 class="card-title"><strong class="text-info">Conceptos</strong></h5>
+        <mat-divider></mat-divider>
+        <p>
+            <strong>&Aacute;rea: </strong>
+            <label class="card-text"> {{requisicion?.areaExperiencia  | uppercase}}</label>
+          </p>
+          <p>
+            <strong>G&eacute;nero: </strong>
+            <label class="card-text"> {{requisicion?.genero | uppercase}}</label>
+          </p>
+          <p>
+            <strong>Edad: </strong>
+            <label class="card-text"> {{requisicion?.edadMinima}} años a {{requisicion?.edadMaxima}} años </label>
+          </p>
+          <p>
+            <strong>Estado Civil: </strong>
+            <label class="card-text"> {{requisicion?.estadoCivil | uppercase}}</label>
+          </p>
+      </div>
+      <div class="col-md-4 col-sm-12 col-xs-12">
+          <h5 class="card-title"><strong class="text-info">Sueldos</strong></h5>
+          <mat-divider></mat-divider>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+              <h5 class="text-warning">M&iacute;nimo</h5>
+              <p>
+                <strong>Mensual: </strong>
+                <label class="card-text"> ${{requisicion?.sueldoMinimo | currency: 'MXN'}}</label>
+              </p>
+              <p>
+                <strong>Semanal: </strong>
+                <label class="card-text"> ${{(requisicion?.sueldoMinimo / 30) * 7 | currency: 'MXN'}}</label>
+              </p>
+              <p>
+                <strong>Diario: </strong>
+                <label class="card-text"> ${{requisicion?.sueldoMinimo / 30 | currency: 'MXN'}}</label>
+              </p>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+              <h5 class="text-warning">M&aacute;ximo</h5>
+              <p>
+                <strong>Mensual: </strong>
+                <label class="card-text"> ${{requisicion?.sueldoMaximo | currency: 'MXN'}}</label>
+              </p>
+              <p>
+                <strong>Semanal: </strong>
+                <label class="card-text"> ${{(requisicion?.sueldoMaximo / 30) * 7 | currency: 'MXN'}}</label>
+              </p>
+              <p>
+                <strong>Diario: </strong>
+                <label class="card-text"> ${{requisicion?.sueldoMaximo / 30 | currency: 'MXN'}}</label>
+              </p>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--spinner-->
+<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
+

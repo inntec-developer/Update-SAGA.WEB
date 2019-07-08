@@ -69,7 +69,6 @@ SetResumen(RequiID:string,Idcampo:number,detalle:boolean): Observable<any> {
 
 
 UpdatePublicar(data: any, requi: string): Observable<any> {
-    debugger;
     let httpHeaders = new HttpHeaders({
       'Content-Type' : 'application/json',
       'Cache-Control': 'no-cache'

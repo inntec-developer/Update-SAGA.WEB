@@ -71,10 +71,10 @@ export class MediovacanteComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.Medio = [this.formMedios.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
       .subscribe(result => { // Agregar
-        result ? this.UpMedios.emit(catalogo.Catalogos.Id) : console.log(result);
+        result ? this.UpMedios.emit(catalogo.Catalogos.Id) :  null;
         this.Habilita(true);
       });
   }

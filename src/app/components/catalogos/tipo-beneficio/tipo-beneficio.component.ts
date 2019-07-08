@@ -71,10 +71,10 @@ export class TipoBeneficioComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.BeneficioPerfil = [this.formBeneficios.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpBeneficio.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpBeneficio.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

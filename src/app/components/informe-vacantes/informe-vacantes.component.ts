@@ -110,7 +110,6 @@ export class InformeVacantesComponent implements OnInit {
   getInfoVacantes() {
     this.service.GetInformeRequisiciones(this.settings.user['id']).subscribe(data => {
       this.dataInfoRequi = data;
-      console.log(this.dataInfoRequi)
       this.onChangeTableInfo(this.config);
     });
   }

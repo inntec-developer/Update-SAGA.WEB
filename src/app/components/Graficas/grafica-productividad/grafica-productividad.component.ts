@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
 import { SettingsService } from '../../../core/settings/settings.service';
@@ -25,7 +26,7 @@ export class GraficaProductividadComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
+
     var Onombre = [];
     var Opos = [];
     var Ocub = [];
@@ -35,8 +36,7 @@ export class GraficaProductividadComponent implements OnInit {
      document.oncontextmenu=null
   this.servicio.getProductividad(this.UsuarioId).subscribe(item =>{
     this.General = item;
-    console.log(item);
-    
+
     item.forEach(item2 => {
       Onombre.push(item2.nombre)
       Opos.push(item2.numeropos)
@@ -53,7 +53,7 @@ export class GraficaProductividadComponent implements OnInit {
     //  this.nombres = '[' + this.nombres.substring(9,this.nombres.length-1) +']'
     //  this.posiciones = '[' +  this.posiciones.substring(9,this.posiciones.length-1) +']'
     //  this.cubiertas = '[' +  this.cubiertas.substring(9,this.cubiertas.length-1) +']'
-     
+
     this.Data = {
       labels: Onombre,
       datasets: [
@@ -73,7 +73,7 @@ export class GraficaProductividadComponent implements OnInit {
         }
       ]
     }
-  
+
    this.Chart = new Chart('productividad', {
      type: 'bar',
      data: this.Data,
@@ -85,13 +85,9 @@ export class GraficaProductividadComponent implements OnInit {
    });
 
    // cadena = "[" + this.nombres + "]";
-    // console.log(cadena);
-    //  console.log(this.nombres);
-    //  console.log(this.posiciones);
-    //  console.log(this.cubiertas);
   })
-  
- 
+
+
   //  this.Data = {
   //   labels: ["1900", "1950", "1999", "2050"],
   //   datasets: [
@@ -108,6 +104,6 @@ export class GraficaProductividadComponent implements OnInit {
   // }
 
 
-  
+
   }
 }
