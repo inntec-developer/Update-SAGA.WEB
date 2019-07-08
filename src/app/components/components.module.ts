@@ -144,6 +144,7 @@ import { TipolicenciaComponent } from './catalogos/tipolicencia/tipolicencia.com
 import { ToolsModule } from '../tools/tools.module';
 import { TpNominaComponent } from './catalogos/tp-nomina/tp-nomina.component';
 import { TpPsicometriaComponent } from './catalogos/tp-psicometria/tp-psicometria.component';
+import { CandidatosCubiertosRportComponent } from './candidatos-cubiertos-rport/candidatos-cubiertos-rport.component';
 
 @NgModule({
   imports: [
@@ -293,7 +294,8 @@ import { TpPsicometriaComponent } from './catalogos/tp-psicometria/tp-psicometri
     GraficaProductividadComponent,
     IndicadorUndNegocioMtyComponent,
     IndicadorUndNegocioGdlComponent,
-    IndicadorUndNegocioMxComponent
+    IndicadorUndNegocioMxComponent,
+    CandidatosCubiertosRportComponent
   ],
   exports: [
     DtDireccionComponent,

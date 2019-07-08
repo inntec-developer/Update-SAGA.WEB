@@ -34,7 +34,8 @@ export class DTHistorialComponent implements OnInit {
   clearFilter: boolean = false;
   element: any = [];
   rowAux: any = [];
-
+  reporteCandidatos = false;
+  
   constructor( private service: RequisicionesService, private spinner: NgxSpinnerService, private settings: SettingsService) { }
 
   ngOnInit() {
