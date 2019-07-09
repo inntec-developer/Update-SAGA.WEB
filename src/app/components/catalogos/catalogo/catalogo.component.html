@@ -53,6 +53,7 @@
                 <app-estado-civil *ngIf="idCatalogo == 7" [Log]="log" [SelectedEstadoCivil]="selectedId" (UpEstadoCivil)="Refresh($event)"></app-estado-civil>
                 <app-departamentos *ngIf="idCatalogo == 42" [Log]="log" [Areas]="areas" [SelectedDepartamento]="selectedId" (UpDepartamentos)="Refresh($event)"></app-departamentos>
                 <app-areas *ngIf="idCatalogo == 43" [Log]="log" [SelectedArea]="selectedId" (UpAreas)="Refresh($event)"></app-areas>
+                <app-roles *ngIf="idCatalogo == 44" [Log]="log" [SelectedRol]="selectedId" (UpRol)="Refresh($event)"></app-roles>
                 <!-- Reclutamiento -->
                 <app-escolaridades *ngIf="idCatalogo == 34" [SelectedEscolaridad]="selectedId" [Log]="log" (UpEscolaridad)="Refresh($event)"></app-escolaridades>
                 <app-nivelestudios *ngIf="idCatalogo == 35" [SelectedNivel]="selectedId" (UpNivel)="Refresh($event)"></app-nivelestudios>

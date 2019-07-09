@@ -37,6 +37,7 @@ export class catalogos {
    TiemposContrato: Array<tiempocontratos>;
    DocDamsa: Array<DocDamsa>;
    PrestacionesLey: Array<PrestacionesLey>;
+   Roles: Array<Roles>;
 }
 
 interface Catalogos {
@@ -279,4 +280,10 @@ export class filtros {
     IdCat: number;
     IdEstado: number;
     IdMunicipio: number;
+}
+
+interface Roles {
+    Id: number;
+    rol: string;
+    activo: boolean;
 }
