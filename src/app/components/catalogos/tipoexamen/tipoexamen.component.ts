@@ -2,12 +2,16 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
-// Servicios
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 import { SettingsService } from '../../../core/settings/settings.service';
+import { catalogos } from '../../../models/catalogos/catalogos';
+
+// Servicios
+
+
 
 // Modelos
-import { catalogos } from '../../../models/catalogos/catalogos';
+
 
 @Component({
   selector: 'app-tipoexamen',
@@ -71,10 +75,10 @@ export class TipoexamenComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.TipoExamen = [this.formTpExamen.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpTpExamen.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpTpExamen.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

@@ -106,7 +106,6 @@ export class DireccionesClienteComponent implements OnInit {
   }
 
   AddDireccion() {
-    debugger;
     this.auxTipoDireccion = this.tipoDireccion.filter(x => {
       if (x.id == this.formDirecciones.get('TipoDireccion').value) {
         return x.tipoDireccion

@@ -72,10 +72,10 @@ export class DiaSemanaComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.DiasSemana = [this.formDias.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpDias.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpDias.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

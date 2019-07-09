@@ -8,6 +8,11 @@
         <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-xs mat-elevation-z8"
           [disabled]="element.length == 0" [ngClass]="element.length == 0 ? 'disabled' : 'btn-dark'" container="body" placement="bottom"
           tooltip="Comentarios"><em class="fa fa-comments-o"></em></button>
+          <button class="btn btn-xs mat-elevation-z8" [disabled]="element.length == 0 || element.contratados == 0"
+          (click)="reporteCandidatos = true" [ngClass]="element.length == 0 || element.contratados == 0 ? 'disabled' : 'btn-info'"
+          container="body" placement="bottom" tooltip="Candidatos">
+          <i class="fa fa-users" aria-hidden="true"></i>
+        </button>
 
     <button type="button" class="btn btn-xs btn-success float-right mat-elevation-z8" (click)="refreshTable()" container="body"
     placement="bottom" tooltip="Actualizar" container="body">
@@ -62,9 +67,9 @@
                 <td class="text-center">
                   <span class="mr-1 badge badge-pill badge-info"> {{row.contratados}}/{{row.vacantes}}</span>
                 </td>
-                <td class="text-center"> <span *ngIf="row.tipoReclutamiento.length < 8 else toLengthRecl">{{row.tipoReclutamiento | uppercase}}</span>
+                <td class="text-center"> <span *ngIf="row.tipoReclutamiento.length < 8 else toLengthRecl">{{row.claseReclutamiento | uppercase}}</span>
                   <ng-template #toLengthRecl>
-                      <span tooltip="{{row.tipoReclutamiento | uppercase}}" placement="top" container="body"> {{row.tipoReclutamiento | slice:0:6 | uppercase
+                      <span tooltip="{{row.tipoReclutamiento | uppercase}}" placement="top" container="body"> {{row.claseReclutamiento | slice:0:6 | uppercase
                         }} ...
                       </span>
                     </ng-template></td>
@@ -193,6 +198,25 @@
         </div>
       </div>
     </div>
+
+<!--modal candidatos cubiertos-->
+    <div *ngIf="reporteCandidatos" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal
+  #candiModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="float-left text-success"><em class="fa fa-users mr-2"></em>CANDIDATOS / REQUISICI&Oacute;N
+          {{element.folio}} - {{element.vBtra}}</h5>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="reporteCandidatos=false;">
+          <i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <app-candidatos-cubiertos-rport [RequisicionId]="element.id"></app-candidatos-cubiertos-rport>
+      </div>
+    </div>
+  </div>
+</div>
+
           <!--mensaje cuando esta vacio la tabla-->
 <ng-template #NotCandidatos>
     <div class="row">

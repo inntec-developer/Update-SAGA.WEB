@@ -72,10 +72,10 @@ export class TipoContratoComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.TipoContrato = [this.formTpContrato.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpTpContrato.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpTpContrato.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

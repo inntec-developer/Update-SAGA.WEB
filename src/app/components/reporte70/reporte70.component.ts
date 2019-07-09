@@ -89,10 +89,6 @@ export class Reporte70Component implements OnInit {
   {
     var date1 = new Date();
 
-console.log(date1)
-
-
-
     this.objsucursal1 = oficina;
     this.objsolicit1 = solicitante;
     this.objrecluta1 = reclutador;
@@ -176,18 +172,18 @@ console.log(date1)
       var final = fin['value'];
       let tipo = document.getElementById('TipoReporte')['value'];
 
-    
+
      this._service.GetReporte70(palabra,ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec).subscribe(result => {
       var date2 = new Date();
 
-      console.log(date2)
+
       this.requisiciones = result;
        this.onChangeTable(this.config);
 
        var date3 = new Date();
 
-       console.log(date3)
-      
+
+
      })
   }
 
@@ -223,7 +219,7 @@ console.log(date1)
               {
                 let aux = [];
                 aux = item[column.name];
-                
+
                 let flag = false;
                 aux.forEach(element => {
                   if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))

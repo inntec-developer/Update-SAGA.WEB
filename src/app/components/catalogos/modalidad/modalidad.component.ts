@@ -74,10 +74,10 @@ export class ModalidadComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.TipoModalidad = [this.formModalidad.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpModalidad.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpModalidad.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

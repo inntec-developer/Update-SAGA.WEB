@@ -72,10 +72,10 @@ export class IdiomasComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.Idioma = [this.formIdiomas.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpIdioma.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpIdioma.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

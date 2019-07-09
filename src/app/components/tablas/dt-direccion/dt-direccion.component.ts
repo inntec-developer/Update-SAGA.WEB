@@ -17,7 +17,6 @@ export class DtDireccionComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes.Direcciones && !changes.Direcciones.isFirstChange()){
-      debugger;
       this.cargarDirecciones(this.Direcciones);
     }
   }

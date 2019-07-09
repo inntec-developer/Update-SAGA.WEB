@@ -30,7 +30,6 @@ export class HomeComponent implements OnInit {
   }
 
   changeFolios($event: any) {
-    debugger;
     this.UpdateFolios = $event;
   }
 

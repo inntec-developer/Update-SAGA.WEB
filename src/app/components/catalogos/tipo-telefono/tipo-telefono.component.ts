@@ -73,7 +73,7 @@ export class TipoTelefonoComponent implements OnInit, OnChanges {
     catalogo.TpTelefono = [this.formTipoTelefono.getRawValue()];
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpTpTelefono.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpTpTelefono.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

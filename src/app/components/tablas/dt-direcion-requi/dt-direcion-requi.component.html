@@ -1,51 +1,50 @@
 <!-- <div class="dt-container mat-elevation-z8">-->
-  <div class="title-headre-view">
-    <h4>Direcci&oacute;n</h4>
-  </div>
-  <!-- <div class="card card-default"> -->
-  <div class="table-responsive" #tableContainer>
-    <table id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
-      <thead>
-        <tr>
-          <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr (click)="onCellClick(row)" *ngFor="let row of rows"
-          [class.selected]="row.selected">
-          <td class="text-center">
-            {{row.tipoDireccion | uppercase}}
-          </td>
-          <td class="text-center"> {{row.pais | uppercase}}</td>
-          <td class="text-center"> {{row.estado | uppercase}}</td>
-          <td class="text-center"> {{row.municipio | uppercase}}</td>
-          <td class="text-center"> {{row.colonia | uppercase}}</td>
-          <td class="text-center"> {{row.calle | uppercase}}</td>
-          <td class="text-center"> {{row.numeroExterior}}</td>
-          <td class="text-center"> {{row.numeroInterior}}</td>
-          <td class="text-center"> {{row.codigoPostal}}</td>
-          <td class="text-center">
-            <span *ngIf="row.activo">
-              <em class="fa fa-check-square-o"></em>
-            </span>
-            <span *ngIf="!row.activo">
-              <em class="fa fa-square-o"></em>
-            </span>
-          </td>
-          <td class="text-center">
-            <span *ngIf="row.esPrincipal">
-              <em class="fa fa-check-square-o"></em>
-            </span>
-            <span *ngIf="!row.esPrincipal">
-              <em class="fa fa-square-o"></em>
-            </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <!-- </div> -->
+<div class="title-headre-view">
+  <h4>Direcci&oacute;n</h4>
+</div>
+<!-- <div class="card card-default"> -->
+<div class="table-responsive" #tableContainer>
+  <table id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr (click)="onCellClick(row)" *ngFor="let row of rows" [class.selected]="row.selected">
+        <td class="text-center">
+          {{row.tipoDireccion | uppercase}}
+        </td>
+        <td class="text-center"> {{row.pais | uppercase}}</td>
+        <td class="text-center"> {{row.estado | uppercase}}</td>
+        <td class="text-center"> {{row.municipio | uppercase}}</td>
+        <td class="text-center"> {{row.colonia | uppercase}}</td>
+        <td class="text-center"> {{row.calle | uppercase}}</td>
+        <td class="text-center"> {{row.numeroExterior}}</td>
+        <td class="text-center"> {{row.numeroInterior}}</td>
+        <td class="text-center"> {{row.codigoPostal}}</td>
+        <td class="text-center">
+          <span *ngIf="row.activo">
+            <small class="badge badge-pill badge-success text-white text-center"><em class="fa fa-check"></em></small>
+          </span>
+          <span *ngIf="!row.activo">
+            <small class="badge badge-pill badge-warning text-white text-center"><em class="fa fa-close"></em></small>
+          </span>
+        </td>
+        <td class="text-center">
+          <span *ngIf="row.principal">
+            <small class="badge badge-pill badge-success text-white text-center"><em class="fa fa-check"></em></small>
+          </span>
+          <span *ngIf="!row.principal">
+            <small class="badge badge-pill badge-warning text-white text-center"><em class="fa fa-close"></em></small>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- </div> -->
 <!-- </div> -->
 
 <!-- Modal para vista previa de la vacante -->
@@ -83,7 +82,8 @@
         </ng-template>
       </div>
       <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-success mat-elevation-z8" (click)="closeModalRutasCamion()">Cerrar</button>
+        <button type="button" class="md-1 btn btn-success mat-elevation-z8"
+          (click)="closeModalRutasCamion()">Cerrar</button>
       </div>
     </div>
   </div>

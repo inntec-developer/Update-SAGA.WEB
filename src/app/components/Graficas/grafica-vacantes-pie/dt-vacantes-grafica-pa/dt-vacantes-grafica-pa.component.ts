@@ -75,7 +75,6 @@ export class DtVacantesGraficaPAComponent implements OnInit {
 
   getRequisiciones() {
     this.spinner.show();
-    debugger;
     var estado = this.EstadoVacante.split(':', 1);
     this._ComponentService.getRequiGraficaPA(estado, this.UsuarioId ).subscribe(data => {
       this.totalPos = 0;

@@ -79,7 +79,6 @@ export class DialogCancelRequiComponent implements OnInit {
   cancelRequisicion() {
     var comentarioReclutador = this.formComentario.get('comentario').value.trim();
     this.loading = true;
-    debugger;
     if(comentarioReclutador.length >= 30){
       this.service.cancelRequisicion(this.infoCancelRequi)
       .subscribe(data => {

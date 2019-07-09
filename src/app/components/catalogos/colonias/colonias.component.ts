@@ -105,7 +105,7 @@ export class ColoniasComponent implements OnInit, OnChanges {
     catalogo.Pais = Pais;
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpColonia.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpColonia.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

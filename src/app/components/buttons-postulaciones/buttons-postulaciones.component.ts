@@ -583,7 +583,6 @@ export class ButtonsPostulacionesComponent implements OnInit {
     // });
 
     // dialogRef.afterClosed().subscribe(result => {
-    //   console.log("entro")
     // })
 
     //this.bsModalRef = this.modalService.show(EditarContratadosComponent, {initialState, class:'modal-lg'});
