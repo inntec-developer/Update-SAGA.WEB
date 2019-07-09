@@ -75,10 +75,10 @@ export class TipolicenciaComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.TipoLicencia = [this.formTpLicencia.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpTpLicencia.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpTpLicencia.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

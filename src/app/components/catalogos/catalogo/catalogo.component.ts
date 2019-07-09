@@ -1,12 +1,15 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-// Servicios
-import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 
-// Componentes
+import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 import { filtros } from '../../../models/catalogos/catalogos';
 
-// Modelos
+// Servicios
 
+
+// Componentes
+
+
+// Modelos
 
 const swal = require('sweetalert');
 
@@ -81,6 +84,9 @@ export class CatalogoComponent implements OnChanges , OnInit {
         break;
       case 43:
       this.selectedId = this.fCatalogo.areas.find( (p: { id: number; }) => p.id === IdReg);
+        break;
+      case 44:
+      this.selectedId = this.fCatalogo.roles.find( (p: { id: number; }) => p.id === IdReg);
         break;
       //#endregion
       //#region Reclutamiento
@@ -344,6 +350,25 @@ export class CatalogoComponent implements OnChanges , OnInit {
                  // Registros.
           this.HeadTable = new Array<String>('Id', 'Nombre', 'Clave', 'Orden');
           this.DataTable = this.fCatalogo.areas;
+          this.log = this.fCatalogo.log; // Log de cada catalogo.
+        }
+       } );
+      break;
+
+      case 44: // Roles
+      this.serviceCatalogo.getCatalogo(IdCat)
+      .subscribe( result => {
+        this.fCatalogo = result;
+        this.titulo = this.fCatalogo.catalogos.nombre;
+        this.descripcion = this.fCatalogo.catalogos.descripcion;
+        if (this.fCatalogo.roles.length === 0) {
+                  // Registros.
+          this.HeadTable = new Array<String>('');
+          this.DataTable = [];
+        } else {
+                 // Registros.
+          this.HeadTable = new Array<String>('Id', 'Rol', 'Activo');
+          this.DataTable = this.fCatalogo.roles;
           this.log = this.fCatalogo.log; // Log de cada catalogo.
         }
        } );
@@ -881,7 +906,6 @@ export class CatalogoComponent implements OnChanges , OnInit {
   }
 
   Save(IdCat: number, event: any) {
-    console.log(IdCat, event);
   }
 
 }

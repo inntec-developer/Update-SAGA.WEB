@@ -83,10 +83,10 @@ export class MunicipiosComponent implements OnInit, OnChanges {
     catalogo.Estado = Estados;
     let Pais: Array<any> = [];
     catalogo.Pais = Pais;
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpMunicipios.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpMunicipios.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

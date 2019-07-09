@@ -35,7 +35,6 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    debugger;
     //how to update the request Parameters
     console.log("Init Interceptor");
     const updatedRequest = request.clone({

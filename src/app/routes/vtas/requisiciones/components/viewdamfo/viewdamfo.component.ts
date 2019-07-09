@@ -58,7 +58,6 @@ export class ViewdamfoComponent implements OnInit {
         this.damfoId = params['IdDamfo'];
         this.serviceRequisiciones.getDamfoById(this.damfoId)
             .subscribe(data => {
-              debugger;
               if(data.TipoContratoId == null)
               {
                 data.TipoContratoId = 0;

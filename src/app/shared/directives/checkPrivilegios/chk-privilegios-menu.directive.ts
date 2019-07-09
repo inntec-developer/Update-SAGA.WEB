@@ -18,7 +18,6 @@ export class ChkPrivilegiosMenuDirective implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    debugger;
     var btncreate = document.querySelectorAll("#create");
     var btnupdate = document.querySelectorAll("#update");
     var btndelete = document.querySelectorAll("#delete");

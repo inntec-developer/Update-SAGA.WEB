@@ -71,10 +71,10 @@ export class PrestLeyComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.PrestacionesLey = [this.formPrestLey.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpPrestLey.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpPrestLey.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

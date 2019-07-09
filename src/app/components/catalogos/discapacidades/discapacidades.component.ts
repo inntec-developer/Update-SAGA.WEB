@@ -72,10 +72,10 @@ export class DiscapacidadesComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.Discapacidad = [this.formDiscapacidades.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpDiscapacidad.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpDiscapacidad.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

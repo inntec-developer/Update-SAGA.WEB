@@ -74,10 +74,10 @@ export class PerfilExpComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.PerfilExperiencia = [this.formPerfil.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpPerfil.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpPerfil.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

@@ -2,26 +2,23 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
+// Servicios
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 import { SettingsService } from '../../../core/settings/settings.service';
-import { catalogos } from '../../../models/catalogos/catalogos';
-
-// Servicios
 
 // Modelos
-
-
+import { catalogos } from '../../../models/catalogos/catalogos';
 @Component({
-  selector: 'app-tipo-beneficio',
-  templateUrl: './tipo-beneficio.component.html',
-  styleUrls: ['./tipo-beneficio.component.scss']
+  selector: 'app-roles',
+  templateUrl: './roles.component.html',
+  styleUrls: ['./roles.component.scss']
 })
-export class TipoBeneficioComponent implements OnInit, OnChanges {
+export class RolesComponent implements OnInit, OnChanges {
 
-  @Input() SelectedBeneficio: any;
+  @Input() SelectedRol: any;
   @Input() Log: any;
-  @Output() UpBeneficio = new EventEmitter<number>(); // Id de País para actualizar tabla.
-  formBeneficios: FormGroup;
+  @Output() UpRol = new EventEmitter<number>(); // Id de País para actualizar tabla.
+  formRol: FormGroup;
 
   displayedColumns: string[] = ['id', 'usuario', 'fechaAct', 'tpMov'];
   dataSource: MatTableDataSource<any>;
@@ -30,9 +27,9 @@ export class TipoBeneficioComponent implements OnInit, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor( private services: CatalogosService, private settings: SettingsService ) {
-    this.formBeneficios = new FormGroup({
+    this.formRol = new FormGroup({
       id: new FormControl(),
-      tipoBeneficio: new FormControl({value: '', disabled: true}, [Validators.required]),
+      rol: new FormControl({value: '', disabled: true}, [Validators.required]),
       activo: new FormControl({value: '', disabled: true})
     });
   }
@@ -41,11 +38,11 @@ export class TipoBeneficioComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.SelectedBeneficio !== undefined) {
+    if (this.SelectedRol !== undefined) {
       this.Habilita(false);
-      this.formBeneficios.get('id').setValue(this.SelectedBeneficio.id);
-      this.formBeneficios.get('tipoBeneficio').setValue(this.SelectedBeneficio.tipoBeneficio);
-      this.formBeneficios.get('activo').setValue(this.SelectedBeneficio.activo);
+      this.formRol.get('id').setValue(this.SelectedRol.id);
+      this.formRol.get('rol').setValue(this.SelectedRol.rol);
+      this.formRol.get('activo').setValue(this.SelectedRol.activo);
     }
     if (this.Log !== undefined) {
       this.dataSource = new MatTableDataSource(this.Log);
@@ -55,41 +52,41 @@ export class TipoBeneficioComponent implements OnInit, OnChanges {
   }
 
   New() {
-    this.formBeneficios.reset();
+    this.formRol.reset();
     this.Habilita(false);
-    this.SelectedBeneficio = '';
+    this.SelectedRol = '';
   }
 
   Save() {
     const catalogo: catalogos = new catalogos();
-    this.SelectedBeneficio !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
+    this.SelectedRol !== '' ? catalogo.opt = 2 : catalogo.opt = 1;
     catalogo.usuario = this.settings.user['usuario'];
     catalogo.Catalogos = {
-      Id: 27,
-      Nombre: 'Beneficios',
-      Descripcion: 'Catalogo de tipos de beneficios',
+      Id: 44,
+      Nombre: 'Roles',
+      Descripcion: 'Catalogo de roles',
       Activo: true
     };
-    catalogo.BeneficioPerfil = [this.formBeneficios.getRawValue()];
-
+    catalogo.Roles = [this.formRol.getRawValue()];
+    console.log(catalogo);
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpBeneficio.emit(catalogo.Catalogos.Id) :  null;
+      result ? this.UpRol.emit(catalogo.Catalogos.Id) : console.log(result);
       this.Habilita(true);
     });
   }
 
   Limpiar() {
-    this.formBeneficios.reset();
+    this.formRol.reset();
   }
 
   Habilita(opt: boolean) {
     if (!opt) {
-      this.formBeneficios.get('tipoBeneficio').enable();
-      this.formBeneficios.get('activo').enable();
+      this.formRol.get('rol').enable();
+      this.formRol.get('activo').enable();
     } else {
-      this.formBeneficios.get('tipoBeneficio').disable();
-      this.formBeneficios.get('activo').disable();
+      this.formRol.get('rol').disable();
+      this.formRol.get('activo').disable();
     }
   }
 
@@ -100,4 +97,5 @@ export class TipoBeneficioComponent implements OnInit, OnChanges {
       this.dataSource.paginator.firstPage();
     }
   }
+
 }

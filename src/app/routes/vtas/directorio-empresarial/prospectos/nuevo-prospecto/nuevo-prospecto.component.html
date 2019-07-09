@@ -216,7 +216,8 @@
             <div class="modal-footer">
               <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8"
                 (click)="(addDireccion = ! addDireccion) ; cancelarDireccion()">Cancelar</button>
-              <button type="button" [disabled]="!formDirecciones.valid" class="md-1 btn btn-xs btn-success mat-elevation-z8"
+              <button type="button" [disabled]="!formDirecciones.valid"
+                class="md-1 btn btn-xs btn-success mat-elevation-z8"
                 (click)="AddDireccion()">{{textbtnDirecciones}}</button>
             </div>
 
@@ -224,7 +225,7 @@
           <br>
         </div>
         <!-- Tabla de Direcciones -->
-        <div class="butoonAction clearfix p-2 bg-light">
+        <div class="buttonAction clearfix p-2 bg-light">
           <div class="contenedor">
             <div class="aling-div">
               <button class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8" *ngIf="!addDireccion" container="body"
@@ -253,7 +254,8 @@
               <div class="row" #tableDirecciones>
                 <div class="col-sm-12 col-md-12 table-responsive clearfix">
                   <div>
-                    <span *ngIf="config.paging" class="float-right">Total Registros: {{registrosD}}</span>
+                    <span *ngIf="config.paging" class="float-right">Total Registros: <label
+                        class="badge badge-pill badge-success text-white text-center">{{registrosD}}</label></span>
                   </div>
                   <table id="direccionesNuevas" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
                     <thead>
@@ -296,19 +298,23 @@
                           </small>
                         </td>
                         <td class="text-center">
-                          <small *ngIf="rowd.esPrincipal else Inactivo">
-                            SI
+                          <small *ngIf="rowd.esPrincipal else Inactivo"
+                            class="badge badge-pill badge-success text-white text-center">
+                            <em class="fa fa-check"></em>
                           </small>
                           <ng-template #Inactivo>
-                            <small>NO</small>
+                            <small class="badge badge-pill badge-warning text-white text-center"><em
+                                class="fa fa-close"></em></small>
                           </ng-template>
                         </td>
                         <td class="text-center">
-                          <small *ngIf="rowd.activo else IsActivo">
-                            SI
+                          <small *ngIf="rowd.activo else IsActivo"
+                            class="badge badge-pill badge-success text-white text-center">
+                            <em class="fa fa-check"></em>
                           </small>
                           <ng-template #IsActivo>
-                            <small>NO</small>
+                            <small class="badge badge-pill badge-warning text-white text-center"><em
+                                class="fa fa-close"></em></small>
                           </ng-template>
                         </td>
                       </tr>
@@ -410,12 +416,13 @@
             <div class="modal-footer">
               <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8"
                 (click)="(addTelefono = ! addTelefono) ; cancelarTelefono()">Cancelar</button>
-              <button type="button" [disabled]="!formTelefonos.valid" class="md-1 btn btn-xs btn-success mat-elevation-z8"
+              <button type="button" [disabled]="!formTelefonos.valid"
+                class="md-1 btn btn-xs btn-success mat-elevation-z8"
                 (click)="AddTelefono()">{{textbtnTelefono}}</button>
             </div>
           </form>
         </div>
-        <div class="butoonAction clearfix p-2 bg-light">
+        <div class="buttonAction clearfix p-2 bg-light">
           <div class="contenedor">
             <div class="aling-div">
               <button class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8" *ngIf="!addTelefono" container="body"
@@ -424,14 +431,14 @@
               </button>
             </div>
             <div class="aling-div" *ngIf="!EditTelefono">
-              <button *ngIf="TelefonosNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body" placement="bottom"
-                tooltip="Editar" [disabled]="!elementT" [ngClass]="(!elementT)? 'disabled' : 'btn-primary'"
-                (click)="UpTelefono(); textbtnTelefono = 'Editar'">
+              <button *ngIf="TelefonosNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body"
+                placement="bottom" tooltip="Editar" [disabled]="!elementT"
+                [ngClass]="(!elementT)? 'disabled' : 'btn-primary'" (click)="UpTelefono(); textbtnTelefono = 'Editar'">
                 <em class="fa fa-pencil"></em>
               </button>
-              <button *ngIf="TelefonosNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body" placement="bottom"
-                tooltip="Eliminar" [disabled]="!elementT" [ngClass]="(!elementT)? 'disabled' : 'btn-danger'"
-                (click)="DtTelefono()">
+              <button *ngIf="TelefonosNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body"
+                placement="bottom" tooltip="Eliminar" [disabled]="!elementT"
+                [ngClass]="(!elementT)? 'disabled' : 'btn-danger'" (click)="DtTelefono()">
                 <em class="fa fa-trash"></em>
               </button>
             </div>
@@ -469,19 +476,23 @@
                       slice:0:4}}-{{rowt.telefono | slice:4:8}}</td>
                         <td class="text-center">{{rowt.extension}}</td>
                         <td class="text-center">
-                          <small *ngIf="rowt.esPrincipal else InactivoT">
-                            SI
+                          <small *ngIf="rowt.esPrincipal else InactivoT"
+                            class="badge badge-pill badge-success text-white text-center">
+                            <em class="fa fa-check"></em>
                           </small>
                           <ng-template #InactivoT>
-                            <small>NO</small>
+                            <small class="badge badge-pill badge-warning text-white text-center"><em
+                                class="fa fa-close"></em></small>
                           </ng-template>
                         </td>
                         <td class="text-center">
-                          <small *ngIf="rowt.activo else IsActivoT">
-                            SI
+                          <small *ngIf="rowt.activo else IsActivoT"
+                            class="badge badge-pill badge-success text-white text-center">
+                            <em class="fa fa-check"></em>
                           </small>
                           <ng-template #IsActivoT>
-                            <small>NO</small>
+                            <small class="badge badge-pill badge-warning text-white text-center"><em
+                                class="fa fa-close"></em></small>
                           </ng-template>
                         </td>
                       </tr>
@@ -545,7 +556,7 @@
             </div>
           </form>
         </div>
-        <div class="butoonAction clearfix p-2 bg-light">
+        <div class="buttonAction clearfix p-2 bg-light">
           <div class="contenedor">
             <div class="aling-div">
               <button class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8" *ngIf="!addCorreo" container="body"
@@ -554,13 +565,13 @@
               </button>
             </div>
             <div class="aling-div" *ngIf="!EditCorreo">
-              <button *ngIf="CorreosNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body" placement="bottom"
-                tooltip="Editar" [disabled]="!elementC" [ngClass]="(!elementC) ? 'disabled' : 'btn-primary'"
-                (click)="UpEmail(); textbtnCorreo = 'Editar'">
+              <button *ngIf="CorreosNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body"
+                placement="bottom" tooltip="Editar" [disabled]="!elementC"
+                [ngClass]="(!elementC) ? 'disabled' : 'btn-primary'" (click)="UpEmail(); textbtnCorreo = 'Editar'">
                 <em class="fa fa-pencil"></em>
               </button>
-              <button *ngIf="CorreosNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body" placement="bottom"
-                placement="bottom" tooltip="Eliminar" [disabled]="!elementC"
+              <button *ngIf="CorreosNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body"
+                placement="bottom" placement="bottom" tooltip="Eliminar" [disabled]="!elementC"
                 [ngClass]="(!elementC)? 'disabled' : 'btn-danger'" (click)="DtEmail()">
                 <em class="fa fa-trash"></em>
               </button>
@@ -739,17 +750,20 @@
               <br>
               <div class="clearfix">
                 <div class="aling-div" *ngIf="!addContactoTelefono">
-                  <button (click)="addContactoTelefono = true" class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8">
+                  <button (click)="addContactoTelefono = true"
+                    class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8">
                     <em class="fa fa-plus"></em>
                   </button>
                 </div>
                 <div class="aling-div" *ngIf="!EditContactoTelefono">
-                  <button *ngIf="Telefonos.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" [disabled]="!elementCnT"
-                    [ngClass]="(!elementCnT) ? 'disabled' : 'btn-primary'" (click)="UdContactoTelefono()">
+                  <button *ngIf="Telefonos.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8"
+                    [disabled]="!elementCnT" [ngClass]="(!elementCnT) ? 'disabled' : 'btn-primary'"
+                    (click)="UdContactoTelefono()">
                     <em class="fa fa-pencil"></em>
                   </button>
-                  <button *ngIf="Telefonos.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" [disabled]="!elementCnT"
-                    [ngClass]="(!elementCnT) ? 'disabled' : 'btn-danger'" (click)="DtContactoTelefono()">
+                  <button *ngIf="Telefonos.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8"
+                    [disabled]="!elementCnT" [ngClass]="(!elementCnT) ? 'disabled' : 'btn-danger'"
+                    (click)="DtContactoTelefono()">
                     <em class="fa fa-trash"></em>
                   </button>
                 </div>
@@ -824,17 +838,20 @@
               <br>
               <div class="clearfix">
                 <div class="aling-div" *ngIf="!addContactoCorreo">
-                  <button (click)="addContactoCorreo = true" class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8">
+                  <button (click)="addContactoCorreo = true"
+                    class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8">
                     <em class="fa fa-plus"></em>
                   </button>
                 </div>
                 <div class="aling-div" *ngIf="!EditContactoCorreo">
-                  <button *ngIf="Emails.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" [disabled]="!elementCnC"
-                    [ngClass]="(!elementCnC) ? 'disabled' : 'btn-primary'" (click)="UdContactoCorreo()">
+                  <button *ngIf="Emails.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8"
+                    [disabled]="!elementCnC" [ngClass]="(!elementCnC) ? 'disabled' : 'btn-primary'"
+                    (click)="UdContactoCorreo()">
                     <em class="fa fa-pencil"></em>
                   </button>
-                  <button *ngIf="Emails.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" [disabled]="!elementCnC"
-                    [ngClass]="(!elementCnC) ? 'disabled' : 'btn-danger'" (click)="DtContactoCorreo()">
+                  <button *ngIf="Emails.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8"
+                    [disabled]="!elementCnC" [ngClass]="(!elementCnC) ? 'disabled' : 'btn-danger'"
+                    (click)="DtContactoCorreo()">
                     <em class="fa fa-trash"></em>
                   </button>
                 </div>
@@ -881,13 +898,13 @@
           <div class="modal-footer">
             <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8"
               (click)="(addContacto = ! addContacto) ; cancelarContacto()">Cancelar</button>
-            <button type="button" class="mat-elevation-z8" [disabled]="!formContactos.valid || Telefonos.length === 0 || Emails.length === 0"
+            <button type="button" class="md-1 btn btn-xs mat-elevation-z8"
+              [disabled]="!formContactos.valid || Telefonos.length === 0 || Emails.length === 0"
               [ngClass]="!formContactos.valid || Telefonos.length === 0 || Emails.length === 0 ? 'disabled' : 'btn-success'"
-              class="md-1 btn btn-xs" (click)="AddContacto()">{{textbtnContacto}}</button>
+              (click)="AddContacto()">{{textbtnContacto}}</button>
           </div>
-
         </div>
-        <div class="butoonAction clearfix p-2">
+        <div class="buttonAction clearfix p-2 bg-light">
           <div class="contenedor">
             <div class="aling-div">
               <button class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8" *ngIf="!addContacto" container="body"
@@ -897,14 +914,15 @@
               </button>
             </div>
             <div class="aling-div" *ngIf="!EditContacto">
-              <button *ngIf="ContactosNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body" placement="bottom"
-                tooltip="Editar" [disabled]="!elementCn" [ngClass]="(!elementCn) ? 'disabled' : 'btn-primary'"
+              <button *ngIf="ContactosNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body"
+                placement="bottom" tooltip="Editar" [disabled]="!elementCn"
+                [ngClass]="(!elementCn) ? 'disabled' : 'btn-primary'"
                 (click)="UpContactos(); textbtnContacto = 'Editar'">
                 <em class="fa fa-pencil"></em>
               </button>
-              <button *ngIf="ContactosNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body" placement="bottom"
-                tooltip="Eliminar" [disabled]="!elementCn" [ngClass]="(!elementCn) ? 'disabled' : 'btn-danger'"
-                (click)="DtContacto()">
+              <button *ngIf="ContactosNew.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body"
+                placement="bottom" tooltip="Eliminar" [disabled]="!elementCn"
+                [ngClass]="(!elementCn) ? 'disabled' : 'btn-danger'" (click)="DtContacto()">
                 <em class="fa fa-trash"></em>
               </button>
             </div>

@@ -70,7 +70,7 @@ export class TipoUsuarioComponent implements OnInit, OnChanges {
     catalogo.TpUsuario = [this.formTipoUsuario.getRawValue()];
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpTpUsuario.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpTpUsuario.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

@@ -70,11 +70,6 @@ export class EditarCandidatoEstatusComponent implements OnInit {
       MotivoId: row.motivoId,
       estatusId: estatus
     }
-
-    console.log(row)
-
-
-
     this.rowAux = [];
     this.estatusAux = 0;
     this.confirmar = false;

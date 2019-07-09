@@ -1,5 +1,6 @@
-import { SistTicketsService } from './../../../service/SistTickets/sist-tickets.service';
 import { Component, OnInit } from '@angular/core';
+
+import { SistTicketsService } from './../../../service/SistTickets/sist-tickets.service';
 
 @Component({
   selector: 'app-en-atencion',
@@ -15,17 +16,12 @@ export class EnAtencionComponent implements OnInit {
 
   ngOnInit() {
     this.GetTicketEnAtencion();
-
   }
 
   GetTicketEnAtencion()
   {
     this._service.GetTicketEnAtencion().subscribe(data => {
       this.turnos = data;
-      console.log(this.turnos)
-      
-    })
-
+    });
   }
-
 }

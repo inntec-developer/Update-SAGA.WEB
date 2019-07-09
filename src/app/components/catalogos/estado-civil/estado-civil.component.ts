@@ -73,7 +73,7 @@ export class EstadoCivilComponent implements OnInit, OnChanges {
     catalogo.EstadoCivil = [this.formEstadoCivil.getRawValue()];
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpEstadoCivil.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpEstadoCivil.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

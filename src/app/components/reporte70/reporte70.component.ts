@@ -170,12 +170,10 @@ export class Reporte70Component implements OnInit {
       var final = fin['value'];
       let tipo = document.getElementById('TipoReporte')['value'];
 
-    
+
      this._service.GetReporte70(palabra,ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec).subscribe(result => {
-      
       this.requisiciones = result;
        this.onChangeTable(this.config);
-     
      })
   }
 
@@ -211,7 +209,7 @@ export class Reporte70Component implements OnInit {
               {
                 let aux = [];
                 aux = item[column.name];
-                
+
                 let flag = false;
                 aux.forEach(element => {
                   if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))

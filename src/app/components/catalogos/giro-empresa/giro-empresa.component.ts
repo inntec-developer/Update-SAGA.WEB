@@ -71,10 +71,10 @@ export class GiroEmpresaComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.GiroEmpresa = [this.formGiro.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpGiro.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpGiro.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

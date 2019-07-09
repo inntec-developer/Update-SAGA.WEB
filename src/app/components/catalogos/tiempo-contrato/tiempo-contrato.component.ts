@@ -74,10 +74,10 @@ export class TiempoContratoComponent implements OnInit, OnChanges {
       Activo: true
     };
     catalogo.TiemposContrato = [this.formTiempoCont.getRawValue()];
-    console.log(catalogo);
+
     this.services.GuardaCatalogo(catalogo)
     .subscribe( result => { // Agregar
-      result ? this.UpTiempoCont.emit(catalogo.Catalogos.Id) : console.log(result);
+      result ? this.UpTiempoCont.emit(catalogo.Catalogos.Id) :  null;
       this.Habilita(true);
     });
   }

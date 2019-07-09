@@ -70,7 +70,6 @@ export class DialogDeleteRequiComponent implements OnInit {
 
   deleteRequisicion() {
     this.loading = true;
-    debugger;
     this.service.deleteRequisicion(this.infoDeleteRequi)
       .subscribe(data => {
         if (data == 200) {
