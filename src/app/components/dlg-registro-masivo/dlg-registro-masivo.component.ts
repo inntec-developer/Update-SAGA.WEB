@@ -271,9 +271,9 @@ this.curp = curp;
   }
   AgregarCandidato()
   {
-    let count = this.data.nv - this.data.contratados + this.dataSource.length + 1;
+    let count = this.data.nv - (this.data.contratados + this.dataSource.length + 1);
     if (count < 0) {
-      swal("Registro", "Ya se cubrió el total de vacantes", "warning");
+      swal("Registro", "Ya se cubrió el total de vacantes.", "warning");
     }
     else {
       // let email = [{ email: this.email.trim(), UsuarioAlta: 'INNTEC' }];
@@ -339,6 +339,12 @@ this.curp = curp;
     this.BorrarCampos();
   }
 
+  BorrarCandidato(rowIndex)
+  {
+    this.dataSource.splice(rowIndex, 1);
+    this.onChangeTable(this.config)
+  }
+
   ValidarEmail(email)
   {
     this.postulateservice.ValidarEmailCandidato(email).subscribe(data => {
@@ -349,12 +355,27 @@ this.curp = curp;
       }
       else
       {
-        this.valEmail = "";
+        let x = this.dataSource.findIndex(value => value.email === this.email);
+        if(x == -1)
+        {
+          this.valEmail = "";
+        }
+        else
+        {
+          this.valEmail = "No se puede repetir email"
+          this.email = "";
+        }
       }
-    })
+    });
   }
   registrar()
   {
+    let count = this.data.nv - (this.data.contratados + this.dataSource.length);
+    if (count < 0) {
+      swal("Registro", "El total de candidatos es mayor al de las vacantes", "warning");
+    }
+    else
+    {
     swal({
       title: "¿ESTÁS SEGURO?",
       text: "¡Se registrarán (" + this.dataSource.length.toString() + ") candidatos con estatus cubierto para la vacante de " + this.data.vacante,
@@ -410,6 +431,7 @@ this.curp = curp;
         swal("Cancelado", "No se realizó ningún cambio", "error");
       }
     });
+  }
 
   }
   updateValue($event, cell, rowIndex, g)

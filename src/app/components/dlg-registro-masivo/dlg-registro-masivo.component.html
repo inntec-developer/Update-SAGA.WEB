@@ -104,8 +104,8 @@
                         <i class="fa fa-eraser" aria-hidden="true"></i>
                         </button>
 
-                <button [disabled]="f.invalid || edad < 18 || rowIndex == -1" type="button" [ngClass]="f.invalid || edad < 18 || rowIndex == -1 ? 'disabled' : 'btn-warning'" class="btn btn-xs float-right ml-1" (click)="EditarCandidato()">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                <button container="body" placement="bottom" tooltip="Guardar cambios" [disabled]="f.invalid || edad < 18 || rowIndex == -1" type="button" [ngClass]="f.invalid || edad < 18 || rowIndex == -1 ? 'disabled' : 'btn-warning'" class="btn btn-xs float-right ml-1" (click)="EditarCandidato()">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i>
         </button>
                 <button [disabled]="f.invalid || edad < 18 || rowIndex != -1" type="button" [ngClass]="f.invalid || edad < 18 || rowIndex != -1 ? 'disabled' : 'btn-success'" class="btn btn-xs float-right" (click)="AgregarCandidato()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
@@ -132,6 +132,7 @@
                               <small>{{column.title | uppercase}}</small>
 
                             </th>
+                            <th></th>
                           </tr>
                           <!-- <tr>
                             <th *ngFor="let column of columns">
@@ -145,7 +146,7 @@
                           <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
                             [disabled]="disabled">
                             <div style="height: 300px;">
-                              <tr *ngFor="let row of rows; let rowIndex = index" (click)="onCellClick(row, rowIndex)" container="body" placement="bottom" tooltip="Selecciona para editar"  [class.bg-info]="row.selected">
+                              <tr *ngFor="let row of rows; let rowIndex = index" (dblclick)="onCellClick(row, rowIndex)" container="body" placement="bottom" tooltip="doble click para editar"  [class.bg-info]="row.selected">
                                 <td class="text-center">{{row.curp}}
                                     <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-curp'] = true" *ngIf="!editing[rowIndex + '-curp']">
                                         
@@ -217,6 +218,13 @@
                                         
                                     </span>
                                     <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'telefono', rowIndex, row)" *ngIf="editing[rowIndex + '-telefono']" type="text" [value]=row.telefono /> -->
+                                </td>
+                                <td>
+                                    
+                <button container="body" placement="bottom" tooltip="Borrar Candidato" type="button" class="btn btn-xs btn-danger mat-elevation-z8" (click)="BorrarCandidato(rowIndex)">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+            </button>
+
                                 </td>
                               </tr>
                             </div>

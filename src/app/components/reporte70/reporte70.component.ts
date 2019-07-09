@@ -87,12 +87,6 @@ export class Reporte70Component implements OnInit {
 
   GetReporte70(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor)
   {
-    var date1 = new Date();
-
-console.log(date1)
-
-
-
     this.objsucursal1 = oficina;
     this.objsolicit1 = solicitante;
     this.objrecluta1 = reclutador;
@@ -178,16 +172,10 @@ console.log(date1)
 
     
      this._service.GetReporte70(palabra,ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec).subscribe(result => {
-      var date2 = new Date();
-
-      console.log(date2)
+      
       this.requisiciones = result;
        this.onChangeTable(this.config);
-
-       var date3 = new Date();
-
-       console.log(date3)
-      
+     
      })
   }
 

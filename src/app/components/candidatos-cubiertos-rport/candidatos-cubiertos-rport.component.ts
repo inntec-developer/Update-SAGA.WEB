@@ -29,7 +29,7 @@ export class CandidatosCubiertosRportComponent implements OnInit {
     { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
     { title: 'RFC', className: 'text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
     { title: 'NSS', className: 'text-success', name: 'nss', filtering: { filterString: '', placeholder: 'NSS' } },
-    { title: 'Sexo', className: 'text-success', name: 'genero', filtering: { filterString: '', placeholder: 'Genero' } }
+    { title: 'Sexo', className: 'text-info', name: 'genero', filtering: { filterString: '', placeholder: 'Genero' } }
   ]
 
   constructor(private _service: PostulateService) { }
@@ -41,8 +41,18 @@ export class CandidatosCubiertosRportComponent implements OnInit {
   GetCandidatos()
   {
     this._service.GetCandidatosCubiertos(this.RequisicionId).subscribe(data => {
-      this.dataSource = data;
-      console.log(this.dataSource)
+      data.forEach(element => {
+        this.dataSource.push({
+          horario: element.horario,
+          nombre: element.informacion.nombre,
+          localidad: element.informacion.localidad,
+          edad: element.informacion.edad,
+          curp: element.informacion.curp,
+          rfc: element.informacion.rfc,
+          nss: element.informacion.nss,
+          genero: element.informacion.genero
+        });
+      });
       this.onChangeTable(this.config);
     })
   }

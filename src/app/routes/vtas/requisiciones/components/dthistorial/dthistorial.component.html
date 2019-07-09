@@ -67,9 +67,9 @@
                 <td class="text-center">
                   <span class="mr-1 badge badge-pill badge-info"> {{row.contratados}}/{{row.vacantes}}</span>
                 </td>
-                <td class="text-center"> <span *ngIf="row.tipoReclutamiento.length < 8 else toLengthRecl">{{row.claseReclutamiento | uppercase}}</span>
+                <td class="text-center"> <span *ngIf="row.claseReclutamiento.length < 10 else toLengthRecl">{{row.claseReclutamiento | uppercase}}</span>
                   <ng-template #toLengthRecl>
-                      <span tooltip="{{row.tipoReclutamiento | uppercase}}" placement="top" container="body"> {{row.claseReclutamiento | slice:0:6 | uppercase
+                      <span tooltip="{{row.claseReclutamiento | uppercase}}" placement="top" container="body"> {{row.claseReclutamiento | slice:0:10 | uppercase
                         }} ...
                       </span>
                     </ng-template></td>
