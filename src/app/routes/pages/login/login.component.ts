@@ -221,7 +221,7 @@ export class DialogOverviewExampleDialog {
           swal('Se ha restablecido correctamente la contraseña', 'Intenta ingresar de nuevo', 'success');
           this.dialogRef.close();
         } else {
-          swal('Huo un error la restablecer la contraseña', 'Intenta de nuevo', 'error');
+          swal('Hubo un error la restablecer la contraseña', 'Intenta de nuevo', 'error');
         }
       });
   }

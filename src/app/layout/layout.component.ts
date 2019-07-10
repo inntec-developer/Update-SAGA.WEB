@@ -30,11 +30,11 @@ export class LayoutComponent implements OnInit {
 
       clearTimeout(this.mouseStop);
       this.mouseStop = setTimeout(() => {
-        swal('Valar Morghulis,(Pero tu sesión NO!, puedes continuar trabajando)', 'Valar Doheris', 'error');
+        swal('!Hasta la vista baby!', 'Game Over', 'error');
       }, 900000);
 
     } else {
-      if (this.settings.user['id']) { // Nos percatamos si ya inicio sesión.
+      if (this.settings.user['id'] != null) { // Nos percatamos si ya inicio sesión.
         clearTimeout(this.mouseStop);
         this.mouseStop = setTimeout(() => {
           this.lock = true;
@@ -58,7 +58,7 @@ export class LayoutComponent implements OnInit {
             if (this.lock) {
               swal({
                 title: 'Tu sesión ha caducado',
-                text: 'Incia sesión nuevamente.',
+                text: 'Inicia sesión nuevamente.',
                 type: 'info',
                 showCancelButton: false,
                 confirmButtonText: 'Ok',
