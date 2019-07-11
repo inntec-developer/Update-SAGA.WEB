@@ -1,5 +1,9 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MAT_DATE_LOCALE, MatPaginatorIntl } from '@angular/material';
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
+import { ToasterModule, ToasterService } from 'angular2-toaster';
+import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../core/translator/config-paginator/config-paginator.component';
 
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { AlertModule } from 'ngx-bootstrap/alert';
@@ -21,7 +25,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NowDirective } from './directives/now/now.directive';
-import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { RatingModule } from 'ngx-bootstrap/rating';
@@ -30,7 +33,6 @@ import { ScrollableDirective } from './directives/scrollable/scrollable.directiv
 import { SparklineDirective } from './directives/sparkline/sparkline.directive';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
-import { ToasterModule } from 'angular2-toaster';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { TreeGridDirective } from './directives/treeGrid/treeGrid.directive';
@@ -67,6 +69,10 @@ import { VectormapDirective } from './directives/vectormap/vectormap.directive';
   providers: [
     ColorsService,
     ColorPickerService,
+    { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
+    { provide: PaginationConfig, useValue: getSpanishPaginatorBtp() },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-MX'},
+    ToasterService
   ],
 
   declarations: [

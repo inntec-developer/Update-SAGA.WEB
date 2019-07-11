@@ -389,6 +389,7 @@ export class ApiConection {
   public static getUnidadNegocioMty = 'contadores/unidadMty'
   public static getUnidadNegocioGdl = 'contadores/unidadGdl'
   public static getUnidadNegocioMx = 'contadores/unidadMx'
+  public static getRequiUnidadNegocio = 'contadores/getRequiUnidadNegocio';
 
   /* Menu de Catalogos */
   public static getCatalogos = 'Catalogos/getCatalogos';

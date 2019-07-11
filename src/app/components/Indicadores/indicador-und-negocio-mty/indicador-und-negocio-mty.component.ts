@@ -27,64 +27,136 @@ export class IndicadorUndNegocioMtyComponent implements OnInit {
   public Vigentes: number = 0;
   public PorVencer: number = 0;
   public Vencidas: number = 0;
+  public UnidadNegocio: string;
+  public totalPos: number = 0;
 
   ngOnInit() {
+    this.UnidadNegocio = 'Mty'
     this.UsuarioId = this.settings.user['id'];
     this._ServiceComponente.getUnidadesNegocioMTY().subscribe(result => {
       if (result != 404) {
-        this.RegistrosT = result['vigentes'] + result['porVencer'] + result['vencidas'];
-        this.Vigentes = result['vigentes']
-        this.PorVencer = result['porVencer']
-        this.Vencidas = result['vencidas']
+        this.RegistrosT = result['vigentes'].length + result['porVencer'].length + result['vencidas'].length;
+        this.Vigentes = result['vigentes'].length;
+        this.PorVencer = result['porVencer'].length;
+        this.Vencidas = result['vencidas'].length;
+        debugger;
+        var vigentes = result['vigentes'];
+        var porVencer = result['porVencer'];
+        var vencidas = result['vencidas'];
+        vigentes.forEach(vg => {
+          this.totalPos += vg.vacantes;
+        });
+        porVencer.forEach(pv => {
+          this.totalPos += pv.vacantes;
+        });
+        vencidas.forEach(vc => {
+          this.totalPos += vc.vacantes;
+        });
 
         this.Data = {
           labels: ["Vigentes", "Por Vencer", "Vencidas"],
           datasets: [{
             label: "Monterrey",
-            backgroundColor: "rgba(200,0,0,0.5)",
-            data: [this.Vigentes, this.PorVencer, this.Vencidas]
+            lineTension: 0.1,
+            backgroundColor: "rgba(102, 153, 204, 0.2)",
+            borderColor: "rgba(102, 153, 204, 1)",
+            pointBackgroundColor: "rgba(102, 153, 204, 1)",
+            pointBorderColor: "#fff",
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgba(102, 153, 204, 1)",
+            data: [this.Vigentes, this.PorVencer, this.Vencidas],
           }]
         };
 
         var charOptions = {
-          legend: {
-            position: 'right',
-            display: true,
-            labels: {
-              fontSize: 12,
-              boxWidth: 10,
-              usePointStyle: true,
-              padding: 15
+          options: {
+            scale: {
+              angleLines: {
+                display: true,
+                lineWidth: 0.5,
+                color: 'rgba(128, 128, 128, 0.2)'
+              },
+              pointLabels: {
+                fontSize: 14,
+                fontStyle: '300',
+                fontColor: 'rgba(204, 204, 204, 1)',
+                fontFamily: "'Lato', sans-serif"
+              },
+              ticks: {
+                beginAtZero: true,
+                maxTicksLimit: 3,
+                min: 0,
+                max: 3,
+                display: false
+              }
             }
-          },
-          scale: {
-            display: true,
           }
         }
 
-        Chart.defaults.scale.ticks.beginAtZero = true;
         this.Chart = new Chart('canvasMty', {
           type: 'radar',
           data: this.Data,
-          options: charOptions
+          options: {
+            charOptions,
+            onClick: this.detectedClick.bind(this),
+          }
         });
       }
     });
   }
 
+  detectedClick(evt: any) {
+    if (evt == 'todas') {
+      this.EstadoVacante = 'Todas';
+      this.NumeroVacantes = this.RegistrosT
+      this.ShowModal = true;
+    }
+    else {
+      let ActivatEvent = this.Chart.getElementAtEvent(evt);
+      if (ActivatEvent[0]) {
+        var chartData = ActivatEvent[0]['_chart'].config.data;
+        var idx = ActivatEvent[0]['_index'];
+        this.EstadoVacante = chartData.labels[idx];
+        this.NumeroVacantes = chartData.datasets[0].data[idx];
+        this.ShowModal = true;
+      }
+    }
+  }
+
   updateChart() {
     this._ServiceComponente.getUnidadesNegocioMTY().subscribe(result => {
       if (result != 404) {
-        this.RegistrosT = result['vigentes'] + result['porVencer'] + result['vencidas'];
-        this.Vigentes = result['vigentes']
-        this.PorVencer = result['porVencer']
-        this.Vencidas = result['vencidas']
+        this.RegistrosT = result['vigentes'].length + result['porVencer'].length + result['vencidas'].length;
+        this.Vigentes = result['vigentes'].length;
+        this.PorVencer = result['porVencer'].length;
+        this.Vencidas = result['vencidas'].length;
+        debugger;
+        var vigentes = result['vigentes'];
+        var porVencer = result['porVencer'];
+        var vencidas = result['vencidas'];
+        vigentes.forEach(vg => {
+          this.totalPos += vg.vacantes;
+        });
+        porVencer.forEach(pv => {
+          this.totalPos += pv.vacantes;
+        });
+        vencidas.forEach(vc => {
+          this.totalPos += vc.vacantes;
+        });
         this.Data = {
-          labels: ["Vigentes", "Por Vencer", "Vencidas"],
+          labels: [["Vigentes"], ["Por Vencer"], ["Vencidas"]],
           datasets: [{
             label: "Monterrey",
-            backgroundColor: "rgba(200,0,0,0.5)",
-            data: [this.Vigentes, this.PorVencer, this.Vencidas]
+            lineTension: 0.1,
+            backgroundColor: "rgba(102, 153, 204, 0.2)",
+            borderColor: "rgba(102, 153, 204, 1)",
+            pointBackgroundColor: "rgba(102, 153, 204, 1)",
+            pointBorderColor: "#fff",
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "#fff",
+            pointHoverBorderColor: "rgba(102, 153, 204, 1)",
+            data: [this.Vigentes, this.PorVencer, this.Vencidas],
           }]
         };
         this.Chart.data = this.Data;

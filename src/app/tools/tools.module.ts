@@ -2,7 +2,6 @@ import { DataTableColumnCellDirective, DataTableColumnDirective, DataTableColumn
 import { DataTableModule, FileUploadModule } from 'primeng/primeng';
 import { INgxSelectOptions, NgxSelectModule } from 'ngx-select-ex';
 import {
-  MAT_DATE_LOCALE,
   MatAutocompleteModule,
   MatButtonModule,
   MatButtonToggleModule,
@@ -20,7 +19,6 @@ import {
   MatMenuModule,
   MatNativeDateModule,
   MatOptionModule,
-  MatPaginatorIntl,
   MatPaginatorModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
@@ -38,7 +36,6 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
-import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../core/translator/config-paginator/config-paginator.component';
 
 import { AgGridModule } from 'ag-grid-angular';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -54,12 +51,10 @@ import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { PaginationConfig } from 'ngx-bootstrap/pagination';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { SelectModule } from 'ng2-select';
 import { TagInputModule } from 'ngx-chips';
 import { TextMaskModule } from 'angular2-text-mask';
-import { ToasterService } from 'angular2-toaster';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
@@ -126,15 +121,9 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective
   ],
-  providers:[
-    { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },
-    { provide: PaginationConfig, useValue: getSpanishPaginatorBtp() },
-    { provide: MAT_DATE_LOCALE, useValue: 'en-MX'},
-    ToasterService
-  ],
+  providers:[],
   exports:[
     FocusDirective,
-
     AgGridModule,
     BsDatepickerModule,
     ColorPickerModule,

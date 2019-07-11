@@ -28,7 +28,8 @@ export class GraficaVacantesPieComponent implements OnInit {
 
   ngOnInit() {
     this.UsuarioId = this.settings.user['id'];
-    Chart.defaults.scale.ticks.beginAtZero = true;
+
+
     this._ServiceComponente.getGraficaVPA(this.UsuarioId).subscribe(result => {
       let vigentes = result['vigentes'];
       let porVecner = result['porVencer'];
@@ -56,24 +57,10 @@ export class GraficaVacantesPieComponent implements OnInit {
           hoverBorderColor: '#00000',
           responsive: true,
           onClick: this.detectedClick.bind(this),
-          // title: {
-          //   text: 'Seguimiento Vacantes'
-          //   display: true,
-          // },
-          // scale: {
-          //   ticks: {
-          //     scaleBeginAtZero: true,
-          //     scaleStartValue: 0,
-          //   },
-          //   display: true,
-          //   scaleShowLine: true,
-          //   reverse: false
-          // },
           animation: {
             animateRotate: true,
             animateScale: true
           },
-          // startAngle: -Math.PI / -4,
           legend: {
             position: 'right',
             display: true,
@@ -107,7 +94,7 @@ export class GraficaVacantesPieComponent implements OnInit {
     }
   }
 
-  updateChart(){
+  updateChart() {
     this._ServiceComponente.getGraficaVPA(this.UsuarioId).subscribe(result => {
       let vigentes = result['vigentes'];
       let porVecner = result['porVencer'];
@@ -126,7 +113,7 @@ export class GraficaVacantesPieComponent implements OnInit {
           'Vencidas'
         ]
       }
-      this.Chart.data= this.Data;
+      this.Chart.data = this.Data;
       this.Chart.update();
       this.ChangeFolios.emit(this.RegistrosT);
     });

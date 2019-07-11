@@ -65,6 +65,7 @@ export class ComponentsService {
   private UrlGetUnidadNegocioMTY = ApiConection.ServiceUrl + ApiConection.getUnidadNegocioMty;
   private UrlGetUnidadNegocioGDL = ApiConection.ServiceUrl + ApiConection.getUnidadNegocioGdl;
   private UrlGetUnidadNegocioMX = ApiConection.ServiceUrl + ApiConection.getUnidadNegocioMx;
+  private UrlGetRequiUnidadNegocio = ApiConection.ServiceUrl + ApiConection.getRequiUnidadNegocio;
 
   constructor(private _httpClient: HttpClient) { }
 
@@ -212,6 +213,11 @@ export class ComponentsService {
   getUnidadesNegocioMX(): Observable<any>{
     return this._httpClient.get(this.UrlGetUnidadNegocioMX, this.httpOptions)
       .map(result => result);
+  }
+
+  getRequiUnidadNegocio(data: any): Observable<any>{
+    return this._httpClient.post<any>(this.UrlGetRequiUnidadNegocio, data, this.httpOptions )
+    .map(result => result);
   }
 
 }

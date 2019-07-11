@@ -146,6 +146,7 @@ import { TpNominaComponent } from './catalogos/tp-nomina/tp-nomina.component';
 import { TpPsicometriaComponent } from './catalogos/tp-psicometria/tp-psicometria.component';
 import { RolesComponent } from './catalogos/roles/roles.component';
 import { CandidatosCubiertosRportComponent } from './candidatos-cubiertos-rport/candidatos-cubiertos-rport.component';
+import { DtVacantesUNComponent } from './Indicadores/dt-vacantes-un/dt-vacantes-un.component';
 
 @NgModule({
   imports: [
@@ -297,7 +298,8 @@ import { CandidatosCubiertosRportComponent } from './candidatos-cubiertos-rport/
     IndicadorUndNegocioGdlComponent,
     IndicadorUndNegocioMxComponent,
     RolesComponent,
-    CandidatosCubiertosRportComponent
+    CandidatosCubiertosRportComponent,
+    DtVacantesUNComponent
   ],
   exports: [
     DtDireccionComponent,

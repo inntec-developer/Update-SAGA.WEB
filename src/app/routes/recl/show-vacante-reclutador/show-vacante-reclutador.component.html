@@ -1,4 +1,4 @@
-<div class="content-heading" [hidden]="imprimir">
+<div class="content-heading">
   <div>
     Informaci&oacute;n de Vacante
   </div>
@@ -85,8 +85,8 @@
       <h5>
         <strong>Coordinador o líder</strong>
         <br>
-        <label class="text-muted" *ngIf="estatusId != 4">{{requisicion?.coordinador}}</label>
-        <div *ngIf="estatusId == 4">
+        <label class="text-muted" *ngIf="requisicion?.estatusId != 4">{{requisicion?.coordinador}}</label>
+        <div *ngIf="requisicion?.estatusId == 4">
           <li class="list-group-item" *ngFor="let x of requisicion?.asignados">
             <span class="text-muted bg-light">{{x.nombre}} {{x.apellidoPaterno}} {{x.apellidoMaterno}}</span>
           </li>
@@ -97,7 +97,7 @@
         <h5>
           <strong>Reclutadores</strong>
         </h5>
-        <div *ngIf="estatusId != 4">
+        <div *ngIf="requisicion?.estatusId != 4">
           <li class="list-group-item" *ngFor="let x of requisicion?.asignados">
             <span class="text-muted bg-light">{{x.nombre}} {{x.apellidoPaterno}} {{x.apellidoMaterno}}</span>
           </li>

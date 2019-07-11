@@ -63,11 +63,11 @@
         <form [formGroup]="formRS">
           <div #SecciponRd *ngIf="redesSociales">
             <mat-form-field class="example-full-width">
-              <input #oficio matInput placeholder="Oficio Requisición" formControlName="Oficio" required>
+              <input #oficio matInput placeholder="Oficio Requisición (Nombre de Publicacion de Vacante)" formControlName="Oficio" required>
               <mat-hint align="end">{{oficio.value.length}} / 100</mat-hint>
             </mat-form-field>
             <mat-form-field>
-              <textarea matInput #message maxlength="500" placeholder="Comentario" rows="8"
+              <textarea matInput #message maxlength="500" placeholder="Comentario (Formacion Adicional a publcar ¿Que necesitas?)" rows="8"
                 formControlName="Comentario"></textarea>
               <mat-hint align="start">
                 <strong>Comentario adicional para la publicación</strong>
