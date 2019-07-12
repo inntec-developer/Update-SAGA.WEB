@@ -57,7 +57,6 @@ export class InformeComponent implements OnInit {
  
   public reclutaList:any;
   public cordinaList:any;
-  public PokemonList:any;
 
   public EstatusGeneral:any;
 
