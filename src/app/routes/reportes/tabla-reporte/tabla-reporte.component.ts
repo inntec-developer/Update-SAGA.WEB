@@ -211,7 +211,7 @@ public columns: Array<any> = [
   { title: 'Empresa', className: 'text-info text-center', name: 'empresa', filtering: { filterString: '', placeholder: 'Empresa' } },
   { title: 'Puesto', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Puesto' } },
   { title: 'Estado', className: 'text-info text-center', name: 'estado', filtering: { filterString: '', placeholder: 'Estado' } },
-  { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadorTotal', filtering: { filterString: '', placeholder: 'No. Reclutador' } },
+  { title: 'Reclutador', className: 'text-info text-center', name: 'nombreReclutado', filtering: { filterString: '', placeholder: 'No. Reclutador' } },
   { title: 'No.', className: 'text-info text-center', name: 'numero' , filtering: { filterString: '', placeholder: 'No. vacante' } },
   { title: 'Cubierta', className: 'text-info text-center', name: 'cubierta' , filtering: { filterString: '', placeholder: 'Cubiertas..' } },
   { title: 'Cumplimiento', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'Cumplimiento..' } },

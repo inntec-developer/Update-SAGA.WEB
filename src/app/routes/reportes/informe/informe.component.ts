@@ -1,29 +1,29 @@
 import * as _moment from 'moment';
 import * as _rollupMoment from 'moment';
-
+ 
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-
 import { ApiConection } from '../../../service/api-conection.service';
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
+import { ReportesService } from '../../../service/Reporte/reportes.service';
 import { FormControl } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import {Http} from '@angular/http';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ReportesService } from '../../../service/Reporte/reportes.service';
 import { daLocale } from 'ngx-bootstrap/chronos/i18n/da';
 
+ 
 //import {ToasterConfig, ToasterService} from 'angular2-toaster';
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
 const moment = _rollupMoment || _moment;
-
+ 
 @Component({
   selector: 'app-informe',
   templateUrl: './informe.component.html',
@@ -35,8 +35,8 @@ const moment = _rollupMoment || _moment;
   ],
 })
 export class InformeComponent implements OnInit {
-
-
+ 
+ 
   public value: any;
   public Empresas : any[];
   public Estatus : any[];
@@ -54,10 +54,14 @@ export class InformeComponent implements OnInit {
   public UsuarioCor : any[];
   public UsuarioSol : any[];
   public ListaEstado : any[];
-
+ 
   public reclutaList:any;
   public cordinaList:any;
+  public PokemonList:any;
 
+  public EstatusGeneral:any;
+
+ 
   public FormEmpresas: FormGroup;
   public FormSucursal: FormGroup;
   public FormSolicitante: FormGroup;
@@ -67,11 +71,11 @@ export class InformeComponent implements OnInit {
   public FormTipoReclu: FormGroup;
   public FormUserCor: FormGroup;
   public FormEstado: FormGroup;
-
+ 
    public myDate: any = new Date();
   date = new FormControl(new Date());
  // date2 = new FormControl(new Date());
-
+ 
   constructor(
     private Rutas: ActivatedRoute,
     private Servicio: ReportesService,
@@ -82,7 +86,10 @@ export class InformeComponent implements OnInit {
  //   private toasterService: ToasterService,
     private spinner: NgxSpinnerService,
     private estados: CatalogosService
+   
   ) {
+ 
+  
   //  this.toasterService = toasterService;
     this.FormEmpresas = new FormGroup({
       ClientesControl: new FormControl({ value: '', disabled: false })
@@ -105,25 +112,26 @@ export class InformeComponent implements OnInit {
     this.FormTipoReclu = new FormGroup({
       TiporecluControl: new FormControl({ value: '', disabled: false })
     });
-
+ 
     this.FormUserCor = new FormGroup({
       UserCorControl: new FormControl({ value: '', disabled: false })
     });
-
+ 
     this.FormEstado = new FormGroup({
       EstadoControl: new FormControl({ value: '', disabled: false })
     });
-
-
+ 
    }
-
+ 
   ngOnInit() {
-
+ 
     // let date = new Date();
+    // console.log("fecha: "+ date.getDate() +"-"+ date.getMonth());
+    // console.log("fecha: "+ (date.setDate(date.getDate() + 1)).toString());
     this.adapter.setLocale('es');
     this.cordinaList = [{id:0,nombre:'Todos'},
       {id:1,nombre:'Especializado'},{id:2,nombre:'Operativo'},{id:3,nombre:'Masivo'}]
-
+ 
       this.reclutaList = [{id:0,nombre:'Todos'},
       {id:1,nombre:'Reclutamiento Puro'},{id:2,nombre:'Subcontratación'},{id:3,nombre:'Staff'}]
 
@@ -135,29 +143,37 @@ export class InformeComponent implements OnInit {
       this.Oficina = [{id:0,nombre:'Todas'},
       {id:1,nombre:'Guadalajara'},{id:2,nombre:'México'},{id:3,nombre:'Monterrey'}]
     })
-
+ 
     this.Servicio.GetEstatusRep("").subscribe(item =>{
       this.Estatus = item;
     })
 
+    this.Servicio.GetEstatusRep("2").subscribe(item =>{
+  
+      this.EstatusGeneral = [{nombre:"Activos",pieza:item.activos}
+    ,{nombre:"Cubiertos",pieza:item.cubiertos},{nombre:"Otros",pieza:item.otros}]
+      console.log(this.EstatusGeneral)
+    })
+ 
+ 
     this.Servicio.GetUsuario('0').subscribe(item =>{
       this.Usuario = item;
     })
-
+ 
     this.Servicio.GetUsuario('1').subscribe(item =>{
       this.UsuarioCor = item;
     })
-
+ 
     this.Servicio.GetUsuario('2').subscribe(item =>{
       this.UsuarioSol = item;
     })
     this.GenerarEstados();
-
-
-
+ 
+ 
+ 
     document.oncontextmenu=null
   }
-
+ 
   ConvierteFecha(dateTime){
     if(dateTime != undefined){
       var res = dateTime.substring(0, 10);
@@ -170,64 +186,103 @@ export class InformeComponent implements OnInit {
       return (fecha);
     }
   }
-
-
+ 
+ 
 GenerarEstados(){
   this.estados.getEstado(42).subscribe(item =>{
     this.ListaEstado = item;
+    console.log(this.ListaEstado);
   })
 }
-
+ 
 GeneraEstatusBolsa(){
   this.Servicio.GetEstatusRep("1").subscribe(item =>{
     this.Estatus = item;
   })
 }
-
+ 
   empresaChange() {
      this.objempresa = this.FormEmpresas.get('ClientesControl').value;
-
+ 
   }
-
+ 
   sucursalChange(){
     this.objsucursal = this.FormSucursal.get('SucursalControl').value;
-
+ 
   }
-
+ 
   solicitanteChange(){
     this.objsolicit = this.FormSolicitante.get('SolicitanteControl').value;
-
+ 
   }
-
+ 
   reclutadorChange(){
     this.objrecluta = this.FormReclutador.get('ReclutadorControl').value;
-
+ 
   }
-
+ 
   estatusChange(){
     this.objstatus = this.FormEstatus.get('EstatusControl').value;
   }
-
+ 
   cordinaChange(){
     this.objtipocordi = this.FormCordina.get('CordinaControl').value;
   }
-
+ 
   tiporeclutaChange(){
     this.objtiporeclu = this.FormTipoReclu.get('TiporecluControl').value;
+    console.log(this.objtiporeclu)
   }
-
-
+ 
+ 
   UsuarioCorChange(){
     this.objusercoo = this.FormUserCor.get('UserCorControl').value;
-
+    
   }
-
+ 
   EstadoChange(){
     this.objestado = this.FormEstado.get('EstadoControl').value;
+    
   }
 
+  PruebaEstatus(evento){
+    this.objstatus = evento
+    console.log(this.objstatus);
+   
+  }
 
-
+  ActivaCheck(valor){
+    console.log(valor)
+    if(valor == "Activos"){
+      document.getElementById("mat-option-3").click()
+      document.getElementById("mat-option-4").click()
+      document.getElementById("mat-option-5").click()
+      document.getElementById("mat-option-6").click()
+      document.getElementById("mat-option-7").click()
+      document.getElementById("mat-option-8").click()
+      document.getElementById("mat-option-9").click()
+      document.getElementById("mat-option-10").click()
+      document.getElementById("mat-option-11").click()
+      document.getElementById("mat-option-12").click()
+    }else if(valor == "Cubiertos"){
+      document.getElementById("mat-option-13").click()
+      document.getElementById("mat-option-14").click()
+      document.getElementById("mat-option-15").click()
+      document.getElementById("mat-option-16").click()
+      document.getElementById("mat-option-17").click()
+      document.getElementById("mat-option-18").click()
+    }else{
+      document.getElementById("mat-option-19").click()
+      document.getElementById("mat-option-20").click()
+      document.getElementById("mat-option-21").click()
+      document.getElementById("mat-option-22").click()
+      document.getElementById("mat-option-23").click()
+      document.getElementById("mat-option-24").click()
+    }
+  }
+ 
+  
+ 
  Ocultar(){
   document.getElementById('DivReportefil').classList.add('ocultar');
   document.getElementById('Divprincipal').classList.add('ocultar');
@@ -236,8 +291,8 @@ GeneraEstatusBolsa(){
   document.getElementById('DivDetalleCordi').classList.add('ocultar');
   document.getElementById('DivCoordinacion').classList.add('ocultar');
   document.getElementById('DivCandidato').classList.add('ocultar');
-
-
+ 
+ 
   document.getElementById('report1').classList.add('ocultar');
   document.getElementById('repProActi').classList.add('ocultar');
   document.getElementById('report2').classList.add('ocultar');
@@ -252,8 +307,8 @@ GeneraEstatusBolsa(){
   document.getElementById('exelCoordinacion').classList.add('ocultar');
   document.getElementById('repCandidato').classList.add('ocultar');
   document.getElementById('exelCandidato').classList.add('ocultar');
-
-
+ 
+ 
   document.getElementById('divBusCoordina2').classList.add('ocultar');
   document.getElementById('divreclutador').classList.remove('ocultar');
   document.getElementById('divestatus2').classList.add('ocultar');
@@ -261,7 +316,7 @@ GeneraEstatusBolsa(){
   document.getElementById('divEdad').classList.add('ocultar');
   document.getElementById('divgenero').classList.add('ocultar');
   document.getElementById('Divdiv').classList.remove('ocultar');
-
+ 
   let tipo = document.getElementById('TipoReporte')['value'];
   if(tipo == 3){
     document.getElementById('report2').classList.remove('ocultar');
@@ -286,7 +341,7 @@ GeneraEstatusBolsa(){
     document.getElementById('report1').classList.remove('ocultar');
     document.getElementById('exel1').classList.remove('ocultar');
   }
-
+ 
   if(tipo == 4 || tipo == 5){
     document.getElementById('divTipoReclu').classList.add('ocultar');
     document.getElementById('divestatus').classList.add('ocultar');
@@ -340,9 +395,9 @@ GeneraEstatusBolsa(){
     document.getElementById('divEmpresas').classList.remove('ocultar');
     document.getElementById('divSucursal').classList.remove('ocultar');
   }
-
+ 
  }
-
+ 
   date2 = new FormControl(this.myDate);
-
+ 
 }

@@ -123,6 +123,9 @@ type="square-jelly-box"
       </div>
 </div>
 
+
+
+
 <div class="col-xl-2 ocultar" id="divEdad">
     <div class="form-group ">
       <label for="TipoReporte"></label>
@@ -217,7 +220,6 @@ type="square-jelly-box"
 </div>
 
     <div class="col-xl-2" id="divcordinacion">
-
       <div class="form-group">
         <label for="sel2"></label>
             <form  [formGroup]="FormCordina">
@@ -247,6 +249,26 @@ type="square-jelly-box"
 
       </div>
 
+      <div class="col-xl-2 " id="divestatus">
+        <mat-form-field style="margin-top: 10px">
+          <mat-label>Estatus</mat-label>
+          
+          <mat-select  (selectionChange)="PruebaEstatus($event.value)" 
+          (select)="PruebaEstatus()"
+          multiple 
+          [formControl]="PokemonControl" style="z-index: 100px !important">
+            <!-- <mat-option> None </mat-option> -->
+            <mat-optgroup *ngFor="let group of EstatusGeneral" [label]="group.nombre">
+                <mat-option style="color: red" (click)="ActivaCheck(group.nombre)" [value]="0">Todos los {{group.nombre}} </mat-option>
+              <mat-option id="Check_{{item.id}}"  *ngFor="let item of group.pieza"  [value]="item.id">
+                {{item.descripcion}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+        
+        </mat-form-field>
+      </div>
+     
 
       <div class="col-xl-4 ocultar" id="divestatus2">
         <div class="form-group input-sm" style="z-index: 100px !important">
@@ -276,7 +298,7 @@ type="square-jelly-box"
         </div>
     </div>
 
-      <div class="col-xl-2" id="divestatus">
+      <!-- <div class="col-xl-2 ocultar" id="divestatus">
           <div class="form-group input-sm" style="z-index: 100px !important">
             <label for="sel1"></label>
             <form [formGroup]="FormEstatus">
@@ -302,7 +324,7 @@ type="square-jelly-box"
              </ngx-select>
              </form>
           </div>
-      </div>
+      </div> -->
 
 
 
