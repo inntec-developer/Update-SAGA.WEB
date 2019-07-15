@@ -106,7 +106,7 @@ export class LoginComponent implements OnInit {
             if(!this.showRequi){
               this.router.navigate(['/home']);
             }else{
-              this.router.navigate(['/reclutamiento/showVacanteReclutador/', this.Folio]);
+              this.router.navigate(['/reclutamiento/showVacanteReclutador/', this.Folio], { skipLocationChange: true });
             }
 
           }

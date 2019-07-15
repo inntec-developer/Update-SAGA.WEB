@@ -1,12 +1,11 @@
 // import * as jsPDF from 'jspdf';
 
-import { ActivatedRoute, CanDeactivate, Router, } from '@angular/router';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatTableDataSource, PageEvent} from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
-import { CatalogosService } from '../../../../../service';
 import { DialogdamfoComponent } from '../dialogdamfo/dialogdamfo.component'
+import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../service/index';
 import { SettingsService } from '../../../../../core/settings/settings.service';
@@ -40,44 +39,45 @@ export class ViewdamfoComponent implements OnInit {
   constructor(
     private serviceRequisiciones: RequisicionesService,
     private dialog: MatDialog,
-    private _Router: Router,
     private _Route: ActivatedRoute,
-    private spinner:  NgxSpinnerService,
+    private _Router: Router,
+    private spinner: NgxSpinnerService,
     public settings: SettingsService,
-  ) {
+    private toasterService: ToasterService,
 
-    }
+  ) {
+    this.getParams();
+  }
   ngOnInit() {
-      this.GetDateDamfo();
+    this.spinner.show();
+    if (this.damfoId != null) {
+      this.serviceRequisiciones.getDamfoById(this.damfoId)
+        .subscribe(data => {
+          if (data.TipoContratoId == null) {
+            data.TipoContratoId = 0;
+          }
+          this.ClienteInfo = data['cliente'];
+          this.periodoPagoId = data.periodoPagoId;
+          this.damfo290 = data;
+          this.spinner.hide();
+        });
+    }
   }
 
-  GetDateDamfo(){
-    this.spinner.show();
+  getParams() {
     this._Route.params.subscribe(params => {
-      if(params['IdDamfo'] != null){
+      if (params['IdDamfo'] != null) {
         this.damfoId = params['IdDamfo'];
-        this.serviceRequisiciones.getDamfoById(this.damfoId)
-            .subscribe(data => {
-              if(data.TipoContratoId == null)
-              {
-                data.TipoContratoId = 0;
-              }
-              this.ClienteInfo = data['cliente'];
-              this.periodoPagoId = data.periodoPagoId;
-              this.damfo290 = data;
-              this.spinner.hide();
-            });
-
-      }else{
-          console.log('Error al cargar información');
+      } else {
+        this.popToast('error', 'Nueva Requisicion', 'Error al intentar notificar por medio de correo electrónico la creación de la requisición.');
+        this._Router.navigate(['/ventas/crearRequisicion']);
       }
-
     });
   }
 
-  openDialog(){
-    this.data  = {
-      cliente: this.ClienteInfo['nombreComercial'],
+  openDialog() {
+    this.data = {
+      cliente: this.ClienteInfo['nombrecomercial'],
       claseReclutamiento: this.damfo290['claseReclutamiento'],
       tipoReclutamiento: this.damfo290['tipoReclutamiento'],
       sueldoMinimo: this.damfo290['sueldoMinimo'],
@@ -85,7 +85,7 @@ export class ViewdamfoComponent implements OnInit {
       nombrePerfil: this.damfo290['nombrePerfil'],
       id: this.damfoId
     }
-    let dialogRef = this.dialog.open(DialogdamfoComponent,{
+    let dialogRef = this.dialog.open(DialogdamfoComponent, {
       width: '50%',
       height: 'auto',
       data: this.data
@@ -95,10 +95,10 @@ export class ViewdamfoComponent implements OnInit {
   }
 
 
-  print(){
+  print() {
     this.imprimir = true;
-    if(!this.settings.layout.isCollapsed){
-        this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
+    if (!this.settings.layout.isCollapsed) {
+      this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
     }
     setTimeout(() => {
       document.getElementById('content').style.marginLeft = "70px";
@@ -114,5 +114,29 @@ export class ViewdamfoComponent implements OnInit {
       document.getElementById('content').style.marginLeft = "0";
     }, 500);
 
+  }
+
+  //------------------------------------------------------------------------------------
+  // Toasts (Mensajes del sistema)
+  //------------------------------------------------------------------------------------
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
+
+  popToast(type, title, body) {
+
+    var toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 4000,
+      body: body
+    }
+    this.toasterService.pop(toast);
   }
 }

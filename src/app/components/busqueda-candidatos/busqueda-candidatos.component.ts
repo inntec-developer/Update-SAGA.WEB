@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators/map';
 import { startWith } from 'rxjs/operators';
 
+const swal = require('sweetalert');
+
 @Component({
   selector: 'app-busqueda-candidatos',
   templateUrl: './busqueda-candidatos.component.html',
@@ -93,7 +95,7 @@ export class BusquedaCandidatosComponent implements OnInit {
   toolTipePC: string;
   alerts: any;
   loadingPC: boolean;
-  palabraClave: string;
+  palabraClave: string = '';
 
 
   constructor(
@@ -332,13 +334,18 @@ export class BusquedaCandidatosComponent implements OnInit {
   }
 
   buscarPalabraClave(palabraclave: string) {
-    this.loading = true;
-    this.service.getcandidatosPalabraClave(palabraclave).subscribe(data => {
-      this.Candidatos = data;
-      this.filtro.emit(this.Candidatos);
-      this.loading = false;
-      this.expanded = false;
-    });
+    var busqueda = palabraclave.trim();
+    if(busqueda != ''){
+      this.loading = true;
+      this.service.getcandidatosPalabraClave(busqueda).subscribe(data => {
+        this.Candidatos = data;
+        this.filtro.emit(this.Candidatos);
+        this.loading = false;
+        this.expanded = false;
+      });
+    }else{
+      swal('Agregue información a buscar.', '', 'info');
+    }
   }
 
   LimpiarFiltro() {

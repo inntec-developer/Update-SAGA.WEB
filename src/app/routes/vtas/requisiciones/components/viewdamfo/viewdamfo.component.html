@@ -1,4 +1,3 @@
-<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
 <div class="content-heading" *ngIf="!imprimir">
   <div>
     Visualizar DAM-FO-290
@@ -159,7 +158,7 @@
               </p>
               <p>
                 <strong>Semanal: </strong>
-                <label class="card-text"> ${{(damfo290.sueldoMaximo / 30) * 7 | currency: 'MXN'}}</label>
+                <label class="card-text"> ${{(damfo290?.sueldoMaximo / 30) * 7 | currency: 'MXN'}}</label>
               </p>
               <p>
                 <strong>Diario: </strong>
@@ -406,3 +405,5 @@
     </div>
   </div>
 </div>
+
+<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
