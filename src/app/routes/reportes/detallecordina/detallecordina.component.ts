@@ -111,7 +111,7 @@ public columns: Array<any> = [
   { title: 'FOLIOS', className: 'text-success text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'Folio' } },
   { title: 'POSICIONES', className: 'text-success text-center', name: 'numeropos', filtering: { filterString: '', placeholder: 'Folio' } },
   { title: 'CUBIERTOS', className: 'text-success text-center', name: 'cubiertas', filtering: { filterString: '', placeholder: 'cubiertas' } },
-  { title: 'AVANCE', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'puntos' } },
+  { title: 'CUMPLIMIENTO', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'puntos' } },
  
 ];
 
