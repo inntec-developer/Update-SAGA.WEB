@@ -69,7 +69,7 @@ type="square-jelly-box"
           <option value="2">Por Estatus</option>
           <option value="3">General</option>
           <option value="4">Productividad</option>
-          <option value="5">Detalle Reclutador</option>
+          <option value="5">Cumplimiento</option>
           <option value="6">Detalle Coordinador</option>
           <option value="7">Coordinacion</option>
           <option value="8">Candidato Bolsa</option>
@@ -252,11 +252,10 @@ type="square-jelly-box"
       <div class="col-xl-2 " id="divestatus">
         <mat-form-field style="margin-top: 10px">
           <mat-label>Estatus</mat-label>
-          
-          <mat-select  (selectionChange)="PruebaEstatus($event.value)" 
-          (select)="PruebaEstatus()"
-          multiple 
-          [formControl]="PokemonControl" style="z-index: 100px !important">
+
+          <mat-select  (selectionChange)="PruebaEstatus($event.value)"
+          multiple
+          style="z-index: 100px !important">
             <!-- <mat-option> None </mat-option> -->
             <mat-optgroup *ngFor="let group of EstatusGeneral" [label]="group.nombre">
                 <mat-option style="color: red" (click)="ActivaCheck(group.nombre)" [value]="0">Todos los {{group.nombre}} </mat-option>
@@ -265,10 +264,10 @@ type="square-jelly-box"
               </mat-option>
             </mat-optgroup>
           </mat-select>
-        
+
         </mat-form-field>
       </div>
-     
+
 
       <div class="col-xl-4 ocultar" id="divestatus2">
         <div class="form-group input-sm" style="z-index: 100px !important">

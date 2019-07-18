@@ -196,25 +196,6 @@ export class DtRequisicionReclPuroComponent implements OnInit {
       if (this.mx.find(x => x == this.estado)) {
         this.UnidadNegocioId = 2
       }
-
-
-      // this.UnidadNegocioId = this.mty.find( function(element, estado = this.estado){
-      //   if ( element == estado ){
-      //     return 3
-      //   }
-      // });
-
-      // this.UnidadNegocioId = this.gdl.find(function(element, estado = this.estado) {
-      //   if ( element == estado ){
-      //     return 1
-      //   }
-      // });
-
-      // this.UnidadNegocioId = this.mx.find(function(element, estado = this.estado) {
-      //   if ( element == estado ){
-      //     return 2
-      //   }
-      // });
     }
     this.ValidarEstatus(data.estatusId, data.vacantes);
 
@@ -267,9 +248,6 @@ export class DtRequisicionReclPuroComponent implements OnInit {
       this.borrar = false;
       this.autorizar = false;
     }
-
-
-
   }
 
   validation(estatusId, vacantes) {

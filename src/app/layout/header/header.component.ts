@@ -157,12 +157,26 @@ export class HeaderComponent implements OnInit {
 
 const renderActualizaciones = `
 <ul>
-    <li>Notificar el departamento de Medios si la Vacante se va a publicar en redes sociales. Esto al momento de asignar la vacante.</li>
-    <li>Agregar la ponderación de la vacante, el sistema en automático calcula dependiendo el tipo de reclutamiento, si el Coordinador o Líder considera
-    que no es correcta la ponderación puede cambiarla</li>
+    <li><strong>Periodo de inactividad</strong></li>
+    <li><strong>Restablecer contraseña</strong></li>
+    <li><strong>Autorización GG (anticipos menores al 50%)</strong></li>
+    <li><strong>Coincidencias de Candidatos por email al asignar folio. </strong></li>
+    <li><strong>Aviso a Redes Sociales de Publicar vacantes a Redes Sociales</strong></li>
+    <li><strong>Vista del diseño de Vacantes</strong></li>
+    <li><strong>Sincronización Calendario con Outlook y Thunderbird</strong></li>
+    <li><strong>Reporte y Grafica de productividad</strong></li>
+    <li><strong>Reporte Detalle de Coordinadores</strong></li>
+    <li><strong>Reporte Detalle de Reclutadores</strong></li>
+    <li><strong>Reporte de Candidatos en Bolsa de Trabajo</strong></li>
+    <li><strong>Visualizar Requisición al momento de darle clic en el n&uacute;mero de folio que se muestra en el correo electr&oacute;nico. </strong></li>
+    <li><strong>Reporte por Coordinación</strong></li>
+    <li><strong>Indicador Captados & Contratados</strong></li>
+    <li><strong>Visualización de Subordinados – Sistema->Usuarios</strong></li>
+    <li><strong>Visualización de Perfil en el módulo de Foto.</strong></li>
+    <li><strong>Transferencia de folios</strong></li>
+    <li><strong>Indicadores de Inicio por folio, por posiciones y candidatos</strong></li>
+    <li><strong>Impresión Perfil para Solicitar Reclutamiento</strong></li>
 </ul>`;
-
-
 // <ol>
 //       <li>Menú Principal -> Reportes -> Reporte</li>
 //       <li>Para hacer uso del mimos, es necesario utilixar los filtros para que la busqueda,

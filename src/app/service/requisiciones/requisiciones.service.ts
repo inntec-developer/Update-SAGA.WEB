@@ -57,6 +57,8 @@ export class RequisicionesService {
   private URLGetRequiTipoRecl = ApiConection.ServiceUrl + ApiConection.GetRequiTipoRecl;
   private URLSendEmailRequiPuro = ApiConection.ServiceUrl + ApiConection.SendEmailRequiPuro;
   private URLSendEmailRedesSociales = ApiConection.ServiceUrl + ApiConection.SendEmailRedesSociales;
+  private URLSendEmailNuevaRequisicion = ApiConection.ServiceUrl + ApiConection.SendEmailNuevaRequi;
+  private URLPublicarNuevaRequisicion = ApiConection.ServiceUrl + ApiConection.PublicarNuevaRequisicion;
   private URLAddDtosFactura = ApiConection.ServiceUrl + ApiConection.AddDatosFactura;
   private URLGetReporte70 = ApiConection.ServiceUrl + ApiConection.GetReporte70;
   private URLGetAsignados = ApiConection.ServiceUrl + ApiConection.GetAsignados;
@@ -222,6 +224,15 @@ export class RequisicionesService {
 
   SendEmailRedesSociales(data: any): Observable<any>{
     return this._httpClient.post(this.URLSendEmailRedesSociales, data, this.httpOptions);
+  }
+
+  SendEmailNuevaRequi(data: any): Observable<any>{
+    return this._httpClient.post(this.URLSendEmailNuevaRequisicion, data, this.httpOptions);
+  }
+
+  PublicarNuevaRequisicion(data: any): Observable<any>{
+    let params = new HttpParams().set('Id', data);
+    return this._httpClient.get(this.URLPublicarNuevaRequisicion, {params: params, headers: this.httpOptions.headers})
   }
 
   AddDatosFactura(datos):Observable<any>

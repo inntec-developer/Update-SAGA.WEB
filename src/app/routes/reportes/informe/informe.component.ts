@@ -19,9 +19,6 @@ import { daLocale } from 'ngx-bootstrap/chronos/i18n/da';
 //import {ToasterConfig, ToasterService} from 'angular2-toaster';
  
  
- 
- 
- 
 const moment = _rollupMoment || _moment;
  
 @Component({

@@ -107,6 +107,8 @@ export class ApiConection {
   public static GetRequiTipoRecl = 'Requisiciones/getRequisicionesTipo';
   public static SendEmailRequiPuro = 'Requisiciones/sendEmailRequiPura';
   public static SendEmailRedesSociales = 'Requisiciones/sendEmailRedesSociales'
+  public static SendEmailNuevaRequi = 'Requisiciones/senEmailNuevaRequi';
+  public static PublicarNuevaRequisicion = 'Requisiciones/publicarNuevaRequi'
   public static AddDatosFactura = 'Requisiciones/insertDtosFactura';
   public static GetReporte70 = 'Requisiciones/getReporte70';
   public static GetRepoteCandidatos = 'Candidatos/getRPTCandidatosVacante'

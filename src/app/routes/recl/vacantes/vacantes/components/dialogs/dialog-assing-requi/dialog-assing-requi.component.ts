@@ -255,7 +255,7 @@ export class DialogAssingRequiComponent implements OnInit {
                 });
               }
               else{
-                swal('Asignación', 'La asignacion se a realizado con exito', 'success');
+                swal('Asignación', 'La asignación se a realizado con éxito', 'success');
               }
             }
 

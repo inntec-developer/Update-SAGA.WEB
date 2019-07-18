@@ -41,7 +41,6 @@ export class IndicadorUndNegocioGdlComponent implements OnInit {
         this.Vigentes = result['vigentes'].length;
         this.PorVencer = result['porVencer'].length;
         this.Vencidas = result['vencidas'].length;
-        debugger;
         var vigentes = result['vigentes'];
         var porVencer = result['porVencer'];
         var vencidas = result['vencidas'];
@@ -133,7 +132,6 @@ export class IndicadorUndNegocioGdlComponent implements OnInit {
         this.Vigentes = result['vigentes'].length;
         this.PorVencer = result['porVencer'].length;
         this.Vencidas = result['vencidas'].length;
-        debugger;
         var vigentes = result['vigentes'];
         var porVencer = result['porVencer'];
         var vencidas = result['vencidas'];

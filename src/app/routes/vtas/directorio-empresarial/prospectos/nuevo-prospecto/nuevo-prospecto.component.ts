@@ -1815,7 +1815,7 @@ export class NuevoProspectoComponent implements OnInit {
     }
     this._ClienteService.addProspecto(prospecto).subscribe(element => {
       if (element == 202) {
-        let msg = 'Se a Registrado Correctamente el Prospecto' + prospecto['Nombre Comercial'];
+        let msg = 'Se a Registrado Correctamente el Prospecto' + prospecto['NombreComercial'];
         this.popToast('success', 'Prospectos', msg);
         setTimeout(() => {
           this.loading = false;

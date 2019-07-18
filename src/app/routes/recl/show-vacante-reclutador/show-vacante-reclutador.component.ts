@@ -18,20 +18,25 @@ export class ShowVacanteReclutadorComponent implements OnInit {
     private _Service: VacantesEmailService,
     private spinner: NgxSpinnerService,
   ) {
-    this.spinner.show();
-    this._Route.params.subscribe(params => {
-      if (params['Folio'] != null) {
-        this.Folio = params['Folio'];
-        this._Service.showVacanteEmail(this.Folio).subscribe(result => {
-          this.requisicion = result;
-          this.spinner.hide();
-        });
-      }
-    });
+    this.getParams();
   }
 
   ngOnInit() {
+    this.spinner.show();
+    if (this.Folio != null) {
+      this._Service.showVacanteEmail(this.Folio).subscribe(result => {
+        this.requisicion = result;
+        this.spinner.hide();
+      });
+    }
+  }
 
+  getParams() {
+    this._Route.params.subscribe(params => {
+      if (params['Folio'] != null) {
+        this.Folio = params['Folio'];
+      }
+    });
   }
 
 }
