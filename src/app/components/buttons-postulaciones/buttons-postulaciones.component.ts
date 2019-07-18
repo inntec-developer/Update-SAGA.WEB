@@ -17,6 +17,7 @@ import { PostulateService } from './../../service/SeguimientoVacante/postulate.s
 import { RequisicionesService } from '../../service';
 import { SettingsService } from './../../core/settings/settings.service';
 import { element } from 'protractor';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-buttons-postulaciones',
@@ -49,7 +50,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   showFilterRow: boolean;
   registros: number;
   errorMessage: any;
-  element: any = {};
+  element: any = [];
   postulados: any;
   dlgLiberar = false;
   //candidatoId = 'f66da23e-9d69-e811-80e1-9e274155325e';'621ede7a-2fbc-e811-80ea-9e274155325e'
@@ -86,16 +87,13 @@ export class ButtonsPostulacionesComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private dialog: MatDialog,
     private modalService: BsModalService,
-    private settings: SettingsService) { }
+    private settings: SettingsService,
+    private _Router: Router) { }
 
   ngOnInit() {
     this.getpostulados();
     this.GetConteoVacante();
   }
-
-  // openModal(templateModal: TemplateRef<any>) {
-  //   this.modalRef = this.modalService.show(templateModal, { class: 'atras' });
-  // }
 
   ValidarEstatus(estatus) {
     var auxc = this.dataSource.filter(element => {
@@ -373,6 +371,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
           candidatoId: element.candidatoId,
           estatusId: element.estatusId,
           folio: element.folio,
+          tipoReclutamientoId: element.tipoReclutamientoId,
           usuario: element.usuario,
           usuarioId: element.usuarioId,
           fecha: element.fecha,
@@ -740,11 +739,12 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   public onCellClick(data: any) {
 
-    data.selected ? data.selected = false : data.selected = true; //para poner el backgroun cuando seleccione
+    data.selected ? data.selected = false : data.selected = true; //para poner el background cuando seleccione
     data.selected ? this.candidatoId = data.candidatoId : this.candidatoId = null; //agrega y quita el row seleccionado
     data.selected ? this.horarioId = data.horarioId : this.horarioId = null; //agrega y quita el row seleccionado
     data.selected ? this.ProcesoCandidatoId = data.id : this.ProcesoCandidatoId = null;
 
+    this.element = data;
     if (!data.selected) {
       this.cr = true;
       this.enr = true;
@@ -824,31 +824,28 @@ export class ButtonsPostulacionesComponent implements OnInit {
     this.evm = true;
     this.liberado = true;
     this.pst = true;
-
+this.element = [];
     this.onChangeTable(this.config);
   }
 
   closeModal(modal) {
     if (modal == 1) {
-      this.ShownModal.hide();
+    
       this.isModalShow = false;
     }
     else {
       if (this.actualizoContratados) {
         var datos = { candidatoId: this.candidatoId, estatusId: 24, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: this.settings.user['id'] };
-        this.SetApiProceso(datos, 24, 'Contratado')
+        this.SetApiProceso(datos, 24, 'Cubierto')
         this.editarContratados = false;
       }
       else {
         this.editarContratados = false;
       }
+      this.refresh();
     }
 
-    this.refresh();
-
   }
-
-
 
   public rows: Array<any> = []
   public columns: Array<any> = [
@@ -878,75 +875,17 @@ export class ButtonsPostulacionesComponent implements OnInit {
     return data.slice(start, end);
   }
 
-  public changeSort(data: any, config: any): any {
-    if (!config.sorting) {
-      return data;
-    }
-
-    let columns = this.config.sorting.columns || [];
-    let columnName: string = void 0;
-    let sort: string = void 0;
-
-    for (let i = 0; i < columns.length; i++) {
-      if (columns[i].sort !== '' && columns[i].sort !== false) {
-        columnName = columns[i].name;
-        sort = columns[i].sort;
-      }
-    }
-
-    if (!columnName) {
-      return data;
-    }
-
-    // simple sorting
-    return data.sort((previous: any, current: any) => {
-      if (previous[columnName] > current[columnName]) {
-        return sort === 'desc' ? -1 : 1;
-      } else if (previous[columnName] < current[columnName]) {
-        return sort === 'asc' ? -1 : 1;
-      }
-      return 0;
-    });
-  }
-
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
+    this.showFilterRow = true;
     this.columns.forEach((column: any) => {
-      if (column.filtering) {
-        this.showFilterRow = true;
+      if (column.filtering.filterString != "") {
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
         });
       }
     });
-
-    if (!config.filtering) {
-      return filteredData;
-    }
-
-    if (config.filtering.columnName) {
-      return filteredData.filter((item: any) =>
-        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-    }
-
-    let tempArray: Array<any> = [];
-    filteredData.forEach((item: any) => {
-      let flag = false;
-      this.columns.forEach((column: any) => {
-        if (item[column.name] == null) {
-          flag = true;
-        } else {
-          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-            flag = true;
-          }
-        }
-      });
-      if (flag) {
-        tempArray.push(item);
-      }
-    });
-    filteredData = tempArray;
 
     return filteredData;
   }
@@ -956,15 +895,11 @@ export class ButtonsPostulacionesComponent implements OnInit {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
 
-    if (config.sorting) {
-      (<any>Object).assign(this.config.sorting, config.sorting);
-    }
     this.registros = this.dataSource.length;
     this.rows = this.dataSource;
     let filteredData = this.changeFilter(this.dataSource, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
-    this.length = sortedData.length;
+    this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
+    this.length = filteredData.length;
   }
 
   public clearfilters() {

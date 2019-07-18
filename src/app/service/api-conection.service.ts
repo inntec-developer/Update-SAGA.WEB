@@ -267,6 +267,7 @@ export class ApiConection {
   public static AddComentariosVacante = 'reclutamiento/seguimientovacante/addComentariosVacante';
   public static setStatusBolsa = 'reclutamiento/seguimientovacante/updateStatusBolsa';
   public static sendEmailCandidato = 'reclutamiento/seguimientovacante/sendEmailCandidato';
+  public static sendEmailContratados = 'reclutamiento/seguimientovacante/sendEmailContratados';
   public static sendEmailNoContratado = 'reclutamiento/seguimientovacante/sendEmailsNoContratado';
   public static getConteoVacante = 'Requisiciones/getConteoVacante';
   public static execProcedurePause = 'Requisiciones/execProcedurePause'
@@ -277,6 +278,7 @@ export class ApiConection {
   public static getRequisicionesHistorial = 'Requisiciones/getRequisicionesHistorial'
   public static registrarCandidatos = 'reclutamiento/seguimientovacante/registrarCandidatos'
   public static validarEmailCandidato = 'reclutamiento/seguimientovacante/validarEmailCandidato'
+  public static validarTelCandidato = 'reclutamiento/seguimientovacante/validarTelCandidato'
   public static getCandidatosCubiertos = 'reclutamiento/seguimientovacante/getCandidatosCubiertos'
 
 

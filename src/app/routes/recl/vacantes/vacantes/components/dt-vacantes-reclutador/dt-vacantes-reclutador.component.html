@@ -11,11 +11,11 @@
   <div class="card-body mat-elevation-z8">
     <div class="row p-2 bg-light clearfix">
       <div class="col-sm-12 col-md-12">
-        <button id="view" (click)="lgModal15.show()" placement="bottom" tooltip="Ver Requisición"
+        <button (click)="lgModal15.show()" placement="bottom" tooltip="Ver Requisición"
           class="mr-1 mat-elevation-z8" [disabled]="!element"
           [ngClass]="(!element) ? 'btn btn-xs disabled':'btn btn-xs btn-warning'">
           <em class="fa fa-eye"></em></button>
-        <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-xs mat-elevation-z8"
+        <button (click)="lgModal.show()" class="mr-1 btn btn-xs mat-elevation-z8"
           [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-dark'" container="body" placement="bottom"
           tooltip="Comentarios"><em class="fa fa-comments-o"></em></button>
         <button id="create" chkPrivilegiosButtons (click)="openDialogAssingRequi()" placement="bottom" tooltip="Asignar"

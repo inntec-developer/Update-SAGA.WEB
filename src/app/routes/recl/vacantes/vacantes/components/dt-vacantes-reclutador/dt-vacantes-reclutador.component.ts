@@ -273,34 +273,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       }
     });
 
-    // if (!config.filtering) {
-    //   return filteredData;
-    // }
-
-    // if (config.filtering.columnName) {
-    //   return filteredData.filter((item: any) =>
-    //     item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-    // }
-
-    // let tempArray: Array<any> = [];
-    // filteredData.forEach((item: any) => {
-    //   let flag = false;
-    //   this.columns.forEach((column: any) => {
-    //     if (item[column.name] == null) {
-    //       flag = true;
-    //     } else {
-    //       if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-    //         flag = true;
-    //       }
-    //     }
-    //   });
-    //   if (flag) {
-
-    //     tempArray.push(item);
-    //   }
-    // });
-    // filteredData = tempArray;
-
     return filteredData;
   }
 
@@ -310,11 +282,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
     if (config.filtering) {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
-
-    if (config.sorting) {
-      (<any>Object).assign(this.config.sorting, config.sorting);
-    }
-
 
     this.rows = this.dataSource;
     let filteredData = this.changeFilter(this.dataSource, this.config);
@@ -341,7 +308,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
       this._reinciar();
       this.spinner.hide();
-    }, 800);
+    }, 1000);
   }
 
   public clearfilters() {
@@ -762,14 +729,45 @@ export class DtVacantesReclutadorComponent implements OnInit {
     });
 
     dialogDlt.afterClosed().subscribe(result => {
-      if (result == 200) {
-
-            this.popToast('success', 'Seguimiento', 'El registro se realizó correctamente');
-
-
+      if (result == 0) {
+        this.onChangeTable(this.config);
       }
       else if(result == 417) {
-        this.popToast('error', 'Seguimiento', 'Ocurrió un error al intentar registrar candidato');
+        this.popToast('error', 'Registro Masivo', 'Ocurrió un error al intentar registrar candidato');
+      }
+      else
+      {
+        swal({
+          title: "Registro Masivo de Candidatos",
+          text: "¡Se registraron (" + result.length.toString() + ") candidatos con estatus cubierto para la vacante de " + this.vBtra + ". ¿Desea enviar notificación a los candidatos registrados?. Esto puede tardar varios minutos",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#21a240",
+          confirmButtonText: "¡Si, enviar notificación!",
+          cancelButtonText: "¡No, cancelar!",
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, (isConfirm) => {
+          window.onkeydown = null;
+          window.onfocus = null;
+          if (isConfirm) {
+    
+            this.spinner.show();
+         
+            this.postulateservice.SendEmailContratados(result).subscribe(data => {
+              this.spinner.hide();      
+              this.refreshTable();
+            });
+          }
+          else {
+            this.spinner.hide();
+            swal("Cancelado", "No se realizó ningún cambio", "error");
+            this.refreshTable();
+          }
+        });
+            // this.popToast('success', 'Registro Masivo', 'El registro se realizó correctamente');
+            // this.refreshTable();
+
       }
     });
   }

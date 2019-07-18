@@ -16,7 +16,7 @@
     <div class="d-flex justify-content-between mt-4">
     <h6 class="text-info mt-2">SELECCIONAR {{titulo | uppercase}}</h6>
       <mat-checkbox *ngIf="data.depto=='Recl'" (change)="GetReclutadores($event);">Reclutador</mat-checkbox>
-      <div *ngIf="data.depto=='Vtas'" class="input-group input-group-sm mb-1 ilong float-left">
+      <div *ngIf="data.depto=='Vtas' || !verRecl" class="input-group input-group-sm mb-1 ilong float-left">
           <input (input)="Search($event, 3, dataSource)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
           <div class="input-group-append">
             <span class="input-group-text text-info"><i class="fa fa-search" aria-hidden="true"></i></span>

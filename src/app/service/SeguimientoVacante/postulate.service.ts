@@ -29,10 +29,12 @@ export class PostulateService {
   private UrlSetProcesoVacante = ApiConection.ServiceUrl + ApiConection.setProcesoVacante;
   private UrlSetStatusBolsa = ApiConection.ServiceUrl + ApiConection.setStatusBolsa;
   private UrlSendEmailCandidato = ApiConection.ServiceUrl + ApiConection.sendEmailCandidato;
+  private UrlSendEmailContratados = ApiConection.ServiceUrl + ApiConection.sendEmailContratados;
   private UrlSendEmailsNoContrado = ApiConection.ServiceUrl + ApiConection.sendEmailNoContratado;
   private UrlGetConteoVacante = ApiConection.ServiceUrl + ApiConection.getConteoVacante;
   private UrlRegistrarCandidatos = ApiConection.ServiceUrl + ApiConection.registrarCandidatos;
   private UrlValidarEmailCandidato = ApiConection.ServiceUrl + ApiConection.validarEmailCandidato;
+  private UrlValidarTelCandidato = ApiConection.ServiceUrl + ApiConection.validarTelCandidato;
   private UrlGetCandidatosCubiertos = ApiConection.ServiceUrl + ApiConection.getCandidatosCubiertos
 
   constructor(private _HttpClient: HttpClient) { }
@@ -41,6 +43,11 @@ export class PostulateService {
   {
     let params = new HttpParams().set('email', email);
     return this._HttpClient.get(this.UrlValidarEmailCandidato, {params: params, headers: this.httpOptions.headers })
+  }
+  ValidarTelCandidato(lada, telefono) : Observable<any>
+  {
+    let params = new HttpParams().set('lada', lada).set('telefono', telefono);
+    return this._HttpClient.get(this.UrlValidarTelCandidato, {params: params, headers: this.httpOptions.headers })
   }
   RegistrarCandidatos(data)
   {
@@ -85,6 +92,10 @@ export class PostulateService {
   SendEmailCandidato(data)
   {
     return this._HttpClient.post(this.UrlSendEmailCandidato, data, this.httpOptions )
+  }
+  SendEmailContratados(data)
+  {
+    return this._HttpClient.post(this.UrlSendEmailContratados, data, this.httpOptions )
   }
 
   SendEmailsNoContratado(data)

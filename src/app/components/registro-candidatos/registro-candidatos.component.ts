@@ -3,6 +3,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import { MomentDateAdapter} from '@angular/material-moment-adapter';
 import { SistTicketsService } from '../../service/SistTickets/sist-tickets.service';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+import { PostulateService } from '../../service/SeguimientoVacante/postulate.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -41,6 +42,7 @@ export class RegistroCandidatosComponent implements OnInit {
   ap = ''; 
   am = '';
   email = '';
+  txtLada = '';
   txtPhone = '';
   estados: any = [];
   municipios: any = [];
@@ -54,7 +56,9 @@ export class RegistroCandidatosComponent implements OnInit {
   opcRegistro1 = 1;
   opcRegistro2 = 0;
   date: Date;
-  constructor(private adapter: DateAdapter<any>, private _service: SistTicketsService) {
+  valEmail = '';
+  valTel: string = "";
+  constructor(private adapter: DateAdapter<any>, private _service: SistTicketsService, private postulateservice: PostulateService) {
     this.adapter.setLocale('es')
 
    }
@@ -94,11 +98,12 @@ export class RegistroCandidatosComponent implements OnInit {
 
   registrar()
   {
-
     let opc = 0;
+
     if(this.opcRegistro1 > 0)
     {
       opc = this.opcRegistro1;
+
     }
     else
     {
@@ -107,7 +112,6 @@ export class RegistroCandidatosComponent implements OnInit {
 
     let email = [{ email: this.email.trim(), UsuarioAlta: 'INNTEC' }];
     let candidato = {
-      
       Nombre: this.nom,
       ApellidoPaterno: this.ap,
       ApellidoMaterno: this.am,
@@ -116,19 +120,106 @@ export class RegistroCandidatosComponent implements OnInit {
       GeneroId: this.rbS,
       EstadoNacimientoId: this.estadoId,
       MunicipioNacimientoId: this.municipioId,
-      Telefono: [{ClavePais:52, ClaveLada: this.txtPhone.substring(0,2), telefono: this.txtPhone, TipoTelefonoId: 1}],
+      Telefono: [{ClavePais:52, ClaveLada: this.txtLada, telefono: this.txtPhone, TipoTelefonoId: 1}],
       OpcionRegistro: opc
       
     };
-    this._service.RegistrarCandidato(candidato).subscribe(data => {
-      if(data != 417)
-      {
-        this.BorrarCampos();
 
-      }
-      this.validarRegistro.emit(data);
+     this._service.RegistrarCandidato(candidato).subscribe(result => {
+        this.validarRegistro.emit(result);
+
     })
+  
+  }
+  ValidarEmail(email) : boolean
+  {
+    let regexpEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$');
+    if(regexpEmail.test(email))
+    {
+      this.postulateservice.ValidarEmailCandidato(email).subscribe(data => {
+        if(data==302)
+        {
+          this.valEmail = "el email " + email + " ya se encuentra registrado"
+          this.email = "";
 
+          return false;
+        }
+        else
+        {
+          this.valEmail = "";
+
+          return true;
+        }
+      });
+    }
+    else
+    {
+      this.valEmail = "el email " + email + "  no tiene el formato correcto"
+      this.email = "";
+      return false;
+    }
+  }
+  ValidarTelefono() : boolean
+    {
+      // var regex = /^[+ 0-9]{5}$/;  valida que solo sean numeros y longitud 5
+    var regex = /^[0-9]+$/;
+
+    if(regex.test(this.txtLada) && regex.test(this.txtPhone))
+    {
+      this.postulateservice.ValidarTelCandidato(this.txtLada, this.txtPhone).subscribe(data => {
+        if(data==302)
+        {
+          this.valTel = "El teléfono " + this.txtLada + "-" + this.txtPhone + " ya se encuentra registrado"
+          this.txtLada = "";
+          this.txtPhone = "";
+
+          return false;
+        }
+        else
+        {
+          this.valTel = "";
+          return true;
+
+        }
+      });
+    }
+    else if(this.opcRegistro2 == 1)
+    {
+      this.valTel = "Lada y teléfono son campos necesarios y deben ser númericos";
+      this.txtLada = "";
+      this.txtPhone = "";
+
+      return false;
+    }
+  }
+
+  valOpcionReg(val)
+  {
+    let regexpEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$');
+    var regex = /^[0-9]+$/;
+    
+    if(val == 1 )
+    {
+      if(!regexpEmail.test(this.email))
+      {
+        this.email = "";
+      }
+
+      this.opcRegistro2=0; 
+       this.txtLada='---'; 
+       this.txtPhone='-------'
+    }
+    else if(val == 2 )
+    {
+      if(!regex.test(this.txtPhone))
+      {
+        this.txtPhone = "";
+        this.txtLada = "";
+      }
+      this.opcRegistro1=0;
+      this.email='REGISTRO POR TELEFONO'
+  
+    }
   }
   BorrarCampos()
   {
@@ -137,7 +228,9 @@ export class RegistroCandidatosComponent implements OnInit {
     this.am = '';
     this.edad = 0;
     this.email = '';
+    this.txtLada = '';
     this.txtPhone = '';
+    this.valTel = "";
     this.municipios = [];
     this.rbH = 0;
     this.rbM = 0;
