@@ -22,7 +22,7 @@
           tooltip="Desactivar Usuario">
           <em class="fa fa-ban"></em>
         </button>
-        <button id='special' chkPrivilegiosButtons [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-purple'" class="btn btn-xs mat-elevation-z8 float-left mr-1" (click)="SendEmail(p)" container="body" placement="bottom"
+        <button id='special' chkPrivilegiosButtons [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-purple'" class="btn btn-xs mat-elevation-z8 float-left mr-1" (click)="SendEmail(rowAux)" container="body" placement="bottom"
         tooltip="Enviar Correo">
         <em class="fa fa-envelope"></em></button>
 
@@ -183,7 +183,7 @@
             </td>
             <td class="action-width">
   
-          <button id='update' chkPrivilegiosButtons class="mr-1 btn btn-xs btn-warning float-right mat-elevation-z8" (click)="updateUser(p, rowIndex)" container="body"
+          <button id='update' chkPrivilegiosButtons [disabled]="!editar" [ngClass] = "!editar ? 'disable' : 'btn-warning '"class="mr-1 btn btn-xs float-right mat-elevation-z8" (click)="updateUser(p, rowIndex)" container="body"
             placement="bottom" tooltip="Guardar Cambios">
             <em class="fa fa-floppy-o"></em>
           </button>

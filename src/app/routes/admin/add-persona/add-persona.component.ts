@@ -50,9 +50,10 @@ export class AddPersonaComponent implements OnInit {
   filteredData: Array<any> = [];
   dataRowIndex: any = 0;
   dataRow: any;
+  editar = false;
 
   tipoUsuario = this.settings.user['tipoUsuarioId'];
-  
+
   @ViewChild('uploadImg') someInput: UploadImgsComponent;
   @ViewChild('staticModal') modal;
 
@@ -277,7 +278,7 @@ export class AddPersonaComponent implements OnInit {
     else if (event.target.value !== '') {
       this.Users[ObjertIndex][cell] = event.target.value;
     }
-
+this.editar = true;
     this.editing[rowIndex + '-' + cell] = false;
     this.Users = [...this.Users];
   }
@@ -305,6 +306,8 @@ export class AddPersonaComponent implements OnInit {
       .subscribe(data => {
         if (data == 201) {
           this.popToast('success', 'Actualizar Datos', 'Los datos se actualizaron con éxito');
+          this.editar = false;
+          this.onChangeTable(this.config)
         } else {
           this.popToast('error', 'Actualizar Datos', 'Ocurrio un error al intentar actualizar datos');
         }
