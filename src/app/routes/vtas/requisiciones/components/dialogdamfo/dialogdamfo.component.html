@@ -11,10 +11,10 @@
       <h5><strong class="text-primary">Puesto: </strong>{{data.nombrePerfil}}</h5>
     </div>
     <div class="col-md-4 col-sm-4">
-      <h5><strong class="text-primary">Sueldo M&iacute;nimo: </strong>${{data.sueldoMinimo | currency: 'MXN'}}</h5>
+      <h5><strong class="text-primary">Sueldo M&iacute;nimo: </strong>{{data.sueldoMinimo | moneda: '$'}}</h5>
     </div>
     <div class="col-md-4 col-sm-4">
-      <h5><strong class="text-primary">Sueldo M&aacute;ximo: </strong>${{data.sueldoMaximo | currency: 'MXN'}}</h5>
+      <h5><strong class="text-primary">Sueldo M&aacute;ximo: </strong>{{data.sueldoMaximo | moneda: '$'}}</h5>
     </div>
   </div>
   <div class="row">

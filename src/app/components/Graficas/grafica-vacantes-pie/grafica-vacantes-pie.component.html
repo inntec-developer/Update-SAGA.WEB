@@ -1,27 +1,40 @@
-
 <div class="card box">
-    <div class="card-body mat-elevation-z8">
-      <div class="d-flex justify-content-between">
-        <label class="text-info"><strong>Folios Activos</strong></label>
-        <em class="icon-refresh em- text-success" (click)="updateChart()"></em>
-      </div>
-      <br>
-      <div id="chart">
-          <canvas id="cavasFoliosActivos" ></canvas>
-          <br>
-          <mat-divider></mat-divider>
-          <small class="em-button"><span (click)="detectedClick('todas')" class="float-right"> Total Folios: <span  class="badge badge-info" >{{RegistrosT}}</span></span></small>
-        </div>
+  <div class="card-body mat-elevation-z8">
+    <div class="d-flex justify-content-between">
+      <label class="text-info"><strong>Folios Activos</strong></label>
+      <em class="icon-refresh em- text-success" (click)="updateChart()"></em>
     </div>
+    <br>
+    <div id="chart"></div>
+    <canvas id="cavasFoliosActivos"></canvas>
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <small><span class="float-letf"> Vigentes: <span class="badge badge-success">{{Vigentes}}</span></span></small>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <small><span class="text-center"> PorVencer: <span
+              class="badge badge-warning">{{PorVencer}}</span></span></small>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <small><span class="float-right"> Vencidas: <span class="badge badge-danger">{{Vencidas}}</span></span></small>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <br>
+    <small class="em-button"><span (click)="detectedClick('todas')" class="float-right"> Total Folios: <span
+          class="badge badge-info">{{RegistrosT}}</span></span></small>
+
   </div>
+</div>
 
 <!-- Modal para visualizar vacantes seleccionadas -->
-<div *ngIf="ShowModal" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #MessageModal="bs-modal" class="modal"
-  tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+<div *ngIf="ShowModal" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal
+  #MessageModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
   <div class="modal-dialog modal-lg reporteMod">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="float-left text-warning"><em class="fa fa-file-text-o mr-2"></em>Informaci&oacute;n de Vacantes {{EstadoVacante}} por Fecha de Cumplimiento </h4>
+        <h4 class="float-left text-warning"><em class="fa fa-file-text-o mr-2"></em>Informaci&oacute;n de Vacantes
+          {{EstadoVacante}} por Fecha de Cumplimiento </h4>
         <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="ShowModal=false"><i
             class="fa fa-times"></i></button>
       </div>

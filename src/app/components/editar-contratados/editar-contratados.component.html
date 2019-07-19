@@ -184,7 +184,7 @@
             </mat-form-field>
           </td> -->
           <td class="text-center">
-                {{row.sueldoMinimo | currency : '$'}}
+                {{row.sueldoMinimo | moneda : '$'}}
 
             <!-- <input [(ngModel)]="row.sueldoMinimo" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'sueldoMinimo', rowIndex)" *ngIf="editing[rowIndex + '-sueldoMinimo']" type="text" [value]=row.sueldoMinimo>
             <span *ngIf="editing[rowIndex + '-sueldoMinimo']">

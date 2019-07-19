@@ -20,7 +20,7 @@
       </div>
       <div class="col-md-4">
         <strong class="text-primary">SUELDO: </strong>
-        <p>De ${{data?.sueldoMinimo | currency: 'MXN'}} a ${{data?.sueldoMaximo | currency:'MXN'}}</p>
+        <p>De {{data?.sueldoMinimo | moneda: '$'}} a {{data?.sueldoMaximo | moneda:'$'}}</p>
       </div>
     </div>
     <br>

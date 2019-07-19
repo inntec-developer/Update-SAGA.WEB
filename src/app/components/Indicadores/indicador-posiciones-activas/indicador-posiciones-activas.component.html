@@ -1,17 +1,26 @@
 <div class="card box">
   <div class="card-body mat-elevation-z8">
     <div class="d-flex justify-content-between">
-      <label class="text-info"><strong>Posiciones Activas</strong> </label>
-      <em class="icon-refresh em- text-success"
-            (click)="updateChart()"></em>
+      <label class="text-info"><strong>Posiciones Activas</strong></label>
+      <em class="icon-refresh em- text-success" (click)="updateChart()"></em>
     </div>
     <br>
-    <div id="PosicionesActivas">
-      <canvas id="canvasPosicionesActivas"></canvas>
-      <br>
-      <mat-divider></mat-divider>
-      <small><span class="float-right"> Total Posiciones: <span
-            class="badge badge-info">{{RegistrosT}}</span></span></small>
+    <div id="chart"></div>
+    <canvas id="canvasPosicionesActivas"></canvas>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <small><span class="float-letf"> Cubiertos: <span
+              class="badge badge-success">{{Cubiertos}}</span></span></small>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <small><span class="float-right"> No Cubiertos: <span
+              class="badge badge-warning">{{NoCubiertos}}</span></span></small>
+      </div>
     </div>
+    <mat-divider></mat-divider>
+    <br>
+    <small><span class="float-right"> Total Posiciones: <span
+          class="badge badge-info">{{RegistrosT}}</span></span></small>
+
   </div>
 </div>

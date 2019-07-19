@@ -2,6 +2,7 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
+import { AgmCoreModule } from '@agm/core';
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './service/auth/auth-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!

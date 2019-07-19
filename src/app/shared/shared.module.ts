@@ -6,6 +6,7 @@ import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../core/translator/config-paginator/config-paginator.component';
 
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { AgmCoreModule } from '@agm/core';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
@@ -22,9 +23,11 @@ import { EasypiechartDirective } from './directives/easypiechart/easypiechart.di
 import { FlotDirective } from './directives/flot/flot.directive';
 import { JqcloudDirective } from './directives/jqcloud/jqcloud.directive';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { MonedaPipe } from './pipes/moneda.pipe';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NowDirective } from './directives/now/now.directive';
+import { NumericoPipe } from './pipes/numerico.pipe';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { RatingModule } from 'ngx-bootstrap/rating';
@@ -42,6 +45,10 @@ import { VectormapDirective } from './directives/vectormap/vectormap.directive';
 // https://angular.io/styleguide#!#04-10
 @NgModule({
   imports: [
+
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCvtCCb5IK8MQbFiXe4J2F5LIQqa5fLeSY'
+    }),
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -87,8 +94,11 @@ import { VectormapDirective } from './directives/vectormap/vectormap.directive';
     ChkButtonsDirective,
     ChkPrivilegiosMenuDirective,
     TreeGridDirective,
+    MonedaPipe,
+    NumericoPipe,
   ],
   exports: [
+    AgmCoreModule ,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -126,6 +136,8 @@ import { VectormapDirective } from './directives/vectormap/vectormap.directive';
     ChkButtonsDirective,
     NgScrollbarModule,
     NgbModule,
+    MonedaPipe,
+    NumericoPipe
   ]
 })
 

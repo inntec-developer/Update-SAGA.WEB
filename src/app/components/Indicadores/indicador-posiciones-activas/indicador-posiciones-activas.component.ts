@@ -21,7 +21,10 @@ export class IndicadorPosicionesActivasComponent implements OnInit {
   public Chart: Chart;
   public Data: any;
   public RegistrosT: number = 0;
+  public Cubiertos: number = 0;
+  public NoCubiertos: number = 0;
   public user: any;
+
 
   ngOnInit() {
     Chart.defaults.scale.ticks.beginAtZero = true;
@@ -30,17 +33,17 @@ export class IndicadorPosicionesActivasComponent implements OnInit {
       TipoUsuarioId: this.settings.user['tipoUsuarioId']
     }
     this._ComponentService.getPosicionesActivas(this.user).subscribe(result => {
-      let vacantes = result['vacantes'];
-      let contratados = result['contratados'];
-      this.RegistrosT = vacantes + contratados;
+      this.NoCubiertos = result['vacantes'];
+      this.Cubiertos = result['contratados'];
+      this.RegistrosT = this.Cubiertos + this.NoCubiertos;
 
       this.Data = {
         datasets: [{
           backgroundColor: ['#07B4F0', 'rgba(255,128,0,0.65)'],
           borderColor: '#fff',
           data: [
-            contratados,
-            vacantes,
+            this.Cubiertos,
+            this.NoCubiertos,
           ]
         }],
         // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -77,19 +80,20 @@ export class IndicadorPosicionesActivasComponent implements OnInit {
 
   updateChart() {
     this._ComponentService.getPosicionesActivas(this.user).subscribe(result => {
-      let vacantes = result['vacantes'];
-      let contratados = result['contratados'];
-      this.RegistrosT = vacantes + contratados;
+      this.NoCubiertos = result['vacantes'];
+      this.Cubiertos = result['contratados'];
+      this.RegistrosT = this.Cubiertos + this.NoCubiertos;
 
       this.Data = {
         datasets: [{
           backgroundColor: ['#07B4F0', 'rgba(255,128,0,0.65)'],
           borderColor: '#fff',
           data: [
-            contratados,
-            vacantes,
+            this.Cubiertos,
+            this.NoCubiertos,
           ]
         }],
+        // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: [
           'Cubiertos',
           'No Cubiertos'
