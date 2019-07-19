@@ -1,30 +1,52 @@
-<h4 class="text-warning">Requisicion {{data.folio}} {{data.vacante}} {{data.cliente}}
-<button type="button" class="btn btn-xs btn-danger btn-circle float-right mb-3" mat-dialog-close ><i class="fa fa-times"></i></button>
-</h4>
+<div class="d-flex justify-content-between">
+<h4 class="text-warning float-left mt-1">Requisicion {{data.folio}} {{data.vacante}} {{data.cliente}}</h4>
+<button type="button" class="btn btn-xs btn-danger btn-circle float-right mt-0" (click) ="close()"><i class="fa fa-times"></i></button>
+</div>
 <hr>
 <!-- <mat-dialog-content> -->
+    <div class="card card-body">
 <form novalidate #f="ngForm">
-        <div class="row">
-            <div class="col sm-6 col-md-6">
+
+        <!-- <div class="col-md-4"> -->
+            <div class="d-flex justify-content-between">
                 <div class="form-group">
                     <label class="text-muted" for="nombre">NOMBRE</label>
-                    <input type="text" class="form-control form-control-sm" placeholder="Nombre(s) *" [(ngModel)]="nom" name="nombre" ngModel
-                    required [class.requerido]="nom.length == 0" [class.valido]="nom.length > 1">
+                    <input type="text" class="form-control form-control-sm long" placeholder="*" [(ngModel)]="nom" name="nombre" ngModel
+                    required [class.valido]="nom.length >= 1">
                             <!-- <small *ngIf="nom.length == 0" class="text-danger">
                                       El campo nombre es requerido
                                     </small> -->
                 </div>
                 <div class="form-group">
                     <label class="text-muted" for="ap">APELLIDO PATERNO</label>
-                    <input type="text" class="form-control form-control-sm" placeholder="Apellido Paterno *" [(ngModel)]="ap" name="ap" ngModel
-                                required [class.requerido]="ap.length == 0" [class.valido]="ap.length > 1" />
+                    <input type="text" class="form-control form-control-sm long" placeholder="*" [(ngModel)]="ap" name="ap" ngModel
+                                required [class.valido]="ap.length >= 1" />
                 </div>
                 <div class="form-group">
                     <label class="text-muted" for="ap">APELLIDO MATERNO</label>
-                    <input type="text" class="form-control form-control-sm" placeholder="Apellido Materno *" [(ngModel)]="am" name="am" ngModel
-                             required [class.requerido]="am.length == 0" [class.valido]="am.length > 1" />
+                    <input type="text" class="form-control form-control-sm long" placeholder="*" [(ngModel)]="am" name="am" ngModel
+                             required [class.valido]="am.length >= 1" />
                 </div>
-                <div class="mb-1">
+             
+            </div>
+            <mat-divider></mat-divider>
+            <!-- </div> -->
+            <!-- <div class="col-sm-4 col-md-4"> -->
+            <div class="d-flex justify-content-between mt-3">
+                    <div class="form-group">
+                            <label class="text-muted">GENERO</label>
+                            <div class="input-group">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="rb" [(ngModel)]="model.options" value="2">
+                                <label class="form-check-label" for="inlineRadio1">MUJER</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="rb" [(ngModel)]="model.options" value="1">
+                                <label class="form-check-label" for="inlineRadio2">HOMBRE</label>
+                            </div>
+                            </div>
+                        </div>              
+                <div class="dateLong">
                     <mat-form-field>
                     <input matInput [matDatepicker]="picker" placeholder="Fecha de Nacimiento" name="edad" [(ngModel)]="date" (dateChange)="validarFecha($event.value)">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -34,72 +56,65 @@
                     </mat-form-field>
                 </div>
                 <div class="form-group">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="rb" [(ngModel)]="model.options" value="2">
-                            <label class="form-check-label" for="inlineRadio1">MUJER</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="rb" [(ngModel)]="model.options" value="1">
-                            <label class="form-check-label" for="inlineRadio2">HOMBRE</label>
-                        </div>
+                        <label class="text-muted">LUGAR DE NACIMIENTO</label>
+                        <select class="form-control form-control-sm long" name="estado" ngModel required [(ngModel)]="estadoId"
+                               [class.requerido]="estadoId == 0" [class.valido]="estadoId > 0" (change)="GenerarCurp()">
+                                <option [value]=0 selected disabled>Selecciona Estado de Nacimiento</option>
+                                <option *ngFor="let e of estados" [value]=e.id>{{e.estado | uppercase}}</option>
+                        </select>
                     </div>
-            </div>
-            <div class="col-sm-6 col-md-6">
-                <div class="form-group">
-                    <label class="text-muted">LUGAR DE NACIMIENTO</label>
-                    <select class="form-control form-control-sm" name="estado" ngModel required [(ngModel)]="estadoId"
-                           [class.requerido]="estadoId == 0" [class.valido]="estadoId > 0" (change)="GenerarCurp()">
-                            <option [value]=0 selected disabled>Selecciona Estado de Nacimiento</option>
-                            <option *ngFor="let e of estados" [value]=e.id>{{e.estado | uppercase}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="text-muted">CURP</label>
-                     <div class="input-group">
-                        <input type="text" class="form-control form-control-sm" placeholder="CURP *" name="curp" [(ngModel)]="curp" ngModel required
-                            [class.requerido]="curp.length == 0" [class.valido]="curp.length >= 16" minlength="16" maxlength=18 />
-                            <div class="input-group-append">
-                                 
-                                            <button type="button" class="btn btn-xs btn-info" (click)="GenerarCurp()"  container="body" placement="top" tooltip="Generar CURP">
-                                                <i class="fa fa-file-text-o" aria-hidden="true"></i></button>
-       
+                    <div class="form-group">
+                            <label class="text-muted">CURP</label>
+                             <div class="input-group long">
+                                <input type="text" class="form-control form-control-sm" placeholder="*" name="curp" [(ngModel)]="curp" ngModel required
+                                    [class.requerido]="curp.length == 0" [class.valido]="curp.length >= 16" minlength="16" maxlength=18 />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-xs btn-info" (click)="GenerarCurp()"  container="body" placement="top" tooltip="Generar CURP">
+                                          <i class="fa fa-file-text-o" aria-hidden="true"></i></button>
                                     </div>
+                                </div>
                         </div>
-                </div>
-                <!-- <div class="form-group">
-                    <label></label>
-                    <select class="form-control form-control-sm" name="municipio" [(ngModel)]="municipioId" ngModel required
-                             [class.requerido]="municipioId == 0" [class.valido]="municipioId > 0">
-                        <option [value]=0 selected disabled>Selecciona Municipio de Nacimiento</option>
-                        <option *ngFor="let m of municipios" [value]=m.id>{{m.municipio | uppercase}}</option>
-                    </select>
-                </div> -->
-                <div class="form-group">
+            </div>
+            <mat-divider></mat-divider>
+        <!-- </div> -->
+     <!-- <div class="col-sm-4 col-md-4"> -->
+            <div class="d-flex justify-content-between mt-3">
+                <div class="form-group with-focus">
                     <label class="text-muted" for="email">EMAIL</label>
-                            <!-- <div class="input-group"> -->
-                    <input type="email" class="form-control form-control-sm" placeholder="Email *" name="email" [(ngModel)]="email" ngModel required
-                            [class.requerido]="email.length == 0" [class.valido]="email.length >= 1" (blur)="ValidarEmail(email)" />
-                            <small class="text-danger">{{valEmail}}</small>
-                            <!-- <div class="input-group-append">
-                                        <div class="input-group-text" tooltip="Registrar con Email" placement="top" container="body">
-                                            <input type="radio" [(ngModel)]="opcRegistro1" name="opc1" value=1 (click)="opcRegistro2=0">
-                                        </div>
-                                    </div> -->
-                            <!-- </div> -->
+                    <div class="input-group long">
+                    <input type="email" class="form-control form-control-sm" (blur)="ValidarEmail(email)" placeholder="*" value="" name="email" [(ngModel)]="email" ngModel required [class.requerido]="email.length < 7" [class.valido]="email.length >= 7"/>
+                    <div class="input-group-append">
+                        <div class="input-group-text" tooltip="Registrar con Email" placement="top" container="body">
+                        <input type="radio" [(ngModel)]="opcRegistro1" name="opc1" value="1" (click)="valOpcionReg(1);">
+                        </div>
+                      </div>
+                    </div>
+                    <small class="text-danger">{{valEmail}}</small>
                 </div>
-                <div class="form-group">
-                    <label class="text-muted" for="txtPhone">TEL&Eacute;FONO</label>
-                    <div class="input-group">
-                       <input type="text" minlength="10" maxlength="10" name="txtPhone" class="form-control form-control-sm" placeholder="Tel&eacute;fono *"
-                                [(ngModel)]="txtPhone" value="" ngModel required [class.requerido]="txtPhone.length < 10" [class.valido]="txtPhone.length == 10"
-                        />
-                                <!-- <div class="input-group-append">
-                                        <div class="input-group-text" tooltip="Registrar con Tel&eacute;fono" placement="top" container="body">
-                                            <input type="radio" [(ngModel)]="opcRegistro2" name="opc2" value="2" (click)="opcRegistro1=0">
-                                        </div>
-                                    </div> -->
+                <div class="d-flex justify-content-between">
+                    <div class="form-group mr-1">
+                        <label class="text-muted" for="txtLada">LADA</label>
+                        <div class="input-group">
+                            <input type="text" minlength="2" maxlength="3" name="txtLada" ngModel required class="form-control form-control-sm ladaLong"
+                                placeholder="*" [(ngModel)]="txtLada" [class.requerido]="txtLada.length < 2" [class.valido]="txtLada.length >= 2"/>
+                        </div>
+                    </div>
+                    <div class="form-group long">
+                        <label class="text-muted" for="txtPhone">TEL&Eacute;FONO</label>
+                        <div class="input-group">
+                            <input (blur)="ValidarTelefono()" type="text" minlength="7" maxlength="8" name="txtPhone" ngModel required class="form-control form-control-sm" placeholder="*"
+                                [(ngModel)]="txtPhone" [class.requerido]="txtPhone.length < 7" [class.valido]="txtPhone.length > 6"
+                            />
+                            <div class="input-group-append">
+                                <div class="input-group-text" tooltip="Registrar con Tel&eacute;fono" placement="top" container="body">
+                                    <input type="radio" [(ngModel)]="opcRegistro2" name="opc2" value=2 (click)="valOpcionReg(2);">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <small class="text-danger">{{valTel}}</small>
+                <div class="mt-4">
                 <button type="button" class="btn btn-xs btn-info ml-1 float-right" (click)="BorrarCampos()">
                         <i class="fa fa-eraser" aria-hidden="true"></i>
                         </button>
@@ -111,10 +126,13 @@
                             <i class="fa fa-plus" aria-hidden="true"></i>
                 </button>
             </div>
-         </div>
+            </div>
+        <!-- </div> -->
+
+       <mat-divider></mat-divider>
        <div class="row">
      
-        <div class="col">
+        <div class="col-md-12 col-lg-12">
             <div class="card card-body mat-elevation-z8">
                 <div class="d-flex justify-content-end mb-2">
                     <span class="text-muted font-weight-bold float-right text-uppercase mr-4">Cubiertos/Vacantes
@@ -240,6 +258,7 @@
 
     </div>
 </form>
+</div>
 <!-- </mat-dialog-content>
 <mat-dialog-actions>
         <button mat-button mat-dialog-close>No</button>

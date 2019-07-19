@@ -45,6 +45,7 @@ export class AdminServiceService {
   private UrlUpdateRoles = ApiConection.ServiceUrl+ApiConection.updateRoles;
   private UrlDeleteGrupo = ApiConection.ServiceUrl+ApiConection.deleteGrupo;
   private UrlDeleteRoles = ApiConection.ServiceUrl+ApiConection.deleteRoles;
+  private UrlDeleteUsuario = ApiConection.ServiceUrl+ApiConection.deleteUsuario;
   private UrlGetTreeRoles = ApiConection.ServiceUrl+ApiConection.getTreeRoles;
   private UrlGetEstructuraRoles = ApiConection.ServiceUrl+ApiConection.getEstructuraRoles;
   private UrlGetPrivilegios = ApiConection.ServiceUrl+ApiConection.getPrivilegios;
@@ -283,7 +284,11 @@ export class AdminServiceService {
     let params =  new HttpParams().set('id', data);
     return this._httpClient.get(this.UrlDeleteRoles, {params: params, headers: this.httpOptions.headers});
   }
-
+  DeleteUsuario(data: any) : Observable<any>
+  {
+    let params =  new HttpParams().set('entidadId', data);
+    return this._httpClient.get(this.UrlDeleteUsuario, {params: params, headers: this.httpOptions.headers});
+  }
   DeleteUserGroup(data: any) : Observable<any>
   {
     return this._httpClient.post(this.UrlDeleteUserGroup, JSON.stringify(data), this.httpOptions);

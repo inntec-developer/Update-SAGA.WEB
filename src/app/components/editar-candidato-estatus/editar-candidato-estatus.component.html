@@ -1,21 +1,37 @@
-<div class="table-responsive">
+ <div class="card card-body">
+   <div>
+    <button class="btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="refresh()" container="body" placement="bottom"
+    tooltip="Actualizar">
+    <em class="icon-refresh"></em>
+  </button>
+
+  <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" 
+  class="mr-2 btn btn-xs btn-info float-right mat-elevation-z8"><em class="fa fa-eraser"></em></button>
+
+    <span class="text-muted font-weight-bold float-right text-uppercase mr-3">Total de Folios <span class="badge badge-pill badge-success ml-1">{{candidatos.length}}</span></span>
+  </div>
   <table *ngIf="candidatos.length > 0 else NotCandidatos" class="table">
     <thead>
       <tr>
-        <th class="text-center text-info">FOLIO</th>
-        <th class="text-center text-info">NOMBRE SOLICITANTE</th>
-        <th class="text-center text-info">MOTIVO</th>
-        <th class="text-center text-info">FECHA INCIDENCIA</th>
-        <th class="text-center text-info">NOMBRE CANDIDATO</th>
-        <!-- <th class="text-center text-info">DATOS CANDIDATO</th> -->
-        <th class="text-center text-info">ESTATUS</th>
-        <th class="text-center text-info">DESCRIPCIÓN INCIDENCIA</th>
+        <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+          <small>{{column.title | uppercase}}</small>
+        </th>
         <th class="text-center text-info">RESULTADO INCIDENCIA</th>
         <th width="10%" class="text-center text-info"></th>
       </tr>
+      <tr>
+        <th *ngFor="let column of columns">
+          <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
+            [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+            class="form-control form-control-sm" id="{{column.name}}">
+        </th>
+      </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let row of candidatos; let rowIndex = index" [class.selected]="row.selected">
+      <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+        [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+      <div>
+      <tr *ngFor="let row of rows; let rowIndex = index" [class.selected]="row.selected">
         <td class="text-center"> {{row.folio}}</td>
         <td class="text-center"> {{row.reclutador}}</td>
         <td class="text-center"> {{row.motivo}}</td>
@@ -38,7 +54,7 @@
             </span>
           </ng-template>
         </ng-container>
-          <textarea [(ngModel)]="comentario" class="form-control-sm" autofocus (blur)="updateValue($event, 'respuesta', rowIndex);" *ngIf="editing[rowIndex + '-respuesta']" rows="4" cols="50" [value]="row.respuesta"></textarea>
+          <textarea [(ngModel)]="comentario" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'respuesta', rowIndex);" *ngIf="editing[rowIndex + '-respuesta']" rows="4" cols="50" [value]="row.respuesta"></textarea>
 
         </td>
 
@@ -51,8 +67,16 @@
           </button>
         </td>
       </tr>
+      </div>
+      </ng-scrollbar>
     </tbody>
   </table>
+  <div class="mt-2">
+    <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
+          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+          (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+       </pagination>
+    </div>
 </div>
 
 

@@ -23,6 +23,7 @@ export class TicketsInicioComponent implements OnInit {
   btnCita = false;
   user: string;
   pass: string;
+
   constructor(
     private _service: SistTicketsService,
     private service: RequisicionesService,
@@ -100,8 +101,16 @@ export class TicketsInicioComponent implements OnInit {
     let dialog = this.dialog.open(TicketsRegisterComponent, {
       width: 'auto',
       height: 'auto',
-
+      disableClose: true
     });
+    dialog.afterClosed().subscribe(result => {
+      if(result)
+      {
+        this.user = result.username;
+        this.pass = result.pass;
+        this.iniciar = true;
+      }
+    })
   }
 
   Login(usuario, pass)

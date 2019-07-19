@@ -60,6 +60,7 @@ total = 0;
     let start = (page.page - 1) * page.itemsPerPage;
     let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     this.rows = data.slice(start, end);
+    this.length = data.length;
     return data.slice(start, end);
   }
   //#endregion

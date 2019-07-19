@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { ActivatedRoute } from '@angular/router';
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import { ApiConection } from '../../../service/api-conection.service';
 import { forEach } from '@angular/router/src/utils/collection';
@@ -27,26 +27,8 @@ export class AddadminComponent implements OnInit {
   draggable = false;
   flag = false;
   msj = 'Arrastrar usuario aqui'
-  verMsj = false;
-
-  alerts: any[] = [
-    {
-      type: 'success',
-      msg: '',
-      timeout: 4000
-    },
-    {
-      type: 'danger',
-      msg: '',
-      timeout: 4000
-    }
-  ];
-alert = this.alerts;
-onClosed(): void {
-  this.verMsj = false;
-}
-
-  constructor(private service: AdminServiceService, public fb: FormBuilder) {}
+ 
+  constructor(private service: AdminServiceService, public fb: FormBuilder, private toasterService: ToasterService) {}
 
   ngOnInit() {
     this.formAdmin = this.fb.group({
@@ -61,14 +43,17 @@ onClosed(): void {
 
   public Search(data: any) {
     let tempArray: Array<any> = [];
-    let colFiltar: Array<any> = [{ title: "nombre" }, { title: "apellidoPaterno" }];
+    let colFiltar: Array<any> = [{title: "clave"}, { title: "nombre" }, { title: "apellidoPaterno" }, {title: "email"}];
 
     this.filteredData.forEach(function (item) {
       let flag = false;
       colFiltar.forEach(function (c) {
+        if(item[c.title] != null)
+        {
         if (item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
           flag = true;
         }
+      }
       });
 
       if (flag) {
@@ -256,27 +241,26 @@ onClosed(): void {
                 this.ListAuxEntidades[idx]['grupos'].push({id:grupo.id, grupo: grupo.nombre});
               }
             });
-
-            this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
-            this.alert = this.alerts[0];
-            this.verMsj = true;
+            this.popToast('success', 'Actualizar Datos', 'Los datos se actualizaron con éxito');
             this.ListaPG = [];
             this.IdGrupo = "0";
+            this.formAdmin = this.fb.group({
+              slcGrupo: ['0', [Validators.required]],
+              filterInput: ''
+            });
+
+            this.GetEntidades();
           }
           else
           {
-            this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar datos';
-            this.alert = this.alerts[1];
-            this.verMsj = true;
+            this.popToast('error', 'Actualizar Datos', 'Ocurrio un error al intentar actualizar datos');
           }
 
         });
 
     }
     else {
-      this.alerts[1]['msg'] = 'Debe al menos agregar un usuario';
-      this.alert = this.alerts[1];
-      this.verMsj = true;
+      this.popToast('error', 'Actualizar Datos', 'Debe al menos agregar un usuario nuevo');
     }
   }
   else
@@ -314,5 +298,30 @@ onClosed(): void {
           this.listGrupos = aux;
         })
   }
+
+   /**
+  * configuracion para mensajes de acciones.
+  */
+ toaster: any;
+ toasterConfig: any;
+ toasterconfig: ToasterConfig = new ToasterConfig({
+   positionClass: 'toast-bottom-right',
+   limit: 7,
+   tapToDismiss: false,
+   showCloseButton: true,
+   mouseoverTimerStop: true,
+   preventDuplicates: true,
+ });
+
+ popToast(type, title, body) {
+   var toast: Toast = {
+     type: type,
+     title: title,
+     timeout: 4000,
+     body: body
+   }
+   this.toasterService.pop(toast);
+
+ }
 
 }

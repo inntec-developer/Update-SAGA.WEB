@@ -14,23 +14,20 @@
 
 
 <form [formGroup]="formRol" novalidate>
-    <div *ngIf="verMsj">
-        <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
-      </div>
-    <br/>
-  <div class="row">
-    <div class="col-md-4">
-      <div class="input-group">
-        <input #filterInput (input)="Search($event)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
-      </div>
-    </div>
-  </div>
-  <br/>
+
   <div class="row">
     <div class="col-md-8">
-       
       <div class="panel panel-default mat-elevation-z8">
-        <p class="panel-heading text-center">GRUPOS - USUARIOS</p>
+        <div class="panel-heading d-flex justify-content-between"><span class="text-muted mt-1">GRUPOS - USUARIOS</span>
+        <div class="input-group input-group-sm ilong"> 
+            <input #filterInput (input)="Search($event)" class="form-control form-control-sm" type="text" placeholder="Filtrar"
+            />
+            <div class="input-group-append">
+              <span class="input-group-text text-info"><i class="fa fa-search" aria-hidden="true"></i></span>
+            </div>
+          </div>
+       
+        </div>
         <div class="panel-body">
           <table class="table table-hover">
             <thead>
@@ -71,7 +68,7 @@
           </table>
         </div>
       </div>
-    </div>
+      </div>
     <!-- panel para agregar a los seleccionados -->
     <div class="col-md-4">
       <div class="panel panel-default mat-elevation-z8">
@@ -79,7 +76,7 @@
           <div class="row">
    
           <div class="col-md-6">
-            <select #slcRol class="form-control" (change)="selected($event); rolId = $event.target.value" formControlName="slcRol">
+            <select #slcRol class="form-control form-control-sm" (change)="selected($event); rolId = $event.target.value" formControlName="slcRol">
               <option [value]="-1">Seleccionar Rol</option>
               <option *ngFor="let r of Roles; let i = index" [value]="r.id">{{r.rol}}</option>
             </select>
@@ -115,6 +112,8 @@
 
   </div>
 </form>
+<toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
+
 <!-- Modal  -->
 
 <!-- <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"

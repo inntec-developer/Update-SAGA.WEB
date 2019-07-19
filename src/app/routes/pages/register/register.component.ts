@@ -211,28 +211,38 @@ export class RegisterComponent implements OnInit {
         this.user = this.valForm.controls['email'].value.trim();
         var idx = this.user.indexOf("@");
         this.user = "DAMSA." + this.user.substring(0, idx);
-
-        this.authService.isUserActive(email)
-            .subscribe(
-                data => {
-                    if (data != 404) {
-                        this.alerts[1]['msg'] = 'El email: ' + email + ' ya se encuentra registrado';
+        let regexpEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$');
+        if (regexpEmail.test(email)) {
+            this.authService.isUserActive(email)
+                .subscribe(
+                    data => {
+                        if (data != 404) {
+                            this.alerts[1]['msg'] = 'El email: ' + email + ' ya se encuentra registrado';
+                            this.alert = this.alerts[1];
+                            this.disabledE = false;
+                            this.verMsj = true;
+                            this.showPop();
+                        }
+                        else {
+                            this.disabledE = true;
+                            this.verMsj = false;
+                            this.epopover.hide();
+                        }
+                    },
+                    error => {
+                        this.alerts[1]['msg'] = error;
                         this.alert = this.alerts[1];
-                        this.disabledE = false;
                         this.verMsj = true;
-                        this.showPop();
-                    }
-                    else {
-                        this.disabledE = true;
-                        this.verMsj = false;
-                        this.epopover.hide();
-                    }
-                },
-                error => {
-                    this.alerts[1]['msg'] = error;
-                    this.alert = this.alerts[1];
-                    this.verMsj = true;
-                });
+                    });
+        }
+        else
+        {
+            this.alerts[1]['msg'] = 'El email: ' + email + ' no tiene el formato correcto';
+            this.alert = this.alerts[1];
+            this.disabledE = false;
+            this.verMsj = true;
+            this.showPop();
+        }
     }
 
     // ValidarDAL(dal: string)

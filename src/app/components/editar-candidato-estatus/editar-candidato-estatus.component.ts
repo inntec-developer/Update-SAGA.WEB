@@ -18,12 +18,31 @@ export class EditarCandidatoEstatusComponent implements OnInit {
   @Input("estatusId") estatusId;
   @Input("candidatosNR") candidatos = [];
 
+    // Varaibles del paginador
+    public page: number = 1;
+    public itemsPerPage: number = 20;
+    public maxSize: number = 5;
+    public numPages: number = 1;
+    public length: number = 0;
+
   editing = {};
   comentario = "";
   confirmar: boolean = false;
   confirmar2: boolean = false;
   rowAux: any = [];
   estatusAux: any = 0;
+
+  public rows: Array<any> = [];
+  public columns: Array<any> = [
+    { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+    { title: 'Solicitante', className: 'text-info text-center', name: 'reclutador', filtering: { filterString: '', placeholder: 'Solicitante' } },
+    { title: 'Motivo', className: 'text-info text-center', name: 'motivo', filtering: { filterString: '', placeholder: 'Motivo' } },
+    { title: 'Fecha incidencia', className: 'text-info text-center', name: 'fecha', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Nombre candidato', className: 'text-info text-center', name: 'candidato', filtering: { filterString: '', placeholder: 'Candidato' } },
+    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
+    { title: 'Descripcion incidencia', className: 'text-info text-center', name: 'comentario', filtering: { filterString: '', placeholder: 'Comentario' } }
+  ];
+
   constructor(
     private service: CandidatosService,
     public serviceComentarios: ComentariosService,
@@ -31,8 +50,74 @@ export class EditarCandidatoEstatusComponent implements OnInit {
     private settings: SettingsService) { }
 
   ngOnInit() {
+    this.onChangeTable(this.config)
     //this.GetCandidatosNR();
   }
+//#region paginador
+public config: any = {
+  paging: true,
+  //sorting: { columns: this.columns },
+  filtering: { filterString: '' },
+  className: ['table-hover mb-0 ']
+};
+
+public changePage(page: any, data: Array<any> = this.candidatos): Array<any> {
+  let start = (page.page - 1) * page.itemsPerPage;
+  let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+  return data.slice(start, end);
+}
+public changeFilter(data: any, config: any): any {
+  let filteredData: Array<any> = data;
+  this.columns.forEach((column: any) => {
+    if (column.filtering.filterString != "") {
+      filteredData = filteredData.filter((item: any) => {
+        if (item[column.name] != null)
+            return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+      });
+    }
+  });
+
+  return filteredData;
+}
+
+//#endregion
+
+public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
+  if (config.filtering) {
+    (<any>Object).assign(this.config.filtering, config.filtering);
+  }
+
+  this.rows = this.candidatos;
+  let filteredData = this.changeFilter(this.rows, this.config);
+  //let sortedData = this.changeSort(filteredData, this.config);
+  this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
+  this.length = filteredData.length;
+
+}
+
+public refresh() {
+    this.columns.forEach(element => {
+      element.filtering.filterString = '';
+      (<HTMLInputElement>document.getElementById(element.name)).value = '';
+    });
+    this.editing = {};
+    this.comentario = "";
+    this.confirmar = false;
+    this.confirmar2 = false;
+    this.rowAux = [];
+    this.estatusAux = 0;
+
+    this.onChangeTable(this.config)
+}
+
+public clearfilters() {
+  this.columns.forEach(element => {
+    element.filtering.filterString = '';
+    (<HTMLInputElement>document.getElementById(element.name)).value = '';
+  });
+  this.onChangeTable(this.config);
+
+}
 
   GetCandidatosNR() {
     this.service.GetFoliosIncidencias(this.estatusId, this.settings.user['id']).subscribe(result => {

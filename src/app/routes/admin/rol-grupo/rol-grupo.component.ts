@@ -3,7 +3,7 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms'
 import { ApiConection } from '../../../service/api-conection.service';
-
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 @Component({
   selector: 'app-rol-grupo',
   templateUrl: './rol-grupo.component.html',
@@ -24,26 +24,9 @@ export class RolGrupoComponent implements OnInit {
   permisoRol: Array<any> = [];
   msj: string = "";
   flag = false;
-  verMsj = false;
   rolId = 0;
-  alerts: any[] = [
-    {
-      type: 'success',
-      msg: '',
-      timeout: 4000
-    },
-    {
-      type: 'danger',
-      msg: '',
-      timeout: 4000
-    }
-  ];
-alert = this.alerts;
-onClosed(): void {
-  this.verMsj = false;
-}
-
-  constructor(private service: AdminServiceService, public fb: FormBuilder) 
+ 
+  constructor(private service: AdminServiceService, public fb: FormBuilder, private toasterService: ToasterService) 
   {
     this.formRol = this.fb.group({
       slcRol: ["-1", [Validators.required]]
@@ -104,9 +87,7 @@ onClosed(): void {
 
       this.service.AddGroupRol(lrg)
       .subscribe( data => {
-        this.alerts[0]['msg'] = data;
-        this.alert = this.alerts[0];
-        this.verMsj = true;
+        this.popToast('success', 'Actualizar Datos', 'Los datos se actualizaron con éxito');
         this.ListaRG = [];
         this.ListaAux = [];
         this.ngOnInit();
@@ -116,9 +97,7 @@ onClosed(): void {
     }
     else
     {
-      this.alerts[1]['msg'] = "Debe agregar al menos un grupo";
-      this.alert = this.alerts[1];
-      this.verMsj = true;
+      this.popToast('error', 'Actualizar Datos', 'Debe al menos agregar un usuario nuevo');
     }
   }
   else
@@ -129,7 +108,6 @@ onClosed(): void {
 
   selected($event)
   {
-    this.verMsj = false;
     this.service.GetEntidadesUG($event.target.value)
         .subscribe( data => {
           this.ListaRG = [];
@@ -212,7 +190,6 @@ onClosed(): void {
   
     DeleteUserRoles(user, rol)
     {
-        this.verMsj = false;
         var idx = this.Grupos.findIndex(x => x.entidadId == user);
 
         if(idx != -1)
@@ -245,5 +222,31 @@ onClosed(): void {
     this.GetEntidades();
     this.getRoles();    
     this.formRol.controls['slcRol'].reset();
+    this.formRol.controls['filterInput'].reset();
   }
+
+    /**
+  * configuracion para mensajes de acciones.
+  */
+ toaster: any;
+ toasterConfig: any;
+ toasterconfig: ToasterConfig = new ToasterConfig({
+   positionClass: 'toast-bottom-right',
+   limit: 7,
+   tapToDismiss: false,
+   showCloseButton: true,
+   mouseoverTimerStop: true,
+   preventDuplicates: true,
+ });
+
+ popToast(type, title, body) {
+   var toast: Toast = {
+     type: type,
+     title: title,
+     timeout: 4000,
+     body: body
+   }
+   this.toasterService.pop(toast);
+
+ }
 }

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ReportesService } from '../../../service/Reporte/reportes.service';
 import { SettingsService } from '../../../core/settings/settings.service';
+import { ComponentsService } from './../../../service/Components/components.service';
 
 @Component({
   selector: 'app-indicadores',
@@ -28,15 +29,33 @@ export class IndicadoresComponent implements OnInit {
   public Rechazadopor: string = '0';
 
 
+  public totalFolio : number;
+  public totalPos : number;
+  public cubierto : number;
+  public faltante : number;
+
   constructor(
     private service:ReportesService,
     private spinner: NgxSpinnerService,
-    private settings: SettingsService
+    private settings: SettingsService,
+    private servicio:ComponentsService,
     ) { }
+
+    
 
   ngOnInit() {
     this.spinner.show();
     this.UsuarioId = this.settings.user['id'];
+
+
+    this.servicio.getVActiva(this.UsuarioId).subscribe(item =>{
+   
+     this.totalFolio = item['total'];
+     this.totalPos = item['numeropos'];
+     this.cubierto = item['cubierto'];
+     this.faltante = item['faltante'];
+
+    });
 
     // this.service.getVRadial(this.UsuarioId).subscribe(item =>{
 

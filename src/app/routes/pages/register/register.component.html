@@ -16,7 +16,7 @@
                             <input class="form-control border-right-0" (blur)="ValidarEmail($event.target.value)" name="account_email" placeholder="Enter email" autocomplete="off" formControlName="email" required="" />
                             <div class="input-group-append">
                                 <ng-template #popTemplateEmail>
-                                    <p>"El email: {{ valForm.controls['email'].value }} ya se encuentra registrado"</p>
+                                    <p>"El email: {{ valForm.controls['email'].value }} ya se encuentra registrado o no tiene el formato correcto"</p>
                                 </ng-template>
                                 <span class="input-group-text fa fa-envelope text-muted bg-transparent border-left-0" [popover]="popTemplateEmail" placement="right" triggers="" #pop="bs-popover"></span>
                             </div>

@@ -11,11 +11,11 @@
   <div class="card-body mat-elevation-z8">
     <div class="row p-2 bg-light clearfix">
       <div class="col-sm-12 col-md-12">
-        <button id="view" (click)="lgModal15.show()" placement="bottom" tooltip="Ver Requisición"
+        <button (click)="lgModal15.show()" placement="bottom" tooltip="Ver Requisición"
           class="mr-1 mat-elevation-z8" [disabled]="!element"
           [ngClass]="(!element) ? 'btn btn-xs disabled':'btn btn-xs btn-warning'">
           <em class="fa fa-eye"></em></button>
-        <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-xs mat-elevation-z8"
+        <button (click)="lgModal.show()" class="mr-1 btn btn-xs mat-elevation-z8"
           [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-dark'" container="body" placement="bottom"
           tooltip="Comentarios"><em class="fa fa-comments-o"></em></button>
         <button id="create" chkPrivilegiosButtons (click)="openDialogAssingRequi()" placement="bottom" tooltip="Asignar"
@@ -223,7 +223,7 @@
                     </ng-template>
                   </td>
                   <td class="text-center">
-                      <ng-template #popTemplate>
+                      <ng-template #popTemplateCoor>
                           <div class="card">
                             <div class="card-body">
                               <ul class="list-group list-group-flush">
@@ -234,7 +234,7 @@
                         </ng-template>
 
                         <span *ngIf="row.coordinador.length == 0 && row.estatusId == 4" class="text-warning">SIN ASIGNAR</span>
-                        <small class="text-center badge badge-pill badge-danger" *ngIf="row.coordinador.length > 1 && row.estatusId == 4" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{row.coordinador.length}}</small>
+                        <small class="text-center badge badge-pill badge-danger" *ngIf="row.coordinador.length > 1 && row.estatusId == 4" [popover]="popTemplateCoor" placement="left" container="body" triggers="mouseenter:mouseleave">{{row.coordinador.length}}</small>
                         <span class="text-left" *ngIf="row.coordinador.length == 1 && row.estatusId == 4">{{row.coordinador[0]}}</span>
                         <span *ngIf = "row.estatusId != 4" [class.text-warning] = "row.coordinador === 'SIN ASIGNAR'">{{row.coordinador | uppercase}}</span></td>
                   <td class="text-center">

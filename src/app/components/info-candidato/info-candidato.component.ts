@@ -77,6 +77,7 @@ export class InfoCandidatoComponent implements OnInit {
   //examenes
   examen = { 'tecnicos': [], 'psicometricos': [] };
   modalExamen = false;
+  modalComentarios = false;
   ShowButtonCV: boolean = false;
 
 

@@ -13,21 +13,37 @@ label
      padding: 0;
 }
 
-.requerido
-{
-    border-color: red;
-}
+// input:focus{
+//     border-color: red;
+// }
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: red;
+    opacity: 1; /* Firefox */
+text-align: end;
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: red;
+    text-align: end;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: red;
+    text-align: end;
+  }
+
 .valido
 {
     border-color:rgb(76, 248, 76);
     background-color: rgb(232, 240, 254);
 }
 
-.long
-{
-    width: 250px;
-    height: 80px;
-}
+// .long
+// {
+//     width: 250px;
+//     height: 80px;
+// }
 
 tbody {
     display: block;
@@ -50,6 +66,31 @@ tbody {
     width: 100%;
   }
 
+  .long
+  {
+      width:260px;
+ 
+  }
+  .ladaLong
+  {
+      width: 60px;
+
+  }
+  .form-control
+  {
+      height: 25px !important;
+  }
+  .input-group-text
+  {
+    height: 25px !important;
+  }
+//   select.form-control-sm:not([size]):not([multiple]), .input-group-sm > select.form-control:not([size]):not([multiple]), .input-group-sm > .input-group-prepend > select.input-group-text:not([size]):not([multiple]), .input-group-sm > .input-group-append > select.input-group-text:not([size]):not([multiple]), .input-group-sm > .input-group-prepend > select.btn:not([size]):not([multiple]), .input-group-sm > .input-group-append > select.btn:not([size]):not([multiple]) {
+//     height: 20px;
+// }
+  .dateLong
+  {
+      width: 200px;
+  }
 ng-scrollbar {
     --scrollbar-size: 4px;
     --scrollbar-thumb-color: rgb(94, 175, 255);

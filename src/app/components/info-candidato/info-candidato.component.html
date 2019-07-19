@@ -8,7 +8,10 @@
           class="btn btn-xs btn-warning float-right mat-elevation-z8" (click)="modalExamen=true;" container="body"
           placement="bottom" tooltip="Examenes Realizados">
           <i class="fa fa-pencil"></i></button>
-
+          <button  class="btn btn-xs btn-dark float-right mat-elevation-z8" (click)="modalComentarios=true;" container="body"
+          placement="bottom" tooltip="Comentarios">
+          <i class="fa fa-comments-o"></i>
+        </button>
         <!-- <a class="float-right text-muted" (click)="favContact1=!favContact1">
           <em class="fa" [ngClass]="favContact1 ? 'fa-star text-warning' : 'fa-star-o'"></em>
         </a> -->
@@ -786,8 +789,8 @@
   </div>
 </div>
 <br>
-<app-comentario-candidato [CandidatoId]="CandidatoId" [RequisicionId]="RequisicionId"
-  [ProcesoCandidatoId]="procesoCandidatoId"></app-comentario-candidato>
+<!-- <app-comentario-candidato [CandidatoId]="CandidatoId" [RequisicionId]="RequisicionId"
+  [ProcesoCandidatoId]="procesoCandidatoId"></app-comentario-candidato> -->
 
 
 <!-- Modal para vista previa de la vacante  -->
@@ -831,6 +834,24 @@
   </div>
 </div>
 
+<!-- Modal COMENTARIOS -->
+<div *ngIf="modalComentarios" [config]="{ show: true, ignoreBackdropClick: false, backdrop: 'static', keyboard: false }"
+  bsModal #lgModal2="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="dialog-sizes-name1" class="modal-title pull-left text-success">COMENTARIOS PARA CANDIDATO</h5>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right mat-elevation-z8"
+          (click)="lgModal2.hide();modalComentarios = false;"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+          <app-comentario-candidato [CandidatoId]="CandidatoId" [RequisicionId]="RequisicionId"
+          [ProcesoCandidatoId]="procesoCandidatoId"></app-comentario-candidato>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 
 

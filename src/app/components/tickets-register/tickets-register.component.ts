@@ -26,14 +26,23 @@ export class TicketsRegisterComponent implements OnInit {
     if($event != 417)
     {
       sessionStorage.setItem('candidatoId', $event.id);
-      swal("¡El registro se completó con éxito!" , '', "success");
+      // swal("¡El registro se completó con éxito!" , '', "success");
       
       swal({
-        title: "El registro se completó con éxito!",
-        text: "Usuario: " + $event.username + " contraseña: " + $event.pass + " ¡Ya puedes empezar!",
+        title: "¡El registro se completó con éxito!",
+        text: "Usuario: " + $event.username + " contraseña: " + $event.pass + " ¡Ya puedes empezar!" + " Se enviará notificación con usuario y contraseña para iniciar sesion en bolsa de trabajo DAMSA",
         type: "success",
       })
-      this.dialog.close();
+      this.dialog.close($event);
+
+    }
+    else
+    {
+      swal({
+        title: "¡Registro Candidato!",
+        text: "Ocurrió un error al intentar registrar candidato por favor intentelo de nuevo",
+        type: "error",
+      })
 
     }
   }

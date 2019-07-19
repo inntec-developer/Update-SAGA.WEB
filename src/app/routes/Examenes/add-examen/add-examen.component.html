@@ -112,7 +112,7 @@
               </div>
           <br/>
           <ul class="list-group">
-            <li *ngFor="let item of respuestas; let ind2 = index" class="list-group-item" [ngClass]="item.value == 1 ? 'text-success' : 'text-warning'">{{item.resp }} - {{item.name || ''}}
+            <li *ngFor="let item of respuestas; let ind2 = index" class="list-group-item" [ngClass]="item.value == 1 ? 'text-success' : 'text-warning'">{{item.resp }} <span *ngIf="item.name">-</span> {{item.name || ''}}
 
               <label *ngIf="item.value != 1" for="image-input" class="file-upload float-right">
                 <button class="btn btn-xs btn-warning mr-1 mat-elevation-z8">

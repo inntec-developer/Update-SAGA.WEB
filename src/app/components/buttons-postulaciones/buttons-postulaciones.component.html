@@ -38,6 +38,17 @@
 <br />
 <div class="dt-container mat-elevation-z8">
   <div class="dt-header">
+      <button (click)="VerCandidato(element)" class="mr-2 btn btn-xs mat-elevation-z8"
+      [disabled]="element.length == 0" [ngClass]="element.length == 0 ? 'disabled' : 'btn-warning'" container="body"
+      placement="bottom" tooltip="Visualizar">
+      <em class="fa fa-eye"></em>
+    </button>
+    <!-- <button (click)="lgModal.show()" class="mr-2 btn btn-xs mat-elevation-z8"
+      [disabled]="element.length == 0" [ngClass]="element.length == 0 ? 'disabled' : 'btn-dark'" container="body"
+      placement="bottom" tooltip="Comentarios">
+      <em class="fa fa-comments-o"></em>
+    </button> -->
+    <em class="vl mr-2"></em>
         <button [ngClass]="pst ? 'btn btn-xs disabled' : 'btn btn-xs btn-success'" class="mr-2 mat-elevation-z8" [disabled]="pst"
           type="button" (click)="SetProceso(12, 'Apartado')" placement="bottom" tooltip="Apartar" container="body">
           <em class="fa fa-thumbs-o-up"></em>
@@ -107,6 +118,8 @@
           <em class="fa fa-eraser"></em>
         </button>
 
+        <span class="text-muted font-weight-bold float-right text-uppercase mt-1 mr-4 ">Total de Candidatos <span
+          class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span></span>
     <!-- <br />
 
     <mat-form-field>
@@ -125,9 +138,6 @@
             <tr>
               <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
                 {{column.title | uppercase}}
-                <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)"
-                  [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
-                </i>
               </th>
             </tr>
             <tr *ngIf="showFilterRow">
@@ -187,23 +197,22 @@
 <toaster-container toaster-options="{'toaster-id': 2 }" [toasterconfig]="toasterconfig"></toaster-container>
 
 <!-- Modal -->
-<div *ngIf="isModalShow" [config]="{ show: true, ignoreBackdropClick: true }" (onHidden)="onHidden()" bsModal
+<div *ngIf="isModalShow" [config]="{ show: true, ignoreBackdropClick: false }" bsModal
   #MessageModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+    <div class="modal-content ">
       <div class="modal-header">
-        <h4 class="modal-title float-left">Información de Candidato</h4>
-        <button type="button" class="close float-right" aria-label="Close" (click)="closeModal(1)">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h4 class="modal-title float-left text-info">INFORMACI&Oacute;N DE CANDIDATO</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right mat-elevation-z8"
+        (click)="closeModal(1);MessageModal.hide()"><i class="fa fa-times"></i></button>
       </div>
       <div class="modal-body">
         <app-info-candidato [IdCandidato]='candidatoId' [VerVacantes]='false' (Estatus)="EstatusModal($event)">
         </app-info-candidato>
       </div>
-      <div class="modal-footer">
+      <!-- <div class="modal-footer">
         <button type="button" class="btn btn-success mat-elevation-z8" (click)="closeModal(1)">Cerrar</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
@@ -277,3 +286,22 @@
     </div>
   </div>
 </div>
+<!-- Modal para comentarios de la requisicion -->
+<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="dialog-sizes-name1" class="modal-title pull-left">Requisici&oacute;n: {{vacante}} {{element.folio}}</h4>
+          <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <comentario-vacante [RequisicionId]="RequisicionId" [MotivoId]="7"></comentario-vacante>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="md-1 btn btn-success" (click)="lgModal.hide()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>

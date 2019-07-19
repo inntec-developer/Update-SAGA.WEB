@@ -11,70 +11,73 @@
     <li class="breadcrumb-item active">Usuarios</li>
   </ol>
 </div>
-
-<!-- <div *ngIf="verMsj">
-    <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
-  </div>
-<br/> -->
-<div class="dt-container mat-elevation-z8">
-  <div class="dt-header">
-    <!-- <div class="input-group">
-      <mat-form-field>
-        <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
-          (tableChanged)="onChangeTable(config)" id="filterGeneral">
-      </mat-form-field>
-    </div> -->
-    <div class="row justify-content-between">
-      <div>
-        <span class="text-muted font-weight-bold float-right text-uppercase mb-3 ">Total de Usuarios
-          <span class="badge badge-pill badge-success">{{Users.length}}</span>
-        </span>
-      </div>
-      <div>
-        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body"
-          class="margen mr-2 btn btn-xs mat-elevation-z8" [disabled]="!clearFilter"
-          [ngClass]="(!clearFilter) ? 'disabled':'btn-primary'">
-          <em class="fa fa-eraser"></em>
+<div class="card">
+  <div class="card-body">
+    <div class="row p-2 mb-1 bg-light">
+      <div class="col">
+          <button id='update' chkPrivilegiosButtons [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-success'" class="btn btn-xs mat-elevation-z8 float-left mr-1" (click)="Actualizar(true)" container="body" placement="bottom"
+          tooltip="Activar Usuario">
+          <em class="fa fa-check"></em></button>
+          <button id='update' chkPrivilegiosButtons [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-danger'" class="btn btn-xs mat-elevation-z8 float-left mr-1" (click)="Actualizar(false)" container="body" placement="bottom"
+          tooltip="Desactivar Usuario">
+          <em class="fa fa-ban"></em>
         </button>
-        <button type="button" class="margen mr-2 btn btn-xs btn-success mat-elevation-z8" (click)="refreshTable()" container="body"
+        <button id='special' chkPrivilegiosButtons [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-purple'" class="btn btn-xs mat-elevation-z8 float-left mr-1" (click)="SendEmail(p)" container="body" placement="bottom"
+        tooltip="Enviar Correo">
+        <em class="fa fa-envelope"></em></button>
+
+          <button *ngIf="tipoUsuario == '1'" [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-danger'" class="btn btn-xs mat-elevation-z8 float-left" (click)="Borrar(p)" container="body" placement="bottom"
+          tooltip="Borrar Usuario">
+          <em class="fa fa-trash"></em>
+        </button>
+
+        <button type="button" class="btn btn-xs btn-success mat-elevation-z8 float-right mr-1" (click)="refreshTable()" container="body"
           placement="bottom" tooltip="Actualizar" container="body">
           <em class="icon-refresh"></em>
         </button>
+        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" class="mr-1 btn btn-xs mat-elevation-z8 float-right"
+          [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'disabled':'btn-primary'">
+          <em class="fa fa-eraser"></em>
+        </button>
+        <span class="text-muted font-weight-bold float-right text-uppercase mr-4 ">Total de Usuarios
+          <span class="badge badge-pill badge-success">{{Users.length}}</span>
+        </span>
       </div>
     </div>
-  </div>
-  <div class="card card-default">
-    <div #TablaUsers>
-      <table id="UsersDataTable" ngClass={{config.className}} class="table" rol="grid" style="width:100%">
+    <table id="UsersDataTable" ngClass={{config.className}} class="table" style="width:100%">
         <thead>
           <tr>
+            <th style="width:70px;"></th>
             <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
               <small>{{column.title | uppercase}}</small>
-              <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}"> -->
-              <!-- </i> -->
             </th>
             <th class="action-width"></th>
           </tr>
-          <tr *ngIf="showFilterRow">
-            <td *ngFor="let column of columns">
+          <tr>
+            <th><input  class="form-control form-control-sm" id="foto" disabled></th>
+            <th *ngFor="let column of columns">
               <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
                 [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
                 class="form-control form-control-sm" id="{{column.name}}">
-            </td>
+            </th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let p of rows; let rowIndex = index">
-            <td>
+            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+              [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+        
+          <tr (click)="onCellClick(p)" *ngFor="let p of rows; let rowIndex = index" [class.bg-info]="p.selected">
+            <td style="width:70px">
               <div class="media">
-                <a container="body" style="margin:auto;">
-                  <!-- placement="bottom" tooltip="Click para editar" data-toggle="modal"
-                  data-target="#staticModal" (click)="rowAux = rowIndex; CrearURL(p.entidadId); staticModal.show();" -->
-                  <img class="img-fluid circle thumb32" [src]="p.foto" alt="Avatar" (error)="errorImg(p.entidadId)" />
-                </a>
+                 <a> <img class="img-fluid circle thumb32" [src]="p.foto" alt="Avatar" (error)="errorImg(p.entidadId)" /></a>
               </div>
+              <ng-template #popTemplate>
+                  <div class="media">
+                      <img class="img-fluid circle thumb64" [src]="p.foto" alt="Avatar" (error)="errorImg(p.entidadId)" />
+                   </div>
+                </ng-template>
             </td>
-            <td>
+            <td class="text-center">
               <span container="body" placement="bottom" tooltip="Doble click para editar"
                 (dblclick)="editing[rowIndex + '-clave'] = true" *ngIf="!editing[rowIndex + '-clave']">
                 {{p.clave}}
@@ -83,7 +86,7 @@
                 (blur)="updateValue($event, 'clave', rowIndex, p.entidadId)" *ngIf="editing[rowIndex + '-clave']"
                 type="text" [value]=p.clave />
             </td>
-            <td>
+            <td class="text-center">
               <span container="body" placement="bottom" tooltip="Doble click para editar"
                 (dblclick)="editing[rowIndex + '-usuario'] = true" *ngIf="!editing[rowIndex + '-usuario']">
                 {{p.usuario}}
@@ -92,7 +95,7 @@
                 (blur)="updateValue($event, 'usuario', rowIndex, p.entidadId)" *ngIf="editing[rowIndex + '-usuario']"
                 type="text" [value]=p.usuario />
             </td>
-            <td>
+            <td class="text-center">
               <span container="body" placement="bottom" tooltip="Doble click para editar"
                 (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
                 {{p.nombre}}
@@ -101,7 +104,7 @@
                 (blur)="updateValue($event, 'nombre', rowIndex, p.entidadId)" *ngIf="editing[rowIndex + '-nombre']"
                 type="text" [value]=p.nombre />
             </td>
-            <td>
+            <td class="text-center">
               <span container="body" placement="bottom" tooltip="Doble click para editar"
                 (dblclick)="editing[rowIndex + '-apellidoPaterno'] = true"
                 *ngIf="!editing[rowIndex + '-apellidoPaterno']">
@@ -111,7 +114,7 @@
                 (blur)="updateValue($event, 'apellidoPaterno', rowIndex, p.entidadId)"
                 *ngIf="editing[rowIndex + '-apellidoPaterno']" type="text" [value]=p.apellidoPaterno />
             </td>
-            <td>
+            <td class="text-center">
               <span container="body" placement="bottom" tooltip="Doble click para editar"
                 (dblclick)="editing[rowIndex + '-apellidoMaterno'] = true"
                 *ngIf="!editing[rowIndex + '-apellidoMaterno']">
@@ -121,11 +124,11 @@
                 (blur)="updateValue($event, 'apellidoMaterno', rowIndex, p.entidadId)"
                 *ngIf="editing[rowIndex + '-apellidoMaterno']" type="text" [value]=p.apellidoMaterno />
             </td>
-            <td *ngIf="p.email.length > 0">
+            <td class="text-center" *ngIf="p.email.length > 0">
               {{p.email}}
               <!-- <tr *ngFor="let e of p.email" class="text-center" >{{e.email}}</tr> -->
             </td>
-            <td>
+            <td class="text-center">
               <span container="body" placement="bottom" tooltip="Doble click para editar"
                 (dblclick)="editing[rowIndex + '-departamento'] = true" *ngIf="!editing[rowIndex + '-departamento']">
                 {{p.departamento}}
@@ -137,7 +140,7 @@
                 <option *ngFor="let d of ListDepas" [value]='d.id'>{{d.nombre}}</option>
               </select>
             </td>
-            <td>
+            <td class="text-center">
               <span container="body" placement="bottom" tooltip="Doble click para editar"
                 (dblclick)="editing[rowIndex + '-tipoUsuario'] = true" *ngIf="!editing[rowIndex + '-tipoUsuario']">
                 {{p.tipoUsuario}}
@@ -149,7 +152,7 @@
                 <option *ngFor="let t of ListTipos" [value]='t.id'>{{t.tipo}}</option>
               </select>
             </td>
-            <td>
+            <td class="text-center">
               <span container="body" placement="bottom" tooltip="Doble click para editar"
                 (dblclick)="editing[rowIndex + '-lider'] = true" *ngIf="!editing[rowIndex + '-lider']">
                 {{p.nombreLider}}
@@ -160,7 +163,7 @@
                 <option *ngFor="let t of Lideres" [value]='t.liderId'>{{t.nombreLider | uppercase}}</option>
               </select>
             </td>
-            <td>
+            <td class="text-center">
               <span container="body" placement="bottom" tooltip="Doble click para editar"
                 (dblclick)="editing[rowIndex + '-oficina'] = true" *ngIf="!editing[rowIndex + '-oficina']">
                 {{p.oficina}}
@@ -171,29 +174,33 @@
                 <option *ngFor="let o of Oficina" [value]='o.id'>{{o.nombre | uppercase}}</option>
               </select>
             </td>
-            <td>
-              <label class="switch">
-                <input type="checkbox" [checked]="p.activo" (change)="Actualizar($event, p.entidadId)" />
-                <span></span>
-              </label>
+            <td class="text-center">
+                <i class="fa" [ngClass]="p.activo == 1 ? 'text-success fa-user' : 'text-muted fa-user-o'" aria-hidden="true"></i>
+              <!-- <label class="switch"> -->
+                <!-- <input type="checkbox" [checked]="p.activo" disabled/> -->
+                <!-- <span></span>
+              </label> -->
             </td>
             <td class="action-width">
-              <button id='update' chkPrivilegiosButtons class="margin-butto
-                  mb-1 btn btn-xs btn-success float-right mat-elevation-z8" (click)="updateUser(p, rowIndex)" container="body"
-                placement="bottom" tooltip="Guardar Cambios">
-                <em class="fa fa-check"></em>
-              </button>
-              <button id='email' chkPrivilegiosButtons class="margin-butto
-                  ms-1 btn btn-xs btn-warning mat-elevation-z8" (click)="SendEmail(p)" container="body" placement="bottom"
-                tooltip="Enviar Correo">
-                <em class="fa fa-envelope"></em>
-              </button>
+  
+          <button id='update' chkPrivilegiosButtons class="mr-1 btn btn-xs btn-warning float-right mat-elevation-z8" (click)="updateUser(p, rowIndex)" container="body"
+            placement="bottom" tooltip="Guardar Cambios">
+            <em class="fa fa-floppy-o"></em>
+          </button>
             </td>
           </tr>
+    
+          </ng-scrollbar>
         </tbody>
       </table>
-    </div>
   </div>
+  <div>
+      <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
+        [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+        (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
+
+      <!-- <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}} Registros: {{registros}}</small></pre> -->
+    </div>
 </div>
 
 <toaster-container toaster-options="{'toaster-id': 2 }" [toasterconfig]="toasterconfig"></toaster-container>

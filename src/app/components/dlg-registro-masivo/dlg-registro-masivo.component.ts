@@ -92,6 +92,8 @@ valEmail = '';
   registros: number = 0;
   rowIndex: number = -1;
   rowAux = [];
+  txtLada: string = "";
+  valTel: string = "";
   // (
   constructor( private postulateservice: PostulateService,
      @Inject(MAT_DIALOG_DATA) public data: any,
@@ -287,6 +289,17 @@ this.curp = curp;
       //   return item.municipio;
       // });
 
+      let opc = 0;
+
+      if(this.opcRegistro1 > 0)
+      {
+        opc = this.opcRegistro1;
+  
+      }
+      else
+      {
+        opc = this.opcRegistro2;
+      }
 
       let candidato = {
         curp: this.curp,
@@ -298,9 +311,10 @@ this.curp = curp;
         genero: this.model.options == '2' ? 'Mujer' : 'Hombre',
         EstadoNacimientoId: this.estadoId,
         estado: estado[0].estado,
-        MunicipioNacimientoId: this.municipioId,
+       lada: this.txtLada,
         // municipio: municipio[0].municipio,
-        telefono: this.txtPhone
+        telefono: this.txtLada + "-" + this.txtPhone,
+        opcionRegistro: opc
       };
 
       this.dataSource.push(candidato);
@@ -322,6 +336,18 @@ this.curp = curp;
       return item.estado;
     });
 
+    let opc = 0;
+
+    if(this.opcRegistro1 > 0)
+    {
+      opc = this.opcRegistro1;
+
+    }
+    else
+    {
+      opc = this.opcRegistro2;
+    }
+
     this.dataSource[this.rowIndex].curp = this.curp,
     this.dataSource[this.rowIndex].nombre = this.nom,
     this.dataSource[this.rowIndex].apellidoPaterno = this.ap,
@@ -333,8 +359,9 @@ this.curp = curp;
     this.dataSource[this.rowIndex].estado = estado[0].estado,
     this.dataSource[this.rowIndex].MunicipioNacimientoId = this.municipioId,
       // municipio: municipio[0].municipio,
-    this.dataSource[this.rowIndex].telefono = this.txtPhone
-
+    this.dataSource[this.rowIndex].lada = this.txtLada;
+    this.dataSource[this.rowIndex].telefono = this.txtPhone;
+    this.dataSource[this.rowIndex].opcionRegistro = opc;
     this.onChangeTable(this.config);
     this.BorrarCampos();
   }
@@ -347,26 +374,93 @@ this.curp = curp;
 
   ValidarEmail(email)
   {
-    this.postulateservice.ValidarEmailCandidato(email).subscribe(data => {
-      if(data==302)
-      {
-        this.valEmail = "el email " + email + " ya se encuentra registrado"
-        this.email = "";
-      }
-      else
-      {
-        let x = this.dataSource.findIndex(value => value.email === this.email);
-        if(x == -1)
+    this.valTel = "";
+    let regexpEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$');
+    if (regexpEmail.test(email)) {
+      this.postulateservice.ValidarEmailCandidato(email).subscribe(data => {
+        if (data == 302) {
+          this.valEmail = "el email " + email + " ya se encuentra registrado"
+          this.email = "";
+        }
+        else {
+          let x = this.dataSource.findIndex(value => value.email === this.email);
+          if (x == -1) {
+            this.valEmail = "";
+          }
+          else {
+            this.valEmail = "No se puede repetir email"
+            this.email = "";
+          }
+        }
+      });
+    }
+    else {
+      this.valEmail = "el email " + email + "  no tiene el formato correcto"
+      this.email = "";
+    }
+  }
+
+  ValidarTelefono() : boolean
+    {
+      this.valEmail = "";
+      // var regex = /^[+ 0-9]{5}$/;  valida que solo sean numeros y longitud 5
+    var regex = /^[0-9]+$/;
+
+    if(regex.test(this.txtLada) && regex.test(this.txtPhone))
+    {
+      this.postulateservice.ValidarTelCandidato(this.txtLada, this.txtPhone).subscribe(data => {
+        if(data==302)
         {
-          this.valEmail = "";
+          this.valTel = "El teléfono " + this.txtLada + "-" + this.txtPhone + " ya se encuentra registrado"
+          this.txtLada = "";
+          this.txtPhone = "";
+
+          return false;
         }
         else
         {
-          this.valEmail = "No se puede repetir email"
-          this.email = "";
+          this.valTel = "";
+          return true;
+
         }
+      });
+    }
+    else if(this.opcRegistro2 == 1)
+    {
+      this.valTel = "Lada y teléfono son campos necesarios y deben ser númericos";
+      this.txtLada = "";
+      this.txtPhone = "";
+
+      return false;
+    }
+  }
+  valOpcionReg(val)
+  {
+    let regexpEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$');
+    var regex = /^[0-9]+$/;
+    
+    if(val == 1 )
+    {
+      if(!regexpEmail.test(this.email))
+      {
+        this.email = "";
       }
-    });
+
+      this.opcRegistro2=0; 
+       this.txtLada='---'; 
+       this.txtPhone='-------'
+    }
+    else if(val == 2 )
+    {
+      if(!regex.test(this.txtPhone))
+      {
+        this.txtPhone = "";
+        this.txtLada = "";
+      }
+      this.opcRegistro1=0;
+      this.email='REGISTRO POR TELEFONO'
+  
+    }
   }
   registrar()
   {
@@ -381,9 +475,8 @@ this.curp = curp;
       text: "¡Se registrarán (" + this.dataSource.length.toString() + ") candidatos con estatus cubierto para la vacante de " + this.data.vacante,
       type: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#ec2121",
+      confirmButtonColor: "#21a240",
       confirmButtonText: "¡Si, registrar candidato(s)!",
-      cancelButtonColor: "#ec2121",
       cancelButtonText: "¡No, cancelar!",
       closeOnConfirm: true,
       closeOnCancel: true
@@ -397,7 +490,7 @@ this.curp = curp;
 
     this.dataSource.forEach(element => {
       let email = [{ email: element.email.trim() || 'SIN REGISTRO', UsuarioAlta: 'INNTEC' }];
-      let tel = element.telefono || '0000000000';
+    
       let candidato = {
         Curp: element.curp,
         Nombre: element.nombre,
@@ -407,13 +500,13 @@ this.curp = curp;
         FechaNac: element.fechaNac,
         GeneroId: element.genero == 'Mujer' ? 2 : 1,
         EstadoNacimientoId: element.EstadoNacimientoId,
-        Telefono: [{ClavePais:52, ClaveLada: tel.substring(0,2), telefono: tel, TipoTelefonoId: 1}],
+        Telefono: [{ClavePais:52, ClaveLada: element.lada, telefono: element.telefono, TipoTelefonoId: 1}],
         requisicionId: this.data.requisicionId,
-        reclutadorId: this.settings.user['id']
+        reclutadorId: this.settings.user['id'],
+        OpcionRegistro: element.opcionRegistro
       };
       aux.push(candidato);
     });
-  
     this.postulateservice.RegistrarCandidatos(aux).subscribe(data => {
       this.spinner.hide();
       if(data != 417)
@@ -493,6 +586,7 @@ this.curp = curp;
     this.edad = 0;
     this.email = '';
     this.txtPhone = '';
+    this.txtLada = '';
     this.municipios = [];
     this.rbS = 0;
     this.estadoId = 0;
@@ -510,6 +604,10 @@ this.rowAux = [];
 this.onChangeTable(this.config);
   }
 
+  close()
+  {
+    this.dialog.close(0)
+  }
 
    /**
   * configuracion para mensajes de acciones.
