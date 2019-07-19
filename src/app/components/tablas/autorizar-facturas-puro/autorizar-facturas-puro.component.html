@@ -68,8 +68,8 @@
                 <span class="mr-1 badge badge-pill badge-info"> {{row.vacantes}}</span>
               </td>
               <!-- <td class="text-center"> {{row.tipoReclutamiento}}</td> -->
-              <!-- <td class="text-right"> {{row.sueldoMinimo | currency: $}}</td>
-<td class="text-right"> {{row.sueldoMaximo | currency: $}}</td> -->
+              <!-- <td class="text-right"> {{row.sueldoMinimo | moneda: $}}</td>
+<td class="text-right"> {{row.sueldoMaximo | moneda: $}}</td> -->
               <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
               <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
               <td class="text-center">
@@ -91,7 +91,7 @@
                 </ng-template>
               </td>
               <td class="text-right">{{row.porcentaje}} %</td>
-              <td class="text-right">{{row.monto | currency:"$"}}</td>
+              <td class="text-right">{{row.monto | moneda:'$'}}</td>
               <td class="text-center"> {{row.propietario }}</td>
             </tr>
           </div>
@@ -105,7 +105,7 @@
       <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
         [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
         (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
-      
+
   </div>
 </div>
 <!--Mensajes del sistema-->

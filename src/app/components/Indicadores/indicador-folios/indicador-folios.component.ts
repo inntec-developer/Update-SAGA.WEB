@@ -25,7 +25,7 @@ export class IndicadorFoliosComponent implements OnInit {
     }
     this._ComponentService.getFolios(user).subscribe(result => {
       this.UpdateFolios = result;
-      this.Folios = result
+      this.Folios = result;
     }, err => console.error(err));
   }
 

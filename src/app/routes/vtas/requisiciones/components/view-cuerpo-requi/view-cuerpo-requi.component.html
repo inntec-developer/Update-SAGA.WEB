@@ -87,30 +87,30 @@
           <h5 class="text-warning">M&iacute;nimo</h5>
           <p>
             <strong>Mensual: </strong>
-            <label class="card-text"> ${{requisicion?.sueldoMinimo | currency: 'MXN'}}</label>
+            <label class="card-text"> {{requisicion?.sueldoMinimo | moneda: '$'}}</label>
           </p>
           <p>
             <strong>Semanal: </strong>
-            <label class="card-text"> ${{(requisicion?.sueldoMinimo / 30) * 7 | currency: 'MXN'}}</label>
+            <label class="card-text"> {{(requisicion?.sueldoMinimo / 30) * 7 | moneda: '$'}}</label>
           </p>
           <p>
             <strong>Diario: </strong>
-            <label class="card-text"> ${{requisicion?.sueldoMinimo / 30 | currency: 'MXN'}}</label>
+            <label class="card-text"> {{requisicion?.sueldoMinimo / 30 | moneda: '$'}}</label>
           </p>
         </div>
         <div class="col-md-6 col-sm-6 col-xs-6">
           <h5 class="text-warning">M&aacute;ximo</h5>
           <p>
             <strong>Mensual: </strong>
-            <label class="card-text"> ${{requisicion?.sueldoMaximo | currency: 'MXN'}}</label>
+            <label class="card-text"> {{requisicion?.sueldoMaximo | moneda: '$'}}</label>
           </p>
           <p>
             <strong>Semanal: </strong>
-            <label class="card-text"> ${{(requisicion?.sueldoMaximo / 30) * 7 | currency: 'MXN'}}</label>
+            <label class="card-text"> {{(requisicion?.sueldoMaximo / 30) * 7 | moneda: '$'}}</label>
           </p>
           <p>
             <strong>Diario: </strong>
-            <label class="card-text"> ${{requisicion?.sueldoMaximo / 30 | currency: 'MXN'}}</label>
+            <label class="card-text"> {{requisicion?.sueldoMaximo / 30 | moneda: '$'}}</label>
           </p>
         </div>
       </div>

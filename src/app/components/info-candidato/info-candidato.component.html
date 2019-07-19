@@ -280,7 +280,7 @@
                     <div>
                       <strong class="text-primary">Salario Aceptable: </strong>
                       <label *ngIf="candidato?.about?.salarioAceptable else NotSalarioA" class="text-muted">
-                        ${{candidato?.about?.salarioAceptable | currency: 'MXN'}}</label>
+                        {{candidato?.about?.salarioAceptable | moneda: '$'}}</label>
                       <ng-template #NotSalarioA>
                         <label class="text-muted"> Sin Registro</label>
                       </ng-template>
@@ -288,7 +288,7 @@
                     <div>
                       <strong class="text-primary">Salario Deseado: </strong>
                       <label *ngIf="candidato?.about?.salarioDeseado else NotSalarioD" class="text-muted">
-                        ${{candidato?.about?.salarioDeseado | currency: 'MXN'}}</label>
+                        {{candidato?.about?.salarioDeseado | moneda: '$'}}</label>
                       <ng-template #NotSalarioD>
                         <label class="text-muted"> Sin Registro</label>
                       </ng-template>
@@ -458,7 +458,7 @@
                     </div>
                     <div>
                       <strong class="text-primary">Salario: </strong>
-                      <label class="text-muted">${{x?.salario | currency: 'MXN'}}</label>
+                      <label class="text-muted">{{x?.salario | moneda: '$'}}</label>
                     </div>
                   </div>
                 </div>
