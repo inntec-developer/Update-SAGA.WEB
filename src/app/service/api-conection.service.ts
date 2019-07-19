@@ -226,6 +226,7 @@ export class ApiConection {
   public static updateRoles = '/admin/updateRoles';
   public static deleteGrupo = '/admin/deleteGrupo';
   public static deleteRoles = 'admin/deleteRoles';
+  public static deleteUsuario = 'admin/deleteUsuario'
   public static getTreeRoles = '/admin/GetEstructura';
   public static getEntidadesUG = '/admin/getEntidadesByRol';
   public static getEntidades = '/admin/getEntidades2';

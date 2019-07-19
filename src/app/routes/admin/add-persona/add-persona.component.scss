@@ -1,92 +1,52 @@
-.margin-button
-{
-    margin-left: 1px;
-}
 
 .action-width{
-    width: 80px;
+    width: 50px;
 }
 
-thead,
-tbody tr {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-}
+table tbody {
+    display: block;
+    height: 450px;
 
-thead {
-  width: calc(100% - 1em)
-}
+  }
+  
+  table thead,
+  tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  table thead {
+    width: calc(100% - 1em)
+  }
+  
+  table {
+    width: 400px;
+  }
+  
+  
+  table tbody tr:hover{
+    font-size: 14.5px;
+    box-shadow:1px 20px 60px rgba(0,0,0,.23);
+  }
 
-table {
-  width: 400px;
-}
-
+// table tbody div
+// {
+//   height: 350px;
+// }
 .contentEmail{
     width: 200px;
 }
+ng-scrollbar {
+    --scrollbar-size: 4px;
+    --scrollbar-thumb-color: rgb(94, 175, 255);
+    --scrollbar-thumb-hover-color: dodgerblue;
+    --scrollbar-border-radius: 4px;
+  }
 
-// tr.selected {
-//     background-color:  #5d9cec !important;
-//     color: white;
-//   }
 
-//   thead, tbody, tr, td, th { display: block; }
 
-//   table {
-//     width: 100%;
-//   }
-
-// thead th {
-//   height: 40px;
-
-//   /*text-align: left;*/
-// }
-// tr:after {
-//     content: ' ';
-//     display: block;
-//     visibility: hidden;
-//     clear: both;
-//   }
-  
-  
-
-// tbody
-// {
-//     height: 500px;
-//     overflow-y: auto;
-// }
-  
-// thead {
-//     /* fallback */
-//   }
-  
-  
-//   tbody td, thead th {
-// width: 130px;
-//     float: left;
-//   }
-
-// tbody tr:hover
-// {
-// //   transform:scale(0.999,0.9);
-// //   transform-origin:center;
-//     font-size: 16px;
-//     box-shadow:0 20px 60px rgba(0,0,0,.25);
-// }
-
-thead
-{
-    border-bottom: 1px solid whitesmoke;
+a:hover img{
+    -webkit-transform: scale(1.8);
+	transform: scale(1.9);
 }
-
-// .panel
-// {
-//     max-width: 1110px;
-//     overflow: hidden;
-// }
-
-// .panel .table
-// {
-//     max-width: 1100px;
-// }

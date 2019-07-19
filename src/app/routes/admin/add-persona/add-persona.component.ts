@@ -1,3 +1,4 @@
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -8,7 +9,7 @@ import { MatDialog } from '@angular/material';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { UploadImgsComponent } from '../upload-imgs/upload-imgs.component';
 
-
+const swal = require('sweetalert');
 @Component({
   selector: 'app-add-persona',
   templateUrl: './add-persona.component.html',
@@ -17,14 +18,25 @@ import { UploadImgsComponent } from '../upload-imgs/upload-imgs.component';
 
 })
 export class AddPersonaComponent implements OnInit {
-
   public errorMessage: any;
   public showFilterRow: boolean;
   public clearFilter: boolean = false;
   selected: boolean = false;
   public foto: string;
 
+  // Varaibles del paginador
+  public page: number = 1;
+  public itemsPerPage: number = 20;
+  public maxSize: number = 5;
+  public numPages: number = 1;
+  public length: number = 0;
 
+    //scroll
+    disabled = false;
+    compact = false;
+    invertX = false;
+    invertY = false;
+    shown = 'hover';
 
   Users: Array<any> = [];
   ListDepas: Array<any> = [];
@@ -33,12 +45,14 @@ export class AddPersonaComponent implements OnInit {
   Oficina = [];
   editing = {};
   bandera = false;
-  rowAux: any;
+  rowAux: any = [];
   name: string;
   filteredData: Array<any> = [];
   dataRowIndex: any = 0;
   dataRow: any;
 
+  tipoUsuario = this.settings.user['tipoUsuarioId'];
+  
   @ViewChild('uploadImg') someInput: UploadImgsComponent;
   @ViewChild('staticModal') modal;
 
@@ -57,18 +71,17 @@ export class AddPersonaComponent implements OnInit {
 
   public rows: Array<any> = [];
   public columns: Array<any> = [
-    { title: 'Foto', sorting: 'desc', className: 'text-success text-center', name: 'foto' },
-    { title: 'Clave', sorting: 'desc', className: 'text-success text-center', name: 'clave', filtering: { filterString: '', placeholder: 'Clave' } },
-    { title: 'Alias', sorting: 'desc', className: 'text-success text-center', name: 'usuario', filtering: { filterString: '', placeholder: 'Alias' } },
-    { title: 'Nombre', sorting: 'desc', className: 'text-success text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
-    { title: 'Apellido Pat.', sorting: 'desc', className: 'text-success text-center', name: 'apellidoPaterno', filtering: { filterString: '', placeholder: 'Apellido Pat.' } },
-    { title: 'Apellido Mat', sorting: 'desc', className: 'text-success text-center', name: 'apellidoMaterno', filtering: { filterString: '', placeholder: 'Apellido Mat.' } },
-    { title: 'Email', sorting: 'desc', className: 'text-success text-center', name: 'email', filtering: { filterString: '', placeholder: 'Email' } },
-    { title: 'Depto.', sorting: 'desc', className: 'text-success text-center', name: 'departamento', filtering: { filterString: '', placeholder: 'Depto.' } },
-    { title: 'Tipo', sorting: 'desc', className: 'text-success text-center', name: 'tipoUsuario', filtering: { filterString: '', placeholder: 'Tipo' } },
-    { title: 'Asignado a:', sorting: 'desc', className: 'text-success text-center', name: 'nombreLider', filtering: { filterString: '', placeholder: 'Lider' } },
-    { title: 'Ofc / Suc.', sorting: 'desc', className: 'text-success text-center', name: 'oficina', filtering: { filterString: '', placeholder: 'Ofc / Suc' } },
-    { title: 'Activo', sorting: 'desc', className: 'text-success text-center', name: 'activo', filtering: { filterString: '', placeholder: 'Activo' } },
+    { title: 'Clave', className: 'text-center', name: 'clave', filtering: { filterString: '', placeholder: 'Clave' } },
+    { title: 'Alias', className: 'text-center', name: 'usuario', filtering: { filterString: '', placeholder: 'Alias' } },
+    { title: 'Nombre', className: 'text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
+    { title: 'Apellido Pat.', className: 'text-center', name: 'apellidoPaterno', filtering: { filterString: '', placeholder: 'Apellido Pat.' } },
+    { title: 'Apellido Mat', className: 'text-center', name: 'apellidoMaterno', filtering: { filterString: '', placeholder: 'Apellido Mat.' } },
+    { title: 'Email', className: 'text-center', name: 'email', filtering: { filterString: '', placeholder: 'Email' } },
+    { title: 'Depto.', className: 'text-center', name: 'departamento', filtering: { filterString: '', placeholder: 'Depto.' } },
+    { title: 'Tipo', className: 'text-center', name: 'tipoUsuario', filtering: { filterString: '', placeholder: 'Tipo' } },
+    { title: 'Asignado a:', className: 'text-center', name: 'nombreLider', filtering: { filterString: '', placeholder: 'Lider' } },
+    { title: 'Ofc / Suc.', className: 'text-center', name: 'oficina', filtering: { filterString: '', placeholder: 'Ofc / Suc' } },
+    { title: 'Activo/Inactivo', className: 'text-center', name: 'activo', filtering: { filterString: '', placeholder: '1 / 0' } },
   ]
 
   public config: any = {
@@ -77,91 +90,35 @@ export class AddPersonaComponent implements OnInit {
     className: ['table-hover mb-0']
   }
 
-  public onChangeTable(config: any): any {
+  public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }) {
 
     if (config.filtering) {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
-
-    if (config.sorting) {
-      (<any>Object).assign(this.config.sorting, config.sorting);
-    }
     this.rows = this.Users;
-    let filteredData = this.changeFilter(this.Users, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = sortedData;
+    let filteredData = this.changeFilter(this.rows, this.config);
+    this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
+    this.length = filteredData.length;
+
+  }
+  public changePage(page: any, data: Array<any> = this.Users): Array<any> {
+    let start = (page.page - 1) * page.itemsPerPage;
+    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    return data.slice(start, end);
   }
 
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
     this.columns.forEach((column: any) => {
       this.clearFilter = true;
-      if (column.filtering) {
-        this.showFilterRow = true;
+      if (column.filtering.filterString != "") {
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
         });
       }
     });
-    if (!config.filtering) {
-      return filteredData;
-    }
-
-    if (config.filtering.columnName) {
-      return filteredData.filter((item: any) =>
-        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-    }
-
-    let tempArray: Array<any> = [];
-    filteredData.forEach((item: any) => {
-      let flag = false;
-      this.columns.forEach((column: any) => {
-        if (item[column.name] == null) {
-          flag = true;
-        } else {
-          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-            flag = true;
-          }
-        }
-      });
-      if (flag) {
-        tempArray.push(item);
-      }
-    });
-    filteredData = tempArray;
     return filteredData;
-  }
-
-  public changeSort(data: any, config: any): any {
-    if (!config.sorting) {
-      return data;
-    }
-
-    let columns = this.config.sorting.columns || [];
-    let columnName: string = void 0;
-    let sort: string = void 0;
-
-    for (let i = 0; i < columns.length; i++) {
-      if (columns[i].sort !== '' && columns[i].sort !== false) {
-        columnName = columns[i].name;
-        sort = columns[i].sort;
-      }
-    }
-
-    if (!columnName) {
-      return data;
-    }
-
-    // simple sorting
-    return data.sort((previous: any, current: any) => {
-      if (previous[columnName] > current[columnName]) {
-        return sort === 'desc' ? -1 : 1;
-      } else if (previous[columnName] < current[columnName]) {
-        return sort === 'asc' ? -1 : 1;
-      }
-      return 0;
-    });
   }
 
   public clearfilters() {
@@ -172,10 +129,61 @@ export class AddPersonaComponent implements OnInit {
       }
     });
     this.onChangeTable(this.config);
-    if (!this.selected) {
-    }
   }
 
+  Borrar()
+  {
+    if(this.rowAux)
+    {
+      swal({
+        title: "¿ESTÁS SEGURO?",
+        text: "¡Los datos del usuario" + this.rowAux.nombre + " " + this.rowAux.apellidoPaterno + " " + this.rowAux.apellidoMaterno + " se borrarán de la base de datos ",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#21a240",
+        confirmButtonText: "¡Si, Borrar datos!",
+        cancelButtonColor: "red",
+        cancelButtonText: "¡No, cancelar!",
+        closeOnConfirm: true,
+        closeOnCancel: true
+      }, (isConfirm) => {
+        window.onkeydown = null;
+        window.onfocus = null;
+        if (isConfirm) {
+          this.service.DeleteUsuario(this.rowAux.entidadId).subscribe(data => {
+          
+            if(data == 200)
+            {
+              this.popToast('success', 'Actualizar Datos', 'Los datos de usuario se borraron con éxito');
+              this.refreshTable();      
+            }
+            else
+            {
+              this.popToast('error', 'Actualizar Datos', 'Ocurrió un error al intentar borrar datos');
+            }
+      
+          });
+        }
+        else {
+          this.popToast('error', 'Actualizar Datos', 'No se realizó ningun cambio');
+        }
+      });
+    }
+  }
+  public onCellClick(data: any): any {
+    data.selected ? data.selected = false : data.selected = true;
+
+    if (this.rowAux.length == 0) {
+      this.rowAux = data;
+    }
+    else if (data.selected && this.rowAux != []) {
+      var aux = data;
+      data = this.rowAux;
+      data.selected = false;
+      aux.selected = true;
+      this.rowAux = aux;
+    }
+  }
   refreshTable() {
     this.columns.forEach(element => {
       if (element.name != 'foto') {
@@ -183,12 +191,15 @@ export class AddPersonaComponent implements OnInit {
         (<HTMLInputElement>document.getElementById(element.name)).value = '';
       }
     });
+    this.rowAux = [];
     this.getUsuarios();
+    this.GetCatalogos();
   }
 
   CrearURL(idP: any) {
     this.name = idP;
   }
+
 
 
   // updateFoto() {
@@ -301,21 +312,27 @@ export class AddPersonaComponent implements OnInit {
       });
   }
 
-  Actualizar($ev: any, id: any) {
-    this.service.UDActivoUsers(id, $ev.target.checked)
-      .subscribe(data => {
-        if (data == 201) {
-          this.popToast('success', 'Actualizar Datos', 'Los datos se actualizaron con éxito');
-        }
-        else {
-          this.popToast('error', 'Actualizar Datos', 'Ocurrió un error al intentar actualizar datos');
-        }
-      });
+  Actualizar(value) {
+    if(this.rowAux)
+    {
+      this.service.UDActivoUsers(this.rowAux.entidadId, value)
+        .subscribe(data => {
+          if (data == 201) {
+            this.popToast('success', 'Actualizar Datos', 'Los datos se actualizaron con éxito');
+            value ? this.rowAux.activo = 1 : this.rowAux.activo = 0;
+            this.onChangeTable(this.config);
+          }
+          else {
+            this.popToast('error', 'Actualizar Datos', 'Ocurrió un error al intentar actualizar datos');
+          }
+        });
+    }
   }
 
   getUsuarios() {
     this.service.getPersonas(this.settings.user['id']).subscribe(e => {
       this.Users = e;
+      console.log(this.Users)
       this.Users.forEach(item => {
         item.foto = ApiConection.ServiceUrlFotoUser + item.clave + '.jpg';
         // item.fotoAux = ApiConection.ServiceUrlFotoUser + item.clave + '.jpg';

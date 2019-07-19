@@ -79,7 +79,7 @@
         <!-- </div> -->
      <!-- <div class="col-sm-4 col-md-4"> -->
             <div class="d-flex justify-content-between mt-3">
-                <div class="form-group">
+                <div class="form-group with-focus">
                     <label class="text-muted" for="email">EMAIL</label>
                     <div class="input-group long">
                     <input type="email" class="form-control form-control-sm" (blur)="ValidarEmail(email)" placeholder="*" value="" name="email" [(ngModel)]="email" ngModel required [class.requerido]="email.length < 7" [class.valido]="email.length >= 7"/>
