@@ -177,7 +177,7 @@
                     </ng-template>
                   </td>
                   <td class="text-center">
-                    <ng-template #popTemplate>
+                    <ng-template #popTemplateCoor>
                       <div class="row">
                         <div class="col-md-12">
                           <div class="popover-body">
@@ -191,7 +191,7 @@
 
                     <span class="text-center text-warning" *ngIf="row.coordinador.length == 0 && row.estatusId == 4">SIN ASIGNAR</span>
                     <a class="badge badge-pill badge-primary text-white text-center"
-                      *ngIf="row.coordinador.length > 1 && row.estatusId == 4" [popover]="popTemplate" placement="left"
+                      *ngIf="row.coordinador.length > 1 && row.estatusId == 4" [popover]="popTemplateCoor" placement="left"
                       container="body" triggers="mouseenter:mouseleave">{{row.coordinador.length}}</a>
                     <span class="text-center" [class.text-warning] = "row.coordinador[0] == 'SIN ASIGNAR'"
                       *ngIf="row.coordinador.length == 1 && row.estatusId == 4">{{row.coordinador[0] | uppercase}}</span>

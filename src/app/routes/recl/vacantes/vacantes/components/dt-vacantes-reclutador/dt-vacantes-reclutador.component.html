@@ -223,7 +223,7 @@
                     </ng-template>
                   </td>
                   <td class="text-center">
-                      <ng-template #popTemplate>
+                      <ng-template #popTemplateCoor>
                           <div class="card">
                             <div class="card-body">
                               <ul class="list-group list-group-flush">
@@ -234,7 +234,7 @@
                         </ng-template>
 
                         <span *ngIf="row.coordinador.length == 0 && row.estatusId == 4" class="text-warning">SIN ASIGNAR</span>
-                        <small class="text-center badge badge-pill badge-danger" *ngIf="row.coordinador.length > 1 && row.estatusId == 4" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{row.coordinador.length}}</small>
+                        <small class="text-center badge badge-pill badge-danger" *ngIf="row.coordinador.length > 1 && row.estatusId == 4" [popover]="popTemplateCoor" placement="left" container="body" triggers="mouseenter:mouseleave">{{row.coordinador.length}}</small>
                         <span class="text-left" *ngIf="row.coordinador.length == 1 && row.estatusId == 4">{{row.coordinador[0]}}</span>
                         <span *ngIf = "row.estatusId != 4" [class.text-warning] = "row.coordinador === 'SIN ASIGNAR'">{{row.coordinador | uppercase}}</span></td>
                   <td class="text-center">
