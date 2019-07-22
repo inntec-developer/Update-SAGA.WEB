@@ -1,3 +1,4 @@
+import { KioscoServiceService } from './../../../service/Kiosco/kiosco-service.service';
 import { SettingsService } from './../../../core/settings/settings.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbCarousel, NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -32,6 +33,7 @@ export class InicioKioscoComponent implements OnInit {
 
   constructor(config: NgbCarouselConfig, 
     private _service: SistTicketsService,
+    private _kioscoService: KioscoServiceService,
     private settings: SettingsService
   ) {
     config.interval = 10000;
@@ -50,7 +52,7 @@ export class InicioKioscoComponent implements OnInit {
       var images = ['./../assets/img/ArteVacantes/img01.png',
         './../assets/img/ArteVacantes/img02.png', './../assets/img/ArteVacantes/img03.jpg',
         './../assets/img/ArteVacantes/img04.jpg', './../assets/img/ArteVacantes/img05.png',
-        './../assets/img/ArteVacantes/img06.png', './../assets/img/ArteVacantes/img07.png', './../assets/img/ArteVacantes/img08.png']
+        './../assets/img/ArteVacantes/img06.png', './../assets/img/ArteVacantes/img07.png', './../assets/img/ArteVacantes/img08.png'];
 
       this.dataSource = data;
       if (this.dataSource.length > 0) {
@@ -65,7 +67,7 @@ export class InicioKioscoComponent implements OnInit {
               id: id,
               categoria: this.dataSource.find(s => s.areaId === id).categoria,
               icono: this.dataSource.find(s => s.areaId === id).icono,
-              color: color
+              color: color,
             }
           });
         this.dataSource = this.dataSource.filter(element => {
@@ -111,11 +113,11 @@ export class InicioKioscoComponent implements OnInit {
   GenerarTicket(row) {
     swal({
       title: "¿ESTAS SEGURO?",
-      text: "¡Se generará ticket para entrevista! para la vacante de " + row.vBtra,
+      text: "¡Se se está postulando a la vacante de " + row.vBtra + "!",
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: "#ec2121",
-      confirmButtonText: "¡Si, imprimir ticket!",
+      confirmButtonText: "¡Si, postularme!",
       cancelButtonColor: "#ec2121",
       cancelButtonText: "¡No, cancelar!",
       closeOnConfirm: false,
@@ -132,14 +134,12 @@ export class InicioKioscoComponent implements OnInit {
            candidatoId = sessionStorage.getItem('candidatoId');
         }
 
+        this._kioscoService.PostulacionKiosco({requisicionId: row.id, candidatoId: candidatoId}).subscribe(data => {
+          this.num = data[0];
 
-    this._service.GetTicketSinCita(row.id, candidatoId).subscribe(data => {
-      this.num = data;
+          swal("¡POSTULACIÓN!", "La postulación se registró con éxito ", "success");
 
-      swal("¡Ticket Impreso!", this.num, "success");
-      sessionStorage.removeItem('candidatoId');
-
-    });
+        });
 
 
       }

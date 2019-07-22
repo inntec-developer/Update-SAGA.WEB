@@ -319,6 +319,10 @@ export class ApiConection {
   public static GetCoordinacion = 'reporte/coordinacion'
   public static GetCandidatoRep = 'reporte/candidatos'
 
+  /* Kiosco */
+
+  public static PostulacionKiosco = 'Kiosco/postulacion'
+  
   /*SistTickets */
 
   public static InsertTicket = 'SistTickets/InsertTicketRecl'

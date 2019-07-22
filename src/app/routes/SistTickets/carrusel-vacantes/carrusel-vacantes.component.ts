@@ -62,9 +62,9 @@ export class CarruselVacantesComponent implements OnInit {
 
 
     this._service.GetTicketSinCita(row.id, candidatoId).subscribe(data => {
-      this.num = data;
+      this.num = data[0];
 
-      swal("¡Ticket Impreso!", this.num, "success");
+      swal("¡TURNO IMPRESO!", "Bienvenido " + data[1] + " . Por favor tome su turno impreso." + this.num + ". Si inició sesión se cerrará al imprimir turno", "success");
       sessionStorage.removeItem('candidatoId');
 
     });
