@@ -33,6 +33,13 @@ export class IndicadoresComponent implements OnInit {
   public totalPos : number;
   public cubierto : number;
   public faltante : number;
+  public apartado : number;
+  public cita : number;
+  public entrevista : number;
+  public evaluacion : number;
+  public finalist : number;
+  public entrecliente : number;
+  public fincliente : number;
 
   constructor(
     private service:ReportesService,
@@ -54,6 +61,13 @@ export class IndicadoresComponent implements OnInit {
      this.totalPos = item['numeropos'];
      this.cubierto = item['cubierto'];
      this.faltante = item['faltante'];
+     this.apartado = item['apartado'];
+     this.cita = item['cita'];
+     this.entrevista = item['entrevista'];
+     this.evaluacion = item['evaluacion'];
+     this.finalist = item['finalista'];
+     this.entrecliente = item['entrecliente'];
+     this.fincliente = item['fincliente'];
 
     });
 

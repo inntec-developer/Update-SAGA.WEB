@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
 import { SettingsService } from '../../../core/settings/settings.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-grafica-vacante-activa',
@@ -18,11 +19,12 @@ export class GraficaVacanteActivaComponent implements OnInit {
 
   constructor(
     private servicio:ComponentsService,
-    private settings: SettingsService
+    private settings: SettingsService,
+    private spinner: NgxSpinnerService,
     ) { }
 
   ngOnInit() {
-
+    this.spinner.hide();
     this.UsuarioId = this.settings.user['id'];
    // this.UsuarioId = '2217B0F2-5A6E-E811-80E1-9E274155325E';
     // Chart.defaults.scale.ticks.beginAtZero = true;

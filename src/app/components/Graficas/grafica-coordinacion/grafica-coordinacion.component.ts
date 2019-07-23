@@ -18,6 +18,9 @@ export class GraficaCoordinacionComponent implements OnInit {
   public masivo : number;
   public especial : number;
   public operativo : number;
+  public masivopos : number;
+  public especialpos : number;
+  public operativopos : number;
 
   constructor(
     private servicio:ComponentsService,
@@ -32,13 +35,16 @@ export class GraficaCoordinacionComponent implements OnInit {
     this.masivo = item['masivo'];
     this.operativo = item['operativo'];
     this.especial = item['ezpecial'];
+    this.masivopos = item['masivopos'];
+    this.operativopos = item['operativopos'];
+    this.especialpos = item['especialpos'];
    
    this.Data = {
      datasets: [{
        backgroundColor: [
-                       '#8e5ea2',
-                       '#BA49FF',
-                       '#FF358F',
+                       '#4F8AFF',
+                       '#FF8F35',
+                       '#FF495F',
                         ],
        data: [
           this.masivo,
@@ -49,7 +55,7 @@ export class GraficaCoordinacionComponent implements OnInit {
      labels: [
        'Masivo',
        'Operativo',
-       'Especial',
+       'Especializado',
      ]
    }
    this.Chart = new Chart('coordinacion', {

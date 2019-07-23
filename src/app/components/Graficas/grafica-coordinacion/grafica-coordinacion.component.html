@@ -1,10 +1,43 @@
 
-<div style="text-align: center">
+
+<div class="card box">
+    <div class="card-body mat-elevation-z8">
+      <div class="d-flex justify-content-between">
+        <label class="text-info"><strong>Coordinacion Folios: {{masivo + operativo + especial}}</strong> </label>
+        <em class="icon-refresh em- text-success"
+              (click)="ngOnInit()"></em>
+      </div>
+      <br>
+      <div>
+        <canvas id="coordinacion"></canvas>
+        <br>
+        <div class="col-xl-12">
+          <div >
+              <small><span > Masivos: <span
+                class="badge badge-primary">{{masivopos}}</span></span></small>
+          
+              <small style="margin-left: 20%"><span > Operativo: <span
+                class="badge badge-warning">{{operativopos}}</span></span></small>
+        
+              <small style="margin-left: 20%"><span > Especializado: <span
+                class="badge badge-danger">{{especialpos}}</span></span></small>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <small><span class="float-right"> Total Posiciones: <span
+              class="badge badge-info">{{masivopos + operativopos + especialpos}}</span></span></small>
+      </div>
+    </div>
+  </div>
+
+
+
+<!-- <div style="text-align: center">
   <h4 >Folios Activos: {{masivo}} Masivos, {{operativo}} Operativos y {{especial}} Especiales </h4> 
 </div>
 <div >
 <canvas  id="coordinacion" ></canvas>
-</div>
+</div> -->
 
 
 
