@@ -66,7 +66,7 @@ export class DlgRegistroMasivoComponent implements OnInit {
   estados: any = [];
   municipios: any = [];
   edad: number = 0;
-  fn: Date;
+  fn: Date = new Date();
   rbS: any = 0;
   estadoId = 0;
   municipioId = 0;

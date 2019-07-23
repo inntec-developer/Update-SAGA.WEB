@@ -65,7 +65,7 @@ export class TicketsInicioComponent implements OnInit {
       else
       {
       this.num = data;
-      swal("¡Ticket Impreso!", this.num, "success");
+      swal("¡TURNO IMPRESO!", "Bienvenido Blanca Melina Morales Cordova. Por favor tome su turno impreso." + this.num, "success");
       this.btnCita = false;
       this.folio = 0;
       }
