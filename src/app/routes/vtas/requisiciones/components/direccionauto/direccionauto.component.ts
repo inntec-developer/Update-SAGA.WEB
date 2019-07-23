@@ -1,12 +1,13 @@
-import { Component, OnInit, Input, Output,  EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, ReactiveFormsModule, NgForm, Validator } from '@angular/forms'
-import { Observable } from 'rxjs/Observable';
-import {startWith} from 'rxjs/operators/startWith';
-import {map} from 'rxjs/operators/map';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, NgForm, ReactiveFormsModule, Validator } from '@angular/forms'
 
+import { Observable } from 'rxjs/Observable';
+import { RequisicionesService } from '../../../../../service'
+import {map} from 'rxjs/operators/map';
+import {startWith} from 'rxjs/operators/startWith';
 
 //Service
-import { RequisicionesService } from '../../../../../service'
+
 
 @Component({
   selector: 'app-direccionauto',

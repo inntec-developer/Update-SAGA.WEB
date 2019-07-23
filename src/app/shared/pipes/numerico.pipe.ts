@@ -6,7 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class NumericoPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    debugger;
     args = args || '';
     var valor = '';
     var cdu = '';

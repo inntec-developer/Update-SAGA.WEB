@@ -7,7 +7,7 @@ export class ApiConection {
   // public static ServiceUrlImgExamenes = 'http://10.10.12.31:333/api/';
 
 
-  //Produccion
+  // Produccion
   // public static ServiceUrlWeb = 'https://weberp.damsa.com.mx/';
   // public static ServiceUrl = 'https://apierp.damsa.com.mx/api/';
   // public static ServiceUrlImgExamenes = 'https://apierp.damsa.com.mx';
@@ -31,6 +31,8 @@ export class ApiConection {
   public static ServiceUrlLoginBolsa = 'https://btweb.damsa.com.mx';
   public static ServicioUrl290 = 'https://webrcsb.damsa.com.mx/Home/';
 
+  /* Check Vertion Sistem */
+public static CheckVertionSistem = 'Vertion/Check';
   /* Calendario Event */
   public static GetCalendarioEvent = 'CalendarEvent/GetEvent';
   public static AddCalendarioEvent = 'CalendarEvent/AddEvent';

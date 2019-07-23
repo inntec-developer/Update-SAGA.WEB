@@ -65,7 +65,6 @@ export class RequisicionNuevaComponent implements OnInit {
           this.spinner.hide();
 
           setTimeout(() => {
-            debugger;
             var sendEmail = {
               Email: this.settings['user']['email'],
               Folio: this.folio,
@@ -77,7 +76,7 @@ export class RequisicionNuevaComponent implements OnInit {
                 if (this.confidencial == false) {
                   this.serviceRequisiciones.PublicarNuevaRequisicion(this.requisicionId).subscribe(data => {
                     if (data != 404) {
-                      this.popToast('success', 'Publicacion de Requisicion', 'Se ha publicado correctamente en Bolsa de Trabajo la requisición.');
+                      this.popToast('success', 'Publicación de Requisición', 'Se ha publicado correctamente en Bolsa de Trabajo la requisición.');
                     }
                     else {
                       this.popToast('error', 'Nueva Requisicion', 'Error al intentar publicado en Bolsa de Trabajo la requisición.')
@@ -109,7 +108,6 @@ export class RequisicionNuevaComponent implements OnInit {
   }
 
   getParams() {
-    debugger;
     this._Route.params.subscribe(params => {
       if (params['IdDamfo'] != null && params['IdDireccion'] != null) {
         this.damfoId = params['IdDamfo'];

@@ -8,11 +8,9 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import { ApiConection } from '../../../service';
 import { AuthService } from '../../../service/auth/auth.service';
+import { CheckVertionSistemService } from './../../../service/check-vertion-sistem.service';
 import { CustomValidators } from 'ng2-validation';
-import { HttpClient } from '@angular/common/http';
-import { INVALID } from '@angular/forms/src/model';
 import { SettingsService } from '../../../core/settings/settings.service';
-import { log } from 'util';
 import { password } from '../../../models/admin/password';
 
 //Modelos
@@ -26,12 +24,13 @@ const swal = require('sweetalert');
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers: [AdminServiceService, AuthService]
+  providers: [AdminServiceService, AuthService, CheckVertionSistemService]
 })
 export class LoginComponent implements OnInit {
 
   Folio: any;
   showRequi: boolean = false;
+  Actualizado: boolean = false;
 
 
   showPassL: boolean = false;
@@ -51,7 +50,14 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    private _serviceSistem: CheckVertionSistemService) {
+    this._serviceSistem.checkVertionSistem(settings.app.vertion).subscribe(result => {
+      debugger;
+      if (result != 404) {
+        this.Actualizado = result;
+      }
+    });
     this.route.params.subscribe(params => {
       if (params['Folio'] != null) {
         this.Folio = params['Folio'];
@@ -72,6 +78,11 @@ export class LoginComponent implements OnInit {
     if (this.valForm.valid) {
       this.login(value.email, value.password);
     }
+  }
+
+  actualizar() {
+    debugger;
+    location.reload();
   }
 
   login(email: string, password: string) {
@@ -103,9 +114,9 @@ export class LoginComponent implements OnInit {
             this.settings.user['departamentoId'] = decode['DepartamentoId'];
             this.settings.user['departamento'] = decode['Departamento'];
             this.settings.user['unidadNegocioId'] = decode['UnidadNegocioId'];
-            if(!this.showRequi){
+            if (!this.showRequi) {
               this.router.navigate(['/home']);
-            }else{
+            } else {
               this.router.navigate(['/reclutamiento/showVacanteReclutador/', this.Folio], { skipLocationChange: true });
             }
 

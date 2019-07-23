@@ -87,7 +87,6 @@ export class DtHorariosComponent implements OnInit {
             .map(r => r.numeroVacantes)
             .reduce((sum, current) => sum + current)
           this.NumeroVacantes.emit(SumaVacantes);
-
         }
       });
     }

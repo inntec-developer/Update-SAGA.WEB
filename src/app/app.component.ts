@@ -1,5 +1,4 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
-
 import { SettingsService } from './core/settings/settings.service';
 
 declare var $: any;
@@ -9,7 +8,7 @@ declare var $: any;
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'], 
 })
 export class AppComponent implements OnInit {
 
@@ -24,9 +23,11 @@ export class AppComponent implements OnInit {
     @HostBinding('class.aside-toggled') get asideToggled() { return this.settings.layout.asideToggled; };
     @HostBinding('class.aside-collapsed-text') get isCollapsedText() { return this.settings.layout.isCollapsedText; };
 
-    constructor(public settings: SettingsService) { }
+    constructor(public settings: SettingsService) { 
+    }
 
     ngOnInit() {
         $(document).on('click', '[href="#"]', e => e.preventDefault());
+        
     }
 }
