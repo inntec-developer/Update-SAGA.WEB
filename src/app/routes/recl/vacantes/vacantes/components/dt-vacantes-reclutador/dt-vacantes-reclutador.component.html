@@ -415,7 +415,7 @@
       <div class="modal-header">
         <h4 id="dialog-sizes-name1" class="modal-title pull-left">Informaci&oacute;n de la Vacante</h4>
         <button placement="right" tooltip="Imprimir Requisición" class="mr-1 btn btn-xs btn-info mat-elevation-z8"
-          (click)="lgModal15.hide(); print()">
+          (click)="childModal.show()">
           <em class="fa fa-print"></em>
         </button>
         <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal15.hide()"
@@ -438,6 +438,42 @@
   <div>
     <div class="modal-body">
       <app-info-vacante [Folios]="folio" [Requisicion]="id"></app-info-vacante>
+    </div>
+  </div>
+</div>
+
+
+<!-- <button type="button" class="btn btn-primary" (click)="parentModal.show()">Open parent modal</button> -->
+<div class="modal fade" bsModal #parentModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="dialog-nested-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-nested-name1" class="modal-title pull-left">First modal</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="parentModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <button type="button" class="btn btn-primary" (click)="childModal.show()">Open second modal</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" bsModal #childModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="dialog-nested-name2">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-nested-name2" class="modal-title pull-left">Second modal</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="childModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Información a mostrar en impresión
+        <br>
+        <button type="button" class="btn btn-primary" (click)="lgModal15.hide(); childModal.hide(); print(); ">Imprimir</button>
+      </div>
     </div>
   </div>
 </div>

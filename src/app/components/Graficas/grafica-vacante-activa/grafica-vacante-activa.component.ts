@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
-import { SettingsService } from '../../../core/settings/settings.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SettingsService } from '../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-grafica-vacante-activa',
@@ -16,6 +16,7 @@ export class GraficaVacanteActivaComponent implements OnInit {
   Data: any;
   private UsuarioId: any;
   public total : number;
+  public ShowModal = false;
 
   constructor(
     private servicio:ComponentsService,
