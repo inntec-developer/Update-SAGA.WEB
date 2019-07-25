@@ -101,6 +101,7 @@ export class DialogAssingRequiComponent implements OnInit {
   }
 
   getInformacion() {
+    debugger;
     if (this.data != null) {
       var Ponderacion = 0;
       if (this.data['ponderacion'] == null) {

@@ -195,7 +195,7 @@
 <ng-template #acercaDe>
   <div class="modal-lg">
     <div class="modal-header">
-      <h4 class="modal-title text-success">Actualizaciones del Sistema {{settings.app.vertion}}</h4>
+      <h4 class="modal-title text-success">Actualizaciones del Sistema {{settings.app.vertion + ' - ' + settings.app.environment }}</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
         <span aria-hidden="true" class="text-danger">&times;</span>
       </button>

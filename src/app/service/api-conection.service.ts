@@ -1,13 +1,27 @@
 export class ApiConection {
-  public static ServiceUrl = 'http://localhost:33333/api/';
-  public static ServiceUrlImgExamenes = 'http://localhost:33333/';
-  public static ServiceUrlWeb = "http://localhost:4200/"
+   public static ServiceUrl = 'http://localhost:33333/api/';
+   public static ServiceUrlImgExamenes = 'http://localhost:33333/';
+   public static ServiceUrlWeb = "http://localhost:4200/"
 
   // public static ServiceUrl = 'http://10.10.12.31:333/api/';
   // public static ServiceUrlImgExamenes = 'http://10.10.12.31:333/api/';
 
+  /************************************************************************************************ */
 
-  //Produccion
+ // public static ServiceUrl = 'http://192.168.0.5:33333/api/';
+ // public static ServiceUrlImgExamenes = 'http://192.168.0.5t:33333/';
+ // public static ServiceUrlWeb = "http://192.168.0.5:4200/"
+
+  public static ServiceUrlFotoUser = 'http://192.168.0.5:33333/img/';
+  public static ServiceUrlFileManager = 'http://192.168.0.5:33333/utilerias/';
+  public static ServiceUrlFoto = 'http://192.168.0.5:33333/';
+  public static ServiceUrlBolsa = 'https://btapi.damsa.com.mx';
+  public static ServiceUrlLoginBolsa = 'https://btweb.damsa.com.mx';
+  public static ServicioUrl290 = 'https://webrcsb.damsa.com.mx/Home/';
+
+/************************************************************************************************ */
+
+  // Produccion
   // public static ServiceUrlWeb = 'https://weberp.damsa.com.mx/';
   // public static ServiceUrl = 'https://apierp.damsa.com.mx/api/';
   // public static ServiceUrlImgExamenes = 'https://apierp.damsa.com.mx';
@@ -24,13 +38,15 @@ export class ApiConection {
   // public static ServiceUrl = 'https://apisb.damsa.com.mx/api/';
   // public static ServiceUrlImgExamenes = 'https://apisb.damsa.com.mx';
 
-  public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
-  public static ServiceUrlFileManager = 'https://apisb.damsa.com.mx/utilerias/';
-  public static ServiceUrlFoto = 'https://apisb.damsa.com.mx/';
-  public static ServiceUrlBolsa = 'https://btapi.damsa.com.mx';
-  public static ServiceUrlLoginBolsa = 'https://btweb.damsa.com.mx';
-  public static ServicioUrl290 = 'https://webrcsb.damsa.com.mx/Home/';
+  // public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
+  // public static ServiceUrlFileManager = 'https://apisb.damsa.com.mx/utilerias/';
+  // public static ServiceUrlFoto = 'https://apisb.damsa.com.mx/';
+  // public static ServiceUrlBolsa = 'https://btapi.damsa.com.mx';
+  // public static ServiceUrlLoginBolsa = 'https://btweb.damsa.com.mx';
+  // public static ServicioUrl290 = 'https://webrcsb.damsa.com.mx/Home/';
 
+  /* Check Vertion Sistem */
+public static CheckVertionSistem = 'Vertion/Check';
   /* Calendario Event */
   public static GetCalendarioEvent = 'CalendarEvent/GetEvent';
   public static AddCalendarioEvent = 'CalendarEvent/AddEvent';
@@ -322,7 +338,7 @@ export class ApiConection {
   /* Kiosco */
 
   public static PostulacionKiosco = 'Kiosco/postulacion'
-  
+
   /*SistTickets */
 
   public static InsertTicket = 'SistTickets/InsertTicketRecl'

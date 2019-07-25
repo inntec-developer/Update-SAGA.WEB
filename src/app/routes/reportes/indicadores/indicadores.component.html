@@ -1,15 +1,15 @@
 
-<div class="content-heading">
+<!-- <div class="content-heading">
     <div>
        Indicadores
         <span class="text-sm d-none d-sm-block">informe de indicadores.</span>
     </div>
-    <!-- Breadcrumb right aligned-->
+
     <ol class="breadcrumb ml-auto">
         <li class="breadcrumb-item"><a [routerLink]="['/home']" >Inicio</a></li>
         <li class="breadcrumb-item active">Indicadores</li>
     </ol>
-  </div>
+  </div> -->
 
   <ngx-spinner
   bdColor="rgba(198,195,195,0.8)"
@@ -69,35 +69,30 @@
 
 <div class="row">
     <div class="col-xl-12">
-                <div class="col-xl-4 sombra" style="float: left;">
-                                <div class="form-group ">
-                                       <app-grafica-vacante-activa></app-grafica-vacante-activa>
-                                </div>
-                            </div>
-            <div class="col-xl-4 sombra " style="float: left;">
-                    <div class="form-group ">
-                            <app-grafica-vacante-cubierta  ></app-grafica-vacante-cubierta>
-                    </div>
-                </div>
-                    <div class="col-xl-4 sombra" style="float: left;">
-                                <div class="form-group ">
-                                       <app-grafica-vacante-porvenc></app-grafica-vacante-porvenc>
-                                </div>
-                            </div>
-                          
-                           <!-- <div class="col-xl-3 sombra" style="float: left;">
-                                        <div class="form-group ">
-                                              <app-grafica-vacante-vencida></app-grafica-vacante-vencida>
-                                        </div>
-                                    </div> -->
-                   
+        <div class="col-xl-4" style="float: left;">
+            <div class="form-group ">
+                <app-grafica-vacante-activa></app-grafica-vacante-activa>
+            </div>
+        </div>
+        <div class="col-xl-4 " style="float: left;">
+            <div class="form-group ">
+                <app-grafica-vacante-cubierta></app-grafica-vacante-cubierta>
+            </div>
+        </div>
+        <div class="col-xl-4 " style="float: left;">
+            <div class="form-group ">
+                <app-indicador-posiciones-activas></app-indicador-posiciones-activas>
+                <!-- <app-grafica-vacante-porvenc></app-grafica-vacante-porvenc> -->
+            </div>
+        </div>
+
     </div>
-    
-    <div class="col-xl-6 sombra" style="margin-top: 30px">
+
+    <div class="col-xl-6 " style="margin-top: 30px">
         <app-grafica-captado-contratado></app-grafica-captado-contratado>
         </div>
 
-        <div class="col-xl-6 sombra" style="margin-top: 30px">
+        <div class="col-xl-6 " style="margin-top: 30px">
             <app-grafica-coordinacion></app-grafica-coordinacion>
             </div>
 
@@ -127,7 +122,7 @@
                         <div _ngcontent-c10=""  class="radial-bar radial-bar-{{Enviadopor}} radial-bar-lg radial-bar-success">
                                 <span class="centrar">{{Enviado}}</span>
                         </div>
-                    </div>     
+                    </div>
         </div>
         <div class="col-xl-12">
                 <div class="col-xl-4" style="float:left">
@@ -147,11 +142,113 @@
                         <div _ngcontent-c10="" class="radial-bar radial-bar-{{Contratadopor}} radial-bar-lg radial-bar-success"   >
                            <span class="centrar">{{Contratado}}</span>
                         </div>
-                    </div>     
+                    </div>
         </div>
-           
     </div> -->
-  
-    
 </div>
+
+
+<div class="col-xl-6 margen left letra">
+        <div class="row">
+                <div class="col-xl-3 col-md-6 dimen">
+                    <div class="card flex-row align-items-center align-items-stretch border-0">
+                        <div class="col-4 d-flex align-items-center bg-primary-dark justify-content-center rounded-left">
+                            <em class="fa fa-file-text fa-3x"></em>
+                        </div>
+                        <div class="col-8 py-1 bg-primary rounded-right">
+                            <div class="h2 mt-0">{{apartado}}</div>
+                            <div class="text-uppercase">Candidato Apartados</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 dimen">
+                    <div class="card flex-row align-items-center align-items-stretch border-0">
+                        <div class="col-4 d-flex align-items-center bg-primary-dark justify-content-center rounded-left">
+                            <em class="fa fa-briefcase fa-3x"></em>
+                        </div>
+                        <div class="col-8 py-1 bg-primary rounded-right">
+                            <div class="h2 mt-0">{{cita}}
+                            </div>
+                            <div class="text-uppercase">Candidato Cita</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3  col-md-6 dimen">
+                    <div class="card flex-row align-items-center align-items-stretch border-0">
+                        <div class="col-4 d-flex align-items-center bg-green-dark justify-content-center rounded-left">
+                            <em class="fa fa-user fa-3x"></em>
+                        </div>
+                        <div class="col-8 py-1 bg-green rounded-right">
+                            <div class="h2 mt-0">{{entrevista}}</div>
+                            <div class="text-uppercase">entrevista Recluta..</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3  col-md-6 dimen">
+                    <div class="card flex-row align-items-center align-items-stretch border-0">
+                        <div class="col-4 d-flex align-items-center bg-warning-dark justify-content-center rounded-left">
+                            <em class="fa fa-user-o fa-3x"></em>
+                        </div>
+                        <div class="col-8 py-1 bg-warning rounded-right">
+                            <div class="h2 mt-0">{{evaluacion}}</div>
+                            <div class="text-uppercase">Evaluación recluta..</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-6 left margen letra">
+                <div class="row">
+                        <div class="col-xl-3 col-md-6 dimen">
+                            <div class="card flex-row align-items-center align-items-stretch border-0">
+                                <div class="col-4 d-flex align-items-center bg-danger-dark justify-content-center rounded-left">
+                                    <em class="fa fa-file-text fa-3x"></em>
+                                </div>
+                                <div class="col-8 py-1 bg-danger rounded-right">
+                                    <div class="h2 mt-0">{{finalist}}</div>
+                                    <div class="text-uppercase">Finalista recluta..</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 dimen">
+                            <div class="card flex-row align-items-center align-items-stretch border-0">
+                                <div class="col-4 d-flex align-items-center bg-green-dark justify-content-center rounded-left">
+                                    <em class="fa fa-briefcase fa-3x"></em>
+                                </div>
+                                <div class="col-8 py-1 bg-green rounded-right">
+                                    <div class="h2 mt-0">{{entrecliente}}
+                                    </div>
+                                    <div class="text-uppercase">Entrevista Cliente</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3  col-md-6 dimen">
+                            <div class="card flex-row align-items-center align-items-stretch border-0">
+                                <div class="col-4 d-flex align-items-center bg-danger-dark justify-content-center rounded-left">
+                                    <em class="fa fa-user fa-3x"></em>
+                                </div>
+                                <div class="col-8 py-1 bg-danger rounded-right">
+                                    <div class="h2 mt-0">{{fincliente}}</div>
+                                    <div class="text-uppercase">Finalista Cliente</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3  col-md-6 dimen">
+                            <div class="card flex-row align-items-center align-items-stretch border-0">
+                                <div class="col-4 d-flex align-items-center bg-purple-dark justify-content-center rounded-left">
+                                    <em class="fa fa-user-o fa-3x"></em>
+                                </div>
+                                <div class="col-8 py-1 bg-purple rounded-right">
+                                    <div class="h2 mt-0">{{faltante}}</div>
+                                    <div class="text-uppercase">Total de Posiciones</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
 

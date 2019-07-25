@@ -7,7 +7,7 @@
                     <img class="block-center rounded" src="assets/img/damsa/logo.png" alt="Image" />
                 </a>
             </div>
-            <div class="card-body">
+            <div class="card-body" *ngIf="Actualizado">
                 <p class="text-center py-2">SAGA INN</p>
                 <form [formGroup]="valForm" class="form-validate mb-3" role="form" name="loginForm" novalidate="" (submit)="submitForm($event, valForm.value)">
                     <div class="form-group">
@@ -57,6 +57,9 @@
                 <div *ngIf="failLogin" class="alert alert-link alert-danger text-center btn-block" role="alert">Usuario o contraseña incorrecto</div>
                 <div *ngIf="noAccess" class="alert alert-warning text-center" role="alert">Sin acceso al sistema</div>
             </div>
+            <div class="card-body" *ngIf="!Actualizado">
+              <button class="btn btn-block btn-warning mt-3" (click)="actualizar()">Actualizar Versi&oacute;n</button>
+            </div>
         </div>
         <!-- END card-->
         <div class="p-3 text-center">
@@ -65,7 +68,8 @@
             <span class="mx-2">-</span>
             <span>{{ settings.app.name }}</span>
             <span class="mx-2">-</span>
-            <span>{{ settings.app.vertion }}</span>
+            <span>{{ settings.app.vertion }} </span>
+            <span>{{ settings.app.environment }}</span>
             <br/>
             <span>{{ settings.app.description }}</span>
         </div>

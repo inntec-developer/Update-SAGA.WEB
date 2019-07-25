@@ -21,3 +21,32 @@
   z-index: 1000;
   margin-top: 34%;
  }
+
+ .scaled {
+  transform: scale(0.5, 0.5); /* Igual que: scaleX(2) scaleY(0.5) */
+  transform-origin: left;
+  background-color: pink;
+}
+
+.dimen{
+  max-width: 25%;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.margen{
+  margin-top: 10px;
+  margin-bottom: 50px;
+}
+
+.left{
+  float: left;
+}
+
+.letra{
+  font-size: 10px
+}
+
+.padi{
+ padding-top: 3px;
+}

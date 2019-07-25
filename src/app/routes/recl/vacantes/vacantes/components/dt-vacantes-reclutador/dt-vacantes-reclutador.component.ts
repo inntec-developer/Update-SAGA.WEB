@@ -326,6 +326,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
+    debugger;
     data.selected ? data.selected = false : data.selected = true;
     this.estatusId = data.estatusId;
     this.element = data;
@@ -751,11 +752,11 @@ export class DtVacantesReclutadorComponent implements OnInit {
           window.onkeydown = null;
           window.onfocus = null;
           if (isConfirm) {
-    
+
             this.spinner.show();
-         
+
             this.postulateservice.SendEmailContratados(result).subscribe(data => {
-              this.spinner.hide();      
+              this.spinner.hide();
               this.refreshTable();
             });
           }

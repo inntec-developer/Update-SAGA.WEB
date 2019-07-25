@@ -20,6 +20,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   ]
 })
 export class InfoVacanteComponent implements OnInit {
+  @Input('HiddenPirnt') HiddenPrint: any;
   @Input('Folios') Folios: string;
   @Input('Requisicion') Requisicion: string;
   @Output() EstatusId: EventEmitter<number> = new EventEmitter();
