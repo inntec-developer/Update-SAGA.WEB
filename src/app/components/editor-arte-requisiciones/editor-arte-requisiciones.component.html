@@ -1,0 +1,57 @@
+<div class="container-fluid">
+ <div class="card card-body">
+  <div class="row ml-3">
+    <div class="col-sm-4 col-md-4">
+        <div class="bg-light p-1 mb-4">
+          <button class="btn btn-xs btn-warning mr-2 mat-elevation-z8" type="button" container="body" placement="bottom" tooltip="Seleccionar fondo">
+            <i class="fa fa-picture-o"></i>
+          </button>
+          <button (click)="Borrar()" class="btn btn-xs btn-info mat-elevation-z8" container="body" placement="bottom" tooltip="Borrar">
+              <i class="fa fa-eraser"></i>
+            </button>
+            <button (click)="Guardar()" class="btn btn-xs btn-success mat-elevation-z8 float-right" container="body" placement="bottom" tooltip="Guardar Cambios">
+                <i class="fa fa-floppy-o"></i>
+              </button>
+        </div>
+        <div class="form-group">
+            <label class="text-muted" for="nombre">VACANTE DE:</label>
+            <input type="text" class="form-control form-control-sm" placeholder="vBtra" [(ngModel)]="vBtra" >
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">DESCRIPCI&Oacute;N</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="descripcion"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="experiencia">¿Que necesitas?</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="experiencia"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="contacto">¿Tienes dudas?</label>
+            <textarea class="form-control" id="contacto" rows="3" [(ngModel)]="contacto"></textarea>
+        </div>
+    </div>
+    <div class="col-sm-8 col-md-8">
+      <div class="mx-auto mat-elevation-z8" style="width: 800px; height: 700px;">
+        <div class="media">
+          <img src="./../assets/img/ArteVacantes/DamsaVacantes_PP1.jpg" alt="Random slide" style="width: 800px; height: 700px;">
+        
+        <div class="carousel-caption">
+          <h3 class="text-muted">
+            VACANTE DE:</h3>
+          <h1 class="vacante">
+            {{vBtra}}
+          </h1>
+          <p class="text-muted font-weight-bold ml-2 mt-4">{{descripcion}}</p>
+          <h3 class="quenecesitas font-weight-bold mt-4 ml-2">¿Qué necesitas?</h3>
+          <p class="text-muted font-weight-bold ml-2">{{experiencia}}</p>
+          <h3 class="tienesdudas font-weight-bold mt-4 ml-2">¿Tienes dudas?</h3>
+          <p class="contacto font-weight-bold ml-2">{{contacto}}</p>
+          <p class="pagina font-weight-bold ml-2">www.bolsa.damsa.com.mx</p>
+          <img class="float-right" src="assets/img/damsa/damsa_logo4.png" alt="" />
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>

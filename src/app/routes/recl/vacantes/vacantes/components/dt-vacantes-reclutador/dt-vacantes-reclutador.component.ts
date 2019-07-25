@@ -735,8 +735,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   openDialogRegistro() {
     let dialogDlt = this.dialog.open(DlgRegistroMasivoComponent, {
-      width: '1300px',
-      height: '600px',
+      width: '95%',
+      height: '95%',
       data: { requisicionId: this.requi.id, folio: this.requi.folio, cliente: this.element.cliente, vacante: this.vBtra, nv: this.element.vacantes, contratados: this.element.contratados },
       disableClose: true
 

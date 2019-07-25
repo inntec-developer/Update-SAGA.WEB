@@ -1,0 +1,84 @@
+.carousel-caption
+{
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    right: 0%;
+    left: 20%;
+    top: 11%;
+    z-index: 10;
+    text-align: justify;
+}
+
+.carousel-caption p
+{
+    font-size: 14px;
+    width: 310px;
+    // position: absolute;
+    // top: 20%;
+    // left: 2%;
+    text-align: justify;
+}
+
+.carousel-caption h4
+{
+    font-size: 18px;
+    width: 350px;
+    // position: absolute;
+    // top: 20%;
+    // left: 2%;
+    text-align: justify;
+}
+
+.carousel-caption .vacante
+{
+   
+    color: blue;
+
+}
+
+.carousel-caption .quenecesitas
+{
+    font-size: 18px;
+    width: 150px;
+    color: blue;
+    // position: absolute;
+    // top: 60%;
+    // left: 0%;
+    text-align: justify;
+}
+.carousel-caption .tienesdudas
+{
+    font-size: 18px;
+    width: 200px;
+    color: blue;
+    // position: absolute;
+    // top: 60%;
+    // left: 0%;
+    text-align: justify;
+}
+
+.carousel-caption .contacto
+{
+    font-size: 14px;
+    width: 200px;
+    color: blue;
+    // position: absolute;
+    // top: 60%;
+    // left: 0%;
+    text-align: left;
+}
+.carousel-caption .pagina{
+    color: blue;
+    font-size: 12px;
+    margin-top: 10%;
+}
+
+.carousel-caption img{
+    margin-top: 2%;
+    margin-bottom: 3%;
+    margin-right: -10%;
+    width: 35%;
+    // -webkit-animation: mover 2s infinite  alternate;
+    // animation: mover 1s infinite  alternate;
+}

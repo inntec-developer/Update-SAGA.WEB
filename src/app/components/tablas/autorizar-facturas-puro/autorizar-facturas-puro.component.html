@@ -152,12 +152,12 @@
               <li class="list-group-item text-muted"><span class="mr-1">FOLIO:</span><span
                   class="text-success mr-3">{{element.folio}}</span>
                 <span class="mr-1">NO:</span><span class="text-primary mr-3">{{element.vacantes }}</span>
-                <span class="mr-1">SUELDO FINAL:</span><span class="text-primary mr-3">{{element.sueldoMaximo}}</span>
+                <span class="mr-1">SUELDO FINAL:</span><span class="text-primary mr-3">{{element.sueldoMaximo |  moneda:'$'}}</span>
                 <span class="mr-1">TOTAL:</span><span class="text-primary">
-                  {{element.sueldoMaximo * element.vacantes}}</span></li>
+                  {{element.sueldoMaximo * element.vacantes |  moneda:'$'}}</span></li>
               <li class="list-group-item text-muted"><span class="mr-1">PORCENTAJE DE PAGO:</span><span
                   class="text-primary mr-3">{{element.porcentaje}} %</span>
-                <span class="mr-1">MONTO A FACTURAR:</span><span class="text-primary mr-3">$ {{element.monto}}</span>
+                <span class="mr-1">MONTO A FACTURAR:</span><span class="text-primary mr-3">$ {{element.monto |  moneda:'$'}}</span>
               </li>
             </ul>
             <div class="p-3 mb-2 bg-light">

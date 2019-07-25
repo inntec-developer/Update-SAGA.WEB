@@ -1,10 +1,93 @@
-.card-body .cita
+
+
+.bg{
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    background: -moz-linear-gradient(left, #3931af 0%, #00c6ff 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, #3931af), color-stop(100%, #00c6ff));
+    background: -o-linear-gradient(left, #3931af 0%, #00c6ff 100%);
+    background: -ms-linear-gradient(left, #3931af 0%, #00c6ff 100%);
+    background: linear-gradient(to right, #3931af 0%, #00c6ff 100%);
+    padding: 2%;
+
+}
+.fontMio
 {
-    height: 134px;
+  font-family: 'Lato', sans-serif;
+
+}
+
+.bg-right{
+    background: #f8f9fa;
+    border-top-left-radius: 10% 50%;
+    border-bottom-left-radius: 10% 50%;
+    height: 650px;
+}
+
+.bg-left{
+    text-align: center;
+    color: #fff;
+}
+
+.bg-left img{
+    margin-top: 0%;
+    margin-bottom: 3%;
+    margin-left: 2%;
+    width: 40%;
+    // -webkit-animation: mover 2s infinite  alternate;
+    // animation: mover 1s infinite  alternate;
+}
+
+h4
+{
+    color: #ffffff;
+}
+
+.round
+{
+    border-radius: 25px;
+
+}
+
+.carousel-caption
+{
+    position: absolute;
+    width: 350px;
+    height: 300px;
+    right: 0%;
+    left: 10%;
+    top: 11%;
+    z-index: 10;
+    text-align: justify;
+}
+
+.carousel-caption h4
+{
+    font-size: 20px;
+    width: 300px;
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    text-align: justify;
+}
+
+.carousel-caption p
+{
+    position: absolute;
+    top: 60%;
+    left: 10%;
+}
+.cita
+{
+     height: 134px;
+}
+
+.input-group > .input-group-sm .lnCita
+{
+    width: 200px !important;
 }
 .carouselLong
 {
-    width: 900px;
+    width: 700px;
 }
 
 .bg-primary
@@ -38,17 +121,18 @@
 }
 
 .btn-iniciar{
+    width: 40px;
+    height: 23px;
     border-radius: 25px;
-    width: 30%;
-     height: 23px;
-     font-size: 10px;
-     padding: 0;
+    padding: 0px 10px;
   }
 
   .btn-iniciar > .btn-label
   {
-    padding: 0.3rem 0.7rem;
-    width: 20px;
+    width: 40px;
+    height: 23px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
   }
 .btn-registro {
     border-radius: 25px;
@@ -58,13 +142,77 @@
      padding: 0;
   }
 
-.btn-label
-  {
-    border-top-left-radius: 25px;
-    border-bottom-left-radius: 25px;
-    left: 0;
-  }
   .mat-dialog-container
   {
       padding: 0px;
   }
+
+  .btn-registro .btn-label
+{
+    left: 0;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+}
+
+.btn-lg
+{
+    border-radius: 25px;
+    width: 300px !important;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-circle
+{
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    font-size: 24px;
+    line-height: 1.33;
+    border-radius: 35px;
+
+}
+
+label
+{
+    font-family: 'Lato', sans-serif;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+}
+.btn-lg > .btn-label
+ {
+     width: 50px;
+     height: 40px;
+     border-top-left-radius: 25px;
+     border-bottom-left-radius: 25px;
+     display: flex;
+     align-self: center;
+}
+
+.btn-postulate {
+  
+    width: 50%;
+ height: 40px;
+ background-color: blue;
+//    background-color: #3931af;
+   color: #fff;
+  }
+.carousel-button
+{
+    position: absolute;
+left: 5%;
+    right: 0%;
+    top: 85%;
+    bottom: 2px;
+    z-index: 10;
+    padding-top: 10px;
+    padding-bottom: 0px;
+
+}
+
+.carousel-button :hover
+{
+background-color: rgb(7, 7, 225);
+}
+

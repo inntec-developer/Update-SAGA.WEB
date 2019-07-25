@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { NgbCarousel, NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -13,7 +13,7 @@ const swal = require('sweetalert');
 
 })
 export class CarruselVacantesComponent implements OnInit {
-
+  @Output() LogOut:  EventEmitter<any> = new EventEmitter();
   @ViewChild('myCarousel') myCarousel: NgbCarousel;
   vacantes = [];
   showNavigationArrows = true;
@@ -21,6 +21,7 @@ export class CarruselVacantesComponent implements OnInit {
   modalTicket: boolean = false;
   num = "";
   categorias: any[];
+  categorias2 = [];
   dataSource = [];
   activeId;
   constructor(config: NgbCarouselConfig, private _service: SistTicketsService, private spinner: NgxSpinnerService) {
@@ -65,7 +66,7 @@ export class CarruselVacantesComponent implements OnInit {
       this.num = data[0];
 
       swal("¡TURNO IMPRESO!", "Bienvenido " + data[1] + " . Por favor tome su turno impreso." + this.num + ". Si inició sesión se cerrará al imprimir turno", "success");
-      sessionStorage.removeItem('candidatoId');
+      this.LogOut.emit(data);
 
     });
 
@@ -81,43 +82,47 @@ export class CarruselVacantesComponent implements OnInit {
   GetVacantes() {
 
     this._service.GetVacantes().subscribe(data => {
-      var images = ['./../assets/img/ArteVacantes/img01.png',
-        './../assets/img/ArteVacantes/img02.png', './../assets/img/ArteVacantes/img03.jpg',
-        './../assets/img/ArteVacantes/img04.jpg', './../assets/img/ArteVacantes/img05.png',
-        './../assets/img/ArteVacantes/img06.png', './../assets/img/ArteVacantes/img07.png', './../assets/img/ArteVacantes/img08.png']
+      var images = ['./../assets/img/ArteVacantes/DamsaVacantes_PP.jpg',
+        './../assets/img/ArteVacantes/DamsaVacantes_PP1.jpg', './../assets/img/ArteVacantes/DamsaVacantes_PP2.jpg',
+        './../assets/img/ArteVacantes/DamsaVacantes_PP3.jpg', './../assets/img/ArteVacantes/DamsaVacantes_PP4.jpg',
+        './../assets/img/ArteVacantes/DamsaVacantes_PP5.jpg', './../assets/img/ArteVacantes/DamsaVacantes_PP6.jpg', './../assets/img/ArteVacantes/DamsaVacantes_PP7.jpg', './../assets/img/ArteVacantes/DamsaVacantes_PP8.jpg',
+        './../assets/img/ArteVacantes/DamsaVacantes_PP17.jpg']
 
       this.dataSource = data;
       if(this.dataSource.length > 0)
       {
-      var color = 0;
-      this.categorias = Array.from(new Set(this.dataSource.map(s => s.areaId)))
-      .map(id => {
-        color +=1;
-        if(color > 7)
-        {
-          color = 1;
+        this.dataSource = this.dataSource.filter(element => {
+          if (element.cubierta > 0) {
+  
+            return element;
+          }
+  
+  
+        });
+  
+        var color = 0;
+        this.categorias = Array.from(new Set(this.dataSource.map(s => s.areaId)))
+        .map(id => {
+          color +=1;
+          if(color > 7)
+          {
+            color = 1;
+          }
+          return {
+            id: id,
+            categoria: this.dataSource.find(s => s.areaId === id).categoria,
+            icono: this.dataSource.find(s => s.areaId === id).icono,
+            color: color
+          }
+        });
+    
+        for (var c = 0; c <= 7; c++) {
+          this.dataSource[c].image = images[c];
         }
-        return {
-          id: id,
-          categoria: this.dataSource.find(s => s.areaId === id).categoria,
-          icono: this.dataSource.find(s => s.areaId === id).icono,
-          color: color
-        }
-      });
-      this.dataSource = this.dataSource.filter(element => {
-        if (element.cubierta > 0) {
 
-          return element;
-        }
-
-
-      });
-
-      for (var c = 0; c <= 7; c++) {
-        this.dataSource[c].image = images[c];
-      }
-
-      this.vacantes = this.dataSource;
+      // this.categorias2 = this.categorias.splice(11, this.categorias.length);
+      // this.categorias = this.categorias.splice(0, 10);
+        this.vacantes = this.dataSource;
     }
     });
   }

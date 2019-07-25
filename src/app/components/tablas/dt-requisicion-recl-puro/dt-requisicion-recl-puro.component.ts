@@ -221,6 +221,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
         var idx = this.rows.findIndex(x => x.id == this.RequisicionId);
         this.rows[idx]['estatus'] = estatus;
         this.rows[idx]['estatusId'] = estatusId;
+        this.rows[idx]['estatusId'] = estatusId;
         this.ValidarEstatus(estatusId, 1);
         this.refreshTable();
         this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
@@ -229,6 +230,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
 
       }
       else {
+        this.autorizar = true;
         this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
       }
     });

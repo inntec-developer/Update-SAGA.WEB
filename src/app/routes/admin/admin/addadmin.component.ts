@@ -43,7 +43,7 @@ export class AddadminComponent implements OnInit {
 
   public Search(data: any) {
     let tempArray: Array<any> = [];
-    let colFiltar: Array<any> = [{title: "clave"}, { title: "nombre" }, { title: "apellidoPaterno" }, {title: "email"}];
+    let colFiltar: Array<any> = [{title: "clave"}, { title: "nombre" }, { title: "apellidoPaterno" }, {title: "emails"}];
 
     this.filteredData.forEach(function (item) {
       let flag = false;

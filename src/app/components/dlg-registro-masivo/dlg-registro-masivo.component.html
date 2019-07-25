@@ -37,11 +37,11 @@
                             <label class="text-muted">GENERO</label>
                             <div class="input-group">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="rb" [(ngModel)]="model.options" value="2">
+                                <input class="form-check-input" type="radio" [(ngModel)]="model.options" name="rb2" value="2">
                                 <label class="form-check-label" for="inlineRadio1">MUJER</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="rb" [(ngModel)]="model.options" value="1">
+                                <input class="form-check-input" type="radio" [(ngModel)]="model.options" name="rb1" value="1">
                                 <label class="form-check-label" for="inlineRadio2">HOMBRE</label>
                             </div>
                             </div>
@@ -85,7 +85,7 @@
                     <input type="email" class="form-control form-control-sm" (blur)="ValidarEmail(email)" placeholder="*" value="" name="email" [(ngModel)]="email" ngModel required [class.requerido]="email.length < 7" [class.valido]="email.length >= 7"/>
                     <div class="input-group-append">
                         <div class="input-group-text" tooltip="Registrar con Email" placement="top" container="body">
-                        <input type="radio" [(ngModel)]="opcRegistro1" name="opc1" value="1" (click)="valOpcionReg(1);">
+                        <input type="radio" [(ngModel)]="modelOpc.options" name="opc1" value=1 (click)="valOpcionReg(1);">
                         </div>
                       </div>
                     </div>
@@ -107,7 +107,7 @@
                             />
                             <div class="input-group-append">
                                 <div class="input-group-text" tooltip="Registrar con Tel&eacute;fono" placement="top" container="body">
-                                    <input type="radio" [(ngModel)]="opcRegistro2" name="opc2" value=2 (click)="valOpcionReg(2);">
+                                    <input type="radio" [(ngModel)]="modelOpc.options" name="opc2" value=2 (click)="valOpcionReg(2);">
                                 </div>
                             </div>
                         </div>
@@ -115,8 +115,8 @@
                 </div>
                 <small class="text-danger">{{valTel}}</small>
                 <div class="mt-4">
-                <button type="button" class="btn btn-xs btn-info ml-1 float-right" (click)="BorrarCampos()">
-                        <i class="fa fa-eraser" aria-hidden="true"></i>
+                <button type="button" class="btn btn-xs btn-danger ml-1 float-right" container="body" placement="bottom" tooltip="Borrar campos" (click)="BorrarCampos()">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
                         </button>
 
                 <button container="body" placement="bottom" tooltip="Guardar cambios" [disabled]="f.invalid || edad < 18 || rowIndex == -1" type="button" [ngClass]="f.invalid || edad < 18 || rowIndex == -1 ? 'disabled' : 'btn-warning'" class="btn btn-xs float-right ml-1" (click)="EditarCandidato()">
@@ -141,8 +141,12 @@
                     <span class="text-muted font-weight-bold float-right text-uppercase">Total de Candidatos
                             <span class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span>
                           </span>
+                          <button *ngIf="dataSource.length > 0" (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
+                          class="btn btn-xs btn-info float-right mat-elevation-z8">
+                          <em class="fa fa-eraser"></em>
+                        </button>
                         </div>
-                <table *ngIf="rows.length > 0 else NotCandidatos" class="table">
+                <table *ngIf="dataSource.length > 0 else NotCandidatos" class="table">
                         <thead>
                           <tr>
 
@@ -152,13 +156,13 @@
                             </th>
                             <th></th>
                           </tr>
-                          <!-- <tr>
+                          <tr>
                             <th *ngFor="let column of columns">
-                              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                              <input *ngIf="column.filtering" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
                                 class="form-control form-control-sm" id="{{column.name}}">
                             </th>
 
-                          </tr> -->
+                          </tr>
                         </thead>
                         <tbody>
                           <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
@@ -249,9 +253,13 @@
                             </ng-scrollbar>
                         </tbody>
                       </table>
-                      <div class="d-flex justify-content-end">
+                      <div *ngIf="dataSource.length > 0" class="d-flex justify-content-between">
+                            <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
+                            [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+                            (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+                          </pagination>
                         <button type="button" [disabled]="dataSource.length == 0" [ngClass]="dataSource.length == 0 ? 'disabled' : 'btn-success'" class="btn btn-labeled mat-elevation-z8 d-flex justify-content-between" (click)="registrar()">
-                            <span class="btn-label"><i class="fa fa-check"></i></span><span class="align-self-center font-weight-bold">REGISTRAR</span></button>
+                           <i class="fa fa-check btn-label align-self-center"></i><span class="font-weight-bold">REGISTRAR</span></button>
                         </div>
                     </div>
         </div>

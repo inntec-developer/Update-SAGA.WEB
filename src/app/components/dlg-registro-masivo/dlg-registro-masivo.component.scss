@@ -39,6 +39,22 @@ text-align: end;
     background-color: rgb(232, 240, 254);
 }
 
+.btn-labeled
+{
+  height: 30px;
+
+}
+.btn-labeled > span
+{
+  display: flex;
+  align-self: center;
+}
+.btn-label
+{
+  height: 30px;
+  display: flex;
+  align-self: center;
+}
 // .long
 // {
 //     width: 250px;
