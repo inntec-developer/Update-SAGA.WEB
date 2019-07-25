@@ -1,3 +1,4 @@
+import { EditorArteRequisicionesComponent } from './../../components/editor-arte-requisiciones/editor-arte-requisiciones.component';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AddGrupoComponent } from './add-grupo/add-grupo.component';
@@ -24,7 +25,8 @@ const routes: Routes = [
     { path: 'rol', component: RolGrupoComponent, data: {'componente':'Grupos a roles'} },
     { path: 'privilegios', component: RollsStructComponent, data: {'componente':'Privilegios'}},
     { path: 'filesContratados', component: FilesContratadosComponent},
-    {path: 'jobPause', component:JobRequiPauseComponent}
+    {path: 'jobPause', component:JobRequiPauseComponent},
+    {path: 'editorArte', component:EditorArteRequisicionesComponent}
 ];
 
 

@@ -131,7 +131,7 @@ export class RolGrupoComponent implements OnInit {
 
   public Search(data: any) {
     let tempArray: Array<any> = [];
-    let colFiltar: Array<any> = [ { title: "apellidoPaterno" }, { title: "nombre" }];
+    let colFiltar: Array<any> = [ { title: "apellidoPaterno" }, { title: "nombre" }, {title: "emails"}];
 
     this.filteredGroups.forEach(function (item) {
       let flag = false;

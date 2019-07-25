@@ -147,6 +147,9 @@ import { TpPsicometriaComponent } from './catalogos/tp-psicometria/tp-psicometri
 import { RolesComponent } from './catalogos/roles/roles.component';
 import { CandidatosCubiertosRportComponent } from './candidatos-cubiertos-rport/candidatos-cubiertos-rport.component';
 import { DtVacantesUNComponent } from './Indicadores/dt-vacantes-un/dt-vacantes-un.component';
+import { EditorArteRequisicionesComponent } from './editor-arte-requisiciones/editor-arte-requisiciones.component';
+import { DlgBGArteComponent } from './editor-arte-requisiciones/dlg-bgarte/dlg-bgarte.component';
+
 
 @NgModule({
   imports: [
@@ -299,7 +302,9 @@ import { DtVacantesUNComponent } from './Indicadores/dt-vacantes-un/dt-vacantes-
     IndicadorUndNegocioMxComponent,
     RolesComponent,
     CandidatosCubiertosRportComponent,
-    DtVacantesUNComponent
+    DtVacantesUNComponent,
+    EditorArteRequisicionesComponent,
+    DlgBGArteComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -399,9 +404,11 @@ import { DtVacantesUNComponent } from './Indicadores/dt-vacantes-un/dt-vacantes-
     GraficaProductividadComponent,
     IndicadorUndNegocioMtyComponent,
     IndicadorUndNegocioGdlComponent,
-    IndicadorUndNegocioMxComponent
+    IndicadorUndNegocioMxComponent,
+    EditorArteRequisicionesComponent,
+    DlgBGArteComponent
   ],
-  entryComponents: [ DlgCubiertasComponent, DlgResultadosMedicosComponent, DlgRegistroMasivoComponent, RegistroReclutadorComponent, TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
+  entryComponents: [DlgBGArteComponent, DlgCubiertasComponent, DlgResultadosMedicosComponent, DlgRegistroMasivoComponent, RegistroReclutadorComponent, TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
 
 
 })

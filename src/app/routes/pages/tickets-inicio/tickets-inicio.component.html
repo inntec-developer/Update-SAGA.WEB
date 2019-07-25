@@ -1,9 +1,13 @@
-<div class="container">
-  <div class="card">
-    <div class="card-body">
-      <div class="d-flex flex-column">
-        <div class="row">
-          <div class="col-sm-6 col-md-6">
+<div class="container-fluid h-100 bg">
+    <div class="my-auto">
+      <div class="row d-flex justify-content-between">
+          <div class="col-sm-4 col-md-4">
+              <div class="bg-left">
+                <img src="assets/img/damsa/damsa_logo4.png" alt="" />
+                <h5 class="bg-left"><i class="fa fa-ticket fa-lg mr-1" aria-hidden="true"></i>SISTEMA GESTI&Oacute;N DE TURNOS INNTEC</h5>
+              </div>
+          </div>
+          <div class="col-sm-4 col-md-4">
             <div class="card">
               <div class="card-body mat-elevation-z8 cita">
                 <h4 class="p-1 bg-warning clearfix">
@@ -11,21 +15,21 @@
                   <i class="fa fa-calendar-check-o float-right" aria-hidden="true"></i>
                 </h4>
                 <h5 class="text-info">Genera tu ticket para entrevista con tu número de folio</h5>
-                <div class="input-group input-group-sm">
+                <div class="input-group input-group-sm lnCita">
                   <div class="input-group-prepend">
                     <span class="input-group-text text-info">FOLIO CITA:</span>
                   </div>
-                  <input type="text" class="form-control form-control-sm" [(ngModel)]="folio" name="folios" (keydown.enter)="GenerarTicket(); btnCita=true;">
+                  <input type="text" class="form-control form-control-sm" [(ngModel)]="folio" name="folios" (keydown.enter)="GenerarTicketCita(); btnCita=true;">
                   <div class="input-group-append">
-                    <button class="btn btn-xs btn-success" type="button" [disabled]="btnCita" (click)="GenerarTicket(); btnCita=true;">
+                    <button class="btn btn-xs btn-success" type="button" [disabled]="btnCita" (click)="GenerarTicketCita(); btnCita=true;">
                       <em class="fa fa-check"></em>
                     </button>
                   </div>
                 </div>
               </div>
-            </div>
+             </div>
           </div>
-          <div class="col-sm-6 col-md-6">
+          <div class="col-sm-4 col-md-4">
             <div class="card">
               <div class="card-body mat-elevation-z8">
                 <h4 class="p-1 bg-primary clearfix">
@@ -49,13 +53,13 @@
                     </div>
                     <input type="password" [disabled]="iniciar" class="form-control form-control-sm round" [(ngModel)]="pass" placeholder="Contraseña">
                   </div>
-                  <button *ngIf="!iniciar" [disabled]="iniciar" class="btn btn-labeled btn-success btn-iniciar ml-2 font-weight-bold d-flex align-items-center mat-elevation-z8" type="button" (click)="Login(user, pass)">
-                      <span class="btn-label fa fa-play mr-1">
-                        </span>INICIO
+                  <button *ngIf="!iniciar" [disabled]="iniciar" class="btn btn-xs btn-iniciar btn-success ml-1 mat-elevation-z8" type="button" (click)="Login(user, pass)">
+                      <i class="fa fa-play ml-1">
+                      </i>
                       </button>
-                      <button *ngIf="iniciar" class="btn btn-labeled btn-success btn-iniciar ml-2 font-weight-bold d-flex align-items-center mat-elevation-z8" [class.btn-danger]="iniciar" type="button" (click)="LogOut()">
-                        <span class="btn-label fa fa-unlock mr-1">
-                          </span>SALIR
+                      <button *ngIf="iniciar" class="btn btn-xs btn-success btn-iniciar ml-1 mat-elevation-z8" [class.btn-danger]="iniciar" type="button" (click)="LogOut()">
+                        <span class="fa fa-unlock ml-1">
+                          </span>
                         </button>
                 </div>
                 <div class="row">
@@ -68,14 +72,125 @@
             </div>
           </div>
         </div>
-
+        <hr>
         <div class="row">
-          <div class="col d-flex justify-content-center carouselLong">
-            <app-carrusel-vacantes></app-carrusel-vacantes>
+            <div class="col mb-2 clearfix">
+                <h4 class="float-left">&Aacute;REAS DE INTER&Eacute;S</h4>
+                <div class="float-right">
+              <div class="input-group input-group-sm with-focus">
+                <input type="text" class="form-control form-control-sm border-right-0 round" placeholder="Buscar por palabra clave" (keydown.enter)="Search($event)">
+                <div class="input-group-append">
+                  <span class="input-group-text fa fa-search bg-warning border-left-0"></span>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        
+        <div class="row">
+            <div class="col-sm-5 col-md-5">
+              <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="col d-flex justify-content-center">
+                        <div class="d-flex flex-column float-right">
+                          <div class="mb-3">
+                            <button type="button" class="btn btn-secondary btn-circle mat-elevation-z8" (click)="FiltrarCategoria(0, myCarousel)">
+                                <i class="fa fa-eye text-warning mr-auto my-auto"></i>
+                              </button>
+                               <label class="ml-2">Ver todas</label>
+                              </div>  
+                          <!-- <button type="button" class="btn btn-labeled btn-secondary btn-lg btn-block mat-elevation-z8" (click)="FiltrarCategoria(0, myCarousel)">
+                            <span class="btn-label fa fa-eye text-warning mr-auto my-auto"></span>
+                            <span class="align-self-center text-warning font-weight-bold">Ver todas</span>
+                          </button> -->
+                          <ng-container *ngFor="let r of categorias">
+                              <div class="mb-3">
+                                  <button type="button" [class.btn-success]="r.color == 1" [class.btn-info]="r.color == 2" [class.btn-danger]="r.color == 3"
+                                  [class.btn-primary]="r.color == 4" [class.btn-purple]="r.color == 5" [class.btn-warning]="r.color == 6" [class.btn-dark]="r.color == 7"
+                                  class="btn btn-success btn-circle mat-elevation-z8" (click)="FiltrarCategoria(r.id, myCarousel);myCarousel.cycle();">
+                                  <i class="{{r.icono}}"></i>
+                                    </button>
+                                     <label class="ml-2">{{r.categoria}}</label>
+                                    </div>  
+
+                            <!-- <button *ngIf="r.id != 0" type="button" [class.btn-success]="r.color == 1" [class.btn-info]="r.color == 2" [class.btn-danger]="r.color == 3"
+                              [class.btn-primary]="r.color == 4" [class.btn-purple]="r.color == 5" [class.btn-warning]="r.color == 6" [class.btn-dark]="r.color == 7"
+                              class="btn btn-labeled btn-success btn-lg btn-block mat-elevation-z8" (click)="FiltrarCategoria(r.id,myCarousel);myCarousel.cycle();">
+                              <span class="btn-label mr-auto">
+                                <i class="{{r.icono}}"></i>
+                              </span>
+                              <span class="align-self-center mr-auto">{{r.categoria}}</span>
+                            </button> -->
+                          </ng-container>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="col d-flex justify-content-center">
+                        <div class="d-flex flex-column float-right">
+                          <!-- <button type="button" class="btn btn-labeled btn-secondary btn-lg btn-block mat-elevation-z8" (click)="FiltrarCategoria(0, myCarousel)">
+                            <span class="btn-label fa fa-eye text-warning mr-auto my-auto"></span>
+                            <span class="align-self-center text-warning font-weight-bold">Ver todas</span>
+                          </button> -->
+                          <ng-container *ngFor="let r of categorias2">
+                              <div class="mb-3">
+                                  <button type="button" [class.btn-success]="r.color == 1" [class.btn-info]="r.color == 2" [class.btn-danger]="r.color == 3"
+                                  [class.btn-primary]="r.color == 4" [class.btn-purple]="r.color == 5" [class.btn-warning]="r.color == 6" [class.btn-dark]="r.color == 7"
+                                  class="btn btn-success btn-circle mat-elevation-z8" (click)="FiltrarCategoria(r.id,myCarousel);myCarousel.cycle();">
+                                  <i class="{{r.icono}}"></i>
+                                    </button>
+                                     <label class="ml-2">{{r.categoria}}</label>
+                                    </div>  
+                          </ng-container>
+                        </div>
+                    </div>
+              </div>
+                
+                </div>
+              </div>
+                    
+          <div class="col-sm-7 col-md-7 bg-right">
+            <div class="d-flex justify-content-center">
+              <ngb-carousel #myCarousel="ngbCarousel" *ngIf="vacantes.length > 0" [activeId]="activeId" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
+                  <ng-template ngbSlide *ngFor="let v of vacantes" >
+                      <!-- <div style="width: 800px; height: 650px; background-position : center center; background-size: cover;" [style.background-image]="'url(' + v.image + ')'"> -->
+                          <div class="media ml-1" *ngIf="v.image">
+                        <img class="align-self-center mr-3" [src]="v.image" alt="Random slide" style="width: 800px; height: 650px;">  
+                      </div>
+                    <!-- </div>  -->
+                     <div *ngIf="v.image" class="carousel-caption">
+                        <h3 class="text-muted">
+                         VACANTE DE:</h3>
+                         <h1 class="text-info">
+                            {{v.vBtra}}
+                         </h1>
+                         <h4 class="text-muted font-weight-bold">{{v.experiencia}}</h4>
+                        </div>
+                    <div *ngIf="!v.image" class="card">
+                      <div class="card-body bg-light fontMio mat-elevation-z8" style="width: 800px; height: 650px;">
+                        <div class="carousel-caption">
+                            <h3 class="text-muted">
+                                VACANTE DE:</h3>
+                          <h1 class="text-info mt-2 ml-1">
+                            <i class="fa fa-chevron-right text-warning mr-1" aria-hidden="true"></i>{{v.folio}} - {{v.vBtra}}</h1>
+                            <h4 class="text-muted font-weight-bold">{{v.experiencia}}</h4>
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="carousel-button d-flex justify-content-center">
+            
+                        <button (click)="GenerarTicket(v)" class="btn btn-lg btn-postulate mat-elevation-z8">
+                          <span class="align-self-center font-weight-bold">POST&Uacute;LATE</span><i class="fa fa-thumbs-o-up ml-3"></i>
+                        </button>
+            
+                    </div>
+                  </ng-template>
+                </ngb-carousel>
+              </div>
           </div>
         </div>
 
       </div>
     </div>
-  </div>
-</div>
+  

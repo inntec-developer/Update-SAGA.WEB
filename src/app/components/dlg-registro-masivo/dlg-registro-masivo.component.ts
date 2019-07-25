@@ -70,11 +70,10 @@ export class DlgRegistroMasivoComponent implements OnInit {
   rbS: any = 0;
   estadoId = 0;
   municipioId = 0;
-  opcRegistro1 = 1;
-  opcRegistro2 = 0;
   date: Date;
   editing = {};
   model = { options: '0' };
+  modelOpc = { options: '0' };
 valEmail = '';
   public columns: Array<any> = [
     { title: 'CURP', className: 'text-success text-center', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
@@ -122,7 +121,6 @@ valEmail = '';
     return data.slice(start, end);
   }
 
-
   public changeSort(data: any, config: any): any {
     if (!config.sorting) {
       return data;
@@ -157,7 +155,7 @@ valEmail = '';
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
     this.columns.forEach((column: any) => {
-      if (column.filtering) {
+      if (column.filtering.filterString != "") {
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
@@ -165,53 +163,28 @@ valEmail = '';
       }
     });
 
-    if (!config.filtering) {
-      return filteredData;
-    }
-
-    // if (config.filtering.columnName) {
-    //   return filteredData.filter((item: any) =>
-    //     item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-    // }
-
-    // let tempArray: Array<any> = [];
-    // filteredData.forEach((item: any) => {
-    //   let flag = false;
-    //   this.columns.forEach((column: any) => {
-    //     if (item[column.name] == null) {
-    //       flag = true;
-    //     } else {
-    //       if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-    //         flag = true;
-    //       }|
-    //     }
-    //   });
-    //   if (flag) {
-
-    //     tempArray.push(item);
-    //   }
-    // });
-    // filteredData = tempArray;
-
     return filteredData;
+  }
+
+  public clearfilters(){
+    this.columns.forEach(element => {
+      element.filtering.filterString = '';
+     (<HTMLInputElement>document.getElementById(element.name)).value = '';
+    });
+    this.onChangeTable(this.config);
   }
 
   //#endregion
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
-
-
-    let filteredData = this.dataSource;
-    //let sortedData = this.changeSort(filteredData, this.config);
+    let filteredData = this.changeFilter(this.dataSource, this.config);
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
     this.registros = this.rows.length;
     this.length = filteredData.length;
-
   }
 
   public onCellClick(row, rowIndex)
   {
     row.selected = true;
-
 
     this.rowIndex = rowIndex;
     this.curp = row.curp;
@@ -219,10 +192,11 @@ valEmail = '';
     this.ap = row.apellidoPaterno;
     this.am = row.apellidoMaterno;
     this.email = row.email;
+    this.txtLada = row.lada;
     this.txtPhone = row.telefono;
-
     // this.municipios = {id: row.MunicipioNacimientoId, municipio: row.municipio};
     this.model.options = row.genero == "Mujer" ? '2' : '1';
+    this.modelOpc.options = row.opcionRegistro;
     this.estadoId = row.EstadoNacimientoId;
     this.date = new Date(row.fechaNac);
     this.validarFecha(this.date);
@@ -289,18 +263,6 @@ this.curp = curp;
       //   return item.municipio;
       // });
 
-      let opc = 0;
-
-      if(this.opcRegistro1 > 0)
-      {
-        opc = this.opcRegistro1;
-  
-      }
-      else
-      {
-        opc = this.opcRegistro2;
-      }
-
       let candidato = {
         curp: this.curp,
         nombre: this.nom,
@@ -314,7 +276,7 @@ this.curp = curp;
        lada: this.txtLada,
         // municipio: municipio[0].municipio,
         telefono: this.txtLada + "-" + this.txtPhone,
-        opcionRegistro: opc
+        opcionRegistro: this.modelOpc.options
       };
 
       this.dataSource.push(candidato);
@@ -336,18 +298,6 @@ this.curp = curp;
       return item.estado;
     });
 
-    let opc = 0;
-
-    if(this.opcRegistro1 > 0)
-    {
-      opc = this.opcRegistro1;
-
-    }
-    else
-    {
-      opc = this.opcRegistro2;
-    }
-
     this.dataSource[this.rowIndex].curp = this.curp,
     this.dataSource[this.rowIndex].nombre = this.nom,
     this.dataSource[this.rowIndex].apellidoPaterno = this.ap,
@@ -361,7 +311,7 @@ this.curp = curp;
       // municipio: municipio[0].municipio,
     this.dataSource[this.rowIndex].lada = this.txtLada;
     this.dataSource[this.rowIndex].telefono = this.txtPhone;
-    this.dataSource[this.rowIndex].opcionRegistro = opc;
+    this.dataSource[this.rowIndex].opcionRegistro = this.modelOpc.options;
     this.onChangeTable(this.config);
     this.BorrarCampos();
   }
@@ -425,7 +375,7 @@ this.curp = curp;
         }
       });
     }
-    else if(this.opcRegistro2 == 1)
+    else if(this.modelOpc.options == '2')
     {
       this.valTel = "Lada y teléfono son campos necesarios y deben ser númericos";
       this.txtLada = "";
@@ -445,8 +395,6 @@ this.curp = curp;
       {
         this.email = "";
       }
-
-      this.opcRegistro2=0; 
        this.txtLada='---'; 
        this.txtPhone='-------'
     }
@@ -457,7 +405,6 @@ this.curp = curp;
         this.txtPhone = "";
         this.txtLada = "";
       }
-      this.opcRegistro1=0;
       this.email='REGISTRO POR TELEFONO'
   
     }
@@ -511,9 +458,7 @@ this.curp = curp;
       this.spinner.hide();
       if(data != 417)
       {
-    
         this.dialog.close(data)
-
       }
 
     });
@@ -591,12 +536,11 @@ this.curp = curp;
     this.rbS = 0;
     this.estadoId = 0;
     this.municipioId = 0;
-    this.opcRegistro1 = 1;
-    this.opcRegistro2 = 0;
     this.GetEstados();
     this.date = new Date();
     this.rowIndex = -1;
 this.model.options = '0';
+this.modelOpc.options = '0';
 this.dataSource.forEach(element => {
   element.selected = false;
 })

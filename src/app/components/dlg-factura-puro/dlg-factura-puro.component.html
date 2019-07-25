@@ -6,12 +6,12 @@
   <div class="card-body">
     <mat-dialog-content class="scroll">
        <ul class="list-group list-group-flush mb-2">
-            <li class="list-group-item text-muted">EMPRESA: <span class="text-primary">{{data.cliente}}</span></li>
-            <li class="list-group-item text-muted">PUESTO: <span class="text-primary">{{data.vBtra}} </span></li>
+            <li class="list-group-item text-muted">EMPRESA: <span class="text-primary">{{data.cliente | uppercase}}</span></li>
+            <li class="list-group-item text-muted">PUESTO: <span class="text-primary">{{data.vBtra | uppercase}} </span></li>
             <li class="list-group-item text-muted"><span class="mr-1">FOLIO:</span><span class="text-primary mr-3">{{data.folio }}</span>
               <span class="mr-1">NO:</span><span class="text-primary mr-3">{{data.vacantes }}</span>
-              <span class="mr-1">SUELDO FINAL:</span><span class="text-primary mr-3">{{data.sueldoMaximo}}</span>
-              <span class="mr-1">TOTAL:</span><span class="text-primary"> {{data.sueldoMaximo * data.vacantes}}</span></li>
+              <span class="mr-1">SUELDO FINAL:</span><span class="text-primary mr-3">{{data.sueldoMaximo |  moneda:'$'}}</span>
+              <span class="mr-1">TOTAL:</span><span class="text-primary"> {{data.sueldoMaximo * data.vacantes |  moneda:'$'}}</span></li>
           </ul>
           <div class="p-3 mb-2 bg-light">
           <ul class="list-group list-group-flush">

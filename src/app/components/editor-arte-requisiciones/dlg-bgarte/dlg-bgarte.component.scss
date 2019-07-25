@@ -1,0 +1,22 @@
+a{
+    cursor: pointer
+  }
+
+  .elevar
+  {
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+  }
+  .modal h4 
+  {
+    color: #e91e63;
+  }
+  .longScroll
+  {
+    height: 600px;
+  }
+  ng-scrollbar {
+    --scrollbar-size: 4px;
+    --scrollbar-thumb-color: rgb(94, 175, 255);
+    --scrollbar-thumb-hover-color: dodgerblue;
+    --scrollbar-border-radius: 4px;
+  }

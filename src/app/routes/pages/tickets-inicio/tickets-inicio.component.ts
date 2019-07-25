@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material';
 import { RequisicionesService } from '../../../service';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
 import { TicketsRegisterComponent } from '../../../components/tickets-register/tickets-register.component';
+import { NgbCarouselConfig, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 
 const swal = require('sweetalert');
 
@@ -15,6 +16,9 @@ const swal = require('sweetalert');
   providers: [RequisicionesService]
 })
 export class TicketsInicioComponent implements OnInit {
+  showNavigationArrows = true;
+  showNavigationIndicators = false;
+  @ViewChild('myCarousel') myCarousel: NgbCarousel;
 
   folio = 0;
   iniciar = false;
@@ -23,22 +27,91 @@ export class TicketsInicioComponent implements OnInit {
   btnCita = false;
   user: string;
   pass: string;
-
-  constructor(
+categorias = [];
+categorias2 = [];
+vacantes = [];
+  activeId: any;
+  constructor(config: NgbCarouselConfig,
     private _service: SistTicketsService,
     private service: RequisicionesService,
     private dialog: MatDialog,
-    private settings: SettingsService) { }
+    private settings: SettingsService) {
+      config.interval = 10000;
+      config.wrap = false;
+      config.pauseOnHover = true;
+     }
 
 
   ngOnInit() {
     sessionStorage.removeItem('candidatoId');
+    this.GetVacantes();
   }
 
-  GenerarTicket()
+  GenerarTicket(row) {
+    swal({
+      title: "¿ESTÁS SEGURO?",
+      text: "¡Se generará ticket para entrevista! para la vacante de " + row.vBtra,
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ec2121",
+      confirmButtonText: "¡Si, imprimir ticket!",
+      cancelButtonColor: "#ec2121",
+      cancelButtonText: "¡No, cancelar!",
+      closeOnConfirm: false,
+      closeOnCancel: false
+    }, (isConfirm) => {
+      window.onkeydown = null;
+      window.onfocus = null;
+      if (isConfirm) {
+
+        let candidatoId = "00000000-0000-0000-0000-000000000000";
+
+        if(sessionStorage.getItem('candidatoId'))
+        {
+           candidatoId = sessionStorage.getItem('candidatoId');
+        }
+
+
+    this._service.GetTicketSinCita(row.id, candidatoId).subscribe(data => {
+      if(data == 409)
+      {
+        swal("¡Ocurrió un error!", "Impresora sin papel", "error");
+      }
+      else if(data == 502)
+      {
+        swal("¡Ocurrió un error!", "Impresora apagada", "error");
+      }
+      else
+      {
+      this.num = data[0];
+
+      swal("¡TURNO IMPRESO!", "Bienvenido " + data[1] + " . Por favor tome su turno impreso." + this.num + ". Si inició sesión se cerrará al imprimir turno", "success");
+      this.LogOut();
+      }
+
+    });
+
+      }
+      else {
+        swal("Cancelado", "No se realizó ningún cambio", "error");
+      }
+    });
+  }
+
+  GenerarTicketCita()
   {
     this._service.GetTicketConCita(this.folio).subscribe(data => {
-      if(data==404)
+      if(data == 409)
+      {
+        swal("¡Ocurrió un error!", "Impresora sin papel", "error");
+        this.btnCita = false;
+      }
+      else if(data == 502)
+      {
+        swal("¡Ocurrió un error!", "Impresora apagada", "error");
+        this.btnCita = false;
+      }
+      else if(data==404)
       {
         swal("¡No hay citas registradas para el folio " + this.folio + "!", '', "error");
         this.btnCita = false;
@@ -64,10 +137,10 @@ export class TicketsInicioComponent implements OnInit {
       }
       else
       {
-      this.num = data;
-      swal("¡TURNO IMPRESO!", "Bienvenido Blanca Melina Morales Cordova. Por favor tome su turno impreso." + this.num, "success");
-      this.btnCita = false;
-      this.folio = 0;
+        this.num = data[0];
+
+        swal("¡TURNO IMPRESO!", "Bienvenido " + data[1] + " . Por favor tome su turno impreso." + this.num, "success");
+  
       }
     })
 
@@ -92,6 +165,60 @@ export class TicketsInicioComponent implements OnInit {
   GetMisVacantes() {
     this.service.getRequiReclutador(this.settings.user['id']).subscribe(data => {
       this.dataSource = data;
+    });
+  }
+
+  GetVacantes() {
+
+    this._service.GetVacantes().subscribe(data => {
+      var images = ['./../assets/img/ArteVacantes/DamsaVacantes_PP.jpg',
+      './../assets/img/ArteVacantes/DamsaVacantes_PP1.jpg', './../assets/img/ArteVacantes/DamsaVacantes_PP2.jpg',
+      './../assets/img/ArteVacantes/DamsaVacantes_PP3.jpg', './../assets/img/ArteVacantes/DamsaVacantes_PP4.jpg',
+      './../assets/img/ArteVacantes/DamsaVacantes_PP5.jpg', './../assets/img/ArteVacantes/DamsaVacantes_PP6.jpg', './../assets/img/ArteVacantes/DamsaVacantes_PP7.jpg', './../assets/img/ArteVacantes/DamsaVacantes_PP8.jpg',
+      './../assets/img/ArteVacantes/DamsaVacantes_PP17.jpg'];
+
+    
+
+      this.dataSource = data;
+      if (this.dataSource.length > 0) {
+        this.dataSource = this.dataSource.filter(element => {
+          if (element.cubierta > 0) {
+            return element;
+          }
+
+        });
+
+
+        var color = 0;
+        this.categorias = Array.from(new Set(this.dataSource.map(s => s.areaId)))
+          .map(id => {
+            color += 1;
+            if (color > 7) {
+              color = 1;
+            }
+
+            let cat = this.dataSource.find(s => s.areaId === id).categoria;
+            let idx = cat.search(/[/y,]/i);
+            if(idx > -1)
+            {
+              cat = cat.substring(0, idx);
+            }
+            return {
+              id: id,
+              categoria: cat,
+              icono: this.dataSource.find(s => s.areaId === id).icono,
+              color: color,
+            }
+          });
+        
+        for (var c = 0; c <= 7; c++) {
+          this.dataSource[c].image = images[c];
+        }
+
+        this.categorias2 = this.categorias.splice(8, this.categorias.length);
+        this.categorias = this.categorias.splice(0, 7);
+        this.vacantes = this.dataSource;
+      }
     });
   }
 
@@ -151,4 +278,30 @@ export class TicketsInicioComponent implements OnInit {
     this.pass = "";
     this.iniciar = false;
   }
+
+  FiltrarCategoria(id, mocos) {
+    if (id == 0) {
+      this.vacantes = this.dataSource;
+    }
+    else {
+      var filtro = this.dataSource.filter(item => {
+        if (item.areaId === id) {
+          return item;
+        }
+      });
+
+    this.vacantes = filtro;
+  }
+  this.activeId = this.vacantes[0].id;
+  this.myCarousel.activeId = this.vacantes[0].id;
+  this.myCarousel.cycle();
+
+
+  //   setTimeout(() => {
+  //     /** spinner ends after 5 seconds */
+  //     this.spinner.hide();
+  // }, 5000);
+
+  }
+  
 }

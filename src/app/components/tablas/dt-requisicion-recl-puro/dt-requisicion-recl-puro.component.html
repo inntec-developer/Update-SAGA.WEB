@@ -31,12 +31,13 @@
           <em class="fa fa-comments-o"></em>
         </button>
         <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8" [disabled]="!facturar" [ngClass]="!facturar ? 'btn disabled' : 'btn btn-info'"
-          container="body" placement="bottom" tooltip="Enviar a factura" (click)="openDialogFactura()">
+          container="body" placement="bottom" tooltip="Enviar a factura" (click)="openDialogFactura();">
           <em class="fa fa-file-text-o"></em>
         </button>
+        <!--  -->
         <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8" [disabled]="!autorizar"
           [ngClass]="!autorizar ? 'disabled' : 'btn-success'" container="body" placement="bottom"
-          tooltip="Autorizar" (click)="updataStatus(4, 'Nueva')">
+          tooltip="Autorizar" (click)="updataStatus(4, 'Nueva'); autorizar = false;"> 
           <i class="fa fa-check"></i>
         </button>
 
