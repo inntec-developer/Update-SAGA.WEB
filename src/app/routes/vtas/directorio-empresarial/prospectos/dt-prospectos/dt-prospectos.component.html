@@ -2,21 +2,21 @@
   <div class="card-body mat-elevation-z8">
     <div class="row">
       <div class="col-sm-12 col-md-12 clearfix p-2 bg-light">
-        <button id="add" #add class="margen mr-1 btn btn-xs btn-primary btn-acciones mat-elevation-z8" type="button" [routerLink]="['/ventas/nuevoProspecto']"
-          container="body" placement="bottom" tooltip="Agregar Prospecto">
+        <button id="add" #add class="margen mr-1 btn btn-xs btn-primary btn-acciones mat-elevation-z8" type="button"
+          [routerLink]="['/ventas/nuevoProspecto']" container="body" placement="bottom" tooltip="Agregar Prospecto">
           <em class="fa fa-plus"></em>
         </button>
         <em class="vl"></em>
         <button id="view" #view class="margen mr-1 btn btn-xs btn-acciones mat-elevation-z8"
-          (click)="visualizarProspecto()" placement="bottom" tooltip="Ver Cliente"
-          [disabled]="!element" [ngClass]="(!element) ? 'disabled':'btn-warning'">
+          (click)="visualizarProspecto()" placement="bottom" tooltip="Ver Cliente" [disabled]="!element"
+          [ngClass]="(!element) ? 'disabled':'btn-warning'">
           <em class="fa fa-eye"></em></button>
         <button id="edit" #edit class="margen mr-1 btn btn-xs btn-acciones mat-elevation-z8" chkPrivilegiosButtons
           (click)="editarProspecto()" [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-info'"
           container="body" placement="bottom" tooltip="Editar"><em class="fa fa-pencil"></em></button>
         <em class="vl"></em>
-        <button id="hacerCliente" #hacerCliente class="margen mr-1 btn btn-xs btn-acciones mat-elevation-z8" chkPrivilegiosButtons
-          (click)="HacerClienteModal.show()" [disabled]="!element"
+        <button id="hacerCliente" #hacerCliente class="margen mr-1 btn btn-xs btn-acciones mat-elevation-z8"
+          chkPrivilegiosButtons (click)="HacerClienteModal.show()" [disabled]="!element"
           [ngClass]="(!element) ? 'disabled' : 'btn-success'" container="body" placement="bottom"
           tooltip="Hacer Cliente">
           <em class="fa  fa fa-handshake-o"></em></button>
@@ -94,7 +94,8 @@
               </div>
               <ng-template #SpinnerLoading>
                 <div class="card-body d-flex align-items-center justify-content-center">
-                  <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+                  <img
+                    src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
                 </div>
               </ng-template>
             </ng-scrollbar>
@@ -123,13 +124,13 @@
 
 <!-- MODAL PARA HACER CLIENTE -->
 <div bsModal #HacerClienteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
-  [config]="{ show: false, ignoreBackdropClick: true, keyboard: false }"
-  aria-labelledby="dialog-sizes-name1">
+  [config]="{ show: false, ignoreBackdropClick: true, keyboard: false }" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h4 id="dialog-sizes-name1" class="modal-title text-center">{{element?.nombrecomercial}}</h4>
-        <button type="button" class="close pull-right" (click)="HacerClienteModal.hide(); formCliente.reset()" aria-label="Close">
+        <button type="button" class="close pull-right" (click)="HacerClienteModal.hide(); formCliente.reset()"
+          aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -137,15 +138,16 @@
         <form [formGroup]="formCliente">
           <div class="card-body">
             <mat-form-field>
-              <input matInput placeholder="Razon Social" formControlName="RazonSocial" name="RazonSocial" maxlength="100"
-                maxlength="100" required="" />
+              <input matInput placeholder="Razón Social" formControlName="RazonSocial" name="RazonSocial"
+                maxlength="100" maxlength="100" required="" />
             </mat-form-field>
             <mat-form-field>
               <input matInput placeholder="RFC" formControlName="RFC" name="RFC" minlength="12" maxlength="13"
                 required="" />
             </mat-form-field>
             <mat-form-field>
-              <input matInput formControlName="ValidarRFC" name="ValidarRFC" placeholder="Validar RFC" minlength="12" maxlength="13"/>
+              <input matInput formControlName="ValidarRFC" name="ValidarRFC" placeholder="Validar RFC" minlength="12"
+                maxlength="13" />
               <mat-hint align="start">
                 <strong *ngIf="formCliente.controls.ValidarRFC.errors?.MachRFC" class="text-danger">Los datos
                   ingresados no coinciden, favor de verificar la informaci&oacute;n</strong>
@@ -155,10 +157,10 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8" (click)="HacerClienteModal.hide(); formCliente.reset()">Cancelar
+        <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8"
+          (click)="HacerClienteModal.hide(); formCliente.reset()">Cancelar
         </button>
-        <button type="button" class="md-1 btn btn-xs mat-elevation-z8"
-          [disabled]="!formCliente.valid"
+        <button type="button" class="md-1 btn btn-xs mat-elevation-z8" [disabled]="!formCliente.valid"
           [ngClass]="!formCliente.valid ? 'disabled' : 'btn-success'"
           (click)="HacerClienteModal.hide(); createCliente(); formCliente.reset()">Aceptar
         </button>

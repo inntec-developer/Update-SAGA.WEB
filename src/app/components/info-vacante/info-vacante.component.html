@@ -2,7 +2,7 @@
   <div class="card-header">
     <em class="fa fa-list-alt"></em> Información Principal
   </div> -->
-<div class="card-body">
+<div class="card-body" *ngIf="ShowSection == null || ShowSection.Encabezado">
   <div class="row">
     <div class="col-lg-4 col-md-4 col-ms-4 col-xs-12">
       <h4>
@@ -109,7 +109,7 @@
   <div class="card-header">
     <em class="fa fa-user"></em> Vacantes por Horarios
   </div> -->
-<div class="card-body">
+<div class="card-body" *ngIf="ShowSection == null || ShowSection.Horarios">
   <div class="row">
     <div class="col-md-12">
       <!-- HORARIOS -->
@@ -117,7 +117,8 @@
     </div>
   </div>
 </div>
-<div class="card-body">
+
+<div class="card-body" *ngIf="ShowSection == null || ShowSection.Cliente">
   <div class="row">
     <div class="col-md-3 col-sm-12 col-xs-12">
       <h5 class="card-title"><strong class="text-info">Datos del cliente</strong></h5>
@@ -227,7 +228,8 @@
     </div>
   </div>
 </div>
-<div class="card-body">
+
+<div class="card-body" *ngIf="ShowSection == null || ShowSection.ExpApt">
   <div class="row">
     <div class="col-md-3 col-sm-12 col-xs-12">
       <h5 class="card-title"><strong class="text-info">Estudios / Escolaridades</strong></h5>
@@ -280,36 +282,39 @@
 </div>
 
 <div class="card-body">
-  <div class="row">
+  <!-- DIRECCION -->
+  <div class="row" *ngIf="ShowSection == null || ShowSection.Direccion">
     <div class="col-md-12">
       <!-- DIRECCIONES -->
       <app-dt-direcion-requi [DireccionId]="requisicion?.direccionId"></app-dt-direcion-requi>
     </div>
   </div>
-  <br />
-  <div class="row">
+  <!-- TELEFONOS -->
+  <div class="row" *ngIf="ShowSection == null || ShowSection.Telefono">
+    <br />
     <div class="col-md-6">
       <!-- TELEFONOS -->
       <app-dt-telefonos [Telefonos]="cliente?.telefonos"></app-dt-telefonos>
     </div>
   </div>
-  <br />
   <!-- CONTACTOS -->
-  <div class="row">
+  <div class="row" *ngIf="ShowSection == null || ShowSection.Contacto">
+    <br />
     <div class="col-md-10">
       <app-dt-contactos [Contactos]="cliente?.contactos"></app-dt-contactos>
     </div>
   </div>
-  <br />
-  <div class="row">
+  <!-- BENEFICIOS -->
+  <div class="row" *ngIf="ShowSection == null || ShowSection.Beneficio">
+    <br />
     <div class="col-md-12">
       <!-- BENEFICIOS -->
       <app-dt-beneficios [Beneficios]="requisicion?.beneficios"></app-dt-beneficios>
     </div>
   </div>
-  <br />
   <!-- ACTIVIDADES OBSERVACIONES PROCESO-->
-  <div class="row">
+  <div class="row" *ngIf="ShowSection == null || ShowSection.ActObsProd">
+    <br />
     <div class="col-md-4">
       <app-actividades [Actividades]="requisicion?.actividades"></app-actividades>
     </div>
@@ -320,10 +325,11 @@
       <app-procesos [Proceso]="requisicion?.procesos"></app-procesos>
     </div>
   </div>
-  <br />
-  <div class="row">
+  <!-- DOCUMENTOS -->
+  <div class="row" *ngIf="ShowSection == null || ShowSection.DocPrest">
+    <br />
     <div class="col-md-3">
-      <!-- DOCUMENTOS dAMSA -->
+      <!-- DOCUMENTOS DAMSA -->
       <app-documentos-damsa></app-documentos-damsa>
     </div>
     <div class="col-md-3">
@@ -339,8 +345,9 @@
       <app-prestaciones-cliente [Prestaciones]="requisicion?.prestacionesCliente"></app-prestaciones-cliente>
     </div>
   </div>
-  <br />
-  <div class="row">
+  <!-- PSICOMETRIAS -->
+  <div class="row" *ngIf="ShowSection == null || ShowSection.Psicom">
+    <br />
     <div class="col-md-6">
       <!-- PSICOMETRIAS DAMSA -->
       <app-dt-psicometrias-damsa [Psicometrias]="requisicion?.psicometriasDamsa"></app-dt-psicometrias-damsa>
@@ -350,8 +357,9 @@
       <app-dt-psicometrias-cliente [Psicometrias]="requisicion?.psicometriasCliente"></app-dt-psicometrias-cliente>
     </div>
   </div>
-  <br />
-  <div class="row">
+  <!-- COMPETENCIAS -->
+  <div class="row" *ngIf="ShowSection == null || ShowSection.Competencia">
+    <br />
     <div class="col-md-4 col-lg-4">
       <!-- COMPTENCIAS CARDINALES -->
       <app-dt-competencia-cardinal [Competencias]="requisicion?.competenciasCardinal"></app-dt-competencia-cardinal>

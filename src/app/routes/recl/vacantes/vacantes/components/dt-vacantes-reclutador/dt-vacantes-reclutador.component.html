@@ -11,13 +11,12 @@
   <div class="card-body mat-elevation-z8">
     <div class="row p-2 bg-light clearfix">
       <div class="col-sm-12 col-md-12">
-        <button (click)="lgModal15.show()" placement="bottom" tooltip="Ver Requisición"
-          class="mr-1 mat-elevation-z8" [disabled]="!element"
-          [ngClass]="(!element) ? 'btn btn-xs disabled':'btn btn-xs btn-warning'">
+        <button (click)="lgModal15.show()" placement="bottom" tooltip="Ver Requisición" class="mr-1 mat-elevation-z8"
+          [disabled]="!element" [ngClass]="(!element) ? 'btn btn-xs disabled':'btn btn-xs btn-warning'">
           <em class="fa fa-eye"></em></button>
-        <button (click)="lgModal.show()" class="mr-1 btn btn-xs mat-elevation-z8"
-          [disabled]="!element" [ngClass]="(!element) ? 'disabled' : 'btn-dark'" container="body" placement="bottom"
-          tooltip="Comentarios"><em class="fa fa-comments-o"></em></button>
+        <button (click)="lgModal.show()" class="mr-1 btn btn-xs mat-elevation-z8" [disabled]="!element"
+          [ngClass]="(!element) ? 'disabled' : 'btn-dark'" container="body" placement="bottom" tooltip="Comentarios"><em
+            class="fa fa-comments-o"></em></button>
         <button id="create" chkPrivilegiosButtons (click)="openDialogAssingRequi()" placement="bottom" tooltip="Asignar"
           container="body" class="mr-1 mat-elevation-z8" [disabled]="asignar"
           [ngClass]="asignar ? 'btn btn-xs disabled':'btn btn-xs btn-purple'">
@@ -152,12 +151,12 @@
       <div class="col-sm-12 col-md-12 table-responsive clearfix">
         <div class="mt-3 ">
           <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total posiciones cubiertas
-            <span class="badge badge-pill badge-success ml-1">{{totalContratados}}</span></span>
+            <span class="badge badge-pill badge-success ml-1">{{totalContratados | numerico}}</span></span>
         </div>
         <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total de Posiciones activas <span
-            class="ml-1 badge badge-pill badge-success">{{totalPos}}</span></span>
+            class="ml-1 badge badge-pill badge-success">{{totalPos | numerico}}</span></span>
         <span class="text-muted font-weight-bold float-right text-uppercase mb-3">Total de Folios <span
-            class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span></span>
+            class="badge badge-pill badge-success ml-1">{{dataSource.length  | numerico}}</span></span>
 
         <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table border-top" style="width: 100%;">
           <thead>
@@ -223,20 +222,27 @@
                     </ng-template>
                   </td>
                   <td class="text-center">
-                      <ng-template #popTemplateCoor>
-                          <div class="card">
-                            <div class="card-body">
-                              <ul class="list-group list-group-flush">
-                                <li *ngFor="let r of row.coordinador" class="list-group-item text-muted">{{r}}</li>
-                              </ul>
-                            </div>
-                          </div>
-                        </ng-template>
+                    <ng-template #popTemplateCoor>
+                      <div class="card">
+                        <div class="card-body">
+                          <ul class="list-group list-group-flush">
+                            <li *ngFor="let r of row.coordinador" class="list-group-item text-muted">{{r}}</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </ng-template>
 
-                        <span *ngIf="row.coordinador.length == 0 && row.estatusId == 4" class="text-warning">SIN ASIGNAR</span>
-                        <small class="text-center badge badge-pill badge-danger" *ngIf="row.coordinador.length > 1 && row.estatusId == 4" [popover]="popTemplateCoor" placement="left" container="body" triggers="mouseenter:mouseleave">{{row.coordinador.length}}</small>
-                        <span class="text-left" *ngIf="row.coordinador.length == 1 && row.estatusId == 4">{{row.coordinador[0]}}</span>
-                        <span *ngIf = "row.estatusId != 4" [class.text-warning] = "row.coordinador === 'SIN ASIGNAR'">{{row.coordinador | uppercase}}</span></td>
+                    <span *ngIf="row.coordinador.length == 0 && row.estatusId == 4" class="text-warning">SIN
+                      ASIGNAR</span>
+                    <small class="text-center badge badge-pill badge-danger"
+                      *ngIf="row.coordinador.length > 1 && row.estatusId == 4" [popover]="popTemplateCoor"
+                      placement="left" container="body"
+                      triggers="mouseenter:mouseleave">{{row.coordinador.length}}</small>
+                    <span class="text-left"
+                      *ngIf="row.coordinador.length == 1 && row.estatusId == 4">{{row.coordinador[0]}}</span>
+                    <span *ngIf="row.estatusId != 4"
+                      [class.text-warning]="row.coordinador === 'SIN ASIGNAR'">{{row.coordinador | uppercase}}</span>
+                  </td>
                   <td class="text-center">
                     <ng-template #popTemplate>
                       <div class="card">
@@ -437,43 +443,49 @@
 <div [hidden]="!imprimir" id="content">
   <div>
     <div class="modal-body">
-      <app-info-vacante [Folios]="folio" [Requisicion]="id"></app-info-vacante>
+      <app-info-vacante [Folios]="folio" [Requisicion]="id" [ShowSection]="SelectiedSection"></app-info-vacante>
     </div>
   </div>
 </div>
 
-
-<!-- <button type="button" class="btn btn-primary" (click)="parentModal.show()">Open parent modal</button> -->
-<div class="modal fade" bsModal #parentModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="dialog-nested-name1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 id="dialog-nested-name1" class="modal-title pull-left">First modal</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="parentModal.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <button type="button" class="btn btn-primary" (click)="childModal.show()">Open second modal</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" bsModal #childModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="dialog-nested-name2">
+<div class="modal fade" bsModal #childModal="bs-modal" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-nested-name2">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 id="dialog-nested-name2" class="modal-title pull-left">Second modal</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="childModal.hide()">
-          <span aria-hidden="true">&times;</span>
+        <h4 id="dialog-nested-name2" class="modal-title text-center">Informaci&oacute;n a mostrar en Impresi&oacute;n</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" aria-label="Close"
+          (click)="childModal.hide()">
+          <i class="fa fa-times"></i>
         </button>
       </div>
       <div class="modal-body">
-        Información a mostrar en impresión
-        <br>
-        <button type="button" class="btn btn-primary" (click)="lgModal15.hide(); childModal.hide(); print(); ">Imprimir</button>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <section>
+              <mat-checkbox [(ngModel)]="Encabezado" class="margin-checkbox">Encabezado</mat-checkbox>
+              <mat-checkbox [(ngModel)]="Horarios" class="margin-checkbox">Horarios</mat-checkbox>
+              <mat-checkbox [(ngModel)]="Cliente" class="margin-checkbox">Info. Cliente / Puesto(Vacante)</mat-checkbox>
+              <mat-checkbox [(ngModel)]="ExpApt" class="margin-checkbox">Experiencia / Aptitudes </mat-checkbox>
+              <mat-checkbox [(ngModel)]="Direccion" class="margin-checkbox">Direcci&oacute;n</mat-checkbox>
+              <mat-checkbox [(ngModel)]="Beneficio" class="margin-checkbox">Beneficios</mat-checkbox>
+            </section>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <section>
+                <mat-checkbox [(ngModel)]="ActObsProd" class="margin-checkbox">Actividades / Obser / Porceso</mat-checkbox>
+              <mat-checkbox [(ngModel)]="Telefono" class="margin-checkbox">T&eacute;lefonos</mat-checkbox>
+              <mat-checkbox [(ngModel)]="Contacto" class="margin-checkbox">Contactos</mat-checkbox>
+              <mat-checkbox [(ngModel)]="DocPrest" class="margin-checkbox">Documentos / Prestaciones</mat-checkbox>
+              <mat-checkbox [(ngModel)]="Psicom" class="margin-checkbox">Psicometr&iacute;as</mat-checkbox>
+              <mat-checkbox [(ngModel)]="Competencia" class="margin-checkbox">Competencias</mat-checkbox>
+            </section>
+          </div>
+        </div>
       </div>
+      <mat-divider></mat-divider>
+      <button type="button" class="btn btn-xs btn-primary bottom"
+        (click)="lgModal15.hide(); childModal.hide(); print(); ">Imprimir</button>
     </div>
   </div>
 </div>

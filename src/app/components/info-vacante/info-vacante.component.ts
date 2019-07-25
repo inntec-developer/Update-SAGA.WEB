@@ -23,6 +23,7 @@ export class InfoVacanteComponent implements OnInit {
   @Input('HiddenPirnt') HiddenPrint: any;
   @Input('Folios') Folios: string;
   @Input('Requisicion') Requisicion: string;
+  @Input('ShowSection') ShowSection: any;
   @Output() EstatusId: EventEmitter<number> = new EventEmitter();
 
   public cliente: any;
@@ -60,6 +61,7 @@ export class InfoVacanteComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.ShowSection);
     if (this.Folios != null) {
       this.getPrioridades();
       this.getEstatus(2);
