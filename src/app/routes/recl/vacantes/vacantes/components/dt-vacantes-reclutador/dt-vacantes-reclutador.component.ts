@@ -24,7 +24,7 @@ const swal = require('sweetalert');
   providers: [RequisicionesService, PostulateService, DatePipe, CandidatosService]
 })
 export class DtVacantesReclutadorComponent implements OnInit {
-  @Output('Imprimir') EmImprimir : EventEmitter<any> = new EventEmitter<any>();
+  @Output('Imprimir') EmImprimir: EventEmitter<any> = new EventEmitter<any>();
   public imprimir: boolean;
 
   //scroll
@@ -87,6 +87,35 @@ export class DtVacantesReclutadorComponent implements OnInit {
   totalPos: any = 0;
   totalContratados: number = 0;
 
+  // checkBox Seccion de impresion
+  SelectiedSection = {
+    Encabezado: true,
+    Horarios: true,
+    Cliente: true,
+    ExpApt: true,
+    Direccion: true,
+    Beneficio: true,
+    ActObsProd: true,
+    Telefono: true,
+    Contacto: true,
+    DocPrest: true,
+    Psicom: true,
+    Competencia: true,
+  };
+  labelPosition = 'before';
+  Encabezado = true;
+  Horarios = true;
+  Cliente = true;
+  ExpApt = true;
+  Direccion = true;
+  Beneficio = true;
+  ActObsProd = true;
+  Telefono = false;
+  Contacto = false;
+  DocPrest = false;
+  Psicom = false;
+  Competencia = false;
+
   constructor(
     private service: RequisicionesService,
     private postulateservice: PostulateService,
@@ -121,13 +150,11 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.totalPos = 0;
       this.totalContratados = 0;
       this.dataSource.forEach(r => {
-        if(r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37))
-        {
+        if (r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37)) {
           this.totalPos += r.vacantes;
           this.totalContratados += r.contratados;
 
-          if(r.estatusId == 4)
-          {
+          if (r.estatusId == 4) {
             r.coordinador = r.reclutadores;
             r.reclutadores = "SIN ASIGNAR";
           }
@@ -137,7 +164,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.rows = this.dataSource.slice(0, this.itemsPerPage);
       this.registros = this.rows.length;
       this.length = this.dataSource.length;
-     // this.onChangeTable(this.config);
+      // this.onChangeTable(this.config);
       this.spinner.hide();
 
     });
@@ -148,9 +175,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
     });
   }
 
-  GetCandidatosNR()
-  {
-    this.serviceCandidato.GetFoliosIncidencias(28, this.settings.user['id']).subscribe(result =>{
+  GetCandidatosNR() {
+    this.serviceCandidato.GetFoliosIncidencias(28, this.settings.user['id']).subscribe(result => {
       this.candidatosNR = result;
     });
 
@@ -226,14 +252,11 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.clearFilter = true;
       if (column.filtering.filterString != "") {
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
-          {
-            if(!Array.isArray(item[column.name]))
-            {
+          if (item[column.name] != null) {
+            if (!Array.isArray(item[column.name])) {
               return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
             }
-            else
-            {
+            else {
               let aux = [];
               // if(column.filtering.columnName)
               // {
@@ -241,31 +264,26 @@ export class DtVacantesReclutadorComponent implements OnInit {
               // }
               // else
               // {
-                aux = item[column.name];
+              aux = item[column.name];
               // }
-                let flag = false;
-                if(item[column.name].length > 0)
-                {
-                  item[column.name].forEach(element => {
-                    if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
-                    {
-                      flag = true;
-                      return;
-                    }
-                  });
+              let flag = false;
+              if (item[column.name].length > 0) {
+                item[column.name].forEach(element => {
+                  if (element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase())) {
+                    flag = true;
+                    return;
+                  }
+                });
 
-                  if(flag)
-                  {
-                    return item[column.name];
-                  }
+                if (flag) {
+                  return item[column.name];
                 }
-                else
-                {
-                  if( 'sin asignar'.match(column.filtering.filterString.toLowerCase()))
-                  {
-                    return item[column.name];
-                  }
+              }
+              else {
+                if ('sin asignar'.match(column.filtering.filterString.toLowerCase())) {
+                  return item[column.name];
                 }
+              }
             }
           }
 
@@ -326,7 +344,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
-    debugger;
     data.selected ? data.selected = false : data.selected = true;
     this.estatusId = data.estatusId;
     this.element = data;
@@ -355,7 +372,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
     if (!data.selected) {
       this.ValidarEstatus(9999)
-     this._reinciar();
+      this._reinciar();
       this.selected = false;
     } else {
       this.selected = true;
@@ -391,21 +408,18 @@ export class DtVacantesReclutadorComponent implements OnInit {
   ValidarEstatus(estatusId) {
     //revisar en pausa
 
-    if(this.element.aprobada == 1 && this.element.aprobadorId ==  this.settings.user['id'] && this.element.contratados == 0 && (estatusId != 39 && estatusId != 34 && estatusId != 35 && estatusId != 36 && estatusId != 37) && this.element.vacantes > 0 )
-     {
+    if (this.element.aprobada == 1 && this.element.aprobadorId == this.settings.user['id'] && this.element.contratados == 0 && (estatusId != 39 && estatusId != 34 && estatusId != 35 && estatusId != 36 && estatusId != 37) && this.element.vacantes > 0) {
       this.asignar = false
       this.disenador = false
-     }
-     else if(this.element.aprobada == 0 && this.element.contratados == 0 && (estatusId != 39 && estatusId != 34 && estatusId != 35 && estatusId != 36 && estatusId != 37) && this.element.vacantes > 0)
-     {
-       this.asignar = false
-       this.disenador = false;
-     }
-     else
-     {
-       this.asignar = true;
-       this.disenador = true;
-     }
+    }
+    else if (this.element.aprobada == 0 && this.element.contratados == 0 && (estatusId != 39 && estatusId != 34 && estatusId != 35 && estatusId != 36 && estatusId != 37) && this.element.vacantes > 0) {
+      this.asignar = false
+      this.disenador = false;
+    }
+    else {
+      this.asignar = true;
+      this.disenador = true;
+    }
 
     // estatusId == 6 && this.element.propietarioId == this.settings.user['id'] && this.element.vacantes > 0 ? this.disenador = false : this.disenador = true;
 
@@ -682,8 +696,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       data: this.element
     });
     dialogCnc.afterClosed().subscribe(result => {
-      if(result)
-      {
+      if (result) {
         this.refreshTable();
       }
     })
@@ -733,11 +746,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
       if (result == 0) {
         this.onChangeTable(this.config);
       }
-      else if(result == 417) {
+      else if (result == 417) {
         this.popToast('error', 'Registro Masivo', 'Ocurrió un error al intentar registrar candidato');
       }
-      else
-      {
+      else {
         swal({
           title: "Registro Masivo de Candidatos",
           text: "¡Se registraron (" + result.length.toString() + ") candidatos con estatus cubierto para la vacante de " + this.vBtra + ". ¿Desea enviar notificación a los candidatos registrados?. Esto puede tardar varios minutos",
@@ -766,8 +778,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
             this.refreshTable();
           }
         });
-            // this.popToast('success', 'Registro Masivo', 'El registro se realizó correctamente');
-            // this.refreshTable();
+        // this.popToast('success', 'Registro Masivo', 'El registro se realizó correctamente');
+        // this.refreshTable();
 
       }
     });
@@ -792,10 +804,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
     if (this.aprobador === usuario) {
       this._Router.navigate(['/reclutamiento/configuracionVacante/', this.id, this.folio, this.vBtra], { skipLocationChange: true });
     } else {
-      if(this.coordinador != null){
-          swal('Ops...!', 'Esta vacante solo puede ser diseñada por el aprobador (' + this.coordinador + ').', 'error');
+      if (this.coordinador != null) {
+        swal('Ops...!', 'Esta vacante solo puede ser diseñada por el aprobador (' + this.coordinador + ').', 'error');
       }
-      else{
+      else {
         swal('Ops...!', 'Esta vacante aún no esta aprobada', 'error');
       }
     }
@@ -808,11 +820,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   seguimientoRequi() {
-    if (this.numeroVacantes != 0 && (this.settings.user['tipoUsuarioId'] == '4' || this.settings.user['tipoUsuarioId'] == '3'))
-    {
+    if (this.numeroVacantes != 0 && (this.settings.user['tipoUsuarioId'] == '4' || this.settings.user['tipoUsuarioId'] == '3')) {
       this.procesoCandidato = true;
     }
-    else if(this.numeroVacantes != 0 ){
+    else if (this.numeroVacantes != 0) {
       this._Router.navigate(['/reclutamiento/gestionVacante', this.id, this.folio, this.vBtra, this.clienteId, this.enProceso, this.estatusId], { skipLocationChange: true });
     } else {
       swal('Ops...!', 'Esta vacante no cuenta con posiciones disponibles esta en 0, cambie el número de vacantes disponibles.', 'error');
@@ -842,29 +853,24 @@ export class DtVacantesReclutadorComponent implements OnInit {
         // var mocos = (d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString()
         var e = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
 
-        if(row.reclutadores.length == 0)
-        {
+        if (row.reclutadores.length == 0) {
           reclutador = "SIN ASIGNAR";
         }
-        else if(row.reclutadores.length > 1)
-        {
+        else if (row.reclutadores.length > 1) {
           row.reclutadores.forEach(element => {
             reclutador = reclutador + element + ', \n'
           });
         }
-        else
-        {
+        else {
           reclutador = row.reclutadores[0];
         }
 
-        if(row.estatusId == 4)
-        {
+        if (row.estatusId == 4) {
           coordinador = reclutador;
           reclutador = "SIN ASIGNAR"
 
         }
-        else
-        {
+        else {
           coordinador = row.coordinador;
         }
 
@@ -897,11 +903,26 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
 
 
-  print(){
+  print() {
     this.imprimir = true;
+
+    this.SelectiedSection = {
+      Encabezado: this.Encabezado,
+      Horarios: this.Horarios,
+      Cliente: this.Cliente,
+      ExpApt: this.ExpApt,
+      Direccion: this.Direccion,
+      Beneficio: this.Beneficio,
+      ActObsProd: this.ActObsProd,
+      Telefono: this.Telefono,
+      Contacto: this.Contacto,
+      DocPrest: this.DocPrest,
+      Psicom: this.Psicom,
+      Competencia: this.Competencia,
+    }
     this.EmImprimir.emit(this.imprimir);
-    if(!this.settings.layout.isCollapsed){
-        this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
+    if (!this.settings.layout.isCollapsed) {
+      this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
     }
     setTimeout(() => {
       document.getElementById('content').style.marginLeft = "45px";
@@ -918,7 +939,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
       document.getElementById('content').style.marginLeft = "0";
     }, 500);
   }
-
 
   /**
   * configuracion para mensajes de acciones.

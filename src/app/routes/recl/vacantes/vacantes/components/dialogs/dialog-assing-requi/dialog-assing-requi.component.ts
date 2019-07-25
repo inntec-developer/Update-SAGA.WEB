@@ -205,7 +205,7 @@ export class DialogAssingRequiComponent implements OnInit {
                 if (result != 404) {
                   if (!this.Confidencial) {
                     swal({
-                      title: 'Se a notificado al departamento de medios.',
+                      title: 'Se Ha notificado al departamento de medios.',
                       text: 'Desea diseñar la Vacante para Publicar en Bolsa DAMSA ?',
                       type: 'success',
                       showCancelButton: true,
@@ -222,7 +222,7 @@ export class DialogAssingRequiComponent implements OnInit {
                     });
                   }
                   else{
-                    swal('Medios / Redes sociales', 'Se a notificado al departamento de medios.', 'success');
+                    swal('Medios / Redes sociales', 'Se Ha notificado al departamento de medios.', 'success');
                   }
 
                   this.dialogAssing.close(true);
@@ -256,7 +256,7 @@ export class DialogAssingRequiComponent implements OnInit {
                 });
               }
               else{
-                swal('Asignación', 'La asignación se a realizado con éxito', 'success');
+                swal('Asignación', 'La asignación se realizó con éxito', 'success');
               }
             }
 
@@ -339,7 +339,7 @@ export class DialogAssingRequiComponent implements OnInit {
         window.onfocus = null;
         this.serviceRequisicion.SendEmailRedesSociales(this.RequiId).subscribe(result => {
           if (result != 404) {
-            swal('Redes sociales', 'Se a notificado con exito la publicacion de la vacante.', 'success');
+            swal('Redes sociales', 'Se Ha notificado con exito la publicacion de la vacante.', 'success');
           } else {
             swal('Redes sociales', 'Algo salio mal al intentar notificar al departamento de redes sociales.', 'error');
           }

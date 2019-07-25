@@ -17,14 +17,15 @@ export class MonedaPipe implements PipeTransform {
       obj.push('00');
     }
     if(obj[0].length <= 3){
-      valor = value;
+      cdu = obj[0];
+      valor = cdu+'.'+obj[1].slice(0,2);
     }
     else if(obj[0].length > 3 && obj[0].length < 7 ){
       cdu = obj[0];
       cmdmum = obj[0];
       cdu = cdu.slice(-3);
       cmdmum = cmdmum.slice(0,-3);
-      valor = cmdmum+','+cdu+'.'+obj[1];
+      valor = cmdmum+','+cdu+'.'+obj[1].slice(0,2);
     }else if(obj[0].length > 6 ){
       cdu = obj[0];
       cmdmum = obj[0];
@@ -32,7 +33,7 @@ export class MonedaPipe implements PipeTransform {
       cdu = cdu.slice(-3);
       cmdmum = cmdmum.slice(-6,-3);
       m = m.slice(0,-6);
-      valor = m+','+cmdmum+','+cdu+'.'+obj[1];
+      valor = m+','+cmdmum+','+cdu+'.'+obj[1].slice(0,2);
     }
     var nom = ' '+args2;
     return args+valor+nom;

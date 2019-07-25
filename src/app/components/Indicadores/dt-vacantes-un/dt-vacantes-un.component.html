@@ -25,9 +25,9 @@
               <span class="badge badge-pill badge-success ml-1">{{totalContratados}}</span></span> -->
 
             <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total de posiciones activas
-              <span class="ml-1 badge badge-pill badge-success">{{totalPos}}</span></span>
+              <span class="ml-1 badge badge-pill badge-success">{{totalPos | numerico}}</span></span>
             <span class="text-muted font-weight-bold float-right text-uppercase">Total de Folios <span
-                class=" ml-1 badge badge-pill badge-success">{{dataSource.length}}</span></span>
+                class=" ml-1 badge badge-pill badge-success">{{dataSource.length  | numerico}}</span></span>
           </div>
         </div>
         <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
