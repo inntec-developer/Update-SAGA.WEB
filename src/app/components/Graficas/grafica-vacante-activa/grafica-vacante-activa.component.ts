@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { SettingsService } from '../../../core/settings/settings.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-grafica-vacante-activa',
@@ -16,7 +16,10 @@ export class GraficaVacanteActivaComponent implements OnInit {
   Data: any;
   private UsuarioId: any;
   public total : number;
-  public ShowModal = false;
+  public NumeroVacantes: number;
+  public NumeroPos:number;
+  public EstadoVacante: string;
+  public ShowModal: boolean;
 
   constructor(
     private servicio:ComponentsService,
@@ -43,7 +46,8 @@ export class GraficaVacanteActivaComponent implements OnInit {
   let pausada = item['pausada'];
   let garantia = item['garantia'];
   this.total = item['total'];
-
+  this.NumeroVacantes = item['total'];
+  this.NumeroPos = item['numeropos'];
 
   this.Data = {
     datasets: [{
@@ -91,6 +95,7 @@ export class GraficaVacanteActivaComponent implements OnInit {
     title: { text: 'Seguimiento de Vacantes' },
     data: this.Data,
     options: {
+      onClick: this.detectedClick.bind(this),
       legend: {
         position: 'right',
         display: true,
@@ -104,14 +109,19 @@ export class GraficaVacanteActivaComponent implements OnInit {
     },
 
   });
-
-
  })
+  }
 
-
-
-
-
+  detectedClick(evt: any) {
+   
+    let ActivatEvent = this.Chart.getElementAtEvent(evt);
+    if (ActivatEvent[0]) {
+      var chartData = ActivatEvent[0]['_chart'].config.data;
+      var idx = ActivatEvent[0]['_index'];
+      this.EstadoVacante = chartData.labels[idx];
+      this.NumeroVacantes = chartData.datasets[0].data[idx];
+      this.ShowModal = true;
+    }
   }
 
 }
