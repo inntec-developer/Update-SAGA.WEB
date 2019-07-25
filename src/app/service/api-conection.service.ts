@@ -254,6 +254,7 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static GetByUsuario = 'admin/getByTipoUsuario'
   public static EnviaCorreo = 'admin/EnviaCorreo';
   public static updatePassword = 'admin/updatePassword';
+  public static GetBGArte = 'admin/getBGArte';
 
   /*Seguimiento Vacantes*/
   public static getDtosCard = 'reclutamiento/seguimientovacante/getCard';

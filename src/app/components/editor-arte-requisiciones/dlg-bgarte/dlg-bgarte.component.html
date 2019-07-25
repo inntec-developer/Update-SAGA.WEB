@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-sm-3 col-md-3 col-lg-3">
       <div class="card">
-    <div class="card-body mat-elevation-z8">
+        <div class="card-body mat-elevation-z8">
         <strong class="text-muted">ARCHIVOS</strong>
         <div class="list-group">
             <a class="active list-group-item list-group-item-action d-flex justify-content-between align-items-center rounded-0">
@@ -35,8 +35,7 @@
                                 </div>
                             </div>
                             <a class="px-4" (click)="verArchivo(t)">
-                                <em [ngClass]="{'text-warning':t.type === '.jpg' || t.type === '.jpeg' || t.type === '.png' || t.type === '.PNG' }"
-                                        class="fa fa-5x {{t.icon}}"></em>
+                                <img class="float-left img-fluid thumb32" src={{t.icon}} alt="" />
                             </a>
                             <p><small class="text-dark">{{t.nom}}</small></p>
                             <div class="d-flex m-0 text-muted">
