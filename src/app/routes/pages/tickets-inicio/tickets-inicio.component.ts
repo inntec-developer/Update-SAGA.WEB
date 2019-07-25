@@ -31,6 +31,7 @@ categorias = [];
 categorias2 = [];
 vacantes = [];
   activeId: any;
+  search: any;
   constructor(config: NgbCarouselConfig,
     private _service: SistTicketsService,
     private service: RequisicionesService,
@@ -304,7 +305,31 @@ vacantes = [];
 
   }
 
-  Search()
-  {}
+  public Search(data: any) {
+
+    this.search = data.target.value;
+    let tempArray: Array<any> = [];
+
+    let colFiltar: Array<any> = [{ title: "vBtra" }];
+
+    this.dataSource.forEach(function (item) {
+      let flag = false;
+      colFiltar.forEach(function (c) {
+        if (item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
+          flag = true;
+        }
+      });
+
+      if (flag) {
+        tempArray.push(item)
+      }
+    });
+
+    this.vacantes = tempArray;
+
+    this.activeId = this.vacantes[0].id;
+    this.myCarousel.activeId = this.vacantes[0].id;
+    this.myCarousel.cycle();
+  }
   
 }
