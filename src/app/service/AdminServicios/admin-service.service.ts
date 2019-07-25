@@ -68,6 +68,8 @@ export class AdminServiceService {
   private UrlGetByUsuario = ApiConection.ServiceUrl + ApiConection.GetByUsuario;
   private UrlSendEmail = ApiConection.ServiceUrl + ApiConection.EnviaCorreo;
   private UrlUpdatePassword = ApiConection.ServiceUrl + ApiConection.updatePassword;
+  private UrlGetBGArte = ApiConection.ServiceUrl + ApiConection.GetBGArte;
+
   constructor(private _httpClient: HttpClient ) {
 
   }
@@ -81,14 +83,14 @@ export class AdminServiceService {
 
   GetFiles(candidatoId): Observable<any>
   {
-
-    let httpHeaders = new HttpHeaders({
-      'Access-Control-Allow-Origin': 'https://websb.damsa.com.mx'
-     })
-
      let params = new HttpParams().set('entidadId', candidatoId)
 
      return this._httpClient.get(this.UrlGetFiles, {params: params});
+  }
+
+  GetBGArte(): Observable<any>
+  {
+    return this._httpClient.get(this.UrlGetBGArte);
   }
 
   GetPdf(ruta): Observable<any>
