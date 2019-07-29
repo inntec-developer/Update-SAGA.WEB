@@ -34,13 +34,14 @@ export class SettingsService {
         // App Settings
         // -----------------------------------
         this.app = {
-            vertionTime: '20190725_1404_DVP-SBI610/20190725_1404_DVP-SBI611',
-            vertion: 'v2.0.107251404',
+            vertionTime: '20190729_1110_DVP-SBI610/20190729_1110_DVP-SBI611',
+            vertion: 'v2.0.107291110',
             environment: 'BETA',
             name: 'SAGA - Inntec',
             description: 'Sistema Administrativo de Gestión Avanzada',
             year: ((new Date()).getFullYear()),
-            prefijo: 'DAL'
+            prefijo: 'DAL',
+            email: '  inntec@damsa.com.mx'
         };
 
         // Layout Settings
