@@ -1,7 +1,8 @@
+import { element } from 'protractor';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material';
-import { RequisicionesService } from '../../../service';
+import { RequisicionesService, ApiConection } from '../../../service';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
 import { TicketsRegisterComponent } from '../../../components/tickets-register/tickets-register.component';
@@ -74,6 +75,7 @@ vacantes = [];
 
 
     this._service.GetTicketSinCita(row.id, candidatoId).subscribe(data => {
+      console.log(data)
       if(data == 409)
       {
         swal("¡Ocurrió un error!", "Impresora sin papel", "error");
@@ -85,7 +87,6 @@ vacantes = [];
       else
       {
       this.num = data[0];
-
       swal("¡TURNO IMPRESO!", "Bienvenido " + data[1] + " . Por favor tome su turno impreso." + this.num + ". Si inició sesión se cerrará al imprimir turno", "success");
       this.LogOut();
       }
@@ -184,11 +185,12 @@ vacantes = [];
       if (this.dataSource.length > 0) {
         this.dataSource = this.dataSource.filter(element => {
           if (element.cubierta > 0) {
+            element.arte != null ? element.arte = ApiConection.ServiceUrlFileManager + element.arte : null;
             return element;
           }
 
         });
-
+console.log(this.dataSource)
 
         var color = 0;
         this.categorias = Array.from(new Set(this.dataSource.map(s => s.areaId)))
@@ -212,9 +214,9 @@ vacantes = [];
             }
           });
         
-        for (var c = 0; c <= 7; c++) {
-          this.dataSource[c].image = images[c];
-        }
+        // for (var c = 0; c <= 7; c++) {
+        //   this.dataSource[c].image = images[c];
+        // }
 
         this.categorias2 = this.categorias.splice(8, this.categorias.length);
         this.categorias = this.categorias.splice(0, 7);

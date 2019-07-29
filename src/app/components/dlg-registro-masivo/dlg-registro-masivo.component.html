@@ -45,6 +45,7 @@
                                 <label class="form-check-label" for="inlineRadio2">HOMBRE</label>
                             </div>
                             </div>
+                            <small *ngIf="model.options == 0" class="text-danger">Debe seleccionar g&eacute;nero</small>
                         </div>              
                 <div class="dateLong">
                     <mat-form-field>
@@ -82,10 +83,10 @@
                 <div class="form-group with-focus">
                     <label class="text-muted" for="email">EMAIL</label>
                     <div class="input-group long">
-                    <input type="email" class="form-control form-control-sm" (blur)="ValidarEmail(email)" placeholder="*" value="" name="email" [(ngModel)]="email" ngModel required [class.requerido]="email.length < 7" [class.valido]="email.length >= 7"/>
+                    <input type="email" class="form-control form-control-sm" (blur)="ValidarEmail(email)" placeholder="*" value="" name="email" [(ngModel)]="email" [class.requerido]="email.length < 7" [class.valido]="email.length >= 7"/>
                     <div class="input-group-append">
                         <div class="input-group-text" tooltip="Registrar con Email" placement="top" container="body">
-                        <input type="radio" [(ngModel)]="modelOpc.options" name="opc1" value=1 (click)="valOpcionReg(1);">
+                        <input type="radio" [(ngModel)]="modelOpc.options"  [ngModelOptions]="{standalone: true}" id="modelOpc1" value="1" (click)="valOpcionReg(1);">
                         </div>
                       </div>
                     </div>
@@ -95,34 +96,39 @@
                     <div class="form-group mr-1">
                         <label class="text-muted" for="txtLada">LADA</label>
                         <div class="input-group">
-                            <input type="text" minlength="2" maxlength="3" name="txtLada" ngModel required class="form-control form-control-sm ladaLong"
-                                placeholder="*" [(ngModel)]="txtLada" [class.requerido]="txtLada.length < 2" [class.valido]="txtLada.length >= 2"/>
+                            <input type="text" minlength="2" maxlength="3" class="form-control form-control-sm ladaLong"
+                                placeholder="*" [(ngModel)]="txtLada" name="txtLada" [class.requerido]="txtLada.length < 2" [class.valido]="txtLada.length >= 2"/>
                         </div>
                     </div>
                     <div class="form-group long">
                         <label class="text-muted" for="txtPhone">TEL&Eacute;FONO</label>
                         <div class="input-group">
-                            <input (blur)="ValidarTelefono()" type="text" minlength="7" maxlength="8" name="txtPhone" ngModel required class="form-control form-control-sm" placeholder="*"
-                                [(ngModel)]="txtPhone" [class.requerido]="txtPhone.length < 7" [class.valido]="txtPhone.length > 6"
+                            <input (blur)="ValidarTelefono()" type="text" minlength="7" maxlength="8" class="form-control form-control-sm" placeholder="*"
+                                [(ngModel)]="txtPhone" name="txtPhone" [class.requerido]="txtPhone.length < 7" [class.valido]="txtPhone.length > 6"
                             />
                             <div class="input-group-append">
                                 <div class="input-group-text" tooltip="Registrar con Tel&eacute;fono" placement="top" container="body">
-                                    <input type="radio" [(ngModel)]="modelOpc.options" name="opc2" value=2 (click)="valOpcionReg(2);">
+                                    <input type="radio" [(ngModel)]="modelOpc.options" [ngModelOptions]="{standalone: true}" id="modelOpc2" value="2" (click)="valOpcionReg(2);">
                                 </div>
                             </div>
                         </div>
+                        <small class="text-danger">{{valTel}}</small>
                     </div>
+                    
                 </div>
-                <small class="text-danger">{{valTel}}</small>
+             
                 <div class="mt-4">
                 <button type="button" class="btn btn-xs btn-danger ml-1 float-right" container="body" placement="bottom" tooltip="Borrar campos" (click)="BorrarCampos()">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                         </button>
 
-                <button container="body" placement="bottom" tooltip="Guardar cambios" [disabled]="f.invalid || edad < 18 || rowIndex == -1" type="button" [ngClass]="f.invalid || edad < 18 || rowIndex == -1 ? 'disabled' : 'btn-warning'" class="btn btn-xs float-right ml-1" (click)="EditarCandidato()">
+                <button container="body" placement="bottom" tooltip="Guardar cambios"
+                [disabled]="f.invalid || edad < 18 || model.options == 0 || modelOpc.options == 0 || rowIndex == -1 || email.length == 0 || txtPhone.length == 0" type="button"
+                [ngClass]="f.invalid || edad < 18 || model.options == 0 || modelOpc.options == 0 || rowIndex == -1 || email.length == 0 || txtPhone.length == 0 ? 'disabled' : 'btn-warning'" class="btn btn-xs float-right ml-1" (click)="EditarCandidato()">
                     <i class="fa fa-floppy-o" aria-hidden="true"></i>
         </button>
-                <button [disabled]="f.invalid || edad < 18 || rowIndex != -1" type="button" [ngClass]="f.invalid || edad < 18 || rowIndex != -1 ? 'disabled' : 'btn-success'" class="btn btn-xs float-right" (click)="AgregarCandidato()">
+                <button [disabled]="f.invalid || edad < 18 || model.options == 0 || modelOpc.options == 0 || rowIndex != -1 || email.length == 0 || txtPhone.length == 0" 
+                type="button" [ngClass]="f.invalid || edad < 18 || model.options == 0 || modelOpc.options == 0 || rowIndex != -1 || email.length == 0 || txtPhone.length == 0 ? 'disabled' : 'btn-success'" class="btn btn-xs float-right" (click)="AgregarCandidato()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                 </button>
             </div>
@@ -135,10 +141,10 @@
         <div class="col-md-12 col-lg-12">
             <div class="card card-body mat-elevation-z8">
                 <div class="d-flex justify-content-end mb-2">
-                    <span class="text-muted font-weight-bold float-right text-uppercase mr-4">Cubiertos/Vacantes
+                    <span class="text-muted font-weight-bold float-right text-uppercase mr-2">Cubiertos/Vacantes
                             <span class="badge badge-pill badge-success ml-1">{{data.contratados + dataSource.length}} / {{data.nv}}</span>
                           </span>
-                    <span class="text-muted font-weight-bold float-right text-uppercase">Total de Candidatos
+                    <span class="text-muted font-weight-bold float-right text-uppercase mr-4">Total de Candidatos
                             <span class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span>
                           </span>
                           <button *ngIf="dataSource.length > 0" (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"

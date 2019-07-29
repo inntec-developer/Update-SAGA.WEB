@@ -2,7 +2,7 @@ export class ApiConection {
   public static ServiceUrl = 'http://localhost:33333/api/';
   public static ServiceUrlImgExamenes = 'http://localhost:33333/';
   public static ServiceUrlWeb = "http://localhost:4200/"
-
+  public static ServiceUrlFileManager = 'http://localhost:33333/utilerias/';
   // public static ServiceUrl = 'http://10.10.12.31:333/api/';
   // public static ServiceUrlImgExamenes = 'http://10.10.12.31:333/api/';
 
@@ -24,7 +24,7 @@ export class ApiConection {
   // public static ServiceUrlImgExamenes = 'https://apisb.damsa.com.mx';
 
   public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
-  public static ServiceUrlFileManager = 'https://apisb.damsa.com.mx/utilerias/';
+  // public static ServiceUrlFileManager = 'https://apisb.damsa.com.mx/utilerias/';
   public static ServiceUrlFoto = 'https://apisb.damsa.com.mx/';
   public static ServiceUrlBolsa = 'https://btapi.damsa.com.mx';
   public static ServiceUrlLoginBolsa = 'https://btweb.damsa.com.mx';
@@ -255,6 +255,7 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static EnviaCorreo = 'admin/EnviaCorreo';
   public static updatePassword = 'admin/updatePassword';
   public static GetBGArte = 'admin/getBGArte';
+  public static GuardarArte = 'admin/guardarArte';
 
   /*Seguimiento Vacantes*/
   public static getDtosCard = 'reclutamiento/seguimientovacante/getCard';

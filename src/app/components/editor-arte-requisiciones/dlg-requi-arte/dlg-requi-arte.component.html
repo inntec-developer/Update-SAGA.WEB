@@ -1,0 +1,27 @@
+<div class="d-flex justify-content-between">
+    <h4 class="text-warning">REQUISICIONES</h4>
+    <button type="button" class="btn btn-xs btn-danger btn-circle mb-3" mat-dialog-close><i class="fa fa-times"></i></button>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="card">
+    <div class="card-body">
+        <div class="input-group input-group-sm p-2 mb-2 ilong">
+            <input (input)="Search($event)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
+            <div class="input-group-append">
+              <span class="input-group-text text-info"><i class="fa fa-search" aria-hidden="true"></i></span>
+            </div>
+          </div>
+
+        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+          <div class="long">  
+            <ul class="list-group" *ngFor="let a of filterData; let rowIndex2 = index;">
+                <li class="list-group-item d-flex justify-content-between">
+                  <span class="text-success">{{a.folio}}</span>
+                  <span class="text-info">{{a.vBtra}}</span>
+                  <button class="btn btn-xs btn-success" (click)="onSelect(a)"><i class="fa fa-check"></i></button>
+                </li>
+            </ul> 
+          </div>
+          </ng-scrollbar>
+    </div>
+  </div>

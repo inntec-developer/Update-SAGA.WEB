@@ -82,18 +82,21 @@ export class RegistroCandidatosComponent implements OnInit {
   }
 
   validarFecha(event: MatDatepickerInputEvent<Date>) {
-    var fn = new Date(event.value);
-    var date = new Date();
-    var edad = date.getFullYear() - fn.getFullYear();
+    if(event.value != null)
+    {
+      var fn = new Date(event.value);
+      var date = new Date();
+      var edad = date.getFullYear() - fn.getFullYear();
 
-    if (date.getMonth() < fn.getMonth() - 1) {
-      edad--;
+      if (date.getMonth() < fn.getMonth() - 1) {
+        edad--;
+      }
+      if (((fn.getMonth() - 1) == date.getMonth()) && (date < fn)) {
+        edad--;
+      }
+      this.fn = new Date(fn.getFullYear(), fn.getMonth() + 1, fn.getDate());
+      this.edad = edad; 
     }
-    if (((fn.getMonth() - 1) == date.getMonth()) && (date < fn)) {
-      edad--;
-    }
-    this.fn = new Date(fn.getFullYear(), fn.getMonth() + 1, fn.getDate());
-    this.edad = edad; 
   }
 
   registrar()

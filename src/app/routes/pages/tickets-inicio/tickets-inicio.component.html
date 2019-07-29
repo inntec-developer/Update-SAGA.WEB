@@ -154,19 +154,19 @@
               <ngb-carousel #myCarousel="ngbCarousel" *ngIf="vacantes.length > 0" [activeId]="activeId" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
                   <ng-template ngbSlide *ngFor="let v of vacantes" >
                       <!-- <div style="width: 800px; height: 650px; background-position : center center; background-size: cover;" [style.background-image]="'url(' + v.image + ')'"> -->
-                          <div class="media ml-1" *ngIf="v.image">
-                        <img class="align-self-center mr-3" [src]="v.image" alt="Random slide" style="width: 800px; height: 650px;">  
+                          <div class="media ml-1" *ngIf="v.arte != null">
+                        <img class="align-self-center mr-3" [src]="v.arte" alt="Random slide" style="width: 800px; height: 650px;">  
                       </div>
                     <!-- </div>  -->
-                     <div *ngIf="v.image" class="carousel-caption">
+                     <!-- <div *ngIf="v.arte" class="carousel-caption">
                         <h3 class="text-muted">
                          VACANTE DE:</h3>
                          <h1 class="text-info">
                             {{v.vBtra}}
                          </h1>
                          <h4 class="text-muted font-weight-bold">{{v.experiencia}}</h4>
-                        </div>
-                    <div *ngIf="!v.image" class="card">
+                        </div> -->
+                    <div *ngIf="v.arte == null" class="card">
                       <div class="card-body bg-light fontMio mat-elevation-z8" style="width: 800px; height: 650px;">
                         <div class="carousel-caption">
                             <h3 class="text-muted">

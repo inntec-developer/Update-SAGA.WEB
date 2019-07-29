@@ -1,6 +1,8 @@
+import { EditorArteRequisicionesComponent } from './../editor-arte-requisiciones.component';
 import { Component, OnInit } from '@angular/core';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import { ApiConection } from '../../../service/api-conection.service';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-dlg-bgarte',
@@ -19,7 +21,7 @@ export class DlgBGArteComponent implements OnInit {
   cont_image = 0;
   files = [];
 
-  constructor(private service: AdminServiceService) { }
+  constructor(private service: AdminServiceService, private dialog : MatDialogRef<DlgBGArteComponent>,) { }
 
   ngOnInit() {
     this.GetBackGround();
@@ -49,6 +51,11 @@ export class DlgBGArteComponent implements OnInit {
       }
     });
 
+  }
+
+  SeleccionarBG(file)
+  {
+    this.dialog.close(file)
   }
 
 

@@ -3,6 +3,9 @@
   <div class="row ml-3">
     <div class="col-sm-4 col-md-4">
         <div class="bg-light p-1 mb-4">
+          <button class="btn btn-xs btn-purple mr-2 mat-elevation-z8" type="button" (click)="openDialogRequiArte()" container="body" placement="bottom" tooltip="Seleccionar fondo">
+                <i class="fa fa-file-text-o"></i>
+              </button>
           <button class="btn btn-xs btn-warning mr-2 mat-elevation-z8" type="button" (click)="openDialogBG()" container="body" placement="bottom" tooltip="Seleccionar fondo">
             <i class="fa fa-picture-o"></i>
           </button>
@@ -15,39 +18,56 @@
         </div>
         <div class="form-group">
             <label class="text-muted" for="nombre">VACANTE DE:</label>
-            <input type="text" class="form-control form-control-sm" placeholder="vBtra" [(ngModel)]="vBtra" >
+            <div class="input-group input-group-sm with-focus">
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="vBtra" >
+            <div class="input-group-append border-left-0">
+                <div style="cursor: pointer;" [(fontPicker)]="fontVacante" [fpWidth]="'330px'" [fpPosition]="'bottom'" class="input-group-text fa fa-font bg-transparent border-left-0"></div>
+                <div style="cursor: pointer;" [(colorPicker)]="ColorPicker" class="input-group-text fa fa-tint bg-transparent border-left-0"></div>
+              </div>
+          </div>
         </div>
         <div class="form-group">
             <label for="exampleFormControlTextarea1">DESCRIPCI&Oacute;N</label>
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="descripcion"></textarea>
         </div>
         <div class="form-group">
-            <label for="experiencia">¿Que necesitas?</label>
+            <label for="experiencia">¿Que necesitas?
+              <div style="cursor: pointer;" [(fontPicker)]="font" [fpWidth]="'330px'" [fpPosition]="'bottom'" class="fa fa-font ml-2"></div>
+              <i style="cursor: pointer;" [(colorPicker)]="ColorPicker1" class="fa fa-tint ml-2"></i>
+            </label>
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="experiencia"></textarea>
         </div>
         <div class="form-group">
-            <label for="contacto">¿Tienes dudas?</label>
+            <label for="contacto">¿Tienes dudas?
+              <div style="cursor: pointer;" [(fontPicker)]="font2" [fpWidth]="'330px'" [fpPosition]="'bottom'" class="fa fa-font ml-2"></div>
+              <i style="cursor: pointer;" [(colorPicker)]="ColorPicker2" class="fa fa-tint ml-2"></i></label>
             <textarea class="form-control" id="contacto" rows="3" [(ngModel)]="contacto"></textarea>
         </div>
     </div>
     <div class="col-sm-8 col-md-8">
-      <div class="mx-auto mat-elevation-z8" style="width: 800px; height: 700px;">
+      <div id='my-node' class="mx-auto mat-elevation-z8" style="width: 800px; height: 700px;">
         <div class="media">
-          <img src="./../assets/img/ArteVacantes/DamsaVacantes_PP1.jpg" alt="Random slide" style="width: 800px; height: 700px;">
+          <img alt="Random slide" [src]="bg" [width]="800" [height]="700">
         
         <div class="carousel-caption">
           <h3 class="text-muted">
             VACANTE DE:</h3>
-          <h1 class="vacante">
+          <h1 [style.font-family]="fontVacante?.family" [style.color]="ColorPicker" class="vacante">
             {{vBtra}}
           </h1>
           <p class="text-muted font-weight-bold ml-2 mt-4">{{descripcion}}</p>
-          <h3 class="quenecesitas font-weight-bold mt-4 ml-2">¿Qué necesitas?</h3>
+          <h3 [style.color]="ColorPicker1" [style.font-family]="font?.family" [style.font-size]="font?.font-size" class="quenecesitas font-weight-bold mt-4 ml-2">¿Qué necesitas?</h3>
           <p class="text-muted font-weight-bold ml-2">{{experiencia}}</p>
-          <h3 class="tienesdudas font-weight-bold mt-4 ml-2">¿Tienes dudas?</h3>
-          <p class="contacto font-weight-bold ml-2">{{contacto}}</p>
-          <p class="pagina font-weight-bold ml-2">www.bolsa.damsa.com.mx</p>
-          <img class="float-right" src="assets/img/damsa/damsa_logo4.png" alt="" />
+          <h3 [style.color]="ColorPicker2" [style.font-family]="font2?.family" [style.font-size]="font2?.font-size" class="tienesdudas font-weight-bold mt-4 ml-2">¿Tienes dudas?</h3>
+          <p [style.color]="ColorPicker2" [style.font-family]="font2?.family" [style.font-size]="font2?.font-size" class="contacto font-weight-bold ml-2">{{contacto}}</p>
+          <p [style.color]="ColorPicker2" class="pagina font-weight-bold ml-2">www.bolsa.damsa.com.mx</p>
+          <div class="row">
+            <div class="col">
+              <img class="float-left logoesr" src="assets/img/esr.png" alt="" />
+              <img class="float-left ml-4 logoiso" src="assets/img/logo-iso.png" alt="" />
+              <img class="float-right logoDamsa" src="assets/img/damsa/damsa_logo4.png" alt="" />
+            </div>
+          </div>
         </div>
       </div>
       </div>

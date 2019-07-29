@@ -33,7 +33,7 @@
 .carousel-caption .vacante
 {
    
-    color: blue;
+    color: rgb(0, 0, 255);
 
 }
 
@@ -73,12 +73,24 @@
     font-size: 12px;
     margin-top: 10%;
 }
-
-.carousel-caption img{
-    margin-top: 2%;
-    margin-bottom: 3%;
-    margin-right: -10%;
+.carousel-caption .row{
+margin-top: 3%;
+}
+.carousel-caption .row .logoesr{
+    width: 20%;
+    margin-top: -14px;
+    // -webkit-animation: mover 2s infinite  alternate;
+    // animation: mover 1s infinite  alternate;
+}
+.carousel-caption .row .logoiso{
+    width: 10%;
+    margin-top: 1%;
+    // -webkit-animation: mover 2s infinite  alternate;
+    // animation: mover 1s infinite  alternate;
+}
+.carousel-caption .row .logoDamsa{
     width: 35%;
+    margin-bottom: 2%;
     // -webkit-animation: mover 2s infinite  alternate;
     // animation: mover 1s infinite  alternate;
 }

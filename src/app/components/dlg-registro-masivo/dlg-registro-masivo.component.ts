@@ -185,7 +185,6 @@ valEmail = '';
   public onCellClick(row, rowIndex)
   {
     row.selected = true;
-
     this.rowIndex = rowIndex;
     this.curp = row.curp;
     this.nom = row.nombre;
@@ -193,13 +192,14 @@ valEmail = '';
     this.am = row.apellidoMaterno;
     this.email = row.email;
     this.txtLada = row.lada;
-    this.txtPhone = row.telefono;
+    this.txtPhone = row.telefono.substring(row.telefono.indexOf('-') + 1, row.telefono.length);
     // this.municipios = {id: row.MunicipioNacimientoId, municipio: row.municipio};
     this.model.options = row.genero == "Mujer" ? '2' : '1';
     this.modelOpc.options = row.opcionRegistro;
     this.estadoId = row.EstadoNacimientoId;
     this.date = new Date(row.fechaNac);
     this.validarFecha(this.date);
+    this.valOpcionReg(this.modelOpc.options);
 
     if (this.rowAux.length == 0) {
       this.rowAux = row;
@@ -247,73 +247,93 @@ this.curp = curp;
   }
   AgregarCandidato()
   {
-    let count = this.data.nv - (this.data.contratados + this.dataSource.length + 1);
-    if (count < 0) {
-      swal("Registro", "Ya se cubrió el total de vacantes.", "warning");
+    if(this.modelOpc.options == '1')
+    {
+      this.ValidarEmail(this.email);
     }
-    else {
-      // let email = [{ email: this.email.trim(), UsuarioAlta: 'INNTEC' }];
-      let estado = this.estados.filter(item => {
-        if (item.id == this.estadoId)
-          return item.estado;
-      });
+    else
+    {
+      this.ValidarTelefono();
+    }
 
-      // let municipio = this.municipios.filter(item => {
-      //   if(item.id == this.municipioId)
-      //   return item.municipio;
-      // });
+    if(this.valEmail == '' && this.valTel == '')
+    {
 
-      let candidato = {
-        curp: this.curp,
-        nombre: this.nom,
-        apellidoPaterno: this.ap,
-        apellidoMaterno: this.am,
-        email: this.email.trim(),
-        fechaNac: this.fn.getFullYear().toString() + '/' + (this.fn.getMonth() + 1).toString() + '/' + this.fn.getDate().toString(),
-        genero: this.model.options == '2' ? 'Mujer' : 'Hombre',
-        EstadoNacimientoId: this.estadoId,
-        estado: estado[0].estado,
-       lada: this.txtLada,
-        // municipio: municipio[0].municipio,
-        telefono: this.txtLada + "-" + this.txtPhone,
-        opcionRegistro: this.modelOpc.options
-      };
+      let count = this.data.nv - (this.data.contratados + this.dataSource.length + 1);
+      if (count < 0) {
+        swal("Registro", "Ya se cubrió el total de vacantes.", "warning");
+      }
+      else {
 
-      this.dataSource.push(candidato);
-      this.onChangeTable(this.config);
-      this.BorrarCampos();
+        // let email = [{ email: this.email.trim(), UsuarioAlta: 'INNTEC' }];
+        let estado = this.estados.filter(item => {
+          if (item.id == this.estadoId)
+            return item.estado;
+        });
 
-      if(count == 0)
-      {
-        swal("Vacante cubierta", "Se cubrió el total de vacantes, no se podrá agregar más candidatos ", "warning");
+        let candidato = {
+          curp: this.curp,
+          nombre: this.nom,
+          apellidoPaterno: this.ap,
+          apellidoMaterno: this.am,
+          email: this.email.trim(),
+          fechaNac: this.fn.getFullYear().toString() + '/' + (this.fn.getMonth() + 1).toString() + '/' + this.fn.getDate().toString(),
+          genero: this.model.options == '2' ? 'Mujer' : 'Hombre',
+          EstadoNacimientoId: this.estadoId,
+          estado: estado[0].estado,
+        lada: this.txtLada,
+          // municipio: municipio[0].municipio,
+          telefono: this.txtLada + "-" + this.txtPhone,
+          opcionRegistro: this.modelOpc.options
+        };
+
+        this.dataSource.push(candidato);
+        this.onChangeTable(this.config);
+        this.BorrarCampos();
+
+        if(count == 0)
+        {
+          swal("Vacante cubierta", "Se cubrió el total de vacantes, no se podrá agregar más candidatos ", "warning");
+        }
       }
     }
   }
 
   EditarCandidato()
   {
-    // let email = [{ email: this.email.trim(), UsuarioAlta: 'INNTEC' }];
-    let estado = this.estados.filter(item => {
-      if(item.id == this.estadoId)
-      return item.estado;
-    });
+    if(this.modelOpc.options == '1')
+    {
+      this.ValidarEmail(this.email);
+    }
+    else
+    {
+      this.ValidarTelefono();
+    }
+    if(this.valEmail == '' && this.valTel == '')
+    {
+      let estado = this.estados.filter(item => {
+        if(item.id == this.estadoId)
+        return item.estado;
+      });
 
-    this.dataSource[this.rowIndex].curp = this.curp,
-    this.dataSource[this.rowIndex].nombre = this.nom,
-    this.dataSource[this.rowIndex].apellidoPaterno = this.ap,
-    this.dataSource[this.rowIndex].apellidoMaterno = this.am,
-    this.dataSource[this.rowIndex].email = this.email.trim(),
-    this.dataSource[this.rowIndex].fechaNac = this.fn.getFullYear().toString() + '/' + (this.fn.getMonth() + 1).toString() + '/' +  this.fn.getDate().toString(),
-    this.dataSource[this.rowIndex].genero = this.model.options == '2' ? 'Mujer' : 'Hombre',
-    this.dataSource[this.rowIndex].EstadoNacimientoId = this.estadoId,
-    this.dataSource[this.rowIndex].estado = estado[0].estado,
-    this.dataSource[this.rowIndex].MunicipioNacimientoId = this.municipioId,
-      // municipio: municipio[0].municipio,
-    this.dataSource[this.rowIndex].lada = this.txtLada;
-    this.dataSource[this.rowIndex].telefono = this.txtPhone;
-    this.dataSource[this.rowIndex].opcionRegistro = this.modelOpc.options;
-    this.onChangeTable(this.config);
-    this.BorrarCampos();
+      this.dataSource[this.rowIndex].curp = this.curp,
+      this.dataSource[this.rowIndex].nombre = this.nom,
+      this.dataSource[this.rowIndex].apellidoPaterno = this.ap,
+      this.dataSource[this.rowIndex].apellidoMaterno = this.am,
+      this.dataSource[this.rowIndex].email = this.email.trim(),
+      this.dataSource[this.rowIndex].fechaNac = this.fn.getFullYear().toString() + '/' + (this.fn.getMonth() + 1).toString() + '/' +  this.fn.getDate().toString(),
+      this.dataSource[this.rowIndex].genero = this.model.options == '2' ? 'Mujer' : 'Hombre',
+      this.dataSource[this.rowIndex].EstadoNacimientoId = this.estadoId,
+      this.dataSource[this.rowIndex].estado = estado[0].estado,
+      this.dataSource[this.rowIndex].MunicipioNacimientoId = this.municipioId,
+        // municipio: municipio[0].municipio,
+      this.dataSource[this.rowIndex].lada = this.txtLada;
+      this.dataSource[this.rowIndex].telefono = this.txtPhone;
+      this.dataSource[this.rowIndex].opcionRegistro = this.modelOpc.options;
+      this.onChangeTable(this.config);
+      this.BorrarCampos();
+    }
+
   }
 
   BorrarCandidato(rowIndex)
@@ -325,19 +345,21 @@ this.curp = curp;
   ValidarEmail(email)
   {
     this.valTel = "";
+    this.valEmail = "";
     let regexpEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$');
     if (regexpEmail.test(email)) {
       this.postulateservice.ValidarEmailCandidato(email).subscribe(data => {
         if (data == 302) {
           this.valEmail = "el email " + email + " ya se encuentra registrado"
           this.email = "";
+          
         }
         else {
           let x = this.dataSource.findIndex(value => value.email === this.email);
           if (x == -1) {
             this.valEmail = "";
           }
-          else {
+          else if(this.rowIndex == -1) {
             this.valEmail = "No se puede repetir email"
             this.email = "";
           }
@@ -350,9 +372,10 @@ this.curp = curp;
     }
   }
 
-  ValidarTelefono() : boolean
+  ValidarTelefono()
     {
       this.valEmail = "";
+      this.valTel = "";
       // var regex = /^[+ 0-9]{5}$/;  valida que solo sean numeros y longitud 5
     var regex = /^[0-9]+$/;
 
@@ -364,14 +387,16 @@ this.curp = curp;
           this.valTel = "El teléfono " + this.txtLada + "-" + this.txtPhone + " ya se encuentra registrado"
           this.txtLada = "";
           this.txtPhone = "";
-
-          return false;
         }
-        else
-        {
-          this.valTel = "";
-          return true;
-
+        else {
+          let x = this.dataSource.findIndex(value => value.telefono === this.txtPhone);
+          if (x == -1) {
+            this.valTel = "";
+          }
+          else if(this.rowIndex == -1) {
+            this.valEmail = "No se puede repetir Teléfono"
+            this.txtPhone = "";
+          }
         }
       });
     }
@@ -380,12 +405,12 @@ this.curp = curp;
       this.valTel = "Lada y teléfono son campos necesarios y deben ser númericos";
       this.txtLada = "";
       this.txtPhone = "";
-
-      return false;
+      this.email='REGISTRO POR TELEFONO'
     }
   }
   valOpcionReg(val)
   {
+    
     let regexpEmail = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$');
     var regex = /^[0-9]+$/;
     
@@ -397,8 +422,9 @@ this.curp = curp;
       }
        this.txtLada='---'; 
        this.txtPhone='-------'
+      
     }
-    else if(val == 2 )
+    else if(val == 2 && this.txtPhone.length > 0 )
     {
       if(!regex.test(this.txtPhone))
       {
@@ -508,18 +534,25 @@ this.curp = curp;
 
 
   validarFecha(fecha) {
-    var fn = new Date(fecha);
-    var date = new Date();
-    var edad = date.getFullYear() - fn.getFullYear();
+    if(fecha != null)
+    {
+      var fn = new Date(fecha);
+      var date = new Date();
+      var edad = date.getFullYear() - fn.getFullYear();
 
-    if (date.getMonth() < fn.getMonth() - 1) {
-      edad--;
+      if (date.getMonth() < fn.getMonth() - 1) {
+        edad--;
+      }
+      if (((fn.getMonth() - 1) == date.getMonth()) && (date < fn)) {
+        edad--;
+      }
+      this.fn = fn;
+      this.edad = edad;
     }
-    if (((fn.getMonth() - 1) == date.getMonth()) && (date < fn)) {
-      edad--;
+    else
+    {
+      this.fn = new Date(fecha);
     }
-    this.fn = fn;
-    this.edad = edad;
   }
 
   BorrarCampos()

@@ -69,6 +69,7 @@ export class AdminServiceService {
   private UrlSendEmail = ApiConection.ServiceUrl + ApiConection.EnviaCorreo;
   private UrlUpdatePassword = ApiConection.ServiceUrl + ApiConection.updatePassword;
   private UrlGetBGArte = ApiConection.ServiceUrl + ApiConection.GetBGArte;
+  private UrlGuardarArte = ApiConection.ServiceUrl + ApiConection.GuardarArte;
 
   constructor(private _httpClient: HttpClient ) {
 
@@ -91,6 +92,17 @@ export class AdminServiceService {
   GetBGArte(): Observable<any>
   {
     return this._httpClient.get(this.UrlGetBGArte);
+  }
+
+  GuardarArte(Arte): Observable<any>
+  {
+    return this._httpClient.post(this.UrlGuardarArte, Arte, this.httpOptions);
+  }
+
+  GetBG(nombre): Observable<any>
+  {
+     let params = new HttpParams().set('ruta', nombre);
+     return this._httpClient.get(this.UrlGetImage, {params: params});
   }
 
   GetPdf(ruta): Observable<any>
@@ -124,7 +136,7 @@ export class AdminServiceService {
     })
 
     let params = new HttpParams().set('ruta', ruta);
-     return this._httpClient.get(ApiConection.ServiceUrlFileManager + '/img/user/' + ruta, {headers: httpHeaders, responseType: "blob"});
+     return this._httpClient.get(ApiConection.ServiceUrlFileManager + '/img/ArteRequi/Arte/' + ruta, {headers: httpHeaders, responseType: "blob"});
   }
 
   downloadPDF(url):  Observable<any> {

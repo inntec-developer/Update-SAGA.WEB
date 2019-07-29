@@ -149,6 +149,7 @@ import { CandidatosCubiertosRportComponent } from './candidatos-cubiertos-rport/
 import { DtVacantesUNComponent } from './Indicadores/dt-vacantes-un/dt-vacantes-un.component';
 import { EditorArteRequisicionesComponent } from './editor-arte-requisiciones/editor-arte-requisiciones.component';
 import { DlgBGArteComponent } from './editor-arte-requisiciones/dlg-bgarte/dlg-bgarte.component';
+import { DlgRequiArteComponent } from './editor-arte-requisiciones/dlg-requi-arte/dlg-requi-arte.component';
 
 
 @NgModule({
@@ -304,7 +305,8 @@ import { DlgBGArteComponent } from './editor-arte-requisiciones/dlg-bgarte/dlg-b
     CandidatosCubiertosRportComponent,
     DtVacantesUNComponent,
     EditorArteRequisicionesComponent,
-    DlgBGArteComponent
+    DlgBGArteComponent,
+    DlgRequiArteComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -406,9 +408,10 @@ import { DlgBGArteComponent } from './editor-arte-requisiciones/dlg-bgarte/dlg-b
     IndicadorUndNegocioGdlComponent,
     IndicadorUndNegocioMxComponent,
     EditorArteRequisicionesComponent,
-    DlgBGArteComponent
+    DlgBGArteComponent,
+    DlgRequiArteComponent
   ],
-  entryComponents: [DlgBGArteComponent, DlgCubiertasComponent, DlgResultadosMedicosComponent, DlgRegistroMasivoComponent, RegistroReclutadorComponent, TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
+  entryComponents: [DlgRequiArteComponent, DlgBGArteComponent, DlgCubiertasComponent, DlgResultadosMedicosComponent, DlgRegistroMasivoComponent, RegistroReclutadorComponent, TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
 
 
 })

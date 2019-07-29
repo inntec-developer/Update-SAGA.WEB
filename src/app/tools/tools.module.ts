@@ -55,12 +55,15 @@ import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 import { SelectModule } from 'ng2-select';
 import { TagInputModule } from 'ngx-chips';
 import { TextMaskModule } from 'angular2-text-mask';
-
+import { FontPickerModule, FONT_PICKER_CONFIG, FontPickerConfigInterface } from 'ngx-font-picker';
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
   optionTextField: 'name'
 };
-
+const DEFAULT_FONT_PICKER_CONFIG: FontPickerConfigInterface = {
+  // Change this to your Google API key
+  apiKey: 'AIzaSyBI5mRJ-PevYsq92gL41_0Zc3D6AjttiAQ'
+};
 @NgModule({
   imports: [
     AgGridModule,
@@ -114,6 +117,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     SelectModule,
     TagInputModule,
     TextMaskModule,
+    FontPickerModule
   ],
   declarations: [
     FocusDirective,
@@ -121,7 +125,12 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     DataTableColumnHeaderDirective,
     DataTableColumnCellDirective
   ],
-  providers:[],
+  providers: [
+    {
+      provide: FONT_PICKER_CONFIG,
+      useValue: DEFAULT_FONT_PICKER_CONFIG
+    }
+  ],
   exports:[
     FocusDirective,
     AgGridModule,
@@ -174,6 +183,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     SelectModule,
     TagInputModule,
     TextMaskModule,
+    FontPickerModule
   ]
 })
 export class ToolsModule { }
