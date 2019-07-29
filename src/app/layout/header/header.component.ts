@@ -153,6 +153,10 @@ export class HeaderComponent implements OnInit {
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, this.config);
   }
+
+  openModalInfo(template: TemplateRef<any>){
+    this.modalRef = this.modalService.show(template, this.config);
+  }
 }
 
 const renderActualizaciones = `
