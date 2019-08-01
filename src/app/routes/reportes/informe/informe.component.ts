@@ -250,30 +250,58 @@ GeneraEstatusBolsa(){
   ActivaCheck(valor){
     console.log(valor)
     if(valor == "Activos"){
-      document.getElementById("mat-option-3").click()
-      document.getElementById("mat-option-4").click()
-      document.getElementById("mat-option-5").click()
-      document.getElementById("mat-option-6").click()
-      document.getElementById("mat-option-7").click()
-      document.getElementById("mat-option-8").click()
-      document.getElementById("mat-option-9").click()
-      document.getElementById("mat-option-10").click()
-      document.getElementById("mat-option-11").click()
-      document.getElementById("mat-option-12").click()
+    
+     var stus4 = document.querySelectorAll("[name='namee4']")[0].id;
+     document.getElementById(stus4).click();
+      stus4 = document.querySelectorAll("[name='namee6']")[0].id;
+      document.getElementById(stus4).click();
+      stus4 = document.querySelectorAll("[name='namee7']")[0].id;
+      document.getElementById(stus4).click();
+      stus4 = document.querySelectorAll("[name='namee29']")[0].id;
+      document.getElementById(stus4).click();
+      stus4 = document.querySelectorAll("[name='namee30']")[0].id;
+      document.getElementById(stus4).click();
+      stus4 = document.querySelectorAll("[name='namee31']")[0].id;
+      document.getElementById(stus4).click();
+      stus4 = document.querySelectorAll("[name='namee32']")[0].id;
+      document.getElementById(stus4).click();
+      stus4 = document.querySelectorAll("[name='namee33']")[0].id;
+      document.getElementById(stus4).click();
+      stus4 = document.querySelectorAll("[name='namee38']")[0].id;
+      document.getElementById(stus4).click();
+      stus4 = document.querySelectorAll("[name='namee39']")[0].id;
+      document.getElementById(stus4).click();
+
     }else if(valor == "Cubiertos"){
-      document.getElementById("mat-option-13").click()
-      document.getElementById("mat-option-14").click()
-      document.getElementById("mat-option-15").click()
-      document.getElementById("mat-option-16").click()
-      document.getElementById("mat-option-17").click()
-      document.getElementById("mat-option-18").click()
+
+      var stus4 = document.querySelectorAll("[name='namee34']")[0].id
+      document.getElementById(stus4).click()
+       stus4 = document.querySelectorAll("[name='namee35']")[0].id;
+       document.getElementById(stus4).click();
+       stus4 = document.querySelectorAll("[name='namee36']")[0].id;
+       document.getElementById(stus4).click();
+       stus4 = document.querySelectorAll("[name='namee37']")[0].id;
+       document.getElementById(stus4).click();
+       stus4 = document.querySelectorAll("[name='namee47']")[0].id;
+       document.getElementById(stus4).click();
+       stus4 = document.querySelectorAll("[name='namee48']")[0].id;
+       document.getElementById(stus4).click();
+
     }else{
-      document.getElementById("mat-option-19").click()
-      document.getElementById("mat-option-20").click()
-      document.getElementById("mat-option-21").click()
-      document.getElementById("mat-option-22").click()
-      document.getElementById("mat-option-23").click()
-      document.getElementById("mat-option-24").click()
+
+      var stus4 = document.querySelectorAll("[name='namee8']")[0].id
+      document.getElementById(stus4).click()
+       stus4 = document.querySelectorAll("[name='namee9']")[0].id;
+       document.getElementById(stus4).click();
+       stus4 = document.querySelectorAll("[name='namee43']")[0].id;
+       document.getElementById(stus4).click();
+       stus4 = document.querySelectorAll("[name='namee44']")[0].id;
+       document.getElementById(stus4).click();
+       stus4 = document.querySelectorAll("[name='namee45']")[0].id;
+       document.getElementById(stus4).click();
+       stus4 = document.querySelectorAll("[name='namee46']")[0].id;
+       document.getElementById(stus4).click();
+      
     }
   }
  

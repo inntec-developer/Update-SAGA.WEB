@@ -3,17 +3,17 @@
 <div class="card box">
     <div class="card-body mat-elevation-z8">
       <div class="d-flex justify-content-between">
-        <label class="text-info"><strong>Candidatos</strong> </label>
+        <label class="text-info"><strong>seguimiento</strong> </label>
         <em class="icon-refresh em- text-success"
               (click)="ngOnInit()"></em>
       </div>
       <br>
       <div>
         <canvas id="captadoContratado"></canvas>
-        <br>
+        <!-- <br>
         <mat-divider></mat-divider>
         <small><span class="float-right"> Total de candidatos: <span
-              class="badge badge-info">{{contratado + captado}}</span></span></small>
+              class="badge badge-info">{{contratado + captado}}</span></span></small> -->
       </div>
     </div>
   </div>
@@ -30,7 +30,7 @@
 
 
 <!-- Modal para visualizar vacantes seleccionadas -->
-<div *ngIf="ShowModal" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #MessageModal="bs-modal" class="modal"
+<!-- <div *ngIf="ShowModal" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #MessageModal="bs-modal" class="modal"
   tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
   <div class="modal-dialog modal-lg reporteMod">
     <div class="modal-content">
@@ -44,4 +44,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
