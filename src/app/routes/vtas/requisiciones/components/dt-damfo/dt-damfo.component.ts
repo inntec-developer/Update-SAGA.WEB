@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { BodyOutputType, Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { DialogdamfoComponent } from '../dialogdamfo/dialogdamfo.component'
 import { MatDialog } from '@angular/material';
@@ -17,6 +17,7 @@ const swal = require('sweetalert');
   providers: [RequisicionesService]
 })
 export class DtDamfoComponent implements OnInit {
+  @Input('Perfil290') Perfil290: boolean;
   //scroll
   disabled = false;
   compact = false;
@@ -59,6 +60,7 @@ export class DtDamfoComponent implements OnInit {
     /** spinner starts on init */
     this.spinner.show();
     this.getDamfo290();
+    this.Perfil290 = this.Perfil290 || false;
   }
 
   ngAfterViewInit(): void {
@@ -240,7 +242,10 @@ export class DtDamfoComponent implements OnInit {
     if (this.element.horariosActivos === 0) {
       swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. No es posible visualizarlo.', 'error');
     } else if (this.damfoId) {
-      this._Router.navigate(['/ventas/visualizarDamfo290', this.damfoId], { skipLocationChange: true });
+      if(!this.Perfil290)
+        this._Router.navigate(['/ventas/visualizarDamfo290', this.damfoId], { skipLocationChange: true });
+      else
+        this._Router.navigate(['/ventas/visualizarDamfo290', this.damfoId, this.Perfil290], { skipLocationChange: true });
     }
   }
 
@@ -257,6 +262,14 @@ export class DtDamfoComponent implements OnInit {
         swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. No es posible generar la requisición', 'error');
       }
     }
+  }
+
+  crearPerfil290(){
+    this._Router.navigate(['/ventas/formato290'], {skipLocationChange: true});
+  }
+
+  editar290(){
+    this._Router.navigate(['/ventas/formato290', this.damfoId], {skipLocationChange: false});
   }
   /*
   * Creacion de mensajes

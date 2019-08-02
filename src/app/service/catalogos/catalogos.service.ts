@@ -68,6 +68,7 @@ export class CatalogosService {
   private UrlCatalogos = ApiConection.ServiceUrl + ApiConection.getCatalogosComplete;
   private UrlCatalogoCrud = ApiConection.ServiceUrl + ApiConection.postCatalogos;
   private UrlCatalogoFilter = ApiConection.ServiceUrl + ApiConection.FilterCatalogos;
+  private UrlGetCatalgoForId = ApiConection.ServiceUrl + ApiConection.GetCatalgoForId;
 
   constructor(private _httpClient: HttpClient, private http: Http) { }
 
@@ -253,5 +254,10 @@ return this._httpClient.get(this.UrlGetTipoDireccion, {headers: this.httpOptions
 
   EditCatalogo(): Observable<any> {
     return;
+  }
+
+  getCatalgoForId(IdCatalogo: any): Observable<any>{
+    const params = new HttpParams().set('IdCatalogo', IdCatalogo);
+    return this._httpClient.get<any>(this.UrlGetCatalgoForId, {params: params, headers: this.httpOptions.headers});
   }
 }

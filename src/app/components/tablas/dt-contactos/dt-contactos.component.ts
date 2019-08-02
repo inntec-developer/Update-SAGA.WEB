@@ -22,12 +22,13 @@ export class DtContactosComponent implements OnInit {
   }
 
   cargarContactos(data){
-    if(!this.getPhone){
+  //   if(!this.getPhone){
       this.rows =  data;
-      this.getPhone = true;
-    }
+    //   this.getPhone = true;
+    // }
   }
   public columns: Array<any> = [
+    {title: 'Dirección', className: 'text-success text-center'},
     {title: 'Nombre', className: 'text-info'},
     {title: 'Puesto', className: 'text-info'},
     {title: 'Teléfono', className: 'text-info'},

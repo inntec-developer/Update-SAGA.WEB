@@ -1,0 +1,18 @@
+<section>
+  <form [formGroup]="formEscolaridades">
+    <mat-form-field class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+      <mat-select placeholder="Escolaridad" formControlName="Escolaridad" required>
+        <mat-option *ngFor="let x of Escolaridades" [value]="x.id">
+          {{x.escolaridad}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="col-lg-6 col-md-6 col-sm -12 col-xs-12">
+      <mat-select placeholder="Nivel" formControlName="Nivel" required>
+        <mat-option *ngFor="let x of Niveles" [value]="x.id">
+          {{x.nivel}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</section>

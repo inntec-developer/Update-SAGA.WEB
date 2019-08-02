@@ -53,7 +53,6 @@ export class LoginComponent implements OnInit {
     public dialog: MatDialog,
     private _serviceSistem: CheckVertionSistemService) {
     this._serviceSistem.checkVertionSistem(settings.app.vertion).subscribe(result => {
-      debugger;
       if (result != 404) {
         this.Actualizado = result;
       }
@@ -81,7 +80,6 @@ export class LoginComponent implements OnInit {
   }
 
   actualizar() {
-    debugger;
     location.reload();
   }
 
@@ -172,6 +170,16 @@ export class LoginComponent implements OnInit {
       // });
     }
   }
+
+  complite(){
+    var email = this.valForm.controls['email'].value || '';
+    var indexOF = email.indexOf('@');
+    if(indexOF == -1 && email.length > 0){
+      this.valForm.controls['email'].setValue(email + '@' + this.settings.app.domain);
+    }
+  }
+
+
 }
 
 @Component({

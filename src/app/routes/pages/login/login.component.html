@@ -12,7 +12,7 @@
                 <form [formGroup]="valForm" class="form-validate mb-3" role="form" name="loginForm" novalidate="" (submit)="submitForm($event, valForm.value)">
                     <div class="form-group">
                         <div class="input-group with-focus">
-                            <input class="form-control border-right-0" id="email" type="email" name="email" placeholder="Correo electrónico" autocomplete="off" formControlName="email" required="" />
+                            <input class="form-control border-right-0" id="email" type="email" name="email" placeholder="Correo electrónico" autocomplete="off" formControlName="email" required="" (blur)="complite()" focus/>
                             <div class="input-group-append">
                                 <span class="input-group-text fa fa-envelope text-muted bg-transparent border-left-0"></span>
                             </div>

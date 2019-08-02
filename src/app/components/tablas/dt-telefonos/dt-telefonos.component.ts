@@ -1,4 +1,4 @@
-import { AfterContentChecked, Component, Input } from '@angular/core';
+import { AfterContentChecked, Component, Input, SimpleChanges } from '@angular/core';
 
 declare var $: any;
 @Component({
@@ -6,27 +6,35 @@ declare var $: any;
   templateUrl: './dt-telefonos.component.html',
   styleUrls: ['./dt-telefonos.component.scss']
 })
-export class DtTelefonosComponent implements AfterContentChecked {
+export class DtTelefonosComponent  {
   @Input() Telefonos: any[];
+  @Input() Perfil290: any;
   getPhone : boolean = false;
   public rows: Array<any> = [];
   rowAux = [];
   constructor() { }
-  
-  ngAfterContentChecked(){
-    if(this.Telefonos != null){
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.Perfil290 = this.Perfil290 || false;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes.Telefonos && !changes.Telefonos.isFirstChange()){
       this.cargarTelefonos(this.Telefonos);
     }
   }
 
   cargarTelefonos(data){
-    if(!this.getPhone){
+    // if(!this.getPhone){
       this.rows = data;
-      this.getPhone = true;
-    }
+    //   this.getPhone = true;
+    // }
   }
 
   public columns: Array<any> = [
+    {title: 'Dirección', className: 'text-success text-center'},
     {title: 'Tipo Teléfono', className: 'text-info text-center'},
     {title: 'Teléfono', className: 'text-info text-center'},
     {title: 'Extensión', className: 'text-info text-center'},

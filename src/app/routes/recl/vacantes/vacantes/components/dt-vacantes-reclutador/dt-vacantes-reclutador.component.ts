@@ -21,7 +21,8 @@ const swal = require('sweetalert');
   selector: 'app-dt-vacantes-reclutador',
   templateUrl: './dt-vacantes-reclutador.component.html',
   styleUrls: ['./dt-vacantes-reclutador.component.scss'],
-  
+  providers: [RequisicionesService, PostulateService, DatePipe, CandidatosService]
+
 })
 export class DtVacantesReclutadorComponent implements OnInit {
   @Output('Imprimir') EmImprimir: EventEmitter<any> = new EventEmitter<any>();

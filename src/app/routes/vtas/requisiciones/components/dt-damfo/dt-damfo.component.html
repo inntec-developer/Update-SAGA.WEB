@@ -2,23 +2,45 @@
   <div class="card-body mat-elevation-z8">
     <div class="row">
       <div class="col-sm-12 col-md-12 clearfix p-2 bg-light">
+        <button *ngIf="Perfil290" id="create" chkPrivilegiosButtons class="mr-2 btn btn-xs btn-info mat-elevation-z8"
+          container="body" placement="bottom" tooltip="Nuevo DAMFO-290" (click)="crearPerfil290()">
+          <em class="fa fa-plus"></em>
+        </button>
         <button id="view" chkPrivilegiosButtons (click)="showDamfo()" class="mr-2 btn btn-xs mat-elevation-z8"
           [disabled]="!selected" [ngClass]="(!selected) ? 'disabled' : 'btn-warning'" container="body"
           placement="bottom" tooltip="Visualizar">
-          <em class="fa fa-eye"></em></button>
-        <button id="view" chkPrivilegiosButtons (click)="openDialog()" class="mr-2 btn btn-xs mat-elevation-z8"
-          [disabled]="!selected" [ngClass]="(!selected) ? 'disabled' : 'btn-success'" container="body"
-          placement="bottom" tooltip="Crear Requisición">
-          <em class="icon-docs"></em></button>
-          <button container="body" placement="bottom" tooltip="Regresar"
+          <em class="fa fa-eye"></em>
+        </button>
+        <button id="create" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8" [disabled]="editar"
+          [ngClass]="!selected ? 'disabled' : 'btn-primary'" container="body" placement="bottom"
+          tooltip="Editar" (click)="editar290()">
+          <em class="icon-pencil"></em>
+        </button>
+        <button *ngIf="!Perfil290" id="view" chkPrivilegiosButtons (click)="openDialog()"
+          class="mr-2 btn btn-xs mat-elevation-z8" [disabled]="!selected"
+          [ngClass]="(!selected) ? 'disabled' : 'btn-success'" container="body" placement="bottom"
+          tooltip="Crear Requisición">
+          <em class="icon-docs"></em>
+        </button>
+        <button class="mr-2 btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="refreshTable()"
+          container="body" placement="bottom" tooltip="Actualizar">
+          <em class="icon-refresh"></em>
+        </button>
+        <button *ngIf="!Perfil290" container="body" placement="bottom" tooltip="Regresar"
           class="mr-2 btn btn-xs btn-warning float-right mat-elevation-z8" type="button"
           [routerLink]="['/ventas/requisicion']">
-          <em class="icon-action-undo"></em></button>
+          <em class="icon-action-undo"></em>
+        </button>
         <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
-           class="mr-2 btn btn-xs btn-info float-right mat-elevation-z8">
-          <em class="fa fa-eraser"></em></button>
+          class="mr-2 btn btn-xs btn-info float-right mat-elevation-z8">
+          <em class="fa fa-eraser"></em>
+        </button>
       </div>
+      <!-- <ng-template #NewPerfil290>
+        seccion para nuevos formatos 290
+      </ng-template> -->
     </div>
+
     <div class="row" #tableContainer>
       <div class="col-sm-12 col-md-12 table-responsive clearfix">
         <div>
@@ -73,7 +95,8 @@
         <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
           [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
           (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
-        <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}} Registros: {{registros}}</small></pre>
+        <pre *ngIf="config.paging"
+          class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}} Registros: {{registros}}</small></pre>
       </div>
     </div>
   </div>

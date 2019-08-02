@@ -259,6 +259,8 @@ export class RequisicionesService {
     return this._httpClient.get(this.URLExecProcedureVencidas);
   }
 
+
+
   GetReporte70(clave:string,ofc:string,tipo:string,fini:string,ffin:string,emp:string,
     sol:string,trcl:string,cor:string,stus:string,recl:string) : Observable<any> {
     return this._httpClient.get(this.URLGetReporte70 + '?clave='+clave+'&ofc='+ofc+'&tipo='+tipo+'&fini='+fini

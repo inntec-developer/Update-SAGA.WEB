@@ -67,6 +67,11 @@ export class ComponentsService {
   private UrlGetUnidadNegocioMX = ApiConection.ServiceUrl + ApiConection.getUnidadNegocioMx;
   private UrlGetRequiUnidadNegocio = ApiConection.ServiceUrl + ApiConection.getRequiUnidadNegocio;
 
+  // Validar Folio Reclutamiento Puro
+  private UrlCheckFolioPuro = ApiConection.ServiceUrl + ApiConection.CheckFolioPuro;
+  private UrlEnviarCorreFactPuro = ApiConection.ServiceUrl + ApiConection.EnviarCorreFactPuro;
+
+
   constructor(private _httpClient: HttpClient) { }
 
   getProductividad(data: any): Observable<any> {
@@ -218,6 +223,16 @@ export class ComponentsService {
   getRequiUnidadNegocio(data: any): Observable<any>{
     return this._httpClient.post<any>(this.UrlGetRequiUnidadNegocio, data, this.httpOptions )
     .map(result => result);
+  }
+
+  checkFolioPuro(folio: any):Observable<any>{
+    let params = new HttpParams().set('Folio', folio);
+    return this._httpClient.get(this.UrlCheckFolioPuro, {params: params, headers: this.httpOptions.headers})
+  }
+
+  enviarCorreFactPuro(Folio:any): Observable<any>{
+    let params = new HttpParams().set('folio', Folio);
+    return this._httpClient.get(this.UrlEnviarCorreFactPuro, {params: params, headers:  this.httpOptions.headers});
   }
 
 }

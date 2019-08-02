@@ -1,5 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -37,6 +38,9 @@ export class HeaderComponent implements OnInit {
   private subscription: Subscription;
   UserId: string;
 
+  Folio: string = '';
+  Puro: boolean;
+
   text = renderActualizaciones;
   disabled = false;
   compact = false;
@@ -49,7 +53,8 @@ export class HeaderComponent implements OnInit {
     public userblockService: UserblockService,
     public settings: SettingsService,
     public _service: ComponentsService,
-    private modalService: BsModalService) {
+    private modalService: BsModalService,
+    private toasterService: ToasterService) {
   }
 
   ngOnInit() {
@@ -154,9 +159,65 @@ export class HeaderComponent implements OnInit {
     this.modalRef = this.modalService.show(template, this.config);
   }
 
-  openModalInfo(template: TemplateRef<any>){
+  openModalInfo(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, this.config);
   }
+
+  enviarCorreFactPuro(){
+    this._service.enviarCorreFactPuro(this.Folio).subscribe(data => {
+      if(data == 202){
+        this.popToast('success', 'Enviar Correo ', 'Se ha notificado a las personas responsables y al área de facturación de reclutamiento puro folio '+this.Folio);
+        this.Folio = '';
+        this.Puro = false;
+      }
+      else{
+        this.popToast('error', 'Enviar Correo', 'Algo salio mal al intentar enviar los correos correspondientes');
+      }
+    });
+  }
+
+  checkfolio() {
+    if (this.Folio.length == 12) {
+      this._service.checkFolioPuro(this.Folio).subscribe(data => {
+        if (data == 202) {
+          this.Puro = true;
+        }
+        else if (data == 204) {
+          this.Puro = false;
+          this.popToast('error', 'Folio Reclutamiento', 'El Folio que está ingresando no es de Reclutamiento Puro, verifique la información para continuar.');
+        }
+        else {
+          this.popToast('error', 'Folio Reclutamiento', 'Algo salio mal al intentar validar la información del Folio');
+        }
+      });
+    }
+    else{
+      this.Puro = false;
+    }
+  }
+
+  /*
+  * Creacion de mensajes
+  * */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7, tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
+  popToast(type, title, body) {
+
+    var toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 5000,
+      body: body
+    }
+    this.toasterService.pop(toast);
+  }
+
 }
 
 const renderActualizaciones = `

@@ -1,0 +1,58 @@
+<form [formGroup]="formEncabezado">
+  <section>
+    <mat-form-field class="col-12">
+      <input matInput placeholder="Nombre del Puesto a Reclutar" formControlName="NombrePuesto">
+    </mat-form-field>
+  </section>
+  <section>
+    <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+      <mat-select placeholder="Sexo / Genero" formControlName="Genero" required>
+        <mat-option *ngFor="let x of Genero" [value]="x.id">
+          {{x.genero}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+      <input matInput #edadMinima type="number" placeholder="Edad Minima" min="16" formControlName="EdadMin">
+    </mat-form-field>
+    <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+      <input matInput #edadMaxima type="number" placeholder="Edad Maximar" min="{{edadMinima.value}}"
+        formControlName="EdadMax">
+    </mat-form-field>
+    <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+      <mat-select placeholder="Estado Civil" formControlName="EstadoCivil" required>
+        <mat-option *ngFor="let x of EstadoCivil" [value]="x.id">
+          {{x.estadoCivil}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </section>
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+      <app-perfil-escolaridades [IdFormato]="IdFormato">
+      </app-perfil-escolaridades>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+      <mat-form-field class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <mat-select #areaSelect placeholder="Área" formControlName="Area" required>
+          <br>
+          <mat-form-field class="col-6">
+            <input matInput #buscarAreas type="text" [(ngModel)]="buscarArea" [ngModelOptions]="{standalone: true}"
+              placeholder="Buscar" (keypress)="filterAreas()" (keydown)="filterAreas()">
+          </mat-form-field>
+          <mat-option *ngFor="let x of AreasAux" [value]="x.id">
+            {{x.areaExperiencia}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <mat-select placeholder="Contrato" formControlName="Contrato" required>
+          <mat-option *ngFor="let x of Contratos" [value]="x.id">
+            {{x.tipoContrato}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  {{areaSelect.value}}
+</form>

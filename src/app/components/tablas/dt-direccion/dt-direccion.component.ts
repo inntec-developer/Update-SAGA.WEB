@@ -8,11 +8,17 @@ declare var $: any;
 })
 export class DtDireccionComponent implements OnInit {
   @Input() Direcciones : any[];
-  getAddress : boolean = false;
+  @Input() Perfil290: boolean;
+  public getAddress : boolean = false;
   public rows: Array<any> = [];
+  public element: any = [];
+  public damfoId: any;
+  public rowAux = [];
+  public selected: boolean = false;
   constructor() { }
 
   ngOnInit() {
+    this.Perfil290 = this.Perfil290 || false;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -22,10 +28,10 @@ export class DtDireccionComponent implements OnInit {
   }
 
   cargarDirecciones(data){
-    if(!this.getAddress){
+    // if(!this.getAddress){
         this.rows = data;
-        this.getAddress = true;
-    }
+        // this.getAddress = true;
+    // }
   }
 
 
@@ -49,12 +55,27 @@ export class DtDireccionComponent implements OnInit {
   };
 
   public onCellClick(data: any): any {
+    let index = this.rows.indexOf(data.row);
+    this.element = data;
+    this.damfoId = data.id
     data.selected ? data.selected = false : data.selected = true;
-    /* add an class 'active' on click */
-    // $('#resultDataTable').on('click', 'tr', function (event: any) {
-    //     //noinspection TypeScriptUnresolvedFunction
-    //     $(this).addClass('selected').siblings().removeClass('selected');
-    // });
+
+    if (!data.selected) {
+      this.selected = false;
+    } else {
+      this.selected = true;
+    }
+
+    if (this.rowAux.length == 0) {
+      this.rowAux = data;
+    }
+    else if (data.selected && this.rowAux != []) {
+      var aux = data;
+      data = this.rowAux;
+      data.selected = false;
+      aux.selected = true;
+      this.rowAux = aux;
+    }
   }
 
 }

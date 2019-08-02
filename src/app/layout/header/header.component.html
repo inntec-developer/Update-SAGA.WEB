@@ -89,6 +89,11 @@
             </a>
         </li> -->
     <li *ngIf="tipoUsuario == '1'" class="nav-item">
+      <a class="nav-link" title="Correo Factuación Puro" (click)="openModal(SendEmail)">
+        <em class="fa fa-envelope"></em>
+      </a>
+    </li>
+    <li *ngIf="tipoUsuario == '1'" class="nav-item">
       <a class="nav-link" title="Jobs" [routerLink]="'/admin/jobPause'">
         <em class="fa fa-bolt"></em>
       </a>
@@ -227,7 +232,7 @@
 </ng-template>
 
 <ng-template #infosistem>
-  <div >
+  <div>
     <div class="modal-header">
       <h4 class="modal-title text-success">Acerca del Sistema</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
@@ -236,27 +241,29 @@
     </div>
     <div class="modal-body">
       <!-- <div class="contenAcerDe"> -->
-        <!-- <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="true" [compact]="compact"
+      <!-- <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="true" [compact]="compact"
           [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled"> -->
-          <span class="text-info-modal"><span class="text-info">¿Tienes dudas o sugerencias?</span> contactanos: <strong class="text-warning">
-              {{settings.app.email }}</strong></span>
-          <br>
-          <p><img src="assets/img/Inntec/inntec_logo.png" alt="Random slide" class="img-logo"></p>
-          <br>
-        <!-- </ng-scrollbar> -->
+      <span class="text-info-modal"><span class="text-info">¿Tienes dudas o sugerencias?</span> contactanos: <strong
+          class="text-warning">
+          {{settings.app.email }}</strong></span>
+      <br>
+      <p><img src="assets/img/Inntec/logo_inntec.png" alt="Random slide" class="img-logo"></p>
+      <p><img src="assets/img/Inntec/logo_saga.png" alt="Random slide" class="img-logo"></p>
+      <br>
+      <!-- </ng-scrollbar> -->
       <!-- </div> -->
     </div>
     <!-- Footer -->
     <footer>
       <!-- Copyright -->
       <div class="text-center footer-modl-sistem">
-          <span>&copy;</span>
-          <span>{{ settings.app.year }}</span>
-          <span class="mx-2">-</span>
-          <span>{{ settings.app.name }}</span>
-          <span>{{ settings.app.vertion }}</span>
-          <span class="mx-2">-</span>
-          <span>{{ settings.app.environment }}</span>
+        <span>&copy;</span>
+        <span>{{ settings.app.year }}</span>
+        <span class="mx-2">-</span>
+        <span>{{ settings.app.name }}</span>
+        <span>{{ settings.app.vertion }}</span>
+        <span class="mx-2">-</span>
+        <span>{{ settings.app.environment }}</span>
       </div>
       <!-- Copyright -->
 
@@ -268,3 +275,37 @@
     </div> -->
   </div>
 </ng-template>
+
+<ng-template #SendEmail>
+  <div class="modal-header">
+    <h4 class="modal-title text-warning">Enviar Correo Electr&oacute;nico Facturaci&oacute;n</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true" class="text-danger">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <mat-form-field>
+      <input matInput #folio placeholder="Folio"
+      [(ngModel)]="Folio"
+      (keyup)="checkfolio()"
+      value="Sushi"
+      maxlength="12"
+      minlength="12"
+      required="">
+      <mat-hint align="start"><strong>Ingrese el n&uacute;mero de Folio del Reclutamiento Puro</strong> </mat-hint>
+      <mat-hint align="end">{{folio.value.length}} / 12</mat-hint>
+    </mat-form-field>
+  </div>
+  <div class="modal-footer">
+    <button type="button" [disabled]="!Puro"
+    [ngClass]="(!Puro) ? 'disabled' : 'btn-success'"
+    class="btn md-1 btn-xs mat-elevation-z8" (click)="modalRef.hide(); enviarCorreFactPuro()">
+      Enviar Correo
+    </button>
+  </div>
+</ng-template>
+
+
+
+<!-- Mensajes del Sistema -->
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>

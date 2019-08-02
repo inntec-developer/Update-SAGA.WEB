@@ -1,0 +1,24 @@
+<div class="content-heading" *ngIf="!imprimir">
+  <div>
+    DAM-FO-290
+    <!-- <span class="text-sm d-none d-sm-block">DAM-FO-290</span> -->
+  </div>
+  <!-- Breadcrumb right aligned-->
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item ">
+      <a [routerLink]="['/home']">Inicio</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a [routerLink]="['/reclutamiento/290']">Prefil Reclutamiento</a>
+    </li>
+    <li class="breadcrumb-item active">Formato DAMFO-290</li>
+  </ol>
+</div>
+<tabset [justified]="true">
+  <tab heading="Cliente" id="TapCliente">
+    <app-formato-cliente [IdFormato]="IdFormato"></app-formato-cliente>
+  </tab>
+  <tab heading="Requisitos" id="TapRequisitos">
+    <app-formato-requisitos [IdFormato]="IdFormato"></app-formato-requisitos>
+  </tab>
+</tabset>

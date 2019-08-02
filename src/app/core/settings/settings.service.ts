@@ -41,7 +41,8 @@ export class SettingsService {
             description: 'Sistema Administrativo de Gestión Avanzada',
             year: ((new Date()).getFullYear()),
             prefijo: 'DAL',
-            email: '  inntec@damsa.com.mx'
+            email: 'inntec@damsa.com.mx',
+            domain: 'damsa.com.mx'
         };
 
         // Layout Settings

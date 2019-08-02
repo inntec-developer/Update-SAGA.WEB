@@ -1,0 +1,31 @@
+// .example-form {
+//   min-width: 150px;
+//   max-width: 500px;
+//   width: 100%;
+// }
+
+// .example-full-width {
+//   width: 100%;
+// }
+
+.option-container {
+  height: max-content !important;
+}
+.razonSocial{
+  margin-top: 5px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 12px;
+}
+.more-option{
+  margin-top: -35px;
+  padding: 0 20px 0;
+  display: block !important;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 10px;
+}
+
+.mat-input-element:disabled{
+  color: orangered !important;
+  font-size: 12px !important;
+}
+

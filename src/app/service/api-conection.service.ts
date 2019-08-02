@@ -112,8 +112,9 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static PublicarNuevaRequisicion = 'Requisiciones/publicarNuevaRequi'
   public static AddDatosFactura = 'Requisiciones/insertDtosFactura';
   public static GetReporte70 = 'Requisiciones/getReporte70';
-  public static GetRepoteCandidatos = 'Candidatos/getRPTCandidatosVacante'
-  public static GetRequisPendientes = 'Requisiciones/getRequisPendientes'
+  public static GetRepoteCandidatos = 'Candidatos/getRPTCandidatosVacante';
+  public static GetRequisPendientes = 'Requisiciones/getRequisPendientes';
+
 
   /* Clientes / Prospectos */
   public static GetProspectos = 'Directorio/getProspectos';
@@ -408,8 +409,17 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static getCatalogosComplete = 'Catalogos/getCatalogosComplete';
   public static postCatalogos = 'Catalogos/postCatalogo';
   public static FilterCatalogos = 'Catalogos/FilterCatalogo';
+  public static GetCatalgoForId = 'Catalogos/getCatalgoForId';
 
   /* Show Vacantes Emails */
   public static showVacantesEmails = 'VacantesEmail/ShowVacanteEmail';
 
+  /*Reenviar correo al departamento de Facturación PURO */
+  public static CheckFolioPuro = 'Correo/checkFolioPuro';
+  public static EnviarCorreFactPuro = 'Correo/enviarCorreFactPuro';
+
+  /*Perfil de Reclutamiento */
+  public static GetClientePerfilR = 'PerfilReclutamiento/getCliente';
+  public static GetInfoCliente = 'PerfilReclutamiento/getInfoCliente';
+  public static GetClienteId = 'PerfilReclutamiento/getClienteId'
 }

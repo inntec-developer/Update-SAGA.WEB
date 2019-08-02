@@ -13,6 +13,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let row of rows" [class.selected]="row.selected" (click)="onCellClick(row)">
+        <td class="text-center">{{row.calle}}</td>
         <td class="text-center"> {{row.tipo | uppercase}}</td>
         <td class="text-center"> {{row.clavePais}} - {{row.claveLada}} - {{row.telefono}}</td>
         <td class="text-center"> {{row.extension}}</td>
@@ -21,15 +22,15 @@
             <small class="badge badge-pill badge-success text-white text-center"><em class="fa fa-check"></em></small>
           </span>
           <span *ngIf="!row.activo">
-              <small class="badge badge-pill badge-warning text-white text-center"><em class="fa fa-close"></em></small>
+            <small class="badge badge-pill badge-warning text-white text-center"><em class="fa fa-close"></em></small>
           </span>
         </td>
         <td class="text-center">
           <span *ngIf="row.esPrincipal">
-              <small class="badge badge-pill badge-success text-white text-center"><em class="fa fa-check"></em></small>
+            <small class="badge badge-pill badge-success text-white text-center"><em class="fa fa-check"></em></small>
           </span>
           <span *ngIf="!row.esPrincipal">
-              <small class="badge badge-pill badge-warning text-white text-center"><em class="fa fa-close"></em></small>
+            <small class="badge badge-pill badge-warning text-white text-center"><em class="fa fa-close"></em></small>
           </span>
         </td>
       </tr>

@@ -19,7 +19,8 @@ import { SettingsService } from '../../../../../core/settings/settings.service';
 export class ViewdamfoComponent implements OnInit {
 
   @ViewChild('content') content: ElementRef;
-  // Formularios
+
+  public Perfil290: boolean;
 
   //Variables
   public damfoId: string;
@@ -68,6 +69,7 @@ export class ViewdamfoComponent implements OnInit {
     this._Route.params.subscribe(params => {
       if (params['IdDamfo'] != null) {
         this.damfoId = params['IdDamfo'];
+        this.Perfil290 = params['Perfil290'] || false;
       } else {
         this.popToast('error', 'Nueva Requisicion', 'Error al intentar notificar por medio de correo electrónico la creación de la requisición.');
         this._Router.navigate(['/ventas/crearRequisicion']);
@@ -92,6 +94,19 @@ export class ViewdamfoComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
     });
+  }
+
+  return(){
+    if(!this.Perfil290){
+      this._Router.navigate(['/ventas/crearRequisicion']);
+    }
+    else{
+      this._Router.navigate(['/reclutamiento/290']);
+    }
+  }
+
+  editFormato(){
+    this._Router.navigate(['/ventas/formato290', this.damfoId], { skipLocationChange: true })
   }
 
 

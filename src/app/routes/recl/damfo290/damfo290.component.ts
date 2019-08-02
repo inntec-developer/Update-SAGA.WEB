@@ -13,13 +13,15 @@ import { SettingsService } from '../../../core/settings/settings.service';
 
 export class Damfo290Component implements OnInit {
   public URL: string;
+  public Perfil290: boolean;
   private UrlFormato = ApiConection.ServicioUrl290
   constructor(
     private settings : SettingsService
   ) { }
 
   ngOnInit(){
-    this.goToDamfo();
+    this.Perfil290 = true;
+    // this.goToDamfo();
   }
 
   goToDamfo(){
