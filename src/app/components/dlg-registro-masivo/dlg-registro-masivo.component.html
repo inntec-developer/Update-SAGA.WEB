@@ -123,12 +123,12 @@
                         </button>
 
                 <button container="body" placement="bottom" tooltip="Guardar cambios"
-                [disabled]="f.invalid || edad < 18 || model.options == 0 || modelOpc.options == 0 || rowIndex == -1 || email.length == 0 || txtPhone.length == 0" type="button"
-                [ngClass]="f.invalid || edad < 18 || model.options == 0 || modelOpc.options == 0 || rowIndex == -1 || email.length == 0 || txtPhone.length == 0 ? 'disabled' : 'btn-warning'" class="btn btn-xs float-right ml-1" (click)="EditarCandidato()">
+                [disabled]="f.invalid || edad < 18 || model.options == '0' || modelOpc.options == '0' || rowIndex == -1 || email.length == 0 || txtPhone.length == 0" type="button"
+                [ngClass]="f.invalid || edad < 18 || model.options == '0' || modelOpc.options == '0' || rowIndex == -1 || email.length == 0 || txtPhone.length == 0 ? 'disabled' : 'btn-warning'" class="btn btn-xs float-right ml-1" (click)="EditarCandidato()">
                     <i class="fa fa-floppy-o" aria-hidden="true"></i>
         </button>
-                <button [disabled]="f.invalid || edad < 18 || model.options == 0 || modelOpc.options == 0 || rowIndex != -1 || email.length == 0 || txtPhone.length == 0" 
-                type="button" [ngClass]="f.invalid || edad < 18 || model.options == 0 || modelOpc.options == 0 || rowIndex != -1 || email.length == 0 || txtPhone.length == 0 ? 'disabled' : 'btn-success'" class="btn btn-xs float-right" (click)="AgregarCandidato()">
+                <button [disabled]="f.invalid || edad < 18 || model.options == '0' || modelOpc.options == '0' || rowIndex != -1 || email.length == 0 || txtPhone.length == 0" 
+                type="button" [ngClass]="f.invalid || edad < 18 || model.options == '0' || modelOpc.options == '0' || rowIndex != -1 || email.length == 0 || txtPhone.length == 0 ? 'disabled' : 'btn-success'" class="btn btn-xs float-right" (click)="AgregarCandidato()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                 </button>
             </div>

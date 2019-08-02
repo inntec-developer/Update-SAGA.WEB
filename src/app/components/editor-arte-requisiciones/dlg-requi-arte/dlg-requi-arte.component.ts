@@ -9,6 +9,12 @@ import { MatDialogRef } from '@angular/material';
 })
 export class DlgRequiArteComponent implements OnInit {
 
+  public disabled = false;
+  public compact = false;
+  public invertX = true;
+  public invertY = true;
+  public shown = 'hover';
+  
   requisiciones = [];
   filterData: any[] = [];
   constructor(private _service: SistTicketsService, private dialog : MatDialogRef<DlgRequiArteComponent>) { }
