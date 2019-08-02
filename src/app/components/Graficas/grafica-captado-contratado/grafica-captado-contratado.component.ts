@@ -52,12 +52,12 @@ export class GraficaCaptadoContratadoComponent implements OnInit {
          }, {
            label: "Enviados",
            backgroundColor: "#3cba9f",
-           data: Ocub
+           data: Opunta
          }
          , {
            label: "Cubiertos",
            backgroundColor: "#0FFF5B",
-           data: Opunta
+           data: Ocub
          }
        ]
      }

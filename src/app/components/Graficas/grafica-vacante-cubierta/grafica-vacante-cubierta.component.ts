@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-
+import { Observable } from "rxjs/Observable";
 import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
 import { DataTableModule } from 'primeng/primeng';
 import { SettingsService } from '../../../core/settings/settings.service';
+declare var $: any;
 
 @Component({
   selector: 'app-grafica-vacante-cubierta',
@@ -30,80 +31,170 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
   
   ngOnInit() {
     this.UsuarioId = this.settings.user['id'];
+    var Onombre = [];
+     var Ocubierta = [];
+     var Omedios = [];
+     var Oparcial = [];
+     var Ocliente = [];
+     var Operacion = [];
+     var Opromo = [];
+     var Opostotal = [];
+     var Ocubiertotal = [];
     this._ServiceComponente.getVCubierta(this.UsuarioId).subscribe(result => {
 
-      let cubiertas = result['cubiertas'];
-      let parcialmente = result['parcialmente'];
-      let medios = result['medios'];
-      let cubiertacliente = result['cubiertacliente'];
-      let promocion = result['promocion'];
-      let opera = result['opera'];
-
-
-
+      result.forEach(item2 => {
+        Onombre.push(item2.nombre)
+        Ocubierta.push(item2.cubierta)
+        Omedios.push(item2.medios)
+        Oparcial.push(item2.parcial)
+        Ocliente.push(item2.cliente)
+        Operacion.push(item2.operacion)
+        Opromo.push(item2.promo)
+        Opostotal.push(item2.possicion)
+        Ocubiertotal.push(item2.Totalcubierta)
+       });
     // Chart.defaults.scale.ticks.beginAtZero = true;
     document.oncontextmenu=null
-  this.NumeroVacantes = result['total'];
-  this.TotalVacantes = result['total'];
-  this.Data = {
-    datasets: [{
-      backgroundColor: [
-        '#3F3CFF',
-        '#F335FF',
-        '#C5FF60',
-        '#FF4B4B',
-        '#f7f707',
-        '#30d356',
-         ],
-      data: [cubiertas,
-            parcialmente,
-            medios,
-            cubiertacliente,
-            promocion,
-            opera
-          ]
-    }],
-    // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: [
-      'Cubiertas',
-      'Parcialmente',
-      'Por Medios',
-      'Por el Cliente',
-      'Promocion Interna',
-      'Operaciones'
-    ]
-  }
 
     this.Chart = new Chart('canvas', {
-      type: 'pie',
-      title: { text: 'Seguimiento de Vacantes' },
-      data: this.Data,
-      options: {
-        onClick: this.detectedClick.bind(this),
-        legend: {
-          position: 'right',
-          display: true,
-          labels:{
-            fontSize: 9,
-            boxWidth: 10,
-            usePointStyle: true,
-            padding: 3
-          }
-        },
+      type: 'bar',
+  data: {
+    labels: Onombre,
+    datasets: [{
+        label: 'Cubierto',
+        data: Ocubierta,
+        backgroundColor: [
+          '#0F3CFF',
+          '#0F3CFF',
+          '#0F3CFF',
+          '#0F3CFF',
+          '#0F3CFF',
+          '#0F3CFF',
+          '#0F3CFF'
+        ],
+        borderWidth: 2
+      },
+      {
+        label: 'Medios',
+        data: Omedios,
+        backgroundColor: [
+          '#FF8F35',
+          '#FF8F35',
+          '#FF8F35',
+          '#FF8F35',
+          '#FF8F35',
+          '#FF8F35',
+          '#FF8F35'
+        ],
+        borderWidth: 2
+      },
+      {
+        label: 'Parcial',
+        data: Oparcial,
+        backgroundColor: [
+          '#3cba9f',
+          '#3cba9f',
+          '#3cba9f',
+          '#3cba9f',
+          '#3cba9f',
+          '#3cba9f',
+          '#3cba9f'
+        ],
+        borderWidth: 2
+      },
+      {
+        label: 'Cliente',
+        data: Ocliente,
+        backgroundColor: [
+          '#0FFF5B',
+          '#0FFF5B',
+          '#0FFF5B',
+          '#0FFF5B',
+          '#0FFF5B',
+          '#0FFF5B',
+          '#0FFF5B'
+        ],
+        borderWidth: 2
+      },
+      {
+        label: 'Operacion',
+        data: Operacion,
+        backgroundColor: [
+          '#C560FF',
+          '#C560FF',
+          '#C560FF',
+          '#C560FF',
+          '#C560FF',
+          '#C560FF',
+          '#C560FF'
+        ],
+        borderWidth: 2
+      },
+      {
+        label: 'Promocion',
+        data: Opromo,
+        backgroundColor: [
+          '#FF49A3',
+          '#FF49A3',
+          '#FF49A3',
+          '#FF49A3',
+          '#FF49A3',
+          '#FF49A3',
+          '#FF49A3'
+        ],
+        borderWidth: 2
       }
+    ]
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        stacked: true,
+        ticks: {
+          beginAtZero: true
+        }
+      }],
+      xAxes: [{
+        stacked: true,
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+
+    },
+    legend: {
+      position: 'right',
+      display: true,
+      labels:{
+        fontSize: 9,
+        boxWidth: 10,
+        usePointStyle: true,
+        padding: 3
+      }
+    },
+  }
     });
+
+
+
 
   });
   }
 
-  detectedClick(evt: any) {
-    let ActivatEvent = this.Chart.getElementAtEvent(evt);
-    if (ActivatEvent[0]) {
-      var chartData = ActivatEvent[0]['_chart'].config.data;
-      var idx = ActivatEvent[0]['_index'];
-      this.EstadoVacante = chartData.labels[idx];
-      this.NumeroVacantes = chartData.datasets[0].data[idx];
-      this.ShowModal = true;
-    }
-  }
+  // detectedClick(evt: any) {
+  //   let ActivatEvent = this.Chart.getElementAtEvent(evt);
+  //   if (ActivatEvent[0]) {
+  //     var chartData = ActivatEvent[0]['_chart'].config.data;
+  //     var idx = ActivatEvent[0]['_index'];
+  //     this.EstadoVacante = chartData.labels[idx];
+  //     this.NumeroVacantes = chartData.datasets[0].data[idx];
+  //     this.ShowModal = true;
+  //   }
+  // }
+
+
+
+
+
+
 }
