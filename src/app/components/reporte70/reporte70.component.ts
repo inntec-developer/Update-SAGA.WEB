@@ -321,9 +321,9 @@ public refreshTable() {
           comentariosRecl = "";
         }
 
-        if(row.reclutadores.length == 0)
+        if(!Array.isArray(row.reclutadores))
         {
-          reclutador = row.propietario;
+          reclutador = "SIN ASIGNAR";
         }
         else if(row.reclutadores.length > 1)
         {

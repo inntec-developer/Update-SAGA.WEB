@@ -314,7 +314,7 @@
 </div>
 
 <!-- Modal para reporte -->
-<div *ngIf="historial" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #MessageModal="bs-modal"
+<div *ngIf="historial" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #MessageModal="bs-modal" data-keyboard="false"
   class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -331,7 +331,7 @@
 </div>
 
 <!--Editar estatus-->
-<div *ngIf="editarRequi" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal2="bs-modal"
+<div *ngIf="editarRequi" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #lgModal2="bs-modal"
   class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -354,7 +354,7 @@
 </div>
 
 <!--Editar estatus candidatos-->
-<div *ngIf="editarNR" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal3="bs-modal"
+<div *ngIf="editarNR" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #lgModal3="bs-modal"
   class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -377,7 +377,7 @@
 
 
 <!--Informe vacantes-->
-<div *ngIf="informeVacante" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #lgModal4="bs-modal"
+<div *ngIf="informeVacante" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #lgModal4="bs-modal"
   class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-lg long">
     <div class="modal-content">
@@ -397,7 +397,7 @@
 </div>
 
 <!-- Modal para candidatos en proceso -->
-<div *ngIf="procesoCandidato" [config]="{ show: true, ignoreBackdropClick: true }" bsModal #MessageModal="bs-modal"
+<div *ngIf="procesoCandidato" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #MessageModal="bs-modal"
   class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
   <div class="modal-dialog modal-lg reporteMod">
     <div class="modal-content">

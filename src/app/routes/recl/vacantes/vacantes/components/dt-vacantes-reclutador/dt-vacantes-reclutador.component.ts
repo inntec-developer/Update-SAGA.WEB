@@ -854,7 +854,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
         // var mocos = (d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString()
         var e = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
 
-        if (row.reclutadores.length == 0) {
+        if (!Array.isArray(row.reclutadores) ){
           reclutador = "SIN ASIGNAR";
         }
         else if (row.reclutadores.length > 1) {

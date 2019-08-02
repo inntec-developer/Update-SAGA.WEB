@@ -774,7 +774,7 @@ export class DtRequisicionComponent implements OnInit {
           comentarios = "";
         }
 
-        if(row.reclutadores.length == 0)
+        if(!Array.isArray(row.reclutadores))
         {
           reclutador = "SIN ASIGNAR";
         }
