@@ -25,6 +25,9 @@ export class IndicadorPosicionesActivasComponent implements OnInit {
   public NoCubiertos: number = 0;
   public user: any;
 
+  public NumeroVacantes: number;
+  public EstadoVacante: string;
+  public ShowModal: boolean;
 
   ngOnInit() {
     Chart.defaults.scale.ticks.beginAtZero = true;
@@ -57,6 +60,7 @@ export class IndicadorPosicionesActivasComponent implements OnInit {
         type: 'pie',
         data: this.Data,
         options: {
+          onClick: this.detectedClick.bind(this),
           hoverBorderColor: '#00000',
           responsive: true,
           animation: {
@@ -104,4 +108,17 @@ export class IndicadorPosicionesActivasComponent implements OnInit {
       this.ChangePosiciones.emit(this.RegistrosT);
     });
   }
+
+
+  detectedClick(evt: any) {
+    let ActivatEvent = this.Chart.getElementAtEvent(evt);
+    if (ActivatEvent[0]) {
+      var chartData = ActivatEvent[0]['_chart'].config.data;
+      var idx = ActivatEvent[0]['_index'];
+      this.EstadoVacante = chartData.labels[idx];
+      this.NumeroVacantes = chartData.datasets[0].data[idx];
+      this.ShowModal = true;
+    }
+  }
+
 }
