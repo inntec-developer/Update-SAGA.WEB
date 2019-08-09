@@ -1,55 +1,62 @@
 <form [formGroup]="formCliente">
-  <mat-form-field class="col-12">
-    <input type="text" placeholder="Razon Social" aria-label="Number" matInput formControlName="RazonSocial"
-      [matAutocomplete]="cliente" (keyup.enter)="filter()" required="" />
-    <mat-autocomplete #cliente="matAutocomplete" (optionSelected)="selected($event)">
-      <mat-option *ngFor="let option of AuxOptions" [value]="option.razonSocial" class="option-container">
-        <span class="razonSocial"><strong>{{option.razonSocial | uppercase}}</strong></span>
-        <span class="more-option"><strong class="text-info">RFC: </strong><span
-            class="text-warning">{{option.rfc | uppercase}}</span></span>
-        <span class="more-option"><strong class="text-info">Nombre Comercial: </strong><span
-            class="text-warning">{{option.nombrecomercial | uppercase}}</span></span>
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-  <mat-form-field class="col-6">
-    <input matInput placeholder="Nombre Comercial" formControlName="NombreComercial">
-  </mat-form-field>
-  <mat-form-field class="col-6">
-    <input matInput placeholder="RFC" formControlName="RFC">
-  </mat-form-field>
-
-  <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-    <input matInput placeholder="Giro de la Empresa" formControlName="Giro">
-  </mat-form-field>
-  <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-    <input matInput placeholder="Actividad de la Empresa" formControlName="Actividad">
-  </mat-form-field>
-  <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-    <mat-select placeholder="Tipo Reclutamiento" formControlName="Tipo" required>
-      <mat-option *ngFor="let x of TiposReclutamientos" [value]="x.id">
-        {{x.tipoReclutamiento}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-    <mat-select placeholder="Coordinación" formControlName="Clase" required>
-      <mat-option *ngFor="let x of ClasesReclutamientos" [value]="x.id">
-        {{x.calsesReclutamiento}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
+  <section #ClienteSection class="row">
+    <mat-form-field class="col-12">
+      <input type="text" placeholder="Razon Social" aria-label="Number" matInput formControlName="RazonSocial"
+        [matAutocomplete]="cliente" (keyup.enter)="filter()" required="" />
+      <mat-autocomplete #cliente="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let option of AuxOptions" [value]="option.razonSocial" class="option-container">
+          <span class="razonSocial"><strong>{{option.razonSocial | uppercase}}</strong></span>
+          <span class="more-option"><strong class="text-info">RFC: </strong><span
+              class="text-warning">{{option.rfc | uppercase}}</span></span>
+          <span class="more-option"><strong class="text-info">Nombre Comercial: </strong><span
+              class="text-warning">{{option.nombrecomercial | uppercase}}</span></span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </section>
+  <section #InfoFiscalSection class="row">
+    <mat-form-field class="col-6">
+      <input matInput placeholder="Nombre Comercial" formControlName="NombreComercial">
+    </mat-form-field>
+    <mat-form-field class="col-6">
+      <input matInput placeholder="RFC" formControlName="RFC">
+    </mat-form-field>
+  </section>
+  <section #InfoClienteSection class="row">
+    <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+      <input matInput placeholder="Giro de la Empresa" formControlName="Giro">
+    </mat-form-field>
+    <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+      <input matInput placeholder="Actividad de la Empresa" formControlName="Actividad">
+    </mat-form-field>
+    <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+      <mat-select placeholder="Tipo Reclutamiento" formControlName="Tipo" required>
+        <mat-option *ngFor="let x of TiposReclutamientos" [value]="x.id">
+          {{x.tipoReclutamiento}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+      <mat-select placeholder="Coordinación" formControlName="Clase" required>
+        <mat-option *ngFor="let x of ClasesReclutamientos" [value]="x.id">
+          {{x.calsesReclutamiento}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </section>
 </form>
-<div class="col-12">
-  <app-dt-direccion class="col-12" [Direcciones]="Direcciones" [Perfil290]="isPerfilReclutamiento"></app-dt-direccion>
-</div>
-<div class="col-12">
-  <app-dt-telefonos class="col-8" [Telefonos]="Telefonos" [Perfil290]="isPerfilReclutamiento"></app-dt-telefonos>
-</div>
-<div class="col-12">
-  <app-dt-contactos class="col-12" [Contactos]="Contactos"></app-dt-contactos>
-</div>
+<section #infoAdiSection class="row">
+  <div class="col-12">
+    <app-dt-direccion class="col-12" [Direcciones]="Direcciones" [Perfil290]="isPerfilReclutamiento"></app-dt-direccion>
+  </div>
+  <div class="col-12">
+    <app-dt-telefonos class="col-8" [Telefonos]="Telefonos" [Perfil290]="isPerfilReclutamiento"></app-dt-telefonos>
+  </div>
+  <div class="col-12">
+    <app-dt-contactos class="col-12" [Contactos]="Contactos"></app-dt-contactos>
+  </div>
+</section>
+
 
 <!-- mensajes del sistema  -->
 <toaster-container [toasterconfig]="toasterconfig"></toaster-container>

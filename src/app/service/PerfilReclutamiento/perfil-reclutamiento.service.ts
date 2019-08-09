@@ -26,6 +26,11 @@ export class PerfilReclutamientoService {
   private urlGetCliente = ApiConection.ServiceUrl + ApiConection.GetClientePerfilR;
   private urlGetInfoCliente = ApiConection.ServiceUrl + ApiConection.GetInfoCliente;
   private urlGetClienteId = ApiConection.ServiceUrl + ApiConection.GetClienteId;
+  private urlGetInfoPerfil = ApiConection.ServiceUrl + ApiConection.GetInfoPerfil;
+
+  private urlAddEscolaridad = ApiConection.ServiceUrl + ApiConection.AddEscolaridad;
+  private urlEditEscolaridad = ApiConection.ServiceUrl + ApiConection.EditEscolaridad;
+  public urlDeleteEscolaridad = ApiConection.ServiceUrl + ApiConection.DeleteEscolaridad;
 
   constructor(
     private _httpClient: HttpClient
@@ -46,5 +51,20 @@ export class PerfilReclutamientoService {
     return this._httpClient.get<any>(this.urlGetClienteId, { params: params, headers: this.httpOptions.headers });
   }
 
+  getInfoPerfil(perfilId: any){
+    const params = new HttpParams().set('PerfilId', perfilId);
+    return this._httpClient.get<any>(this.urlGetInfoPerfil, {params: params, headers: this.httpOptions.headers});
+  }
 
+  addEscolaridad(data: any){
+    return this._httpClient.post<any>(this.urlAddEscolaridad, data, this.httpOptions);
+  }
+
+  editEscolaridad(data: any){
+    return this._httpClient.post<any>(this.urlEditEscolaridad, data, this.httpOptions);
+  }
+
+  deleteEscolaridad(data: any){
+    return this._httpClient.post<any>(this.urlDeleteEscolaridad, data, this.httpOptions);
+  }
 }

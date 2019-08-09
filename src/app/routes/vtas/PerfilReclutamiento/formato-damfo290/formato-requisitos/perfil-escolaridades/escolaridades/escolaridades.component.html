@@ -1,0 +1,38 @@
+<div class="contaier">
+  <form [formGroup]="escolaridad" id="index">
+    <section [hidden]="!Edit">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="row">
+          <mat-form-field class="col-4">
+            <mat-select #t1 placeholder="Escolaridad" formControlName="escolaridadId"
+              (selectionChange)="getEscolaridad()" required>
+              <mat-option *ngFor="let x of Escolaridades" [value]="x.id">
+                {{x.gradoEstudio}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="col-4">
+            <mat-select #t2 placeholder="Nivel" formControlName="nivelId" (selectionChange)="getNivel()" required>
+              <mat-option *ngFor="let x of Niveles" [value]="x.id">
+                {{x.nivel}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <section class="col-4">
+            <em class="fa fa-close text-danger em-button float-left" (click)="Remove()"></em>
+            <em class="fa fa-check text-success em-button float-left" (click)="Save()" *ngIf="escolaridad.valid"></em>
+          </section>
+        </div>
+      </div>
+    </section>
+    <div [hidden]="Edit" class="col-12">
+      <strong>Escolaridad: </strong> <label class="text-warning">{{Escolaridad}} </label> -
+      <strong>Nivel: </strong><label class="text-warning">{{Nivel}}</label>
+      <em class="fa fa-pencil text-info" (click)="OnEdit(); Edit = true"></em>
+      <em class="fa fa-close text-danger em-button" (click)="Remove()"></em>
+      <alert [type]="TypeAlert" [hidden]="ShowAlert == false">
+        <strong>{{MsgAlert}}</strong>
+      </alert>
+    </div>
+  </form>
+</div>

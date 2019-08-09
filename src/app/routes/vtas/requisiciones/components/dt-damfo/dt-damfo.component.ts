@@ -44,6 +44,8 @@ export class DtDamfoComponent implements OnInit {
   rowAux = [];
   selected: boolean = false;
 
+  editar
+
   constructor(
     private service: RequisicionesService,
     private dialog: MatDialog,

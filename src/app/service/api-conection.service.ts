@@ -409,7 +409,7 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static getCatalogosComplete = 'Catalogos/getCatalogosComplete';
   public static postCatalogos = 'Catalogos/postCatalogo';
   public static FilterCatalogos = 'Catalogos/FilterCatalogo';
-  public static GetCatalgoForId = 'Catalogos/getCatalgoForId';
+  public static GetCatalogoForId = 'Catalogos/getCatalogoForId';
 
   /* Show Vacantes Emails */
   public static showVacantesEmails = 'VacantesEmail/ShowVacanteEmail';
@@ -422,4 +422,8 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static GetClientePerfilR = 'PerfilReclutamiento/getCliente';
   public static GetInfoCliente = 'PerfilReclutamiento/getInfoCliente';
   public static GetClienteId = 'PerfilReclutamiento/getClienteId'
+  public static GetInfoPerfil = 'PerfilReclutamiento/getInfoPerfil';
+  public static AddEscolaridad = 'PerfilReclutamiento/addEscolaridad';
+  public static EditEscolaridad = 'PerfilReclutamiento/editEscolaridad';
+  public static DeleteEscolaridad = 'PerfilReclutamiento/deleteEscolaridad';
 }

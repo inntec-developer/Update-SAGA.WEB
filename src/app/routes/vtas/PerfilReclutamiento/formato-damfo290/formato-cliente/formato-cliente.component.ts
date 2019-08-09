@@ -72,7 +72,6 @@ export class FormatoClienteComponent implements OnInit {
     if (this.IdFormato != null) {
       this.DisableComponente = true;
       this._servicePerfilR.getClienteId(this.IdFormato).subscribe(data => {
-        debugger;
         if (data != null && data != 404) {
           this.Cliente = data;
           this.formCliente.controls['Tipo'].setValue(this.Cliente['tipo']);
