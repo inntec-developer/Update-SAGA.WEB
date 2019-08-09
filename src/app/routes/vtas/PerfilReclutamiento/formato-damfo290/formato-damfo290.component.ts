@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class FormatoDAMFO290Component implements OnInit {
   IdFormato: any;
   isNew: boolean = false;
+  imprimir: boolean = false;
 
   constructor(
     private _Router: Router,
