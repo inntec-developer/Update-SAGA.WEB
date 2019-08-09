@@ -65,7 +65,7 @@ export class PerfilEscolaridadesComponent implements OnInit {
     });
   }
 
-  AddEscolaridad(Escolaridad: any) {
+  AddEscolaridad(Escolaridad?: any) {
     if (this.Add) {
       this.Add = true;
       return;

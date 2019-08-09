@@ -37,7 +37,7 @@
     <mat-divider></mat-divider>
   </section>
   <div class="container">
-    <div *ngFor="let escolaridad of EscolaridadArray.controls.escolaridad.controls; let i=index">
+    <div *ngFor="let escolaridad of EscolaridadArray['controls'].escolaridad['controls']; let i=index">
       <div formArrayName="escolaridad">
         <form [formGroupName]="i">
           <escolaridades [IdFormato]="IdFormato" [group]="EscolaridadArray.controls.escolaridad.controls[i]" [Index]="i" (Add)="Agregar($event)"

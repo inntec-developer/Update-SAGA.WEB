@@ -2,13 +2,13 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { map, startWith } from 'rxjs/operators';
 
 import { CatalogosService } from '../../../../../service';
 import { Observable } from 'rxjs';
 import { PerfilReclutamientoService } from './../../../../../service/PerfilReclutamiento/perfil-reclutamiento.service';
 import { SettingsService } from '../../../../../core/settings/settings.service';
-import { ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'app-formato-requisitos',
@@ -55,7 +55,7 @@ export class FormatoRequisitosComponent implements OnInit {
   @ViewChild('fruitInput') fruitInput: ElementRef;
 
   constructor(
-    private ToasterService: ToasterService,
+    private toasterService: ToasterService,
     private settings: SettingsService,
     private fb: FormBuilder,
     private _servicePerfilR: PerfilReclutamientoService,
@@ -208,6 +208,26 @@ export class FormatoRequisitosComponent implements OnInit {
     console.log('Padre', data);
   }
   //#endregion
+
+   //#region  CREACION DE MENSAJES
+   toaster: any;
+   toasterConfig: any;
+   toasterconfig: ToasterConfig = new ToasterConfig({
+     positionClass: 'toast-bottom-right',
+     limit: 7, tapToDismiss: false,
+     showCloseButton: true,
+     mouseoverTimerStop: true,
+   });
+   popToast(type, title, body) {
+     var toast: Toast = {
+       type: type,
+       title: title,
+       timeout: 5000,
+       body: body
+     }
+     this.toasterService.pop(toast);
+   }
+   //#endregion
 
 
 }
