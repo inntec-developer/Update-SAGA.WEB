@@ -101,7 +101,7 @@ public columns: Array<any> = [
   { title: 'Estatus', className: 'text-info text-center', name: 'descripcion', filtering: { filterString: '', placeholder: 'Descripcion' } },
   { title: 'Masivo', className: 'text-success text-center', name: 'masivo', filtering: { filterString: '', placeholder: 'Masivo' } },
   { title: 'Operativo', className: 'text-success text-center', name: 'Operativo', filtering: { filterString: '', placeholder: 'Operativo' } },
-  { title: 'Especializado', className: 'text-success text-center', name: 'ezpecial', filtering: { filterString: '', placeholder: 'Especial' } }
+  { title: 'Especializado', className: 'text-success text-center', name: 'ezpecial', filtering: { filterString: '', placeholder: 'Especializado' } }
 ];
 
 

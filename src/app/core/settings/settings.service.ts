@@ -34,7 +34,7 @@ export class SettingsService {
         // App Settings
         // -----------------------------------
         this.app = {
-            vertionTime: '20190729_1110_DVP-SBI610/20190729_1110_DVP-SBI611',
+            vertionTime: '20190802_1110_DVP-SBI610/20190802_1110_DVP-SBI611',
             vertion: 'v2.0.108011800',
             environment: 'BETA',
             name: 'SAGA - Inntec',
