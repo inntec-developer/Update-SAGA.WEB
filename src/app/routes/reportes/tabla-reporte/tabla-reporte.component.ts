@@ -167,7 +167,7 @@ ucor = ucor == undefined?'0':ucor;
         'EMPRESA': item.empresa,
         'PUESTO' : item.vBtra,
         'ESTADO': item.estado,
-        'RECLUTADOR'  : item.nombreReclutado == '' || item.estatusId == 4?'SIN ASIGNAR':item.nombreReclutado,
+        
         'NO.'	: item.numero,
         'CUBIERTA':item.cubierta,
         'CUMPLIMIENTO'	: item.porcentaje + '%',
@@ -175,6 +175,7 @@ ucor = ucor == undefined?'0':ucor;
         'FECHA ESTATUS': this.convertDateTime(item.fch_Modificacion),
         'COORDINACÍON ': item.clasesReclutamiento,
         'COORDINADOR':item.estatusId == 4? item.nombreReclutado == ''?'SIN ASIGNAR':item.nombreReclutado : item.cordinador2 == ''?'SIN ASIGNAR':item.cordinador2,
+        'RECLUTADOR'  : item.nombreReclutado == '' || item.estatusId == 4?'SIN ASIGNAR':item.nombreReclutado,
         'SOLICITA': item.nombreApellido,
       })
      });
@@ -211,15 +212,15 @@ public columns: Array<any> = [
   { title: 'Empresa', className: 'text-info text-center', name: 'empresa', filtering: { filterString: '', placeholder: 'Empresa' } },
   { title: 'Puesto', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Puesto' } },
   { title: 'Estado', className: 'text-info text-center', name: 'estado', filtering: { filterString: '', placeholder: 'Estado' } },
-  { title: 'Reclutador', className: 'text-info text-center', name: 'nombreReclutado', filtering: { filterString: '', placeholder: 'No. Reclutador' } },
+ 
   { title: 'No.', className: 'text-info text-center', name: 'numero' , filtering: { filterString: '', placeholder: 'No. vacante' } },
   { title: 'Cubierta', className: 'text-info text-center', name: 'cubierta' , filtering: { filterString: '', placeholder: 'Cubiertas..' } },
   { title: 'Cumplimiento', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'Cumplimiento..' } },
-
   { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
   { title: 'Fecha Estatus', className: 'text-info text-center', name: 'fch_Modificacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
   { title: 'Coordinación', className: 'text-info text-center', name: 'clasesReclutamiento', filtering: { filterString: '', placeholder: 'Coordinacion' } },
   { title: 'Coordinador', className: 'text-info text-center', name: 'cordinador2', filtering: { filterString: '', placeholder: 'Coordinador' } },
+  { title: 'Reclutador', className: 'text-info text-center', name: 'nombreReclutado', filtering: { filterString: '', placeholder: 'No. Reclutador' } },
   { title: 'Solicita', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Solicita' } }
 ];
 

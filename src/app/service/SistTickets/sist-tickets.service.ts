@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ApiConection } from './../api-conection.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Session } from 'inspector';
+import { SettingsService } from '../../core/settings/settings.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -50,7 +52,8 @@ export class SistTicketsService {
   private UrlPostularCandidato = ApiConection.ServiceUrl + ApiConection.PostularCandidato;
   private UrlGetTicketsGenerados = ApiConection.ServiceUrl + ApiConection.GetTicketsGenerados;
   private UrlGetRportAtencion = ApiConection.ServiceUrl + ApiConection.GetRportAtencion;
-  constructor(private _httpClient: HttpClient) { }
+
+  constructor(private _httpClient: HttpClient, private settings: SettingsService) { }
 
   GetEstados() :Observable<any>
   {
@@ -158,7 +161,7 @@ export class SistTicketsService {
 
   GetVacantesReclutador(reclutadorId) : Observable<any>
   {
-    let params = new HttpParams().set('reclutadorId', reclutadorId);
+    let params = new HttpParams().set('reclutadorId', this.settings.user['id'] );
     return this._httpClient.get(this.UrlGetVacantesReclutador, {params: params})
   }
 
