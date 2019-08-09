@@ -7,7 +7,7 @@ import { SettingsService } from '../../../core/settings/settings.service';
 import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
 import { TicketsRegisterComponent } from '../../../components/tickets-register/tickets-register.component';
 import { NgbCarouselConfig, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
-import { PrintTicket } from '../../../tools/PrintTicket';
+
 
 
 const swal = require('sweetalert');
@@ -16,7 +16,7 @@ const swal = require('sweetalert');
   selector: 'app-tickets-inicio',
   templateUrl: './tickets-inicio.component.html',
   styleUrls: ['./tickets-inicio.component.scss'],
-  providers: [RequisicionesService, PrintTicket]
+  providers: [RequisicionesService]
 })
 export class TicketsInicioComponent implements OnInit {
   showNavigationArrows = true;
