@@ -27,7 +27,7 @@
                     <input type="text" class="form-control form-control-sm long" placeholder="*" [(ngModel)]="am" name="am" ngModel
                              required [class.valido]="am.length >= 1" />
                 </div>
-             
+
             </div>
             <mat-divider></mat-divider>
             <!-- </div> -->
@@ -45,8 +45,8 @@
                                 <label class="form-check-label" for="inlineRadio2">HOMBRE</label>
                             </div>
                             </div>
-                            <small *ngIf="model.options == 0" class="text-danger">Debe seleccionar g&eacute;nero</small>
-                        </div>              
+                            <small *ngIf="model.options == '0'" class="text-danger">Debe seleccionar g&eacute;nero</small>
+                        </div>
                 <div class="dateLong">
                     <mat-form-field>
                     <input matInput [matDatepicker]="picker" placeholder="Fecha de Nacimiento" name="edad" [(ngModel)]="date" (dateChange)="validarFecha($event.value)">
@@ -114,9 +114,9 @@
                         </div>
                         <small class="text-danger">{{valTel}}</small>
                     </div>
-                    
+
                 </div>
-             
+
                 <div class="mt-4">
                 <button type="button" class="btn btn-xs btn-danger ml-1 float-right" container="body" placement="bottom" tooltip="Borrar campos" (click)="BorrarCampos()">
                         <i class="fa fa-trash" aria-hidden="true"></i>
@@ -127,7 +127,7 @@
                 [ngClass]="f.invalid || edad < 18 || model.options == '0' || modelOpc.options == '0' || rowIndex == -1 || email.length == 0 || txtPhone.length == 0 ? 'disabled' : 'btn-warning'" class="btn btn-xs float-right ml-1" (click)="EditarCandidato()">
                     <i class="fa fa-floppy-o" aria-hidden="true"></i>
         </button>
-                <button [disabled]="f.invalid || edad < 18 || model.options == '0' || modelOpc.options == '0' || rowIndex != -1 || email.length == 0 || txtPhone.length == 0" 
+                <button [disabled]="f.invalid || edad < 18 || model.options == '0' || modelOpc.options == '0' || rowIndex != -1 || email.length == 0 || txtPhone.length == 0"
                 type="button" [ngClass]="f.invalid || edad < 18 || model.options == '0' || modelOpc.options == '0' || rowIndex != -1 || email.length == 0 || txtPhone.length == 0 ? 'disabled' : 'btn-success'" class="btn btn-xs float-right" (click)="AgregarCandidato()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                 </button>
@@ -137,7 +137,7 @@
 
        <mat-divider></mat-divider>
        <div class="row">
-     
+
         <div class="col-md-12 col-lg-12">
             <div class="card card-body mat-elevation-z8">
                 <div class="d-flex justify-content-end mb-2">
@@ -177,31 +177,31 @@
                               <tr *ngFor="let row of rows; let rowIndex = index" (dblclick)="onCellClick(row, rowIndex)" container="body" placement="bottom" tooltip="doble click para editar"  [class.bg-info]="row.selected">
                                 <td class="text-center">{{row.curp}}
                                     <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-curp'] = true" *ngIf="!editing[rowIndex + '-curp']">
-                                        
+
                                     </span>
                                     <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'curp', rowIndex, row)" *ngIf="editing[rowIndex + '-curp']" type="text" [value]=row.curp /> -->
                                 </td>
                                 <td class="text-center">{{row.nombre}}
                                     <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
-                                       
+
                                     </span>
                                     <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'nombre', rowIndex, row)" *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=row.nombre /> -->
                                 </td>
                                 <td class="text-center">{{row.apellidoPaterno}}
                                     <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoPaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoPaterno']">
-                                        
+
                                     </span>
                                     <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'apellidoPaterno', rowIndex, row)" *ngIf="editing[rowIndex + '-apellidoPaterno']" type="text" [value]=row.apellidoPaterno /> -->
                                 </td>
                                 <td class="text-center"> {{row.apellidoMaterno}}
                                     <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoMaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoMaterno']">
-                                       
+
                                     </span>
                                     <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'apellidoMaterno', rowIndex, row)" *ngIf="editing[rowIndex + '-apellidoMaterno']" type="text" [value]=row.apellidoMaterno /> -->
                                 </td>
                                 <td class="text-center"> {{row.fechaNac | date:'dd/MM/yyyy'}}
                                     <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-fechaNac'] = true" *ngIf="!editing[rowIndex + '-fechaNac']">
-                                       
+
                                     </span>
                                     <mat-form-field *ngIf="editing[rowIndex + '-fechaNac']">
                                        <input matInput [matDatepicker]="picker2" placeholder="Fecha de Nacimiento" name="edad" (dateChange)="validarFecha($event)" (blur)="updateValue($event, 'fechaNac', rowIndex, row)" *ngIf="editing[rowIndex + '-fechaNac']">
@@ -213,13 +213,13 @@
                                 </td>
                                 <td class="text-center"> {{row.genero}}
                                     <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-genero'] = true" *ngIf="!editing[rowIndex + '-genero']">
-                                       
+
                                     </span>
                                     <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'genero', rowIndex, row)" *ngIf="editing[rowIndex + '-genero']" type="text" [value]=row.genero /> -->
                                 </td>
                                 <td class="text-center">{{row.estado}}
                                     <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-estado'] = true" *ngIf="!editing[rowIndex + '-estado']">
-                                        
+
                                     </span>
                                     <select class="form-control form-control-sm" name="estado" (change)="GetMunicipio($event.target.value)" autofocus (blur)="updateValue($event, 'estado', rowIndex, row)" *ngIf="editing[rowIndex + '-estado']" type="text" [value]=row.estadoId>
                                         <option [value]=0 selected disabled>Selecciona Estado de Nacimiento</option>
@@ -228,7 +228,7 @@
                                  </td>
                                 <!-- <td class="text-center">{{row.municipio}} -->
                                     <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-municipio'] = true" *ngIf="!editing[rowIndex + '-municipio']">
-                                        
+
                                     </span>
                                     <select class="form-control form-control-sm" name="municipio" autofocus (blur)="updateValue($event, 'municipio', rowIndex, row)" *ngIf="editing[rowIndex + '-municipio']" type="text" [value]=row.municipioId>
                                             <option [value]=0 selected disabled>Selecciona Estado de Nacimiento</option>
@@ -237,18 +237,18 @@
                                 <!-- </td> -->
                                 <td class="text-center">{{row.email}}
                                     <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-email'] = true" *ngIf="!editing[rowIndex + '-email']">
-                                        
+
                                     </span>
                                     <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'email', rowIndex, row)" *ngIf="editing[rowIndex + '-email']" type="text" [value]=row.email /> -->
                                 </td>
                                 <td class="text-center">{{row.telefono}}
                                     <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-telefono'] = true" *ngIf="!editing[rowIndex + '-telefono']">
-                                        
+
                                     </span>
                                     <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'telefono', rowIndex, row)" *ngIf="editing[rowIndex + '-telefono']" type="text" [value]=row.telefono /> -->
                                 </td>
                                 <td>
-                                    
+
                 <button container="body" placement="bottom" tooltip="Borrar Candidato" type="button" class="btn btn-xs btn-danger mat-elevation-z8" (click)="BorrarCandidato(rowIndex)">
                         <i class="fa fa-trash-o" aria-hidden="true"></i>
             </button>

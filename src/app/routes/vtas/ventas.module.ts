@@ -19,12 +19,14 @@ import { DtDamfoComponent } from './requisiciones/components/dt-damfo/dt-damfo.c
 import { DtProspectosComponent } from './directorio-empresarial/prospectos/dt-prospectos/dt-prospectos.component';
 import { DtRequisicionReclPuroComponent } from './../../components/tablas/dt-requisicion-recl-puro/dt-requisicion-recl-puro.component';
 import { EditarClientesComponent } from './directorio-empresarial/editar-clientes/editar-clientes.component'
+import { EscolaridadesComponent } from './PerfilReclutamiento/formato-damfo290/formato-requisitos/perfil-escolaridades/escolaridades/escolaridades.component';
+import { FormatoAnexosComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/formato-anexos.component';
 import { FormatoClienteComponent } from './PerfilReclutamiento/formato-damfo290/formato-cliente/formato-cliente.component';
 import { FormatoDAMFO290Component } from './PerfilReclutamiento/formato-damfo290/formato-damfo290.component';
 import { FormatoRequisitosComponent } from './PerfilReclutamiento/formato-damfo290/formato-requisitos/formato-requisitos.component';
 import { NgModule } from '@angular/core';
 import { NuevoProspectoComponent } from './directorio-empresarial/prospectos/nuevo-prospecto/nuevo-prospecto.component';
-import { PerfilEscolaridadesComponent } from './PerfilReclutamiento/formato-damfo290/formato-requisitos/perfil-escolaridades/perfil-escolaridades.component'
+import { PerfilEscolaridadesComponent } from './PerfilReclutamiento/formato-damfo290/formato-requisitos/perfil-escolaridades/perfil-escolaridades.component';
 import { RequisicionComponent } from './requisiciones/requisicion.component';
 import { RequisicionNuevaComponent } from './requisiciones/components/requisicion-nueva/requisicion-nueva.component';
 import { SharedModule } from '../../shared/shared.module';
@@ -37,9 +39,6 @@ import { ViewCuerpoRequiComponent } from './requisiciones/components/view-cuerpo
 import { ViewInforRequiComponent } from './requisiciones/components/view-info-requi/view-info-requi.component';
 import { ViewRequisicionComponent } from './requisiciones/components/view-requisicion/view-requisicion.component';
 import { ViewdamfoComponent } from './requisiciones/components/viewdamfo/viewdamfo.component';
-
-;
-
 
 const routes: Routes = [
   { path: 'directorio', component: DirectorioEmpresarialComponent, data: { componente: 'Directorio Empresarial' } },
@@ -99,8 +98,9 @@ const routes: Routes = [
     FormatoDAMFO290Component,
     FormatoClienteComponent,
     FormatoRequisitosComponent,
-    PerfilEscolaridadesComponent
-  ],
+    PerfilEscolaridadesComponent,
+    EscolaridadesComponent,
+    FormatoAnexosComponent  ],
 
   entryComponents: [DialogdamfoComponent, DialogDeleteRequiComponent, DialogCancelRequiComponent, DialogActivarRequiComponent, DialogEditHorarioComponent, DialogRutasComponent],
   exports: [

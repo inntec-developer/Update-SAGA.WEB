@@ -1,4 +1,4 @@
-import { element } from 'protractor';
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { MatDialog } from '@angular/material';
@@ -7,6 +7,8 @@ import { SettingsService } from '../../../core/settings/settings.service';
 import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
 import { TicketsRegisterComponent } from '../../../components/tickets-register/tickets-register.component';
 import { NgbCarouselConfig, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
+
+
 
 const swal = require('sweetalert');
 
@@ -20,7 +22,7 @@ export class TicketsInicioComponent implements OnInit {
   showNavigationArrows = true;
   showNavigationIndicators = false;
   @ViewChild('myCarousel') myCarousel: NgbCarousel;
-
+ 
   folio = 0;
   iniciar = false;
   num = '';
@@ -73,9 +75,9 @@ vacantes = [];
            candidatoId = sessionStorage.getItem('candidatoId');
         }
 
-
+   
     this._service.GetTicketSinCita(row.id, candidatoId).subscribe(data => {
-      console.log(data)
+
       if(data == 409)
       {
         swal("¡Ocurrió un error!", "Impresora sin papel", "error");
@@ -179,8 +181,6 @@ vacantes = [];
       './../assets/img/ArteVacantes/DamsaVacantes_PP5.jpg', './../assets/img/ArteVacantes/DamsaVacantes_PP6.jpg', './../assets/img/ArteVacantes/DamsaVacantes_PP7.jpg', './../assets/img/ArteVacantes/DamsaVacantes_PP8.jpg',
       './../assets/img/ArteVacantes/DamsaVacantes_PP17.jpg'];
 
-    
-
       this.dataSource = data;
       if (this.dataSource.length > 0) {
         this.dataSource = this.dataSource.filter(element => {
@@ -190,7 +190,6 @@ vacantes = [];
           }
 
         });
-console.log(this.dataSource)
 
         var color = 0;
         this.categorias = Array.from(new Set(this.dataSource.map(s => s.areaId)))
