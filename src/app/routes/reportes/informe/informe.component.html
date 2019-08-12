@@ -92,12 +92,12 @@ type="square-jelly-box"
   <div class="form-group">
       <label for="picker1"></label>
       <mat-form-field style="top: 17px;">
-          <input   matInput [matDatepicker]="fechaInicial" id="fechaInicial"   >
+          <input   matInput [max]="date.value" [matDatepicker]="fechaInicial" id="fechaInicial"  [formControl]="date2" >
           <mat-datepicker-toggle matSuffix [for]="fechaInicial"></mat-datepicker-toggle>
           <mat-datepicker #fechaInicial></mat-datepicker>
         </mat-form-field>
     </div>
-    {{fechaInicial.value}}
+    
         <!-- <div class="form-group">
           <label  for="sel3">Fecha Inicio</label>
           <input
@@ -116,8 +116,8 @@ type="square-jelly-box"
 <div class="col-xl-2">
     <div class="form-group">
         <label for="sel3"></label>
-        <mat-form-field style="top: 17px;">
-            <input   matInput  [matDatepicker]="fechaFinal" id="fechaFinal"  [formControl]="date">
+        <mat-form-field  style="top: 17px;">
+            <input  matInput [min]="date2.value" [max]="date.value"    [matDatepicker]="fechaFinal" id="fechaFinal"  [formControl]="date">
             <mat-datepicker-toggle matSuffix [for]="fechaFinal"></mat-datepicker-toggle>
             <mat-datepicker #fechaFinal ></mat-datepicker>
           </mat-form-field>
