@@ -16,11 +16,14 @@
 
     <button type="button" class="btn btn-xs btn-success float-right mat-elevation-z8" (click)="refreshTable()" container="body"
     placement="bottom" tooltip="Actualizar" container="body">
-    <em class="icon-refresh"></em>
+    <i class="icon-refresh"></i>
   </button>
   <button (click)="clearfilters()" class="btn btn-xs btn-primary float-right mr-2 mat-elevation-z8" container="body" placement="bottom" tooltip="Limpiar Filtros"
   container="body">
-  <em class="fa fa-eraser"></em>
+  <i class="fa fa-eraser"></i>
+</button>
+<button (click)="exportAsXLSX()" class="btn btn-xs btn-success float-right mr-2 mat-elevation-z8" container="body" placement="bottom" tooltip="Limpiar Filtros" >
+<i class="fa fa-download"></i>
 </button>
 </div>
 </div>

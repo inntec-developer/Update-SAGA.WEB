@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
+import { DatePipe } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from './../../service/requisiciones/requisiciones.service';
 import { SettingsService } from '../../core/settings/settings.service';
+import { ExcelService } from '../../service/ExcelService/excel.service';
 
 @Component({
   selector: 'app-informe-vacantes',
@@ -44,11 +45,15 @@ export class InformeVacantesComponent implements OnInit {
     { title: 'RECHAZADOS', className: 'text-info text-center', name: 'rechazados', filtering: { filterString: '', placeholder: 'RECHAZADOS' } },
     { title: 'CUBIERTOS', className: 'text-info text-center', name: 'contratados', filtering: { filterString: '', placeholder: 'CUBIERTOS' } }
   ];
+  totalPos: number = 0;
+  totalContratados: number = 0;
 
   constructor(
     private service: RequisicionesService,
     private spinner: NgxSpinnerService,
-    private settings: SettingsService
+    private settings: SettingsService,
+    private excelService: ExcelService,
+    private pipe: DatePipe
     ) { }
 
   ngOnInit() {
@@ -110,9 +115,77 @@ export class InformeVacantesComponent implements OnInit {
   getInfoVacantes() {
     this.service.GetInformeRequisiciones(this.settings.user['id']).subscribe(data => {
       this.dataInfoRequi = data;
+      
+      this.totalPos = 0;
+      this.totalContratados = 0;
+      this.dataInfoRequi.forEach(r => {
+        if (r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37)) {
+          this.totalPos += r.vacantes;
+          this.totalContratados += r.contratados;
+
+       
+        }
+
+      })
       this.onChangeTableInfo(this.config);
     });
   }
 
+  public refreshTable() {
+    this.spinner.show();
+
+    setTimeout(() => {
+      this.columnsInfo.forEach(element => {
+        element.filtering.filterString = '';
+        (<HTMLInputElement>document.getElementById(element.name + "_1")).value = '';
+      });
+      this.spinner.hide();
+    }, 1000);
+  }
+
+  public clearfilters() {
+
+    // (<HTMLInputElement>document.getElementById('filterInput')).value = '';
+    this.columnsInfo.forEach(element => {
+      element.filtering.filterString = '';
+      (<HTMLInputElement>document.getElementById(element.name + "_1")).value = '';
+    });
+    this.onChangeTableInfo(this.config);
+  }
+  exportAsXLSX() {
+
+    if (this.dataInfoRequi.length > 0) {
+      var aux = [];
+      
+      this.dataInfoRequi.forEach(row => {
+        
+        // var mocos = (d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString()
+        var e = this.pipe.transform(new Date(row.fch_limite), 'dd/MM/yyyy');
+
+       
+        aux.push({
+          FOLIO: row.folio.toString(),
+          PUESTO: row.vBtra,
+          EMPRESA: row.cliente,
+          'FECHA LIMITE': e,
+          ESTATUS: row.estatus,
+          NO: row.vacantes,
+          "% CUMPLIMIENTO": row.porcentaje,
+          POSTULADOS: row.postulados,
+          ENTREVISTADOS: row.entrevista,
+          "ABANDONÓ PROCESO": row.abandono,
+          DESCARTADOS: row.descartados,
+          "ENVIADO AL CLIENTE": row.enviados,
+          RECHAZADOS: row.rechazados,
+          CUBIERTOS: row.contratados
+        })
+      });
+
+      //   })
+      // })
+      this.excelService.exportAsExcelFile(aux, 'InformeVacantes');
+      this.refreshTable();
+    }
+  }
 
 }

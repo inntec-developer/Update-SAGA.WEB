@@ -1,7 +1,27 @@
 <div class="card">
-  <div class="card-body">
+  <div class="card-body mat-elevation-z8">
+      <button type="button" class="mr-1 btn btn-xs btn-success float-right mat-elevation-z8" (click)="refreshTable()"
+      container="body" placement="bottom" tooltip="Actualizar" container="body">
+      <em class="icon-refresh"></em>
+    </button>
+    <button class="mr-1 btn btn-xs btn-info float-right mat-elevation-z8" (click)="clearfilters()" container="body" placement="bottom"
+      tooltip="Limpiar Filtros" container="body" >
+      <em class="fa fa-eraser"></em>
+    </button>
+    <button (click)="exportAsXLSX()" class="btn btn-xs btn-success float-right mr-2 mat-elevation-z8" container="body" placement="bottom" tooltip="Limpiar Filtros" >
+        <i class="fa fa-download"></i>
+        </button>
     <div class="table-responsive">
-      <table class="table">
+        <div class="mt-3 ">
+            <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total posiciones cubiertas
+              <span class="badge badge-pill badge-success ml-1">{{totalContratados | numerico}}</span></span>
+          </div>
+          <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total de Posiciones activas <span
+              class="ml-1 badge badge-pill badge-success">{{totalPos | numerico}}</span></span>
+          <span class="text-muted font-weight-bold float-right text-uppercase mb-3">Total de Folios <span
+              class="badge badge-pill badge-success ml-1">{{dataInfoRequi.length  | numerico}}</span></span>
+
+      <table class="table border-top">
         <thead>
           <tr>
             <th *ngFor="let column of columnsInfo" ngClass="{{column.className || ''}}">
@@ -13,7 +33,7 @@
           <tr>
             <th *ngFor="let column of columnsInfo">
               <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                (tableChanged)="onChangeTableInfo(config)" class="form-control form-control-sm" id="{{column.name}}">
+                (tableChanged)="onChangeTableInfo(config)" class="form-control form-control-sm" id="{{column.name}}_1">
             </th>
           </tr>
         </thead>
@@ -78,12 +98,12 @@
         </tbody>
       </table>
       <br />
-      <div class="text-right">
+      <div>
         <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="pageInfo" [totalItems]="lengthInfo"
           [itemsPerPage]="itemsPerPageInfo" [maxSize]="maxSizeInfo" [boundaryLinks]="true" [rotate]="false"
           (pageChanged)="onChangeTableInfo(config, $event)" (numPages)="numPagesInfo = $event">
         </pagination>
-        <pre *ngIf="config.paging" class="text-muted">P&aacute;gina: {{pageInfo}} / {{numPagesInfo}}  Total Registros: {{registrosInfo}}</pre>
+      
       </div>
 
   </div>

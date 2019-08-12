@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { RequisicionesService } from '../../../../../service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SettingsService } from '../../../../../core/settings/settings.service';
-
+import { DatePipe } from '@angular/common';
+import { ExcelService } from '../../../../../service/ExcelService/excel.service';
 @Component({
   selector: 'app-dthistorial',
   templateUrl: './dthistorial.component.html',
@@ -36,14 +37,13 @@ export class DTHistorialComponent implements OnInit {
   rowAux: any = [];
   reporteCandidatos = false;
 
-  constructor( private service: RequisicionesService, private spinner: NgxSpinnerService, private settings: SettingsService) { }
+  constructor( private service: RequisicionesService, private spinner: NgxSpinnerService, private settings: SettingsService, private excelService: ExcelService,
+    private pipe: DatePipe,) { }
 
   ngOnInit() {
     this.spinner.show();
     this.getRequisiciones();
   }
-
-
 
   getRequisiciones() {
     this.service.GetRequisicionesHistorial(this.settings.user['id']).subscribe(data => {
@@ -186,5 +186,63 @@ export class DTHistorialComponent implements OnInit {
     });
     this.onChangeTable(this.config);
 
+  }
+
+  exportAsXLSX() {
+
+    if (this.dataSource.length > 0) {
+      var aux = [];
+      var reclutador = "";
+      var coordinador = "";
+
+      this.dataSource.forEach(row => {
+        
+        var d = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
+        // var mocos = (d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString()
+        var e = this.pipe.transform(new Date(row.fch_Cumplimiento), 'dd/MM/yyyy');
+
+        if (!Array.isArray(row.reclutadores) ){
+          reclutador = "SIN ASIGNAR";
+        }
+        else if (row.reclutadores.length > 1) {
+          row.reclutadores.forEach(element => {
+            reclutador = reclutador + element + ', \n'
+          });
+        }
+        else {
+          reclutador = row.reclutadores[0];
+        }
+
+        if (row.estatusId == 4) {
+          coordinador = reclutador;
+          reclutador = "SIN ASIGNAR"
+
+        }
+        else {
+          coordinador = row.coordinador;
+        }
+
+        aux.push({
+          FOLIO: row.folio.toString(),
+          EMPRESA: row.cliente,
+          PUESTO: row.vBtra,
+          NO: row.vacantes,
+          CUBIERTOS: row.contratados,
+          COORDINACION: row.claseReclutamiento,
+          'FECHA CREACIÓN': d,//new Date(d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString(),
+          'FECHA CUMPLIMIENTO': e,
+          ESTATUS: row.estatus,
+          COORDINADOR: coordinador,
+          SOLICITANTE: row.solicita,
+          RECLUTADOR: reclutador,
+        })
+        reclutador = "";
+      });
+
+      //   })
+      // })
+      this.excelService.exportAsExcelFile(aux, 'Historico');
+      this.refreshTable();
+    }
   }
 }

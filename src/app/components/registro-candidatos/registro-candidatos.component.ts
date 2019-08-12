@@ -4,6 +4,7 @@ import { MomentDateAdapter} from '@angular/material-moment-adapter';
 import { SistTicketsService } from '../../service/SistTickets/sist-tickets.service';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { PostulateService } from '../../service/SeguimientoVacante/postulate.service';
+import { CURPValidator } from '../dlg-registro-masivo/GenerarCURP';
 
 export const MY_FORMATS = {
   parse: {
@@ -58,6 +59,8 @@ export class RegistroCandidatosComponent implements OnInit {
   date: Date;
   valEmail = '';
   valTel: string = "";
+  loading = false;
+  curp: string = "";
   constructor(private adapter: DateAdapter<any>, private _service: SistTicketsService, private postulateservice: PostulateService) {
     this.adapter.setLocale('es')
 
@@ -105,34 +108,55 @@ export class RegistroCandidatosComponent implements OnInit {
 
     if(this.opcRegistro1 > 0)
     {
+      this.ValidarEmail(this.email);
       opc = this.opcRegistro1;
 
     }
     else
     {
+      this.ValidarTelefono();
       opc = this.opcRegistro2;
     }
+    if(this.valEmail == '' && this.valTel == '')
+    {
+      this.loading = true;
+      let email = [{ email: this.email.trim(), UsuarioAlta: 'INNTEC' }];
+      let candidato = {
+        Curp: this.curp,
+        Nombre: this.nom,
+        ApellidoPaterno: this.ap,
+        ApellidoMaterno: this.am,
+        Email: email,
+        FechaNac: this.fn.getFullYear().toString() + '/' + (this.fn.getMonth()).toString() + '/' +  this.fn.getDate().toString(),
+        GeneroId: this.rbS,
+        EstadoNacimientoId: this.estadoId,
+        MunicipioNacimientoId: 0,
+        Telefono: [{ClavePais:52, ClaveLada: this.txtLada, telefono: this.txtPhone, TipoTelefonoId: 1}],
+        OpcionRegistro: opc
+        
+      };
 
-    let email = [{ email: this.email.trim(), UsuarioAlta: 'INNTEC' }];
-    let candidato = {
-      Nombre: this.nom,
-      ApellidoPaterno: this.ap,
-      ApellidoMaterno: this.am,
-      Email: email,
-      FechaNac: this.fn.getFullYear().toString() + '/' + (this.fn.getMonth()).toString() + '/' +  this.fn.getDate().toString(),
-      GeneroId: this.rbS,
-      EstadoNacimientoId: this.estadoId,
-      MunicipioNacimientoId: this.municipioId,
-      Telefono: [{ClavePais:52, ClaveLada: this.txtLada, telefono: this.txtPhone, TipoTelefonoId: 1}],
-      OpcionRegistro: opc
-      
-    };
+      this._service.RegistrarCandidato(candidato).subscribe(result => {
+        this.loading = false;
+          this.validarRegistro.emit(result);
 
-     this._service.RegistrarCandidato(candidato).subscribe(result => {
-        this.validarRegistro.emit(result);
+      })
+    }
+  }
+  GenerarCurp() : string
+  {
+    let obj = new CURPValidator();
+    let clave = this.estados.filter(element => {
+      if(element.id == this.estadoId)
+      {
+        return element;
+      }
+    });
 
-    })
-  
+    let curp = obj.ValidarCurp(this.nom, this.ap, this.am, this.fn, this.rbS, clave[0].clave, '', true);
+
+this.curp = curp;
+    return curp;
   }
   ValidarEmail(email) : boolean
   {
@@ -206,11 +230,14 @@ export class RegistroCandidatosComponent implements OnInit {
       if(!regexpEmail.test(this.email))
       {
         this.email = "";
+        this.valEmail = "";
+        
       }
 
       this.opcRegistro2=0; 
        this.txtLada='---'; 
        this.txtPhone='-------'
+       this.valTel = "";
     }
     else if(val == 2 )
     {
@@ -218,9 +245,11 @@ export class RegistroCandidatosComponent implements OnInit {
       {
         this.txtPhone = "";
         this.txtLada = "";
+        this.valTel = "";
       }
       this.opcRegistro1=0;
       this.email='REGISTRO POR TELEFONO'
+      this.valEmail = "";
   
     }
   }

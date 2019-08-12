@@ -130,14 +130,18 @@ export class RolGrupoComponent implements OnInit {
   }
 
   public Search(data: any) {
+
     let tempArray: Array<any> = [];
     let colFiltar: Array<any> = [ { title: "apellidoPaterno" }, { title: "nombre" }, {title: "emails"}];
 
     this.filteredGroups.forEach(function (item) {
       let flag = false;
       colFiltar.forEach(function (c) {
-        if (item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
-          flag = true;
+        if(item[c.title] != null)
+        {
+          if (item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
+            flag = true;
+          }
         }
       });
 
@@ -179,9 +183,9 @@ export class RolGrupoComponent implements OnInit {
       .subscribe(
         e=>{
           this.Grupos = e;
-          
+          console.log(this.Grupos)
           this.Grupos.forEach(item => {
-            item.fotoAux = ApiConection.ServiceUrlFoto + item.foto;
+            item.fotoAux = ApiConection.ServiceUrlFotoUser + item.clave + '.jpg';
           })
 
           this.filteredGroups = this.Grupos;
