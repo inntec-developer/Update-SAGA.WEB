@@ -2,23 +2,28 @@
     <div class="block-center mt-4 wd-xl">
         <!-- START card-->
         <div class="card card-flat">
-            <div class="card-header text-center bg-dark">
+            <div class="card-header text-center bg-info">
                 <a href="#">
                     <img class="block-center rounded" src="assets/img/damsa/logo.png" alt="Image" />
                 </a>
             </div>
             <div class="card-body">
-                <p class="text-center py-2">REGISTRO</p>
+                <p class="text-center text-muted font-weight-bold py-2">REGISTRO</p>
                 <form [formGroup]="valForm" class="form-validate mb-3" role="form" name="registerForm" novalidate="">
                     <div class="form-group">
-                        <label class="text-muted mb-1">Correo Electronico</label>
-                        <div class="input-group with-focus">
-                            <input class="form-control border-right-0" (blur)="ValidarEmail($event.target.value)" name="account_email" placeholder="Enter email" autocomplete="off" formControlName="email" required="" />
+                        <label class="text-muted mb-1">Correo Electr&oacute;nico</label>
+                        <div class="input-group input-group-sm with-focus">
+                            <input class="form-control form-control-sm border-right-0" (blur)="ValidarEmail($event.target.value)" name="account_email"
+                                placeholder="Ingresar email" autocomplete="off" formControlName="email" type="email" />
                             <div class="input-group-append">
                                 <ng-template #popTemplateEmail>
-                                    <p>"El email: {{ valForm.controls['email'].value }} ya se encuentra registrado o no tiene el formato correcto"</p>
+                                    <p class="text-muted">
+                                        <i class="fa fa-exclamation-circle text-warning mr-1" aria-hidden="true"></i>El email:
+                                        <em class="text-danger">{{ valForm.controls['email'].value }}</em> ya se encuentra registrado o no tiene
+                                        el formato correcto</p>
                                 </ng-template>
-                                <span class="input-group-text fa fa-envelope text-muted bg-transparent border-left-0" [popover]="popTemplateEmail" placement="right" triggers="" #pop="bs-popover"></span>
+                                <span class="input-group-text fa fa-envelope text-muted bg-transparent border-left-0" [popover]="popTemplateEmail" placement="left"
+                                    triggers="" #pop="bs-popover"></span>
                             </div>
                         </div>
                         <div class="text-danger" *ngIf="valForm.controls['email'].hasError('required') && (valForm.controls['email'].dirty || valForm.controls['email'].touched)">
@@ -31,88 +36,108 @@
                     <div formGroupName="passwordGroup">
                         <div class="form-group">
                             <label class="text-muted mb-1">Contraseña</label>
-                            <div class="input-group with-focus">
-                                <input class="form-control border-right-0" id="id-password" type="password" name="password" formControlName="password" [formControl]="valForm.get('passwordGroup.password')" />
+                            <div class="input-group input-group-sm with-focus">
+                                <input class="form-control form-control-sm border-right-0" placeholder="Ingresar Contraseña" id="id-password" type="password"
+                                    name="password" formControlName="password" maxlength="10" minlength="6" [formControl]="valForm.get('passwordGroup.password')"
+                                />
                                 <div class="input-group-append">
                                     <span class="input-group-text fa fa-lock text-muted bg-transparent border-left-0"></span>
                                 </div>
                             </div>
-                            <div class="text-danger" *ngIf="valForm.get('passwordGroup.password').hasError('required') && (valForm.get('passwordGroup.password').dirty || valForm.get('passwordGroup.password').touched)">
-                                <small>Las contraseñas no coinciden</small>
-                            </div>
-                            <div class="text-danger" *ngIf="valForm.get('passwordGroup.password').hasError('pattern') && (valForm.get('passwordGroup.password').dirty || valForm.get('passwordGroup.password').touched)">
-                                <small>Crear contraseñas con 'a-zA-Z0-9' y 6-10 caracteres</small>
+                            <div class="text-danger" *ngIf="valForm.get('passwordGroup.password').errors && (valForm.get('passwordGroup.password').dirty || valForm.get('passwordGroup.confirmPassword').touched)">
+                                <small *ngIf="valForm.get('passwordGroup.password').hasError('required')">el campo contraseña es requerido</small>
+                                <small *ngIf="valForm.get('passwordGroup.password').hasError('minlength')">la longitud de la cadena es de 6 a 10 caracteres</small>
+                                <small *ngIf="valForm.get('passwordGroup.password').hasError('maxlength')">la longitud m&aacute;xima de la cadena es 10 caracteres</small>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="text-muted mb-1">Confirmar Contraseña</label>
-                            <div class="input-group with-focus">
-                                <input class="form-control border-right-0" type="password" name="confirmPassword" formControlName="confirmPassword" [formControl]="valForm.get('passwordGroup.confirmPassword')" />
+                            <div class="input-group input-group-sm with-focus">
+                                <input class="form-control form-control-sm border-right-0" type="password" name="confirmPassword" formControlName="confirmPassword"
+                                    [formControl]="valForm.get('passwordGroup.confirmPassword')" />
                                 <div class="input-group-append">
                                     <span class="input-group-text fa fa-lock text-muted bg-transparent border-left-0"></span>
                                 </div>
                             </div>
-                            <div class="text-danger" *ngIf="valForm.get('passwordGroup.confirmPassword').hasError('required') && (valForm.get('passwordGroup.confirmPassword').dirty || valForm.get('passwordGroup.confirmPassword').touched)">This field is required</div>
+                            <div class="text-danger" *ngIf="valForm.get('passwordGroup.confirmPassword').hasError('required') && (valForm.get('passwordGroup.confirmPassword').dirty || valForm.get('passwordGroup.confirmPassword').touched)">El campo es requerido</div>
                             <div class="text-danger" *ngIf="valForm.get('passwordGroup.confirmPassword').hasError('equalTo')">
                                 <small>Las contraseñas no coinciden</small>
                             </div>
                         </div>
                     </div>
-                    <label class="text-muted">Clave</label>
-                    <div class="input-group with-focus">
-                        <input class="form-control" type="text" placeholder="DAL" autocomplete="off" formControlName="Clave" required="" />
-                        <!-- <div class="input-group-append">
-               <ng-template #popTemplate>"Clave:{{Clave }} ya se encuentra registrado"</ng-template>
-              <span [popover]="popTemplate" placement="right" trigger="" #pop2="bs-popover"></span>
-            </div> -->
+                    <div class="form-group">
+                        <label class="text-muted">Clave</label>
+                        <div class="input-group with-focus">
+                            <input class="form-control form-control-sm" type="text" placeholder="DAL" autocomplete="off" formControlName="Clave" required=""
+                            />
+
+                        </div>
+                        <div class="text-danger" *ngIf="valForm.controls['Clave'].touched && !valForm.controls['Clave'].valid">
+                            <small>Clave es un campo requerido</small>
+                        </div>
                     </div>
-                    <div class="text-danger" *ngIf="valForm.controls['Clave'].touched && !valForm.controls['Clave'].valid">
-                        <small>Clave es un campo requerido</small>
+                    <div class="form-group">
+                        <label class="text-muted">Nombre</label>
+                        <input class="form-control form-control-sm" type="text" placeholder="Ingresar Nombre" autocomplete="off" formControlName="Nombre"
+                            required="" />
+                        <div class="text-danger" *ngIf="valForm.controls['Nombre'].touched && !valForm.controls['Nombre'].valid">
+                            <small>Nombre es un campo requerido</small>
+                        </div>
                     </div>
-                    <label class="text-muted">Nombre</label>
-                    <input class="form-control" type="text" placeholder="Ingresar Nombre" autocomplete="off" formControlName="Nombre" required="" />
-                    <div class="text-danger" *ngIf="valForm.controls['Nombre'].touched && !valForm.controls['Nombre'].valid">
-                        <small>Nombre es un campo requerido</small>
+                    <div class="form-group">
+                        <label class="text-muted">Apellido Paterno</label>
+                        <input class="form-control form-control-sm" type="text" placeholder="Ingresar Apellido Paterno" autocomplete="off" formControlName="ApellidoPaterno"
+                            required="" />
+                        <div class="text-danger" *ngIf="valForm.controls['ApellidoPaterno'].touched && !valForm.controls['ApellidoPaterno'].valid">
+                            <small>Apellido paterno es un campo requerido</small>
+                        </div>
                     </div>
-                    <label class="text-muted">Apellido Paterno</label>
-                    <input class="form-control" type="text" placeholder="Ingresar Apellido Paterno" autocomplete="off" formControlName="ApellidoPaterno" required="" />
-                    <div class="text-danger" *ngIf="valForm.controls['ApellidoPaterno'].touched && !valForm.controls['ApellidoPaterno'].valid">
-                        <small>Apellido paterno es un campo requerido</small>
+                    <div class="form-group">
+                        <label class="text-muted">Apellido Materno</label>
+                        <input class="form-control form-control-sm" type="text" placeholder="Ingresar Apellido Materno" autocomplete="off" formControlName="ApellidoMaterno"
+                            required="" />
+                        <div class="text-danger" *ngIf="valForm.controls['ApellidoMaterno'].touched && !valForm.controls['ApellidoMaterno'].valid">
+                            <small>Apellido materno es un campo requerido</small>
+                        </div>
                     </div>
-                    <label class="text-muted">Apellido Materno</label>
-                    <input class="form-control" type="text" placeholder="Ingresar Apellido Materno" autocomplete="off" formControlName="ApellidoMaterno" required="" />
-                    <div class="text-danger" *ngIf="valForm.controls['ApellidoMaterno'].touched && !valForm.controls['ApellidoMaterno'].valid">
-                        <small>Apellido materno es un campo requerido</small>
+                    <div class="form-group">
+                        <label class="text-muted">Alias</label>
+                        <input class="form-control form-control-sm" type="text" placeholder="{{user}}" autocomplete="off" formControlName="Usuario"
+                            required="" />
+                        <!-- <p><span class="text-danger" *ngIf="valForm.controls['Usuario'].touched">Si no selecciona usuario se le asignará uno</span></p>                  -->
                     </div>
-                    <label class="text-muted">Alias</label>
-                    <input class="form-control" type="text" placeholder="{{user}}" autocomplete="off" formControlName="Usuario" required="" />
-                    <!-- <p><span class="text-danger" *ngIf="valForm.controls['Usuario'].touched">Si no selecciona usuario se le asignará uno</span></p>                  -->
-                    <label class="text-muted">Departamentos</label>
-                    <select class="form-control" formControlName="DepartamentoId" required="">
-            <option value="0">Seleccionar departamento</option>
-            <!-- not selected / blank option -->
-            <option *ngFor="let d of ListDepas" [value]="d.id">{{d.nombre}}</option>
-          </select>
-                    <div class="text-danger" *ngIf="valForm.controls['DepartamentoId'].touched && !valForm.controls['DepartamentoId'].valid">
-                        <small>Departamento es un campo requerido</small>
+                    <div class="form-group">
+                        <label class="text-muted">Departamentos</label>
+                        <select class="form-control form-control-sm" formControlName="DepartamentoId" required="">
+                            <option value="0">Seleccionar departamento</option>
+                            <!-- not selected / blank option -->
+                            <option *ngFor="let d of ListDepas" [value]="d.id">{{d.nombre}}</option>
+                        </select>
+                        <div class="text-danger" *ngIf="valForm.controls['DepartamentoId'].touched && !valForm.controls['DepartamentoId'].valid">
+                            <small>Departamento es un campo requerido</small>
+                        </div>
                     </div>
-                    <label class="text-muted">Oficina / Sucursal</label>
-                    <select class="form-control" formControlName="OficinasId" required="">
-            <option value="0">Seleccionar Oficina / Sucursal</option>
-            <!-- not selected / blank option -->
-            <option *ngFor="let d of Oficinas" [value]="d.id">{{d.nombre}}</option>
-          </select>
-                    <div class="text-danger" *ngIf="valForm.controls['OficinasId'].touched && !valForm.controls['OficinasId'].valid">
-                        <small>Oficina / Sucursal es un campo requerido</small>
+                    <div class="form-group">
+                        <label class="text-muted">Oficina / Sucursal</label>
+                        <select class="form-control form-control-sm" formControlName="OficinasId" required="">
+                            <option value="0">Seleccionar Oficina / Sucursal</option>
+                            <!-- not selected / blank option -->
+                            <option *ngFor="let d of Oficinas" [value]="d.id">{{d.nombre}}</option>
+                        </select>
+                        <div class="text-danger" *ngIf="valForm.controls['OficinasId'].touched && !valForm.controls['OficinasId'].valid">
+                            <small>Oficina / Sucursal es un campo requerido</small>
+                        </div>
                     </div>
-                    <label class="text-muted">Líder</label>
-                    <select class="form-control" formControlName="LiderId" required="">
-                      <option value="0">Seleccionar Líder</option>
-                        <!-- not selected / blank option -->
-                      <option *ngFor="let lider of Lideres" [value]="lider.liderId">{{lider.nombreLider}}</option>
-                    </select>
-                    <div class="text-danger" *ngIf="valForm.controls['LiderId'].touched && !valForm.controls['LiderId'].valid">
-                        <small>Líder es un campo requerido</small>
+                    <div class="form-group">
+                        <label class="text-muted">Líder</label>
+                        <select class="form-control form-control-sm" formControlName="LiderId" required="">
+                            <option value="0">Seleccionar Líder</option>
+                            <!-- not selected / blank option -->
+                            <option *ngFor="let lider of Lideres" [value]="lider.liderId">{{lider.nombreLider}}</option>
+                        </select>
+                        <div class="text-danger" *ngIf="valForm.controls['LiderId'].touched && !valForm.controls['LiderId'].valid">
+                            <small>Líder es un campo requerido</small>
+                        </div>
                     </div>
                     <br/>
 
@@ -120,18 +145,18 @@
                         <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
                     </div>
 
-                    <button class="btn btn-block btn-primary mt-3" type="submit" [disabled]="!disabledE && loading" (click)="submitForm($event, valForm.value)">Crear cuenta 
-              <img class="float-right" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
-          </button>
+                    <button class="btn btn-block btn-success mt-3 mat-elevation-z8" type="submit" [disabled]="!disabledE && loading" (click)="submitForm($event, valForm.value)">Crear cuenta
+                        <img class="float-right" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+                    </button>
 
                 </form>
                 <!-- <div class="alert alert-danger text-center"></div> -->
-                <p class="pt-3 text-center">Ya estas registrado?</p>
-                <a class="btn btn-block btn-secondary" [routerLink]="'/login'">Ingresar</a>
+                <p class="pt-3 text-center text-info">¿Ya estas registrado? <a [routerLink]="'/login'">Da click aqui para ingresar</a></p>
+                
             </div>
         </div>
         <!-- END card-->
-        <div class="p-3 text-center">
+        <div class="p-3 text-center text-muted">
             <span>&copy;</span>
             <span>{{ settings.app.year }}</span>
             <span class="mx-2">-</span>
@@ -146,22 +171,25 @@
 
 
 <!-- Modal -->
-<div *ngIf="isModalShown" [config]="{ show: true, ignoreBackdropClick: true }" (onHidden)="onHidden()" bsModal #MessageModal="bs-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
+<div *ngIf="isModalShown" [config]="{ show: true, ignoreBackdropClick: true }" (onHidden)="onHidden()" bsModal #MessageModal="bs-modal"
+    class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-auto-name">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title float-left">{{valForm.controls['email'].value}}</h4>
-                <button type="button" class="close float-right" aria-label="Close" (click)="closeModal()">
-    <span aria-hidden="true">&times;</span>
-  </button>
+                <h3 class="modal-title float-left text-warning">{{valForm.controls['email'].value}}</h3>
+                <!-- <button type="button" class="btn btn-xs btn-danger btn-circle float-right mat-elevation-z8" aria-label="Close" (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
             </div>
             <div class="modal-body">
-                <p style="color:#08af2f"><strong>¡El registro se realizó con éxito!</strong></p>
-                <p style="color: #4489e2;">Recibirá un correo con las instrucciones para acceder al sistema</p>
-                <p style="color: #4489e2;">Quedamos a tus órdenes para cualquier relativo, al correo inntec@damsa.com.mx</p>
+                <div class="d-flex justify-content-center mb-2">
+                <i class="fa fa-check-circle text-success text-center fa-4x" aria-hidden="true"></i></div>
+                <h4 class="text-success text-center">¡El registro se realizó con éxito!</h4>
+                <br/>
+                <p class="text-muted ml-1">Recibirá un correo con las instrucciones para acceder al sistema. Quedamos a tus órdenes para cualquier relativo, al correo <em class="text-info">inntec@damsa.com.mx</em></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" (click)="closeModal()">Cerrar</button>
+                <button type="button" class="btn btn-xs btn-success mat-elevation-z8" (click)="closeModal()">Cerrar</button>
             </div>
         </div>
     </div>

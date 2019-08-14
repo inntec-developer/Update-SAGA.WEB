@@ -187,7 +187,7 @@ export class FoliosActivosComponent implements OnInit {
       }
       this.Chart = new Chart('canvas', {
         type: 'pie',
-        title: { text: 'Seguimiento de Vacantes' },
+        // title: { text: 'Seguimiento de Vacantes' },
         data: this.Data,
         options: {
           legend: {
@@ -224,7 +224,7 @@ export class FoliosActivosComponent implements OnInit {
     
         this.Chart2 = new Chart('canvas2', {
           type: 'pie',
-          title: { text: 'Seguimiento de Vacantes' },
+          // title: { text: 'Seguimiento de Vacantes' },
           data: this.Data2,
           options: {
             legend: {
@@ -265,7 +265,7 @@ export class FoliosActivosComponent implements OnInit {
     
         this.Chart3 = new Chart('canvas3', {
           type: 'pie',
-          title: { text: 'Seguimiento de Vacantes' },
+          // title: { text: 'Seguimiento de Vacantes' },
           data: this.Data3,
           options: {
             legend: {

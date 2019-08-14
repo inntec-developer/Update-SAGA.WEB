@@ -1,0 +1,61 @@
+.card
+{
+    width: 340px;
+    height: 380px;
+}
+
+.card-body
+{
+    width: 330px;
+}
+a{
+    cursor: pointer;
+  }
+
+a:hover
+{
+    text-decoration: none;
+}
+
+.bg-info
+{
+    background-color: #23B7E5;
+}
+
+  .estilomio a:hover
+  {
+    color: #555555 !important;
+  }
+
+  
+  .login-button {
+    position: absolute;
+    right: -15px;
+    top: 38%;
+    background: #ffffff;
+    color: #fad732;
+    padding: 11px 0;
+    width: 50px;
+    height: 50px;
+    border: 5px solid #efefef;
+    border-radius: 50%;
+    transition: all ease-in-out 500ms;
+    z-index: 10;
+    cursor: pointer;
+  }
+ .login-button:hover {
+    color: #f3ca06;
+    transform: rotate(450deg);
+  }
+.login-button.clicked {
+    color: #fad732;
+  }
+.login-button.clicked:hover {
+    transform: none;
+  }
+ .login-button.clicked.success {
+    color: #2ecc71;
+  }
+ .login-button.clicked.error {
+    color: #e74c3c;
+  }
