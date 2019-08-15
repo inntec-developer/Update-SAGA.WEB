@@ -26,12 +26,12 @@
       </div>
     </section>
     <div [hidden]="Edit" class="col-12">
-      <strong>Escolaridad: </strong> <label class="text-warning">{{Escolaridad}} </label> -
-      <strong>Nivel: </strong><label class="text-warning">{{Nivel}}</label>
+      <strong class="text-primary">Escolaridad: </strong> <label>{{Escolaridad}} </label> -
+      <strong class="text-primary">Nivel: </strong><label>{{Nivel}}</label>
       <em class="fa fa-pencil text-info" (click)="OnEdit(); Edit = true"></em>
       <em class="fa fa-close text-danger em-button" (click)="Remove()"></em>
       <alert [type]="TypeAlert" [hidden]="ShowAlert == false">
-        <strong>{{MsgAlert}}</strong>
+        <strong>{{MsgAlert | uppercase}}</strong>
       </alert>
     </div>
   </form>

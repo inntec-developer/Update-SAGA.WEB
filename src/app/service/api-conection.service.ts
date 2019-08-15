@@ -425,7 +425,15 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static GetInfoCliente = 'PerfilReclutamiento/getInfoCliente';
   public static GetClienteId = 'PerfilReclutamiento/getClienteId'
   public static GetInfoPerfil = 'PerfilReclutamiento/getInfoPerfil';
+  public static GetAnexosPerfil = 'PerfilReclutamiento/getAnexosPerfil';
+
   public static AddEscolaridad = 'PerfilReclutamiento/addEscolaridad';
   public static EditEscolaridad = 'PerfilReclutamiento/editEscolaridad';
   public static DeleteEscolaridad = 'PerfilReclutamiento/deleteEscolaridad';
+
+  public static CrudBeneficio = 'PerfilReclutamiento/crudBeneficios';
+  public static CrudHorario = 'PerfilReclutamiento/crudHorarios';
+  public static CrudActividades = 'PerfilReclutamiento/crudActividades';
+  public static CrudObservaciones = 'PerfilReclutamiento/crudObservaciones';
+  public static CrudPsicometriaDamsa = 'PerfilReclutamiento/crudPsicometriasDamsa'
 }

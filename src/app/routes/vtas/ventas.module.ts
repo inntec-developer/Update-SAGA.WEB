@@ -1,5 +1,7 @@
 ﻿import { RouterModule, Routes } from '@angular/router';
 
+import { ActividadesComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-actividades/actividades/actividades.component';
+import { BeneficiosComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-beneficios/beneficios/beneficios.component';
 import { ComponentsModule } from '../../components/components.module';
 import { ContactosClienteComponent } from './directorio-empresarial/editar-clientes/Components/contactos-cliente/contactos-cliente.component';
 import { CorreosClienteComponent } from './directorio-empresarial/editar-clientes/Components/correos-cliente/correos-cliente.component';
@@ -24,9 +26,13 @@ import { FormatoAnexosComponent } from './PerfilReclutamiento/formato-damfo290/f
 import { FormatoClienteComponent } from './PerfilReclutamiento/formato-damfo290/formato-cliente/formato-cliente.component';
 import { FormatoDAMFO290Component } from './PerfilReclutamiento/formato-damfo290/formato-damfo290.component';
 import { FormatoRequisitosComponent } from './PerfilReclutamiento/formato-damfo290/formato-requisitos/formato-requisitos.component';
+import { HorariosComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-horarios/horarios/horarios.component'
 import { NgModule } from '@angular/core';
 import { NuevoProspectoComponent } from './directorio-empresarial/prospectos/nuevo-prospecto/nuevo-prospecto.component';
+import { PerfilActividadesComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-actividades/perfil-actividades.component';
+import { PerfilBeneficiosComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-beneficios/perfil-beneficios.component';
 import { PerfilEscolaridadesComponent } from './PerfilReclutamiento/formato-damfo290/formato-requisitos/perfil-escolaridades/perfil-escolaridades.component';
+import { PerfilHorariosComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-horarios/perfil-horarios.component';
 import { RequisicionComponent } from './requisiciones/requisicion.component';
 import { RequisicionNuevaComponent } from './requisiciones/components/requisicion-nueva/requisicion-nueva.component';
 import { SharedModule } from '../../shared/shared.module';
@@ -38,8 +44,12 @@ import { VerClienteComponent } from './directorio-empresarial/ver-cliente/ver-cl
 import { ViewCuerpoRequiComponent } from './requisiciones/components/view-cuerpo-requi/view-cuerpo-requi.component';
 import { ViewInforRequiComponent } from './requisiciones/components/view-info-requi/view-info-requi.component';
 import { ViewRequisicionComponent } from './requisiciones/components/view-requisicion/view-requisicion.component';
-import { ViewdamfoComponent } from './requisiciones/components/viewdamfo/viewdamfo.component';
-
+import { ViewdamfoComponent } from './requisiciones/components/viewdamfo/viewdamfo.component';;
+import { PerfilObservacionesComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-observaciones/perfil-observaciones.component';
+import { ObservacionesComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-observaciones/observaciones/observaciones.component'
+;
+import { PerfilPstDamsaComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-pst-damsa/perfil-pst-damsa.component';
+import { PstDamsaComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-pst-damsa/pst-damsa/pst-damsa.component'
 const routes: Routes = [
   { path: 'directorio', component: DirectorioEmpresarialComponent, data: { componente: 'Directorio Empresarial' } },
   { path: 'nuevoProspecto', component: NuevoProspectoComponent },
@@ -100,9 +110,26 @@ const routes: Routes = [
     FormatoRequisitosComponent,
     PerfilEscolaridadesComponent,
     EscolaridadesComponent,
-    FormatoAnexosComponent  ],
-
-  entryComponents: [DialogdamfoComponent, DialogDeleteRequiComponent, DialogCancelRequiComponent, DialogActivarRequiComponent, DialogEditHorarioComponent, DialogRutasComponent],
+    FormatoAnexosComponent,
+    PerfilBeneficiosComponent,
+    BeneficiosComponent,
+    HorariosComponent,
+    PerfilHorariosComponent,
+    PerfilActividadesComponent,
+    ActividadesComponent,
+    PerfilObservacionesComponent
+,
+    ObservacionesComponent ,
+    PerfilPstDamsaComponent ,
+    PstDamsaComponent],
+  entryComponents: [
+    DialogdamfoComponent,
+    DialogDeleteRequiComponent,
+    DialogCancelRequiComponent,
+    DialogActivarRequiComponent,
+    DialogEditHorarioComponent,
+    DialogRutasComponent
+  ],
   exports: [
     RouterModule,
     ViewCuerpoRequiComponent,

@@ -43,11 +43,9 @@ export class EscolaridadesComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.escolaridad, this.index);
   }
 
   Save() {
-    debugger;
     if (this.IdFormato != null) {
       var obj = {
         id: this.escolaridad.get('id').value || null,
@@ -67,7 +65,7 @@ export class EscolaridadesComponent implements OnInit {
           }
         });
       }
-      else{
+      else {
         this._servicePerfilR.editEscolaridad(obj).subscribe(x => {
           if (x != 404) {
             this.Edit = false;
@@ -95,6 +93,7 @@ export class EscolaridadesComponent implements OnInit {
       }
       this.Registros.emit(data);
     }
+    this.Add.emit(false);
   }
 
   getCatalogos() {
@@ -109,7 +108,6 @@ export class EscolaridadesComponent implements OnInit {
   }
 
   ngAfterContentInit() {
-    debugger;
     if (this.escolaridad.get('id').value != 0) {
       this.Escolaridad = this.escolaridad.get('escolaridad').value;
       this.Nivel = this.escolaridad.get('nivel').value;
@@ -133,19 +131,21 @@ export class EscolaridadesComponent implements OnInit {
     this.isActionEdit = true;
   }
 
+
   Remove() {
     if (!this.isActionEdit) {
       this.remove.emit(this.index);
       this.Add.emit(false);
-      if(this.IdFormato != null){
+      if (this.IdFormato != null && this.escolaridad.get('id').value != null) {
         var obj = {
           id: this.escolaridad.get('id').value
         }
         this._servicePerfilR.deleteEscolaridad(obj).subscribe(data => {
-          if(data != 404){
-            this.functionCreateAlert('info', false );
+          if (data != 404) {
+            this.remove.emit(this.index);
+            this.Add.emit(false);
           }
-          else{
+          else {
             this.functionCreateAlert('erro');
           }
         });
@@ -159,35 +159,35 @@ export class EscolaridadesComponent implements OnInit {
 
   }
 
-  functionCreateAlert(type: string, edit?: boolean){
+  functionCreateAlert(type: string, edit?: boolean) {
     this.ShowAlert = true;
-    switch(type){
+    switch (type) {
       case 'success':
-        if(edit){
+        if (edit) {
           this.MsgAlert = 'Se actualizo la escolaridad del Perfil de Reclutamiento.'
         }
-        else{
+        else {
           this.MsgAlert = 'Se agregó una nueva escolaridad el Perfil de Reclutamiento.'
         }
-          this.TypeAlert = type;
+        this.TypeAlert = type;
 
         break;
       case 'error':
-          this.TypeAlert = type;
-          this.MsgAlert = 'Algo salió mal, por favor intente de nuevo.'
+        this.TypeAlert = type;
+        this.MsgAlert = 'Algo salió mal, por favor intente de nuevo.'
         break;
       case 'info':
-          this.TypeAlert = type;
-          this.MsgAlert = 'La escolaridad se elimno correctamente.'
+        this.TypeAlert = type;
+        this.MsgAlert = 'La escolaridad se elimno correctamente.'
         break;
     }
     setTimeout(() => {
       this.ShowAlert = false;
-    }, 7000);
+    }, 3000);
   }
 
-   //#region  CREACION DE Alerta
+  //#region  CREACION DE Alerta
 
-   //#endregion
+  //#endregion
 
 }

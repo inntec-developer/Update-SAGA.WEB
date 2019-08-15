@@ -1,0 +1,31 @@
+<!-- <div class="container"> -->
+  <form [formGroup]="psicometria" id="index">
+    <section [hidden]="!Edit">
+      <div class="row">
+        <mat-form-field class="col-4">
+          <mat-select #t1 placeholder="Psicometria" formControlName="psicometriaId"
+            (selectionChange)="getPsicometria()" required>
+            <mat-option *ngFor="let x of Psicometrias" [value]="x.id">
+              {{x.tipoPsicometria}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-4">
+          <input matInput type="text"  placeholder="Cantidad" [disabled]="true" [(ngModel)]="Descipcion">
+        </mat-form-field>
+        <section class="col-2">
+          <em class="fa fa-close text-danger em-button float-left" (click)="Remove()"></em>
+          <em class="fa fa-check text-success em-button float-left" (click)="Save()" *ngIf="beneficio.valid"></em>
+        </section>
+      </div>
+    </section>
+    <div [hidden]="Edit" class="col-12">
+      <strong class="text-primary">Psicometria: </strong> <label>{{Psicometria | uppercase}} </label> -
+      <strong class="text-primary">Descripci&oacute;n: </strong><label>{{Descipcion | moneda: '$'}}</label>
+      <em class="fa fa-pencil text-info" (click)="OnEdit(); Edit = true"></em>
+      <em class="fa fa-close text-danger em-button" (click)="Remove()"></em>
+      <alert [type]="TypeAlert" [hidden]="ShowAlert == false">
+        <strong>{{MsgAlert | uppercase}}</strong>
+      </alert>
+    </div>
+  </form>

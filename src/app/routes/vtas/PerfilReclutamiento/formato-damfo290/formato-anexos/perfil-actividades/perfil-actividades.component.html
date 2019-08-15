@@ -1,0 +1,20 @@
+<form [formGroup]="ActividadArray">
+  <section class="col-12">
+    <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
+    <strong class="text-warning">Principales actividades a desarrollar</strong>
+    <span class="fa fa-plus em-button text-primary float-right"
+      (click)="AddActividad()"></span>
+    <mat-divider></mat-divider>
+  </section>
+  <section>
+    <div *ngFor="let actividad of ActividadArray['controls'].actividad['controls']; let i=index">
+      <div formArrayName="actividad">
+        <form [formGroupName]="i">
+          <actividades [IdFormato]="IdFormato" [group]="ActividadArray.controls.actividad.controls[i]" [Index]="i"
+            (Add)="Agregar($event)" (Remove)="removeActivdad($event)" (Registros)="getRegistros($event)">
+          </actividades>
+        </form>
+      </div>
+    </div>
+  </section>
+</form>

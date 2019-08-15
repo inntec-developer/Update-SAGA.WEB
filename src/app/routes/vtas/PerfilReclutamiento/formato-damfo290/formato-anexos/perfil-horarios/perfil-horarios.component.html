@@ -1,0 +1,19 @@
+<form [formGroup]="HorarioArray">
+    <section class="col-12">
+      <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
+      <strong class="text-warning">Horarios</strong> <span class="fa fa-plus em-button text-primary float-right"
+        (click)="AddHorario()"></span>
+      <mat-divider></mat-divider>
+    </section>
+    <section>
+      <div *ngFor="let horario of HorarioArray['controls'].horario['controls']; let i=index">
+        <div formArrayName="horario">
+          <form [formGroupName]="i">
+            <horarios [IdFormato]="IdFormato" [group]="HorarioArray.controls.horario.controls[i]" [Index]="i"
+              (Add)="Agregar($event)" (Remove)="removeHorario($event)" (Registros)="getRegistros($event)">
+            </horarios>
+          </form>
+        </div>
+      </div>
+    </section>
+  </form>

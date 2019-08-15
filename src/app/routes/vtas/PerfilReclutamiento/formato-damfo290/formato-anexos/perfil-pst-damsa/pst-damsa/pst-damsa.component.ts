@@ -1,0 +1,196 @@
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+
+import { CatalogosService } from '../../../../../../../service';
+import { FormGroup } from '@angular/forms';
+import { PerfilReclutamientoService } from '../../../../../../../service/PerfilReclutamiento/perfil-reclutamiento.service';
+import { SettingsService } from '../../../../../../../core/settings/settings.service';
+
+@Component({
+  selector: 'pst-damsa',
+  templateUrl: './pst-damsa.component.html',
+  styleUrls: ['./pst-damsa.component.scss'],
+  providers: [CatalogosService, PerfilReclutamientoService]
+})
+export class PstDamsaComponent implements OnInit {
+  @Input('IdFormato') public IdFormato: any;
+  @Input('group') public psicometria: FormGroup;
+  @Input('Index') public index: number;
+  @Output('Remove') public remove = new EventEmitter();
+  @Output('Add') public Add = new EventEmitter();
+  @Output('Registros') public Registros = new EventEmitter();
+
+  Psicometrias: any;
+
+  PsicometriaId: any;
+  Psicometria: any;
+  Descipcion: any;
+
+  PsicometriaIdAux: any;
+  PsicometriaAux: any;
+  DescipcionAux: any;
+
+  Edit: boolean = false;
+  isActionEdit: boolean = false;
+  ShowAlert: boolean = false;
+
+
+  TypeAlert: string = '';
+  MsgAlert: string = '';
+
+  constructor(
+    private _serviceCatalogos: CatalogosService,
+    private _servicePerfilR: PerfilReclutamientoService,
+    private _setting: SettingsService,
+  ) {
+    this.getCatalogos();
+  }
+
+  ngOnInit() {
+  }
+
+  ngAfterContentInit(): void {
+    if (this.psicometria.get('id').value != 0) {
+      this.Psicometria = this.psicometria.get('psicometria').value;
+      this.Descipcion = this.psicometria.get('descripcion').value;
+      this.PsicometriaId = this.psicometria.get('psicometriaId').value;
+    } else {
+      this.Edit = true;
+    }
+  }
+
+  Save() {
+    if (this.IdFormato != null) {
+      var obj = {
+        id: this.psicometria.get('id').value || null,
+        psicometriaId: this.psicometria.get('psicometriaId').value,
+        Usuario: this._setting.user.usuario,
+        DAMFO290Id: this.IdFormato,
+      }
+      if (!this.isActionEdit) {
+        obj['action'] = 'create';
+        this._servicePerfilR.CrudPsicometriaDamsa(obj).subscribe(x => {
+          if (x != 404) {
+            if (x != 300) {
+              this.psicometria.controls['id'].setValue(x);
+              this.Edit = false;
+              this.functionCreateAlert('success', false);
+            } else {
+              this.functionCreateAlert('info', false);
+            }
+          } else {
+            this.functionCreateAlert('error');
+          }
+        });
+      }
+      else {
+        obj['action'] = 'update';
+        this._servicePerfilR.CrudPsicometriaDamsa(obj).subscribe(x => {
+          if (x != 404) {
+            if (x != 300) {
+              this.Edit = false;
+              this.isActionEdit = false;
+              this.functionCreateAlert('success', true);
+            } else {
+              this.functionCreateAlert('info', false);
+            }
+          } else {
+            this.functionCreateAlert('error');
+          }
+        });
+      }
+    }
+    else {
+      var data = {
+        isEdit: this.isActionEdit,
+        index: this.index,
+        psicometriaId: this.psicometria.get('psicometriaId').value,
+        UsuarioAlta: this._setting.user.usuario,
+      }
+      if (!this.isActionEdit) {
+        this.Add.emit(false);
+        this.Edit = false;
+      } else {
+        this.Edit = false;
+        this.isActionEdit = false;
+      }
+      this.Registros.emit(data);
+    }
+    this.Add.emit(false);
+  }
+
+  OnEdit() {
+    this.PsicometriaAux = this.Psicometria;
+    this.DescipcionAux = this.Descipcion;
+    this.PsicometriaIdAux = this.PsicometriaId;
+    this.isActionEdit = true;
+  }
+
+  getPsicometria() {
+    let index = this.Psicometrias.findIndex(x => x.id == this.psicometria.get('psicometriaId').value);
+    this.Psicometria = this.Psicometrias[index]['tipoPsicometria'];
+    this.Descipcion = this.Psicometria[index['descripcion']];
+  }
+
+  Remove() {
+    if (!this.isActionEdit) {
+      this.remove.emit(this.index);
+      this.Add.emit(false);
+      if (this.IdFormato != null && this.psicometria.get('id').value != null) {
+        var obj = {
+          id: this.psicometria.get('id').value,
+          action: 'delete'
+        }
+        this._servicePerfilR.CrudPsicometriaDamsa(obj).subscribe(data => {
+          if (data != 404) {
+            this.remove.emit(this.index);
+            this.Add.emit(false);
+          } else {
+            this.functionCreateAlert('erro');
+          }
+        });
+      }
+    } else {
+      this.Psicometria = this.PsicometriaAux;
+      this.Descipcion = this.DescipcionAux;
+      this.psicometria.patchValue({
+        psicometriaId: this.PsicometriaAux
+      });
+      this.isActionEdit = false;
+      this.Edit = false;
+    }
+  }
+
+  getCatalogos() {
+    this._serviceCatalogos.getCatalogoForId(22).subscribe(element => {
+      this.Psicometrias = element;
+    });
+  }
+
+  functionCreateAlert(type: string, edit?: boolean) {
+    this.ShowAlert = true;
+    switch (type) {
+      case 'success':
+        if (edit) {
+          this.MsgAlert = 'Se actualizo la Psicometría del Perfil de Reclutamiento.'
+        }
+        else {
+          this.MsgAlert = 'Se agregó una nueva Psicometría el Perfil de Reclutamiento.'
+        }
+        this.TypeAlert = type;
+
+        break;
+      case 'error':
+        this.TypeAlert = type;
+        this.MsgAlert = 'Algo salió mal, por favor intente de nuevo.'
+        break;
+      case 'info':
+        this.TypeAlert = type;
+        this.MsgAlert = 'La Psicometría ya existe, intento con otro.'
+        break;
+    }
+    setTimeout(() => {
+      this.ShowAlert = false;
+    }, 3000);
+  }
+
+}

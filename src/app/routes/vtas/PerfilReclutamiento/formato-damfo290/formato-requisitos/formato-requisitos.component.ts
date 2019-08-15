@@ -1,12 +1,8 @@
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-import { map, startWith } from 'rxjs/operators';
 
 import { CatalogosService } from '../../../../../service';
-import { Observable } from 'rxjs';
 import { PerfilReclutamientoService } from './../../../../../service/PerfilReclutamiento/perfil-reclutamiento.service';
 import { SettingsService } from '../../../../../core/settings/settings.service';
 
@@ -23,7 +19,7 @@ export class FormatoRequisitosComponent implements OnInit {
   @ViewChild('AptitudtInput') AptitudtInput: ElementRef;
   @Input() IdFormato: any;
   EditPerfil: boolean = false;
-  isPrueba: boolean = false;
+  isContratoPrueba: boolean = false;
   public formEncabezado: FormGroup;
 
   Areas: any;
@@ -119,7 +115,7 @@ export class FormatoRequisitosComponent implements OnInit {
         });
 
         if(element['contratoInicialId'] == 2){
-          this.isPrueba = true;
+          this.isContratoPrueba = true;
         }
 
         this.apt= aptitudes;
@@ -191,7 +187,7 @@ export class FormatoRequisitosComponent implements OnInit {
 
   getContrato(){
     if(this.formEncabezado.get('Contrato').value == 2 ){
-      this.isPrueba = true
+      this.isContratoPrueba = true
     }
   }
 
