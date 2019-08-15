@@ -79,15 +79,15 @@
                             <div class="row text-center">
                                 <div class="col-4">
                                     <p class="text-bold">POSICIONES</p>
-                                    <div class="sparkline inline mr-2" [sparkline]="sparkOptionsWarning" values="{{t.totalPos}}"></div>
+                                    <div class="sparkline inline mr-2" [sparkline]="sparkOptionsInfo" values="t.totalPos"></div>
                                 </div>
                                 <div class="col-4">
-                                    <p class="text-bold">TASKS</p>
-                                    <div class="h3 m-0">26</div>
+                                    <p class="text-bold">CUBIERTAS</p>
+                                    <div class="sparkline inline mr-2" [sparkline]="sparkOptionsSuccess" values="t.totalCub"></div>
                                 </div>
                                 <div class="col-4">
-                                    <p class="text-bold">AVAILABITY</p>
-                                    <div class="sparkline inline mr-2" [sparkline]="sparkOptionsWarning" values="70,30"></div>
+                                    <p class="text-bold">FALTANTES</p>
+                                    <div class="sparkline inline mr-2" [sparkline]="sparkOptionsWarning" values="totalFal"></div>
                                 </div>
                             </div>
                         </div>

@@ -1,5 +1,5 @@
-import { element } from 'protractor';
 
+import { ColorsService } from '../../../shared/colors/colors.service';
 import { EquiposTrabajoService } from './../../../service/EquiposDeTrabajo/equipos-trabajo.service';
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
@@ -35,7 +35,32 @@ export class PantallaGGComponent implements OnInit {
     '#C5FF60'
   ];
   urlFoto: string = ApiConection.ServiceUrlFotoUser;
-  constructor(private _service: EquiposTrabajoService) { }
+
+  sparkOptionsInfo = {
+    type: 'pie',
+    sliceColors: [this.colors.byName('gray-lighter'), this.colors.byName('info')],
+    height: 24
+};
+
+sparkOptionsWarning = {
+    type: 'pie',
+    sliceColors: [this.colors.byName('gray-lighter'), this.colors.byName('warning')],
+    height: 24
+};
+
+sparkOptionsSuccess = {
+    type: 'pie',
+    sliceColors: [this.colors.byName('gray-lighter'), this.colors.byName('success')],
+    height: 24
+};
+
+sparkOptionsDanger = {
+    type: 'pie',
+    sliceColors: [this.colors.byName('gray-lighter'), this.colors.byName('danger')],
+    height: 24
+};
+
+  constructor(private _service: EquiposTrabajoService, public colors: ColorsService) { }
 
   ngOnInit() {
     this.GetRport();
