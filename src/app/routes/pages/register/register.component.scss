@@ -3,35 +3,21 @@
   width: 700px !important;
 }
 
-.modal {
-
-  /* other stuff we already covered */
-
-  
-  max-width: 100%;
-  max-height: 100%;
-  display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    top: 50%;
-    left: 50%;
-    z-index: 9999; /* Sit on top */
-
-
-
-  transform: translate(-50%, -50%);
-
-  
-}
-
-.modal h4 
+a:hover
 {
-  color: #e91e63;
+    text-decoration: none;
 }
+
+.bg-info
+{
+    background-color: #23B7E5;
+}
+
 .modal-content {
   background-color: #fefefe;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
+  width: 90%;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }

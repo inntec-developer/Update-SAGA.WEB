@@ -168,8 +168,13 @@ export class SeguimientoTicketComponent implements OnInit {
           setInterval(() => this.minutosEnAtencion += 1, 60000);
           this.GetFilaTickets();
         }
-        else {
+        else if (data == 417)
+        {
+          this.popToast('error', 'Seguimiento', 'Ocurrio un error. se puede deber a que la requisicion no pertenece al reclutador');
+          this.Reinciar();
 
+        }
+        else {
           this.Reinciar();
           this.atender = true;
         }
@@ -183,6 +188,12 @@ export class SeguimientoTicketComponent implements OnInit {
           setInterval(() => this.minutosEnAtencion += 1, 60000);
           this.GetFilaTickets();
         }
+        else if (data == 417)
+        {
+          this.popToast('error', 'Seguimiento', 'Ocurrio un error. se puede deber a que la requisicion no pertenece al reclutador');
+          this.Reinciar();
+
+        }
         else {
           this.popToast('warning', 'Seguimiento', 'No hay mas citas en espera');
           this.Reinciar();
@@ -195,24 +206,30 @@ export class SeguimientoTicketComponent implements OnInit {
 
   public Finalizar(ticketId, estatus)
   {
-    this._service.UpdateStatusTicket(ticketId, estatus, sessionStorage.getItem('moduloId')).subscribe(data => {
-      //this.GetTicket(ticketId)
-      this.Reinciar();
-      this.minutosEnAtencion = 0;
-    });
+      this._service.UpdateStatusTicket(ticketId, estatus, sessionStorage.getItem('moduloId')).subscribe(data => {
+        //this.GetTicket(ticketId)
+        this.Reinciar();
+        this.minutosEnAtencion = 0;
+      });
   }
 
   GetHorarioRequis(estatusTicket) {
-    if (this.ticket[0].candidato[0].estatusId != 27) {
-      this.service.GetHorariosRequiConteo(this.ticket[0].requisicionId).subscribe(data => {
-        var aux = data.filter(element => !element.vacantes)
+    if(this.ticket[0].candidato.length > 0)
+    {
+      if (this.ticket[0].candidato[0].estatusId != 27) {
+        this.service.GetHorariosRequiConteo(this.ticket[0].requisicionId).subscribe(data => {
+          var aux = data.filter(element => !element.vacantes)
 
-        if (aux.length == 0) {
-          aux = [{ id: 0, nombre: "Los horarios ya están cubiertos" }]
-        }
+          if (aux.length == 0) {
+            aux = [{ id: 0, nombre: "Los horarios ya están cubiertos" }]
+          }
 
-        this.OpenDlgHorarios(aux, 18, 'ENTREVISTA RECLUTAMIENTO', this.ticket[0].requisicionId, estatusTicket);
-      })
+          this.OpenDlgHorarios(aux, 18, 'ENTREVISTA RECLUTAMIENTO', this.ticket[0].requisicionId, estatusTicket);
+        })
+      }
+      else {
+        this.Finalizar(this.ticket[0].ticketId, estatusTicket);
+      }
     }
     else {
       this.Finalizar(this.ticket[0].ticketId, estatusTicket);
@@ -479,7 +496,7 @@ export class SeguimientoTicketComponent implements OnInit {
 
   registrarUsuario() {
     let dialogDlt = this.dialog.open(RegistroReclutadorComponent, {
-      width: '45%',
+      width: '55%',
       height: 'auto',
       disableClose: true
     });

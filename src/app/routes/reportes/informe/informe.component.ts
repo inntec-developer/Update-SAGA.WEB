@@ -70,7 +70,7 @@ export class InformeComponent implements OnInit {
  
    public myDate: any = new Date();
   date = new FormControl(new Date());
- // date2 = new FormControl(new Date());
+  date2 = new FormControl(new Date());
  
   constructor(
     private Rutas: ActivatedRoute,
@@ -169,6 +169,8 @@ export class InformeComponent implements OnInit {
  
     document.oncontextmenu=null
   }
+
+
  
   ConvierteFecha(dateTime){
     if(dateTime != undefined){
@@ -422,6 +424,6 @@ GeneraEstatusBolsa(){
  
  }
  
-  date2 = new FormControl(this.myDate);
+  
  
 }

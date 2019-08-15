@@ -160,7 +160,7 @@ export class AddPersonaComponent implements OnInit {
             }
             else
             {
-              this.popToast('error', 'Actualizar Datos', 'Ocurrió un error al intentar borrar datos');
+              this.popToast('error', 'Actualizar Datos', 'Ocurrió un error al intentar borrar datos. Esto se debe a que el usuario ya cuenta con algun movimiento en su cuenta');
             }
       
           });

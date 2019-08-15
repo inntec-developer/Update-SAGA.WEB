@@ -106,7 +106,7 @@
         </td>
           <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar" >
               <span (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
-                  {{row.nombre}}
+                  {{row.nombre | uppercase}}
               </span>
               <input [(ngModel)]="row.nombre" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'nombre', rowIndex)" *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=row.nombre>
               <span *ngIf="editing[rowIndex + '-nombre']">
@@ -119,7 +119,7 @@
           </td>
           <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar" >
               <span  (dblclick)="editing[rowIndex + '-apellidoPaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoPaterno']">
-                  {{row.apellidoPaterno}}
+                  {{row.apellidoPaterno | uppercase}}
               </span>
               <input [(ngModel)]="row.apellidoPaterno" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'apellidoPaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoPaterno']" type="text" [value]=row.apellidoPaterno>
               <span *ngIf="editing[rowIndex + '-apellidoPaterno']">
@@ -132,7 +132,7 @@
           </td>
           <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
               <span (dblclick)="editing[rowIndex + '-apellidoMaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoMaterno']">
-                  {{row.apellidoMaterno}}
+                  {{row.apellidoMaterno | uppercase}}
               </span>
               <input [(ngModel)]="row.apellidoMaterno" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'apellidoMaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoMaterno']" type="text" [value]=row.apellidoMaterno>
               <span *ngIf="editing[rowIndex + '-apellidoMaterno']">

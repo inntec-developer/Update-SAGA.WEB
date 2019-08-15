@@ -65,7 +65,6 @@ export class EditorArteRequisicionesComponent implements OnInit {
     dialogCnc.afterClosed().subscribe(result => {
       this._service.GetBG('ArteRequi/BG/' + result.nom).subscribe(r => {
         let type = result.type.replace('.', '');
-        debugger;
         this.bg = 'data:image/'+ type + ';base64,' + r;
       });
     })

@@ -311,6 +311,8 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static GetClavesCandidatos = 'examenes/getClavesCandidatos'
   public static GetExamenesMedicos = 'examenes/examenesMedicos'
 
+  /*Equipos de Trabajo*/
+  public static GetRportGG = "Equipos/getRportGG"
   /*Reportes */
   public static GetInforme = 'reporte/Informe'
   public static GetEmpresas = 'reporte/empresas'

@@ -55,7 +55,8 @@ export class RegisterComponent implements OnInit {
         private service: AdminServiceService,
         private authService: AuthService,
         private router: Router) {
-        let password = new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9]{6,10}$')]));
+        // let password = new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9]{6,10}$')]));
+        let password = new FormControl('', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(10)]));
         let certainPassword = new FormControl('', CustomValidators.equalTo(password));
 
         this.passwordForm = fb.group({
