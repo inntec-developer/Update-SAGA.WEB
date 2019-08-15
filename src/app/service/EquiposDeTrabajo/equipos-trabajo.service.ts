@@ -14,8 +14,10 @@ export class EquiposTrabajoService {
 
   constructor(private _httpClient: HttpClient, private settings: SettingsService) { }
 
-  GetRportGG() :Observable<any>
+  GetRportGG(gg) :Observable<any>
   {
-    return this._httpClient.get(this.UrlGetRporGG)
+    let params = new HttpParams().set('gg', gg);
+    
+    return this._httpClient.get(this.UrlGetRporGG, {params: params})
   }
 }

@@ -1,12 +1,15 @@
 <div class="d-flex justify-content-around">
     <div class="card">
       <div class="card-body mat-elevation-z8">
+          <div>
           <canvas  id="canvas" ></canvas>
-      </div>
+        </div>
+  
           <hr>
           <div class="text-muted float-right">
-              TOTAL DE POSICIONES <small class="badge badge-pill badge-info">{{reporte.totalPos}}</small>
+              TOTAL DE POSICIONES <small class="badge badge-pill badge-info">{{totalPos}}</small>
           </div>
+        </div>
       </div>
   
     <div class="card">
@@ -40,10 +43,58 @@
             </div>
             <hr>
             <div class="text-muted float-right">
-                TOTAL DE CUMPLIMIENTO <small class="badge badge-pill badge-info">{{cumplimiento}}</small>
+                TOTAL DE CUMPLIMIENTO <small class="badge badge-pill badge-info">{{totalCump}}</small>
             </div>
         </div>
       
       </div>
       
+    </div>
+    <div class="row">
+        <ng-container *ngFor="let t of reporte">
+            <div class="col-lg-4 col-md-6">
+                <div class="card border" [style.border-color]="t.bg">
+                    <div class="card-header">
+                        <div class="card-title font-weight-bold" [style.color]="t.bg">{{t.nombre | uppercase}}</div>
+                        <hr>
+                    </div>
+                   
+                    <div class="card-body">
+                        <ng-container *ngFor="let r of t.resumen">
+                        <a *ngIf="r.tipoUsuario == 5" class="inline" tooltip="Lider - {{r.nombre}}">
+                            <img class="rounded-circle thumb48" src="{{urlFoto}}{{r.clave}}.jpg"  (error)="errorImg()" />
+                        </a>
+                        <a class="inline" tooltip="Ejecutivo de reclutamiento - {{r.nombre}}">
+                                <img class="rounded-circle thumb24" src="{{urlFoto}}{{r.clave}}.jpg" (error)="errorImg()" />
+                        </a>
+                        </ng-container>
+                        <hr>
+                    </div>
+                    <div class="card-body bb text-center">
+                        <div tooltip="{{t.totalCump}} %">
+                            <progressbar class="progress-xs m-0" value="{{t.totalCump}}" type="info"></progressbar>
+                        </div>
+                    </div>
+                    <div class="card-body bb">
+                            <div class="row text-center">
+                                    <div class="col-4">
+                                            <p class="text-bold">CUBIERTAS</p>
+                                            <div class="sparkline inline mr-2" [sparkline]="sparkOptionsSuccess" values="{{t.totalPos}}, {{t.totalCub}}"></div>
+                                            <br/><small class="text-muted m-0">{{t.totalCub}}</small>
+                                        </div>
+                                        <div class="col-4">
+                                                <p class="text-bold">POSICIONES</p>
+                                                <div class="h3 m-0">{{t.totalPos}}</div>
+                                            </div>
+                                <div class="col-4">
+                                    <p class="text-bold">FALTANTES</p>
+                                    <div class="sparkline inline mr-2" [sparkline]="sparkOptionsWarning" values="{{t.totalPos}}, {{t.totalFal}}"></div>
+                                    <br/> <small class="text-muted m-0">{{t.totalFal}}</small>
+                                </div>
+                            </div>
+                        </div>
+         
+                </div>
+            </div>
+        </ng-container>
     </div>
