@@ -79,8 +79,8 @@
                             <div class="row text-center">
                                     <div class="col-4">
                                             <p class="text-bold">CUBIERTAS</p>
-                                            <div class="sparkline inline mr-2" [sparkline]="sparkOptionsSuccess" values="{{t.totalCub}}, {{t.totalPos}}"></div>
-                                            <small class="text-muted m-0">{{t.totalCub}}</small>
+                                            <div class="sparkline inline mr-2" [sparkline]="sparkOptionsSuccess" values="{{t.totalPos}}, {{t.totalCub}}"></div>
+                                            <br/><small class="text-muted m-0">{{t.totalCub}}</small>
                                         </div>
                                         <div class="col-4">
                                                 <p class="text-bold">POSICIONES</p>
@@ -88,8 +88,8 @@
                                             </div>
                                 <div class="col-4">
                                     <p class="text-bold">FALTANTES</p>
-                                    <div class="sparkline inline mr-2" [sparkline]="sparkOptionsWarning" values="{{t.totalFal}}, {{t.totalPos}}"></div>
-                                    <small class="text-muted m-0">{{t.totalFal}}</small>
+                                    <div class="sparkline inline mr-2" [sparkline]="sparkOptionsWarning" values="{{t.totalPos}}, {{t.totalFal}}"></div>
+                                    <br/> <small class="text-muted m-0">{{t.totalFal}}</small>
                                 </div>
                             </div>
                         </div>
