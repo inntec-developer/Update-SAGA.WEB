@@ -1,0 +1,44 @@
+<!-- <div class="container"> -->
+<form [formGroup]="beneficio" id="index">
+  <section [hidden]="!Edit">
+    <div class="row">
+      <mat-form-field class="col-3">
+        <mat-select #t1 placeholder="Tipo Beneficio" formControlName="tipoBeneficioId"
+          (selectionChange)="getTipoBeneficio()" required>
+          <mat-option *ngFor="let x of TiposBeneficios" [value]="x.id">
+            {{x.tipoBeneficio}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="col-2">
+        <mat-icon matPrefix>attach_money</mat-icon>
+        <input matInput #CantidadCtrl type="number" class="text-right" placeholder="Cantidad"
+          formControlName="cantidadId" required="">
+        <strong matSuffix>MXN.</strong>
+      </mat-form-field>
+      <mat-form-field class="col-5">
+        <textarea #message matInput maxlength="500" placeholder="Observaciones" rows="4"
+          formControlName="observacionesId"></textarea>
+        <mat-hint align="start">
+          <strong class="text-warning">Ingrese algúna Observación</strong>
+        </mat-hint>
+        <mat-hint align="end"><strong class="text-info">{{message.value.length}} / 500</strong></mat-hint>
+      </mat-form-field>
+      <section class="col-2">
+        <em class="fa fa-close text-danger em-button float-left" (click)="Remove()"></em>
+        <em class="fa fa-check text-success em-button float-left" (click)="Save()" *ngIf="beneficio.valid"></em>
+      </section>
+    </div>
+  </section>
+  <div [hidden]="Edit" class="col-12">
+    <strong class="text-primary">Beneficio: </strong> <label>{{TipoBeneficio | uppercase}} </label> -
+    <strong class="text-primary">Cantidad: </strong><label>{{Cantidad | moneda: '$'}}</label> -
+    <strong class="text-primary">Observaciones: </strong><label>{{Observaciones | uppercase}}</label>
+    <em class="fa fa-pencil text-info" (click)="OnEdit(); Edit = true"></em>
+    <em class="fa fa-close text-danger em-button" (click)="Remove()"></em>
+    <alert [type]="TypeAlert" [hidden]="ShowAlert == false">
+      <strong>{{MsgAlert | uppercase}}</strong>
+    </alert>
+  </div>
+</form>
+<!-- </div> -->

@@ -267,7 +267,7 @@ export class DtDamfoComponent implements OnInit {
   }
 
   crearPerfil290(){
-    this._Router.navigate(['/ventas/formato290'], {skipLocationChange: true});
+    this._Router.navigate(['/ventas/formato290']/*,{skipLocationChange: true}*/);
   }
 
   editar290(){

@@ -27,10 +27,17 @@ export class PerfilReclutamientoService {
   private urlGetInfoCliente = ApiConection.ServiceUrl + ApiConection.GetInfoCliente;
   private urlGetClienteId = ApiConection.ServiceUrl + ApiConection.GetClienteId;
   private urlGetInfoPerfil = ApiConection.ServiceUrl + ApiConection.GetInfoPerfil;
+  private urlGetAnexosPerfil = ApiConection.ServiceUrl + ApiConection.GetAnexosPerfil;
 
   private urlAddEscolaridad = ApiConection.ServiceUrl + ApiConection.AddEscolaridad;
   private urlEditEscolaridad = ApiConection.ServiceUrl + ApiConection.EditEscolaridad;
-  public urlDeleteEscolaridad = ApiConection.ServiceUrl + ApiConection.DeleteEscolaridad;
+  private urlDeleteEscolaridad = ApiConection.ServiceUrl + ApiConection.DeleteEscolaridad;
+
+  private urlCrudBeneficio = ApiConection.ServiceUrl + ApiConection.CrudBeneficio;
+  private urlCrudHorarios = ApiConection.ServiceUrl + ApiConection.CrudHorario;
+  private UrlCrudActividades = ApiConection.ServiceUrl + ApiConection.CrudActividades;
+  private urlCrudObservaciones = ApiConection.ServiceUrl + ApiConection.CrudObservaciones;
+  private urlCrudPsicometriaDamsa = ApiConection.ServiceUrl + ApiConection.CrudPsicometriaDamsa
 
   constructor(
     private _httpClient: HttpClient
@@ -46,25 +53,50 @@ export class PerfilReclutamientoService {
     return this._httpClient.get<any>(this.urlGetInfoCliente, { params: params, headers: this.httpOptions.headers });
   }
 
-  getClienteId(perfilId: any) {
+  getClienteId(perfilId: any): Observable<any> {
     const params = new HttpParams().set('PerfilId', perfilId);
     return this._httpClient.get<any>(this.urlGetClienteId, { params: params, headers: this.httpOptions.headers });
   }
 
-  getInfoPerfil(perfilId: any){
+  getInfoPerfil(perfilId: any): Observable<any> {
     const params = new HttpParams().set('PerfilId', perfilId);
-    return this._httpClient.get<any>(this.urlGetInfoPerfil, {params: params, headers: this.httpOptions.headers});
+    return this._httpClient.get<any>(this.urlGetInfoPerfil, { params: params, headers: this.httpOptions.headers });
   }
 
-  addEscolaridad(data: any){
+  getAnexosPerfil(perfilId: any): Observable<any> {
+    const params = new HttpParams().set('PerfilId', perfilId);
+    return this._httpClient.get<any>(this.urlGetAnexosPerfil, { params: params, headers: this.httpOptions.headers });
+  }
+
+  addEscolaridad(data: any): Observable<any> {
     return this._httpClient.post<any>(this.urlAddEscolaridad, data, this.httpOptions);
   }
 
-  editEscolaridad(data: any){
+  editEscolaridad(data: any): Observable<any> {
     return this._httpClient.post<any>(this.urlEditEscolaridad, data, this.httpOptions);
   }
 
-  deleteEscolaridad(data: any){
+  deleteEscolaridad(data: any): Observable<any> {
     return this._httpClient.post<any>(this.urlDeleteEscolaridad, data, this.httpOptions);
+  }
+
+  CrudBeneficio(data: any): Observable<any> {
+    return this._httpClient.post<any>(this.urlCrudBeneficio, data, this.httpOptions);
+  }
+
+  CrudHorarios(data: any): Observable<any> {
+    return this._httpClient.post<any>(this.urlCrudHorarios, data, this.httpOptions);
+  }
+
+  CrudActividad(data: any): Observable<any> {
+    return this._httpClient.post<any>(this.UrlCrudActividades, data, this.httpOptions);
+  }
+
+  CrudObservacion(data: any): Observable<any>{
+    return this._httpClient.post<any>(this.urlCrudObservaciones, data, this.httpOptions);
+  }
+
+  CrudPsicometriaDamsa(data: any) :Observable<any>{
+    return this._httpClient.post<any>(this.urlCrudPsicometriaDamsa, data, this.httpOptions);
   }
 }

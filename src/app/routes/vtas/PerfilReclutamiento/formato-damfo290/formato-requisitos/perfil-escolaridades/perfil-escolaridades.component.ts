@@ -9,8 +9,7 @@ import { ToasterService } from 'angular2-toaster';
 @Component({
   selector: 'app-perfil-escolaridades',
   templateUrl: './perfil-escolaridades.component.html',
-  styleUrls: ['./perfil-escolaridades.component.scss'],
-  providers: [CatalogosService]
+  styleUrls: ['./perfil-escolaridades.component.scss']
 })
 export class PerfilEscolaridadesComponent implements OnInit {
   @Input() IdFormato: any;
@@ -19,9 +18,6 @@ export class PerfilEscolaridadesComponent implements OnInit {
   EscolaridadesNew = [];
 
   esNuevo: boolean = true;
-  // Escolaridades: any[];
-  // Niveles: any;
-
   private Add: boolean;
 
   // public formEscolaridades: FormGroup;
@@ -45,9 +41,6 @@ export class PerfilEscolaridadesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
-    debugger;
     if (this.IdFormato != null) {
       this.esNuevo = false;
       if (this.Escolaridades != null) {
@@ -93,17 +86,18 @@ export class PerfilEscolaridadesComponent implements OnInit {
   }
 
   getRegistros(data: any) {
-    debugger;
     if (!data['isEdit']) {
 
       this.EscolaridadesNew.push({
         escolaridadId: data['escolaridadId'],
-        estadoEstudioId: data['estadoEstudioId']
+        estadoEstudioId: data['estadoEstudioId'],
+        UsuarioAlta: this._settings['user']['usuario']
       });
     } else {
       let editRegistro = {
         escolaridadId: data['escolaridadId'],
-        estadoEstudioId: data['estadoEstudioId']
+        estadoEstudioId: data['estadoEstudioId'],
+        UsuarioAlta: this._settings['user']['usuario']
       };
       this.EscolaridadesNew[data['index']] = editRegistro;
     }

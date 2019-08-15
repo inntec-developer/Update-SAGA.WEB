@@ -1,3 +1,24 @@
-<p>
-  formato-anexos works!
-</p>
+<section #HorariosSt class="row">
+  <div class="col-12">
+    <app-perfil-horarios [IdFormato]="IdFormato" [Horarios]="Horarios" (HorariosEmt)="getHorarios($event)">
+    </app-perfil-horarios>
+  </div>
+</section>
+<br>
+<section #ActividadesSt class="row">
+  <div class="col-6">
+    <app-perfil-actividades [IdFormato]="IdFormato" [Actividades]="Actividades" (ActividadesEmt)="getActividades($event)">
+    </app-perfil-actividades>
+  </div>
+  <div class="col-6">
+    <app-perfil-observaciones [IdFormato]="IdFormato" [Observaciones]="Observaciones" (ObservacionesEmt)="getObservaciones($event)">
+    </app-perfil-observaciones>
+  </div>
+</section>
+<br>
+<section #BeneficiosSt class="row">
+  <div class="col-6">
+    <app-perfil-beneficios [IdFormato]="IdFormato" [Beneficios]="Beneficios" (BeneficiosEmt)="getBeneficios($event)">
+    </app-perfil-beneficios>
+  </div>
+</section>

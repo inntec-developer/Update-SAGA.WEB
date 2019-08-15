@@ -1,0 +1,21 @@
+<form [formGroup]="ObservacionesArray">
+  <section class="col-12">
+    <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
+    <strong class="text-warning">Observaciones de tipo confidencial, requisitos de cliente no publicables: (<small>Para consulta exclusiva del reclutador</small>)</strong>
+    <span class="fa fa-plus em-button text-primary float-right"
+      (click)="AddObservacion()"></span>
+    <mat-divider></mat-divider>
+  </section>
+  <section>
+    <div *ngFor="let observacion of ObservacionesArray['controls'].observacion['controls']; let i=index">
+      <div formArrayName="observacion">
+        <form [formGroupName]="i">
+          <observaciones [IdFormato]="IdFormato" [group]="ObservacionesArray.controls.observacion.controls[i]" [Index]="i"
+            (Add)="Agregar($event)" (Remove)="removeObservacion($event)" (Registros)="getRegistros($event)">
+          </observaciones>
+        </form>
+      </div>
+    </div>
+  </section>
+</form>
+
