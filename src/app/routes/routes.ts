@@ -1,3 +1,4 @@
+import { PantallaGGComponent } from './EquiposDeTrabajo/pantalla-gg/pantalla-gg.component';
 import { Error404Component } from './pages/error404/error404.component';
 import { Error500Component } from './pages/error500/error500.component';
 import { InicioKioscoComponent } from './pages/inicio-kiosco/inicio-kiosco.component';
@@ -46,6 +47,7 @@ export const routes = [
     { path: 'Tickets', component: TicketsInicioComponent },
     { path: 'VerTurno', component: VerTurnosComponent},
     { path: 'Principal', component: InicioKioscoComponent},
+    {path: 'Equipos', component: PantallaGGComponent},
 
 
     // Not found
