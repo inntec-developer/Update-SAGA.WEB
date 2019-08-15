@@ -77,17 +77,19 @@
                     </div>
                     <div class="card-body bb">
                             <div class="row text-center">
-                                <div class="col-4">
-                                    <p class="text-bold">POSICIONES</p>
-                                    <div class="sparkline inline mr-2" [sparkline]="sparkOptionsInfo" values="{{t.totalPos}},100"></div>
-                                </div>
-                                <div class="col-4">
-                                    <p class="text-bold">CUBIERTAS</p>
-                                    <div class="sparkline inline mr-2" [sparkline]="sparkOptionsSuccess" values="{{t.totalCub}}, 100"></div>
-                                </div>
+                                    <div class="col-4">
+                                            <p class="text-bold">CUBIERTAS</p>
+                                            <div class="sparkline inline mr-2" [sparkline]="sparkOptionsSuccess" values="{{t.totalCub}}, {{t.totalPos}}"></div>
+                                            <small class="text-muted m-0">{{t.totalCub}}</small>
+                                        </div>
+                                        <div class="col-4">
+                                                <p class="text-bold">POSICIONES</p>
+                                                <div class="h3 m-0">{{t.totalPos}}</div>
+                                            </div>
                                 <div class="col-4">
                                     <p class="text-bold">FALTANTES</p>
-                                    <div class="sparkline inline mr-2" [sparkline]="sparkOptionsWarning" values="{{t.totalFal}}, 100"></div>
+                                    <div class="sparkline inline mr-2" [sparkline]="sparkOptionsWarning" values="{{t.totalFal}}, {{t.totalPos}}"></div>
+                                    <small class="text-muted m-0">{{t.totalFal}}</small>
                                 </div>
                             </div>
                         </div>
