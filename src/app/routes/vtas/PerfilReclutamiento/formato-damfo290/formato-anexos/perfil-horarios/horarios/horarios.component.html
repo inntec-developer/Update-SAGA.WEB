@@ -51,11 +51,10 @@
         <em class="fa fa-check text-success em-button float-left" (click)="Save()" *ngIf="horario.valid"></em>
       </section>
     </div>
-    <alert [type]="TypeAlert" [hidden]="ShowAlert == false">
-      <strong>{{MsgAlert | uppercase}}</strong>
-    </alert>
   </section>
   <div [hidden]="Edit" class="col-12">
+    <strong *ngIf="activo" class="text-success"> ACTIVO - </strong>
+    <strong *ngIf="!activo" class="text-danger"> INACTIVO - </strong>
     <strong class="text-primary">Nombre: </strong> <label>{{nombre | uppercase}} </label> -
     <strong class="text-primary">De D&iacute;a: </strong><label>{{deDia}}</label> -
     <strong class="text-primary">A D&iacute;a: </strong><label>{{aDia}}</label> -
@@ -65,9 +64,9 @@
     <strong class="text-primary">Especificaciones: </strong><label>{{especificaciones | uppercase}}</label>
     <em class="fa fa-pencil text-info" (click)="OnEdit(); Edit = true"></em>
     <em class="fa fa-close text-danger em-button" (click)="Remove()"></em>
-    <alert [type]="TypeAlert" [hidden]="ShowAlert == false">
-      <strong>{{MsgAlert | uppercase}}</strong>
-    </alert>
   </div>
+  <alert [type]="TypeAlert" [hidden]="ShowAlert == false">
+    <strong>{{MsgAlert | uppercase}}</strong>
+  </alert>
 </form>
 <!-- </div> -->

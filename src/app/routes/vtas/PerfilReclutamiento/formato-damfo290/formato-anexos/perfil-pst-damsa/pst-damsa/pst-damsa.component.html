@@ -11,21 +11,21 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field class="col-4">
-          <input matInput type="text"  placeholder="Cantidad" [disabled]="true" [(ngModel)]="Descipcion">
+          <input matInput type="text"  placeholder="Descripción"  formControlName="descripcion">
         </mat-form-field>
         <section class="col-2">
           <em class="fa fa-close text-danger em-button float-left" (click)="Remove()"></em>
-          <em class="fa fa-check text-success em-button float-left" (click)="Save()" *ngIf="beneficio.valid"></em>
+          <em class="fa fa-check text-success em-button float-left" (click)="Save()" *ngIf="psicometria.valid"></em>
         </section>
       </div>
     </section>
     <div [hidden]="Edit" class="col-12">
       <strong class="text-primary">Psicometria: </strong> <label>{{Psicometria | uppercase}} </label> -
-      <strong class="text-primary">Descripci&oacute;n: </strong><label>{{Descipcion | moneda: '$'}}</label>
+      <strong class="text-primary">Descripci&oacute;n: </strong><label>{{Descripcion | uppercase}}</label>
       <em class="fa fa-pencil text-info" (click)="OnEdit(); Edit = true"></em>
       <em class="fa fa-close text-danger em-button" (click)="Remove()"></em>
-      <alert [type]="TypeAlert" [hidden]="ShowAlert == false">
-        <strong>{{MsgAlert | uppercase}}</strong>
-      </alert>
     </div>
+    <alert [type]="TypeAlert" *ngIf="ShowAlert">
+      <strong>{{MsgAlert | uppercase}}</strong>
+    </alert>
   </form>

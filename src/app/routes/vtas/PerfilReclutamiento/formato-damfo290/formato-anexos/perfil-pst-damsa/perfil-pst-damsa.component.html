@@ -1,4 +1,4 @@
-<form [formGroup]="PsicometriaArray">
+<form [formGroup]="PsicometriasArray">
   <section class="col-12">
     <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
     <strong class="text-warning">Psicometrias DAMSA</strong>
@@ -7,10 +7,10 @@
     <mat-divider></mat-divider>
   </section>
   <section>
-    <div *ngFor="let psicometria of PsicometriaArray['controls'].psicometria['controls']; let i=index">
+    <div *ngFor="let psicometria of PsicometriasArray['controls'].psicometria['controls']; let i=index">
       <div formArrayName="psicometria">
         <form [formGroupName]="i">
-          <pst-damsa [IdFormato]="IdFormato" [group]="PsicometriaArray.controls.psicometria.controls[i]" [Index]="i"
+          <pst-damsa [IdFormato]="IdFormato" [group]="PsicometriasArray.controls.psicometria.controls[i]" [Index]="i"
             (Add)="Agregar($event)" (Remove)="removePsicometria($event)" (Registros)="getRegistros($event)">
           </pst-damsa>
         </form>

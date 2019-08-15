@@ -15,9 +15,8 @@ export class FormatoAnexosComponent implements OnInit {
   Horarios: any[];
   Actividades: any[];
   Observaciones: any[];
-  PstDamsa: any[];
-  PstCliente: any[];
   PsicometriasD: any[];
+  PsicometriasC: any[]
 
   constructor(
     private _servicePerfilR: PerfilReclutamientoService,
@@ -64,12 +63,12 @@ export class FormatoAnexosComponent implements OnInit {
   }
 
   getPstDamsa(data :any){
-    this.PstDamsa = data;
+    this.PsicometriasD = data;
     console.log('Pst DAMSA', data);
   }
 
   getPstCliente(data :any){
-    this.PstCliente = data;
+    this.PsicometriasC = data;
     console.log('Pst Cliente', data);
   }
 }

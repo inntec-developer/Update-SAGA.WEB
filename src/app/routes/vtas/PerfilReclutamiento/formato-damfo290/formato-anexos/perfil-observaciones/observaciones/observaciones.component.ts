@@ -41,7 +41,6 @@ export class ObservacionesComponent implements OnInit {
     //Called after ngOnInit when the component's or directive's content has been initialized.
     //Add 'implements AfterContentInit' to the class.
     if (this.observacion.get('id').value != 0) {
-      debugger;
       this.Observacion = this.observacion.get('observacion').value;
     } else {
       this.Edit = true;

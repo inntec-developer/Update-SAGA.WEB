@@ -23,7 +23,7 @@ export class PstDamsaComponent implements OnInit {
 
   PsicometriaId: any;
   Psicometria: any;
-  Descipcion: any;
+  Descripcion: any;
 
   PsicometriaIdAux: any;
   PsicometriaAux: any;
@@ -50,8 +50,9 @@ export class PstDamsaComponent implements OnInit {
 
   ngAfterContentInit(): void {
     if (this.psicometria.get('id').value != 0) {
+      debugger;
       this.Psicometria = this.psicometria.get('psicometria').value;
-      this.Descipcion = this.psicometria.get('descripcion').value;
+      this.Descripcion = this.psicometria.get('descripcion').value;
       this.PsicometriaId = this.psicometria.get('psicometriaId').value;
     } else {
       this.Edit = true;
@@ -66,6 +67,7 @@ export class PstDamsaComponent implements OnInit {
         Usuario: this._setting.user.usuario,
         DAMFO290Id: this.IdFormato,
       }
+      this.PsicometriaId = obj['psicometriaId'];
       if (!this.isActionEdit) {
         obj['action'] = 'create';
         this._servicePerfilR.CrudPsicometriaDamsa(obj).subscribe(x => {
@@ -120,15 +122,23 @@ export class PstDamsaComponent implements OnInit {
 
   OnEdit() {
     this.PsicometriaAux = this.Psicometria;
-    this.DescipcionAux = this.Descipcion;
+    this.DescipcionAux = this.Descripcion;
     this.PsicometriaIdAux = this.PsicometriaId;
+    this.psicometria.patchValue({
+      psicometriaId: this.PsicometriaId,
+      descipcion: this.Descripcion
+    });
     this.isActionEdit = true;
   }
 
   getPsicometria() {
+    debugger;
     let index = this.Psicometrias.findIndex(x => x.id == this.psicometria.get('psicometriaId').value);
     this.Psicometria = this.Psicometrias[index]['tipoPsicometria'];
-    this.Descipcion = this.Psicometria[index['descripcion']];
+    this.Descripcion = this.Psicometrias[index]['descripcion'];
+    this.psicometria.patchValue({
+      descripcion: this.Descripcion
+    });
   }
 
   Remove() {
@@ -150,10 +160,12 @@ export class PstDamsaComponent implements OnInit {
         });
       }
     } else {
+      this.PsicometriaId = this.PsicometriaIdAux
       this.Psicometria = this.PsicometriaAux;
-      this.Descipcion = this.DescipcionAux;
+      this.Descripcion = this.DescipcionAux;
       this.psicometria.patchValue({
-        psicometriaId: this.PsicometriaAux
+        psicometriaId: this.PsicometriaId,
+        descripcion: this.Descripcion
       });
       this.isActionEdit = false;
       this.Edit = false;
@@ -180,12 +192,13 @@ export class PstDamsaComponent implements OnInit {
 
         break;
       case 'error':
+
+        this.MsgAlert = 'Algo salió mal, por favor intente de nuevo.';
         this.TypeAlert = type;
-        this.MsgAlert = 'Algo salió mal, por favor intente de nuevo.'
         break;
       case 'info':
+        this.MsgAlert = 'La Psicometría ya existe, intento con otro.';
         this.TypeAlert = type;
-        this.MsgAlert = 'La Psicometría ya existe, intento con otro.'
         break;
     }
     setTimeout(() => {

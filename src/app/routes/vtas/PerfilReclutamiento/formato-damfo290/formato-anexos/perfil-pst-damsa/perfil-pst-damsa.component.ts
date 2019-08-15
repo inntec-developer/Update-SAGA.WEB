@@ -26,6 +26,7 @@ export class PerfilPstDamsaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    debugger;
     this.IdFormato = this.IdFormato || null;
     this.PsicometriasArray = this.fb.group({
       psicometria: this.fb.array([])
@@ -34,8 +35,6 @@ export class PerfilPstDamsaComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     debugger;
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
     if (this.IdFormato != null) {
       this.esNuevo = false;
       if (this.Psicometrias != null) {
@@ -44,23 +43,24 @@ export class PerfilPstDamsaComponent implements OnInit {
     }
   }
 
-  private PopulateForm(actividad: any) {
+  private PopulateForm(psicometria: any) {
     debugger;
-    for (let x in actividad) {
+    for (let x in psicometria) {
       this.AddPsicometria(1);
     }
     this.PsicometriasArray.patchValue({
-      observacion: this.Psicometrias
+      psicometria: this.Psicometrias
     });
   }
 
-  AddPsicometria(Psicometria?: any) {
+  AddPsicometria(Psicometria: any) {
+    debugger;
     if (this.Add) {
       this.Add = true;
       return;
     } else {
       Psicometria > 0 ? this.Add = false : this.Add = true;
-      const control = <FormArray>this.PsicometriasArray.controls['observacion'];
+      const control = <FormArray>this.PsicometriasArray.controls['psicometria'];
       const addCtrl = this.initPsicometria();
       control.push(addCtrl);
     }
@@ -70,7 +70,7 @@ export class PerfilPstDamsaComponent implements OnInit {
     return  this.fb.group({
       id: ['0'],
       psicometria: [],
-      descripcion: [],
+      descripcion: [{value:'', disabled: true}, [Validators.required]],
       psicometriaId: ['', [Validators.required, Validators.maxLength(200)]]
     });
   }
@@ -96,7 +96,7 @@ export class PerfilPstDamsaComponent implements OnInit {
   }
 
   removePsicometria(i: number) {
-    const control = <FormArray>this.PsicometriasArray.controls['observacion'];
+    const control = <FormArray>this.PsicometriasArray.controls['psicometria'];
     control.removeAt(i);
     this.PsicometriasNew.splice(i, 1);
     this.PsicometriasEmt.emit(this.PsicometriasNew);

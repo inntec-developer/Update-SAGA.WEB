@@ -30,9 +30,9 @@
       <strong class="text-primary">Nivel: </strong><label>{{Nivel}}</label>
       <em class="fa fa-pencil text-info" (click)="OnEdit(); Edit = true"></em>
       <em class="fa fa-close text-danger em-button" (click)="Remove()"></em>
-      <alert [type]="TypeAlert" [hidden]="ShowAlert == false">
-        <strong>{{MsgAlert | uppercase}}</strong>
-      </alert>
     </div>
+    <alert [type]="TypeAlert" [hidden]="ShowAlert == false">
+      <strong>{{MsgAlert | uppercase}}</strong>
+    </alert>
   </form>
 </div>

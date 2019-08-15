@@ -33,8 +33,6 @@ export class PerfilObservacionesComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     debugger;
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
     if (this.IdFormato != null) {
       this.esNuevo = false;
       if (this.Observaciones != null) {
@@ -43,9 +41,8 @@ export class PerfilObservacionesComponent implements OnInit {
     }
   }
 
-  private PopulateForm(actividad: any) {
-    debugger;
-    for (let x in actividad) {
+  private PopulateForm(observacion: any) {
+    for (let x in observacion) {
       this.AddObservacion(1);
     }
     this.ObservacionesArray.patchValue({
@@ -53,7 +50,7 @@ export class PerfilObservacionesComponent implements OnInit {
     });
   }
 
-  AddObservacion(Actividad : any) {
+  AddObservacion(Actividad: any) {
     if (this.Add) {
       this.Add = true;
       return;
@@ -65,18 +62,18 @@ export class PerfilObservacionesComponent implements OnInit {
     }
   }
 
-  initObservacion(){
+  initObservacion() {
     return this.fb.group({
       id: ['0'],
       observacion: ['', [Validators.required, Validators.maxLength(200)]]
     });
   }
 
-  Agregar(Value: boolean){
+  Agregar(Value: boolean) {
     this.Add = false;
   }
 
-  getRegistros(data: any){
+  getRegistros(data: any) {
     if (!data['isEdit']) {
       this.ObservacionesNew.push({
         observaciones: data['observaciones'],

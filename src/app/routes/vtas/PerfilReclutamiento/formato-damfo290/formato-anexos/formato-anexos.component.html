@@ -22,3 +22,11 @@
     </app-perfil-beneficios>
   </div>
 </section>
+
+<br>
+<section #PsicometriasDamsa class="row">
+  <div class="col-6">
+    <app-perfil-pst-damsa [IdFormato]="IdFormato" [Psicometrias]="PsicometriasD" (BeneficiosEmt)="getPstDamsa($event)">
+    </app-perfil-pst-damsa>
+  </div>
+</section>

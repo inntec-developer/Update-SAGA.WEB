@@ -252,7 +252,6 @@ export class HorariosComponent implements OnInit {
           if (data != 404) {
             this.remove.emit(this.index);
             this.Add.emit(false);
-            this.functionCreateAlert('info', false);
           }
           else {
             this.functionCreateAlert('erro');
