@@ -13,6 +13,7 @@ export class ProductividadComponent implements OnInit {
 
   public General : any[];
   public palabra :string;
+  public columns: Array<any>;
  
   disabled = false;
   compact = false;
@@ -60,6 +61,8 @@ export class ProductividadComponent implements OnInit {
   }
 
   Generar(reclutador,cordina){
+    this.LimpiaFiltro(0)
+    this.LimpiaFiltro(1)
     this.spinner.show();
   
     document.getElementById('Divprincipal').classList.add('ocultar');
@@ -106,15 +109,28 @@ export class ProductividadComponent implements OnInit {
     });
   }
 
+  LimpiaFiltro(valor){
+    if(valor = 0){
+      this.columns = [];
+    }else{
+      this.columns = [
+        { title: 'Reclutadores', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Reclutadores' } },
+        { title: 'Folios', className: 'text-success text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'Folios' } },
+        { title: 'Posiciones', className: 'text-success text-center', name: 'numeropos', filtering: { filterString: '', placeholder: 'Posiciones' } },
+        { title: 'Cubiertos', className: 'text-success text-center', name: 'cubiertas', filtering: { filterString: '', placeholder: 'Cubiertos' } },
+        { title: 'Puntaje', className: 'text-info text-center', name: 'puntaje', filtering: { filterString: '', placeholder: 'Puntaje' } },
+      ]
+    }
+  }
 
-public columns: Array<any> = [
-  { title: 'Reclutadores', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Reclutadores' } },
-  { title: 'Folios', className: 'text-success text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'Folios' } },
-  { title: 'Posiciones', className: 'text-success text-center', name: 'numeropos', filtering: { filterString: '', placeholder: 'Posiciones' } },
-  { title: 'Cubiertos', className: 'text-success text-center', name: 'cubiertas', filtering: { filterString: '', placeholder: 'Cubiertos' } },
-  { title: 'Puntaje', className: 'text-info text-center', name: 'puntaje', filtering: { filterString: '', placeholder: 'Puntaje' } },
+// public columns: Array<any> = [
+//   { title: 'Reclutadores', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Reclutadores' } },
+//   { title: 'Folios', className: 'text-success text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'Folios' } },
+//   { title: 'Posiciones', className: 'text-success text-center', name: 'numeropos', filtering: { filterString: '', placeholder: 'Posiciones' } },
+//   { title: 'Cubiertos', className: 'text-success text-center', name: 'cubiertas', filtering: { filterString: '', placeholder: 'Cubiertos' } },
+//   { title: 'Puntaje', className: 'text-info text-center', name: 'puntaje', filtering: { filterString: '', placeholder: 'Puntaje' } },
  
-];
+// ];
 
 
 

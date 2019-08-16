@@ -12,6 +12,7 @@ export class DetallecordinaComponent implements OnInit {
 
   public General : any[];
   public palabra :string;
+  public columns: Array<any>;
  
   disabled = false;
   compact = false;
@@ -60,6 +61,8 @@ export class DetallecordinaComponent implements OnInit {
   }
 
   Generar(reclutador,cordina){
+    this.LimpiaFiltro(0);
+    this.LimpiaFiltro(1);
     this.spinner.show();
     document.getElementById('DivDetalleCordi').classList.remove('ocultar');
     document.getElementById('DivDetalleReclu').classList.add('ocultar');
@@ -105,15 +108,28 @@ export class DetallecordinaComponent implements OnInit {
     });
   }
 
+  LimpiaFiltro(valor){
+    if(valor = 0){
+      this.columns = [];
+    }else{
+      this.columns = [
+        { title: 'RECLUTADORES', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'nombre' } },
+        { title: 'FOLIOS', className: 'text-success text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'Folio' } },
+        { title: 'POSICIONES', className: 'text-success text-center', name: 'numeropos', filtering: { filterString: '', placeholder: 'Folio' } },
+        { title: 'CUBIERTOS', className: 'text-success text-center', name: 'cubiertas', filtering: { filterString: '', placeholder: 'cubiertas' } },
+        { title: 'CUMPLIMIENTO', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'puntos' } },
+      ];
+    }
+  }
 
-public columns: Array<any> = [
-  { title: 'RECLUTADORES', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'nombre' } },
-  { title: 'FOLIOS', className: 'text-success text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'Folio' } },
-  { title: 'POSICIONES', className: 'text-success text-center', name: 'numeropos', filtering: { filterString: '', placeholder: 'Folio' } },
-  { title: 'CUBIERTOS', className: 'text-success text-center', name: 'cubiertas', filtering: { filterString: '', placeholder: 'cubiertas' } },
-  { title: 'CUMPLIMIENTO', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'puntos' } },
+// public columns: Array<any> = [
+//   { title: 'RECLUTADORES', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'nombre' } },
+//   { title: 'FOLIOS', className: 'text-success text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'Folio' } },
+//   { title: 'POSICIONES', className: 'text-success text-center', name: 'numeropos', filtering: { filterString: '', placeholder: 'Folio' } },
+//   { title: 'CUBIERTOS', className: 'text-success text-center', name: 'cubiertas', filtering: { filterString: '', placeholder: 'cubiertas' } },
+//   { title: 'CUMPLIMIENTO', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'puntos' } },
  
-];
+// ];
 
 
 

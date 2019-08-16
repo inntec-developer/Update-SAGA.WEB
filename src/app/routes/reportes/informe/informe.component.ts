@@ -133,8 +133,8 @@ export class InformeComponent implements OnInit {
 
     this.Servicio.GetEmpresas().subscribe(item =>{
       this.Empresas = item;
-     this.myDate = item.fechal
-    // date2 = new FormControl(new Date());
+      this.date2 = new FormControl(item[0].fechal);
+     
      document.getElementById('fechaInicial')['value'] = this.ConvierteFecha(item[0].fechal)
       this.Oficina = [{id:0,nombre:'Todas'},
       {id:1,nombre:'Guadalajara'},{id:2,nombre:'México'},{id:3,nombre:'Monterrey'}]

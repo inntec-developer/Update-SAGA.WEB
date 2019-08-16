@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit  } from '@angular/core';
 import {ToasterConfig, ToasterService} from 'angular2-toaster';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
@@ -10,6 +10,8 @@ import {Http} from '@angular/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ReportesService } from '../../../service/Reporte/reportes.service';
 
+
+
 @Component({
   selector: 'app-tabla-reporte',
   templateUrl: './tabla-reporte.component.html',
@@ -17,10 +19,11 @@ import { ReportesService } from '../../../service/Reporte/reportes.service';
   providers:[ReportesService]
 })
 export class TablaReporteComponent implements OnInit {
+   
   @Input('data') valor:any;
   public General : any[];
   public palabra :string;
-
+  public columns: Array<any>;
   disabled = false;
   compact = false;
   invertX = true;
@@ -51,18 +54,19 @@ export class TablaReporteComponent implements OnInit {
   ) { }
 
   ngOnInit() {}
-
+  
   Guardar(valor){
     var dato = valor;
     var p = document.getElementById('palabra');
     var palabra = p['value'];
   }
 
-  Prueba(lista){
-
-  }
+  
 
   Generar(oficina,solicitante,reclutador,empresa,estatus,tiporeclu,tipocor,usercoo){
+    this.LimpiaFiltro(0);
+    this.LimpiaFiltro(1);
+
     this.spinner.show();
     document.getElementById('DivReportefil').classList.remove('ocultar');
     document.getElementById('Divprincipal').classList.add('ocultar');
@@ -203,26 +207,32 @@ ucor = ucor == undefined?'0':ucor;
 
 
 
+LimpiaFiltro(valor){
+  if(valor = 0){
+    this.columns = [];
+  }else{
+    this.columns = [
+      { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+      { title: 'Solicitud', className: 'text-success text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+      { title: 'Empresa', className: 'text-info text-center', name: 'empresa', filtering: { filterString: '', placeholder: 'Empresa' } },
+      { title: 'Puesto', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Puesto' } },
+      { title: 'Estado', className: 'text-info text-center', name: 'estado', filtering: { filterString: '', placeholder: 'Estado' } },
+     
+      { title: 'No.', className: 'text-info text-center', name: 'numero' , filtering: { filterString: '', placeholder: 'No. vacante' } },
+      { title: 'Cubierta', className: 'text-info text-center', name: 'cubierta' , filtering: { filterString: '', placeholder: 'Cubiertas..' } },
+      { title: 'Cumplimiento', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'Cumplimiento..' } },
+      { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
+      { title: 'Fecha Estatus', className: 'text-info text-center', name: 'fch_Modificacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+      { title: 'Coordinación', className: 'text-info text-center', name: 'clasesReclutamiento', filtering: { filterString: '', placeholder: 'Coordinacion' } },
+      { title: 'Coordinador', className: 'text-info text-center', name: 'cordinador2', filtering: { filterString: '', placeholder: 'Coordinador' } },
+      { title: 'Reclutador', className: 'text-info text-center', name: 'nombreReclutado', filtering: { filterString: '', placeholder: 'No. Reclutador' } },
+      { title: 'Solicita', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Solicita' } }
+    ];
+  }
+}
 
 
-
-public columns: Array<any> = [
-  { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
-  { title: 'Solicitud', className: 'text-success text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
-  { title: 'Empresa', className: 'text-info text-center', name: 'empresa', filtering: { filterString: '', placeholder: 'Empresa' } },
-  { title: 'Puesto', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Puesto' } },
-  { title: 'Estado', className: 'text-info text-center', name: 'estado', filtering: { filterString: '', placeholder: 'Estado' } },
  
-  { title: 'No.', className: 'text-info text-center', name: 'numero' , filtering: { filterString: '', placeholder: 'No. vacante' } },
-  { title: 'Cubierta', className: 'text-info text-center', name: 'cubierta' , filtering: { filterString: '', placeholder: 'Cubiertas..' } },
-  { title: 'Cumplimiento', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: 'Cumplimiento..' } },
-  { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
-  { title: 'Fecha Estatus', className: 'text-info text-center', name: 'fch_Modificacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
-  { title: 'Coordinación', className: 'text-info text-center', name: 'clasesReclutamiento', filtering: { filterString: '', placeholder: 'Coordinacion' } },
-  { title: 'Coordinador', className: 'text-info text-center', name: 'cordinador2', filtering: { filterString: '', placeholder: 'Coordinador' } },
-  { title: 'Reclutador', className: 'text-info text-center', name: 'nombreReclutado', filtering: { filterString: '', placeholder: 'No. Reclutador' } },
-  { title: 'Solicita', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Solicita' } }
-];
 
 
 

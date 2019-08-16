@@ -12,6 +12,7 @@ export class CoordinacionComponent implements OnInit {
 
   public General : any[];
   public palabra :string;
+  public columns: Array<any>;
  
   disabled = false;
   compact = false;
@@ -58,6 +59,8 @@ export class CoordinacionComponent implements OnInit {
   }
 
   Generar(estatus){
+    this.LimpiaFiltro(0);
+    this.LimpiaFiltro(1);
     this.spinner.show();
     document.getElementById('DivCoordinacion').classList.remove('ocultar');
     // document.getElementById('DivDetalleReclu').classList.add('ocultar');
@@ -96,13 +99,26 @@ export class CoordinacionComponent implements OnInit {
     });
   }
 
+  LimpiaFiltro(valor){
+    if(valor = 0){
+      this.columns = [];
+    }else{
+      this.columns = [
+        { title: 'Estatus', className: 'text-info text-center', name: 'descripcion', filtering: { filterString: '', placeholder: 'Descripcion' } },
+        { title: 'Masivo', className: 'text-success text-center', name: 'masivo', filtering: { filterString: '', placeholder: 'Masivo' } },
+        { title: 'Operativo', className: 'text-success text-center', name: 'Operativo', filtering: { filterString: '', placeholder: 'Operativo' } },
+        { title: 'Especializado', className: 'text-success text-center', name: 'ezpecial', filtering: { filterString: '', placeholder: 'Especializado' } }
+      ];
+    }
+  }
 
-public columns: Array<any> = [
-  { title: 'Estatus', className: 'text-info text-center', name: 'descripcion', filtering: { filterString: '', placeholder: 'Descripcion' } },
-  { title: 'Masivo', className: 'text-success text-center', name: 'masivo', filtering: { filterString: '', placeholder: 'Masivo' } },
-  { title: 'Operativo', className: 'text-success text-center', name: 'Operativo', filtering: { filterString: '', placeholder: 'Operativo' } },
-  { title: 'Especializado', className: 'text-success text-center', name: 'ezpecial', filtering: { filterString: '', placeholder: 'Especializado' } }
-];
+
+// public columns: Array<any> = [
+//   { title: 'Estatus', className: 'text-info text-center', name: 'descripcion', filtering: { filterString: '', placeholder: 'Descripcion' } },
+//   { title: 'Masivo', className: 'text-success text-center', name: 'masivo', filtering: { filterString: '', placeholder: 'Masivo' } },
+//   { title: 'Operativo', className: 'text-success text-center', name: 'Operativo', filtering: { filterString: '', placeholder: 'Operativo' } },
+//   { title: 'Especializado', className: 'text-success text-center', name: 'ezpecial', filtering: { filterString: '', placeholder: 'Especializado' } }
+// ];
 
 
 

@@ -12,6 +12,7 @@ import { ExcelService } from '../../../service/ExcelService/excel.service';
 export class CandidatobolsaComponent implements OnInit {
   public General : any[];
   public palabra :string;
+  public columns: Array<any>;
  
   disabled = false;
   compact = false;
@@ -62,6 +63,8 @@ export class CandidatobolsaComponent implements OnInit {
   }
 
   Generar(estado,estatus){
+    this.LimpiaFiltro(0);
+    this.LimpiaFiltro(1);
     this.spinner.show();
     document.getElementById('DivCandidato').classList.remove('ocultar');
 
@@ -109,16 +112,31 @@ export class CandidatobolsaComponent implements OnInit {
     });
   }
 
+  LimpiaFiltro(valor){
+    if(valor = 0){
+      this.columns = [];
+    }else{
+      this.columns =[
+        { title: 'NOMBRE', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'nombre' } },
+        { title: 'ESTADO', className: 'text-success text-center', name: 'estado', filtering: { filterString: '', placeholder: 'estado' } },
+        { title: 'EDAD', className: 'text-success text-center', name: 'edad', filtering: { filterString: '', placeholder: 'edad' } },
+        { title: 'GENERO', className: 'text-success text-center', name: 'genero', filtering: { filterString: '', placeholder: 'Genero' } },
+        { title: 'ESTATUS', className: 'text-success text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'estatus' } },
+        { title: 'CURP', className: 'text-success text-center', name: 'curp', filtering: { filterString: '', placeholder: 'curp' } },
+        { title: 'RFC', className: 'text-success text-center', name: 'rfc', filtering: { filterString: '', placeholder: 'rfc' } }
+      ];
+    }
+  }
 
-public columns: Array<any> = [
-  { title: 'NOMBRE', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'nombre' } },
-  { title: 'ESTADO', className: 'text-success text-center', name: 'estado', filtering: { filterString: '', placeholder: 'estado' } },
-  { title: 'EDAD', className: 'text-success text-center', name: 'edad', filtering: { filterString: '', placeholder: 'edad' } },
-  { title: 'GENERO', className: 'text-success text-center', name: 'genero', filtering: { filterString: '', placeholder: 'Genero' } },
-  { title: 'ESTATUS', className: 'text-success text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'estatus' } },
-  { title: 'CURP', className: 'text-success text-center', name: 'curp', filtering: { filterString: '', placeholder: 'curp' } },
-  { title: 'RFC', className: 'text-success text-center', name: 'rfc', filtering: { filterString: '', placeholder: 'rfc' } }
-];
+// public columns: Array<any> = [
+//   { title: 'NOMBRE', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'nombre' } },
+//   { title: 'ESTADO', className: 'text-success text-center', name: 'estado', filtering: { filterString: '', placeholder: 'estado' } },
+//   { title: 'EDAD', className: 'text-success text-center', name: 'edad', filtering: { filterString: '', placeholder: 'edad' } },
+//   { title: 'GENERO', className: 'text-success text-center', name: 'genero', filtering: { filterString: '', placeholder: 'Genero' } },
+//   { title: 'ESTATUS', className: 'text-success text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'estatus' } },
+//   { title: 'CURP', className: 'text-success text-center', name: 'curp', filtering: { filterString: '', placeholder: 'curp' } },
+//   { title: 'RFC', className: 'text-success text-center', name: 'rfc', filtering: { filterString: '', placeholder: 'rfc' } }
+// ];
 
 
 
