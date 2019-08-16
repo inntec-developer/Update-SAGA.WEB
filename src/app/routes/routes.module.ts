@@ -9,9 +9,6 @@ import { SharedModule } from '../shared/shared.module';
 import { TranslatorService } from '../core/translator/translator.service';
 import { menu } from './menu';
 import { routes } from './routes';
-import { PantallaGGComponent } from './EquiposDeTrabajo/pantalla-gg/pantalla-gg.component';
-
-
 
 
 @NgModule({
@@ -21,7 +18,7 @@ import { PantallaGGComponent } from './EquiposDeTrabajo/pantalla-gg/pantalla-gg.
         PagesModule
     ],
     declarations: [
-   PantallaGGComponent],
+   ],
     exports: [RouterModule],
     providers: [LogInGuardGuard, AuthRolesGuard, AuthService]
 })

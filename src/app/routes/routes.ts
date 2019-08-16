@@ -29,7 +29,8 @@ export const routes = [
             { path: 'examenes', loadChildren: './Examenes/examenes.module#ExamenesModule'},
             { path: 'catalogos', loadChildren: './catalogos/catalogos.module#CatalogosModule'},
             { path: 'reporte', loadChildren:'./reportes/reportes.module#ReportesModule'},
-            { path: 'tickets', loadChildren: './SistTickets/sist-tickets.module#SistTicketsModule'}
+            { path: 'tickets', loadChildren: './SistTickets/sist-tickets.module#SistTicketsModule'},
+            { path: 'equipos', loadChildren: './EquiposDeTrabajo/equipos.module#EquiposModule'},
         ]},
 
 
@@ -43,11 +44,10 @@ export const routes = [
     { path: 'maintenance', component: MaintenanceComponent },
     { path: '404', component: Error404Component },
     { path: '500', component: Error500Component },
-    { path: 'TrackingVacantes', component: TrackingVacantesComponent },
+    { path: 'trackingvacantes', component: TrackingVacantesComponent },
     { path: 'Tickets', component: TicketsInicioComponent },
     { path: 'VerTurno', component: VerTurnosComponent},
     { path: 'Principal', component: InicioKioscoComponent},
-    {path: 'Equipos', component: PantallaGGComponent},
 
 
     // Not found

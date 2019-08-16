@@ -1,9 +1,11 @@
+import { GraficaResumenComponent } from './../../../components/Graficas/grafica-resumen/grafica-resumen.component';
 
 import { ColorsService } from '../../../shared/colors/colors.service';
 import { EquiposTrabajoService } from './../../../service/EquiposDeTrabajo/equipos-trabajo.service';
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { ApiConection } from '../../../service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-pantalla-gg',
@@ -11,17 +13,20 @@ import { ApiConection } from '../../../service';
   styleUrls: ['./pantalla-gg.component.scss']
 })
 export class PantallaGGComponent implements OnInit {
+// config scroll
+  disabled = false;
+  compact = false;
+  invertX = false;
+  invertY = false;
+  shown = 'hover';
 
   reporte = [];
-  Data: any;
-  Chart: Chart;
-  Chart2: Chart;
-  Chart3: Chart;
-  Chart4: Chart;
   totalCub = 0;
   totalFal = 0;
   totalCump = 0;
   totalPos = 0;
+  gerente = [];
+
   backgroundColor = [
     '#FF8F35',
     '#0F3CFF',
@@ -59,6 +64,18 @@ sparkOptionsDanger = {
     sliceColors: [this.colors.byName('gray-lighter'), this.colors.byName('danger')],
     height: 24
 };
+  pieData: { labels: any[]; datasets: { data: any[]; }[]; };
+  pieColors: { borderColor: any[]; backgroundColor: any[]; }[];
+  pieOptions: { responsive: boolean; };
+
+  pieData2: { labels: any[]; datasets: { data: any[]; }[]; };
+  pieColors2: { borderColor: any[]; backgroundColor: any[]; }[];
+
+  pieData3: { labels: any[]; datasets: { data: any[]; }[]; };
+  pieColors3: { borderColor: any[]; backgroundColor: any[]; }[];
+
+  pieData4: { labels: any[]; datasets: { data: any[]; }[]; };
+  pieColors4: { borderColor: any[]; backgroundColor: any[]; }[];
 
   constructor(private _service: EquiposTrabajoService, public colors: ColorsService) { }
 
@@ -70,183 +87,282 @@ sparkOptionsDanger = {
   {
     this._service.GetRportGG('FA6039C6-6497-E911-8993-B2AAD340F890').subscribe(result => {
       this.reporte = result;
-    this.loadCharts();
-      console.log(this.reporte)
+    this.loadCharts(this.reporte);
     })
 
   }
 
-  loadCharts()
+  loadCharts(row)
   {
-    let bg = [];
-    let label = [];
-    let totalPos = [];
-    let bg2 = [];
-    let label2 = [];
-    let totalPos2 = [];
-    let totalCub = [];
-    let bg3 = [];
-    let label3 = [];
-    let totalPos3 = [];
-    let totalFal = [];
-    let bg4 = [];
-    let label4 = [];
-    let totalPos4 = [];
-    let totalCump = [];
+    const bg = [];
+    const label = [];
+    const totalPos = [];
+    const bg2 = [];
+    const label2 = [];
+    const totalCub = [];
+    const bg3 = [];
+    const label3 = [];
+    const totalFal = [];
+    const bg4 = [];
+    const label4 = [];
+    const totalCump = [];
     let cont = 0;
 
     // tslint:disable-next-line: no-shadowed-variable
-    this.reporte.forEach(element => {
-      element.bg = this.backgroundColor[cont];
-
-      totalPos.push(element.totalPos);
-      label.push(element.nombre);
-      bg.push(this.backgroundColor[cont]);
-      totalCub.push(element.totalCub);
-      label2.push(element.nombre);
-      bg2.push(this.backgroundColor[cont]);
-
-      totalFal.push(element.totalFal);
-      label3.push(element.nombre);
-      bg3.push(this.backgroundColor[cont]);
-
-      totalCump.push(element.totalCump);
-      label4.push(element.nombre);
-      bg4.push(this.backgroundColor[cont]);
-      this.totalPos = element.totalPos;
-
-      cont++;
-    });
-
-    let data = {
-      datasets: [{
-        backgroundColor: bg,
-        data: totalPos
-      }],
-      labels: label
-    }
-
-    this.totalPos = totalPos.reduce(function (valorAnterior, valorActual, indice, vector) {
-      return valorAnterior + valorActual;
-    }, 10);
-
-    this.Chart = new Chart('canvas', {
-      type: 'pie',
-      //title: { text: 'Seguimiento de Vacantes' },
-      data: data,
-      options: {
-        legend: {
-          position: 'right',
-          display: true,
-          labels: {
-            fontSize: 9,
-            boxWidth: 10,
-            usePointStyle: true,
-            padding: 3
+    row.forEach(element => {
+      if ( element.resumen.length > 0 )
+      {
+        element.resumen.forEach(item => {
+          if (item.resumen.length > 0)
+          {
+            item.resumen.forEach(i => {
+              i.foto = this.urlFoto + i.clave + '.jpg';
+              if ( i.resumen.length > 0)
+              {
+                i.resumen.forEach(ii => {
+                  ii.foto = this.urlFoto + ii.clave + '.jpg';
+                });
+              }
+            });
           }
-        },
-      },
+
+          this.gerente.push(
+            {
+              nombre: item.nombre,
+              foto: this.urlFoto + item.clave + '.jpg',
+              resumen: item.resumen,
+              totalPos: item.totalPos,
+              totalCub: item.totalCub,
+              totalFal: item.totalPos - item.totalCub,
+              totalCump: item.totalCub * 100 / item.totalPos || 0,
+              bg: this.backgroundColor[cont],
+            }
+          );
+
+          totalPos.push(item.totalPos);
+          label.push(item.nombre);
+          bg.push(this.backgroundColor[cont]);
+          totalCub.push(item.totalCub);
+          label2.push(item.nombre);
+          bg2.push(this.backgroundColor[cont]);
+
+          totalFal.push(item.totalPos - item.totalCub);
+          label3.push(item.nombre);
+          bg3.push(this.backgroundColor[cont]);
+
+          totalCump.push(item.totalCub * 100 / item.totalPos || 0);
+          label4.push(item.nombre);
+          bg4.push(this.backgroundColor[cont]);
+          cont++;
+        });
+        this.totalPos = totalPos.reduce(function (valorAnterior, valorActual, indice, vector) {
+            return valorAnterior + valorActual;
+       }, 10);
+
+        this.totalCub = totalCub.reduce(function (valorAnterior, valorActual, indice, vector) {
+          return valorAnterior + valorActual;
+     }, 10);
+
+        this.totalFal = this.totalPos - this.totalCub;
+        this.totalCump = this.totalCub * 100 / this.totalPos || 0;
+      }
+      // element.bg = this.backgroundColor[cont];
+      // element.foto = this.urlFoto + element.clave + '.jpg';
+      // element.resumen.forEach(item => {
+      //   item.foto = this.urlFoto + item.clave + '.jpg';
+      // });
+      // this.totalPos = totalPos.reduce(function (valorAnterior, valorActual, indice, vector) {
+      //   return valorAnterior + valorActual;
+      // }, 10);
+
     });
 
-    data = {
-      datasets: [{
-        backgroundColor: bg2,
-        data: totalCub
-      }],
-      labels: label2
-    }
+    this.refreshGraficasPie(label, totalPos, bg, label2, totalCub, bg2, label3, totalFal, bg3, label4, totalCump, bg4)
+    // this.pieData = {
+    //   labels: label,
+    //   datasets: [{
+    //     data: totalPos
+    //   }]
+    // };
+
+    // this.pieColors = [{
+    //   borderColor: this.colors.byName('gray-light'),
+    //   backgroundColor: bg,
+    // }];
+
+    // this.pieOptions = {
+    //   responsive: true
+    // };
+
+    // this.pieData2 = {
+    //   labels: label2,
+    //   datasets: [{
+    //     data: totalCub
+    //   }]
+    // };
+
+    // this.pieColors2 = [{
+    //   borderColor: this.colors.byName('gray-light'),
+    //   backgroundColor: bg2,
+    // }];
+
+    // // this.totalCub = totalCub.reduce(function (valorAnterior, valorActual, indice, vector) {
+    // //   return valorAnterior + valorActual;
+    // // }, 10);
+
+    // this.pieData3 = {
+    //   labels: label3,
+    //   datasets: [{
+    //     data: totalFal
+    //   }]
+    // };
+
+    // this.pieColors3 = [{
+    //   borderColor: this.colors.byName('gray-light'),
+    //   backgroundColor: bg3,
+    // }];
+
+    // // this.totalFal = totalFal.reduce(function (valorAnterior, valorActual, indice, vector) {
+    // //   return valorAnterior + valorActual;
+    // // }, 10);
+
+    // this.pieData4 = {
+    //   labels: label4,
+    //   datasets: [{
+    //     data: totalCump
+    //   }]
+    // };
+
+    // this.pieColors4 = [{
+    //   borderColor: this.colors.byName('gray-light'),
+    //   backgroundColor: bg,
+    // }];
+
+    // this.totalCump = totalCump.reduce(function (valorAnterior, valorActual, indice, vector) {
+    //   return valorAnterior + valorActual;
+    // }, 10);
+
+  }
+
+  DetalleGerente(regionales)
+  {
+
+    const bg = [];
+    const label = [];
+    const totalPos = [];
+    const bg2 = [];
+    const label2 = [];
+    const totalCub = [];
+    const bg3 = [];
+    const label3 = [];
+    const totalFal = [];
+    const bg4 = [];
+    const label4 = [];
+    const totalCump = [];
+
+    this.gerente = [];
+    let cont = 0;
+
+      regionales.resumen.forEach(item => {
+        this.gerente.push(
+          {
+            nombre: item.nombre,
+            foto: this.urlFoto + item.clave + '.jpg',
+            resumen: item.resumen,
+            totalPos: item.totalPos,
+            totalCub: item.totalCub,
+            totalFal: item.totalPos - item.totalCub,
+            totalCump: item.totalCub * 100 / item.totalPos || 0,
+            bg: this.backgroundColor[cont],
+          });
+          totalPos.push(item.totalPos);
+          label.push(item.nombre);
+          bg.push(this.backgroundColor[cont]);
+
+          totalCub.push(item.totalCub);
+          label2.push(item.nombre);
+          bg2.push(this.backgroundColor[cont]);
+
+          totalFal.push(item.totalPos - item.totalCub);
+          label3.push(item.nombre);
+          bg3.push(this.backgroundColor[cont]);
+
+          totalCump.push(item.totalCub * 100 / item.totalPos || 0);
+          label4.push(item.nombre);
+          bg4.push(this.backgroundColor[cont]);
+          cont++;
+      });
+
+      this.totalPos = totalPos.reduce(function (valorAnterior, valorActual, indice, vector) {
+        return valorAnterior + valorActual;
+   }, 10);
 
     this.totalCub = totalCub.reduce(function (valorAnterior, valorActual, indice, vector) {
       return valorAnterior + valorActual;
-    }, 10);
+ }, 10);
 
-    this.Chart2 = new Chart('canvas2', {
-      type: 'pie',
-      //title: { text: 'Seguimiento de Vacantes' },
-      data: data,
-      options: {
-        legend: {
-          position: 'right',
-          display: true,
-          labels: {
-            fontSize: 9,
-            boxWidth: 10,
-            usePointStyle: true,
-            padding: 3
-          }
-        },
-      },
+    this.totalFal = this.totalPos - this.totalCub;
+    this.totalCump = this.totalCub * 100 / this.totalPos || 0;
+  
+        this.refreshGraficasPie(label, totalPos, bg, label2, totalCub, bg2, label3, totalFal, bg3, label4, totalCump, bg4);
 
-    });
+  }
 
-    data = {
+  refreshGraficasPie(label, totalPos, bg, label2, totalCub, bg2, label3, totalFal, bg3, label4, totalCump, bg4 )
+  {
+ 
+    this.pieData = {labels: [], datasets: []};
+    
+    this.pieData = {
+      labels: label,
       datasets: [{
-        backgroundColor: bg3,
-        data: totalFal
-      }],
-      labels: label3
+        data: totalPos
+      }]
     };
 
-    this.totalFal = totalFal.reduce(function (valorAnterior, valorActual, indice, vector) {
-      return valorAnterior + valorActual;
-    }, 10);
+    this.pieColors = [{
+      borderColor: this.colors.byName('gray-light'),
+      backgroundColor: bg,
+    }];
 
-
-    this.Chart3 = new Chart('canvas3', {
-      type: 'pie',
-      //title: { text: 'Seguimiento de Vacantes' },
-      data: data,
-      options: {
-        legend: {
-          position: 'right',
-          display: true,
-          labels: {
-            fontSize: 9,
-            boxWidth: 10,
-            usePointStyle: true,
-            padding: 3
-          }
-        },
-      },
-
-    });
-
-    data = {
+    this.pieData2 = {
+      labels: label2,
       datasets: [{
-        backgroundColor: bg4,
+        data: totalCub
+      }]
+    };
+
+    this.pieColors2 = [{
+      borderColor: this.colors.byName('gray-light'),
+      backgroundColor: bg2,
+    }];
+
+    this.pieData3 = {
+      labels: label3,
+      datasets: [{
+        data: totalFal
+      }]
+    };
+
+    this.pieColors3 = [{
+      borderColor: this.colors.byName('gray-light'),
+      backgroundColor: bg3,
+    }];
+
+    this.pieData4 = {
+      labels: label4,
+      datasets: [{
         data: totalCump
-      }],
-      labels: label4
-    }
+      }]
+    };
 
-    this.totalCump = totalCump.reduce(function (valorAnterior, valorActual, indice, vector) {
-      return valorAnterior + valorActual;
-    }, 10);
-
-
-    this.Chart4 = new Chart('canvas4', {
-      type: 'pie',
-      //title: { text: 'Seguimiento de Vacantes' },
-      data: data,
-      options: {
-        legend: {
-          position: 'right',
-          display: true,
-          labels: {
-            fontSize: 9,
-            boxWidth: 10,
-            usePointStyle: true,
-            padding: 3
-          }
-        },
-      },
-
-    });
-  }
-  errorImg(): string {
-   return ApiConection.ServiceUrlFileManager + 'img/user/default.jpg';
+    this.pieColors4 = [{
+      borderColor: this.colors.byName('gray-light'),
+      backgroundColor: bg4,
+    }];
   }
 
-
-
+  errorImg(item) {
+  item.foto = '/assets/img/user/default.jpg';
+  }
 }

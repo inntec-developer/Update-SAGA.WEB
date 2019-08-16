@@ -1,100 +1,117 @@
 <div class="d-flex justify-content-around">
-    <div class="card">
-      <div class="card-body mat-elevation-z8">
-          <div>
-          <canvas  id="canvas" ></canvas>
-        </div>
-  
-          <hr>
-          <div class="text-muted float-right">
-              TOTAL DE POSICIONES <small class="badge badge-pill badge-info">{{totalPos}}</small>
-          </div>
-        </div>
-      </div>
-  
-    <div class="card">
-        <div class="card-body mat-elevation-z8">
-            <div>
-            <canvas  id="canvas2" ></canvas>
-            </div>
-            <hr>
-            <div class="text-muted float-right">
-                TOTAL DE CUBIERTAS <small class="badge badge-pill badge-info">{{totalCub}}</small>
-            </div>
-        </div>
-      
-      </div>
-      <div class="card">
-          <div class="card-body mat-elevation-z8">
-              <div>
-              <canvas  id="canvas3" ></canvas>
-              </div>
-              <hr>
-              <div class="text-muted float-right">
-                  TOTAL DE FALTANTES <small class="badge badge-pill badge-info">{{totalFal}}</small>
-              </div>
-          </div>
-        
-        </div>
-    <div class="card">
-        <div class="card-body mat-elevation-z8">
-            <div>
-            <canvas  id="canvas4" ></canvas>
-            </div>
-            <hr>
-            <div class="text-muted float-right">
-                TOTAL DE CUMPLIMIENTO <small class="badge badge-pill badge-info">{{totalCump}}</small>
-            </div>
-        </div>
-      
-      </div>
-      
-    </div>
-    <div class="row">
-        <ng-container *ngFor="let t of reporte">
-            <div class="col-lg-4 col-md-6">
-                <div class="card border" [style.border-color]="t.bg">
-                    <div class="card-header">
-                        <div class="card-title font-weight-bold" [style.color]="t.bg">{{t.nombre | uppercase}}</div>
-                        <hr>
-                    </div>
-                   
-                    <div class="card-body">
-                        <ng-container *ngFor="let r of t.resumen">
-                        <a *ngIf="r.tipoUsuario == 5" class="inline" tooltip="Lider - {{r.nombre}}">
-                            <img class="rounded-circle thumb48" src="{{urlFoto}}{{r.clave}}.jpg"  (error)="errorImg()" />
-                        </a>
-                        <a class="inline" tooltip="Ejecutivo de reclutamiento - {{r.nombre}}">
-                                <img class="rounded-circle thumb24" src="{{urlFoto}}{{r.clave}}.jpg" (error)="errorImg()" />
-                        </a>
-                        </ng-container>
-                        <hr>
-                    </div>
-                    <div class="card-body bb text-center">
-                        <div tooltip="{{t.totalCump}} %">
-                            <progressbar class="progress-xs m-0" value="{{t.totalCump}}" type="info"></progressbar>
-                        </div>
-                    </div>
-                    <div class="card-body bb">
-                            <div class="row text-center">
-                                    <div class="col-4">
-                                            <p class="text-bold">CUBIERTAS</p>
-                                            <div class="sparkline inline mr-2" [sparkline]="sparkOptionsSuccess" values="{{t.totalPos}}, {{t.totalCub}}"></div>
-                                            <br/><small class="text-muted m-0">{{t.totalCub}}</small>
-                                        </div>
-                                        <div class="col-4">
-                                                <p class="text-bold">POSICIONES</p>
-                                                <div class="h3 m-0">{{t.totalPos}}</div>
-                                            </div>
-                                <div class="col-4">
-                                    <p class="text-bold">FALTANTES</p>
-                                    <div class="sparkline inline mr-2" [sparkline]="sparkOptionsWarning" values="{{t.totalPos}}, {{t.totalFal}}"></div>
-                                    <br/> <small class="text-muted m-0">{{t.totalFal}}</small>
-                                </div>
-                            </div>
-                        </div>
-         
+    <div class="col-xl-3 col-md-6">
+        <div class="card">
+            <div class="card-body bg-primary">
+                <div>
+                    <canvas baseChart [chartType]="'pie'" [options]="pieOptions" [datasets]="pieData.datasets"
+                        [colors]="pieColors" [labels]="pieData.labels" [legend]="false" height="120"></canvas>
                 </div>
             </div>
-        </ng-container>
+            <div class="bg-primary-dark text-center pt-1">
+                    TOTAL DE POSICIONES <label class="badge badge-pill badge-primary">{{totalPos}}</label>
+           </div>
+        </div>
     </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card">
+            <div class="card-body bg-success">
+                <div>
+                    <canvas baseChart [chartType]="'pie'" [options]="pieOptions" [datasets]="pieData2.datasets"
+                        [colors]="pieColors2" [labels]="pieData2.labels" [legend]="false" height="120"></canvas>
+                </div>
+            </div>
+            <div class="text-center bg-success-dark pt-1">
+                    TOTAL DE CUBIERTAS <label class="badge badge-pill badge-success">{{totalCub}}</label>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card">
+            <div class="card-body bg-warning">
+                <div>
+                    <canvas baseChart [chartType]="'pie'" [options]="pieOptions" [datasets]="pieData3.datasets"
+                    [colors]="pieColors3" [labels]="pieData3.labels" [legend]="false" height="120"></canvas>
+                </div>               
+            </div>
+            <div class="text-center bg-warning-dark pt-1">
+                    TOTAL DE FALTANTES <label class="badge badge-pill badge-warning">{{totalFal}}</label>
+                </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card">
+            <div class="card-body bg-info">
+                <div>
+                    <canvas baseChart [chartType]="'pie'" [options]="pieOptions" [datasets]="pieData4.datasets"
+                    [colors]="pieColors4" [labels]="pieData4.labels" [legend]="false" height="120"></canvas>
+                </div>
+            </div>
+            <div class="text-center bg-info-dark pt-1">
+                    TOTAL DE CUMPLIMIENTO <label class="badge badge-pill badge-info">{{totalCump}}</label>
+                </div>
+        </div>
+    </div>
+</div>
+<ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown"
+[disableOnBreakpoints]="false" [disabled]="disabled">
+<div class="row" style="height: 400px">
+    <ng-container *ngFor="let t of gerente">
+        <div class="col-lg-4 col-md-6">
+            <div class="card border">
+                <div class="card-header text-white">
+                    <div class="h-25 d-inline-block w-100 p-2" [style.background-color]="t.bg">
+                    <div class="d-flex align-items-center float-left"><img class="img-fluid circle thumb32 mr-1" [src]="t.foto" (error)="errorImg(t)" /><span>{{t.nombre | uppercase}}</span>
+                
+                    </div>
+                    <div class="float-right mt-1">
+                        <button (click)="DetalleGerente(t)" class="btn btn-xs btn-success float-right mb-2 mr-1" container="body" placement="bottom" tooltip="Ver Detalle"><i class="fa fa-eye"></i></button>
+                    </div>
+                </div>
+                </div>
+                <div class="card-body bt bb">
+                    <ng-container *ngFor="let r of t.resumen">
+                        <a *ngIf="r.tipoUsuario == 5 || r.tipoUsuario == 4" class="inline" container="body" placement="right" tooltip="{{r.nombre}}">
+                            <img class="img-fluid circle thumb48" [src]="r.foto" (error)="errorImg(r)" />
+                        </a>
+                        <ng-container *ngIf= "r.resumen.length > 0">
+                            <ng-container *ngFor="let rr of r.resumen">
+                                <a  class="inline" container="body" placement="right" tooltip="{{rr.nombre}}">
+                                    <img class="rounded-circle thumb24" [src]="rr.foto" (error)="errorImg(rr)" />
+                                </a>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                    <div class="text-center mt-2">
+                            <div tooltip="{{t.totalCump}} %">
+                                <progressbar class="progress-xs m-0" value="{{t.totalCump}}" type="info"></progressbar>
+                            </div>
+                            <small class="text-muted">{{t.totalCump || 0}}% Cumplimiento</small>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <p class="text-bold">CUBIERTAS</p>
+                            <div class="sparkline inline mr-2" [sparkline]="sparkOptionsSuccess"
+                                values="{{t.totalPos}}, {{t.totalCub}}"></div>
+                            <br /><small class="text-muted m-0">{{t.totalCub}}</small>
+                        </div>
+                        <div class="col-4">
+                            <p class="text-bold">POSICIONES</p>
+                            <div class="h3 m-0">{{t.totalPos}}</div>
+                        </div>
+                        <div class="col-4">
+                            <p class="text-bold">FALTANTES</p>
+                            <div class="sparkline inline mr-2" [sparkline]="sparkOptionsWarning"
+                                values="{{t.totalPos}}, {{t.totalFal}}"></div>
+                            <br /> <small class="text-muted m-0">{{t.totalFal}}</small>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </ng-container>
+</div>
+</ng-scrollbar>
