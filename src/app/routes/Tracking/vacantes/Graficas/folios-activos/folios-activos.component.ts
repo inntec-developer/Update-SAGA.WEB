@@ -2,6 +2,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Chart } from 'chart.js';
 import { VacantesService } from '../../../../../service/TrackingVacantes/vacantes.service';
+import { stripSummaryForJitFileSuffix } from '@angular/compiler/src/aot/util';
+import { preserveWhitespacesDefault } from '@angular/compiler';
 @Component({
   selector: 'app-folios-activos',
   templateUrl: './folios-activos.component.html',
@@ -143,7 +145,7 @@ export class FoliosActivosComponent implements OnInit {
         }
 
       });
-    
+
       this.Data = {
         datasets: [{
           backgroundColor: [
@@ -194,6 +196,7 @@ export class FoliosActivosComponent implements OnInit {
             position: 'right',
             display: true,
             labels: {
+              fontColor: 'white',
               fontSize: 9,
               boxWidth: 10,
               usePointStyle: true,
@@ -221,7 +224,6 @@ export class FoliosActivosComponent implements OnInit {
           'Cubiertas'
         ]
       }
-    
         this.Chart2 = new Chart('canvas2', {
           type: 'pie',
           // title: { text: 'Seguimiento de Vacantes' },
@@ -231,13 +233,14 @@ export class FoliosActivosComponent implements OnInit {
               position: 'right',
               display: true,
               labels:{
+                fontColor: 'white',
                 fontSize: 9,
                 boxWidth: 10,
                 usePointStyle: true,
                 padding: 3
-              }
-            },
+            }
           }
+        }
         });
 
       this.Data3 = {
@@ -272,6 +275,7 @@ export class FoliosActivosComponent implements OnInit {
               position: 'right',
               display: true,
               labels:{
+                fontColor: 'white',
                 fontSize: 9,
                 boxWidth: 10,
                 usePointStyle: true,
