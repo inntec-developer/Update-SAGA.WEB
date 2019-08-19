@@ -51,7 +51,7 @@ export class IndicadoresComponent implements OnInit {
     
 
   ngOnInit() {
-    this.spinner.show();
+   // this.spinner.show();
     this.UsuarioId = this.settings.user['id'];
 
 

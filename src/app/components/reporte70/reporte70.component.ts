@@ -356,11 +356,9 @@ public refreshTable() {
           comentariosRecl = "";
         }
 
-        if(!Array.isArray(row.reclutadores))
-        {
+        if(row.reclutadores.length < 1){
           reclutador = "SIN ASIGNAR";
-        }
-        else if(row.reclutadores.length > 1)
+      }else if(row.reclutadores.length > 1)
         {
           row.reclutadores.forEach(element => {
             reclutador = reclutador + element + '\n'
@@ -416,6 +414,7 @@ public refreshTable() {
           CUMPLIMIENTO: row.porcentaje,
           'DIAS TRANSCURRIDOS': row.estatus[0].diasTotal,
           ESTATUS: estatus,
+          'FECHA ESTATUS': e,
           'TIPO RECLUTAMIENTO': row.tipoReclutamiento,
           'COORDINACION': row.claseReclutamiento,
           'COMENTARIOS SOLICITANTE': comentariosSol,
