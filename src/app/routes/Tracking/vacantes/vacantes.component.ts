@@ -37,17 +37,17 @@ export class VacantesComponent implements OnInit {
     { title: 'FOLIO', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'FOLIO' } },
     { title: 'PERFIL', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'PERFIL' } },
     // { title: 'CLIENTE', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'CLIENTE' } },
-    { title: 'FECHA LÍMITE', className: 'text-info text-center', name: 'fch_limite', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'FECHA LÍMITE', className: 'text-info text-center', name: 'fch_limite', filtering: { filterString: '', placeholder: 'aaaa-mm-dd'}},
     { title: 'ESTATUS', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'ESTATUS' } },
-    { title: '# POSICIONES', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: '# POSICIONES' } },
-    { title: '% AVANCE', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: '% AVANCE' } },
-    { title: 'POSTULADOS', className: 'text-info text-center', name: 'postulados', filtering: { filterString: '', placeholder: 'POSTULADOS' } },
-    { title: 'ENTREVISTA', className: 'text-info text-center', name: 'entrevista', filtering: { filterString: '', placeholder: 'ENTREVISTA' } },
-    { title: 'ABANDONÓ PROCESO', className: 'text-info text-center', name: 'abandono', filtering: { filterString: '', placeholder: 'ABANDONÓ PROCESO' } },
-    { title: 'DESCARTADOS', className: 'text-info text-center', name: 'descartados', filtering: { filterString: '', placeholder: 'DESCARTADOS' } },
-    { title: 'ENVIADO CLIENTE', className: 'text-info text-center', name: 'enviados', filtering: { filterString: '', placeholder: 'ENVIADO CLIENTE' } },
-    { title: 'RECHAZADOS', className: 'text-info text-center', name: 'rechazados', filtering: { filterString: '', placeholder: 'RECHAZADOS' } },
-    { title: 'CONTRATADOS', className: 'text-info text-center', name: 'contratados', filtering: { filterString: '', placeholder: 'CONTRATADOS' } }
+    { title: '# POSICIONES', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: '0' } },
+    { title: '% AVANCE', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: '% 0' } },
+    { title: 'POSTULADOS', className: 'text-info text-center', name: 'postulados', filtering: { filterString: '', placeholder: '0' } },
+    { title: 'ENTREVISTA', className: 'text-info text-center', name: 'entrevista', filtering: { filterString: '', placeholder: '0' } },
+    { title: 'ABANDONÓ PROCESO', className: 'text-info text-center', name: 'abandono', filtering: { filterString: '', placeholder: '0' } },
+    { title: 'DESCARTADOS', className: 'text-info text-center', name: 'descartados', filtering: { filterString: '', placeholder: '0' } },
+    { title: 'ENVIADO CLIENTE', className: 'text-info text-center', name: 'enviados', filtering: { filterString: '', placeholder: '0' } },
+    { title: 'RECHAZADOS', className: 'text-info text-center', name: 'rechazados', filtering: { filterString: '', placeholder: '0' } },
+    { title: 'CONTRATADOS', className: 'text-info text-center', name: 'contratados', filtering: { filterString: '', placeholder: '0' } }
   ];
 
   constructor(private service: VacantesService, private spinner: NgxSpinnerService, private _appcomponent: AppComponent) { }

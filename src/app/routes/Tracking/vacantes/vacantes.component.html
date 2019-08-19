@@ -4,19 +4,26 @@
     <app-folios-activos [clienteId]="clienteId"></app-folios-activos>
 </div>
 </div>
-<div class="card">
-  <div class="card-body mat-elevation-z8">
-    <div class="row">
-      <div class="col-sm-12 mb-2 clearfix">
-          <button (click)="refreshTableInfo()" container="body" placement="bottom" tooltip="Actualizar" container="body" class="btn btn-xs btn-success float-right mb-1 mr-2 mat-elevation-z8">
-              <em class="fa fa-refresh"></em>
-           </button>
-        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" [disabled]="!clearFilter" class="btn btn-xs btn-info float-right mb-1 mr-1 mat-elevation-z8">
-          <em class="fa fa-eraser"></em>
-       </button>
-       <span class="text-muted font-weight-bold float-right text-uppercase mb-3">Total de Folios <span class="badge badge-pill badge-success mr-4 mat-elevation-z8">{{dataInfoRequi.length}}</span></span>
+
+<div class="row">
+  <div class="col">
+<div class="card mat-elevation-z8">
+  <div class="card-header">
+    <div class="row bg-info-light p-2">
+        <div class="col-sm-12 clearfix">
+          <label class="float-left text-bold mt-1">DETALLE</label>
+            <button (click)="refreshTableInfo()" container="body" placement="bottom" tooltip="Actualizar" container="body" class="btn btn-xs btn-success float-right mr-2 mat-elevation-z8">
+                <i class="fa fa-refresh"></i>
+             </button>
+          <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" class="btn btn-xs btn-warning float-right mr-1 mat-elevation-z8">
+            <i class="fa fa-eraser"></i>
+         </button>
+         <span class="font-weight-bold float-right text-uppercase mt-1">Total de Folios <span class="badge badge-pill badge-success mr-4 mat-elevation-z8">{{dataInfoRequi.length}}</span></span>
+        </div>
       </div>
-    </div>
+  </div>
+  <div class="card-body">
+    
     <table class="table">
       <thead>
         <tr>
@@ -93,11 +100,13 @@
       </tbody>
     </table>
     <div class="mt-2">
-      <pagination *ngIf="config.paging" class="pagination-sm float-left mt-2" [(ngModel)]="pageInfo" [totalItems]="lengthInfo"
+      <pagination *ngIf="config.paging" class="pagination-sm float-right mt-2" [(ngModel)]="pageInfo" [totalItems]="lengthInfo"
         [itemsPerPage]="itemsPerPageInfo" [maxSize]="maxSizeInfo" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTableInfo(config, $event)"
         (numPages)="numPagesInfo = $event">
       </pagination>
     
     </div>
   </div>
+</div>
+</div>
 </div>

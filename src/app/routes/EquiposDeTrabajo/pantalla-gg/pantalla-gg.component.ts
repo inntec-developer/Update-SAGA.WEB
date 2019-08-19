@@ -110,6 +110,7 @@ sparkOptionsDanger = {
 
     // tslint:disable-next-line: no-shadowed-variable
     row.forEach(element => {
+      debugger;
       if ( element.resumen.length > 0 )
       {
         element.resumen.forEach(item => {
@@ -312,7 +313,7 @@ sparkOptionsDanger = {
   {
  
     this.pieData = {labels: [], datasets: []};
-    
+
     this.pieData = {
       labels: label,
       datasets: [{
