@@ -317,6 +317,7 @@ GeneraEstatusBolsa(){
   document.getElementById('DivDetalleCordi').classList.add('ocultar');
   document.getElementById('DivCoordinacion').classList.add('ocultar');
   document.getElementById('DivCandidato').classList.add('ocultar');
+  document.getElementById('DivVacante').classList.add('ocultar');
  
  
   document.getElementById('report1').classList.add('ocultar');
@@ -333,6 +334,8 @@ GeneraEstatusBolsa(){
   document.getElementById('exelCoordinacion').classList.add('ocultar');
   document.getElementById('repCandidato').classList.add('ocultar');
   document.getElementById('exelCandidato').classList.add('ocultar');
+  document.getElementById('repVacante').classList.add('ocultar');
+  document.getElementById('exelVacante').classList.add('ocultar');
  
  
   document.getElementById('divBusCoordina2').classList.add('ocultar');
@@ -342,6 +345,12 @@ GeneraEstatusBolsa(){
   document.getElementById('divEdad').classList.add('ocultar');
   document.getElementById('divgenero').classList.add('ocultar');
   document.getElementById('Divdiv').classList.remove('ocultar');
+  document.getElementById('divcordinacion').classList.add('ocultar');
+  document.getElementById('divSolicitante').classList.add('ocultar');
+  document.getElementById('divEmpresas').classList.add('ocultar');
+  document.getElementById('divSucursal').classList.add('ocultar');
+  document.getElementById('divBusCoordina').classList.add('ocultar');
+  document.getElementById('divBusCoordina2').classList.add('ocultar');
  
   let tipo = document.getElementById('TipoReporte')['value'];
   if(tipo == 3){
@@ -362,6 +371,10 @@ GeneraEstatusBolsa(){
   }else if(tipo == 8){
     document.getElementById('repCandidato').classList.remove('ocultar');
     document.getElementById('exelCandidato').classList.remove('ocultar');
+    this.GeneraEstatusBolsa();
+  }else if(tipo == 9){
+    document.getElementById('repVacante').classList.remove('ocultar');
+    document.getElementById('exelVacante').classList.remove('ocultar');
     this.GeneraEstatusBolsa();
   }else{
     document.getElementById('report1').classList.remove('ocultar');
@@ -412,6 +425,8 @@ GeneraEstatusBolsa(){
     document.getElementById('divSucursal').classList.add('ocultar');
     document.getElementById('divBusCoordina').classList.add('ocultar');
     document.getElementById('divBusCoordina2').classList.add('ocultar');
+  }else if(tipo == 9){
+    
   }else{
     document.getElementById('divTipoReclu').classList.remove('ocultar');
     document.getElementById('divestatus').classList.remove('ocultar');

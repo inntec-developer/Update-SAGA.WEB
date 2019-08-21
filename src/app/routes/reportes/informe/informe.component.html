@@ -73,14 +73,8 @@ type="square-jelly-box"
           <option value="6">Detalle Coordinador</option>
           <option value="7">Coordinacion</option>
           <option value="8">Candidato Bolsa</option>
-          <!-- <option value="3">Movimientos Vacantes </option>
-          <option value="5">Fecha Estatus Grupal</option>
-          <option value="6">Reporte General </option> -->
-        <!-- <option>Contratado vs Requerido</option>
-        <option>Estatus de Vacantes</option>
-        <option>Captación</option>
-        <option>Productividad</option>
-        <option>Fecha de Solicitud</option> -->
+          <option value="9">Vacantes</option>
+        
       </select>
     </div>
 </div>
@@ -531,6 +525,9 @@ type="square-jelly-box"
             <button id="exelCandidato" tooltip="Exportar" style="right: auto;" (click)="Candidato.Exportar()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
               <em  class="fa fa-download"></em>
             </button>
+            <button id="exelVacante" tooltip="Exportar" style="right: auto;" (click)="Vacante.Exportar()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
+              <em  class="fa fa-download"></em>
+            </button>
 
 
 
@@ -555,7 +552,9 @@ type="square-jelly-box"
           <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="Candidato.Generar(objestado,objstatus)" tooltip="Generar Reporte" id="repCandidato"  >
               <em  class="fa fa-bar-chart"></em>
             </button>
-
+            <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="Vacante.Generar()" tooltip="Generar Reporte" id="repVacante"  >
+              <em  class="fa fa-bar-chart"></em>
+            </button>
 
       </div>
 
@@ -579,5 +578,7 @@ type="square-jelly-box"
 <app-coordinacion  id="DivCoordinacion" #Cordinacion></app-coordinacion>
 
 <app-candidatobolsa id="DivCandidato" #Candidato ></app-candidatobolsa>
+
+<app-vacante id="DivVacante" #Vacante ></app-vacante>
 </div>
 
