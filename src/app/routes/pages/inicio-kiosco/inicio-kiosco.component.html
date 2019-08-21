@@ -56,45 +56,49 @@
       </div>
       <div class="col-sm-9 col-md-9 register-right">
         <div class="row">
-          <div class="col-sm-5 col-md-5">
+          <div class="col-sm-4 col-md-4">
             <div class="row">
               <div class="col-sm-6 col-md-6">
-                  <div class="d-flex flex-column">
-                    <div class="pl-3 mb-3">
-                      <button type="button" class="btn btn-secondary btn-circle btn-xl mat-elevation-z8" (click)="FiltrarCategoria(0, myCarousel)">
-                          <i class="fa fa-eye text-warning mr-auto my-auto"></i>
+                <div class="flex-row d-flex justify-content-center">
+                
+              
+                <div class="d-flex flex-column">
+
+                        <button type="button" class="btn btn-secondary btn-circle btn-xl mat-elevation-z8" (click)="FiltrarCategoria(0, myCarousel)">
+                            <i class="fa fa-eye text-warning mr-auto my-auto"></i>
                         </button>
-                      <label class="ml-1 text-muted font-weight-bold">VER TODAS</label>
-             </div>
-                    <ng-container *ngFor="let r of categorias">
-                      <div class="pl-2 mb-3">
-                            <button type="button" [class.btn-success]="r.color == 1" [class.btn-info]="r.color == 2" [class.btn-danger]="r.color == 3"
-                            [class.btn-primary]="r.color == 4" [class.btn-purple]="r.color == 5" [class.btn-warning]="r.color == 6" [class.btn-dark]="r.color == 7"
-                            class="btn btn-success btn-circle btn-xl mat-elevation-z8" (click)="FiltrarCategoria(r.id, myCarousel);myCarousel.cycle();">
-                            <i class="{{r.icono}}"></i>
-                              </button>
-                              <label class="ml-1 text-muted font-weight-bold">{{r.categoria | uppercase}}</label>
-                            </div>
-                    </ng-container>
-                </div>
+                        <label class="mt-1 text-muted font-weight-bold">VER TODAS</label>
+     
+                <ng-container *ngFor="let r of categorias">
+
+                      <button type="button" [class.btn-success]="r.color == 1" [class.btn-info]="r.color == 2" [class.btn-danger]="r.color == 3"
+                        [class.btn-primary]="r.color == 4" [class.btn-purple]="r.color == 5" [class.btn-warning]="r.color == 6" [class.btn-dark]="r.color == 7"
+                        class="btn btn-success btn-circle btn-xl mat-elevation-z8" (click)="FiltrarCategoria(r.id, myCarousel);myCarousel.cycle();">
+                        <i class="{{r.icono}}"></i>
+                      </button>
+                      <label class="mt-1 text-muted font-weight-bold">{{r.categoria | uppercase}}</label>
+
+            </ng-container>
+          </div>
+        </div>
             </div>
             <div class="col-sm-6 col-md-6">
                 <div class="d-flex flex-column">
                   <ng-container *ngFor="let r of categorias2">
-                      <div class="mb-3">
+
                           <button type="button" [class.btn-success]="r.color == 1" [class.btn-info]="r.color == 2" [class.btn-danger]="r.color == 3"
                           [class.btn-primary]="r.color == 4" [class.btn-purple]="r.color == 5" [class.btn-warning]="r.color == 6" [class.btn-dark]="r.color == 7"
                           class="btn btn-success btn-circle btn-xl mat-elevation-z8" (click)="FiltrarCategoria(r.id,myCarousel);myCarousel.cycle();">
                           <i class="{{r.icono}}"></i>
                             </button>
-                             <label class="ml-1 text-muted font-weight-bold">{{r.categoria | uppercase}}</label>
-                            </div>  
+                             <label class="mt-1 text-muted font-weight-bold">{{r.categoria | uppercase}}</label>
+                       
                   </ng-container>
                 </div>
             </div>
           </div>
       </div>
-      <div class="col-sm-7 col-md-7">
+      <div class="col-sm-8 col-md-8">
           <div class="d-flex justify-content-left">
             <ngb-carousel #myCarousel="ngbCarousel" *ngIf="vacantes.length > 0 else NotVacantes" [activeId]="activeId" [showNavigationArrows]="showNavigationArrows"
               [showNavigationIndicators]="showNavigationIndicators">
