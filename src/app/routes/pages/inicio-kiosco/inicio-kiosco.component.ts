@@ -31,6 +31,8 @@ export class InicioKioscoComponent implements OnInit {
   dataSource: any;
   activeId: any;
   search: any;
+  categorias3: any[];
+  categorias4: any[];
 
   constructor(config: NgbCarouselConfig, 
     private _service: SistTicketsService,
@@ -81,9 +83,10 @@ export class InicioKioscoComponent implements OnInit {
               color: color,
             };
           });
-
-          this.categorias2 = this.categorias.splice(8, this.categorias.length);
-          this.categorias = this.categorias.splice(0, 7);
+          this.categorias4 = this.categorias.splice(12, this.categorias.length);
+          this.categorias3 = this.categorias.splice(8, 11);
+          this.categorias2 = this.categorias.splice(4, 7);
+          this.categorias = this.categorias.splice(0, 3);
           this.vacantes = this.dataSource;
       }
     });
