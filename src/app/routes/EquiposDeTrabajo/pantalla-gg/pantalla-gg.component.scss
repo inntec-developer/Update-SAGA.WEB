@@ -4,3 +4,15 @@ ng-scrollbar {
     --scrollbar-thumb-hover-color: dodgerblue;
     --scrollbar-border-radius: 4px;
   }
+
+  .modal-lg
+  {
+    max-width: 95% !important;
+  }
+
+  a {
+    cursor: pointer;
+  }
+  a :hover{
+    font-size: 15px;
+  }

@@ -1,16 +1,26 @@
-<div class="row register h-100">
-  <div class="col-lg-12 my-auto">
+<div class="register">
+    <div class="d-flex flex-row justify-content-end">
+        <div class="input-group input-group-sm lonSearch">
+            <input type="text" class="form-control form-control-sm border-right-0 round" placeholder="Buscar por palabra clave" (keydown.enter)="Search($event)">
+            <div class="input-group-append">
+              <button class="btn btn-xs btn-success" type="button" (click)="Search($event); btnCita=true;">
+                <em class="fa fa-search"></em>
+              </button>
+            </div>
+        </div>
+      </div>
     <div class="row">
       <div class="col-sm-3 col-md-3">
         <div class="register-left">
+          <div class="mov">
           <img src="assets/img/damsa/damsa_logo4.png" alt="" />
+        </div>
           <h3>BIENVENIDO</h3>
           <h4 *ngIf="logeado">{{usuario}}</h4>
           <p>¡Estas a 1 minuto de encontrar tu empleo ideal!</p>
           <p *ngIf="verLogin">¡Solo inicia sesión!</p>
           <div *ngIf="verLogin" class="card bg-transparent">
             <div class="card-body">
-              <div>
                 <div class="input-group input-group-sm with-focus mb-2">
                   <div class="input-group-prepend">
                     <span class="input-group-text text-warning border-right-0 fa fa-user"></span>
@@ -30,7 +40,6 @@
               <span class="font-weight-bold mt-1">INICIAR</span>
                  </button>
               </div>
-            </div>
           </div>
           <div class="d-flex justify-content-center">
             <button *ngIf="!verLogin" type="button" class="btn btn-labeled btn-danger btn-lateral mat-elevation-z8" tabindex="-1" (click)="LogOut()">
@@ -40,53 +49,72 @@
               <span class="font-weight-bold mt-2">SALIR</span>
             </button>
           </div>
+          <div class="logoSaga">
+          <img class="block-center rounded" src="assets/img//Inntec/logo_saga.png" alt="Image" [width]="250" [height]="50"/>
+        </div>
         </div>
       </div>
       <div class="col-sm-9 col-md-9 register-right">
         <div class="row">
-          <div class="col mt-2 mb-2">
-            <div class="input-group input-group-sm with-focus d-flex justify-content-end">
-              <input type="text" class="form-control form-control-sm border-right-0 round" placeholder="Buscar por palabra clave" (keydown.enter)="Search($event)">
-              <div class="input-group-append">
-                <span class="input-group-text fa fa-search text-info bg-transparent border-left-0"></span>
-              </div>
+          <div class="col-sm-5 col-md-5">
+            <div class="row">
+              <div class="col-sm-6 col-md-6">
+                  <div class="d-flex flex-column">
+                    <div class="pl-3 mb-3">
+                      <button type="button" class="btn btn-secondary btn-circle btn-xl mat-elevation-z8" (click)="FiltrarCategoria(0, myCarousel)">
+                          <i class="fa fa-eye text-warning mr-auto my-auto"></i>
+                        </button>
+                      <label class="ml-1 text-muted font-weight-bold">VER TODAS</label>
+             </div>
+                    <ng-container *ngFor="let r of categorias">
+                      <div class="pl-2 mb-3">
+                            <button type="button" [class.btn-success]="r.color == 1" [class.btn-info]="r.color == 2" [class.btn-danger]="r.color == 3"
+                            [class.btn-primary]="r.color == 4" [class.btn-purple]="r.color == 5" [class.btn-warning]="r.color == 6" [class.btn-dark]="r.color == 7"
+                            class="btn btn-success btn-circle btn-xl mat-elevation-z8" (click)="FiltrarCategoria(r.id, myCarousel);myCarousel.cycle();">
+                            <i class="{{r.icono}}"></i>
+                              </button>
+                              <label class="ml-1 text-muted font-weight-bold">{{r.categoria | uppercase}}</label>
+                            </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <div class="d-flex flex-column">
+                  <ng-container *ngFor="let r of categorias2">
+                      <div class="mb-3">
+                          <button type="button" [class.btn-success]="r.color == 1" [class.btn-info]="r.color == 2" [class.btn-danger]="r.color == 3"
+                          [class.btn-primary]="r.color == 4" [class.btn-purple]="r.color == 5" [class.btn-warning]="r.color == 6" [class.btn-dark]="r.color == 7"
+                          class="btn btn-success btn-circle btn-xl mat-elevation-z8" (click)="FiltrarCategoria(r.id,myCarousel);myCarousel.cycle();">
+                          <i class="{{r.icono}}"></i>
+                            </button>
+                             <label class="ml-1 text-muted font-weight-bold">{{r.categoria | uppercase}}</label>
+                            </div>  
+                  </ng-container>
+                </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col d-flex justify-content-center">
-            <div class="d-flex flex-column float-right">
-              <button type="button" class="btn btn-labeled btn-secondary btn-lg btn-block mat-elevation-z8" (click)="FiltrarCategoria(0, myCarousel)">
-                <span class="btn-label fa fa-eye text-warning mr-auto my-auto"></span>
-                <span class="align-self-center text-warning font-weight-bold">Ver todas</span>
-              </button>
-              <ng-container *ngFor="let r of categorias">
-                <button *ngIf="r.id != 0" type="button" [class.btn-success]="r.color == 1" [class.btn-info]="r.color == 2" [class.btn-danger]="r.color == 3"
-                  [class.btn-primary]="r.color == 4" [class.btn-purple]="r.color == 5" [class.btn-warning]="r.color == 6" [class.btn-dark]="r.color == 7"
-                  class="btn btn-labeled btn-success btn-lg btn-block mat-elevation-z8" (click)="FiltrarCategoria(r.id,myCarousel);myCarousel.cycle();">
-                  <span class="btn-label mr-auto">
-                    <i class="{{r.icono}}"></i>
-                  </span>
-                  <span class="align-self-center mr-auto">{{r.categoria}}</span>
-                </button>
-              </ng-container>
-            </div>
+      </div>
+      <div class="col-sm-7 col-md-7">
+          <div class="d-flex justify-content-left">
             <ngb-carousel #myCarousel="ngbCarousel" *ngIf="vacantes.length > 0 else NotVacantes" [activeId]="activeId" [showNavigationArrows]="showNavigationArrows"
               [showNavigationIndicators]="showNavigationIndicators">
               <ng-template ngbSlide *ngFor="let v of vacantes">
-                <div class="media ml-1" *ngIf="v.image">
-                  <img class="align-self-center mr-3" [src]="v.image" alt="Random slide" style="width: 600px; height: 500px;">
+                <div *ngIf="v.arte != null">
+                  <img [src]="v.arte" alt="Random slide" [width]="600" [height]="650" (error)="errorImg(v)">  
                 </div>
-                <div *ngIf="!v.image" class="card carouselLong ml-1">
-                  <div class="card-body bg-light fontMio mat-elevation-z8">
-                    <div class="d-flex flex-column justify-content-between fontMio">
-                      <h4 class="text-info mt-2 ml-1">
-                        <i class="fa fa-chevron-right text-warning mr-1" aria-hidden="true"></i>{{v.vBtra}}</h4>
-                      <h5 class="text-justify text-muted font-weight-bold ml-1">Escolaridad {{v.requisitos}}</h5>
-                      <p class="text-justify ml-1">{{v.experiencia}}</p>
+
+               <div *ngIf="v.arte == null" class="card">
+                      <div class="card-body bg-light fontMio mat-elevation-z8" style="width: 600px; height: 600px;">
+                        <div class="carousel-caption">
+                            <h3 class="text-muted">
+                                VACANTE DE:</h3>
+                          <h1 class="text-info mt-2 ml-1">
+                            <i class="fa fa-chevron-right text-warning mr-1" aria-hidden="true"></i>{{v.folio}} - {{v.vBtra}}</h1>
+                            <h4 class="text-muted font-weight-bold">{{v.experiencia}}</h4>
+
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
                 <div class="carousel-caption d-flex justify-content-center">
 
                   <button *ngIf="logeado" class="btn btn-success btn-postulate mat-elevation-z8" (click)="GenerarTicket(v)">
@@ -98,9 +126,11 @@
               </ng-template>
             </ngb-carousel>
           </div>
+          </div>
+          </div>
         </div>
       </div>
-    </div>
+
   </div>
 
   <!--mensaje cuando esta vacio la tabla-->

@@ -237,7 +237,7 @@ export class DtRequisicionComponent implements OnInit {
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = false;
-      this.cubiertas.push({id: 34, descripcion: "Cubierta" },{id: 36, descripcion: "Cubierta por medios" } );
+      this.cubiertas.push({id: 34, descripcion: 'Cubierta' },{id: 36, descripcion: 'Cubierta por medios' } );
 
       this.cc = true; //cubierta por el cliente
       this.crm = false; //cubierta reclutamiento medios
@@ -252,7 +252,7 @@ export class DtRequisicionComponent implements OnInit {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = false;
       this.cc = false; //cubierta por el cliente
-      this.cubiertas.push({id: 35, descripcion: "Cubierta parcialmente" })
+      this.cubiertas.push({id: 35, descripcion: 'Cubierta parcialmente' })
 
       this.crm = true; //cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
