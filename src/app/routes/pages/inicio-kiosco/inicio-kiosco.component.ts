@@ -1,9 +1,10 @@
-import { KioscoServiceService } from './../../../service/Kiosco/kiosco-service.service';
-import { SettingsService } from './../../../core/settings/settings.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbCarousel, NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 
+import { KioscoServiceService } from './../../../service/Kiosco/kiosco-service.service';
+import { SettingsService } from './../../../core/settings/settings.service';
 import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
+
 const swal = require('sweetalert');
 @Component({
   selector: 'app-inicio-kiosco',
@@ -18,6 +19,7 @@ export class InicioKioscoComponent implements OnInit {
   usuario = '';
   user = '';
   pass = '';
+  btnCita: boolean;
   @ViewChild('myCarousel') myCarousel: NgbCarousel;
   @ViewChild('lgModal') modal;
 
@@ -34,7 +36,7 @@ export class InicioKioscoComponent implements OnInit {
   categorias3: any[];
   categorias4: any[];
 
-  constructor(config: NgbCarouselConfig, 
+  constructor(config: NgbCarouselConfig,
     private _service: SistTicketsService,
     private _kioscoService: KioscoServiceService,
     private settings: SettingsService
