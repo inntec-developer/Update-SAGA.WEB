@@ -43,6 +43,10 @@ export class InicioKioscoComponent implements OnInit {
     config.wrap = false;
     config.pauseOnHover = true;
 
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.GetVacantes();
+  }, 5000);
   }
 
   ngOnInit() {
