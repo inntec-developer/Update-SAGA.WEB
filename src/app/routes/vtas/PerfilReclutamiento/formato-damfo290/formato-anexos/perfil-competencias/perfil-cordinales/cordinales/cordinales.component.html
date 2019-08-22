@@ -1,0 +1,40 @@
+<div class="contaier">
+  <form [formGroup]="competencia" id="index">
+    <section [hidden]="!Edit">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="row">
+          <mat-form-field class="col-4">
+            <mat-select placeholder="Competencia" formControlName="competenciaId"
+              (selectionChange)="getCompetencia()" required="">
+              <mat-option *ngFor="let x of Competencias" [value]="x.id">
+                {{x.competencia}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="col-4">
+            <mat-select placeholder="Nivel" formControlName="nivel"
+            (selectionChange)="getNivel()" required="">
+              <mat-option *ngFor="let x of Niveles" [value]="x.nivel">
+                {{x.nivel}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <section class="col-4">
+            <em class="fa fa-close text-danger em-button float-left" (click)="Remove()"></em>
+            <em class="fa fa-check text-success em-button float-left" (click)="Save()" *ngIf="competencia.valid"></em>
+          </section>
+        </div>
+      </div>
+    </section>
+    <div [hidden]="Edit" class="col-12">
+      <strong class="text-primary">{{index + 1}} - <i class="fa fa-chevron-right fa-x1" aria-hidden="true"></i></strong>
+      <label>{{Competencia | uppercase}} </label> -
+      <strong class="text-primary">Nivel: </strong><label>{{Nivel}}</label>
+      <em class="fa fa-pencil text-info" (click)="OnEdit(); Edit = true"></em>
+      <em class="fa fa-close text-danger em-button" (click)="Remove()"></em>
+    </div>
+    <alert [type]="TypeAlert" [hidden]="ShowAlert == false">
+      <strong>{{MsgAlert | uppercase}}</strong>
+    </alert>
+  </form>
+</div>

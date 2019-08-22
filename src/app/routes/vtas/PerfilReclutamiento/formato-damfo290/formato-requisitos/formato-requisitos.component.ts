@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -15,11 +15,11 @@ import { SettingsService } from '../../../../../core/settings/settings.service';
     CatalogosService
   ]
 })
-export class FormatoRequisitosComponent implements OnInit {
+export class FormatoRequisitosComponent implements OnInit, OnChanges {
   @ViewChild('AptitudtInput') AptitudtInput: ElementRef;
   @Input() IdFormato: any;
-  EditPerfil: boolean = false;
-  isContratoPrueba: boolean = false;
+  EditPerfil = false;
+  isContratoPrueba = false;
   public formEncabezado: FormGroup;
 
   Areas: any;
@@ -27,11 +27,11 @@ export class FormatoRequisitosComponent implements OnInit {
   EstadoCivil: any;
   Contratos: any;
   TiempoContrato: any;
-  buscarArea: string = '';
+  buscarArea = '';
   Escolaridades: any[];
-  Aptitudes: string[] = [''];
-  sueldoMin: number = 1000;
-  sueldoMax: number = 1000;
+  Aptitudes = [''];
+  sueldoMin = 1000;
+  sueldoMax = 1000;
   PeriodosPago: any;
   DiasPago: any;
   TiposNomina: any;
@@ -41,14 +41,10 @@ export class FormatoRequisitosComponent implements OnInit {
     { id: 0, genero: 'Indistinto' },
     { id: 1, genero: 'Masculino' },
     { id: 2, genero: 'Femenino' },
-  ]
+  ];
 
   exp: any = '';
-  apt = []
-
-
-
-  @ViewChild('fruitInput') fruitInput: ElementRef;
+  apt = [];
 
   constructor(
     private toasterService: ToasterService,
@@ -87,7 +83,7 @@ export class FormatoRequisitosComponent implements OnInit {
       EstadoCivil: [{ value: '', disabled: false }, [Validators.required]],
       Area: [{ value: '', disabled: false }, [Validators.required]],
       Contrato: [{ value: '', disabled: false }, [Validators.required]],
-      TiempoContrato: [{ value: '', disabled: false }, [Validators.required]],
+      TiempoContrato: [{ value: '', disabled: false }],
       Aptitud: [{ value: '', disabled: false }, [Validators.required]],
       Experiencia: [{ value: '', disabled: false }, [Validators.required]],
       SueldoMinimo: [{ value: '1000', disabled: false }, [Validators.required]],
@@ -96,46 +92,50 @@ export class FormatoRequisitosComponent implements OnInit {
       TipoNomina: [{ value: '', disabled: false }, [Validators.required]],
       DiaPago: [{ value: '', disabled: false }, [Validators.required]],
       PeriodoPago: [{ value: '', disabled: false }, [Validators.required]],
-    })
+    });
 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
     if (this.IdFormato != null) {
       this.EditPerfil = true;
       this._servicePerfilR.getInfoPerfil(this.IdFormato).subscribe(element => {
 
         this.Escolaridades = element['escolaridades'];
 
-        var aptitudes = []
+        const aptitudes = []
         element['aptitudes'].forEach(x => {
           aptitudes.push(x['id']);
         });
 
-        if(element['contratoInicialId'] == 2){
+        if (element['contratoInicialId'] == 2) {
           this.isContratoPrueba = true;
         }
 
-        this.apt= aptitudes;
+        this.apt = aptitudes;
         this.exp = element['experiencia'];
-        this.formEncabezado.controls['NombrePuesto'].setValue(element['nombrePerfil']);
-        this.formEncabezado.controls['EdadMin'].setValue(element['edadMinima']);
-        this.formEncabezado.controls['EdadMax'].setValue(element['edadMaxima']);
-        this.formEncabezado.controls['SueldoMinimo'].setValue(element['sueldoMinimo']);
-        this.formEncabezado.controls['SueldoMaximo'].setValue(element['sueldoMaximo']);
+        this.formEncabezado.patchValue({
+          NombrePuesto: element['nombrePerfil'],
+          EdadMin: element['edadMinima'],
+          EdadMax: element['edadMaxima'],
+          SueldoMinimo: element['sueldoMinimo'],
+          SueldoMaximo: element['sueldoMaximo'],
+          Experiencia: element['experiencia'],
+        });
+
 
         setTimeout(() => {
-          this.formEncabezado.controls['Genero'].setValue(element['generoId']);
-          this.formEncabezado.controls['EstadoCivil'].setValue(element['estadoCivilId']);
-          this.formEncabezado.controls['Area'].setValue(element['areaId']);
-          this.formEncabezado.controls['Contrato'].setValue(element['contratoInicialId']);
-          this.formEncabezado.controls['TiempoContrato'].setValue(element['tiempoContratoId']);
-          this.formEncabezado.controls['DiaCorte'].setValue(element['diaCorteId']);
-          this.formEncabezado.controls['TipoNomina'].setValue(element['tipoNominaId']);
-          this.formEncabezado.controls['DiaPago'].setValue(element['diaPagoId']);
-          this.formEncabezado.controls['PeriodoPago'].setValue(element['periodoPagoId']);
+         this.formEncabezado.patchValue({
+          Genero: element['generoId'],
+          EstadoCivil: element['estadoCivilId'],
+          Area: element['areaId'],
+          Contrato: element['contratoInicialId'],
+          TiempoContrato: element['tiempoContratoId'],
+          DiaCorte: element['diaCorteId'],
+          TipoNomina: element['tipoNominaId'],
+          DiaPago: element['diaPagoId'],
+          PeriodoPago: element['periodoPagoId'],
+         });
         }, 1000);
 
 
@@ -178,16 +178,15 @@ export class FormatoRequisitosComponent implements OnInit {
         return x['areaExperiencia']
           .toString()
           .toLowerCase().match(this.buscarArea.toString().toLowerCase());
-      })
-    }
-    else {
-      this.AreasAux = this.Areas
+      });
+    } else {
+      this.AreasAux = this.Areas;
     }
   }
 
-  getContrato(){
-    if(this.formEncabezado.get('Contrato').value == 2 ){
-      this.isContratoPrueba = true
+  getContrato() {
+    if (this.formEncabezado.get('Contrato').value == 2) {
+      this.isContratoPrueba = true;
     }
   }
 
@@ -205,25 +204,25 @@ export class FormatoRequisitosComponent implements OnInit {
   }
   //#endregion
 
-   //#region  CREACION DE MENSAJES
-   toaster: any;
-   toasterConfig: any;
-   toasterconfig: ToasterConfig = new ToasterConfig({
-     positionClass: 'toast-bottom-right',
-     limit: 7, tapToDismiss: false,
-     showCloseButton: true,
-     mouseoverTimerStop: true,
-   });
-   popToast(type, title, body) {
-     var toast: Toast = {
-       type: type,
-       title: title,
-       timeout: 5000,
-       body: body
-     }
-     this.toasterService.pop(toast);
-   }
-   //#endregion
+  //#region  CREACION DE MENSAJES
+  // toaster: any;
+  // toasterConfig: any;
+  // toasterconfig: ToasterConfig = new ToasterConfig({
+  //   positionClass: 'toast-bottom-right',
+  //   limit: 7, tapToDismiss: false,
+  //   showCloseButton: true,
+  //   mouseoverTimerStop: true,
+  // });
+  // popToast(type, title, body) {
+  //   var toast: Toast = {
+  //     type: type,
+  //     title: title,
+  //     timeout: 5000,
+  //     body: body
+  //   }
+  //   this.toasterService.pop(toast);
+  // }
+  //#endregion
 
 
 }

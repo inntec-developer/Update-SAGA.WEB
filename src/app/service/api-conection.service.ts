@@ -435,5 +435,12 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static CrudHorario = 'PerfilReclutamiento/crudHorarios';
   public static CrudActividades = 'PerfilReclutamiento/crudActividades';
   public static CrudObservaciones = 'PerfilReclutamiento/crudObservaciones';
-  public static CrudPsicometriaDamsa = 'PerfilReclutamiento/crudPsicometriasDamsa'
+  public static CrudPsicometriaDamsa = 'PerfilReclutamiento/crudPsicometriasDamsa';
+  public static CrudPsicometriaCliente = 'PerfilReclutamiento/crudPsicometriasCliente';
+  public static CrudDocumentos = 'PerfilReclutamiento/crudDocumento';
+  public static CrudProcesos = 'PerfilReclutamiento/crudProceso';
+  public static CrudPrestaciones = 'PerfilReclutamiento/crudPrestacion';
+  public static CrudCompCardinales = 'PerfilReclutamiento/crudCompCardinal';
+  public static CrudCompAreas = 'PerfilReclutamiento/crudCompArea';
+  public static CrudCompGerenciales = 'PerfilReclutamiento/crudCompGerencial';
 }

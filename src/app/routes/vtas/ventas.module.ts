@@ -1,9 +1,11 @@
 ﻿import { RouterModule, Routes } from '@angular/router';
 
 import { ActividadesComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-actividades/actividades/actividades.component';
+import { AreasComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-competencias/perfil-areas/areas/areas.component';
 import { BeneficiosComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-beneficios/beneficios/beneficios.component';
 import { ComponentsModule } from '../../components/components.module';
 import { ContactosClienteComponent } from './directorio-empresarial/editar-clientes/Components/contactos-cliente/contactos-cliente.component';
+import { CordinalesComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-competencias/perfil-cordinales/cordinales/cordinales.component';
 import { CorreosClienteComponent } from './directorio-empresarial/editar-clientes/Components/correos-cliente/correos-cliente.component';
 import { DatosGeneralesComponent } from './directorio-empresarial/editar-clientes/Components/datos-generales/datos-generales.component';
 import { DialogActivarRequiComponent } from './requisiciones/components/dialog-activar-requi/dialog-activar-requi.component';
@@ -15,6 +17,7 @@ import { DialogdamfoComponent } from './requisiciones/components/dialogdamfo/dia
 import { DireccionautoComponent } from './requisiciones/components/direccionauto/direccionauto.component';
 import { DireccionesClienteComponent } from './directorio-empresarial/editar-clientes/Components/direcciones-cliente/direcciones-cliente.component';
 import { DirectorioEmpresarialComponent } from './directorio-empresarial/directorio-empresarial.component';
+import { DocClienteComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-doc-cliente/doc-cliente/doc-cliente.component';
 import { DtClientesComponent } from './directorio-empresarial/clientes/dt-clientes/dt-clientes.component';
 import { DtCrearRequisicionComponent } from './requisiciones/components/dt-crear-requisicion/dt-crear-requisicion.component';
 import { DtDamfoComponent } from './requisiciones/components/dt-damfo/dt-damfo.component';
@@ -26,13 +29,28 @@ import { FormatoAnexosComponent } from './PerfilReclutamiento/formato-damfo290/f
 import { FormatoClienteComponent } from './PerfilReclutamiento/formato-damfo290/formato-cliente/formato-cliente.component';
 import { FormatoDAMFO290Component } from './PerfilReclutamiento/formato-damfo290/formato-damfo290.component';
 import { FormatoRequisitosComponent } from './PerfilReclutamiento/formato-damfo290/formato-requisitos/formato-requisitos.component';
+import { GerencialesComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-competencias/perfil-gerenciales/gerenciales/gerenciales.component';
 import { HorariosComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-horarios/horarios/horarios.component'
 import { NgModule } from '@angular/core';
 import { NuevoProspectoComponent } from './directorio-empresarial/prospectos/nuevo-prospecto/nuevo-prospecto.component';
+import { ObservacionesComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-observaciones/observaciones/observaciones.component';
 import { PerfilActividadesComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-actividades/perfil-actividades.component';
+import { PerfilAreasComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-competencias/perfil-areas/perfil-areas.component';
 import { PerfilBeneficiosComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-beneficios/perfil-beneficios.component';
+import { PerfilCordinalesComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-competencias/perfil-cordinales/perfil-cordinales.component';
+import { PerfilDocClienteComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-doc-cliente/perfil-doc-cliente.component';
 import { PerfilEscolaridadesComponent } from './PerfilReclutamiento/formato-damfo290/formato-requisitos/perfil-escolaridades/perfil-escolaridades.component';
+import { PerfilGerencialesComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-competencias/perfil-gerenciales/perfil-gerenciales.component';
 import { PerfilHorariosComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-horarios/perfil-horarios.component';
+import { PerfilObservacionesComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-observaciones/perfil-observaciones.component';
+import { PerfilPrestacionesComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-prestaciones/perfil-prestaciones.component';
+import { PerfilProcesosComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-procesos/perfil-procesos.component';
+import { PerfilPstClienteComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-pst-cliente/perfil-pst-cliente.component';
+import { PerfilPstDamsaComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-pst-damsa/perfil-pst-damsa.component';
+import { PrestacionesComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-prestaciones/prestaciones/prestaciones.component';
+import { ProcesosComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-procesos/procesos/procesos.component';
+import { PstClienteComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-pst-cliente/pst-cliente/pst-cliente.component';
+import { PstDamsaComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-pst-damsa/pst-damsa/pst-damsa.component';
 import { RequisicionComponent } from './requisiciones/requisicion.component';
 import { RequisicionNuevaComponent } from './requisiciones/components/requisicion-nueva/requisicion-nueva.component';
 import { SharedModule } from '../../shared/shared.module';
@@ -44,12 +62,8 @@ import { VerClienteComponent } from './directorio-empresarial/ver-cliente/ver-cl
 import { ViewCuerpoRequiComponent } from './requisiciones/components/view-cuerpo-requi/view-cuerpo-requi.component';
 import { ViewInforRequiComponent } from './requisiciones/components/view-info-requi/view-info-requi.component';
 import { ViewRequisicionComponent } from './requisiciones/components/view-requisicion/view-requisicion.component';
-import { ViewdamfoComponent } from './requisiciones/components/viewdamfo/viewdamfo.component';;
-import { PerfilObservacionesComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-observaciones/perfil-observaciones.component';
-import { ObservacionesComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-observaciones/observaciones/observaciones.component'
-;
-import { PerfilPstDamsaComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-pst-damsa/perfil-pst-damsa.component';
-import { PstDamsaComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-pst-damsa/pst-damsa/pst-damsa.component'
+import { ViewdamfoComponent } from './requisiciones/components/viewdamfo/viewdamfo.component';
+
 const routes: Routes = [
   { path: 'directorio', component: DirectorioEmpresarialComponent, data: { componente: 'Directorio Empresarial' } },
   { path: 'nuevoProspecto', component: NuevoProspectoComponent },
@@ -116,12 +130,26 @@ const routes: Routes = [
     HorariosComponent,
     PerfilHorariosComponent,
     PerfilActividadesComponent,
-    ActividadesComponent,
-    PerfilObservacionesComponent
-,
-    ObservacionesComponent ,
-    PerfilPstDamsaComponent ,
-    PstDamsaComponent],
+    ActividadesComponent,
+    PerfilObservacionesComponent,
+    ObservacionesComponent,
+    PerfilPstDamsaComponent,
+    PstDamsaComponent,
+    PstClienteComponent,
+    PerfilPstClienteComponent,
+    PerfilDocClienteComponent,
+    DocClienteComponent,
+    PerfilProcesosComponent,
+    ProcesosComponent,
+    PerfilPrestacionesComponent,
+    PrestacionesComponent,
+    PerfilCordinalesComponent,
+    PerfilAreasComponent,
+    PerfilGerencialesComponent,
+    AreasComponent,
+    GerencialesComponent,
+    CordinalesComponent
+  ],
   entryComponents: [
     DialogdamfoComponent,
     DialogDeleteRequiComponent,

@@ -37,7 +37,14 @@ export class PerfilReclutamientoService {
   private urlCrudHorarios = ApiConection.ServiceUrl + ApiConection.CrudHorario;
   private UrlCrudActividades = ApiConection.ServiceUrl + ApiConection.CrudActividades;
   private urlCrudObservaciones = ApiConection.ServiceUrl + ApiConection.CrudObservaciones;
-  private urlCrudPsicometriaDamsa = ApiConection.ServiceUrl + ApiConection.CrudPsicometriaDamsa
+  private urlCrudPsicometriaDamsa = ApiConection.ServiceUrl + ApiConection.CrudPsicometriaDamsa;
+  private urlCrudPsicometriaCliente = ApiConection.ServiceUrl + ApiConection.CrudPsicometriaCliente;
+  private urlCrudDocumentos = ApiConection.ServiceUrl + ApiConection.CrudDocumentos;
+  private urlCrudProcesos = ApiConection.ServiceUrl + ApiConection.CrudProcesos;
+  private urlCrudPrestaciones = ApiConection.ServiceUrl + ApiConection.CrudPrestaciones;
+  private urlCrudCompCardinales = ApiConection.ServiceUrl + ApiConection.CrudCompCardinales;
+  private urlCrudCompAreas = ApiConection.ServiceUrl + ApiConection.CrudCompAreas;
+  private urlCrudCompGerenciales = ApiConection.ServiceUrl + ApiConection.CrudCompGerenciales
 
   constructor(
     private _httpClient: HttpClient
@@ -99,4 +106,33 @@ export class PerfilReclutamientoService {
   CrudPsicometriaDamsa(data: any) :Observable<any>{
     return this._httpClient.post<any>(this.urlCrudPsicometriaDamsa, data, this.httpOptions);
   }
+
+  CrudPsicometriaCliente(data: any) : Observable<any>{
+    return this._httpClient.post<any>(this.urlCrudPsicometriaCliente, data, this.httpOptions);
+  }
+
+  CrudDocumentos(data: any) : Observable<any>{
+    return this._httpClient.post<any>(this.urlCrudDocumentos, data, this.httpOptions);
+  }
+
+  CrudProcesos(data:any) : Observable<any>{
+    return this._httpClient.post<any>(this.urlCrudProcesos, data, this.httpOptions);
+  }
+
+  CrudPrestaciones(data:any) : Observable<any>{
+    return this._httpClient.post<any>(this.urlCrudPrestaciones, data, this.httpOptions);
+  }
+
+  CrudCompCardinales(data: any): Observable<any>{
+    return this._httpClient.post<any>(this.urlCrudCompCardinales, data, this.httpOptions);
+  }
+
+  CrudCompAreas(data: any): Observable<any>{
+    return this._httpClient.post<any>(this.urlCrudCompAreas, data, this.httpOptions);
+  }
+
+  CrudCompGerenciales(data: any): Observable<any>{
+    return this._httpClient.post<any>(this.urlCrudCompGerenciales, data, this.httpOptions);
+  }
+
 }

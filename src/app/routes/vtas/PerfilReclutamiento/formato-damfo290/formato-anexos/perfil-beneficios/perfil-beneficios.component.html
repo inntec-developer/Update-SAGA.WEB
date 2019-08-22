@@ -9,9 +9,9 @@
     <div *ngFor="let beneficio of BeneficioArray['controls'].beneficio['controls']; let i=index">
       <div formArrayName="beneficio">
         <form [formGroupName]="i">
-          <beneficios [IdFormato]="IdFormato" [group]="BeneficioArray.controls.beneficio.controls[i]" [Index]="i"
-            (Add)="Agregar($event)" (Remove)="removeBeneficio($event)" (Registros)="getRegistros($event)">
-          </beneficios>
+          <app-beneficios-p [IdFormato]="IdFormato" [beneficio]="BeneficioArray.controls.beneficio.controls[i]" [index]="i"
+            (Add)="Agregar($event)" (remove)="removeBeneficio($event)" (Registros)="getRegistros($event)">
+          </app-beneficios-p>
         </form>
       </div>
     </div>

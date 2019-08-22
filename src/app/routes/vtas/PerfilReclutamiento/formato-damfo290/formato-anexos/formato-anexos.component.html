@@ -7,12 +7,26 @@
 <br>
 <section #ActividadesSt class="row">
   <div class="col-6">
-    <app-perfil-actividades [IdFormato]="IdFormato" [Actividades]="Actividades" (ActividadesEmt)="getActividades($event)">
+    <app-perfil-actividades [IdFormato]="IdFormato" [Actividades]="Actividades"
+      (ActividadesEmt)="getActividades($event)">
     </app-perfil-actividades>
   </div>
   <div class="col-6">
-    <app-perfil-observaciones [IdFormato]="IdFormato" [Observaciones]="Observaciones" (ObservacionesEmt)="getObservaciones($event)">
+    <app-perfil-observaciones [IdFormato]="IdFormato" [Observaciones]="Observaciones"
+      (ObservacionesEmt)="getObservaciones($event)">
     </app-perfil-observaciones>
+  </div>
+</section>
+<br>
+<section #PsicometriasDamsa class="row">
+  <div class="col-6">
+    <app-perfil-pst-damsa [IdFormato]="IdFormato" [Psicometrias]="PsicometriasD" (BeneficiosEmt)="getPstDamsa($event)">
+    </app-perfil-pst-damsa>
+  </div>
+  <div class="col-6">
+    <app-perfil-pst-cliente [IdFormato]="IdFormato" [Psicometrias]="PsicometriasC"
+      (BeneficiosEmt)="getPstCliente($event)">
+    </app-perfil-pst-cliente>
   </div>
 </section>
 <br>
@@ -21,12 +35,34 @@
     <app-perfil-beneficios [IdFormato]="IdFormato" [Beneficios]="Beneficios" (BeneficiosEmt)="getBeneficios($event)">
     </app-perfil-beneficios>
   </div>
-</section>
-
-<br>
-<section #PsicometriasDamsa class="row">
   <div class="col-6">
-    <app-perfil-pst-damsa [IdFormato]="IdFormato" [Psicometrias]="PsicometriasD" (BeneficiosEmt)="getPstDamsa($event)">
-    </app-perfil-pst-damsa>
+    <app-perfil-doc-cliente [IdFormato]="IdFormato" [Documentos]="Documentos" (DocumentosEmt)="getDocumento($event)">
+    </app-perfil-doc-cliente>
+  </div>
+</section>
+<br>
+<section #ProcesosSt class="row">
+  <div class="col-6">
+    <app-perfil-procesos [IdFormato]="IdFormato" [Procesos]="Procesos" (ProcesosEmt)="getProceso($event)">
+    </app-perfil-procesos>
+  </div>
+  <div class="col-6">
+    <app-perfil-prestaciones [IdFormato]="IdFormato" [Prestaciones]="Prestaciones" (ProcesosEmt)="getPrestacion($event)">
+    </app-perfil-prestaciones>
+  </div>
+</section>
+<br>
+<section #CompetenciasSt class="row">
+  <div class="col-4">
+    <app-perfil-cardinales [IdFormato]="IdFormato" [Competencias]="Cardinales" (ProcesosEmt)="getCardianales($event)">
+    </app-perfil-cardinales>
+  </div>
+  <div class="col-4">
+    <app-perfil-areas [IdFormato]="IdFormato" [Competencias]="Areas" (ProcesosEmt)="getAreas($event)">
+    </app-perfil-areas>
+  </div>
+  <div class="col-4">
+    <app-perfil-gerenciales [IdFormato]="IdFormato" [Competencias]="Gerenciales" (CompetenciaEmt)="getGerenciales($event)">
+    </app-perfil-gerenciales>
   </div>
 </section>

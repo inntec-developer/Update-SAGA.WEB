@@ -1,0 +1,24 @@
+<form [formGroup]="prestacion" id="index">
+  <section [hidden]="!Edit">
+    <div class="row">
+      <mat-form-field class="col-10">
+        <input #PrestacionCtrl matInput maxlength="100" placeholder="Prestación" rows="2"
+        [value]="PrestacionCtrl.value.toUpperCase()"
+        formControlName="prestacion" required="">
+      </mat-form-field>
+      <section class="col-2">
+        <em class="fa fa-close text-danger em-button float-left" (click)="Remove()"></em>
+        <em class="fa fa-check text-success em-button float-left" (click)="Save()" *ngIf="prestacion.valid"></em>
+      </section>
+    </div>
+  </section>
+  <div [hidden]="Edit" class="col-12">
+      <strong class="text-primary">{{index + 1}} - <i class="fa fa-chevron-right fa-x1" aria-hidden="true"></i></strong>
+    <label> {{Prestacion | uppercase}} </label>
+    <em class="fa fa-pencil text-info" (click)="OnEdit(); Edit = true"></em>
+    <em class="fa fa-close text-danger em-button" (click)="Remove()"></em>
+  </div>
+  <alert [type]="TypeAlert" [hidden]="ShowAlert == false">
+    <strong>{{MsgAlert | uppercase}}</strong>
+  </alert>
+</form>

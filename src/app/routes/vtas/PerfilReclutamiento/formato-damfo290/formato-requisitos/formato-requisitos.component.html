@@ -1,14 +1,14 @@
 <form [formGroup]="formEncabezado">
   <section #NombrePerfilSection class="row">
     <mat-form-field class="col-12">
-      <input matInput placeholder="Nombre del Puesto a Reclutar" formControlName="NombrePuesto">
+      <input #NombrePuestoCtrl matInput placeholder="Nombre del Puesto a Reclutar" formControlName="NombrePuesto" [value]="NombrePuestoCtrl.value.toUpperCase()">
     </mat-form-field>
   </section>
   <section #GeneroEdadEstadoSection class="row">
     <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
       <mat-select placeholder="Sexo / Genero" formControlName="Genero" required>
         <mat-option *ngFor="let x of Genero" [value]="x.id">
-          {{x.genero}}
+          {{x.genero | uppercase}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -22,7 +22,7 @@
     <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
       <mat-select placeholder="Estado Civil" formControlName="EstadoCivil" required>
         <mat-option *ngFor="let x of EstadoCivil" [value]="x.id">
-          {{x.estadoCivil}}
+          {{x.estadoCivil | uppercase}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -41,7 +41,7 @@
               placeholder="Buscar" (keypress)="filterAreas()" (keydown)="filterAreas()">
           </mat-form-field>
           <mat-option *ngFor="let x of AreasAux" [value]="x.id">
-            {{x.areaExperiencia}}
+            {{x.areaExperiencia | uppercase}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -51,7 +51,7 @@
             <mat-select #ContratoCtrl placeholder="Contrato" formControlName="Contrato"
             (selectionChange)="getContrato()" required>
               <mat-option *ngFor="let x of Contratos" [value]="x.id">
-                {{x.tipoContrato}}
+                {{x.tipoContrato | uppercase}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -60,7 +60,7 @@
           <mat-form-field>
             <mat-select placeholder="Tiempo Contrato" formControlName="TiempoContrato" required>
               <mat-option *ngFor="let x of TiempoContrato" [value]="x.id">
-                {{x.tiempo}}
+                {{x.tiempo | uppercase}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -75,18 +75,18 @@
       <mat-form-field>
         <mat-label>Aptitudes</mat-label>
         <mat-select formControlName="Aptitud" multiple #AptitudesCtrl [(ngModel)]="apt">
-          <mat-option *ngFor="let x of Aptitudes" [value]="x.id">{{x.aptitud}}</mat-option>
+          <mat-option *ngFor="let x of Aptitudes" [value]="x.id">{{x.aptitud | uppercase}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <mat-form-field>
-          <textarea #message matInput maxlength="500" placeholder="Experiencia" rows="2" value={{exp}}
+          <textarea #ExperienciaCtrl matInput maxlength="500" placeholder="Experiencia" rows="2" [value]="ExperienciaCtrl.value.toUpperCase()"
           formControlName="Experiencia"></textarea>
         <mat-hint align="start">
           <strong class="text-warning">Ingrese la experiencia requerida para la vacante.</strong>
         </mat-hint>
-        <mat-hint align="end"><strong class="text-info">{{message.value.length}} / 500</strong></mat-hint>
+        <mat-hint align="end"><strong class="text-info">{{ExperienciaCtrl.value.length}} / 500</strong></mat-hint>
       </mat-form-field>
       <!-- Experiencia: {{exp}} -->
     </div>
@@ -109,7 +109,7 @@
             required="">
           <strong matSuffix>MXN.</strong>
         </mat-form-field>
-        <h4 class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-primary">Sueldo Mensual</h4>
+        <h5 class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-primary">Sueldo Mensual</h5>
       </section>
       <section class=" row">
         <h4 class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-right text-warning">
@@ -118,7 +118,7 @@
         <h4 class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-right text-warning">
           {{(sueldoMax / 30) * 7 | moneda: '$'}} MXN.
         </h4>
-        <h4 class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-primary">Sueldo Semanal</h4>
+        <h5 class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-primary">Sueldo Semanal</h5>
       </section>
       <br>
       <section class="row">
@@ -128,32 +128,32 @@
         <h4 class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-right text-warning">
           {{(sueldoMax / 30)| moneda: '$'}} MXN.
         </h4>
-        <h4 class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-primary">Sueldo Diario</h4>
+        <h5 class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-primary">Sueldo Diario</h5>
       </section>
     </section>
     <section class="col-lg-6 col-md-6 colsm-12 col-xs-12">
       <mat-form-field>
         <mat-select formControlName="DiaCorte" placeholder="Días de Corte" required="">
-          <mat-option *ngFor="let x of DiasCorte" [value]="x.id">{{x.diaSemana}}</mat-option>
+          <mat-option *ngFor="let x of DiasCorte" [value]="x.id">{{x.diaSemana | uppercase}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
         <mat-select formControlName="TipoNomina" placeholder="Tipo de Nomina" required="">
-          <mat-option *ngFor="let x of TiposNomina" [value]="x.id">{{x.tipoDeNomina}}</mat-option>
+          <mat-option *ngFor="let x of TiposNomina" [value]="x.id">{{x.tipoDeNomina | uppercase}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
         <mat-select formControlName="DiaPago" placeholder="Días de pago" required="">
-          <mat-option *ngFor="let x of DiasPago" [value]="x.id">{{x.diaSemana}}</mat-option>
+          <mat-option *ngFor="let x of DiasPago" [value]="x.id">{{x.diaSemana | uppercase}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
         <mat-select formControlName="PeriodoPago" placeholder="Período de pago" required="">
-          <mat-option *ngFor="let x of PeriodosPago" [value]="x.id">{{x.periodoPago}}</mat-option>
+          <mat-option *ngFor="let x of PeriodosPago" [value]="x.id">{{x.periodoPago | uppercase}}</mat-option>
         </mat-select>
       </mat-form-field>
     </section>
   </section>
 </form>
+Estado de formulario: {{formEncabezado.valid}}
 
-<toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>

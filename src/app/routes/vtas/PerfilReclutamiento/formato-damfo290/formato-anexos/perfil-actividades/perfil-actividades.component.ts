@@ -1,20 +1,21 @@
+import { forEach } from '@angular/router/src/utils/collection';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { SettingsService } from './../../../../../../core/settings/settings.service';
-import { Component, OnInit, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, SimpleChanges, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-perfil-actividades',
   templateUrl: './perfil-actividades.component.html',
   styleUrls: ['./perfil-actividades.component.scss']
 })
-export class PerfilActividadesComponent implements OnInit {
+export class PerfilActividadesComponent implements OnInit, OnChanges {
   @Input() IdFormato: any;
   @Input() Actividades: any[];
   @Output() ActividadesEmt = new EventEmitter();
 
   ActividadesNew = [];
 
-  esNuevo: boolean = true;
+  esNuevo = true;
   private Add: boolean;
 
   public ActividadArray: FormGroup;
@@ -33,8 +34,6 @@ export class PerfilActividadesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
     if (this.IdFormato != null) {
       this.esNuevo = false;
       if (this.Actividades != null) {
@@ -44,15 +43,15 @@ export class PerfilActividadesComponent implements OnInit {
   }
 
   private PopulateForm(actividad: any) {
-    for (let x in actividad) {
+    actividad.forEach(x => {
       this.AddActividad(1);
-    }
+    });
     this.ActividadArray.patchValue({
       actividad: this.Actividades
     });
   }
 
-  AddActividad(Actividad : any) {
+  AddActividad(Actividad?: any) {
     if (this.Add) {
       this.Add = true;
       return;
@@ -64,25 +63,25 @@ export class PerfilActividadesComponent implements OnInit {
     }
   }
 
-  initActividad(){
+  initActividad() {
     return this.fb.group({
       id: ['0'],
       actividad: ['', [Validators.required, Validators.maxLength(200)]]
     });
   }
 
-  Agregar(Value: boolean){
+  Agregar(Value: boolean) {
     this.Add = false;
   }
 
-  getRegistros(data: any){
+  getRegistros(data: any) {
     if (!data['isEdit']) {
       this.ActividadesNew.push({
         Actividad: data['actividad'],
         UsuarioAlta: data['UsuarioAlta']
       });
     } else {
-      let editRegistro = {
+      const editRegistro = {
         Actividad: data['actividad'],
         UsuarioAlta: data['UsuarioAlta']
       };

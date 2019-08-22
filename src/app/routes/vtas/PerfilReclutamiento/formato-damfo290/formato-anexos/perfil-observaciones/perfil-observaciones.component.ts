@@ -1,4 +1,5 @@
-import { Component, OnInit, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { forEach } from '@angular/router/src/utils/collection';
+import { Component, OnInit, EventEmitter, Input, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 
 @Component({
@@ -6,7 +7,7 @@ import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
   templateUrl: './perfil-observaciones.component.html',
   styleUrls: ['./perfil-observaciones.component.scss']
 })
-export class PerfilObservacionesComponent implements OnInit {
+export class PerfilObservacionesComponent implements OnInit, OnChanges {
 
   @Input() IdFormato: any;
   @Input() Observaciones: any[];
@@ -32,7 +33,6 @@ export class PerfilObservacionesComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    debugger;
     if (this.IdFormato != null) {
       this.esNuevo = false;
       if (this.Observaciones != null) {
@@ -42,20 +42,20 @@ export class PerfilObservacionesComponent implements OnInit {
   }
 
   private PopulateForm(observacion: any) {
-    for (let x in observacion) {
+    observacion.forEach(x => {
       this.AddObservacion(1);
-    }
+    });
     this.ObservacionesArray.patchValue({
       observacion: this.Observaciones
     });
   }
 
-  AddObservacion(Actividad: any) {
+  AddObservacion(Observaciones?: any) {
     if (this.Add) {
       this.Add = true;
       return;
     } else {
-      Actividad > 0 ? this.Add = false : this.Add = true;
+      Observaciones > 0 ? this.Add = false : this.Add = true;
       const control = <FormArray>this.ObservacionesArray.controls['observacion'];
       const addCtrl = this.initObservacion();
       control.push(addCtrl);
@@ -80,7 +80,7 @@ export class PerfilObservacionesComponent implements OnInit {
         UsuarioAlta: data['UsuarioAlta']
       });
     } else {
-      let editRegistro = {
+      const editRegistro = {
         observaciones: data['observaciones'],
         UsuarioAlta: data['UsuarioAlta']
       };

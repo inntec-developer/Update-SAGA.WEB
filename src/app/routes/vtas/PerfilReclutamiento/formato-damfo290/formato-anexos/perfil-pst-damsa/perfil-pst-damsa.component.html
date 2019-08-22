@@ -10,9 +10,9 @@
     <div *ngFor="let psicometria of PsicometriasArray['controls'].psicometria['controls']; let i=index">
       <div formArrayName="psicometria">
         <form [formGroupName]="i">
-          <pst-damsa [IdFormato]="IdFormato" [group]="PsicometriasArray.controls.psicometria.controls[i]" [Index]="i"
-            (Add)="Agregar($event)" (Remove)="removePsicometria($event)" (Registros)="getRegistros($event)">
-          </pst-damsa>
+          <app-pst-damsa [IdFormato]="IdFormato" [psicometria]="PsicometriasArray.controls.psicometria.controls[i]" [index]="i"
+            (Add)="Agregar($event)" (remove)="removePsicometria($event)" (Registros)="getRegistros($event)">
+          </app-pst-damsa>
         </form>
       </div>
     </div>

@@ -10,9 +10,9 @@
     <div *ngFor="let observacion of ObservacionesArray['controls'].observacion['controls']; let i=index">
       <div formArrayName="observacion">
         <form [formGroupName]="i">
-          <observaciones [IdFormato]="IdFormato" [group]="ObservacionesArray.controls.observacion.controls[i]" [Index]="i"
-            (Add)="Agregar($event)" (Remove)="removeObservacion($event)" (Registros)="getRegistros($event)">
-          </observaciones>
+          <app-observaciones-p [IdFormato]="IdFormato" [observacion]="ObservacionesArray.controls.observacion.controls[i]" [index]="i"
+            (Add)="Agregar($event)" (remove)="removeObservacion($event)" (Registros)="getRegistros($event)">
+          </app-observaciones-p>
         </form>
       </div>
     </div>

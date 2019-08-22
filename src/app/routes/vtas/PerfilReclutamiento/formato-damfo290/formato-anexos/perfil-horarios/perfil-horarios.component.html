@@ -9,9 +9,9 @@
       <div *ngFor="let horario of HorarioArray['controls'].horario['controls']; let i=index">
         <div formArrayName="horario">
           <form [formGroupName]="i">
-            <horarios [IdFormato]="IdFormato" [group]="HorarioArray.controls.horario.controls[i]" [Index]="i"
-              (Add)="Agregar($event)" (Remove)="removeHorario($event)" (Registros)="getRegistros($event)">
-            </horarios>
+            <app-horarios-p [IdFormato]="IdFormato" [horario]="HorarioArray.controls.horario.controls[i]" [index]="i"
+              (Add)="Agregar($event)" (remove)="removeHorario($event)" (Registros)="getRegistros($event)">
+            </app-horarios-p>
           </form>
         </div>
       </div>

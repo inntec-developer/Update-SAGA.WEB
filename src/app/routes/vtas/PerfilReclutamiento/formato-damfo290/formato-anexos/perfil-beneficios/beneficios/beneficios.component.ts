@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { CatalogosService } from '../../../../../../../service';
 import { FormGroup } from '@angular/forms';
@@ -6,22 +6,25 @@ import { PerfilReclutamientoService } from '../../../../../../../service/PerfilR
 import { SettingsService } from '../../../../../../../core/settings/settings.service';
 
 @Component({
-  selector: 'beneficios',
+  selector: 'app-beneficios-p',
   templateUrl: './beneficios.component.html',
   styleUrls: ['./beneficios.component.scss'],
   providers: [CatalogosService, PerfilReclutamientoService]
 })
-export class BeneficiosComponent implements OnInit {
+export class BeneficiosComponent implements OnInit, AfterContentInit {
   @Input('IdFormato') public IdFormato: any;
-  @Input('group') public beneficio: FormGroup;
-  @Input('Index') public index: number;
-  @Output('Remove') public remove = new EventEmitter();
+  @Input('beneficio') public beneficio: FormGroup;
+  @Input('index') public index: number;
+  @Output('remove') public remove = new EventEmitter();
   @Output('Add') public Add = new EventEmitter();
   @Output('Registros') public Registros = new EventEmitter();
 
-  TiposBeneficios: any; //Get de la base de datos
+  TiposBeneficios: any; // Get de la base de datos
 
-  TipoBeneficio: any
+  TipoBeneficioId: any;
+  TipoBeneficioIdAux: any;
+
+  TipoBeneficio: any;
   Cantidad: any;
   Observaciones: any;
 
@@ -29,13 +32,13 @@ export class BeneficiosComponent implements OnInit {
   CantidadAux: any;
   ObservacionesAux: any;
 
-  Edit: boolean = false;
-  isActionEdit: boolean = false;
-  ShowAlert: boolean = false;
+  Edit = false;
+  isActionEdit = false;
+  ShowAlert = false;
 
 
-  TypeAlert: string = '';
-  MsgAlert: string = '';
+  TypeAlert = '';
+  MsgAlert = '';
 
 
 
@@ -51,7 +54,8 @@ export class BeneficiosComponent implements OnInit {
   }
 
   ngAfterContentInit(): void {
-    if (this.beneficio.get('id').value != 0) {
+    if (this.beneficio.get('id').value !== '0') {
+      this.TipoBeneficioId = this.beneficio.get('tipoBeneficioId').value;
       this.TipoBeneficio = this.beneficio.get('tipoBeneficio').value;
       this.Cantidad = this.beneficio.get('cantidad').value;
       this.Observaciones = this.beneficio.get('observaciones').value;
@@ -62,50 +66,56 @@ export class BeneficiosComponent implements OnInit {
 
   Save() {
     if (this.IdFormato != null) {
-      var obj = {
+      const obj = {
         id: this.beneficio.get('id').value || null,
         tipoBeneficioId: this.beneficio.get('tipoBeneficioId').value,
         cantidad: this.beneficio.get('cantidadId').value,
-        observaciones: this.beneficio.get('observacionesId').value,
+        observaciones: this.beneficio.get('observacionesId').value.toUpperCase(),
         Usuario: this._setting.user.usuario,
         DAMFO290Id: this.IdFormato,
-      }
+      };
       this.Cantidad = obj['cantidad'];
       this.Observaciones = obj['observaciones'];
       if (!this.isActionEdit) {
         obj['action'] = 'create';
         this._servicePerfilR.CrudBeneficio(obj).subscribe(x => {
-          if (x != 404) {
-            this.beneficio.controls['id'].setValue(x);
-            this.Edit = false;
-            this.functionCreateAlert('success', false);
+          if (x !== 404) {
+            if (x !== 300) {
+              this.beneficio.controls['id'].setValue(x);
+              this.Edit = false;
+              this.functionCreateAlert('success', false);
+            } else {
+              this.functionCreateAlert('info');
+            }
           } else {
             this.functionCreateAlert('error');
           }
         });
-      }
-      else {
+      } else {
         obj['action'] = 'update';
         this._servicePerfilR.CrudBeneficio(obj).subscribe(x => {
-          if (x != 404) {
-            this.Edit = false;
-            this.isActionEdit = false;
-            this.functionCreateAlert('success', true);
+          if (x !== 404) {
+            if (x != 300) {
+              this.Edit = false;
+              this.isActionEdit = false;
+              this.functionCreateAlert('success', true);
+            } else {
+              this.functionCreateAlert('info');
+            }
           } else {
             this.functionCreateAlert('error');
           }
         });
       }
-    }
-    else {
-      var data = {
+    } else {
+      const data = {
         isEdit: this.isActionEdit,
-        index: this.index,
+        Index: this.index,
         tipoBeneficioId: this.beneficio.get('tipoBeneficioId').value,
         cantidad: this.beneficio.get('cantidadId').value,
         observaciones: this.beneficio.get('observacionesId').value || 'S/R',
         UsuarioAlta: this._setting.user.usuario,
-      }
+      };
       this.Cantidad = data['cantidad'];
       this.Observaciones = data['observaciones'];
       if (!this.isActionEdit) {
@@ -123,7 +133,7 @@ export class BeneficiosComponent implements OnInit {
   OnEdit() {
     this.beneficio.controls['cantidadId'].setValue(this.Cantidad);
     this.beneficio.controls['observacionesId'].setValue(this.Observaciones);
-
+    this.TipoBeneficioIdAux = this.TipoBeneficioId;
     this.TipoBeneficioAux = this.TipoBeneficio;
     this.CantidadAux = this.Cantidad;
     this.ObservacionesAux = this.Observaciones;
@@ -131,8 +141,9 @@ export class BeneficiosComponent implements OnInit {
   }
 
   getTipoBeneficio() {
-    let index = this.TiposBeneficios.findIndex(x => x.id == this.beneficio.get('tipoBeneficioId').value);
-    this.TipoBeneficio = this.TiposBeneficios[index]['tipoBeneficio'];
+    const index = this.TiposBeneficios.findIndex(x => x.id === this.beneficio.get('tipoBeneficioId').value);
+    this.TipoBeneficioId = this.beneficio.get('tipoBeneficioId').value;
+    this.TipoBeneficio = this.TiposBeneficios[index]['tipoBeneficio'].toUpperCase();
   }
 
   Remove() {
@@ -140,12 +151,12 @@ export class BeneficiosComponent implements OnInit {
       this.remove.emit(this.index);
       this.Add.emit(false);
       if (this.IdFormato != null && this.beneficio.get('id').value != null) {
-        var obj = {
+        const obj = {
           id: this.beneficio.get('id').value,
           action: 'delete'
-        }
+        };
         this._servicePerfilR.CrudBeneficio(obj).subscribe(data => {
-          if (data != 404) {
+          if (data !== 404) {
             this.remove.emit(this.index);
             this.Add.emit(false);
           } else {
@@ -174,17 +185,19 @@ export class BeneficiosComponent implements OnInit {
     switch (type) {
       case 'success':
         if (edit) {
-          this.MsgAlert = 'Se actualizo el beneficio del Perfil de Reclutamiento.'
-        }
-        else {
-          this.MsgAlert = 'Se agregó un nuevo beneficio el Perfil de Reclutamiento.'
+          this.MsgAlert = 'Se actualizo el beneficio del Perfil de Reclutamiento.';
+        } else {
+          this.MsgAlert = 'Se agregó un nuevo beneficio el Perfil de Reclutamiento.';
         }
         this.TypeAlert = type;
-
         break;
       case 'error':
+        this.TypeAlert = 'danger';
+        this.MsgAlert = 'Algo salió mal, por favor intente de nuevo.';
+        break;
+      case 'info':
+        this.MsgAlert = 'El Beneficio ya existe, intento con otro.';
         this.TypeAlert = type;
-        this.MsgAlert = 'Algo salió mal, por favor intente de nuevo.'
         break;
     }
     setTimeout(() => {

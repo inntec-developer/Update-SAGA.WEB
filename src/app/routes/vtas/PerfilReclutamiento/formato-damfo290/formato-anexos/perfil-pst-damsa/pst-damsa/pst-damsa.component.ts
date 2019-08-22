@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { CatalogosService } from '../../../../../../../service';
 import { FormGroup } from '@angular/forms';
@@ -6,16 +6,16 @@ import { PerfilReclutamientoService } from '../../../../../../../service/PerfilR
 import { SettingsService } from '../../../../../../../core/settings/settings.service';
 
 @Component({
-  selector: 'pst-damsa',
+  selector: 'app-pst-damsa',
   templateUrl: './pst-damsa.component.html',
   styleUrls: ['./pst-damsa.component.scss'],
   providers: [CatalogosService, PerfilReclutamientoService]
 })
-export class PstDamsaComponent implements OnInit {
+export class PstDamsaComponent implements OnInit, AfterContentInit {
   @Input('IdFormato') public IdFormato: any;
-  @Input('group') public psicometria: FormGroup;
-  @Input('Index') public index: number;
-  @Output('Remove') public remove = new EventEmitter();
+  @Input('psicometria') public psicometria: FormGroup;
+  @Input('index') public index: number;
+  @Output('remove') public remove = new EventEmitter();
   @Output('Add') public Add = new EventEmitter();
   @Output('Registros') public Registros = new EventEmitter();
 
@@ -29,13 +29,13 @@ export class PstDamsaComponent implements OnInit {
   PsicometriaAux: any;
   DescipcionAux: any;
 
-  Edit: boolean = false;
-  isActionEdit: boolean = false;
-  ShowAlert: boolean = false;
+  Edit = false;
+  isActionEdit = false;
+  ShowAlert = false;
 
 
-  TypeAlert: string = '';
-  MsgAlert: string = '';
+  TypeAlert = '';
+  MsgAlert = '';
 
   constructor(
     private _serviceCatalogos: CatalogosService,
@@ -49,8 +49,7 @@ export class PstDamsaComponent implements OnInit {
   }
 
   ngAfterContentInit(): void {
-    if (this.psicometria.get('id').value != 0) {
-      debugger;
+    if (this.psicometria.get('id').value !== '0') {
       this.Psicometria = this.psicometria.get('psicometria').value;
       this.Descripcion = this.psicometria.get('descripcion').value;
       this.PsicometriaId = this.psicometria.get('psicometriaId').value;
@@ -61,18 +60,18 @@ export class PstDamsaComponent implements OnInit {
 
   Save() {
     if (this.IdFormato != null) {
-      var obj = {
+      const obj = {
         id: this.psicometria.get('id').value || null,
         psicometriaId: this.psicometria.get('psicometriaId').value,
         Usuario: this._setting.user.usuario,
         DAMFO290Id: this.IdFormato,
-      }
+      };
       this.PsicometriaId = obj['psicometriaId'];
       if (!this.isActionEdit) {
         obj['action'] = 'create';
         this._servicePerfilR.CrudPsicometriaDamsa(obj).subscribe(x => {
-          if (x != 404) {
-            if (x != 300) {
+          if (x !== 404) {
+            if (x !== 300) {
               this.psicometria.controls['id'].setValue(x);
               this.Edit = false;
               this.functionCreateAlert('success', false);
@@ -83,12 +82,11 @@ export class PstDamsaComponent implements OnInit {
             this.functionCreateAlert('error');
           }
         });
-      }
-      else {
+      } else {
         obj['action'] = 'update';
         this._servicePerfilR.CrudPsicometriaDamsa(obj).subscribe(x => {
-          if (x != 404) {
-            if (x != 300) {
+          if (x !== 404) {
+            if (x !== 300) {
               this.Edit = false;
               this.isActionEdit = false;
               this.functionCreateAlert('success', true);
@@ -100,14 +98,13 @@ export class PstDamsaComponent implements OnInit {
           }
         });
       }
-    }
-    else {
-      var data = {
+    } else {
+      const data = {
         isEdit: this.isActionEdit,
-        index: this.index,
+        Index: this.index,
         psicometriaId: this.psicometria.get('psicometriaId').value,
         UsuarioAlta: this._setting.user.usuario,
-      }
+      };
       if (!this.isActionEdit) {
         this.Add.emit(false);
         this.Edit = false;
@@ -126,14 +123,14 @@ export class PstDamsaComponent implements OnInit {
     this.PsicometriaIdAux = this.PsicometriaId;
     this.psicometria.patchValue({
       psicometriaId: this.PsicometriaId,
-      descipcion: this.Descripcion
+      descripcion: this.Descripcion
     });
     this.isActionEdit = true;
   }
 
   getPsicometria() {
-    debugger;
-    let index = this.Psicometrias.findIndex(x => x.id == this.psicometria.get('psicometriaId').value);
+    const index = this.Psicometrias.findIndex(x => x.id === this.psicometria.get('psicometriaId').value);
+    this.PsicometriaId = this.psicometria.get('psicometriaId').value;
     this.Psicometria = this.Psicometrias[index]['tipoPsicometria'];
     this.Descripcion = this.Psicometrias[index]['descripcion'];
     this.psicometria.patchValue({
@@ -146,12 +143,12 @@ export class PstDamsaComponent implements OnInit {
       this.remove.emit(this.index);
       this.Add.emit(false);
       if (this.IdFormato != null && this.psicometria.get('id').value != null) {
-        var obj = {
+        const obj = {
           id: this.psicometria.get('id').value,
           action: 'delete'
-        }
+        };
         this._servicePerfilR.CrudPsicometriaDamsa(obj).subscribe(data => {
-          if (data != 404) {
+          if (data !== 404) {
             this.remove.emit(this.index);
             this.Add.emit(false);
           } else {
@@ -160,7 +157,7 @@ export class PstDamsaComponent implements OnInit {
         });
       }
     } else {
-      this.PsicometriaId = this.PsicometriaIdAux
+      this.PsicometriaId = this.PsicometriaIdAux;
       this.Psicometria = this.PsicometriaAux;
       this.Descripcion = this.DescipcionAux;
       this.psicometria.patchValue({
@@ -183,18 +180,15 @@ export class PstDamsaComponent implements OnInit {
     switch (type) {
       case 'success':
         if (edit) {
-          this.MsgAlert = 'Se actualizo la Psicometría del Perfil de Reclutamiento.'
-        }
-        else {
-          this.MsgAlert = 'Se agregó una nueva Psicometría el Perfil de Reclutamiento.'
+          this.MsgAlert = 'Se actualizo la Psicometría del Perfil de Reclutamiento.';
+        } else {
+          this.MsgAlert = 'Se agregó una nueva Psicometría el Perfil de Reclutamiento.';
         }
         this.TypeAlert = type;
-
         break;
       case 'error':
-
         this.MsgAlert = 'Algo salió mal, por favor intente de nuevo.';
-        this.TypeAlert = type;
+        this.TypeAlert = 'danger';
         break;
       case 'info':
         this.MsgAlert = 'La Psicometría ya existe, intento con otro.';

@@ -1,0 +1,21 @@
+<form [formGroup]="PrestacionesArray">
+  <section class="col-12">
+    <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
+    <strong class="text-warning">Prestaciones adicionales ofrecidas por el cliente</strong>
+    <span class="fa fa-plus em-button text-primary float-right"
+      (click)="AddPrestacion()"></span>
+    <mat-divider></mat-divider>
+  </section>
+  <section>
+    <div *ngFor="let prestacion of PrestacionesArray['controls'].prestacion['controls']; let i=index">
+      <div formArrayName="prestacion">
+        <form [formGroupName]="i">
+          <app-prestaciones-p [IdFormato]="IdFormato" [prestacion]="PrestacionesArray.controls.prestacion.controls[i]" [index]="i"
+            (Add)="Agregar($event)" (remove)="removePrestacion($event)" (Registros)="getRegistros($event)">
+          </app-prestaciones-p>
+        </form>
+      </div>
+    </div>
+  </section>
+</form>
+

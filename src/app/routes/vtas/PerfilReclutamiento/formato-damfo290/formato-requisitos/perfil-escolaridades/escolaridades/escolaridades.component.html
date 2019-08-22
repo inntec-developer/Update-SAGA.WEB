@@ -7,14 +7,14 @@
             <mat-select #t1 placeholder="Escolaridad" formControlName="escolaridadId"
               (selectionChange)="getEscolaridad()" required>
               <mat-option *ngFor="let x of Escolaridades" [value]="x.id">
-                {{x.gradoEstudio}}
+                {{x.gradoEstudio | uppercase}}
               </mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field class="col-4">
             <mat-select #t2 placeholder="Nivel" formControlName="nivelId" (selectionChange)="getNivel()" required>
               <mat-option *ngFor="let x of Niveles" [value]="x.id">
-                {{x.nivel}}
+                {{x.nivel | uppercase}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -26,8 +26,9 @@
       </div>
     </section>
     <div [hidden]="Edit" class="col-12">
-      <strong class="text-primary">Escolaridad: </strong> <label>{{Escolaridad}} </label> -
-      <strong class="text-primary">Nivel: </strong><label>{{Nivel}}</label>
+      <strong class="text-primary">{{index + 1}} - <i class="fa fa-chevron-right fa-x1" aria-hidden="true"></i></strong>
+      <label>{{Escolaridad | uppercase}} </label> -
+      <strong class="text-primary">Nivel: </strong><label>{{Nivel | uppercase}}</label>
       <em class="fa fa-pencil text-info" (click)="OnEdit(); Edit = true"></em>
       <em class="fa fa-close text-danger em-button" (click)="Remove()"></em>
     </div>

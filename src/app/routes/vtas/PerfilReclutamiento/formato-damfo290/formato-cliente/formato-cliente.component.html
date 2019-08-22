@@ -1,7 +1,7 @@
 <form [formGroup]="formCliente">
   <section #ClienteSection class="row">
     <mat-form-field class="col-12">
-      <input type="text" placeholder="Razon Social" aria-label="Number" matInput formControlName="RazonSocial"
+      <input #RazonSocialCtrl type="text" placeholder="Razon Social" aria-label="Number" matInput formControlName="RazonSocial" [value]="RazonSocialCtrl.value.toUpperCase()"
         [matAutocomplete]="cliente" (keyup.enter)="filter()" required="" />
       <mat-autocomplete #cliente="matAutocomplete" (optionSelected)="selected($event)">
         <mat-option *ngFor="let option of AuxOptions" [value]="option.razonSocial" class="option-container">
@@ -32,14 +32,14 @@
     <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
       <mat-select placeholder="Tipo Reclutamiento" formControlName="Tipo" required>
         <mat-option *ngFor="let x of TiposReclutamientos" [value]="x.id">
-          {{x.tipoReclutamiento}}
+          {{x.tipoReclutamiento | uppercase}}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
       <mat-select placeholder="Coordinación" formControlName="Clase" required>
         <mat-option *ngFor="let x of ClasesReclutamientos" [value]="x.id">
-          {{x.calsesReclutamiento}}
+          {{x.calsesReclutamiento | uppercase}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -57,6 +57,7 @@
   </div>
 </section>
 
+Estado de formulario: {{formCliente.valid}}
 
 <!-- mensajes del sistema  -->
 <toaster-container [toasterconfig]="toasterconfig"></toaster-container>

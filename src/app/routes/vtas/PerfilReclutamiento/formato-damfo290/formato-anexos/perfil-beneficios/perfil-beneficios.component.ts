@@ -1,28 +1,39 @@
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { Component, OnInit, Input, EventEmitter, Output, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { SettingsService } from '../../../../../../core/settings/settings.service';
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'app-perfil-beneficios',
   templateUrl: './perfil-beneficios.component.html',
   styleUrls: ['./perfil-beneficios.component.scss']
 })
-export class PerfilBeneficiosComponent implements OnInit {
+export class PerfilBeneficiosComponent implements OnInit, OnChanges {
   @Input() IdFormato: any;
   @Input() Beneficios: any[];
   @Output() BeneficiosEmt = new EventEmitter();
   BeneficiosNew = [];
 
-  esNuevo: boolean = true;
+  esNuevo = true;
   private Add: boolean;
 
   // public formEscolaridades: FormGroup;
   public BeneficioArray: FormGroup;
   public beneficio: any;
 
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7, tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
+
   constructor(
     private _settings: SettingsService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toasterService: ToasterService,
 
   ) { }
 
@@ -34,7 +45,6 @@ export class PerfilBeneficiosComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    //Called before any other lifecycle hook. Use it to inj
     if (this.IdFormato != null) {
       this.esNuevo = false;
       if (this.Beneficios != null) {
@@ -44,9 +54,9 @@ export class PerfilBeneficiosComponent implements OnInit {
   }
 
   private PopulateForm(beneficio: any[]) {
-    for (let x in beneficio) {
+    beneficio.forEach(x => {
       this.AddBeneficio(1);
-    }
+    });
     this.BeneficioArray.patchValue({
       beneficio: this.Beneficios,
     });
@@ -56,8 +66,7 @@ export class PerfilBeneficiosComponent implements OnInit {
     if (this.Add) {
       this.Add = true;
       return;
-    }
-    else {
+    } else {
       Escolaridad > 0 ? this.Add = false : this.Add = true;
       const control = <FormArray>this.BeneficioArray.controls['beneficio'];
       const addrCtrl = this.initBeneficio();
@@ -84,20 +93,48 @@ export class PerfilBeneficiosComponent implements OnInit {
 
   getRegistros(data: any) {
     if (!data['isEdit']) {
-      this.BeneficiosNew.push({
-        TipobeneficioId: data['tipoBeneficioId'],
-        Cantidad: data['cantidad'],
-        Observaciones: data['observaciones'],
-        UsuarioAlta: this._settings['user']['usuario']
-      });
+      let create = true;
+      if (this.BeneficiosNew.length > 0) {
+        this.BeneficiosNew.find(x => {
+          if (x['tipoBeneficioId'] === data['tipoBeneficioId']) {
+            return create = false;
+          }
+        });
+      }
+      if (create) {
+        this.BeneficiosNew.push({
+          Index: data['Index'],
+          tipoBeneficioId: data['tipoBeneficioId'],
+          Cantidad: data['cantidad'],
+          Observaciones: data['observaciones'],
+          UsuarioAlta: data['UsuarioAlta']
+        });
+      } else {
+        this.removeBeneficio(data['Index']);
+        this.popToast('info', 'Beneficios', 'El Beneficio ya existe, intente con otra.');
+        this.AddBeneficio();
+      }
     } else {
-      let editRegistro = {
-        TipobeneficioId: data['tipoBeneficioId'],
-        Cantidad: data['cantidad'],
-        Observaciones: data['observaciones'],
-        UsuarioAlta: this._settings['user']['usuario']
-      };
-      this.BeneficiosNew[data['index']] = editRegistro;
+      let edit = true;
+      this.BeneficiosNew.find(x => {
+        if (x['tipoBeneficioId'] === data['tipoBeneficioId'] && x['Index'] !== data['Index']) {
+          return edit = false;
+        }
+      });
+      if (edit) {
+        const editRegistro = {
+          Index: data['Index'],
+          tipoBeneficioId: data['tipoBeneficioId'],
+          Cantidad: data['cantidad'],
+          Observaciones: data['observaciones'],
+          UsuarioAlta: data['UsuarioAlta']
+        };
+        this.BeneficiosNew[data['index']] = editRegistro;
+      } else {
+        this.removeBeneficio(data['Index']);
+        this.popToast('info', 'Beneficios', 'El Beneficio ya existe, intente con otra.');
+        this.AddBeneficio();
+      }
     }
     this.BeneficiosEmt.emit(this.BeneficiosNew);
   }
@@ -107,6 +144,16 @@ export class PerfilBeneficiosComponent implements OnInit {
     control.removeAt(i);
     this.BeneficiosNew.splice(i, 1);
     this.BeneficiosEmt.emit(this.BeneficiosNew);
+  }
+
+  popToast(type: any, title: any, body: any) {
+    const toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 5000,
+      body: body
+    };
+    this.toasterService.pop(toast);
   }
 
 }

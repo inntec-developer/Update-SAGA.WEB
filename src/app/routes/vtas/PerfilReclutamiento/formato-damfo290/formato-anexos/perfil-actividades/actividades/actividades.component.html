@@ -3,12 +3,13 @@
     <section [hidden]="!Edit">
       <div class="row">
         <mat-form-field class="col-10">
-          <textarea #message matInput maxlength="200" placeholder="Actividad" rows="2"
+          <textarea #ActividadCtrl matInput maxlength="200" placeholder="Actividad"
+            [value]="ActividadCtrl.value.toUpperCase()" rows="2"
             formControlName="actividad"></textarea>
           <mat-hint align="start">
             <strong class="text-warning">Actividad a Realizarn</strong>
           </mat-hint>
-          <mat-hint align="end"><strong class="text-info">{{message.value.length}} / 200</strong></mat-hint>
+          <mat-hint align="end"><strong class="text-info">{{ActividadCtrl.value.length}} / 200</strong></mat-hint>
         </mat-form-field>
         <section class="col-2">
           <em class="fa fa-close text-danger em-button float-left" (click)="Remove()"></em>
@@ -17,7 +18,8 @@
       </div>
     </section>
     <div [hidden]="Edit" class="col-12">
-      <strong class="text-primary">Actividad: </strong> <label>{{Actividad | uppercase}} </label>
+      <strong class="text-primary">{{index + 1}} - <i class="fa fa-chevron-right fa-x1" aria-hidden="true"></i></strong>
+      <label> {{Actividad | uppercase}} </label>
       <em class="fa fa-pencil text-info" (click)="OnEdit(); Edit = true"></em>
       <em class="fa fa-close text-danger em-button" (click)="Remove()"></em>
     </div>

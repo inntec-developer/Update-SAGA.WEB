@@ -3,41 +3,42 @@
   <section [hidden]="!Edit">
     <div class="row">
       <mat-form-field class="col-2">
-        <input matInput #NombreCtrl type="text" placeholder="Nombre" formControlName="horario" required="">
+        <input matInput #NombreCtrl type="text" placeholder="Nombre" formControlName="horario"
+          [value]="NombreCtrl.value.toUpperCase()" required="">
       </mat-form-field>
 
       <mat-form-field class="col-1">
         <mat-select #t1 placeholder="De Día " formControlName="deDiaId" (selectionChange)="getDeDia()" required="">
           <mat-option *ngFor="let x of DiasSemana" [value]="x.id">
-            {{x.diaSemana}}
+            {{x.diaSemana | uppercase}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="col-1">
         <mat-select #t1 placeholder="A Día " formControlName="aDiaId" (selectionChange)="getADia()" required="">
           <mat-option *ngFor="let x of DiasSemana" [value]="x.id">
-            {{x.diaSemana}}
+            {{x.diaSemana | uppercase}}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field class="col-1">
-        <input matInput #NombreCtrl type="time" class="text-right" placeholder="De Hora" formControlName="deHora"
+        <input matInput #deDiaCtrl type="time" class="text-right" placeholder="De Hora" formControlName="deHora"
           required="">
       </mat-form-field>
       <mat-form-field class="col-1">
-        <input matInput #NombreCtrl type="time" class="text-right" placeholder="A Hora" formControlName="aHora"
+        <input matInput #deHoraCtrl type="time" class="text-right" placeholder="A Hora" formControlName="aHora"
           required="">
       </mat-form-field>
 
       <mat-form-field class="col-1">
-        <input matInput #VacantesCtrl type="number" class="text-right" placeholder="No. Vacantes"
+        <input matInput #aHoraCtrl type="number" class="text-right" placeholder="No. Vacantes"
           formControlName="vacantes" required="">
       </mat-form-field>
 
       <mat-form-field class="col-3">
         <textarea #message matInput maxlength="500" placeholder="Especificacipon" rows="3"
-          formControlName="especificaciones"></textarea>
+          [value]="message.value.toUpperCase()" formControlName="especificaciones"></textarea>
         <mat-hint align="start">
           <strong class="text-warning">Ingrese algúna Especificaci&oacute;n</strong>
         </mat-hint>
@@ -53,6 +54,7 @@
     </div>
   </section>
   <div [hidden]="Edit" class="col-12">
+    <strong class="text-primary">{{index + 1}} - <i class="fa fa-chevron-right fa-x1" aria-hidden="true"></i></strong>
     <strong *ngIf="activo" class="text-success"> ACTIVO - </strong>
     <strong *ngIf="!activo" class="text-danger"> INACTIVO - </strong>
     <strong class="text-primary">Nombre: </strong> <label>{{nombre | uppercase}} </label> -

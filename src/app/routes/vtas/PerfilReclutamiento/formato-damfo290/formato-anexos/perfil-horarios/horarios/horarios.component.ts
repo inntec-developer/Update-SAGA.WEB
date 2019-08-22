@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { CatalogosService } from '../../../../../../../service';
 import { FormGroup } from '@angular/forms';
@@ -7,20 +7,20 @@ import { SettingsService } from '../../../../../../../core/settings/settings.ser
 import { detectChanges } from '@angular/core/src/render3';
 
 @Component({
-  selector: 'horarios',
+  selector: 'app-horarios-p',
   templateUrl: './horarios.component.html',
   styleUrls: ['./horarios.component.scss'],
   providers: [CatalogosService, PerfilReclutamientoService]
 })
-export class HorariosComponent implements OnInit {
+export class HorariosComponent implements OnInit, AfterContentInit {
   @Input('IdFormato') public IdFormato: any;
-  @Input('group') public horario: FormGroup;
-  @Input('Index') public index: number;
-  @Output('Remove') public remove = new EventEmitter();
+  @Input('horario') public horario: FormGroup;
+  @Input('index') public index: number;
+  @Output('remove') public remove = new EventEmitter();
   @Output('Add') public Add = new EventEmitter();
   @Output('Registros') public Registros = new EventEmitter();
 
-  DiasSemana: any; //Get de la base de datos
+  DiasSemana: any; // Get de la base de datos
 
   nombre: any;
   deDia: any;
@@ -33,7 +33,7 @@ export class HorariosComponent implements OnInit {
   especificaciones: any;
   activo: any;
 
-  nombreAux: any
+  nombreAux: any;
   deDiaAux: any;
   aDiaAux: any;
   deDiaIdAux: any;
@@ -44,13 +44,15 @@ export class HorariosComponent implements OnInit {
   especificacionesAux: any;
   activoAux: any;
 
-  Edit: boolean = false;
-  isActionEdit: boolean = false;
-  ShowAlert: boolean = false;
+  Edit = false;
+  isActionEdit = false;
+  ShowAlert = false;
+
+  warn = 'warn';
 
 
-  TypeAlert: string = '';
-  MsgAlert: string = '';
+  TypeAlert = '';
+  MsgAlert = '';
 
   constructor(
     private _serviceCatalogos: CatalogosService,
@@ -64,7 +66,7 @@ export class HorariosComponent implements OnInit {
   }
 
   ngAfterContentInit(): void {
-    if (this.horario.get('id').value != 0) {
+    if (this.horario.get('id').value !== '0') {
       this.nombre = this.horario.get('horario').value;
       this.deDia = this.horario.get('deDia').value;
       this.aDia = this.horario.get('aDia').value;
@@ -84,7 +86,7 @@ export class HorariosComponent implements OnInit {
     if (this.IdFormato != null) {
       this.getDeDia();
       this.getADia();
-      var obj = {
+      const obj = {
         id: this.horario.get('id').value || null,
         nombre: this.horario.get('horario').value,
         deDia: this.deDia,
@@ -98,41 +100,39 @@ export class HorariosComponent implements OnInit {
         activo: this.horario.get('activo').value,
         Usuario: this._setting.user.usuario,
         DAMFO290Id: this.IdFormato,
-      }
+      };
       if (!this.isActionEdit) {
         obj['action'] = 'create';
         this._servicePerfilR.CrudHorarios(obj).subscribe(x => {
-          if (x != 404) {
-            if (x != 300) {
-              var hStar = obj['deHora'].split(":");
-              var hEnd = obj['aHora'].split(":");
+          if (x !== 404) {
+            if (x !== 300) {
+              const horaInicio = obj['deHora'].split(':');
+              const horaFinal = obj['aHora'].split(':');
               this.horario.controls['id'].setValue(x);
               this.nombre = obj['nombre'];
               this.deDia = obj['deDia'];
               this.aDia = obj['aDia'];
               this.deDiaId = obj['deDiaId'];
               this.aDiaId = obj['aDiaId'];
-              this.deHora = new Date(0, 0, 0, hStar[0], hStar[1], 0);
-              this.aHora = new Date(0, 0, 0, hEnd[0], hEnd[1], 0);
+              this.deHora = new Date(0, 0, 0, horaInicio[0], horaInicio[1], 0);
+              this.aHora = new Date(0, 0, 0, horaFinal[0], horaFinal[1], 0);
               this.vacantes = obj['numeroVacantes'];
               this.especificaciones = obj['especificaciones'];
               this.activo = obj['activo'];
               this.Edit = false;
               this.functionCreateAlert('success', false);
-            }
-            else {
+            } else {
               this.functionCreateAlert('info', false);
             }
           } else {
             this.functionCreateAlert('error');
           }
         });
-      }
-      else {
+      } else {
         obj['action'] = 'update';
         this._servicePerfilR.CrudHorarios(obj).subscribe(x => {
-          if (x != 404) {
-            if (x != 300) {
+          if (x !== 404) {
+            if (x !== 300) {
               this.nombre = x['nombre'];
               this.deDia = x['deDia']['diaSemana'];
               this.aDia = x['aDia']['diaSemana'];
@@ -146,8 +146,7 @@ export class HorariosComponent implements OnInit {
               this.Edit = false;
               this.isActionEdit = false;
               this.functionCreateAlert('success', true);
-            }
-            else {
+            } else {
               this.functionCreateAlert('info', false);
             }
           } else {
@@ -155,9 +154,10 @@ export class HorariosComponent implements OnInit {
           }
         });
       }
-    }
-    else {
-      var data = {
+    } else {
+      const data = {
+        isEdit: this.isActionEdit,
+        Index: this.index,
         id: this.horario.get('id').value || null,
         nombre: this.horario.get('horario').value,
         deDia: this.deDia,
@@ -170,19 +170,18 @@ export class HorariosComponent implements OnInit {
         especificaciones: this.horario.get('especificaciones').value || 'S/E',
         activo: this.horario.get('activo').value,
         Usuario: this._setting.user.usuario,
-        DAMFO290Id: this.IdFormato,
-      }
-      var hStar = data['deHora'].split(":");
-      var hEnd = data['aHora'].split(":");
-      this.nombre = data['nombre'];
+      };
+      const horariosIncio = data['deHora'].split(':');
+      const horarioFinal = data['aHora'].split(':');
+      this.nombre = data['nombre'].toUpperCase();
       this.deDia = data['deDia'];
       this.aDia = data['aDia'];
       this.deDiaId = data['deDiaId'];
       this.aDiaId = data['aDiaId'];
-      this.deHora = new Date(0, 0, 0, hStar[0], hStar[1], 0);
-      this.aHora = new Date(0, 0, 0, hEnd[0], hEnd[1], 0);
+      this.deHora = new Date(0, 0, 0, horariosIncio[0], horariosIncio[1], 0);
+      this.aHora = new Date(0, 0, 0, horarioFinal[0], horarioFinal[1], 0);
       this.vacantes = data['numeroVacantes'];
-      this.especificaciones = data['especificaciones'] || 'S/E';
+      this.especificaciones = data['especificaciones'].toUpperCase() || 'S/E';
       this.activo = data['activo'];
       if (!this.isActionEdit) {
         this.Add.emit(false);
@@ -198,31 +197,34 @@ export class HorariosComponent implements OnInit {
 
   OnEdit() {
     let horasI = String(new Date(this.deHora).getHours());
-    if (horasI.length == 1)
+    if (horasI.length === 1) {
       horasI = '0' + horasI;
+    }
     let minutosI = String(new Date(this.deHora).getMinutes());
-    if (minutosI.length == 1)
+    if (minutosI.length === 1) {
       minutosI = '0' + minutosI;
-    let hourStart = horasI + ':' + minutosI;
-
+    }
+    const hourStart = horasI + ':' + minutosI;
     let horasF = String(new Date(this.aHora).getHours());
-    if (horasF.length == 1)
-      horasF = '0' + horasF
+    if (horasF.length === 1) {
+      horasF = '0' + horasF;
+    }
     let minutosF = String(new Date(this.aHora).getMinutes());
-    if (minutosF.length == 1)
-      minutosF = '0' + minutosF
-    let hourEnd = horasF + ':' + minutosF
+    if (minutosF.length === 1) {
+      minutosF = '0' + minutosF;
+    }
+    const hourEnd = horasF + ':' + minutosF;
 
     this.horario.patchValue({
       deHora: hourStart,
       aHora: hourEnd
-    })
+    });
     this.nombreAux = this.nombre;
     this.deDiaAux = this.deDia;
     this.aDiaAux = this.aDia;
     this.deDiaIdAux = this.deDiaId;
     this.aDiaIdAux = this.aDiaId;
-    this.deHoraAux = this.deHora
+    this.deHoraAux = this.deHora;
     this.aHoraAux = this.aHora;
     this.vacantesAux = this.vacantes;
     this.especificacionesAux = this.especificaciones;
@@ -230,12 +232,12 @@ export class HorariosComponent implements OnInit {
   }
 
   getDeDia() {
-    let index = this.DiasSemana.findIndex(x => x.id == this.horario.get('deDiaId').value);
+    const index = this.DiasSemana.findIndex(x => x.id === this.horario.get('deDiaId').value);
     this.deDia = this.DiasSemana[index]['diaSemana'];
   }
 
   getADia() {
-    let index = this.DiasSemana.findIndex(x => x.id == this.horario.get('aDiaId').value);
+    const index = this.DiasSemana.findIndex(x => x.id === this.horario.get('aDiaId').value);
     this.aDia = this.DiasSemana[index]['diaSemana'];
   }
 
@@ -244,16 +246,15 @@ export class HorariosComponent implements OnInit {
       this.remove.emit(this.index);
       this.Add.emit(false);
       if (this.IdFormato != null) {
-        var obj = {
+        const obj = {
           id: this.horario.get('id').value,
           action: 'delete'
-        }
+        };
         this._servicePerfilR.CrudHorarios(obj).subscribe(data => {
-          if (data != 404) {
+          if (data !== 404) {
             this.remove.emit(this.index);
             this.Add.emit(false);
-          }
-          else {
+          } else {
             this.functionCreateAlert('erro');
           }
         });
@@ -287,21 +288,20 @@ export class HorariosComponent implements OnInit {
     switch (type) {
       case 'success':
         if (edit) {
-          this.MsgAlert = 'Se actualizo el horario del Perfil de Reclutamiento.'
-        }
-        else {
-          this.MsgAlert = 'Se agregó un nuevo horario el Perfil de Reclutamiento.'
+          this.MsgAlert = 'Se actualizo el horario del Perfil de Reclutamiento.';
+        } else {
+          this.MsgAlert = 'Se agregó un nuevo horario el Perfil de Reclutamiento.';
         }
         this.TypeAlert = type;
 
         break;
       case 'error':
-        this.TypeAlert = type;
-        this.MsgAlert = 'Algo salió mal, por favor intente de nuevo.'
+        this.TypeAlert = 'danger';
+        this.MsgAlert = 'Algo salió mal, por favor intente de nuevo.';
         break;
       case 'info':
         this.TypeAlert = type;
-        this.MsgAlert = 'El nombre del horarios ya existe, intento con otro.'
+        this.MsgAlert = 'El nombre del horarios ya existe, intento con otro.';
         break;
     }
     setTimeout(() => {

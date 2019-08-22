@@ -1,0 +1,33 @@
+<!-- <div class="container"> -->
+<form [formGroup]="psicometriaC" id="index">
+  <section [hidden]="!Edit">
+    <div class="row">
+      <mat-form-field class="col-4">
+        <input matInput #pstClienteCtl type="text" placeholder="Psicometria" formControlName="psicometria"
+        [value]="pstClienteCtl.value.toUpperCase()" required="">
+      </mat-form-field>
+      <mat-form-field class="col-6">
+        <textarea matInput #message maxlength="200" placeholder="Descripción" formControlName="descripcion" rows="2"
+          [value]="message.value.toUpperCase()"  required=""></textarea>
+        <mat-hint align="start">
+          <strong>Ingrese la descripci&oacute;n de la psicometr&iacute;a</strong>
+        </mat-hint>
+        <mat-hint align="end">{{message.value.length}} / 200</mat-hint>
+      </mat-form-field>
+      <section class="col-2">
+        <em class="fa fa-close text-danger em-button float-left" (click)="Remove()"></em>
+        <em class="fa fa-check text-success em-button float-left" (click)="Save()" *ngIf="psicometriaC.valid"></em>
+      </section>
+    </div>
+  </section>
+  <div [hidden]="Edit" class="col-12">
+    <strong class="text-primary">{{index + 1}} - <i class="fa fa-chevron-right fa-x1" aria-hidden="true"></i></strong>
+    <label>{{Psicometria | uppercase}} </label> -
+    <strong class="text-primary"> Descripci&oacute;n: </strong><label>{{Descripcion | uppercase}}</label>
+    <em class="fa fa-pencil text-info" (click)="OnEdit(); Edit = true"></em>
+    <em class="fa fa-close text-danger em-button" (click)="Remove()"></em>
+  </div>
+  <alert [type]="TypeAlert" *ngIf="ShowAlert">
+    <strong>{{MsgAlert | uppercase}}</strong>
+  </alert>
+</form>

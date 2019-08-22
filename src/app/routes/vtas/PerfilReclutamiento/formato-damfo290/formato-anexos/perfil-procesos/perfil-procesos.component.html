@@ -1,0 +1,20 @@
+<form [formGroup]="ProcesosArray">
+    <section class="col-12">
+      <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
+      <strong class="text-warning">Proceso</strong>
+      <span class="fa fa-plus em-button text-primary float-right"
+        (click)="AddProceso()"></span>
+      <mat-divider></mat-divider>
+    </section>
+    <section>
+      <div *ngFor="let proceso of ProcesosArray['controls'].proceso['controls']; let i=index">
+        <div formArrayName="proceso">
+          <form [formGroupName]="i">
+            <app-procesos-p [IdFormato]="IdFormato" [proceso]="ProcesosArray.controls.proceso.controls[i]" [index]="i"
+              (Add)="Agregar($event)" (remove)="removeProceso($event)" (Registros)="getRegistros($event)">
+            </app-procesos-p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </form>

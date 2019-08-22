@@ -1,7 +1,7 @@
 <form [formGroup]="EscolaridadArray">
   <section class="col-12">
     <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
-    <strong>Escolaridad</strong> <span class="fa fa-plus em-button text-primary float-right"
+    <strong class="text-warning">Escolaridad</strong> <span class="fa fa-plus em-button text-primary float-right"
       (click)="AddEscolaridad()"></span>
     <mat-divider></mat-divider>
   </section>
@@ -9,8 +9,8 @@
     <div *ngFor="let escolaridad of EscolaridadArray['controls'].escolaridad['controls']; let i=index">
       <div formArrayName="escolaridad">
         <form [formGroupName]="i">
-          <escolaridades [IdFormato]="IdFormato" [group]="EscolaridadArray.controls.escolaridad.controls[i]" [Index]="i" (Add)="Agregar($event)"
-            (Remove)="removeEscolaridad($event)" (Registros)="getRegistros($event)" >
+          <escolaridades [IdFormato]="IdFormato" [escolaridad]="EscolaridadArray.controls.escolaridad.controls[i]" [index]="i" (Add)="Agregar($event)"
+            (remove)="removeEscolaridad($event)" (Registros)="getRegistros($event)" >
           </escolaridades>
         </form>
       </div>

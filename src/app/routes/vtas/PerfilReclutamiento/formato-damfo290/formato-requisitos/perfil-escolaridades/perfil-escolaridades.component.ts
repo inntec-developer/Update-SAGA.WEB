@@ -1,23 +1,19 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-
-import { CatalogosService } from './../../../../../../service/catalogos/catalogos.service';
-import { PerfilReclutamientoService } from '../../../../../../service/PerfilReclutamiento/perfil-reclutamiento.service';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, OnChanges } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SettingsService } from './../../../../../../core/settings/settings.service';
-import { ToasterService } from 'angular2-toaster';
 
 @Component({
   selector: 'app-perfil-escolaridades',
   templateUrl: './perfil-escolaridades.component.html',
   styleUrls: ['./perfil-escolaridades.component.scss']
 })
-export class PerfilEscolaridadesComponent implements OnInit {
+export class PerfilEscolaridadesComponent implements OnInit, OnChanges {
   @Input() IdFormato: any;
   @Input() Escolaridades: any[];
   @Output() EscolaridadesEmt = new EventEmitter();
   EscolaridadesNew = [];
 
-  esNuevo: boolean = true;
+  esNuevo = true;
   private Add: boolean;
 
   // public formEscolaridades: FormGroup;
@@ -25,10 +21,7 @@ export class PerfilEscolaridadesComponent implements OnInit {
   public escolaridad: any;
 
   constructor(
-    private _servicePerfilR: PerfilReclutamientoService,
-    private _serviceCatalogos: CatalogosService,
     private _settings: SettingsService,
-    private toasterService: ToasterService,
     private fb: FormBuilder
 
   ) { }
@@ -50,9 +43,9 @@ export class PerfilEscolaridadesComponent implements OnInit {
   }
 
   private PopulateForm(escolaridad: any[]) {
-    for (let x in escolaridad) {
+    escolaridad.forEach(x => {
       this.AddEscolaridad(1);
-    }
+    });
     this.EscolaridadArray.patchValue({
       escolaridad: this.Escolaridades,
     });
@@ -62,8 +55,7 @@ export class PerfilEscolaridadesComponent implements OnInit {
     if (this.Add) {
       this.Add = true;
       return;
-    }
-    else {
+    } else {
       Escolaridad > 0 ? this.Add = false : this.Add = true;
       const control = <FormArray>this.EscolaridadArray.controls['escolaridad'];
       const addrCtrl = this.initEscolaridad();
@@ -94,7 +86,7 @@ export class PerfilEscolaridadesComponent implements OnInit {
         UsuarioAlta: this._settings['user']['usuario']
       });
     } else {
-      let editRegistro = {
+      const editRegistro = {
         escolaridadId: data['escolaridadId'],
         estadoEstudioId: data['estadoEstudioId'],
         UsuarioAlta: this._settings['user']['usuario']

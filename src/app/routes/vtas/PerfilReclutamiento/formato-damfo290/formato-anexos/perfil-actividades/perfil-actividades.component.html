@@ -10,9 +10,9 @@
     <div *ngFor="let actividad of ActividadArray['controls'].actividad['controls']; let i=index">
       <div formArrayName="actividad">
         <form [formGroupName]="i">
-          <actividades [IdFormato]="IdFormato" [group]="ActividadArray.controls.actividad.controls[i]" [Index]="i"
-            (Add)="Agregar($event)" (Remove)="removeActivdad($event)" (Registros)="getRegistros($event)">
-          </actividades>
+          <app-actividades-p [IdFormato]="IdFormato" [actividad]="ActividadArray.controls.actividad.controls[i]" [index]="i"
+            (Add)="Agregar($event)" (remove)="removeActivdad($event)" (Registros)="getRegistros($event)">
+          </app-actividades-p>
         </form>
       </div>
     </div>

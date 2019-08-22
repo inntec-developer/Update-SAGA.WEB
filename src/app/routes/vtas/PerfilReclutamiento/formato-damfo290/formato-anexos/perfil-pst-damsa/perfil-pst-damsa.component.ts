@@ -1,12 +1,15 @@
-import { Component, OnInit, EventEmitter, Output, Input, SimpleChanges } from '@angular/core';
+import { forEach } from '@angular/router/src/utils/collection';
+import { Component, OnInit, EventEmitter, Output, Input, SimpleChanges, AfterViewInit, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { ToasterConfig, ToasterService, Toast } from 'angular2-toaster';
+import { SettingsService } from '../../../../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-perfil-pst-damsa',
   templateUrl: './perfil-pst-damsa.component.html',
   styleUrls: ['./perfil-pst-damsa.component.scss']
 })
-export class PerfilPstDamsaComponent implements OnInit {
+export class PerfilPstDamsaComponent implements OnInit, OnChanges {
 
   @Input() IdFormato: any;
   @Input() Psicometrias: any[];
@@ -14,19 +17,28 @@ export class PerfilPstDamsaComponent implements OnInit {
 
   PsicometriasNew = [];
 
-  esNuevo: boolean = true;
+  esNuevo = true;
 
   private Add: boolean;
 
   public PsicometriasArray: FormGroup;
   public pscometrias: any;
 
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7, tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
+
   constructor(
     private fb: FormBuilder,
+    private toasterService: ToasterService,
   ) { }
 
   ngOnInit() {
-    debugger;
     this.IdFormato = this.IdFormato || null;
     this.PsicometriasArray = this.fb.group({
       psicometria: this.fb.array([])
@@ -34,7 +46,6 @@ export class PerfilPstDamsaComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    debugger;
     if (this.IdFormato != null) {
       this.esNuevo = false;
       if (this.Psicometrias != null) {
@@ -44,17 +55,15 @@ export class PerfilPstDamsaComponent implements OnInit {
   }
 
   private PopulateForm(psicometria: any) {
-    debugger;
-    for (let x in psicometria) {
+    psicometria.forEach(x => {
       this.AddPsicometria(1);
-    }
+    });
     this.PsicometriasArray.patchValue({
       psicometria: this.Psicometrias
     });
   }
 
-  AddPsicometria(Psicometria: any) {
-    debugger;
+  AddPsicometria(Psicometria?: any) {
     if (this.Add) {
       this.Add = true;
       return;
@@ -66,31 +75,58 @@ export class PerfilPstDamsaComponent implements OnInit {
     }
   }
 
-  initPsicometria(){
-    return  this.fb.group({
+  initPsicometria() {
+    return this.fb.group({
       id: ['0'],
       psicometria: [],
-      descripcion: [{value:'', disabled: true}, [Validators.required]],
+      descripcion: [{ value: '', disabled: true }, [Validators.required]],
       psicometriaId: ['', [Validators.required, Validators.maxLength(200)]]
     });
   }
 
-  Agregar(Value: boolean){
+  Agregar(Value: boolean) {
     this.Add = false;
   }
 
-  getRegistros(data: any){
+  getRegistros(data: any) {
     if (!data['isEdit']) {
-      this.PsicometriasNew.push({
-        psicometriaId: data['psicometriaId'],
-        UsuarioAlta: data['UsuarioAlta']
-      });
+      let create = true;
+      if (this.PsicometriasNew.length > 0) {
+        this.PsicometriasNew.find(x => {
+          if (x['psicometriaId'] === data['psicometriaId']) {
+            return create = false;
+          }
+        });
+      }
+      if (create) {
+        this.PsicometriasNew.push({
+          Index: data['Index'],
+          psicometriaId: data['psicometriaId'],
+          UsuarioAlta: data['UsuarioAlta']
+        });
+      } else {
+        this.removePsicometria(data['Index']);
+        this.popToast('info', 'Psicometría Damsa', 'La psicometría ya existe, intente con otra.');
+        this.AddPsicometria();
+      }
     } else {
-      let editRegistro = {
-        psicometriaId: data['psicometriaId'],
-        UsuarioAlta: data['UsuarioAlta']
-      };
-      this.PsicometriasNew[data['index']] = editRegistro;
+      let edit = true;
+      this.PsicometriasNew.find(x => {
+        if (x['psicometriaId'] === data['psicometriaId'] && x['Index'] !== data['Index']) {
+          return edit = false;
+        }
+      });
+      if (edit) {
+        const editRegistro = {
+          psicometriaId: data['psicometriaId'],
+          UsuarioAlta: data['UsuarioAlta']
+        };
+        this.PsicometriasNew[data['index']] = editRegistro;
+      } else {
+        this.removePsicometria(data['Index']);
+        this.popToast('info', 'Psicometría Damsa', 'La psicometría ya existe intente con otra.');
+        this.AddPsicometria();
+      }
     }
     this.PsicometriasEmt.emit(this.PsicometriasNew);
   }
@@ -100,5 +136,15 @@ export class PerfilPstDamsaComponent implements OnInit {
     control.removeAt(i);
     this.PsicometriasNew.splice(i, 1);
     this.PsicometriasEmt.emit(this.PsicometriasNew);
+  }
+
+  popToast(type: any, title: any, body: any) {
+    const toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 5000,
+      body: body
+    };
+    this.toasterService.pop(toast);
   }
 }
