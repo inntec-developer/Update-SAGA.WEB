@@ -39,11 +39,12 @@
                   </div>
              </td>
              <td>
-                <div class="input-group input-group-sm mb-3">
-                    <div class="input-group-prepend">
+                <div class="input-group input-group-sm mb-2">
+                  <label class="border p-1">{{monto | moneda:'$ '}}</label>
+                    <!-- <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                       </div>
-                    <input type="number" min="0" class="form-control form-control-sm" [(ngModel)]="monto" disabled>
+                    <input type="number" min="0" class="form-control form-control-sm" [(ngModel)]="monto" step="0.01" disabled> -->
 
                   </div>
              </td>
@@ -59,11 +60,12 @@
                    </div>
               </td>
               <td>
-                 <div class="input-group input-group-sm mb-3">
-                     <div class="input-group-prepend">
+                 <div class="input-group input-group-sm mb-2">
+                    <label class="border p-1">{{montoContratado | moneda:'$ '}}</label>
+                     <!-- <div class="input-group-prepend">
                          <span class="input-group-text">$</span>
                        </div>
-                     <input type="number" min="0" class="form-control form-control-sm" [(ngModel)]="montoContratado" disabled>
+                     <input type="number" min="0" class="form-control form-control-sm" [(ngModel)]="montoContratado" step="0.001" disabled> -->
 
                    </div>
               </td>

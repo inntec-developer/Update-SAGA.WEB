@@ -59,9 +59,9 @@ export class SeguimientoTicketComponent implements OnInit {
   dlgLiberar: boolean = false;
   filteredData: any = [];
   filteredDataPos: any = [];
-  search = "";
-  username: string = "";
-  pass: string = "";
+  search = '';
+  username: string = '';
+  pass: string = '';
 
   constructor( private _service: SistTicketsService,
       private _Router: Router, private dialog: MatDialog,
@@ -95,14 +95,13 @@ export class SeguimientoTicketComponent implements OnInit {
     this.modalExamen = false;
     this.tipoModulo = sessionStorage.getItem('tipoModulo');
     this.GetFilaTickets();
-
   }
 
   public GetFilaTickets()
   {
     this._service.GetFilaTickets(this.tipoModulo, this.settings.user['id']).subscribe( data => {
         this.fila = data;
-    })
+    });
   }
 
   public GetTicket(ticketId)
@@ -110,24 +109,21 @@ export class SeguimientoTicketComponent implements OnInit {
     this._service.GetTicketRecl(ticketId, this.settings.user['id']).subscribe(data => {
       this.ticket = data;
 
-      this.ticket[0].estado == 3 ? this.finalizar = false : this.finalizar = true;
-      this.ticket[0].estado == 2 ? this.atender = true : this.atender = false;
+      this.ticket[0].estado === 3 ? this.finalizar = false : this.finalizar = true;
+      this.ticket[0].estado === 2 ? this.atender = true : this.atender = false;
 
-      if(this.ticket[0].candidato.length > 0 )
-      {
-        this.PostularCandidato(this.ticket[0].candidato[0].candidatoId, this.ticket[0].requisicionId)
-        this.GetPostulaciones(this.ticket[0].candidato[0].candidatoId);
-        this.ExamenesCandidatos();
+      if (this.ticket[0].candidato.length > 0 ) {
+        this.PostularCandidato(this.ticket[0].candidato[0].candidatoId, this.ticket[0].requisicionId);
       }
 
-    })
+      this.GetMisVacantes();
+    });
 
   }
 
-  PostularCandidato(candidatoId, requisicionId)
-  {
+  PostularCandidato(candidatoId, requisicionId) {
     this._service.PostularCandidato(candidatoId, requisicionId).subscribe(data => {
-
+      this.GetPostulaciones(candidatoId);
     });
   }
   GetPostulaciones(candidatoId)
@@ -135,66 +131,59 @@ export class SeguimientoTicketComponent implements OnInit {
     this._service.GetPostulaciones(candidatoId).subscribe(data => {
       this.postulaciones = data;
       this.filteredDataPos = data;
-      this.GetMisVacantes();
+      this.ExamenesCandidatos();
     });
   }
 
   GetMisVacantes() {
     this._service.GetVacantesReclutador(this.settings.user['id']).subscribe(data => {
-      var aux = [];
-      this.dataSource = data.filter(element => {
-        if(element.id === this.ticket[0].requisicionId)
-        {
-          aux = element;
-        }
-        else
-        {
+      let aux = [];
+      // para poner la vacante al principio
+      this.dataSource = data.filter( element => {
+        if (element.id !== this.ticket[0].requisicionId) {
           return element;
+        } else {
+          aux = element;
         }
       });
 
-      this.dataSource.unshift(aux);
-      this.filteredData = this.dataSource;
+      // por si la vacante no es mia
+      if (aux.length > 0) {
+        this.dataSource.unshift(aux);
+      }
+      this.filteredData = this.dataSource; // para filtrar
     });
   }
 
   public Atender()
   {
-    if (sessionStorage.getItem('moduloId') == "1")
+    if (sessionStorage.getItem('moduloId') === '1')
     {
       this._service.GetTicketPrioridad(this.settings.user['id'], sessionStorage.getItem('moduloId')).subscribe(data => {
-        if (data != 417) {
+        if (data !== 417) {
           this.GetTicket(data);
           setInterval(() => this.minutosEnAtencion += 1, 60000);
           this.GetFilaTickets();
-        }
-        else if (data == 417)
-        {
+        } else if (data === 417) {
           this.popToast('error', 'Seguimiento', 'Ocurrio un error. se puede deber a que la requisicion no pertenece al reclutador');
           this.Reinciar();
 
-        }
-        else {
+        } else {
           this.Reinciar();
           this.atender = true;
         }
       });
-    }
-    else
-    {
+    } else {
       this._service.GetCitas(this.settings.user['id'], sessionStorage.getItem('moduloId')).subscribe(data => {
-        if (data != 417) {
+        if (data !== 417) {
           this.GetTicket(data);
           setInterval(() => this.minutosEnAtencion += 1, 60000);
           this.GetFilaTickets();
-        }
-        else if (data == 417)
-        {
+        } else if (data == 417) {
           this.popToast('error', 'Seguimiento', 'Ocurrio un error. se puede deber a que la requisicion no pertenece al reclutador');
           this.Reinciar();
 
-        }
-        else {
+        } else {
           this.popToast('warning', 'Seguimiento', 'No hay mas citas en espera');
           this.Reinciar();
 
@@ -221,7 +210,7 @@ export class SeguimientoTicketComponent implements OnInit {
           var aux = data.filter(element => !element.vacantes)
 
           if (aux.length == 0) {
-            aux = [{ id: 0, nombre: "Los horarios ya están cubiertos" }]
+            aux = [{ id: 0, nombre: 'Los horarios ya están cubiertos' }]
           }
 
           this.OpenDlgHorarios(aux, 18, 'ENTREVISTA RECLUTAMIENTO', this.ticket[0].requisicionId, estatusTicket);
@@ -237,7 +226,7 @@ export class SeguimientoTicketComponent implements OnInit {
   }
 
   OpenDlgHorarios(data, estatusId, estatus, requi, estatusTicket) {
-    let dialogDlt = this.dialog.open(DialogHorariosConteoComponent, {
+    const dialogDlt = this.dialog.open(DialogHorariosConteoComponent, {
       width: '45%',
       height: 'auto',
       data: data,
@@ -247,9 +236,14 @@ export class SeguimientoTicketComponent implements OnInit {
     dialogDlt.afterClosed().subscribe(result => {
       if (result != 0) {
 
-       let horarioId = result.horarioId;
+       const horarioId = result.horarioId;
 
-        var datos = { candidatoId: this.ticket[0].candidato[0].candidatoId, estatusId: estatusId, requisicionId: requi, horarioId: horarioId, tipoMediosId: result.mediosId, ReclutadorId: this.settings.user['id'] };
+        const datos = { candidatoId: this.ticket[0].candidato[0].candidatoId,
+           estatusId: estatusId,
+           requisicionId: requi,
+           horarioId: horarioId,
+           tipoMediosId: result.mediosId,
+           ReclutadorId: this.settings.user['id'] };
 
         this.serviceCandidato.UpdateFuenteRecl(datos).subscribe(result =>{
           this.servicePost.SetProceso(datos).subscribe(data => {
@@ -479,15 +473,15 @@ export class SeguimientoTicketComponent implements OnInit {
 
       if(this.examenesCandidato.tecnicos.length > 0)
       {
-        if(this.examenesCandidato.tecnicos[0].resultado > 0 && this.examenesCandidato.tecnicos[0].requisicionId == this.ticket[0].requisicionId)
-        {
+        if (this.examenesCandidato.tecnicos[0].resultado > 0
+          && this.examenesCandidato.tecnicos[0].requisicionId === this.ticket[0].requisicionId) {
           this.exaTecnico = true;
         }
       }
       if(this.examenesCandidato.psicometricos.length > 0)
       {
-        if(this.examenesCandidato.psicometricos[0].resultado.toUpperCase() != "SIN RESULTADO" && this.examenesCandidato.psicometricos[0].requisicionId == this.ticket[0].requisicionId)
-        {
+        if (this.examenesCandidato.psicometricos[0].resultado.toUpperCase() !== 'SIN RESULTADO'
+          && this.examenesCandidato.psicometricos[0].requisicionId === this.ticket[0].requisicionId) {
           this.exaPsico = true;
         }
       }
@@ -510,6 +504,7 @@ export class SeguimientoTicketComponent implements OnInit {
             this.GetTicket(this.ticket[0].ticketId);
             this.username = result.username;
             this.pass = result.pass;
+            
             this.popToast('success', 'Seguimiento', 'El registro se realizó correctamente');
           });
 
@@ -522,22 +517,24 @@ export class SeguimientoTicketComponent implements OnInit {
   }
 
   public Search(data: any, opc, aux) {
-    this.search = data.target.value;
-    let tempArray: Array<any> = [];
+    const search = data.target.value;
+    const tempArray: Array<any> = [];
 
-    let colFiltar: Array<any> = [{ title: "folio" }, { title: "vBtra" }, { title: "cliente" }];
+    const colFiltar: Array<any> = [{ title: 'folio' }, { title: 'vBtra' }, { title: 'cliente' }];
 
     aux.forEach(function (item) {
-      let flag = false;
-      colFiltar.forEach(function (c) {
-        if (item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
-          flag = true;
-        }
-      });
+      if (item) {
+        let flag = false;
+        colFiltar.forEach(function (c) {
+          if (item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
+            flag = true;
+          }
+        });
 
-      if (flag) {
-        tempArray.push(item)
-      }
+        if (flag) {
+          tempArray.push(item);
+        }
+    }
     });
 
     if(opc == 1)

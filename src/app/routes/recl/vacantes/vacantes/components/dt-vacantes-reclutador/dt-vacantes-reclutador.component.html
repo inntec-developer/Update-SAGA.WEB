@@ -182,7 +182,7 @@
               <div>
                 <tr (click)="onCellClick(row)" (dblclick)="seguimientoRequi()" *ngFor="let row of rows"
                   [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8"
-                  [class.selected]="row.selected">
+                  [class.bg-primary-light]="row.selected">
                   <td class="text-center">
                     {{row.folio}}
                   </td>
@@ -406,7 +406,7 @@
         <h5 class="text-warning font-weight-bold mt-2">{{folio}} - {{vBtra | uppercase}}</h5>
 
         <button type="button" class="btn btn-xs btn-danger btn-circle float-right mr-1"
-          (click)="procesoCandidato=false; lgModal.hide();"><i class="fa fa-times"></i></button>
+          (click)="procesoCandidato=false; MessageModal.hide();"><i class="fa fa-times"></i></button>
       </div>
       <div class="modal-body">
         <app-candidatos-en-proceso [RequisicionId]="id"></app-candidatos-en-proceso>

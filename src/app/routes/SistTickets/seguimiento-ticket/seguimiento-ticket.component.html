@@ -133,12 +133,13 @@
     <div class="col-sm-8 col-md-8" *ngIf="ticket.length > 0">
       <div class="card" *ngIf="ticket[0].candidato.length > 0">
         <div class="card-body mat-elevation-z8">
+        
             <div class="row p-1 bg-light mb-2">
                 <div class="col-sm-6 col-md-6">
                     <h5 class="text-left text-success mt-1">
                         <i class="fa fa-user-circle-o mr-1" aria-hidden="true"></i>POSTULACIONES</h5>
                </div>
-               <div class="col-sm-6 col-md-6">
+               <!-- <div class="col-sm-6 col-md-6"> -->
                   <!-- <div class="input-group input-group-sm float-right mb-1">
                       <div class="input-group-prepend">
                           <span class="input-group-text text-info"><i class="fa fa-search" aria-hidden="true"></i></span>
@@ -146,10 +147,11 @@
                   <input (input)="Search($event,1, filteredDataPos)" class="form-control form-control-sm" type="text" placeholder="Filtrar" />
 
                   </div> -->
-                </div>
+                <!-- </div> -->
                 </div>
 
           <div class="justify-content-between">
+              <ng-container *ngIf="ticket[0].candidato.length > 0">
             <ul class="list-group mb-2">
               <li *ngFor="let item of postulaciones; let ind = index;" class="list-group-item" [ngClass]="item.id == ticket[0].requisicionId && postulaciones.length > 1? 'bg-info' : ''">
                 <span class="text-info">
@@ -202,7 +204,7 @@
                 </span>
               </li>
             </ul>
-
+          </ng-container>
             <div class="row p-1 bg-light mb-2">
               <div class="col-sm-6 col-md-6">
             <h5 class="float-left text-warning ml-1 mt-2"><i class="fa fa-file-text-o mr-1" aria-hidden="true"></i>MIS VACANTES</h5>

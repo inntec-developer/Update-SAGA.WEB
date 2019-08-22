@@ -27,15 +27,13 @@ export class DlgFacturaPuroComponent implements OnInit {
    this.Calcular();
   }
 
-  Calcular() 
-  {
-    if(this.porcentaje == 0)
-    {
+  Calcular() {
+    if (this.porcentaje === 0) {
       this.porcentaje = 0.00001;
     }
 
-    this.monto = this.round(this.porcentaje * (this.data.sueldoMaximo * this.data.vacantes) / 100, 4); 
-    this.perContratado = 100 - this.porcentaje; 
+    this.monto = this.round(this.porcentaje * (this.data.sueldoMaximo * this.data.vacantes) / 100, 4);
+    this.perContratado = 100 - this.porcentaje;
     this.montoContratado = this.round((this.data.sueldoMaximo * this.data.vacantes) - this.monto, 4);
 
   }
@@ -46,19 +44,16 @@ export class DlgFacturaPuroComponent implements OnInit {
     let dtos = {RequisicionId: this.data.id, Porcentaje: this.porcentaje,
        Monto: this.monto, PerContratado: this.perContratado,
         MontoContratado: this.montoContratado };
-    
-      if(this.porcentaje < 50)
-      {
+
+      if (this.porcentaje < 50) {
         estatus = 46;
       }
-  
-    this.service.AddDatosFactura(dtos).subscribe(data =>{
+
+    this.service.AddDatosFactura(dtos).subscribe(data => {
       this.loading = false;
         this.dialog.close({Ok: data, estatus: estatus, porcentaje: this.porcentaje});
-      
     });
-    
-    
+
   }
 
   round(value, precision) : any{

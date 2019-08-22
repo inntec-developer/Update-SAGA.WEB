@@ -6,7 +6,7 @@
           <button class="btn btn-xs btn-purple mr-2 mat-elevation-z8" type="button" (click)="openDialogRequiArte()" container="body" placement="bottom" tooltip="Seleccionar Vacante">
                 <i class="fa fa-file-text-o"></i>
               </button>
-          <button class="btn btn-xs btn-warning mr-2 mat-elevation-z8" type="button" (click)="openDialogBG()" container="body" placement="bottom" tooltip="Seleccionar fondo">
+          <button class="btn btn-xs btn-warning mr-2 mat-elevation-z8" type="button" (click)="openDialogBG()" container="body" placement="bottom" tooltip="Adjuntar archivo">
             <i class="fa fa-picture-o"></i>
           </button>
           <button (click)="Borrar()" class="btn btn-xs btn-info mat-elevation-z8" container="body" placement="bottom" tooltip="Borrar">
@@ -69,10 +69,10 @@
           </h3>
           <p [style.color]="ColorPickerDesc" [style.font-family]="fontDesc.family" class="font-weight-bold ml-2 mt-4">{{descripcion}}</p>
           <h3 [style.color]="ColorPickerNecs" [style.font-family]="fontNecesitas.family" class="quenecesitas font-weight-bold mt-4 ml-2">¿Qué necesitas?</h3>
-          <p [style.color]="ColorPickerDescNesc" [style.font-family]="fontNecesitas.family" class="font-weight-bold ml-2">{{experiencia}}</p>
+          <p [style.color]="ColorPickerDescNesc" [style.font-family]="fontNecesitas.family" class="experiencia font-weight-bold ml-2">{{experiencia}}</p>
           <h3 [style.color]="ColorPickerDudas" [style.font-family]="fontDudas.family"  class="tienesdudas font-weight-bold mt-4 ml-2">¿Tienes dudas?</h3>
           <p [style.color]="ColorPickerDudas" [style.font-family]="fontDudas.family"  class="contacto font-weight-bold ml-2">{{contacto}}</p>
-          <p [style.color]="ColorPickerDudas" class="pagina font-weight-bold ml-2">www.bolsa.damsa.com.mx</p>
+          <p [style.color]="ColorPickerDudas" class="pagina font-weight-bold ml-2">bolsa.damsa.com.mx</p>
           <div class="row">
             <div class="col">
               <img class="float-left logoesr" src="assets/img/esr.png" alt="" />

@@ -11,7 +11,7 @@
             <div class="d-flex justify-content-between">
                 <div class="form-group">
                     <label class="text-muted" for="nombre">NOMBRE</label>
-                    <input type="text" class="form-control form-control-sm long" placeholder="*" [(ngModel)]="nom" name="nombre" ngModel
+                    <input type="text" class="form-control form-control-sm long" placeholder="Nombre *" [(ngModel)]="nom" name="nombre" ngModel
                     required [class.valido]="nom.length >= 1">
                             <!-- <small *ngIf="nom.length == 0" class="text-danger">
                                       El campo nombre es requerido
@@ -19,12 +19,12 @@
                 </div>
                 <div class="form-group">
                     <label class="text-muted" for="ap">APELLIDO PATERNO</label>
-                    <input type="text" class="form-control form-control-sm long" placeholder="*" [(ngModel)]="ap" name="ap" ngModel
+                    <input type="text" class="form-control form-control-sm long" placeholder="Apellido paterno *" [(ngModel)]="ap" name="ap" ngModel
                                 required [class.valido]="ap.length >= 1" />
                 </div>
                 <div class="form-group">
                     <label class="text-muted" for="ap">APELLIDO MATERNO</label>
-                    <input type="text" class="form-control form-control-sm long" placeholder="*" [(ngModel)]="am" name="am" ngModel
+                    <input type="text" class="form-control form-control-sm long" placeholder="Apellido materno *" [(ngModel)]="am" name="am" ngModel
                              required [class.valido]="am.length >= 1" />
                 </div>
 
@@ -67,7 +67,7 @@
                     <div class="form-group">
                             <label class="text-muted">CURP</label>
                              <div class="input-group long">
-                                <input type="text" class="form-control form-control-sm" placeholder="*" name="curp" [(ngModel)]="curp" ngModel required
+                                <input type="text" class="form-control form-control-sm" placeholder="CURP *" name="curp" [(ngModel)]="curp" ngModel required
                                     [class.requerido]="curp.length == 0" [class.valido]="curp.length >= 16" minlength="16" maxlength=18 />
                                     <div class="input-group-append">
                                         <button type="button" class="btn btn-xs btn-info" (click)="GenerarCurp()"  container="body" placement="top" tooltip="Generar CURP">
@@ -83,7 +83,7 @@
                 <div class="form-group with-focus">
                     <label class="text-muted" for="email">EMAIL</label>
                     <div class="input-group long">
-                    <input type="email" class="form-control form-control-sm" (blur)="ValidarEmail(email)" placeholder="*" value="" name="email" [(ngModel)]="email" [class.requerido]="email.length < 7" [class.valido]="email.length >= 7"/>
+                    <input type="email" class="form-control form-control-sm" (blur)="ValidarEmail(email)" placeholder="Email *" value="" name="email" [(ngModel)]="email" [class.requerido]="email.length < 7" [class.valido]="email.length >= 7"/>
                     <div class="input-group-append">
                         <div class="input-group-text" tooltip="Registrar con Email" placement="top" container="body">
                         <input type="radio" [(ngModel)]="modelOpc.options"  [ngModelOptions]="{standalone: true}" id="modelOpc1" value="1" (click)="valOpcionReg(1);">
@@ -97,13 +97,13 @@
                         <label class="text-muted" for="txtLada">LADA</label>
                         <div class="input-group">
                             <input type="text" minlength="2" maxlength="3" class="form-control form-control-sm ladaLong"
-                                placeholder="*" [(ngModel)]="txtLada" name="txtLada" [class.requerido]="txtLada.length < 2" [class.valido]="txtLada.length >= 2"/>
+                                placeholder="Lada *" [(ngModel)]="txtLada" name="txtLada" [class.requerido]="txtLada.length < 2" [class.valido]="txtLada.length >= 2"/>
                         </div>
                     </div>
                     <div class="form-group long">
                         <label class="text-muted" for="txtPhone">TEL&Eacute;FONO</label>
                         <div class="input-group">
-                            <input (blur)="ValidarTelefono()" type="text" minlength="7" maxlength="8" class="form-control form-control-sm" placeholder="*"
+                            <input (blur)="ValidarTelefono()" type="text" minlength="7" maxlength="8" class="form-control form-control-sm" placeholder="Telefono *"
                                 [(ngModel)]="txtPhone" name="txtPhone" [class.requerido]="txtPhone.length < 7" [class.valido]="txtPhone.length > 6"
                             />
                             <div class="input-group-append">

@@ -357,7 +357,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.clienteId = data.clienteId;
     this.aprobador = data.aprobadorId || null;
     this.coordinador = data.coordinador || null;
-    this.confidencial = data.confidencial
+    this.confidencial = data.confidencial;
     this.ValidarEstatus(this.estatusId)
 
     if (this.enProceso > 0) {

@@ -88,10 +88,12 @@ export class EditorArteRequisicionesComponent implements OnInit {
       height: '90%',
     });
     dialogCnc.afterClosed().subscribe(result => {
-      this.requisicionId = result.id;
-      this.vBtra = result.vBtra;
-      this.experiencia = result.experiencia.substring(0, 150);
-    })
+        if (result !== '') {
+              this.requisicionId = result.id;
+              this.vBtra = result.vBtra;
+              this.experiencia = result.experiencia.substring(0, 150);
+        }
+    });
   }
 
   Borrar()

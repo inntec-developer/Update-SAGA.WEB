@@ -58,7 +58,9 @@ export class AutorizarFacturasPuroComponent implements OnInit {
   cancelar: boolean = false;
 
   constructor(private service: RequisicionesService,
-     private postulacionservice: PostulateService, private spinner: NgxSpinnerService, private toasterService: ToasterService, private dialog: MatDialog,) { }
+     private postulacionservice: PostulateService,
+     private spinner: NgxSpinnerService,
+     private toasterService: ToasterService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.GetRequisiciones();
@@ -67,6 +69,7 @@ export class AutorizarFacturasPuroComponent implements OnInit {
   GetRequisiciones() {
     this.service.GetRequisPendientes().subscribe(data => {
       this.dataSource = data;
+      console.log(data)
       this.onChangeTable(this.config);
     })
   }
@@ -118,7 +121,7 @@ export class AutorizarFacturasPuroComponent implements OnInit {
       this.columns.forEach(element => {
         (<HTMLInputElement>document.getElementById(element.name)).value = '';
       });
-      this.onChangeTable(this.config)
+      this.onChangeTable(this.config);
       this.autorizar = false;
       this.comment = false;
       this.view = false;
@@ -198,11 +201,10 @@ export class AutorizarFacturasPuroComponent implements OnInit {
       this.cancelar = true;
     }
 
-    if (this.rowAux.length == 0) {
+    if (this.rowAux.length === 0) {
       this.rowAux = data;
-    }
-    else if (data.selected && this.rowAux != []) {
-      var aux = data;
+    } else if (data.selected && this.rowAux !== []) {
+      const aux = data;
       data = this.rowAux;
       data.selected = false;
       aux.selected = true;
@@ -239,8 +241,12 @@ export class AutorizarFacturasPuroComponent implements OnInit {
         this.cancelar = false;
         this.element = null;
       }
-    })
+    });
   }
+  round(value, precision) : any{
+    const rounder = Math.pow(10, precision);
+  return (Math.round(value * rounder) / rounder).toFixed(precision);
+}
 
 
   /*

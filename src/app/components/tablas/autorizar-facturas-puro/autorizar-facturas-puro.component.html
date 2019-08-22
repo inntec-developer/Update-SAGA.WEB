@@ -92,7 +92,7 @@
               </td>
               <td class="text-right">{{row.porcentaje}} %</td>
               <td class="text-right">{{row.monto | moneda:'$'}}</td>
-              <td class="text-center"> {{row.propietario }}</td>
+              <td class="text-center"> {{row.propietario | uppercase}}</td>
             </tr>
           </div>
         </ng-scrollbar>
@@ -135,7 +135,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title"><i class="fa fa-file-text-o mr-2" aria-hidden="true"></i>DATOS FACTURACION</h4>
+        <h4 class="modal-title text-info"><i class="fa fa-file-text-o mr-2" aria-hidden="true"></i>DATOS FACTURACION</h4>
         <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal2.hide()"
           aria-label="Close">
           <i class="fa fa-times"></i>
@@ -157,8 +157,12 @@
                   {{element.sueldoMaximo * element.vacantes |  moneda:'$'}}</span></li>
               <li class="list-group-item text-muted"><span class="mr-1">PORCENTAJE DE PAGO:</span><span
                   class="text-primary mr-3">{{element.porcentaje}} %</span>
-                <span class="mr-1">MONTO A FACTURAR:</span><span class="text-primary mr-3">$ {{element.monto |  moneda:'$'}}</span>
+                <span class="mr-1">MONTO A FACTURAR:</span><span class="text-primary mr-3"> {{element.monto |  moneda:'$'}}</span>
               </li>
+              <li class="list-group-item text-muted"><span class="mr-1">PORCENTAJE A CUBRIR:</span><span
+                class="text-warning mr-3">{{element.perContratado }} %</span>
+              <span class="mr-1">MONTO A CUBRIR:</span><span class="text-warning mr-3"> {{element.montoContratado |  moneda:'$'}}</span>
+            </li>
             </ul>
             <div class="p-3 mb-2 bg-light">
               <ul class="list-group list-group-flush">

@@ -33,7 +33,6 @@ export class InicioKioscoComponent implements OnInit {
   dataSource: any;
   activeId: any;
   search: any;
-  categorias3: any[];
   categorias4: any[];
 
   constructor(config: NgbCarouselConfig,

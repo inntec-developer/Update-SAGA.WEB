@@ -45,8 +45,13 @@ export class InformeVacantesComponent implements OnInit {
     { title: 'RECHAZADOS', className: 'text-info text-center', name: 'rechazados', filtering: { filterString: '', placeholder: 'RECHAZADOS' } },
     { title: 'CUBIERTOS', className: 'text-info text-center', name: 'contratados', filtering: { filterString: '', placeholder: 'CUBIERTOS' } }
   ];
-  totalPos: number = 0;
-  totalContratados: number = 0;
+  totalPos = 0;
+  totalContratados = 0;
+  element = [];
+  vBtra: any;
+  id: any;
+  folio: any;
+  rowAux = [];
 
   constructor(
     private service: RequisicionesService,
@@ -115,20 +120,36 @@ export class InformeVacantesComponent implements OnInit {
   getInfoVacantes() {
     this.service.GetInformeRequisiciones(this.settings.user['id']).subscribe(data => {
       this.dataInfoRequi = data;
-      
+
       this.totalPos = 0;
       this.totalContratados = 0;
       this.dataInfoRequi.forEach(r => {
-        if (r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37)) {
+        if (r.estatusId !== 8 && (r.estatusId < 34 || r.estatusId > 37)) {
           this.totalPos += r.vacantes;
           this.totalContratados += r.contratados;
-
-       
         }
 
       })
       this.onChangeTableInfo(this.config);
     });
+  }
+  public onCellClick(data: any): any {
+    data.selected ? data.selected = false : data.selected = true;
+
+    this.element = data;
+    this.vBtra = data.vBtra;
+    this.id = data.id;
+    this.folio = data.folio;
+
+    if (this.rowAux.length === 0) {
+      this.rowAux = data;
+    } else if (data.selected && this.rowAux !== []) {
+      const aux = data;
+      data = this.rowAux;
+      data.selected = false;
+      aux.selected = true;
+      this.rowAux = aux;
+    }
   }
 
   public refreshTable() {

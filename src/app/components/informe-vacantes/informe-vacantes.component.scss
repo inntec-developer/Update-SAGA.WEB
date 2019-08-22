@@ -35,6 +35,17 @@ tbody {
     font-size: 10px;
   }
 
+  button .badge {
+    position: absolute;
+    top: 1px;
+  z-index: 9;
+    font-size: .7em;
+  }
+  
+  .modal-lg {
+    max-width: 100% !important;
+  }
+
 ng-scrollbar {
     --scrollbar-size: 4px;
     --scrollbar-thumb-color: rgb(94, 175, 255);
