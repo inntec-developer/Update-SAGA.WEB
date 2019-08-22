@@ -48,7 +48,7 @@
                       <td class="text-center">{{item.empresa}}</td>
                       <td class="text-center">{{item.vBtra}}</td>
                       <td class="text-center">{{item.estado}}</td>
-                      <td class="text-center" *ngIf="item.estatusId == '4'"><p>SIN ASIGNAR</p></td>
+                     
                      
                       <td class="text-center">{{item.numero}}</td>
                       <td class="text-center">{{item.cubierta}}</td>
@@ -72,6 +72,7 @@
                         <span class="text-left" *ngIf="item.reclutadorTotal == 1">{{item.nombreReclutado}}</span>
                         <span class="text-left" *ngIf="item.reclutadorTotal == 'SIN ASIGNAR'">{{item.reclutadorTotal}}</span>
                        </td>
+                       <td class="text-center" *ngIf="item.estatusId == '4'"><p>SIN ASIGNAR</p></td>
                       <td class="text-center" *ngIf="item.estatusId != '4'">
                           <p *ngIf="item.cordinador2 != ''">{{item.cordinador2}}</p>
                           <p *ngIf="item.cordinador2 == ''">SIN ASIGNAR</p>

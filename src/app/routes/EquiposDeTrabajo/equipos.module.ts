@@ -5,10 +5,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { ToolsModule } from '../../tools/tools.module';
 import { ChartsModule as Ng2ChartsModule } from 'ng2-charts/ng2-charts';
-import { PantallaCoordinadoresComponent } from './pantalla-coordinadores/pantalla-coordinadores.component';
+import { TablaEquiposComponent } from './tabla-equipos/tabla-equipos.component';
 
 const routes: Routes = [
-  { path: 'GerenteGeneral', component: PantallaGGComponent}
+  { path: 'gerentegeneral', component: PantallaGGComponent}
 ];
 
 @NgModule({
@@ -21,7 +21,7 @@ const routes: Routes = [
   ],
   declarations: [
     PantallaGGComponent,
-    PantallaCoordinadoresComponent
+    TablaEquiposComponent
   ],
   exports: [
     RouterModule

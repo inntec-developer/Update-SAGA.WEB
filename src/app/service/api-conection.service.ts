@@ -313,6 +313,8 @@ public static CheckVertionSistem = 'Vertion/Check';
 
   /*Equipos de Trabajo*/
   public static GetRportGG = "Equipos/getRportGG"
+  public static GetRportTable = 'Equipos/getRportTable'
+
   /*Reportes */
   public static GetInforme = 'reporte/Informe'
   public static GetEmpresas = 'reporte/empresas'
@@ -324,6 +326,7 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static GetDetalleCordi = 'reporte/detallecordina'
   public static GetCoordinacion = 'reporte/coordinacion'
   public static GetCandidatoRep = 'reporte/candidatos'
+  public static GetVacanteReporte = 'reporte/vacante'
 
   /* Kiosco */
 

@@ -1,10 +1,21 @@
+<div class="content-heading">
+        <div>
+          <span class="text-sm d-none d-sm-block"><a class="mr-1" (click)="loadMigas(1)"><i class="fa fa-home text-success" aria-hidden="true"></i></a> EQUIPOS DE TRABAJO.</span>
+        </div>
+        <!-- Breadcrumb right aligned-->
+        <ol class="breadcrumb ml-auto">
+          <li class="breadcrumb-item">
+            <a (click)="loadMigas(2)" class="text-info text-bold">{{lider}}</a>
+          </li>
+          <li class="breadcrumb-item active text-muted">{{sub}}</li>
+        </ol>
+      </div>
 <div class="d-flex justify-content-around">
     <div class="col-xl-3 col-md-6">
         <div class="card">
             <div class="card-body bg-primary">
                 <div>
-                    <canvas baseChart [chartType]="'pie'" [options]="pieOptions" [datasets]="pieData.datasets"
-                        [colors]="pieColors" [labels]="pieData.labels" [legend]="false" height="120"></canvas>
+                    <canvas id='canvasPos' height="120" (click)="titulo='Posiciones'; orden= 1; modal = true;"></canvas>
                 </div>
             </div>
             <div class="bg-primary-dark text-center pt-1">
@@ -16,8 +27,7 @@
         <div class="card">
             <div class="card-body bg-success">
                 <div>
-                    <canvas baseChart [chartType]="'pie'" [options]="pieOptions" [datasets]="pieData2.datasets"
-                        [colors]="pieColors2" [labels]="pieData2.labels" [legend]="false" height="120"></canvas>
+                    <canvas id='canvasCub' height="120" (click)="titulo='Cubiertas'; orden= 2; modal = true;"></canvas>
                 </div>
             </div>
             <div class="text-center bg-success-dark pt-1">
@@ -30,8 +40,7 @@
         <div class="card">
             <div class="card-body bg-warning">
                 <div>
-                    <canvas baseChart [chartType]="'pie'" [options]="pieOptions" [datasets]="pieData3.datasets"
-                    [colors]="pieColors3" [labels]="pieData3.labels" [legend]="false" height="120"></canvas>
+                    <canvas id='canvasFal' height="120" (click)="titulo='Faltantes'; orden= 3; modal = true;"></canvas>
                 </div>               
             </div>
             <div class="text-center bg-warning-dark pt-1">
@@ -43,12 +52,11 @@
         <div class="card">
             <div class="card-body bg-info">
                 <div>
-                    <canvas baseChart [chartType]="'pie'" [options]="pieOptions" [datasets]="pieData4.datasets"
-                    [colors]="pieColors4" [labels]="pieData4.labels" [legend]="false" height="120"></canvas>
+                    <canvas id='canvasCump' height="120" (click)="titulo='Cumplimiento'; orden= 4; modal = true;"></canvas>
                 </div>
             </div>
             <div class="text-center bg-info-dark pt-1">
-                    TOTAL DE CUMPLIMIENTO <label class="badge badge-pill badge-info">{{totalCump}}</label>
+                    TOTAL DE CUMPLIMIENTO <label class="badge badge-pill badge-info">{{totalCump}} %</label>
                 </div>
         </div>
     </div>
@@ -65,20 +73,22 @@
                 
                     </div>
                     <div class="float-right mt-1">
-                        <button (click)="DetalleGerente(t)" class="btn btn-xs btn-success float-right mb-2 mr-1" container="body" placement="bottom" tooltip="Ver Detalle"><i class="fa fa-eye"></i></button>
+                        <button (click)="loadCharts(t, lider);" class="btn btn-xs btn-success float-right mb-2 mr-1" container="body" placement="bottom" tooltip="Ver Detalle"><i class="fa fa-eye"></i></button>
                     </div>
                 </div>
                 </div>
-                <div class="card-body bt bb">
-                    <ng-container *ngFor="let r of t.resumen">
-                        <a *ngIf="r.tipoUsuario == 5 || r.tipoUsuario == 4" class="inline" container="body" placement="right" tooltip="{{r.nombre}}">
-                            <img class="img-fluid circle thumb48" [src]="r.foto" (error)="errorImg(r)" />
-                        </a>
-                        <ng-container *ngIf= "r.resumen.length > 0">
-                            <ng-container *ngFor="let rr of r.resumen">
-                                <a  class="inline" container="body" placement="right" tooltip="{{rr.nombre}}">
-                                    <img class="rounded-circle thumb24" [src]="rr.foto" (error)="errorImg(rr)" />
-                                </a>
+                <div class="card-body bt bb h-75">
+                    <ng-container *ngIf= "t.resumen.length > 0">
+                        <ng-container *ngFor="let r of t.resumen">
+                            <div class="inline" container="body" placement="right" tooltip="{{r.nombre}}">
+                                <img class="img-fluid circle thumb48" [src]="r.foto" (error)="errorImg(r)" />
+                            </div>
+                            <ng-container *ngIf= "r.resumen.length > 0">
+                                <ng-container *ngFor="let rr of r.resumen">
+                                    <div class="inline" container="body" placement="right" tooltip="{{rr.nombre}}">
+                                        <img class="rounded-circle thumb32" [src]="rr.foto" (error)="errorImg(rr)" />
+                                    </div>
+                                </ng-container>
                             </ng-container>
                         </ng-container>
                     </ng-container>
@@ -86,7 +96,7 @@
                             <div tooltip="{{t.totalCump}} %">
                                 <progressbar class="progress-xs m-0" value="{{t.totalCump}}" type="info"></progressbar>
                             </div>
-                            <small class="text-muted">{{t.totalCump || 0}}% Cumplimiento</small>
+                            <small class="text-muted">{{t.totalCump || 0}} % Cumplimiento</small>
                     </div>
                 </div>
                 <div class="card-body">
@@ -115,3 +125,20 @@
     </ng-container>
 </div>
 </ng-scrollbar>
+
+<!-- Modal para reporte -->
+<div *ngIf="modal" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #lgModal="bs-modal" class="modal"
+  tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="float-left text-warning"><em class="fa fa-area-chart mr-2"></em>INDICADOR {{titulo | uppercase}}</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="modal=false; lgModal.hide();"><i
+            class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <app-tabla-equipos [usuarioId]="usuarioId" [orden]="orden"></app-tabla-equipos>
+      </div>
+    </div>
+  </div>
+</div>

@@ -20,11 +20,10 @@ export class DlgFacturaPuroComponent implements OnInit {
   
   constructor( @Inject(MAT_DIALOG_DATA) public data: any, private service: RequisicionesService,
    private dialog: MatDialogRef<DlgFacturaPuroComponent>) {
-     
+
     }
 
   ngOnInit() {
-    
    this.Calcular();
   }
 

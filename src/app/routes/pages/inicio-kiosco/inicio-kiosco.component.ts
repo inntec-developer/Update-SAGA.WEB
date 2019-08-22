@@ -14,22 +14,25 @@ const swal = require('sweetalert');
 export class InicioKioscoComponent implements OnInit {
 
   verLogin = true;
-  logeado: boolean = false;
-  usuario: string = "";
-  user = "";
-  pass = "";
+  logeado = false;
+  usuario = '';
+  user = '';
+  pass = '';
   @ViewChild('myCarousel') myCarousel: NgbCarousel;
   @ViewChild('lgModal') modal;
 
   vacantes = [];
   showNavigationArrows = true;
   showNavigationIndicators = false;
-  modalTicket: boolean = false;
-  num = "";
+  modalTicket = false;
+  num = '';
   categorias: any[];
+  categorias2 = [];
   dataSource: any;
   activeId: any;
   search: any;
+  categorias3: any[];
+  categorias4: any[];
 
   constructor(config: NgbCarouselConfig, 
     private _service: SistTicketsService,
@@ -49,27 +52,10 @@ export class InicioKioscoComponent implements OnInit {
   GetVacantes() {
 
     this._service.GetVacantes().subscribe(data => {
-      var images = ['./../assets/img/ArteVacantes/img01.png',
-        './../assets/img/ArteVacantes/img02.png', './../assets/img/ArteVacantes/img03.jpg',
-        './../assets/img/ArteVacantes/img04.jpg', './../assets/img/ArteVacantes/img05.png',
-        './../assets/img/ArteVacantes/img06.png', './../assets/img/ArteVacantes/img07.png', './../assets/img/ArteVacantes/img08.png'];
 
       this.dataSource = data;
       if (this.dataSource.length > 0) {
-        var color = 0;
-        this.categorias = Array.from(new Set(this.dataSource.map(s => s.areaId)))
-          .map(id => {
-            color += 1;
-            if (color > 7) {
-              color = 1;
-            }
-            return {
-              id: id,
-              categoria: this.dataSource.find(s => s.areaId === id).categoria,
-              icono: this.dataSource.find(s => s.areaId === id).icono,
-              color: color,
-            }
-          });
+        // reviso que tenga vacantes disponibles
         this.dataSource = this.dataSource.filter(element => {
           if (element.cubierta > 0) {
             return element;
@@ -77,10 +63,31 @@ export class InicioKioscoComponent implements OnInit {
 
         });
 
-        for (var c = 0; c <= 7; c++) {
-          this.dataSource[c].image = images[c];
-        }
-        this.vacantes = this.dataSource;
+        let color = 0;
+        this.categorias = Array.from(new Set(this.dataSource.map(s => s.areaId)))
+          .map(id => {
+            color += 1;
+            if (color > 7) {
+              color = 1;
+            }
+            let cat = this.dataSource.find(s => s.areaId === id).categoria;
+            const idx = cat.search(/[/y,]/i);
+            if(idx > -1)
+            {
+              cat = cat.substring(0, idx);
+            }
+            return {
+              id: id,
+              categoria: cat,
+              icono: this.dataSource.find(s => s.areaId === id).icono,
+              color: color,
+            };
+          });
+          this.categorias4 = this.categorias.splice(12, this.categorias.length);
+          this.categorias3 = this.categorias.splice(8, 11);
+          this.categorias2 = this.categorias.splice(4, 7);
+          this.categorias = this.categorias.splice(0, 3);
+          this.vacantes = this.dataSource;
       }
     });
   }
@@ -112,14 +119,14 @@ export class InicioKioscoComponent implements OnInit {
 
   GenerarTicket(row) {
     swal({
-      title: "¿ESTAS SEGURO?",
-      text: "¡Se se está postulando a la vacante de " + row.vBtra + "!",
-      type: "warning",
+      title: '¿ESTAS SEGURO?',
+      text: '¡Se se está postulando a la vacante de ' + row.vBtra + '!',
+      type: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#ec2121",
-      confirmButtonText: "¡Si, postularme!",
-      cancelButtonColor: "#ec2121",
-      cancelButtonText: "¡No, cancelar!",
+      confirmButtonColor: '#ec2121',
+      confirmButtonText: '¡Si, postularme!',
+      cancelButtonColor: '#ec2121',
+      cancelButtonText: '¡No, cancelar!',
       closeOnConfirm: false,
       closeOnCancel: false
     }, (isConfirm) => {
@@ -127,7 +134,7 @@ export class InicioKioscoComponent implements OnInit {
       window.onfocus = null;
       if (isConfirm) {
 
-        let candidatoId = "00000000-0000-0000-0000-000000000000";
+        let candidatoId = '00000000-0000-0000-0000-000000000000';
 
         if(sessionStorage.getItem('candidatoId'))
         {
@@ -137,15 +144,14 @@ export class InicioKioscoComponent implements OnInit {
         this._kioscoService.PostulacionKiosco({requisicionId: row.id, candidatoId: candidatoId}).subscribe(data => {
           this.num = data[0];
 
-          swal("¡POSTULACIÓN!", "La postulación se registró con éxito ", "success");
+          swal('¡POSTULACIÓN!', 'La postulación se registró con éxito ', 'success');
 
         });
 
 
-      }
-      else {
+      } else {
         this.modalTicket = false;
-        swal("Cancelado", "No se realizó ningún cambio", "error");
+        swal('Cancelado', 'No se realizó ningún cambio', 'error');
       }
     });
   }
@@ -154,36 +160,31 @@ export class InicioKioscoComponent implements OnInit {
   {
     this._service.LoginBolsa(usuario, pass).subscribe(data => {
 
-      if(data == 300)
+      if (data === 300)
       {
-        swal("¡Error en la contraseña!", '', "error");
-        this.user = "";
-        this.pass = "";
-      }
-      else if(data == 404)
-      {
-        swal("¡El usuario no se encuentra!", '', "error");
-        this.user = "";
-        this.pass = "";
-      }
-      else
-      {
-        swal("¡Gracias por iniciar sesión!", '', "success");
+        swal('¡Error en la contraseña!', '', 'error');
+        this.user = '';
+        this.pass = '';
+      } else if (data === 404) {
+        swal('¡El usuario no se encuentra!', '', 'error');
+        this.user = '';
+        this.pass = '';
+      } else {
+        swal('¡Gracias por iniciar sesión!', '', 'success');
         this.usuario = data[0].usuario;
         sessionStorage.setItem('candidatoId', data[0].personaId);
         this.logeado = true;
         this.verLogin = false;
       }
-    })
+    });
   }
-  LogOut()
-  {
+  LogOut() {
     sessionStorage.removeItem('candidatoId');
     this.logeado = false;
     this.verLogin = true;
-    this.user = "";
-    this.usuario = "";
-    this.pass = "";
+    this.user = '';
+    this.usuario = '';
+    this.pass = '';
   }
 
   public Search(data: any) {
@@ -191,7 +192,7 @@ export class InicioKioscoComponent implements OnInit {
     this.search = data.target.value;
     let tempArray: Array<any> = [];
 
-    let colFiltar: Array<any> = [{ title: "vBtra" }];
+    let colFiltar: Array<any> = [{ title: 'vBtra' }];
 
     this.dataSource.forEach(function (item) {
       let flag = false;
@@ -212,4 +213,9 @@ export class InicioKioscoComponent implements OnInit {
     this.myCarousel.activeId = this.vacantes[0].id;
     this.myCarousel.cycle();
   }
+
+  errorImg(item) {
+    item.arte = null;
+  }
+
 }

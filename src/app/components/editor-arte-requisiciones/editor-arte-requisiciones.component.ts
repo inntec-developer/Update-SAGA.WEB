@@ -6,6 +6,9 @@ import { MatDialog } from '@angular/material';
 import { Font } from 'ngx-font-picker';
 import { SettingsService } from '../../core/settings/settings.service';
 import { ApiConection } from '../../service/api-conection.service';
+import { switchAll } from 'rxjs/operators';
+
+const swal = require('sweetalert');
 
 /* ES5 */
 var htmlToImage = require('html-to-image');
@@ -18,43 +21,53 @@ var htmlToImage = require('html-to-image');
 })
 export class EditorArteRequisicionesComponent implements OnInit {
 
-  bg = './../assets/img/ArteVacantes/DamsaVacantes_PP1.jpg'
+  bg = './../assets/img/ArteVacantes/DamsaVacantes_PP1.jpg';
 
-  public fontVacante: Font = new Font({
+  fontVacante: Font = new Font({
     family: 'Roboto',
     size: '14px',
     style: 'regular',
     styles: ['regular']
   });
-  
-  public font: Font = new Font({
-    family: 'Roboto',
-    size: '14px',
-    style: 'regular',
-    styles: ['regular']
-  });
-  
-  public font2: Font = new Font({
-    family: 'Roboto',
-    size: '14px',
-    style: 'regular',
-    styles: ['regular']
-  });
-  
 
-  ff: string = 'Lato';
-  ColorPicker = 'blue'
-  ColorPicker1 = 'blue'
-  ColorPicker2 = 'blue'
-  vBtra: string = "Vacante prueba de Melina"
-  descripcion: string = "Importante empresa solicita persona para puesto de " + this.vBtra + " en la Zona Metropolitana de Guadalajara";
-  experiencia: string = "Experiencia inventada por Melina en mocos mocos mocos mocos";
-  contacto: string = "Llama al 3333 3333 ext.666 o manda correo indicando el título de la vacante al correo mbonita@damsa.com.mx con atención a Melina Bonita";
+  fontDesc: Font = new Font({
+    family: 'Roboto',
+    size: '12px',
+    style: 'regular',
+    styles: ['regular']
+  });
+
+   fontNecesitas: Font = new Font({
+    family: 'Roboto',
+    size: '12px',
+    style: 'regular',
+    styles: ['regular']
+  });
+   fontDudas: Font = new Font({
+    family: 'Roboto',
+    size: '12px',
+    style: 'regular',
+    styles: ['regular']
+  });
+
+  ff = 'Lato';
+  ColorPickerVac = 'blue';
+  ColorPickerDesc = '#909FA7';
+  ColorPickerNecs = 'blue';
+  ColorPickerDescNesc = 'dark';
+  ColorPickerDudas = 'blue';
+
+  vBtra: string = 'Vacante prueba de Melina'
+  descripcion: string = 'Importante empresa solicita persona para puesto de ' + this.vBtra + ' en la Zona Metropolitana de Guadalajara';
+  experiencia: string = 'Experiencia inventada por Melina en mocos mocos mocos mocos';
+  contacto: string = 'Llama al 3333 3333 ext.666 o manda correo indicando el título de la vacante al correo mbonita@damsa.com.mx con atención a Melina Bonita';
   requisicionId: any;
   usuarioId = this.settings.user['id'];
+  
   constructor(private dialog: MatDialog, private _service: AdminServiceService, private settings: SettingsService) { }
 
   ngOnInit() {
+
   }
 
   openDialogBG() {
@@ -77,20 +90,22 @@ export class EditorArteRequisicionesComponent implements OnInit {
     dialogCnc.afterClosed().subscribe(result => {
       this.requisicionId = result.id;
       this.vBtra = result.vBtra;
-      this.experiencia = result.experiencia;
+      this.experiencia = result.experiencia.substring(0, 150);
     })
   }
 
   Borrar()
   {
-    this.vBtra = "";
-    this.descripcion = "";
-    this.experiencia = "";
-    this.contacto = "";
+    this.vBtra = '';
+    this.descripcion = '';
+    this.experiencia = '';
+    this.contacto = '';
   }
 
   Guardar()
   {
+    if(this.requisicionId != undefined)
+    {
     var node = document.getElementById('my-node');
     htmlToImage.toPng(node)
   .then(dataUrl => {
@@ -98,7 +113,7 @@ export class EditorArteRequisicionesComponent implements OnInit {
      this._service.GuardarArte(arte).subscribe(data => {
         if(data == 200)
         {
-          var nom = this.requisicionId + '.png'
+          var nom = this.requisicionId + '.png';
           window.saveAs(dataUrl, nom)
           // this._service.downloadImage(nom).subscribe(res =>{
           //   saveAs(res, nom)
@@ -115,8 +130,8 @@ export class EditorArteRequisicionesComponent implements OnInit {
   .catch(function (error) {
     console.error('oops, something went wrong!', error);
   });
-
- 
-  
+  } else {
+    swal('¡GUARDAR ARTE!', 'No se ha seleccionado vacante', 'warning');
   }
+}
 }
