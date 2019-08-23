@@ -10,7 +10,7 @@
         (click)="reporteCandidatos = true" [ngClass]="element.length == 0 || element.enProceso == 0 ? 'disabled' : 'btn-info'"
         container="body" placement="bottom" tooltip="Candidatos">
         <i class="fa fa-users" aria-hidden="true"></i>
-        <span *ngIf="element.enProceso > 0" class="badge badge-pill badge-warning">{{element.enProceso}}</span>
+        <span *ngIf="element.enProceso > 0" class="badge badge-pill badge-info">{{element.enProceso}}</span>
       </button>
 
       <button type="button" class="mr-1 btn btn-xs btn-success float-right mat-elevation-z8" (click)="refreshTable()"
@@ -173,7 +173,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="float-left text-warning"><em class="fa fa-users mr-2"></em>CANDIDATOS EN PROCESO / REQUISICI&Oacute;N
-          {{Folio}} - {{Vacante}}</h5>
+          {{folio}} - {{vBtra}}</h5>
         <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="reporteCandidatos=false;">
           <i class="fa fa-times"></i></button>
       </div>
