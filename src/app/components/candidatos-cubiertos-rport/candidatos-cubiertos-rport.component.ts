@@ -10,11 +10,11 @@ export class CandidatosCubiertosRportComponent implements OnInit {
   @Input() RequisicionId;
 
   // Varaibles del paginador
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
   registros: number;
   clearFilter: boolean = false;
@@ -41,6 +41,7 @@ export class CandidatosCubiertosRportComponent implements OnInit {
   GetCandidatos()
   {
     this._service.GetCandidatosCubiertos(this.RequisicionId).subscribe(data => {
+      debugger;
       data.forEach(element => {
         this.dataSource.push({
           horario: element.horario,

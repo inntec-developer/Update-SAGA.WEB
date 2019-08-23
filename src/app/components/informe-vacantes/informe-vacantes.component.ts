@@ -12,7 +12,7 @@ import { ExcelService } from '../../service/ExcelService/excel.service';
 })
 export class InformeVacantesComponent implements OnInit {
 
-   //scroll
+   // scroll
    disabled = false;
    compact = false;
    invertX = false;
@@ -20,12 +20,12 @@ export class InformeVacantesComponent implements OnInit {
    shown = 'hover';
 
    public dataInfoRequi: Array<any> = [];
-   public pageInfo: number = 1;
-   public itemsPerPageInfo: number = 20;
-   public maxSizeInfo: number = 5;
-   public numPagesInfo: number = 1;
-   public lengthInfo: number = 0;
-   showFilterRowInfo: boolean = true;
+   public pageInfo = 1;
+   public itemsPerPageInfo = 20;
+   public maxSizeInfo = 5;
+   public numPagesInfo = 1;
+   public lengthInfo = 0;
+   showFilterRowInfo = true;
    registrosInfo: number;
    public rowsInfo: Array<any> = [];
 
@@ -49,7 +49,6 @@ export class InformeVacantesComponent implements OnInit {
   totalContratados = 0;
   element = [];
   vBtra: any;
-  id: any;
   folio: any;
   rowAux = [];
 
@@ -98,15 +97,9 @@ export class InformeVacantesComponent implements OnInit {
     if (config.filtering) {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
-
-    // if (config.sorting) {
-    //   (<any>Object).assign(this.config.sorting, config.sorting);
-    // }
-
     this.registrosInfo = this.dataInfoRequi.length;
     this.rowsInfo = this.dataInfoRequi;
-    let filteredData = this.changeFilterInfo(this.dataInfoRequi, this.config);
-    //let sortedData = this.changeSort(filteredData, this.config);
+    const filteredData = this.changeFilterInfo(this.dataInfoRequi, this.config);
     this.rowsInfo = page && config.paging ? this.changePageInfo(page, filteredData) : filteredData;
     this.lengthInfo = filteredData.length;
 
@@ -138,7 +131,6 @@ export class InformeVacantesComponent implements OnInit {
 
     this.element = data;
     this.vBtra = data.vBtra;
-    this.id = data.id;
     this.folio = data.folio;
 
     if (this.rowAux.length === 0) {
