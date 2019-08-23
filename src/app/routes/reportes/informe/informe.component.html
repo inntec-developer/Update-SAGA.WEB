@@ -30,7 +30,7 @@ type="square-jelly-box"
   <div class="col-xl-2" id="divSucursal">
 
         <div class="form-group">
-          <label for="sel2"></label>
+        
 
               <form  [formGroup]="FormSucursal">
                   <ngx-select
@@ -63,7 +63,7 @@ type="square-jelly-box"
 
 <div class="col-xl-2">
     <div class="form-group divtiporeport">
-      <label for="TipoReporte"></label>
+     
       <select  (change)="Ocultar()" class="form-control" id="TipoReporte">
           <option value="1">Por Solicitud</option>
           <option value="2">Por Estatus</option>
@@ -81,11 +81,11 @@ type="square-jelly-box"
 
 
 
-<div class="col-xl-2">
+<div class="col-xl-2" id="divFechaInicial">
 
   <div class="form-group">
-      <label for="picker1"></label>
-      <mat-form-field style="top: 17px;">
+     
+      <mat-form-field >
           <input   matInput [max]="date.value" [matDatepicker]="fechaInicial" id="fechaInicial"  [formControl]="date2" >
           <mat-datepicker-toggle matSuffix [for]="fechaInicial"></mat-datepicker-toggle>
           <mat-datepicker #fechaInicial></mat-datepicker>
@@ -107,10 +107,10 @@ type="square-jelly-box"
 
 
 
-<div class="col-xl-2">
+<div class="col-xl-2" id="divFechafinal">
     <div class="form-group">
-        <label for="sel3"></label>
-        <mat-form-field  style="top: 17px;">
+      
+        <mat-form-field  >
             <input  matInput [min]="date2.value" [max]="date.value"    [matDatepicker]="fechaFinal" id="fechaFinal"  [formControl]="date">
             <mat-datepicker-toggle matSuffix [for]="fechaFinal"></mat-datepicker-toggle>
             <mat-datepicker #fechaFinal ></mat-datepicker>
@@ -119,11 +119,70 @@ type="square-jelly-box"
 </div>
 
 
+<div class="col-xl-6 ocultar" id="divEmpresas2">
+
+    <!-- <mat-form-field class="col-12">
+        <input #RazonSocialCtrl type="text" placeholder="Razon Social" aria-label="Number" matInput formControlName="RazonSocial" [value]="RazonSocialCtrl.value.toUpperCase()"
+          [matAutocomplete]="cliente" (keyup.enter)="filter()" required="" />
+        <mat-autocomplete #cliente="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let option of AuxOptions" [value]="option.razonSocial" class="option-container">
+            <span class="razonSocial"><strong>{{option.razonSocial | uppercase}}</strong></span>
+            <span class="more-option"><strong class="text-info">RFC: </strong><span
+                class="text-warning">{{option.rfc | uppercase}}</span></span>
+            <span class="more-option"><strong class="text-info">Nombre Comercial: </strong><span
+                class="text-warning">{{option.nombrecomercial | uppercase}}</span></span>
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field> formato-cliente-->
+
+    <div class="form-group input-sm" >
+      
+        <form [formGroup]="FormEmpresas">
+            <ngx-select
+           [allowClear]="true"
+           autoClearSearch="true"
+           placeholder="Empresas..."
+           formControlName = "ClientesControl"
+           (data)="(value)"
+           class="select-asig"
+          
+           [items]="Clientes"
+           (remove)="empresaChange()"
+           (select)="empresaChange()"
+           size="small"
+           optionValueField="id"
+           optionTextField="razonSocial"
+         >
+         
+           <ng-template ngx-select-option-selected let-option let-text="descripcion">
+             <span style="font-size: 9px !important">{{ option.data.razonSocial }}</span>
+           </ng-template>
+           <ng-template ngx-select-option let-option let-text="text">
+              <span class="razonSocial"><strong>{{option.data.razonSocial}}</strong></span>
+              <br>
+              <span class="more-option"><strong class="text-info">RFC: </strong><span
+                  class="text-warning">{{option.data.rfc }}</span></span>
+                  <br>
+              <span class="more-option"><strong class="text-info">Nombre Comercial: </strong><span
+                  class="text-warning">{{option.data.nombrecomercial }}</span></span>
+              <!-- <span style="font-size: 9px !important">{{ option.data.razonSocial }}</span>
+              <br>
+              <small>hola</small> -->
+          </ng-template>
+           <ng-template ngx-select-option-not-found>
+             No se encontraron resultados...
+           </ng-template>
+         </ngx-select>
+         </form>
+      </div>
+</div>
+
+
 
 
 <div class="col-xl-2 ocultar" id="divEdad">
     <div class="form-group ">
-      <label for="TipoReporte"></label>
+    
       <select  (change)="Ocultar()" class="form-control" id="EdadReporte">
           <option value="0">Edad, Todos</option>
           <option value="16">16 - 20</option>
@@ -146,7 +205,7 @@ type="square-jelly-box"
 
   <div class="col-xl-2 ocultar" id="divgenero">
       <div class="form-group ">
-        <label for="TipoReporte"></label>
+      
         <select  (change)="Ocultar()" class="form-control" id="GeneroReporte">
             <option value="0">Genero, Todos</option>
             <option value="1">Masculino</option>
@@ -157,7 +216,7 @@ type="square-jelly-box"
 
 <div class="col-xl-2 ocultar" id="divEstado">
     <div class="form-group">
-        <label ></label>
+      
             <form  [formGroup]="FormEstado">
                 <ngx-select
                 [allowClear]="true"
@@ -187,7 +246,7 @@ type="square-jelly-box"
 
 <div class="col-xl-2" id="divTipoReclu">
     <div class="form-group">
-        <label ></label>
+      
             <form  [formGroup]="FormTipoReclu">
                 <ngx-select
                 [allowClear]="true"
@@ -216,7 +275,7 @@ type="square-jelly-box"
 
     <div class="col-xl-2" id="divcordinacion">
       <div class="form-group">
-        <label for="sel2"></label>
+      
             <form  [formGroup]="FormCordina">
                 <ngx-select
                 [allowClear]="true"
@@ -245,7 +304,7 @@ type="square-jelly-box"
       </div>
 
       <div class="col-xl-2 " id="divestatus">
-        <mat-form-field style="margin-top: 10px">
+        <mat-form-field >
           <mat-label>Estatus</mat-label>
 
           <mat-select  (selectionChange)="PruebaEstatus($event.value)"
@@ -266,7 +325,7 @@ type="square-jelly-box"
 
       <div class="col-xl-4 ocultar" id="divestatus2">
         <div class="form-group input-sm" style="z-index: 100px !important">
-          <label for="sel1"></label>
+         
           <form [formGroup]="FormEstatus">
               <ngx-select
              [allowClear]="true"
@@ -292,39 +351,11 @@ type="square-jelly-box"
         </div>
     </div>
 
-      <!-- <div class="col-xl-2 ocultar" id="divestatus">
-          <div class="form-group input-sm" style="z-index: 100px !important">
-            <label for="sel1"></label>
-            <form [formGroup]="FormEstatus">
-                <ngx-select
-               [allowClear]="true"
-               autoClearSearch="true"
-               placeholder="Estatus..."
-               formControlName = "EstatusControl"
-               (data)="(value)"
-               [multiple]="true"
-               [items]="Estatus"
-               size="small"
-               optionValueField="id"
-               optionTextField="descripcion"
-               (remove)="estatusChange()"
-               (select)="estatusChange()">
-               <ng-template ngx-select-option-selected let-option  >
-                 <span style="font-size: 10px !important" >{{ option.data.descripcion }}</span>
-               </ng-template>
-               <ng-template ngx-select-option-not-found>
-                  <span style="font-size: 11px">No se encontraron resultados...</span>
-                </ng-template>
-             </ngx-select>
-             </form>
-          </div>
-      </div> -->
-
-
+    
 
 <div class="col-xl-2" id="divSolicitante">
     <div class="form-group" >
-      <label for="solicitanteR"></label>
+     
 
       <form [formGroup]="FormSolicitante" style="font-size: 10px !important">
           <ngx-select
@@ -361,11 +392,9 @@ type="square-jelly-box"
 
 
 
-
-
 <div class="col-xl-4" id="divEmpresas">
     <div class="form-group input-sm" >
-      <label for="empresaR"></label>
+     
 
       <form [formGroup]="FormEmpresas">
           <ngx-select
@@ -399,7 +428,7 @@ type="square-jelly-box"
 <div class="col-xl-4" id="divreclutador">
 
     <div class="form-group input-sm">
-      <label for="sel2"></label>
+     
 
       <form [formGroup]="FormReclutador">
           <ngx-select
@@ -429,7 +458,7 @@ type="square-jelly-box"
 
 <div class="col-xl-4 ocultar" id="divBusCoordina2">
   <div class="form-group input-sm " >
-    <label for="sel2"></label>
+   
     <form [formGroup]="FormUserCor">
         <ngx-select
        [allowClear]="true"
@@ -457,7 +486,7 @@ type="square-jelly-box"
 
 <div class="col-xl-4">
     <div class="form-group input-sm" id="divBusCoordina">
-      <label for="sel2"></label>
+     
       <form [formGroup]="FormUserCor">
           <ngx-select
          [allowClear]="true"
@@ -484,24 +513,13 @@ type="square-jelly-box"
 </div>
 
 <div class="col-xl-4" id="Divdiv"></div>
-  <div class="col-xl-2 " style="margin-top: 23px;">
-      <div class="form-group ocultar">
-          <div class="input-group input-sm">
-            <input
-              id="palabra"
-              type="text"
-              size="12"
-              #palabra
-              (blur)="hijo.Guardar(palabra.value)"
-              placeholder="Palabra clave"
-              class=" form-control input-sm"
-            />
-            <div class="input-group-append mano" (click)="hijo.Generar()">
-              <span class="input-group-text "> <em class="fa fa-search"></em></span>
-            </div>
-          </div>
-        </div>
+  <div class="col-xl-2" >
+      <button id="btnGraficaVacante"   (click)="GraficaVacante.Generar(objempresa,objtipocordi)" class="ocultar btn btn-sm btn-primary btnReport mat-elevation-z8 grafica" tooltip="Grafica">
+          <em  class="fa fa-pie-chart" ></em>
+        </button>
     </div>
+
+
 
     <div class="col-xl-2" style="margin-top: 10px;">
         <button id="exel1" tooltip="Exportar" (click)="hijo.Exportar()" class="btn btn-sm btn-warning btnReport mat-elevation-z8">
@@ -552,7 +570,7 @@ type="square-jelly-box"
           <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="Candidato.Generar(objestado,objstatus)" tooltip="Generar Reporte" id="repCandidato"  >
               <em  class="fa fa-bar-chart"></em>
             </button>
-            <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="Vacante.Generar()" tooltip="Generar Reporte" id="repVacante"  >
+            <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="Vacante.Generar(objempresa,objtipocordi)" tooltip="Generar Reporte" id="repVacante"  >
               <em  class="fa fa-bar-chart"></em>
             </button>
 
@@ -580,5 +598,9 @@ type="square-jelly-box"
 <app-candidatobolsa id="DivCandidato" #Candidato ></app-candidatobolsa>
 
 <app-vacante id="DivVacante" #Vacante ></app-vacante>
+
+
+
+<app-grafica-resumen class="ocultar" id="DivGraficaVacante" #GraficaVacante></app-grafica-resumen>
 </div>
 

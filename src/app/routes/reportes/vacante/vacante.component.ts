@@ -60,22 +60,17 @@ export class VacanteComponent implements OnInit {
      this.Exel.exportAsExcelFile(obj,'Reporte')
   }
 
-  Generar(reclutador,cordina){
+  Generar(empresa,cordina){
     this.LimpiaFiltro(0);
     this.LimpiaFiltro(1);
     this.spinner.show();
     document.getElementById('DivVacante').classList.remove('ocultar');
+    document.getElementById('DivGraficaVacante').classList.add('ocultar');
 
-    var rec = '';
+    var emp = '';
     var coo = '';
-    let inc = document.getElementById('fechaInicial');
-    let fin = document.getElementById('fechaFinal');
-
-    if(reclutador != undefined){
-      for (let item of reclutador) {
-        rec += item +',';
-      }
-    }
+    console.log(empresa)
+   
 
     if(cordina != undefined){
       for (let item of cordina) {
@@ -84,15 +79,9 @@ export class VacanteComponent implements OnInit {
     }
 
     coo = cordina == undefined?'0':coo;
-    rec = reclutador == undefined?'0':rec;
-
-    // var palabra = pal['value'];
-    var inicio = inc['value'];
-    var final = fin['value'];
-   
-    let tipo = document.getElementById('TipoReporte')['value'];
+    emp = empresa == undefined?'0':empresa;
     
-    this.servicio.getVacante("rec","0")
+    this.servicio.getVacante(emp,coo)
     .subscribe( data => {
     this.requisiciones = data;
     this.General = data;

@@ -89,9 +89,8 @@ GetInforme(clave:string,ofc:string,tipo:string,fini:string,ffin:string,emp:strin
     ).map(result => result.json()).catch(this.handleError);
 }
 
-GetEmpresas(): Observable<any> {
-   
-return this.http.get(this.UrlEmpresa)
+GetEmpresas(bandera:string): Observable<any> {
+return this.http.get(this.UrlEmpresa+ '?bandera='+bandera)
     .map(result => result.json())
     .catch(this.handleError);
 }

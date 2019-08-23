@@ -1,6 +1,7 @@
 import * as _moment from 'moment';
 import * as _rollupMoment from 'moment';
- 
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -36,6 +37,7 @@ export class InformeComponent implements OnInit {
  
   public value: any;
   public Empresas : any[];
+  public Clientes : any[];
   public Estatus : any[];
   public Usuario : any[];
   public Oficina : any[];
@@ -84,7 +86,7 @@ export class InformeComponent implements OnInit {
     private estados: CatalogosService
    
   ) {
- 
+    
   
   //  this.toasterService = toasterService;
     this.FormEmpresas = new FormGroup({
@@ -131,15 +133,21 @@ export class InformeComponent implements OnInit {
       this.reclutaList = [{id:0,nombre:'Todos'},
       {id:1,nombre:'Reclutamiento Puro'},{id:2,nombre:'Subcontratación'},{id:3,nombre:'Staff'}]
 
-    this.Servicio.GetEmpresas().subscribe(item =>{
+    this.Servicio.GetEmpresas("1").subscribe(item =>{
       this.Empresas = item;
       this.date2 = new FormControl(item[0].fechal);
-     
      document.getElementById('fechaInicial')['value'] = this.ConvierteFecha(item[0].fechal)
       this.Oficina = [{id:0,nombre:'Todas'},
       {id:1,nombre:'Guadalajara'},{id:2,nombre:'México'},{id:3,nombre:'Monterrey'}]
+      
     })
- 
+    
+    this.Servicio.GetEmpresas("0").subscribe(item =>{
+      this.Clientes = item;
+      
+    })
+   
+
     this.Servicio.GetEstatusRep("").subscribe(item =>{
       this.Estatus = item;
     })
@@ -148,7 +156,7 @@ export class InformeComponent implements OnInit {
   
       this.EstatusGeneral = [{nombre:"Activos",pieza:item.activos}
     ,{nombre:"Cubiertos",pieza:item.cubiertos},{nombre:"Otros",pieza:item.otros}]
-      console.log(this.EstatusGeneral)
+     
     })
  
  
@@ -169,7 +177,6 @@ export class InformeComponent implements OnInit {
  
     document.oncontextmenu=null
   }
-
 
  
   ConvierteFecha(dateTime){
@@ -229,7 +236,7 @@ GeneraEstatusBolsa(){
  
   tiporeclutaChange(){
     this.objtiporeclu = this.FormTipoReclu.get('TiporecluControl').value;
-    console.log(this.objtiporeclu)
+    
   }
  
  
@@ -245,12 +252,12 @@ GeneraEstatusBolsa(){
 
   PruebaEstatus(evento){
     this.objstatus = evento
-    console.log(this.objstatus);
+   
    
   }
 
   ActivaCheck(valor){
-    console.log(valor)
+  
     if(valor == "Activos"){
     
      var stus4 = document.querySelectorAll("[name='namee4']")[0].id;
@@ -318,6 +325,7 @@ GeneraEstatusBolsa(){
   document.getElementById('DivCoordinacion').classList.add('ocultar');
   document.getElementById('DivCandidato').classList.add('ocultar');
   document.getElementById('DivVacante').classList.add('ocultar');
+  document.getElementById('DivGraficaVacante').classList.add('ocultar');
  
  
   document.getElementById('report1').classList.add('ocultar');
@@ -336,6 +344,8 @@ GeneraEstatusBolsa(){
   document.getElementById('exelCandidato').classList.add('ocultar');
   document.getElementById('repVacante').classList.add('ocultar');
   document.getElementById('exelVacante').classList.add('ocultar');
+  
+  document.getElementById('btnGraficaVacante').classList.add('ocultar');
  
  
   document.getElementById('divBusCoordina2').classList.add('ocultar');
@@ -351,6 +361,9 @@ GeneraEstatusBolsa(){
   document.getElementById('divSucursal').classList.add('ocultar');
   document.getElementById('divBusCoordina').classList.add('ocultar');
   document.getElementById('divBusCoordina2').classList.add('ocultar');
+  document.getElementById('divEmpresas2').classList.add('ocultar');
+  document.getElementById('divFechafinal').classList.remove('ocultar');
+  document.getElementById('divFechaInicial').classList.remove('ocultar');
  
   let tipo = document.getElementById('TipoReporte')['value'];
   if(tipo == 3){
@@ -375,6 +388,7 @@ GeneraEstatusBolsa(){
   }else if(tipo == 9){
     document.getElementById('repVacante').classList.remove('ocultar');
     document.getElementById('exelVacante').classList.remove('ocultar');
+    document.getElementById('btnGraficaVacante').classList.remove('ocultar');
     this.GeneraEstatusBolsa();
   }else{
     document.getElementById('report1').classList.remove('ocultar');
@@ -426,7 +440,14 @@ GeneraEstatusBolsa(){
     document.getElementById('divBusCoordina').classList.add('ocultar');
     document.getElementById('divBusCoordina2').classList.add('ocultar');
   }else if(tipo == 9){
-    
+    document.getElementById('divEmpresas2').classList.remove('ocultar');
+    document.getElementById('divcordinacion').classList.remove('ocultar');
+    document.getElementById('divTipoReclu').classList.add('ocultar');
+    document.getElementById('divFechafinal').classList.add('ocultar');
+    document.getElementById('divFechaInicial').classList.add('ocultar');
+    document.getElementById('divBusCoordina').classList.add('ocultar');
+    document.getElementById('divreclutador').classList.add('ocultar');
+    document.getElementById('divestatus').classList.add('ocultar');
   }else{
     document.getElementById('divTipoReclu').classList.remove('ocultar');
     document.getElementById('divestatus').classList.remove('ocultar');

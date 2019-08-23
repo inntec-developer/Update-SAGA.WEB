@@ -56,6 +56,8 @@ export class PreguntasFrecuentesComponent implements OnInit {
     this.Servicio.addPreguntasFrecuentes(pregunta,respuesta).subscribe(item =>{
       alert(item);
       this.ngOnInit()
+      document.getElementById('addPregunta')['value'] = "";
+      document.getElementById('addRepuesta')['value'] = "";
     })
     //this.router.navigateByUrl('/catalogos/preguntas');
   }
