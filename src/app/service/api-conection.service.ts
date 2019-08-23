@@ -344,6 +344,7 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static LiberarCandidato = 'SistTickets/liberarCandidato'
   public static GetTicketEnAtencion = 'SistTickets/getTicketEnAtencion'
   public static GetVacantes = 'SistTickets/getVacantes'
+  public static GetVacantesById = 'SistTickets/getVacantesById'
   public static SetExamen = 'SistTickets/setExamen'
   public static GetModulos = 'SistTickets/getModulos'
   public static UpdateRequiTicket = 'SistTickets/updateRequiTicket'

@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Input } from '@angular/core';
 import { ToasterConfig, ToasterService } from 'angular2-toaster';
 import { views, viewsdtl } from '../../../../models/recl/viewvacantes';
 
@@ -23,6 +23,10 @@ import { id } from '@swimlane/ngx-datatable/release/utils';
 })
 
 export class DisenadorVacanteComponent implements OnInit {
+  @Input() Folio;
+  @Input() Requi;
+  @Input() VBtra;
+
   public General: any[];
   public Contrato: any[];
   public PuestoReclutar: any[];
@@ -59,7 +63,6 @@ export class DisenadorVacanteComponent implements OnInit {
   public Options: string[] = ['Resumen', 'Detalle'];
   panelOpenState = false;
 
-  public Requi: string;
   public Mensaje: string;
   public variable = false;
   private toasterService: ToasterService;
@@ -74,8 +77,7 @@ export class DisenadorVacanteComponent implements OnInit {
     positionClass: 'toast-bottom-right',
     showCloseButton: true
   });
-  Folio: any;
-  VBtra: any;
+
   element: HTMLElement;
 
   constructor(
@@ -90,11 +92,11 @@ export class DisenadorVacanteComponent implements OnInit {
     , @Inject(DOCUMENT) document
   ) {
     this.toasterService = toasterService;
-    this.route.params.subscribe(params => {
-      this.Requi = params['Requi'];
-      this.Folio = params['Folio'];
-      this.VBtra = params['VBtra'];
-    });
+    // this.route.params.subscribe(params => {
+    //   this.Requi = params['Requi'];
+    //   this.Folio = params['Folio'];
+    //   this.VBtra = params['VBtra'];
+    // });
   }
 
   ngOnInit() {

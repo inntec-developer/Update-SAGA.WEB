@@ -787,10 +787,9 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
   closeModal(flag) {
 
-    if (flag == 1) {
+    if (flag === 1) {
       this.informeVacante = false;
-    }
-    else {
+    } else {
       this.editarRequi = false;
       this.editarNR = false;
       this.GetCandidatosNR();
@@ -801,14 +800,13 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   openDesignVacante() {
-    var usuario = this.settings.user['id'];
+    const usuario = this.settings.user['id'];
     if (this.aprobador === usuario) {
       this._Router.navigate(['/reclutamiento/configuracionVacante/', this.id, this.folio, this.vBtra], { skipLocationChange: true });
     } else {
       if (this.coordinador != null) {
         swal('Ops...!', 'Esta vacante solo puede ser diseñada por el aprobador (' + this.coordinador + ').', 'error');
-      }
-      else {
+      } else {
         swal('Ops...!', 'Esta vacante aún no esta aprobada', 'error');
       }
     }
