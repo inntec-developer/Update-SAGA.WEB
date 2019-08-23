@@ -30,6 +30,7 @@ export class InicioKioscoComponent implements OnInit {
   num = '';
   categorias: any[];
   categorias2 = [];
+  categorias3 = [];
   dataSource: any;
   activeId: any;
   search: any;
