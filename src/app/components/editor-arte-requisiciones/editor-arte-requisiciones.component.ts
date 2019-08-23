@@ -1,12 +1,12 @@
+import { SistTicketsService } from './../../service/SistTickets/sist-tickets.service';
 import { DlgRequiArteComponent } from './dlg-requi-arte/dlg-requi-arte.component';
 import { AdminServiceService } from './../../service/AdminServicios/admin-service.service';
 import { DlgBGArteComponent } from './../editor-arte-requisiciones/dlg-bgarte/dlg-bgarte.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Font } from 'ngx-font-picker';
 import { SettingsService } from '../../core/settings/settings.service';
-import { ApiConection } from '../../service/api-conection.service';
-import { switchAll } from 'rxjs/operators';
+
 
 const swal = require('sweetalert');
 
@@ -20,6 +20,8 @@ var htmlToImage = require('html-to-image');
   providers: [AdminServiceService]
 })
 export class EditorArteRequisicionesComponent implements OnInit {
+
+  @Input() requisicionId;
 
   bg = './../assets/img/ArteVacantes/DamsaVacantes_PP1.jpg';
 
@@ -61,13 +63,13 @@ export class EditorArteRequisicionesComponent implements OnInit {
   descripcion: string = 'Importante empresa solicita persona para puesto de ' + this.vBtra + ' en la Zona Metropolitana de Guadalajara';
   experiencia: string = 'Experiencia inventada por Melina en mocos mocos mocos mocos';
   contacto: string = 'Llama al 3333 3333 ext.666 o manda correo indicando el título de la vacante al correo mbonita@damsa.com.mx con atención a Melina Bonita';
-  requisicionId: any;
+
   usuarioId = this.settings.user['id'];
   
-  constructor(private dialog: MatDialog, private _service: AdminServiceService, private settings: SettingsService) { }
+  constructor(private dialog: MatDialog, private _service: AdminServiceService, private settings: SettingsService, private _serviceTickets: SistTicketsService) { }
 
   ngOnInit() {
-
+this.openDialogRequiArte();
   }
 
   openDialogBG() {
@@ -83,17 +85,23 @@ export class EditorArteRequisicionesComponent implements OnInit {
     })
   }
   openDialogRequiArte() {
-    let dialogCnc = this.dialog.open(DlgRequiArteComponent, {
-      width: '90%',
-      height: '90%',
+
+    this._serviceTickets.GetVacantesByRequi(this.requisicionId).subscribe(data => {
+
+       this.vBtra = data[0]['vBtra'];
+       this.experiencia = data[0]['experiencia'].substring(0, 150);
     });
-    dialogCnc.afterClosed().subscribe(result => {
-        if (result !== '') {
-              this.requisicionId = result.id;
-              this.vBtra = result.vBtra;
-              this.experiencia = result.experiencia.substring(0, 150);
-        }
-    });
+    // let dialogCnc = this.dialog.open(DlgRequiArteComponent, {
+    //   width: '90%',
+    //   height: '90%',
+    // });
+    // dialogCnc.afterClosed().subscribe(result => {
+    //     if (result !== '') {
+    //           this.requisicionId = result.id;
+    //           this.vBtra = result.vBtra;
+    //           this.experiencia = result.experiencia.substring(0, 150);
+    //     }
+    // });
   }
 
   Borrar()

@@ -1,0 +1,42 @@
+<div class="content-heading">
+  <div>
+      Diseño de Vacante {{VBtra}} Folio: {{Folio}}
+      <span class="text-sm d-none d-sm-block"> Administraci&oacute;n de Diseño Vacantes</span>
+  </div>
+  <!-- Breadcrumb right aligned-->
+  <ol class="breadcrumb ml-auto">
+      <li class="breadcrumb-item"><a [routerLink]="['/home']">Inicio</a></li>
+      <li class="breadcrumb-item"><a [routerLink]="['/reclutamiento/vacantesReclutador']">Vacantes</a></li>
+      <li class="breadcrumb-item active"><a [routerLink]="['/reclutamiento/vacantesReclutador']">Diseñador de Vacante</a></li>
+  </ol>
+</div>
+<div class="row">
+  <div class="col-md-6 col-sm-6">
+    <button type="button" class="btn btn-lg btn-block" [ngClass]="viewArte ? 'btn-primary mat-elevation-z8' : 'disabled'" (click)="viewArte = true;">
+      <div class="d-flex justify-content-between">
+        <i class="fa fa-paint-brush fa-3x"></i>
+        <h3 class="text-button my-auto">Diseñador Arte</h3>
+      </div>
+    </button>
+  </div>
+  <div class="col.md-6 col-sm-6">
+    <button type="button" class="btn btn-lg btn-block" [ngClass]="!viewArte ? 'btn-primary mat-elevation-z8' :  'disabled'" (click)="viewArte = false;">
+        <div class="d-flex justify-content-between">
+            <i class=" fa fa-list-ul fa-3x "></i>
+            <h3 class="text-button py-auto">Diseñador Vacantes</h3>
+          </div>
+    </button>
+  </div>
+  <br>
+</div>
+<br>
+<div class="row border card">
+  <div class="col-sm-12 col-md-12" *ngIf="viewArte">
+    <app-editor-arte-requisiciones [requisicionId]="Requi"></app-editor-arte-requisiciones>
+  </div>
+  <div *ngIf="!viewArte">
+      <app-disenador-vacante [Requi]="Requi" [Folio]="Folio" [VBtra]="VBtra"></app-disenador-vacante>
+  </div>
+</div>
+
+

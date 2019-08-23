@@ -7,7 +7,7 @@
       [ngClass]="element.length == 0 ? 'disabled' : 'btn-dark'" container="body" placement="bottom" tooltip="Comentarios"><em
         class="fa fa-comments-o"></em></button>  
         <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-xs mat-elevation-z8" [disabled]="element.length == 0 || element.enProceso == 0"
-        (click)="reporteCandidatos = true" [ngClass]="element.length == 0 || element.enProceso == 0 ? 'disabled' : 'btn-info'"
+        (click)="reporteCandidatos = true" [ngClass]="element.length == 0 && element.enProceso == 0 ? 'disabled' : 'btn-info'"
         container="body" placement="bottom" tooltip="Candidatos">
         <i class="fa fa-users" aria-hidden="true"></i>
         <span *ngIf="element.enProceso > 0" class="badge badge-pill badge-info">{{element.enProceso}}</span>
@@ -132,7 +132,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <comentario-vacante [RequisicionId]="id" [MotivoId]="7"></comentario-vacante>
+          <comentario-vacante [RequisicionId]="element.id" [MotivoId]="7"></comentario-vacante>
         </div>
         <div class="modal-footer">
           <button type="button" class="md-1 btn btn-success mat-elevation-z8"
@@ -157,7 +157,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <app-info-vacante [Folios]="folio" [Requisicion]="id"></app-info-vacante>
+          <app-info-vacante [Folios]="folio" [Requisicion]="element.id"></app-info-vacante>
         </div>
         <div class="modal-footer">
           <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8"

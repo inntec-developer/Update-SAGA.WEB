@@ -36,6 +36,7 @@ export class SistTicketsService {
   private UrlLiberarCandidato = ApiConection.ServiceUrl + ApiConection.LiberarCandidato;
   private UrlGetTicketEnAtencion = ApiConection.ServiceUrl + ApiConection.GetTicketEnAtencion;
   private UrlGetVacantes = ApiConection.ServiceUrl + ApiConection.GetVacantes;
+  private UrlGetVacantesById = ApiConection.ServiceUrl + ApiConection.GetVacantesById;
   private UrlSetExamen = ApiConection.ServiceUrl + ApiConection.SetExamen;
   private UrlGetModulos = ApiConection.ServiceUrl + ApiConection.GetModulos;
   private UrlSetEstatusCandidato = ApiConection.ServiceUrl + ApiConection.SetEstatusCandidato;
@@ -175,12 +176,14 @@ export class SistTicketsService {
     return this._httpClient.get(this.UrlSetEstatusCandidato, {params: params});
   }
 
-  GetVacantes() : Observable<any>
-  {
-    return this._httpClient.get(this.UrlGetVacantes)
+  GetVacantes(): Observable<any> {
+    return this._httpClient.get(this.UrlGetVacantes);
   }
-
-  GetModulos() :Observable<any>
+  GetVacantesByRequi(requiId) : Observable<any> {
+    const params = new HttpParams().set('requisicionId', requiId);
+    return this._httpClient.get(this.UrlGetVacantesById, {params: params});
+  }
+  GetModulos(): Observable<any>
   {
     return this._httpClient.get(this.UrlGetModulos);
   }
