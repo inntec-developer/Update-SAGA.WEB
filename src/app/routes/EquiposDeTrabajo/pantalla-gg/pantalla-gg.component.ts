@@ -1,3 +1,4 @@
+import { SettingsService } from './../../../core/settings/settings.service';
 
 import { ColorsService } from '../../../shared/colors/colors.service';
 import { EquiposTrabajoService } from './../../../service/EquiposDeTrabajo/equipos-trabajo.service';
@@ -5,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { ApiConection } from '../../../service';
 import { element } from 'protractor';
+import { switchAll } from 'rxjs/operators';
 
 
 @Component({
@@ -85,17 +87,20 @@ sparkOptionsDanger = {
   sig = [];
   sub: any;
   migasDtos = [];
-
-  constructor(private _service: EquiposTrabajoService, public colors: ColorsService) { }
+  usuarioLogin = this.settings.user['id'];
+  constructor(private _service: EquiposTrabajoService, public colors: ColorsService, private settings: SettingsService) { }
 
   ngOnInit() {
     this.GetRport();
   }
 
   GetRport() {
-    this._service.GetRportGG('FA6039C6-6497-E911-8993-B2AAD340F890').subscribe(result => {
-      this.reporte = result;
-    this.loadCharts(this.reporte[0]);
+    this._service.GetRportGG(this.usuarioLogin).subscribe(result => {
+      if(result !== 417) {
+
+        this.reporte = result;
+      this.loadCharts(this.reporte[0]);
+      }
     });
   }
 
