@@ -121,7 +121,7 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges {
     };
     if (this.IdFormato == null) {
       PerfilReclutamiento['Action'] = 'create';
-      PerfilReclutamiento['ClienteId'] = this.cliente.Cliente[0]['id'];
+      Encabezado['ClienteId'] = this.cliente.Cliente[0]['id'];
     } else {
       PerfilReclutamiento['Action'] = 'update';
     }
@@ -141,6 +141,7 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges {
       } else {
         this.popToast('error', 'Perfil Reclutamiento',
           'Algo salio mal, intente de nuevo, si el problema persiste favor de notificarlo.');
+          this.loading = false;
       }
     });
 

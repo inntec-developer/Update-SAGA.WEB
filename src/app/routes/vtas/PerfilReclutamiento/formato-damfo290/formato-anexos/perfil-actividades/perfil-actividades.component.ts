@@ -37,6 +37,7 @@ export class PerfilActividadesComponent implements OnInit, OnChanges {
     if (this.IdFormato != null) {
       this.esNuevo = false;
       if (this.Actividades.length > 0) {
+        this.ActividadesNew = this.Actividades;
         this.PopulateForm(this.Actividades);
       }
     }

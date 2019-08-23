@@ -47,6 +47,7 @@ export class PerfilCordinalesComponent implements OnInit, OnChanges {
     if (this.IdFormato != null) {
       this.esNuevo = false;
       if (this.Competencias.length > 0) {
+        this.CompetenciaNew = this.Competencias;
         this.PopulateForm(this.Competencias);
       }
     }

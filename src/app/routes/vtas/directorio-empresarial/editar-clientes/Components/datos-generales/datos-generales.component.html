@@ -7,12 +7,12 @@
       <div #rating class="float-right">
         <rating [(ngModel)]="clf" [max]="maxRat" [readonly]="isReadonly" (onHover)="hoveringOver($event)"
           class="fa-2x text-warning" [ngModelOptions]="{standalone: true}" (onLeave)="resetStar()"
-          [titles]="['A','AA','AAA']" stateOn="fa fa-star" stateOff="fa fa-star-o"></rating>
+          [titles]="['A. Subcontratados &lt;150','AA. Subcontratados =&gt; 150 y &lt;1000','AAA. Subcontratados =&gt;1000']" stateOn="fa fa-star" stateOff="fa fa-star-o"></rating>
         <p><span>Clasificaci&oacute;n </span></p>
       </div>
       <div *ngIf="esCliente">
         <mat-form-field>
-          <input matInput #razonSocial formControlName="RazonSocial" name="RazonSocial" placeholder="Razon Social" autofocus
+          <input matInput #razonSocial formControlName="RazonSocial" name="RazonSocial" placeholder="Razón Social" autofocus
           maxlength="100" required/>
           <mat-hint align="end">{{razonSocial.value.length}} / 100</mat-hint>
         </mat-form-field>

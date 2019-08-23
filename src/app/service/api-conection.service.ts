@@ -1,8 +1,9 @@
 export class ApiConection {
   public static ServiceUrl = 'http://localhost:33333/api/';
   public static ServiceUrlImgExamenes = 'http://localhost:33333/';
-  public static ServiceUrlWeb = "http://localhost:4200/"
+  public static ServiceUrlWeb = 'http://localhost:4200/';
   public static ServiceUrlFileManager = 'http://localhost:33333/utilerias/';
+
   // public static ServiceUrl = 'http://10.10.12.31:333/api/';
   // public static ServiceUrlImgExamenes = 'http://10.10.12.31:333/api/';
 
@@ -78,23 +79,23 @@ public static CheckVertionSistem = 'Vertion/Check';
   /* Reclutamiento */
   public static Damfo290GetById = 'Damfo290/getById';
   public static GetDamfoRutasCamion = 'Damfo290/getDamfoRutasCamion';
-  public static GetViewDamfos = "Damfo290/getViewDamfos";
-  public static GetVacantesDamfo = "Damfo290/getVacantesDamfo";
+  public static GetViewDamfos = 'Damfo290/getViewDamfos';
+  public static GetVacantesDamfo = 'Damfo290/getVacantesDamfo';
 
   /* Ventas */
-  public static AddressCliente = "Requisiciones/getAddress";
-  public static CreateRequi = "Requisiciones/createRequi";
-  public static GetRequisicionById = "Requisiciones/getById";
-  public static GetRequisicionByFolio = "Requisiciones/getByFolio";
-  public static GetRequisicionesAll = "Requisiciones/getRequisiciones";
-  public static UpdateRequisicion = "Requisiciones/updateRequisiciones";
-  public static DeleteRequisicion = "Requisiciones/deleteRequisiciones";
+  public static AddressCliente = 'Requisiciones/getAddress';
+  public static CreateRequi = 'Requisiciones/createRequi';
+  public static GetRequisicionById = 'Requisiciones/getById';
+  public static GetRequisicionByFolio = 'Requisiciones/getByFolio';
+  public static GetRequisicionesAll = 'Requisiciones/getRequisiciones';
+  public static UpdateRequisicion = 'Requisiciones/updateRequisiciones';
+  public static DeleteRequisicion = 'Requisiciones/deleteRequisiciones';
   public static CancelRequisicion = 'Requisiciones/cancelRequisiciones';
-  public static GetUserGroups = 'Requisiciones/getUserGroups'
+  public static GetUserGroups = 'Requisiciones/getUserGroups';
   public static GetRequiReclutador = 'Requisiciones/getRequiReclutador';
-  public static AsignarRequisicion = 'Requisiciones/asignacionRequisiciones'
+  public static AsignarRequisicion = 'Requisiciones/asignacionRequisiciones';
   public static GetDireccionRequisicion = 'Requisiciones/getDireccionRequisicon';
-  public static GetRutasCamionRequisicion = 'Requisiciones/getRutasCamion'
+  public static GetRutasCamionRequisicion = 'Requisiciones/getRutasCamion';
   public static AddRutaCamion = 'Requisiciones/addRutaCamion';
   public static UpdateRutaCamion = 'Requisiciones/updateRutaCamion';
   public static DeleteRutaCamion = 'Requisiciones/deleteRutaCamion';
@@ -107,9 +108,9 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static GetUltimoEstatusRequi = 'Requisiciones/getUltimoEstatus';
   public static GetRequiTipoRecl = 'Requisiciones/getRequisicionesTipo';
   public static SendEmailRequiPuro = 'Requisiciones/sendEmailRequiPura';
-  public static SendEmailRedesSociales = 'Requisiciones/sendEmailRedesSociales'
+  public static SendEmailRedesSociales = 'Requisiciones/sendEmailRedesSociales';
   public static SendEmailNuevaRequi = 'Requisiciones/senEmailNuevaRequi';
-  public static PublicarNuevaRequisicion = 'Requisiciones/publicarNuevaRequi'
+  public static PublicarNuevaRequisicion = 'Requisiciones/publicarNuevaRequi';
   public static AddDatosFactura = 'Requisiciones/insertDtosFactura';
   public static GetReporte70 = 'Requisiciones/getReporte70';
   public static GetRepoteCandidatos = 'Candidatos/getRPTCandidatosVacante';
@@ -126,7 +127,7 @@ public static CheckVertionSistem = 'Vertion/Check';
   // Direcciones del Cliente
   public static AddDireccionCliente = 'Directorio/AddDireccionCliente';
   public static DeleteDireccionCliente = 'Directorio/DeleteDireccionCliente';
-  public static EditDireccionCliente = 'Directorio/EditDireccionCliente'; s
+  public static EditDireccionCliente = 'Directorio/EditDireccionCliente';
 
   // Telefonos del Cliente
   public static AddTelefonoCliente = 'Directorio/AddTelefonoCliente';
@@ -154,7 +155,7 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static filtromunicipios = 'Candidatos/getmunicipios';
   public static filtrocolonias = 'Candidatos/getcolonias';
   public static Candidatos = 'Candidatos/getcandidatos';
-  public static MisCandidatos = 'candidatos/getMisCandidatos'
+  public static MisCandidatos = 'candidatos/getMisCandidatos';
   public static Candidatodetail = 'Candidatos/getcandidatoid';
   public static Postulaciones = 'Candidatos/getpostulaciones';
   public static Areasexp = 'Candidatos/getareasexp';
@@ -173,15 +174,15 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static AddComentariosCandidato = 'Candidatos/addComentarios';
   public static GetCandidatoPalabraClave = 'Candidatos/getCandidatoPalabraClave';
   public static GetAreasRecl = 'Candidatos/getAreasRecl';
-  public static GetMediosRecl = 'Candidatos/getMediosRecl'
-  public static UpdateFuenteRecl = 'Candidatos/updateFuenteRecl'
-  public static UpdateCandidatoContratado = 'Candidatos/updateContratados'
-  public static GetMotivos = 'Candidatos/getMotivos'
-  public static GetContratados = 'Candidatos/getContratados'
-  public static AddComentarioNR = 'Candidatos/addComentariosNR'
-  public static GetCandidatosNR = 'Candidatos/getFoliosIncidencias' //comentarioCandidatosController
-  public static AddRespuesta = 'Candidatos/addRespuesta'
-  public static GetInfoContratados = 'Candidatos/getInfoContratados'
+  public static GetMediosRecl = 'Candidatos/getMediosRecl';
+  public static UpdateFuenteRecl = 'Candidatos/updateFuenteRecl';
+  public static UpdateCandidatoContratado = 'Candidatos/updateContratados';
+  public static GetMotivos = 'Candidatos/getMotivos';
+  public static GetContratados = 'Candidatos/getContratados';
+  public static AddComentarioNR = 'Candidatos/addComentariosNR';
+  public static GetCandidatosNR = 'Candidatos/getFoliosIncidencias'; // comentarioCandidatosController
+  public static AddRespuesta = 'Candidatos/addRespuesta';
+  public static GetInfoContratados = 'Candidatos/getInfoContratados';
 
   /* Vacantes */
   public static getRequis = '/dvacante/get';
@@ -228,7 +229,7 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static updateRoles = '/admin/updateRoles';
   public static deleteGrupo = '/admin/deleteGrupo';
   public static deleteRoles = 'admin/deleteRoles';
-  public static deleteUsuario = 'admin/deleteUsuario'
+  public static deleteUsuario = 'admin/deleteUsuario';
   public static getTreeRoles = '/admin/GetEstructura';
   public static getEntidadesUG = '/admin/getEntidadesByRol';
   public static getEntidades = '/admin/getEntidades2';
@@ -252,7 +253,7 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static updateActivo = 'admin/updateActivo';
   public static getLideres = 'admin/getLideres';
   public static getOficinas = 'admin/getOficinas';
-  public static GetByUsuario = 'admin/getByTipoUsuario'
+  public static GetByUsuario = 'admin/getByTipoUsuario';
   public static EnviaCorreo = 'admin/EnviaCorreo';
   public static updatePassword = 'admin/updatePassword';
   public static GetBGArte = 'admin/getBGArte';
@@ -277,124 +278,124 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static sendEmailContratados = 'reclutamiento/seguimientovacante/sendEmailContratados';
   public static sendEmailNoContratado = 'reclutamiento/seguimientovacante/sendEmailsNoContratado';
   public static getConteoVacante = 'Requisiciones/getConteoVacante';
-  public static execProcedurePause = 'Requisiciones/execProcedurePause'
-  public static execProcedureSinCambios = 'Requisiciones/execProcedureSinCambio'
-  public static execProcedurePendientesPuro = 'Requisiciones/execProcedurePendientesPuro'
-  public static execProcedureSinAsignar = 'Requisiciones/execProcedureSinAsignar'
-  public static execProcedureVencidas = 'Requisiciones/execProcedureVencidas'
-  public static getRequisicionesHistorial = 'Requisiciones/getRequisicionesHistorial'
-  public static registrarCandidatos = 'reclutamiento/seguimientovacante/registrarCandidatos'
-  public static validarEmailCandidato = 'reclutamiento/seguimientovacante/validarEmailCandidato'
-  public static validarTelCandidato = 'reclutamiento/seguimientovacante/validarTelCandidato'
-  public static getCandidatosCubiertos = 'reclutamiento/seguimientovacante/getCandidatosCubiertos'
+  public static execProcedurePause = 'Requisiciones/execProcedurePause';
+  public static execProcedureSinCambios = 'Requisiciones/execProcedureSinCambio';
+  public static execProcedurePendientesPuro = 'Requisiciones/execProcedurePendientesPuro';
+  public static execProcedureSinAsignar = 'Requisiciones/execProcedureSinAsignar';
+  public static execProcedureVencidas = 'Requisiciones/execProcedureVencidas';
+  public static getRequisicionesHistorial = 'Requisiciones/getRequisicionesHistorial';
+  public static registrarCandidatos = 'reclutamiento/seguimientovacante/registrarCandidatos';
+  public static validarEmailCandidato = 'reclutamiento/seguimientovacante/validarEmailCandidato';
+  public static validarTelCandidato = 'reclutamiento/seguimientovacante/validarTelCandidato';
+  public static getCandidatosCubiertos = 'reclutamiento/seguimientovacante/getCandidatosCubiertos';
 
 
   /*Examenes */
-  public static InsertExamen = 'examenes/insertExamen'
-  public static GetCatalogo = 'examenes/getCatalogo'
-  public static GetExamenes = 'examenes/getExamenes'
-  public static GetExamen = 'examenes/getExamen'
-  public static InsertRelacion = 'examenes/insertRelacion'
-  public static InsertRespCandidato = 'examenes/insertRespCandidato'
-  public static InsertResultMedico = 'examenes/insertResultMedico'
-  public static GetCandidatosExamen = 'examenes/getCandidatos'
-  public static GetRespuestasCandidato = 'examenes/getRespCandidatos'
-  public static ActualizarResultado = 'examenes/actualizarResultado'
-  public static GetExamenRequi = 'examenes/getExamenRequi'
-  public static GetRequiEstatus = 'examenes/getRequiEstatus'
-  public static GetExamenCandidato = 'examenes/getExamenCandidato'
-  public static GetRequisicionesPsico = 'examenes/getRequisiciones'
-  public static InsertClaves = 'examenes/insertClaves'
-  public static AgregarResultado = 'examenes/agregarResultado'
-  public static GetClaves = 'examenes/getClaves'
-  public static GetClaveCandidatos = 'examenes/getClaveCandidatos'
-  public static GetClavesCandidatos = 'examenes/getClavesCandidatos'
-  public static GetExamenesMedicos = 'examenes/examenesMedicos'
+  public static InsertExamen = 'examenes/insertExamen';
+  public static GetCatalogo = 'examenes/getCatalogo';
+  public static GetExamenes = 'examenes/getExamenes';
+  public static GetExamen = 'examenes/getExamen';
+  public static InsertRelacion = 'examenes/insertRelacion';
+  public static InsertRespCandidato = 'examenes/insertRespCandidato';
+  public static InsertResultMedico = 'examenes/insertResultMedico';
+  public static GetCandidatosExamen = 'examenes/getCandidatos';
+  public static GetRespuestasCandidato = 'examenes/getRespCandidatos';
+  public static ActualizarResultado = 'examenes/actualizarResultado';
+  public static GetExamenRequi = 'examenes/getExamenRequi';
+  public static GetRequiEstatus = 'examenes/getRequiEstatus';
+  public static GetExamenCandidato = 'examenes/getExamenCandidato';
+  public static GetRequisicionesPsico = 'examenes/getRequisiciones';
+  public static InsertClaves = 'examenes/insertClaves';
+  public static AgregarResultado = 'examenes/agregarResultado';
+  public static GetClaves = 'examenes/getClaves';
+  public static GetClaveCandidatos = 'examenes/getClaveCandidatos';
+  public static GetClavesCandidatos = 'examenes/getClavesCandidatos';
+  public static GetExamenesMedicos = 'examenes/examenesMedicos';
 
   /*Equipos de Trabajo*/
-  public static GetRportGG = "Equipos/getRportGG"
-  public static GetRportTable = 'Equipos/getRportTable'
+  public static GetRportGG = 'Equipos/getRportGG';
+  public static GetRportTable = 'Equipos/getRportTable';
 
   /*Reportes */
-  public static GetInforme = 'reporte/Informe'
-  public static GetEmpresas = 'reporte/empresas'
-  public static GetUsuario = 'reporte/usuario'
-  public static GetEstatusRep = 'reporte/estatus'
-  public static GetOficinas = 'reporte/oficinas'
-  public static GetProActividad = 'reporte/actividad'
-  public static GetDetalleReclu = 'reporte/detallerecluta'
-  public static GetDetalleCordi = 'reporte/detallecordina'
-  public static GetCoordinacion = 'reporte/coordinacion'
-  public static GetCandidatoRep = 'reporte/candidatos'
-  public static GetVacanteReporte = 'reporte/vacante'
+  public static GetInforme = 'reporte/Informe';
+  public static GetEmpresas = 'reporte/empresas';
+  public static GetUsuario = 'reporte/usuario';
+  public static GetEstatusRep = 'reporte/estatus';
+  public static GetOficinas = 'reporte/oficinas';
+  public static GetProActividad = 'reporte/actividad';
+  public static GetDetalleReclu = 'reporte/detallerecluta';
+  public static GetDetalleCordi = 'reporte/detallecordina';
+  public static GetCoordinacion = 'reporte/coordinacion';
+  public static GetCandidatoRep = 'reporte/candidatos';
+  public static GetVacanteReporte = 'reporte/vacante';
 
   /* Kiosco */
 
-  public static PostulacionKiosco = 'Kiosco/postulacion'
+  public static PostulacionKiosco = 'Kiosco/postulacion';
 
   /*SistTickets */
 
-  public static InsertTicket = 'SistTickets/InsertTicketRecl'
-  public static GetFilaTickets = 'SistTickets/getFilaTickets'
-  public static GetTicketRecl = 'SistTickets/getTicketsReclutador'
-  public static GetTicketPrioridad = 'SistTickets/getTicketPrioridad'
-  public static UpdateStatusTicket = 'SistTickets/updateStatus'
-  public static GetPostulaciones = 'SistTickets/getPostulaciones'
-  public static GetVacantesReclutador = 'SistTickets/getVacantesReclutador'
-  public static LiberarCandidato = 'SistTickets/liberarCandidato'
-  public static GetTicketEnAtencion = 'SistTickets/getTicketEnAtencion'
-  public static GetVacantes = 'SistTickets/getVacantes'
-  public static SetExamen = 'SistTickets/setExamen'
-  public static GetModulos = 'SistTickets/getModulos'
-  public static UpdateRequiTicket = 'SistTickets/updateRequiTicket'
-  public static GetTicketExamen = 'SistTickets/getTicketsExamen'
-  public static AsignarClaveCandidato = 'examenes/asignarClaveCandidato'
-  public static SetEstatusCandidato = 'SistTickets/setEstatusCandidato'
-  public static GetTicketConCita = 'SistTickets/ticketConCita'
-  public static GetTicketSinCita = 'SistTickets/ticketSinCita'
-  public static GetConcurrenciaReporte = 'SistTickets/getConcurrencia'
-  public static UpdateCandidatoTicket = 'SistTickets/updateCandidatoTicket'
-  public static RegistrarCandidato = 'SistTickets/registrarCandidato'
-  public static LoginBolsa = 'SistTickets/loginBolsa'
-  public static GetCitas = 'SistTickets/getCitas'
-  public static PostularCandidato = 'SistTickets/postularCandidato'
-  public static GetTicketsGenerados = 'SistTickets/getTicketsGenerados'
-  public static GetRportAtencion = 'SistTickets/getRportAtencion'
+  public static InsertTicket = 'SistTickets/InsertTicketRecl';
+  public static GetFilaTickets = 'SistTickets/getFilaTickets';
+  public static GetTicketRecl = 'SistTickets/getTicketsReclutador';
+  public static GetTicketPrioridad = 'SistTickets/getTicketPrioridad';
+  public static UpdateStatusTicket = 'SistTickets/updateStatus';
+  public static GetPostulaciones = 'SistTickets/getPostulaciones';
+  public static GetVacantesReclutador = 'SistTickets/getVacantesReclutador';
+  public static LiberarCandidato = 'SistTickets/liberarCandidato';
+  public static GetTicketEnAtencion = 'SistTickets/getTicketEnAtencion';
+  public static GetVacantes = 'SistTickets/getVacantes';
+  public static SetExamen = 'SistTickets/setExamen';
+  public static GetModulos = 'SistTickets/getModulos';
+  public static UpdateRequiTicket = 'SistTickets/updateRequiTicket';
+  public static GetTicketExamen = 'SistTickets/getTicketsExamen';
+  public static AsignarClaveCandidato = 'examenes/asignarClaveCandidato';
+  public static SetEstatusCandidato = 'SistTickets/setEstatusCandidato';
+  public static GetTicketConCita = 'SistTickets/ticketConCita';
+  public static GetTicketSinCita = 'SistTickets/ticketSinCita';
+  public static GetConcurrenciaReporte = 'SistTickets/getConcurrencia';
+  public static UpdateCandidatoTicket = 'SistTickets/updateCandidatoTicket';
+  public static RegistrarCandidato = 'SistTickets/registrarCandidato';
+  public static LoginBolsa = 'SistTickets/loginBolsa';
+  public static GetCitas = 'SistTickets/getCitas';
+  public static PostularCandidato = 'SistTickets/postularCandidato';
+  public static GetTicketsGenerados = 'SistTickets/getTicketsGenerados';
+  public static GetRportAtencion = 'SistTickets/getRportAtencion';
 
   /*TrackingVacantes*/
   public static GetInformeTracking = 'Requisiciones/getInformeClientes';
 
   /* Componentes de Graficas */
   public static GraficPAVacantes = 'Graficas/vacantesInicio';
-  public static GetRequisicionesGPA = 'Graficas/getRequisicionesGPA'
+  public static GetRequisicionesGPA = 'Graficas/getRequisicionesGPA';
 
 
   /*Preguntas frecuentes */
-  public static GetPreguntasFrecuentes = 'PreguntasFrecuente/preguntas'
-  public static AddPreguntasFrecuentes = 'PreguntasFrecuente/add'
-  public static alterPreguntasFrecuentes = 'PreguntasFrecuente/alter'
-  public static deletePreguntasFrecuentes = 'PreguntasFrecuente/delete'
+  public static GetPreguntasFrecuentes = 'PreguntasFrecuente/preguntas';
+  public static AddPreguntasFrecuentes = 'PreguntasFrecuente/add';
+  public static alterPreguntasFrecuentes = 'PreguntasFrecuente/alter';
+  public static deletePreguntasFrecuentes = 'PreguntasFrecuente/delete';
 
 
   /*Oficinas */
-  public static GetSucursal = 'Oficina/oficina'
-  public static GetEstadoOfi = 'Oficina/estado'
-  public static GetMunicipioOfi = 'Oficina/municipio'
-  public static GetColoniaOfi = 'Oficina/colonia'
-  public static AddOficina = 'Oficina/add'
-  public static alterOficina = 'Oficina/editar'
-  public static deleteOficina = 'Oficina/delete'
+  public static GetSucursal = 'Oficina/oficina';
+  public static GetEstadoOfi = 'Oficina/estado';
+  public static GetMunicipioOfi = 'Oficina/municipio';
+  public static GetColoniaOfi = 'Oficina/colonia';
+  public static AddOficina = 'Oficina/add';
+  public static alterOficina = 'Oficina/editar';
+  public static deleteOficina = 'Oficina/delete';
 
   /*Indicadores */
-  public static getCubiertaG = 'indicador/vcubierta'
-  public static getActivaG = 'indicador/vactiva'
-  public static getPorvencerG = 'indicador/vporvencer'
-  public static getVencidasG = 'indicador/vvencida'
-  public static getResumenG = 'indicador/resumen'
-  public static getRadialG = 'indicador/radial'
-  public static getcontracaptado = 'indicador/captadocontra'
-  public static getCoordinaciongraf = 'indicador/Coordinacion'
-  public static getProductividadGraf = 'indicador/productividad'
+  public static getCubiertaG = 'indicador/vcubierta';
+  public static getActivaG = 'indicador/vactiva';
+  public static getPorvencerG = 'indicador/vporvencer';
+  public static getVencidasG = 'indicador/vvencida';
+  public static getResumenG = 'indicador/resumen';
+  public static getRadialG = 'indicador/radial';
+  public static getcontracaptado = 'indicador/captadocontra';
+  public static getCoordinaciongraf = 'indicador/Coordinacion';
+  public static getProductividadGraf = 'indicador/productividad';
 
   /* Contadores */
   public static getPerfiles = 'contadores/perfiles';
@@ -404,9 +405,9 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static getCandidatos = 'contadores/candidatos';
   public static getCandidatosInicio = 'contadores/candidatosEstatus';
   /* Indicadores Unidades de Negocio GERENTES*/
-  public static getUnidadNegocioMty = 'contadores/unidadMty'
-  public static getUnidadNegocioGdl = 'contadores/unidadGdl'
-  public static getUnidadNegocioMx = 'contadores/unidadMx'
+  public static getUnidadNegocioMty = 'contadores/unidadMty';
+  public static getUnidadNegocioGdl = 'contadores/unidadGdl';
+  public static getUnidadNegocioMx = 'contadores/unidadMx';
   public static getRequiUnidadNegocio = 'contadores/getRequiUnidadNegocio';
 
   /* Menu de Catalogos */
@@ -426,7 +427,7 @@ public static CheckVertionSistem = 'Vertion/Check';
   /*Perfil de Reclutamiento */
   public static GetClientePerfilR = 'PerfilReclutamiento/getCliente';
   public static GetInfoCliente = 'PerfilReclutamiento/getInfoCliente';
-  public static GetClienteId = 'PerfilReclutamiento/getClienteId'
+  public static GetClienteId = 'PerfilReclutamiento/getClienteId';
   public static GetInfoPerfil = 'PerfilReclutamiento/getInfoPerfil';
   public static GetAnexosPerfil = 'PerfilReclutamiento/getAnexosPerfil';
 
@@ -446,4 +447,6 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static CrudCompCardinales = 'PerfilReclutamiento/crudCompCardinal';
   public static CrudCompAreas = 'PerfilReclutamiento/crudCompArea';
   public static CrudCompGerenciales = 'PerfilReclutamiento/crudCompGerencial';
+
+  public static CrudPerfilReclutamiento = 'PerfilReclutamiento/crudPerfilReclutamiento';
 }

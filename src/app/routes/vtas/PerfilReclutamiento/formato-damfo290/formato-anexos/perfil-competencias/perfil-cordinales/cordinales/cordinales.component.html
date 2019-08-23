@@ -7,7 +7,7 @@
             <mat-select placeholder="Competencia" formControlName="competenciaId"
               (selectionChange)="getCompetencia()" required="">
               <mat-option *ngFor="let x of Competencias" [value]="x.id">
-                {{x.competencia}}
+                {{x.competencia | uppercase}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -15,7 +15,7 @@
             <mat-select placeholder="Nivel" formControlName="nivel"
             (selectionChange)="getNivel()" required="">
               <mat-option *ngFor="let x of Niveles" [value]="x.nivel">
-                {{x.nivel}}
+                {{x.nivel | uppercase}}
               </mat-option>
             </mat-select>
           </mat-form-field>

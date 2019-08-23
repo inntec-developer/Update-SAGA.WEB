@@ -48,6 +48,7 @@ export class PerfilHorariosComponent implements OnInit, OnChanges {
     if (this.IdFormato != null) {
       this.esNuevo = false;
       if (this.Horarios.length > 0) {
+        this.HorariosNew = this.Horarios;
         this.PopulateForm(this.Horarios);
       }
     }
@@ -87,7 +88,7 @@ export class PerfilHorariosComponent implements OnInit, OnChanges {
       aHora: ['', Validators.required],
       vacantes: ['', [Validators.required, Validators.min(1)]],
       especificaciones: [''],
-      activo: ['']
+      activo: [true]
     });
   }
 
