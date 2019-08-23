@@ -33,7 +33,6 @@ export class FormatoAnexosComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdFormato != null) {
-      console.log(this.IdFormato);
       this._servicePerfilR.getAnexosPerfil(this.IdFormato).subscribe(data => {
         if (data !== 404) {
           this.Beneficios = data['beneficios'];
@@ -93,10 +92,10 @@ export class FormatoAnexosComponent implements OnInit, OnChanges {
 
   getPrestacion(data: any) {
     this.Prestaciones = data;
-    console.log('Porcesos', data);
+    console.log('Prestaciones', data);
   }
 
-  getCardianales(data: any) {
+  getCardinales(data: any) {
     this.Cardinales = data;
     console.log('Cardinales', data);
   }

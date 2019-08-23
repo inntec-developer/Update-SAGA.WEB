@@ -3,7 +3,6 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toPromise';
-import 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -44,7 +43,8 @@ export class PerfilReclutamientoService {
   private urlCrudPrestaciones = ApiConection.ServiceUrl + ApiConection.CrudPrestaciones;
   private urlCrudCompCardinales = ApiConection.ServiceUrl + ApiConection.CrudCompCardinales;
   private urlCrudCompAreas = ApiConection.ServiceUrl + ApiConection.CrudCompAreas;
-  private urlCrudCompGerenciales = ApiConection.ServiceUrl + ApiConection.CrudCompGerenciales
+  private urlCrudCompGerenciales = ApiConection.ServiceUrl + ApiConection.CrudCompGerenciales;
+  private urlCrudPerfilReclutamiento = ApiConection.ServiceUrl + ApiConection.CrudPerfilReclutamiento;
 
   constructor(
     private _httpClient: HttpClient
@@ -56,7 +56,7 @@ export class PerfilReclutamientoService {
   }
 
   getInfoCliente(ClienteId: any): Observable<any> {
-    const params = new HttpParams().set('ClienteId', ClienteId)
+    const params = new HttpParams().set('ClienteId', ClienteId);
     return this._httpClient.get<any>(this.urlGetInfoCliente, { params: params, headers: this.httpOptions.headers });
   }
 
@@ -99,40 +99,44 @@ export class PerfilReclutamientoService {
     return this._httpClient.post<any>(this.UrlCrudActividades, data, this.httpOptions);
   }
 
-  CrudObservacion(data: any): Observable<any>{
+  CrudObservacion(data: any): Observable<any> {
     return this._httpClient.post<any>(this.urlCrudObservaciones, data, this.httpOptions);
   }
 
-  CrudPsicometriaDamsa(data: any) :Observable<any>{
+  CrudPsicometriaDamsa(data: any): Observable<any> {
     return this._httpClient.post<any>(this.urlCrudPsicometriaDamsa, data, this.httpOptions);
   }
 
-  CrudPsicometriaCliente(data: any) : Observable<any>{
+  CrudPsicometriaCliente(data: any): Observable<any> {
     return this._httpClient.post<any>(this.urlCrudPsicometriaCliente, data, this.httpOptions);
   }
 
-  CrudDocumentos(data: any) : Observable<any>{
+  CrudDocumentos(data: any): Observable<any> {
     return this._httpClient.post<any>(this.urlCrudDocumentos, data, this.httpOptions);
   }
 
-  CrudProcesos(data:any) : Observable<any>{
+  CrudProcesos(data: any): Observable<any> {
     return this._httpClient.post<any>(this.urlCrudProcesos, data, this.httpOptions);
   }
 
-  CrudPrestaciones(data:any) : Observable<any>{
+  CrudPrestaciones(data: any): Observable<any> {
     return this._httpClient.post<any>(this.urlCrudPrestaciones, data, this.httpOptions);
   }
 
-  CrudCompCardinales(data: any): Observable<any>{
+  CrudCompCardinales(data: any): Observable<any> {
     return this._httpClient.post<any>(this.urlCrudCompCardinales, data, this.httpOptions);
   }
 
-  CrudCompAreas(data: any): Observable<any>{
+  CrudCompAreas(data: any): Observable<any> {
     return this._httpClient.post<any>(this.urlCrudCompAreas, data, this.httpOptions);
   }
 
-  CrudCompGerenciales(data: any): Observable<any>{
+  CrudCompGerenciales(data: any): Observable<any> {
     return this._httpClient.post<any>(this.urlCrudCompGerenciales, data, this.httpOptions);
+  }
+
+  CrudPerfilReclutamiento(data: any): Observable<any> {
+    return this._httpClient.post<any>(this.urlCrudPerfilReclutamiento, data, this.httpOptions);
   }
 
 }

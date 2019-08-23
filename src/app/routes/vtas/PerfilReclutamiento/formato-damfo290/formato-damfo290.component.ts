@@ -5,12 +5,14 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { FormatoAnexosComponent } from './formato-anexos/formato-anexos.component';
 import { FormatoClienteComponent } from './formato-cliente/formato-cliente.component';
 import { FormatoRequisitosComponent } from './formato-requisitos/formato-requisitos.component';
+import { PerfilReclutamientoService } from './../../../../service/PerfilReclutamiento/perfil-reclutamiento.service';
 import { SettingsService } from '../../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-formato-damfo290',
   templateUrl: './formato-damfo290.component.html',
-  styleUrls: ['./formato-damfo290.component.scss']
+  styleUrls: ['./formato-damfo290.component.scss'],
+  providers: [PerfilReclutamientoService]
 })
 export class FormatoDAMFO290Component implements OnInit, OnChanges {
   @ViewChild(FormatoClienteComponent) cliente: FormatoClienteComponent;
@@ -21,18 +23,21 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges {
   isNew = false;
   imprimir = false;
 
-   /*Mensajes del sistema */
-   toaster: any;
-   toasterConfig: any;
-   toasterconfig: ToasterConfig = new ToasterConfig({
-     positionClass: 'toast-bottom-right',
-     limit: 7,
-     tapToDismiss: false,
-     showCloseButton: true,
-     mouseoverTimerStop: true,
-   });
+  loading = false;
+
+  /*Mensajes del sistema */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
 
   constructor(
+    private _servicePerfilR: PerfilReclutamientoService,
     private _setting: SettingsService,
     private _Router: Router,
     private _Route: ActivatedRoute,
@@ -51,7 +56,6 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    debugger;
     if (changes.cliente['Cliente'][0]['id'] && !changes.cliente['Cliente'][0]['id'].isFirstChange()) {
       const obj = this.cliente.Cliente[0]['id'];
     }
@@ -59,27 +63,20 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges {
 
   GuardarPerfil() {
     debugger;
-    // this.cliente.formCliente.valid
-    // const validformEncabezado = this.requisitos.formEncabezado.valid;
-    // if (!validformEncabezado) {
-    //   this.popToast('warning', 'Perfil Reclutamiento', 'Verificar información en datos del perfil');
-    //   return;
-    // }
-    this.anexos.Actividades;
-    this.anexos.Areas;
-    this.anexos.Beneficios;
-    this.anexos.Cardinales;
-    this.anexos.Documentos;
-    this.anexos.Gerenciales;
-    this.anexos.Horarios;
-    this.anexos.Observaciones;
-    this.anexos.Prestaciones;
-    this.anexos.Procesos;
-    this.anexos.PsicometriasC
-    this.anexos.PsicometriasD;
+    this.loading = true;
+    const apt = this.requisitos.formEncabezado.get('Aptitud').value;
+    const Aptitudes = [];
 
-    const obj = {
-      ClienteId: this.cliente.Cliente[0]['id'],
+    apt.forEach(x => {
+      Aptitudes.push({
+        DAMFO290Id: this.IdFormato || null,
+        AptitudId: x,
+        UsuarioAlta: this._setting.user.usuario
+      });
+    });
+
+    const Encabezado = {
+      Id: this.IdFormato || null,
       NombrePerfil: this.requisitos.formEncabezado.get('NombrePuesto').value.toUpperCase(),
       TiporeclutamientoId: this.cliente.formCliente.get('Tipo').value,
       ClaseReclutamientoId: this.cliente.formCliente.get('Clase').value,
@@ -95,12 +92,60 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges {
       TipoNominaId: this.requisitos.formEncabezado.get('TipoNomina').value,
       DiaPagoId: this.requisitos.formEncabezado.get('DiaPago').value,
       PeriodoPagoId: this.requisitos.formEncabezado.get('PeriodoPago').value,
-      // Especifique: this.requisitos.formEncabezado.get('').value || '',
+      Especifique: '',
       ContratoInicialId: this.requisitos.formEncabezado.get('Contrato').value,
       TiempoContratoId: this.requisitos.formEncabezado.get('TiempoContrato').value || null,
       Usuario: this._setting.user.usuario,
     };
-    console.log('guardar Perfil', obj);
+
+    const Collections = {
+      actividadesPerfil: this.anexos.Actividades,
+      aptitudesPerfil: Aptitudes,
+      competenciasAreaPerfil: this.anexos.Areas,
+      beneficiosPerfil: this.anexos.Beneficios,
+      competenciasCardinalPerfil: this.anexos.Cardinales,
+      documentosCliente: this.anexos.Documentos,
+      competetenciasGerencialPerfil: this.anexos.Gerenciales,
+      horariosPerfil: this.anexos.Horarios,
+      observacionesPerfil: this.anexos.Observaciones,
+      prestacionesCliente: this.anexos.Prestaciones,
+      procesoPerfil: this.anexos.Procesos,
+      psicometriasCliente: this.anexos.PsicometriasC,
+      psicometriasDamsa: this.anexos.PsicometriasD,
+      escolardadesPerfil: this.requisitos.Escolaridades,
+    };
+
+    const PerfilReclutamiento = {
+      Headers: Encabezado,
+      Collections: Collections,
+    };
+    if (this.IdFormato == null) {
+      PerfilReclutamiento['Action'] = 'create';
+      PerfilReclutamiento['ClienteId'] = this.cliente.Cliente[0]['id'];
+    } else {
+      PerfilReclutamiento['Action'] = 'update';
+    }
+
+    this._servicePerfilR.CrudPerfilReclutamiento(PerfilReclutamiento).subscribe(x => {
+      if (x !== 404 && x !== 406) {
+        if (PerfilReclutamiento['Action'] === 'create') {
+          this.popToast('success', 'Perfil Reclutamiento',
+            'Se acreado con éxito el perfil de reclutamiento par la vacante' +
+            Encabezado['NombrePerfil'] + '.');
+        } else {
+          this.popToast('success', 'Perfil Reclutamiento',
+          'Se actualizo con éxito el perfil de reclutamiento par la vacante' +
+          Encabezado['NombrePerfil'] + '.');
+        }
+        this._Router.navigate(['/reclutamiento/290']);
+      } else {
+        this.popToast('error', 'Perfil Reclutamiento',
+          'Algo salio mal, intente de nuevo, si el problema persiste favor de notificarlo.');
+      }
+    });
+
+
+    console.log('guardar Perfil', PerfilReclutamiento);
   }
 
   popToast(type: any, title: any, body: any) {

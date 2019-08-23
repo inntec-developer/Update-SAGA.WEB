@@ -47,7 +47,7 @@ export class PerfilHorariosComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdFormato != null) {
       this.esNuevo = false;
-      if (this.Horarios != null) {
+      if (this.Horarios.length > 0) {
         this.PopulateForm(this.Horarios);
       }
     }

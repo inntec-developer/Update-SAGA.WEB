@@ -1,4 +1,4 @@
-import { AfterContentChecked, AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 import { CatalogosService } from '../../../../../../../../service';
 import { FormGroup } from '@angular/forms';
@@ -61,6 +61,8 @@ export class AreasComponent implements OnInit, AfterContentInit {
   Save() {
     if (this.IdFormato != null) {
       const obj = {
+        Index: this.index,
+        isEdit: this.isActionEdit,
         id: this.competencia.get('id').value || null,
         CompetenciaId: this.competencia.get('competenciaId').value,
         Nivel: this.competencia.get('nivel').value,
@@ -72,6 +74,7 @@ export class AreasComponent implements OnInit, AfterContentInit {
         this._servicePerfilR.CrudCompAreas(obj).subscribe(x => {
           if (x !== 404) {
             if (x !== 300) {
+              this.Registros.emit(obj);
               this.competencia.controls['id'].setValue(x);
               this.Edit = false;
               this.functionCreateAlert('success', false);
@@ -87,6 +90,7 @@ export class AreasComponent implements OnInit, AfterContentInit {
         this._servicePerfilR.CrudCompAreas(obj).subscribe(x => {
           if (x !== 404) {
             if (x !== 300) {
+              this.Registros.emit(obj);
               this.Edit = false;
               this.isActionEdit = false;
               this.functionCreateAlert('success', true);

@@ -48,6 +48,8 @@ export class ObservacionesComponent implements OnInit, AfterContentInit {
   Save() {
     if (this.IdFormato != null) {
       const obj = {
+        Index: this.index,
+        isEdit: this.isActionEdit,
         id: this.observacion.get('id').value,
         Observaciones: this.observacion.get('observacion').value.toUpperCase(),
         Usuario: this._setting.user.usuario,
@@ -58,6 +60,7 @@ export class ObservacionesComponent implements OnInit, AfterContentInit {
         obj['action'] = 'create';
         this._servicePerfilR.CrudObservacion(obj).subscribe(x => {
           if (x !== 404) {
+            this.Registros.emit(obj);
             this.observacion.controls['id'].setValue(x);
             this.Edit = false;
             this.functionCreateAlert('success', false);
@@ -69,6 +72,7 @@ export class ObservacionesComponent implements OnInit, AfterContentInit {
         obj['action'] = 'update';
         this._servicePerfilR.CrudObservacion(obj).subscribe(x => {
           if (x !== 404) {
+            this.Registros.emit(obj);
             this.Edit = false;
             this.isActionEdit = false;
             this.functionCreateAlert('success', true);
@@ -81,7 +85,7 @@ export class ObservacionesComponent implements OnInit, AfterContentInit {
       const data = {
         isEdit: this.isActionEdit,
         index: this.index,
-        observaciones: this.observacion.get('observacion').value,
+        observaciones: this.observacion.get('observacion').value.toUpperCase(),
         UsuarioAlta: this._setting.user.usuario,
       };
       this.Observacion = data['observaciones'];

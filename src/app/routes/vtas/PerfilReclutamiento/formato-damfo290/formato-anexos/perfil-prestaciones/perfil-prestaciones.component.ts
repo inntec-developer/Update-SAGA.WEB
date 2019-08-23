@@ -34,14 +34,14 @@ export class PerfilPrestacionesComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdFormato != null) {
       this.esNuevo = false;
-      if (this.Prestaciones != null) {
+      if (this.Prestaciones.length > 0) {
         this.PopulateForm(this.Prestaciones);
       }
     }
   }
 
   private PopulateForm(observacion: any) {
-    observacion.forEach(x =>{
+    observacion.forEach(x => {
       this.AddPrestacion(1);
     });
     this.PrestacionesArray.patchValue({
@@ -75,7 +75,7 @@ export class PerfilPrestacionesComponent implements OnInit, OnChanges {
   getRegistros(data: any) {
     if (!data['isEdit']) {
       this.PrestacionesNew.push({
-        Prestacion: data['Prestacion'],
+        Prestamo: data['Prestacion'],
         UsuarioAlta: data['UsuarioAlta']
       });
     } else {

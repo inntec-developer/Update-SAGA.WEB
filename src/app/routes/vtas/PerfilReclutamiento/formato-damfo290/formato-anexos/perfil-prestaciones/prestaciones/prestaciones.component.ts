@@ -48,6 +48,8 @@ export class PrestacionesComponent implements OnInit, AfterContentInit {
   Save() {
     if (this.IdFormato != null) {
       const obj = {
+        Index: this.index,
+        isEdit: this.isActionEdit,
         id: this.prestacion.get('id').value,
         Prestacion: this.prestacion.get('prestacion').value.toUpperCase(),
         Usuario: this._setting.user.usuario,
@@ -58,6 +60,7 @@ export class PrestacionesComponent implements OnInit, AfterContentInit {
         obj['action'] = 'create';
         this._servicePerfilR.CrudPrestaciones(obj).subscribe(x => {
           if (x !== 404) {
+            this.Registros.emit(obj);
             this.prestacion.controls['id'].setValue(x);
             this.Edit = false;
             this.functionCreateAlert('success', false);
@@ -69,6 +72,7 @@ export class PrestacionesComponent implements OnInit, AfterContentInit {
         obj['action'] = 'update';
         this._servicePerfilR.CrudPrestaciones(obj).subscribe(x => {
           if (x !== 404) {
+            this.Registros.emit(obj);
             this.Edit = false;
             this.isActionEdit = false;
             this.functionCreateAlert('success', true);

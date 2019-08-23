@@ -67,6 +67,8 @@ export class BeneficiosComponent implements OnInit, AfterContentInit {
   Save() {
     if (this.IdFormato != null) {
       const obj = {
+        Index: this.index,
+        isEdit: this.isActionEdit,
         id: this.beneficio.get('id').value || null,
         tipoBeneficioId: this.beneficio.get('tipoBeneficioId').value,
         cantidad: this.beneficio.get('cantidadId').value,
@@ -81,6 +83,7 @@ export class BeneficiosComponent implements OnInit, AfterContentInit {
         this._servicePerfilR.CrudBeneficio(obj).subscribe(x => {
           if (x !== 404) {
             if (x !== 300) {
+              this.Registros.emit(obj);
               this.beneficio.controls['id'].setValue(x);
               this.Edit = false;
               this.functionCreateAlert('success', false);
@@ -95,7 +98,8 @@ export class BeneficiosComponent implements OnInit, AfterContentInit {
         obj['action'] = 'update';
         this._servicePerfilR.CrudBeneficio(obj).subscribe(x => {
           if (x !== 404) {
-            if (x != 300) {
+            if (x !== 300) {
+              this.Registros.emit(obj);
               this.Edit = false;
               this.isActionEdit = false;
               this.functionCreateAlert('success', true);

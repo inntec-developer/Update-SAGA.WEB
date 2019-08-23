@@ -15,7 +15,7 @@ export class PerfilObservacionesComponent implements OnInit, OnChanges {
 
   ObservacionesNew = [];
 
-  esNuevo: boolean = true;
+  esNuevo = true;
   private Add: boolean;
 
   public ObservacionesArray: FormGroup;
@@ -35,7 +35,7 @@ export class PerfilObservacionesComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdFormato != null) {
       this.esNuevo = false;
-      if (this.Observaciones != null) {
+      if (this.Observaciones.length > 0) {
         this.PopulateForm(this.Observaciones);
       }
     }

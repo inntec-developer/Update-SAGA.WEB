@@ -6,7 +6,7 @@ import { PerfilReclutamientoService } from './../../../../../../../service/Perfi
 import { SettingsService } from '../../../../../../../core/settings/settings.service';
 
 @Component({
-  selector: 'escolaridades',
+  selector: 'app-escolaridades-p',
   templateUrl: './escolaridades.component.html',
   styleUrls: ['./escolaridades.component.scss'],
   providers: [CatalogosService, PerfilReclutamientoService]

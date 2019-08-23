@@ -34,7 +34,7 @@ export class PerfilDocClienteComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdFormato != null) {
       this.esNuevo = false;
-      if (this.Documentos != null) {
+      if (this.Documentos.length > 0) {
         this.PopulateForm(this.Documentos);
       }
     }

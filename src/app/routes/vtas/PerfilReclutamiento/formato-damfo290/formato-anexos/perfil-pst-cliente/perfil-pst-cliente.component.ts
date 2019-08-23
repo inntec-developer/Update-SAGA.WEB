@@ -50,7 +50,7 @@ export class PerfilPstClienteComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdFormato != null) {
       this.esNuevo = false;
-      if (this.Psicometrias != null) {
+      if (this.Psicometrias.length > 0) {
         this.PopulateForm(this.Psicometrias);
       }
     }

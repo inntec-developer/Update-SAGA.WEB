@@ -9,9 +9,9 @@
     <div *ngFor="let escolaridad of EscolaridadArray['controls'].escolaridad['controls']; let i=index">
       <div formArrayName="escolaridad">
         <form [formGroupName]="i">
-          <escolaridades [IdFormato]="IdFormato" [escolaridad]="EscolaridadArray.controls.escolaridad.controls[i]" [index]="i" (Add)="Agregar($event)"
+          <app-escolaridades-p [IdFormato]="IdFormato" [escolaridad]="EscolaridadArray.controls.escolaridad.controls[i]" [index]="i" (Add)="Agregar($event)"
             (remove)="removeEscolaridad($event)" (Registros)="getRegistros($event)" >
-          </escolaridades>
+          </app-escolaridades-p>
         </form>
       </div>
     </div>

@@ -28,7 +28,7 @@ export class FormatoRequisitosComponent implements OnInit, OnChanges {
   Contratos: any;
   TiempoContrato: any;
   buscarArea = '';
-  Escolaridades: any[];
+  Escolaridades: any[] = [];
   Aptitudes = [''];
   sueldoMin = 1000;
   sueldoMax = 1000;
@@ -103,17 +103,19 @@ export class FormatoRequisitosComponent implements OnInit, OnChanges {
 
         this.Escolaridades = element['escolaridades'];
 
-        const aptitudes = []
+        const aptitudes = [];
         element['aptitudes'].forEach(x => {
           aptitudes.push(x['id']);
         });
 
-        if (element['contratoInicialId'] == 2) {
+        if (element['contratoInicialId'] === 2) {
           this.isContratoPrueba = true;
         }
 
         this.apt = aptitudes;
         this.exp = element['experiencia'];
+        this.sueldoMin = element['sueldoMinimo'];
+        this.sueldoMax = element['sueldoMaximo'];
         this.formEncabezado.patchValue({
           NombrePuesto: element['nombrePerfil'],
           EdadMin: element['edadMinima'],
@@ -125,17 +127,17 @@ export class FormatoRequisitosComponent implements OnInit, OnChanges {
 
 
         setTimeout(() => {
-         this.formEncabezado.patchValue({
-          Genero: element['generoId'],
-          EstadoCivil: element['estadoCivilId'],
-          Area: element['areaId'],
-          Contrato: element['contratoInicialId'],
-          TiempoContrato: element['tiempoContratoId'],
-          DiaCorte: element['diaCorteId'],
-          TipoNomina: element['tipoNominaId'],
-          DiaPago: element['diaPagoId'],
-          PeriodoPago: element['periodoPagoId'],
-         });
+          this.formEncabezado.patchValue({
+            Genero: element['generoId'],
+            EstadoCivil: element['estadoCivilId'],
+            Area: element['areaId'],
+            Contrato: element['contratoInicialId'],
+            TiempoContrato: element['tiempoContratoId'],
+            DiaCorte: element['diaCorteId'],
+            TipoNomina: element['tipoNominaId'],
+            DiaPago: element['diaPagoId'],
+            PeriodoPago: element['periodoPagoId'],
+          });
         }, 1000);
 
 
@@ -173,7 +175,7 @@ export class FormatoRequisitosComponent implements OnInit, OnChanges {
   }
 
   filterAreas() {
-    if (this.buscarArea != '') {
+    if (this.buscarArea !== '') {
       this.AreasAux = this.Areas.filter(x => {
         return x['areaExperiencia']
           .toString()
@@ -185,7 +187,7 @@ export class FormatoRequisitosComponent implements OnInit, OnChanges {
   }
 
   getContrato() {
-    if (this.formEncabezado.get('Contrato').value == 2) {
+    if (this.formEncabezado.get('Contrato').value === 2) {
       this.isContratoPrueba = true;
     }
   }

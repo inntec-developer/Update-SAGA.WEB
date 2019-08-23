@@ -30,14 +30,15 @@
 <br>
 <section class="row">
   <div class="col-lg-6 col-md-6 col-sm-12">
-    <button type="reset"
-      class="btn btn-block mat-elevation-z8 btn-danger" [routerLink]="['/reclutamiento/290']">Cancelar</button>
+    <button type="reset" class="btn btn-block mat-elevation-z8 btn-danger"
+      [routerLink]="['/reclutamiento/290']"
+      [disabled]="loading">Cancelar</button>
   </div>
   <div class="col-lg-6 col-md-6 col-sm-12">
-    <button class="btn btn-block btn-success mat-elevation-z8"
-    [disabled]="
+    <button *ngIf="!loading" class="btn btn-block btn-success mat-elevation-z8" [disabled]="
     !requisitos.formEncabezado.valid ||
     !cliente.formCliente.valid ||
+    requisitos.Escolaridades.length == 0 ||
     anexos.Actividades.length == 0 ||
     anexos.Areas.length == 0 ||
     anexos.Beneficios.length == 0 ||
@@ -50,10 +51,9 @@
     anexos.Procesos.length == 0 ||
     anexos.PsicometriasC.length == 0 ||
     anexos.PsicometriasD.length == 0
-    "
-    (click)="GuardarPerfil()">Guardar</button>
+    " (click)="GuardarPerfil()">Guardar</button>
+    <span *ngIf="loading"><i class="fa fa-spinner fa-2x fa-pulse" aria-hidden="true"></i></span>
   </div>
 </section>
 
 <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
-

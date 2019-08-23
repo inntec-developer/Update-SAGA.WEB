@@ -56,6 +56,8 @@ export class PstClienteComponent implements OnInit, AfterContentInit {
   Save() {
     if (this.IdFormato != null) {
       const obj = {
+        Index: this.index,
+        isEdit: this.isActionEdit,
         id: this.psicometriaC.get('id').value || null,
         psicometria: this.psicometriaC.get('psicometria').value,
         descripcion: this.psicometriaC.get('descripcion').value,
@@ -69,6 +71,7 @@ export class PstClienteComponent implements OnInit, AfterContentInit {
         this._servicePerfilR.CrudPsicometriaCliente(obj).subscribe(x => {
           if (x !== 404) {
             if (x !== 300) {
+              this.Registros.emit(obj);
               this.psicometriaC.controls['id'].setValue(x);
               this.Edit = false;
               this.functionCreateAlert('success', false);
@@ -84,6 +87,7 @@ export class PstClienteComponent implements OnInit, AfterContentInit {
         this._servicePerfilR.CrudPsicometriaCliente(obj).subscribe(x => {
           if (x !== 404) {
             if (x !== 300) {
+              this.Registros.emit(obj);
               this.Edit = false;
               this.isActionEdit = false;
               this.functionCreateAlert('success', true);

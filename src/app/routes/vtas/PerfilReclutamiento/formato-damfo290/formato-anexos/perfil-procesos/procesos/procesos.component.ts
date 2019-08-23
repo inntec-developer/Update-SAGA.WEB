@@ -48,6 +48,8 @@ export class ProcesosComponent implements OnInit, AfterContentInit {
   Save() {
     if (this.IdFormato != null) {
       const obj = {
+        Index: this.index,
+        isEdit: this.isActionEdit,
         id: this.proceso.get('id').value,
         Proceso: this.proceso.get('proceso').value.toUpperCase(),
         Usuario: this._setting.user.usuario,
@@ -58,6 +60,7 @@ export class ProcesosComponent implements OnInit, AfterContentInit {
         obj['action'] = 'create';
         this._servicePerfilR.CrudProcesos(obj).subscribe(x => {
           if (x !== 404) {
+            this.Registros.emit(obj);
             this.proceso.controls['id'].setValue(x);
             this.Edit = false;
             this.functionCreateAlert('success', false);
@@ -69,6 +72,7 @@ export class ProcesosComponent implements OnInit, AfterContentInit {
         obj['action'] = 'update';
         this._servicePerfilR.CrudProcesos(obj).subscribe(x => {
           if (x !== 404) {
+            this.Registros.emit(obj);
             this.Edit = false;
             this.isActionEdit = false;
             this.functionCreateAlert('success', true);

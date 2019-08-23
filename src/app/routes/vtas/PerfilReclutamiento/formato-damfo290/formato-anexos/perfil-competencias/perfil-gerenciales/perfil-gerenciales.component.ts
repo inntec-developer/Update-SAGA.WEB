@@ -47,7 +47,7 @@ export class PerfilGerencialesComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdFormato != null) {
       this.esNuevo = false;
-      if (this.Competencias != null) {
+      if (this.Competencias.length > 0) {
         this.PopulateForm(this.Competencias);
       }
     }
@@ -101,7 +101,7 @@ export class PerfilGerencialesComponent implements OnInit, OnChanges {
         this.CompetenciaNew.push({
           Index: data['Index'],
           CompetenciaId: data['CompetenciaId'],
-          Mivel: data['Nivel'],
+          Nivel: data['Nivel'],
           UsuarioAlta: this._settings['user']['usuario']
         });
       } else {
@@ -120,7 +120,7 @@ export class PerfilGerencialesComponent implements OnInit, OnChanges {
         const editRegistro = {
           Index: data['Index'],
           CompetenciaId: data['CompetenciaId'],
-          Mivel: data['Nivel'],
+          Nivel: data['Nivel'],
           UsuarioAlta: this._settings['user']['usuario']
         };
         this.CompetenciaNew[data['index']] = editRegistro;

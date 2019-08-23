@@ -61,6 +61,8 @@ export class PstDamsaComponent implements OnInit, AfterContentInit {
   Save() {
     if (this.IdFormato != null) {
       const obj = {
+        Index: this.index,
+        isEdit: this.isActionEdit,
         id: this.psicometria.get('id').value || null,
         psicometriaId: this.psicometria.get('psicometriaId').value,
         Usuario: this._setting.user.usuario,
@@ -72,6 +74,7 @@ export class PstDamsaComponent implements OnInit, AfterContentInit {
         this._servicePerfilR.CrudPsicometriaDamsa(obj).subscribe(x => {
           if (x !== 404) {
             if (x !== 300) {
+              this.Registros.emit(obj);
               this.psicometria.controls['id'].setValue(x);
               this.Edit = false;
               this.functionCreateAlert('success', false);
@@ -87,6 +90,7 @@ export class PstDamsaComponent implements OnInit, AfterContentInit {
         this._servicePerfilR.CrudPsicometriaDamsa(obj).subscribe(x => {
           if (x !== 404) {
             if (x !== 300) {
+              this.Registros.emit(obj);
               this.Edit = false;
               this.isActionEdit = false;
               this.functionCreateAlert('success', true);

@@ -36,7 +36,7 @@ export class PerfilActividadesComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdFormato != null) {
       this.esNuevo = false;
-      if (this.Actividades != null) {
+      if (this.Actividades.length > 0) {
         this.PopulateForm(this.Actividades);
       }
     }
@@ -77,7 +77,7 @@ export class PerfilActividadesComponent implements OnInit, OnChanges {
   getRegistros(data: any) {
     if (!data['isEdit']) {
       this.ActividadesNew.push({
-        Actividad: data['actividad'],
+        Actividades: data['actividad'],
         UsuarioAlta: data['UsuarioAlta']
       });
     } else {

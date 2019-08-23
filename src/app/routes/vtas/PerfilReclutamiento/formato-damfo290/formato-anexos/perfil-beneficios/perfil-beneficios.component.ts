@@ -47,7 +47,7 @@ export class PerfilBeneficiosComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdFormato != null) {
       this.esNuevo = false;
-      if (this.Beneficios != null) {
+      if (this.Beneficios.length > 0) {
         this.PopulateForm(this.Beneficios);
       }
     }
@@ -106,7 +106,7 @@ export class PerfilBeneficiosComponent implements OnInit, OnChanges {
           Index: data['Index'],
           tipoBeneficioId: data['tipoBeneficioId'],
           Cantidad: data['cantidad'],
-          Observaciones: data['observaciones'],
+          Observaciones: data['observaciones'].toUpperCase(),
           UsuarioAlta: data['UsuarioAlta']
         });
       } else {

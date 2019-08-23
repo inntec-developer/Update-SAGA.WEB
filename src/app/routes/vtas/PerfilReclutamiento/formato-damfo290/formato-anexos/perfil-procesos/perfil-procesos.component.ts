@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, EventEmitter, Output, SimpleChanges } from '@angular/core';
+import { forEach } from '@angular/router/src/utils/collection';
+import { Component, OnInit, Input, EventEmitter, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 
 @Component({
@@ -6,7 +7,7 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
   templateUrl: './perfil-procesos.component.html',
   styleUrls: ['./perfil-procesos.component.scss']
 })
-export class PerfilProcesosComponent implements OnInit {
+export class PerfilProcesosComponent implements OnInit, OnChanges {
   @Input() IdFormato: any;
   @Input() Procesos: any[];
   @Output() ProcesosEmt = new EventEmitter();
@@ -14,7 +15,7 @@ export class PerfilProcesosComponent implements OnInit {
   ProcesosNew = [];
   Orden = 0;
 
-  esNuevo: boolean = true;
+  esNuevo = true;
   private Add: boolean;
 
   public ProcesosArray: FormGroup;
@@ -34,16 +35,16 @@ export class PerfilProcesosComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdFormato != null) {
       this.esNuevo = false;
-      if (this.Procesos != null) {
+      if (this.Procesos.length > 0) {
         this.PopulateForm(this.Procesos);
       }
     }
   }
 
   private PopulateForm(observacion: any) {
-    for (let x in observacion) {
+    observacion.forEach( x => {
       this.AddProceso(1);
-    }
+    });
     this.ProcesosArray.patchValue({
       proceso: this.Procesos
     });
@@ -81,7 +82,7 @@ export class PerfilProcesosComponent implements OnInit {
         UsuarioAlta: data['UsuarioAlta']
       });
     } else {
-      let editRegistro = {
+      const editRegistro = {
         Proceso: data['Proceso'],
         UsuarioAlta: data['UsuarioAlta']
       };

@@ -87,6 +87,8 @@ export class HorariosComponent implements OnInit, AfterContentInit {
       this.getDeDia();
       this.getADia();
       const obj = {
+        Index: this.index,
+        isEdit: this.isActionEdit,
         id: this.horario.get('id').value || null,
         nombre: this.horario.get('horario').value,
         deDia: this.deDia,
@@ -106,6 +108,7 @@ export class HorariosComponent implements OnInit, AfterContentInit {
         this._servicePerfilR.CrudHorarios(obj).subscribe(x => {
           if (x !== 404) {
             if (x !== 300) {
+              this.Registros.emit(obj);
               const horaInicio = obj['deHora'].split(':');
               const horaFinal = obj['aHora'].split(':');
               this.horario.controls['id'].setValue(x);
@@ -133,6 +136,7 @@ export class HorariosComponent implements OnInit, AfterContentInit {
         this._servicePerfilR.CrudHorarios(obj).subscribe(x => {
           if (x !== 404) {
             if (x !== 300) {
+              this.Registros.emit(obj);
               this.nombre = x['nombre'];
               this.deDia = x['deDia']['diaSemana'];
               this.aDia = x['aDia']['diaSemana'];
