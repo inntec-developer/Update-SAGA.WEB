@@ -21,13 +21,14 @@ import { VacantesComponent } from './vacantes/vacantes.component';
 import { VacantesPostulateComponent } from './vacantes/vacantes/vacantes-postulate/vacantes-postulate.component';
 import { VacantesReclutadorComponent } from './vacantes/vacantes/vacantes-reclutador/vacantes-reclutador.component';
 import { VentaModule } from '../vtas/ventas.module';
+import { DisenadorComponent } from './disenador/disenador.component';
 
 const routes: Routes = [
   { path: '290', component: Damfo290Component },
   { path: 'candidatos', component: CandidatosComponent },
   { path: 'vacantes', component: VacantesComponent, },
-  { path: 'disenador', component: DisenadorVacanteComponent },
-  { path: 'configuracionVacante/:Requi/:Folio/:VBtra', component: DisenadorVacanteComponent },
+  { path: 'configuracionVacante/:Requi/:Folio/:VBtra', component: DisenadorComponent },
+  // { path: 'configuracionVacante/:Requi/:Folio/:VBtra', component: DisenadorVacanteComponent },
   { path: 'vacantesReclutador', component: VacantesReclutadorComponent, data: { componente: 'Vacantes' } },
   { path: 'postulados/:VacanteId/:Folio/:VBtra', component: VacantesPostulateComponent, data: { componente: 'Vacantes' } },
   { path: 'gestionVacante/:VacanteId/:Folio/:VBtra/:ClienteId/:enProceso/:estatusId', component: SeguimientoVacanteComponent, data: { componente: 'Vacantes' } },
@@ -59,7 +60,8 @@ const routes: Routes = [
     VacantesPostulateComponent,
     SeguimientoVacanteComponent,
     DlgTransferComponent,
-    ShowVacanteReclutadorComponent
+    ShowVacanteReclutadorComponent,
+    DisenadorComponent
     ],
   entryComponents: [
     DialogcandidatosComponent, DialogShowRequiComponent, DialogAssingRequiComponent, DlgTransferComponent],
