@@ -327,7 +327,7 @@ public static CheckVertionSistem = 'Vertion/Check';
   public static GetCoordinacion = 'reporte/coordinacion'
   public static GetCandidatoRep = 'reporte/candidatos'
   public static GetVacanteReporte = 'reporte/vacante'
-
+  public static GetClientesReporte = 'reporte/clientes'
   /* Kiosco */
 
   public static PostulacionKiosco = 'Kiosco/postulacion'
