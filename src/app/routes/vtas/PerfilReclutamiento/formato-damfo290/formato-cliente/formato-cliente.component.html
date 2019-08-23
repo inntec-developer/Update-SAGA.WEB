@@ -1,7 +1,7 @@
 <form [formGroup]="formCliente">
   <section #ClienteSection class="row">
     <mat-form-field class="col-12">
-      <input #RazonSocialCtrl type="text" placeholder="Razon Social" aria-label="Number" matInput formControlName="RazonSocial" [value]="RazonSocialCtrl.value.toUpperCase()"
+      <input #RazonSocialCtrl type="text" placeholder="Razón Social" aria-label="Number" matInput formControlName="RazonSocial" [value]="RazonSocialCtrl.value.toUpperCase()"
         [matAutocomplete]="cliente" (keyup.enter)="filter()" required="" />
       <mat-autocomplete #cliente="matAutocomplete" (optionSelected)="selected($event)">
         <mat-option *ngFor="let option of AuxOptions" [value]="option.razonSocial" class="option-container">

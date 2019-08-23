@@ -51,6 +51,7 @@ export class PerfilPstClienteComponent implements OnInit, OnChanges {
     if (this.IdFormato != null) {
       this.esNuevo = false;
       if (this.Psicometrias.length > 0) {
+        this.PsicometriasNew = this.Psicometrias;
         this.PopulateForm(this.Psicometrias);
       }
     }

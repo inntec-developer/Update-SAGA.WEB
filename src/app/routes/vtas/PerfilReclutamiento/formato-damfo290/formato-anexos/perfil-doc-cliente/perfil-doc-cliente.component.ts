@@ -35,6 +35,7 @@ export class PerfilDocClienteComponent implements OnInit, OnChanges {
     if (this.IdFormato != null) {
       this.esNuevo = false;
       if (this.Documentos.length > 0) {
+        this.DocumentosNew = this.Documentos;
         this.PopulateForm(this.Documentos);
       }
     }

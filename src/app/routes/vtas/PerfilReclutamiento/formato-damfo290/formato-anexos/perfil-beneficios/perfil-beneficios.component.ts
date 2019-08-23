@@ -48,6 +48,7 @@ export class PerfilBeneficiosComponent implements OnInit, OnChanges {
     if (this.IdFormato != null) {
       this.esNuevo = false;
       if (this.Beneficios.length > 0) {
+        this.BeneficiosNew = this.Beneficios;
         this.PopulateForm(this.Beneficios);
       }
     }

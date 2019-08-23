@@ -35,6 +35,7 @@ export class PerfilPrestacionesComponent implements OnInit, OnChanges {
     if (this.IdFormato != null) {
       this.esNuevo = false;
       if (this.Prestaciones.length > 0) {
+        this.PrestacionesNew = this.Prestaciones;
         this.PopulateForm(this.Prestaciones);
       }
     }

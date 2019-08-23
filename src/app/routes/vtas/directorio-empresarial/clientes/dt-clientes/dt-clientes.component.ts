@@ -68,7 +68,7 @@ export class DtClientesComponent implements OnInit {
   public rows: Array<any> = [];
   public columns: Array<any> = [
     { title: 'RFC', sorting: 'desc', className: 'text-success text-center', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
-    { title: 'Razón Social', sorting: 'desc', className: 'text-success text-center', name: 'razonSocial', filtering: { filterString: '', placeholder: 'Razon Social' } },
+    { title: 'Razón Social', sorting: 'desc', className: 'text-success text-center', name: 'razonSocial', filtering: { filterString: '', placeholder: 'Razón Social' } },
     { title: 'Nombre Comercial', sorting: 'desc', className: 'text-success text-center', name: 'nombrecomercial', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'Giro', className: 'text-info text-center', name: 'giroEmpresa', filtering: { filterString: '', placeholder: 'Giro' } },
     { title: 'Actividad', className: 'text-info text-center', name: 'actividadEmpresa', filtering: { filterString: '', placeholder: 'Actividad' } },

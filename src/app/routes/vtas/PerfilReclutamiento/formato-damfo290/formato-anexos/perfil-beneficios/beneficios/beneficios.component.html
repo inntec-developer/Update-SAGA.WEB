@@ -6,7 +6,7 @@
         <mat-select #t1 placeholder="Tipo Beneficio" formControlName="tipoBeneficioId"
           (selectionChange)="getTipoBeneficio()" required>
           <mat-option *ngFor="let x of TiposBeneficios" [value]="x.id">
-            {{x.tipoBeneficio}}
+            {{x.tipoBeneficio | uppercase}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -21,7 +21,7 @@
           [value]="ObservacionesCtrl.value.toUpperCase()"
           formControlName="observacionesId"></textarea>
         <mat-hint align="start">
-          <strong class="text-warning">Ingrese algúna Observación</strong>
+          <strong class="text-warning">Ingrese alguna Observación</strong>
         </mat-hint>
         <mat-hint align="end"><strong class="text-info">{{ObservacionesCtrl.value.length}} / 500</strong></mat-hint>
       </mat-form-field>

@@ -36,6 +36,7 @@ export class PerfilProcesosComponent implements OnInit, OnChanges {
     if (this.IdFormato != null) {
       this.esNuevo = false;
       if (this.Procesos.length > 0) {
+        this.ProcesosNew = this.Procesos;
         this.PopulateForm(this.Procesos);
       }
     }

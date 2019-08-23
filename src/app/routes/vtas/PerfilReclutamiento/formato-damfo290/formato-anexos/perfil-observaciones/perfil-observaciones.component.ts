@@ -36,6 +36,7 @@ export class PerfilObservacionesComponent implements OnInit, OnChanges {
     if (this.IdFormato != null) {
       this.esNuevo = false;
       if (this.Observaciones.length > 0) {
+        this.ObservacionesNew = this.Observaciones;
         this.PopulateForm(this.Observaciones);
       }
     }
