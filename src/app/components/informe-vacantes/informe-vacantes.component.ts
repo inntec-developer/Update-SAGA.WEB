@@ -51,6 +51,9 @@ export class InformeVacantesComponent implements OnInit {
   vBtra: any;
   folio: any;
   rowAux = [];
+  reporteCandidatos = false;
+  id: any;
+  enProceso: any;
 
   constructor(
     private service: RequisicionesService,
@@ -132,6 +135,8 @@ export class InformeVacantesComponent implements OnInit {
     this.element = data;
     this.vBtra = data.vBtra;
     this.folio = data.folio;
+    this.id = data.id;
+    this.enProceso = data.enProceso;
 
     if (this.rowAux.length === 0) {
       this.rowAux = data;
