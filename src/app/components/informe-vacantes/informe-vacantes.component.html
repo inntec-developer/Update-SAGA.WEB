@@ -6,6 +6,13 @@
     <button (click)="lgModalCom.show()" class="mr-1 btn btn-xs mat-elevation-z8" [disabled]="element.length == 0"
       [ngClass]="element.length == 0 ? 'disabled' : 'btn-dark'" container="body" placement="bottom" tooltip="Comentarios"><em
         class="fa fa-comments-o"></em></button>  
+        <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-xs mat-elevation-z8" [disabled]="element.length == 0 || element.enProceso == 0"
+        (click)="reporteCandidatos = true" [ngClass]="element.length == 0 || element.enProceso == 0 ? 'disabled' : 'btn-info'"
+        container="body" placement="bottom" tooltip="Candidatos">
+        <i class="fa fa-users" aria-hidden="true"></i>
+        <span *ngIf="element.enProceso > 0" class="badge badge-pill badge-warning">{{element.enProceso}}</span>
+      </button>
+
       <button type="button" class="mr-1 btn btn-xs btn-success float-right mat-elevation-z8" (click)="refreshTable()"
       container="body" placement="bottom" tooltip="Actualizar" container="body">
       <em class="icon-refresh"></em>
@@ -159,3 +166,20 @@
       </div>
     </div>
   </div>
+
+<div *ngIf="reporteCandidatos" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal
+  #candiModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="float-left text-warning"><em class="fa fa-users mr-2"></em>CANDIDATOS EN PROCESO / REQUISICI&Oacute;N
+          {{Folio}} - {{Vacante}}</h5>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="reporteCandidatos=false;">
+          <i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <app-reporte-candidatos [RequisicionId]="element.id" [EstatusId]="element.estatusId"></app-reporte-candidatos>
+      </div>
+    </div>
+  </div>
+</div>

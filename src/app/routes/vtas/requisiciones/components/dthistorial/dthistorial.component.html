@@ -9,7 +9,7 @@
           [disabled]="element.length == 0" [ngClass]="element.length == 0 ? 'disabled' : 'btn-dark'" container="body" placement="bottom"
           tooltip="Comentarios"><em class="fa fa-comments-o"></em></button>
           <button class="btn btn-xs mat-elevation-z8" [disabled]="element.length == 0 || element.contratados == 0"
-          (click)="reporteCandidatos = true" [ngClass]="element.length == 0 || element.contratados == 0 ? 'disabled' : 'btn-info'"
+          (click)="reporteCandidatos = true" [ngClass]="element.length == 0 || element.contratados == 0 ? 'disabled' : 'btn-warning'"
           container="body" placement="bottom" tooltip="Candidatos">
           <i class="fa fa-users" aria-hidden="true"></i>
         </button>
