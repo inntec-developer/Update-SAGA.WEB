@@ -145,12 +145,12 @@ ucor = ucor == undefined?'0':ucor;
     let inc = document.getElementById('fechaInicial');
     let fin = document.getElementById('fechaFinal');
 
-    var palabra = pal['value'];
+    // var palabra = pal['value'];
     var inicio = inc['value'];
     var final = fin['value'];
     let tipo = document.getElementById('TipoReporte')['value'];
 
-    this.Servicio.GetInforme(palabra,ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec,ucor)
+    this.Servicio.GetInforme("",ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec,ucor)
     .subscribe( data => {
     // this.popGenerico(data.mensaje,data.bandera,'Publicacion');
     this.requisiciones = data;
