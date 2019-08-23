@@ -56,7 +56,7 @@ export class ReporteCandidatosComponent implements OnInit {
     { title: 'CURP', className: 'text-success text-center', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
     { title: 'RFC', className: 'text-success text-center', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
     { title: 'NSS', className: 'text-success text-center', name: 'nss', filtering: { filterString: '', placeholder: 'NSS' } },
-    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } }
+    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
     { title: 'Reclutador', className: 'text-info text-center', name: 'reclutador', filtering: { filterString: '', placeholder: 'Reclutador' } }
   ];
 
