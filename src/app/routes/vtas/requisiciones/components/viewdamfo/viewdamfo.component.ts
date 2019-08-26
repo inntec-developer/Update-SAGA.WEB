@@ -22,7 +22,7 @@ export class ViewdamfoComponent implements OnInit {
 
   public Perfil290: boolean;
 
-  //Variables
+  // Variables
   public damfoId: string;
   public damfo290: any;
 
@@ -32,6 +32,18 @@ export class ViewdamfoComponent implements OnInit {
   public cliente: any;
 
   public imprimir: boolean;
+
+  public isEditable: boolean;
+
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
 
 
 
@@ -60,6 +72,11 @@ export class ViewdamfoComponent implements OnInit {
           this.ClienteInfo = data['cliente'];
           this.periodoPagoId = data.periodoPagoId;
           this.damfo290 = data;
+          if (data['usuarioAlta'] === this.settings['user']['usuario']){
+            this.isEditable = true;
+          } else {
+            this.isEditable = false;
+          }
           this.spinner.hide();
         });
     }
@@ -71,7 +88,10 @@ export class ViewdamfoComponent implements OnInit {
         this.damfoId = params['IdDamfo'];
         this.Perfil290 = params['Perfil290'] || false;
       } else {
-        this.popToast('error', 'Nueva Requisicion', 'Error al intentar notificar por medio de correo electrónico la creación de la requisición.');
+        this.popToast(
+          'error',
+          'Nueva Requisicion',
+          'Error al intentar notificar por medio de correo electrónico la creación de la requisición.');
         this._Router.navigate(['/ventas/crearRequisicion']);
       }
     });
@@ -86,8 +106,8 @@ export class ViewdamfoComponent implements OnInit {
       sueldoMaximo: this.damfo290['sueldoMaximo'],
       nombrePerfil: this.damfo290['nombrePerfil'],
       id: this.damfoId
-    }
-    let dialogRef = this.dialog.open(DialogdamfoComponent, {
+    };
+    const dialogRef = this.dialog.open(DialogdamfoComponent, {
       width: '50%',
       height: 'auto',
       data: this.data
@@ -96,16 +116,15 @@ export class ViewdamfoComponent implements OnInit {
     });
   }
 
-  return(){
-    if(!this.Perfil290){
+  return() {
+    if (!this.Perfil290) {
       this._Router.navigate(['/ventas/crearRequisicion']);
-    }
-    else{
+    } else {
       this._Router.navigate(['/reclutamiento/290']);
     }
   }
 
-  editFormato(){
+  editFormato() {
     this._Router.navigate(['/ventas/formato290', this.damfoId], { skipLocationChange: true })
   }
 
@@ -116,37 +135,27 @@ export class ViewdamfoComponent implements OnInit {
       this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
     }
     setTimeout(() => {
-      document.getElementById('content').style.marginLeft = "70px";
-      document.getElementById('content').style.marginTop = "15px";
-      document.getElementById('content').style.marginRight = "0px";
-      document.getElementById('content').style.marginBottom = "15px";
+      document.getElementById('content').style.marginLeft = '70px';
+      document.getElementById('content').style.marginTop = '15px';
+      document.getElementById('content').style.marginRight = '0px';
+      document.getElementById('content').style.marginBottom = '15px';
 
       window.print();
     }, 500);
     setTimeout(() => {
       this.imprimir = false;
-      document.getElementById('content').style.marginTop = "0";
-      document.getElementById('content').style.marginLeft = "0";
+      document.getElementById('content').style.marginTop = '0';
+      document.getElementById('content').style.marginLeft = '0';
     }, 500);
 
   }
 
-  //------------------------------------------------------------------------------------
+  //  ------------------------------------------------------------------------------------
   // Toasts (Mensajes del sistema)
-  //------------------------------------------------------------------------------------
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    limit: 7,
-    tapToDismiss: false,
-    showCloseButton: true,
-    mouseoverTimerStop: true,
-  });
-
+  //  ------------------------------------------------------------------------------------
   popToast(type, title, body) {
 
-    var toast: Toast = {
+    const toast: Toast = {
       type: type,
       title: title,
       timeout: 4000,

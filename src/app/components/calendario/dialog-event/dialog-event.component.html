@@ -32,7 +32,6 @@
       </mat-form-field>
       <mat-form-field>
         <input matInput
-          [min]="minDate"
           [matDatepicker]="fchInicio"
           placeholder="Inicio"
           formControlName="Inicio"
@@ -72,18 +71,18 @@
         </mat-form-field>
       </section>
       <mat-dialog-actions>
-        <button type="button" class="btn btn-xs btn-labeled btn-danger mb-1 margen mat-elevation-z8" (click)="onCloseDialog()">
+        <button [disabled]="loading" type="button" class="btn btn-xs btn-labeled btn-danger mb-1 margen mat-elevation-z8" (click)="onCloseDialog()">
           <span class="btn-label">
             <i class="fa fa-times"></i>
           </span> Cancelar
         </button>
-        <button [disabled]="!formEvent.valid" type="button" [ngClass]="!formEvent.valid ? 'disabled' : 'btn-success '"
+        <button [disabled]="!formEvent.valid || loading" type="button" [ngClass]="!formEvent.valid ? 'disabled' : 'btn-success '"
           class="mb-1 btn btn-xs btn-labeled margen mat-elevation-z8" (click)="onCloseDialogInfo()">
           <span class="btn-label">
             <i class="fa fa-check"></i>
           </span> Aceptar
         </button>
-        <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+        <span *ngIf="loading"><i class="fa fa-spinner fa-2x fa-pulse" aria-hidden="true"></i></span>
       </mat-dialog-actions>
     </form>
   </div>

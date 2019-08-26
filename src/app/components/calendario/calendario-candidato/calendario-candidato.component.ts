@@ -423,7 +423,7 @@ export class CalendarioCandidatoComponent implements OnInit {
       new Date(new Date(event.start).getFullYear(), new Date(event.start).getMonth(),
       new Date(event.start).getDate(), 0, 0) < compare && event.activo === true);
     this.Hoy = this.calendarEvents.filter(event => {
-      const DateCompare = new Date(new Date(event.start).getFullYear(), 
+      const DateCompare = new Date(new Date(event.start).getFullYear(),
       new Date(event.start).getMonth(), new Date(event.start).getDate(), 0, 0);
       if (String(DateCompare) === String(compare) && event.activo === true){
         return event;
@@ -470,13 +470,11 @@ export class CalendarioCandidatoComponent implements OnInit {
       FinalD = new Date(DFinal).toJSON();
       Inicio = new Date(ys, ms, ds, hrs, mns);
       Final = new Date(ye, me, de, hre, mne);
-
-
     } else {
       // Inicio = new Date(ys, ms, ds, 0, 0);
       // Final = new Date(ye, me, de, 0, 0);
     }
-    if (Inicio > Final) {
+    if (Inicio < Final) {
       this.popToast('warning', 'Calendario', 'La fecha Final no debe ser mayor a la fecha Inicio.');
       this.loading = false;
       return;

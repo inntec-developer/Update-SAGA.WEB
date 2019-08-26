@@ -22,6 +22,7 @@ export class FormatoRequisitosComponent implements OnInit, OnChanges {
   isContratoPrueba = false;
   public formEncabezado: FormGroup;
 
+  ContratoValue: any;
   Areas: any;
   AreasAux: any;
   EstadoCivil: any;
@@ -111,11 +112,11 @@ export class FormatoRequisitosComponent implements OnInit, OnChanges {
         if (element['contratoInicialId'] === 2) {
           this.isContratoPrueba = true;
         }
-
         this.apt = aptitudes;
         this.exp = element['experiencia'];
         this.sueldoMin = element['sueldoMinimo'];
         this.sueldoMax = element['sueldoMaximo'];
+        this.ContratoValue = element['contratoInicialId'];
         this.formEncabezado.patchValue({
           NombrePuesto: element['nombrePerfil'],
           EdadMin: element['edadMinima'],

@@ -1,11 +1,13 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { BodyOutputType, Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 
-import { DialogdamfoComponent } from '../dialogdamfo/dialogdamfo.component'
+import { DialogdamfoComponent } from '../dialogdamfo/dialogdamfo.component';
 import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../service';
+import { SettingsService } from '../../../../../core/settings/settings.service';
+import { PerfilReclutamientoService } from '../../../../../service/PerfilReclutamiento/perfil-reclutamiento.service';
 
 declare var $: any;
 const swal = require('sweetalert');
@@ -14,26 +16,26 @@ const swal = require('sweetalert');
   selector: 'app-dt-damfo',
   templateUrl: './dt-damfo.component.html',
   styleUrls: ['./dt-damfo.component.scss'],
-  providers: [RequisicionesService]
+  providers: [RequisicionesService, PerfilReclutamientoService]
 })
-export class DtDamfoComponent implements OnInit {
+export class DtDamfoComponent implements OnInit, AfterViewInit {
   @Input('Perfil290') Perfil290: boolean;
-  //scroll
+  // scroll
   disabled = false;
   compact = false;
   invertX = false;
   invertY = false;
   shown = 'hover';
-  //Varaibales Globales
+  // Varaibales Globales
   public dataSource: Array<any> = [];
-  Vacantes: number = 0;
+  Vacantes = 0;
 
   // Varaibles del paginador
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
   showFilterRow: boolean;
   registros: number;
@@ -42,12 +44,66 @@ export class DtDamfoComponent implements OnInit {
   damfoId: any;
 
   rowAux = [];
-  selected: boolean = false;
+  selected = false;
 
-  editar
+  isEditable = false;
+
+  public rows: Array<any> = [];
+  public columns: Array<any> = [
+    {
+      title: 'Cliente', className: 'text-success text-center', name: 'cliente',
+      filtering: { filterString: '', placeholder: 'Cliente' }
+    },
+    {
+      title: 'Perfil', className: 'text-info text-center', name: 'nombrePerfil',
+      filtering: { filterString: '', placeholder: 'Perfil' }
+    },
+    {
+      title: 'No. Vacantes', className: 'text-info text-center', name: 'vacantes',
+      filtering: { filterString: '', placeholder: 'No. Vacantes' }
+    },
+    {
+      title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo',
+      filtering: { filterString: '', placeholder: 'Sueldo Min' }
+    },
+    {
+      title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo',
+      filtering: { filterString: '', placeholder: 'Sueldo Max' }
+    },
+    {
+      title: 'Tipo Recl.', className: 'text-info text-center', name: 'tipoReclutamiento',
+      filtering: { filterString: '', placeholder: 'Tipo Recl.' }
+    },
+    {
+      title: 'Clase Recl.', className: 'text-info text-center', name: 'claseReclutamiento',
+      filtering: { filterString: '', placeholder: 'Clase Recl.' }
+    },
+    {
+      title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion',
+      filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }
+    }
+  ];
+
+  public config: any = {
+    paging: true,
+    // sorting: { columns: this.columns },
+    filtering: { filterString: '' },
+    className: ['table-hover mb-0']
+  };
+
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7, tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
 
   constructor(
+    private _setting: SettingsService,
     private service: RequisicionesService,
+    private _perfillR: PerfilReclutamientoService,
     private dialog: MatDialog,
     private _Router: Router,
     private _Route: ActivatedRoute,
@@ -66,8 +122,6 @@ export class DtDamfoComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
     setTimeout(() => {
       this.onChangeTable(this.config);
     }, 1500);
@@ -79,28 +133,11 @@ export class DtDamfoComponent implements OnInit {
     }, error => this.errorMessage = <any>error);
   }
 
-  public rows: Array<any> = [];
-  public columns: Array<any> = [
-    { title: 'Cliente', className: 'text-success text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
-    { title: 'Perfil', className: 'text-info text-center', name: 'nombrePerfil', filtering: { filterString: '', placeholder: 'Perfil' } },
-    { title: 'No. Vacantes', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' } },
-    { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
-    { title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
-    { title: 'Tipo Recl.', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo Recl.' } },
-    { title: 'Clase Recl.', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Clase Recl.' } },
-    { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } }
-  ];
 
-  public config: any = {
-    paging: true,
-    // sorting: { columns: this.columns },
-    filtering: { filterString: '' },
-    className: ['table-hover mb-0']
-  };
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
-    let start = (page.page - 1) * page.itemsPerPage;
-    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    const start = (page.page - 1) * page.itemsPerPage;
+    const end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
   }
 
@@ -109,7 +146,7 @@ export class DtDamfoComponent implements OnInit {
       return data;
     }
 
-    let columns = this.config.sorting.columns || [];
+    const columns = this.config.sorting.columns || [];
     let columnName: string = void 0;
     let sort: string = void 0;
 
@@ -141,8 +178,9 @@ export class DtDamfoComponent implements OnInit {
       if (column.filtering) {
         this.showFilterRow = true;
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
+          if (item[column.name] != null) {
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+          }
         });
       }
     });
@@ -156,7 +194,7 @@ export class DtDamfoComponent implements OnInit {
         item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
     }
 
-    let tempArray: Array<any> = [];
+    const tempArray: Array<any> = [];
     filteredData.forEach((item: any) => {
       let flag = false;
       this.columns.forEach((column: any) => {
@@ -187,8 +225,8 @@ export class DtDamfoComponent implements OnInit {
     }
     this.registros = this.dataSource.length;
     this.rows = this.dataSource;
-    let filteredData = this.changeFilter(this.dataSource, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
+    const filteredData = this.changeFilter(this.dataSource, this.config);
+    const sortedData = this.changeSort(filteredData, this.config);
     this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
     this.registros = this.rows.length;
     this.length = sortedData.length;
@@ -197,9 +235,13 @@ export class DtDamfoComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
-    let index = this.dataSource.indexOf(data.row);
+    if (data['usuarioAlta'] === this._setting.user.usuario) {
+      this.isEditable = true;
+    } else {
+      this.isEditable = false;
+    }
     this.element = data;
-    this.damfoId = data.id
+    this.damfoId = data.id;
     data.selected ? data.selected = false : data.selected = true;
 
     if (!data.selected) {
@@ -208,11 +250,10 @@ export class DtDamfoComponent implements OnInit {
       this.selected = true;
     }
 
-    if (this.rowAux.length == 0) {
+    if (this.rowAux.length === 0) {
       this.rowAux = data;
-    }
-    else if (data.selected && this.rowAux != []) {
-      var aux = data;
+    } else if (data.selected && this.rowAux !== []) {
+      const aux = data;
       data = this.rowAux;
       data.selected = false;
       aux.selected = true;
@@ -244,17 +285,18 @@ export class DtDamfoComponent implements OnInit {
     if (this.element.horariosActivos === 0) {
       swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. No es posible visualizarlo.', 'error');
     } else if (this.damfoId) {
-      if(!this.Perfil290)
+      if (!this.Perfil290) {
         this._Router.navigate(['/ventas/visualizarDamfo290', this.damfoId], { skipLocationChange: true });
-      else
+      } else {
         this._Router.navigate(['/ventas/visualizarDamfo290', this.damfoId, this.Perfil290], { skipLocationChange: true });
+      }
     }
   }
 
   openDialog() {
     if (this.element) {
       if (this.element.horariosActivos > 0) {
-        let dialogRef = this.dialog.open(DialogdamfoComponent, {
+        const dialogRef = this.dialog.open(DialogdamfoComponent, {
           width: '50%',
           height: 'auto',
           data: this.element
@@ -266,32 +308,24 @@ export class DtDamfoComponent implements OnInit {
     }
   }
 
-  crearPerfil290(){
+  crearPerfil290() {
     this._Router.navigate(['/ventas/formato290']/*,{skipLocationChange: true}*/);
   }
 
-  editar290(){
-    this._Router.navigate(['/ventas/formato290', this.damfoId], {skipLocationChange: false});
+  editar290() {
+    this._Router.navigate(['/ventas/formato290', this.damfoId], { skipLocationChange: false });
   }
   /*
   * Creacion de mensajes
   * */
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    limit: 7, tapToDismiss: false,
-    showCloseButton: true,
-    mouseoverTimerStop: true,
-  });
   popToast(type, title, body) {
 
-    var toast: Toast = {
+    const toast: Toast = {
       type: type,
       title: title,
       timeout: 5000,
       body: body
-    }
+    };
     this.toasterService.pop(toast);
   }
   /**
@@ -313,7 +347,7 @@ export class DtDamfoComponent implements OnInit {
       window.onfocus = null;
       if (isConfirm) {
         swal('Generar Requisicion', '', 'success');
-        let dialogRef = this.dialog.open(DialogdamfoComponent, {
+        const dialogRef = this.dialog.open(DialogdamfoComponent, {
           width: '50%',
           height: 'auto',
           data: this.element
@@ -321,6 +355,39 @@ export class DtDamfoComponent implements OnInit {
       } else {
         swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. :)', 'error');
       }
+    });
+  }
+
+  clonarFormato290() {
+    swal({
+      title: 'Clonar Formato 290 -' + this.element['nombrePerfil'] + '?',
+      text: 'Este Formato 290 se clonara para realizar modificaciones correspondientes.',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Si, clonar formato',
+      cancelButtonText: 'No, cancelar',
+      closeOnConfirm: false,
+      closeOnCancel: false,
+    }, (isConfirm: any) => {
+      if (isConfirm) {
+        const headers = {
+          id: this.element['id']
+        };
+        const perfil = {
+          Headers: headers,
+          Action: 'clone'
+        };
+        this._perfillR.CrudPerfilReclutamiento(perfil).subscribe(x => {
+          this.damfoId = x;
+          this.editar290();
+          swal('Se clono el damfo correctamente', '', 'success');
+        });
+      } else {
+        swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. :)', 'error');
+      }
+      window.onkeydown = null;
+      window.onfocus = null;
     });
   }
 

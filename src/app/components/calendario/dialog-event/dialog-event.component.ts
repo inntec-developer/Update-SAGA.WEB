@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, AfterContentInit } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -66,15 +66,21 @@ export class DialogEventComponent implements OnInit {
 
   ngOnInit() {
     this.ColorPicker = '#4290ff';
-    this.dateStart = this.data;
-    this.dateEnd = this.data;
-    this.formEvent.patchValue({
-      Inicio: new Date(this.data),
-      Fin: new Date(this.data),
-    });
+    // this.dateStart = this.data;
+    // this.dateEnd = this.data;
     this.loading = false;
     this._GetActivdadesReclutador();
   }
+
+  // ngAfterContentInit(): void {
+  //   const d = new Date(this.data).toISOString();
+  //   const d1 = new Date(this.data).toUTCString();
+  //   const d2 = new Date(this.data).toLocaleDateString();
+  //   this.formEvent.patchValue({
+  //     Inicio: new Date(d),
+  //     Final: new Date(d),
+  //   });
+  // }
 
   // ngAfterViewInit(): void {
   //   //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
@@ -101,6 +107,7 @@ export class DialogEventComponent implements OnInit {
     const dateInicio = new Date(this.formEvent.get('Inicio').value);
     const dateFinal = new Date(this.formEvent.get('Fin').value);
 
+
     const ds = dateInicio.getUTCDate(),
       ms = dateInicio.getMonth(),
       ys = dateInicio.getFullYear();
@@ -120,6 +127,11 @@ export class DialogEventComponent implements OnInit {
       const mns = parseInt(hourStart[1], null);
       const hre = parseInt(hourEnd[0], null);
       const mne = parseInt(hourEnd[1], null);
+      if (new Date(ys, ms, ds) < new Date(ye, me, de)) {
+        this.popToast('warning', 'Calendario', 'La fecha Inicio no debe ser igual o mayor a la fecha Actual');
+        this.loading = false;
+        return;
+      }
       if (hre < hrs) {
         this.popToast('warning', 'Calendario', 'La hora Final no debe ser menor a la hora Inicio.');
         this.loading = false;
@@ -149,6 +161,7 @@ export class DialogEventComponent implements OnInit {
       borderColor: this.ColorPicker,
     };
     this.dialogEvent.close(data);
+
   }
 
   private _GetActivdadesReclutador() {

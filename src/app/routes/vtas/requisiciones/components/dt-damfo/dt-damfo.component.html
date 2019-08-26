@@ -11,10 +11,17 @@
           placement="bottom" tooltip="Visualizar">
           <em class="fa fa-eye"></em>
         </button>
-        <button id="create" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8"
-          [ngClass]="!selected ? 'disabled' : 'btn-primary'" container="body" placement="bottom"
+        <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8"
+          [ngClass]="!selected || !isEditable ? 'disabled' : 'btn-primary'" container="body" placement="bottom"
+          [disabled]="!selected || !isEditable"
           tooltip="Editar" (click)="editar290()">
           <em class="icon-pencil"></em>
+        </button>
+        <button id="create" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8"
+          [ngClass]="!selected || !isEditable ? 'disabled' : 'btn-warning'" container="body" placement="bottom"
+          [disabled]="!selected || !isEditable"
+          tooltip="Clonar Formato" (click)="clonarFormato290()">
+          <em class="fa fa-clone"></em>
         </button>
         <button *ngIf="!Perfil290" id="view" chkPrivilegiosButtons (click)="openDialog()"
           class="mr-2 btn btn-xs mat-elevation-z8" [disabled]="!selected"

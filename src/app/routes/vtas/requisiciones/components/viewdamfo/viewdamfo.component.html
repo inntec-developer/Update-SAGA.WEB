@@ -23,8 +23,10 @@
 <div class="row" *ngIf="!imprimir">
   <div class="col-md-12">
     <div class="d-flex justify-content-between">
-      <button *ngIf="Perfil290" id="edit" chkPrivilegiosButtons class="mr-2 btn btn-xs btn-info mat-elevation-z8" container="body"
-        placement="bottom" tooltip="Editar DAMFO-290" (click)="editFormato()">
+      <button *ngIf="Perfil290" id="edit" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8"
+        [ngClass]="!isEditable ? 'disabled' : 'btn-primary'" container="body" placement="bottom"
+        [disabled]="!isEditable"
+        tooltip="Editar DAMFO-290" (click)="editFormato()">
         <em class="fa fa-pencil"></em>
       </button>
       <button *ngIf="!Perfil290" placement="right" tooltip="Generar Requisición"

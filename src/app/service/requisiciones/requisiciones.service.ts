@@ -85,12 +85,12 @@ export class RequisicionesService {
     return this._httpClient.get(this.urlGetRequisicionById, {params: params, headers: this.httpOptions.headers});
   }
   getRequiFolio(folio: any): Observable<any> {
-    let params = new HttpParams().set('folio', folio)
+    let params = new HttpParams().set('folio', folio);
     return this._httpClient.get(this.urlGetRequisicionByFolio, {params: params, headers: this.httpOptions.headers});
   }
   // Recupera la información completa del DAMFO-290 que se requiera.
   getDamfoById(damfoId: string) {
-    let params = new HttpParams().set('id', damfoId)
+    let params = new HttpParams().set('id', damfoId);
     return this._httpClient.get<any>(this.urlGetDamfoById, {params: params, headers: this.httpOptions.headers});
   }
   // Recuperar las rutas de camiones de las direccionaes relacionadas con el damfo - cliente
