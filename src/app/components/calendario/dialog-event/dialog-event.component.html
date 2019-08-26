@@ -32,18 +32,22 @@
       </mat-form-field>
       <mat-form-field>
         <input matInput
-          [min]="minLimitDate"
+          [min]="minDate"
           [matDatepicker]="fchInicio"
           placeholder="Inicio"
           formControlName="Inicio"
-          (dateChange)="_CheckNuevaFecha()"
-          [(ngModel)]="SeletedDayC" required="">
+          [(ngModel)]="dateStart"
+          required="">
         <mat-datepicker-toggle matSuffix [for]="fchInicio"></mat-datepicker-toggle>
         <mat-datepicker #fchInicio></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [matDatepicker]="fchFinal" placeholder="Fin" formControlName="Fin"
-          required>
+        <input matInput
+        [min]="dateStart"
+        [matDatepicker]="fchFinal"
+        placeholder="Fin"
+        formControlName="Fin"
+        [(ngModel)]="dateEnd">
         <mat-datepicker-toggle matSuffix [for]="fchFinal"></mat-datepicker-toggle>
         <mat-datepicker #fchFinal></mat-datepicker>
       </mat-form-field>

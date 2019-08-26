@@ -13,13 +13,14 @@ import { SettingsService } from '../../../core/settings/settings.service';
   templateUrl: './dialog-event.component.html',
   styleUrls: ['./dialog-event.component.scss'],
   providers: [CatalogosService,
-    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    { provide: MAT_DATE_LOCALE, useValue: 'es' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
     DatePipe
   ]
 })
 export class DialogEventComponent implements OnInit {
+  minDate = new Date();
   // Variables de Formulario
   public formEvent: FormGroup;
   public fb: FormBuilder;
@@ -28,19 +29,19 @@ export class DialogEventComponent implements OnInit {
   public color: string;
   public ColorPicker: string;
   public allDaySelected: boolean;
-  public minDate:any;
   public minLimitDate: any;
-  public SeletedDayC: any;
+  public dateStart: any;
+  public dateEnd: any;
   public Actividades: any;
-  // public evnt = {
-  //   titulo: '',
-  //   inicio: null,
-  //   final: null,
-  //   color: null,
-  //   horaInicio: null,
-  //   horaFinal: null,
-  //   descripcion: '',
-  // }
+
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7, tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -55,33 +56,24 @@ export class DialogEventComponent implements OnInit {
       Actividad: new FormControl('', [Validators.required]),
       Titulo: new FormControl('', [Validators.required]),
       Inicio: new FormControl('', [Validators.required]),
-      Fin: new FormControl('', [Validators.required]),
+      Fin: new FormControl(''),
       HoraInicio: new FormControl('', [Validators.required]),
       HoraFin: new FormControl('', [Validators.required]),
-      // AllDay: new FormControl(),
       Descripcion: new FormControl(''),
       Color: new FormControl('')
     });
-
   }
 
   ngOnInit() {
-    var DateNow = new Date();
-    this.minDate = DateNow;
-    this.ColorPicker = '#4290ff'
-    this.SeletedDayC = this.data;
-    this.minLimitDate = this.SeletedDayC;
+    this.ColorPicker = '#4290ff';
+    this.dateStart = this.data;
+    this.dateEnd = this.data;
+    this.formEvent.patchValue({
+      Inicio: new Date(this.data),
+      Fin: new Date(this.data),
+    });
     this.loading = false;
     this._GetActivdadesReclutador();
-    // this.formEvent = this.fb.group({
-    //   Titulo: [{ value: '' }, Validators.required],
-    //   Inicio: [{ value: this.SeletedDayC }, Validators.required],
-    //   Fin: [{ value: '' }, Validators.required],
-    //   HoraInicio: [{ value: '' }],
-    //   HoraFin: [{ value: '' }],
-    //   AllDay: [false],
-    //   Descripcion: [{ value: '' }],
-    // });
   }
 
   // ngAfterViewInit(): void {
@@ -92,9 +84,9 @@ export class DialogEventComponent implements OnInit {
   //   //   HoraFin: [{ value: '18:00' }]
   //   // });
   // }
-  public _CheckNuevaFecha() {
-    this.minLimitDate = this.formEvent.get('Inicio').value;
-  }
+  // public _CheckNuevaFecha() {
+  //   this.minLimitDate = this.formEvent.get('Inicio').value;
+  // }
 
   public _CheckAllDay() {
     this.allDaySelected = this.formEvent.get('AllDay').value;
@@ -103,30 +95,31 @@ export class DialogEventComponent implements OnInit {
   onCloseDialog() {
     this.dialogEvent.close(false);
   }
+
   onCloseDialogInfo() {
     this.loading = true;
-    var dateInicio = new Date(this.formEvent.get('Inicio').value);
-    var dateFinal = new Date(this.formEvent.get('Fin').value);
+    const dateInicio = new Date(this.formEvent.get('Inicio').value);
+    const dateFinal = new Date(this.formEvent.get('Fin').value);
 
-    var ds = dateInicio.getUTCDate(),
+    const ds = dateInicio.getUTCDate(),
       ms = dateInicio.getMonth(),
       ys = dateInicio.getFullYear();
-    var de = dateFinal.getUTCDate(),
+    const de = dateFinal.getUTCDate(),
       me = dateFinal.getMonth(),
       ye = dateFinal.getFullYear();
 
-    var Inicio: String,
+    let Inicio: String,
       Final: string,
       hourStart: Array<any> = [],
       hourEnd: Array<any> = [];
 
     if (!this.allDaySelected) {
-      hourStart = this.formEvent.get('HoraInicio').value.split(":");
-      hourEnd = this.formEvent.get('HoraFin').value.split(":");
-      var hrs = parseInt(hourStart[0]);
-      var mns = parseInt(hourStart[1]);
-      var hre = parseInt(hourEnd[0]);
-      var mne = parseInt(hourEnd[1]);
+      hourStart = this.formEvent.get('HoraInicio').value.split(':');
+      hourEnd = this.formEvent.get('HoraFin').value.split(':');
+      const hrs = parseInt(hourStart[0], null);
+      const mns = parseInt(hourStart[1], null);
+      const hre = parseInt(hourEnd[0], null);
+      const mne = parseInt(hourEnd[1], null);
       if (hre < hrs) {
         this.popToast('warning', 'Calendario', 'La hora Final no debe ser menor a la hora Inicio.');
         this.loading = false;
@@ -144,7 +137,7 @@ export class DialogEventComponent implements OnInit {
       // Inicio = new Date(ys, ms, ds, 0, 0).toJSON();
       // Final = new Date(ye, me, de, 0, 0).toJSON();
     }
-    var data = {
+    const data = {
       entidadId: this.settings.user['id'],
       TipoActividadId: this.formEvent.get('Actividad').value,
       title: this.formEvent.get('Titulo').value,
@@ -154,34 +147,26 @@ export class DialogEventComponent implements OnInit {
       message: this.formEvent.get('Descripcion').value || 'Sin Descripción',
       backgroundColor: this.ColorPicker,
       borderColor: this.ColorPicker,
-    }
+    };
     this.dialogEvent.close(data);
   }
 
   private _GetActivdadesReclutador() {
     this._catalogotService.getActividadesReclutador().subscribe(result => {
       this.Actividades = result;
-    })
+    });
   }
 
   /*
  * Creacion de mensajes
  * */
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    limit: 7, tapToDismiss: false,
-    showCloseButton: true,
-    mouseoverTimerStop: true,
-  });
   popToast(type: any, title: any, body: any) {
-    var toast: Toast = {
+    const toast: Toast = {
       type: type,
       title: title,
       timeout: 5000,
       body: body
-    }
+    };
     this.toasterService.pop(toast);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges, OnChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -15,17 +15,17 @@ const swal = require('sweetalert');
   styleUrls: ['./telefonos-cliente.component.scss'],
   providers: [CatalogosService, ClientesService]
 })
-export class TelefonosClienteComponent implements OnInit {
+export class TelefonosClienteComponent implements OnInit, OnChanges {
   @Input('Direcciones') Direcciones: any = [];
   @Input('EntidadId') EntidadId: any;
   @Input('Telefonos') Telefonos: any = [];
 
   public formTelefonos: FormGroup;
 
-  public loading: boolean = false;
+  public loading = false;
 
-  public itemsPerPage: number = 5;
-  public maxSize: number = 5;
+  public itemsPerPage = 5;
+  public maxSize = 5;
   public showFilterRowT: boolean;
 
   public indexTelefonos: any;
@@ -37,7 +37,7 @@ export class TelefonosClienteComponent implements OnInit {
   public textbtnTelefono: string;
   public esOficina: any;
 
-  public Principal: boolean = false;
+  public Principal = false;
   public tipoTelefonos: any;
   public Usuario: string;
 
@@ -80,6 +80,7 @@ export class TelefonosClienteComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if ((changes.Direcciones && !changes.Direcciones.isFirstChange()) ||
       (changes.Telefonos && !changes.Telefonos.isFirstChange())) {
+      console.log(this.Direcciones);
       this.Telefonos.forEach(element => {
         if (element['esPrincipal']) {
           this.Principal = true;
@@ -103,27 +104,27 @@ export class TelefonosClienteComponent implements OnInit {
     this.addTelefono = false;
     this.EditTelefono = false;
     this.esOficina = 1;
-    //this.elementT = null;
     this.formTelefonos.controls['Activo'].setValue(true);
     this.formTelefonos.controls['Principal'].setValue(false);
-    this.formTelefonos.controls['LadaPais'].setValue(52)
+    this.formTelefonos.controls['LadaPais'].setValue(52);
   }
 
   AddTelefono() {
-    let idDireccion = this.formTelefonos.get('TelDireccion').value;
-    let idxDireccion = this.Direcciones.findIndex(x => x.id == idDireccion)
-    let tipoTelefonoId = this.formTelefonos.get('TipoTelefono').value;
+    const idDireccion = this.formTelefonos.get('TelDireccion').value;
+    const idxDireccion = this.Direcciones.findIndex(x => x.id === idDireccion)
+    const tipoTelefonoId = this.formTelefonos.get('TipoTelefono').value;
     this.auxTipoTelefono = this.tipoTelefonos.filter(x => {
-      if (x.id == tipoTelefonoId) {
-        return x.tipo
+      if (x.id === tipoTelefonoId) {
+        return x.tipo;
       }
     });
-    if (tipoTelefonoId != 4) {
+    if (tipoTelefonoId !== 4) {
       this.formTelefonos.controls['Extension'].setValue('');
     }
-    let data = {
+    const data = {
       activo: this.formTelefonos.get('Activo').value,
-      calle: this.Direcciones[idxDireccion]['calle'] + ' No. ' + this.Direcciones[idxDireccion]['numeroExterior'] + ' C.P.' + this.Direcciones[idxDireccion]['codigoPostal'],
+      calle: this.Direcciones[idxDireccion]['calle'] + ' No. ' +
+      this.Direcciones[idxDireccion]['numeroExterior'] + ' C.P.' + this.Direcciones[idxDireccion]['codigoPostal'],
       claveLada: this.formTelefonos.get('Lada').value || '',
       clavePais: this.formTelefonos.get('LadaPais').value,
       entidadId: this.EntidadId,

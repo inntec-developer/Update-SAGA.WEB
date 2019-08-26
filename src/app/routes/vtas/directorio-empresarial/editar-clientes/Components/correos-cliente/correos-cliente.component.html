@@ -12,12 +12,12 @@
                 <mat-option *ngFor="let x of Direcciones; " [value]="x.id">
                   <span
                     *ngIf="(x?.calle.length + x?.municipio.length + x?.codigoPostal.length) < 42 else toLengthDr">
-                    {{x.calle}} - {{x.municipio}} - <strong>{{x.codigoPostal}}</strong>
+                    <strong class="text-warning">{{x.tipoDireccion}}</strong> {{x.calle}} {{x.numeroExterior}} - {{x.municipio}} - <strong>{{x.codigoPostal}}</strong>
                   </span>
                   <ng-template #toLengthDr>
                     <span container="body" placement="bottom"
-                      tooltip="{{x.calle}} - {{x.municipio}} - {{x.codigoPostal}}">
-                      {{x.calle +' - '+ x.municipio +' - '+ x.codigoPostal | slice:0:42}} ...</span>
+                      tooltip="{{x.tipoDireccion}} {{x.calle}} - {{x.numeroExterior +' - '+ x.municipio +' - '+ x.codigoPostal}}">
+                      <strong class="text-warning">{{x.tipoDireccion}}</strong> {{x.calle}} {{x.numeroExterior +' - '+ x.municipio +' - '+ x.codigoPostal | slice:0:42}} ...</span>
                   </ng-template>
                 </mat-option>
               </mat-select>
