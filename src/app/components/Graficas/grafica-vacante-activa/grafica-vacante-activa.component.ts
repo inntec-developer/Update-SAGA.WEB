@@ -42,6 +42,8 @@ export class GraficaVacanteActivaComponent implements OnInit {
   let espera = item['espera'];
   let pausada = item['pausada'];
   let garantia = item['garantia'];
+  let Pendiente = item['pendiente'];
+  let Pendientegg = item['pendientegg'];
   this.total = item['total'];
  // this.NumeroVacantes = item['total'];
   this.NumeroPos = item['numeropos'];
@@ -58,7 +60,9 @@ export class GraficaVacanteActivaComponent implements OnInit {
                       '#c45850',
                       '#70FFD3',
                       '#F335FF',
-                      '#C5FF60'
+                      '#C5FF60',
+                      '#FF4136',
+                      '#FFDC00'
                        ],
       data: [
          nuevo ,
@@ -70,7 +74,9 @@ export class GraficaVacanteActivaComponent implements OnInit {
          socioeconomicos,
          espera ,
          pausada ,
-         garantia
+         garantia,
+         Pendiente,
+         Pendientegg
       ]
     }],
     // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -85,6 +91,8 @@ export class GraficaVacanteActivaComponent implements OnInit {
       'En espera de contratación',
       'Pausadas',
       'Garantía de búsqueda',
+      'Pendiente',
+      'PendienteGG'
     ]
   }
   this.Chart = new Chart('activaIndi', {
