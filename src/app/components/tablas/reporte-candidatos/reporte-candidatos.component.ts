@@ -117,7 +117,7 @@ export class ReporteCandidatosComponent implements OnInit {
     this.candidatos = false;
     setTimeout(() => {
       this.columns.forEach(element => {
-        (<HTMLInputElement>document.getElementById(element.name + '_1')).value = '';
+        (<HTMLInputElement>document.getElementById(element.name + '_2')).value = '';
       });
     }, 1000);
   }
@@ -125,11 +125,11 @@ export class ReporteCandidatosComponent implements OnInit {
   public clearfilters() {
     this.columns.forEach(element => {
       element.filtering.filterString = '';
-      (<HTMLInputElement>document.getElementById(element.name + '_1')).value = '';
+      (<HTMLInputElement>document.getElementById(element.name + '_2')).value = '';
     });
     this.candidatos = false;
     this.selected = false;
-    this.getCandidatos();
+   this.getCandidatos();
   }
 
   openDialogLiberar() {

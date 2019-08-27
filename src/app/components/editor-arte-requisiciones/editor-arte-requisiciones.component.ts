@@ -87,7 +87,6 @@ this.openDialogRequiArte();
   openDialogRequiArte() {
 
     this._serviceTickets.GetVacantesByRequi(this.requisicionId).subscribe(data => {
-
        this.vBtra = data[0]['vBtra'];
        this.experiencia = data[0]['experiencia'].substring(0, 150);
     });

@@ -95,8 +95,8 @@ sparkOptionsDanger = {
   }
 
   GetRport() {
-    this._service.GetRportGG(this.usuarioLogin).subscribe(result => {
-      if(result !== 417) {
+    this._service.GetRportGG('FA6039C6-6497-E911-8993-B2AAD340F890').subscribe(result => {
+      if (result !== 417) {
 
         this.reporte = result;
       this.loadCharts(this.reporte[0]);
@@ -120,8 +120,26 @@ sparkOptionsDanger = {
       this.sub = row.nombre;
     }
 
+    if (row.tipoUsuario === 4) {
+      this.gerente.push({
+        reclutadorId: row.reclutadorId,
+        nombre: row.nombre,
+        foto: row.foto,
+        resumen: row.resumen,
+        totalPos: row.totalPos,
+        totalCub: row.totalCub,
+        totalFal: row.totalPos - row.totalCub,
+        totalCump: Math.round(row.totalCub * 100 / row.totalPos || 0),
+        bg: this.backgroundColor[cont],
+      });
+      cont++;
+    }
     if (row.resumen.length > 0) {
       row.resumen.forEach(element => {
+        if (row.tipoUsuario === 4) {
+        this.gerente[0]['totalPos'] = this.gerente[0]['totalPos'] - element.totalPos;
+        this.gerente[0]['totalCub'] = this.gerente[0]['totalCub'] - element.totalCub;
+        }
         this.gerente.push({
           reclutadorId: element.reclutadorId,
           nombre: element.nombre,
@@ -135,7 +153,10 @@ sparkOptionsDanger = {
         });
         cont++;
       });
-
+      if (row.tipoUsuario === 4) {
+      this.gerente[0]['totalFal'] = this.gerente[0]['totalPos'] - this.gerente[0]['totalCub'];
+      this.gerente[0]['totalCump'] =  Math.round(this.gerente[0]['totalCub'] * 100 / this.gerente[0]['totalPos'] || 0);
+      }
       this.totalPos = row.totalPos;
       this.totalCub = row.totalCub;
       this.totalFal = this.totalPos - this.totalCub;
@@ -166,8 +187,7 @@ sparkOptionsDanger = {
     this.loadCharts(aux);
   }
 
-  refreshGraficasPie(data)
-  {
+  refreshGraficasPie(data) {
     const bg = [];
     const label = [];
     const totalPos = [];

@@ -64,8 +64,8 @@
 <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown"
 [disableOnBreakpoints]="false" [disabled]="disabled">
 <div class="row" style="height: 400px">
-    <ng-container *ngFor="let t of gerente">
-        <div class="col-lg-4 col-md-6">
+    <ng-container *ngFor="let t of gerente; let ind = index">
+        <div *ngIf="t.reclutadorId != usuarioId" class="col-lg-4 col-md-6">
             <div class="card border">
                 <div class="card-header text-white">
                     <div class="h-25 d-inline-block w-100 p-2" [style.background-color]="t.bg">

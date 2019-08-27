@@ -30,7 +30,7 @@
           <tr *ngIf="showFilterRow">
             <th *ngFor="let column of columns">
               <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
-                (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}_1">
+                (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}_2">
             </th>
           </tr>
         </thead>

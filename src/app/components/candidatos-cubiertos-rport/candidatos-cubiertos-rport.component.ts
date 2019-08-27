@@ -41,7 +41,7 @@ export class CandidatosCubiertosRportComponent implements OnInit {
   GetCandidatos()
   {
     this._service.GetCandidatosCubiertos(this.RequisicionId).subscribe(data => {
-      debugger;
+      this.dataSource = [];
       data.forEach(element => {
         this.dataSource.push({
           horario: element.horario,

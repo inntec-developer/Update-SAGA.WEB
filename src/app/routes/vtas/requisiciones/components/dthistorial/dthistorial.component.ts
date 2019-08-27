@@ -37,8 +37,15 @@ export class DTHistorialComponent implements OnInit {
   rowAux: any = [];
   reporteCandidatos = false;
 
-  constructor( private service: RequisicionesService, private spinner: NgxSpinnerService, private settings: SettingsService, private excelService: ExcelService,
-    private pipe: DatePipe,) { }
+  public config: any = {
+    paging: true,
+    filtering: { filterString: '' },
+    className: ['table-hover  mb-0']
+  };
+  constructor( private service: RequisicionesService, private spinner: NgxSpinnerService,
+    private settings: SettingsService,
+    private excelService: ExcelService,
+    private pipe: DatePipe ) { }
 
   ngOnInit() {
     this.spinner.show();
@@ -51,7 +58,7 @@ export class DTHistorialComponent implements OnInit {
       this.totalContratados = 0;
       this.dataSource.forEach(r => {
         this.totalContratados += r.contratados;
-      })
+      });
      this.onChangeTable(this.config);
     });
   }
@@ -73,16 +80,9 @@ export class DTHistorialComponent implements OnInit {
     { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador' } },
   ];
 
-  public config: any = {
-    paging: true,
-    //sorting: { columns: this.columns },
-    filtering: { filterString: '' },
-    className: ['table-hover  mb-0']
-  };
-
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
-    let start = (page.page - 1) * page.itemsPerPage;
-    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    const start = (page.page - 1) * page.itemsPerPage;
+    const end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
   }
 
@@ -97,9 +97,7 @@ export class DTHistorialComponent implements OnInit {
             if(!Array.isArray(item[column.name]))
             {
               return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
-            }
-            else
-            {
+            } else {
                 let aux = item[column.name];
                 let mocos = false;
                 if(item[column.name].length > 0)
@@ -138,12 +136,8 @@ export class DTHistorialComponent implements OnInit {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
 
-    if (config.sorting) {
-      (<any>Object).assign(this.config.sorting, config.sorting);
-    }
-
     this.rows = this.dataSource;
-    let filteredData = this.changeFilter(this.dataSource, this.config);
+    const filteredData = this.changeFilter(this.rows, this.config);
 
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
     this.length = filteredData.length;
@@ -157,8 +151,7 @@ export class DTHistorialComponent implements OnInit {
 
     if (this.rowAux.length == 0) {
       this.rowAux = data;
-    }
-    else if (data.selected && this.rowAux != []) {
+    } else if (data.selected && this.rowAux !== []) {
       var aux = data;
       data = this.rowAux;
       data.selected = false;
@@ -196,29 +189,25 @@ export class DTHistorialComponent implements OnInit {
       var coordinador = "";
 
       this.dataSource.forEach(row => {
-        
-        var d = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
+        const d = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
         // var mocos = (d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString()
-        var e = this.pipe.transform(new Date(row.fch_Cumplimiento), 'dd/MM/yyyy');
+        const e = this.pipe.transform(new Date(row.fch_Cumplimiento), 'dd/MM/yyyy');
 
         if (!Array.isArray(row.reclutadores) ){
-          reclutador = "SIN ASIGNAR";
-        }
-        else if (row.reclutadores.length > 1) {
+          reclutador = 'SIN ASIGNAR';
+        } else if (row.reclutadores.length > 1) {
           row.reclutadores.forEach(element => {
             reclutador = reclutador + element + ', \n'
           });
-        }
-        else {
+        } else {
           reclutador = row.reclutadores[0];
         }
 
-        if (row.estatusId == 4) {
+        if (row.estatusId === 4) {
           coordinador = reclutador;
-          reclutador = "SIN ASIGNAR"
+          reclutador = 'SIN ASIGNAR';
 
-        }
-        else {
+        } else {
           coordinador = row.coordinador;
         }
 
@@ -229,14 +218,14 @@ export class DTHistorialComponent implements OnInit {
           NO: row.vacantes,
           CUBIERTOS: row.contratados,
           COORDINACION: row.claseReclutamiento,
-          'FECHA CREACIÓN': d,//new Date(d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString(),
+          'FECHA CREACIÓN': d, // new Date(d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString(),
           'FECHA CUMPLIMIENTO': e,
           ESTATUS: row.estatus,
           COORDINADOR: coordinador,
           SOLICITANTE: row.solicita,
           RECLUTADOR: reclutador,
-        })
-        reclutador = "";
+        });
+        reclutador = '';
       });
 
       //   })
