@@ -19,7 +19,7 @@
 }
 
 .ocultar{
-    display: none;
+    display: none !important;
 }
 
 .botonmargen{
@@ -71,5 +71,10 @@
     position: relative;
    }
 
+
+   .botonesClient{
+  
+    position: relative;
+}
 
   

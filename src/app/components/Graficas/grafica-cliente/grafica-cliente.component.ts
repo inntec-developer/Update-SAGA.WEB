@@ -8,11 +8,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ColorPickerComponent } from 'ngx-color-picker/dist/lib/color-picker.component';
 
 @Component({
-  selector: 'app-grafica-resumen',
-  templateUrl: './grafica-resumen.component.html',
-  styleUrls: ['./grafica-resumen.component.scss']
+  selector: 'app-grafica-cliente',
+  templateUrl: './grafica-cliente.component.html',
+  styleUrls: ['./grafica-cliente.component.scss']
 })
-export class GraficaResumenComponent implements OnInit {
+export class GraficaClienteComponent implements OnInit {
 
   Chart: Chart;
   Data: any;
@@ -31,43 +31,35 @@ export class GraficaResumenComponent implements OnInit {
 
     Generar(empresa,cordina) {
       this.spinner.show();
-      document.getElementById('DivVacante').classList.add('ocultar');
-    document.getElementById('DivGraficaVacante').classList.remove('ocultar');
+      document.getElementById('DivClientes').classList.add('ocultar');
+    document.getElementById('DivGraficaCliente').classList.remove('ocultar');
 
-    var emp = '';
-    var coo = '';
-   
+    let inc = document.getElementById('fechaInicial')['value'];
+    let fin = document.getElementById('fechaFinal')['value'];
+
+  this.servicio.getClientes(inc,fin,"2").subscribe(item =>{
+
     if(this.Chart != null){
       this.Chart.destroy();
     }
-
-    if(cordina != undefined){
-      for (let item of cordina) {
-        coo += item +',';
-      }
-    }
-
-    coo = cordina == undefined?'0':coo;
-    emp = empresa == undefined?'0':empresa;
-  this.servicio.getVacante(emp,coo).subscribe(item =>{
- this.nombreCliente = item[0].vacantenombre;
+ 
     var Onombre = [];
     var Opos = [];
     item.forEach(item2 => {
-      Onombre.push(item2.perfil)
+      Onombre.push(item2.nombre)
       Opos.push(item2.numeropos)
      });
      this.spinner.hide();
    this.Data = {
      datasets: [{
        backgroundColor:["#0074D9", "#FF4136", "#2ECC40", "#FF851B", "#7FDBFF", "#B10DC9", 
-       "#FFDC00", "#001f3f", "#39CCCC", "#01FF70", "#85144b", "#F012BE", "#3D9970","#AAAAAA", "#111111", 
+       "#FFDC00", "#001f3f", "#39CCCC", "#01FF70", "#85144b", "#F012BE", "#3D9970","#111111","#AAAAAA" , 
        ColorPickerComponent],
        data: Opos
      }],
      labels: Onombre
    }
-   this.Chart = new Chart('GraficaVacante', {
+   this.Chart = new Chart('GraficaClientes', {
      type: 'pie',
      title: { text: 'Seguimiento de Vacantes' },
      data: this.Data,
@@ -88,7 +80,6 @@ export class GraficaResumenComponent implements OnInit {
    });
   })
 
- 
-
   }
+
 }

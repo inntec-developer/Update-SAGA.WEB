@@ -326,8 +326,10 @@ GeneraEstatusBolsa(){
   document.getElementById('DivCandidato').classList.add('ocultar');
   document.getElementById('DivVacante').classList.add('ocultar');
   document.getElementById('DivGraficaVacante').classList.add('ocultar');
+  document.getElementById('DivClientes').classList.add('ocultar');
+
  
- 
+  document.getElementById('DivBotones').classList.remove('botones');
   document.getElementById('report1').classList.add('ocultar');
   document.getElementById('repProActi').classList.add('ocultar');
   document.getElementById('report2').classList.add('ocultar');
@@ -344,9 +346,13 @@ GeneraEstatusBolsa(){
   document.getElementById('exelCandidato').classList.add('ocultar');
   document.getElementById('repVacante').classList.add('ocultar');
   document.getElementById('exelVacante').classList.add('ocultar');
+  document.getElementById('repCliente').classList.add('ocultar');
+  document.getElementById('exelCliente').classList.add('ocultar');
+
   
   document.getElementById('btnGraficaVacante').classList.add('ocultar');
- 
+  document.getElementById('btnGraficaCliente').classList.add('ocultar');
+
  
   document.getElementById('divBusCoordina2').classList.add('ocultar');
   document.getElementById('divreclutador').classList.remove('ocultar');
@@ -355,6 +361,7 @@ GeneraEstatusBolsa(){
   document.getElementById('divEdad').classList.add('ocultar');
   document.getElementById('divgenero').classList.add('ocultar');
   document.getElementById('Divdiv').classList.remove('ocultar');
+  document.getElementById('Divdiv3').classList.add('ocultar');
   document.getElementById('divcordinacion').classList.add('ocultar');
   document.getElementById('divSolicitante').classList.add('ocultar');
   document.getElementById('divEmpresas').classList.add('ocultar');
@@ -364,6 +371,7 @@ GeneraEstatusBolsa(){
   document.getElementById('divEmpresas2').classList.add('ocultar');
   document.getElementById('divFechafinal').classList.remove('ocultar');
   document.getElementById('divFechaInicial').classList.remove('ocultar');
+  document.getElementById('Divdivbusca').classList.remove('ocultar');
  
   let tipo = document.getElementById('TipoReporte')['value'];
   if(tipo == 3){
@@ -389,7 +397,14 @@ GeneraEstatusBolsa(){
     document.getElementById('repVacante').classList.remove('ocultar');
     document.getElementById('exelVacante').classList.remove('ocultar');
     document.getElementById('btnGraficaVacante').classList.remove('ocultar');
-    this.GeneraEstatusBolsa();
+  }else if(tipo == 10){
+    document.getElementById('DivBotones').classList.add('botones');
+    document.getElementById('repCliente').classList.remove('ocultar');
+    document.getElementById('exelCliente').classList.remove('ocultar');
+    document.getElementById('btnGraficaCliente').classList.remove('ocultar');
+    document.getElementById('Divdiv3').classList.remove('ocultar');
+    document.getElementById('Divdivbusca').classList.add('ocultar');
+    document.getElementById('Divdiv').classList.add('ocultar');
   }else{
     document.getElementById('report1').classList.remove('ocultar');
     document.getElementById('exel1').classList.remove('ocultar');
@@ -445,6 +460,11 @@ GeneraEstatusBolsa(){
     document.getElementById('divTipoReclu').classList.add('ocultar');
     document.getElementById('divFechafinal').classList.add('ocultar');
     document.getElementById('divFechaInicial').classList.add('ocultar');
+    document.getElementById('divBusCoordina').classList.add('ocultar');
+    document.getElementById('divreclutador').classList.add('ocultar');
+    document.getElementById('divestatus').classList.add('ocultar');
+  }else if(tipo == 10){
+    document.getElementById('divTipoReclu').classList.add('ocultar');
     document.getElementById('divBusCoordina').classList.add('ocultar');
     document.getElementById('divreclutador').classList.add('ocultar');
     document.getElementById('divestatus').classList.add('ocultar');
