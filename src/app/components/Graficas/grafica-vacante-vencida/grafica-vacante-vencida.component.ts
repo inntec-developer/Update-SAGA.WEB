@@ -44,7 +44,7 @@ export class GraficaVacanteVencidaComponent implements OnInit {
     }
     this.Chart = new Chart('canvas4', {
       type: 'pie',
-      title: { text: 'Seguimiento de Vacantes' },
+      // title: { text: 'Seguimiento de Vacantes' },
       data: this.Data,
       options: {
         legend: {

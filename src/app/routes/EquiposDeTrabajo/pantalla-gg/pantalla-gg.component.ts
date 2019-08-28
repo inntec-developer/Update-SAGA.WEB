@@ -4,9 +4,7 @@ import { ColorsService } from '../../../shared/colors/colors.service';
 import { EquiposTrabajoService } from './../../../service/EquiposDeTrabajo/equipos-trabajo.service';
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
-import { ApiConection } from '../../../service';
-import { element } from 'protractor';
-import { switchAll } from 'rxjs/operators';
+
 
 
 @Component({

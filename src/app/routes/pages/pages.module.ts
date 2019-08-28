@@ -1,4 +1,4 @@
-import { FoliosActivosComponent } from './../Tracking/vacantes/Graficas/folios-activos/folios-activos.component';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginatorIntl, MatTableModule, MatInputModule, MatIconModule } from '@angular/material';
 import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
@@ -22,8 +22,8 @@ import { SharedModule } from '../../shared/shared.module';
 import { SistTicketsModule } from './../SistTickets/sist-tickets.module';
 import { TicketsInicioComponent } from './tickets-inicio/tickets-inicio.component';
 import { TrackingVacantesComponent } from './tracking-vacantes/tracking-vacantes.component';
-import { VacantesComponent } from './../Tracking/vacantes/vacantes.component';
 import { VerTurnosComponent } from './ver-turnos/ver-turnos.component';
+import { ComponentsModule } from '../../components/components.module';
 
 /* Use this routes definition in case you want to make them lazy-loaded */
 // const routes: Routes = [
@@ -52,7 +52,8 @@ import { VerTurnosComponent } from './ver-turnos/ver-turnos.component';
         ReactiveFormsModule,
         NgScrollbarModule,
         HttpClientModule,
-        SistTicketsModule
+        SistTicketsModule, 
+        ComponentsModule
     ],
     declarations: [
         LoginComponent,
@@ -63,12 +64,10 @@ import { VerTurnosComponent } from './ver-turnos/ver-turnos.component';
         MaintenanceComponent,
         Error404Component,
         Error500Component,
-        VacantesComponent,
         TrackingVacantesComponent,
         TicketsInicioComponent,
         VerTurnosComponent,
-        InicioKioscoComponent,
-        FoliosActivosComponent
+        InicioKioscoComponent
     ],
     providers: [
         { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

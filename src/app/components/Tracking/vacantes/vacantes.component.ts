@@ -1,3 +1,4 @@
+import { EquiposTrabajoService } from './../../../service/EquiposDeTrabajo/equipos-trabajo.service';
 
 import { Component, Input, OnInit } from '@angular/core';
 
@@ -14,6 +15,7 @@ import { VacantesService } from '../../../service/TrackingVacantes/vacantes.serv
 export class VacantesComponent implements OnInit {
 
   @Input() public clienteId;
+  @Input() public flag = 0; // para saber si vengo de tracking o de clientes
 
   //config scroll
   disabled = false;
@@ -27,7 +29,7 @@ export class VacantesComponent implements OnInit {
   public dataInfoRequi: Array<any> = [];
   public rowsInfo: Array<any> = [];
   public pageInfo: number = 1;
-  public itemsPerPageInfo: number = 20;
+  public itemsPerPageInfo: number = 5;
   public maxSizeInfo: number = 5;
   public numPagesInfo: number = 1;
   public lengthInfo: number = 0;
@@ -49,32 +51,38 @@ export class VacantesComponent implements OnInit {
     { title: 'RECHAZADOS', className: 'text-info text-center', name: 'rechazados', filtering: { filterString: '', placeholder: '0' } },
     { title: 'CONTRATADOS', className: 'text-info text-center', name: 'contratados', filtering: { filterString: '', placeholder: '0' } }
   ];
-
-  constructor(private service: VacantesService, private spinner: NgxSpinnerService, private _appcomponent: AppComponent) { }
+  public config: any = {
+    paging: true,
+    filtering: { filterString: '' },
+    className: ['table-hover mb-0 ']
+  };
+  constructor(private service: VacantesService, private _service: EquiposTrabajoService,
+    private spinner: NgxSpinnerService, private _appcomponent: AppComponent) { }
 
   ngOnInit() {
+    if (this.flag === 0) {
     this.getInfoVacantes();
+    } else {
+      this.getInfoVacantes2();
+    }
   }
 
   getInfoVacantes() {
     this.service.GetInformeRequisiciones(this.clienteId).subscribe(data => {
       this.dataInfoRequi = data;
-      this.rowsInfo = this.dataInfoRequi.slice(0, this.itemsPerPageInfo);
-      this.registrosInfo = this.rowsInfo.length;
-      this.lengthInfo = this.dataInfoRequi.length;
+      this.onChangeTableInfo(this.config);
+    });
+  }
+  getInfoVacantes2() {
+    this._service.GetInformeClientes(this.clienteId).subscribe(data => {
+      this.dataInfoRequi = data;
+    this.onChangeTableInfo(this.config);
     });
   }
 
-  public config: any = {
-    paging: true,
-    //sorting: { columns: this.columns },
-    filtering: { filterString: '' },
-    className: ['table-hover mb-0 ']
-  };
-
   public changePageInfo(page: any, data: Array<any> = this.dataInfoRequi): Array<any> {
-    let start = (page.page - 1) * page.itemsPerPage;
-    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    const start = (page.page - 1) * page.itemsPerPage;
+    const end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
   }
 
@@ -82,42 +90,14 @@ export class VacantesComponent implements OnInit {
     let filteredData: Array<any> = data;
     this.columnsInfo.forEach((column: any) => {
       this.clearFilter = true;
-      if (column.filtering) {
-       // this.showFilterRowInfo = true;
+      if (column.filtering.filterString !== '') {
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
+          if (item[column.name] != null) {
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+          }
         });
       }
     });
-
-    if (!config.filtering) {
-      return filteredData;
-    }
-
-    if (config.filtering.columnName) {
-      return filteredData.filter((item: any) =>
-        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-    }
-
-    let tempArray: Array<any> = [];
-    filteredData.forEach((item: any) => {
-      let flag = false;
-      this.columnsInfo.forEach((column: any) => {
-        if (item[column.name] == null) {
-          flag = true;
-        } else {
-          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-            flag = true;
-          }
-        }
-      });
-      if (flag) {
-
-        tempArray.push(item);
-      }
-    });
-    filteredData = tempArray;
 
     return filteredData;
   }
@@ -127,14 +107,10 @@ export class VacantesComponent implements OnInit {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
 
-    // if (config.sorting) {
-    //   (<any>Object).assign(this.config.sorting, config.sorting);
-    // }
-
     this.registrosInfo = this.dataInfoRequi.length;
     this.rowsInfo = this.dataInfoRequi;
-    let filteredData = this.changeFilterInfo(this.dataInfoRequi, this.config);
-    //let sortedData = this.changeSort(filteredData, this.config);
+    const filteredData = this.changeFilterInfo(this.dataInfoRequi, this.config);
+
     this.rowsInfo = page && config.paging ? this.changePageInfo(page, filteredData) : filteredData;
     this.lengthInfo =  filteredData.length;
     setTimeout(() => {
@@ -145,14 +121,14 @@ export class VacantesComponent implements OnInit {
   }
 
   public refreshTableInfo() {
-    this.getInfoVacantes();
+    this.ngOnInit();
     setTimeout(() => {
       this.columnsInfo.forEach(element => {
         element.filtering.filterString = '';
         (<HTMLInputElement>document.getElementById(element.name)).value = '';
       });
-     let page: any = { page: 1, itemsPerPage: this.itemsPerPageInfo }
-      this.onChangeTableInfo(this.config, page);
+
+      this.onChangeTableInfo(this.config);
     }, 400);
   }
 

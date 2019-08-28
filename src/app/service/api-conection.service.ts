@@ -314,6 +314,9 @@ export class ApiConection {
   /*Equipos de Trabajo*/
   public static GetRportGG = 'Equipos/getRportGG';
   public static GetRportTable = 'Equipos/getRportTable';
+  public static GetRportClientes = 'Equipos/getRportClientes';
+  public static GetInformeClientes = 'Equipos/getInformeClientes';
+  public static GetRportTableClientes = 'Equipos/getRportTableClientes';
 
   /*Reportes */
   public static GetInforme = 'reporte/Informe';

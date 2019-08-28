@@ -1,3 +1,4 @@
+import { VacantesComponent } from './Tracking/vacantes/vacantes.component';
 import { ActividadEmpresaComponent } from './catalogos/actividad-empresa/actividad-empresa.component';
 import { ActividadesComponent } from './tablas/actividades/actividades.component';
 import { ActividadesReclutadorComponent } from './calendario/actividades-reclutador/actividades-reclutador.component';
@@ -150,6 +151,7 @@ import { DtVacantesUNComponent } from './Indicadores/dt-vacantes-un/dt-vacantes-
 import { EditorArteRequisicionesComponent } from './editor-arte-requisiciones/editor-arte-requisiciones.component';
 import { DlgBGArteComponent } from './editor-arte-requisiciones/dlg-bgarte/dlg-bgarte.component';
 import { DlgRequiArteComponent } from './editor-arte-requisiciones/dlg-requi-arte/dlg-requi-arte.component';
+import { FoliosActivosComponent } from './Tracking/vacantes/Graficas/folios-activos/folios-activos.component';
 
 
 @NgModule({
@@ -306,7 +308,9 @@ import { DlgRequiArteComponent } from './editor-arte-requisiciones/dlg-requi-art
     DtVacantesUNComponent,
     EditorArteRequisicionesComponent,
     DlgBGArteComponent,
-    DlgRequiArteComponent
+    DlgRequiArteComponent,
+    VacantesComponent,
+    FoliosActivosComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -409,9 +413,16 @@ import { DlgRequiArteComponent } from './editor-arte-requisiciones/dlg-requi-art
     IndicadorUndNegocioMxComponent,
     EditorArteRequisicionesComponent,
     DlgBGArteComponent,
-    DlgRequiArteComponent
+    DlgRequiArteComponent,
+    VacantesComponent,
+    FoliosActivosComponent
   ],
-  entryComponents: [DlgRequiArteComponent, DlgBGArteComponent, DlgCubiertasComponent, DlgResultadosMedicosComponent, DlgRegistroMasivoComponent, RegistroReclutadorComponent, TicketsRegisterComponent,DlgRevisarExamenesComponent, DialogHorariosConteoComponent, DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent, DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
+  entryComponents: [DlgRequiArteComponent, DlgBGArteComponent, DlgCubiertasComponent,
+    DlgResultadosMedicosComponent, DlgRegistroMasivoComponent,
+    RegistroReclutadorComponent, TicketsRegisterComponent,
+    DlgRevisarExamenesComponent, DialogHorariosConteoComponent,
+    DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent,
+    DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
 
 
 })

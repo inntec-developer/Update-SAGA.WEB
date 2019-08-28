@@ -12,6 +12,9 @@ export class EquiposTrabajoService {
 
   private UrlGetRporGG = ApiConection.ServiceUrl + ApiConection.GetRportGG;
   private UrlGetRporTable = ApiConection.ServiceUrl + ApiConection.GetRportTable;
+  private UrlGetRportClientes = ApiConection.ServiceUrl + ApiConection.GetRportClientes;
+  private UrlGetInfoClientes = ApiConection.ServiceUrl + ApiConection.GetInformeClientes;
+  private UrlGetRporTableClientes = ApiConection.ServiceUrl + ApiConection.GetRportTableClientes;
 
   constructor(private _httpClient: HttpClient, private settings: SettingsService) { }
 
@@ -25,5 +28,22 @@ export class EquiposTrabajoService {
     const params = new HttpParams().set('usuario', usuario).set('orden', orden);
 
     return this._httpClient.get(this.UrlGetRporTable, {params: params});
+  }
+
+  GetRportClientes(usuarioId): Observable<any> {
+    const params = new HttpParams().set('usuarioId', usuarioId);
+
+    return this._httpClient.get(this.UrlGetRportClientes, {params: params});
+  }
+  GetInformeClientes(clienteId): Observable<any> {
+    const params = new HttpParams().set('cc', clienteId);
+
+    return this._httpClient.get(this.UrlGetInfoClientes, {params: params});
+  }
+
+  GetRportTableClientes(clienteId, orden): Observable<any> {
+    const params = new HttpParams().set('clienteId', clienteId).set('orden', orden);
+
+    return this._httpClient.get(this.UrlGetRporTableClientes, {params: params});
   }
 }

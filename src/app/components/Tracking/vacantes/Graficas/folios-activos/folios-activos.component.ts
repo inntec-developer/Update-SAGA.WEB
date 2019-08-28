@@ -4,6 +4,7 @@ import { Chart } from 'chart.js';
 import { VacantesService } from '../../../../../service/TrackingVacantes/vacantes.service';
 import { stripSummaryForJitFileSuffix } from '@angular/compiler/src/aot/util';
 import { preserveWhitespacesDefault } from '@angular/compiler';
+import { EquiposTrabajoService } from '../../../../../service/EquiposDeTrabajo/equipos-trabajo.service';
 @Component({
   selector: 'app-folios-activos',
   templateUrl: './folios-activos.component.html',
@@ -16,6 +17,8 @@ export class FoliosActivosComponent implements OnInit {
   Chart3: Chart;
 
   @Input() clienteId: any = [];
+  @Input() flag = 0;
+
   Data: any;
   Data2: any;
   Data3: any;
@@ -23,9 +26,31 @@ export class FoliosActivosComponent implements OnInit {
   totalActivos = 0;
   total = 0;
   totalPos = 0;
-  constructor(private service: VacantesService) { }
+  dataInfoRequi: any;
+  constructor(private service: VacantesService, private _service: EquiposTrabajoService) { }
 
   ngOnInit() {
+    if (this.flag === 0) {
+      this.getInfoVacantes();
+      } else {
+        this.getInfoVacantes2();
+      }
+  }
+
+  getInfoVacantes() {
+    this.service.GetInformeRequisiciones(this.clienteId).subscribe(data => {
+      this.dataInfoRequi = data;
+      this.loadChart(this.dataInfoRequi);
+    });
+  }
+  getInfoVacantes2() {
+    this._service.GetInformeClientes(this.clienteId).subscribe(data => {
+      this.dataInfoRequi = data;
+      this.loadChart(this.dataInfoRequi);
+    });
+  }
+
+  loadChart(result) {
     let nuevo = 0;
     let aprobada = 0;
     let publicada = 0;
@@ -44,8 +69,13 @@ export class FoliosActivosComponent implements OnInit {
     this.totalPos = 0;
     let contratados = 0;
 
-    this.service.GetInformeRequisiciones(this.clienteId).subscribe(data => {
-      data.forEach(element => {
+    if (this.Chart)
+    {
+      this.Chart.destroy();
+      this.Chart2.destroy();
+      this.Chart3.destroy();
+    }
+    result.forEach(element => {
         this.totalPos += element.vacantes;
         contratados += element.contratados;
 
@@ -186,15 +216,15 @@ export class FoliosActivosComponent implements OnInit {
           'Pausadas',
           'Garantía de búsqueda',
         ]
-      }
+      };
+
       this.Chart = new Chart('canvas', {
         type: 'pie',
-        // title: { text: 'Seguimiento de Vacantes' },
         data: this.Data,
         options: {
           legend: {
             position: 'right',
-            display: true,
+            display: false,
             labels: {
               fontColor: 'white',
               fontSize: 9,
@@ -204,7 +234,6 @@ export class FoliosActivosComponent implements OnInit {
             }
           },
         },
-
       });
 
  
@@ -231,7 +260,7 @@ export class FoliosActivosComponent implements OnInit {
           options: {
             legend: {
               position: 'right',
-              display: true,
+              display: false,
               labels:{
                 fontColor: 'white',
                 fontSize: 9,
@@ -264,8 +293,8 @@ export class FoliosActivosComponent implements OnInit {
           'Cubiertas por medios',
           'Cubiertas por el cliente'
         ]
-      }
-    
+      };
+
         this.Chart3 = new Chart('canvas3', {
           type: 'pie',
           // title: { text: 'Seguimiento de Vacantes' },
@@ -273,7 +302,7 @@ export class FoliosActivosComponent implements OnInit {
           options: {
             legend: {
               position: 'right',
-              display: true,
+              display: false,
               labels:{
                 fontColor: 'white',
                 fontSize: 9,
@@ -284,9 +313,5 @@ export class FoliosActivosComponent implements OnInit {
             },
           }
         });
-
-    });
-
   }
-
 }

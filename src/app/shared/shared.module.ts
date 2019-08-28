@@ -95,7 +95,7 @@ import { VectormapDirective } from './directives/vectormap/vectormap.directive';
     ChkPrivilegiosMenuDirective,
     TreeGridDirective,
     MonedaPipe,
-    NumericoPipe,
+    NumericoPipe
   ],
   exports: [
     AgmCoreModule ,

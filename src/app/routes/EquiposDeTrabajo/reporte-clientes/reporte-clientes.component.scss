@@ -1,0 +1,25 @@
+.modal-lg
+{
+  max-width: 95% !important;
+}
+
+a {
+  cursor: pointer;
+}
+
+a:hover {
+  background-color: rgba(126, 123, 215, 0.2);
+  font-size: 14.5px;
+  box-shadow:1px 20px 60px rgba(0,0,0,.23);
+}
+
+a:hover .h2 {
+  font-size: 32.5px;
+}
+
+ng-scrollbar {
+  --scrollbar-size: 4px;
+  --scrollbar-thumb-color: rgb(94, 175, 255);
+  --scrollbar-thumb-hover-color: dodgerblue;
+  --scrollbar-border-radius: 4px;
+}
