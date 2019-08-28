@@ -27,6 +27,7 @@ export class ReporteClientesComponent implements OnInit {
   clienteId: any;
   modal = false;
   modal2 = false;
+  orden = 0;
 
   sparkOptionsInfo = {
     type: 'pie',
@@ -53,7 +54,7 @@ sparkOptionsDanger = {
 };
 
   constructor(private _service: EquiposTrabajoService, private settings: SettingsService, public colors: ColorsService ) {
-    this.usuarioLogin = 'FA6039C6-6497-E911-8993-B2AAD340F890'; // this.settings.user['id'];
+    this.usuarioLogin = this.settings.user['id']; // this.settings.user['id']; FA6039C6-6497-E911-8993-B2AAD340F890 gg
     // 6A0B5070-5797-E911-8993-B2AAD340F890 regional gdl
     // FAD3AB2A-5797-E911-8993-B2AAD340F890 regional mty
     // DA9F33E3-5697-E911-8993-B2AAD340F890 regional mx
@@ -70,24 +71,23 @@ sparkOptionsDanger = {
       this.totalPos = 0;
       this.totalFal = 0;
       this.totalCump = 0;
-
+      console.log(this.reporte)
       this.reporte.forEach( element => {
         this.totalPos += element.totalPos;
         this.totalCub += element.totalCub;
         element.totalCump =  Math.round(element.totalPos > 0 ? element.totalCub * 100 / element.totalPos : 0);
         element.totalFal = element.totalPos - element.totalCub;
 
-        const distinctThings =   element.reclutadores.filter(
-            (thing, i, arr) => arr.findIndex(t => t.reclutadorId === thing.reclutadorId) === i
-          );
-        element.reclutadores = distinctThings;
+        // const distinctThings =   element.reclutadores.filter(
+        //     (thing, i, arr) => arr.findIndex(t => t.reclutadorId === thing.reclutadorId) === i
+        //   );
+        // element.reclutadores = distinctThings;
 
       });
 
       this.totalCump = Math.round(this.totalPos > 0 ? this.totalCub * 100 / this.totalPos : 0);
       this.totalFal = this.totalPos - this.totalCub;
 
-      console.log(this.reporte)
     });
   }
 

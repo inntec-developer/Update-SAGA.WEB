@@ -67,7 +67,7 @@
                 </div>
                 </div>
                 <div class="card-body bt bb h-75">
-                  <ng-container *ngFor="let r of t.reclutadores[0]">
+                  <ng-container *ngFor="let r of t.reclutadores">
                     <div class="inline" container="body" placement="right" tooltip="{{r.nombre}}">
                       <img class="img-fluid circle thumb48" [src]="r.foto" (error)="errorImg(r)" />
                     </div>
@@ -136,7 +136,7 @@
             class="fa fa-times"></i></button>
       </div>
       <div class="modal-body">
-        <app-tabla-equipos [usuarioId]="usuarioLogin" [orden]="orden"></app-tabla-equipos>
+        <app-tabla-equipos [usuarioId]="usuarioLogin" [orden]="orden" [flag]=1></app-tabla-equipos>
       </div>
     </div>
   </div>

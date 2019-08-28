@@ -41,8 +41,8 @@ export class EquiposTrabajoService {
     return this._httpClient.get(this.UrlGetInfoClientes, {params: params});
   }
 
-  GetRportTableClientes(clienteId, orden): Observable<any> {
-    const params = new HttpParams().set('clienteId', clienteId).set('orden', orden);
+  GetRportTableClientes(usuarioId, orden): Observable<any> {
+    const params = new HttpParams().set('usuarioId', usuarioId).set('orden', orden);
 
     return this._httpClient.get(this.UrlGetRporTableClientes, {params: params});
   }
