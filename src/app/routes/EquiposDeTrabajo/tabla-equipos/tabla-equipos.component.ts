@@ -20,7 +20,7 @@ shown = 'hover';
 public dataSource: Array<any> = [];
 @Input('usuarioId') usuarioId: any;
 @Input('orden') orden: any;
-
+@Input('flag') flag = 0;
   // Varaibles del paginador
   public page = 1;
   public itemsPerPage = 20;
@@ -52,11 +52,35 @@ public dataSource: Array<any> = [];
   constructor(private _service: EquiposTrabajoService, private pipe: DatePipe, private excelService: ExcelService) { }
 
   ngOnInit() {
-    this.getRequisiciones();
+    if (this.flag === 0) {
+      this.getRequisiciones();
+    } else {
+      this.getRequisicionesClientes();
+    }
   }
 
   getRequisiciones() {
     this._service.GetRportTable(this.usuarioId, this.orden).subscribe( data => {
+      this.dataSource = data;
+
+      this.totalPos = 0;
+      this.totalContratados = 0;
+
+      this.dataSource.forEach(r => {
+        this.totalPos += r.vacantes;
+          this.totalContratados += r.contratados;
+          if (r.estatusId === 4) {
+            r.coordinador = r.reclutadores;
+            r.reclutadores = 'SIN ASIGNAR';
+          }
+      });
+
+      this.onChangeTable(this.config);
+    });
+  }
+
+  getRequisicionesClientes() {
+    this._service.GetRportTableClientes(this.usuarioId, this.orden).subscribe( data => {
       this.dataSource = data;
 
       this.totalPos = 0;
