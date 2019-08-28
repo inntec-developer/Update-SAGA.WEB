@@ -368,7 +368,7 @@ export class DtDamfoComponent implements OnInit, AfterViewInit {
       confirmButtonText: 'Si, clonar formato',
       cancelButtonText: 'No, cancelar',
       closeOnConfirm: false,
-      closeOnCancel: false,
+      closeOnCancel: true,
     }, (isConfirm: any) => {
       if (isConfirm) {
         const headers = {
@@ -383,8 +383,6 @@ export class DtDamfoComponent implements OnInit, AfterViewInit {
           this.editar290();
           swal('Se clono el damfo correctamente', '', 'success');
         });
-      } else {
-        swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. :)', 'error');
       }
       window.onkeydown = null;
       window.onfocus = null;

@@ -127,6 +127,11 @@ export class DialogEventComponent implements OnInit {
       const mns = parseInt(hourStart[1], null);
       const hre = parseInt(hourEnd[0], null);
       const mne = parseInt(hourEnd[1], null);
+      if (new Date(ys, ms, ds) < new Date()) {
+        this.popToast('warning', 'Calendario', 'La fecha Inicio no debe ser menor a la fecha Actual');
+        this.loading = false;
+        return;
+      }
       if (new Date(ys, ms, ds) < new Date(ye, me, de)) {
         this.popToast('warning', 'Calendario', 'La fecha Inicio no debe ser igual o mayor a la fecha Actual');
         this.loading = false;
