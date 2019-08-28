@@ -55,12 +55,12 @@ export class DialogCancelRequiComponent implements OnInit {
   });
   // Creacion de mensaje
   popToast(type, title, body) {
-    var toast: Toast = {
+    const toast: Toast = {
       type: type,
       title: title,
       timeout: 2000,
       body: body
-    }
+    };
     this.toasterService.pop(toast);
   }
 
@@ -73,40 +73,38 @@ export class DialogCancelRequiComponent implements OnInit {
     this.infoCancelRequi = {
       id: this.data.id,
       UsuarioMod: this.settings.user['usuario']
-    }
+    };
   }
 
   cancelRequisicion() {
-    var comentarioReclutador = this.formComentario.get('comentario').value.trim();
+    const comentarioReclutador = this.formComentario.get('comentario').value.trim();
     this.loading = true;
-    if(comentarioReclutador.length >= 30){
+    if (comentarioReclutador.length >= 30) {
       this.service.cancelRequisicion(this.infoCancelRequi)
-      .subscribe(data => {
-        if (data == 200) {
-          let comentario = {
-            Comentario: comentarioReclutador,
-            RequisicionId: this.data.id,
-            UsuarioAlta: this.settings.user['usuario'],
-            ReclutadorId: this.settings.user['id'],
-            MotivoId: this.data.motivoId
+        .subscribe(data => {
+          if (data === 200) {
+            const comentario = {
+              Comentario: comentarioReclutador,
+              RequisicionId: this.data.id,
+              UsuarioAlta: this.settings.user['usuario'],
+              ReclutadorId: this.settings.user['id'],
+              MotivoId: this.data.motivoId
+            };
+            this.serviceComent.addComentarioVacante(comentario).subscribe(x => {
+              if (x === 200) {
+                this.dialogCancel.close(x);
+              }
+            }, err => {
+              console.log(err);
+            });
+          } else {
+            this.popToast('warning', 'Requisición', 'Oops!! No se pudo cancelar la requisición ' + this.folio);
+            this.loading = false;
           }
-          this.serviceComent.addComentarioVacante(comentario).subscribe(data => {
-            if (data == 200) {
-              this.dialogCancel.close(data);
-            }
-          }, err => {
-            console.log(err);
-          });
-        }
-        else {
-          this.popToast('warning', 'Requisición', 'Oops!! No se pudo cancelar la requisición ' + this.folio);
-          this.loading = false;
-        }
-      }, err => {
-        console.log(err);
-      });
-    }
-    else{
+        }, err => {
+          console.log(err);
+        });
+    } else {
       this.popToast('warning', 'Requisición', 'Los caracteres mínimos del motivo de cancelacion son 30 sin espacios en blanco al final.');
       this.loading = false;
     }

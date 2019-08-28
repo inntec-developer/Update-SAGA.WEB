@@ -361,7 +361,7 @@ export class DtDamfoComponent implements OnInit, AfterViewInit {
   clonarFormato290() {
     swal({
       title: 'Clonar Formato 290 -' + this.element['nombrePerfil'] + '?',
-      text: 'Este Formato 290 se clonara para realizar modificaciones correspondientes.',
+      text: 'Este Formato 290 se clonará para realizar modificaciones correspondientes.',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#DD6B55',

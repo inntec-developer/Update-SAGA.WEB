@@ -1,4 +1,4 @@
-import { AfterContentChecked, Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterContentChecked, AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { CatalogosService, RequisicionesService } from '../../../../../service';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -23,13 +23,13 @@ import { UpdateRequisicion } from '../../../../../models/vtas/Requisicion'
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
   ]
 })
-export class UpdateInfoRequiComponent implements OnInit {
+export class UpdateInfoRequiComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() Folios: any;
   @Input() NumeroVacantes: any;
 
   @ViewChild('asginaciones') asignaciones: AsignarRequisicionComponent;
   public RequiId: string;
-  public checked: boolean = false;
+  public checked = false;
   public Prioridades: any[];
   public Estatus: any[];
   public requiUpdate: UpdateRequisicion;
@@ -38,7 +38,7 @@ export class UpdateInfoRequiComponent implements OnInit {
   public asignadosRequi: any[] = [];
   public infoRequi: any[];
   public loading: boolean;
-  public warn:string = 'warn';
+  public warn = 'warn';
   public formRequi: FormGroup;
   public minLimitDate: any;
 
@@ -74,9 +74,9 @@ export class UpdateInfoRequiComponent implements OnInit {
     });
   }
 
-  //------------------------------------------------------------------------------------
+  // ------------------------------------------------------------------------------------
   // Toasts (Mensajes del sistema)
-  //------------------------------------------------------------------------------------
+  // ------------------------------------------------------------------------------------
   toaster: any;
   toasterConfig: any;
   toasterconfig: ToasterConfig = new ToasterConfig({
@@ -87,21 +87,21 @@ export class UpdateInfoRequiComponent implements OnInit {
     mouseoverTimerStop: true,
   });
 
-  popToast(type, title, body) {
+  popToast(type: any, title: any, body: any) {
 
-    var toast: Toast = {
+    const toast: Toast = {
       type: type,
       title: title,
       timeout: 4000,
       body: body
-    }
+    };
     this.toasterService.pop(toast);
   }
 
   ngOnInit() {
 
     this.DisabledButton = true;
-    this.placeHolderSelect = 'ASIGNAR COORDINADOR'
+    this.placeHolderSelect = 'ASIGNAR COORDINADOR';
     this.getPrioridades();
     this.getEstatus(2);
     this.formRequi = this.fb.group({
@@ -114,13 +114,12 @@ export class UpdateInfoRequiComponent implements OnInit {
       estatus: [{ value: '', disabled: true }]
     });
     this.GetCatalogoExamenes();
-
   }
 
   ngAfterViewInit(): void {
     if (this.Folios != null) {
-      this.getInformacionRequisicio(this.Folios)
-      if (this.NumeroVacantes == 0) {
+      this.getInformacionRequisicio(this.Folios);
+      if (this.NumeroVacantes === 0) {
         this.DisabledButton = true;
       }
     }
@@ -136,8 +135,7 @@ export class UpdateInfoRequiComponent implements OnInit {
     if (changes.NumeroVacantes && !changes.NumeroVacantes.isFirstChange()) {
       if (this.NumeroVacantes === 0 || this.NumeroVacantes == null) {
         this.DisabledButton = true;
-      }
-      else {
+      } else {
         this.DisabledButton = false;
       }
     }
@@ -153,7 +151,7 @@ export class UpdateInfoRequiComponent implements OnInit {
   GetExamenes() {
     this.service.GetExamenes(this.tipoId).subscribe(data => {
       this.examenes = data;
-    })
+    });
   }
 
   GetExamen(ExamenId) {
@@ -170,10 +168,9 @@ export class UpdateInfoRequiComponent implements OnInit {
   }
 
   AgregarExamen() {
-
-    var relacion = [{ ExamenId: this.examenId, RequisicionId: this.RequiId }];
+    const relacion = [{ ExamenId: this.examenId, RequisicionId: this.RequiId }];
     this.service.InsertRelacion(relacion).subscribe(data => {
-      if (data == 200) {
+      if (data === 200) {
         this.popToast('success', 'Asignar Exámen', 'La relación requisición exámen se generó con éxito');
         this.examenId = 0;
         this.tipoId = 0;
@@ -181,11 +178,10 @@ export class UpdateInfoRequiComponent implements OnInit {
         this.examenes = [];
         this.CloseModal();
 
-      }
-      else {
+      } else {
         this.popToast('error', 'Asignar Exámen', 'Ocurrio un error');
       }
-    })
+    });
 
 
   }
@@ -225,7 +221,7 @@ export class UpdateInfoRequiComponent implements OnInit {
     this.serviceCatalogos.getPrioridades()
       .subscribe(data => {
         this.Prioridades = data;
-      })
+      });
   }
   getEstatus(tipoMov: number) {
     this.serviceCatalogos.getEstatusRequi(tipoMov)
@@ -237,10 +233,10 @@ export class UpdateInfoRequiComponent implements OnInit {
   Save() {
     this.loading = true;
     this.spinner.show();
-    let asg = [];
+    const asg = [];
     if (this.asignadosRequi.length > 0) {
 
-      for (let a of this.asignadosRequi) {
+       this.asignadosRequi.forEach( a => {
         asg.push({
           RequisicionId: this.RequiId,
           GrpUsrId: a,
@@ -249,11 +245,11 @@ export class UpdateInfoRequiComponent implements OnInit {
           UsuarioMod: this.settings.user['usuario'],
           fch_Modificacion: new Date()
         });
-      };
+      });
     }
 
 
-    var update = {
+    const update = {
       id: this.RequiId,
       folio: this.formRequi.get('folio').value,
       prioridadId: this.formRequi.get('prioridad').value,
@@ -262,30 +258,37 @@ export class UpdateInfoRequiComponent implements OnInit {
       confidencial: this.formRequi.get('confidencial').value,
       usuario: this.settings.user['usuario'],
       asignacionRequi: asg
-    }
+    };
     this.requiUpdate = update;
     this.serviceRequisicion.updateRequisicion(this.requiUpdate)
       .subscribe(data => {
         this.return = data;
-        if (this.return == 200) {
+        if (this.return === 200) {
           this.popToast('success', 'Requisición', 'La requisición se actualizó correctamente ');
           this.loading = false;
           this.spinner.hide();
-          if(this.estatusId == 43){
+          if (this.estatusId === 43) {
             this.serviceRequisicion.SendEmailRequiPuro(update.id).subscribe(email => {
-              if(email == 200){
-                this.popToast('success', 'Reclutamiento Puro', 'Se ha notificado por correo electrónico al Gerente de Ventas, para revisión de la vacante.');
+              if (email === 200) {
+                this.popToast(
+                  'success',
+                  'Reclutamiento Puro',
+                  'Se ha notificado por correo electrónico al Gerente Regional, para revisión de la vacante.'
+                );
                 // setTimeout(() => {
                 //   this._Router.navigate(['/ventas/requisicion']);
                 // }, 500);
-              } else{
-                this.popToast('error', 'Error', 'Error inesperado al intentar notificar al Gerente de Ventas sobre la vanate de Reclutamiento Puro.')
+              } else {
+                this.popToast(
+                  'error',
+                  'Error',
+                  'Error inesperado al intentar notificar al Gerente Regional sobre la vanate de Reclutamiento Puro.'
+                );
               }
             });
           }
           this._Router.navigate(['/ventas/requisicion']);
-        }
-        else {
+        } else {
           this.popToast('error', 'Oops!!', 'Algo salio mal intente de nuevo');
           this.loading = false;
           this.spinner.hide();
