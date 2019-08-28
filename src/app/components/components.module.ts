@@ -152,6 +152,7 @@ import { EditorArteRequisicionesComponent } from './editor-arte-requisiciones/ed
 import { DlgBGArteComponent } from './editor-arte-requisiciones/dlg-bgarte/dlg-bgarte.component';
 import { DlgRequiArteComponent } from './editor-arte-requisiciones/dlg-requi-arte/dlg-requi-arte.component';
 import { FoliosActivosComponent } from './Tracking/vacantes/Graficas/folios-activos/folios-activos.component';
+import { GraficaClienteComponent } from './Graficas/grafica-cliente/grafica-cliente.component';
 
 
 @NgModule({
@@ -310,7 +311,8 @@ import { FoliosActivosComponent } from './Tracking/vacantes/Graficas/folios-acti
     DlgBGArteComponent,
     DlgRequiArteComponent,
     VacantesComponent,
-    FoliosActivosComponent
+    FoliosActivosComponent,
+    GraficaClienteComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -408,6 +410,7 @@ import { FoliosActivosComponent } from './Tracking/vacantes/Graficas/folios-acti
     GraficaCaptadoContratadoComponent,
     GraficaCoordinacionComponent,
     GraficaProductividadComponent,
+    GraficaClienteComponent,
     IndicadorUndNegocioMtyComponent,
     IndicadorUndNegocioGdlComponent,
     IndicadorUndNegocioMxComponent,

@@ -74,7 +74,7 @@ type="square-jelly-box"
           <option value="7">Coordinacion</option>
           <option value="8">Candidato Bolsa</option>
           <option value="9">Vacantes</option>
-        
+          <option value="10">Clientes</option>
       </select>
     </div>
 </div>
@@ -484,7 +484,7 @@ type="square-jelly-box"
   </div>
 </div>
 
-<div class="col-xl-4">
+<div class="col-xl-4" id="Divdivbusca">
     <div class="form-group input-sm" id="divBusCoordina">
      
       <form [formGroup]="FormUserCor">
@@ -513,15 +513,19 @@ type="square-jelly-box"
 </div>
 
 <div class="col-xl-4" id="Divdiv"></div>
-  <div class="col-xl-2" >
+<div class="col-xl-2 ocultar" id="Divdiv3"></div>
+  <div class="col-xl-2"  >
       <button id="btnGraficaVacante"   (click)="GraficaVacante.Generar(objempresa,objtipocordi)" class="ocultar btn btn-sm btn-primary btnReport mat-elevation-z8 grafica" tooltip="Grafica">
+          <em  class="fa fa-pie-chart" ></em>
+        </button>
+        <button id="btnGraficaCliente"   (click)="GraficaCliente.Generar()" class="ocultar btn btn-sm btn-primary btnReport mat-elevation-z8 grafica" tooltip="Grafica">
           <em  class="fa fa-pie-chart" ></em>
         </button>
     </div>
 
 
 
-    <div class="col-xl-2" style="margin-top: 10px;">
+    <div class="col-xl-2" id="DivBotones" style="margin-top: 10px;">
         <button id="exel1" tooltip="Exportar" (click)="hijo.Exportar()" class="btn btn-sm btn-warning btnReport mat-elevation-z8">
             <em  class="fa fa-download"></em>
           </button>
@@ -546,6 +550,9 @@ type="square-jelly-box"
             <button id="exelVacante" tooltip="Exportar" style="right: auto;" (click)="Vacante.Exportar()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
               <em  class="fa fa-download"></em>
             </button>
+            <button id="exelCliente" tooltip="Exportar" style="right: auto;" (click)="Clientes2.Exportar()" class="ocultar botonesClient btn btn-sm btn-warning btnReport mat-elevation-z8">
+                <em  class="fa fa-download"></em>
+              </button>
 
 
 
@@ -573,6 +580,9 @@ type="square-jelly-box"
             <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="Vacante.Generar(objempresa,objtipocordi)" tooltip="Generar Reporte" id="repVacante"  >
               <em  class="fa fa-bar-chart"></em>
             </button>
+            <button id="repCliente"  (click)="Clientes2.Generar()" tooltip="Generar Reporte" style="right: auto;"   class="ocultar botonesClient btn btn-sm btn-success btnReport mat-elevation-z8" >
+                <em  class="fa fa-bar-chart"></em>
+              </button>
 
       </div>
 
@@ -599,8 +609,11 @@ type="square-jelly-box"
 
 <app-vacante id="DivVacante" #Vacante ></app-vacante>
 
+<app-cliente id="DivClientes" #Clientes2 ></app-cliente>
+
 
 
 <app-grafica-resumen class="ocultar" id="DivGraficaVacante" #GraficaVacante></app-grafica-resumen>
+<app-grafica-cliente class="ocultar" id="DivGraficaCliente" #GraficaCliente></app-grafica-cliente>
 </div>
 
