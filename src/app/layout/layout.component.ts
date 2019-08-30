@@ -17,10 +17,12 @@ export class LayoutComponent implements OnInit {
   public Activo = true;
   private mouseStop = null;
   public lock: boolean;
+  public print: boolean;
 
   constructor(private settings: SettingsService) { }
 
   ngOnInit() {
+    this.print = this.settings.actionPrint;
   }
 
   Sesion() {

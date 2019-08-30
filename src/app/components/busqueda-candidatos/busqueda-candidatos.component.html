@@ -1,5 +1,5 @@
 <mat-accordion class="example-headers-align">
-  <mat-expansion-panel [expanded]="expanded" >
+  <mat-expansion-panel [expanded]="expanded">
     <mat-expansion-panel-header (click)="expanded  = ! expanded">
       <mat-panel-title>
         <mat-icon class="text-primary">find_in_page</mat-icon>
@@ -8,270 +8,287 @@
         <label class="text-primary">Filtrado de Candidatos</label>
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <mat-divider></mat-divider>
-    <br>
-    <form id="PalabraClave">
-      <div class="row">
-        <div class="col-md-4 col-lg-4 col-sm-8">
-          <mat-form-field>
-            <input matInput placeholder="Palabra Clave" [(ngModel)]="palabraClave" [ngModelOptions]="{standalone: true}"
-              (keyup.enter)="buscarPalabraClave(palabraClave)">
-            <button matSuffix mat-icon-button aria-label="Clear" container="body" placement="bottom" tooltip="Buscar por palabra clave" placement="bottom" (click)="buscarPalabraClave(palabraClave)">
-              <em class="fa fa-search "></em>
-            </button>
-            <button mat-button *ngIf="palabraClave" matSuffix mat-icon-button aria-label="Clear" (click)="palabraClave=''">
-              <mat-icon>close</mat-icon>
-            </button>
-          </mat-form-field>
-        </div>
-      </div>
-    </form>
-    <form class="find-form" (keyup.control.enter)="Buscar()">
-      <hr>
-      <div class="row">
-        <!-- Inicio de filtros. Filtro de Paises. -->
-        <div class="col-md-2">
-          <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="País" aria-label="Country" [matAutocomplete]="cn" [formControl]="countryCtrl"
-              (blur)="cargarEstados()">
-            <mat-autocomplete #cn="matAutocomplete">
-              <mat-option *ngFor="let country of filteredCountry | async" [value]="country.pais">
-                <div class="row">
-                  <div class="col-md-2">
-                    <img style="vertical-align:middle;" aria-hidden src="assets/img/flags-mini/{{country.pais}}.png"
-                      height="12" />
-                  </div>
-                  <div class="col-md-4">
-                    <small>{{ country.pais }}</small>
-                  </div>
-                </div>
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-        <!-- Filtro de Estados -->
-        <div class="col-md-2">
-          <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="Estado" aria-label="State" [matAutocomplete]="st" [formControl]="StatesCtrl"
-              (blur)="cargarMunicipios()">
-            <mat-autocomplete #st="matAutocomplete">
-              <mat-option *ngFor="let state of filteredStates | async" [value]="state.estado">
-                <div class="row">
-                  <div class="col-md-4">
-                    <small>{{ state.estado }}</small>
-                  </div>
-                </div>
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-        <!-- Filtro de Municipios -->
-        <div class="col-md-2">
-          <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="Municipio" aria-label="Municipio" [matAutocomplete]="mn" [formControl]="MunicipioCtrl"
-              (blur)="cargarColonias()">
-            <mat-autocomplete #mn="matAutocomplete">
-              <mat-option *ngFor="let municipio of filteredMunicipio | async" [value]="municipio.municipio">
-                <div class="row">
-                  <div class="col-md-4">
-                    <small>{{ municipio.municipio }}</small>
-                  </div>
-                </div>
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-        <!-- Filtro de Colonias -->
-        <div class="col-md-2">
-          <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="Colonia" aria-label="Colonia" [matAutocomplete]="cl" [formControl]="ColoniaCtrl">
-            <mat-autocomplete #cl="matAutocomplete">
-              <mat-option *ngFor="let colonia of filteredColonia | async" [value]="colonia.colonia">
-                <div class="row">
-                  <div class="col-md-4">
-                    <small>{{ colonia.colonia }}</small>
-                  </div>
-                </div>
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-        <!-- Filtro de C.P. -->
-        <div class="col-md-2">
-          <mat-form-field class="fieldautocomplete-full-width">
-            <input maxlength="7" matInput #codigo placeholder="CP" [formControl]="CodigoPostal" [(ngModel)]="cp">
-            <mat-hint align="start">
-              <strong>C&oacute;digo Postal</strong>
-            </mat-hint>
-            <mat-hint align="end">{{codigo.value.length}} / 7</mat-hint>
-          </mat-form-field>
-        </div>
-        <!-- Filtro de Area de experiencia -->
-        <div class="col-md-2">
-          <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="Áreas Interés" aria-label="Area Exp" [matAutocomplete]="ae" [formControl]="aresexpCtrl">
-            <mat-autocomplete #ae="matAutocomplete">
-              <mat-option *ngFor="let areaexp of filteredareaexp | async" [value]="areaexp.areaInteres">
-                <div class="row">
-                  <div class="col-md-4">
-                    <small>{{ areaexp.areaInteres }}</small>
-                  </div>
-                </div>
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <!-- Filtro de Perfil -->
-        <div class="col-md-2">
-          <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="Perfil" aria-label="Perfil" [matAutocomplete]="pf" [formControl]="perfilCtrl">
-            <mat-autocomplete #pf="matAutocomplete">
-              <mat-option *ngFor="let perfil of filteredperfil | async" [value]="perfil.perfilExperiencia">
-                <div class="row">
-                  <div class="col-md-4">
-                    <small>{{ perfil.perfilExperiencia }}</small>
-                  </div>
-                </div>
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-        <!-- Filtro de Salario -->
-        <div class="col-md-2">
-          <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="Salario" [formControl]="salarioCtrl" [(ngModel)]="salario" type="number"
-              #Salario>
-            <span matPrefix>$&nbsp;</span>
-            <span matSuffix>.00</span>
-          </mat-form-field>
-        </div>
-        <!-- Filtro de Genero -->
-        <div class="col-md-2 ">
-          <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="Genero" aria-label="Genero" [matAutocomplete]="auto" [formControl]="generoCtrl">
-            <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let genero of filteredgenero | async" [value]="genero.genero">
-                <div class="row">
-                  <div class="col-md-4">
-                    <small>{{ genero.genero }}</small>
-                  </div>
-                </div>
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-        <!-- Filtro de Edad -->
-        <div class="col-md-2 ">
-          <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput type="number" placeholder="Edad" min="18" max="60" [formControl]="edadCtrl" [(ngModel)]="edad"
-              #Edad>
-          </mat-form-field>
-        </div>
-        <!-- Filtro de Reubicacion -->
-        <div class="col-md-2 ">
-          <section class="example-section">
-            <mat-checkbox class="example-margin" [formControl]="checkedCtrl" [(ngModel)]="checked">Reubicacion</mat-checkbox>
-          </section>
-        </div>
-        <!-- Filtro de Persona con discapasidad -->
-        <div class="col-md-2 ">
-          <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="Persona con discapacidad" aria-label="Personadiscapacidad" [matAutocomplete]="pcd"
-              [formControl]="pdiscapacidadCtrl">
-            <mat-autocomplete #pcd="matAutocomplete">
-              <mat-option *ngFor="let pdiscapacidad of filteredpdiscapacidad| async" [value]="pdiscapacidad.tipoDiscapacidad">
-                <div class="row">
-                  <div class="col-md-4">
-                    <small>{{ pdiscapacidad.tipoDiscapacidad }}</small>
-                  </div>
-                </div>
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row ">
-        <!-- Filtro de Tipo de licencia -->
-        <div class="col-md-2 ">
-          <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="Tipo de licencia" aria-label="tplicencia" [matAutocomplete]="tl" [formControl]="tplicCtrl">
-            <mat-autocomplete #tl="matAutocomplete">
-              <mat-option *ngFor="let tplicencia of filteredtplicencia| async" [value]="tplicencia.descripcion">
-                <div class="row">
-                  <div class="col-md-4">
-                    <small>{{ tplicencia.descripcion }}</small>
-                  </div>
-                </div>
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-        <!-- Filtro de vehiculo propio -->
-        <div class="col-md-2 ">
-          <section class="example-section">
-            <mat-checkbox class="example-margin" [formControl]="checkedVCtrl" [(ngModel)]="checkedV">Vehiculo Propio</mat-checkbox>
-          </section>
-        </div>
-        <!-- Filtro de Nivel de estudios -->
-        <div class="col-md-2 ">
-          <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="Nivel de estudios" aria-label="Nivelestudio" [matAutocomplete]="ne"
-              [formControl]="nvestudiosCtrl">
-            <mat-autocomplete #ne="matAutocomplete">
-              <mat-option *ngFor="let nvestudio of filterednvestudios | async" [value]="nvestudio.gradoEstudio">
-                <div class="row">
-                  <div class="col-md-4">
-                    <small>{{ nvestudio.gradoEstudio }}</small>
-                  </div>
-                </div>
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-        <!-- Filtro de Idiomas -->
-        <div class="col-md-2 ">
-          <mat-form-field class="fieldautocomplete-full-width">
-            <input matInput placeholder="Idiomas" aria-label="idioma" [matAutocomplete]="idm" [formControl]="idiomasCtrl">
-            <mat-autocomplete #idm="matAutocomplete">
-              <mat-option *ngFor="let idioma of filteredidiomas | async" [value]="idioma.idioma">
-                <div class="row">
-                  <div class="col-md-4">
-                    <small>{{ idioma.idioma }}</small>
-                  </div>
-                </div>
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-      </div>
-      <hr>
-    </form>
-    <!-- <div class="container"> -->
-    <div class="row">
-      <div class="col-12">
-        <button style="margin-left: 10px; " class="btn btn-labeled mb-1 mat-elevation-z8" type="button" (click)="Buscar()" [disabled]='loading'
-        [ngClass]="loading ? 'disabled' : 'btn-info'"
-        container="body" placement="bottom" tooltip="Busca candidatos">
-          <span class="btn-label ">
-            <i class="fa fa-search "></i>
-          </span>Buscar
-        </button>
-        <button style="margin-left: 10px; " class="btn btn-labeled btn-green mb-1 mat-elevation-z8" type="button" (click)="LimpiarFiltro()"
-        container="body" placement="bottom" tooltip="Limpia todo los filtros">
-          <span class="btn-label ">
-            <i class="fa fa-eraser "></i>
-          </span>Limpiar filtros
-        </button>
-        <!-- <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="BuscarMisCandidatos()"  container="body" placement="bottom" tooltip="Mis Apartados">
-            <span class="btn-label ">
-              <i class="fa fa-users"></i>
-            </span>Mis Candidatos
-          </button> -->
-        <img *ngIf="loading" style="margin-left: 10px; margin-right: 10px;" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
-      </div>
-    </div>
-    <!-- </div> -->
+    <tabset [justified]="true">
+      <tab heading="Busqueda Basica" id="TapCliente">
+        <form id="PalabraClave">
+          <div class="row">
+            <div class="col-md-4 col-lg-4 col-sm-8">
+              <mat-form-field>
+                <input matInput placeholder="Palabra Clave" [(ngModel)]="palabraClave"
+                  [ngModelOptions]="{standalone: true}" (keyup.enter)="buscarPalabraClave(palabraClave)">
+                <button matSuffix mat-icon-button aria-label="Clear" container="body" placement="bottom"
+                  tooltip="Buscar por palabra clave" placement="bottom" (click)="buscarPalabraClave(palabraClave)">
+                  <em class="fa fa-search "></em>
+                </button>
+                <button mat-button *ngIf="palabraClave" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="palabraClave=''">
+                  <mat-icon>close</mat-icon>
+                </button>
+                <mat-hint align="start">
+                  <strong>Nombre(s) Apellido(s), RFC, CURP, Acerca de Mí, Experiencias(Puesto, Descripci&oacute;n) ..</strong>
+                </mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </tab>
+      <tab heading="Busqueda Avanzada" id="TapRequisitos">
+        <form class="find-form" (keyup.control.enter)="Buscar()">
+          <hr>
+          <div class="row">
+            <!-- Inicio de filtros. Filtro de Paises. -->
+            <div class="col-md-2">
+              <mat-form-field class="fieldautocomplete-full-width">
+                <input matInput placeholder="País" aria-label="Country" [matAutocomplete]="cn"
+                  [formControl]="countryCtrl" (blur)="cargarEstados()">
+                <mat-autocomplete #cn="matAutocomplete">
+                  <mat-option *ngFor="let country of filteredCountry | async" [value]="country.pais">
+                    <div class="row">
+                      <div class="col-md-2">
+                        <img style="vertical-align:middle;" aria-hidden src="assets/img/flags-mini/{{country.pais}}.png"
+                          height="12" />
+                      </div>
+                      <div class="col-md-4">
+                        <small>{{ country.pais }}</small>
+                      </div>
+                    </div>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <!-- Filtro de Estados -->
+            <div class="col-md-2">
+              <mat-form-field class="fieldautocomplete-full-width">
+                <input matInput placeholder="Estado" aria-label="State" [matAutocomplete]="st"
+                  [formControl]="StatesCtrl" (blur)="cargarMunicipios()">
+                <mat-autocomplete #st="matAutocomplete">
+                  <mat-option *ngFor="let state of filteredStates | async" [value]="state.estado">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <small>{{ state.estado }}</small>
+                      </div>
+                    </div>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <!-- Filtro de Municipios -->
+            <div class="col-md-2">
+              <mat-form-field class="fieldautocomplete-full-width">
+                <input matInput placeholder="Municipio" aria-label="Municipio" [matAutocomplete]="mn"
+                  [formControl]="MunicipioCtrl" (blur)="cargarColonias()">
+                <mat-autocomplete #mn="matAutocomplete">
+                  <mat-option *ngFor="let municipio of filteredMunicipio | async" [value]="municipio.municipio">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <small>{{ municipio.municipio }}</small>
+                      </div>
+                    </div>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <!-- Filtro de Colonias -->
+            <div class="col-md-2">
+              <mat-form-field class="fieldautocomplete-full-width">
+                <input matInput placeholder="Colonia" aria-label="Colonia" [matAutocomplete]="cl"
+                  [formControl]="ColoniaCtrl">
+                <mat-autocomplete #cl="matAutocomplete">
+                  <mat-option *ngFor="let colonia of filteredColonia | async" [value]="colonia.colonia">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <small>{{ colonia.colonia }}</small>
+                      </div>
+                    </div>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <!-- Filtro de C.P. -->
+            <div class="col-md-2">
+              <mat-form-field class="fieldautocomplete-full-width">
+                <input maxlength="7" matInput #codigo placeholder="CP" [formControl]="CodigoPostal" [(ngModel)]="cp">
+                <mat-hint align="start">
+                  <strong>C&oacute;digo Postal</strong>
+                </mat-hint>
+                <mat-hint align="end">{{codigo.value.length}} / 7</mat-hint>
+              </mat-form-field>
+            </div>
+            <!-- Filtro de Area de experiencia -->
+            <div class="col-md-2">
+              <mat-form-field class="fieldautocomplete-full-width">
+                <input matInput placeholder="Áreas Interés" aria-label="Area Exp" [matAutocomplete]="ae"
+                  [formControl]="aresexpCtrl">
+                <mat-autocomplete #ae="matAutocomplete">
+                  <mat-option *ngFor="let areaexp of filteredareaexp | async" [value]="areaexp.areaInteres">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <small>{{ areaexp.areaInteres }}</small>
+                      </div>
+                    </div>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <!-- Filtro de Perfil -->
+            <div class="col-md-2">
+              <mat-form-field class="fieldautocomplete-full-width">
+                <input matInput placeholder="Perfil" aria-label="Perfil" [matAutocomplete]="pf"
+                  [formControl]="perfilCtrl">
+                <mat-autocomplete #pf="matAutocomplete">
+                  <mat-option *ngFor="let perfil of filteredperfil | async" [value]="perfil.perfilExperiencia">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <small>{{ perfil.perfilExperiencia }}</small>
+                      </div>
+                    </div>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <!-- Filtro de Salario -->
+            <div class="col-md-2">
+              <mat-form-field class="fieldautocomplete-full-width">
+                <input matInput placeholder="Salario" [formControl]="salarioCtrl" [(ngModel)]="salario" type="number"
+                  #Salario>
+                <span matPrefix>$&nbsp;</span>
+                <span matSuffix>.00</span>
+              </mat-form-field>
+            </div>
+            <!-- Filtro de Genero -->
+            <div class="col-md-2 ">
+              <mat-form-field class="fieldautocomplete-full-width">
+                <input matInput placeholder="Genero" aria-label="Genero" [matAutocomplete]="auto"
+                  [formControl]="generoCtrl">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let genero of filteredgenero | async" [value]="genero.genero">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <small>{{ genero.genero }}</small>
+                      </div>
+                    </div>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <!-- Filtro de Edad -->
+            <div class="col-md-2 ">
+              <mat-form-field class="fieldautocomplete-full-width">
+                <input matInput type="number" placeholder="Edad" min="18" max="60" [formControl]="edadCtrl"
+                  [(ngModel)]="edad" #Edad>
+              </mat-form-field>
+            </div>
+            <!-- Filtro de Reubicacion -->
+            <div class="col-md-2 ">
+              <section class="example-section">
+                <mat-checkbox class="example-margin" [formControl]="checkedCtrl" [(ngModel)]="checked">Reubicacion
+                </mat-checkbox>
+              </section>
+            </div>
+            <!-- Filtro de Persona con discapasidad -->
+            <div class="col-md-2 ">
+              <mat-form-field class="fieldautocomplete-full-width">
+                <input matInput placeholder="Persona con discapacidad" aria-label="Personadiscapacidad"
+                  [matAutocomplete]="pcd" [formControl]="pdiscapacidadCtrl">
+                <mat-autocomplete #pcd="matAutocomplete">
+                  <mat-option *ngFor="let pdiscapacidad of filteredpdiscapacidad| async"
+                    [value]="pdiscapacidad.tipoDiscapacidad">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <small>{{ pdiscapacidad.tipoDiscapacidad }}</small>
+                      </div>
+                    </div>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row ">
+            <!-- Filtro de Tipo de licencia -->
+            <div class="col-md-2 ">
+              <mat-form-field class="fieldautocomplete-full-width">
+                <input matInput placeholder="Tipo de licencia" aria-label="tplicencia" [matAutocomplete]="tl"
+                  [formControl]="tplicCtrl">
+                <mat-autocomplete #tl="matAutocomplete">
+                  <mat-option *ngFor="let tplicencia of filteredtplicencia| async" [value]="tplicencia.descripcion">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <small>{{ tplicencia.descripcion }}</small>
+                      </div>
+                    </div>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <!-- Filtro de vehiculo propio -->
+            <div class="col-md-2 ">
+              <section class="example-section">
+                <mat-checkbox class="example-margin" [formControl]="checkedVCtrl" [(ngModel)]="checkedV">Vehiculo Propio
+                </mat-checkbox>
+              </section>
+            </div>
+            <!-- Filtro de Nivel de estudios -->
+            <div class="col-md-2 ">
+              <mat-form-field class="fieldautocomplete-full-width">
+                <input matInput placeholder="Nivel de estudios" aria-label="Nivelestudio" [matAutocomplete]="ne"
+                  [formControl]="nvestudiosCtrl">
+                <mat-autocomplete #ne="matAutocomplete">
+                  <mat-option *ngFor="let nvestudio of filterednvestudios | async" [value]="nvestudio.gradoEstudio">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <small>{{ nvestudio.gradoEstudio }}</small>
+                      </div>
+                    </div>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <!-- Filtro de Idiomas -->
+            <div class="col-md-2 ">
+              <mat-form-field class="fieldautocomplete-full-width">
+                <input matInput placeholder="Idiomas" aria-label="idioma" [matAutocomplete]="idm"
+                  [formControl]="idiomasCtrl">
+                <mat-autocomplete #idm="matAutocomplete">
+                  <mat-option *ngFor="let idioma of filteredidiomas | async" [value]="idioma.idioma">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <small>{{ idioma.idioma }}</small>
+                      </div>
+                    </div>
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          </div>
+          <hr>
+        </form>
+        <div class="row">
+            <div class="col-12">
+              <button style="margin-left: 10px; " class="btn btn-labeled mb-1 mat-elevation-z8" type="button"
+                (click)="Buscar()" [disabled]='loading' [ngClass]="loading ? 'disabled' : 'btn-info'" container="body"
+                placement="bottom" tooltip="Busca candidatos">
+                <span class="btn-label ">
+                  <i class="fa fa-search "></i>
+                </span>Buscar
+              </button>
+              <button style="margin-left: 10px; " class="btn btn-labeled btn-green mb-1 mat-elevation-z8" type="button"
+                (click)="LimpiarFiltro()" container="body" placement="bottom" tooltip="Limpia todo los filtros">
+                <span class="btn-label ">
+                  <i class="fa fa-eraser "></i>
+                </span>Limpiar filtros
+              </button>
+              <!-- <button style="margin-left: 10px; " class="btn btn-labeled btn-outline-info mb-1" type="button" (click)="BuscarMisCandidatos()"  container="body" placement="bottom" tooltip="Mis Apartados">
+                  <span class="btn-label ">
+                    <i class="fa fa-users"></i>
+                  </span>Mis Candidatos
+                </button> -->
+              <img *ngIf="loading" style="margin-left: 10px; margin-right: 10px;"
+                src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+            </div>
+          </div>
+      </tab>
+    </tabset>
   </mat-expansion-panel>
 </mat-accordion>

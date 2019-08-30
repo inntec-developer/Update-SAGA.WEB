@@ -8,6 +8,7 @@ export class SettingsService {
     public user: any;
     public app: any;
     public layout: any;
+    public actionPrint = false;
 
     constructor() {
 

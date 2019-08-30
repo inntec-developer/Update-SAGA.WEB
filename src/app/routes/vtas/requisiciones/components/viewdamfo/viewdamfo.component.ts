@@ -131,21 +131,25 @@ export class ViewdamfoComponent implements OnInit {
 
   print() {
     this.imprimir = true;
+    this.settings.actionPrint = true;
     if (!this.settings.layout.isCollapsed) {
       this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
     }
     setTimeout(() => {
-      document.getElementById('content').style.marginLeft = '70px';
-      document.getElementById('content').style.marginTop = '15px';
-      document.getElementById('content').style.marginRight = '0px';
-      document.getElementById('content').style.marginBottom = '15px';
+      document.getElementById('PrintDamfo').style.marginLeft = '70px';
+      document.getElementById('PrintDamfo').style.marginTop = '15px';
+      document.getElementById('PrintDamfo').style.marginRight = '0px';
+      document.getElementById('PrintDamfo').style.marginBottom = '15px';
+      const contenido = document.getElementById('PrintDamfo').innerHTML;
 
+      window.open().document.write(contenido);
       window.print();
     }, 500);
     setTimeout(() => {
       this.imprimir = false;
-      document.getElementById('content').style.marginTop = '0';
-      document.getElementById('content').style.marginLeft = '0';
+      this.settings.actionPrint = false;
+      document.getElementById('PrintDamfo').style.marginTop = '0';
+      document.getElementById('PrintDamfo').style.marginLeft = '0';
     }, 500);
 
   }
