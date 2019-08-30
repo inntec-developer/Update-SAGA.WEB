@@ -12,7 +12,7 @@ export class SettingsService {
 
     constructor() {
 
-        // User Settings
+        // User configuracion
         // -----------------------------------
         this.user = {
             id : '',

@@ -14,6 +14,7 @@ export class ExamenesService {
   URLGetCatalogo = ApiConection.ServiceUrl + ApiConection.GetCatalogo;
   URLGetExamenes = ApiConection.ServiceUrl + ApiConection.GetExamenes;
   URLGetExamen = ApiConection.ServiceUrl + ApiConection.GetExamen;
+  URLGetExamenesEntrevista = ApiConection.ServiceUrl + ApiConection.GetExamenesEntrevista;
   URLInsertRelacion = ApiConection.ServiceUrl + ApiConection.InsertRelacion;
   URLInsertRespCandidato = ApiConection.ServiceUrl + ApiConection.InsertRespCandidato;
   URLInsertResultMedico = ApiConection.ServiceUrl + ApiConection.InsertResultMedico;
@@ -34,10 +35,8 @@ export class ExamenesService {
 
   constructor(private _httpClient: HttpClient) { }
 
-  InsertExamenes(examen): Observable<any>
-  {
-    
-    let params = new HttpParams().set('Objeto', examen);
+  InsertExamenes(examen): Observable<any> {
+    const params = new HttpParams().set('Objeto', examen);
 
 
 
@@ -52,10 +51,8 @@ export class ExamenesService {
     return this._httpClient.post(this.URLInsertExamen, examen, httpOptions);
   }
 
-  InsertRelacion(relacion): Observable<any>
-  {
-    
-    let params = new HttpParams().set('requiexamen', relacion);
+  InsertRelacion(relacion): Observable<any> {
+    const params = new HttpParams().set('requiexamen', relacion);
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -144,6 +141,9 @@ export class ExamenesService {
   {
     let params = new HttpParams().set('tipoexamenId', tipoexamenId);
     return this._httpClient.get(this.URLGetExamenes, {params:params});
+  }
+  GetExamenesEntrevista() : Observable<any> {
+    return this._httpClient.get(this.URLGetExamenesEntrevista);
   }
   GetExamenesMedicos() : Observable<any>
   {

@@ -146,26 +146,24 @@ export class DtVacantesReclutadorComponent implements OnInit {
   getVacantes() {
     this.service.getRequiReclutador(this.settings.user['id']).subscribe(data => {
       this.dataSource = data;
-      this.GetCandidatosNR();
-      this.GetRequisicionesPausa();
+      
       this.totalPos = 0;
       this.totalContratados = 0;
       this.dataSource.forEach(r => {
-        if (r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37)) {
+
           this.totalPos += r.vacantes;
           this.totalContratados += r.contratados;
 
-          if (r.estatusId == 4) {
+          if (r.estatusId === 4) {
             r.coordinador = r.reclutadores;
             r.reclutadores = "SIN ASIGNAR";
           }
-        }
 
-      })
-      this.rows = this.dataSource.slice(0, this.itemsPerPage);
-      this.registros = this.rows.length;
-      this.length = this.dataSource.length;
-      // this.onChangeTable(this.config);
+      });
+      this.GetCandidatosNR();
+      this.GetRequisicionesPausa();
+
+      this.onChangeTable(this.config);
       this.spinner.hide();
 
     });

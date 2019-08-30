@@ -1,0 +1,136 @@
+
+ <div >
+  <h2 *ngIf="General?.length == 0" style="margin-top: 120px">
+      
+       <div style="margin-top: 55px; font-size: 14px" role="alert" class="alert alert-info ng-star-inserted">
+          <strong >Oops!</strong> No se encontraron Resultados
+        </div>
+  </h2>
+ </div>
+
+ <div>
+   
+<div class="card"  *ngIf="General?.length > 0" style="margin-top:80px">
+<div class="card-body mat-elevation-z8">
+
+<ng-scrollbar #scrollableP [trackX]="true" [trackY]="false" [invertX]="invertX" [invertY]="invertY" [compact]="compact" [shown]="shown"
+  [disableOnBreakpoints]="false" [disabled]="disabled">
+
+  <div style="width: 130%; height: 450px; overflow: hidden;">
+    <table ngClass="{{config.className || ''}}" class="table">
+      <thead>
+        <tr>
+          <th *ngFor="let column of columns" ngClass="{{column.className || ''}}" >
+            <small>{{column.title | uppercase}}</small>
+            <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
+            </i> -->
+          </th>
+        </tr>
+        <tr *ngIf="showFilterRow">
+          <th *ngFor="let column of columns">
+            <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+              class="form-control form-control-sm" id="{{column.name}}">
+          </th>
+        </tr>
+
+      </thead>
+     
+      <tbody>
+          <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
+          [disableOnBreakpoints]="false" [disabled]="disabled">
+          <div>
+            
+            <tr *ngFor="let item of rows" >
+                <th class="text-center ">{{item.folio}}</th>
+                <td class="text-center">{{item.empresa}}</td>
+                <td class="text-center">{{item.vBtra}}</td>
+                <td class="text-center">{{this.convertDateTime(item.fch_Modificacion)}}</td>
+              
+               
+                <td class="text-center">{{item.numero}}</td>
+                <td class="text-center" >
+                  <ng-template #popTemplateCandi>
+                      <div class="card">
+                        <div class="card-body">
+                          <ul class="list-group list-group-flush">
+                            <li *ngFor="let r of item.nombreCandidato.split(',')" class="list-group-item text-muted">{{r}}</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </ng-template>
+                  <small class="text-center badge badge-pill " *ngIf="item.candiTotal > 1" [popover]="popTemplateCandi" placement="left" container="body" triggers="mouseenter:mouseleave">{{item.candiTotal}}</small>
+                  <span class="text-left" *ngIf="item.candiTotal == 1">{{item.nombreCandidato}}</span>
+                  <span class="text-left" *ngIf="item.candiTotal == 0">{{item.candiTotal}}</span>
+                 </td>
+                 <td class="text-center" >
+                  <ng-template #popTemplateComent>
+                      <div class="card">
+                        <div class="card-body">
+                          <ul class="list-group list-group-flush">
+                            <li *ngFor="let r of item.listaComentario.split(',')" class="list-group-item text-muted">{{r}}</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </ng-template>
+                  <small class="text-center badge badge-pill " *ngIf="item.coemtaTotal > 1" [popover]="popTemplateComent" placement="left" container="body" triggers="mouseenter:mouseleave">{{item.coemtaTotal}}</small>
+                  <span class="text-left" *ngIf="item.coemtaTotal == 1">{{item.listaComentario}}</span>
+                  <span class="text-left" *ngIf="item.coemtaTotal == 0">{{item.coemtaTotal}}</span>
+                 </td>
+                
+                <td class="text-center"  ><p >{{item.nombreApellido}}</p> </td>
+                <td class="text-center" *ngIf="item.estatusId == '4'" >
+                  <ng-template #popTemplate>
+                      <div class="card">
+                        <div class="card-body">
+                          <ul class="list-group list-group-flush">
+                            <li *ngFor="let r of item.nombreReclutado.split(',')" class="list-group-item text-muted">{{r}}</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </ng-template>
+                  <small class="text-center badge badge-pill " *ngIf="item.reclutadorTotal > 1" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{item.reclutadorTotal}}</small>
+                  <span class="text-left" *ngIf="item.reclutadorTotal == 1">{{item.nombreReclutado}}</span>
+                  <span class="text-left" *ngIf="item.reclutadorTotal == 'SIN ASIGNAR'">{{item.reclutadorTotal}}</span>
+                 </td>
+                 <td class="text-center" *ngIf="item.estatusId == '4'"><p>SIN ASIGNAR</p></td>
+
+
+                <td class="text-center" *ngIf="item.estatusId != '4'">
+                    <p *ngIf="item.cordinador2 != ''">{{item.cordinador2}}</p>
+                    <p *ngIf="item.cordinador2 == ''">SIN ASIGNAR</p>
+                </td>
+                <td class="text-center" *ngIf="item.estatusId != '4'" >
+                  <ng-template #popTemplate>
+                      <div class="card">
+                        <div class="card-body">
+                          <ul class="list-group list-group-flush">
+                            <li *ngFor="let r of item.nombreReclutado.split(',')" class="list-group-item text-muted">{{r}}</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </ng-template>
+                  <small class="text-center badge badge-pill " *ngIf="item.reclutadorTotal > 1" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{item.reclutadorTotal}}</small>
+                  <span class="text-left" *ngIf="item.reclutadorTotal == 1">{{item.nombreReclutado}}</span>
+                  <span class="text-left" *ngIf="item.reclutadorTotal == 'SIN ASIGNAR'">{{item.reclutadorTotal}}</span>
+                 </td>
+                
+            </tr>
+          </div>
+          </ng-scrollbar>
+      </tbody>
+   
+    </table>
+  </div>
+</ng-scrollbar>
+
+<br/>
+<div class="row">
+  <div class="col-md-12 clearfix">
+    <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+      [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
+
+    <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre>
+  </div>
+</div>
+</div>
+</div>

@@ -28,6 +28,7 @@ export class OficinasComponent implements OnInit {
   public Estado : any[];
   public Municipio : any[];
   public Colonia : any[];
+  public tipo : any[];
   public dataSource: MatTableDataSource<any[]>;
 
   public nombre:string;
@@ -38,7 +39,7 @@ export class OficinasComponent implements OnInit {
   public email :string;
   public lat :string;
   public lon :string;
- // public tipo:string;
+ 
   public act :boolean;
 
   constructor(
@@ -51,8 +52,17 @@ export class OficinasComponent implements OnInit {
   ngOnInit() {
     this.LlamarOfi();
     document.oncontextmenu=null
+    this.llamartipo();
 
+  }
 
+  llamartipo(){
+    this.tipo = [{id:0,nombre:'Seleccione tipo de reclutamiento'},
+    {id:3,nombre:'Reclutamiento'},
+    {id:1,nombre:'Corporativo'},
+    {id:2,nombre:'Ventas'},
+    {id:4,nombre:'Filial'},
+    {id:5,nombre:'Representante'}]
   }
 
   LlamarOfi(){
@@ -86,6 +96,11 @@ export class OficinasComponent implements OnInit {
     let tipo = document.getElementById('tipoOfi')['value'];
     let act = document.getElementById('checkModal-input')['checked'];
     let id = document.getElementById('Identi')['value'];
+
+    if(tipo == "0"){
+      alert("Seleccione un tipo de reclutamiento")
+      return
+    }
 
     if(id == '0'){
       this.Servicio.GuardarOficina(nom , est , mun , col , cp , calle , num , tel , email ,lat , lon , tipo ).subscribe(item =>{
@@ -138,6 +153,19 @@ export class OficinasComponent implements OnInit {
 
   AbrirModal(){
     document.getElementById('Identi')['value'] = '0';
+    document.getElementById('tipoOfi')['value'] = '3';
+    
+
+    this.nombre = "";
+    this.cp = "";
+    this.calle = "";
+    this.num = "";
+    this.tel = "";
+    this.email = "";
+    this.lat = "";
+    this.lon = "";
+
+   
     this.nombre = '';
     this.Servicio.getOficinaEstado('0').subscribe(item =>{
       this.Estado = item;
@@ -145,6 +173,7 @@ export class OficinasComponent implements OnInit {
       })
       this.Municipio = [{id:0,municipio:'Seleccione un municipio'}]
       this.Colonia = [{id:0,colonia:'Seleccione una colonia'}]
+      
   }
 
   EditarModal(id){
@@ -161,7 +190,9 @@ export class OficinasComponent implements OnInit {
     let es = document.getElementById('Estadoid_' + id)['value'];
     let mun = document.getElementById('Municipio_'+ id)['value'];
     let col = document.getElementById('Colonia_'+ id)['value'];
-
+    var ofiId = document.getElementById('TipoOficina_'+ id)['value'];
+   
+    document.getElementById('tipoOfi')['value'] = ofiId;
 
     this.Servicio.getOficinaEstado(es).subscribe(item =>{
       this.Estado = item;

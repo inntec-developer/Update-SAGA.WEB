@@ -43,7 +43,7 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
     this._ServiceComponente.getVCubierta(this.UsuarioId).subscribe(result => {
 
       result.forEach(item2 => {
-        Onombre.push(item2.nombre)
+        Onombre.push(item2.nombre + " "+item2.totalcubierta+"/"+ item2.possicion)
         Ocubierta.push(item2.cubierta)
         Omedios.push(item2.medios)
         Oparcial.push(item2.parcial)

@@ -17,7 +17,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { daLocale } from 'ngx-bootstrap/chronos/i18n/da';
 
  
-//import {ToasterConfig, ToasterService} from 'angular2-toaster';
+
+declare var jQuery:any;
+declare var $:any;
  
  
 const moment = _rollupMoment || _moment;
@@ -314,9 +316,26 @@ GeneraEstatusBolsa(){
     }
   }
  
-  
+  llamarCubi(){
+   
+    var elemento = document.querySelectorAll("[name='Cate_Cubiertos']")[0].id;
+    document.getElementById(elemento).click();
+    setTimeout(()=>{    
+     $(".cdk-overlay-backdrop").click();
+              }, 100);
+  }
  
  Ocultar(){
+
+  let tiporeporte = document.getElementById('TipoReporte')['value'];
+  if(tiporeporte == 11){
+    document.getElementById("mat-select-0").click();
+    setTimeout(()=>{    
+      this.llamarCubi();
+              }, 100);
+  }
+
+
   document.getElementById('DivReportefil').classList.add('ocultar');
   document.getElementById('Divprincipal').classList.add('ocultar');
   document.getElementById('DivProacti').classList.add('ocultar');
@@ -327,6 +346,8 @@ GeneraEstatusBolsa(){
   document.getElementById('DivVacante').classList.add('ocultar');
   document.getElementById('DivGraficaVacante').classList.add('ocultar');
   document.getElementById('DivClientes').classList.add('ocultar');
+  document.getElementById('DivCubiertoReport').classList.add('ocultar');
+  
 
  
   document.getElementById('DivBotones').classList.remove('botones');
@@ -405,6 +426,9 @@ GeneraEstatusBolsa(){
     document.getElementById('Divdiv3').classList.remove('ocultar');
     document.getElementById('Divdivbusca').classList.add('ocultar');
     document.getElementById('Divdiv').classList.add('ocultar');
+  }else if(tipo == 11){
+    document.getElementById('repCubierto').classList.remove('ocultar');
+    document.getElementById('exelCubierto').classList.remove('ocultar');
   }else{
     document.getElementById('report1').classList.remove('ocultar');
     document.getElementById('exel1').classList.remove('ocultar');

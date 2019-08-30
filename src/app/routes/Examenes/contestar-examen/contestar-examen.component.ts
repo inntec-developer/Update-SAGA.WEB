@@ -22,7 +22,7 @@ export class ContestarExamenComponent implements OnInit {
 
   GetExamen()
   {
-    this.service.GetExamen(1004).subscribe(data => {
+    this.service.GetExamen(64).subscribe(data => {
       this.examen = data;
     });
   }

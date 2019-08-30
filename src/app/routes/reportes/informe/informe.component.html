@@ -75,6 +75,7 @@ type="square-jelly-box"
           <option value="8">Candidato Bolsa</option>
           <option value="9">Vacantes</option>
           <option value="10">Clientes</option>
+          <option value="11">Cubiertos</option>
       </select>
     </div>
 </div>
@@ -92,17 +93,6 @@ type="square-jelly-box"
         </mat-form-field>
     </div>
     
-        <!-- <div class="form-group">
-          <label  for="sel3">Fecha Inicio</label>
-          <input
-            class="form-control input-sm"
-            lang="es"
-            type="date"
-            id="fechaInicial"
-            name="fecha"
-            max="{{ano}}-{{mes}}-{{dia}}"
-          />
-        </div> -->
 </div>
 
 
@@ -300,19 +290,18 @@ type="square-jelly-box"
              </ngx-select>
              </form>
       </div>
-
       </div>
+
 
       <div class="col-xl-2 " id="divestatus">
         <mat-form-field >
           <mat-label>Estatus</mat-label>
-
           <mat-select  (selectionChange)="PruebaEstatus($event.value)"
           multiple
           style="z-index: 100px !important">
             <!-- <mat-option> None </mat-option> -->
             <mat-optgroup *ngFor="let group of EstatusGeneral" [label]="group.nombre">
-                <mat-option class="prueba" style="color: red" (click)="ActivaCheck(group.nombre)" [value]="0">Todos los {{group.nombre}} </mat-option>
+                <mat-option class="prueba" style="color: red" [attr.name]="'Cate_'+group.nombre" (click)="ActivaCheck(group.nombre)" [value]="0">Todos los {{group.nombre}} </mat-option>
               <mat-option [attr.id]="'o_'+item.id"   [attr.name]="'namee'+item.id"  *ngFor="let item of group.pieza"  [value]="item.id">
                 {{item.descripcion}}
               </mat-option>
@@ -325,7 +314,6 @@ type="square-jelly-box"
 
       <div class="col-xl-4 ocultar" id="divestatus2">
         <div class="form-group input-sm" style="z-index: 100px !important">
-         
           <form [formGroup]="FormEstatus">
               <ngx-select
              [allowClear]="true"
@@ -355,8 +343,6 @@ type="square-jelly-box"
 
 <div class="col-xl-2" id="divSolicitante">
     <div class="form-group" >
-     
-
       <form [formGroup]="FormSolicitante" style="font-size: 10px !important">
           <ngx-select
           [allowClear]="true"
@@ -394,8 +380,6 @@ type="square-jelly-box"
 
 <div class="col-xl-4" id="divEmpresas">
     <div class="form-group input-sm" >
-     
-
       <form [formGroup]="FormEmpresas">
           <ngx-select
          [allowClear]="true"
@@ -411,7 +395,6 @@ type="square-jelly-box"
          size="small"
          optionValueField="id"
          optionTextField="razonSocial"
-
        >
          <ng-template ngx-select-option-selected let-option let-text="descripcion">
            <span style="font-size: 9px !important">{{ option.data.razonSocial }}</span>
@@ -426,10 +409,7 @@ type="square-jelly-box"
 
 
 <div class="col-xl-4" id="divreclutador">
-
     <div class="form-group input-sm">
-     
-
       <form [formGroup]="FormReclutador">
           <ngx-select
          [allowClear]="true"
@@ -530,29 +510,32 @@ type="square-jelly-box"
             <em  class="fa fa-download"></em>
           </button>
           <button id="exel2" tooltip="Exportar" (click)="ReGeneral.exportAsXLSX()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
-              <em  class="fa fa-download"></em>
-            </button>
-            <button id="exelProact" tooltip="Exportar" style="right: auto;" (click)="ProAct.Exportar()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
-              <em  class="fa fa-download"></em>
-            </button>
-            <button id="exelDetalleReclu" tooltip="Exportar" style="right: auto;" (click)="DetalleReclu.Exportar()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
-              <em  class="fa fa-download"></em>
-            </button>
-            <button id="exelDetalleCordi" tooltip="Exportar" style="right: auto;" (click)="DetalleCordi.Exportar()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
-              <em  class="fa fa-download"></em>
-            </button>
-            <button id="exelCoordinacion" tooltip="Exportar" style="right: auto;" (click)="Cordinacion.Exportar()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
-              <em  class="fa fa-download"></em>
-            </button>
-            <button id="exelCandidato" tooltip="Exportar" style="right: auto;" (click)="Candidato.Exportar()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
-              <em  class="fa fa-download"></em>
-            </button>
-            <button id="exelVacante" tooltip="Exportar" style="right: auto;" (click)="Vacante.Exportar()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
-              <em  class="fa fa-download"></em>
-            </button>
-            <button id="exelCliente" tooltip="Exportar" style="right: auto;" (click)="Clientes2.Exportar()" class="ocultar botonesClient btn btn-sm btn-warning btnReport mat-elevation-z8">
-                <em  class="fa fa-download"></em>
-              </button>
+            <em  class="fa fa-download"></em>
+          </button>
+          <button id="exelProact" tooltip="Exportar" style="right: auto;" (click)="ProAct.Exportar()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
+            <em  class="fa fa-download"></em>
+          </button>
+          <button id="exelDetalleReclu" tooltip="Exportar" style="right: auto;" (click)="DetalleReclu.Exportar()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
+            <em  class="fa fa-download"></em>
+          </button>
+          <button id="exelDetalleCordi" tooltip="Exportar" style="right: auto;" (click)="DetalleCordi.Exportar()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
+            <em  class="fa fa-download"></em>
+          </button>
+          <button id="exelCoordinacion" tooltip="Exportar" style="right: auto;" (click)="Cordinacion.Exportar()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
+            <em  class="fa fa-download"></em>
+          </button>
+          <button id="exelCandidato" tooltip="Exportar" style="right: auto;" (click)="Candidato.Exportar()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
+            <em  class="fa fa-download"></em>
+          </button>
+          <button id="exelVacante" tooltip="Exportar" style="right: auto;" (click)="Vacante.Exportar()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
+            <em  class="fa fa-download"></em>
+          </button>
+          <button id="exelCliente" tooltip="Exportar" style="right: auto;" (click)="Clientes2.Exportar()" class="ocultar botonesClient btn btn-sm btn-warning btnReport mat-elevation-z8">
+            <em  class="fa fa-download"></em>
+          </button>
+          <button id="exelCubierto" tooltip="Exportar" style="right: auto;" (click)="CubiertoReport.Exportar()" class="ocultar botonesClient btn btn-sm btn-warning btnReport mat-elevation-z8">
+            <em  class="fa fa-download"></em>
+          </button>
 
 
 
@@ -562,27 +545,30 @@ type="square-jelly-box"
         <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" (click)="ReGeneral.llamado(objsucursal,objsolicit,objrecluta,objempresa,objstatus,objtiporeclu,objtipocordi)" tooltip="Generar Reporte" id="report2"  >
             <em  class="fa fa-bar-chart"></em>
           </button>
-          <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="ProAct.Generar(objrecluta,objtipocordi)" tooltip="Generar Reporte" id="repProActi"  >
+        <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="ProAct.Generar(objrecluta,objtipocordi)" tooltip="Generar Reporte" id="repProActi"  >
+          <em  class="fa fa-bar-chart"></em>
+        </button>
+        <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="DetalleReclu.Generar(objrecluta,objtipocordi)" tooltip="Generar Reporte" id="repDetalleReclu"  >
+          <em  class="fa fa-bar-chart"></em>
+        </button>
+        <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="DetalleCordi.Generar(objusercoo,objtipocordi)" tooltip="Generar Reporte" id="repDetalleCordina"  >
+          <em  class="fa fa-bar-chart"></em>
+        </button>
+        <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="Cordinacion.Generar(objstatus)" tooltip="Generar Reporte" id="repCoordinacion"  >
+          <em  class="fa fa-bar-chart"></em>
+        </button>
+        <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="Candidato.Generar(objestado,objstatus)" tooltip="Generar Reporte" id="repCandidato"  >
             <em  class="fa fa-bar-chart"></em>
-          </button>
-          <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="DetalleReclu.Generar(objrecluta,objtipocordi)" tooltip="Generar Reporte" id="repDetalleReclu"  >
-            <em  class="fa fa-bar-chart"></em>
-          </button>
-          <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="DetalleCordi.Generar(objusercoo,objtipocordi)" tooltip="Generar Reporte" id="repDetalleCordina"  >
-            <em  class="fa fa-bar-chart"></em>
-          </button>
-          <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="Cordinacion.Generar(objstatus)" tooltip="Generar Reporte" id="repCoordinacion"  >
-            <em  class="fa fa-bar-chart"></em>
-          </button>
-          <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="Candidato.Generar(objestado,objstatus)" tooltip="Generar Reporte" id="repCandidato"  >
-              <em  class="fa fa-bar-chart"></em>
-            </button>
-            <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="Vacante.Generar(objempresa,objtipocordi)" tooltip="Generar Reporte" id="repVacante"  >
-              <em  class="fa fa-bar-chart"></em>
-            </button>
-            <button id="repCliente"  (click)="Clientes2.Generar()" tooltip="Generar Reporte" style="right: auto;"   class="ocultar botonesClient btn btn-sm btn-success btnReport mat-elevation-z8" >
-                <em  class="fa fa-bar-chart"></em>
-              </button>
+        </button>
+        <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="Vacante.Generar(objempresa,objtipocordi)" tooltip="Generar Reporte" id="repVacante"  >
+          <em  class="fa fa-bar-chart"></em>
+        </button>
+        <button id="repCliente"  (click)="Clientes2.Generar()" tooltip="Generar Reporte" style="right: auto;"   class="ocultar botonesClient btn btn-sm btn-success btnReport mat-elevation-z8" >
+          <em  class="fa fa-bar-chart"></em>
+        </button>
+        <button id="repCubierto"  (click)="CubiertoReport.Generar()" tooltip="Generar Reporte" style="right: auto;"   class="ocultar botonesClient btn btn-sm btn-success btnReport mat-elevation-z8" >
+          <em  class="fa fa-bar-chart"></em>
+        </button>
 
       </div>
 
@@ -610,6 +596,8 @@ type="square-jelly-box"
 <app-vacante id="DivVacante" #Vacante ></app-vacante>
 
 <app-cliente id="DivClientes" #Clientes2 ></app-cliente>
+
+<app-cubierto id="DivCubiertoReport" #CubiertoReport></app-cubierto>
 
 
 

@@ -1,0 +1,63 @@
+<div class="content-heading">
+  <div>
+    <span class="text-sm d-none d-sm-block">Administraci&oacute;n de ex&aacute;menes.</span>
+  </div>
+  <!-- Breadcrumb right aligned-->
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item">
+      <a [routerLink]="['/home']">Inicio</a>
+    </li>
+    <li class="breadcrumb-item active">Examenes</li>
+  </ol>
+</div>
+
+<div class="row">
+  <div class="col-md-3 col-sm-3">
+    <button type="button" class="btn btn-lg btn-block" [ngClass]="viewEnt ? 'btn-primary mat-elevation-z8' : 'disabled'" (click)="viewTec=false; viewPsic=false; viewMd=false; viewEnt = true;">
+      <div class="d-flex justify-content-between">
+        <i class="fa fa-address-book-o fa-3x"></i>
+        <h3 class="text-button my-auto">Entrevista</h3>
+      </div>
+    </button>
+  </div>
+  <div class="col-md-3 col-sm-3">
+    <button type="button" class="btn btn-lg btn-block" [ngClass]="viewTec ? 'btn-primary mat-elevation-z8' :  'disabled'" (click)="viewEnt=false; viewPsic=false; viewMd=false; viewTec= true;">
+        <div class="d-flex justify-content-between">
+            <i class=" fa fa-cogs fa-3x "></i>
+            <h3 class="text-button py-auto">T&eacute;cnicos</h3>
+          </div>
+    </button>
+  </div>
+  <div class="col-md-3 col-sm-3">
+    <button type="button" class="btn btn-lg btn-block" [ngClass]="viewPsic ? 'btn-primary mat-elevation-z8' :  'disabled'" (click)="viewTec=false;viewPsic=false;viewMd=false;viewPsic = true;viewEnt = false;">
+        <div class="d-flex justify-content-between">
+            <i class=" fa fa-puzzle-piece fa-3x "></i>
+            <h3 class="text-button py-auto">Psicom&eacute;tricos</h3>
+          </div>
+    </button>
+  </div>
+  <div class="col-md-3 col-sm-3">
+    <button type="button" class="btn btn-lg btn-block" [ngClass]="viewMd ? 'btn-primary mat-elevation-z8' :  'disabled'" (click)="viewTec=false;viewPsic=false;viewMd=true;viewEnt = false;">
+        <div class="d-flex justify-content-between">
+            <i class=" fa fa-user-md fa-3x "></i>
+            <h3 class="text-button py-auto">M&eacute;dicos</h3>
+          </div>
+    </button>
+  </div>
+  <br>
+</div>
+<br>
+<div class="row border card">
+  <div class="col-sm-12 col-md-12" *ngIf="viewEnt">
+   <app-entrevistas></app-entrevistas>
+  </div>
+  <div *ngIf="viewTec">
+      <app-asignar-examen></app-asignar-examen>
+  </div>
+  <div *ngIf="viewPsic">
+    <app-asignar-psicometricos></app-asignar-psicometricos>
+</div>
+<div *ngIf="viewMd">
+  <app-agregar-result-medicos></app-agregar-result-medicos>
+</div>
+</div>
