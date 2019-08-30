@@ -61,6 +61,7 @@ public dataSource: Array<any> = [];
 
   getRequisiciones() {
     this._service.GetRportTable(this.usuarioId, this.orden).subscribe( data => {
+
       this.dataSource = data;
 
       this.totalPos = 0;

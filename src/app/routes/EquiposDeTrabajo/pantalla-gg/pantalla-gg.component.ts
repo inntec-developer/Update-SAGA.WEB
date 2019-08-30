@@ -107,6 +107,10 @@ sparkOptionsDanger = {
     this.gerente = [];
     this.usuarioId = row.reclutadorId;
     this.migasDtos.push(row);
+this.totalCub = 0;
+this.totalPos = 0;
+this.totalFal = 0;
+this.totalCump = 0;
 
     if (this.migas.length > 0) {
       this.lider = this.migas[this.migas.length - 1];
@@ -124,6 +128,7 @@ sparkOptionsDanger = {
           reclutadorId: element.reclutadorId,
           nombre: element.nombre,
           foto: element.foto,
+          requis: element.requis,
           resumen: element.resumen,
           totalPos: element.totalPos,
           totalCub: element.totalCub,
@@ -133,17 +138,36 @@ sparkOptionsDanger = {
         });
         cont++;
       });
-  
-      this.totalPos = row.totalPos;
-      this.totalCub = row.totalCub;
-      this.totalFal = this.totalPos - this.totalCub;
-      this.totalCump = Math.round(this.totalCub * 100 / this.totalPos || 0);
-      //   this.totalPos = totalPos.reduce(function (valorAnterior, valorActual, indice, vector) {
-      //       return valorAnterior + valorActual;
-      //  }, 10);
 
-      this.refreshGraficasPie(this.gerente);
+      if (row.requis.length > 0) {
+        const aux = this.gerente.reduce(function (valorAnterior, valorActual, indice, vector) {
+          return valorAnterior + valorActual.totalPos;
+        }, 0);
+
+        const auxCon = this.gerente.reduce(function (valorAnterior, valorActual, indice, vector) {
+          return valorAnterior + valorActual.totalCub;
+        }, 0);
+
+        this.gerente.push({
+          reclutadorId: row.reclutadorId,
+          nombre: row.nombre,
+          foto: row.foto,
+          resumen: row.resumen,
+          totalPos: row.totalPos - aux,
+          totalCub: row.totalCub - auxCon,
+          totalFal: (row.totalPos - aux ) - (row.totalCub - auxCon),
+          totalCump: Math.round((row.totalCub - auxCon) * 100 / (row.totalPos - aux) || 0),
+          bg: this.backgroundColor[cont++],
+        });
+      }
     }
+    this.totalPos = row.totalPos;
+    this.totalCub = row.totalCub;
+    this.totalFal = this.totalPos - this.totalCub;
+    this.totalCump = Math.round(this.totalCub * 100 / this.totalPos || 0);
+
+    this.refreshGraficasPie(this.gerente);
+
   }
 
   loadMigas(flag) {

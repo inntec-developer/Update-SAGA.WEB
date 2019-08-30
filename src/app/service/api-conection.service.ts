@@ -294,6 +294,7 @@ export class ApiConection {
   public static GetCatalogo = 'examenes/getCatalogo';
   public static GetExamenes = 'examenes/getExamenes';
   public static GetExamen = 'examenes/getExamen';
+  public static GetExamenesEntrevista = 'examenes/getExamenesEntrevista';
   public static InsertRelacion = 'examenes/insertRelacion';
   public static InsertRespCandidato = 'examenes/insertRespCandidato';
   public static InsertResultMedico = 'examenes/insertResultMedico';

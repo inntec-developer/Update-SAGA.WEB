@@ -61,6 +61,8 @@ export class FoliosActivosComponent implements OnInit {
     let espera = 0;
     let pausada = 0;
     let garantia = 0;
+    let pa = 0;
+    let pgg = 0;
     this.totalActivos = 0;
     let cubiertas = 0;
     let parcialmente = 0;
@@ -75,6 +77,7 @@ export class FoliosActivosComponent implements OnInit {
       this.Chart2.destroy();
       this.Chart3.destroy();
     }
+
     result.forEach(element => {
         this.totalPos += element.vacantes;
         contratados += element.contratados;
@@ -146,16 +149,28 @@ export class FoliosActivosComponent implements OnInit {
               this.totalActivos += 1;
               break;
             }
+          case 43:
+              {
+                pa += 1;
+                this.totalActivos += 1;
+                break;
+              }
+          case 46:
+                {
+                  pgg += 1;
+                  this.totalActivos += 1;
+                  break;
+                }
           case 34:
           {
-            cubiertas +=1;
+            cubiertas += 1;
             this.total += 1;
             break;
           }
           case 35:
           {
-            parcialmente +=1;
-            this.total +=1;
+            parcialmente += 1;
+            this.total += 1;
             break;
 
           }
@@ -188,7 +203,9 @@ export class FoliosActivosComponent implements OnInit {
             '#c45850',
             '#70FFD3',
             '#F335FF',
-            '#C5FF60'
+            '#C5FF60',
+            '#85144b',
+            '#F012BE',
           ],
           data: [
             nuevo,
@@ -200,7 +217,9 @@ export class FoliosActivosComponent implements OnInit {
             socioeconomicos,
             espera,
             pausada,
-            garantia
+            garantia,
+            pa,
+            pgg
           ]
         }],
         // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -215,6 +234,8 @@ export class FoliosActivosComponent implements OnInit {
           'En espera de contratación',
           'Pausadas',
           'Garantía de búsqueda',
+          'Pendiente Autorizar',
+          'Pendiente Autorizar GG'
         ]
       };
 
