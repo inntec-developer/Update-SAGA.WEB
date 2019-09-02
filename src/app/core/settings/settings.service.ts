@@ -33,7 +33,7 @@ export class SettingsService {
       departamentoId: '',
       departamento: '',
       unidadNegocioId: '',
-      roles: ''
+      roles:  Array<any>()
     };
 
     // App Settings

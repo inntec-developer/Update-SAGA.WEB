@@ -92,11 +92,12 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(user)
       .subscribe(
         data => {
+          debugger;
           if (data !== 404 && data !== 406) {
             sessionStorage.setItem('access-token', data['dataUser'])
             sessionStorage.setItem('validation-token', data['token'])
             var decode = this.getDecodedAccessToken(sessionStorage.getItem('access-token'));
-            this.Priv = JSON.parse(decode['Privilegios'])
+            this.Priv = JSON.parse(decode['Privilegios']);
             this.settings.user['id'] = decode['IdUsuario'];
             this.settings.user['nombre'] = decode['Nombre'];
             this.settings.user['usuario'] = decode['Usuario'];
@@ -112,6 +113,7 @@ export class LoginComponent implements OnInit {
             this.settings.user['departamentoId'] = decode['DepartamentoId'];
             this.settings.user['departamento'] = decode['Departamento'];
             this.settings.user['unidadNegocioId'] = decode['UnidadNegocioId'];
+            this.settings.user['roles'] = JSON.parse(decode['Roles']);
             if (!this.showRequi) {
               this.router.navigate(['/home']);
             } else {

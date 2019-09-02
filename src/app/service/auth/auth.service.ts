@@ -75,6 +75,7 @@ export class AuthService {
         this.settings.user['departamentoId'] = decode['DepartamentoId'];
         this.settings.user['departamento'] = decode['Departamento'];
         this.settings.user['unidadNegocioId'] = decode['UnidadNegocioId'];
+        this.settings.user['roles'] = decode['Roles'];
       }
       return true;
     }

@@ -21,7 +21,7 @@ export class PerfilesComponent implements OnInit {
   public email:  string;
   public lider:  string;
   public departamento:  string;
-  public roles: any;
+  public roles: any[];
 
   constructor(
     private _Route: ActivatedRoute,
@@ -39,6 +39,7 @@ export class PerfilesComponent implements OnInit {
       this.lider = params['lider'];
       this.departamento = params['departamento'];
       this.roles = params['roles'];
+      console.log(this.roles);
       });
     }
 
