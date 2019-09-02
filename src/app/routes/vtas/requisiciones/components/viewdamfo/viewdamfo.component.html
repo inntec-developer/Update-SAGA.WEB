@@ -446,11 +446,11 @@
         <td><strong>Tipo: </strong></td>
         <td>{{x.tipo | uppercase}}</td>
         <td class="text-right"><strong>N&uacute;mero: </strong></td>
-        <td class="text-center">{{x.clavePais}} - {{x.claveLada}} - {{x.telefono}}</td>
+        <td colspan="2" class="text-center"> ({{x.claveLada}}) {{x.telefono | slice:0:4}}-{{x.telefono | slice:4:8}}</td>
         <td class="text-center"><strong>Extensi&oacute;n </strong></td>
         <td>{{x.extension}}</td>
         <td class="text-center"><strong>Direcci&oacute;n: </strong></td>
-        <td colspan="4">{{x.calle | uppercase}}</td>
+        <td colspan="3">{{x.calle | uppercase}}</td>
       </tr>
     </tbody>
     <tbody>
@@ -502,16 +502,13 @@
         <td class="text-center"><strong>Direcci&oacute;n: </strong></td>
         <td>{{x.calle | uppercase}}</td>
         <td class="text-center"><strong>Nombre: </strong></td>
-        <td colspan="3"> {{x.nombre | uppercase}} {{x.apellidoPaterno | uppercase}} {{x.apellidoMaterno | uppercase}}</td>
+        <td colspan="3"> {{x.nombre | uppercase}} {{x.apellidoPaterno | uppercase}} {{x.apellidoMaterno | uppercase}}
+        </td>
         <td class="text-center"><strong>Puesto: </strong></td>
         <td> {{x.puesto | uppercase}}</td>
         <td class="text-center"><strong>Tel&eacute;fono: </strong></td>
         <td>
-          <p *ngFor="let t of x.telefonos">
-            {{t.tipo}}:
-            +{{t.clavePais}} ({{t.claveLada}})
-            {{t.telefono |
-                          slice:0:4}}-{{t.telefono | slice:4:8}}
+          <p *ngFor="let t of x.telefonos"> ({{t.claveLada}}){{t.telefono | slice:0:4}}-{{t.telefono | slice:4:8}}
             <span *ngIf="t.extension != ''">
               Ext. {{t.extension}}
             </span>
@@ -525,24 +522,85 @@
     </tbody>
     <tbody>
       <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">NOMBRE DEL PUESTO</th>
+      </tr>
+      <tr>
+        <td style="background-color: burlywood" colspan="12">REQUISITOS A PETICION DEL CLIENTE:</td>
+      </tr>
+      <tr>
+        <td><strong>Sexo:</strong></td>
+        <td colspan="11">{{damfo290?.genero | uppercase}}</td>
+      </tr>
+      <tr>
+        <td><strong>Edad:</strong></td>
+        <td colspan="11">{{damfo290?.edadMinima | uppercase}} AÑOS A {{damfo290?.edadMaxima}} AÑOS</td>
+      </tr>
+      <tr>
+        <td><strong>Estado Civil:</strong></td>
+        <td colspan="11">{{damfo290?.estadoCivil | uppercase}}</td>
+      </tr>
+      <tr>
+        <td><strong> Area: </strong></td>
+        <td colspan="11">{{damfo290?.areaExperiencia | uppercase}}</td>
+      </tr>
+      <tr *ngFor="let x of damfo290?.escolaridades">
+        <td><strong> Escolaridad: </strong></td>
+        <td>{{x?.gradoEstudio | uppercase}}</td>
+        <td><strong>Nivel:</strong></td>
+        <td colspan="9">{{x?.estadoEstudio | uppercase}}</td>
+      </tr>
+      <tr>
+        <td><strong>Aptitudes: </strong></td>
+        <td colspan="11">
+          <label *ngFor="let x of damfo290?.aptitudes"> {{x?.aptitud | uppercase}}, </label>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Experiencia: </strong></td>
+        <td colspan="11">
+          {{x?.experiencia | uppercase}}
+        </td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
         <th class="text-center" style="background-color: blue; color: white" colspan="12">HORARIOS</th>
       </tr>
+    <tbody *ngFor="let x of damfo290?.horarios" rowspan="2">
       <tr>
-        <td colspan="12">MAPAS......</td>
+        <td class="text-center"><strong> Horario: </strong></td>
+        <td colspan="8">
+          {{x.nombre | uppercase}} De:
+          {{x.deDia?.diaSemana | uppercase}} a
+          {{x.aDia?.diaSemana | uppercase}} de
+          {{x.deHora | date:"HH:mm"}} a
+          {{x.aHora | date:"HH:mm"}}
+        </td>
+        <td class="text-center">
+          <span *ngIf="x.activo" class="badge badge-pill badge-success"> ACTIVO</span>
+          <span *ngIf="!x.activo" class="badge badge-pill badge-danger"> INACTIVO</span>
+        </td>
+        <td class="text-center"><strong>Vacantes:</strong></td>
+        <td class="text-center"> {{x.numeroVacantes}}</td>
       </tr>
       <tr>
-        <td style="background-color: burlywood" colspan="12">PRINCIPALES ACTIVIDADES A DESARROLLAR:</td>
+        <td class="text-center"><strong> Especificaciones: </strong></td>
+        <td colspan="11"> {{x.especificaciones | uppercase}}</td>
       </tr>
-      <tr>
-        <td colspan="12">ACTIVIDADES......</td>
-      </tr>
-      <tr>
-        <td style="background-color: burlywood" colspan="12">OBSERVACIONES DE TIPO CONFIDENCIAL, REQUISITOS DEL CLIENTE
-          NO PUBLICABLES: <small class="text-danger">(Para consulta exclusiva del reclutador)</small></td>
-      </tr>
-      <tr>
-        <td colspan="12">OBSERVACIONES......</td>
-      </tr>
+    </tbody>
+    <tr>
+      <td style="background-color: burlywood" colspan="12">PRINCIPALES ACTIVIDADES A DESARROLLAR:</td>
+    </tr>
+    <tr *ngFor="let x of damfo290?.actividades; let i = index">
+      <td colspan="12">{{i + 1}}.- {{x.actividades | uppercase}}</td>
+    </tr>
+    <tr>
+      <td style="background-color: burlywood" colspan="12">OBSERVACIONES DE TIPO CONFIDENCIAL, REQUISITOS DEL CLIENTE
+        NO PUBLICABLES: <small class="text-danger">(Para consulta exclusiva del reclutador)</small></td>
+    </tr>
+    <tr *ngFor="let x of damfo290?.observaciones; let i = index">
+      <td colspan="12">{{i + 1}}.- {{x.observaciones | uppercase}}</td>
+    </tr>
     </tbody>
 
 
