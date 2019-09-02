@@ -103,6 +103,7 @@ export class DialogEventComponent implements OnInit {
   }
 
   onCloseDialogInfo() {
+    debugger;
     this.loading = true;
     const dateInicio = new Date(this.formEvent.get('Inicio').value);
     const dateFinal = new Date(this.formEvent.get('Fin').value);
@@ -127,13 +128,15 @@ export class DialogEventComponent implements OnInit {
       const mns = parseInt(hourStart[1], null);
       const hre = parseInt(hourEnd[0], null);
       const mne = parseInt(hourEnd[1], null);
-      if (new Date(ys, ms, ds) < new Date()) {
-        this.popToast('warning', 'Calendario', 'La fecha Inicio no debe ser menor a la fecha Actual');
+      const DateActual = new Date();
+      const DateInit = new Date(ys, ms, ds, hrs, mns);
+      if (DateInit < DateActual) {
+        this.popToast('warning', 'Calendario', 'La fecha y hora inicio debe ser mayor a la fecha y hora actual');
         this.loading = false;
         return;
       }
       if (new Date(ys, ms, ds) < new Date(ye, me, de)) {
-        this.popToast('warning', 'Calendario', 'La fecha Inicio no debe ser igual o mayor a la fecha Actual');
+        this.popToast('warning', 'Calendario', 'La fecha final debe ser igual o mayor a la fecha inicio');
         this.loading = false;
         return;
       }

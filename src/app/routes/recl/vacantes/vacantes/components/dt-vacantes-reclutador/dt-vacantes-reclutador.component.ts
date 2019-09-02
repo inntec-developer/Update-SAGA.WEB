@@ -160,27 +160,31 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   getVacantes() {
     this.service.getRequiReclutador(this.settings.user['id']).subscribe(data => {
-      this.dataSource = data;
+      if (data !== 404) {
+        this.dataSource = data;
 
-      this.totalPos = 0;
-      this.totalContratados = 0;
-      this.dataSource.forEach(r => {
+        this.totalPos = 0;
+        this.totalContratados = 0;
+        this.dataSource.forEach(r => {
 
-        this.totalPos += r.vacantes;
-        this.totalContratados += r.contratados;
+          this.totalPos += r.vacantes;
+          this.totalContratados += r.contratados;
 
-        if (r.estatusId === 4) {
-          r.coordinador = r.reclutadores;
-          r.reclutadores = 'SIN ASIGNAR';
-        }
+          if (r.estatusId === 4) {
+            r.coordinador = r.reclutadores;
+            r.reclutadores = 'SIN ASIGNAR';
+          }
 
-      });
-      this.GetCandidatosNR();
-      this.GetRequisicionesPausa();
+        });
+        this.GetCandidatosNR();
+        this.GetRequisicionesPausa();
 
-      this.onChangeTable(this.config);
-      this.spinner.hide();
-
+        this.onChangeTable(this.config);
+        this.spinner.hide();
+      } else {
+        this.popToast('error', 'Vacantes', 'Algo salió mal al intentar recuperar la información de las vacantes, intente de nuevo.');
+        this.spinner.hide();
+      }
     });
   }
 

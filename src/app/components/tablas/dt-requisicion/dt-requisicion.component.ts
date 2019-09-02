@@ -25,7 +25,7 @@ declare var $: any;
 })
 
 export class DtRequisicionComponent implements OnInit {
-  public reporteCandidatos : boolean = false;
+  public reporteCandidatos: boolean = false;
 
   //scroll
   disabled = false;
@@ -113,26 +113,30 @@ export class DtRequisicionComponent implements OnInit {
 
   getRequisiciones() {
     this.service.getRequisiciones(this.settings.user['id']).subscribe(data => {
-      this.dataSource = data;
+      if (data !== 404) {
+        this.dataSource = data;
 
-      this.totalPos = 0;
-      this.totalContratados = 0;
+        this.totalPos = 0;
+        this.totalContratados = 0;
 
-      this.dataSource.forEach(r => {
-        if(r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37))
-        {
-          this.totalPos += r.vacantes;
-          this.totalContratados += r.contratados;
-          if(r.estatusId == 4)
-          {
-            r.coordinador = r.reclutadores;
-            r.reclutadores = "SIN ASIGNAR";
+        this.dataSource.forEach(r => {
+          if (r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37)) {
+            this.totalPos += r.vacantes;
+            this.totalContratados += r.contratados;
+            if (r.estatusId == 4) {
+              r.coordinador = r.reclutadores;
+              r.reclutadores = 'SIN ASIGNAR';
+            }
           }
-        }
-      })
-
-     this.onChangeTable(this.config);
-    }, error => this.errorMessage = <any>error);
+        });
+        this.onChangeTable(this.config);
+      } else {
+        this.popToast('error',
+        'Requisiciones',
+        'Algo salió mal al intentar recuperar la información de las requisiciones, intente de nuevo.');
+        this.spinner.hide();
+      }
+    });
   }
 
   public rows: Array<any> = [];
@@ -152,11 +156,9 @@ export class DtRequisicionComponent implements OnInit {
     { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador', columnName: 'reclutadores' } },
   ];
 
-  ValidarEstatus(estatusId)
-  {
+  ValidarEstatus(estatusId) {
     this.cubiertas = [];
-    if(this.element.vacantes == 0 && estatusId != 8 && estatusId != 9 )
-    {
+    if (this.element.vacantes == 0 && estatusId != 8 && estatusId != 9) {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
       this.cc = true; //cubierta por el cliente
@@ -167,19 +169,16 @@ export class DtRequisicionComponent implements OnInit {
       this.editar = false;
       this.candidatos = true;
     }
-    else if(estatusId == 1 || estatusId == 4 || estatusId == 46)
-    {
+    else if (estatusId == 1 || estatusId == 4 || estatusId == 46) {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = false;
-      if(this.element.contratados == 0)
-      {
-      this.cubiertas.push({id: 37, descripcion: "Cubierta por el cliente" },
-      {id: 47, descripcion: "Promoción interna" },
-      {id: 48, descripcion: "Operaciones" });
+      if (this.element.contratados == 0) {
+        this.cubiertas.push({ id: 37, descripcion: "Cubierta por el cliente" },
+          { id: 47, descripcion: "Promoción interna" },
+          { id: 48, descripcion: "Operaciones" });
       }
-      else
-      {
-        this.cubiertas.push({id: 37, descripcion: "Cubierta por el cliente" });
+      else {
+        this.cubiertas.push({ id: 37, descripcion: "Cubierta por el cliente" });
       }
       this.cc = false; //cubierta por el cliente
       this.crm = true; //cubierta reclutamiento medios
@@ -190,7 +189,7 @@ export class DtRequisicionComponent implements OnInit {
       this.candidatos = true;
 
     }
-    else if(estatusId == 8) //cancelada
+    else if (estatusId == 8) //cancelada
     {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
@@ -202,13 +201,12 @@ export class DtRequisicionComponent implements OnInit {
       this.editar = true;
       this.candidatos = true;
     }
-    else if( estatusId < 34 && estatusId != 8 && this.element.enProceso > 0 && this.element.contratados == 0)
-    {
+    else if (estatusId < 34 && estatusId != 8 && this.element.enProceso > 0 && this.element.contratados == 0) {
       this.gbc = true;
       this.cubierta = false;
-      this.cubiertas.push({id: 37, descripcion: "Cubierta por el cliente" },
-      {id: 47, descripcion: "Promoción interna" },
-      {id: 48, descripcion: "Operaciones" });
+      this.cubiertas.push({ id: 37, descripcion: "Cubierta por el cliente" },
+        { id: 47, descripcion: "Promoción interna" },
+        { id: 48, descripcion: "Operaciones" });
       this.cc = false; //cubierta por el cliente
       this.crm = true; //cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
@@ -217,14 +215,13 @@ export class DtRequisicionComponent implements OnInit {
       this.editar = true;
       this.candidatos = true;
     }
-    else if( estatusId < 34 && estatusId != 8 && this.element.postulados > 0 && this.element.contratados == 0)
-    {
+    else if (estatusId < 34 && estatusId != 8 && this.element.postulados > 0 && this.element.contratados == 0) {
       this.gbc = true;
       this.cubierta = false;
       this.cc = false; //cubierta por el cliente
-      this.cubiertas.push({id: 37, descripcion: "Cubierta por el cliente" },
-      {id: 47, descripcion: "Promoción interna" },
-      {id: 48, descripcion: "Operaciones" })
+      this.cubiertas.push({ id: 37, descripcion: "Cubierta por el cliente" },
+        { id: 47, descripcion: "Promoción interna" },
+        { id: 48, descripcion: "Operaciones" })
 
       this.crm = true; //cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
@@ -233,11 +230,10 @@ export class DtRequisicionComponent implements OnInit {
       this.editar = true
 
     }
-    else if(estatusId < 34 && estatusId != 8 && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes )
-    {
+    else if (estatusId < 34 && estatusId != 8 && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes) {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = false;
-      this.cubiertas.push({id: 34, descripcion: 'Cubierta' },{id: 36, descripcion: 'Cubierta por medios' } );
+      this.cubiertas.push({ id: 34, descripcion: 'Cubierta' }, { id: 36, descripcion: 'Cubierta por medios' });
 
       this.cc = true; //cubierta por el cliente
       this.crm = false; //cubierta reclutamiento medios
@@ -247,12 +243,11 @@ export class DtRequisicionComponent implements OnInit {
       this.editar = true;
       this.candidatos = false;
     }
-    else if(estatusId < 34 && estatusId != 8 && this.element.vacantes > 0 && ( this.element.contratados > 0  && this.element.contratados < this.element.vacantes ) )
-    {
+    else if (estatusId < 34 && estatusId != 8 && this.element.vacantes > 0 && (this.element.contratados > 0 && this.element.contratados < this.element.vacantes)) {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = false;
       this.cc = false; //cubierta por el cliente
-      this.cubiertas.push({id: 35, descripcion: 'Cubierta parcialmente' })
+      this.cubiertas.push({ id: 35, descripcion: 'Cubierta parcialmente' })
 
       this.crm = true; //cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
@@ -261,14 +256,13 @@ export class DtRequisicionComponent implements OnInit {
       this.editar = true;
       this.candidatos = false;
     }
-    else if( estatusId < 34 && estatusId != 8 && (this.element.enProceso == 0 || this.element.postulados == 0))
-    {
+    else if (estatusId < 34 && estatusId != 8 && (this.element.enProceso == 0 || this.element.postulados == 0)) {
       this.gbc = true;
       this.cubierta = false;
       this.cc = false; //cubierta por el cliente
-      this.cubiertas.push({id: 37, descripcion: "Cubierta por el cliente" },
-      {id: 47, descripcion: "Promoción interna" },
-      {id: 48, descripcion: "Operaciones" });
+      this.cubiertas.push({ id: 37, descripcion: "Cubierta por el cliente" },
+        { id: 47, descripcion: "Promoción interna" },
+        { id: 48, descripcion: "Operaciones" });
       this.crm = true; //cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
@@ -276,8 +270,7 @@ export class DtRequisicionComponent implements OnInit {
       this.editar = true;
       this.candidatos = false;
     }
-    else if(estatusId >= 34 && estatusId < 37 && this.element.tipoReclutamientoId == 1 && this.element.vacantes > 0)
-    {
+    else if (estatusId >= 34 && estatusId < 37 && this.element.tipoReclutamientoId == 1 && this.element.vacantes > 0) {
       this.gbc = false; //garantía busqueda candidato
       this.cubierta = true;
       this.cc = true; //cubierta por el cliente
@@ -288,8 +281,7 @@ export class DtRequisicionComponent implements OnInit {
       this.editar = true;
       this.candidatos = false;
     }
-    else if(estatusId >= 34 && estatusId <= 37 && this.element.tipoReclutamientoId > 1 && this.element.vacantes > 0)
-    {
+    else if (estatusId >= 34 && estatusId <= 37 && this.element.tipoReclutamientoId > 1 && this.element.vacantes > 0) {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
       this.cc = true; //cubierta por el cliente
@@ -312,11 +304,10 @@ export class DtRequisicionComponent implements OnInit {
     //   this.borrar = true;
     //   this.editar = true;
     // }
-    else if(estatusId == 38 && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes)
-    {
+    else if (estatusId == 38 && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes) {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = false;
-      this.cubiertas.push({id: 34, descripcion: "Cubierta" },{id: 36, descripcion: "Cubierta por medios" });
+      this.cubiertas.push({ id: 34, descripcion: "Cubierta" }, { id: 36, descripcion: "Cubierta por medios" });
       this.cc = true; //cubierta por el cliente
       this.crm = false; //cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
@@ -325,12 +316,11 @@ export class DtRequisicionComponent implements OnInit {
       this.editar = true;
       this.candidatos = false;
     }
-    else if(estatusId == 38 && this.element.vacantes > 0 && this.element.contratados > 0 && this.element.contratados < this.element.vacantes)
-    {
+    else if (estatusId == 38 && this.element.vacantes > 0 && this.element.contratados > 0 && this.element.contratados < this.element.vacantes) {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = false;
       this.cc = false; //cubierta por el cliente
-      this.cubiertas.push({id: 35, descripcion: "Cubierta parcialmente" })
+      this.cubiertas.push({ id: 35, descripcion: "Cubierta parcialmente" })
 
       this.crm = true; //cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
@@ -339,8 +329,7 @@ export class DtRequisicionComponent implements OnInit {
       this.editar = true;
       this.candidatos = false;
     }
-    else if(estatusId == 46 || estatusId == 44 || estatusId == 43 )
-    {
+    else if (estatusId == 46 || estatusId == 44 || estatusId == 43) {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
       this.cc = true; //cubierta por el cliente
@@ -351,8 +340,7 @@ export class DtRequisicionComponent implements OnInit {
       this.editar = false;
       this.candidatos = true;
     }
-    else
-    {
+    else {
       this.gbc = true; //garantía busqueda candidato
       this.cubierta = true;
       this.cc = true; //cubierta por el cliente
@@ -416,16 +404,12 @@ export class DtRequisicionComponent implements OnInit {
       if (column.filtering.filterString != "") {
         this.showFilterRow = true;
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
-          {
-            if(!Array.isArray(item[column.name]))
-            {
+          if (item[column.name] != null) {
+            if (!Array.isArray(item[column.name])) {
               return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
             }
-            else
-            {
-              if(item[column.name].length > 0)
-              {
+            else {
+              if (item[column.name].length > 0) {
                 let aux = [];
                 // if(column.filtering.columnName)
                 // {
@@ -433,27 +417,23 @@ export class DtRequisicionComponent implements OnInit {
                 // }
                 // else
                 // {
-                  aux = item[column.name];
+                aux = item[column.name];
                 // }
                 let mocos = false;
 
-                  aux.forEach(element => {
-                    if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
-                    {
-                      mocos = true;
-                      return;
-                    }
-                  });
-
-                  if(mocos)
-                  {
-                    return item[column.name];
+                aux.forEach(element => {
+                  if (element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase())) {
+                    mocos = true;
+                    return;
                   }
+                });
+
+                if (mocos) {
+                  return item[column.name];
+                }
               }
-              else
-              {
-                if( 'sin asignar'.match(column.filtering.filterString.toLowerCase()))
-                {
+              else {
+                if ('sin asignar'.match(column.filtering.filterString.toLowerCase())) {
                   return item[column.name];
                 }
               }
@@ -521,7 +501,7 @@ export class DtRequisicionComponent implements OnInit {
       this.ValidarEstatus(9999)
       this.selected = false;
       this.element = [];
-       this._reinciar();
+      this._reinciar();
     } else {
       this.selected = true;
       this.view = true;
@@ -566,7 +546,7 @@ export class DtRequisicionComponent implements OnInit {
     this.getRequisiciones();
     setTimeout(() => {
       this.columns.forEach(element => {
-       (<HTMLInputElement>document.getElementById(element.name)).value = '';
+        (<HTMLInputElement>document.getElementById(element.name)).value = '';
       });
       this.estatusId = null;
       this.enProceso = null;
@@ -576,10 +556,10 @@ export class DtRequisicionComponent implements OnInit {
     }, 1000);
   }
 
-  public clearfilters(){
+  public clearfilters() {
     this.columns.forEach(element => {
       element.filtering.filterString = '';
-     (<HTMLInputElement>document.getElementById(element.name)).value = '';
+      (<HTMLInputElement>document.getElementById(element.name)).value = '';
     });
     this.onChangeTable(this.config);
     this.estatusId = null;
@@ -588,60 +568,53 @@ export class DtRequisicionComponent implements OnInit {
   }
 
   showRequi() {
-    this._Router.navigate(['/ventas/visualizarRequisicion/', this.element.id, this.element.folio, this.Vacante,this.element.tipoReclutamientoId], { skipLocationChange: true });
+    this._Router.navigate(['/ventas/visualizarRequisicion/', this.element.id, this.element.folio, this.Vacante, this.element.tipoReclutamientoId], { skipLocationChange: true });
   }
 
   editRequi() {
     this._Router.navigate(['/ventas/edicionRequisicion/', this.element.id, this.element.folio, this.element.estatusId, this.element.tipoReclutamientoId], { skipLocationChange: true });
   }
 
-  updataStatus(estatusId, estatus)
-  {
-    var datos = {estatusId: estatusId, requisicionId: this.element.id }
+  updataStatus(estatusId, estatus) {
+    var datos = { estatusId: estatusId, requisicionId: this.element.id }
     var emails = [];
-    if(estatusId == 8)
-    {
+    if (estatusId == 8) {
       var idx = this.rows.findIndex(x => x.id == this.element.id);
 
-        this.rows[idx]['enProcesoN'].forEach(element => {
-            emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
-        });
+      this.rows[idx]['enProcesoN'].forEach(element => {
+        emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
+      });
 
-        this.rows[idx]['postuladosN'].forEach(element => {
-          emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
-        })
+      this.rows[idx]['postuladosN'].forEach(element => {
+        emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
+      })
 
-        if(emails.length > 0)
-        {
-          this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
+      if (emails.length > 0) {
+        this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
           //this.onChangeTable(this.config);
-          });
-        }
+        });
+      }
     }
-    else
-    {
+    else {
       this.postulacionservice.SetProcesoVacante(datos).subscribe(data => {
         if (data == 201) {
           var idx = this.rows.findIndex(x => x.id == this.element.id);
           this.rows[idx]['estatus'] = estatus;
           this.rows[idx]['estatusId'] = estatusId;
 
-          if (estatusId >= 34 && estatusId <=37) {
+          if (estatusId >= 34 && estatusId <= 37) {
             this.rows[idx]['enProcesoN'].forEach(element => {
-              if(element.estatusId != 24 && element.estatusId != 42 && element.estatusId != 27 && element.estatusId != 28)
-              {
+              if (element.estatusId != 24 && element.estatusId != 42 && element.estatusId != 27 && element.estatusId != 28) {
                 emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
               }
             });
 
             this.rows[idx]['postuladosN'].forEach(element => {
-              if(element.statusId == 1)
-              {
+              if (element.statusId == 1) {
                 emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
               }
             })
-            if(emails.length > 0)
-            {
+            if (emails.length > 0) {
               this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
               });
             }
@@ -658,7 +631,7 @@ export class DtRequisicionComponent implements OnInit {
         }
 
       })
-  }
+    }
 
   }
 
@@ -668,10 +641,9 @@ export class DtRequisicionComponent implements OnInit {
     });
     var window: Window
     dialogDlt.afterClosed().subscribe(result => {
-      if(result == 200)
-      {
+      if (result == 200) {
         this.refreshTable();
-        if(this.element.tipoReclutamientoId === 1){
+        if (this.element.tipoReclutamientoId === 1) {
           this.SendEmail();
         }
       }
@@ -685,12 +657,11 @@ export class DtRequisicionComponent implements OnInit {
     });
     var window: Window
     dialogCnc.afterClosed().subscribe(result => {
-      if(result == 200)
-      {
+      if (result == 200) {
         this.updataStatus(8, 'Cancelar')
         this.ValidarEstatus(8);
         this.refreshTable();
-        if(this.element.tipoReclutamientoId === 1){
+        if (this.element.tipoReclutamientoId === 1) {
           this.SendEmail();
         }
       }
@@ -707,8 +678,7 @@ export class DtRequisicionComponent implements OnInit {
       data: this.element
     });
     dialogCnc.afterClosed().subscribe(result => {
-      if(result)
-      {
+      if (result) {
 
         this.refreshTable();
       }
@@ -722,8 +692,7 @@ export class DtRequisicionComponent implements OnInit {
       disableClose: true
     });
     dialogCnc.afterClosed().subscribe(result => {
-      if(result != 0)
-      {
+      if (result != 0) {
         this.updataStatus(result.id, result.descripcion);
         this.ValidarEstatus(result.id);
         this.refreshTable();
@@ -753,52 +722,44 @@ export class DtRequisicionComponent implements OnInit {
     });
   }
 
-  exportAsXLSX()
-  {
+  exportAsXLSX() {
 
-    if(this.dataSource.length > 0)
-    {
+    if (this.dataSource.length > 0) {
       var aux = [];
       var comentarios = "";
       var reclutador = "";
       var coordinador = "";
       this.dataSource.forEach(row => {
-        if(row.comentarioReclutador.length > 0)
-        {
+        if (row.comentarioReclutador.length > 0) {
           row.comentarioReclutador.forEach(element => {
             comentarios = comentarios +
-                          element + '\n'
+              element + '\n'
           });
         }
-        else{
+        else {
           comentarios = "";
         }
 
-        if(!Array.isArray(row.reclutadores))
-        {
+        if (!Array.isArray(row.reclutadores)) {
           reclutador = "SIN ASIGNAR";
         }
-        else if(row.reclutadores.length > 1)
-        {
+        else if (row.reclutadores.length > 1) {
           row.reclutadores.forEach(element => {
             reclutador = reclutador + element + ', \n'
           });
         }
-        else
-        {
+        else {
           reclutador = row.reclutadores[0];
         }
         var d = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
-        var e = this.pipe.transform( new Date(row.fch_Modificacion), 'dd/MM/yyyy');
+        var e = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
 
-        if(row.estatusId == 4)
-        {
+        if (row.estatusId == 4) {
           coordinador = reclutador;
           reclutador = "SIN ASIGNAR"
 
         }
-        else
-        {
+        else {
           coordinador = row.coordinador;
         }
         aux.push({
@@ -810,7 +771,7 @@ export class DtRequisicionComponent implements OnInit {
           NO: row.vacantes,
           CUBIERTOS: row.contratados,
           PUESTO: row.vBtra,
-          SUELDO:  row.sueldoMinimo.toLocaleString('en-US', {style: 'currency', currency: 'USD'}),
+          SUELDO: row.sueldoMinimo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
           ESTATUS: row.estatus,
           'FECHA ESTATUS': e,
           COORDINADOR: coordinador,
