@@ -17,10 +17,12 @@ export class LayoutComponent implements OnInit {
   public Activo = true;
   private mouseStop = null;
   public lock: boolean;
+  public print: boolean;
 
   constructor(private settings: SettingsService) { }
 
   ngOnInit() {
+    this.print = this.settings.actionPrint;
   }
 
   Sesion() {
@@ -31,7 +33,7 @@ export class LayoutComponent implements OnInit {
       clearTimeout(this.mouseStop);
       this.mouseStop = setTimeout(() => {
         swal('!Hasta la vista baby!', 'Game Over', 'error');
-      }, 900000);
+      }, 2700000);
 
     } else {
       if (this.settings.user['id'] != null) { // Nos percatamos si ya inicio sesión.
@@ -73,7 +75,7 @@ export class LayoutComponent implements OnInit {
               });
             }
           }, 20000);
-        }, 1800000);
+        }, 2700000);
       }
     }
   }

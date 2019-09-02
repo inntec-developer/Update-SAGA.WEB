@@ -119,7 +119,7 @@ export class ColoniasComponent implements OnInit, OnChanges {
     this.CMunicipios = [];
   }
 
-  ChEstado(Estado: number) {
+  ChEstado(Estado: any) {
     this.CMunicipios = this.Municipios.filter( e => e.estado === Estado);
   }
 
