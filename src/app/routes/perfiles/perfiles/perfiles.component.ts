@@ -21,6 +21,7 @@ export class PerfilesComponent implements OnInit {
   public email:  string;
   public lider:  string;
   public departamento:  string;
+  public roles: any;
 
   constructor(
     private _Route: ActivatedRoute,
@@ -37,6 +38,7 @@ export class PerfilesComponent implements OnInit {
       this.email = params['email'];
       this.lider = params['lider'];
       this.departamento = params['departamento'];
+      this.roles = params['roles'];
       });
     }
 

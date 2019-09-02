@@ -32,7 +32,8 @@ export class SettingsService {
       lider: '',
       departamentoId: '',
       departamento: '',
-      unidadNegocioId: ''
+      unidadNegocioId: '',
+      roles: ''
     };
 
     // App Settings
