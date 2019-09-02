@@ -12,7 +12,10 @@ declare var $: any;
   providers: [ClientesService],
 })
 export class DtClientesComponent implements OnInit {
-  //scroll
+  /* Configuración de Tabla */
+  public rows: Array<any> = [];
+
+  // scroll
   public disabled = false;
   public compact = false;
   public invertX = false;
@@ -22,15 +25,15 @@ export class DtClientesComponent implements OnInit {
   dataSource: Array<any> = [];
   public errorMessage: any;
   public showFilterRow: boolean;
-  public clearFilter: boolean = false;
-  public selected: boolean = false;
+  public clearFilter = false;
+  public selected = false;
 
   /* Variables de Paginador */
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
   public registros: number;
   public mouseEvent: boolean;
@@ -39,6 +42,71 @@ export class DtClientesComponent implements OnInit {
   public rowAux = [];
   public element: any = null;
   public Loading: boolean;
+
+  public config: any = {
+    paging: true,
+    filtering: { filterString: '' },
+    className: ['table-hover mb-0']
+  };
+  public columns: Array<any> = [
+    {
+      title: 'RFC',
+      sorting: 'desc',
+      className: 'text-success text-center',
+      name: 'rfc',
+      filtering: { filterString: '', placeholder: 'RFC' }
+    },
+    {
+      title: 'Razón Social',
+      sorting: 'desc',
+      className: 'text-success text-center',
+      name: 'razonSocial',
+      filtering: { filterString: '', placeholder: 'Razón Social' }
+    },
+    {
+      title: 'Nombre Comercial',
+      sorting: 'desc',
+      className: 'text-success text-center',
+      name: 'nombrecomercial',
+      filtering: { filterString: '', placeholder: 'Nombre' }
+    },
+    {
+      title: 'Giro',
+      className: 'text-info text-center',
+      name: 'giroEmpresa',
+      filtering: { filterString: '', placeholder: 'Giro' }
+    },
+    {
+      title: 'Actividad',
+      className: 'text-info text-center',
+      name: 'actividadEmpresa',
+      filtering: { filterString: '', placeholder: 'Actividad' }
+    },
+    {
+      title: 'Tamaño',
+      className: 'text-info text-center',
+      name: 'tamanoEmpresa',
+      filtering: { filterString: '', placeholder: 'Tamaño' }
+    },
+    {
+      title: 'Empleados',
+      className: 'text-info text-center',
+      name: 'numeroEmpleados',
+      filtering: { filterString: '', placeholder: 'No. Empleados' }
+    },
+    {
+      title: 'Clasificación',
+      className: 'text-info text-center',
+      name: 'clasificacion',
+      filtering: { filterString: '', placeholder: 'Calsificación' }
+    },
+    {
+      title: 'TipoEmpresa',
+      className: 'text-info text-center',
+      name: 'tipoEmpresa',
+      filtering: { filterString: '', placeholder: 'Tipo' }
+    },
+  ];
 
 
   constructor(
@@ -52,41 +120,21 @@ export class DtClientesComponent implements OnInit {
     this.getClientes();
   }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.onChangeTable(this.config)
-    }, 1500);
-  }
-
   getClientes() {
     this._service.getClientes().subscribe(data => {
       this.dataSource = data;
+      this.onChangeTable(this.config);
     }, error => this.errorMessage = <any>error);
   }
 
-  /* Configuración de Tabla */
-  public rows: Array<any> = [];
-  public columns: Array<any> = [
-    { title: 'RFC', sorting: 'desc', className: 'text-success text-center', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
-    { title: 'Razón Social', sorting: 'desc', className: 'text-success text-center', name: 'razonSocial', filtering: { filterString: '', placeholder: 'Razón Social' } },
-    { title: 'Nombre Comercial', sorting: 'desc', className: 'text-success text-center', name: 'nombrecomercial', filtering: { filterString: '', placeholder: 'Nombre' } },
-    { title: 'Giro', className: 'text-info text-center', name: 'giroEmpresa', filtering: { filterString: '', placeholder: 'Giro' } },
-    { title: 'Actividad', className: 'text-info text-center', name: 'actividadEmpresa', filtering: { filterString: '', placeholder: 'Actividad' } },
-    { title: 'Tamaño', className: 'text-info text-center', name: 'tamanoEmpresa', filtering: { filterString: '', placeholder: 'Tamaño' } },
-    { title: 'Empleados', className: 'text-info text-center', name: 'numeroEmpleados', filtering: { filterString: '', placeholder: 'No. Empleados' } },
-    { title: 'Clasificación', className: 'text-info text-center', name: 'clasificacion', filtering: { filterString: '', placeholder: 'Calsificación' } },
-    { title: 'TipoEmpresa', className: 'text-info text-center', name: 'tipoEmpresa', filtering: { filterString: '', placeholder: 'Tipo' } },
-  ];
 
-  public config: any = {
-    paging: true,
-    filtering: {filterString: ''},
-    className: ['table-hover mb-0']
-  }
+
+
+
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
-    let start = (page.page - 1) * page.itemsPerPage;
-    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    const start = (page.page - 1) * page.itemsPerPage;
+    const end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
   }
 
@@ -95,7 +143,7 @@ export class DtClientesComponent implements OnInit {
       return data;
     }
 
-    let columns = this.config.sorting.columns || [];
+    const columns = this.config.sorting.columns || [];
     let columnName: string = void 0;
     let sort: string = void 0;
 
@@ -127,8 +175,12 @@ export class DtClientesComponent implements OnInit {
       this.clearFilter = true;
       if (column.filtering) {
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
-            return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+          if (item[column.name] != null) {
+            return item[column.name]
+              .toString()
+              .toLowerCase()
+              .match(column.filtering.filterString.toLowerCase());
+          }
         });
       }
     });
@@ -141,7 +193,7 @@ export class DtClientesComponent implements OnInit {
         item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
     }
 
-    let tempArray: Array<any> = [];
+    const tempArray: Array<any> = [];
     filteredData.forEach((item: any) => {
       let flag = false;
       this.columns.forEach((column: any) => {
@@ -171,7 +223,7 @@ export class DtClientesComponent implements OnInit {
       (<any>Object).assign(this.config.sorting, config.sorting);
     }
     this.rows = this.dataSource;
-    let filteredData = this.changeFilter(this.dataSource, this.config);
+    const filteredData = this.changeFilter(this.dataSource, this.config);
     // let sortedData = this.changeSort(filteredData, this.config);
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
     this.registros = this.rows.length;
@@ -179,7 +231,7 @@ export class DtClientesComponent implements OnInit {
     this.Loading = false;
   }
 
-  onCellClick(data: any){
+  onCellClick(data: any) {
     data.selected ? data.selected = false : data.selected = true;
     this.element = data;
 
@@ -191,9 +243,8 @@ export class DtClientesComponent implements OnInit {
     }
     if (this.rowAux.length == 0) {
       this.rowAux = data;
-    }
-    else if (data.selected && this.rowAux != []) {
-      var aux = data;
+    } else if (data.selected && this.rowAux != []) {
+      const aux = data;
       data = this.rowAux;
       data.selected = false;
       aux.selected = true;
@@ -201,7 +252,7 @@ export class DtClientesComponent implements OnInit {
     }
   }
 
-  refreshTable(){
+  refreshTable() {
     this.Loading = true;
     this.getClientes();
     setTimeout(() => {
@@ -224,10 +275,10 @@ export class DtClientesComponent implements OnInit {
     }
   }
 
-  editarCliente(){
-    this._Router.navigate(['/ventas/editarCliente', this.element['id'], ], { skipLocationChange: true });
+  editarCliente() {
+    this._Router.navigate(['/ventas/editarCliente', this.element['id']], { skipLocationChange: true });
   }
-  visualizarCliente(){
-    this._Router.navigate(['/ventas/visualizarCliente', this.element['id'], ], { skipLocationChange: true });
+  visualizarCliente() {
+    this._Router.navigate(['/ventas/visualizarCliente', this.element['id']], { skipLocationChange: true });
   }
 }

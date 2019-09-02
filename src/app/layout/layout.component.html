@@ -2,7 +2,7 @@
     <!-- top navbar-->
     <app-header class="topnavbar-wrapper"></app-header>
     <!-- sidebar-->
-    <app-sidebar class="aside-container"></app-sidebar>
+    <app-sidebar [hidden]="print" class="aside-container"></app-sidebar>
     <!-- offsidebar-->
     <app-offsidebar class="offsidebar"></app-offsidebar>
     <!-- Main section-->
@@ -13,5 +13,5 @@
         </div>
     </section>
     <!-- Page footer-->
-    <footer class="footer-container" app-footer></footer>
+    <footer [hidden]="print" class="footer-container" app-footer></footer>
 </div>

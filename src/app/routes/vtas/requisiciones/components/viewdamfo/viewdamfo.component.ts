@@ -1,5 +1,7 @@
 // import * as jsPDF from 'jspdf';
 
+import * as jspdf from 'jspdf';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
@@ -9,6 +11,7 @@ import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../service/index';
 import { SettingsService } from '../../../../../core/settings/settings.service';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-viewdamfo',
@@ -72,7 +75,7 @@ export class ViewdamfoComponent implements OnInit {
           this.ClienteInfo = data['cliente'];
           this.periodoPagoId = data.periodoPagoId;
           this.damfo290 = data;
-          if (data['usuarioAlta'] === this.settings['user']['usuario']){
+          if (data['usuarioAlta'] === this.settings['user']['usuario']) {
             this.isEditable = true;
           } else {
             this.isEditable = false;
@@ -130,23 +133,37 @@ export class ViewdamfoComponent implements OnInit {
 
 
   print() {
-    this.imprimir = true;
-    if (!this.settings.layout.isCollapsed) {
-      this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
-    }
-    setTimeout(() => {
-      document.getElementById('content').style.marginLeft = '70px';
-      document.getElementById('content').style.marginTop = '15px';
-      document.getElementById('content').style.marginRight = '0px';
-      document.getElementById('content').style.marginBottom = '15px';
+    // this.imprimir = true;
+    // this.settings.actionPrint = true;
+    // if (!this.settings.layout.isCollapsed) {
+    //   this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
+    // }
+    // setTimeout(() => {
+    //   document.getElementById('PrintDamfo').style.marginLeft = '70px';
+    //   document.getElementById('PrintDamfo').style.marginTop = '15px';
+    //   document.getElementById('PrintDamfo').style.marginRight = '0px';
+    //   document.getElementById('PrintDamfo').style.marginBottom = '15px';
+    //   window.print();
+    // }, 500);
+    // setTimeout(() => {
+    //   this.imprimir = false;
+    //   this.settings.actionPrint = false;
+    //   document.getElementById('PrintDamfo').style.marginTop = '0';
+    //   document.getElementById('PrintDamfo').style.marginLeft = '0';
+    // }, 500);
 
-      window.print();
-    }, 500);
-    setTimeout(() => {
-      this.imprimir = false;
-      document.getElementById('content').style.marginTop = '0';
-      document.getElementById('content').style.marginLeft = '0';
-    }, 500);
+    const data = document.getElementById('PrintDamfo');
+    html2canvas(data, { windowWidth: 1500 }).then(canvas => {
+      const contentDataURL = canvas.toDataURL('image/png')
+      const pdf = new jspdf('p', 'pt', 'letter'); // A4 size page of PDF
+      const width = pdf.internal.pageSize.getWidth();
+      const height = pdf.internal.pageSize.getHeight();
+      const position = 0;
+      pdf.addImage(contentDataURL, 'jpg', 0, position, width, height);
+      pdf.save(this.damfo290['nombrePerfil'] + '.pdf'); // Generated PDF
+    });
+
+
 
   }
 

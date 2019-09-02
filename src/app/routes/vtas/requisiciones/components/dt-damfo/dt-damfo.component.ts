@@ -286,7 +286,7 @@ export class DtDamfoComponent implements OnInit, AfterViewInit {
       swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. No es posible visualizarlo.', 'error');
     } else if (this.damfoId) {
       if (!this.Perfil290) {
-        this._Router.navigate(['/ventas/visualizarDamfo290', this.damfoId], { skipLocationChange: true });
+        this._Router.navigate(['/ventas/visualizarDamfo290', this.damfoId], /*{ skipLocationChange: true }*/);
       } else {
         this._Router.navigate(['/ventas/visualizarDamfo290', this.damfoId, this.Perfil290], { skipLocationChange: true });
       }

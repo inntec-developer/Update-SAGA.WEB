@@ -1,4 +1,4 @@
-import { AfterViewChecked, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AfterViewChecked, Component, EventEmitter, OnInit, Output, ElementRef, ViewChild } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { CandidatosService } from './../../../../../../service/Candidatos/candidatos.service';
@@ -14,6 +14,8 @@ import { PostulateService } from './../../../../../../service/SeguimientoVacante
 import { RequisicionesService } from '../../../../../../service';
 import { Router } from '@angular/router';
 import { SettingsService } from '../../../../../../core/settings/settings.service';
+import * as jspdf from 'jspdf';
+import * as html2canvas from 'html2canvas';
 
 const swal = require('sweetalert');
 
@@ -26,9 +28,22 @@ const swal = require('sweetalert');
 })
 export class DtVacantesReclutadorComponent implements OnInit {
   @Output('Imprimir') EmImprimir: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild('content') el: ElementRef;
+
   public imprimir: boolean;
 
-  //scroll
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+    preventDuplicates: true,
+  });
+
+  // scroll
   public disabled = false;
   public invertX = false;
   public compact = false;
@@ -38,17 +53,17 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   public dataSource: Array<any> = [];
   // Varaibles del paginador
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
-  showFilterRow: boolean = true;
+  showFilterRow = true;
   registros: number;
   errorMessage: any;
   element: any = [];
-  confidencial: boolean = true;
+  confidencial = true;
 
   estatusId: any;
   enProceso: any;
@@ -64,13 +79,13 @@ export class DtVacantesReclutadorComponent implements OnInit {
   informeVacante = false;
   historial = false;
   usuarioId: any = this.settings.user['id'];
-  //estatus vacantes
+  // estatus vacantes
 
-  bc = true; //busqueda candidato
-  sc = true; //socieconomico
-  ecc = true; //envío candidato cliente
-  ec = true; //espera contratacion
-  nbc = true; //nueva busqueda candidato
+  bc = true; // busqueda candidato
+  sc = true; // socieconomico
+  ecc = true; // envío candidato cliente
+  ec = true; // espera contratacion
+  nbc = true; // nueva busqueda candidato
   pausa = true;
   asignar = true;
   disenador = true;
@@ -78,15 +93,15 @@ export class DtVacantesReclutadorComponent implements OnInit {
   coordinador: any;
 
   rowAux = [];
-  selected: boolean = false;
-  clearFilter: boolean = false;
-  pds: boolean = true;
+  selected = false;
+  clearFilter = false;
+  pds = true;
   numeroVacantes: any;
-  procesoCandidato: boolean = false;
+  procesoCandidato = false;
   candidatosNR: any = [];
   requisPausa: any = [];
   totalPos: any = 0;
-  totalContratados: number = 0;
+  totalContratados = 0;
 
   // checkBox Seccion de impresion
   SelectiedSection = {
@@ -146,18 +161,18 @@ export class DtVacantesReclutadorComponent implements OnInit {
   getVacantes() {
     this.service.getRequiReclutador(this.settings.user['id']).subscribe(data => {
       this.dataSource = data;
-      
+
       this.totalPos = 0;
       this.totalContratados = 0;
       this.dataSource.forEach(r => {
 
-          this.totalPos += r.vacantes;
-          this.totalContratados += r.contratados;
+        this.totalPos += r.vacantes;
+        this.totalContratados += r.contratados;
 
-          if (r.estatusId === 4) {
-            r.coordinador = r.reclutadores;
-            r.reclutadores = "SIN ASIGNAR";
-          }
+        if (r.estatusId === 4) {
+          r.coordinador = r.reclutadores;
+          r.reclutadores = 'SIN ASIGNAR';
+        }
 
       });
       this.GetCandidatosNR();
@@ -249,7 +264,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     let filteredData: Array<any> = data;
     this.columns.forEach((column: any) => {
       this.clearFilter = true;
-      if (column.filtering.filterString != "") {
+      if (column.filtering.filterString != '') {
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null) {
             if (!Array.isArray(item[column.name])) {
@@ -430,6 +445,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //espera contratacion
       this.nbc = true; //nueva busqueda candidato
       this.pausa = true;
+      this.disenador = true;
     }
     else if (estatusId == 6 && this.element.vacantes > 0 && this.element.confidencial)// aprobada
     {
@@ -750,13 +766,13 @@ export class DtVacantesReclutadorComponent implements OnInit {
       }
       else {
         swal({
-          title: "Registro Masivo de Candidatos",
-          text: "¡Se registraron (" + result.length.toString() + ") candidatos con estatus cubierto para la vacante de " + this.vBtra + ". ¿Desea enviar notificación a los candidatos registrados?. Esto puede tardar varios minutos",
-          type: "warning",
+          title: 'Registro Masivo de Candidatos',
+          text: '¡Se registraron (' + result.length.toString() + ') candidatos con estatus cubierto para la vacante de ' + this.vBtra + '. ¿Desea enviar notificación a los candidatos registrados?. Esto puede tardar varios minutos',
+          type: 'warning',
           showCancelButton: true,
-          confirmButtonColor: "#21a240",
-          confirmButtonText: "¡Si, enviar notificación!",
-          cancelButtonText: "¡No, cancelar!",
+          confirmButtonColor: '#21a240',
+          confirmButtonText: '¡Si, enviar notificación!',
+          cancelButtonText: '¡No, cancelar!',
           closeOnConfirm: true,
           closeOnCancel: true
         }, (isConfirm) => {
@@ -773,7 +789,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
           }
           else {
             this.spinner.hide();
-            swal("Cancelado", "No se realizó ningún cambio", "error");
+            swal('Cancelado', 'No se realizó ningún cambio', 'error');
             this.refreshTable();
           }
         });
@@ -832,9 +848,9 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
     if (this.dataSource.length > 0) {
       var aux = [];
-      var comentarios = "";
-      var reclutador = "";
-      var coordinador = "";
+      var comentarios = '';
+      var reclutador = '';
+      var coordinador = '';
 
       this.dataSource.forEach(row => {
         if (row.comentarioReclutador.length > 0) {
@@ -844,14 +860,14 @@ export class DtVacantesReclutadorComponent implements OnInit {
           });
         }
         else {
-          comentarios = "";
+          comentarios = '';
         }
         var d = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
         // var mocos = (d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString()
         var e = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
 
-        if (!Array.isArray(row.reclutadores) ){
-          reclutador = "SIN ASIGNAR";
+        if (!Array.isArray(row.reclutadores)) {
+          reclutador = 'SIN ASIGNAR';
         }
         else if (row.reclutadores.length > 1) {
           row.reclutadores.forEach(element => {
@@ -864,7 +880,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
         if (row.estatusId == 4) {
           coordinador = reclutador;
-          reclutador = "SIN ASIGNAR"
+          reclutador = 'SIN ASIGNAR';
 
         }
         else {
@@ -887,8 +903,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
           RECLUTADOR: reclutador,
           'COMENTARIOS': comentarios
         })
-        comentarios = "";
-        reclutador = "";
+        comentarios = '';
+        reclutador = '';
       });
 
       //   })
@@ -916,43 +932,45 @@ export class DtVacantesReclutadorComponent implements OnInit {
       DocPrest: this.DocPrest,
       Psicom: this.Psicom,
       Competencia: this.Competencia,
-    }
+    };
     this.EmImprimir.emit(this.imprimir);
     if (!this.settings.layout.isCollapsed) {
       this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
     }
     setTimeout(() => {
-      document.getElementById('content').style.marginLeft = "45px";
-      document.getElementById('content').style.marginTop = "15px";
-      document.getElementById('content').style.marginRight = "0px";
-      document.getElementById('content').style.marginBottom = "15px";
+      const data = document.getElementById('content');
+      html2canvas(data, { windowWidth: 1500 }).then(canvas => {
+        const contentDataURL = canvas.toDataURL('image/png')
+        const pdf = new jspdf('p', 'pt', 'letter'); // A4 size page of PDF
+        const width = pdf.internal.pageSize.getWidth();
+        const height = pdf.internal.pageSize.getHeight();
+        const position = 0;
+        pdf.addImage(contentDataURL, 'jpg', 0, position, width, height);
+        pdf.save(this.folio + '.pdf'); // Generated PDF
+      });
 
-      window.print();
-    }, 500);
+
+      // const pdf = new jspdf('1', 'pt', 'a4');
+      // const options = {
+      //   pagesplit: true
+      // };
+      // pdf.addHTML(data, 10, 10, options, () => {
+      //   pdf.save(this.folio + '.pdf');
+      // });
+
+
+    }, 1000);
+
     setTimeout(() => {
       this.imprimir = false;
       this.EmImprimir.emit(this.imprimir);
-      document.getElementById('content').style.marginTop = "0";
-      document.getElementById('content').style.marginLeft = "0";
-    }, 500);
+    }, 1500);
   }
 
-  /**
-  * configuracion para mensajes de acciones.
-  */
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    limit: 7,
-    tapToDismiss: false,
-    showCloseButton: true,
-    mouseoverTimerStop: true,
-    preventDuplicates: true,
-  });
+
 
   popToast(type, title, body) {
-    var toast: Toast = {
+    const toast: Toast = {
       type: type,
       title: title,
       timeout: 4000,

@@ -25,8 +25,7 @@
     <div class="d-flex justify-content-between">
       <button *ngIf="Perfil290" id="edit" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8"
         [ngClass]="!isEditable ? 'disabled' : 'btn-primary'" container="body" placement="bottom"
-        [disabled]="!isEditable"
-        tooltip="Editar DAMFO-290" (click)="editFormato()">
+        [disabled]="!isEditable" tooltip="Editar DAMFO-290" (click)="editFormato()">
         <em class="fa fa-pencil"></em>
       </button>
       <button *ngIf="!Perfil290" placement="right" tooltip="Generar Requisición"
@@ -45,28 +44,7 @@
   </div>
 </div>
 
-<div id="content">
-  <div class="row justify-content-between" *ngIf="imprimir">
-    <div class="col-2">
-      <img class="huerotate" src="assets/img/damsa/logoDamfo_.png" alt="" />
-    </div>
-    <div class="col-8">
-      <div class="text-center">
-        <h4>PERFIL PARA SOLICITAR RECLUTAMIENTO</h4>
-      </div>
-    </div>
-    <div class="col-2">
-      <div class="float-right">
-        <small><strong>Clave: </strong>DAM-FO-290</small>
-        <br>
-        <small><strong>Revisi&oacute;n: </strong>02</small>
-      </div>
-    </div>
-  </div>
-  <!-- <div class="dt-container  mat-elevation-z8"> -->
-  <!-- <div *ngIf="!imprimir" class="card-header">
-      <em class="fa fa-user"></em> Informaci&oacute;n General
-    </div> -->
+<div id="content" *ngIf="!imprimir">
   <div class="card-body">
     <div class="row">
       <div class="col-md-3 col-sm-12 col-xs-12">
@@ -413,5 +391,220 @@
     </div>
   </div>
 </div>
+<br>
+<br>
+<section id="PrintDamfo">
+  <div class="row justify-content-between">
+    <div class="col-2">
+      <img class="huerotate" src="assets/img/damsa/logoDamfo_.png" alt="" />
+    </div>
+    <div class="col-8">
+      <div class="text-center">
+        <h4>PERFIL PARA SOLICITAR RECLUTAMIENTO</h4>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="float-right">
+        <small><strong>Clave: </strong>DAM-FO-290</small>
+        <br>
+        <small><strong>Revisi&oacute;n: </strong>02</small>
+      </div>
+    </div>
+  </div>
+  <table class="egt" border="1">
+    <tbody>
+      <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">CLIENTE</th>
+      </tr>
+      <tr>
+        <td style="width: 10%;"><strong>Raz&oacute;n Social</strong></td>
+        <td colspan="11"><label class="card-text"> {{ClienteInfo?.razonSocial | uppercase}}</label></td>
+      </tr>
+      <tr>
+        <td style="width: 10%;"><strong>Nombre Comercial</strong></td>
+        <td colspan="11"><label class="card-text"> {{ClienteInfo?.nombrecomercial | uppercase}}</label></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr *ngFor="let x of damfo290?.cliente?.direcciones">
+        <td><strong>Direcci&oacute;n</strong></td>
+        <td><strong>Calle: </strong></td>
+        <td colspan="2">{{x.calle | uppercase}}</td>
+        <td class="text-right"><strong>N&uacute;mero: </strong></td>
+        <td class="text-center">{{x.numeroExterior + '' + x.numeroInterior}}</td>
+        <td class="text-center"><strong>Colonia: </strong></td>
+        <td>{{x.colonia | uppercase}}</td>
+        <td class="text-center"><strong>Municipio: </strong></td>
+        <td>{{x.municipio | uppercase}}</td>
+        <td class="text-center"><strong>C.P: </strong></td>
+        <td class="text-center">{{x.codigoPostal}}</td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr *ngFor="let x of damfo290?.cliente?.telefonos">
+        <td><strong>Tel&eacute;fono</strong></td>
+        <td><strong>Tipo: </strong></td>
+        <td>{{x.tipo | uppercase}}</td>
+        <td class="text-right"><strong>N&uacute;mero: </strong></td>
+        <td colspan="2" class="text-center"> ({{x.claveLada}}) {{x.telefono | slice:0:4}}-{{x.telefono | slice:4:8}}</td>
+        <td class="text-center"><strong>Extensi&oacute;n </strong></td>
+        <td>{{x.extension}}</td>
+        <td class="text-center"><strong>Direcci&oacute;n: </strong></td>
+        <td colspan="3">{{x.calle | uppercase}}</td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">GIRO DE LA EMPRESA</th>
+      </tr>
+      <tr>
+        <td class="text-center" colspan="12">{{ClienteInfo?.giroEmpresa | uppercase}}</td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">ACTIVIDAD DE LA EMPRESA</th>
+      </tr>
+      <tr>
+        <td class="text-center" colspan="12">{{ClienteInfo?.actividadEmpresa | uppercase}}</td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">TIPO RECLUTAMIENTO</th>
+      </tr>
+      <tr>
+        <td class="text-center" colspan="6">{{damfo290?.tipoReclutamiento | uppercase}}</td>
+        <td class="text-center" colspan="6">{{damfo290?.claseReclutamiento | uppercase}}</td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">MAPA UBICACI&Oacute;N</th>
+      </tr>
+      <tr>
+        <td colspan="12">MAPAS......</td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">RUTAS DE CAMION</th>
+      </tr>
+      <tr>
+        <td colspan="12">rutas...</td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">CONTACTOS</th>
+      </tr>
+      <tr *ngFor="let x of damfo290?.cliente?.contactos">
+        <td class="text-center"><strong>Direcci&oacute;n: </strong></td>
+        <td>{{x.calle | uppercase}}</td>
+        <td class="text-center"><strong>Nombre: </strong></td>
+        <td colspan="3"> {{x.nombre | uppercase}} {{x.apellidoPaterno | uppercase}} {{x.apellidoMaterno | uppercase}}
+        </td>
+        <td class="text-center"><strong>Puesto: </strong></td>
+        <td> {{x.puesto | uppercase}}</td>
+        <td class="text-center"><strong>Tel&eacute;fono: </strong></td>
+        <td>
+          <p *ngFor="let t of x.telefonos"> ({{t.claveLada}}){{t.telefono | slice:0:4}}-{{t.telefono | slice:4:8}}
+            <span *ngIf="t.extension != ''">
+              Ext. {{t.extension}}
+            </span>
+          </p>
+        </td>
+        <td class="text-center"><strong>Correo: </strong></td>
+        <td>
+          <p *ngFor="let e of x.email">{{e.email | uppercase}}</p>
+        </td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">NOMBRE DEL PUESTO</th>
+      </tr>
+      <tr>
+        <td style="background-color: burlywood" colspan="12">REQUISITOS A PETICION DEL CLIENTE:</td>
+      </tr>
+      <tr>
+        <td><strong>Sexo:</strong></td>
+        <td colspan="11">{{damfo290?.genero | uppercase}}</td>
+      </tr>
+      <tr>
+        <td><strong>Edad:</strong></td>
+        <td colspan="11">{{damfo290?.edadMinima | uppercase}} AÑOS A {{damfo290?.edadMaxima}} AÑOS</td>
+      </tr>
+      <tr>
+        <td><strong>Estado Civil:</strong></td>
+        <td colspan="11">{{damfo290?.estadoCivil | uppercase}}</td>
+      </tr>
+      <tr>
+        <td><strong> Area: </strong></td>
+        <td colspan="11">{{damfo290?.areaExperiencia | uppercase}}</td>
+      </tr>
+      <tr *ngFor="let x of damfo290?.escolaridades">
+        <td><strong> Escolaridad: </strong></td>
+        <td>{{x?.gradoEstudio | uppercase}}</td>
+        <td><strong>Nivel:</strong></td>
+        <td colspan="9">{{x?.estadoEstudio | uppercase}}</td>
+      </tr>
+      <tr>
+        <td><strong>Aptitudes: </strong></td>
+        <td colspan="11">
+          <label *ngFor="let x of damfo290?.aptitudes"> {{x?.aptitud | uppercase}}, </label>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Experiencia: </strong></td>
+        <td colspan="11">
+          {{x?.experiencia | uppercase}}
+        </td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">HORARIOS</th>
+      </tr>
+    <tbody *ngFor="let x of damfo290?.horarios" rowspan="2">
+      <tr>
+        <td class="text-center"><strong> Horario: </strong></td>
+        <td colspan="8">
+          {{x.nombre | uppercase}} De:
+          {{x.deDia?.diaSemana | uppercase}} a
+          {{x.aDia?.diaSemana | uppercase}} de
+          {{x.deHora | date:"HH:mm"}} a
+          {{x.aHora | date:"HH:mm"}}
+        </td>
+        <td class="text-center">
+          <span *ngIf="x.activo" class="badge badge-pill badge-success"> ACTIVO</span>
+          <span *ngIf="!x.activo" class="badge badge-pill badge-danger"> INACTIVO</span>
+        </td>
+        <td class="text-center"><strong>Vacantes:</strong></td>
+        <td class="text-center"> {{x.numeroVacantes}}</td>
+      </tr>
+      <tr>
+        <td class="text-center"><strong> Especificaciones: </strong></td>
+        <td colspan="11"> {{x.especificaciones | uppercase}}</td>
+      </tr>
+    </tbody>
+    <tr>
+      <td style="background-color: burlywood" colspan="12">PRINCIPALES ACTIVIDADES A DESARROLLAR:</td>
+    </tr>
+    <tr *ngFor="let x of damfo290?.actividades; let i = index">
+      <td colspan="12">{{i + 1}}.- {{x.actividades | uppercase}}</td>
+    </tr>
+    <tr>
+      <td style="background-color: burlywood" colspan="12">OBSERVACIONES DE TIPO CONFIDENCIAL, REQUISITOS DEL CLIENTE
+        NO PUBLICABLES: <small class="text-danger">(Para consulta exclusiva del reclutador)</small></td>
+    </tr>
+    <tr *ngFor="let x of damfo290?.observaciones; let i = index">
+      <td colspan="12">{{i + 1}}.- {{x.observaciones | uppercase}}</td>
+    </tr>
+    </tbody>
+
+
+  </table>
+</section>
 
 <ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
