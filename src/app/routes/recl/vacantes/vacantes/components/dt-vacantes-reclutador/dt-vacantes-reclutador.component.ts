@@ -185,38 +185,36 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   getVacantes() {
     this.service.getRequiReclutador(this.settings.user['id']).subscribe(data => {
-      this.dataSource = data;
-      const n = new Date;
-      this.totalPos = 0;
-      this.totalContratados = 0;
-      this.dataSource.forEach(r => {
-        r.rango = r.sueldoMinimo + '-' + r.sueldoMaximo;
-        const daux = new Date(r.fch_Creacion);
-        let diasTrans = 0;
-        while (daux <= n) {
-          if (daux.getDay() > 0 && daux.getDay() < 6) {
-            diasTrans += 1;
+      if (data !== 404) {
+        this.dataSource = data;
+        const n = new Date;
+        this.totalPos = 0;
+        this.totalContratados = 0;
+        this.dataSource.forEach(r => {
+          r.rango = r.sueldoMinimo + '-' + r.sueldoMaximo;
+          const daux = new Date(r.fch_Creacion);
+          let diasTrans = 0;
+          while (daux <= n) {
+            if (daux.getDay() > 0 && daux.getDay() < 6) {
+              diasTrans += 1;
+            }
+            daux.setDate(daux.getDate() + 1);
           }
-          daux.setDate(daux.getDate() + 1);
-        }
-        r.diasTrans = diasTrans;
-        this.totalPos += r.vacantes;
-        this.totalContratados += r.contratados;
+          r.diasTrans = diasTrans;
+          this.totalPos += r.vacantes;
+          this.totalContratados += r.contratados;
+        });
+        this.GetCandidatosNR();
+        this.GetRequisicionesPausa();
 
-        if (r.estatusId === 4) {
-          r.coordinador = r.reclutadores;
-          r.reclutadores = 'SIN ASIGNAR';
-        }
-
-      });
-      this.GetCandidatosNR();
-      this.GetRequisicionesPausa();
-
-      this.onChangeTable(this.config);
-      this.spinner.hide();
-
+        this.onChangeTable(this.config);
+        this.spinner.hide();
+      } else {
+        this.popToast('error', 'Vacantes', 'Algo salió mal al intentar recuperar la información de las vacantes, intente de nuevo.');
+        this.spinner.hide();
+      }
     });
-  }
+}
 
   getRequiEstadisticos() {
     this.service.GetRequiEstadisticos(this.settings.user['id']).subscribe(data => {
