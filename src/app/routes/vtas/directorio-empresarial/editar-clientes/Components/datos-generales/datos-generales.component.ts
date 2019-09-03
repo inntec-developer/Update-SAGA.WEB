@@ -73,7 +73,7 @@ export class DatosGeneralesComponent implements OnInit {
       if (this.esCliente) {
         this.formGeneral = this.fb.group({
           RazonSocial: ['', [Validators.required]],
-          RFC: ['', [Validators.required, Validators.maxLength(12), Validators.minLength(12)]],
+          RFC: ['', [Validators.required, Validators.maxLength(13), Validators.minLength(12)]],
           Empresa: ['', [Validators.required]],
           ValidarEmpresa: ['', [Validators.required]],
           Giros: ['', Validators.required],
