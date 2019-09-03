@@ -393,7 +393,7 @@
 </div>
 <br>
 <br>
-<section id="PrintDamfo">
+<div id="PrintDamfo" #PrintDamfo class="clsPrintDamfo">
   <div class="row justify-content-between">
     <div class="col-2">
       <img class="huerotate" src="assets/img/damsa/logoDamfo_.png" alt="" />
@@ -411,7 +411,7 @@
       </div>
     </div>
   </div>
-  <table class="egt" border="1">
+  <table class="egt" border="0">
     <tbody>
       <tr>
         <th class="text-center" style="background-color: blue; color: white" colspan="12">CLIENTE</th>
@@ -426,27 +426,32 @@
       </tr>
     </tbody>
     <tbody>
+      <tr>
+        <td><strong>Direcci&oacute;n(s):</strong></td>
+      </tr>
       <tr *ngFor="let x of damfo290?.cliente?.direcciones">
-        <td><strong>Direcci&oacute;n</strong></td>
         <td><strong>Calle: </strong></td>
-        <td colspan="2">{{x.calle | uppercase}}</td>
+        <td class="text-center">{{x.calle | uppercase}}</td>
         <td class="text-right"><strong>N&uacute;mero: </strong></td>
         <td class="text-center">{{x.numeroExterior + '' + x.numeroInterior}}</td>
         <td class="text-center"><strong>Colonia: </strong></td>
         <td>{{x.colonia | uppercase}}</td>
         <td class="text-center"><strong>Municipio: </strong></td>
-        <td>{{x.municipio | uppercase}}</td>
+        <td colspan="3">{{x.municipio | uppercase}}</td>
         <td class="text-center"><strong>C.P: </strong></td>
         <td class="text-center">{{x.codigoPostal}}</td>
       </tr>
     </tbody>
     <tbody>
+      <tr>
+        <td><strong>Tel&eacute;fono(s):</strong></td>
+      </tr>
       <tr *ngFor="let x of damfo290?.cliente?.telefonos">
-        <td><strong>Tel&eacute;fono</strong></td>
         <td><strong>Tipo: </strong></td>
         <td>{{x.tipo | uppercase}}</td>
         <td class="text-right"><strong>N&uacute;mero: </strong></td>
-        <td colspan="2" class="text-center"> ({{x.claveLada}}) {{x.telefono | slice:0:4}}-{{x.telefono | slice:4:8}}</td>
+        <td colspan="3" class="text-center"> ({{x.claveLada}}) {{x.telefono | slice:0:4}}-{{x.telefono | slice:4:8}}
+        </td>
         <td class="text-center"><strong>Extensi&oacute;n </strong></td>
         <td>{{x.extension}}</td>
         <td class="text-center"><strong>Direcci&oacute;n: </strong></td>
@@ -533,7 +538,7 @@
       </tr>
       <tr>
         <td><strong>Edad:</strong></td>
-        <td colspan="11">{{damfo290?.edadMinima | uppercase}} AÑOS A {{damfo290?.edadMaxima}} AÑOS</td>
+        <td colspan="11">{{damfo290?.edadMinima}} AÑOS A {{damfo290?.edadMaxima}} AÑOS</td>
       </tr>
       <tr>
         <td><strong>Estado Civil:</strong></td>
@@ -552,13 +557,12 @@
       <tr>
         <td><strong>Aptitudes: </strong></td>
         <td colspan="11">
-          <label *ngFor="let x of damfo290?.aptitudes"> {{x?.aptitud | uppercase}}, </label>
+          <label *ngFor="let apt of damfo290?.aptitudes"> {{apt?.aptitud | uppercase}}, </label>
         </td>
       </tr>
       <tr>
         <td><strong>Experiencia: </strong></td>
-        <td colspan="11">
-          {{x?.experiencia | uppercase}}
+        <td colspan="11">{{damfo290?.experiencia | uppercase}}
         </td>
       </tr>
     </tbody>
@@ -602,9 +606,300 @@
       <td colspan="12">{{i + 1}}.- {{x.observaciones | uppercase}}</td>
     </tr>
     </tbody>
+    <tbody>
+      <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">PSICOMETRIAS A APLICAR </th>
+      </tr>
+      <tr>
+        <th style="background-color: burlywood" colspan="12">EN CASO DE QUE NO REQUERIR COLOCAR N/A </th>
+      </tr>
+      <tr *ngFor="let x of damfo290?.psicometriasDamsa">
+        <td class="text-center" colspan="6"> {{x.tipoPsicometria | uppercase}} </td>
+        <td class="text-center" colspan="6"> {{x.descripcion | uppercase}}</td>
+      </tr>
+      <tr>
+        <th style="background-color: burlywood" colspan="12">PRUEBA SUGERIDA POR EL CLIENTE</th>
+      </tr>
+      <tr *ngFor="let x of damfo290?.psicometriasCliente">
+        <td class="text-center" colspan="6"> {{x.psicometria | uppercase}} </td>
+        <td class="text-center" colspan="6"> {{x.descripcion | uppercase}}</td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">SUELDO NOMINAL</th>
+      </tr>
+      <tr>
+        <td colspan="2"><strong> Sueldo Mensual: </strong></td>
+        <td class="text-center" colspan="3"><strong> MINIMO </strong></td>
+        <td class="text-center" colspan="2"> {{damfo290?.sueldoMinimo | moneda: '$'}}</td>
+        <td class="text-center" colspan="3"><strong> MAXIMO: </strong></td>
+        <td class="text-center" colspan="2"> {{damfo290?.sueldoMaximo | moneda: '$'}}</td>
+      </tr>
+      <tr>
+        <td colspan="2"><strong> Sueldo Semanal: </strong></td>
+        <td class="text-center" colspan="5"> {{(damfo290?.sueldoMinimo / 30) * 7 | moneda: '$'}}</td>
+        <td class="text-center" colspan="5"> {{(damfo290?.sueldoMaximo / 30) * 7 | moneda: '$'}}</td>
+      </tr>
+      <tr>
+        <td colspan="2"><strong> Sueldo Diario: </strong></td>
+        <td class="text-center" colspan="5"> {{(damfo290?.sueldoMinimo / 30) | moneda: '$'}}</td>
+        <td class="text-center" colspan="5"> {{(damfo290?.sueldoMaximo / 30) | moneda: '$'}}</td>
+      </tr>
+      <tr>
+        <td colspan="2"><strong> D&iacute;as de Corte: </strong></td>
+        <td class="text-center" colspan="3"> {{damfo290?.diaCorte | uppercase}}</td>
+        <td class="text-center" colspan="3"><strong> TIPO NOMINA </strong></td>
+        <td class="text-center" colspan="4"> {{damfo290?.tipoDeNomina | uppercase}}</td>
+      </tr>
+      <tr>
+        <td colspan="2"><strong> D&iacute;as de pago al trabajador: </strong></td>
+        <td class="text-center" colspan="3"> {{damfo290?.diaPago | uppercase}}</td>
+      </tr>
+      <tr>
+        <td colspan="2"><strong> Periodo de pago: </strong></td>
+        <td class="text-center" colspan="3"><strong> {{damfo290?.periodoPago | uppercase}} </strong></td>
+        <td class="text-center" colspan="2"></td>
+        <td class="text-center" style="background-color: dimgrey; color: white" colspan="5">
+          {{damfo290?.especifique | uppercase}}</td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">BENEFICIOS</th>
+      </tr>
+      <tr *ngFor="let x of damfo290?.beneficios; let i = index">
+        <td colspan="4"> {{x.tipoBeneficio | uppercase}} </td>
+        <td colspan="4" class="text-lenght"> {{x.cantidad |moneda: '$'}}</td>
+        <td colspan="4"> {{x.observaciones | uppercase}}</td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">DOCUMENTOS</th>
+      </tr>
+      <tr>
+        <th style="background-color: burlywood" colspan="5">DOCUMENTOS OBLIGATORIOS DAMSA:</th>
+        <th colspan="2"></th>
+        <th style="background-color: burlywood" colspan="5">DOCUMENTOS ADICIONALES A PETICION DEL CLIENTE:</th>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <ol>
+            <li *ngFor="let x of documentosDamsa">
+              <label class="card-text"> {{x.documentoDamsa | uppercase}}</label>
+            </li>
+          </ol>
+        </td>
+        <td colspan="6">
+          <ol>
+            <li *ngFor="let x of damfo290?.documentosCliente">
+              <label class="card-text"> {{x.documento | uppercase}}</label>
+            </li>
+          </ol>
+        </td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">PROCESO</th>
+      </tr>
+      <tr *ngFor="let x of damfo290?.procesos; let i = index">
+        <td colspan="12">{{i + 1}}.- {{x.proceso | uppercase}}</td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">PRESTACIONES</th>
+      </tr>
+      <tr>
+        <th style="background-color: burlywood" class="text-center" colspan="4">PRESTACIONES DE LEY</th>
+        <th colspan="2"></th>
+        <th style="background-color: burlywood" class="text-center" colspan="4">PRESTACIONES ADICIONALES OFRECIDAS POR
+          EL CLIENTE</th>
+      </tr>
+      <tr>
+        <td colspan="6">
+          <ol>
+            <li *ngFor="let x of prestacionesLey">
+              <label class="card-text">{{x.prestacionLey | uppercase}}</label>
+            </li>
+            <ul>
+              <li *ngFor="let x of diasObligatorios">
+                <label class="card-text">{{x.dia | uppercase}}</label>
+              </li>
+            </ul>
+          </ol>
+        </td>
+        <td colspan="6">
+          <ol>
+            <li *ngFor="let x of damfo290?.prestacionesCliente">
+              <label class="card-text">{{x.prestamo | uppercase}}</label>
+            </li>
+          </ol>
+        </td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">COMPETENCIAS</th>
+      </tr>
+      <tr>
+        <th style="background-color: rgb(255, 0, 0); color: white" class="text-center" colspan="12">SECCION PARA USO
+          EXCLUSIVO DE LOS EJECUTIVOS DE CUENTA Y RECLUTADORES</th>
+      </tr>
+      <tr>
+        <td height="25"></td>
+      </tr>
+      <tr>
+        <td colspan="12">
+          <div class="container">
+            <div class="row">
+              <section class="col-4">
+                <table border="1" bordercolor="#ff0000" style="width: 95%">
+                  <thead>
+                    <th style="background-color: rgb(255, 0, 0); color: white" class="text-center">COMPETENCIAS
+                      CARDINALES
+                    </th>
+                    <th style="background-color: rgb(255, 0, 0); color: white" class="text-center">NIVEL</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let x of damfo290?.competenciasCardinal">
+                      <td white="75%"> {{x.competencia | uppercase}} </td>
+                      <td class="text-center"> {{x.nivel}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <section class="col-4">
+                <table border="1" bordercolor="#ff0000" style="width: 95%">
+                  <thead>
+                    <th style="background-color: rgb(255, 0, 0); color: white" class="text-center">COMPETENCIAS POR AREA
+                    </th>
+                    <th style="background-color: rgb(255, 0, 0); color: white" class="text-center">NIVEL</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let x of damfo290?.competenciasArea">
+                      <td white="75%"> {{x.competencia | uppercase}} </td>
+                      <td class="text-center"> {{x.nivel}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <section class="col-4">
+                <table border="1" bordercolor="#ff0000" style="width: 95%">
+                  <thead>
+                    <th style="background-color: rgb(255, 0, 0); color: white" class="text-center">COMPETENCIAS
+                      GERENCIALES
+                    </th>
+                    <th style="background-color: rgb(255, 0, 0); color: white" class="text-center">NIVEL</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let x of damfo290?.competenciasGerencial">
+                      <td white="75%"> {{x.competencia | uppercase}} </td>
+                      <td class="text-center"> {{x.nivel}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td height="25"></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">ARTE AUTORIZADA PARA REDES
+        </th>
+      </tr>
+      <tr>
+        <td height="50"></td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">AUTORIZACIONES
+        </th>
+      </tr>
+      <tr>
+        <td height="25"></td>
+      </tr>
+      <tr>
+        <td colspan="12">
+          <div class="container">
+            <div class="row">
+              <section class="col-4">
+                <table border="1" style="width: 100%">
+                  <thead>
+                    <th style="background-color: blue; color: white" class="text-center">DAMSA OPERACIONES / VENTAS</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td height="200"></td>
+                    </tr>
+                    <tr>
+                      <td class="text-center">Elabor&oacute; ( Nombre y firma)</td>
+                    </tr>
+                    <tr>
+                      <td height="200"></td>
+                    </tr>
+                    <tr>
+                      <td class="text-center">Autoriz&oacute; (Nombre y Fiirma)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <section class="col-4">
+                <table border="1" style="width: 100%">
+                  <thead>
+                    <th style="background-color: blue; color: white" class="text-center">DAMSA RECLUTAMIENTO</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td height="200"></td>
+                    </tr>
+                    <tr>
+                      <td class="text-center">Elabor&oacute; ( Nombre y firma)</td>
+                    </tr>
+                    <tr>
+                      <td height="200"></td>
+                    </tr>
+                    <tr>
+                      <td class="text-center">Autoriz&oacute; (Nombre y Fiirma)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <section class="col-4">
+                <table border="1" style="width: 100%">
+                  <thead>
+                    <th style="background-color: blue; color: white" class="text-center">CLIENTE</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td height="200"></td>
+                    </tr>
+                    <tr>
+                      <td class="text-center">Elabor&oacute; ( Nombre y firma)</td>
+                    </tr>
+                    <tr>
+                      <td height="200"></td>
+                    </tr>
+                    <tr>
+                      <td class="text-center">Autoriz&oacute; (Nombre y Fiirma)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+            </div>
+          </div>
 
-
+        </td>
+    </tbody>
   </table>
-</section>
+</div>
 
 <ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>

@@ -18,7 +18,7 @@ export class PrestacionesLeyComponent implements OnInit {
     this.serviceCatalogos.getPrestacionesLey()
         .subscribe(data => {
           this.prestacionesLey = data;
-        })
+        });
   }
 
 }

@@ -29,11 +29,12 @@ const swal = require('sweetalert');
 export class LoginComponent implements OnInit {
 
   Folio: any;
-  showRequi: boolean = false;
-  Actualizado: boolean = false;
+  showRequi = false;
+  Actualizado = false;
+  versionDB: string;
 
 
-  showPassL: boolean = false;
+  showPassL = false;
   valForm: FormGroup;
   loading = false;
   returnUrl: string;
@@ -53,8 +54,10 @@ export class LoginComponent implements OnInit {
     public dialog: MatDialog,
     private _serviceSistem: CheckVertionSistemService) {
     this._serviceSistem.checkVertionSistem(settings.app.vertion).subscribe(result => {
-      if (result != 404) {
-        this.Actualizado = result;
+      if (result !== 404) {
+        debugger;
+        this.Actualizado = result['actualizado'];
+        this.versionDB = result['version'];
       }
     });
     this.route.params.subscribe(params => {

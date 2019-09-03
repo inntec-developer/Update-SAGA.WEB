@@ -22,7 +22,7 @@ export class CheckVertionSistemService {
   constructor(private _httpClient: HttpClient) { }
 
   checkVertionSistem(version :string): Observable<any>{
-    let params = new HttpParams().set('version', version);
+    const params = new HttpParams().set('version', version);
     return this._httpClient.get<any>(this.URLCheckVertionSistem, {params: params});
   }
 }

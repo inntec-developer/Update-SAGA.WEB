@@ -3,25 +3,36 @@
 import * as jspdf from 'jspdf';
 
 import { ActivatedRoute, Router } from '@angular/router';
+import { CatalogosService, RequisicionesService } from '../../../../../service/index';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
-import { DialogdamfoComponent } from '../dialogdamfo/dialogdamfo.component'
+import { DialogdamfoComponent } from '../dialogdamfo/dialogdamfo.component';
 import { MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { RequisicionesService } from '../../../../../service/index';
 import { SettingsService } from '../../../../../core/settings/settings.service';
+import { element } from 'protractor';
 import html2canvas from 'html2canvas';
+
+declare var $: any;
 
 @Component({
   selector: 'app-viewdamfo',
   templateUrl: './viewdamfo.component.html',
   styleUrls: ['./viewdamfo.component.scss'],
-  providers: [RequisicionesService]
+  providers: [RequisicionesService, CatalogosService]
 })
 export class ViewdamfoComponent implements OnInit {
 
-  @ViewChild('content') content: ElementRef;
+  @ViewChild('PrintDamfo') content: ElementRef;
+
+  base64Img = null;
+  margins = {
+    top: 70,
+    bottom: 40,
+    left: 30,
+    width: 550
+  };
 
   public Perfil290: boolean;
 
@@ -48,6 +59,21 @@ export class ViewdamfoComponent implements OnInit {
     mouseoverTimerStop: true,
   });
 
+  documentosDamsa: any[];
+  prestacionesLey: any[];
+
+  diasObligatorios = [
+    {dia: '* 1 de Enero'},
+    {dia: '* El primer lunes de febrero en conmemoración del 5 de febrero'},
+    {dia: '* El tercer lunes de marzo en conmemoración del 21 de marzo'},
+    {dia: '* 1 de Mayo'},
+    {dia: '* 16 de Septiembre'},
+    {dia: '* Tercer lunes de noviembre en conmemoración del 20 nomviembre'},
+    {dia: '* El 1 de diciembre de cada seis años, cuando corresponda ala transmisión del poder ejecutivo'},
+    {dia: '* 25 de Diciembre'},
+    {dia: '* El que determinen las leyes federales y locales electorales, para efectuar la jornada electoral'}
+  ];
+
 
 
 
@@ -60,12 +86,22 @@ export class ViewdamfoComponent implements OnInit {
     private spinner: NgxSpinnerService,
     public settings: SettingsService,
     private toasterService: ToasterService,
+    private serviceCatalogos: CatalogosService
 
   ) {
     this.getParams();
   }
   ngOnInit() {
     this.spinner.show();
+    this.serviceCatalogos.getDocumentosDamsa()
+      .subscribe(data => {
+        this.documentosDamsa = data;
+        console.log(this.documentosDamsa);
+      });
+      this.serviceCatalogos.getPrestacionesLey()
+      .subscribe(data => {
+        this.prestacionesLey = data;
+      });
     if (this.damfoId != null) {
       this.serviceRequisiciones.getDamfoById(this.damfoId)
         .subscribe(data => {
@@ -128,42 +164,50 @@ export class ViewdamfoComponent implements OnInit {
   }
 
   editFormato() {
-    this._Router.navigate(['/ventas/formato290', this.damfoId], { skipLocationChange: true })
+    this._Router.navigate(['/ventas/formato290', this.damfoId], { skipLocationChange: true });
   }
 
 
   print() {
-    // this.imprimir = true;
-    // this.settings.actionPrint = true;
-    // if (!this.settings.layout.isCollapsed) {
-    //   this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
-    // }
-    // setTimeout(() => {
-    //   document.getElementById('PrintDamfo').style.marginLeft = '70px';
-    //   document.getElementById('PrintDamfo').style.marginTop = '15px';
-    //   document.getElementById('PrintDamfo').style.marginRight = '0px';
-    //   document.getElementById('PrintDamfo').style.marginBottom = '15px';
-    //   window.print();
-    // }, 500);
-    // setTimeout(() => {
-    //   this.imprimir = false;
-    //   this.settings.actionPrint = false;
-    //   document.getElementById('PrintDamfo').style.marginTop = '0';
-    //   document.getElementById('PrintDamfo').style.marginLeft = '0';
-    // }, 500);
+    const nombrePerfil = this.damfo290['nombrePerfil'];
+    const HTML_Width = $('.clsPrintDamfo').width();
+    const HTML_Height = $('.clsPrintDamfo').height();
+    html2canvas($('.clsPrintDamfo')[0], { windowWidth: 1500 }).then(function (canvas) {
+      canvas.getContext('2d');
 
-    const data = document.getElementById('PrintDamfo');
-    html2canvas(data, { windowWidth: 1500 }).then(canvas => {
-      const contentDataURL = canvas.toDataURL('image/png')
-      const pdf = new jspdf('p', 'pt', 'letter'); // A4 size page of PDF
-      const width = pdf.internal.pageSize.getWidth();
-      const height = pdf.internal.pageSize.getHeight();
-      const position = 0;
-      pdf.addImage(contentDataURL, 'jpg', 0, position, width, height);
-      pdf.save(this.damfo290['nombrePerfil'] + '.pdf'); // Generated PDF
+      console.log(canvas.height + '  ' + canvas.width);
+
+
+      const imgData = canvas.toDataURL('image/jpeg', 1.0);
+      const pdf = new jspdf('p', 'pt', 'letter');
+
+      const top_left_margin = 15;
+      const PDF_Width = pdf.internal.pageSize.getWidth();
+      const PDF_Height = pdf.internal.pageSize.getHeight();
+      const canvas_image_width = HTML_Width;
+      const canvas_image_height = HTML_Height;
+
+      const totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 2;
+
+      pdf.addImage(
+        imgData, 'JPG',
+        top_left_margin,
+        top_left_margin,
+        570,
+        HTML_Height - 600
+      );
+
+      for (let i = 1; i <= totalPDFPages; i++) {
+        pdf.addPage([PDF_Width, PDF_Height]);
+        pdf.addImage(imgData,
+          'JPG', top_left_margin,
+          -(PDF_Height * i) + (top_left_margin * 4),
+          570,
+          HTML_Height - 600
+        );
+      }
+      pdf.save(nombrePerfil + '.pdf');
     });
-
-
 
   }
 
@@ -177,7 +221,8 @@ export class ViewdamfoComponent implements OnInit {
       title: title,
       timeout: 4000,
       body: body
-    }
+    };
     this.toasterService.pop(toast);
   }
+
 }
