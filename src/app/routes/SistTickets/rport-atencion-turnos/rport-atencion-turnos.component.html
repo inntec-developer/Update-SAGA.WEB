@@ -1,20 +1,28 @@
 <div class="card">
   <div class="card-body mat-elevation-z8">
     <div class="row p-1 bg-light">
-      <div class="col clearfix">
+      <div class="col">
         <h5 class="text-warning float-left mt-2">REPORTE TURNOS ATENDIDOS</h5>
-        <button class="float-right mt-1 mat-elevation-z8" (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Descargar reporte"
+        <button type="button" class="mt-1 btn btn-xs btn-success float-right mat-elevation-z8" (click)="refreshTable()"
+          container="body" placement="bottom" tooltip="Actualizar" container="body">
+          <i class="icon-refresh"></i>
+        </button>
+        <button class="mr-1 mt-1 float-right mat-elevation-z8" (click)="clearfilters()" container="body" placement="bottom"
+          tooltip="Limpiar Filtros" container="body" [disabled]="!clearFilter"
+          [ngClass]="(!clearFilter) ? 'btn btn-xs disabled':'btn btn-xs btn-info'">
+          <i class="fa fa-eraser"></i>
+        </button>
+        <button class="float-right mr-1 mt-1 mat-elevation-z8" (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Descargar reporte"
           container="body" [disabled]="result.length == 0" [ngClass]="result.length == 0 ? 'btn btn-xs disabled':'btn btn-xs btn-success'">
           <em class="fa fa-download"></em>
         </button>
-        <button class="float-right mt-1 mr-1 mat-elevation-z8" (click)="clearfilters()" container="body" placement="bottom" tooltip="Actualizar"
-        container="body" [disabled]="result.length == 0" [ngClass]="result.length == 0 ? 'btn btn-xs disabled':'btn btn-xs btn-success'">
-        <em class="fa fa-refresh"></em>
-      </button>
       </div>
     </div>
-    <hr>
-    <table class="table">
+    <div class="d-flex justify-content-end mt-2">
+      <span class="text-muted font-weight-bold float-right text-uppercase mb-3">Total de registros <span
+        class="badge badge-pill badge-success ml-1">{{result.length  | numerico}}</span></span>
+      </div>
+    <table class="table border-top">
       <thead>
         <tr>
           <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
@@ -51,11 +59,11 @@
       </tbody>
     </table>
     <br/>
-    <div class="row">
-      <div class="col-md-12">
+    <div class="d-flex justify-content-end mt-2">
+
         <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
           [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
-      </div>
+
     </div>
   </div>
 </div>

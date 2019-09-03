@@ -1,16 +1,29 @@
 <div class="card">
   <div class="card-body mat-elevation-z8">
     <div class="row p-1 bg-light">
-      <div class="col clearfix">
+      <div class="col">
         <h5 class="text-warning float-left mt-2">REPORTE CONCURRENCIA DE TURNOS</h5>
-        <button class="float-right mt-1 mat-elevation-z8" (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Descargar reporte"
-          container="body" [disabled]="reporte.length == 0" [ngClass]="reporte.length == 0 ? 'btn btn-xs disabled':'btn btn-xs btn-success'">
-          <em class="fa fa-download"></em>
+       
+        <button type="button" class="mt-1 btn btn-xs btn-success float-right mat-elevation-z8" (click)="refreshTable()"
+          container="body" placement="bottom" tooltip="Actualizar" container="body">
+          <i class="icon-refresh"></i>
         </button>
+        <button class="mr-1 mt-1 float-right mat-elevation-z8" (click)="clearfilters()" container="body" placement="bottom"
+          tooltip="Limpiar Filtros" container="body" [disabled]="!clearFilter"
+          [ngClass]="(!clearFilter) ? 'btn btn-xs disabled':'btn btn-xs btn-info'">
+          <i class="fa fa-eraser"></i>
+        </button>
+        <button class="float-right mr-1 mt-1 mat-elevation-z8" (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Descargar reporte"
+        container="body" [disabled]="reporte.length == 0" [ngClass]="reporte.length == 0 ? 'btn btn-xs disabled':'btn btn-xs btn-success'">
+        <i class="fa fa-download"></i>
+      </button>
       </div>
     </div>
-    <hr>
-    <table class="table">
+    <div class="d-flex justify-content-end mt-2">
+    <span class="text-muted font-weight-bold float-right text-uppercase mb-3">Total de registros <span
+      class="badge badge-pill badge-success ml-1">{{reporte.length  | numerico}}</span></span>
+    </div>
+    <table class="table border-top">
       <thead>
         <tr>
           <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
@@ -23,10 +36,6 @@
             <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
               (tableChanged)="onChangeTable(config)" class="form-control form-control-sm" id="{{column.name}}">
           </th>
-          <th width="3%"> <button class="float-left mb-1 mat-elevation-z8" (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
-            container="body" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'btn btn-xs disabled':'btn btn-xs btn-primary'">
-            <em class="fa fa-eraser"></em>
-          </button></th>
         </tr>
       </thead>
       <tbody>
@@ -34,12 +43,13 @@
           [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
           <div>
             <tr *ngFor="let r of rows">
-              <td class="text-left">{{r.fecha | date:'dd/MM/yyyy H:mm' }}</td>
+              <td class="text-center">{{r.fecha | date:'dd/MM/yyyy H:mm' }}</td>
               <td class="text-center">{{r.hora | date:'H:mm'}}</td>
               <td class="text-center">{{r.usuario}}</td>
               <td class="text-center">{{r.modulo}}</td>
               <td class="text-center">{{r.turno}}</td>
-              <td class="text-center"><span class="badge badge-pill badge-info" [popover]="popEstatus" #popE="bs-popover" [outsideClick]="true" placement="left" container="body">{{r.resumen[r.resumen.length - 1].estatus | uppercase}}</span>
+              <td class="text-center">{{r.estatus}}</td>
+              <!-- <td class="text-center"><span class="badge badge-pill badge-info" [popover]="popEstatus" #popE="bs-popover" [outsideClick]="true" placement="left" container="body">{{r.resumen[r.resumen.length - 1].estatus | uppercase}}</span>
                 <ng-template #popEstatus>
                   <div class="card">
                     <div class="card-body">
@@ -77,9 +87,8 @@
                   </div>
                 </ng-template>
 
-              </td>
+              </td> -->
               <td class="text-center">{{r.tiempo}}</td>
-              <td width="1%"></td>
             </tr>
           </div>
           </ng-scrollbar>
@@ -87,11 +96,11 @@
     </table>
     <br/>
     <div class="row">
-      <div class="col-md-12 clearfix">
-        <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+      <div class="col-md-12">
+        <pagination *ngIf="config.paging" class="pagination-sm float-right" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
           [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
 
-        <pre *ngIf="config.paging" class="text-muted float-right"><span>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</span></pre>
+     
       </div>
     </div>
   </div>

@@ -38,6 +38,10 @@
     --scrollbar-border-radius: 4px;
   }
 
+  .modal-lg {
+    max-width: 100% !important;
+  }
+
   .modal-lg .long {
     max-height: 100% !important;
   }

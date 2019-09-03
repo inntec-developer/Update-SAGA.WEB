@@ -160,6 +160,7 @@ public dataSource: Array<any> = [];
     this.getRequisiciones();
     setTimeout(() => {
       this.columns.forEach(element => {
+        element.filtering.filterString = '';
        (<HTMLInputElement>document.getElementById(element.name)).value = '';
       });
     }, 100);

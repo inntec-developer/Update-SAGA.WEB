@@ -23,20 +23,21 @@ export class ReporteConcurrenciaComponent implements OnInit {
   reporte = [];
 
   // Varaibles del paginador
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
   registros: any;
-  showFilterRow: boolean = true;
-  clearFilter: boolean = true;
-  constructor(private _service: SistTicketsService, private pipe: DatePipe, private excelService: ExcelService) { }
+  showFilterRow = true;
+  clearFilter = true;
 
-  ngOnInit() {
-    this.GetReporte();
-  }
+  public config: any = {
+    paging: true,
+    filtering: { filterString: '' },
+    className: ['table-hover  mb-0']
+  };
 
   public columns: Array<any> = [
     { title: 'Fecha', className: 'text-success text-center', name: 'fecha', filtering: { filterString: '',  placeholder: 'aaaa-mm-dd' } },
@@ -44,27 +45,43 @@ export class ReporteConcurrenciaComponent implements OnInit {
     { title: 'Usuario', className: 'text-info text-center', name: 'usuario', filtering: { filterString: '', placeholder: 'Usuario' } },
     { title: 'Módulo', className: 'text-info text-center', name: 'modulo', filtering: { filterString: '', placeholder: 'Modulo' } },
     { title: 'No. Turno', className: 'text-info text-center', name: 'turno', filtering: { filterString: '', placeholder: 'Turno' } },
-    { title: 'Estatus', className: 'text-info text-center', name: 'resumen', filtering: { filterString: '', placeholder: 'Estatus' } },
+    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
     { title: 'Tiempo en Atención', className: 'text-info text-center', name: 'tiempo', filtering: { filterString: '', placeholder: 'Tiempo' } }
   ];
 
-  GetReporte()
-  {
+  constructor(private _service: SistTicketsService, private pipe: DatePipe, private excelService: ExcelService) { }
+
+  ngOnInit() {
+    this.GetReporte();
+  }
 
 
+
+  GetReporte() {
     this._service.GetConcurrenciaReporte().subscribe(result => {
-      this.reporte = result;
+      const aux = [];
+      result.forEach(element => {
+        element.tiempo.forEach(item => {
+          aux.push({
+            fecha: item.fecha,
+            hora: item.hora,
+            usuario: item.usuario,
+            modulo: item.modulo,
+            turno: item.turno,
+            estatus: item.estatus,
+            tiempo: item.minutos
+          });
+        });
+      });
+      this.reporte = aux;
+
+
       this.onChangeTable(this.config);
-    })
+    });
   }
 
   //#region filtros y paginador
-  public config: any = {
-    paging: true,
-    //sorting: { columns: this.columns },
-    filtering: { filterString: '' },
-    className: ['table-hover  mb-0']
-  };
+
 
   public changePage(page: any, data: Array<any> = this.reporte): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
@@ -72,46 +89,14 @@ export class ReporteConcurrenciaComponent implements OnInit {
     return data.slice(start, end);
   }
 
-  public changeSort(data: any, config: any): any {
-    if (!config.sorting) {
-      return data;
-    }
-
-    let columns = this.config.sorting.columns || [];
-    let columnName: string = void 0;
-    let sort: string = void 0;
-
-    for (let i = 0; i < columns.length; i++) {
-      if (columns[i].sort !== '' && columns[i].sort !== false) {
-        columnName = columns[i].name;
-        sort = columns[i].sort;
-      }
-    }
-
-    if (!columnName) {
-      return data;
-    }
-
-    // simple sorting
-    return data.sort((previous: any, current: any) => {
-      if (previous[columnName] > current[columnName]) {
-        return sort === 'desc' ? -1 : 1;
-      } else if (previous[columnName] < current[columnName]) {
-        return sort === 'asc' ? -1 : 1;
-      }
-      return 0;
-    });
-  }
-
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
     this.columns.forEach((column: any) => {
-      if (column.filtering) {
+      if (column.filtering.filterString !== '') {
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
           {
-            if(!Array.isArray(item[column.name]))
-            {
+            if(!Array.isArray(item[column.name])) {
               return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
             }
             else
@@ -143,34 +128,6 @@ export class ReporteConcurrenciaComponent implements OnInit {
       }
     });
 
-    if (!config.filtering) {
-      return filteredData;
-    }
-
-    if (config.filtering.columnName) {
-      return filteredData.filter((item: any) =>
-        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-    }
-
-    let tempArray: Array<any> = [];
-    filteredData.forEach((item: any) => {
-      let flag = false;
-      this.columns.forEach((column: any) => {
-        if (item[column.name] == null) {
-          flag = true;
-        } else {
-          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-            flag = true;
-          }
-        }
-      });
-      if (flag) {
-
-        tempArray.push(item);
-      }
-    });
-    filteredData = tempArray;
-
     return filteredData;
   }
 
@@ -179,20 +136,24 @@ export class ReporteConcurrenciaComponent implements OnInit {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
 
-    if (config.sorting) {
-      (<any>Object).assign(this.config.sorting, config.sorting);
-    }
-
     this.registros = this.reporte.length;
-    this.rows = this.reporte;
-    let filteredData = this.changeFilter(this.reporte, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
-    this.length = sortedData.length;
+    const filteredData = this.changeFilter(this.reporte, this.config);
+    this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
+    this.length = filteredData.length;
   }
 //#endregion
 
 
+public refreshTable() {
+  setTimeout(() => {
+    this.columns.forEach(element => {
+     (<HTMLInputElement>document.getElementById(element.name)).value = '';
+     element.filtering.filterString = '';
+    });
+  }, 1000);
+
+  this.GetReporte();
+}
 
   public clearfilters() {
     this.columns.forEach(element => {
@@ -206,25 +167,26 @@ export class ReporteConcurrenciaComponent implements OnInit {
   exportAsXLSX() {
 
     if (this.reporte.length > 0) {
-      var aux = [];
+      const aux = [];
       this.reporte.forEach(row => {
-      
-        var d = this.pipe.transform(new Date(row.fecha), 'yyyy-MM-dd');
 
-        var estatus = '';
-        row.resumen.forEach(element => {
-          estatus = estatus + element.estatus + ' ' + this.pipe.transform(new Date(element.fecha), 'yyyy-MM-dd HH:mm') + '\n';
-        });
+        const d = this.pipe.transform(new Date(row.fecha), 'yyyy-MM-dd H:mm');
+        const h = this.pipe.transform(new Date(row.fecha), 'H:mm');
+
+        // let estatus = '';
+        // row.resumen.forEach(element => {
+        //   estatus = estatus + element.estatus + ' ' + this.pipe.transform(new Date(element.fecha), 'yyyy-MM-dd HH:mm') + '\n';
+        // });
 
         aux.push({
           'FECHA TURNO': d,
-          'HORA DE ATENCION': row.hora,
+          'HORA DE ATENCION': h,
           'USUARIO': row.usuario,
           MODULO: row.modulo,
           TURNO: row.turno,
-          ESTATUS: estatus,
+          ESTATUS: row.estatus,
           'TIEMPO EN ATENCION': row.tiempo
-        })
+        });
 
       });
 

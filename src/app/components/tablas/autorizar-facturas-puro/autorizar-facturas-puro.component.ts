@@ -119,6 +119,7 @@ export class AutorizarFacturasPuroComponent implements OnInit {
     this.GetRequisiciones();
     setTimeout(() => {
       this.columns.forEach(element => {
+        element.filtering.filterString = '';
         (<HTMLInputElement>document.getElementById(element.name)).value = '';
       });
       this.onChangeTable(this.config);

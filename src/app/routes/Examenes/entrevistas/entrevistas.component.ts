@@ -85,8 +85,6 @@ export class EntrevistasComponent implements OnInit {
     this.length = filteredData.length;
   }
   onSelect(row) {
-    debugger;
-    console.log(row)
     this.element = row;
     row.selected ? row.selected = false : row.selected = true;
 
@@ -106,6 +104,7 @@ export class EntrevistasComponent implements OnInit {
     this.GetExamenes();
     setTimeout(() => {
       this.columns.forEach(element => {
+        element.filtering.filterString = '';
        (<HTMLInputElement>document.getElementById(element.name)).value = '';
       });
     }, 100);

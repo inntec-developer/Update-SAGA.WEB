@@ -68,9 +68,9 @@ export class DtRequisicionComponent implements OnInit {
   nbc = true; //nueva busqueda candidato
   contratado = true;
   cubierta = true;
-  gbc = true; //garantía busqueda candidato
-  cc = true; //cubierta por el cliente
-  crm = true; //cubierta reclutamiento medios
+  gbc = true; // garantía busqueda candidato
+  cc = true; // cubierta por el cliente
+  crm = true; // cubierta reclutamiento medios
   cp = true; // cubierta parcialmente
   borrar = true;
   cancelar = true;
@@ -82,8 +82,31 @@ export class DtRequisicionComponent implements OnInit {
 
   tipoUsuarioId = this.settings.user['tipoUsuarioId'];
   historial = false;
-  totalPos: number = 0;
-  totalContratados: number = 0;
+  totalPos = 0;
+  totalContratados = 0;
+
+  public rows: Array<any> = [];
+  public columns: Array<any> = [
+    { title: 'Folio', sorting: 'desc', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+    { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
+    { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
+    { title: 'Cub/Vac', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No.' } },
+    { title: 'Tipo Recl.', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo' } },
+    // { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
+    // { title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
+    { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
+    { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador', filtering: { filterString: '', placeholder: 'Coordinador', columnName: 'reclutadores' } },
+    { title: 'Solicitante', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Solicitante' } },
+    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador', columnName: 'reclutadores' } },
+  ];
+  public config: any = {
+    paging: true,
+    filtering: { filterString: '' },
+    className: ['table-hover  mb-0']
+  };
+
   constructor(
     private service: RequisicionesService,
     private postulacionservice: PostulateService,
@@ -119,244 +142,181 @@ export class DtRequisicionComponent implements OnInit {
       this.totalContratados = 0;
 
       this.dataSource.forEach(r => {
-        if(r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37))
-        {
           this.totalPos += r.vacantes;
           this.totalContratados += r.contratados;
-          if(r.estatusId == 4)
-          {
+          if (r.estatusId === 4) {
             r.coordinador = r.reclutadores;
-            r.reclutadores = "SIN ASIGNAR";
+            r.reclutadores = 'SIN ASIGNAR';
           }
-        }
-      })
+      });
 
      this.onChangeTable(this.config);
     }, error => this.errorMessage = <any>error);
   }
-
-  public rows: Array<any> = [];
-  public columns: Array<any> = [
-    { title: 'Folio', sorting: 'desc', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
-    { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
-    { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
-    { title: 'Cub/Vac', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No.' } },
-    { title: 'Tipo Recl.', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo' } },
-    // { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
-    // { title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
-    { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
-    { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
-    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
-    { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador', filtering: { filterString: '', placeholder: 'Coordinador', columnName: 'reclutadores' } },
-    { title: 'Solicitante', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Solicitante' } },
-    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador', columnName: 'reclutadores' } },
-  ];
-
-  ValidarEstatus(estatusId)
-  {
+  ValidarEstatus(estatusId) {
     this.cubiertas = [];
-    if(this.element.vacantes == 0 && estatusId != 8 && estatusId != 9 )
-    {
-      this.gbc = true; //garantía busqueda candidato
+    if (this.element.vacantes === 0 && estatusId !== 8 && estatusId !== 9 ) {
+      this.gbc = true; // garantía busqueda candidato
       this.cubierta = true;
-      this.cc = true; //cubierta por el cliente
-      this.crm = true; //cubierta reclutamiento medios
+      this.cc = true; // cubierta por el cliente
+      this.crm = true; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
       this.borrar = false;
       this.editar = false;
       this.candidatos = true;
-    }
-    else if(estatusId == 1 || estatusId == 4 || estatusId == 46)
-    {
-      this.gbc = true; //garantía busqueda candidato
+    } else if (estatusId === 1 || estatusId === 4 || estatusId === 46) {
+      this.gbc = true; // garantía busqueda candidato
       this.cubierta = false;
-      if(this.element.contratados == 0)
-      {
-      this.cubiertas.push({id: 37, descripcion: "Cubierta por el cliente" },
-      {id: 47, descripcion: "Promoción interna" },
-      {id: 48, descripcion: "Operaciones" });
+      if (this.element.contratados === 0) {
+        this.cubiertas.push({id: 37, descripcion: 'Cubierta por el cliente' },
+        {id: 47, descripcion: 'Promoción interna' },
+        {id: 48, descripcion: 'Operaciones' });
+      } else {
+        this.cubiertas.push({id: 37, descripcion: 'Cubierta por el cliente' });
       }
-      else
-      {
-        this.cubiertas.push({id: 37, descripcion: "Cubierta por el cliente" });
-      }
-      this.cc = false; //cubierta por el cliente
-      this.crm = true; //cubierta reclutamiento medios
+      this.cc = false; // cubierta por el cliente
+      this.crm = true; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
       this.borrar = false;
       this.editar = false;
       this.candidatos = true;
 
-    }
-    else if(estatusId == 8) //cancelada
-    {
-      this.gbc = true; //garantía busqueda candidato
+    } else if (estatusId === 8) {// cancelada
+      this.gbc = true; // garantía busqueda candidato
       this.cubierta = true;
-      this.cc = true; //cubierta por el cliente
-      this.crm = true; //cubierta reclutamiento medios
+      this.cc = true; // cubierta por el cliente
+      this.crm = true; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = true;
       this.borrar = false;
       this.editar = true;
       this.candidatos = true;
-    }
-    else if( estatusId < 34 && estatusId != 8 && this.element.enProceso > 0 && this.element.contratados == 0)
-    {
+    } else if ( estatusId < 34 && estatusId !== 8 && this.element.enProceso > 0 && this.element.contratados === 0) {
       this.gbc = true;
       this.cubierta = false;
-      this.cubiertas.push({id: 37, descripcion: "Cubierta por el cliente" },
-      {id: 47, descripcion: "Promoción interna" },
-      {id: 48, descripcion: "Operaciones" });
-      this.cc = false; //cubierta por el cliente
-      this.crm = true; //cubierta reclutamiento medios
+      this.cubiertas.push({id: 37, descripcion: 'Cubierta por el cliente' },
+      {id: 47, descripcion: 'Promoción interna' },
+      {id: 48, descripcion: 'Operaciones' });
+      this.cc = false; // cubierta por el cliente
+      this.crm = true; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
       this.borrar = true;
       this.editar = true;
       this.candidatos = true;
-    }
-    else if( estatusId < 34 && estatusId != 8 && this.element.postulados > 0 && this.element.contratados == 0)
-    {
+    } else if ( estatusId < 34 && estatusId !== 8 && this.element.postulados > 0 && this.element.contratados === 0) {
       this.gbc = true;
       this.cubierta = false;
-      this.cc = false; //cubierta por el cliente
-      this.cubiertas.push({id: 37, descripcion: "Cubierta por el cliente" },
-      {id: 47, descripcion: "Promoción interna" },
-      {id: 48, descripcion: "Operaciones" })
+      this.cc = false; // cubierta por el cliente
+      this.cubiertas.push({id: 37, descripcion: 'Cubierta por el cliente' },
+      {id: 47, descripcion: 'Promoción interna' },
+      {id: 48, descripcion: 'Operaciones' });
 
-      this.crm = true; //cubierta reclutamiento medios
+      this.crm = true; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
       this.borrar = true;
-      this.editar = true
-
-    }
-    else if(estatusId < 34 && estatusId != 8 && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes )
-    {
-      this.gbc = true; //garantía busqueda candidato
+      this.editar = true;
+    } else if (estatusId < 34 && estatusId !== 8 && this.element.vacantes > 0 && this.element.contratados === this.element.vacantes ) {
+      this.gbc = true; // garantía busqueda candidato
       this.cubierta = false;
       this.cubiertas.push({id: 34, descripcion: 'Cubierta' },{id: 36, descripcion: 'Cubierta por medios' } );
 
-      this.cc = true; //cubierta por el cliente
-      this.crm = false; //cubierta reclutamiento medios
+      this.cc = true; // cubierta por el cliente
+      this.crm = false; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = true;
       this.borrar = true;
       this.editar = true;
       this.candidatos = false;
-    }
-    else if(estatusId < 34 && estatusId != 8 && this.element.vacantes > 0 && ( this.element.contratados > 0  && this.element.contratados < this.element.vacantes ) )
-    {
-      this.gbc = true; //garantía busqueda candidato
+    } else if(estatusId < 34 && estatusId !== 8 && this.element.vacantes > 0
+            && ( this.element.contratados > 0  && this.element.contratados < this.element.vacantes ) )  {
+      this.gbc = true; // garantía busqueda candidato
       this.cubierta = false;
-      this.cc = false; //cubierta por el cliente
-      this.cubiertas.push({id: 35, descripcion: 'Cubierta parcialmente' })
+      this.cc = false; // cubierta por el cliente
+      this.cubiertas.push({id: 35, descripcion: 'Cubierta parcialmente' });
 
-      this.crm = true; //cubierta reclutamiento medios
+      this.crm = true; // cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
       this.cancelar = true;
       this.borrar = true;
       this.editar = true;
       this.candidatos = false;
-    }
-    else if( estatusId < 34 && estatusId != 8 && (this.element.enProceso == 0 || this.element.postulados == 0))
-    {
+    } else if ( estatusId < 34 && estatusId !== 8 && (this.element.enProceso === 0 || this.element.postulados === 0)) {
       this.gbc = true;
       this.cubierta = false;
-      this.cc = false; //cubierta por el cliente
-      this.cubiertas.push({id: 37, descripcion: "Cubierta por el cliente" },
-      {id: 47, descripcion: "Promoción interna" },
-      {id: 48, descripcion: "Operaciones" });
-      this.crm = true; //cubierta reclutamiento medios
+      this.cc = false; // cubierta por el cliente
+      this.cubiertas.push({id: 37, descripcion: 'Cubierta por el cliente' },
+      {id: 47, descripcion: 'Promoción interna' },
+      {id: 48, descripcion: 'Operaciones' });
+      this.crm = true; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
       this.borrar = true;
       this.editar = true;
       this.candidatos = false;
-    }
-    else if(estatusId >= 34 && estatusId < 37 && this.element.tipoReclutamientoId == 1 && this.element.vacantes > 0)
-    {
-      this.gbc = false; //garantía busqueda candidato
+    } else if (estatusId >= 34 && estatusId < 37 && this.element.tipoReclutamientoId === 1 && this.element.vacantes > 0) {
+      this.gbc = false; // garantía busqueda candidato
       this.cubierta = true;
-      this.cc = true; //cubierta por el cliente
-      this.crm = true; //cubierta reclutamiento medios
+      this.cc = true; // cubierta por el cliente
+      this.crm = true; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = true;
       this.borrar = true;
       this.editar = true;
       this.candidatos = false;
-    }
-    else if(estatusId >= 34 && estatusId <= 37 && this.element.tipoReclutamientoId > 1 && this.element.vacantes > 0)
-    {
-      this.gbc = true; //garantía busqueda candidato
+    } else if (estatusId >= 34 && estatusId <= 37 && this.element.tipoReclutamientoId > 1 && this.element.vacantes > 0) {
+      this.gbc = true; // garantía busqueda candidato
       this.cubierta = true;
-      this.cc = true; //cubierta por el cliente
-      this.crm = true; //cubierta reclutamiento medios
+      this.cc = true; // cubierta por el cliente
+      this.crm = true; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = true;
       this.borrar = true;
       this.editar = true;
       this.candidatos = true;
       this.candidatos = false;
-    }
-    // else if( estatusId > 34 && estatusId <= 37 && this.element.vacantes > 0)
-    // {
-    //   this.gbc = true; //garantía busqueda candidato
-    //   this.cubierta = true;
-    //   this.cc = true; //cubierta por el cliente
-    //   this.crm = true; //cubierta reclutamiento medios
-    //   this.cp = true; // cubierta parcialmente
-    //   this.cancelar = true;
-    //   this.borrar = true;
-    //   this.editar = true;
-    // }
-    else if(estatusId == 38 && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes)
-    {
-      this.gbc = true; //garantía busqueda candidato
+    } else if (estatusId === 38 && this.element.vacantes > 0 && this.element.contratados === this.element.vacantes) {
+      this.gbc = true; // garantía busqueda candidato
       this.cubierta = false;
-      this.cubiertas.push({id: 34, descripcion: "Cubierta" },{id: 36, descripcion: "Cubierta por medios" });
-      this.cc = true; //cubierta por el cliente
-      this.crm = false; //cubierta reclutamiento medios
+      this.cubiertas.push({id: 34, descripcion: 'Cubierta' },{id: 36, descripcion: 'Cubierta por medios' });
+      this.cc = true; // cubierta por el cliente
+      this.crm = false; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = true;
       this.borrar = true;
       this.editar = true;
       this.candidatos = false;
-    }
-    else if(estatusId == 38 && this.element.vacantes > 0 && this.element.contratados > 0 && this.element.contratados < this.element.vacantes)
-    {
-      this.gbc = true; //garantía busqueda candidato
+    } else if(estatusId === 38 && this.element.vacantes > 0 && this.element.contratados > 0 
+      && this.element.contratados < this.element.vacantes) {
+      this.gbc = true; // garantía busqueda candidato
       this.cubierta = false;
-      this.cc = false; //cubierta por el cliente
-      this.cubiertas.push({id: 35, descripcion: "Cubierta parcialmente" })
+      this.cc = false; // cubierta por el cliente
+      this.cubiertas.push({id: 35, descripcion: 'Cubierta parcialmente' });
 
-      this.crm = true; //cubierta reclutamiento medios
+      this.crm = true; // cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
       this.cancelar = false;
       this.borrar = true;
       this.editar = true;
       this.candidatos = false;
-    }
-    else if(estatusId == 46 || estatusId == 44 || estatusId == 43 )
-    {
-      this.gbc = true; //garantía busqueda candidato
+    } else if (estatusId === 46 || estatusId === 44 || estatusId === 43 ) {
+      this.gbc = true; // garantía busqueda candidato
       this.cubierta = true;
-      this.cc = true; //cubierta por el cliente
-      this.crm = true; //cubierta reclutamiento medios
+      this.cc = true; // cubierta por el cliente
+      this.crm = true; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
       this.borrar = false;
       this.editar = false;
       this.candidatos = true;
-    }
-    else
-    {
-      this.gbc = true; //garantía busqueda candidato
+    } else {
+      this.gbc = true; // garantía busqueda candidato
       this.cubierta = true;
-      this.cc = true; //cubierta por el cliente
-      this.crm = true; //cubierta reclutamiento medios
+      this.cc = true; // cubierta por el cliente
+      this.crm = true; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = true;
       this.borrar = true;
@@ -365,12 +325,6 @@ export class DtRequisicionComponent implements OnInit {
     }
 
   }
-  public config: any = {
-    paging: true,
-    //sorting: { columns: this.columns },
-    filtering: { filterString: '' },
-    className: ['table-hover  mb-0']
-  };
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
@@ -378,82 +332,33 @@ export class DtRequisicionComponent implements OnInit {
     return data.slice(start, end);
   }
 
-  public changeSort(data: any, config: any): any {
-    if (!config.sorting) {
-      return data;
-    }
-
-    let columns = this.config.sorting.columns || [];
-    let columnName: string = void 0;
-    let sort: string = void 0;
-
-    for (let i = 0; i < columns.length; i++) {
-      if (columns[i].sort !== '' && columns[i].sort !== false) {
-        columnName = columns[i].name;
-        sort = columns[i].sort;
-      }
-    }
-
-    if (!columnName) {
-      return data;
-    }
-
-    // simple sorting
-    return data.sort((previous: any, current: any) => {
-      if (previous[columnName] > current[columnName]) {
-        return sort === 'desc' ? -1 : 1;
-      } else if (previous[columnName] < current[columnName]) {
-        return sort === 'asc' ? -1 : 1;
-      }
-      return 0;
-    });
-  }
-
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
 
     this.columns.forEach((column: any) => {
-      if (column.filtering.filterString != "") {
+      if (column.filtering.filterString != '') {
         this.showFilterRow = true;
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
-          {
-            if(!Array.isArray(item[column.name]))
-            {
+          if (item[column.name] != null) {
+            if (!Array.isArray(item[column.name])) {
               return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
-            }
-            else
-            {
-              if(item[column.name].length > 0)
-              {
+            } else {
+              if (item[column.name].length > 0) {
                 let aux = [];
-                // if(column.filtering.columnName)
-                // {
-                //   aux = item[column.filtering.columnName];
-                // }
-                // else
-                // {
-                  aux = item[column.name];
-                // }
-                let mocos = false;
-
-                  aux.forEach(element => {
-                    if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
-                    {
-                      mocos = true;
+                aux = item[column.name];
+                let flag = false;
+                aux.forEach(element => {
+                  if (element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase())) {
+                    flag = true;
                       return;
-                    }
-                  });
-
-                  if(mocos)
-                  {
-                    return item[column.name];
                   }
-              }
-              else
-              {
-                if( 'sin asignar'.match(column.filtering.filterString.toLowerCase()))
-                {
+                });
+
+                if (flag) {
+                    return item[column.name];
+                }
+              } else {
+                if ('sin asignar'.match(column.filtering.filterString.toLowerCase())) {
                   return item[column.name];
                 }
               }
@@ -462,33 +367,6 @@ export class DtRequisicionComponent implements OnInit {
         });
       }
     });
-
-    // if (!config.filtering) {
-    //   return filteredData;
-    // }
-
-    // if (config.filtering.columnName) {
-    //   return filteredData.filter((item: any) =>
-    //     item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-    // }
-
-    // let tempArray: Array<any> = [];
-    // filteredData.forEach((item: any) => {
-    //   let flag = false;
-    //   this.columns.forEach((column: any) => {
-    //     if (item[column.name] == null) {
-    //       flag = true;
-    //     } else {
-    //       if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-    //         flag = true;
-    //       }
-    //     }
-    //   });
-    //   if (flag) {
-    //     tempArray.push(item);
-    //   }
-    // });
-    // filteredData = tempArray;
 
     return filteredData;
   }
@@ -499,24 +377,26 @@ export class DtRequisicionComponent implements OnInit {
     }
 
     this.rows = this.dataSource;
-    let filteredData = this.changeFilter(this.rows, this.config);
-    // let sortedData = this.changeSort(filteredData, this.config);
+    const filteredData = this.changeFilter(this.rows, this.config);
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
-    this.length = filteredData.length;
     this.registros = this.rows.length;
-    this.spinner.hide();
+    this.length = filteredData.length;
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 700);
+
   }
 
   public onCellClick(data: any): any {
     data.selected ? data.selected = false : data.selected = true;
-    this.RequisicionId = data.id
+    this.RequisicionId = data.id;
     this.estatusId = data.estatusId;
     this.enProceso = data.enProceso;
     this.Folio = data.folio;
     this.Vacante = data.vBtra;
     this.element = data;
 
-    this.ValidarEstatus(data.estatusId)
+    this.ValidarEstatus(data.estatusId);
     if (!data.selected) {
       this.ValidarEstatus(9999)
       this.selected = false;
@@ -530,9 +410,8 @@ export class DtRequisicionComponent implements OnInit {
 
     if (this.rowAux.length == 0) {
       this.rowAux = data;
-    }
-    else if (data.selected && this.rowAux != []) {
-      var aux = data;
+    } else if (data.selected && this.rowAux !== []) {
+      const aux = data;
       data = this.rowAux;
       data.selected = false;
       aux.selected = true;
@@ -541,12 +420,12 @@ export class DtRequisicionComponent implements OnInit {
   }
 
   private _reinciar() {
-    this.nbc = true; //nueva busqueda candidato
+    this.nbc = true; // nueva busqueda candidato
     this.contratado = true;
     this.cubierta = true;
-    this.gbc = true; //garantía busqueda candidato
-    this.cc = true; //cubierta por el cliente
-    this.crm = true; //cubierta reclutamiento medios
+    this.gbc = true; // garantía busqueda candidato
+    this.cc = true; // cubierta por el cliente
+    this.crm = true; // cubierta reclutamiento medios
     this.cp = true; // cubierta parcialmente
     this.borrar = true;
     this.cancelar = true;
@@ -563,20 +442,21 @@ export class DtRequisicionComponent implements OnInit {
   * */
   public refreshTable() {
     this.spinner.show();
-    this.getRequisiciones();
     setTimeout(() => {
       this.columns.forEach(element => {
        (<HTMLInputElement>document.getElementById(element.name)).value = '';
+       element.filtering.filterString = '';
       });
-      this.estatusId = null;
-      this.enProceso = null;
-      this.element = [];
-      this.ValidarEstatus(9999);
-      this.spinner.hide();
     }, 1000);
+    this.estatusId = null;
+    this.enProceso = null;
+    this.element = [];
+    this.ValidarEstatus(9999);
+    this.getRequisiciones();
+    // this.onChangeTable(this.config);
   }
 
-  public clearfilters(){
+  public clearfilters() {
     this.columns.forEach(element => {
       element.filtering.filterString = '';
      (<HTMLInputElement>document.getElementById(element.name)).value = '';
@@ -759,9 +639,9 @@ export class DtRequisicionComponent implements OnInit {
     if(this.dataSource.length > 0)
     {
       var aux = [];
-      var comentarios = "";
-      var reclutador = "";
-      var coordinador = "";
+      var comentarios = '';
+      var reclutador = '';
+      var coordinador = '';
       this.dataSource.forEach(row => {
         if(row.comentarioReclutador.length > 0)
         {
@@ -771,12 +651,12 @@ export class DtRequisicionComponent implements OnInit {
           });
         }
         else{
-          comentarios = "";
+          comentarios = '';
         }
 
         if(!Array.isArray(row.reclutadores))
         {
-          reclutador = "SIN ASIGNAR";
+          reclutador = 'SIN ASIGNAR';
         }
         else if(row.reclutadores.length > 1)
         {
@@ -794,7 +674,7 @@ export class DtRequisicionComponent implements OnInit {
         if(row.estatusId == 4)
         {
           coordinador = reclutador;
-          reclutador = "SIN ASIGNAR"
+          reclutador = 'SIN ASIGNAR'
 
         }
         else
@@ -817,8 +697,8 @@ export class DtRequisicionComponent implements OnInit {
           RECLUTADOR: reclutador,
           'COMENTARIOS': comentarios
         })
-        comentarios = "";
-        reclutador = "";
+        comentarios = '';
+        reclutador = '';
       });
 
       //   })

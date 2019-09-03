@@ -147,6 +147,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
     this.GetRequisicionesPuro();
     setTimeout(() => {
       this.columns.forEach(element => {
+        element.filtering.filterString = '';
         (<HTMLInputElement>document.getElementById(element.name)).value = '';
       });
       this.resetSelect();

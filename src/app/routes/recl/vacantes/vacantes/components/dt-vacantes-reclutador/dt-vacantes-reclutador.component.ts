@@ -1,3 +1,4 @@
+import { debug } from 'util';
 import { AfterViewChecked, Component, EventEmitter, OnInit, Output, ElementRef, ViewChild } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -132,6 +133,30 @@ export class DtVacantesReclutadorComponent implements OnInit {
   Psicom = false;
   Competencia = false;
 
+  public rows: Array<any> = [];
+  public columns: Array<any> = [
+    { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+    { title: 'Solicitante', className: 'text-info text-center', name: 'solicita', filtering: { filterString: '', placeholder: 'Solicitante' } },
+    { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
+    { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
+    { title: 'Cub/Vac', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No.' } },
+    { title: 'Coordinación', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Coordinación' } },
+    // { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
+    // { title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
+    { title: 'Días Transc.', className: 'text-info text-center', name: 'diasTrans', filtering: { filterString: '', placeholder: 'Días' } },
+    { title: 'Rango sueldo', className: 'text-info text-center', name: 'rango', filtering: { filterString: '', placeholder: 'Rango sueldo' } },
+    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
+    { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador', filtering: { filterString: '', placeholder: 'Coordinador', columnName: 'reclutadores' } },
+    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador', columnName: 'reclutadores' } },
+    { title: 'Postulados', className: 'text-info text-center', name: 'postulados', filtering: { filterString: '', placeholder: 'Postulados' } },
+    { title: 'En Proceso', className: 'text-info text-center', name: 'enProceso', filtering: { filterString: '', placeholder: 'Proceso' } },
+  ];
+
+  public config: any = {
+    paging: true,
+    filtering: { filterString: '' },
+    className: ['table-hover mb-0 ']
+  };
   constructor(
     private service: RequisicionesService,
     private postulateservice: PostulateService,
@@ -161,11 +186,20 @@ export class DtVacantesReclutadorComponent implements OnInit {
   getVacantes() {
     this.service.getRequiReclutador(this.settings.user['id']).subscribe(data => {
       this.dataSource = data;
-
+      const n = new Date;
       this.totalPos = 0;
       this.totalContratados = 0;
       this.dataSource.forEach(r => {
-
+        r.rango = r.sueldoMinimo + '-' + r.sueldoMaximo;
+        const daux = new Date(r.fch_Creacion);
+        let diasTrans = 0;
+        while (daux <= n) {
+          if (daux.getDay() > 0 && daux.getDay() < 6) {
+            diasTrans += 1;
+          }
+          daux.setDate(daux.getDate() + 1);
+        }
+        r.diasTrans = diasTrans;
         this.totalPos += r.vacantes;
         this.totalContratados += r.contratados;
 
@@ -228,32 +262,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
 
-  public rows: Array<any> = [];
-  public columns: Array<any> = [
-    { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
-    { title: 'Solicitante', className: 'text-info text-center', name: 'solicita', filtering: { filterString: '', placeholder: 'Solicitante' } },
-    { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
-    { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
-    { title: 'Cub/Vac', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No.' } },
-    { title: 'Coordinación', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Coordinación' } },
-    // { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
-    // { title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
-    { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
-    { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
-    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
-    { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador', filtering: { filterString: '', placeholder: 'Coordinador', columnName: 'reclutadores' } },
-    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador', columnName: 'reclutadores' } },
-    { title: 'Postulados', className: 'text-info text-center', name: 'postulados', filtering: { filterString: '', placeholder: 'Postulados' } },
-    { title: 'En Proceso', className: 'text-info text-center', name: 'enProceso', filtering: { filterString: '', placeholder: 'Proceso' } },
-  ];
+
 
   //#region paginador
-  public config: any = {
-    paging: true,
-    //sorting: { columns: this.columns },
-    filtering: { filterString: '' },
-    className: ['table-hover mb-0 ']
-  };
+
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
@@ -269,8 +281,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
           if (item[column.name] != null) {
             if (!Array.isArray(item[column.name])) {
               return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
-            }
-            else {
+            } else {
               let aux = [];
               // if(column.filtering.columnName)
               // {
@@ -316,8 +327,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
     }
 
     this.rows = this.dataSource;
-    let filteredData = this.changeFilter(this.dataSource, this.config);
-    //let sortedData = this.changeSort(filteredData, this.config);
+    const filteredData = this.changeFilter(this.dataSource, this.config);
+
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
     this.registros = this.rows.length;
     this.length = filteredData.length;
@@ -835,8 +846,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   seguimientoRequi() {
     if (this.numeroVacantes != 0 && (this.settings.user['tipoUsuarioId'] == '4' || this.settings.user['tipoUsuarioId'] == '3')) {
       this.procesoCandidato = true;
-    }
-    else if (this.numeroVacantes != 0) {
+    } else if (this.numeroVacantes !== 0) {
       this._Router.navigate(['/reclutamiento/gestionVacante', this.id, this.folio, this.vBtra, this.clienteId, this.enProceso, this.estatusId], { skipLocationChange: true });
     } else {
       swal('Ops...!', 'Esta vacante no cuenta con posiciones disponibles esta en 0, cambie el número de vacantes disponibles.', 'error');
@@ -847,62 +857,56 @@ export class DtVacantesReclutadorComponent implements OnInit {
   exportAsXLSX() {
 
     if (this.dataSource.length > 0) {
-      var aux = [];
-      var comentarios = '';
-      var reclutador = '';
-      var coordinador = '';
+      let aux = [];
+      let comentarios = '';
+      let reclutador = '';
+      let coordinador = '';
 
       this.dataSource.forEach(row => {
         if (row.comentarioReclutador.length > 0) {
           row.comentarioReclutador.forEach(element => {
             comentarios = comentarios +
-              element + '\n'
+              element + '\n';
           });
-        }
-        else {
+        } else {
           comentarios = '';
         }
-        var d = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
-        // var mocos = (d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString()
-        var e = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
+        const d = row.diasTrans;
+        // var e = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
 
         if (!Array.isArray(row.reclutadores)) {
           reclutador = 'SIN ASIGNAR';
-        }
-        else if (row.reclutadores.length > 1) {
+        } else if (row.reclutadores.length > 1) {
           row.reclutadores.forEach(element => {
-            reclutador = reclutador + element + ', \n'
+            reclutador = reclutador + element + ', \n';
           });
-        }
-        else {
+        } else {
           reclutador = row.reclutadores[0];
         }
 
-        if (row.estatusId == 4) {
+        if (row.estatusId === 4) {
           coordinador = reclutador;
           reclutador = 'SIN ASIGNAR';
-
-        }
-        else {
+        } else {
           coordinador = row.coordinador;
         }
 
         aux.push({
           FOLIO: row.folio.toString(),
-          'FECHA SOLICITUD': d,//new Date(d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString(),
+          'DIAS TRANSCURRIDOS': d,
           SOLICITANTE: row.solicita,
           EMPRESA: row.cliente,
           SUCURSAL: row.sucursal,
           NO: row.vacantes,
           CUBIERTOS: row.contratados,
           PUESTO: row.vBtra,
-          SUELDO: row.sueldoMinimo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
+          SUELDO: row.sueldoMinimo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) +
+                  ' - ' + row.sueldoMaximo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) ,
           ESTATUS: row.estatus,
-          'FECHA ESTATUS': e,
           COORDINADOR: coordinador,
           RECLUTADOR: reclutador,
           'COMENTARIOS': comentarios
-        })
+        });
         comentarios = '';
         reclutador = '';
       });

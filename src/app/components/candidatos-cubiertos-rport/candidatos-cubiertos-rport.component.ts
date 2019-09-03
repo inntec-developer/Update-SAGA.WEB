@@ -114,7 +114,8 @@ export class CandidatosCubiertosRportComponent implements OnInit {
 
     public refreshTable() {
         this.columns.forEach(element => {
-         (<HTMLInputElement>document.getElementById(element.name + "_1")).value = '';
+          element.filtering.filterString = '';
+         (<HTMLInputElement>document.getElementById(element.name + '_1')).value = '';
         });
         this.GetCandidatos();
       }
