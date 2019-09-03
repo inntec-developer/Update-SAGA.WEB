@@ -37,7 +37,7 @@ export class CandidatosCubiertosRportComponent implements OnInit {
     paging: true,
     filtering: { filterString: '' },
     className: ['table-striped mb-0 d-table-fixed']
-  }
+  };
   constructor(private _service: PostulateService) { }
 
   ngOnInit() {

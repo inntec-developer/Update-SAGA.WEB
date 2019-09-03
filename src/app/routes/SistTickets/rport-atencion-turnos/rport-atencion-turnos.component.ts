@@ -106,7 +106,7 @@ export class RportAtencionTurnosComponent implements OnInit {
     return filteredData;
   }
 
-  public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }, col: string = ''): any {
+  public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
     if (config.filtering) {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
@@ -117,7 +117,7 @@ export class RportAtencionTurnosComponent implements OnInit {
 
     this.registros = this.result.length;
     this.rows = this.result;
-    let filteredData = this.changeFilter(this.result, this.config, col);
+    const filteredData = this.changeFilter(this.result, this.config);
     // let sortedData = this.changeSort(filteredData, this.config);
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
     this.length = filteredData.length;
