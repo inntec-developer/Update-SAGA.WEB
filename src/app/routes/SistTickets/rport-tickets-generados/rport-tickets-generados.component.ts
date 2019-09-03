@@ -21,12 +21,12 @@ export class RportTicketsGeneradosComponent implements OnInit {
   shown = 'hover';
 
     // Varaibles del paginador
-    public page: number = 1;
-    public itemsPerPage: number = 20;
-    public maxSize: number = 5;
-    public numPages: number = 1;
-    public length: number = 0;
-    clearFilter: boolean = true;
+    public page = 1;
+    public itemsPerPage = 20;
+    public maxSize = 5;
+    public numPages = 1;
+    public length = 0;
+    clearFilter = true;
   public columns: Array<any> = [
     { title: 'Fecha', className: 'text-success text-center', name: 'fecha', filtering: { filterString: '',  placeholder: 'aaaa-mm-dd' } },
     { title: 'Turnos Generados', className: 'text-info text-center', name: 'total', filtering: { filterString: '', placeholder: 'Turnos generados' } },
@@ -34,6 +34,13 @@ export class RportTicketsGeneradosComponent implements OnInit {
     { title: 'Turnos con Cita', className: 'text-info text-center', name: 'concita', filtering: { filterString: '', placeholder: 'Con cita' } },
     { title: 'Turnos sin Cita', className: 'text-info text-center', name: 'sincita', filtering: { filterString: '', placeholder: 'Sin cita' } },
   ];
+
+  public config: any = {
+    paging: true,
+
+    filtering: { filterString: '' },
+    className: ['table-hover  mb-0']
+  };
   registros: any;
 
   constructor(private _service: SistTicketsService, private pipe: DatePipe, private excelService: ExcelService) { }
@@ -55,12 +62,7 @@ export class RportTicketsGeneradosComponent implements OnInit {
   }
 
    //#region filtros y paginador
-   public config: any = {
-    paging: true,
-    //sorting: { columns: this.columns },
-    filtering: { filterString: '' },
-    className: ['table-hover  mb-0']
-  };
+
 
   public changePage(page: any, data: Array<any> = this.result): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
@@ -68,122 +70,65 @@ export class RportTicketsGeneradosComponent implements OnInit {
     return data.slice(start, end);
   }
 
-  public changeFilter(data: any, config: any, col: string): any {
+  public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
-
-    var column = this.columns.filter(c => {
-        if(c.name == col)
-        {
-          return c;
-        }
-      });
-
-    if(column.length > 0)
-    {
-      if (column[0].filtering) {
+    this.columns.forEach((column: any) => {
+      if (column.filtering.filterString !== '') {
         filteredData = filteredData.filter((item: any) => {
-          if (item[col] != null)
-          {
-            if(!Array.isArray(item[col]))
-            {
-              return item[col].toString().toLowerCase().match(column[0].filtering.filterString.toLowerCase());
-            }
-            else
-            {
-              let aux = item[col];
-              let bandera = false;
-              if(item[col].length > 0)
-              {
-                item[col].forEach(element => {
-                  if(element.estatus.toString().toLowerCase().match(column[0].filtering.filterString.toLowerCase()))
-                  {
-                    bandera = true;
+          if (item[column.name] != null) {
+            if (!Array.isArray(item[column.name])) {
+              return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+            } else {
+              if (item[column.name].length > 0) {
+                let aux = [];
+                aux = item[column.name];
+                let mocos = false;
+
+                aux.forEach(element => {
+                  if (element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase())) {
+                    mocos = true;
                     return;
                   }
                 });
 
-                if(bandera)
-                {
-                  return item[col];
+                if (mocos) {
+                  return item[column.name];
                 }
-              }
-              else
-              {
-                  return item[col];
+              } else {
+                if ('sin asignar'.match(column.filtering.filterString.toLowerCase())) {
+                  return item[column.name];
+                }
               }
             }
           }
         });
       }
-    }
-    else
-    {
-      filteredData = this.result
-
-      // if (!config.filtering) {
-      //   return filteredData;
-      // }
-
-      // if (config.filtering.columnName) {
-      //   return filteredData.filter((item: any) =>
-      //     item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-      // }
-
-      // let tempArray: Array<any> = [];
-      // filteredData.forEach((item: any) => {
-      //   let flag = false;
-      //   this.columns.forEach((column: any) => {
-      //     if (item[column.name] == null) {
-      //       flag = true;
-      //     } else {
-      //       if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-      //         flag = true;
-      //       }
-      //     }
-      //   });
-      //   if (flag) {
-
-      //     tempArray.push(item);
-      //   }
-      // });
-      // filteredData = tempArray;
-
-    }
-
+    });
 
     return filteredData;
   }
-
-  // public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }, col: any = ''): any {
-  //   if (config.filtering) {
-  //     (<any>Object).assign(this.config.filtering, config.filtering);
-  //   }
-
-  //   this.rows = this.result;
-  //   let filteredData = this.changeFilter(this.result, this.config, col);
-  //   this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
-  //   this.length = this.rows.length;
-  // }
-
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }, col: string = ''): any {
     if (config.filtering) {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
-
-    if (config.sorting) {
-      (<any>Object).assign(this.config.sorting, config.sorting);
-    }
-
     this.registros = this.result.length;
     this.rows = this.result;
-    let filteredData = this.changeFilter(this.result, this.config, col);
-    // let sortedData = this.changeSort(filteredData, this.config);
+    const filteredData = this.changeFilter(this.result, this.config, col);
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
     this.length = filteredData.length;
   }
 //#endregion
 
+public refreshTable() {
+  setTimeout(() => {
+    this.columns.forEach(element => {
+     (<HTMLInputElement>document.getElementById(element.name)).value = '';
+     element.filtering.filterString = '';
+    });
+  }, 1000);
 
+  this.GetTickets();
+}
 
   public clearfilters() {
     this.columns.forEach(element => {

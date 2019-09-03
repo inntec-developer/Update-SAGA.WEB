@@ -11,30 +11,41 @@ import { SettingsService } from '../../../core/settings/settings.service';
 })
 export class AsignarPsicometricosComponent implements OnInit {
 
-  //scroll
+  // scroll
   public disabled = false;
   public invertX = false;
   public compact = false;
   public invertY = false;
   public shown = 'hover';
 
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
   requisiciones = [];
   seleccionados = [];
   listClaves = [];
-  clave = "";
+  clave = '';
   spinner = false;
   clavesRequi = [];
   verClaves = false;
   registros: number;
   filterData = [];
-
+  public columns: Array<any> = [
+    { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+    { title: 'Perfil', className: 'text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
+    { title: 'Psicometrico', className: 'text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Psicometrico' } },
+    { title: 'Claves disponibles', className: 'text-center', name: 'claves', filtering: { filterString: '', placeholder: 'Claves' } },
+  ];
+  public config: any = {
+    paging: true,
+    filtering: { filterString: '' },
+    className: ['table-hover mb-0 ']
+  };
   rows = [];
+  NumClaves = 0;
   constructor(
     private _serviceExamen: ExamenesService,
     private toasterService: ToasterService,
@@ -44,118 +55,58 @@ export class AsignarPsicometricosComponent implements OnInit {
     this.GetRequisiciones();
 
   }
-  public columns: Array<any> = [
-    { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
-    { title: 'Perfil', className: 'text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
-    { title: 'Psicometrico', className: 'text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Psicometrico' } },
-    
-    { title: 'Claves disponibles', className: 'text-center', name: 'claves', filtering: { filterString: '', placeholder: 'Claves' } },
-  ];
-
 
   //#region paginador
-  public config: any = {
-    paging: true,
-    //sorting: { columns: this.columns },
-    filtering: { filterString: '' },
-    className: ['table-hover mb-0 ']
-  };
-
   public changePage(page: any, data: Array<any> = this.requisiciones): Array<any> {
-    let start = (page.page - 1) * page.itemsPerPage;
-    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    const start = (page.page - 1) * page.itemsPerPage;
+    const end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
   }
 
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
     this.columns.forEach((column: any) => {
-      if (column.filtering) {
+      if (column.filtering.filterString !== '') {
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null)
           {
-            if(!Array.isArray(item[column.name]))
-            {
+            if(!Array.isArray(item[column.name])) {
               return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
-            }
-            else
-            {
-                let aux = item[column.name];
-                let flag = false;
-                if(item[column.name].length > 0)
-                {
+            } else {
+              const aux = item[column.name];
+              let flag = false;
+              if (item[column.name].length > 0) {
                   item[column.name].forEach(element => {
-                    if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
-                    {
+                    if (element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase())) {
                       flag = true;
                       return;
                     }
                   });
 
-                  if(flag)
-                  {
+                  if (flag) {
                     return item[column.name];
                   }
-                }
-              else
-              {
+              } else {
                   return item[column.name];
               }
             }
-          }
-          else
-          {
-            return 'sin asignar'
+          } else {
+            return 'sin asignar';
           }
         });
       }
     });
 
-    if (!config.filtering) {
-      return filteredData;
-    }
-
-    if (config.filtering.columnName) {
-      return filteredData.filter((item: any) =>
-        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-    }
-
-    let tempArray: Array<any> = [];
-    filteredData.forEach((item: any) => {
-      let flag = false;
-      this.columns.forEach((column: any) => {
-        if (item[column.name] == null) {
-          flag = true;
-        } else {
-          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-            flag = true;
-          }
-        }
-      });
-      if (flag) {
-
-        tempArray.push(item);
-      }
-    });
-    filteredData = tempArray;
-
     return filteredData;
   }
 
-  
   //#endregion
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
     if (config.filtering) {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
 
-    if (config.sorting) {
-      (<any>Object).assign(this.config.sorting, config.sorting);
-    }
-
-    this.rows = this.requisiciones;
-    let filteredData = this.changeFilter(this.requisiciones, this.config);
-    //let sortedData = this.changeSort(filteredData, this.config);
+    const filteredData = this.changeFilter(this.requisiciones, this.config);
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
     this.registros = this.rows.length;
     this.length = filteredData.length;
@@ -168,33 +119,35 @@ export class AsignarPsicometricosComponent implements OnInit {
     this._serviceExamen.GetRequisicionesPsico().subscribe(data => {
       this.requisiciones = data;
       this.filterData = data;
-      this.onChangeTable(this.config)
-    })
+      this.NumClaves = 0;
+      this.requisiciones.forEach(element => {
+        this.NumClaves += element.claves;
+      });
+
+      this.onChangeTable(this.config);
+    });
   }
 
   GetClaves(row) {
-
     this._serviceExamen.GetClaves(row.requisicionId).subscribe(data => {
       this.clavesRequi = data;
       this.onSelect(row);
-    })
+    });
   }
 
   AgregarClave(clave) {
-    if (clave.length == 16) {
+    if (clave.length === 16) {
       if (this.listClaves.length > 0) {
-        var idx = this.listClaves.indexOf(clave);
+        const idx = this.listClaves.indexOf(clave);
 
-        if (idx == -1) {
-          this.listClaves.push(clave)
+        if (idx === -1) {
+          this.listClaves.push(clave);
         }
-      }
-      else {
-        this.listClaves.push(clave)
-
+      } else {
+        this.listClaves.push(clave);
       }
 
-      this.clave = "";
+      this.clave = '';
     }
 
   }
@@ -202,33 +155,26 @@ export class AsignarPsicometricosComponent implements OnInit {
   Agregar() {
     if (this.seleccionados.length > 0) {
       this.spinner = true;
-      var aux = [];
+      const aux = [];
       this.listClaves.forEach(item => {
-        aux.push({ RequisicionId: this.seleccionados[0].requisicionId, UsuarioId: this.settings.user['id'], Clave: item })
-      })
+        aux.push({ RequisicionId: this.seleccionados[0].requisicionId, UsuarioId: this.settings.user['id'], Clave: item });
+      });
 
       this._serviceExamen.InsertClaves(aux).subscribe(data => {
-        if (data == 200) {
+        if (data === 200) {
           this.popToast('success', 'Generar Claves', 'Las claves se agregaron con éxito');
           this.seleccionados = [];
           this.listClaves = [];
           this.GetRequisiciones();
           this.spinner = false;
 
-        }
-        else {
+        } else {
           this.popToast('error', 'Generar Claves', 'Ocurrio un error al intentar agregar claves');
           this.spinner = false;
         }
-      })
+      });
     }
   }
-  // GetPostulados()
-  // {
-  //   this._serviceExamen.GetRequisicionesEstatus(7).subscribe(data => {
-  //     this.requisiciones = data;
-  //   })
-  // }
 
   PopClave(row) {
     this.listClaves = this.listClaves.filter(function (item) {
@@ -244,25 +190,23 @@ export class AsignarPsicometricosComponent implements OnInit {
       if (item.requisicionId !== row.requisicionId) {
         item.selected = false;
       }
-    })
+    });
 
     if (row.selected) {
       if (this.seleccionados.length > 0) {
         this.seleccionados.pop();
         this.seleccionados.push(row)
-      }
-      else {
+      } else {
         this.seleccionados.push(row);
       }
-    }
-    else {
+    } else {
       this.seleccionados.pop();
     }
   }
 
   public Search(data: any) {
-    let tempArray: Array<any> = [];
-    let colFiltar: Array<any> = [{ title: "folio" }, { title: "vBtra" }];
+    const tempArray: Array<any> = [];
+    const colFiltar: Array<any> = [{ title: 'folio' }, { title: 'vBtra' }];
 
     this.filterData.forEach(function (item) {
       let flag = false;
@@ -273,11 +217,27 @@ export class AsignarPsicometricosComponent implements OnInit {
       });
 
       if (flag) {
-        tempArray.push(item)
+        tempArray.push(item);
       }
     });
 
     this.requisiciones = tempArray;
+  }
+
+  public refreshTable() {
+      this.columns.forEach(element => {
+       (<HTMLInputElement>document.getElementById(element.name)).value = '';
+       element.filtering.filterString = '';
+      });
+    this.GetRequisiciones();
+  }
+
+  public clearfilters() {
+    this.columns.forEach(element => {
+      element.filtering.filterString = '';
+      (<HTMLInputElement>document.getElementById(element.name)).value = '';
+    });
+    this.onChangeTable(this.config);
   }
 
 

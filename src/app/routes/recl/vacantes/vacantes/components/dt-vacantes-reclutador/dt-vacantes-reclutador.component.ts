@@ -401,11 +401,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.selected = true;
     }
 
-    if (this.rowAux.length == 0) {
+    if (this.rowAux.length === 0) {
       this.rowAux = data;
-    }
-    else if (data.selected && this.rowAux != []) {
-      var aux = data;
+    } else if (data.selected && this.rowAux !== []) {
+      const aux = data;
       data = this.rowAux;
       data.selected = false;
       aux.selected = true;

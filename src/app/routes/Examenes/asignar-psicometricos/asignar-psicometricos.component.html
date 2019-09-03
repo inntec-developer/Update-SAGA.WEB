@@ -20,7 +20,29 @@
               <hr>
           </div>
           <div class="card-body mat-elevation-z8">
-               <table class="table">
+<div class="row">
+            <div class="col bg-light p-1">
+                <button (click)="lgModal15.show()" placement="bottom" tooltip="Ver Requisición" class="float-left ml-1 mat-elevation-z8"
+                [disabled]="seleccionados.length == 0" [ngClass]="(seleccionados.length == 0) ? 'btn btn-xs disabled':'btn btn-xs btn-warning'">
+                <i class="fa fa-eye"></i></button>
+                <button class="btn btn-xs btn-success float-right mr-1 mat-elevation-z8" type="button" (click)="refreshTable()"
+                container="body" placement="bottom" tooltip="Actualizar">
+                <i class="icon-refresh"></i>
+              </button>
+              <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
+                class="mr-1 btn btn-xs btn-info float-right mat-elevation-z8">
+                <i class="fa fa-eraser"></i>
+              </button>
+             
+          </div>
+        </div>
+          <div class="d-flex justify-content-end mt-2">
+              <span class="text-muted font-weight-bold float-right text-uppercase mb-3 mr-3">Total de Folios <span
+                class="badge badge-pill badge-success ml-1">{{requisiciones.length  | numerico}}</span></span>
+                <span class="text-muted font-weight-bold float-right text-uppercase mb-3 mr-1">Total Claves Generadas <span
+                  class="badge badge-pill badge-success ml-1">{{NumClaves  | numerico}}</span></span>
+          </div>
+               <table class="table border-top">
                   <thead>
                       <tr>
 
@@ -60,12 +82,11 @@
              </table>
            </div>
            <br/>
-           <div class="text-right">
+           <div class="d-flex justify-content-end">
 
                   <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
                     [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
                   </pagination>
-                  <pre class="card card-block card-header text-muted">Total Registros: {{requisiciones.length}}</pre>
 
               </div>
 
@@ -152,19 +173,27 @@
     </div>
   </div>
 
-
-<!-- <ng-container *ngFor="let row of requisiciones; let ind = index">
-
-    <div class="margin">
-      <p *ngIf="requisiciones.length > 0 else NotRequi" class="list-group text-warning"><em class="fa fa-file-text-o">  {{row.folio}} - {{row.vBtra | uppercase}}</em></p>
+  <div bsModal #lgModal15="bs-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 id="dialog-sizes-name1" class="modal-title pull-left">Informaci&oacute;n de la Vacante</h4>
+         
+            <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal15.hide()"
+              aria-label="Close">
+              <i class="fa fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <app-info-vacante [Folios]="folio" [Requisicion]="id"></app-info-vacante>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8"
+              (click)="lgModal15.hide()">Cerrar</button>
+          </div>
+        </div>
+      </div>
     </div>
-
-      <ul *ngIf="row.postulados.length > 0 else NotCandidatos" class="list-group">
-        <li container="body" placement="bottom" tooltip="click para seleccionar" [class.selected]="r.selected" class="list-group-item rowHover text-muted long" *ngFor="let r of row.postulados; let rowIndex = index" (click)="onSelect(r)">
-          <em class="fa fa-user-circle-o text-success"></em> {{r.curp | uppercase}} {{r.nombre | uppercase}} {{r.apellidoPaterno | uppercase}} {{r.apellidoMaterno | uppercase}} </li>
-      </ul>
-      <hr>
-    </ng-container> -->
 
   <!--mensaje cuando esta vacio la tabla-->
 <ng-template #NotCandidatos>

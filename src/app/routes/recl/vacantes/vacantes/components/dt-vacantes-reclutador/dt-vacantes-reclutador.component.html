@@ -13,19 +13,19 @@
       <div class="col-sm-12 col-md-12">
         <button (click)="lgModal15.show()" placement="bottom" tooltip="Ver Requisición" class="mr-1 mat-elevation-z8"
           [disabled]="!element" [ngClass]="(!element) ? 'btn btn-xs disabled':'btn btn-xs btn-warning'">
-          <em class="fa fa-eye"></em></button>
+          <i class="fa fa-eye"></i></button>
         <button (click)="lgModal.show()" class="mr-1 btn btn-xs mat-elevation-z8" [disabled]="!element"
-          [ngClass]="(!element) ? 'disabled' : 'btn-dark'" container="body" placement="bottom" tooltip="Comentarios"><em
-            class="fa fa-comments-o"></em></button>
+          [ngClass]="(!element) ? 'disabled' : 'btn-dark'" container="body" placement="bottom" tooltip="Comentarios"><i
+            class="fa fa-comments-o"></i></button>
         <button id="create" chkPrivilegiosButtons (click)="openDialogAssingRequi()" placement="bottom" tooltip="Asignar"
           container="body" class="mr-1 mat-elevation-z8" [disabled]="asignar"
           [ngClass]="asignar ? 'btn btn-xs disabled':'btn btn-xs btn-purple'">
-          <em class="icon-user-follow"></em></button>
+          <i class="icon-user-follow"></i></button>
         <button type="button" id="special" chkPrivilegiosButtons (click)="openDesignVacante()" class="mat-elevation-z8"
           container="body" placement="bottom" tooltip="Diseñar Vacante" container="body"
           [disabled]="disenador || confidencial"
           [ngClass]="(disenador || confidencial) ? 'btn btn-xs disabled':'btn btn-xs btn-primary'">
-          <em class="fa fa-pencil-square-o"></em>
+          <i class="fa fa-pencil-square-o"></i>
         </button>
 
         <em class="vl ml-1 mr-1"></em>
@@ -35,20 +35,20 @@
           [ngClass]="bc ? 'btn btn-xs disabled' : 'btn btn-xs btn-green'" type="button"
           (click)="SetStatus(29, 'B&uacute;squeda Candidatos')" container="body" placement="bottom"
           tooltip="B&uacute;squeda de Candidatos">
-          <em class="fa fa-search"></em>
+          <i class="fa fa-search"></i>
         </button>
         <button id="update" chkPrivilegiosButtons class="mr-1 mat-elevation-z8" [disabled]="ecc"
           [ngClass]="ecc ? 'btn btn-xs disabled' : 'btn btn-xs btn-green'" type="button"
           (click)="SetStatus(30, 'Env&iacute;o a Cliente')" container="body" placement="bottom"
           tooltip="Env&iacute;o Candidato a Cliente">
-          <em class="fa fa-truck"></em>
+          <i class="fa fa-truck"></i>
         </button>
 
         <button id="update" chkPrivilegiosButtons class="mr-1 mat-elevation-z8" [disabled]="sc"
           [ngClass]="sc ? 'btn btn-xs disabled' : 'btn btn-xs btn-green'" type="button"
           (click)="SetStatus(32, 'Socioeconómico')" container="body" placement="bottom" tooltip="Socioeconómico"
           container="body">
-          <em class="fa fa-bar-chart"></em>
+          <i class="fa fa-bar-chart"></i>
         </button>
 
 
@@ -56,19 +56,19 @@
           [ngClass]="ec ? 'btn btn-xs disabled' : 'btn btn-xs btn-info'" type="button"
           (click)="SetStatus(33, 'Espera de Ctns')" container="body" placement="bottom"
           tooltip="En Espera de Contrataci&oacute;n">
-          <em class="fa fa-hourglass-half"></em>
+          <i class="fa fa-hourglass-half"></i>
         </button>
 
         <button id="update" chkPrivilegiosButtons class="mr-1 mat-elevation-z8" [disabled]="pausa"
           [ngClass]="pausa ? 'btn btn-xs disabled' : 'btn btn-xs btn-info'" type="button"
           (click)="SetStatus(39, 'Pausada')" container="body" placement="bottom" tooltip="Pausada">
-          <em class="fa fa-pause-circle-o"></em>
+          <i class="fa fa-pause-circle-o"></i>
         </button>
 
         <button id="update" chkPrivilegiosButtons [ngClass]="nbc ? 'btn btn-xs disabled' : 'btn btn-xs btn-primary'"
           class="mat-elevation-z8" [disabled]="nbc" type="button" (click)="SetStatus(31, 'Nueva Busqueda')"
           container="body" placement="bottom" tooltip="Nueva Busqueda de Candidatos">
-          <em class="fa fa-search-plus"></em>
+          <i class="fa fa-search-plus"></i>
         </button>
 
         <!-- estatus de la vacante -->
@@ -79,13 +79,13 @@
           [disabled]="dataSource.length == 0"
           [ngClass]="dataSource.length == 0 ? 'btn btn-xs disable' : 'btn btn-xs btn-info'" container="body"
           placement="bottom" tooltip="Informe Vacantes">
-          <em class="fa fa-file-text-o"></em>
+          <i class="fa fa-file-text-o"></i>
         </button>
         <button class="mr-1 mat-elevation-z8" id='special' chkPrivilegiosButtons type="button" (click)="editarNR=true"
           [disabled]="candidatosNR.length == 0"
           [ngClass]="candidatosNR.length == 0 ? 'mr-1 btn btn-xs disable' : 'mr-1 btn btn-xs btn-danger'"
           container="body" placement="bottom" tooltip="Visualizar Incidente">
-          <em class="fa fa-male"></em>
+          <i class="fa fa-male"></i>
           <span *ngIf="candidatosNR.length > 0" class="badge badge-pill badge-warning">{{candidatosNR.length}}</span>
         </button>
         <button class="mr-1 mat-elevation-z8" id='special' chkPrivilegiosButtons type="button"
@@ -137,9 +137,9 @@
           <i class="fa fa-users" aria-hidden="true"></i>
         </button>
         <button id="update" chkPrivilegiosButtons class="mr-1 float-right mat-elevation-z8"
-          [disabled]="element.claseReclutamientoId != 3 || element.vacantes <= element.contratados"
+          [disabled]="element.claseReclutamientoId == 1 || element.vacantes <= element.contratados"
           (click)="openDialogRegistro()"
-          [ngClass]="element.claseReclutamientoId != 3 || element.vacantes <= element.contratados ? 'btn btn-xs disabled':'btn btn-xs btn-success'"
+          [ngClass]="element.claseReclutamientoId == 1 || element.vacantes <= element.contratados ? 'btn btn-xs disabled':'btn btn-xs btn-success'"
           container="body" placement="bottom" tooltip="Registro Masivo">
           <i class="fa fa-user-plus" aria-hidden="true"></i>
         </button>

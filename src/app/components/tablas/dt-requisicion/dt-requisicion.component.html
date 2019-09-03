@@ -4,17 +4,17 @@
       <div class="col-sm-12 col-md-12">
         <button id="create" chkPrivilegiosButtons class="mr-2 btn btn-xs btn-info mat-elevation-z8" container="body"
           placement="bottom" tooltip="Nuevo" [routerLink]="['/ventas/crearRequisicion']">
-          <em class="fa fa-plus"></em>
+          <i class="fa fa-plus"></i>
         </button>
         <button (click)="showRequi()" class="mr-2 btn btn-xs mat-elevation-z8"
           [disabled]="!view" [ngClass]="(!view) ? 'disabled' : 'btn-warning'" container="body"
           placement="bottom" tooltip="Visualizar">
-          <em class="fa fa-eye"></em>
+          <i class="fa fa-eye"></i>
         </button>
         <button (click)="lgModal.show()" class="mr-2 btn btn-xs mat-elevation-z8"
           [disabled]="!coment" [ngClass]="(!coment) ? 'disabled' : 'btn-dark'" container="body"
           placement="bottom" tooltip="Comentarios">
-          <em class="fa fa-comments-o"></em>
+          <i class="fa fa-comments-o"></i>
         </button>
         <button id="create" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8" [disabled]="editar"
           [ngClass]="editar ? 'disabled' : 'btn-primary'" container="body" placement="bottom"
@@ -80,7 +80,7 @@
         </button>
         <button class="btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="refreshTable()"
           container="body" placement="bottom" tooltip="Actualizar">
-          <em class="icon-refresh"></em>
+          <i class="icon-refresh"></i>
         </button>
         <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
           class="mr-2 btn btn-xs btn-info float-right mat-elevation-z8">

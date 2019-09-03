@@ -61,7 +61,7 @@ export class ReporteConcurrenciaComponent implements OnInit {
     this._service.GetConcurrenciaReporte().subscribe(result => {
       const aux = [];
       result.forEach(element => {
-        element.tiempo.forEach(item => {
+        element.datos.forEach(item => {
           aux.push({
             fecha: item.fecha,
             hora: item.hora,
@@ -94,34 +94,30 @@ export class ReporteConcurrenciaComponent implements OnInit {
     this.columns.forEach((column: any) => {
       if (column.filtering.filterString !== '') {
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
-          {
-            if(!Array.isArray(item[column.name])) {
+          if (item[column.name] != null) {
+            if (!Array.isArray(item[column.name])) {
               return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
-            }
-            else
-            {
-              let aux = item[column.name];
-              let bandera = false;
-              if(item[column.name].length > 0)
-              {
-                item[column.name].forEach(element => {
-                  if(element.estatus.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
-                  {
-                    bandera = true;
+            } else {
+              if (item[column.name].length > 0) {
+                let aux = [];
+                aux = item[column.name];
+                let mocos = false;
+
+                aux.forEach(element => {
+                  if (element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase())) {
+                    mocos = true;
                     return;
                   }
                 });
 
-                if(bandera)
-                {
+                if (mocos) {
+                  return item[column.name];
+                }
+              } else {
+                if ('sin asignar'.match(column.filtering.filterString.toLowerCase())) {
                   return item[column.name];
                 }
               }
-              else
-              {
-                  return item[column.name];
-              } 
             }
           }
         });

@@ -5,19 +5,27 @@
     <div class="card-body">
         <h5 class="card-title text-warning mt-2">
             <em class="fa fa-user-md mr-1"></em> EXAMENES MEDICOS</h5>
-        <div class="d-flex justify-content-end bg-light">
-            <div class="input-group input-group-sm mt-2 mb-2 mr-4 with-focus long">
+        <div class="row bg-light p-1">
+          <div class="col">
+            <div class="input-group input-group-sm float-left with-focus long">
               <input (input)="Search($event)" class="form-control form-control-sm border-right-0 " type="text" placeholder="Filtrar" />
               <div class="input-group-append">
                 <span class="input-group-text fa fa-search text-info bg-transparent border-left-0"></span>
               </div>
             </div>
-            <div class="mr-2 mt-2">
-            <button type="button" class="btn btn-xs btn-success mat-elevation-z8" (click)="refreshTable()" container="body"
+
+            <button type="button" class="btn btn-xs btn-success mat-elevation-z8 float-right mt-1" (click)="refreshTable()" container="body"
             placement="bottom" tooltip="Actualizar" container="body">
             <em class="icon-refresh"></em>
           </button>
+
+      </div>
         </div>
+        <div class="d-flex justify-content-end mt-3">
+            <span class="text-muted font-weight-bold float-right text-uppercase mb-3 mr-3">Total de registros <span
+              class="badge badge-pill badge-success ml-1">{{dataSource.length  | numerico}}</span></span>
+              <span class="text-muted font-weight-bold float-right text-uppercase mb-3 mr-1">Total Candidatos <span
+                class="badge badge-pill badge-success ml-1">{{totalCandidatos  | numerico}}</span></span>
         </div>
         <hr>
      <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
@@ -40,19 +48,29 @@
                 <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
                 [disabled]="disabled">
                 <div style="height: 400px;">
+                  <div class="d-flex justify-content-start bg-light p-1 mb-2">
+                    <button (click)="lgModal15.show()" placement="bottom" tooltip="Ver Requisición" class="mr-1 mat-elevation-z8"
+                      [disabled]="rowAux.length == 0" [ngClass]="(rowAux.length == 0) ? 'btn btn-xs disabled':'btn btn-xs btn-warning'">
+                      <i class="fa fa-eye"></i>
+                    </button>
+                    <button (click)="lgModal.show()" class="mr-1 btn btn-xs mat-elevation-z8" [disabled]="rowAux.length == 0"
+                     [ngClass]="(rowAux.length == 0) ? 'disabled' : 'btn-dark'" container="body" placement="bottom" tooltip="Comentarios">
+                     <i class="fa fa-comments-o"></i>
+                    </button>
+                </div>
                 <table class="table">
                   <thead>
-                    <th class="text-center text-success"><em class="fa fa-file-text-o mr-2"></em>FOLIO</th>
+                    <th class="text-center text-success">FOLIO</th>
                     <th class="text-center text-success">PERFIL</th>
                     <th class="text-center text-warning"><em class="fa fa-user mr-2"></em>CANDIDATO</th>
-                    <th class="text-center text-info">EXAMEN</th>
-                    <th class="text-center text-info">RESULTADO</th>
-                    <th class="text-center text-info">FACTURAR</th>
+                    <th class="text-center">EXAMEN</th>
+                    <th class="text-center">RESULTADO</th>
+                    <th class="text-center">FACTURAR</th>
                   </thead>
                   <tbody>
                       <ng-container   >
                         <ng-container *ngFor="let r of row.candidatos;" >
-                      <tr class="rowHover" *ngFor="let rr of r.candidatos; let rowIndex = index">
+                      <tr class="rowHover" *ngFor="let rr of r.candidatos; let rowIndex = index" (click)="onCellClick(r, rr)" [class.bg-primary-light]="rr.selected" >
                         <td class="text-center text-success">{{ r.folio }}</td>
                         <td class="text-center text-success">{{ r.vBtra | uppercase}}</td>
                         <td class="text-center text-warning">{{ rr.nombre | uppercase}}</td>
@@ -98,13 +116,13 @@
 
       </ng-scrollbar>
       <br/>
-      <div class="text-right">
+      <div class="d-flex justify-content-end">
           <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
           [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
           (pageChanged)="changePage({ page: page, itemsPerPage: itemsPerPage })"
           (numPages)="numPages = $event">
         </pagination>
-          <pre class="card card-block card-header text-muted">Total Registros: {{dataSource.length}}</pre>
+         
           </div>
   </div>
   </div>
@@ -118,4 +136,44 @@
         </div>
       </div>
     </ng-template>
+    <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 id="dialog-sizes-name1" class="modal-title pull-left">Vacante: {{vBtra}} {{folio}}</h4>
+              <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <!-- <app-dlg-registro-masivo></app-dlg-registro-masivo> -->
+              <comentario-vacante [RequisicionId]="requisicionId" [MotivoId]="7"></comentario-vacante>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="md-1 btn btn-success mat-elevation-z8"
+                (click)="lgModal.hide(); closeModal(0);">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <div bsModal #lgModal15="bs-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 id="dialog-sizes-name1" class="modal-title pull-left">Informaci&oacute;n de la Vacante</h4>
+                <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal15.hide()"
+                  aria-label="Close">
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+              <div class="modal-body">
+                <app-info-vacante [Folios]="folio" [Requisicion]="requisicionId"></app-info-vacante>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8"
+                  (click)="lgModal15.hide()">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>

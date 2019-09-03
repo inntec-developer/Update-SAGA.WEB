@@ -29,9 +29,15 @@ export class CandidatosCubiertosRportComponent implements OnInit {
     { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
     { title: 'RFC', className: 'text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
     { title: 'NSS', className: 'text-success', name: 'nss', filtering: { filterString: '', placeholder: 'NSS' } },
-    { title: 'Sexo', className: 'text-info', name: 'genero', filtering: { filterString: '', placeholder: 'Genero' } }
-  ]
+    { title: 'Sexo', className: 'text-info', name: 'genero', filtering: { filterString: '', placeholder: 'Genero' } },
+    { title: 'Reclutador', className: 'text-info', name: 'reclutador', filtering: { filterString: '', placeholder: 'Reclutador' } }
+  ];
 
+  public config: any = {
+    paging: true,
+    filtering: { filterString: '' },
+    className: ['table-striped mb-0 d-table-fixed']
+  }
   constructor(private _service: PostulateService) { }
 
   ngOnInit() {
@@ -51,57 +57,50 @@ export class CandidatosCubiertosRportComponent implements OnInit {
           curp: element.informacion.curp,
           rfc: element.informacion.rfc,
           nss: element.informacion.nss,
-          genero: element.informacion.genero
+          genero: element.informacion.genero,
+          reclutador: element.informacion.reclutador
         });
       });
       this.onChangeTable(this.config);
-    })
+    });
   }
 
     //#region filtros y paginacion
 
-    public config: any = {
-      paging: true,
-      //sorting: { colums: this.columns },
-      filtering: { filterString: '' },
-      className: ['table-striped mb-0 d-table-fixed']
-    }
-  
+
     public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
-      let start = (page.page - 1) * page.itemsPerPage;
-      let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+      const start = (page.page - 1) * page.itemsPerPage;
+      const end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
       return data.slice(start, end);
     }
-  
-   
+
     public changeFilter(data: any, config: any): any {
       let filteredData: Array<any> = data;
       this.columns.forEach((column: any) => {
         this.clearFilter = true;
-        if (column.filtering.filterString != "") {
+        if (column.filtering.filterString !== '') {
           filteredData = filteredData.filter((item: any) => {
-            if (item[column.name] != null)
+            if (item[column.name] != null) {
               return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+            }
           });
         }
       });
-  
       return filteredData;
     }
-  
+
     public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
-  
       if (config.filtering) {
         (<any>Object).assign(this.config.filtering, config.filtering);
       }
-  
+
       this.registros = this.dataSource.length;
       this.rows = this.dataSource;
-      let filteredData = this.changeFilter(this.dataSource, this.config);
+      const filteredData = this.changeFilter(this.dataSource, this.config);
       this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
       this.length = filteredData.length;
     }
-  
+
     public clearfilters() {
       this.clearFilter = false;
       // (<HTMLInputElement>document.getElementById('filterInput')).value = '';
@@ -119,10 +118,6 @@ export class CandidatosCubiertosRportComponent implements OnInit {
         });
         this.GetCandidatos();
       }
-   
-
-    
-  
     //#endregion
-  
+
 }

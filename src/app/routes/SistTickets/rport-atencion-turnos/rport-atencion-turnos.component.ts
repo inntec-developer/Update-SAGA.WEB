@@ -35,6 +35,13 @@ export class RportAtencionTurnosComponent implements OnInit {
     { title: 'Turnos sin Cita', className: 'text-info text-center', name: 'sincita', filtering: { filterString: '', placeholder: 'Sin cita' } },
     // { title: 'Tiempo entre turnos', className: 'text-info text-center', name: 'tiempo', filtering: { filterString: '', placeholder: 'tiempo' } },
   ];
+
+  public config: any = {
+    paging: true,
+    filtering: { filterString: '' },
+    className: ['table-hover  mb-0']
+  };
+
   registros: any;
   constructor(private _service: SistTicketsService, private pipe: DatePipe, private excelService: ExcelService) { }
 
@@ -54,12 +61,6 @@ export class RportAtencionTurnosComponent implements OnInit {
   }
 
    //#region filtros y paginador
-   public config: any = {
-    paging: true,
-    //sorting: { columns: this.columns },
-    filtering: { filterString: '' },
-    className: ['table-hover  mb-0']
-  };
 
   public changePage(page: any, data: Array<any> = this.result): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
@@ -67,54 +68,41 @@ export class RportAtencionTurnosComponent implements OnInit {
     return data.slice(start, end);
   }
 
-  public changeFilter(data: any, config: any, col: string): any {
+  public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
-
-    var column = this.columns.filter(c => {
-        if(c.name == col)
-        {
-          return c;
-        }
-      });
-
-    if(column.length > 0)
-    {
-      if (column[0].filtering) {
+    this.columns.forEach((column: any) => {
+      if (column.filtering.filterString !== '') {
         filteredData = filteredData.filter((item: any) => {
-            if(col == 'fecha')
-            {
-              return item[col].toString().toLowerCase().match(column[0].filtering.filterString.toLowerCase());
-            }
-            else
-            {
-              let aux = item['datos']; // solo para este reporte
-              if(aux.length > 0)
-              {
-                aux = aux.filter(e => {
-                  if(e[col].toString().toLowerCase().match(column[0].filtering.filterString.toLowerCase()))
-                  {
-                    return e;
+          if (item[column.name] != null) {
+            if (!Array.isArray(item[column.name])) {
+              return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+            } else {
+              if (item[column.name].length > 0) {
+                let aux = [];
+                aux = item[column.name];
+                let mocos = false;
+
+                aux.forEach(element => {
+                  if (element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase())) {
+                    mocos = true;
+                    return;
                   }
                 });
 
-                if(aux.length > 0)
-                {
-                  item.datos = aux;
-                  return item.datos;
+                if (mocos) {
+                  return item[column.name];
+                }
+              } else {
+                if ('sin asignar'.match(column.filtering.filterString.toLowerCase())) {
+                  return item[column.name];
                 }
               }
             }
+          }
         });
       }
-    }
-    else
-    {
-      filteredData = this.result
+    });
 
-  
-    }
-
-   
     return filteredData;
   }
 
@@ -137,7 +125,16 @@ export class RportAtencionTurnosComponent implements OnInit {
 //#endregion
 
 
+public refreshTable() {
+  setTimeout(() => {
+    this.columns.forEach(element => {
+     (<HTMLInputElement>document.getElementById(element.name)).value = '';
+     element.filtering.filterString = '';
+    });
+  }, 1000);
 
+  this.GetReport();
+}
   public clearfilters() {
     this.columns.forEach(element => {
       element.filtering.filterString = '';
@@ -150,10 +147,9 @@ export class RportAtencionTurnosComponent implements OnInit {
   exportAsXLSX() {
 
     if (this.result.length > 0) {
-      var aux = [];
+      const aux = [];
       this.result.forEach(row => {
-      
-        var d = this.pipe.transform(new Date(row.fecha), 'dd/MM/yyyy');
+        const d = this.pipe.transform(new Date(row.fecha), 'dd/MM/yyyy');
 
         row.datos.forEach(element => {
         aux.push({
@@ -162,7 +158,7 @@ export class RportAtencionTurnosComponent implements OnInit {
           'TURNOS ATENDIDOS': element.total,
           'TURNOS CON CITA': element.concita,
           'TURNOS SIN CITA': element.sincita
-        })
+        });
       });
       });
 

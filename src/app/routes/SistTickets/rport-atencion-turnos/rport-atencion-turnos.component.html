@@ -13,7 +13,7 @@
           <i class="fa fa-eraser"></i>
         </button>
         <button class="float-right mr-1 mt-1 mat-elevation-z8" (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Descargar reporte"
-          container="body" [disabled]="result.length == 0" [ngClass]="result.length == 0 ? 'btn btn-xs disabled':'btn btn-xs btn-success'">
+          container="body" [disabled]="result.length == 0" [ngClass]="result.length == 0 ? 'btn btn-xs disabled':'btn btn-xs btn-warning'">
           <em class="fa fa-download"></em>
         </button>
       </div>
@@ -28,17 +28,12 @@
           <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
             <small>{{column.title | uppercase}}</small>
           </th>
-          <th width="3%"></th>
         </tr>
         <tr>
           <th *ngFor="let column of columns">
             <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering"
               (tableChanged)="onChangeTable(config, {page: page, itemsPerPage: itemsPerPage}, column.name)" class="form-control form-control-sm" id="{{column.name}}">
           </th>
-          <th width="3%"> <button class="float-left mb-1 mat-elevation-z8" (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
-            container="body" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'btn btn-xs disabled':'btn btn-xs btn-primary'">
-            <em class="fa fa-eraser"></em>
-          </button></th>
         </tr>
       </thead>
       <tbody>
@@ -52,7 +47,6 @@
               <td class="text-center"><small class="badge badge-pill badge-warning"> {{r.datos[0].concita }}</small></td>
               <td class="text-center"><small class="badge badge-pill badge-purple"> {{r.datos[0].sincita }}</small></td>
               <!-- <td class="text-center"><small class="badge badge-pill badge-info"> 20 min</small></td> -->
-              <td width="1%"></td>
             </tr>
           </div>
           </ng-scrollbar>
