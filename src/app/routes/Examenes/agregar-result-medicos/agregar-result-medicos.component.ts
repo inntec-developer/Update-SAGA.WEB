@@ -192,7 +192,7 @@ total = 0;
     row.selected ? row.selected = false : row.selected = true;
     this.requisicionId = data.requisicionId;
     this.folio = data.folio;
-    this.vBtra = 'SIN REGISTRO';
+    this.vBtra = data.vBtra;
 
     if (this.rowAux.length === 0) {
       this.rowAux = row;

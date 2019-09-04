@@ -1,5 +1,8 @@
+import { SettingsService } from './../../../core/settings/settings.service';
 import { Component, OnInit } from '@angular/core';
 import { ExamenesService } from '../../../service/Examenes/examenes.service';
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-entrevistas',
@@ -13,17 +16,33 @@ export class EntrevistasComponent implements OnInit {
   invertX = false;
   invertY = false;
   shown = 'hover';
+
+   /**
+  * configuracion para mensajes de acciones.
+  */
+ toaster: any;
+ toasterConfig: any;
+ toasterconfig: ToasterConfig = new ToasterConfig({
+   positionClass: 'toast-bottom-right',
+   limit: 7,
+   tapToDismiss: false,
+   showCloseButton: true,
+   mouseoverTimerStop: true,
+   preventDuplicates: true,
+ });
+
+
   examenes = [];
   element = [];
   verExamen = false;
-
+  editing = {};
   // Varaibles del paginador
   public page = 1;
   public itemsPerPage = 20;
   public maxSize = 5;
   public numPages = 1;
   public length = 0;
-
+  editar = false;
   public rows: Array<any> = [];
   public columns: Array<any> = [
     { title: 'Nombre Examen', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
@@ -31,7 +50,7 @@ export class EntrevistasComponent implements OnInit {
     { title: 'Aleatoriedad', className: 'text-info text-center', name: 'ale', filtering: { filterString: '', placeholder: 'Aletoriedad' } },
     { title: 'No. Preguntas', className: 'text-info text-center', name: 'num', filtering: { filterString: '', placeholder: 'Numero' } },
     { title: 'Fecha Modificacion', className: 'text-info text-center', name: 'fch_Modificacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
-    { title: 'Usuario', className: 'text-info text-center', name: 'usuario', filtering: { filterString: '', placeholder: '0' } },
+    { title: 'Usuario', className: 'text-info text-center', name: 'usuario', filtering: { filterString: '', placeholder: 'usuario' } },
   ];
   public config: any = {
     paging: true,
@@ -40,7 +59,9 @@ export class EntrevistasComponent implements OnInit {
   };
   rowAux = [];
 
-  constructor(private _service: ExamenesService) { }
+  constructor(private _service: ExamenesService,  private settings: SettingsService,
+     private toasterService: ToasterService,
+     private _Router: Router) { }
 
   ngOnInit() {
     this.GetExamenes();
@@ -49,6 +70,14 @@ export class EntrevistasComponent implements OnInit {
   GetExamenes() {
     this._service.GetExamenesEntrevista().subscribe(data => {
       this.examenes = data;
+      this.examenes.forEach(element => {
+        const aux = [];
+        for (let c = 1; c < element.num; c++) {
+          aux.push(c);
+        }
+        element.numPreguntas = aux;
+      });
+
       this.onChangeTable(this.config);
     });
   }
@@ -99,6 +128,28 @@ export class EntrevistasComponent implements OnInit {
     }
   }
 
+  cambiarAle(num, examenId, rowIndex) {
+    const aux = {examenId: examenId, numPreguntas: num, fch_Modificacion: new Date, usuarioId: this.settings.user['id']};
+    this._service.UpdateAlea(aux).subscribe(result => {
+      if (result !== 417) {
+        this.popToast('success', 'Actualizar Datos', 'los datos se actualizaron con éxito');
+        this.editing[rowIndex + '-alea'] = false;
+        this.refreshTable();
+      } else {
+        this.popToast('error', 'Actualizar Datos', 'Ocurrio un error al intentar actualizar');
+        this.editing[rowIndex + '-alea'] = false;
+      }
+    });
+  }
+
+  addExamen() {
+    this._Router.navigate(['/examenes/addexamen/'], { skipLocationChange: true });
+  }
+
+  contestarExamen() {
+    this._Router.navigate(['/examenes/contestar/'], { skipLocationChange: true });
+  }
+
   public refreshTable() {
 
     this.GetExamenes();
@@ -116,6 +167,17 @@ export class EntrevistasComponent implements OnInit {
      (<HTMLInputElement>document.getElementById(element.name)).value = '';
     });
     this.onChangeTable(this.config);
+  }
+
+  popToast(type: any, title: any, body: any) {
+    var toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 4000,
+      body: body
+    }
+    this.toasterService.pop(toast);
+
   }
 
 }

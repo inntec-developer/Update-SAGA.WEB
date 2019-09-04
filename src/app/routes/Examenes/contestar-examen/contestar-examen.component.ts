@@ -9,56 +9,64 @@ import { ExamenesService } from './../../../service/Examenes/examenes.service';
 })
 export class ContestarExamenComponent implements OnInit {
 
-  examen = [];
+  // scroll
+  public disabled = false;
+  public invertX = false;
+  public compact = false;
+  public invertY = false;
+  public shown = 'hover';
+  entrevista = [];
   Resp = [];
-  candidatoId = '8E283A4F-C7BA-E811-80EA-9E274155325E'
+  overStar = {};
+  percent = {};
+calificacion = 0;
   constructor(private service: ExamenesService) { }
   nomExamen: any;
 
   ngOnInit() {
-    this.GetExamen();
+    this.GetEntrevista();
   }
 
 
-  GetExamen()
-  {
-    this.service.GetExamen(64).subscribe(data => {
-      this.examen = data;
+  GetEntrevista() {
+    this.service.GetEntrevista().subscribe(data => {
+      this.entrevista = data;
+      console.log(this.entrevista)
     });
   }
 
-  AddRespuestas(preguntaId, respuestaId, resp)
-  {
-    if(this.Resp.length > 0)
-    {
-      let flag = false;
+  public hoveringOver(value: number, id: number): void {
+    this.overStar[id + '-'] = value;
+    this.percent[id + '-'] = 100 * (value / 5);
+  }
 
-      this.Resp = this.Resp.filter(item =>{
+  public resetStar(preguntaId): void {
+    this.overStar[preguntaId + '-'] = void 0;
+  }
 
-        if(item.preguntaId == preguntaId)
-        {
-          item.value = resp;
-          flag = true;
-        }
-        return item;
-
-      });
-
-      if(!flag)
-      {
-        this.Resp.push({CandidatoId:this.candidatoId, PreguntaId: preguntaId, RespuestaId: respuestaId, Value: resp})
+  AddRespuestas(preguntaId, value) {
+    const resp = 100 * (value / 5);
+    let val = false;
+    this.Resp.filter(e => {
+      if (e.PreguntaId === preguntaId) {
+        e.Value = resp;
+        val = true;
       }
-    }
-    else
-    {
-      this.Resp.push({CandidatoId:this.candidatoId, PreguntaId: preguntaId, RespuestaId: respuestaId, Value: resp});
-    }
-
-  }
-
-  Agregar()
-  {
-    this.service.InsertRespCandidato(this.Resp).subscribe(data => {
     });
+
+    if (!val) {
+      this.Resp.push({ PreguntaId: preguntaId, Value: resp });
+    }
+    const sum = this.Resp.reduce(function (valorAnterior, valorActual, indice, vector) {
+      return valorAnterior + valorActual.Value;
+    }, 0);
+
+    this.calificacion = sum / this.Resp.length;
   }
+
+  // Agregar()
+  // {
+  //   this.service.InsertRespCandidato(this.Resp).subscribe(data => {
+  //   });
+  // }
 }

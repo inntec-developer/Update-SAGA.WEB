@@ -1,15 +1,17 @@
+
+<toaster-container toaster-options="{'toaster-id': 2 }" [toasterconfig]="toasterconfig"></toaster-container>
 <div class="row p-2 mt-2">
   <div class="col-sm-12 col-md-12">
-    <button container="body" class="ml-1 btn btn-xs btn-success mat-elevation-z8 float-left mr-2" placement="bottom"
+    <button (click)="addExamen()" container="body" class="ml-1 btn btn-xs btn-success mat-elevation-z8 float-left mr-2" placement="bottom"
       tooltip="Agregar">
       <i class="fa fa-plus"></i>
     </button>
-    <button container="body" class="ml-1 btn btn-xs btn-info mat-elevation-z8 float-left mr-2" placement="bottom" (click)="verExamen = true;"
+    <button [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-info'" container="body" class="ml-1 btn btn-xs mat-elevation-z8 float-left mr-2" placement="bottom" (click)="verExamen = true;"
       tooltip="Visualizar Examen">
       <i class="fa fa-eye"></i>
     </button>
-    <button container="body" class="ml-1 btn btn-xs btn-warning mat-elevation-z8 float-left mr-2" placement="bottom"
-      tooltip="Editar Aleatoriedad">
+    <button (click)="contestarExamen()" container="body" class="ml-1 btn btn-warning btn-xs mat-elevation-z8 float-left mr-2" placement="bottom"
+      tooltip="Realizar entrevista">
       <i class="fa fa-pencil"></i>
     </button>
   
@@ -45,13 +47,25 @@
     <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
       [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
       <div style="height: 410px">
-        <tr *ngFor="let row of rows" [class.bg-info-light]="row.selected" (click)="onSelect(row)">
+        <tr *ngFor="let row of rows; let rowIndex = index" [class.bg-info-light]="row.selected" (click)="onSelect(row)">
           <td class="text-center">
             {{row.nombre}}
           </td>
           <td class="text-center"> {{row.tipo | uppercase}}</td>
           <td class="text-center">
-            <span class="mr-1 badge badge-pill badge-info"> {{row.ale | numerico}}</span>
+            <a container="body" placement="bottom" tooltip="Doble click para editar"
+            (dblclick)="editing[rowIndex + '-alea'] = true" *ngIf="!editing[rowIndex + '-alea']" 
+            class="mr-1 badge badge-pill badge-info text-white"> {{row.ale | numerico}}</a>
+            <ng-container *ngIf="editing[rowIndex + '-alea']">
+            <mat-form-field>
+                <mat-label>Aleatoriedad</mat-label>
+                <mat-select>
+                  <mat-option *ngFor="let n of row.numPreguntas" value="n" (click)="cambiarAle(n, row.examenId, rowIndex)">
+                    {{n}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-container>
           </td>
           <td class="text-center">
               <span class="mr-1 badge badge-pill badge-info"> {{row.num | numerico}}</span>

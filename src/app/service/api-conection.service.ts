@@ -312,6 +312,7 @@ export class ApiConection {
   public static GetClaveCandidatos = 'examenes/getClaveCandidatos';
   public static GetClavesCandidatos = 'examenes/getClavesCandidatos';
   public static GetExamenesMedicos = 'examenes/examenesMedicos';
+  public static GetEntrevista = 'examenes/getEntrevista';
 
   /*Equipos de Trabajo*/
   public static GetRportGG = 'Equipos/getRportGG';

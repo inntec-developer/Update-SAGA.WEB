@@ -1,0 +1,21 @@
+.bg-reclutador
+{
+    background-color: #b3e5fc;
+}
+.bg-header {
+    // background: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);
+    background: linear-gradient(to right, #3931af 0%, #00c6ff 100%);
+}
+
+a :hover {
+    font-size: 18px;
+    color: black;
+    cursor: pointer;
+}
+
+ng-scrollbar {
+    --scrollbar-size: 4px;
+    --scrollbar-thumb-color: rgb(94, 175, 255);
+    --scrollbar-thumb-hover-color: dodgerblue;
+    --scrollbar-border-radius: 4px;
+  }

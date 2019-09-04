@@ -33,6 +33,7 @@ export class ExamenesService {
   URLAsignarClaveCandidato = ApiConection.ServiceUrl + ApiConection.AsignarClaveCandidato;
   URLGetExamenesMedicos = ApiConection.ServiceUrl + ApiConection.GetExamenesMedicos;
   URLUpdateAlea = ApiConection.ServiceUrl + ApiConection.UpdateAlea;
+  URLGetEntrevista = ApiConection.ServiceUrl + ApiConection.GetEntrevista;
 
   constructor(private _httpClient: HttpClient) { }
 
@@ -180,8 +181,11 @@ export class ExamenesService {
   GetClavesByCandidatos(): Observable<any> {
     return this._httpClient.get(this.URLGetClavesCandidatos);
   }
-  UpdateAlea(resultado): Observable<any>
-  {
+  GetEntrevista(): Observable<any> {
+    return this._httpClient.get(this.URLGetEntrevista);
+  }
+
+  UpdateAlea(resultado): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'

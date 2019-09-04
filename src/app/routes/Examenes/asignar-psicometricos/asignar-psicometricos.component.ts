@@ -187,6 +187,8 @@ export class AsignarPsicometricosComponent implements OnInit {
   }
   onSelect(row) {
     row.selected ? row.selected = false : row.selected = true;
+this.folio = row.folio;
+this.id = row.requisicionId;
 
     this.requisiciones.filter(function (item) {
       if (item.requisicionId !== row.requisicionId) {
