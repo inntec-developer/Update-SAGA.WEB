@@ -369,6 +369,8 @@ GeneraEstatusBolsa(){
   document.getElementById('exelVacante').classList.add('ocultar');
   document.getElementById('repCliente').classList.add('ocultar');
   document.getElementById('exelCliente').classList.add('ocultar');
+  document.getElementById('repCubierto').classList.add('ocultar');
+  document.getElementById('exelCubierto').classList.add('ocultar');
 
   
   document.getElementById('btnGraficaVacante').classList.add('ocultar');

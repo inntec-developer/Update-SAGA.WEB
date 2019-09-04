@@ -200,13 +200,13 @@ export class Reporte70Component implements OnInit {
       let inc = document.getElementById('fechaInicial');
       let fin = document.getElementById('fechaFinal');
 
-      var palabra = pal['value'];
+     
       var inicio = inc['value'];
       var final = fin['value'];
       let tipo = document.getElementById('TipoReporte')['value'];
 
 
-     this._service.GetReporte70(palabra,ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec).subscribe(result => {
+     this._service.GetReporte70("",ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec).subscribe(result => {
       this.requisiciones = result;
        this.onChangeTable(this.config);
      })

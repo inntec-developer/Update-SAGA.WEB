@@ -13,6 +13,8 @@ import { ComponentsService } from './../../../service/Components/components.serv
 export class IndicadoresComponent implements OnInit {
 
   public UsuarioId: any;
+  public EstadoVacante: string;
+  public ShowModal: boolean;
 
   public Entrevistado: string = '0';
   public Enviado: string = '0';
@@ -71,27 +73,12 @@ export class IndicadoresComponent implements OnInit {
 
     });
 
-    // this.service.getVRadial(this.UsuarioId).subscribe(item =>{
+  }
 
-    //   this.Entrevistado = item['entrevi'];
-    //   this.Entrevistadopor = item['entrevTotal'];
 
-    //   this.Finalista = item['finalista'];
-    //   this.Finalistapor = item['finaTotal'];
-
-    //   this.Enviado = item['enviado'];
-    //   this.Enviadopor = item['enviadoTotal'];
-
-    //   this.Aceptado = item['aceptado'];
-    //   this.Aceptadopor = item['acepTotal'];
-
-    //   this.Rechazado = item['recha'];
-    //   this.Rechazadopor = item['rechaTotal'];
-
-    //   this.Contratado = item['contrata'];
-    //   this.Contratadopor = item['contraTotal'];
-    // })
-
+  llamar2(valor){
+    this.EstadoVacante = valor;
+    this.ShowModal = true;
   }
 
 }

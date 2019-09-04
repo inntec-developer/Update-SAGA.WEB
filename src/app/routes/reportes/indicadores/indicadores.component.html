@@ -20,7 +20,7 @@
 
 
 <div  class="row">
-    <div  class="col-xl-3 col-md-6">
+    <div (click)="llamar2('FolInd')"  class="col-xl-3 col-md-6">
         <div  class="card flex-row align-items-center align-items-stretch border-0">
             <div  class="col-4 d-flex align-items-center bg-primary-dark justify-content-center rounded-left">
                 <em  class="fa fa-file-text fa-3x"></em>
@@ -31,7 +31,7 @@
             </div>
         </div>
     </div>
-    <div  class="col-xl-3 col-md-6">
+    <div (click)="llamar2('PosInd')"  class="col-xl-3 col-md-6">
         <div  class="card flex-row align-items-center align-items-stretch border-0">
             <div  class="col-4 d-flex align-items-center bg-purple-dark justify-content-center rounded-left">
                 <em  class="fa fa-briefcase fa-3x"></em>
@@ -43,7 +43,7 @@
             </div>
         </div>
     </div>
-    <div  class="col-xl-3  col-md-6">
+    <div (click)="llamar2('CubInd')"  class="col-xl-3  col-md-6">
         <div  class="card flex-row align-items-center align-items-stretch border-0">
             <div  class="col-4 d-flex align-items-center bg-green-dark justify-content-center rounded-left">
                 <em  class="fa fa-user fa-3x"></em>
@@ -54,7 +54,7 @@
             </div>
         </div>
     </div>
-    <div  class="col-xl-3  col-md-6">
+    <div (click)="llamar2('FalInd')"  class="col-xl-3  col-md-6">
             <div  class="card flex-row align-items-center align-items-stretch border-0">
                 <div  class="col-4 d-flex align-items-center bg-green-dark justify-content-center rounded-left">
                     <em  class="fa fa-user-o fa-3x"></em>
@@ -188,14 +188,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-3  col-md-6 dimen">
-                            <div class="card flex-row align-items-center align-items-stretch border-0">
+                        <div    class="col-xl-3  col-md-6 dimen">
+                            <div  class="card flex-row align-items-center align-items-stretch border-0">
                                 <div class="col-4 d-flex align-items-center bg-purple-dark justify-content-center rounded-left">
                                     <em class="fa fa-user-o fa-3x"></em>
                                 </div>
                                 <div class="col-8 py-1 bg-purple rounded-right">
-                                    <div class="h2 mt-0">{{faltante}}</div>
-                                    <div class="text-uppercase">Total de Posiciones</div>
+                                    <div class="h2 mt-0">{{cubierto}}</div>
+                                    <div class="text-uppercase">Posiciones Cubiertas</div>
                                 </div>
                             </div>
                         </div>
@@ -205,3 +205,19 @@
 
 
 
+<!-- Modal para visualizar vacantes seleccionadas -->
+<div *ngIf="ShowModal" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #MessageModal="bs-modal" class="modal"
+tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+<div class="modal-dialog modal-lg reporteMod">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="float-left text-warning"><em class="fa fa-file-text-o mr-2"></em>Informaci&oacute;n de Vacantes {{EstadoVacante}} </h4>
+      <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="ShowModal=false"><i
+          class="fa fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <app-dt-vacantes-grafica-pa [EstadoVacante]="EstadoVacante" ></app-dt-vacantes-grafica-pa>
+    </div>
+  </div>
+</div>
+</div>

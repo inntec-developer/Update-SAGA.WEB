@@ -3,6 +3,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ReportesService } from '../../../service/Reporte/reportes.service';
 import { ExcelService } from '../../../service/ExcelService/excel.service';
 
+
+
 @Component({
   selector: 'app-cubierto',
   templateUrl: './cubierto.component.html',
