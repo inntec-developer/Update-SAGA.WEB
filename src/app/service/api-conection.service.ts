@@ -298,6 +298,7 @@ export class ApiConection {
   public static InsertRelacion = 'examenes/insertRelacion';
   public static InsertRespCandidato = 'examenes/insertRespCandidato';
   public static InsertResultMedico = 'examenes/insertResultMedico';
+  public static UpdateAlea = 'examenes/updateAlea';
   public static GetCandidatosExamen = 'examenes/getCandidatos';
   public static GetRespuestasCandidato = 'examenes/getRespCandidatos';
   public static ActualizarResultado = 'examenes/actualizarResultado';

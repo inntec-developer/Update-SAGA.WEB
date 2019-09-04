@@ -30,8 +30,9 @@ export class ExamenesService {
   URLGetClaves = ApiConection.ServiceUrl + ApiConection.GetClaves;
   URLGetClaveCandidatos = ApiConection.ServiceUrl + ApiConection.GetClaveCandidatos;
   URLGetClavesCandidatos = ApiConection.ServiceUrl + ApiConection.GetClavesCandidatos;
-  URLAsignarClaveCandidato = ApiConection.ServiceUrl +ApiConection.AsignarClaveCandidato;
+  URLAsignarClaveCandidato = ApiConection.ServiceUrl + ApiConection.AsignarClaveCandidato;
   URLGetExamenesMedicos = ApiConection.ServiceUrl + ApiConection.GetExamenesMedicos;
+  URLUpdateAlea = ApiConection.ServiceUrl + ApiConection.UpdateAlea;
 
   constructor(private _httpClient: HttpClient) { }
 
@@ -63,8 +64,7 @@ export class ExamenesService {
     return this._httpClient.post(this.URLInsertRelacion, relacion, httpOptions);
   }
 
-  InsertRespCandidato(resultado): Observable<any>
-  {
+  InsertRespCandidato(resultado): Observable<any>  {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
@@ -74,8 +74,7 @@ export class ExamenesService {
     return this._httpClient.post(this.URLInsertRespCandidato, resultado, httpOptions)
   }
 
-  InsertResultMedico(resultado): Observable<any>
-  {
+  InsertResultMedico(resultado): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
@@ -85,8 +84,7 @@ export class ExamenesService {
     return this._httpClient.post(this.URLInsertResultMedico, resultado, httpOptions)
   }
 
-  InsertClaves(claves): Observable<any>
-  {
+  InsertClaves(claves): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
@@ -96,8 +94,7 @@ export class ExamenesService {
     return this._httpClient.post(this.URLInsertClaves, claves, httpOptions)
   }
 
-  AsignarClaveCandidato(objeto): Observable<any>
-  {
+  AsignarClaveCandidato(objeto): Observable<any> {
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -107,8 +104,7 @@ export class ExamenesService {
 
     return this._httpClient.post(this.URLAsignarClaveCandidato, objeto, httpOptions);
   }
-  AgregarResultadoPsico(resultado): Observable<any>
-  {
+  AgregarResultadoPsico(resultado): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
@@ -118,8 +114,7 @@ export class ExamenesService {
     return this._httpClient.post(this.URLAgregarResultado, resultado, httpOptions)
   }
 
-  ActualizarResultado(resultado): Observable<any>
-  {
+  ActualizarResultado(resultado): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
@@ -128,54 +123,42 @@ export class ExamenesService {
     return this._httpClient.post(this.URLActualizarResultado, resultado, httpOptions )
   }
 
-  GetCatalogo() : Observable<any>
-  {
+  GetCatalogo(): Observable<any> {
     return this._httpClient.get(this.URLGetCatalogo);
   }
 
-  GetRequisicionesPsico() : Observable<any>
-  {
+  GetRequisicionesPsico(): Observable<any> {
     return this._httpClient.get(this.URLGetRequisicionesPsico)
   }
-  GetExamenes(tipoexamenId) : Observable<any>
-  {
+  GetExamenes(tipoexamenId): Observable<any> {
     let params = new HttpParams().set('tipoexamenId', tipoexamenId);
     return this._httpClient.get(this.URLGetExamenes, {params:params});
   }
-  GetExamenesEntrevista() : Observable<any> {
+  GetExamenesEntrevista(): Observable<any> {
     return this._httpClient.get(this.URLGetExamenesEntrevista);
   }
-  GetExamenesMedicos() : Observable<any>
-  {
+  GetExamenesMedicos(): Observable<any> {
     return this._httpClient.get(this.URLGetExamenesMedicos);
   }
-  GetExamen(examenId) : Observable<any>
-  {
+  GetExamen(examenId): Observable<any> {
     let params = new HttpParams().set('examenId', examenId);
     return this._httpClient.get(this.URLGetExamen, {params:params});
   }
-  GetCandidatosExamenes(): Observable<any>
-  {
+  GetCandidatosExamenes(): Observable<any> {
     return this._httpClient.get(this.URLGetCandidatosExamenes);
   }
-  GetResultadosCandidato(candidatoId, requisicionId): Observable<any>
-  {
+  GetResultadosCandidato(candidatoId, requisicionId): Observable<any> {
     let params = new HttpParams().set('CandidatoId', candidatoId).set('RequisicionId', requisicionId);
 
     return this._httpClient.get(this.URLGetRespuestasCandidatos, {params:params});
-
   }
-  
-  GetExamenRequi(requisicionId): Observable<any>
-  {
+  GetExamenRequi(requisicionId): Observable<any> {
     let params = new HttpParams().set('requisicionId', requisicionId);
 
     return this._httpClient.get(this.URLGetExamenRequi, {params:params});
 
   }
-
-  GetExamenCandidato(candidatoId): Observable<any>
-  {
+  GetExamenCandidato(candidatoId): Observable<any> {
     let params = new HttpParams().set('candidatoId', candidatoId);
 
     return this._httpClient.get(this.URLGetExamenCandidato, {params:params});
@@ -185,20 +168,26 @@ export class ExamenesService {
     let params = new HttpParams().set('estatus', estatus);
     return this._httpClient.get(this.URLGetRequiEstatus, { params: params });
   }
-
-  GetClaves(requisicionId): Observable<any>
-  {
+  GetClaves(requisicionId): Observable<any> {
     let params = new HttpParams().set('requisicionId', requisicionId);
 
     return this._httpClient.get(this.URLGetClaves, {params:params});
 
   }
-  GetClavesCandidatos(): Observable<any>
-  {
+  GetClavesCandidatos(): Observable<any> {
     return this._httpClient.get(this.URLGetClaveCandidatos);
   }
-  GetClavesByCandidatos(): Observable<any>
-  {
+  GetClavesByCandidatos(): Observable<any> {
     return this._httpClient.get(this.URLGetClavesCandidatos);
+  }
+  UpdateAlea(resultado): Observable<any>
+  {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+
+    return this._httpClient.post(this.URLUpdateAlea, resultado, httpOptions);
   }
 }

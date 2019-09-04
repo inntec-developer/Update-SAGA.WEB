@@ -46,6 +46,8 @@ export class AsignarPsicometricosComponent implements OnInit {
   };
   rows = [];
   NumClaves = 0;
+  folio: any;
+  id: any;
   constructor(
     private _serviceExamen: ExamenesService,
     private toasterService: ToasterService,

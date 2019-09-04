@@ -42,6 +42,7 @@ total = 0;
   rowAux = [];
   requisicionId: any;
   folio: any;
+  vBtra: any;
   constructor(private _service: ExamenesService, private dialog: MatDialog, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
@@ -191,6 +192,7 @@ total = 0;
     row.selected ? row.selected = false : row.selected = true;
     this.requisicionId = data.requisicionId;
     this.folio = data.folio;
+    this.vBtra = 'SIN REGISTRO';
 
     if (this.rowAux.length === 0) {
       this.rowAux = row;
