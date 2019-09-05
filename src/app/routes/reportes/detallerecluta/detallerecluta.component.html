@@ -44,10 +44,18 @@
             
             <tr *ngFor="let item of rows" >
                 <td class="text-center">{{item.nombre}}</td>
-                <th class="text-center ">{{item.vacantes}}</th>
-                <th class="text-center ">{{item.numeropos}}</th>
-                <td class="text-center">{{item.cubiertas}}</td>
-                <td class="text-center">{{item.porcentaje}}%</td>
+                 <th class="text-center ">
+                    <span class="badge badge-pill badge-primary">{{item.vacantes}}</span>
+                </th>
+                <th class="text-center ">
+                    <span class="badge badge-pill badge-primary">{{item.numeropos}}</span>
+                </th>
+                <td class="text-center">
+                    <span class="badge badge-pill badge-success">{{item.cubiertas}}</span>
+                </td>
+                <td class="text-center">
+                    <span class="badge badge-pill badge-warning">{{item.porcentaje}}%</span>
+                </td>
               
             </tr>
           </div>

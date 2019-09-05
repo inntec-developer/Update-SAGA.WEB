@@ -23,7 +23,7 @@ type="square-jelly-box"
 
 
 
-<div class="row sombra" style="font-size: 12px">
+<div class="row sombra " style="font-size: 12px">
 
 
 
@@ -501,6 +501,9 @@ type="square-jelly-box"
         <button id="btnGraficaCliente"   (click)="GraficaCliente.Generar()" class="ocultar btn btn-sm btn-primary btnReport mat-elevation-z8 grafica" tooltip="Grafica">
           <em  class="fa fa-pie-chart" ></em>
         </button>
+        <button id="btnGraficaCordina" (click)="CordinacionOcul()"  (click)="GraficaCordina.ngOnInit()" class="ocultar btn btn-sm btn-primary btnReport mat-elevation-z8 grafica" tooltip="Grafica">
+            <em  class="fa fa-pie-chart" ></em>
+          </button>
     </div>
 
 
@@ -603,5 +606,9 @@ type="square-jelly-box"
 
 <app-grafica-resumen class="ocultar" id="DivGraficaVacante" #GraficaVacante></app-grafica-resumen>
 <app-grafica-cliente class="ocultar" id="DivGraficaCliente" #GraficaCliente></app-grafica-cliente>
+<div class="graficaCordina">
+    <app-grafica-coordinacion class="ocultar" id="DivGraficaCordina" #GraficaCordina></app-grafica-coordinacion>
+</div>
+
 </div>
 

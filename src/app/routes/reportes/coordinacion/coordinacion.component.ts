@@ -32,6 +32,12 @@ export class CoordinacionComponent implements OnInit {
   public numPages: number = 1;
   public length: number = 0;
 
+  public masivo: number = 0;
+  public operativo: number = 0;
+  public especializado: number = 0;
+  public total: number = 0;
+
+
   registros: any;
   showFilterRow: boolean;
 
@@ -63,10 +69,7 @@ export class CoordinacionComponent implements OnInit {
     this.LimpiaFiltro(1);
     this.spinner.show();
     document.getElementById('DivCoordinacion').classList.remove('ocultar');
-    // document.getElementById('DivDetalleReclu').classList.add('ocultar');
-    // document.getElementById('Divprincipal').classList.add('ocultar');
-    // document.getElementById('DivReportefil').classList.add('ocultar');
-    // document.getElementById('DivProacti').classList.add('ocultar');
+    document.getElementById('DivGraficaCordina').classList.add('ocultar');
 
     var est = '';
    
@@ -95,7 +98,10 @@ export class CoordinacionComponent implements OnInit {
     this.General = data;
     this.onChangeTable(this.config);
     this.spinner.hide();
-    
+    // this.masivo = data[0].totalmas;
+    // this.operativo = data[0].totalope;
+    // this.especializado = data[0].totalesp;
+    this.total = data[0].total;
     });
   }
 
@@ -105,7 +111,7 @@ export class CoordinacionComponent implements OnInit {
     }else{
       this.columns = [
         { title: 'Estatus', className: 'text-info text-center', name: 'descripcion', filtering: { filterString: '', placeholder: 'Descripcion' } },
-        { title: 'Masivo', className: 'text-success text-center', name: 'masivo', filtering: { filterString: '', placeholder: 'Masivo' } },
+        { title: 'Masivo:', className: 'text-success text-center', name: 'masivo', filtering: { filterString: '', placeholder: 'Masivo' } },
         { title: 'Operativo', className: 'text-success text-center', name: 'Operativo', filtering: { filterString: '', placeholder: 'Operativo' } },
         { title: 'Especializado', className: 'text-success text-center', name: 'ezpecial', filtering: { filterString: '', placeholder: 'Especializado' } }
       ];

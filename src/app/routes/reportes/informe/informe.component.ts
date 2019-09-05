@@ -347,6 +347,7 @@ GeneraEstatusBolsa(){
   document.getElementById('DivGraficaVacante').classList.add('ocultar');
   document.getElementById('DivClientes').classList.add('ocultar');
   document.getElementById('DivCubiertoReport').classList.add('ocultar');
+  document.getElementById('DivGraficaCordina').classList.add('ocultar');
   
 
  
@@ -371,6 +372,7 @@ GeneraEstatusBolsa(){
   document.getElementById('exelCliente').classList.add('ocultar');
   document.getElementById('repCubierto').classList.add('ocultar');
   document.getElementById('exelCubierto').classList.add('ocultar');
+  document.getElementById('btnGraficaCordina').classList.add('ocultar');
 
   
   document.getElementById('btnGraficaVacante').classList.add('ocultar');
@@ -412,6 +414,7 @@ GeneraEstatusBolsa(){
   }else if(tipo == 7){
     document.getElementById('repCoordinacion').classList.remove('ocultar');
     document.getElementById('exelCoordinacion').classList.remove('ocultar');
+    document.getElementById('btnGraficaCordina').classList.remove('ocultar');
   }else if(tipo == 8){
     document.getElementById('repCandidato').classList.remove('ocultar');
     document.getElementById('exelCandidato').classList.remove('ocultar');
@@ -465,6 +468,7 @@ GeneraEstatusBolsa(){
     document.getElementById('divSucursal').classList.add('ocultar');
     document.getElementById('divBusCoordina').classList.add('ocultar');
     document.getElementById('divBusCoordina2').classList.add('ocultar');
+    
   }else if(tipo == 8){
     document.getElementById('Divdiv').classList.add('ocultar');
     document.getElementById('divEstado').classList.remove('ocultar');
@@ -506,6 +510,11 @@ GeneraEstatusBolsa(){
  
  }
  
+
+ CordinacionOcul(){
+  document.getElementById('DivGraficaCordina').classList.remove('ocultar');
+  document.getElementById('DivCoordinacion').classList.add('ocultar');
+ }
   
  
 }

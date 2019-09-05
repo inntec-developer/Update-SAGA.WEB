@@ -47,7 +47,9 @@
                 <td class="text-center">{{this.convertDateTime(item.fch_Modificacion)}}</td>
               
                
-                <td class="text-center">{{item.numero}}</td>
+                <td class="text-center">
+                    <span class="badge badge-pill badge-primary">{{item.numero}}</span>
+                </td>
                 <td class="text-center" >
                   <ng-template #popTemplateCandi>
                       <div class="card">
@@ -58,9 +60,9 @@
                         </div>
                       </div>
                     </ng-template>
-                  <small class="text-center badge badge-pill " *ngIf="item.candiTotal > 1" [popover]="popTemplateCandi" placement="left" container="body" triggers="mouseenter:mouseleave">{{item.candiTotal}}</small>
+                  <small class="text-center badge badge-pill badge-primary " *ngIf="item.candiTotal > 1" [popover]="popTemplateCandi" placement="left" container="body" triggers="mouseenter:mouseleave">{{item.candiTotal}}</small>
                   <span class="text-left" *ngIf="item.candiTotal == 1">{{item.nombreCandidato}}</span>
-                  <span class="text-left" *ngIf="item.candiTotal == 0">{{item.candiTotal}}</span>
+                  <span class="text-left badge badge-pill badge-primary" *ngIf="item.candiTotal == 0">{{item.candiTotal}}</span>
                  </td>
                  <td class="text-center" >
                   <ng-template #popTemplateComent>
@@ -72,9 +74,9 @@
                         </div>
                       </div>
                     </ng-template>
-                  <small class="text-center badge badge-pill " *ngIf="item.coemtaTotal > 1" [popover]="popTemplateComent" placement="left" container="body" triggers="mouseenter:mouseleave">{{item.coemtaTotal}}</small>
+                  <small class="text-center badge badge-pill badge-primary " *ngIf="item.coemtaTotal > 1" [popover]="popTemplateComent" placement="left" container="body" triggers="mouseenter:mouseleave">{{item.coemtaTotal}}</small>
                   <span class="text-left" *ngIf="item.coemtaTotal == 1">{{item.listaComentario}}</span>
-                  <span class="text-left" *ngIf="item.coemtaTotal == 0">{{item.coemtaTotal}}</span>
+                  <span class="text-left badge badge-pill badge-primary" *ngIf="item.coemtaTotal == 0">{{item.coemtaTotal}}</span>
                  </td>
                 
                 <td class="text-center"  ><p >{{item.nombreApellido}}</p> </td>
@@ -88,9 +90,9 @@
                         </div>
                       </div>
                     </ng-template>
-                  <small class="text-center badge badge-pill " *ngIf="item.reclutadorTotal > 1" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{item.reclutadorTotal}}</small>
+                  <small class="text-center badge badge-pill badge-primary " *ngIf="item.reclutadorTotal > 1" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{item.reclutadorTotal}}</small>
                   <span class="text-left" *ngIf="item.reclutadorTotal == 1">{{item.nombreReclutado}}</span>
-                  <span class="text-left" *ngIf="item.reclutadorTotal == 'SIN ASIGNAR'">{{item.reclutadorTotal}}</span>
+                  <span class="text-left badge badge-pill badge-primary" *ngIf="item.reclutadorTotal == 'SIN ASIGNAR'">{{item.reclutadorTotal}}</span>
                  </td>
                  <td class="text-center" *ngIf="item.estatusId == '4'"><p>SIN ASIGNAR</p></td>
 
@@ -109,9 +111,9 @@
                         </div>
                       </div>
                     </ng-template>
-                  <small class="text-center badge badge-pill " *ngIf="item.reclutadorTotal > 1" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{item.reclutadorTotal}}</small>
+                  <small class="text-center badge badge-pill badge-primary " *ngIf="item.reclutadorTotal > 1" [popover]="popTemplate" placement="left" container="body" triggers="mouseenter:mouseleave">{{item.reclutadorTotal}}</small>
                   <span class="text-left" *ngIf="item.reclutadorTotal == 1">{{item.nombreReclutado}}</span>
-                  <span class="text-left" *ngIf="item.reclutadorTotal == 'SIN ASIGNAR'">{{item.reclutadorTotal}}</span>
+                  <span class="text-left badge badge-pill badge-primary" *ngIf="item.reclutadorTotal == 'SIN ASIGNAR'">{{item.reclutadorTotal}}</span>
                  </td>
                 
             </tr>
