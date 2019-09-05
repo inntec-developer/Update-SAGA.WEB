@@ -11,7 +11,7 @@ import { PerfilReclutamientoService } from '../../../../../service/PerfilRecluta
 export class FormatoAnexosComponent implements OnInit, OnChanges {
   @Input('IdFormato') IdFormato: any;
 
-  public Beneficios: any[]  = [] ;
+  public Beneficios: any[] = [];
   public Horarios: any[] = [];
   public Actividades: any[] = [];
   public Observaciones: any[] = [];
@@ -23,6 +23,20 @@ export class FormatoAnexosComponent implements OnInit, OnChanges {
   public Cardinales: any[] = [];
   public Areas: any[] = [];
   public Gerenciales: any[] = [];
+
+  public Arte = 'DamsaVacantes_PP';
+  public Artes = [
+    { id: 1, value: 'DamsaVacantes_PP' },
+    { id: 2, value: 'DamsaVacantes_PP1' },
+    { id: 3, value: 'DamsaVacantes_PP2' },
+    { id: 4, value: 'DamsaVacantes_PP3' },
+    { id: 5, value: 'DamsaVacantes_PP4' },
+    { id: 6, value: 'DamsaVacantes_PP5' },
+    { id: 7, value: 'DamsaVacantes_PP6' },
+    { id: 1, value: 'DamsaVacantes_PP7' },
+    { id: 1, value: 'DamsaVacantes_PP8' },
+    { id: 1, value: 'DamsaVacantes_PP17' },
+  ];
 
   constructor(
     private _servicePerfilR: PerfilReclutamientoService

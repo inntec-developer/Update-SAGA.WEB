@@ -1,4 +1,3 @@
-import { VacantesComponent } from './Tracking/vacantes/vacantes.component';
 import { ActividadEmpresaComponent } from './catalogos/actividad-empresa/actividad-empresa.component';
 import { ActividadesComponent } from './tablas/actividades/actividades.component';
 import { ActividadesReclutadorComponent } from './calendario/actividades-reclutador/actividades-reclutador.component';
@@ -32,6 +31,7 @@ import { ButtonViewComponent } from './buttons/button-view/button-view.component
 import { ButtonsPostulacionesComponent } from './buttons-postulaciones/buttons-postulaciones.component';
 import { CURPValidator } from './dlg-registro-masivo/GenerarCURP';
 import { CalendarioCandidatoComponent } from './calendario/calendario-candidato/calendario-candidato.component';
+import { CandidatosCubiertosRportComponent } from './candidatos-cubiertos-rport/candidatos-cubiertos-rport.component';
 import { CandidatosEnProcesoComponent } from './candidatos-en-proceso/candidatos-en-proceso.component';
 import { CardVacanteComponent } from './card-vacantes/card-vacante.component';
 import { CatalogoComponent } from './catalogos/catalogo/catalogo.component';
@@ -51,10 +51,12 @@ import { DialogLiberarCandidatoComponent } from './dialog-liberar-candidato/dial
 import { DialogRutasComponent } from './tablas/dt-rutas-camion-requi/dialog-rutas/dialog-rutas.component';
 import { DiscapacidadesComponent } from './catalogos/discapacidades/discapacidades.component';
 import { DlgAsignarPerfilComponent } from './dlg-asignar-perfil/dlg-asignar-perfil.component';
+import { DlgBGArteComponent } from './editor-arte-requisiciones/dlg-bgarte/dlg-bgarte.component';
 import { DlgComentariosNRComponent } from './dlg-comentarios-nr/dlg-comentarios-nr.component';
 import { DlgCubiertasComponent } from './dlg-cubiertas/dlg-cubiertas.component';
 import { DlgFacturaPuroComponent } from './dlg-factura-puro/dlg-factura-puro.component';
 import { DlgRegistroMasivoComponent } from './dlg-registro-masivo/dlg-registro-masivo.component';
+import { DlgRequiArteComponent } from './editor-arte-requisiciones/dlg-requi-arte/dlg-requi-arte.component';
 import { DlgRequisicionPausaComponent } from './dlg-requisicion-pausa/dlg-requisicion-pausa.component';
 import { DlgResultadosMedicosComponent } from './dlg-resultados-medicos/dlg-resultados-medicos.component';
 import { DlgRevisarExamenesComponent } from './dlg-revisar-examenes/dlg-revisar-examenes.component';
@@ -77,17 +79,21 @@ import { DtRequisicionComponent } from './tablas/dt-requisicion/dt-requisicion.c
 import { DtRutasCamionRequiComponent } from './tablas/dt-rutas-camion-requi/dt-rutas-camion-requi.component';
 import { DtTelefonosComponent } from './tablas/dt-telefonos/dt-telefonos.component';
 import { DtVacantesGraficaPAComponent } from './Graficas/grafica-vacantes-pie/dt-vacantes-grafica-pa/dt-vacantes-grafica-pa.component';
+import { DtVacantesUNComponent } from './Indicadores/dt-vacantes-un/dt-vacantes-un.component';
 import { EditarCandidatoEstatusComponent } from './editar-candidato-estatus/editar-candidato-estatus.component';
 import { EditarContratadosComponent } from './editar-contratados/editar-contratados.component';
 import { EditarRequiEstatusComponent } from './editar-requi-estatus/editar-requi-estatus.component';
+import { EditorArteRequisicionesComponent } from './editor-arte-requisiciones/editor-arte-requisiciones.component';
 import { EscolaridadesComponent } from './catalogos/escolaridades/escolaridades.component';
 import { EstadoCivilComponent } from './catalogos/estado-civil/estado-civil.component';
 import { EstadosComponent } from './catalogos/estados/estados.component';
 import { FileManagerComponent } from './file-manager/file-manager.component';
 import { FiltrosComponent } from './catalogos/filtros/filtros.component';
+import { FoliosActivosComponent } from './Tracking/vacantes/Graficas/folios-activos/folios-activos.component';
 import { FormsModule } from '@angular/forms';
 import { GiroEmpresaComponent } from './catalogos/giro-empresa/giro-empresa.component';
 import { GraficaCaptadoContratadoComponent } from './Graficas/grafica-captado-contratado/grafica-captado-contratado.component';
+import { GraficaClienteComponent } from './Graficas/grafica-cliente/grafica-cliente.component';
 import { GraficaCoordinacionComponent } from './Graficas/grafica-coordinacion/grafica-coordinacion.component';
 import { GraficaProductividadComponent } from './Graficas/grafica-productividad/grafica-productividad.component';
 import { GraficaResumenComponent } from './Graficas/grafica-resumen/grafica-resumen.component';
@@ -111,6 +117,7 @@ import { InfoVacanteComponent } from './info-vacante/info-vacante.component';
 import { InformeVacantesComponent } from './informe-vacantes/informe-vacantes.component';
 import { JornadaLaboralComponent } from './catalogos/jornada-laboral/jornada-laboral.component';
 import { MAT_DATE_LOCALE } from '@angular/material';
+import { MapsAddressComponent } from './MapsGoogle/maps-address/maps-address.component';
 import { MediovacanteComponent } from './catalogos/mediovacante/mediovacante.component';
 import { ModalidadComponent } from './catalogos/modalidad/modalidad.component';
 import { MunicipiosComponent } from './catalogos/municipios/municipios.component';
@@ -129,6 +136,7 @@ import { RegistroReclutadorComponent } from './registro-reclutador/registro-recl
 import { Reporte70Component } from './reporte70/reporte70.component';
 import { ReporteCandidatosComponent } from './tablas/reporte-candidatos/reporte-candidatos.component';
 import { RequisicionNuevaPuroComponent } from './requisicion-nueva-puro/requisicion-nueva-puro.component';
+import { RolesComponent } from './catalogos/roles/roles.component';
 import { SearchComponent } from './catalogos/search/search.component';
 import { SharedModule } from '../shared/shared.module';
 import { TableComponent } from './catalogos/table/table.component';
@@ -145,15 +153,7 @@ import { TipolicenciaComponent } from './catalogos/tipolicencia/tipolicencia.com
 import { ToolsModule } from '../tools/tools.module';
 import { TpNominaComponent } from './catalogos/tp-nomina/tp-nomina.component';
 import { TpPsicometriaComponent } from './catalogos/tp-psicometria/tp-psicometria.component';
-import { RolesComponent } from './catalogos/roles/roles.component';
-import { CandidatosCubiertosRportComponent } from './candidatos-cubiertos-rport/candidatos-cubiertos-rport.component';
-import { DtVacantesUNComponent } from './Indicadores/dt-vacantes-un/dt-vacantes-un.component';
-import { EditorArteRequisicionesComponent } from './editor-arte-requisiciones/editor-arte-requisiciones.component';
-import { DlgBGArteComponent } from './editor-arte-requisiciones/dlg-bgarte/dlg-bgarte.component';
-import { DlgRequiArteComponent } from './editor-arte-requisiciones/dlg-requi-arte/dlg-requi-arte.component';
-import { FoliosActivosComponent } from './Tracking/vacantes/Graficas/folios-activos/folios-activos.component';
-import { GraficaClienteComponent } from './Graficas/grafica-cliente/grafica-cliente.component';
-
+import { VacantesComponent } from './Tracking/vacantes/vacantes.component';
 
 @NgModule({
   imports: [
@@ -312,7 +312,8 @@ import { GraficaClienteComponent } from './Graficas/grafica-cliente/grafica-clie
     DlgRequiArteComponent,
     VacantesComponent,
     FoliosActivosComponent,
-    GraficaClienteComponent
+    GraficaClienteComponent,
+    MapsAddressComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -418,7 +419,8 @@ import { GraficaClienteComponent } from './Graficas/grafica-cliente/grafica-clie
     DlgBGArteComponent,
     DlgRequiArteComponent,
     VacantesComponent,
-    FoliosActivosComponent
+    FoliosActivosComponent,
+    MapsAddressComponent
   ],
   entryComponents: [DlgRequiArteComponent, DlgBGArteComponent, DlgCubiertasComponent,
     DlgResultadosMedicosComponent, DlgRegistroMasivoComponent,

@@ -96,6 +96,7 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges {
       ContratoInicialId: this.requisitos.formEncabezado.get('Contrato').value,
       TiempoContratoId: this.requisitos.formEncabezado.get('TiempoContrato').value || null,
       Usuario: this._setting.user.usuario,
+      Arte: this.anexos.Arte
     };
 
     const Collections = {

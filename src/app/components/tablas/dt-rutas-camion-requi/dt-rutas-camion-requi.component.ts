@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, Renderer2, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChanges, ViewChild } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { DialogRutasComponent } from './dialog-rutas/dialog-rutas.component';
@@ -15,7 +15,7 @@ const swal = require('sweetalert');
   styleUrls: ['./dt-rutas-camion-requi.component.scss'],
   providers: [RequisicionesService]
 })
-export class DtRutasCamionRequiComponent implements OnInit {
+export class DtRutasCamionRequiComponent implements OnInit, AfterViewInit, OnChanges {
   @Input('DireccionId') DireccionId: string;
   @Input('DAMFO290Id') DAMFO290Id: string;
   @Input('ShowRequi') ShowRequi: boolean;
@@ -24,19 +24,46 @@ export class DtRutasCamionRequiComponent implements OnInit {
 
   private rows: Array<any> = [];
   private ruta: any = null;
-  isModalRutasShown: boolean = false;
-  RutaCamion: string = '';
-  ViaCamion: string = '';
+  isModalRutasShown = false;
+  RutaCamion = '';
+  ViaCamion = '';
   Accion: string;
   Edit: boolean;
-  TableDisable: boolean = false;
+  TableDisable = false;
+
+  public columns: Array<any> = [
+    { title: 'Ruta', className: 'text-info text-center' },
+    { title: 'Vía', className: 'text-info text-center' },
+  ];
+
+  public config: any = {
+    className: ['table-striped table-bordered mb-0 -d-table-fixed']
+  };
+
+  public columnsD: Array<any> = [
+    { title: 'Dirección', className: 'text-info text-center' },
+    { title: 'Ruta', className: 'text-info text-center' },
+    { title: 'Vía', className: 'text-info text-center' },
+  ];
+
+  public configD: any = {
+    className: ['table-striped table-bordered mb-0 -d-table-fixed']
+  };
+
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7, tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
 
   constructor(
     private dialog: MatDialog,
     private rutasService: RequisicionesService,
     private toasterService: ToasterService,
     private settings: SettingsService) {
-
   }
 
   ngOnInit() {
@@ -67,36 +94,25 @@ export class DtRutasCamionRequiComponent implements OnInit {
   cargarRutas(id): void {
     this.rutasService.getRequiRutasCamion(id).subscribe(data => {
       this.rows = data;
-      if (this.rows.length == 0) {
+      if (this.rows.length === 0) {
         this.TableDisable = true;
       }
     }, err => {
-      console.error(err)
-    })
+      console.error(err);
+    });
   }
 
-  public columns: Array<any> = [
-    { title: 'Ruta', className: 'text-info text-center' },
-    { title: 'Vía', className: 'text-info text-center' },
-  ]
-
-  public config: any = {
-    className: ['table-striped table-bordered mb-0 -d-table-fixed']
-  };
-
   public onCellClick(data: any): any {
-    let index = this.rows.indexOf(data.row);
     this.ruta = data;
     data.selected ? data.selected = false : data.selected = true;
     if (!data.selected) {
       this.ruta = null;
     }
 
-    if (this.rowAux.length == 0) {
+    if (this.rowAux.length === 0) {
       this.rowAux = data;
-    }
-    else if (data.selected && this.rowAux != []) {
-      var aux = data;
+    } else if (data.selected && this.rowAux !== []) {
+      const aux = data;
       data = this.rowAux;
       data.selected = false;
       aux.selected = true;
@@ -106,11 +122,11 @@ export class DtRutasCamionRequiComponent implements OnInit {
 
 
   agregarRutasCamion() {
-    let ruta = {
+    const ruta = {
       DireccionId: this.DireccionId,
       Edit: false
-    }
-    let dialogRuta = this.dialog.open(DialogRutasComponent, {
+    };
+    const dialogRuta = this.dialog.open(DialogRutasComponent, {
       width: '25%',
       height: 'auto',
       data: ruta
@@ -126,14 +142,14 @@ export class DtRutasCamionRequiComponent implements OnInit {
   }
 
   updateRutasCamion() {
-    let ruta = {
+    const ruta = {
       Id: this.ruta.id,
       DireccionId: this.DireccionId,
       RutaCamion: this.ruta.ruta,
       ViaCamion: this.ruta.via,
       Edit: true
-    }
-    let dialogRuta = this.dialog.open(DialogRutasComponent, {
+    };
+    const dialogRuta = this.dialog.open(DialogRutasComponent, {
       width: '25%',
       height: 'auto',
       data: ruta
@@ -150,29 +166,29 @@ export class DtRutasCamionRequiComponent implements OnInit {
 
   private _deleteRuta() {
     if (this.ruta != null) {
-      let rc = {
+      const rc = {
         Id: this.ruta.id,
         DireccionId: this.ruta.direccionId,
         Ruta: this.ruta.ruta,
         Via: this.ruta.via,
         Usuario: this.settings.user['usuario']
-      }
+      };
       this.rutasService.deleteRutaCamion(rc).subscribe(data => {
-        if (data == 200) {
+        if (data === 200) {
           this.cargarRutas(this.DireccionId);
           setTimeout(() => {
-            let msg = 'La ruta de camión se eliminó correctamente.';
+            const msg = 'La ruta de camión se eliminó correctamente.';
             this.popToast('success', 'Ruta de Camión', msg);
             this.ruta = null;
             swal('Eliminada', '', 'success');
           }, 500);
 
-        } else if (data == 404) {
-          let msg = 'Algo salio mal intenta de nuevo, si el problema persiste comunicate al departamento de TI.';
+        } else if (data === 404) {
+          const msg = 'Algo salio mal intenta de nuevo, si el problema persiste comunicate al departamento de TI.';
           this.popToast('error', 'Ruta de Camión', msg);
         }
       }, err => {
-        var msg = err.status + ' : ' + err.message;
+        const msg = err.status + ' : ' + err.message;
         this.popToast('error', 'Ruta de Camión', msg);
       });
     }
@@ -184,32 +200,21 @@ export class DtRutasCamionRequiComponent implements OnInit {
       this.rows = data;
     }, err => {
       console.log(err);
-    })
+    });
   }
 
-  public columnsD: Array<any> = [
-    { title: 'Dirección', className: 'text-info text-center' },
-    { title: 'Ruta', className: 'text-info text-center' },
-    { title: 'Vía', className: 'text-info text-center' },
-  ]
-
-  public configD: any = {
-    className: ['table-striped table-bordered mb-0 -d-table-fixed']
-  };
-
   public onCellClickD(data: any): any {
-    let index = this.rows.indexOf(data.row);
+    const index = this.rows.indexOf(data.row);
     this.ruta = data;
     data.selected ? data.selected = false : data.selected = true;
     if (!data.selected) {
       this.ruta = null;
     }
 
-    if (this.rowAux.length == 0) {
+    if (this.rowAux.length === 0) {
       this.rowAux = data;
-    }
-    else if (data.selected && this.rowAux != []) {
-      var aux = data;
+    } else if (data.selected && this.rowAux !== []) {
+      const aux = data;
       data = this.rowAux;
       data.selected = false;
       aux.selected = true;
@@ -244,23 +249,13 @@ export class DtRutasCamionRequiComponent implements OnInit {
     });
   }
 
-
-
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    limit: 7, tapToDismiss: false,
-    showCloseButton: true,
-    mouseoverTimerStop: true,
-  });
   popToast(type, title, body) {
-    var toast: Toast = {
+    const toast: Toast = {
       type: type,
       title: title,
       timeout: 5000,
       body: body
-    }
+    };
     this.toasterService.pop(toast);
   }
 }
