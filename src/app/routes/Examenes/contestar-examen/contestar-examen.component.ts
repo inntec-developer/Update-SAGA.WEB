@@ -64,9 +64,9 @@ calificacion = 0;
     this.calificacion = sum / this.Resp.length;
   }
 
-  // Agregar()
-  // {
-  //   this.service.InsertRespCandidato(this.Resp).subscribe(data => {
-  //   });
-  // }
+  Agregar()
+  {
+    this.service.InsertRespCandidato(this.Resp).subscribe(data => {
+    });
+  }
 }
