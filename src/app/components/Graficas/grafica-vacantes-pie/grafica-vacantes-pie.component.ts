@@ -24,10 +24,10 @@ export class GraficaVacantesPieComponent implements OnInit {
   public ShowModal: boolean;
   public EstadoVacante: string;
   public NumeroVacantes: number;
-  public RegistrosT: number = 0;
-  public Vigentes: number = 0;
-  public PorVencer: number = 0;
-  public Vencidas: number = 0;
+  public RegistrosT = 0;
+  public Vigentes = 0;
+  public PorVencer = 0;
+  public Vencidas = 0;
 
 ngOnInit() {
   this.UsuarioId = this.settings.user['id'];
@@ -50,7 +50,7 @@ ngOnInit() {
         'Por Vencer',
         'Vencidas'
       ]
-    }
+    };
 
     this.Chart = new Chart('cavasFoliosActivos', {
       type: 'pie',
@@ -81,14 +81,13 @@ ngOnInit() {
 detectedClick(evt: any) {
   if (evt == 'todas') {
     this.EstadoVacante = 'Todas';
-    this.NumeroVacantes = this.RegistrosT
+    this.NumeroVacantes = this.RegistrosT;
     this.ShowModal = true;
-  }
-  else {
-    let ActivatEvent = this.Chart.getElementAtEvent(evt);
+  } else {
+    const ActivatEvent = this.Chart.getElementAtEvent(evt);
     if (ActivatEvent[0]) {
-      var chartData = ActivatEvent[0]['_chart'].config.data;
-      var idx = ActivatEvent[0]['_index'];
+      const chartData = ActivatEvent[0]['_chart'].config.data;
+      const idx = ActivatEvent[0]['_index'];
       this.EstadoVacante = chartData.labels[idx];
       this.NumeroVacantes = chartData.datasets[0].data[idx];
       this.ShowModal = true;
@@ -114,7 +113,7 @@ updateChart() {
         'Por Vencer',
         'Vencidas'
       ]
-    }
+    };
     this.Chart.data = this.Data;
     this.Chart.update();
     this.ChangeFolios.emit(this.RegistrosT);

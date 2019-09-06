@@ -47,7 +47,8 @@ import { VectormapDirective } from './directives/vectormap/vectormap.directive';
   imports: [
 
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCvtCCb5IK8MQbFiXe4J2F5LIQqa5fLeSY'
+      apiKey: 'AIzaSyCvtCCb5IK8MQbFiXe4J2F5LIQqa5fLeSY',
+      libraries: ['places']
     }),
     CommonModule,
     FormsModule,

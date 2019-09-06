@@ -40,6 +40,7 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
      var Opromo = [];
      var Opostotal = [];
      var Ocubiertotal = [];
+     var prueba = [];
     this._ServiceComponente.getVCubierta(this.UsuarioId).subscribe(result => {
 
       result.forEach(item2 => {
@@ -52,6 +53,7 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
         Opromo.push(item2.promo)
         Opostotal.push(item2.possicion)
         Ocubiertotal.push(item2.Totalcubierta)
+        prueba.push(item2.nombre)
        });
     // Chart.defaults.scale.ticks.beginAtZero = true;
     document.oncontextmenu=null
@@ -60,8 +62,9 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
       type: 'bar',
   data: {
     labels: Onombre,
+    value:prueba,
     datasets: [{
-        label: 'Cubierto',
+        label: 'Folio Cubierto',
         data: Ocubierta,
         backgroundColor: [
           '#0F3CFF',
@@ -75,7 +78,7 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
         borderWidth: 2
       },
       {
-        label: 'Medios',
+        label: 'Folio Medios',
         data: Omedios,
         backgroundColor: [
           '#FF8F35',
@@ -89,7 +92,7 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
         borderWidth: 2
       },
       {
-        label: 'Parcial',
+        label: 'Folio Parcial',
         data: Oparcial,
         backgroundColor: [
           '#3cba9f',
@@ -103,7 +106,7 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
         borderWidth: 2
       },
       {
-        label: 'Cliente',
+        label: 'Folio Cliente',
         data: Ocliente,
         backgroundColor: [
           '#0FFF5B',
@@ -117,7 +120,7 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
         borderWidth: 2
       },
       {
-        label: 'Operacion',
+        label: 'Folio Operacion',
         data: Operacion,
         backgroundColor: [
           '#C560FF',
@@ -131,7 +134,7 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
         borderWidth: 2
       },
       {
-        label: 'Promocion',
+        label: 'Folio Promocion',
         data: Opromo,
         backgroundColor: [
           '#FF49A3',
@@ -147,6 +150,7 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
     ]
   },
   options: {
+    onClick: this.detectedClick.bind(this),
     scales: {
       yAxes: [{
         stacked: true,
@@ -181,16 +185,17 @@ export class GraficaVacanteCubiertaComponent implements OnInit {
   });
   }
 
-  // detectedClick(evt: any) {
-  //   let ActivatEvent = this.Chart.getElementAtEvent(evt);
-  //   if (ActivatEvent[0]) {
-  //     var chartData = ActivatEvent[0]['_chart'].config.data;
-  //     var idx = ActivatEvent[0]['_index'];
-  //     this.EstadoVacante = chartData.labels[idx];
-  //     this.NumeroVacantes = chartData.datasets[0].data[idx];
-  //     this.ShowModal = true;
-  //   }
-  // }
+  detectedClick(evt: any) {
+    let ActivatEvent = this.Chart.getElementAtEvent(evt);
+    
+    if (ActivatEvent[0]) {
+      var chartData = ActivatEvent[0]['_chart'].config.data;
+      var idx = ActivatEvent[0]['_index'];
+      this.EstadoVacante = chartData.value[idx];
+      this.NumeroVacantes = 10;
+      this.ShowModal = true;
+    }
+  }
 
 
 

@@ -1,4 +1,4 @@
-<div class="content-heading" *ngIf="!imprimir">
+<div class="content-heading">
   <div>
     Visualizar DAM-FO-290
     <span class="text-sm d-none d-sm-block">Caracteristicas de DAM-FO-290</span>
@@ -20,7 +20,7 @@
     <li class="breadcrumb-item active">Visualizar DAM-FO-290</li>
   </ol>
 </div>
-<div class="row" *ngIf="!imprimir">
+<div class="row">
   <div class="col-md-12">
     <div class="d-flex justify-content-between">
       <button *ngIf="Perfil290" id="edit" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8"
@@ -32,10 +32,11 @@
         class="mr-1 btn btn-xs btn-success mat-elevation-z8" (click)="openDialog()">
         <em class="icon-docs"></em>
       </button>
-      <button placement="right" tooltip="Imprimir DAMFO-290" class="mr-1 btn btn-xs btn-info mat-elevation-z8"
-        (click)="print()">
+      <button *ngIf="!imprimir" placement="right" tooltip="Imprimir DAMFO-290"
+        class="mr-1 btn btn-xs btn-info mat-elevation-z8" (click)="print()">
         <em class="fa fa-print"></em>
       </button>
+      <span *ngIf="imprimir"><i class="fa fa-spinner fa-pulse" aria-hidden="true"></i></span>
       <button container="body" placement="bottom" tooltip="Regresar"
         class="mr-1 btn btn-xs btn-warning mat-elevation-z8" type="button" (click)="return()">
         <em class="icon-action-undo"></em>
@@ -44,7 +45,7 @@
   </div>
 </div>
 
-<div id="content" *ngIf="!imprimir">
+<div id="content">
   <div class="card-body">
     <div class="row">
       <div class="col-md-3 col-sm-12 col-xs-12">
@@ -156,7 +157,7 @@
     </div>
   </div>
   <!-- </div> -->
-  <br *ngIf="!imprimir">
+
   <!-- <div class="dt-container  mat-elevation-z8"> -->
   <!-- <div *ngIf="!imprimir" class="card-header">
       <em class="fa fa-user"></em> Vacantes por Horarios
@@ -170,7 +171,7 @@
   </div>
   <!-- </div> -->
   <!-- </div> -->
-  <br *ngIf="!imprimir">
+
   <!-- <div class="dt-container  mat-elevation-z8">
     <div *ngIf="!imprimir" class="card-header">
       <em class="fa fa-id-badge"></em> Informaci&oacute;n Adicional del Perfil
@@ -226,14 +227,17 @@
       </div>
     </div>
   </div>
-
   <div class="row">
     <div class="col-md-12">
       <!-- DIRECCIONES -->
       <app-dt-direccion [Direcciones]="damfo290?.cliente?.direcciones"></app-dt-direccion>
+      <div class="row">
+        <div class="col-6" *ngFor="let x of direcciones">
+          <app-maps-address [Direccion]="x.direccion"></app-maps-address>
+        </div>
+      </div>
     </div>
   </div>
-
   <div class="row">
     <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
       <!-- TELEFONOS -->
@@ -251,8 +255,6 @@
       <app-dt-contactos [Contactos]="damfo290?.cliente?.contactos"></app-dt-contactos>
     </div>
   </div>
-  <br *ngIf="!imprimir">
-
   <div class="row">
     <div class="col-md-12">
       <!-- BENEFICIOS -->
@@ -319,6 +321,15 @@
       <!-- COMPETENCIAS GERENCIALES -->
       <app-dt-competencia-gerencial [Competencias]="damfo290?.competenciasGerencial">
       </app-dt-competencia-gerencial>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-offset-md-3 col-offset-lg-3 col-sm-12 cols-xs-12">
+      <div class="card box">
+        <div class="card-body">
+          <img src="assets/img/ArteVacantes/{{arte}}.jpg" class="float-center img-arte">
+        </div>
+      </div>
     </div>
   </div>
 
@@ -391,9 +402,8 @@
     </div>
   </div>
 </div>
-<br>
-<br>
-<div id="PrintDamfo" #PrintDamfo class="clsPrintDamfo">
+<!--  -->
+<div [hidden]="!imprimir" id="PrintDamfo" #PrintDamfo class="clsPrintDamfo">
   <div class="row justify-content-between">
     <div class="col-2">
       <img class="huerotate" src="assets/img/damsa/logoDamfo_.png" alt="" />
@@ -488,16 +498,32 @@
         <th class="text-center" style="background-color: blue; color: white" colspan="12">MAPA UBICACI&Oacute;N</th>
       </tr>
       <tr>
-        <td colspan="12">MAPAS......</td>
+        <td height="15"></td>
+      </tr>
+      <tr *ngFor="let x of direcciones">
+        <td colspan="2"></td>
+        <td colspan="8">
+          <app-maps-address [Direccion]="x.direccion"></app-maps-address>
+        </td>
+        <td colspan="2"></td>
+      </tr>
+      <tr>
+        <td height="15"></td>
       </tr>
     </tbody>
     <tbody>
       <tr>
         <th class="text-center" style="background-color: blue; color: white" colspan="12">RUTAS DE CAMION</th>
       </tr>
-      <tr>
-        <td colspan="12">rutas...</td>
+      <tr *ngFor="let x of rutasCamion; let i = index">
+        <td colspan="4">{{i + 1}}.- <strong>Direccion: </strong> {{x.direccion | uppercase}}</td>
+        <td colspan="4"><strong>Ruta </strong> {{x.ruta | uppercase}} </td>
+        <td colspan="4"><strong>Via: </strong> {{x.via | uppercase}}</td>
       </tr>
+      <tr *ngIf="rutasCamion == null">
+        <td height="25" colspan="12"></td>
+      </tr>
+
     </tbody>
     <tbody>
       <tr>
@@ -816,7 +842,9 @@
         </th>
       </tr>
       <tr>
-        <td height="50"></td>
+        <td colspan="2"></td>
+        <td colspan="8"><img src="assets/img/ArteVacantes/{{arte}}.jpg" class="float-center img-arte"></td>
+        <td colspan="2"></td>
       </tr>
     </tbody>
     <tbody>

@@ -2,6 +2,9 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
+    "types": [
+      "googlemaps"
+    ],
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",

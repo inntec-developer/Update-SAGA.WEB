@@ -5,6 +5,8 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { PerfilReclutamientoService } from './../../../../../service/PerfilReclutamiento/perfil-reclutamiento.service';
 import { SettingsService } from '../../../../../core/settings/settings.service';
 
+declare var google: any;
+
 @Component({
   selector: 'app-formato-cliente',
   templateUrl: './formato-cliente.component.html',

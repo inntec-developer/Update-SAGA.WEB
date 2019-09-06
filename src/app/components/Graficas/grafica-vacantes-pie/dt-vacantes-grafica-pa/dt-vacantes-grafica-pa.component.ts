@@ -59,10 +59,11 @@ export class DtVacantesGraficaPAComponent implements OnInit {
   ngOnInit() {
     this.UsuarioId = this.settings.user['id'];
     let estado2 = this.EstadoVacante.split(':', 1);
-    this.bandera = estado2 == 'Parcialmente' || estado2 == 'Cubiertas' || estado2 == 'Operaciones'
-    || estado2 == 'Cubiertas por medios'|| estado2 == 'Por el Cliente' || estado2 == 'Promocion Interna'
-    || estado2 == 'Captado'|| estado2 == 'Contratado' || estado2 == 'Masivo'
-    || estado2 == 'Operativo' || estado2 == 'Especial'?false:true;
+    this.bandera = estado2 == 'Captado'|| estado2 == 'Contratado' || estado2 == 'Masivo'
+    || estado2 == 'Operativo' || estado2 == 'Especial'|| estado2 == "diciembre" || estado2 == "noviembre"
+    || estado2 == "octubre" || estado2 == "septiembre" || estado2 == "agosto"|| estado2 == "julio"
+    || estado2 == "junio" || estado2 == "mayo" || estado2 == "abril" || estado2 == "marzo" 
+    || estado2 == "febrero" || estado2 == "enero"?false:true;
 
   }
 
