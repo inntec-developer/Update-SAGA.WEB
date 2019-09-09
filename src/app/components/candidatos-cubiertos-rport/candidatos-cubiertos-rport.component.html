@@ -1,12 +1,16 @@
 <div class="card">
   <div class="card-body">
+      <button [ngClass]="!liberado ? 'btn btn-xs disabled' : 'btn btn-xs btn-danger'" class="mr-2 float-left mat-elevation-z8" [disabled]="!liberado"
+      type="button" (click)="openDialogLiberar()" container="body" placement="bottom" tooltip="Liberar">
+      <i class="fa fa-thumbs-o-down"></i>
+    </button>
       <button class="btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="refreshTable()"
       container="body" placement="bottom" tooltip="Actualizar">
-      <em class="icon-refresh"></em>
+      <i class="icon-refresh"></i>
     </button>
       <button class="btn btn-xs float-right mr-2 mat-elevation-z8" (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
       container="body" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'disabled':'btn-primary'">
-      <em class="fa fa-eraser"></em>
+      <i class="fa fa-eraser"></i>
     </button>
     <span class="text-muted font-weight-bold float-right text-uppercase mr-3 ">Total de Candidatos <span
       class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span></span>
@@ -30,7 +34,7 @@
             <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
             [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
             <div>
-          <tr *ngFor="let row of rows">
+          <tr *ngFor="let row of rows" (click)="onCellClick(row)" [class.bg-primary]="row.selected">
             <td class="text-center">
               <span *ngIf="row.estatusId != 12 && row.estatusId != 17 && row.estatusId != 27 else sinAsignar">{{row.horario}}</span>
               <ng-template #sinAsignar>
@@ -70,3 +74,24 @@
       </div>
     </div>
   </ng-template>
+<!-- Modal para dlgLiberar  -->
+<div *ngIf="dlgLiberar" [config]="{show: true, ignoreBackdropClick: true, keyboard: false}" bsModal #modallib="bs-modal"
+  class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Informaci&oacute;n de la Vacante</h4>
+        <button type="button" class="close pull-right" (click)="modallib.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+      <div class="modal-body">
+        <app-dialog-liberar-candidato [objLiberar]="objLiberar" (close)="onClose($event)">
+        </app-dialog-liberar-candidato>
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-outline-success" (click)="modallib.hide()">Cerrar</button>
+      </div> -->
+    </div>
+  </div>
+</div>
