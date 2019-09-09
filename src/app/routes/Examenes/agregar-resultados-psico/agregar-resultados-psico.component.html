@@ -1,16 +1,4 @@
-<div class="content-heading">
-    <div>
-      Examenes
-      <span class="text-sm d-none d-sm-block">Administraci&oacute;n Examenes Psicom&eacute;tricos.</span>
-    </div>
-    <!-- Breadcrumb right aligned-->
-    <ol class="breadcrumb ml-auto">
-      <li class="breadcrumb-item">
-        <a [routerLink]="['/home']">Inicio</a>
-      </li>
-      <li class="breadcrumb-item active">Examenes</li>
-    </ol>
-  </div>
+<!--  -->
 
 
 <div class="card">
@@ -19,13 +7,24 @@
         <hr>
     </div>
     <div class="card-body">
-
-       <div class="input-group longInput">
-        <input (input)="Search($event)" class="form-control form-control-sm" type="text" placeholder="Filtrar por clave" />
-        <div class="input-group-append">
-            <span class="input-group-text text-info"><em class="fa fa-search"></em></span>
+        <div class="d-flex justify-content-start mb-3">
+            <button class="btn btn-xs btn-success mat-elevation-z8" placement="right" tooltip="Generar Claves" (click)="GenerarClaves()"><i class="fa fa-plus"></i></button>
           </div>
+        <div class="row">
+          <div class="col-sm-6 col-md-6">
+              <div class="input-group input-group-sm float-left mt-1 mb-1 with-focus longInput">
+
+                  <input (input)="Search($event)" class="form-control form-control-sm border-right-0 " type="text" placeholder="Filtrar por Clave" />
+                  <div class="input-group-append">
+                    <span class="input-group-text fa fa-search text-info bg-transparent border-left-0"></span>
+                  </div>
+                </div>
+          </div>
+          <div class="col-sm-6 col-md-6">
+      <span class="text-muted font-weight-bold float-right text-uppercase mb-3 mr-3">Total de Registros <span
+        class="badge badge-pill badge-success ml-1">{{candidatos.length  | numerico}}</span></span>
       </div>
+    </div>
       <br/>
         <div class="table-responsive mat-elevation-z8">
          <table class="table">
@@ -74,12 +73,11 @@
        </table>
        </div>
      </div>
-     <div class="text-right">
+     <div class="d-flex justify-content-end mr-3">
 
         <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
           [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
         </pagination>
-        <pre class="card card-block card-header text-muted">Total Registros: {{candidatos.length}}</pre>
 
     </div>
 

@@ -27,7 +27,7 @@ declare var $: any;
 export class DtRequisicionComponent implements OnInit {
   public reporteCandidatos: boolean = false;
 
-  //scroll
+  // scroll
   disabled = false;
   compact = false;
   invertX = false;
@@ -36,16 +36,16 @@ export class DtRequisicionComponent implements OnInit {
 
   // Variables Globales
   public dataSource: Array<any> = [];
-  Vacantes: number = 0;
+  Vacantes = 0;
 
   // Varaibles del paginador
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
-  selected: boolean = false;
+  selected = false;
   rowAux = [];
   cubiertas = [];
 
@@ -65,7 +65,7 @@ export class DtRequisicionComponent implements OnInit {
   candidatos = true;
 
   // Estatus
-  nbc = true; //nueva busqueda candidato
+  nbc = true; // nueva busqueda candidato
   contratado = true;
   cubierta = true;
   gbc = true; // garantía busqueda candidato
@@ -181,7 +181,7 @@ export class DtRequisicionComponent implements OnInit {
           if (r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37)) {
             this.totalPos += r.vacantes;
             this.totalContratados += r.contratados;
-            if (r.estatusId == 4) {
+            if (r.estatusId === 4) {
               r.coordinador = r.reclutadores;
               r.reclutadores = 'SIN ASIGNAR';
             }

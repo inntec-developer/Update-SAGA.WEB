@@ -1,7 +1,6 @@
 import { ExcelService } from './../../../service/ExcelService/excel.service';
 import { Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-import { DatePipe } from '@angular/common';
 import { ExamenesService } from './../../../service/Examenes/examenes.service';
 import { SettingsService } from '../../../core/settings/settings.service';
 
@@ -53,7 +52,6 @@ export class AsignarPsicometricosComponent implements OnInit {
     private _serviceExamen: ExamenesService,
     private toasterService: ToasterService,
     private settings: SettingsService,
-    private pipe: DatePipe,
     private excelService: ExcelService) { }
 
   ngOnInit() {
@@ -250,8 +248,9 @@ export class AsignarPsicometricosComponent implements OnInit {
 
     if (this.requisiciones.length > 0) {
       const aux = [];
-      let psico = '';
+
       this.requisiciones.forEach(row => {
+        let psico = '';
         row.psicometricos.forEach(element => {
           psico = psico + ', ' + element.nombre;
         });
@@ -259,13 +258,13 @@ export class AsignarPsicometricosComponent implements OnInit {
         aux.push({
           'FOLIO': row.folio,
           'PERFÍL PSICOMÉTRICO': psico,
-          'No. CLAVES GENERADAS': row.claves,
-          'CLAVES GENERADAS PARA FOLIO': this.NumClaves
+          'No. CLAVES GENERADAS': this.NumClaves,
+          'CLAVES GENERADAS PARA FOLIO': row.claves
         });
 
       });
 
-      this.excelService.exportAsExcelFile(aux, 'Reporte_Turnos_Atendidos');
+      this.excelService.exportAsExcelFile(aux, 'Reporte_Psicometrias');
 
     }
   }

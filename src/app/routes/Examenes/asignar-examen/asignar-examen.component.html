@@ -1,4 +1,4 @@
-<!-- <div class="content-heading">
+<div class="content-heading">
   <div>
     <span class="text-sm d-none d-sm-block">Administraci&oacute;n de ex&aacute;menes.</span>
   </div>
@@ -6,9 +6,9 @@
     <li class="breadcrumb-item">
       <a [routerLink]="['/home']">Inicio</a>
     </li>
-    <li class="breadcrumb-item active">Examenes</li>
+    <li class="breadcrumb-item active"><a [routerLink]="['/examenes/Principal']">Principal Examenes</a></li>
   </ol>
-</div> -->
+</div>
 
 <div class="row">
   <div class="col-md-4">
@@ -17,6 +17,7 @@
         <h5 class="card-title text-info">
           <em class="fa fa-pencil"></em> EXAMENES DISPONIBLES</h5>
         <hr>
+     
         <mat-form-field class="longSelect">
           <mat-select placeholder="Seleccionar tipo de examen" [(value)]="tipoId" [formControl]="se" required>
             <mat-option *ngFor="let c of catalogo" [value]="c.id" (click)="GetExamenes(c.id); nom=c.nombre">
@@ -83,7 +84,7 @@
       </div> -->
 
         <div class="mat-elevation-z8">
-            <div class="row bg-light p-1">
+            <div class="row p-1">
                 <div class="col-sm-12 col-md-12 mt-3">
                   <button type="button" class="btn btn-xs btn-success float-right mr-2 mat-elevation-z8" (click)="refreshTable()" container="body"
                   placement="bottom" tooltip="Actualizar" container="body">
