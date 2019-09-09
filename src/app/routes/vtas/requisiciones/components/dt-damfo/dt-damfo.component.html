@@ -23,6 +23,12 @@
           tooltip="Clonar Formato" (click)="clonarFormato290()">
           <em class="fa fa-clone"></em>
         </button>
+        <button *ngIf="Perfil290" id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8"
+          [ngClass]="!selected || !isEditable ? 'disabled' : 'btn-success'" container="body" placement="bottom"
+          [disabled]="!selected || !isEditable"
+          tooltip="Anexos" (click)="ShowModal = true;">
+          <em class="fa fa-file-pdf-o"></em>
+        </button>
         <button *ngIf="!Perfil290" id="view" chkPrivilegiosButtons (click)="openDialog()"
           class="mr-2 btn btn-xs mat-elevation-z8" [disabled]="!selected"
           [ngClass]="(!selected) ? 'disabled' : 'btn-success'" container="body" placement="bottom"
@@ -109,6 +115,23 @@
   </div>
 </div>
 
+
+<!-- MODAL DE ANEXOS -->
+<div *ngIf="ShowModal" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal
+  #MessageModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-lg reporteMod">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="float-left text-warning"><em class="fa fa-file-text-o mr-2"></em>Anexos de Formato DAMFO-290 {{element.nombrePerfil}} </h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="ShowModal=false"><i
+            class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <app-file-manager [candidatoId]='damfoId'></app-file-manager>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <!-- Elenetos visuales -->

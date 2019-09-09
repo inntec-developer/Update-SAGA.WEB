@@ -18,7 +18,7 @@ export class ApiConection {
   // public static ServiceUrlLoginBolsa = 'https://bolsa.damsa.com.mx';
   // public static ServicioUrl290 = 'https://webpfrc.damsa.com.mx/Home/';
 
-  // // // Pruebas
+  // // Pruebas
   // public static ServiceUrlWeb = 'https://websb.damsa.com.mx/';
   // public static ServiceUrl = 'https://apisb.damsa.com.mx/api/';
   // public static ServiceUrlImgExamenes = 'https://apisb.damsa.com.mx';

@@ -23,15 +23,17 @@
   <tab heading="Datos de Perfil" id="TapRequisitos">
     <app-formato-requisitos [IdFormato]="IdFormato"></app-formato-requisitos>
   </tab>
-  <tab heading="Anexos" id="TapAnexos">
+  <tab heading="Horarios, Prestaciones ..." id="TapInfoAdicional">
     <app-formato-anexos [IdFormato]="IdFormato"></app-formato-anexos>
+  </tab>
+  <tab heading="Anexos" id="TapAnexos" *ngIf="!isNew">
+   <app-file-manager [candidatoId]='IdFormato'></app-file-manager>
   </tab>
 </tabset>
 <br>
 <section class="row">
   <div class="col-lg-6 col-md-6 col-sm-12">
-    <button type="reset" class="btn btn-block mat-elevation-z8 btn-danger"
-      [routerLink]="['/reclutamiento/290']"
+    <button type="reset" class="btn btn-block mat-elevation-z8 btn-danger" [routerLink]="['/reclutamiento/290']"
       [disabled]="loading">Cancelar</button>
   </div>
   <div class="col-lg-6 col-md-6 col-sm-12">

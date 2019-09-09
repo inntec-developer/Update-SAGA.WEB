@@ -34,3 +34,11 @@ ng-scrollbar {
   --scrollbar-thumb-hover-color: dodgerblue;
   --scrollbar-border-radius: 4px;
 }
+
+.modal-lg {
+  max-width: 85% !important;
+}
+
+.modal-lg .long {
+  max-height: 85% !important;
+}

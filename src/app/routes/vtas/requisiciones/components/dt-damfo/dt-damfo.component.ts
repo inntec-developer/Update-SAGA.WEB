@@ -26,6 +26,7 @@ export class DtDamfoComponent implements OnInit, AfterViewInit {
   invertX = false;
   invertY = false;
   shown = 'hover';
+  ShowModal = false;
   // Varaibales Globales
   public dataSource: Array<any> = [];
   Vacantes = 0;
@@ -235,6 +236,7 @@ export class DtDamfoComponent implements OnInit, AfterViewInit {
   }
 
   public onCellClick(data: any): any {
+    debugger;
     if (data['usuarioAlta'] === this._setting.user.usuario) {
       this.isEditable = true;
     } else {
@@ -242,6 +244,7 @@ export class DtDamfoComponent implements OnInit, AfterViewInit {
     }
     this.element = data;
     this.damfoId = data.id;
+
     data.selected ? data.selected = false : data.selected = true;
 
     if (!data.selected) {

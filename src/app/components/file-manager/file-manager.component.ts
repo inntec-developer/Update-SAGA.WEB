@@ -1,6 +1,8 @@
-import { saveAs } from 'file-saver';
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+
 import { AdminServiceService } from '../../service/AdminServicios/admin-service.service';
+import { saveAs } from 'file-saver';
+
 const swal = require('sweetalert');
 
 @Component({
@@ -15,13 +17,13 @@ export class FileManagerComponent implements OnInit {
   @Input() public candidatoId: any;
 
   @ViewChild('staticModal') modal;
-  //config scroll
+  // config scroll
   disabled = false;
   compact = false;
   invertX = true;
   invertY = true;
   shown = 'hover';
-  
+
   selectedFile: File;
   cont_image = 0;
   cont_pdf = 0;
@@ -34,7 +36,7 @@ export class FileManagerComponent implements OnInit {
   imgShow = false;
   pdfShow = false;
   verMsj = false;
-  
+
   alerts: any[] = [
     {
       type: 'success',
@@ -63,7 +65,13 @@ onClosed(): void {
     this.GetFiles();
   }
 
-  fileChangeListener($event) 
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if ((changes.candidatoId && !changes.candidatoId.isFirstChange())) {
+  //     this.GetFiles();
+  //   }
+  // }
+
+  fileChangeListener($event)
   {
     let file: File = $event.target.files[0];
 
@@ -89,13 +97,13 @@ onClosed(): void {
   {
     if(datos.type.toLowerCase() === '.jpeg' || datos.type.toLowerCase() === '.jpg' || datos.type.toLowerCase() === '.png')
     {
-      
+
         this.imgShow = true;
         this.pdfShow = false;
         this.image = this.service.GetImage( '/' + this.candidatoId + datos.nom);
         this.nomImg = datos.nom;
         this.modal.show();
-  
+
     }
     else
     {
@@ -107,7 +115,7 @@ onClosed(): void {
           // this.pdfSrc = fileurl;
           // this.modal.show();
         })
-          
+
     }
   }
 
@@ -119,7 +127,7 @@ onClosed(): void {
     this.service.DownloadFiles(ruta + datos.nom).subscribe( res =>{
       saveAs(res, datos.nom)
     })
-  
+
   }
 
   deleteFile(datos)
@@ -142,7 +150,7 @@ onClosed(): void {
         var ruta = '/utilerias/Files/users/' + this.candidatoId + '/';
         this.service.DeleteFiles(ruta + datos.nom).subscribe( res =>{
           if(res == 200)
-          { 
+          {
             swal('Borrar Archivo', 'El archivo se borró con éxito', 'success')
             this.ngOnInit();
           }
@@ -157,7 +165,7 @@ onClosed(): void {
         swal("Cancelado", "No se realizó ningún cambio", "error");
       }
 });
-  
+
   }
 
   closeModal()
@@ -171,8 +179,8 @@ onClosed(): void {
       if(element.ext.toLowerCase() == '.jpeg' || element.ext.toLowerCase() == '.jpg' || element.ext.toLowerCase() == '.png')
       {
         this.files.push({
-          type: element.ext, 
-          nom: element.nom, 
+          type: element.ext,
+          nom: element.nom,
           size: element.size,
           fc: element.fc,
           icon: 'fa-file-image-o'});
@@ -198,7 +206,7 @@ onClosed(): void {
           icon: 'fa-file-excel-o'});
         this.cont_xls++;
       }
-      else 
+      else
       {
         this.files.push({
           type: element.ext,
@@ -216,7 +224,7 @@ onClosed(): void {
   {
     if(this.candidatoId)
     {
-   
+
       this.service.GetFiles(this.candidatoId)
       .subscribe( data => {
         this.getTypes(data)
