@@ -1,6 +1,7 @@
+import { ExcelService } from './../../../service/ExcelService/excel.service';
 import { Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-
+import { DatePipe } from '@angular/common';
 import { ExamenesService } from './../../../service/Examenes/examenes.service';
 import { SettingsService } from '../../../core/settings/settings.service';
 
@@ -51,7 +52,9 @@ export class AsignarPsicometricosComponent implements OnInit {
   constructor(
     private _serviceExamen: ExamenesService,
     private toasterService: ToasterService,
-    private settings: SettingsService) { }
+    private settings: SettingsService,
+    private pipe: DatePipe,
+    private excelService: ExcelService) { }
 
   ngOnInit() {
     this.GetRequisiciones();
@@ -187,8 +190,8 @@ export class AsignarPsicometricosComponent implements OnInit {
   }
   onSelect(row) {
     row.selected ? row.selected = false : row.selected = true;
-this.folio = row.folio;
-this.id = row.requisicionId;
+    this.folio = row.folio;
+    this.id = row.requisicionId;
 
     this.requisiciones.filter(function (item) {
       if (item.requisicionId !== row.requisicionId) {
@@ -243,7 +246,29 @@ this.id = row.requisicionId;
     });
     this.onChangeTable(this.config);
   }
+  exportAsXLSX() {
 
+    if (this.requisiciones.length > 0) {
+      const aux = [];
+      let psico = '';
+      this.requisiciones.forEach(row => {
+        row.psicometricos.forEach(element => {
+          psico = psico + ', ' + element.nombre;
+        });
+
+        aux.push({
+          'FOLIO': row.folio,
+          'PERFÍL PSICOMÉTRICO': psico,
+          'No. CLAVES GENERADAS': row.claves,
+          'CLAVES GENERADAS PARA FOLIO': this.NumClaves
+        });
+
+      });
+
+      this.excelService.exportAsExcelFile(aux, 'Reporte_Turnos_Atendidos');
+
+    }
+  }
 
   /**
 * configuracion para mensajes de acciones.

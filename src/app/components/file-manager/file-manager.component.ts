@@ -31,7 +31,7 @@ export class FileManagerComponent implements OnInit {
   cont_word = 0;
   files = [];
   image;
-  nomImg = "";
+  nomImg = '';
   pdfSrc;
   imgShow = false;
   pdfShow = false;
@@ -76,16 +76,13 @@ onClosed(): void {
     let file: File = $event.target.files[0];
 
     this.service.UploadFile(file, this.candidatoId).subscribe(result => {
-      if(result === 201)
-      {
+      if (result === 201) {
         this.ngOnInit();
-        this.alerts[0]['msg'] = "El archivo " + file.name + " se subió con éxito";
+        this.alerts[0]['msg'] = 'El archivo ' + file.name + ' se subió con éxito';
         this.alert = this.alerts[0];
         this.verMsj = true;
-      }
-      else
-      {
-        this.alerts[1]['msg'] = "Ocurrió un error al intentar subir archivo " + file.name;
+      } else {
+        this.alerts[1]['msg'] = 'Ocurrió un error al intentar subir archivo ' + file.name;
         this.alert = this.alerts[1];
         this.verMsj = true;
       }
@@ -93,91 +90,75 @@ onClosed(): void {
 
   }
 
-  verArchivo(datos)
-  {
-    if(datos.type.toLowerCase() === '.jpeg' || datos.type.toLowerCase() === '.jpg' || datos.type.toLowerCase() === '.png')
-    {
-
+  verArchivo(datos) {
+    if(datos.type.toLowerCase() === '.jpeg' || datos.type.toLowerCase() === '.jpg' || datos.type.toLowerCase() === '.png') {
         this.imgShow = true;
         this.pdfShow = false;
-        this.image = this.service.GetImage( '/' + this.candidatoId + datos.nom);
+        this.image = this.service.GetImage( this.candidatoId + '/' + datos.nom);
         this.nomImg = datos.nom;
         this.modal.show();
 
-    }
-    else
-    {
+    } else {
         this.imgShow = false;
         this.pdfShow = true;
-        this.pdfSrc = this.service.GetPdf('utilerias/Files/users/' + this.candidatoId + '/' + datos.nom).subscribe( data=>{
-        var fileurl = window.URL.createObjectURL(data);
+        this.pdfSrc = this.service.GetPdf('utilerias/Files/users/' + this.candidatoId + '/' + datos.nom).subscribe( data => {
+        const fileurl = window.URL.createObjectURL(data);
         window.open(fileurl)
           // this.pdfSrc = fileurl;
           // this.modal.show();
-        })
-
+        });
     }
   }
 
 
-  downloadFile(datos)
-  {
-    var ruta = '/utilerias/Files/users/' + this.candidatoId + '/';
+  downloadFile(datos) {
+    const ruta = '/utilerias/Files/users/' + this.candidatoId + '/';
 
     this.service.DownloadFiles(ruta + datos.nom).subscribe( res =>{
-      saveAs(res, datos.nom)
-    })
+      saveAs(res, datos.nom);
+    });
 
   }
 
-  deleteFile(datos)
-  {
+  deleteFile(datos) {
     swal({
-      title: "¿ESTÁS SEGURO?",
-      text: "¡Se borrara el archivo " + datos.nom + "!",
-      type: "warning",
+      title: '¿ESTÁS SEGURO?',
+      text: '¡Se borrara el archivo ' + datos.nom + '!',
+      type: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#ec2121",
-      confirmButtonText: "¡Si, borrar!",
-      cancelButtonColor: "#ec2121",
-      cancelButtonText: "¡No, cancelar!",
+      confirmButtonColor: '#ec2121',
+      confirmButtonText: '¡Si, borrar!',
+      cancelButtonColor: '#ec2121',
+      cancelButtonText: '¡No, cancelar!',
       closeOnConfirm: true,
       closeOnCancel: true
     }, (isConfirm) => {
       window.onkeydown = null;
       window.onfocus = null;
       if (isConfirm) {
-        var ruta = '/utilerias/Files/users/' + this.candidatoId + '/';
-        this.service.DeleteFiles(ruta + datos.nom).subscribe( res =>{
-          if(res == 200)
-          {
-            swal('Borrar Archivo', 'El archivo se borró con éxito', 'success')
+        const ruta = '/utilerias/Files/users/' + this.candidatoId + '/';
+        this.service.DeleteFiles(ruta + datos.nom).subscribe( res => {
+          if(res === 200) {
+            swal('Borrar Archivo', 'El archivo se borró con éxito', 'success');
             this.ngOnInit();
-          }
-          else
-          {
-            swal('Borrar Archivo', 'Ocurrio un error al intentar borrar archivo', 'error')
+          } else {
+            swal('Borrar Archivo', 'Ocurrio un error al intentar borrar archivo', 'error');
           }
         });
+      } else {
+        swal('Cancelado', 'No se realizó ningún cambio', 'error');
       }
-      else
-      {
-        swal("Cancelado", "No se realizó ningún cambio", "error");
-      }
-});
+    });
 
   }
 
-  closeModal()
-  {
+  closeModal() {
     this.modal.hide();
   }
 
-  getTypes(data)
-  {
+  getTypes(data) {
     data.forEach(element => {
-      if(element.ext.toLowerCase() == '.jpeg' || element.ext.toLowerCase() == '.jpg' || element.ext.toLowerCase() == '.png')
-      {
+      if(element.ext.toLowerCase() === '.jpeg' || element.ext.toLowerCase() === '.jpg' || element.ext.toLowerCase() === '.png') {
         this.files.push({
           type: element.ext,
           nom: element.nom,
@@ -185,9 +166,7 @@ onClosed(): void {
           fc: element.fc,
           icon: 'fa-file-image-o'});
         this.cont_image ++;
-      }
-      else if(element.ext == '.pdf')
-      {
+      } else if(element.ext === '.pdf') {
         this.files.push({
           type: element.ext,
           nom: element.nom,
@@ -195,9 +174,7 @@ onClosed(): void {
           fc: element.fc,
           icon: 'fa-file-pdf-o'});
         this.cont_pdf++;
-      }
-      else if(element.ext == '.xlsx')
-      {
+      } else if(element.ext === '.xlsx') {
         this.files.push({
           type: element.ext,
           nom: element.nom,
@@ -205,9 +182,7 @@ onClosed(): void {
           fc: element.fc,
           icon: 'fa-file-excel-o'});
         this.cont_xls++;
-      }
-      else
-      {
+      } else {
         this.files.push({
           type: element.ext,
           nom: element.nom,
@@ -220,15 +195,12 @@ onClosed(): void {
 
   }
 
-  GetFiles()
-  {
-    if(this.candidatoId)
-    {
-
+  GetFiles() {
+    if (this.candidatoId) {
       this.service.GetFiles(this.candidatoId)
       .subscribe( data => {
-        this.getTypes(data)
+        this.getTypes(data);
       });
-  }
+    }
   }
 }

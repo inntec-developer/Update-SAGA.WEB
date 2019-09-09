@@ -143,8 +143,7 @@ export class AdminServiceService {
     return this._httpClient.get(ApiConection.ServiceUrlFileManager + 'pdf/' + url, {responseType: "blob"});
   }
 
-  GetImage(ruta): string
-  {
+  GetImage(ruta): string {
     return ApiConection.ServiceUrlFileManager + 'Files/users/' + ruta;
   }
 

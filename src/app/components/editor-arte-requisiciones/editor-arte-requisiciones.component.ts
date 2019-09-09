@@ -11,7 +11,7 @@ import { SettingsService } from '../../core/settings/settings.service';
 const swal = require('sweetalert');
 
 /* ES5 */
-var htmlToImage = require('html-to-image');
+const htmlToImage = require('html-to-image');
 
 @Component({
   selector: 'app-editor-arte-requisiciones',
@@ -65,24 +65,32 @@ export class EditorArteRequisicionesComponent implements OnInit {
   contacto: string = 'Llama al 3333 3333 ext.666 o manda correo indicando el título de la vacante al correo mbonita@damsa.com.mx con atención a Melina Bonita';
 
   usuarioId = this.settings.user['id'];
-  
-  constructor(private dialog: MatDialog, private _service: AdminServiceService, private settings: SettingsService, private _serviceTickets: SistTicketsService) { }
+
+  constructor(private dialog: MatDialog,
+    private _service: AdminServiceService,
+    private settings: SettingsService,
+    private _serviceTickets: SistTicketsService) { }
 
   ngOnInit() {
-this.openDialogRequiArte();
+   this.openDialogRequiArte();
   }
 
   openDialogBG() {
-    let dialogCnc = this.dialog.open(DlgBGArteComponent, {
+    const dialogCnc = this.dialog.open(DlgBGArteComponent, {
       width: '90%',
       height: '90%',
     });
     dialogCnc.afterClosed().subscribe(result => {
-      this._service.GetBG('ArteRequi/BG/' + result.nom).subscribe(r => {
-        let type = result.type.replace('.', '');
-        this.bg = 'data:image/'+ type + ';base64,' + r;
-      });
-    })
+      console.log(result)
+      if (result !== '') {
+        this._service.GetBG('ArteRequi/BG/' + result.nom).subscribe(r => {
+          let type = result.type.replace('.', '');
+          this.bg = 'data:image/' + type + ';base64,' + r;
+        });
+      } else {
+        swal('¡GUARDAR ARTE!', 'No se realizo ningún cambio', 'warning');
+      }
+    });
   }
   openDialogRequiArte() {
 
@@ -103,27 +111,23 @@ this.openDialogRequiArte();
     // });
   }
 
-  Borrar()
-  {
+  Borrar() {
     this.vBtra = '';
     this.descripcion = '';
     this.experiencia = '';
     this.contacto = '';
   }
 
-  Guardar()
-  {
-    if(this.requisicionId != undefined)
-    {
-    var node = document.getElementById('my-node');
+  Guardar() {
+    if(this.requisicionId !== undefined) {
+    const node = document.getElementById('my-node');
     htmlToImage.toPng(node)
   .then(dataUrl => {
-    let arte = { arte: dataUrl, requisicionId: this.requisicionId, usuarioId: this.usuarioId}
+    const arte = { arte: dataUrl, requisicionId: this.requisicionId, usuarioId: this.usuarioId }
      this._service.GuardarArte(arte).subscribe(data => {
-        if(data == 200)
-        {
-          var nom = this.requisicionId + '.png';
-          window.saveAs(dataUrl, nom)
+        if (data === 200) {
+          const nom = this.requisicionId + '.png';
+          window.saveAs(dataUrl, nom);
           // this._service.downloadImage(nom).subscribe(res =>{
           //   saveAs(res, nom)
           // })
@@ -134,7 +138,6 @@ this.openDialogRequiArte();
 //           })
         }
       });
- 
   })
   .catch(function (error) {
     console.error('oops, something went wrong!', error);
