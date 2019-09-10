@@ -8,14 +8,11 @@ import { ComponentsService } from './../../service/Components/components.service
 import { MenuService } from '../../core/menu/menu.service';
 import { SettingsService } from '../../core/settings/settings.service';
 import { UserblockService } from '../sidebar/userblock/userblock.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 const screenfull = require('screenfull');
 const browser = require('jquery.browser');
 declare var $: any;
-
-
-
-
 
 @Component({
   selector: 'app-header',
@@ -24,8 +21,11 @@ declare var $: any;
   providers: [ComponentsService]
 })
 export class HeaderComponent implements OnInit {
-  modalRef: BsModalRef;
 
+  
+  public ArrayVacante: Array<any> = [];
+  modalRef: BsModalRef;
+  public ShowModal: boolean;
   navCollapsed = true; // for horizontal layout
   menuItems = []; // for horizontal layout
   alertMessage: Array<any> = []
@@ -54,7 +54,8 @@ export class HeaderComponent implements OnInit {
     public settings: SettingsService,
     public _service: ComponentsService,
     private modalService: BsModalService,
-    private toasterService: ToasterService) {
+    private toasterService: ToasterService,
+    private spiner: NgxSpinnerService) {
   }
 
   ngOnInit() {
@@ -163,6 +164,13 @@ export class HeaderComponent implements OnInit {
     this.modalRef = this.modalService.show(template, this.config);
   }
 
+  openModalCon(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, this.config);
+    $(".modal-content").css("width","900px");
+    $(".modal-content").css("top","40px");
+    $(".modal-content").css("left","-209px");
+  }
+
   enviarCorreFactPuro(){
     this._service.enviarCorreFactPuro(this.Folio).subscribe(data => {
       if(data == 202){
@@ -194,6 +202,16 @@ export class HeaderComponent implements OnInit {
     else{
       this.Puro = false;
     }
+  }
+
+
+  BusquedaModal(){
+    this.spiner.show();
+    let valor2 = $("#BtnConsulVacant").val();
+    this._service.getConsultaVacante(valor2).subscribe(elemnt => {
+      this.ArrayVacante = elemnt;
+      this.spiner.hide();
+    });
   }
 
   /*

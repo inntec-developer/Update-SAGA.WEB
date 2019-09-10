@@ -334,12 +334,14 @@ export class ApiConection {
   public static GetCandidatoRep = 'reporte/candidatos';
   public static GetVacanteReporte = 'reporte/vacante';
   public static GetClientesReporte = 'reporte/clientes';
-  /* Kiosco */
 
+  /*Consulta */
+  public static GetConsultavacante = 'reporte/consultavacante';
+
+  /* Kiosco */
   public static PostulacionKiosco = 'Kiosco/postulacion';
 
   /*SistTickets */
-
   public static InsertTicket = 'SistTickets/InsertTicketRecl';
   public static GetFilaTickets = 'SistTickets/getFilaTickets';
   public static GetTicketRecl = 'SistTickets/getTicketsReclutador';

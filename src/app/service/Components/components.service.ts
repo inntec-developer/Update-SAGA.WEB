@@ -71,8 +71,16 @@ export class ComponentsService {
   private UrlCheckFolioPuro = ApiConection.ServiceUrl + ApiConection.CheckFolioPuro;
   private UrlEnviarCorreFactPuro = ApiConection.ServiceUrl + ApiConection.EnviarCorreFactPuro;
 
+  // Consulta de vacante
+  private UrlConsultaVacante = ApiConection.ServiceUrl + ApiConection.GetConsultavacante;
+
 
   constructor(private _httpClient: HttpClient) { }
+
+  getConsultaVacante(data: string): Observable<any> {
+    let params = new HttpParams().set('busquedad', data);
+    return this._httpClient.get(this.UrlConsultaVacante, { params: params, headers: this.httpOptions.headers});
+  }
 
   getProductividad(data: any): Observable<any> {
     let params = new HttpParams().set('usuario', data);

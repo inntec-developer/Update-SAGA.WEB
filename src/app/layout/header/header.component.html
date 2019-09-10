@@ -67,16 +67,22 @@
     </li>
     <!-- End Mostrar Acerca de -->
     <li class="nav-item d-none d-md-block">
-      <a href="#" (click)="openModal(acercaDe)" title="Actualizaci&oacute;n" class="nav-link">
-        <em class="fa fa-question-circle-o"></em>
-      </a>
-    </li>
+        <a href="#" (click)="openModal(acercaDe)" title="Actualizaci&oacute;n" class="nav-link">
+          <em class="fa fa-question-circle-o"></em>
+        </a>
+      </li>
     <!-- End Cpy  Version y correo soporte -->
     <li class="nav-item d-none d-md-block">
       <a href="#" (click)="openModalInfo(infosistem)" title="Informacion del Sistem" class="nav-link">
         <em class="fa fa-info-circle"></em>
       </a>
     </li>
+     <!-- Consulta -->
+     <li class="nav-item d-none d-md-block">
+        <a href="#" (click)="openModalCon(Consulta)" title="Consulta" class="nav-link">
+          <em class="fa fa-search"></em>
+        </a>
+      </li>
     <!-- END lock screen-->
   </ul>
   <!-- END Left navbar-->
@@ -304,6 +310,55 @@
     </button>
   </div>
 </ng-template>
+
+<!-- Modal para visualizar vacantes seleccionadas -->
+<ng-template   #Consulta>
+    <div >
+      <div class="modal-header">
+        <h4 class="modal-title text-success">Consulta de vacantes</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true" class="text-danger">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="width: 200px">
+            <mat-form-field >
+                <span matPrefix></span>
+                <input type="tel" id="BtnConsulVacant"  matInput placeholder="Nombre de la vacante">
+                <em (click)="BusquedaModal()" style="float:right;cursor: pointer" class="fa fa-search"></em>
+              </mat-form-field>
+        </div>
+        <div style="overflow: auto; max-height: 400px">
+            <table class="table" >
+                <thead>
+                    <tr>
+                        <th>Folio</th>
+                        <th>Perfil</th>
+                        <th>Reclutador</th>
+                        <th>Correo electrónico</th>
+                        <th>Sucursal del reclutador</th>
+                      </tr>
+                </thead>
+                <tbody >
+                    <tr *ngFor="let item of ArrayVacante" >
+                        <td>{{item.folio}}</td>
+                        <td>{{item.vBtra}}</td>
+                        <td>{{item.reclutador}}</td>
+                        <td>{{item.email}}</td>
+                        <td>{{item.sucursal}}</td>
+                    </tr>
+                </tbody>
+              </table>
+        </div>
+          <ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
+      </div>
+      <footer>
+      </footer>
+    </div>
+  </ng-template>
+
+ 
+ 
 
 
 
