@@ -1,7 +1,7 @@
 <form [formGroup]="formCliente">
   <section #ClienteSection class="row">
     <mat-form-field class="col-12">
-      <input #RazonSocialCtrl type="text" placeholder="Razón Social" aria-label="Number" matInput
+      <input #RazonSocialCtrl type="text" placeholder="Razón Social" aria-label="Number" matInput autofocus
         formControlName="RazonSocial" [value]="RazonSocialCtrl.value.toUpperCase()" [matAutocomplete]="cliente"
         (keyup.enter)="filter()" required="" />
       <mat-autocomplete #cliente="matAutocomplete" (optionSelected)="selected($event)">
@@ -31,14 +31,14 @@
       <input matInput placeholder="Actividad de la Empresa" formControlName="Actividad">
     </mat-form-field>
     <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-      <mat-select placeholder="Tipo Reclutamiento" formControlName="Tipo" required>
+      <mat-select placeholder="Tipo Reclutamiento" formControlName="Tipo" required #TipoReclutamientoCtrl>
         <mat-option *ngFor="let x of TiposReclutamientos" [value]="x.id">
           {{x.tipoReclutamiento | uppercase}}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-      <mat-select placeholder="Coordinación" formControlName="Clase" required>
+      <mat-select placeholder="Coordinación" formControlName="Clase" required #ClaseReclutamiento>
         <mat-option *ngFor="let x of ClasesReclutamientos" [value]="x.id">
           {{x.calsesReclutamiento | uppercase}}
         </mat-option>

@@ -1,7 +1,7 @@
 <form [formGroup]="formEncabezado">
   <section #NombrePerfilSection class="row">
     <mat-form-field class="col-12">
-      <input #NombrePuestoCtrl matInput placeholder="Nombre del Puesto a Reclutar" formControlName="NombrePuesto" [value]="NombrePuestoCtrl.value.toUpperCase()">
+      <input #NombrePuestoCtrl matInput autofocus placeholder="Nombre del Puesto a Reclutar" formControlName="NombrePuesto" [value]="NombrePuestoCtrl.value.toUpperCase()">
     </mat-form-field>
   </section>
   <section #GeneroEdadEstadoSection class="row">
@@ -13,11 +13,11 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-      <input matInput #edadMinima type="number" placeholder="Edad Mínima" min="16" formControlName="EdadMin">
+      <input matInput #edadMinima type="number" placeholder="Edad Mínima" min="16" formControlName="EdadMin" required="">
     </mat-form-field>
     <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
       <input matInput #edadMaxima type="number" placeholder="Edad Máxima" min="{{edadMinima.value}}"
-        formControlName="EdadMax">
+        formControlName="EdadMax" required="">
     </mat-form-field>
     <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
       <mat-select placeholder="Estado Civil" formControlName="EstadoCivil" required>
@@ -27,9 +27,9 @@
       </mat-select>
     </mat-form-field>
   </section>
-  <section #EscoAreaSection class="row">
+  <section #EscoAreaSection class="row" >
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-      <app-perfil-escolaridades [IdFormato]="IdFormato" [Escolaridades]="Escolaridades" (EscolaridadesEmt)="getEscolaridades($event)">
+      <app-perfil-escolaridades #perfilEscoComp [IdFormato]="IdFormato" [Escolaridades]="Escolaridades" (EscolaridadesEmt)="getEscolaridades($event)">
       </app-perfil-escolaridades>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">

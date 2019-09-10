@@ -3,7 +3,7 @@
   <section [hidden]="!Edit">
     <div class="row">
       <mat-form-field class="col-2">
-        <input matInput #NombreCtrl type="text" placeholder="Nombre" formControlName="horario"
+        <input matInput autofocus #NombreCtrl type="text" placeholder="Nombre" formControlName="horario"
           [value]="NombreCtrl.value.toUpperCase()" required="">
       </mat-form-field>
 
@@ -33,7 +33,7 @@
 
       <mat-form-field class="col-1">
         <input matInput #aHoraCtrl type="number" class="text-right" placeholder="No. Vacantes"
-          formControlName="vacantes" required="">
+          formControlName="vacantes" required="" >
       </mat-form-field>
 
       <mat-form-field class="col-3">

@@ -25,9 +25,21 @@ declare var $: any;
 })
 
 export class DtRequisicionComponent implements OnInit {
-  public reporteCandidatos: boolean = false;
+  public reporteCandidatos = false;
 
-  //scroll
+  /*
+ * Creacion de mensajes
+ * */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7, tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
+
+  // scroll
   disabled = false;
   compact = false;
   invertX = false;
@@ -36,16 +48,16 @@ export class DtRequisicionComponent implements OnInit {
 
   // Variables Globales
   public dataSource: Array<any> = [];
-  Vacantes: number = 0;
+  Vacantes = 0;
 
   // Varaibles del paginador
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
-  selected: boolean = false;
+  selected = false;
   rowAux = [];
   cubiertas = [];
 
@@ -65,7 +77,7 @@ export class DtRequisicionComponent implements OnInit {
   candidatos = true;
 
   // Estatus
-  nbc = true; //nueva busqueda candidato
+  nbc = true; // nueva busqueda candidato
   contratado = true;
   cubierta = true;
   gbc = true; // garantía busqueda candidato
@@ -132,10 +144,12 @@ export class DtRequisicionComponent implements OnInit {
       title: 'Solicitante', className: 'text-info text-center',
       name: 'propietario', filtering: { filterString: '', placeholder: 'Solicitante' }
     },
-    { title: 'Reclutador', className: 'text-info text-center',
-    name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador', columnName: 'reclutadores' } },
+    {
+      title: 'Reclutador', className: 'text-info text-center',
+      name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador', columnName: 'reclutadores' }
+    },
   ];
-  
+
   public config: any = {
     paging: true,
     filtering: { filterString: '' },
@@ -550,13 +564,31 @@ export class DtRequisicionComponent implements OnInit {
           if (estatusId >= 34 && estatusId <= 37) {
             this.rows[idx]['enProcesoN'].forEach(element => {
               if (element.estatusId != 24 && element.estatusId != 42 && element.estatusId != 27 && element.estatusId != 28) {
-                emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
+                emails.push(
+                  {
+                    requisicionId: this.RequisicionId,
+                    vacante: this.Vacante,
+                    email: element.email,
+                    nombre: element.nombre,
+                    candidatoId: element.candidatoId,
+                    estatusId: 27
+                  }
+                );
               }
             });
 
             this.rows[idx]['postuladosN'].forEach(element => {
               if (element.statusId == 1) {
-                emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
+                emails.push(
+                  {
+                    requisicionId: this.RequisicionId,
+                    vacante: this.Vacante,
+                    email: element.email,
+                    nombre: element.nombre,
+                    candidatoId: element.candidatoId,
+                    estatusId: 27
+                  }
+                );
               }
             })
             if (emails.length > 0) {
@@ -597,18 +629,17 @@ export class DtRequisicionComponent implements OnInit {
 
   openDialogCancel() {
     this.element.motivoId = 17;
-    let dialogCnc = this.dialog.open(DialogCancelRequiComponent, {
+    const dialogCnc = this.dialog.open(DialogCancelRequiComponent, {
       data: this.element
     });
-    var window: Window
     dialogCnc.afterClosed().subscribe(result => {
-      if (result == 200) {
-        this.updataStatus(8, 'Cancelar')
+      if (result === 200) {
+        this.updataStatus(8, 'Cancelar');
         this.ValidarEstatus(8);
         this.refreshTable();
         if (this.element.tipoReclutamientoId === 1) {
-          this.SendEmail();
         }
+        this.popToast('success', 'Cancelación', 'La requisicion se cancelo exitosamente, podrás consultarla en el Historico');
       }
 
 
@@ -668,7 +699,6 @@ export class DtRequisicionComponent implements OnInit {
   }
 
   exportAsXLSX() {
-
     if (this.dataSource.length > 0) {
       var aux = [];
       var comentarios = '';
@@ -731,19 +761,8 @@ export class DtRequisicionComponent implements OnInit {
     }
   }
 
-  /*
-  * Creacion de mensajes
-  * */
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    limit: 7, tapToDismiss: false,
-    showCloseButton: true,
-    mouseoverTimerStop: true,
-  });
   popToast(type, title, body) {
-    var toast: Toast = {
+    const toast: Toast = {
       type: type,
       title: title,
       timeout: 5000,

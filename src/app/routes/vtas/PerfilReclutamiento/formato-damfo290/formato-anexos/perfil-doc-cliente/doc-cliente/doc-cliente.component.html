@@ -2,9 +2,9 @@
   <section [hidden]="!Edit">
     <div class="row">
       <mat-form-field class="col-10">
-        <input #DocumentoCtrl matInput maxlength="100" placeholder="Documento" rows="2"
+        <input #DocumentoCtrl autofocus matInput maxlength="100" placeholder="Documento" rows="2"
           [value]="DocumentoCtrl.value.toUpperCase()"
-          formControlName="documento"
+          formControlName="documento" (keyup.control.enter)="Save()"
           required="">
       </mat-form-field>
       <section class="col-2">

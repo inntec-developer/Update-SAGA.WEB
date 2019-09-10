@@ -18,12 +18,14 @@
 </section>
 <tabset [justified]="true">
   <tab heading="Cliente" id="TapCliente">
-    <app-formato-cliente [IdFormato]="IdFormato"></app-formato-cliente>
+    <app-formato-cliente [IdFormato]="IdFormato" #FormatoClienteCpt></app-formato-cliente>
   </tab>
-  <tab heading="Datos de Perfil" id="TapRequisitos">
+  <!-- [disabled]="!cliente.formCliente.valid" -->
+  <tab heading="Datos de Perfil" id="TapRequisitos" >
     <app-formato-requisitos [IdFormato]="IdFormato"></app-formato-requisitos>
   </tab>
-  <tab heading="Horarios, Prestaciones ..." id="TapInfoAdicional">
+  <!-- [disabled]="!cliente.formCliente.valid" -->
+  <tab heading="Horarios, Prestaciones ..." id="TapInfoAdicional" >
     <app-formato-anexos [IdFormato]="IdFormato"></app-formato-anexos>
   </tab>
   <tab heading="Anexos" id="TapAnexos" *ngIf="!isNew">

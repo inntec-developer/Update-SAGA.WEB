@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -78,6 +78,18 @@ export class FormatoClienteComponent implements OnInit, OnChanges {
       Actividad: [{ value: '', disabled: true }],
       Tipo: ['', Validators.required],
       Clase: ['', Validators.required],
+    });
+
+    this.markFormGroupTouched(this.formCliente);
+
+  }
+  private markFormGroupTouched(formGroup: FormGroup) {
+    (<any>Object).values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+
+      if (control.controls) {
+        this.markFormGroupTouched(control);
+      }
     });
   }
 
