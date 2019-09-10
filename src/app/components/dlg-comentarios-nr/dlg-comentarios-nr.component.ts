@@ -46,7 +46,7 @@ export class DlgComentariosNRComponent implements OnInit, AfterViewInit {
   AddComentario()
   {
     this.loading = true;
-    let Comentario = {
+    const Comentario = {
         Comentario: this.comentario,
         CandidatoId: this.usuario.CandidatoId,
         RequisicionId: this.usuario.requisicionId,
@@ -57,7 +57,7 @@ export class DlgComentariosNRComponent implements OnInit, AfterViewInit {
 
       this.serviceComentarios.AddComentariosNR(Comentario).subscribe(data => {
 
-        if (data == 200) {
+        if (data === 200) {
           this.comentario = '';
           this.motivoId = 0;
 

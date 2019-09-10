@@ -154,10 +154,8 @@
                           </span>
                         </ng-template>
                   </td>
-                  <!-- <td class="text-right"> {{row.sueldoMinimo | moneda: $}}</td>
-            <td class="text-right"> {{row.sueldoMaximo | moneda: $}}</td> -->
-                  <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
-                  <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
+                  <td class="text-center" placement="top" tooltip="Fecha Creacion: {{row.fch_Creacion | date: 'dd/MM/yyyy'}}" container='body'> {{row.diasTrans | number}}</td>
+                  <td class="text-right"> {{row.sueldoMinimo | moneda:'$'}} - {{row.sueldoMaximo | moneda:'$'}}</td>
                   <td class="text-center">
                     <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info"
                       [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { ExamenesService } from './../../../service/Examenes/examenes.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-contestar-examen',
@@ -20,7 +21,23 @@ export class ContestarExamenComponent implements OnInit {
   overStar = {};
   percent = {};
 calificacion = 0;
-  constructor(private service: ExamenesService) { }
+
+ /**
+   * configuracion para mensajes de acciones.
+   */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+    preventDuplicates: true,
+  });
+
+  constructor(private service: ExamenesService, private toasterService: ToasterService,
+    public dialog: MatDialogRef<ContestarExamenComponent>) { }
   nomExamen: any;
 
   ngOnInit() {
@@ -31,7 +48,6 @@ calificacion = 0;
   GetEntrevista() {
     this.service.GetEntrevista().subscribe(data => {
       this.entrevista = data;
-      console.log(this.entrevista)
     });
   }
 
@@ -64,9 +80,21 @@ calificacion = 0;
     this.calificacion = sum / this.Resp.length;
   }
 
-  Agregar()
-  {
-    this.service.InsertRespCandidato(this.Resp).subscribe(data => {
-    });
+  Agregar() {
+this.dialog.close();
+    this.popToast('error', 'Entrevista', 'Aún no tengo las preguntas');
+    // this.service.InsertRespCandidato(this.Resp).subscribe(data => {
+    // });
+  }
+
+  popToast(type, title, body) {
+    const toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 4000,
+      body: body
+    };
+    this.toasterService.pop(toast);
+
   }
 }

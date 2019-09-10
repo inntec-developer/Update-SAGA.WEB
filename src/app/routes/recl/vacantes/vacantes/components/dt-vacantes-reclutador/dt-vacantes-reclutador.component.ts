@@ -1,4 +1,4 @@
-import { debug } from 'util';
+
 import { AfterViewChecked, Component, EventEmitter, OnInit, Output, ElementRef, ViewChild } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -453,7 +453,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.nbc = true; //  nueva busqueda candidato
       this.pausa = true;
       this.disenador = true;
-    } else if (estatusId === 6 && this.element.vacantes > 0 && this.element.confidencial){//  aprobada
+    } else if (estatusId === 6 && this.element.vacantes > 0 && this.element.confidencial) {//  aprobada
       this.bc = false; //  busqueda candidato
       this.sc = true; //  socieconomico
       this.ecc = true; //  envío candidato cliente
@@ -544,7 +544,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     } else if ((estatusId === 5 || estatusId === 31) &&
       this.element.vacantes > 0 && this.element.enProceso === 0 && this.element.enProcesoFC === 0 && this.element.enProcesoFR === 0) {
        // reactivada  - garantia de busqueda - nueva busqueda
-      this.bc = true; // busqueda candidato
+      this.bc = false; // busqueda candidato
       this.sc = true; // socieconomico
       this.ecc = true; // envío candidato cliente
       this.ec = true; // espera contratacion
@@ -553,7 +553,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     } else if ((estatusId === 5 || estatusId === 31) && this.element.vacantes > 0
     && this.element.enProcesoFC === 0 && this.element.enProcesoFR === 0 && this.element.enProceso > 0) {
     // reactivada   - garantia de busqueda - nueva busqueda -pausada
-      this.bc = true; // busqueda candidato
+      this.bc = false; // busqueda candidato
       this.sc = true; // socieconomico
       this.ecc = true; // envío candidato cliente
       this.ec = true; // espera contratacion
@@ -813,7 +813,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   exportAsXLSX() {
 
     if (this.dataSource.length > 0) {
-      let aux = [];
+      const aux = [];
       let comentarios = '';
       let reclutador = '';
       let coordinador = '';

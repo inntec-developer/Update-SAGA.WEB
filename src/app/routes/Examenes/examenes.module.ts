@@ -19,7 +19,7 @@ import { PrincipalExamenesComponent } from './principal-examenes/principal-exame
 const routes: Routes = [
   { path: 'addexamen', component: AddExamenComponent },
   { path: 'asignar', component: AsignarExamenComponent },
-  { path: 'contestar', component: ContestarExamenComponent },
+  // { path: 'contestar', component: ContestarExamenComponent },
   { path: 'revisar', component: RevisarExamenesComponent },
   { path: 'asignarClaves', component: AsignarPsicometricosComponent },
   { path: 'agregarResultPsico', component: AgregarResultadosPsicoComponent },
@@ -50,10 +50,10 @@ const routes: Routes = [
     // DlgRevisarExamenesComponent
   ],
   exports: [
-    RouterModule
+    RouterModule, ContestarExamenComponent
   ],
 
-
+  entryComponents: [ContestarExamenComponent],
   providers: [RequisicionesService,],
 
 })

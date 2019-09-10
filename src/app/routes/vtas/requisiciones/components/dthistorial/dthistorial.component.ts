@@ -42,6 +42,29 @@ export class DTHistorialComponent implements OnInit {
     filtering: { filterString: '' },
     className: ['table-hover  mb-0']
   };
+
+  public rows: Array<any> = [];
+  public columns: Array<any> = [
+    { title: 'Folio', sorting: 'desc', className: 'text-success text-center',
+    name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+    { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
+    { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
+    { title: 'Cub/Vac', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No.' } },
+    { title: 'Coordinacion', className: 'text-info text-center',
+    name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Coordinacion' } },
+    { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion',
+    filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento',
+    filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
+    { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador',
+    filtering: { filterString: '', placeholder: 'Coordinador' } },
+    { title: 'Solicitante', className: 'text-info text-center', name: 'propietario',
+    filtering: { filterString: '', placeholder: 'Solicitante' } },
+    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores',
+    filtering: { filterString: '', placeholder: 'Reclutador' } },
+  ];
+
   constructor( private service: RequisicionesService, private spinner: NgxSpinnerService,
     private settings: SettingsService,
     private excelService: ExcelService,
@@ -63,23 +86,6 @@ export class DTHistorialComponent implements OnInit {
     });
   }
 
-  public rows: Array<any> = [];
-  public columns: Array<any> = [
-    { title: 'Folio', sorting: 'desc', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
-    { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
-    { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
-    { title: 'Cub/Vac', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No.' } },
-    { title: 'Coordinacion', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Coordinacion' } },
-    // { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
-    // { title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
-    { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
-    { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
-    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
-    { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador', filtering: { filterString: '', placeholder: 'Coordinador' } },
-    { title: 'Solicitante', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Solicitante' } },
-    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador' } },
-  ];
-
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
     const start = (page.page - 1) * page.itemsPerPage;
     const end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
@@ -90,35 +96,27 @@ export class DTHistorialComponent implements OnInit {
     let filteredData: Array<any> = data;
     this.showFilterRow = true;
     this.columns.forEach((column: any) => {
-      if (column.filtering.filterString != "") {
+      if (column.filtering.filterString !== '') {
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
-          {
-            if(!Array.isArray(item[column.name]))
-            {
+          if (item[column.name] != null) {
+            if (!Array.isArray(item[column.name])) {
               return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
             } else {
                 let aux = item[column.name];
                 let mocos = false;
-                if(item[column.name].length > 0)
-                {
+                if (item[column.name].length > 0) {
                   item[column.name].forEach(element => {
-                    if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
-                    {
+                    if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase())) {
                       mocos = true;
                       return;
                     }
                   });
 
-                  if(mocos)
-                  {
+                  if(mocos) {
                     return item[column.name];
                   }
-                }
-                else
-                {
-                  if( 'sin asignar'.match(column.filtering.filterString.toLowerCase()))
-                  {
+                } else {
+                  if ( 'sin asignar'.match(column.filtering.filterString.toLowerCase())) {
                     return item[column.name];
                   }
                 }
@@ -185,8 +183,8 @@ export class DTHistorialComponent implements OnInit {
 
     if (this.dataSource.length > 0) {
       var aux = [];
-      var reclutador = "";
-      var coordinador = "";
+      var reclutador = '';
+      var coordinador = '';
 
       this.dataSource.forEach(row => {
         const d = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');

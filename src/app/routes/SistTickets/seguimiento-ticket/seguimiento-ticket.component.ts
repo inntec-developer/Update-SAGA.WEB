@@ -14,7 +14,8 @@ import { RequisicionesService } from '../../../service';
 import { Router } from '@angular/router';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { SistTicketsService } from './../../../service/SistTickets/sist-tickets.service';
-import { element } from 'protractor';
+import { ContestarExamenComponent } from '../../Examenes/contestar-examen/contestar-examen.component';
+
 
 @Component({
   selector: 'app-seguimiento-ticket',
@@ -24,7 +25,7 @@ import { element } from 'protractor';
 })
 export class SeguimientoTicketComponent implements OnInit {
   @ViewChild('modallib') modal;
-  modalExamen : boolean;
+  modalExamen: boolean;
 
   disabled = false;
   compact = false;
@@ -50,18 +51,34 @@ export class SeguimientoTicketComponent implements OnInit {
   examenId: any = 0;
 
   examenesCandidato = { 'tecnicos': [], 'psicometricos': [] };
-  exaTecnico: boolean = false;
-  exaPsico: boolean = false;
-  minutosEnAtencion: number = 0;
-  minutosEnEspera: number = 0;
-  registrar: boolean = false;
+  exaTecnico = false;
+  exaPsico = false;
+  minutosEnAtencion = 0;
+  minutosEnEspera = 0;
+  registrar = false;
   objLiberar: any = [];
-  dlgLiberar: boolean = false;
+  dlgLiberar = false;
   filteredData: any = [];
   filteredDataPos: any = [];
   search = '';
-  username: string = '';
-  pass: string = '';
+  username = '';
+  pass = '';
+  entrevista = false;
+
+   /**
+   * configuracion para mensajes de acciones.
+   */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+    preventDuplicates: true,
+  });
+
 
   constructor( private _service: SistTicketsService,
       private _Router: Router, private dialog: MatDialog,
@@ -76,8 +93,7 @@ export class SeguimientoTicketComponent implements OnInit {
         setInterval(() => this.timeWait(), 60000);
   }
 
-  Reinciar()
-  {
+  Reinciar() {
     this.ticket = [];
     this.finalizar = false;
     this.atender = false;
@@ -193,34 +209,29 @@ export class SeguimientoTicketComponent implements OnInit {
 
   }
 
-  public Finalizar(ticketId, estatus)
-  {
+  public Finalizar(ticketId, estatus) {
       this._service.UpdateStatusTicket(ticketId, estatus, sessionStorage.getItem('moduloId')).subscribe(data => {
-        //this.GetTicket(ticketId)
         this.Reinciar();
         this.minutosEnAtencion = 0;
       });
   }
 
   GetHorarioRequis(estatusTicket) {
-    if(this.ticket[0].candidato.length > 0)
-    {
-      if (this.ticket[0].candidato[0].estatusId != 27) {
+    if (this.ticket[0].candidato.length > 0) {
+      if (this.ticket[0].candidato[0].estatusId !== 27) {
         this.service.GetHorariosRequiConteo(this.ticket[0].requisicionId).subscribe(data => {
-          var aux = data.filter(element => !element.vacantes)
+          let aux = data.filter(element => !element.vacantes);
 
-          if (aux.length == 0) {
+          if (aux.length === 0) {
             aux = [{ id: 0, nombre: 'Los horarios ya están cubiertos' }]
           }
 
           this.OpenDlgHorarios(aux, 18, 'ENTREVISTA RECLUTAMIENTO', this.ticket[0].requisicionId, estatusTicket);
-        })
-      }
-      else {
+        });
+      } else {
         this.Finalizar(this.ticket[0].ticketId, estatusTicket);
       }
-    }
-    else {
+    } else {
       this.Finalizar(this.ticket[0].ticketId, estatusTicket);
     }
   }
@@ -234,7 +245,7 @@ export class SeguimientoTicketComponent implements OnInit {
     });
 
     dialogDlt.afterClosed().subscribe(result => {
-      if (result != 0) {
+      if (result !== 0) {
 
        const horarioId = result.horarioId;
 
@@ -245,78 +256,62 @@ export class SeguimientoTicketComponent implements OnInit {
            tipoMediosId: result.mediosId,
            ReclutadorId: this.settings.user['id'] };
 
-        this.serviceCandidato.UpdateFuenteRecl(datos).subscribe(result =>{
+        this.serviceCandidato.UpdateFuenteRecl(datos).subscribe(result => {
           this.servicePost.SetProceso(datos).subscribe(data => {
-            if (data == 201) {
-              if(estatusTicket == 3)
-              {
+            if (data === 201) {
+              if(estatusTicket === 3) {
                 this.popToast('success', 'Seguimiento', 'El candidato se encuentra en examenes');
                 this.Finalizar(this.ticket[0].ticketId, estatusTicket);
-              }
-              else
-              {
+              } else {
                 this.popToast('success', 'Seguimiento', 'El proceso termino correctamente');
                 this.Finalizar(this.ticket[0].ticketId, estatusTicket);
               }
-            }
-            else if (data == 300) {
+            } else if (data === 300) {
               this.popToast('info', 'Apartado', 'El candidato ya esta apartado o en proceso');
+            } else {
+              this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos');
             }
-            else {
-              this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos')
-            }
-          })
+          });
         });
-
       }
-
     });
   }
-
-  SetApartar(datos, ticket)
-  {
+  SetApartar(datos, ticket) {
     this._serviceCandidato.setApartarCandidato(datos)
       .subscribe(data => {
         switch (data) {
           case 200: {
-
-            this._service.UpdateRequiTicket(ticket.ticketId, datos.requisicionId).subscribe(data =>{
-              if(data == 200)
-              {
+            this._service.UpdateRequiTicket(ticket.ticketId, datos.requisicionId).subscribe(data => {
+              if (data === 200) {
                 this.loading = false;
 
-                var msg = 'El candidato se apartó correctamente.';
-                this.popToast('success', 'Apartado', msg);
+                this.popToast('success', 'Apartado', 'El candidato se apartó correctamente.');
 
-                this.GetTicket(ticket.ticketId)
-              }
-              else
-              {
-                var msg = 'Error el intentar apartar el candidato. Consulte al departamento de soporte si el problema persiste.';
-                this.popToast('error', 'Apartado', msg);
-                this._liberarCandidato(datos, ticket)
+                this.GetTicket(ticket.ticketId);
+              } else {
+                this.popToast('error', 'Apartado',
+                 'Error el intentar apartar el candidato. Consulte al departamento de soporte si el problema persiste.');
+                this._liberarCandidato(datos, ticket);
               }
             })
 
             break;
           }
           case 304: {
-            msg = 'El candidato ya esta apartado o en proceso.';
-            this.popToast('info', 'Apartado', msg); ''
+            this.popToast('info', 'Apartado', 'El candidato ya esta apartado o en proceso.');
             this.loading = false;
 
             break;
           }
           case 404: {
-            var msg = 'Error el intentar apartar el candidato. Consulte al departamento de soporte si el problema persiste.';
-            this.popToast('error', 'Apartado', msg);
+            this.popToast('error', 'Apartado',
+                  'Error el intentar apartar el candidato. Consulte al departamento de soporte si el problema persiste.');
             this.loading = false;
 
             break;
           }
           default: {
-            var msg = 'Error inesperado y desconocido, reporte el problema al departamento de soporte.';
-            this.popToast('error', 'Oops!!', msg);
+            this.popToast('error', 'Oops!!', 'Error inesperado y desconocido, reporte el problema al departamento de soporte.');
             this.loading = false;
 
             break;
@@ -332,15 +327,15 @@ export class SeguimientoTicketComponent implements OnInit {
     this.examenId = row.examenId;
     let propietario = false;
     this.dataSource.forEach(element => {
-      if (element.id == row.id) {
+      if (element.id === row.id) {
         propietario = true;
-        return
+        return;
       }
     });
 
     if (!propietario) {
       if (row.reclutadores.length > 1) {
-        let dialogDlt = this.dialog.open(DlgAsignarPerfilComponent, {
+        const dialogDlt = this.dialog.open(DlgAsignarPerfilComponent, {
           width: '45%',
           disableClose: true,
           data: row.reclutadores
@@ -349,78 +344,63 @@ export class SeguimientoTicketComponent implements OnInit {
 
         dialogDlt.afterClosed().subscribe(result => {
 
-          var procesoCandidato = {
+          const procesoCandidato = {
             candidatoId: candidato.candidato[0].candidatoId,
             requisicionId: row.id,
             folio: row.folio,
             reclutador: result.nombre,
             reclutadorId: result.reclutadorId,
             estatusId: 18
-          }
-
+          };
           this.SetApartar(procesoCandidato, candidato);
 
         });
-      }
-      else if (row.reclutadores.length == 1) {
-        let procesoCandidato = {
+      } else if (row.reclutadores.length === 1) {
+        const procesoCandidato = {
           candidatoId: candidato.candidato[0].candidatoId,
           requisicionId: row.id,
           folio: row.folio,
           reclutador: row.reclutadores[0].nombre,
           reclutadorId: row.reclutadores[0].reclutadorId,
           estatusId: 18
-        }
+        };
 
         this.SetApartar(procesoCandidato, candidato);
       }
-    }
-    else {
-
+    } else {
       this.loading = true;
-      let procesoCandidato = {
+      const procesoCandidato = {
         candidatoId: candidato.candidato[0].candidatoId,
         requisicionId: row.id,
         folio: row.folio,
         reclutador: this.settings.user['nombre'],
         reclutadorId: this.settings.user['id'],
         estatusId: 18
-      }
+      };
       this.SetApartar(procesoCandidato, candidato);
     }
 
   }
-
-  onClose(value)
-  {
-    if(value == 200)
-    {
+  onClose(value) {
+    if (value === 200) {
       this.modal.hide();
       this.dlgLiberar = false;
       this.objLiberar = [];
       this.GetTicket(this.ticket[0].ticketId)
         this.apartar = true;
         this.popToast('success', 'SEGUIMIENTO', 'El candidato se liberó correctamente');
-
-
-    }
-    else if(value == 404)
-    {
+    } else if (value === 404) {
       this.modal.hide();
       this.dlgLiberar = false;
       this.objLiberar = [];
       this.popToast('error', 'SEGUIMIENTO', 'Ocurrió un error al intentar actualizar datos');
-
-    }
-    else
-    {
+    } else {
       this.modal.hide();
       this.dlgLiberar = false;
       this.objLiberar = [];
     }
-
   }
-  openDialogLiberar(row, candidato){
+  openDialogLiberar(row, candidato) {
 
     this.objLiberar = [{
       RequisicionId: row.id,
@@ -434,15 +414,12 @@ export class SeguimientoTicketComponent implements OnInit {
   _liberarCandidato(row, candidato)
   {
     this._service.LiberarCandidato(row.id, candidato.candidato[0].candidatoId).subscribe(data =>{
-      if(data == 201)
-      {
+      if (data === 201) {
         this.GetTicket(candidato.ticketId)
         this.apartar = true;
         this.popToast('success', 'Apartado', 'El candidato se liberó correctamente');
-      }
-      else
-      {
-        var msg = 'Error el intentar liberar candidato. Consulte al departamento de soporte si el problema persiste.';
+      } else {
+        const msg = 'Error el intentar liberar candidato. Consulte al departamento de soporte si el problema persiste.';
         this.popToast('error', 'Apartado', msg);
       }
     });
@@ -451,19 +428,28 @@ export class SeguimientoTicketComponent implements OnInit {
 
   openDialogShowRequi(row) {
 
-    let dialogShow = this.dialog.open(DialogShowRequiComponent, {
+    const dialogShow = this.dialog.open(DialogShowRequiComponent, {
       width: '200%',
       height: '100%',
       data: { folio: row.folio, id: row.id, vacante: row.vBtra }
     });
     dialogShow.afterClosed().subscribe(result => {
-      if(result)
-      {
-
+      if (result) {
       }
     });
   }
+  openDialogEntrevista() {
 
+    const dialog = this.dialog.open(ContestarExamenComponent, {
+      width: '80%',
+      height: '70%'
+      // data: { candidatoId: this.ticket[0].candidato[0].candidatoId }
+    });
+    dialog.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    });
+  }
   ExamenesCandidatos()
   {
     this._serviceExamen.GetExamenCandidato(this.ticket[0].candidato[0].candidatoId).subscribe(exa => {
@@ -567,27 +553,13 @@ export class SeguimientoTicketComponent implements OnInit {
 
   }
 
-   /**
-   * configuracion para mensajes de acciones.
-   */
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    limit: 7,
-    tapToDismiss: false,
-    showCloseButton: true,
-    mouseoverTimerStop: true,
-    preventDuplicates: true,
-  });
-
   popToast(type, title, body) {
-    var toast: Toast = {
+    const toast: Toast = {
       type: type,
       title: title,
       timeout: 4000,
       body: body
-    }
+    };
     this.toasterService.pop(toast);
 
   }

@@ -17,7 +17,7 @@ li
 {
     list-style: none;
 }
-a{
+a {
  cursor: pointer;
 }
 a:hover
@@ -25,11 +25,16 @@ a:hover
     background-color: orange;
     font-size: 14px !important;
 }
-// .modal-lg
-// {
-//     width: 1100px !important;
-// }
-
+.entrevista {
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow:1px 10px 40px rgba(0,0,0,.23);
+   }
+ 
+   .entrevista a:hover span
+   {
+     color: #555555 !important;
+   }
 .btn-success.round
 {
   border-radius: 24px;
