@@ -5,27 +5,29 @@
     <div class="card-body">
         <h5 class="card-title text-warning mt-2">
             <em class="fa fa-user-md mr-1"></em> EXAMENES MEDICOS</h5>
-        <div class="row bg-light p-1">
-          <div class="col">
-            <div class="input-group input-group-sm float-left with-focus long">
-              <input (input)="Search($event)" class="form-control form-control-sm border-right-0 " type="text" placeholder="Filtrar" />
-              <div class="input-group-append">
-                <span class="input-group-text fa fa-search text-info bg-transparent border-left-0"></span>
-              </div>
-            </div>
-
+        <div class="d-flex justify-content-end mb-3 mr-2">
+     
             <button type="button" class="btn btn-xs btn-success mat-elevation-z8 float-right mt-1" (click)="refreshTable()" container="body"
             placement="bottom" tooltip="Actualizar" container="body">
             <em class="icon-refresh"></em>
           </button>
 
-      </div>
         </div>
-        <div class="d-flex justify-content-end mt-3">
+        <div class="row">
+          <div class="col-sm-6 col-md-6">
+            <div class="input-group input-group-sm float-left with-focus long">
+                <input (input)="Search($event)" class="form-control form-control-sm border-right-0 " type="text" placeholder="Filtrar" />
+                <div class="input-group-append">
+                  <span class="input-group-text fa fa-search text-info bg-transparent border-left-0"></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6">
             <span class="text-muted font-weight-bold float-right text-uppercase mb-3 mr-3">Total de registros <span
               class="badge badge-pill badge-success ml-1">{{dataSource.length  | numerico}}</span></span>
               <span class="text-muted font-weight-bold float-right text-uppercase mb-3 mr-1">Total Candidatos <span
                 class="badge badge-pill badge-success ml-1">{{totalCandidatos  | numerico}}</span></span>
+              </div>
         </div>
         <hr>
      <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-
+import { Router } from '@angular/router';
 import { ExamenesService } from '../../../service/Examenes/examenes.service';
 import { SettingsService } from '../../../core/settings/settings.service';
 
@@ -18,16 +18,22 @@ export class AgregarResultadosPsicoComponent implements OnInit {
   public invertY = false;
   public shown = 'hover';
 
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
+  public config: any = {
+    paging: true,
+    filtering: { filterString: '' },
+    className: ['table-hover mb-0 ']
+  };
   constructor(
     private _serviceExamen: ExamenesService,
     private toasterService: ToasterService,
-    private settings: SettingsService
+    private settings: SettingsService,
+    private _Router: Router
     ) { }
 
   candidatos = [];
@@ -41,12 +47,6 @@ export class AgregarResultadosPsicoComponent implements OnInit {
   }
 
   //#region paginador
-  public config: any = {
-    paging: true,
-    //sorting: { columns: this.columns },
-    filtering: { filterString: '' },
-    className: ['table-hover mb-0 ']
-  };
 
   public changePage(page: any, data: Array<any> = this.candidatos): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
@@ -56,50 +56,44 @@ export class AgregarResultadosPsicoComponent implements OnInit {
 
   //#endregion
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
- 
 
-    let filteredData = this.candidatos;
-    //let sortedData = this.changeSort(filteredData, this.config);
+    const filteredData = this.candidatos;
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
 
     this.length = filteredData.length;
 
   }
 
-  GetClavesCandidatos()
-  {
+  GetClavesCandidatos() {
     this._serviceExamen.GetClavesCandidatos().subscribe(data => {
       this.candidatos = data;
       this.filteredData = data;
       this.onChangeTable(this.config);
 
-    })
+    });
   }
 
-  AgregarResultado(row, c)
-  {
+  AgregarResultado(row, c) {
 
-    var resultado = {RequiClaveId: row.requiClaveId, Resultado: row.resultado, UsuarioId: this.settings.user['id']};
+    const resultado = {RequiClaveId: row.requiClaveId, Resultado: row.resultado, UsuarioId: this.settings.user['id']};
 
     this._serviceExamen.AgregarResultadoPsico(resultado).subscribe(data => {
-      if(data == 200)
-      {
+      if (data === 200) {
         this.popToast('success', 'Agregar Resultados', 'Los cambios se realizaron con éxito');
         row.resVal = false;
-      }
-      else
-      {
+      } else {
         this.popToast('error', 'Agregar Resultados', 'Ocurrio un error al intentar agregar resultado');
 
       }
-    })
-
-
+    });
   }
 
+  GenerarClaves(){
+    this._Router.navigate(['/examenes/asignarClaves/'], { skipLocationChange: true });
+  }
   public Search(data: any) {
     let tempArray: Array<any> = [];
-    let colFiltar: Array<any> = [{ title: "clave" }, { title: "nombre" }];
+    let colFiltar: Array<any> = [{ title: 'clave' }, { title: 'nombre' }];
 
     this.filteredData.forEach(function (item) {
       let flag = false;

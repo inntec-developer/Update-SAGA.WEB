@@ -195,7 +195,7 @@ export class DtRequisicionComponent implements OnInit {
           if (r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37)) {
             this.totalPos += r.vacantes;
             this.totalContratados += r.contratados;
-            if (r.estatusId == 4) {
+            if (r.estatusId === 4) {
               r.coordinador = r.reclutadores;
               r.reclutadores = 'SIN ASIGNAR';
             }

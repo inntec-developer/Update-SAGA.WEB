@@ -1,5 +1,7 @@
+import { SettingsService } from './../../core/settings/settings.service';
 import { PostulateService } from './../../service/SeguimientoVacante/postulate.service';
 import { Component, OnInit, Input } from '@angular/core';
+import { Toast, ToasterService, ToasterConfig } from 'angular2-toaster';
 
 @Component({
   selector: 'app-candidatos-cubiertos-rport',
@@ -17,7 +19,7 @@ export class CandidatosCubiertosRportComponent implements OnInit {
   public length = 0;
 
   registros: number;
-  clearFilter: boolean = false;
+  clearFilter = false;
   dataSource = [];
 
   public rows: Array<any> = []
@@ -38,18 +40,42 @@ export class CandidatosCubiertosRportComponent implements OnInit {
     filtering: { filterString: '' },
     className: ['table-striped mb-0 d-table-fixed']
   };
-  constructor(private _service: PostulateService) { }
+  objLiberar: { RequisicionId: any; CandidatoId: any; ReclutadorId: any; ProcesoCandidatoId: any; }[];
+  candidatoId: any;
+  ProcesoCandidatoId: any;
+  dlgLiberar = false;
+  rowAux = [];
+  liberado = false;
+
+   /**
+   * configuracion para mensajes de acciones.
+   */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+    preventDuplicates: true,
+  });
+
+
+  constructor(private _service: PostulateService, private settings: SettingsService,
+     private toasterService: ToasterService) { }
 
   ngOnInit() {
     this.GetCandidatos();
   }
 
-  GetCandidatos()
-  {
+  GetCandidatos() {
     this._service.GetCandidatosCubiertos(this.RequisicionId).subscribe(data => {
       this.dataSource = [];
       data.forEach(element => {
+        if (element.informacion != null) {
         this.dataSource.push({
+          candidatoId: element.candidatoId,
           horario: element.horario,
           nombre: element.informacion.nombre,
           localidad: element.informacion.localidad,
@@ -58,13 +84,79 @@ export class CandidatosCubiertosRportComponent implements OnInit {
           rfc: element.informacion.rfc,
           nss: element.informacion.nss,
           genero: element.informacion.genero,
-          reclutador: element.informacion.reclutador
+          reclutador: element.informacion.reclutador,
+          reclutadorId: element.informacion.reclutadorId,
+          procesoId: element.procesoId
         });
+      }
       });
       this.onChangeTable(this.config);
     });
   }
 
+  openDialogLiberar() {
+
+    this.objLiberar = [{
+      RequisicionId: this.RequisicionId,
+      CandidatoId: this.candidatoId,
+      ReclutadorId: this.settings.user['id'],
+      ProcesoCandidatoId: this.ProcesoCandidatoId,
+    }];
+
+    this.dlgLiberar = true;
+  }
+
+  public onCellClick(data: any) {
+
+    data.selected ? data.selected = false : data.selected = true; // para poner el background cuando seleccione
+    data.selected ? this.candidatoId = data.candidatoId : this.candidatoId = null; // agrega y quita el row seleccionado
+    data.selected ? this.ProcesoCandidatoId = data.procesoId : this.ProcesoCandidatoId = null;
+
+    if (this.settings.user['id'] === data.reclutadorId) {
+      this.liberado = true;
+    } else {
+      this.liberado = false;
+    }
+
+    if (this.rowAux.length === 0) {
+      this.rowAux = data;
+    } else if (data.selected && this.rowAux !== []) {
+      const aux = data;
+      data = this.rowAux;
+      data.selected = false;
+      aux.selected = true;
+      this.rowAux = aux;
+    }
+  }
+
+  onClose(value) {
+    if (value === 200) {
+      this.dlgLiberar = false;
+      this.objLiberar = [];
+      const aux = this.dataSource;
+      const datosVacante = { estatusId: 29, requisicionId: this.RequisicionId };
+
+      this._service.SetProcesoVacante(datosVacante).subscribe(data => {
+        if (data !== 417) {
+        this.GetCandidatos();
+        this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+        } else {
+          this.GetCandidatos();
+          this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar el estatus de la vacante');
+        }
+      });
+    } else if (value === 404) {
+      this.dlgLiberar = false;
+      this.objLiberar = [];
+      this.onChangeTable(this.config);
+      this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos');
+
+    } else {
+      this.objLiberar = [];
+      this.dlgLiberar = false;
+    }
+
+  }
     //#region filtros y paginacion
 
 
@@ -106,7 +198,7 @@ export class CandidatosCubiertosRportComponent implements OnInit {
       // (<HTMLInputElement>document.getElementById('filterInput')).value = '';
       this.columns.forEach(element => {
         element.filtering.filterString = '';
-        (<HTMLInputElement>document.getElementById(element.name + "_1")).value = '';
+        (<HTMLInputElement>document.getElementById(element.name + '_1')).value = '';
       });
       this.onChangeTable(this.config);
     }
@@ -120,4 +212,14 @@ export class CandidatosCubiertosRportComponent implements OnInit {
       }
     //#endregion
 
+  popToast(type, title, body) {
+    const toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 4000,
+      body: body
+    }
+    this.toasterService.pop(toast);
+
+  }
 }

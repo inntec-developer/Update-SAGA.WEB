@@ -137,9 +137,9 @@
           <i class="fa fa-users" aria-hidden="true"></i>
         </button>
         <button id="update" chkPrivilegiosButtons class="mr-1 float-right mat-elevation-z8"
-          [disabled]="element.claseReclutamientoId == 1 || element.vacantes <= element.contratados"
+          [disabled]="element.length == 0 || element.claseReclutamientoId == 1 || element.vacantes <= element.contratados"
           (click)="openDialogRegistro()"
-          [ngClass]="element.claseReclutamientoId == 1 || element.vacantes <= element.contratados ? 'btn btn-xs disabled':'btn btn-xs btn-success'"
+          [ngClass]="element.length == 0 || element.claseReclutamientoId == 1 || element.vacantes <= element.contratados ? 'btn btn-xs disabled':'btn btn-xs btn-success'"
           container="body" placement="bottom" tooltip="Registro Masivo">
           <i class="fa fa-user-plus" aria-hidden="true"></i>
         </button>

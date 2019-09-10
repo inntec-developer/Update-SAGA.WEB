@@ -149,10 +149,10 @@ export class DTHistorialComponent implements OnInit {
     data.selected ? data.selected = false : data.selected = true;
     this.element = data;
 
-    if (this.rowAux.length == 0) {
+    if (this.rowAux.length === 0) {
       this.rowAux = data;
     } else if (data.selected && this.rowAux !== []) {
-      var aux = data;
+      const aux = data;
       data = this.rowAux;
       data.selected = false;
       aux.selected = true;

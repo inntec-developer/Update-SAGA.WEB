@@ -44,7 +44,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     preventDuplicates: true,
   });
 
-  // scroll
+  //  scroll
   public disabled = false;
   public invertX = false;
   public compact = false;
@@ -53,7 +53,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
 
   public dataSource: Array<any> = [];
-  // Varaibles del paginador
+  //  Varaibles del paginador
   public page = 1;
   public itemsPerPage = 20;
   public maxSize = 5;
@@ -80,13 +80,13 @@ export class DtVacantesReclutadorComponent implements OnInit {
   informeVacante = false;
   historial = false;
   usuarioId: any = this.settings.user['id'];
-  // estatus vacantes
+  //  estatus vacantes
 
-  bc = true; // busqueda candidato
-  sc = true; // socieconomico
-  ecc = true; // envío candidato cliente
-  ec = true; // espera contratacion
-  nbc = true; // nueva busqueda candidato
+  bc = true; //  busqueda candidato
+  sc = true; //  socieconomico
+  ecc = true; //  envío candidato cliente
+  ec = true; //  espera contratacion
+  nbc = true; //  nueva busqueda candidato
   pausa = true;
   asignar = true;
   disenador = true;
@@ -104,7 +104,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   totalPos: any = 0;
   totalContratados = 0;
 
-  // checkBox Seccion de impresion
+  //  checkBox Seccion de impresion
   SelectiedSection = {
     Encabezado: true,
     Horarios: true,
@@ -141,8 +141,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
     { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
     { title: 'Cub/Vac', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No.' } },
     { title: 'Coordinación', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Coordinación' } },
-    // { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
-    // { title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
+    //  { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
+    //  { title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
     { title: 'Días Transc.', className: 'text-info text-center', name: 'diasTrans', filtering: { filterString: '', placeholder: 'Días' } },
     { title: 'Rango sueldo', className: 'text-info text-center', name: 'rango', filtering: { filterString: '', placeholder: 'Rango sueldo' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
@@ -176,11 +176,11 @@ export class DtVacantesReclutadorComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.getVacantes();
-    // this.GetCandidatosNR();
-    // this.GetRequisicionesPausa();
-    // setTimeout(() => {
-    //     this.spinner.hide();
-    //    }, 3000);
+    //  this.GetCandidatosNR();
+    //  this.GetRequisicionesPausa();
+    //  setTimeout(() => {
+    //      this.spinner.hide();
+    //     }, 3000);
   }
 
   getVacantes() {
@@ -200,10 +200,15 @@ export class DtVacantesReclutadorComponent implements OnInit {
             }
             daux.setDate(daux.getDate() + 1);
           }
+          if (r.estatusId === 4) {
+            r.coordinador = r.reclutadores;
+            r.reclutadores = 'SIN ASIGNAR';
+          }
           r.diasTrans = diasTrans;
           this.totalPos += r.vacantes;
           this.totalContratados += r.contratados;
         });
+
         this.GetCandidatosNR();
         this.GetRequisicionesPausa();
 
@@ -234,35 +239,30 @@ export class DtVacantesReclutadorComponent implements OnInit {
     });
   }
 
-  //estatus vacantes
+  // estatus vacantes
   SetStatus(estatusId, estatus) {
-    var datos = { estatusId: estatusId, requisicionId: this.requi.id, ReclutadorId: this.settings.user['id'] };
+    const datos = { estatusId: estatusId, requisicionId: this.requi.id, ReclutadorId: this.settings.user['id'] };
 
-    if (estatusId == 39) {
+    if (estatusId === 39) {
       this.OpenDialogRequiPausa(estatusId, estatus);
-    }
-    else {
+    } else {
       this.postulateservice.SetProcesoVacante(datos).subscribe(data => {
-        if (data == 201) {
-          var idx = this.rows.findIndex(x => x.id == this.requi.id);
+        if (data === 201) {
+          const idx = this.rows.findIndex(x => x.id == this.requi.id);
           this.rows[idx]['estatus'] = estatus;
           this.rows[idx]['estatusId'] = estatusId;
           this.ValidarEstatus(estatusId)
           this.onChangeTable(this.config);
           this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
 
-        }
-        else {
+        } else {
           this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
         }
-      })
+      });
     }
   }
 
-
-
-
-  //#region paginador
+  // #region paginador
 
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
@@ -281,14 +281,14 @@ export class DtVacantesReclutadorComponent implements OnInit {
               return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
             } else {
               let aux = [];
-              // if(column.filtering.columnName)
-              // {
-              //   aux = item[column.filtering.columnName];
-              // }
-              // else
-              // {
+              //  if(column.filtering.columnName)
+              //  {
+              //    aux = item[column.filtering.columnName];
+              //  }
+              //  else
+              //  {
               aux = item[column.name];
-              // }
+              //  }
               let flag = false;
               if (item[column.name].length > 0) {
                 item[column.name].forEach(element => {
@@ -317,7 +317,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     return filteredData;
   }
 
-  //#endregion
+  // #endregion
 
   public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
     if (config.filtering) {
@@ -354,7 +354,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   public clearfilters() {
     this.clearFilter = false;
-    // (<HTMLInputElement>document.getElementById('filterInput')).value = '';
+    //  (<HTMLInputElement>document.getElementById('filterInput')).value = '';
     this.columns.forEach(element => {
       element.filtering.filterString = '';
       (<HTMLInputElement>document.getElementById(element.name)).value = '';
@@ -415,11 +415,11 @@ export class DtVacantesReclutadorComponent implements OnInit {
   private _reinciar() {
     this.element = [];
     this.postulados = null;
-    this.bc = true; //busqueda candidato
-    this.sc = true; //socieconomico
-    this.ecc = true; //envío candidato cliente
-    this.ec = true; //espera contratacion
-    this.nbc = true; //nueva busqueda candidato
+    this.bc = true; //  busqueda candidato
+    this.sc = true; //  socieconomico
+    this.ecc = true; //  envío candidato cliente
+    this.ec = true; //  espera contratacion
+    this.nbc = true; //  nueva busqueda candidato
     this.pausa = true;
     this.asignar = true;
     this.disenador = true;
@@ -428,255 +428,214 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   ValidarEstatus(estatusId) {
-    //revisar en pausa
+    //  revisar en pausa
 
-    if (this.element.aprobada == 1 && this.element.aprobadorId == this.settings.user['id'] && this.element.contratados == 0 && (estatusId != 39 && estatusId != 34 && estatusId != 35 && estatusId != 36 && estatusId != 37) && this.element.vacantes > 0) {
-      this.asignar = false
-      this.disenador = false
-    }
-    else if (this.element.aprobada == 0 && this.element.contratados == 0 && (estatusId != 39 && estatusId != 34 && estatusId != 35 && estatusId != 36 && estatusId != 37) && this.element.vacantes > 0) {
-      this.asignar = false
+    if (this.element.aprobada === 1 && this.element.aprobadorId === this.settings.user['id'] && this.element.contratados === 0
+        && (estatusId !== 39 && estatusId !== 34 && estatusId !== 35 && estatusId !== 36 && estatusId !== 37)
+        && this.element.vacantes > 0) {
+      this.asignar = false;
       this.disenador = false;
-    }
-    else {
+    } else if (this.element.aprobada === 0 && this.element.contratados === 0
+        && (estatusId !== 39 && estatusId !== 34 && estatusId !== 35 && estatusId !== 36 && estatusId !== 37)
+        && this.element.vacantes > 0) {
+      this.asignar = false;
+      this.disenador = false;
+    } else {
       this.asignar = true;
       this.disenador = true;
     }
 
-    // estatusId == 6 && this.element.propietarioId == this.settings.user['id'] && this.element.vacantes > 0 ? this.disenador = false : this.disenador = true;
-
-    if (estatusId == 4 && this.element.vacantes > 0) //nueva
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+    if (estatusId === 4 && this.element.vacantes > 0) {//  nueva
+      this.bc = true; //  busqueda candidato
+      this.sc = true; //  socieconomico
+      this.ecc = true; //  envío candidato cliente
+      this.ec = true; //  espera contratacion
+      this.nbc = true; //  nueva busqueda candidato
       this.pausa = true;
       this.disenador = true;
-    }
-    else if (estatusId == 6 && this.element.vacantes > 0 && this.element.confidencial)// aprobada
-    {
-      this.bc = false; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+    } else if (estatusId === 6 && this.element.vacantes > 0 && this.element.confidencial){//  aprobada
+      this.bc = false; //  busqueda candidato
+      this.sc = true; //  socieconomico
+      this.ecc = true; //  envío candidato cliente
+      this.ec = true; //  espera contratacion
+      this.nbc = true; //  nueva busqueda candidato
       this.pausa = true;
-    }
-    else if (estatusId == 6 && this.element.vacantes > 0)// aprobada
-    {
-      this.bc = false; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+    } else if (estatusId === 6 && this.element.vacantes > 0) { //  aprobada
+      this.bc = false; //  busqueda candidato
+      this.sc = true; //  socieconomico
+      this.ecc = true; //  envío candidato cliente
+      this.ec = true; //  espera contratacion
+      this.nbc = true; //  nueva busqueda candidato
       this.pausa = true;
-    }
-    else if (estatusId == 7 && this.element.vacantes > 0 && this.element.enProceso == 0)// publicada
+    } else if (estatusId === 7 && this.element.vacantes > 0 && this.element.enProceso === 0)//  publicada
     {
-      this.bc = false; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
-    }
-    else if (estatusId == 7 && this.element.vacantes > 0 && this.element.enProceso > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0)// publicada
-    {
-      this.bc = false; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+      this.bc = false; // busqueda candidato
+      this.sc = true; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = true; // espera contratacion
+      this.nbc = true; // nueva busqueda candidato
+    } else if (estatusId === 7 && this.element.vacantes > 0 && this.element.enProceso > 0
+      && this.element.enProcesoFC === 0 && this.element.enProcesoFR === 0){//  publicada
+      this.bc = false; // busqueda candidato
+      this.sc = true; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = true; // espera contratacion
+      this.nbc = true; // nueva busqueda candidato
       this.pausa = false;
-    }
-    else if (estatusId == 7 && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR > 0)// publicada
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = false; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+    } else if (estatusId === 7 && this.element.vacantes > 0 && this.element.enProcesoFC === 0 && this.element.enProcesoFR > 0) {
+      //  publicada
+      this.bc = true; // busqueda candidato
+      this.sc = true; // socieconomico
+      this.ecc = false; // envío candidato cliente
+      this.ec = true; // espera contratacion
+      this.nbc = true; // nueva busqueda candidato
       this.pausa = false;
-    }
-    else if (estatusId == 7 && this.element.vacantes > 0 && this.element.enProcesoFC > 0)// publicada
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = false; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = false; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+    } else if (estatusId === 7 && this.element.vacantes > 0 && this.element.enProcesoFC > 0) { //  publicada
+      this.bc = true; // busqueda candidato
+      this.sc = false; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = false; // espera contratacion
+      this.nbc = true; // nueva busqueda candidato
       this.pausa = true;
-    }
-    else if (estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso == 0) //busqueda de candidatos
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+    } else if (estatusId === 29 && this.element.vacantes > 0 
+      && this.element.enProcesoFC === 0 && this.element.enProcesoFR === 0 && this.element.enProceso === 0) { // busqueda de candidatos
+      this.bc = true; // busqueda candidato
+      this.sc = true; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = true; // espera contratacion
+      this.nbc = true; // nueva busqueda candidato
       this.pausa = false;
-    }
-    else if (estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso > 0) // busqueda de candidatos
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+    } else if (estatusId === 29 && this.element.vacantes > 0 && this.element.enProcesoFC === 0
+      && this.element.enProcesoFR === 0 && this.element.enProceso > 0) { //  busqueda de candidatos
+      this.bc = true; // busqueda candidato
+      this.sc = true; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = true; // espera contratacion
+      this.nbc = true; // nueva busqueda candidato
       this.pausa = false;
-    }
-    else if (estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFC > 0)// busqueda de candidatos
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = false; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = false; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+    } else if (estatusId === 29 && this.element.vacantes > 0 && this.element.enProcesoFC > 0) {//  busqueda de candidatos
+      this.bc = true; // busqueda candidato
+      this.sc = false; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = false; // espera contratacion
+      this.nbc = true; // nueva busqueda candidato
       this.pausa = true;
-    }
-    else if (estatusId == 29 && this.element.vacantes > 0 && this.element.enProcesoFR > 0) //busqueda de candidatos
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = false; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+    } else if (estatusId === 29 && this.element.vacantes > 0 && this.element.enProcesoFR > 0) { // busqueda de candidatos
+      this.bc = true; // busqueda candidato
+      this.sc = true; // socieconomico
+      this.ecc = false; // envío candidato cliente
+      this.ec = true; // espera contratacion
+      this.nbc = true; // nueva busqueda candidato
       this.pausa = false;
-    }
-    else if (estatusId == 38 && this.element.vacantes > 0) //garantia de busqueda
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = false; //nueva busqueda candidato
+    } else if (estatusId === 38 && this.element.vacantes > 0) {// garantia de busqueda
+      this.bc = true; // busqueda candidato
+      this.sc = true; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = true; // espera contratacion
+      this.nbc = false; // nueva busqueda candidato
       this.pausa = true;
-    }
-    else if (estatusId == 39 && this.element.vacantes > 0) //pausada
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+    } else if (estatusId === 39 && this.element.vacantes > 0) { // pausada
+      this.bc = true; // busqueda candidato
+      this.sc = true; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = true; // espera contratacion
+      this.nbc = true; // nueva busqueda candidato
       this.pausa = true;
-    }
-    else if ((estatusId == 5 || estatusId == 31) &&
-      this.element.vacantes > 0 && this.element.enProceso == 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0) //reactivada  - garantia de busqueda - nueva busqueda
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+    } else if ((estatusId === 5 || estatusId === 31) &&
+      this.element.vacantes > 0 && this.element.enProceso === 0 && this.element.enProcesoFC === 0 && this.element.enProcesoFR === 0) {
+       // reactivada  - garantia de busqueda - nueva busqueda
+      this.bc = true; // busqueda candidato
+      this.sc = true; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = true; // espera contratacion
+      this.nbc = true; // nueva busqueda candidato
       this.pausa = true;
-    }
-    else if ((estatusId == 5 || estatusId == 31) && this.element.vacantes > 0 && this.element.enProcesoFC == 0 && this.element.enProcesoFR == 0 && this.element.enProceso > 0) //reactivada   - garantia de busqueda - nueva busqueda -pausada
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+    } else if ((estatusId === 5 || estatusId === 31) && this.element.vacantes > 0
+    && this.element.enProcesoFC === 0 && this.element.enProcesoFR === 0 && this.element.enProceso > 0) {
+    // reactivada   - garantia de busqueda - nueva busqueda -pausada
+      this.bc = true; // busqueda candidato
+      this.sc = true; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = true; // espera contratacion
+      this.nbc = true; // nueva busqueda candidato
       this.pausa = true;
-    }
-
-    else if ((estatusId == 5 || estatusId == 31) && this.element.vacantes > 0 && this.element.enProcesoFR > 0) //reactivada - publicada  - garantia de busqueda - nueva busqueda -pausada
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = false; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+    } else if ((estatusId === 5 || estatusId === 31) && this.element.vacantes > 0 && this.element.enProcesoFR > 0) {
+      this.bc = true; // busqueda candidato
+      this.sc = true; // socieconomico
+      this.ecc = false; // envío candidato cliente
+      this.ec = true; // espera contratacion
+      this.nbc = true; // nueva busqueda candidato
       this.pausa = true;
-    }
-    else if ((estatusId == 5 || estatusId == 31) && this.element.vacantes > 0 && this.element.contratados == this.element.vacantes) //reactivada - publicada - garantia de busqueda - nueva busqueda - pausada
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+    } else if ((estatusId === 5 || estatusId === 31) && this.element.vacantes > 0 && this.element.contratados === this.element.vacantes) {
+      this.bc = true; // busqueda candidato
+      this.sc = true; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = true; // espera contratacion
+      this.nbc = true; // nueva busqueda candidato
       this.pausa = true;
-    }
-    else if (estatusId == 30 && this.element.enProcesoFC == 0) //envio al cliente
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = false; //nueva busqueda candidato
+    } else if (estatusId === 30 && this.element.enProcesoFC === 0) { // envio al cliente
+      this.bc = true; // busqueda candidato
+      this.sc = true; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = true; // espera contratacion
+      this.nbc = false; // nueva busqueda candidato
       this.pausa = false;
-    }
-    else if (estatusId == 30 && this.element.enProcesoFC > 0) //envio al cliente
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = false; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = false; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+    } else if (estatusId === 30 && this.element.enProcesoFC > 0) {
+      this.bc = true; // busqueda candidato
+      this.sc = false; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = false; // espera contratacion
+      this.nbc = true; // nueva busqueda candidato
       this.pausa = false;
-    }
-    else if (estatusId == 32 && this.element.enProcesoFC > 0) //socioeconomico
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = false; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+    } else if (estatusId === 32 && this.element.enProcesoFC > 0) {
+      this.bc = true; // busqueda candidato
+      this.sc = true; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = false; // espera contratacion
+      this.nbc = true; // nueva busqueda candidato
       this.pausa = true;
-    }
-    else if (estatusId == 32 && this.enProceso > 0 && this.element.contratados > 0 && this.element.contratados < this.element.vacantes) //socioeconomico
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = false; //espera contratacion
-      this.nbc = false; //nueva busqueda candidato
+    } else if (estatusId === 32 && this.enProceso > 0 && this.element.contratados > 0 && this.element.contratados < this.element.vacantes) {
+      this.bc = true; // busqueda candidato
+      this.sc = true; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = false; // espera contratacion
+      this.nbc = false; // nueva busqueda candidato
       this.pausa = true;
-    }
-    else if (estatusId == 33 && this.element.contratados == 0) //espera de contratacion
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = false; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = false; //nueva busqueda candidato
+    } else if (estatusId === 33 && this.element.contratados === 0) { // espera de contratacion
+      this.bc = true; // busqueda candidato
+      this.sc = false; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = true; // espera contratacion
+      this.nbc = false; // nueva busqueda candidato
       this.pausa = true;
-    }
-    else if (estatusId == 33 && this.element.contratados > 0 && this.element.contratados < this.element.vacantes) //espera de contratacion
-    {
-      this.bc = true; //busqueda candidato
-      this.sc = false; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = false; //nueva busqueda candidato
+    } else if (estatusId === 33 && this.element.contratados > 0 && this.element.contratados < this.element.vacantes) {
+      this.bc = true; // busqueda candidato
+      this.sc = false; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = true; // espera contratacion
+      this.nbc = false; // nueva busqueda candidato
       this.pausa = true;
-    }
-    else if (estatusId >= 34 && estatusId <= 37) { //cubierta
+    } else if (estatusId >= 34 && estatusId <= 37) { // cubierta
       /*estatus vacante */
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+      this.bc = true; // busqueda candidato
+      this.sc = true; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = true; // espera contratacion
+      this.nbc = true; // nueva busqueda candidato
       this.pausa = true;
-    }
-    else if (this.element.vacantes == 0) {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+    } else if (this.element.vacantes === 0) {
+      this.bc = true; // busqueda candidato
+      this.sc = true; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = true; // espera contratacion
+      this.nbc = true; // nueva busqueda candidato
       this.pausa = true;
-    }
-    else {
-      this.bc = true; //busqueda candidato
-      this.sc = true; //socieconomico
-      this.ecc = true; //envío candidato cliente
-      this.ec = true; //espera contratacion
-      this.nbc = true; //nueva busqueda candidato
+    } else {
+      this.bc = true; // busqueda candidato
+      this.sc = true; // socieconomico
+      this.ecc = true; // envío candidato cliente
+      this.ec = true; // espera contratacion
+      this.nbc = true; // nueva busqueda candidato
       this.pausa = true;
       this.disenador = true;
 
@@ -686,18 +645,18 @@ export class DtVacantesReclutadorComponent implements OnInit {
   /*
    * Funciones para la administracion de las requisiciones.
    * */
-  // openDialogShowRequi() {
-  //   let dialogShow = this.dialog.open(DialogShowRequiComponent, {
-  //     width: '200%',
-  //     height: '100%',
-  //     data: this.requi
-  //   });
-  //   dialogShow.afterClosed().subscribe(result => {
-  //     if (result) {
-  //       this.refreshTable();
-  //     }
-  //   });
-  // }
+  //  openDialogShowRequi() {
+  //    let dialogShow = this.dialog.open(DialogShowRequiComponent, {
+  //      width: '200%',
+  //      height: '100%',
+  //      data: this.requi
+  //    });
+  //    dialogShow.afterClosed().subscribe(result => {
+  //      if (result) {
+  //        this.refreshTable();
+  //      }
+  //    });
+  //  }
 
   openDialogAssingRequi() {
     let dialogAssing = this.dialog.open(DialogAssingRequiComponent, {
@@ -735,8 +694,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
     dialog.afterClosed().subscribe(result => {
       if (result) {
         this.postulateservice.SetProcesoVacante({ estatusId: estatusId, requisicionId: this.requi.id, ReclutadorId: this.settings.user['id'] }).subscribe(data => {
-          if (data == 201) {
-            var idx = this.rows.findIndex(x => x.id == this.requi.id);
+          if (data === 201) {
+            var idx = this.rows.findIndex(x => x.id === this.requi.id);
             this.rows[idx]['estatus'] = estatus;
             this.rows[idx]['estatusId'] = estatusId;
             this.ValidarEstatus(estatusId);
@@ -766,10 +725,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
     });
 
     dialogDlt.afterClosed().subscribe(result => {
-      if (result == 0) {
+      if (result === 0) {
         this.onChangeTable(this.config);
       }
-      else if (result == 417) {
+      else if (result === 417) {
         this.popToast('error', 'Registro Masivo', 'Ocurrió un error al intentar registrar candidato');
       }
       else {
@@ -801,8 +760,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
             this.refreshTable();
           }
         });
-        // this.popToast('success', 'Registro Masivo', 'El registro se realizó correctamente');
-        // this.refreshTable();
+        //  this.popToast('success', 'Registro Masivo', 'El registro se realizó correctamente');
+        //  this.refreshTable();
 
       }
     });
@@ -869,7 +828,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
           comentarios = '';
         }
         const d = row.diasTrans;
-        // var e = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
+        //  var e = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
 
         if (!Array.isArray(row.reclutadores)) {
           reclutador = 'SIN ASIGNAR';
@@ -908,8 +867,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
         reclutador = '';
       });
 
-      //   })
-      // })
+      //    })
+      //  })
       this.excelService.exportAsExcelFile(aux, 'Solicitud_de_reporte_para_generar_estadisticos');
       this.refreshTable();
     }
@@ -942,22 +901,22 @@ export class DtVacantesReclutadorComponent implements OnInit {
       const data = document.getElementById('content');
       html2canvas(data, { windowWidth: 1500 }).then(canvas => {
         const contentDataURL = canvas.toDataURL('image/png')
-        const pdf = new jspdf('p', 'pt', 'letter'); // A4 size page of PDF
+        const pdf = new jspdf('p', 'pt', 'letter'); //  A4 size page of PDF
         const width = pdf.internal.pageSize.getWidth();
         const height = pdf.internal.pageSize.getHeight();
         const position = 0;
         pdf.addImage(contentDataURL, 'jpg', 0, position, width, height);
-        pdf.save(this.folio + '.pdf'); // Generated PDF
+        pdf.save(this.folio + '.pdf'); //  Generated PDF
       });
 
 
-      // const pdf = new jspdf('1', 'pt', 'a4');
-      // const options = {
-      //   pagesplit: true
-      // };
-      // pdf.addHTML(data, 10, 10, options, () => {
-      //   pdf.save(this.folio + '.pdf');
-      // });
+      //  const pdf = new jspdf('1', 'pt', 'a4');
+      //  const options = {
+      //    pagesplit: true
+      //  };
+      //  pdf.addHTML(data, 10, 10, options, () => {
+      //    pdf.save(this.folio + '.pdf');
+      //  });
 
 
     }, 1000);
@@ -982,7 +941,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
 
-  // Mensaje de Error, en caso de que el damfo no cuente con horarios activos.
-  //  swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. No es posible generar la requisición', 'error');
+  //  Mensaje de Error, en caso de que el damfo no cuente con horarios activos.
+  //   swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. No es posible generar la requisición', 'error');
 
 }

@@ -1,32 +1,25 @@
-<div class="content-heading">
-  <div>
-    <span class="text-sm d-none d-sm-block">Administraci&oacute;n de ex&aacute;menes.</span>
-  </div>
-  <!-- Breadcrumb right aligned-->
-  <ol class="breadcrumb ml-auto">
-    <li class="breadcrumb-item">
-      <a [routerLink]="['/home']">Inicio</a>
-    </li>
-    <li class="breadcrumb-item active">Examenes</li>
-  </ol>
-</div>
-
 <div class="card">
   <div class="card-body">
-      <div class="row bg-light">
-        <div class="col-sm-8 col-md-8">
-          <h5 class="card-title text-warning mt-2">
-            <em class="fa fa-pencil"></em> EXAMENES DISPONIBLES</h5>
-        </div>
-        <div class="col-sm-4 col-md-4">
-          <div class="input-group input-group-sm float-right mt-1 mb-1 with-focus">
+      <h5 class="text-warning">
+          <em class="fa fa-pencil"></em> EXAMENES DISPONIBLES</h5>
+          <hr>
+      <div class="d-flex justify-content-start mb-3">
+          <button class="btn btn-xs btn-success mat-elevation-z8" placement="right" tooltip="Generar Examen T&eacute;cnico"  [routerLink]="['/examenes/addexamen']"><i class="fa fa-plus"></i></button>
+          <button class="btn btn-xs btn-warning ml-2 mat-elevation-z8" placement="right" tooltip="Asignar Examen T&eacute;cnico"  [routerLink]="['/examenes/asignar']"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 col-md-6">
+          <div class="input-group input-group-sm float-left mt-1 mb-1 with-focus longInput">
 
-            <input (input)="Search($event)" class="form-control form-control-sm border-right-0" type="text" placeholder="Filtrar"
-            />
+            <input (input)="Search($event)" class="form-control form-control-sm border-right-0 " type="text" placeholder="Filtrar" />
             <div class="input-group-append">
               <span class="input-group-text fa fa-search text-info bg-transparent border-left-0"></span>
             </div>
           </div>
+          </div>
+          <div class="col-sm-6 col-md-6">
+          <div class="float-right"><span class="text-muted font-weight-bold float-right text-uppercase float-right mr-4">Total de Registros <span
+            class="badge badge-pill badge-success ml-1">{{resultados.length}}</span></span></div>
         </div>
       </div>
       <hr>
@@ -82,12 +75,11 @@
 
     </ng-scrollbar>
     <br/>
-    <div class="text-right">
+    <div class="d-flex justify-content-end">
       <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
       [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
       (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
 
-        <pre class="card card-block card-header text-muted">Total Registros: {{resultados.length}}</pre>
         </div>
 </div>
 </div>

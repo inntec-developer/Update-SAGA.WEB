@@ -22,7 +22,10 @@ a>h5 :hover
 {
   font-size: 15px !important;
 }
-
+.longInput
+{
+  width: 50%;
+}
 ng-scrollbar {
   --scrollbar-size: 4px;
   --scrollbar-thumb-color: rgb(94, 175, 255);
