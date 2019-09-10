@@ -204,10 +204,6 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  openModalconsulta(){
-    this.ShowModal = true;
-    
-  }
 
   BusquedaModal(){
     this.spiner.show();
