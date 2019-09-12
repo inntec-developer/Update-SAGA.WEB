@@ -128,7 +128,7 @@
                     <i class="fa fa-floppy-o" aria-hidden="true"></i>
         </button>
                 <button [disabled]="f.invalid || edad < 18 || model.options == '0' || modelOpc.options == '0' || rowIndex != -1 || email.length == 0 || txtPhone.length == 0"
-                type="button" [ngClass]="f.invalid || edad < 18 || model.options == '0' || modelOpc.options == '0' || rowIndex != -1 || email.length == 0 || txtPhone.length == 0 ? 'disabled' : 'btn-success'" class="btn btn-xs float-right" (click)="AgregarCandidato()">
+                type="button" [ngClass]="f.invalid || edad < 18 || model.options == '0' || modelOpc.options == '0' || rowIndex != -1 || email.length == 0 || txtPhone.length == 0 ? 'disabled' : 'btn-success'" class="btn btn-xs float-right" (click)="GetHorarioRequis()">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                 </button>
             </div>
@@ -164,7 +164,7 @@
                           </tr>
                           <tr>
                             <th *ngFor="let column of columns">
-                              <input *ngIf="column.filtering" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                              <input *ngIf="column.filtering" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)" placeholder="{{column.filtering.placeholder}}"
                                 class="form-control form-control-sm" id="{{column.name}}">
                             </th>
 
@@ -175,6 +175,7 @@
                             [disabled]="disabled">
                             <div style="height: 300px;">
                               <tr *ngFor="let row of rows; let rowIndex = index" (dblclick)="onCellClick(row, rowIndex)" container="body" placement="bottom" tooltip="doble click para editar"  [class.bg-info]="row.selected">
+                               <td class="text-center">{{row.horario}}</td>
                                 <td class="text-center">{{row.curp}}
                                     <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-curp'] = true" *ngIf="!editing[rowIndex + '-curp']">
 

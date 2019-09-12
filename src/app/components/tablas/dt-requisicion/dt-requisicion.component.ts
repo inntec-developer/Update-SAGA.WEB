@@ -726,7 +726,7 @@ export class DtRequisicionComponent implements OnInit {
           reclutador = row.reclutadores[0];
         }
         const d = row.diasTrans;
-        // var d = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
+        const c = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
         // var e = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
 
         if (row.estatusId == 4) {
@@ -739,17 +739,19 @@ export class DtRequisicionComponent implements OnInit {
         }
         aux.push({
           FOLIO: row.folio.toString(),
-          'DIAS TRANSCURRIDOS': d,
-          // SOLICITANTE: row.solicita,
           EMPRESA: row.cliente,
           SUCURSAL: row.sucursal,
-          NO: row.vacantes,
-          CUBIERTOS: row.contratados,
           PUESTO: row.vBtra,
+          CUBIERTOS: row.contratados,
+          NO: row.vacantes,
+          'TIPO RECLUTAMIENTO': row.claseReclutamiento,
+          'DIAS TRANSCURRIDOS': d,
+          'FECHA CREACION': c,
           SUELDO: row.sueldoMinimo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) +
-                  ' - ' + row.sueldoMaximo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) ,
+          ' - ' + row.sueldoMaximo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) ,
           ESTATUS: row.estatus,
           COORDINADOR: coordinador,
+          SOLICITANTE: row.solicita,
           RECLUTADOR: reclutador,
           'COMENTARIOS': comentarios
         });

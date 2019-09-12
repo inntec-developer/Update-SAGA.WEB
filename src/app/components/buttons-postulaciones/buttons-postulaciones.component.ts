@@ -16,7 +16,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../service';
 import { SettingsService } from './../../core/settings/settings.service';
-import { element } from 'protractor';
 import { Router } from '@angular/router';
 
 @Component({
@@ -86,17 +85,18 @@ export class ButtonsPostulacionesComponent implements OnInit {
     { title: 'Área Experiencia', className: 'text-info', name: 'areaExp', filtering: { filterString: '', placeholder: 'Experiencia' } },
     { title: 'Área Interes', className: 'text-info', name: 'areaInt', filtering: { filterString: '', placeholder: 'Interes' } },
     { title: 'Localidad', className: 'text-info', name: 'localidad', filtering: { filterString: '', placeholder: 'Localidad' } },
-    { title: 'Sueldo Aceptable', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo aceptable' } },
-    { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad', filtering: { filterString: '', placeholder: 'Fecha Nacimiento' } },
+    { title: 'Sueldo Aceptable', className: 'text-info text-center', name: 'sueldoMinimo',
+    filtering: { filterString: '', placeholder: 'Sueldo aceptable' } },
+    { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad',
+    filtering: { filterString: '', placeholder: 'Fecha Nacimiento' } },
     { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
     { title: 'RFC', className: 'text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
     { title: 'NSS', className: 'text-success', name: 'nss', filtering: { filterString: '', placeholder: 'NSS' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } }
-  ]
+  ];
 
   public config: any = {
     paging: true,
-    //sorting: { colums: this.columns },
     filtering: { filterString: '' },
     className: ['table-striped mb-0 d-table-fixed']
   }
@@ -676,14 +676,12 @@ export class ButtonsPostulacionesComponent implements OnInit {
         this.GetConteoVacante();
         this.onChangeTable(this.config)
 
-      }
-      else if (data == 300) {
+      } else if (data == 300) {
         this.popToast('info', 'Apartado', 'El candidato ya esta apartado o en proceso');
+      } else {
+        this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos');
       }
-      else {
-        this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos')
-      }
-    })
+    });
   }
 
   SetStatusBolsa(candidatoId, estatusId, estatus) {
@@ -730,7 +728,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
             this.service.SetProcesoVacante(datosVacante).subscribe(data => {
             });
           } else if (estatusId === 23 && this.estatusVacante !== '33' && this.estatusVacante !== '39' && this.estatusVacante !== '38') {
-            const datosVacante = { estatusId: 33, requisicionId: this.RequisicionId }; //espera de contratacion
+            const datosVacante = { estatusId: 33, requisicionId: this.RequisicionId }; // espera de contratacion
 
             this.service.SetProcesoVacante(datosVacante).subscribe(data => {
             });
@@ -742,7 +740,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
           //   this.popToast('warning', 'Estatus', 'El estatus de la vacante es diferente a envio al cliente.');
           // }
         }
-      })
+      });
     }
 
   }

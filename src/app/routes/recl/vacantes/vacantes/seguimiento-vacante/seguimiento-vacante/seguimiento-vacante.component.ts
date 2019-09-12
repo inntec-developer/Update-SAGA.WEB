@@ -19,7 +19,7 @@ export class SeguimientoVacanteComponent implements OnInit {
     private _Router : ActivatedRoute
   ) { 
     this._Router.params.subscribe(params => {
-      if(params['VacanteId'] != null && params['Folio']  != null && params['VBtra']  != null ){
+      if (params['VacanteId'] != null && params['Folio']  != null && params['VBtra']  != null ) {
         this.RequisicionId = params['VacanteId'];
         this.Folio = params['Folio'];
         this.Vacante = params['VBtra'];
