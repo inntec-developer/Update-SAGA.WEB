@@ -31,6 +31,7 @@ export class Reporte70Component implements OnInit {
   public maxSize: number = 5;
   public numPages: number = 1;
   public length: number = 0;
+  public numPosiciones: number = 0;
 
   public objsucursal1 : any[];
   public objempresa1 : any[];
@@ -209,6 +210,10 @@ export class Reporte70Component implements OnInit {
      this._service.GetReporte70("",ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec).subscribe(result => {
       this.requisiciones = result;
        this.onChangeTable(this.config);
+       this.numPosiciones = 0;
+       result.forEach(item2 => {
+      this.numPosiciones = this.numPosiciones + item2.vacantes;
+     });
      })
   }
 

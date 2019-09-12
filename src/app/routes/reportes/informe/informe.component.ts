@@ -198,6 +198,12 @@ export class InformeComponent implements OnInit {
 GenerarEstados(){
   this.estados.getEstado(42).subscribe(item =>{
     this.ListaEstado = item;
+    var Opos = [];
+    Opos.push({estado:"Todos",id:"0"})
+    item.forEach(item2 => {
+      Opos.push({estado:item2.estado,id:item2.id})
+     });
+     this.ListaEstado = Opos
     console.log(this.ListaEstado);
   })
 }
@@ -249,13 +255,10 @@ GeneraEstatusBolsa(){
  
   EstadoChange(){
     this.objestado = this.FormEstado.get('EstadoControl').value;
-    
   }
 
   PruebaEstatus(evento){
     this.objstatus = evento
-   
-   
   }
 
   ActivaCheck(valor){

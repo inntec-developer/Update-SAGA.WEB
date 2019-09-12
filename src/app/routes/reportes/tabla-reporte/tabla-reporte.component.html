@@ -14,7 +14,10 @@
          
 <div class="card"  *ngIf="General?.length > 0" style="margin-top:80px">
     <div class="card-body mat-elevation-z8">
-  
+        <span class="text-muted font-weight-bold float-right text-uppercase mt-2 mr-4">Total de Posiciones <span
+          class="badge badge-pill badge-success ml-1 mat-elevation-z8">{{numPosiciones}}</span></span>
+        <span class="text-muted font-weight-bold float-right text-uppercase mt-2 mr-4">Total de Folios <span
+          class="badge badge-pill badge-success ml-1 mat-elevation-z8">{{rows.length}}</span></span>
       <ng-scrollbar #scrollableP [trackX]="true" [trackY]="false" [invertX]="invertX" [invertY]="invertY" [compact]="compact" [shown]="shown"
         [disableOnBreakpoints]="false" [disabled]="disabled">
   
