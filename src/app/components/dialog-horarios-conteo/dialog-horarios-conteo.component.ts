@@ -13,34 +13,35 @@ export class DialogHorariosConteoComponent implements OnInit {
   medios = [];
   seleccion = 0;
   mediosId;
-  constructor( private dialogHorarios: MatDialogRef<DialogHorariosConteoComponent>,  @Inject(MAT_DIALOG_DATA) public data: any, private service: CandidatosService ) { }
+  constructor( private dialogHorarios: MatDialogRef<DialogHorariosConteoComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private service: CandidatosService ) { }
 
   ngOnInit() {
     this.GetMedios();
 
-    if(this.data.length == 1)
-    {
-      if(this.data[0].id != 0)
-      {
+    if (this.data.length === 1) {
+      if (this.data[0].id !== 0) {
         this.seleccion = this.data[0].id;
       }
-    }
-    else 
-    {
+    } else {
       this.seleccion = 1;
     }
   }
 
-  GetMedios()
-  {
+  GetMedios() {
     this.service.GetMediosRecl().subscribe(result => {
       this.medios = result;
-    })
+    });
   }
 
-  EnviarDatos()
-  {
-    this.dialogHorarios.close({mediosId: this.mediosId, horarioId: this.seleccion});
+  EnviarDatos() {
+    const nom = this.data.filter( d => {
+      if ( d.id === this.seleccion ) {
+        return d.nombre;
+      }
+    });
+
+    this.dialogHorarios.close({mediosId: this.mediosId, horarioId: this.seleccion, horario: nom[0].nombre });
   }
 
   onCloseDialog() {

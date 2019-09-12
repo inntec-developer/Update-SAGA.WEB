@@ -48,6 +48,21 @@ export class AsignarPsicometricosComponent implements OnInit {
   NumClaves = 0;
   folio: any;
   id: any;
+
+    /**
+* configuracion para mensajes de acciones.
+*/
+toaster: any;
+toasterConfig: any;
+toasterconfig: ToasterConfig = new ToasterConfig({
+  positionClass: 'toast-bottom-right',
+  limit: 7,
+  tapToDismiss: false,
+  showCloseButton: true,
+  mouseoverTimerStop: true,
+  preventDuplicates: true,
+});
+
   constructor(
     private _serviceExamen: ExamenesService,
     private toasterService: ToasterService,
@@ -258,7 +273,7 @@ export class AsignarPsicometricosComponent implements OnInit {
         aux.push({
           'FOLIO': row.folio,
           'PERFÍL PSICOMÉTRICO': psico,
-          'No. CLAVES GENERADAS': this.NumClaves,
+          // 'No. CLAVES GENERADAS': this.NumClaves,
           'CLAVES GENERADAS PARA FOLIO': row.claves
         });
 
@@ -269,22 +284,10 @@ export class AsignarPsicometricosComponent implements OnInit {
     }
   }
 
-  /**
-* configuracion para mensajes de acciones.
-*/
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    limit: 7,
-    tapToDismiss: false,
-    showCloseButton: true,
-    mouseoverTimerStop: true,
-    preventDuplicates: true,
-  });
+
 
   popToast(type, title, body) {
-    var toast: Toast = {
+    const toast: Toast = {
       type: type,
       title: title,
       timeout: 4000,

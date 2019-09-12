@@ -430,12 +430,12 @@ export class DtVacantesReclutadorComponent implements OnInit {
   ValidarEstatus(estatusId) {
     //  revisar en pausa
 
-    if (this.element.aprobada === 1 && this.element.aprobadorId === this.settings.user['id'] && this.element.contratados === 0
+    if (this.element.aprobada === true && this.element.aprobadorId === this.settings.user['id'] && this.element.contratados === 0
         && (estatusId !== 39 && estatusId !== 34 && estatusId !== 35 && estatusId !== 36 && estatusId !== 37)
         && this.element.vacantes > 0) {
       this.asignar = false;
       this.disenador = false;
-    } else if (this.element.aprobada === 0 && this.element.contratados === 0
+    } else if (this.element.aprobada === false && this.element.contratados === 0
         && (estatusId !== 39 && estatusId !== 34 && estatusId !== 35 && estatusId !== 36 && estatusId !== 37)
         && this.element.vacantes > 0) {
       this.asignar = false;
@@ -497,7 +497,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = false; // espera contratacion
       this.nbc = true; // nueva busqueda candidato
       this.pausa = true;
-    } else if (estatusId === 29 && this.element.vacantes > 0 
+    } else if (estatusId === 29 && this.element.vacantes > 0
       && this.element.enProcesoFC === 0 && this.element.enProcesoFR === 0 && this.element.enProceso === 0) { // busqueda de candidatos
       this.bc = true; // busqueda candidato
       this.sc = true; // socieconomico
@@ -659,7 +659,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   //  }
 
   openDialogAssingRequi() {
-    let dialogAssing = this.dialog.open(DialogAssingRequiComponent, {
+    const dialogAssing = this.dialog.open(DialogAssingRequiComponent, {
       data: this.element
     });
     dialogAssing.afterClosed().subscribe(result => {
@@ -672,7 +672,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   openDialogTransfer() {
     this.element.usuario = 4;
     this.element.depto = 'Recl';
-    let dialogCnc = this.dialog.open(DlgTransferComponent, {
+    const dialogCnc = this.dialog.open(DlgTransferComponent, {
       width: '50%',
       height: '95%',
       data: this.element
@@ -685,15 +685,18 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   OpenDialogRequiPausa(estatusId: any, estatus: any) {
-    var aux = { requisicionId: this.requi.id, folio: this.requi.folio, cliente: this.requi.vacante, vacante: this.vBtra }
-    let dialog = this.dialog.open(DlgRequisicionPausaComponent, {
+    const aux = { requisicionId: this.requi.id, folio: this.requi.folio, cliente: this.requi.vacante, vacante: this.vBtra };
+    const dialog = this.dialog.open(DlgRequisicionPausaComponent, {
       width: '50%',
       height: 'auto',
       data: aux
     });
     dialog.afterClosed().subscribe(result => {
       if (result) {
-        this.postulateservice.SetProcesoVacante({ estatusId: estatusId, requisicionId: this.requi.id, ReclutadorId: this.settings.user['id'] }).subscribe(data => {
+        this.postulateservice.SetProcesoVacante({
+          estatusId: estatusId,
+          requisicionId: this.requi.id,
+          ReclutadorId: this.settings.user['id'] }).subscribe(data => {
           if (data === 201) {
             var idx = this.rows.findIndex(x => x.id === this.requi.id);
             this.rows[idx]['estatus'] = estatus;
@@ -828,7 +831,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
           comentarios = '';
         }
         const d = row.diasTrans;
-        //  var e = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
+        const c = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
+       // var e = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
 
         if (!Array.isArray(row.reclutadores)) {
           reclutador = 'SIN ASIGNAR';
@@ -849,17 +853,19 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
         aux.push({
           FOLIO: row.folio.toString(),
-          'DIAS TRANSCURRIDOS': d,
-          SOLICITANTE: row.solicita,
           EMPRESA: row.cliente,
           SUCURSAL: row.sucursal,
-          NO: row.vacantes,
-          CUBIERTOS: row.contratados,
           PUESTO: row.vBtra,
+          CUBIERTOS: row.contratados,
+          NO: row.vacantes,
+          'TIPO RECLUTAMIENTO': row.claseReclutamiento,
+          'DIAS TRANSCURRIDOS': d,
+          'FECHA CREACION': c,
           SUELDO: row.sueldoMinimo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) +
-                  ' - ' + row.sueldoMaximo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) ,
+          ' - ' + row.sueldoMaximo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) ,
           ESTATUS: row.estatus,
           COORDINADOR: coordinador,
+          SOLICITANTE: row.solicita,
           RECLUTADOR: reclutador,
           'COMENTARIOS': comentarios
         });
