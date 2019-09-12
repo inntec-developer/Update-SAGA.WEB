@@ -17,6 +17,9 @@ import { ToolsModule } from '../../tools/tools.module';
 import { VentaModule } from './../vtas/ventas.module';
 import { RportTicketsGeneradosComponent } from './rport-tickets-generados/rport-tickets-generados.component';
 import { RportAtencionTurnosComponent } from './rport-atencion-turnos/rport-atencion-turnos.component';
+import { ExamenesModule } from '../Examenes/examenes.module';
+
+
 
 const routes: Routes = [
   { path: 'turno', component: SeguimientoTicketComponent},
@@ -38,6 +41,7 @@ const routes: Routes = [
     ComponentsModule,
     VentaModule,
     ReclutamientoModule,
+    ExamenesModule
   ],
   declarations: [
     SeguimientoTicketComponent,
@@ -50,7 +54,7 @@ const routes: Routes = [
     TicketCitaPruebaComponent,
     ReporteConcurrenciaComponent,
     RportTicketsGeneradosComponent,
-    RportAtencionTurnosComponent,
+    RportAtencionTurnosComponent
   ],
   exports:[CarruselVacantesComponent, EnAtencionComponent, CarruselArteVacantesComponent]
 })

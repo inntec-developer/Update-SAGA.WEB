@@ -1,3 +1,4 @@
+import { VacantesReclutadorComponent } from './../../routes/recl/vacantes/vacantes/vacantes-reclutador/vacantes-reclutador.component';
 import { SettingsService } from './../../core/settings/settings.service';
 import { PostulateService } from './../../service/SeguimientoVacante/postulate.service';
 import { Component, OnInit, Input } from '@angular/core';
@@ -27,7 +28,8 @@ export class CandidatosCubiertosRportComponent implements OnInit {
     { title: 'Horario', className: 'text-info', name: 'horario', filtering: { filterString: '', placeholder: 'Horario' } },
     { title: 'Nombre Candidato', className: 'text-info', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'Localidad', className: 'text-info', name: 'localidad', filtering: { filterString: '', placeholder: 'Localidad' } },
-    { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad', 
+    filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
     { title: 'RFC', className: 'text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
     { title: 'NSS', className: 'text-success', name: 'nss', filtering: { filterString: '', placeholder: 'NSS' } },
@@ -60,6 +62,7 @@ export class CandidatosCubiertosRportComponent implements OnInit {
     mouseoverTimerStop: true,
     preventDuplicates: true,
   });
+  vacantes: any;
 
 
   constructor(private _service: PostulateService, private settings: SettingsService,
@@ -86,7 +89,9 @@ export class CandidatosCubiertosRportComponent implements OnInit {
           genero: element.informacion.genero,
           reclutador: element.informacion.reclutador,
           reclutadorId: element.informacion.reclutadorId,
-          procesoId: element.procesoId
+          procesoId: element.procesoId,
+          propietarioId: element.propietarioId,
+          vacantes: element.vacantes
         });
       }
       });
@@ -111,8 +116,8 @@ export class CandidatosCubiertosRportComponent implements OnInit {
     data.selected ? data.selected = false : data.selected = true; // para poner el background cuando seleccione
     data.selected ? this.candidatoId = data.candidatoId : this.candidatoId = null; // agrega y quita el row seleccionado
     data.selected ? this.ProcesoCandidatoId = data.procesoId : this.ProcesoCandidatoId = null;
-
-    if (this.settings.user['id'] === data.reclutadorId) {
+this.vacantes = data.vacantes;
+    if (this.settings.user['id'] === data.reclutadorId || this.settings.user['id'] === data.propietarioId) {
       this.liberado = true;
     } else {
       this.liberado = false;
@@ -133,9 +138,11 @@ export class CandidatosCubiertosRportComponent implements OnInit {
     if (value === 200) {
       this.dlgLiberar = false;
       this.objLiberar = [];
-      const aux = this.dataSource;
-      const datosVacante = { estatusId: 29, requisicionId: this.RequisicionId };
-
+      if (this.dataSource.length === this.vacantes ) {
+        const datosVacante = { estatusId: 33, requisicionId: this.RequisicionId };
+      } else {
+        const datosVacante = { estatusId: 31, requisicionId: this.RequisicionId };
+      }
       this._service.SetProcesoVacante(datosVacante).subscribe(data => {
         if (data !== 417) {
         this.GetCandidatos();

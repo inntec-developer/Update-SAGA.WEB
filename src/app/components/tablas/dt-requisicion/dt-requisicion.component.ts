@@ -120,18 +120,9 @@ export class DtRequisicionComponent implements OnInit {
       title: 'Tipo Recl.', className: 'text-info text-center',
       name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo' }
     },
-    // { title: 'Sueldo Mínimo', className: 'text-info text-center',
-    //name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
-    // { title: 'Sueldo Máximo', className: 'text-info text-center',
-    //name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
-    {
-      title: 'Creación', className: 'text-info text-center',
-      name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }
-    },
-    {
-      title: 'Fecha Cump.', className: 'text-info text-center',
-      name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }
-    },
+    { title: 'Días Transc.', className: 'text-info text-center', name: 'diasTrans', filtering: { filterString: '', placeholder: 'Días' } },
+    { title: 'Rango sueldo', className: 'text-info text-center', name: 'rango',
+    filtering: { filterString: '', placeholder: 'Rango sueldo' } },
     {
       title: 'Estatus', className: 'text-info text-center',
       name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' }
@@ -187,14 +178,25 @@ export class DtRequisicionComponent implements OnInit {
     this.service.getRequisiciones(this.settings.user['id']).subscribe(data => {
       if (data !== 404) {
         this.dataSource = data;
-
+        const n = new Date;
         this.totalPos = 0;
         this.totalContratados = 0;
 
         this.dataSource.forEach(r => {
-          if (r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37)) {
+          if (r.estatusId !== 8 && (r.estatusId < 34 || r.estatusId > 37)) {
             this.totalPos += r.vacantes;
             this.totalContratados += r.contratados;
+
+            r.rango = r.sueldoMinimo + '-' + r.sueldoMaximo;
+            const daux = new Date(r.fch_Creacion);
+            let diasTrans = 0;
+            while (daux <= n) {
+              if (daux.getDay() > 0 && daux.getDay() < 6) {
+                diasTrans += 1;
+              }
+              daux.setDate(daux.getDate() + 1);
+            }
+            r.diasTrans = diasTrans;
             if (r.estatusId === 4) {
               r.coordinador = r.reclutadores;
               r.reclutadores = 'SIN ASIGNAR';
@@ -723,8 +725,9 @@ export class DtRequisicionComponent implements OnInit {
         } else {
           reclutador = row.reclutadores[0];
         }
-        var d = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
-        var e = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
+        const d = row.diasTrans;
+        // var d = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
+        // var e = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
 
         if (row.estatusId == 4) {
           coordinador = reclutador;
@@ -736,20 +739,20 @@ export class DtRequisicionComponent implements OnInit {
         }
         aux.push({
           FOLIO: row.folio.toString(),
-          'FECHA SOLICITUD': d,//new Date(d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString(),
-          SOLICITANTE: row.propietario,
+          'DIAS TRANSCURRIDOS': d,
+          // SOLICITANTE: row.solicita,
           EMPRESA: row.cliente,
           SUCURSAL: row.sucursal,
           NO: row.vacantes,
           CUBIERTOS: row.contratados,
           PUESTO: row.vBtra,
-          SUELDO: row.sueldoMinimo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
+          SUELDO: row.sueldoMinimo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) +
+                  ' - ' + row.sueldoMaximo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) ,
           ESTATUS: row.estatus,
-          'FECHA ESTATUS': e,
           COORDINADOR: coordinador,
           RECLUTADOR: reclutador,
           'COMENTARIOS': comentarios
-        })
+        });
         comentarios = '';
         reclutador = '';
       });
