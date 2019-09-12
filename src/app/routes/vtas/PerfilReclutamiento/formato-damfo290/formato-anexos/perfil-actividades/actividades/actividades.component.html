@@ -3,9 +3,9 @@
     <section [hidden]="!Edit">
       <div class="row">
         <mat-form-field class="col-10">
-          <textarea #ActividadCtrl matInput maxlength="200" placeholder="Actividad"
+          <textarea #ActividadCtrl matInput autofocus maxlength="200" placeholder="Actividad"
             [value]="ActividadCtrl.value.toUpperCase()" rows="2"
-            formControlName="actividad"></textarea>
+            formControlName="actividad" (keyup.control.enter)="Save()"></textarea>
           <mat-hint align="start">
             <strong class="text-warning">Actividad a Realizarn</strong>
           </mat-hint>

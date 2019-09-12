@@ -62,7 +62,6 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges {
   }
 
   GuardarPerfil() {
-    debugger;
     this.loading = true;
     const apt = this.requisitos.formEncabezado.get('Aptitud').value;
     const Aptitudes = [];

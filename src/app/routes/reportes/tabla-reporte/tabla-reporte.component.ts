@@ -41,6 +41,7 @@ export class TablaReporteComponent implements OnInit {
   public maxSize: number = 5;
   public numPages: number = 1;
   public length: number = 0;
+  public numPosiciones: number = 0;
 
   registros: any;
   showFilterRow: boolean;
@@ -157,7 +158,12 @@ ucor = ucor == undefined?'0':ucor;
     this.General = data;
     this.onChangeTable(this.config);
     this.spinner.hide();
-
+    
+    this.numPosiciones = 0;
+    data.forEach(item2 => {
+      this.numPosiciones = this.numPosiciones + item2.numero;
+     });
+    
     });
   }
 

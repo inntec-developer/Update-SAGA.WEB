@@ -94,7 +94,16 @@ export class FormatoRequisitosComponent implements OnInit, OnChanges {
       DiaPago: [{ value: '', disabled: false }, [Validators.required]],
       PeriodoPago: [{ value: '', disabled: false }, [Validators.required]],
     });
+    this.markFormGroupTouched(this.formEncabezado);
+  }
 
+  private markFormGroupTouched(formGroup: FormGroup) {
+    (<any>Object).values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+      if (control.controls) {
+        this.markFormGroupTouched(control);
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {

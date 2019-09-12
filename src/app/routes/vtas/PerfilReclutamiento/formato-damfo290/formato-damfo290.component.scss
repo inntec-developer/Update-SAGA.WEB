@@ -1,0 +1,11 @@
+.not-allowed {
+  cursor: not-allowed !important;
+}
+
+.pinter {
+  cursor: pointer;
+}
+
+ul li a .nav-link:disabled{
+  cursor: not-allowed !important;
+}

@@ -2,8 +2,8 @@
   <section [hidden]="!Edit">
     <div class="row">
       <mat-form-field class="col-10">
-        <input #ProcesoCtrl matInput maxlength="100" placeholder="Proceso" rows="2" formControlName="proceso"
-        [value]="ProcesoCtrl.value.toUpperCase()" required="">
+        <input #ProcesoCtrl autofocus matInput maxlength="100" placeholder="Proceso" rows="2" formControlName="proceso"
+        [value]="ProcesoCtrl.value.toUpperCase()" required="" (keyup.control.enter)="Save()">
       </mat-form-field>
       <section class="col-2">
         <em class="fa fa-close text-danger em-button float-left" (click)="Remove()"></em>

@@ -1,8 +1,8 @@
-<form [formGroup]="EscolaridadArray">
+<form [formGroup]="EscolaridadArray" (keydown.control.alt.n)="AddEscolaridad()">
   <section class="col-12">
     <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
     <strong class="text-warning">Escolaridad</strong> <span class="fa fa-plus em-button text-primary float-right"
-      (click)="AddEscolaridad()"></span>
+      (click)="AddEscolaridad()" ></span>
     <mat-divider></mat-divider>
   </section>
   <div class="container">

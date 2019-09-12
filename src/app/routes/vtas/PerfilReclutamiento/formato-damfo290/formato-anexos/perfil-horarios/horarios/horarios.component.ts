@@ -63,6 +63,15 @@ export class HorariosComponent implements OnInit, AfterContentInit {
   }
 
   ngOnInit() {
+    this.markFormGroupTouched(this.horario);
+  }
+  private markFormGroupTouched(formGroup: FormGroup) {
+    (<any>Object).values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+      if (control.controls) {
+        this.markFormGroupTouched(control);
+      }
+    });
   }
 
   ngAfterContentInit(): void {
