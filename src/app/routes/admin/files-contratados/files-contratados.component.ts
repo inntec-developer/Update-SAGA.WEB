@@ -12,7 +12,7 @@ export class FilesContratadosComponent implements OnInit {
   registrosInfo: number;
   filemanager = false;
   candidatoId: any;
-  nom = "";
+  nom = '';
     //scroll
     public disabled = false;
     public invertX = false;
@@ -35,32 +35,64 @@ export class FilesContratadosComponent implements OnInit {
     { title: 'CURP', className: 'text-success text-center', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
     { title: 'edad', className: 'text-primary text-center', name: 'edad', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'Nombre', className: 'text-primary text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
-    { title: 'Fecha', className: 'text-primary text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } }
-  ]
+    { title: 'Fecha', className: 'text-primary text-center', name: 'fch_Creacion',
+      filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } }
+  ];
   element: any = [];
   rowAux: any = [];
+  totalCandidatos = 0;
+  totalFolios = 0;
 
   constructor(private service: CandidatosService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.GetContratadosInfo();
-    
   }
 
-  GetContratadosInfo()
-  {
-    this.service.GetInfoContratados().subscribe(result =>{
-      this.dataInfoRequi = result;
-      this.onChangeTableInfo(this.config)
+  GetContratadosInfo() {
+    this.service.GetInfoContratados().subscribe(result => {
+      this.totalFolios = result.length;
+      this.totalCandidatos = 0;
+
+      this.dataInfoRequi = [];
+      result.forEach(element => {
+        if (element.info.length > 0) {
+        element.info.forEach(item => {
+            // row.forEach(item => {
+              if (item.length > 0) {
+                this.dataInfoRequi.push({
+                  candidatoId: item[0].candidatoId,
+                  nombre: item[0].nombre,
+                  edad: item[0].edad,
+                  rfc: item[0].rfc,
+                  curp: item[0].curp,
+                  nss: item[0].nss,
+                  paisNacimiento: item[0].paisNacimiento,
+                  estadoNacimiento: item[0].estadoNacimiento,
+                  municipioNacimiento: item[0].municipioNacimiento,
+                  localidad: item[0].localidad,
+                  generoId: item[0].generoId,
+                  fch_Creacion: item[0].fch_Creacion,
+                  fch_Modificacion: item[0].fch_Modificacion,
+                  folio: item[0].folio,
+                  vbtra: item[0].vbtra
+                });
+               }
+            // });
+        });
+      }
+      });
+      console.log(this.dataInfoRequi)
+      this.totalCandidatos = this.dataInfoRequi.length;
+      this.onChangeTableInfo(this.config);
     });
   }
 
-  closeModal()
-  {
+  closeModal() {
     this.filemanager = false;
   }
   public refreshTableInfo() {
-    this.GetContratadosInfo();  
+    this.GetContratadosInfo(); 
     setTimeout(() => {
       this.columns.forEach(element => {
         element.filtering.filterString = '';
@@ -80,7 +112,6 @@ export class FilesContratadosComponent implements OnInit {
     this.registrosInfo = this.dataInfoRequi.length;
     this.rowsInfo = this.dataInfoRequi;
     let filteredData = this.changeFilterInfo(this.rowsInfo, this.config);
-    //let sortedData = this.changeSort(filteredData, this.config);
     this.rowsInfo = page && config.paging ? this.changePageInfo(page, filteredData) : filteredData;
     this.lengthInfo =  filteredData.length;
     setTimeout(() => {

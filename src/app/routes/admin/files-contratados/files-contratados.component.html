@@ -23,12 +23,20 @@
             container="body" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'btn btn-xs disabled':'btn btn-xs btn-info'">
             <em class="fa fa-eraser"></em>
           </button>
-        <button [disabled]="element.length == 0" [ngClass]="element.length == 0 ? 'disabled' : 'btn-warning'" class="mb-1 btn btn-xs  mat-elevation-z8 float-right mr-2" type="button" container="body" placement="bottom" tooltip="Cargar Archivos" (click)="candidatoId = element.candidatoId; nom = element.nombre; filemanager=true;">
+        <button [disabled]="element.length == 0" [ngClass]="element.length == 0 ? 'disabled' : 'btn-warning'" class="mb-1 ml-2 btn btn-xs  mat-elevation-z8 float-right mr-2" type="button" container="body" placement="bottom" tooltip="Cargar Archivos" (click)="candidatoId = element.candidatoId; nom = element.nombre; filemanager=true;">
             <em class="fa fa-upload"></em>
           </button>
         </div>
+        <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-end">
+                <span class="text-muted font-weight-bold float-right text-uppercase mr-3 ">Total de Folios<span
+                  class="badge badge-pill badge-success ml-1">{{totalFolios}}</span></span>
+              </div>
+          <span class="text-muted font-weight-bold float-right text-uppercase mr-4 ">Total de Candidatos<span
+            class="badge badge-pill badge-success ml-1">{{totalCandidatos}}</span></span>
+        </div>
         <br/>
-  <table *ngIf="dataInfoRequi.length > 0 else NotCandidatos" class="table">
+  <table *ngIf="dataInfoRequi.length > 0 else NotCandidatos" class="table border-top">
     <thead>
       <tr>
         <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
@@ -61,11 +69,10 @@
 </div>
 <br/>
 <div class="clearfix">
-    <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="pageInfo" [totalItems]="lengthInfo" [itemsPerPage]="itemsPerPageInfo"
+    <pagination *ngIf="config.paging" class="pagination-sm float-right" [(ngModel)]="pageInfo" [totalItems]="lengthInfo" [itemsPerPage]="itemsPerPageInfo"
       [maxSize]="maxSizeInfo" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTableInfo(config, $event)"
       (numPages)="numPagesInfo = $event">
     </pagination>
-  <pre *ngIf="config.paging" class="text-muted float-right">P&aacute;gina: {{pageInfo}} / {{numPagesInfo}}  Total Registros: {{registrosInfo}}</pre>
 </div>
 
 </div>

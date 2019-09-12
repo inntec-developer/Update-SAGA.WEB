@@ -138,10 +138,9 @@ this.vacantes = data.vacantes;
     if (value === 200) {
       this.dlgLiberar = false;
       this.objLiberar = [];
+      let datosVacante = { estatusId: 31, requisicionId: this.RequisicionId };
       if (this.dataSource.length === this.vacantes ) {
-        const datosVacante = { estatusId: 33, requisicionId: this.RequisicionId };
-      } else {
-        const datosVacante = { estatusId: 31, requisicionId: this.RequisicionId };
+        datosVacante = { estatusId: 33, requisicionId: this.RequisicionId };
       }
       this._service.SetProcesoVacante(datosVacante).subscribe(data => {
         if (data !== 417) {
