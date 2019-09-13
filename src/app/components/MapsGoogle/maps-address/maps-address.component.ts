@@ -51,11 +51,7 @@ export class MapsAddressComponent implements OnInit, OnChanges {
             this.longitude = results[0].geometry.location.lng();
             this.zoom = 18;
             this.address = busqueda;
-          } else {
-            window.alert('No results found');
           }
-        } else {
-          window.alert('Geocoder failed due to: ' + status);
         }
       });
     });

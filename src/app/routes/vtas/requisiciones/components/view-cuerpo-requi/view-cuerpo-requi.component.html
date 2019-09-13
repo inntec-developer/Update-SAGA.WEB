@@ -178,13 +178,19 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-md-12">
+      <app-maps-address [Direccion]="requisicion?.direccion"></app-maps-address>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
       <!-- TELEFONOS -->
       <app-dt-telefonos [Telefonos]="requisicion?.cliente?.telefonos"></app-dt-telefonos>
     </div>
     <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
       <!-- TELEFONOS -->
-      <app-dt-rutas-camion-requi [DireccionId]='requisicion?.direccionId' [ShowRequi]="ShowRequi"></app-dt-rutas-camion-requi>
+      <app-dt-rutas-camion-requi [DireccionId]='requisicion?.direccionId' [ShowRequi]="ShowRequi">
+      </app-dt-rutas-camion-requi>
     </div>
   </div>
   <!-- CONTACTOS -->
@@ -251,6 +257,18 @@
     <div class="col-md-4 col-lg-4">
       <!-- COMPETENCIAS GERENCIALES -->
       <app-dt-competencia-gerencial [Competencias]="requisicion?.competenciasGerencial"></app-dt-competencia-gerencial>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-offset-md-3 col-offset-lg-3 col-sm-12 cols-xs-12">
+      <div class="title-headre-view d-flex justify-content-between">
+        <h4>Arte para redes</h4>
+      </div>
+      <div class="card box">
+        <div class="card-body">
+          <img src="assets/img/ArteVacantes/{{arte}}.jpg" class="float-center img-arte">
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -325,6 +325,9 @@
   </div>
   <div class="row">
     <div class="col-lg-6 col-md-6 col-offset-md-3 col-offset-lg-3 col-sm-12 cols-xs-12">
+      <div class="title-headre-view d-flex justify-content-between">
+        <h4>Arte para redes</h4>
+      </div>
       <div class="card box">
         <div class="card-body">
           <img src="assets/img/ArteVacantes/{{arte}}.jpg" class="float-center img-arte">
@@ -333,7 +336,7 @@
     </div>
   </div>
 
-  <br *ngIf="imprimir" />
+  <!-- <br *ngIf="imprimir" />
   <div class="row" *ngIf="imprimir">
     <div class="col-4">
       <div class="card text-center">
@@ -377,9 +380,9 @@
           Autorizó (Nombre / Firma)
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="col-4">
+    <!-- <div class="col-4">
       <div class="card text-center ">
         <div class="firmas-header">
           CLIENTE
@@ -401,8 +404,8 @@
       </div>
     </div>
   </div>
-</div>
-<!--  -->
+</div> -->
+<!-- [hidden]="!imprimir" -->
 <div [hidden]="!imprimir" id="PrintDamfo" #PrintDamfo class="clsPrintDamfo">
   <div class="row justify-content-between">
     <div class="col-2">
@@ -553,7 +556,7 @@
     </tbody>
     <tbody>
       <tr>
-        <th class="text-center" style="background-color: blue; color: white" colspan="12">NOMBRE DEL PUESTO</th>
+        <th class="text-center" style="background-color: blue; color: white" colspan="12">{{damfo290?.nombrePerfil | uppercase}}</th>
       </tr>
       <tr>
         <td style="background-color: burlywood" colspan="12">REQUISITOS A PETICION DEL CLIENTE:</td>
@@ -700,6 +703,16 @@
         <td colspan="4"> {{x.observaciones | uppercase}}</td>
       </tr>
     </tbody>
+    <tbody>
+        <tr>
+          <th class="text-center" style="background-color: blue; color: white" colspan="12">CONTRATO</th>
+        </tr>
+        <tr>
+          <td colspan="4"><strong> Tipo de Contrato </strong></td>
+          <td colspan="4" class="text-lenght"> {{damfo290?.tipoContrato | uppercase}}</td>
+          <td colspan="4"  *ngIf="damfo290?.periodoPrueba == true"> {{damfo290?.tiempo | uppercase}}</td>
+        </tr>
+      </tbody>
     <tbody>
       <tr>
         <th class="text-center" style="background-color: blue; color: white" colspan="12">DOCUMENTOS</th>

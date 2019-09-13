@@ -21,6 +21,7 @@ export class ViewCuerpoRequiComponent implements OnInit {
   public requisicion: any;
   public checked: boolean = false;
   public EstatusRequi: any;
+  arte: string;
 
   constructor(
     private serviceRequisiciones: RequisicionesService,
@@ -49,7 +50,9 @@ export class ViewCuerpoRequiComponent implements OnInit {
     this.spinner.show();
     this.serviceRequisiciones.getNewRequi(this.Requisicion)
       .subscribe(data => {
+        debugger;
         this.requisicion = data;
+        this.arte = data['arte'];
         this.EstatusRequi = data.estatusId;
         this.spinner.hide();
       });

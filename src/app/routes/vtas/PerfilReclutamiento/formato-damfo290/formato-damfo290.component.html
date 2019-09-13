@@ -21,11 +21,11 @@
     <app-formato-cliente [IdFormato]="IdFormato" #FormatoClienteCpt></app-formato-cliente>
   </tab>
   <!-- [disabled]="!cliente.formCliente.valid" -->
-  <tab heading="Datos de Perfil" id="TapRequisitos" >
+  <tab heading="Datos de Perfil" id="TapRequisitos" [disabled]="!cliente.formCliente.valid">
     <app-formato-requisitos [IdFormato]="IdFormato"></app-formato-requisitos>
   </tab>
   <!-- [disabled]="!cliente.formCliente.valid" -->
-  <tab heading="Horarios, Prestaciones ..." id="TapInfoAdicional" >
+  <tab heading="Horarios, Prestaciones ..." id="TapInfoAdicional" [disabled]="!cliente.formCliente.valid">
     <app-formato-anexos [IdFormato]="IdFormato"></app-formato-anexos>
   </tab>
   <tab heading="Anexos" id="TapAnexos" *ngIf="!isNew">

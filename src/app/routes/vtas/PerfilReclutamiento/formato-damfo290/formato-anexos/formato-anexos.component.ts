@@ -61,6 +61,7 @@ export class FormatoAnexosComponent implements OnInit, OnChanges {
           this.Cardinales = data['cardinales'];
           this.Areas = data['areas'];
           this.Gerenciales = data['gerenciales'];
+          this.Arte = data['arte']
         }
       });
     }

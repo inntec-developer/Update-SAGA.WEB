@@ -230,7 +230,7 @@ export class ViewdamfoComponent implements OnInit {
           top_left_margin,
           top_left_margin,
           570,
-          HTML_Height - 1100
+          HTML_Height - 1300
         );
 
         for (let i = 1; i <= totalPDFPages; i++) {
@@ -239,7 +239,7 @@ export class ViewdamfoComponent implements OnInit {
             'JPG', top_left_margin,
             -(PDF_Height * i) + (top_left_margin * 4),
             570,
-            HTML_Height - 1100
+            HTML_Height - 1300
           );
         }
         pdf.save(nombrePerfil + '.pdf');
