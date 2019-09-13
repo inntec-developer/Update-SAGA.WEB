@@ -59,7 +59,7 @@
 
         </td>
         <td class="text-center">
-            <button [disabled]="!row.activar && !loading" [ngClass]="!row.activar && loading ? 'mb-1 btn btn-xs disabled  mat-elevation-z8' : 'mb-1 btn btn-xs btn-success mat-elevation-z8'"  type="button" (click)="AddComentario(row, rowIndex)"  container="body" placement="bottom" tooltip="Cambiar Estatus">
+            <button [disabled]="!row.activar && !loading" [ngClass]="!row.activar && loading ? 'mb-1 btn btn-xs disabled  mat-elevation-z8' : 'mb-1 btn btn-xs btn-success mat-elevation-z8'"  type="button" (click)="SetStatus(row, rowIndex)"  container="body" placement="bottom" tooltip="Cambiar Estatus">
                 <em class="fa fa-check"></em>
             </button>
         </td>

@@ -18,6 +18,19 @@ export class DlgRequisicionPausaComponent implements OnInit {
   public comentario: string;
   public motivoId: any;
   public loading = false;
+  /**
+   * configuracion para mensajes de acciones.
+   */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+    preventDuplicates: true,
+  });
   constructor(@Inject(MAT_DIALOG_DATA) public requi: any,
   private serviceCandidato: CandidatosService,
   private serviceComentarios: ComentariosService,
@@ -29,27 +42,25 @@ export class DlgRequisicionPausaComponent implements OnInit {
     this.GetMotivos();
   }
 
-  GetMotivos()
-  {
-    this.serviceCandidato.GetMotivos(39).subscribe(result =>{
+  GetMotivos() {
+    this.serviceCandidato.GetMotivos(39).subscribe(result => {
       this.motivos = result;
-    })
+    });
 
   }
 
-  AddComentario()
-  {
+  AddComentario() {
     this.loading = true;
-    let Comentario = {
+    const Comentario = {
         Comentario: this.comentario,
         RequisicionId: this.requi.requisicionId,
         MotivoId: this.motivoId,
         UsuarioAlta: this.settings.user['usuario'],
         ReclutadorId: this.settings.user['id'],
         EstatusId: 39
-      }
+      };
       this.serviceComentarios.addComentarioVacante(Comentario).subscribe(data => {
-        if (data == 200) {
+        if (data === 200) {
           this.comentario = '';
           this.motivoId = 0;
 
@@ -64,20 +75,6 @@ export class DlgRequisicionPausaComponent implements OnInit {
       });
     }
 
-
-/**
-   * configuracion para mensajes de acciones.
-   */
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    limit: 7,
-    tapToDismiss: false,
-    showCloseButton: true,
-    mouseoverTimerStop: true,
-    preventDuplicates: true,
-  });
 
   popToast(type, title, body) {
     var toast: Toast = {
