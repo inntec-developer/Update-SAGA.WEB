@@ -1,194 +1,199 @@
 <div class="content-heading">
     <div>
-       Sistema de Oficinas
+        Sistema de Oficinas
         <span class="text-sm d-none d-sm-block">Administraci&oacute;n de oficinas de reclutamiento.</span>
     </div>
     <!-- Breadcrumb right aligned-->
     <ol class="breadcrumb ml-auto">
-        <li class="breadcrumb-item"><a [routerLink]="['/home']" >Inicio</a></li>
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/home']">Inicio</a>
+        </li>
         <li class="breadcrumb-item active">Oficina</li>
     </ol>
-  </div>
+</div>
 
 
 
-  <ng-template #content let-modal>
-      <div class="modal-header">
+<ng-template #content let-modal>
+    <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Oficinas</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
         </button>
-      </div>
-      <div class="modal-body">
+    </div>
+    <div class="modal-body">
         <form style="font-size: 12px">
-          <div >
-              <label for="dateOfBirth">Nombre </label>
+            <div>
+                <label for="dateOfBirth">Nombre </label>
                 <input type="tetx" id="nombreOfi" value="{{nombre}}" class="form-control form-control-sm ">
             </div>
             <div class="form-group">
-                <label >Estados</label>
-                <select class="form-control input-sm" (change)="Muni()"  id="EstadoOfi">
+                <label>Estados</label>
+                <select class="form-control input-sm" (change)="Muni()" id="EstadoOfi">
 
-                  <option *ngFor="let item of Estado"  value="{{item.id}}">{{item.estado}}</option>
+                    <option *ngFor="let item of Estado" value="{{item.id}}">{{item.estado}}</option>
                 </select>
-              </div>
-              <div class="form-group">
-                  <label >Municipio</label>
-                  <select (change)="Col()" class="form-control input-sm" id="MunicipioOfi">
+            </div>
+            <div class="form-group">
+                <label>Municipios</label>
+                <select (change)="Col()" class="form-control input-sm" id="MunicipioOfi">
 
-                      <option *ngFor="let item of Municipio"  value="{{item.id}}">{{item.municipio}}</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                    <label for="condinacionR">Colonia</label>
-                    <select class="form-control input-sm" id="colonia">
+                    <option *ngFor="let item of Municipio" value="{{item.id}}">{{item.municipio}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="condinacionR">Colonia</label>
+                <select class="form-control input-sm" id="colonia">
 
-                        <option *ngFor="let item of Colonia"  value="{{item.id}}">{{item.colonia}}</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                      <label for="dateOfBirth">Codigo Postal</label>
-                        <input type="number" id="cp" maxlength="5" value="{{cp}}" class="form-control form-control-sm ">
-                    </div>
-              <div class="form-group">
-                  <label for="dateOfBirth">Calle</label>
-                    <input type="tetx" id="calle" class="form-control form-control-sm "  value="{{calle}}" >
-                </div>
-                <div class="form-group">
-                    <label for="dateOfBirth">Número</label>
-                      <input type="tetx" id="numero" value="{{num}}" class="form-control form-control-sm ">
-                  </div>
-                  <div class="form-group">
-                      <label for="dateOfBirth">Télefono</label>
-                        <input type="text" id="telefono" value="{{tel}}" class="form-control form-control-sm ">
-                    </div>
-                    <div class="form-group">
-                        <label for="dateOfBirth">Email</label>
-                          <input type="text" id="email" value="{{email}}" class="form-control form-control-sm ">
-                      </div>
-                      <div class="form-group">
-                          <label for="dateOfBirth">Latitud</label>
-                            <input type="tetx" id="latitud" value="{{lat}}" class="form-control form-control-sm ">
-                        </div>
-                        <div class="form-group">
-                            <label for="dateOfBirth">Longitud</label>
-                              <input type="tetx" id="longitud" value="{{lon}}" class="form-control form-control-sm ">
-                          </div>
-                          <div class="form-group">
-                              <label >Tipo reclutamiento</label>
-                              <select class="form-control input-sm" id="tipoOfi">
-                                  <option *ngFor="let item of tipo"  value="{{item.id}}">{{item.nombre}}</option>
-                              </select>
-                            </div>
-                            <div class="form-group">
-                                <mat-checkbox id="checkModal" style="margin: 20px"  checked="1">Activa o Desactiva!</mat-checkbox>
-                              </div>
+                    <option *ngFor="let item of Colonia" value="{{item.id}}">{{item.colonia}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="dateOfBirth">Codigo postal</label>
+                <input type="number" id="cp" maxlength="5" value="{{cp}}" class="form-control form-control-sm ">
+            </div>
+            <div class="form-group">
+                <label for="dateOfBirth">Calle</label>
+                <input type="tetx" id="calle" class="form-control form-control-sm " value="{{calle}}">
+            </div>
+            <div class="form-group">
+                <label for="dateOfBirth">Número</label>
+                <input type="tetx" id="numero" value="{{num}}" class="form-control form-control-sm ">
+            </div>
+            <div class="form-group">
+                <label for="dateOfBirth">Télefono</label>
+                <input type="text" id="telefono" value="{{tel}}" class="form-control form-control-sm ">
+            </div>
+            <div class="form-group">
+                <label for="dateOfBirth">Email</label>
+                <input type="text" id="email" value="{{email}}" class="form-control form-control-sm ">
+            </div>
+            <div class="form-group">
+                <label for="dateOfBirth">Latitud</label>
+                <input type="tetx" id="latitud" value="{{lat}}" class="form-control form-control-sm ">
+            </div>
+            <div class="form-group">
+                <label for="dateOfBirth">Longitud</label>
+                <input type="tetx" id="longitud" value="{{lon}}" class="form-control form-control-sm ">
+            </div>
+            <div class="form-group">
+                <label>Tipo reclutamiento</label>
+                <select class="form-control input-sm" id="tipoOfi">
+                    <option *ngFor="let item of tipo" value="{{item.id}}">{{item.nombre}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <mat-checkbox id="checkModal" style="margin: 20px" checked="1">Activa o Desactiva!</mat-checkbox>
+            </div>
 
         </form>
-      </div>
-      <div class="modal-footer">
-          <!-- (click)="modal.close('Save click')" -->
-          <button title="Guardar pregunta" style="margin-right: 20px" class="mb-1 btn btn-sm btn-success mat-elevation-z8" (click)="Guardar()" (click)="modal.close('Save click')" type="button"   >
-              <em _ngcontent-c34="" class="fa fa-save"></em>
-            </button>
+    </div>
+    <div class="modal-footer">
+        <!-- (click)="modal.close('Save click')" -->
+        <button title="Guardar pregunta" style="margin-right: 20px" class="mb-1 btn btn-sm btn-success mat-elevation-z8" (click)="Guardar()"
+            (click)="modal.close('Save click')" type="button">
+            <em _ngcontent-c34="" class="fa fa-save"></em>
+        </button>
         <!-- <button type="button" class="btn btn-dark" (click)="Guardar()" (click)="modal.close('Save click')" >Guardar</button> -->
 
-      </div>
-    </ng-template>
+    </div>
+</ng-template>
 
-    <div class="col-xl-6">
-        <div class="form-group ">
-            <!-- <label for="bus">Busqueda:</label> -->
-            <div class="input-group input-sm">
-              <input
-                id="palabra"
-                type="text"
-                size="12"
-                placeholder="Palabra clave"
-                class=" form-control input-sm"
-                (change)="Filtroo()"
-              />
-              <div class="input-group-append mano" >
-                <span class="input-group-text "> <em class="fa fa-search"></em></span>
-              </div>
+<div class="col-xl-6">
+    <div class="form-group ">
+        <!-- <label for="bus">Busqueda:</label> -->
+        <div class="input-group input-sm">
+            <input id="palabra" type="text" size="12" placeholder="Palabra clave" class=" form-control input-sm" (change)="Filtroo()"
+            />
+            <div class="input-group-append mano">
+                <span class="input-group-text ">
+                    <em class="fa fa-search"></em>
+                </span>
             </div>
-          </div>
-      </div>
-      <div class="col-xl-2" style="position: relative;top: -49px;left: 94%;">
-          <button title="Agregar pregunta"  class="mb-1 btn btn-sm btn-success mat-elevation-z8" (click)="open(content)" (click)="AbrirModal()"    type="button"   >
-              <em _ngcontent-c34="" class="fa fa-plus"></em>
-            </button>
-     </div>
+        </div>
+    </div>
+</div>
+<div class="col-xl-2" style="position: relative;top: -49px;left: 94%;">
+    <button title="Agregar pregunta" class="mb-1 btn btn-sm btn-success mat-elevation-z8" (click)="open(content)" (click)="AbrirModal()"
+        type="button">
+        <em _ngcontent-c34="" class="fa fa-plus"></em>
+    </button>
+</div>
 <input type="hidden" id="Identi" value="">
 
 
 <div class="tablaE">
 
 
-  <table  style="font-size: 12px" class="table table-striped table-hover ">
-    <thead >
-      <tr >
-        <th  class="text-center text-success ng-star-inserted"> Nombre </th>
-        <th  class="text-center text-primary ng-star-inserted"> municipio </th>
-        <th  class="text-center text-primary ng-star-inserted"> Estado </th>
-        <th  class="text-center text-primary ng-star-inserted"> calle y Numero </th>
-        <th  class="text-center text-primary ng-star-inserted"> colonia </th>
-        <th  class="text-center text-primary ng-star-inserted"> telefono </th>
-        <th  class="text-center text-primary ng-star-inserted"> Correo </th>
-        <th  class="text-center text-primary ng-star-inserted"> latitud </th>
-        <th  class="text-center text-primary ng-star-inserted"> longitud </th>
-        <th  class="text-center text-primary ng-star-inserted"> tipoOficina </th>
-        <th  class="text-center text-primary ng-star-inserted"> Activo </th>
-        <th  class="text-center text-primary ng-star-inserted"> Accion </th></tr>
-      </thead><tbody ><!---->
-          <tr class="rowHover ng-star-inserted" *ngFor="let item of datos">
-            <td  class="text-center">{{item.nombre}}
-              <input type="hidden" id="nombre_{{item.id}}" value="{{item.nombre}}" >
-            </td>
-            <td  class="text-center">{{item.municipio}}</td>
-            <td   class="text-center">{{item.estado}}
-                <input type="hidden" id="Estadoid_{{item.id}}" value="{{item.estadoid}}" >
-                <input type="hidden" id="Municipio_{{item.id}}" value="{{item.municipioid}}" >
-                <input type="hidden" id="Colonia_{{item.id}}" value="{{item.coloniaid}}" >
-            </td>
-            <td   class="text-center">{{item.calle}}, {{item.numeroExt}}
-                <input type="hidden" id="calle_{{item.id}}" value="{{item.calle}}" >
-                <input type="hidden" id="numero_{{item.id}}" value="{{item.numeroExt}}" >
-            </td>
-            <td   class="text-center">{{item.colonia}}</td>
-            <td   class="text-center">{{item.telefono}}
-                <input type="hidden" id="telefono_{{item.id}}" value="{{item.telefono}}" >
-            </td>
-            <td   class="text-center">{{item.Correo}}
-                <input type="hidden" id="Correo_{{item.id}}" value="{{item.Correo}}" >
-            </td>
-            <td  class="text-center">{{item.latitud}}
-                <input type="hidden" id="latitud_{{item.id}}" value="{{item.latitud}}" >
-            </td>
-            <td   class="text-center">{{item.longitud}}
-                <input type="hidden" id="longitud_{{item.id}}" value="{{item.longitud}}" >
-            </td>
-            <td   class="text-center">{{item.tipoOficina}}
-                <input type="hidden" id="TipoOficina_{{item.id}}" value="{{item.tipoOficinaid}}" >
-                <input type="hidden" id="codigopostal_{{item.id}}" value="{{item.cp}}" >
-            </td>
-            <!-- Actividad Empresas <Area Nombre> Column -->
+    <table style="font-size: 12px" class="table table-striped table-hover ">
+        <thead>
+            <tr>
+                <th class="text-center text-success ng-star-inserted"> Nombre </th>
+                <th class="text-center text-primary ng-star-inserted"> municipio </th>
+                <th class="text-center text-primary ng-star-inserted"> Estado </th>
+                <th class="text-center text-primary ng-star-inserted"> calle y Numero </th>
+                <th class="text-center text-primary ng-star-inserted"> colonia </th>
+                <th class="text-center text-primary ng-star-inserted"> telefono </th>
+                <th class="text-center text-primary ng-star-inserted"> Correo </th>
+                <th class="text-center text-primary ng-star-inserted"> latitud </th>
+                <th class="text-center text-primary ng-star-inserted"> longitud </th>
+                <th class="text-center text-primary ng-star-inserted"> tipoOficina </th>
+                <th class="text-center text-primary ng-star-inserted"> Activo </th>
+                <th class="text-center text-primary ng-star-inserted"> Accion </th>
+            </tr>
+        </thead>
+        <tbody>
+            <!---->
+            <tr class="rowHover ng-star-inserted" *ngFor="let item of datos">
+                <td class="text-center">{{item.nombre}}
+                    <input type="hidden" id="nombre_{{item.id}}" value="{{item.nombre}}">
+                </td>
+                <td class="text-center">{{item.municipio}}</td>
+                <td class="text-center">{{item.estado}}
+                    <input type="hidden" id="Estadoid_{{item.id}}" value="{{item.estadoid}}">
+                    <input type="hidden" id="Municipio_{{item.id}}" value="{{item.municipioid}}">
+                    <input type="hidden" id="Colonia_{{item.id}}" value="{{item.coloniaid}}">
+                </td>
+                <td class="text-center">{{item.calle}}, {{item.numeroExt}}
+                    <input type="hidden" id="calle_{{item.id}}" value="{{item.calle}}">
+                    <input type="hidden" id="numero_{{item.id}}" value="{{item.numeroExt}}">
+                </td>
+                <td class="text-center">{{item.colonia}}</td>
+                <td class="text-center">{{item.telefono}}
+                    <input type="hidden" id="telefono_{{item.id}}" value="{{item.telefono}}">
+                </td>
+                <td class="text-center">{{item.Correo}}
+                    <input type="hidden" id="Correo_{{item.id}}" value="{{item.Correo}}">
+                </td>
+                <td class="text-center">{{item.latitud}}
+                    <input type="hidden" id="latitud_{{item.id}}" value="{{item.latitud}}">
+                </td>
+                <td class="text-center">{{item.longitud}}
+                    <input type="hidden" id="longitud_{{item.id}}" value="{{item.longitud}}">
+                </td>
+                <td class="text-center">{{item.tipoOficina}}
+                    <input type="hidden" id="TipoOficina_{{item.id}}" value="{{item.tipoOficinaid}}">
+                    <input type="hidden" id="codigopostal_{{item.id}}" value="{{item.codigopostal}}">
+                </td>
+                <!-- Actividad Empresas <Area Nombre> Column -->
 
-            <td  class="text-center">
-                <mat-checkbox id="checkbox-{{item.id}}"  style="margin: 20px" *ngIf="item.activo" checked="1" >Activa o Desactiva!</mat-checkbox>
-                <mat-checkbox id="checkbox-{{item.id}}" style="margin: 20px" *ngIf="!item.activo" checked="0">Activa o Desactiva!</mat-checkbox>
+                <td class="text-center">
+                    <mat-checkbox id="checkbox-{{item.id}}" style="margin: 20px" *ngIf="item.activo" checked="1">Activa o Desactiva!</mat-checkbox>
+                    <mat-checkbox id="checkbox-{{item.id}}" style="margin: 20px" *ngIf="!item.activo" checked="0">Activa o Desactiva!</mat-checkbox>
 
-            </td>
+                </td>
 
-            <td  class="text-center">
-                <button title="Guardar pregunta"  class="mb-1 btn btn-sm btn-success mat-elevation-z8"   (click)="open(content)" (click)="EditarModal(item.id)" type="button"   >
-                    <em  class="fa fa-check"></em>
-                  </button>
-              <button title="Eliminar pregunta" class="mb-1 btn btn-sm btn-danger mat-elevation-z8" (click)="Eliminar(item.id)" type="button"  >
-                  <em  class="fa fa-trash"></em>
-              </button>
-            </td>
-          </tr>
-        </tbody></table>
-      </div>
+                <td class="text-center">
+                    <button title="Guardar pregunta" class="mb-1 btn btn-sm btn-success mat-elevation-z8" (click)="open(content)" (click)="EditarModal(item.id)"
+                        type="button">
+                        <em class="fa fa-check"></em>
+                    </button>
+                    <button title="Eliminar pregunta" class="mb-1 btn btn-sm btn-danger mat-elevation-z8" (click)="Eliminar(item.id)" type="button">
+                        <em class="fa fa-trash"></em>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
   
