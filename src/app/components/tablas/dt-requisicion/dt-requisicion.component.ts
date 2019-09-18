@@ -121,8 +121,10 @@ export class DtRequisicionComponent implements OnInit {
       name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo' }
     },
     { title: 'Días Transc.', className: 'text-info text-center', name: 'diasTrans', filtering: { filterString: '', placeholder: 'Días' } },
-    { title: 'Rango sueldo', className: 'text-info text-center', name: 'rango',
-    filtering: { filterString: '', placeholder: 'Rango sueldo' } },
+    {
+      title: 'Rango sueldo', className: 'text-info text-center', name: 'rango',
+      filtering: { filterString: '', placeholder: 'Rango sueldo' }
+    },
     {
       title: 'Estatus', className: 'text-info text-center',
       name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' }
@@ -388,7 +390,7 @@ export class DtRequisicionComponent implements OnInit {
   }
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
-    let start = (page.page - 1) * page.itemsPerPage;
+    const start = (page.page - 1) * page.itemsPerPage;
     let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
   }
@@ -459,7 +461,7 @@ export class DtRequisicionComponent implements OnInit {
 
     this.ValidarEstatus(data.estatusId);
     if (!data.selected) {
-      this.ValidarEstatus(9999)
+      this.ValidarEstatus(9999);
       this.selected = false;
       this.element = [];
       this._reinciar();
@@ -529,37 +531,61 @@ export class DtRequisicionComponent implements OnInit {
   }
 
   showRequi() {
-    this._Router.navigate(['/ventas/visualizarRequisicion/', this.element.id, this.element.folio, this.Vacante, this.element.tipoReclutamientoId], { skipLocationChange: true });
+    this._Router.navigate(['/ventas/visualizarRequisicion/',
+      this.element.id,
+      this.element.folio,
+      this.Vacante,
+      this.element.tipoReclutamientoId], { skipLocationChange: true }
+    );
   }
 
   editRequi() {
-    this._Router.navigate(['/ventas/edicionRequisicion/', this.element.id, this.element.folio, this.element.estatusId, this.element.tipoReclutamientoId], { skipLocationChange: true });
+    this._Router.navigate(['/ventas/edicionRequisicion/',
+      this.element.id,
+      this.element.folio,
+      this.element.estatusId,
+      this.element.tipoReclutamientoId], { skipLocationChange: true }
+    );
   }
 
   updataStatus(estatusId, estatus) {
-    var datos = { estatusId: estatusId, requisicionId: this.element.id }
-    var emails = [];
+    const datos = { estatusId: estatusId, requisicionId: this.element.id }
+    const emails = [];
     if (estatusId == 8) {
       var idx = this.rows.findIndex(x => x.id == this.element.id);
 
       this.rows[idx]['enProcesoN'].forEach(element => {
-        emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
+        emails.push({
+          requisicionId: this.RequisicionId,
+          vacante: this.Vacante,
+          email: element.email,
+          nombre: element.nombre,
+          candidatoId: element.candidatoId,
+          estatusId: 27
+        });
       });
 
       this.rows[idx]['postuladosN'].forEach(element => {
-        emails.push({ requisicionId: this.RequisicionId, vacante: this.Vacante, email: element.email, nombre: element.nombre, candidatoId: element.candidatoId, estatusId: 27 })
-      })
+        emails.push({
+          requisicionId: this.RequisicionId,
+          vacante: this.Vacante,
+          email: element.email,
+          nombre: element.nombre,
+          candidatoId: element.candidatoId,
+          estatusId: 27
+        });
+      });
 
       if (emails.length > 0) {
         this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
-          //this.onChangeTable(this.config);
+          // this.onChangeTable(this.config);
         });
       }
     }
     else {
       this.postulacionservice.SetProcesoVacante(datos).subscribe(data => {
         if (data == 201) {
-          var idx = this.rows.findIndex(x => x.id == this.element.id);
+          let idx = this.rows.findIndex(x => x.id == this.element.id);
           this.rows[idx]['estatus'] = estatus;
           this.rows[idx]['estatusId'] = estatusId;
 
@@ -641,7 +667,7 @@ export class DtRequisicionComponent implements OnInit {
         this.refreshTable();
         if (this.element.tipoReclutamientoId === 1) {
         }
-        this.popToast('success', 'Cancelación', 'La requisicion se cancelo exitosamente, podrás consultarla en el Historico');
+        this.popToast('success', 'Cancelación', 'La requisición se canceló exitosamente, podrás consultarla en el histórico');
       }
 
 
@@ -675,20 +701,20 @@ export class DtRequisicionComponent implements OnInit {
         this.ValidarEstatus(result.id);
         this.refreshTable();
       }
-    })
+    });
   }
 
-  openDialogReActivar() {
-    let dialogCnc = this.dialog.open(DialogActivarRequiComponent, {
-      width: '25%',
-      height: '100%',
-      data: this.element
-    });
-    var window: Window
-    dialogCnc.afterClosed().subscribe(result => {
-      this.refreshTable();
-    })
-  }
+  // openDialogReActivar() {
+  //   let dialogCnc = this.dialog.open(DialogActivarRequiComponent, {
+  //     width: '25%',
+  //     height: '100%',
+  //     data: this.element
+  //   });
+  //   var window: Window
+  //   dialogCnc.afterClosed().subscribe(result => {
+  //     this.refreshTable();
+  //   });
+  // }
 
   SendEmail() {
     this.service.SendEmailRequiPuro(this.RequisicionId).subscribe(email => {
@@ -702,15 +728,15 @@ export class DtRequisicionComponent implements OnInit {
 
   exportAsXLSX() {
     if (this.dataSource.length > 0) {
-      var aux = [];
-      var comentarios = '';
-      var reclutador = '';
-      var coordinador = '';
+      const aux = [];
+      let comentarios = '';
+      let reclutador = '';
+      let coordinador = '';
       this.dataSource.forEach(row => {
         if (row.comentarioReclutador.length > 0) {
           row.comentarioReclutador.forEach(element => {
             comentarios = comentarios +
-              element + '\n'
+              element + '\n';
           });
         } else {
           comentarios = '';
@@ -720,7 +746,7 @@ export class DtRequisicionComponent implements OnInit {
           reclutador = 'SIN ASIGNAR';
         } else if (row.reclutadores.length > 1) {
           row.reclutadores.forEach(element => {
-            reclutador = reclutador + element + ', \n'
+            reclutador = reclutador + element + ', \n';
           });
         } else {
           reclutador = row.reclutadores[0];
@@ -731,10 +757,9 @@ export class DtRequisicionComponent implements OnInit {
 
         if (row.estatusId == 4) {
           coordinador = reclutador;
-          reclutador = 'SIN ASIGNAR'
+          reclutador = 'SIN ASIGNAR';
 
-        }
-        else {
+        } else {
           coordinador = row.coordinador;
         }
         aux.push({
@@ -748,7 +773,7 @@ export class DtRequisicionComponent implements OnInit {
           'DIAS TRANSCURRIDOS': d,
           'FECHA CREACION': c,
           SUELDO: row.sueldoMinimo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) +
-          ' - ' + row.sueldoMaximo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) ,
+            ' - ' + row.sueldoMaximo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
           ESTATUS: row.estatus,
           COORDINADOR: coordinador,
           SOLICITANTE: row.solicita,
@@ -772,7 +797,7 @@ export class DtRequisicionComponent implements OnInit {
       title: title,
       timeout: 5000,
       body: body
-    }
+    };
     this.toasterService.pop(toast);
   }
 }
