@@ -236,6 +236,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   GetRequisicionesPausa() {
     this.service.GetRequisicionesEstatus(39, this.settings.user['id']).subscribe(result => {
       this.requisPausa = result;
+      console.log(this.requisPausa)
     });
   }
 

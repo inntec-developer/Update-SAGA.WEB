@@ -744,7 +744,7 @@ export class DtRequisicionComponent implements OnInit {
           PUESTO: row.vBtra,
           CUBIERTOS: row.contratados,
           NO: row.vacantes,
-          'TIPO RECLUTAMIENTO': row.claseReclutamiento,
+          'TIPO RECLUTAMIENTO': row.tipoReclutamiento,
           'DIAS TRANSCURRIDOS': d,
           'FECHA CREACION': c,
           SUELDO: row.sueldoMinimo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) +

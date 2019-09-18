@@ -30,13 +30,13 @@ export class DtRequisicionReclPuroComponent implements OnInit {
   public shown = 'hover';
 
   public dataSource = [];
-  public Vacantes: number = 0;
+  public Vacantes = 0;
   // Varaibles del paginador
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
   public showFilterRow: boolean;
   public registros: number;
@@ -60,6 +60,32 @@ export class DtRequisicionReclPuroComponent implements OnInit {
   public view = false;
   public coment = false;
 
+  public config: any = {
+    paging: true,
+    filtering: { filterString: '' },
+    className: ['table-hover  mb-0']
+  };
+
+  public rows: Array<any> = [];
+  public columns: Array<any> = [
+    { title: 'Folio', sorting: 'desc', className: 'text-success text-center', name: 'folio',
+    filtering: { filterString: '', placeholder: 'Folio' } },
+    { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
+    { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
+    { title: 'No. Vacantes', className: 'text-info text-center', name: 'vacantes',
+    filtering: { filterString: '', placeholder: 'No. Vacantes' } },
+    { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion',
+    filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento',
+    filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Estatus', className: 'text-info text-center', name: 'estatus',
+    filtering: { filterString: '', placeholder: 'Estatus' } },
+    { title: 'Prioridad', className: 'text-info text-center', name: 'prioridad',
+    filtering: { filterString: '', placeholder: 'Prioridad' } },
+    { title: 'Propietario', className: 'text-info text-center', name: 'propietario',
+    filtering: { filterString: '', placeholder: 'Propietario' } }
+  ];
+
   constructor(private service: RequisicionesService, private spinner: NgxSpinnerService,
     private _Router: Router,
     private dialog: MatDialog,
@@ -67,21 +93,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
     private postulacionservice: PostulateService,
     private settings: SettingsService) { }
 
-  public rows: Array<any> = [];
-  public columns: Array<any> = [
-    { title: 'Folio', sorting: 'desc', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
-    { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
-    { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
-    { title: 'No. Vacantes', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' } },
-    // { title: 'Tipo Recl.', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo' } },
-    // { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
-    // { title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
-    { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
-    { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
-    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
-    { title: 'Prioridad', className: 'text-info text-center', name: 'prioridad', filtering: { filterString: '', placeholder: 'Prioridad' } },
-    { title: 'Propietario', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Propietario' } }
-  ];
+
 
   ngOnInit() {
     this.spinner.show();
@@ -102,13 +114,6 @@ export class DtRequisicionReclPuroComponent implements OnInit {
     })
   }
 
-  public config: any = {
-    paging: true,
-    //sorting: { columns: this.columns },
-    filtering: { filterString: '' },
-    className: ['table-hover  mb-0']
-  };
-
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
     let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
@@ -119,10 +124,11 @@ export class DtRequisicionReclPuroComponent implements OnInit {
     let filteredData: Array<any> = data;
     this.showFilterRow = true;
     this.columns.forEach((column: any) => {
-      if (column.filtering.filterString != "") {
+      if (column.filtering.filterString !== '') {
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
+          if (item[column.name] != null) {
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+          }
         });
       }
     });
@@ -137,13 +143,14 @@ export class DtRequisicionReclPuroComponent implements OnInit {
 
     this.registros = this.dataSource.length;
     this.rows = this.dataSource;
-    let filteredData = this.changeFilter(this.dataSource, this.config);
+    const filteredData = this.changeFilter(this.dataSource, this.config);
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
     this.length = filteredData.length;
     this.spinner.hide();
   }
 
   public refreshTable() {
+    this.spinner.show();
     this.GetRequisicionesPuro();
     setTimeout(() => {
       this.columns.forEach(element => {
@@ -151,7 +158,8 @@ export class DtRequisicionReclPuroComponent implements OnInit {
         (<HTMLInputElement>document.getElementById(element.name)).value = '';
       });
       this.resetSelect();
-      this.onChangeTable(this.config)
+
+     // this.onChangeTable(this.config);
     }, 1000);
   }
 

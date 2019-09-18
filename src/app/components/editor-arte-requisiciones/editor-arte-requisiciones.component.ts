@@ -59,10 +59,10 @@ export class EditorArteRequisicionesComponent implements OnInit {
   ColorPickerDescNesc = 'dark';
   ColorPickerDudas = 'blue';
 
-  vBtra: string = 'Vacante prueba de Melina'
-  descripcion: string = 'Importante empresa solicita persona para puesto de ' + this.vBtra + ' en la Zona Metropolitana de Guadalajara';
-  experiencia: string = 'Experiencia inventada por Melina en mocos mocos mocos mocos';
-  contacto: string = 'Llama al 3333 3333 ext.666 o manda correo indicando el título de la vacante al correo mbonita@damsa.com.mx con atención a Melina Bonita';
+  vBtra = 'Vacante prueba de Melina';
+  descripcion = 'Importante empresa solicita persona para puesto de ' + this.vBtra + ' en la Zona Metropolitana de Guadalajara';
+  experiencia = '';
+  contacto: string = 'Llama al 3333 3333 ext.666 o manda correo indicando el título de la vacante al correo damsa@damsa.com.mx con atención a Nombre';
 
   usuarioId = this.settings.user['id'];
 
@@ -127,15 +127,21 @@ export class EditorArteRequisicionesComponent implements OnInit {
      this._service.GuardarArte(arte).subscribe(data => {
         if (data === 200) {
           const nom = this.requisicionId + '.png';
-          window.saveAs(dataUrl, nom);
-          // this._service.downloadImage(nom).subscribe(res =>{
-          //   saveAs(res, nom)
-          // })
-//           var ruta = '/utilerias/img/ArteRequi/Arte/' + this.requisicionId + '.png';
-// var nom = this.requisicionId + '.png'
-//           this._service.DownloadFiles(ruta).subscribe( res =>{
-//             saveAs(res, nom)
-//           })
+
+          swal({
+            title: '¡GUARDAR ARTE!',
+            text: 'El arte configurado se guardó exitosamente',
+            type: 'success',
+            showCancelButton: true,
+            confirmButtonText: '¡Descargar Arte!',
+            cancelButtonText: 'Finalizar',
+            closeOnConfirm: true,
+            closeOnCancel: true
+          }, (isConfirm) => {
+            if (isConfirm) {
+               window.saveAs(dataUrl, nom);
+            }
+          });
         }
       });
   })

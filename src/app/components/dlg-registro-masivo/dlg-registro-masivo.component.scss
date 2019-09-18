@@ -17,21 +17,21 @@ label
 //     border-color: red;
 // }
 
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: red;
-    opacity: 1; /* Firefox */
-text-align: end;
-  }
+// ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+//     color: red;
+//     opacity: 1; /* Firefox */
+// text-align: end;
+//   }
   
-  :-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: red;
-    text-align: end;
-  }
+//   :-ms-input-placeholder { /* Internet Explorer 10-11 */
+//     color: red;
+//     text-align: end;
+//   }
   
-  ::-ms-input-placeholder { /* Microsoft Edge */
-    color: red;
-    text-align: end;
-  }
+//   ::-ms-input-placeholder { /* Microsoft Edge */
+//     color: red;
+//     text-align: end;
+//   }
 
 .valido
 {

@@ -1,5 +1,6 @@
 import { EnAtencionComponent } from './../../SistTickets/en-atencion/en-atencion.component';
 import { Component, OnInit,ViewChild } from '@angular/core';
+import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
 
 @Component({
   selector: 'app-ver-turnos',
@@ -8,43 +9,35 @@ import { Component, OnInit,ViewChild } from '@angular/core';
   providers: [EnAtencionComponent]
 })
 export class VerTurnosComponent implements OnInit {
+  turnos = [];
+  carrusel = false;
+  num = 0;
 
-  carrusel: boolean = true;
-  @ViewChild('lgModal') modal;
-
-  constructor(private turno: EnAtencionComponent) { 
-    setInterval(() => this.toggleModal(), 20000);
-   
+  constructor(private _service: SistTicketsService) {
+    setInterval(() => this.toggleTurno(), 10000);
+    setInterval(() => this.toggleModal(), 100000);
   }
 
   ngOnInit() {
+    this.GetTicketEnAtencion();
   }
 
-  toggleModal()
-  {
-    this.carrusel = !this.carrusel;
-    if(!this.carrusel && this.turno.turnos.length > 0)
-    {
-      this.modal.hide();
-    }
-    else if(!this.carrusel && this.turno.turnos.length == 0)
-    {
-      this.carrusel = true;
-      this.modal.show();
-    }
+  GetTicketEnAtencion() {
+    this._service.GetTicketEnAtencion().subscribe(data => {
+      this.turnos = data;
+      if (this.turnos.length > 0 && this.turnos.length > this.num) {
+        this.carrusel = false;
+        this.num = this.turnos.length;
+      } else if (this.turnos.length < this.num) {
+        this.num = this.turnos.length;
+      }
+    });
+  }
+  toggleModal() {
+    this.carrusel = true;
   }
 
-  toggleTurno()
-  {
-    if(this.turno.turnos.length == 0)
-    {
-      this.modal.show();
-      this.carrusel = true;
-    }
-    else
-    {
-      this.modal.hide();
-      this.carrusel = false;
-    }
+  toggleTurno() {
+    this.GetTicketEnAtencion();
   }
 }

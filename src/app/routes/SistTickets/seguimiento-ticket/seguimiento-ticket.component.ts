@@ -223,7 +223,7 @@ export class SeguimientoTicketComponent implements OnInit {
           let aux = data.filter(element => !element.vacantes);
 
           if (aux.length === 0) {
-            aux = [{ id: 0, nombre: 'Los horarios ya están cubiertos' }]
+            aux = [{ id: 0, nombre: 'Los horarios ya están cubiertos' }];
           }
 
           this.OpenDlgHorarios(aux, 18, 'ENTREVISTA RECLUTAMIENTO', this.ticket[0].requisicionId, estatusTicket);
