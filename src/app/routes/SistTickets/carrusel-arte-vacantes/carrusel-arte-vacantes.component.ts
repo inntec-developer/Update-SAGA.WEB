@@ -11,45 +11,37 @@ import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.se
 })
 export class CarruselArteVacantesComponent implements OnInit {
 
-  @ViewChild('myCarousel') myCarousel: NgbCarousel;
- vacantes = [];
- activeId;
+ @ViewChild('myCarousel') myCarousel: NgbCarousel;
+  vacantes = [];
+  activeId = 1;
   showNavigationArrows = false;
   showNavigationIndicators = false;
 
-  images = [{ id:1, img:'./../assets/img/ArteVacantes/img01.png'}, 
-  {id: 2, img:'./../assets/img/ArteVacantes/img02.png'}, {id:3, img:'./../assets/img/ArteVacantes/img03.jpg'},
-   {id: 4, img: './../assets/img/ArteVacantes/img04.jpg'},{id:5, img: './../assets/img/ArteVacantes/img05.png'}, 
-   {id: 6, img: './../assets/img/ArteVacantes/img06.png'}, {id: 7, img: './../assets/img/ArteVacantes/img07.png'}, {id: 8, img: './../assets/img/ArteVacantes/img08.png'}];
-  
+  constructor(config: NgbCarouselConfig, private _service: SistTicketsService) {
 
-  constructor(private config: NgbCarouselConfig, private _service: SistTicketsService) {
-  
-    config.interval = 5000;
+    config.interval = 10000;
     config.wrap = false;
     config.keyboard = false;
     config.pauseOnHover = false;
 
-    setInterval(() => this.timeWait(), 60000);
+    // setInterval(() => this.timeWait(), 60000 * this.vacantes.length );
   }
 
   ngOnInit() {
-
+this.GetVacantes();
   }
 
-  timeWait()
-  {
-    this.images = this.images;
+  timeWait() {
+    this.GetVacantes();
     this.activeId = 1;
-    this.myCarousel.activeId = '1';
-    this.myCarousel.cycle();
+    // this.myCarousel.activeId = '1';
+    // this.myCarousel.cycle();
   }
 
-  GetVacantes()
-  {
-
+  GetVacantes() {
     this._service.GetVacantes().subscribe(data => {
       this.vacantes = data;
+      // this.myCarousel.activeId = '1';
     });
   }
 

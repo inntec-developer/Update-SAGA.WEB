@@ -1,6 +1,18 @@
 
-<ngb-carousel #myCarousel="ngbCarousel" [showNavigationArrows]="showNavigationArrows" [activeId]="activeId" [showNavigationIndicators]="showNavigationIndicators">
-    <ng-template ngbSlide *ngFor="let i of images">
-         <img [src]="i.img" alt="Random slide" style="width: 700px; height: 500px;">
+<ngb-carousel *ngIf="vacantes.length > 0" [showNavigationArrows]="showNavigationArrows" [showNavigationIndicators]="showNavigationIndicators">
+    <ng-template ngbSlide *ngFor="let v of vacantes; let id = index" >
+     <div class="media" *ngIf="v.arte != null">
+          <img class="align-self-center mr-3" [src]="v.arte" alt="Random slide" style="width: 800px; height: 600px;">
+        </div> 
+        <div *ngIf="v.arte == null" class="card">
+          <div class="card-body bg-light mat-elevation-z8" style="width: 800px; height: 600px;">
+            <div class="d-flex flex-column justify-content-between">
+              <h1 class="text-info mt-2 ml-1">
+                <i class="fa fa-chevron-right text-warning mr-1" aria-hidden="true"></i>{{v.vBtra}}</h1>
+              <h2 class="text-justify text-muted font-weight-bold ml-1">{{v.requisitos}}</h2>
+              <p class="text-justify ml-1">{{v.experiencia}}</p>
+            </div>
+          </div>
+        </div>
     </ng-template>
   </ngb-carousel>

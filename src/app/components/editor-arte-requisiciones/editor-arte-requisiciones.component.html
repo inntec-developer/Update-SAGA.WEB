@@ -21,22 +21,22 @@
             <div class="input-group input-group-sm with-focus">
             <input type="text" class="form-control form-control-sm" [(ngModel)]="vBtra" >
             <div class="input-group-append border-left-0">
-                <div style="cursor: pointer;" [(fontPicker)]="fontVacante" [fpWidth]="'330px'" [fpPosition]="'bottom'" class="input-group-text fa fa-font bg-transparent border-left-0"></div>
-                <div style="cursor: pointer;" [(colorPicker)]="ColorPickerVac" class="input-group-text fa fa-tint bg-transparent border-left-0"></div>
+                <div style="cursor: pointer;" [(fontPicker)]="fontVacante" [fpWidth]="'330px'" [fpPosition]="'bottom'" [fpCancelButton]="true" [fpCancelButtonText]="'OK'" [fpCancelButtonClass]="'btn btn-xs btn-success'" class="input-group-text fa fa-font bg-transparent border-left-0"></div>
+                <div style="cursor: pointer;" [(colorPicker)]="ColorPickerVac" [cpOKButton]="true" [cpOKButtonClass]="'btn btn-xs btn-success'" class="input-group-text fa fa-tint bg-transparent border-left-0"></div>
               </div>
           </div>
         </div>
         <div class="form-group">
             <label for="descripcion">DESCRIPCI&Oacute;N
-                <div style="cursor: pointer;" [(fontPicker)]="fontDesc" [fpWidth]="'330px'" [fpPosition]="'bottom'" class="fa fa-font ml-2"></div>
-                <i style="cursor: pointer;" [(colorPicker)]="ColorPickerDesc" class="fa fa-tint ml-2"></i>
+                <div style="cursor: pointer;" [(fontPicker)]="fontDesc" [fpWidth]="'330px'" [fpPosition]="'bottom'"  [fpCancelButton]="true" [fpCancelButtonText]="'OK'" [fpCancelButtonClass]="'btn btn-xs btn-success'" class="fa fa-font ml-2"></div>
+                <i style="cursor: pointer;" [(colorPicker)]="ColorPickerDesc" [cpOKButton]="true" [cpOKButtonClass]="'btn btn-xs btn-success'" class="fa fa-tint ml-2"></i>
             </label>
             <textarea class="form-control" id="descripcion" rows="3" [(ngModel)]="descripcion"></textarea>
         </div>
         <div class="form-group">
             <label for="experiencia">¿Que necesitas?
-              <div style="cursor: pointer;" [(fontPicker)]="fontNecesitas" [fpWidth]="'330px'" [fpPosition]="'bottom'" class="fa fa-font ml-2"></div>
-              <i style="cursor: pointer;" [(colorPicker)]="ColorPickerNecs" class="fa fa-tint ml-2"></i>
+              <div style="cursor: pointer;" [(fontPicker)]="fontNecesitas" [fpWidth]="'330px'" [fpPosition]="'bottom'"  [fpCancelButton]="true" [fpCancelButtonText]="'OK'" [fpCancelButtonClass]="'btn btn-xs btn-success'" class="fa fa-font ml-2"></div>
+              <i style="cursor: pointer;" [(colorPicker)]="ColorPickerNecs" [cpOKButton]="true" [cpOKButtonClass]="'btn btn-xs btn-success'" class="fa fa-tint ml-2"></i>
             </label>
             <div class="row">
                 <div class="col-md-11">
@@ -44,14 +44,14 @@
             <small>caracteres permitidos 150: {{ 150 - experiencia.length}} </small>
           </div>
           <div class="col-md-1">
-              <i style="cursor: pointer;" [(colorPicker)]="ColorPickerDescNesc" class="fa fa-tint ml-2"></i>
+              <i style="cursor: pointer;" [(colorPicker)]="ColorPickerDescNesc" [cpOKButton]="true" [cpOKButtonClass]="'btn btn-xs btn-success'" class="fa fa-tint ml-2"></i>
           </div>
           </div>
         </div>
         <div class="form-group">
             <label for="contacto">¿Tienes dudas?
-              <div style="cursor: pointer;" [(fontPicker)]="fontDudas" [fpWidth]="'330px'" [fpPosition]="'bottom'" class="fa fa-font ml-2"></div>
-              <i style="cursor: pointer;" [(colorPicker)]="ColorPickerDudas" class="fa fa-tint ml-2"></i></label>
+              <div style="cursor: pointer;" [(fontPicker)]="fontDudas" [fpWidth]="'330px'" [fpPosition]="'bottom'"  [fpCancelButton]="true" [fpCancelButtonText]="'OK'" [fpCancelButtonClass]="'btn btn-xs btn-success'" class="fa fa-font ml-2"></div>
+              <i style="cursor: pointer;" [(colorPicker)]="ColorPickerDudas" [cpOKButton]="true" [cpOKButtonClass]="'btn btn-xs btn-success'" class="fa fa-tint ml-2"></i></label>
             <textarea class="form-control" id="contacto" rows="3" [(ngModel)]="contacto" maxlength="150" ></textarea>
             <small>caracteres permitidos 150: {{ 150 - contacto.length}} </small>
         </div>
