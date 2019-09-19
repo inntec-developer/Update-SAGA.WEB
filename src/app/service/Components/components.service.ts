@@ -51,6 +51,8 @@ export class ComponentsService {
   private UrlContratadoCaptado = ApiConection.ServiceUrl + ApiConection.getcontracaptado;
   private UrlCoordinacion = ApiConection.ServiceUrl + ApiConection.getCoordinaciongraf;
   private UrlProductividad = ApiConection.ServiceUrl + ApiConection.getProductividadGraf;
+  private UrlCalidadVige = ApiConection.ServiceUrl + ApiConection.getVigenteVenci;
+  private UrlCalidadEntiempo = ApiConection.ServiceUrl + ApiConection.getEntiempo;
 
   //Indicadores de Inicio
 
@@ -76,6 +78,11 @@ export class ComponentsService {
 
 
   constructor(private _httpClient: HttpClient) { }
+
+  getCalidadVigente(data: any): Observable<any> {
+    let params = new HttpParams().set('usuario', data);
+    return this._httpClient.get(this.UrlCalidadVige, { params: params, headers: this.httpOptions.headers});
+  }
 
   getConsultaVacante(data: string): Observable<any> {
     let params = new HttpParams().set('busquedad', data);

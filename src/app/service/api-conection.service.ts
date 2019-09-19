@@ -404,6 +404,8 @@ export class ApiConection {
   public static getcontracaptado = 'indicador/captadocontra';
   public static getCoordinaciongraf = 'indicador/Coordinacion';
   public static getProductividadGraf = 'indicador/productividad';
+  public static getVigenteVenci = 'indicador/calidad';
+  public static getEntiempo = 'indicador/calidadbarra';
 
   /* Contadores */
   public static getPerfiles = 'contadores/perfiles';
