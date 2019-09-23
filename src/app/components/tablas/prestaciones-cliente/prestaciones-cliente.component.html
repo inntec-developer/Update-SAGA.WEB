@@ -1,7 +1,5 @@
 <h5 class="card-title"><strong class="text-info">Prestaciones Superiores</strong></h5>
 <mat-divider></mat-divider>
-<ol>
-    <li *ngFor="let x of Prestaciones">
-        <label class="card-text"> {{x.prestamo | uppercase}}</label>
-      </li>
-</ol>
+<p *ngFor="let x of Prestaciones; let i = index">
+  <label class="card-text">{{i+1}}. {{x.prestamo | uppercase}}</label>
+</p>

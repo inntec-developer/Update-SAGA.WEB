@@ -1,7 +1,5 @@
 <h5 class="card-title"><strong class="text-info">Observaciones</strong></h5>
 <mat-divider></mat-divider>
-<ol>
-  <li *ngFor="let x of Observaciones">
-    <label class="card-text"> {{x.observaciones | uppercase}}</label>
-  </li>
-</ol>
+<p *ngFor="let x of Observaciones; let i = index">
+  <label class="card-text">{{i+1}} {{x.observaciones | uppercase}}</label>
+</p>

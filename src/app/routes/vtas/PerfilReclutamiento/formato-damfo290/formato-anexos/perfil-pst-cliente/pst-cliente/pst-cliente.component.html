@@ -3,7 +3,7 @@
   <section [hidden]="!Edit">
     <div class="row">
       <mat-form-field class="col-4">
-        <input matInput #pstClienteCtl type="text" placeholder="Psicometria" formControlName="psicometria"
+        <input matInput #pstClienteCtl type="text" placeholder="Psicometria" formControlName="psicometria" maxlength="50"
         [value]="pstClienteCtl.value.toUpperCase()" required="">
       </mat-form-field>
       <mat-form-field class="col-6">

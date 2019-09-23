@@ -29,6 +29,12 @@
           tooltip="Anexos" (click)="ShowModal = true;">
           <em class="fa fa-file-pdf-o"></em>
         </button>
+        <button *ngIf="Perfil290" id="delete" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8"
+          [ngClass]="!selected || !isEditable ? 'disabled' : 'btn-danger'" container="body" placement="bottom"
+          [disabled]="!selected || !isEditable"
+          tooltip="Eliminar" (click)="eliminarFormato290()">
+          <em class="fa fa-trash"></em>
+        </button>
         <button *ngIf="!Perfil290" id="view" chkPrivilegiosButtons (click)="openDialog()"
           class="mr-2 btn btn-xs mat-elevation-z8" [disabled]="!selected"
           [ngClass]="(!selected) ? 'disabled' : 'btn-success'" container="body" placement="bottom"

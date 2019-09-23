@@ -22,6 +22,9 @@ export class DtRutasCamionRequiComponent implements OnInit, AfterViewInit, OnCha
   @ViewChild('RutasModal') ShownModal: ModalDirective;
   rowAux = [];
 
+  ShowModalRutas = false;
+  loading = false;
+
   private rows: Array<any> = [];
   private ruta: any = null;
   isModalRutasShown = false;
@@ -122,46 +125,19 @@ export class DtRutasCamionRequiComponent implements OnInit, AfterViewInit, OnCha
 
 
   agregarRutasCamion() {
-    const ruta = {
-      DireccionId: this.DireccionId,
-      Edit: false
-    };
-    const dialogRuta = this.dialog.open(DialogRutasComponent, {
-      width: '25%',
-      height: 'auto',
-      data: ruta
-    });
-    dialogRuta.afterClosed().subscribe(result => {
-      if (result) {
-        this.rows = result;
-        if (this.rows.length > 0) {
-          this.TableDisable = false;
-        }
-      }
-    });
+    debugger;
+    this.ShowModalRutas = true;
+    this.Accion = 'Agregar';
+    this.Edit = false;
   }
 
   updateRutasCamion() {
-    const ruta = {
-      Id: this.ruta.id,
-      DireccionId: this.DireccionId,
-      RutaCamion: this.ruta.ruta,
-      ViaCamion: this.ruta.via,
-      Edit: true
-    };
-    const dialogRuta = this.dialog.open(DialogRutasComponent, {
-      width: '25%',
-      height: 'auto',
-      data: ruta
-    });
-    dialogRuta.afterClosed().subscribe(result => {
-      if (result) {
-        this.rows = result;
-        if (this.rows.length > 0) {
-          this.TableDisable = false;
-        }
-      }
-    });
+    debugger;
+    this.ShowModalRutas = true;
+    this.Accion = 'Editar';
+    this.RutaCamion = this.ruta.ruta;
+    this.ViaCamion = this.ruta.via;
+    this.Edit = true;
   }
 
   private _deleteRuta() {
@@ -258,4 +234,81 @@ export class DtRutasCamionRequiComponent implements OnInit, AfterViewInit, OnCha
     };
     this.toasterService.pop(toast);
   }
+
+  _saveRuta() {
+    if (this.Edit) {
+      this._UpdateRuta();
+    } else {
+      this._AddRuta();
+    }
+  }
+
+  _AddRuta() {
+    this.loading = true;
+    const rc = {
+      DireccionId: this.DireccionId,
+      Ruta: this.RutaCamion,
+      Via: this.ViaCamion,
+      Usuario: this.settings.user['usuario']
+    };
+
+    this.rutasService.addRutaCamion(rc).subscribe(data => {
+      if (data === 200) {
+        this.rutasService.getRequiRutasCamion(this.DireccionId).subscribe(result => {
+          this.rows = result;
+          const msg = 'La ruta de camión se registro correctamente.';
+          this.popToast('success', 'Ruta de Camión', msg);
+          this.loading = false;
+          this.ShowModalRutas = false;
+        }, err => {
+          console.error(err);
+          this.loading = false;
+        });
+      } else if (data === 404) {
+        const msg = 'Algo salio mal intenta de nuevo, si el problema persiste comunicate al departamento de TI.';
+        this.popToast('error', 'Ruta de Camión', msg);
+        this.loading = false;
+      }
+    }, err => {
+      const msg = err;
+      this.popToast('error', 'Ruta de Camión', msg);
+      this.loading = false;
+    });
+
+
+  }
+
+  _UpdateRuta() {
+    this.loading = true;
+    const rc = {
+      Id: this.ruta.id,
+      DireccionId: this.DireccionId,
+      Ruta: this.RutaCamion,
+      Via: this.ViaCamion,
+      Usuario: this.settings.user['usuario']
+    };
+
+    this.rutasService.updateRutaCamion(rc).subscribe(data => {
+      if (data === 200) {
+        this.rutasService.getRequiRutasCamion(this.DireccionId).subscribe(result => {
+          this.rows = result;
+          const msg = 'La ruta de camión se actualizó correctamente.';
+          this.popToast('success', 'Ruta de Camión', msg);
+          this.loading = false;
+          this.ShowModalRutas = false;
+        }, err => {
+          console.error(err)
+        });
+      } else if (data === 404) {
+        const msg = 'Algo salio mal intenta de nuevo, si el problema persiste comunicate al departamento de TI.';
+        this.popToast('error', 'Ruta de Camión', msg);
+        this.loading = false;
+      }
+    }, err => {
+      const msg = err;
+      this.popToast('error', 'Ruta de Camión', msg);
+      this.loading = false;
+    });
+  }
+
 }

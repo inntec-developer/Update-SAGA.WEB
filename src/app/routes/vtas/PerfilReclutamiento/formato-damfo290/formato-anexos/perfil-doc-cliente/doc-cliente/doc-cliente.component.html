@@ -6,6 +6,7 @@
           [value]="DocumentoCtrl.value.toUpperCase()"
           formControlName="documento" (keyup.control.enter)="Save()"
           required="">
+          <mat-hint align="end"><strong class="text-info">{{DocumentoCtrl.value.length}} / 100</strong></mat-hint>
       </mat-form-field>
       <section class="col-2">
         <em class="fa fa-close text-danger em-button float-left" (click)="Remove()"></em>

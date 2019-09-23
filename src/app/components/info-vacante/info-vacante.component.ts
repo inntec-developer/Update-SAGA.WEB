@@ -1,7 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { CatalogosService, RequisicionesService } from '../../service';
 import { Cliente, Requisicion } from './../../models/models';
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
@@ -19,12 +19,13 @@ import { NgxSpinnerService } from 'ngx-spinner';
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
   ]
 })
-export class InfoVacanteComponent implements OnInit {
-  @Input('HiddenPirnt') HiddenPrint: any;
+export class InfoVacanteComponent implements OnInit, OnChanges {
+  @Input('HiddenPrint') HiddenPrint: any;
   @Input('Folios') Folios: string;
   @Input('Requisicion') Requisicion: string;
   @Input('ShowSection') ShowSection: any;
   @Output() EstatusId: EventEmitter<number> = new EventEmitter();
+
 
   public cliente: any;
   public RequiId: string;
@@ -44,10 +45,12 @@ export class InfoVacanteComponent implements OnInit {
   public asignados: Array<any[]> = [];
   public vBtra: any;
 
-  //Arreglos
+  // Arreglos
   public horariosRequi: any;
   solicitante: any;
   coordinador: any;
+
+  arte: string;
 
 
 
@@ -61,7 +64,6 @@ export class InfoVacanteComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.ShowSection);
     if (this.Folios != null) {
       this.getPrioridades();
       this.getEstatus(2);
@@ -98,9 +100,9 @@ export class InfoVacanteComponent implements OnInit {
         this.estatusId = DataRequisicion.estatus.id;
         this.confidencial = DataRequisicion.confidencial;
         this.vacantes = DataRequisicion.vacantes;
-        this.solicitante = DataRequisicion.solicitante || "SIN ASIGNAR";
-        this.coordinador = DataRequisicion.coordinador || "SIN ASIGNAR";
-        this.asignados = DataRequisicion.asignadosN || "SIN ASIGNAR";
+        this.solicitante = DataRequisicion.solicitante || 'SIN ASIGNAR';
+        this.coordinador = DataRequisicion.coordinador || 'SIN ASIGNAR';
+        this.asignados = DataRequisicion.asignadosN || 'SIN ASIGNAR';
         this.vBtra = DataRequisicion.vBtra;
         this.EstatusId.emit(this.estatusId);
       });
@@ -110,7 +112,7 @@ export class InfoVacanteComponent implements OnInit {
     this.serviceCatalogos.getPrioridades()
       .subscribe(data => {
         this.Prioridades = data;
-      })
+      });
   }
 
   getEstatus(tipoMov: number) {
@@ -125,6 +127,7 @@ export class InfoVacanteComponent implements OnInit {
       .subscribe(data => {
         this.requisicion = data;
         this.cliente = data['cliente'];
+        this.arte = data['arte'];
         this.horariosRequi = data['horarios'];
         this.spinner.hide();
       });

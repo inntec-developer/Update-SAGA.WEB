@@ -1,18 +1,16 @@
 <form [formGroup]="CompetenciaArray">
   <section class="col-12">
     <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
-    <strong class="text-warning">Competencias Cardinales</strong> <span class="fa fa-plus em-button text-primary float-right"
-      (click)="AddCompetencia()"></span>
+    <strong class="text-warning">Competencias Cardinales</strong> <span
+      class="fa fa-plus em-button text-primary float-right" (click)="AddCompetencia()"></span>
     <mat-divider></mat-divider>
   </section>
   <div class="container">
     <div *ngFor="let competencia of CompetenciaArray['controls'].competencia['controls']; let i=index">
       <div formArrayName="competencia">
         <form [formGroupName]="i">
-          <app-cardinales-p [IdFormato]="IdFormato"
-          [competencia]="CompetenciaArray.controls.competencia.controls[i]"
-          [index]="i" (Add)="Agregar($event)"
-            (remove)="removeCompetencia($event)" (Registros)="getRegistros($event)" >
+          <app-cardinales-p [IdFormato]="IdFormato" [competencia]="CompetenciaArray.controls.competencia.controls[i]"
+            [index]="i" (Add)="Agregar($event)" (remove)="removeCompetencia($event)" (Registros)="getRegistros($event)">
           </app-cardinales-p>
         </form>
       </div>

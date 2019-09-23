@@ -37,7 +37,7 @@ export class DtDireccionComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit() {
-    this.Perfil290 = this.Perfil290 || false;
+    this.Perfil290 = this.Perfil290 || false
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -47,12 +47,10 @@ export class DtDireccionComponent implements OnInit, OnChanges {
   }
 
   cargarDirecciones(data) {
-    // if(!this.getAddress){
     this.rows = data;
-    // this.getAddress = true;
-    // }
   }
   public onCellClick(data: any): any {
+    debugger;
     this.Direccion = data['calle'] + ' ' +
       data['numeroExterior'] + ', ' +
       data['colonia'] + ', ' +

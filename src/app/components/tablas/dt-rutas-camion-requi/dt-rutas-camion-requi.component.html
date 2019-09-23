@@ -1,71 +1,113 @@
 <!-- <div class="dt-container mat-elevation-z8"> -->
-  <div class="title-headre-view d-flex justify-content-between">
-    <h4>Rutas de Camiones</h4>
-    <div *ngIf="DireccionId && !ShowRequi">
-      <button id="update" class="mb-1 btn btn-xs btn-success margen mat-elevation-z8" (click)="agregarRutasCamion()"
-        chkPrivilegiosButtons tooltip="Agregar Ruta" placement="bottom">
-        <em class="fa fa-plus"></em>
-      </button>
-      <button id="update" class="mb-1 btn btn-xs margen mat-elevation-z8" [disabled]="!ruta" (click)="updateRutasCamion()"
-        chkPrivilegiosButtons tooltip="Editar Ruta" placement="bottom" [ngClass]="(!ruta) ? 'disabled' : 'btn-info'">
-        <em class="icon-pencil"></em>
-      </button>
-      <button id="update" class="mb-1 btn btn-xs margen mat-elevation-z8" [disabled]="!ruta" (click)="sweetalertDeleteRuta()"
-        chkPrivilegiosButtons tooltip="Eliminar Ruta" placement="bottom" [ngClass]="(!ruta) ? 'disabled' : 'btn-danger'">
-        <em class="icon-trash"></em>
-      </button>
-    </div>
+<div class="title-headre-view d-flex justify-content-between">
+  <h4>Rutas de Camiones</h4>
+  <div *ngIf="DireccionId && !ShowRequi">
+    <button id="update" class="mb-1 btn btn-xs btn-success margen mat-elevation-z8" (click)="agregarRutasCamion()"
+      chkPrivilegiosButtons tooltip="Agregar Ruta" placement="bottom">
+      <em class="fa fa-plus"></em>
+    </button>
+    <button id="update" class="mb-1 btn btn-xs margen mat-elevation-z8" [disabled]="!ruta" (click)="updateRutasCamion()"
+      chkPrivilegiosButtons tooltip="Editar Ruta" placement="bottom" [ngClass]="(!ruta) ? 'disabled' : 'btn-info'">
+      <em class="icon-pencil"></em>
+    </button>
+    <button id="update" class="mb-1 btn btn-xs margen mat-elevation-z8" [disabled]="!ruta"
+      (click)="sweetalertDeleteRuta()" chkPrivilegiosButtons tooltip="Eliminar Ruta" placement="bottom"
+      [ngClass]="(!ruta) ? 'disabled' : 'btn-danger'">
+      <em class="icon-trash"></em>
+    </button>
   </div>
-  <div *ngIf="DireccionId">
-    <div class="table-responsive" #tableContainer *ngIf="!TableDisable else NotResult">
-      <table id="tablaHorarios" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
-        <thead>
-          <tr>
-            <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr (click)="onCellClick(row)" *ngFor="let row of rows" [class.selected]="row.selected">
-            <td class="text-center"> {{row.ruta | uppercase}} </td>
-            <td class="text-center"> {{row.via | uppercase}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <ng-template #NotResult>
-      <alert type="info">
-        <strong>Oops!</strong> Esta direcci&oacute;n no cuenta con rutas registradas...
-      </alert>
-    </ng-template>
+</div>
+<div *ngIf="DireccionId">
+  <div class="table-responsive" #tableContainer *ngIf="!TableDisable else NotResult">
+    <table id="tablaHorarios" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+      <thead>
+        <tr>
+          <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr (click)="onCellClick(row)" *ngFor="let row of rows" [class.selected]="row.selected">
+          <td class="text-center"> {{row.ruta | uppercase}} </td>
+          <td class="text-center"> {{row.via | uppercase}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <div *ngIf="DAMFO290Id">
-    <div class="table-responsive" #tableContainer *ngIf="rows.length > 0 else NotResult">
-      <table id="tablaHorarios" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
-        <thead>
-          <tr>
-            <th *ngFor="let column of columnsD" class="{{column.className || ''}}">{{column.title}}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr (click)="onCellClick(row)" *ngFor="let row of rows" [class.selected]="row.selected">
-            <td class="text-center"> {{row.direccion | uppercase}}</td>
-            <td class="text-center"> {{row.ruta | uppercase}} </td>
-            <td class="text-center"> {{row.via | uppercase}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <ng-template #NotResult>
-      <alert type="info">
-        <strong>Oops!</strong> Esta direcci&oacute;n no cuenta con rutas registradas...
-      </alert>
-    </ng-template>
+  <ng-template #NotResult>
+    <alert type="info">
+      <strong>Oops!</strong> Esta direcci&oacute;n no cuenta con rutas registradas...
+    </alert>
+  </ng-template>
+</div>
+<div *ngIf="DAMFO290Id">
+  <div class="table-responsive" #tableContainer *ngIf="rows.length > 0 else NotResult">
+    <table id="tablaHorarios" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+      <thead>
+        <tr>
+          <th *ngFor="let column of columnsD" class="{{column.className || ''}}">{{column.title}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr (click)="onCellClick(row)" *ngFor="let row of rows" [class.selected]="row.selected">
+          <td class="text-center"> {{row.direccion | uppercase}}</td>
+          <td class="text-center"> {{row.ruta | uppercase}} </td>
+          <td class="text-center"> {{row.via | uppercase}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+  <ng-template #NotResult>
+    <alert type="info">
+      <strong>Oops!</strong> Esta direcci&oacute;n no cuenta con rutas registradas...
+    </alert>
+  </ng-template>
+</div>
 
-  <!-- </div> -->
+<!-- </div> -->
 <!-- </div> -->
 
+<div *ngIf="ShowModalRutas" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal
+  #MessageModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-md reporteMod">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+        <h4 class="float-left text-warning"><em class="fa fa-map-o mr-2"></em>Rutas de Camion de direcci&oacute;n</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="ShowModalRutas=false"><i
+            class="fa fa-times"></i></button>
+      </div> -->
+      <div class="modal-body">
+        <!-- <h3 class="text-primary text-center" mat-dialog-title> {{Accion}}</h3>
+        <mat-divider></mat-divider>
+        <br> -->
+        <mat-dialog-content>
+          <div class="row form-group">
+            <div class="col-md-12">
+              <mat-form-field>
+                <input autofocus class="form-control" #inputRuta matInput placeholder="Ruta de camión" autofocus
+                  [(ngModel)]="RutaCamion" maxlength="50" required="">
+              </mat-form-field>
+              <mat-form-field>
+                <input type="text" class="form-control" matInput placeholder="Vía" [(ngModel)]="ViaCamion"
+                  maxlength="50">
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+          <button type="button" class="md-1 btn btn-xs btn-danger margin mat-elevation-z8" [disabled]="loading"
+            (click)="ShowModalRutas = fasle">Cancelar
+          </button>
+          <button type="button" class="md-1 btn btn-xs btn-success margin mat-elevation-z8"
+            [disabled]='!RutaCamion || loading' (click)="_saveRuta()">{{Accion}}
+          </button>
+          <span *ngIf="loading"><i class="fa fa-spinner fa-pulse" aria-hidden="true"></i></span>
+        </mat-dialog-actions>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Mensajes Toast -->
-<toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
+<!-- <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container> -->

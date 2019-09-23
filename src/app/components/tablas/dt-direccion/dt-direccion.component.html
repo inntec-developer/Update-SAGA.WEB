@@ -2,7 +2,7 @@
 <div class="title-headre-view">
   <h4 class="float-left">Direcciones</h4>
   <button *ngIf="Perfil290" class="mr-2 btn btn-xs mat-elevation-z8 float-right"
-  [ngClass]="!selected ? 'disabled' : 'btn-danger'" [disabled]="!selected">
+  [ngClass]="!selected ? 'disabled' : 'btn-danger'" [disabled]="!selected" (click)="ShowModalRutas = true;">
     <em class="fa fa-bus"></em>
   </button>
   <button *ngIf="Perfil290" class="mr-2 btn btn-xs mat-elevation-z8 float-right"
@@ -67,6 +67,23 @@
       </div>
       <div class="modal-body">
         <app-maps-address [Direccion]='Direccion'></app-maps-address>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="ShowModalRutas" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal
+  #MessageModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-lg reporteMod">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="float-left text-warning"><em class="fa fa-map-o mr-2"></em>Rutas de Camion de {{Direccion}}</h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="ShowModalRutas=false"><i
+            class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <app-dt-rutas-camion-requi [DireccionId]='damfoId' [ShowRequi]="ShowRequi">
+        </app-dt-rutas-camion-requi>
       </div>
     </div>
   </div>

@@ -1,7 +1,6 @@
 <h5 class="card-title"><strong class="text-info">Documentos DAMSA</strong></h5>
 <mat-divider></mat-divider>
-<ol>
-  <li *ngFor="let x of documentosDamsa">
-    <label class="card-text"> {{x.documentoDamsa | uppercase}}</label>
-  </li>
-</ol>
+  <p *ngFor="let x of documentosDamsa; let i = index">
+    <label class="card-text">{{i+1}} {{x.documentoDamsa | uppercase}}</label>
+  </p>
+

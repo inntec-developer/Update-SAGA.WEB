@@ -18,7 +18,7 @@ const swal = require('sweetalert');
   styleUrls: ['./dt-damfo.component.scss'],
   providers: [RequisicionesService, PerfilReclutamientoService]
 })
-export class DtDamfoComponent implements OnInit, AfterViewInit {
+export class DtDamfoComponent implements OnInit {
   @Input('Perfil290') Perfil290: boolean;
   // scroll
   disabled = false;
@@ -122,15 +122,10 @@ export class DtDamfoComponent implements OnInit, AfterViewInit {
     this.Perfil290 = this.Perfil290 || false;
   }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.onChangeTable(this.config);
-    }, 1500);
-  }
-
   getDamfo290() {
     this.service.getDamgo290().subscribe(data => {
       this.dataSource = data;
+      this.onChangeTable(this.config);
     }, error => this.errorMessage = <any>error);
   }
 
@@ -269,10 +264,8 @@ export class DtDamfoComponent implements OnInit, AfterViewInit {
   * */
   public refreshTable() {
     this.getDamfo290();
-    setTimeout(() => {
-      this.onChangeTable(this.config);
-    }, 300);
     this.element = null;
+    this.selected = false;
   }
 
   public clearfilters() {
@@ -291,7 +284,7 @@ export class DtDamfoComponent implements OnInit, AfterViewInit {
       if (!this.Perfil290) {
         this._Router.navigate(['/ventas/visualizarDamfo290', this.damfoId], /*{ skipLocationChange: true }*/);
       } else {
-        this._Router.navigate(['/ventas/visualizarDamfo290', this.damfoId, this.Perfil290], { skipLocationChange: true });
+        this._Router.navigate(['/ventas/visualizarDamfo290', this.damfoId, this.Perfil290], /*{ skipLocationChange: true }*/);
       }
     }
   }
@@ -391,6 +384,38 @@ export class DtDamfoComponent implements OnInit, AfterViewInit {
       window.onfocus = null;
     });
   }
+
+  eliminarFormato290(){
+    swal({
+      title: 'Eliminar Formato 290 -' + this.element['nombrePerfil'] + '?',
+      text: 'Este Formato 290 se eliminara.',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Si, Eliminar formato',
+      cancelButtonText: 'No, cancelar',
+      closeOnConfirm: false,
+      closeOnCancel: true,
+    }, (isConfirm: any) => {
+      if (isConfirm) {
+        const headers = {
+          id: this.element['id']
+        };
+        const perfil = {
+          Headers: headers,
+          Action: 'delete'
+        };
+        this._perfillR.CrudPerfilReclutamiento(perfil).subscribe(x => {
+          this.damfoId = x;
+          this.refreshTable();
+          swal('Se elimino el damfo correctamente', '', 'success');
+        });
+      }
+      window.onkeydown = null;
+      window.onfocus = null;
+    });
+  }
+
 
 }
 

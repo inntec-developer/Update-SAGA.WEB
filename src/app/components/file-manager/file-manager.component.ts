@@ -9,7 +9,7 @@ const swal = require('sweetalert');
   selector: 'app-file-manager',
   templateUrl: './file-manager.component.html',
   styleUrls: ['./file-manager.component.scss'],
-  providers:[ AdminServiceService ]
+  providers: [AdminServiceService]
 })
 export class FileManagerComponent implements OnInit {
 
@@ -49,10 +49,10 @@ export class FileManagerComponent implements OnInit {
       timeout: 4000
     }
   ];
-alert = this.alerts;
-onClosed(): void {
-  this.verMsj = false;
-}
+  alert = this.alerts;
+  onClosed(): void {
+    this.verMsj = false;
+  }
 
   constructor(private service: AdminServiceService) { }
 
@@ -71,8 +71,7 @@ onClosed(): void {
   //   }
   // }
 
-  fileChangeListener($event)
-  {
+  fileChangeListener($event) {
     let file: File = $event.target.files[0];
 
     this.service.UploadFile(file, this.candidatoId).subscribe(result => {
@@ -91,22 +90,22 @@ onClosed(): void {
   }
 
   verArchivo(datos) {
-    if(datos.type.toLowerCase() === '.jpeg' || datos.type.toLowerCase() === '.jpg' || datos.type.toLowerCase() === '.png') {
-        this.imgShow = true;
-        this.pdfShow = false;
-        this.image = this.service.GetImage( this.candidatoId + '/' + datos.nom);
-        this.nomImg = datos.nom;
-        this.modal.show();
+    if (datos.type.toLowerCase() === '.jpeg' || datos.type.toLowerCase() === '.jpg' || datos.type.toLowerCase() === '.png') {
+      this.imgShow = true;
+      this.pdfShow = false;
+      this.image = this.service.GetImage(this.candidatoId + '/' + datos.nom);
+      this.nomImg = datos.nom;
+      this.modal.show();
 
     } else {
-        this.imgShow = false;
-        this.pdfShow = true;
-        this.pdfSrc = this.service.GetPdf('utilerias/Files/users/' + this.candidatoId + '/' + datos.nom).subscribe( data => {
+      this.imgShow = false;
+      this.pdfShow = true;
+      this.pdfSrc = this.service.GetPdf('utilerias/Files/users/' + this.candidatoId + '/' + datos.nom).subscribe(data => {
         const fileurl = window.URL.createObjectURL(data);
         window.open(fileurl)
-          // this.pdfSrc = fileurl;
-          // this.modal.show();
-        });
+        // this.pdfSrc = fileurl;
+        // this.modal.show();
+      });
     }
   }
 
@@ -114,7 +113,7 @@ onClosed(): void {
   downloadFile(datos) {
     const ruta = '/utilerias/Files/users/' + this.candidatoId + '/';
 
-    this.service.DownloadFiles(ruta + datos.nom).subscribe( res =>{
+    this.service.DownloadFiles(ruta + datos.nom).subscribe(res => {
       saveAs(res, datos.nom);
     });
 
@@ -137,8 +136,8 @@ onClosed(): void {
       window.onfocus = null;
       if (isConfirm) {
         const ruta = '/utilerias/Files/users/' + this.candidatoId + '/';
-        this.service.DeleteFiles(ruta + datos.nom).subscribe( res => {
-          if(res === 200) {
+        this.service.DeleteFiles(ruta + datos.nom).subscribe(res => {
+          if (res === 200) {
             swal('Borrar Archivo', 'El archivo se borró con éxito', 'success');
             this.ngOnInit();
           } else {
@@ -148,7 +147,10 @@ onClosed(): void {
       } else {
         swal('Cancelado', 'No se realizó ningún cambio', 'error');
       }
-    });
+    }
+    );
+    window.onkeydown = null;
+    window.onfocus = null;
 
   }
 
@@ -158,29 +160,32 @@ onClosed(): void {
 
   getTypes(data) {
     data.forEach(element => {
-      if(element.ext.toLowerCase() === '.jpeg' || element.ext.toLowerCase() === '.jpg' || element.ext.toLowerCase() === '.png') {
+      if (element.ext.toLowerCase() === '.jpeg' || element.ext.toLowerCase() === '.jpg' || element.ext.toLowerCase() === '.png') {
         this.files.push({
           type: element.ext,
           nom: element.nom,
           size: element.size,
           fc: element.fc,
-          icon: 'fa-file-image-o'});
-        this.cont_image ++;
-      } else if(element.ext === '.pdf') {
+          icon: 'fa-file-image-o'
+        });
+        this.cont_image++;
+      } else if (element.ext === '.pdf') {
         this.files.push({
           type: element.ext,
           nom: element.nom,
           size: element.size,
           fc: element.fc,
-          icon: 'fa-file-pdf-o'});
+          icon: 'fa-file-pdf-o'
+        });
         this.cont_pdf++;
-      } else if(element.ext === '.xlsx') {
+      } else if (element.ext === '.xlsx') {
         this.files.push({
           type: element.ext,
           nom: element.nom,
           size: element.size,
           fc: element.fc,
-          icon: 'fa-file-excel-o'});
+          icon: 'fa-file-excel-o'
+        });
         this.cont_xls++;
       } else {
         this.files.push({
@@ -188,7 +193,8 @@ onClosed(): void {
           nom: element.nom,
           size: element.size,
           fc: element.fc,
-          icon: 'fa-file-word-o'});
+          icon: 'fa-file-word-o'
+        });
         this.cont_word++;
       }
     });
@@ -198,9 +204,9 @@ onClosed(): void {
   GetFiles() {
     if (this.candidatoId) {
       this.service.GetFiles(this.candidatoId)
-      .subscribe( data => {
-        this.getTypes(data);
-      });
+        .subscribe(data => {
+          this.getTypes(data);
+        });
     }
   }
 }

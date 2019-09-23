@@ -17,6 +17,7 @@ export class MapsAddressComponent implements OnInit, OnChanges {
   zoom: number;
   address: string;
   private geoCoder;
+  src = '';
 
   // mapStyles = [
   //   { 'featureType': 'water', 'stylers': [{ 'visibility': 'on' }, { 'color': '#bdd1f9' }] },
@@ -51,6 +52,10 @@ export class MapsAddressComponent implements OnInit, OnChanges {
             this.longitude = results[0].geometry.location.lng();
             this.zoom = 18;
             this.address = busqueda;
+            this.src = 'https://maps.googleapis.com/maps/api/staticmap?center='
+            + this.latitude + ',' + this.longitude
+            + '&markers=color:blue%7Clabel:S%7C'+ this.latitude + ',' + this.longitude
+            + '&zoom=18&size=750x400&key=AIzaSyCvtCCb5IK8MQbFiXe4J2F5LIQqa5fLeSY'
           }
         }
       });
