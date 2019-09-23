@@ -99,7 +99,22 @@ export class ButtonsPostulacionesComponent implements OnInit {
     paging: true,
     filtering: { filterString: '' },
     className: ['table-striped mb-0 d-table-fixed']
-  }
+  };
+
+  /**
+   * configuracion para mensajes de acciones.
+   */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+    preventDuplicates: true,
+  });
+
   constructor(
     private serviceRequi: RequisicionesService,
     private service: PostulateService,
@@ -379,7 +394,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
           foto: ApiConection.ServiceUrlFoto + element.perfil[0]['foto'],
           nombre: element.perfil[0]['nombre'],
           apellidoPaterno: element.perfil[0]['apellidoPaterno'],
-          apellidoMaterno: element.perfil[0]['apellidoMaterno'],
+          apellidoMaterno: element.perfil[0]['apellidoMaterno'] === '' ? 'Sin registro' : element.perfil[0]['apellidoMaterno'],
           areaExp: element.perfil[0]['areaExp'],
           areaInt: element.perfil[0]['areaInt'],
           curp: element.perfil[0]['curp'],
@@ -406,11 +421,11 @@ export class ButtonsPostulacionesComponent implements OnInit {
           municipioNacimiento: element.perfil[0]['municipioNacimiento'] != null ? element.perfil[0]['municipioNacimiento'] : 0,
           generoId: element.perfil[0]['generoId'],
           editarCURP: false
-        }
+        };
         if (element.contratados.length > 0) {
           perfil.nombre = element.contratados[0]['nombre'];
           perfil.apellidoPaterno = element.contratados[0]['apellidoPaterno'];
-          perfil.apellidoMaterno = element.contratados[0]['apellidoMaterno'];
+          perfil.apellidoMaterno = element.contratados[0]['apellidoMaterno'] === '' ? 'Sin registro' : element.contratados[0]['apellidoMaterno'];
           perfil.curp = element.contratados[0]['curp'];
           perfil.rfc = element.contratados[0]['rfc'];
           perfil.nss = element.contratados[0]['nss'];
@@ -422,7 +437,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
         this.showFilterRow = true;
         this.onChangeTable(this.config);
 
-      })
+      });
     }, error => this.errorMessage = <any>error);
   }
 
@@ -538,57 +553,12 @@ export class ButtonsPostulacionesComponent implements OnInit {
     this.dlgLiberar = true;
   }
 
-  // OpenDialogLiberacion(estatusId,estatus) {
-  //   let dialogLiberar = this.dialog.open(DialogLiberarCandidatoComponent, {
-  //     width: '28%',
-  //     height: 'auto',
-  //   });
-  //   dialogLiberar.afterClosed().subscribe(result => {
-  //     if (result) {
-  //       var data = {
-  //         RequisicionId: this.RequisicionId,
-  //         CandidatoId: this.candidatoId,
-  //         ReclutadorId: this.settings.user['id'],
-  //         MotivoId: result.motivo,
-  //         ProcesoCandidatoId: this.ProcesoCandidatoId,
-  //         Comentario: result.comentario,
-  //       }
-
-  //       this.serviceLiberar.setLiberarCandidato(data).subscribe(result => {
-  //           switch(result){
-  //             case 200:{
-
-  //             }
-  //             case 404: {
-  //               this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos');
-  //               break;
-  //             }
-  //           }
-  //         });
-  //     }
-  //     else
-  //     {
-  //       this.onChangeTable(this.config)
-  //     }
-  //   });
-  // }
-
   OpenEditarComponent(datos) {
     this.dataContratados = this.dataSource.filter(element => {
       return element.candidatoId === datos.candidatoId;
-      //  if( element.estatusId == 24 )
-      //   {
-      //     element.areaReclutamiento = 'SIN ASIGNAR';
-      //     element.areaReclutamientoId = -1;
-      //     element.fuenteReclutamiento = 'SIN ASIGNAR';
-      //     element.fuenteReclutamientoId = -1;
-
-      //     return element;
-      //   }
     });
 
     this.editarContratados = true;
-
   }
 
   OpenDialogComentariosNR(data, estatusId, estatus) {
@@ -609,10 +579,10 @@ export class ButtonsPostulacionesComponent implements OnInit {
     });
     dialog.afterClosed().subscribe(result => {
       if (result) {
-        this.SetApiProceso(data, 42, 'En Revision')
+        this.SetApiProceso(data, 42, 'En Revision');
 
       }
-    })
+    });
   }
 
   SetProceso(estatusId, estatus) {
@@ -674,9 +644,9 @@ export class ButtonsPostulacionesComponent implements OnInit {
         this.pst = true;
         this.liberado = true;
         this.GetConteoVacante();
-        this.onChangeTable(this.config)
+        this.onChangeTable(this.config);
 
-      } else if (data == 300) {
+      } else if (data === 300) {
         this.popToast('info', 'Apartado', 'El candidato ya esta apartado o en proceso');
       } else {
         this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos');
@@ -768,24 +738,15 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.ValidarEstatus(data.estatusId);
     }
 
-    if (this.rowAux.length == 0) {
+    if (this.rowAux.length === 0) {
       this.rowAux = data;
-    }
-    else if (data.selected && this.rowAux != []) {
-      var aux = data;
+    } else if (data.selected && this.rowAux !== []) {
+      const aux = data;
       data = this.rowAux;
       data.selected = false;
       aux.selected = true;
       this.rowAux = aux;
     }
-
-    // let index = this.dataSource.indexOf(data.row);
-    // this.element = data;
-    // /* add an class 'active' on click */
-    // $('#resultDataTable').on('click', 'tr', function (event: any) {
-    //   //noinspection TypeScriptUnresolvedFunction
-    //   $(this).addClass('selected').siblings().removeClass('selected');
-    // });
   }
 
   VerCandidato(row) {
@@ -793,15 +754,6 @@ export class ButtonsPostulacionesComponent implements OnInit {
     this.candidatoId = row.candidatoId;
 
     this.isModalShow = true;
-
-    // this.ValidarEstatus(row.estatusId);
-    // row.selected = true;
-    //this.spinner.show();
-    //   setTimeout(() => {
-    //     /** spinner ends after 5 seconds */
-    //     this.spinner.hide();
-
-    // }, 1000);
 
   }
 
@@ -836,25 +788,26 @@ this.element = [];
   }
 
   closeModal(modal) {
-    if (modal == 1) {
-    
+    if (modal === 1) {
       this.isModalShow = false;
-    }
-    else {
+    } else {
       if (this.actualizoContratados) {
-        var datos = { candidatoId: this.candidatoId, estatusId: 24, requisicionId: this.RequisicionId, horarioId: this.horarioId, ReclutadorId: this.settings.user['id'] };
-        this.SetApiProceso(datos, 24, 'Cubierto')
+        const datos = {
+          candidatoId: this.candidatoId,
+          estatusId: 24,
+          requisicionId: this.RequisicionId,
+          horarioId: this.horarioId,
+          ReclutadorId: this.settings.user['id']
+        };
+        this.SetApiProceso(datos, 24, 'Cubierto');
         this.editarContratados = false;
-      }
-      else {
+      } else {
         this.editarContratados = false;
       }
       this.refresh();
     }
 
   }
-
-
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
@@ -866,10 +819,11 @@ this.element = [];
     let filteredData: Array<any> = data;
     this.showFilterRow = true;
     this.columns.forEach((column: any) => {
-      if (column.filtering.filterString != '') {
+      if (column.filtering.filterString !== '') {
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
+          if (item[column.name] != null) {
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+          }
         });
       }
     });
@@ -884,7 +838,7 @@ this.element = [];
 
     this.registros = this.dataSource.length;
     this.rows = this.dataSource;
-    let filteredData = this.changeFilter(this.dataSource, this.config);
+    const filteredData = this.changeFilter(this.dataSource, this.config);
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
     this.length = filteredData.length;
   }
@@ -898,23 +852,8 @@ this.element = [];
     this.onChangeTable(this.config);
   }
 
-
-  /**
-   * configuracion para mensajes de acciones.
-   */
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    limit: 7,
-    tapToDismiss: false,
-    showCloseButton: true,
-    mouseoverTimerStop: true,
-    preventDuplicates: true,
-  });
-
   popToast(type, title, body) {
-    var toast: Toast = {
+    const toast: Toast = {
       type: type,
       title: title,
       timeout: 4000,

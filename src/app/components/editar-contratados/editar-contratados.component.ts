@@ -28,11 +28,11 @@ export class EditarContratadosComponent implements OnInit {
   mediosId: any = 0;
   etiqueta = true;
   // Varaibles del paginador
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
   modelCalendar: NgbDateStruct;
   date: {year: number, month: number};
@@ -95,75 +95,18 @@ this.GetContratadosInfo();
     return data.slice(start, end);
   }
 
-  public changeSort(data: any, config: any): any {
-    if (!config.sorting) {
-      return data;
-    }
-
-    let columns = this.config.sorting.columns || [];
-    let columnName: string = void 0;
-    let sort: string = void 0;
-
-    for (let i = 0; i < columns.length; i++) {
-      if (columns[i].sort !== '' && columns[i].sort !== false) {
-        columnName = columns[i].name;
-        sort = columns[i].sort;
-      }
-    }
-
-    if (!columnName) {
-      return data;
-    }
-
-    // simple sorting
-    return data.sort((previous: any, current: any) => {
-      if (previous[columnName] > current[columnName]) {
-        return sort === 'desc' ? -1 : 1;
-      } else if (previous[columnName] < current[columnName]) {
-        return sort === 'asc' ? -1 : 1;
-      }
-      return 0;
-    });
-  }
-
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
+    this.showFilterRow = true;
     this.columns.forEach((column: any) => {
-      if (column.filtering) {
-        this.showFilterRow = true;
+      if (column.filtering.filterString !== '') {
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
+          if (item[column.name] !== null) {
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+          }
         });
       }
     });
-
-    if (!config.filtering) {
-      return filteredData;
-    }
-
-    if (config.filtering.columnName) {
-      return filteredData.filter((item: any) =>
-        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-    }
-
-    let tempArray: Array<any> = [];
-    filteredData.forEach((item: any) => {
-      let flag = false;
-      this.columns.forEach((column: any) => {
-        if (item[column.name] == null) {
-          flag = true;
-        } else {
-          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-            flag = true;
-          }
-        }
-      });
-      if (flag) {
-        tempArray.push(item);
-      }
-    });
-    filteredData = tempArray;
 
     return filteredData;
   }
@@ -173,62 +116,51 @@ this.GetContratadosInfo();
     if (config.filtering) {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
-
-    if (config.sorting) {
-      (<any>Object).assign(this.config.sorting, config.sorting);
-    }
     this.registros = this.dataSource.length;
     this.rows = this.dataSource;
-    let filteredData = this.changeFilter(this.dataSource, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
-    this.length = sortedData.length;
+    const filteredData = this.changeFilter(this.dataSource, this.config);
+
+    this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
+    this.length = filteredData.length;
   }
 
-//configuraciones de la tabla
+// configuraciones de la tabla
 //////////////////
 
-GetAreas()
-{
+GetAreas() {
   this.service.GetAreasRecl().subscribe(result => {
     this.areas = result;
-  })
+  });
 }
 
-GetMedios()
-{
+GetMedios() {
   this.service.GetMediosRecl().subscribe(result => {
     this.medios = result;
-  })
+  });
 }
 
-GetContratadosInfo()
-{
-  var candidatos= [];
-  var contador = 0;
+GetContratadosInfo() {
+  const candidatos = [];
+  let contador = 0;
    this.data.forEach(element => {
     candidatos.push(element.candidatoId);
   });
 
-  this.service.GetContratados(candidatos).subscribe(result =>{
-   var aux = result.filter(element => {
+  this.service.GetContratados(candidatos).subscribe(result => {
+   const aux = result.filter(element => {
      this.data.forEach(row => {
-       if( row.candidatoId === element.candidatoId )
-       {
+       if ( row.candidatoId === element.candidatoId ) {
           row.curp = element.curp;
           row.rfc = element.rfc;
           row.nss = element.nss;
           row.edad = element.edad;
           row.nombre = element.nombre;
           row.apellidoPaterno = element.apellidoPaterno;
-          row.apellidoMaterno = element.apellidoMaterno;
+          row.apellidoMaterno = element.apellidoMaterno === '' ? 'Sin registro' : element.apellidoMaterno;
 
-          if(element.fch_Creacion == element.fch_Modificacion)
-          {
+          if (element.fch_Creacion === element.fch_Modificacion) {
             row.editCURP = false;
-          }
-          else
-          {
+          } else {
             row.editCURP = true;
             contador++;
           }
@@ -238,22 +170,22 @@ GetContratadosInfo()
       }
     });
 
-  })
-  contador == this.data.length ? this.etiqueta = false : this.etiqueta = true;
+  });
+  contador === this.data.length ? this.etiqueta = false : this.etiqueta = true;
 
-  })
+  });
 }
 
 updateValue(event, cell, rowIndex)
 {
-  if (cell === "areaReclutamiento")
+  if (cell === 'areaReclutamiento')
   {
     var nomslc = this.areas.find(x => x.id === event.target.value);
 
     this.data[rowIndex]['areaReclutamiento'] = nomslc.nombre;
     this.data[rowIndex]['areaReclutamientoId'] = event.target.value;
   }
-  else if (cell === "fuenteReclutamiento")
+  else if (cell === 'fuenteReclutamiento')
   {
       this.medios.forEach( element => {
       var idx = element.medios.findIndex(x => x.tipoMediosId == event.target.value)
@@ -266,7 +198,7 @@ updateValue(event, cell, rowIndex)
 
     this.data[rowIndex]['fuenteReclutamientoId'] = event.target.value;
   }
-  else if (cell === "edad")
+  else if (cell === 'edad')
   {
     var d = event;
     this.data[rowIndex][cell] = d.year + '-' + d.month + '-' + d.day;

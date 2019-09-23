@@ -2,6 +2,13 @@
     <i class="fa fa-times"></i></button></div>
 <div class="row">
     <div class="col-sm-3 col-md-3 col-lg-3">
+        <label for="image-input" class="file-upload">
+            <button class="btn btn-info">
+                <i class="fa fa-upload mr-2"></i>SUBIR ARCHIVO</button>
+            <input id="image-input" type="file" #fileInput (change)="fileChangeListener($event)"
+                   [accept]="['image/png', 'image/jpeg', 'image/jpg']">
+        </label>
+        <br />
       <div class="card">
         <div class="card-body mat-elevation-z8">
         <strong class="text-muted">ARCHIVOS</strong>

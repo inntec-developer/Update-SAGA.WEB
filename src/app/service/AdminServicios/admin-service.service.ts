@@ -70,12 +70,13 @@ export class AdminServiceService {
   private UrlUpdatePassword = ApiConection.ServiceUrl + ApiConection.updatePassword;
   private UrlGetBGArte = ApiConection.ServiceUrl + ApiConection.GetBGArte;
   private UrlGuardarArte = ApiConection.ServiceUrl + ApiConection.GuardarArte;
+  private UrlUploadBG = ApiConection.ServiceUrl + ApiConection.UploadBG;
 
   constructor(private _httpClient: HttpClient ) {
 
   }
 
-  UploadImg( file: File, name: any) : Observable<any>
+  UploadImg( file: File, name: any): Observable<any>
   {
     let formData = new FormData();
     formData.append('image', file, name );
@@ -121,13 +122,16 @@ export class AdminServiceService {
     let params = new HttpParams().set('file', ruta);
     return this._httpClient.get(this.UrlDeleteFiles, {params: params});
   }
-  UploadFile( file: File, candidatoId ) : Observable<any>
-  {
-    let formData = new FormData();
+  UploadFile( file: File, candidatoId ) : Observable<any> {
+    const formData = new FormData();
     formData.append('file', file, file.name + '_' + candidatoId );
     return this._httpClient.post(this.UrlUploadFile, formData );
   }
-
+  UploadBG( file: File ): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, file.name );
+    return this._httpClient.post(this.UrlUploadBG, formData );
+  }
   downloadImage(ruta): Observable<any>
   {
     let httpHeaders = new HttpHeaders({

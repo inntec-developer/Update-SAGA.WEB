@@ -99,4 +99,16 @@ export class DlgBGArteComponent implements OnInit {
     });
   }
 
+  fileChangeListener($event) {
+    const file: File = $event.target.files[0];
+
+    this.service.UploadBG(file).subscribe(result => {
+      if (result === 201) {
+        this.ngOnInit();
+        swal('Guardar Archivo', 'El archivo ' + file.name + ' se subió con éxito', 'success');
+      } else {
+        swal('Guardar Archivo', 'Ocurrió un error al intentar subir archivo ' + file.name, 'error');
+      }
+    });
+  }
 }

@@ -98,7 +98,7 @@ export class IndicadorUndNegocioMxComponent implements OnInit {
           type: 'radar',
           data: this.Data,
           options: {
-            charOptions,
+            // charOptions,
             onClick: this.detectedClick.bind(this),
           }
         });

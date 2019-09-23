@@ -630,12 +630,11 @@ export class DtRequisicionComponent implements OnInit {
           this.onChangeTable(this.config);
           this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
 
-        }
-        else {
+        } else {
           this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
         }
 
-      })
+      });
     }
 
   }
@@ -776,7 +775,7 @@ export class DtRequisicionComponent implements OnInit {
             ' - ' + row.sueldoMaximo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
           ESTATUS: row.estatus,
           COORDINADOR: coordinador,
-          SOLICITANTE: row.solicita,
+          SOLICITANTE: row.propietario,
           RECLUTADOR: reclutador,
           'COMENTARIOS': comentarios
         });

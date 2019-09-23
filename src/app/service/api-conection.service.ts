@@ -257,6 +257,7 @@ export class ApiConection {
   public static updatePassword = 'admin/updatePassword';
   public static GetBGArte = 'admin/getBGArte';
   public static GuardarArte = 'admin/guardarArte';
+  public static UploadBG = 'admin/uploadBG';
 
   /*Seguimiento Vacantes*/
   public static getDtosCard = 'reclutamiento/seguimientovacante/getCard';

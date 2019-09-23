@@ -80,13 +80,13 @@ export class DlgRegistroMasivoComponent implements OnInit {
   public columns: Array<any> = [
     { title: 'Horario', className: 'text-success text-center', name: 'horario', filtering: { filterString: '', placeholder: 'Horario' } },
     { title: 'CURP', className: 'text-success text-center', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
-    { title: 'Nombre', className: 'text-center', name: 'Nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
-    { title: 'Apellido Paterno', className: 'text-center', name: 'ApellidoPaterno',
+    { title: 'Nombre', className: 'text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
+    { title: 'Apellido Paterno', className: 'text-center', name: 'apellidoPaterno',
      filtering: { filterString: '', placeholder: 'Apellido Paterno' } },
-    { title: 'Apellido Materno', className: 'text-center', name: 'ApellidoMaterno',
+    { title: 'Apellido Materno', className: 'text-center', name: 'apellidoMaterno',
     filtering: { filterString: '', placeholder: 'Apellido Materno' } },
-    { title: 'Fecha Nacimiento', className: 'text-center', name: 'FechaNac', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
-    { title: 'Sexo', className: 'text-center', name: 'GeneroId', filtering: { filterString: '', placeholder: 'Sexo' } },
+    { title: 'Fecha Nacimiento', className: 'text-center', name: 'fechaNac', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Sexo', className: 'text-center', name: 'genero', filtering: { filterString: '', placeholder: 'Sexo' } },
     { title: 'Estado Nac.', className: 'text-center', name: 'estado', filtering: { filterString: '', placeholder: 'Estado' } },
     { title: 'Email', className: 'text-center', name: 'email', filtering: { filterString: '', placeholder: 'Email' } },
     { title: 'Teléfono', className: 'text-center', name: 'telefono', filtering: { filterString: '', placeholder: 'Teléfono' } },
@@ -140,37 +140,6 @@ horario = '';
     let start = (page.page - 1) * page.itemsPerPage;
     let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
-  }
-
-  public changeSort(data: any, config: any): any {
-    if (!config.sorting) {
-      return data;
-    }
-
-    let columns = this.config.sorting.columns || [];
-    let columnName: string = void 0;
-    let sort: string = void 0;
-
-    for (let i = 0; i < columns.length; i++) {
-      if (columns[i].sort !== '' && columns[i].sort !== false) {
-        columnName = columns[i].name;
-        sort = columns[i].sort;
-      }
-    }
-
-    if (!columnName) {
-      return data;
-    }
-
-    // simple sorting
-    return data.sort((previous: any, current: any) => {
-      if (previous[columnName] > current[columnName]) {
-        return sort === 'desc' ? -1 : 1;
-      } else if (previous[columnName] < current[columnName]) {
-        return sort === 'asc' ? -1 : 1;
-      }
-      return 0;
-    });
   }
 
   public changeFilter(data: any, config: any): any {
