@@ -79,6 +79,11 @@ export class ComponentsService {
 
   constructor(private _httpClient: HttpClient) { }
 
+  getCalidadEntiempo(data: any): Observable<any> {
+    let params = new HttpParams().set('usuario', data);
+    return this._httpClient.get(this.UrlCalidadEntiempo, { params: params, headers: this.httpOptions.headers});
+  }
+
   getCalidadVigente(data: any): Observable<any> {
     let params = new HttpParams().set('usuario', data);
     return this._httpClient.get(this.UrlCalidadVige, { params: params, headers: this.httpOptions.headers});

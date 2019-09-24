@@ -1,0 +1,44 @@
+<div class="card box">
+  <div class="card-body mat-elevation-z8">
+    <div class="d-flex justify-content-between">
+      <label class="text-info"><strong>Folios Activos</strong> </label>
+      <em class="icon-refresh em- text-success"
+            (click)="ngOnInit()"></em>
+    </div>
+    <br>
+    <div>
+      <canvas id="ActivaVic"></canvas>
+      <br>
+      <div class="col-xl-12">
+        <div style="margin-top: -18px;">
+            <small class="left"><span > Vigentes: <span
+              class="badge badge-primary ">{{vigentes}}</span></span></small>
+        
+            <small class="right" style="float: right"><span > Vencidas: <span
+              class="badge badge-danger">{{vencidas}}</span></span></small>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <small ><span style="margin-right: 11px;margin-top:20px" class="float-right"> Total Folios: <span
+            class="badge badge-info">{{vigentes + vencidas}}</span></span></small>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal para visualizar vacantes seleccionadas -->
+<div *ngIf="ShowModal" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #MessageModal="bs-modal" class="modal"
+tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+<div class="modal-dialog modal-lg reporteMod">
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="float-left text-warning"><em class="fa fa-file-text-o mr-2"></em>Informaci&oacute;n de Vacantes {{EstadoVacante}} </h4>
+    <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="ShowModal=false"><i
+        class="fa fa-times"></i></button>
+  </div>
+  <div class="modal-body">
+    <app-grafica-reporte [EstadoVacante]="EstadoVacante"></app-grafica-reporte>
+  </div>
+</div>
+</div>
+</div>

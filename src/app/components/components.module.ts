@@ -154,6 +154,9 @@ import { ToolsModule } from '../tools/tools.module';
 import { TpNominaComponent } from './catalogos/tp-nomina/tp-nomina.component';
 import { TpPsicometriaComponent } from './catalogos/tp-psicometria/tp-psicometria.component';
 import { VacantesComponent } from './Tracking/vacantes/vacantes.component';
+import { GraficaCalidadActivoComponent } from './Graficas/grafica-calidad-activo/grafica-calidad-activo.component';
+import { GraficaCalidadVencidaComponent } from './Graficas/grafica-calidad-vencida/grafica-calidad-vencida.component';
+import { GraficaReporteComponent } from './Graficas/grafica-calidad-activo/grafica-reporte/grafica-reporte.component';
 
 @NgModule({
   imports: [
@@ -313,7 +316,10 @@ import { VacantesComponent } from './Tracking/vacantes/vacantes.component';
     VacantesComponent,
     FoliosActivosComponent,
     GraficaClienteComponent,
-    MapsAddressComponent
+    MapsAddressComponent,
+    GraficaCalidadActivoComponent,
+    GraficaCalidadVencidaComponent,
+    GraficaReporteComponent
   ],
   exports: [
     DtDireccionComponent,
@@ -420,7 +426,9 @@ import { VacantesComponent } from './Tracking/vacantes/vacantes.component';
     DlgRequiArteComponent,
     VacantesComponent,
     FoliosActivosComponent,
-    MapsAddressComponent
+    MapsAddressComponent,
+    GraficaCalidadActivoComponent,
+    GraficaCalidadVencidaComponent
   ],
   entryComponents: [DlgRequiArteComponent, DlgBGArteComponent, DlgCubiertasComponent,
     DlgResultadosMedicosComponent, DlgRegistroMasivoComponent,

@@ -214,6 +214,11 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  CerrarModal(){
+    this.ArrayVacante = null;
+    $("#BtnConsulVacant").val("");
+  }
+
   /*
   * Creacion de mensajes
   * */
