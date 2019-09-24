@@ -351,7 +351,7 @@ GeneraEstatusBolsa(){
   document.getElementById('DivClientes').classList.add('ocultar');
   document.getElementById('DivCubiertoReport').classList.add('ocultar');
   document.getElementById('DivGraficaCordina').classList.add('ocultar');
-  
+  document.getElementById('DivGraficaCliente').classList.add('ocultar');
 
  
   document.getElementById('DivBotones').classList.remove('botones');
@@ -380,6 +380,7 @@ GeneraEstatusBolsa(){
   
   document.getElementById('btnGraficaVacante').classList.add('ocultar');
   document.getElementById('btnGraficaCliente').classList.add('ocultar');
+  
 
  
   document.getElementById('divBusCoordina2').classList.add('ocultar');

@@ -30,7 +30,6 @@ export class OficinasComponent implements OnInit {
   public Colonia : any[];
   public tipo : any[];
   public dataSource: MatTableDataSource<any[]>;
-
   public nombre:string;
   public cp:string;
   public calle:string;
@@ -39,8 +38,25 @@ export class OficinasComponent implements OnInit {
   public email :string;
   public lat :string;
   public lon :string;
- 
   public act :boolean;
+  public rows: Array<any> = [];
+  requisiciones = [];
+
+  // Varaibles del paginador
+  public page: number = 1;
+  public itemsPerPage: number = 25;
+  public maxSize: number = 5;
+  public numPages: number = 1;
+  public length: number = 0;
+
+  public masivo: number = 0;
+  public operativo: number = 0;
+  public especializado: number = 0;
+  public total: number = 0;
+  public columns: Array<any>;
+
+  registros: any;
+  showFilterRow: boolean;
 
   constructor(
     private Servicio: CatalogosService,
@@ -66,9 +82,15 @@ export class OficinasComponent implements OnInit {
   }
 
   LlamarOfi(){
+    this.LimpiaFiltro(0);
+    this.LimpiaFiltro(1);
     this.Servicio.getSucursales('').subscribe(item =>{
 
       this.datos = item;
+      this.requisiciones = item;
+      this.onChangeTable(this.config);
+      this.spinner.hide();
+      
 
       })
   }
@@ -113,7 +135,6 @@ export class OficinasComponent implements OnInit {
         this.LlamarOfi();
       })
     }
-
    // alert(nom + est + mun + col + cp + calle + num + tel + email +lat + lon + tipo + act)
 
   }
@@ -177,14 +198,14 @@ export class OficinasComponent implements OnInit {
   }
 
   EditarModal(id){
-
+debugger;
     document.getElementById('Identi')['value'] = id;
     this.nombre = document.getElementById('nombre_' + id)['value'];
     this.cp = document.getElementById('codigopostal_' + id)['value'];
     this.calle = document.getElementById('calle_' + id)['value'];
     this.num = document.getElementById('numero_' + id)['value'];
     this.tel = document.getElementById('telefono_' + id)['value'];
-    this.email = document.getElementById('Correo_' + id)['value'];
+    this.email = document.getElementById('correo_' + id)['value'];
     this.lat = document.getElementById('longitud_' + id)['value'];
     this.lon = document.getElementById('latitud_' + id)['value'];
     let es = document.getElementById('Estadoid_' + id)['value'];
@@ -252,37 +273,183 @@ export class OficinasComponent implements OnInit {
     }
   }
 
-  displayedColumns = [
-    'nombre',
-    'tipoOficina',
-    'Direccion',
-    'latitud',
-    'longitud',
-   'telefono',
-    'accion'
-  ];
 
-  // Filtro dentro del Grid
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-   // this.datos = this.datos();
+  LimpiaFiltro(valor){
+    if(valor = 0){
+      this.columns = [];
+    }else{
+      this.columns = [
+        { title: 'Nombre', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'nombre' } },
+        { title: 'municipio', className: 'text-success text-center', name: 'municipio', filtering: { filterString: '', placeholder: 'municipio' } },
+        { title: 'Estado', className: 'text-success text-center', name: 'estado', filtering: { filterString: '', placeholder: 'estado' } },
+        { title: 'calle y Numero', className: 'text-success text-center', name: 'calle', filtering: { filterString: '', placeholder: 'calle' } },
+        { title: 'colonia', className: 'text-success text-center', name: 'colonia', filtering: { filterString: '', placeholder: 'colonia' } },
+        { title: 'telefono', className: 'text-success text-center', name: 'telefono', filtering: { filterString: '', placeholder: 'telefono' } },
+        { title: 'Correo', className: 'text-success text-center', name: 'correo', filtering: { filterString: '', placeholder: 'correo' } },
+        { title: 'latitud', className: 'text-success text-center', name: 'latitud', filtering: { filterString: '', placeholder: 'latitud' } },
+        { title: 'longitud', className: 'text-success text-center', name: 'longitud', filtering: { filterString: '', placeholder: 'longitud' } },
+        { title: 'tipoOficina', className: 'text-success text-center', name: 'tipoOficina', filtering: { filterString: '', placeholder: 'tipo Oficina' } },
+        { title: 'Activo', className: 'text-success text-center'},
+        { title: 'Accion', className: 'text-success text-center'}, 
+      ];
+    }
   }
+
+
+public config: any = {
+  paging: true,
+  //sorting: { columns: this.columns },
+  filtering: { filterString: '' },
+  className: ['table-hover  mb-0']
+};
+
+public changePage(page: any, data: Array<any> = this.requisiciones): Array<any> {
+  let start = (page.page - 1) * page.itemsPerPage;
+  let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+  return data.slice(start, end);
+}
+
+public changeSort(data: any, config: any): any {
+  if (!config.sorting) {
+    return data;
+  }
+
+  let columns = this.config.sorting.columns || [];
+  let columnName: string = void 0;
+  let sort: string = void 0;
+
+  for (let i = 0; i < columns.length; i++) {
+    if (columns[i].sort !== '' && columns[i].sort !== false) {
+      columnName = columns[i].name;
+      sort = columns[i].sort;
+    }
+  }
+
+  if (!columnName) {
+    return data;
+  }
+
+  // simple sorting
+  return data.sort((previous: any, current: any) => {
+    if (previous[columnName] > current[columnName]) {
+      return sort === 'desc' ? -1 : 1;
+    } else if (previous[columnName] < current[columnName]) {
+      return sort === 'asc' ? -1 : 1;
+    }
+    return 0;
+  });
+}
+
+public changeFilter(data: any, config: any): any {
+  let filteredData: Array<any> = data;
+  this.columns.forEach((column: any) => {
+    if (column.filtering) {
+      this.showFilterRow = true;
+      filteredData = filteredData.filter((item: any) => {
+        if (item[column.name] != null )
+        {
+          if(!Array.isArray(item[column.name]))
+          {
+            return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+
+          }
+          else
+          {
+              let aux = item[column.name];
+              let mocos = false;
+              if(item[column.name].length > 0)
+              {
+                item[column.name].forEach(element => {
+                  if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase()))
+                  {
+                    mocos = true;
+                    return;
+                  }
+                });
+
+                if(mocos)
+                {
+                  return item[column.name];
+                }
+              }
+            else
+            {
+                return item[column.name];
+            }
+          }
+        }
+        else
+        {
+          return 'sin asignar'
+        }
+      });
+    }
+
+  });
+
+  if (!config.filtering) {
+    return filteredData;
+  }
+
+  if (config.filtering.columnName) {
+    return filteredData.filter((item: any) =>
+      item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
+  }
+
+  let tempArray: Array<any> = [];
+  filteredData.forEach((item: any) => {
+    let flag = false;
+    this.columns.forEach((column: any) => {
+      if (item[column.name] == null) {
+        flag = true;
+      } else {
+        if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
+          flag = true;
+        }
+      }
+    });
+    if (flag) {
+      tempArray.push(item);
+    }
+  });
+  filteredData = tempArray;
+
+  return filteredData;
+}
+
+public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
+  if (config.filtering) {
+    (<any>Object).assign(this.config.filtering, config.filtering);
+  }
+
+  if (config.sorting) {
+    (<any>Object).assign(this.config.sorting, config.sorting);
+  }
+
+  this.registros = this.requisiciones.length;
+  this.rows = this.requisiciones;
+  let filteredData = this.changeFilter(this.requisiciones, this.config);
+  let sortedData = this.changeSort(filteredData, this.config);
+  this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
+  this.length = sortedData.length;
+
+  this.spinner.hide();
+}
+
+
+public refreshTable() {
+  this.LlamarOfi();
+}
+
+public clearfilters() {
+  this.columns.forEach(element => {
+    element.filtering.filterString = '';
+    (<HTMLInputElement>document.getElementById(element.name)).value = '';
+  });
+  this.onChangeTable(this.config);
 
 }
 
-export interface Element {
-  id: string;
-  nombre: string;
-  latitud: string;
-  longitud: string;
-  tipoOficina: string;
-  estado: string;
-  municipio: string;
-  colonia: string;
-  calle: string;
-  numeroExt: string;
-  telefono: string;
-  correo: string;
+  
 }
 

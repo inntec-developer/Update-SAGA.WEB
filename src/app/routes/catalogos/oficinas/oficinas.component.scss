@@ -10,3 +10,19 @@
     height: 400px;
     overflow-y: auto;
 }
+
+
+table thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table {
+  width: 100%;
+}
+
+table tbody div {
+  height: 350px;
+}
