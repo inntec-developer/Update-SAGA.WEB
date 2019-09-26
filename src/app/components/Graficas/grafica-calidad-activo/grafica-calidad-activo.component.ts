@@ -33,6 +33,10 @@ export class GraficaCalidadActivoComponent implements OnInit {
     this.vigentes = item['vigentes'];
    
    this.Data = {
+    value:[ 
+          'Vigentes2',
+           'Vencidas2'
+          ],
      datasets: [{
        backgroundColor: [
                        '#0FFF5B',
@@ -44,8 +48,8 @@ export class GraficaCalidadActivoComponent implements OnInit {
        ]
      }],
      labels: [
-       'A un vigentes',
-       'Ya vencidas',
+       'Vigentes',
+       'Vencidas',
      ]
    }
    this.Chart = new Chart('ActivaVic', {
@@ -76,7 +80,7 @@ export class GraficaCalidadActivoComponent implements OnInit {
     if (ActivatEvent[0]) {
       var chartData = ActivatEvent[0]['_chart'].config.data;
       var idx = ActivatEvent[0]['_index'];
-      this.EstadoVacante = chartData.labels[idx];
+      this.EstadoVacante = chartData.value[idx];
       this.NumeroVacantes = chartData.datasets[0].data[idx];
       this.ShowModal = true;
     }

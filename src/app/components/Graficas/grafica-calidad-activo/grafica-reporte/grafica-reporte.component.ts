@@ -41,6 +41,14 @@ export class GraficaReporteComponent implements OnInit {
   public bandera = true;
   totalContratados: number = 0;
 
+  element = [];
+  vBtra: any;
+  folio: any;
+  rowAux = [];
+  reporteCandidatos = false;
+  id: any;
+  enProceso: any;
+
   constructor(private _ComponentService: ComponentsService, 
               private excelService: ExcelService, 
               private settings: SettingsService,
@@ -71,6 +79,26 @@ export class GraficaReporteComponent implements OnInit {
     || estado2 == "junio" || estado2 == "mayo" || estado2 == "abril" || estado2 == "marzo" 
     || estado2 == "febrero" || estado2 == "enero"?false:true;
 
+  }
+
+  public onCellClick(data: any): any {
+    data.selected ? data.selected = false : data.selected = true;
+
+    this.element = data;
+    this.vBtra = data.vBtra;
+    this.folio = data.folio;
+    this.id = data.id;
+    this.enProceso = data.enProceso;
+
+    if (this.rowAux.length === 0) {
+      this.rowAux = data;
+    } else if (data.selected && this.rowAux !== []) {
+      const aux = data;
+      data = this.rowAux;
+      data.selected = false;
+      aux.selected = true;
+      this.rowAux = aux;
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {

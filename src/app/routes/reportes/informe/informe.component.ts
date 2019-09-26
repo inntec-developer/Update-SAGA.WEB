@@ -320,23 +320,46 @@ GeneraEstatusBolsa(){
   }
  
   llamarCubi(){
-   
-    var elemento = document.querySelectorAll("[name='Cate_Cubiertos']")[0].id;
-    document.getElementById(elemento).click();
+    let num = $("[name='Cate_Cubiertos']").find('.mat-pseudo-checkbox-checked').length
+    if(num == 0){
+      var elemento = document.querySelectorAll("[name='Cate_Cubiertos']")[0].id;
+      document.getElementById(elemento).click();
+    }
     setTimeout(()=>{    
      $(".cdk-overlay-backdrop").click();
-              }, 100);
+              }, 200);
+  }
+
+  quitarselec(){
+    let num = $("[name='Cate_Cubiertos']").find('.mat-pseudo-checkbox-checked').length
+    if(num == 1){
+      var elemento = document.querySelectorAll("[name='Cate_Cubiertos']")[0].id;
+      document.getElementById(elemento).click();
+    }
+    setTimeout(()=>{    
+     $(".cdk-overlay-backdrop").click();
+              }, 200);
   }
  
  Ocultar(){
 
-  let tiporeporte = document.getElementById('TipoReporte')['value'];
+  let tiporeporte = $("#TipoReporte").val(); 
   if(tiporeporte == 11){
-    document.getElementById("mat-select-0").click();
+    $("[name='estatuSelect']").click(); 
+  //  $( "input[name='estatuSelect']" ).click(); 
+  //  $("#mat-select-0").click(); 
+  //  document.getElementById("mat-select-0").click();
     setTimeout(()=>{    
       this.llamarCubi();
               }, 100);
   }
+  // else{
+  //   $("[name='estatuSelect']").click(); 
+  //   setTimeout(()=>{    
+  //     this.llamarCubi();
+  //             }, 100);
+  //   this.quitarselec();
+  // }
 
 
   document.getElementById('DivReportefil').classList.add('ocultar');

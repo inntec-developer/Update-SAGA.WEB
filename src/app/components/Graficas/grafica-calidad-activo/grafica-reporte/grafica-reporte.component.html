@@ -1,7 +1,21 @@
 <div class="card">
   <div class="card-body mat-elevation-z8">
     <div class="row p-1 bg-light">
+
       <div class="col-sm-12 col-md-12">
+          <button (click)="lgModalRequi.show();" placement="bottom" tooltip="Ver Requisición" class="mr-1 mat-elevation-z8"
+          [disabled]="element.length == 0" [ngClass]="(element.length == 0) ? 'btn btn-xs disabled':'btn btn-xs btn-warning'">
+          <em class="fa fa-eye"></em></button>
+        <button (click)="lgModalCom.show()" class="mr-1 btn btn-xs mat-elevation-z8" [disabled]="element.length == 0"
+          [ngClass]="element.length == 0 ? 'disabled' : 'btn-dark'" container="body" placement="bottom" tooltip="Comentarios"><em
+            class="fa fa-comments-o"></em></button>  
+            <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-xs mat-elevation-z8" [disabled]="element.length == 0 || enProceso == 0"
+            (click)="reporteCandidatos = true" [ngClass]="element.length == 0 || enProceso == 0 ? 'disabled' : 'btn-info'"
+            container="body" placement="bottom" tooltip="Candidatos">
+            <i class="fa fa-users" aria-hidden="true"></i>
+            <span *ngIf="enProceso > 0" class="badge badge-pill badge-info">{{enProceso}}</span>
+          </button>
+
         <button type="button" class="btn btn-xs btn-success float-right mat-elevation-z8" (click)="refreshTable()"
           container="body" placement="bottom" tooltip="Actualizar" container="body">
           <em class="icon-refresh"></em>
@@ -56,7 +70,7 @@
             <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
               [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
               <div>
-                <tr *ngFor="let row of rows" [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8"
+                <tr *ngFor="let row of rows" (click)="onCellClick(row)" [class.bg-primary-light]="row.selected" [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8"
                   [class.selected]="row.selected">
                   <td class="text-center">
                     {{row.folio}}
@@ -134,3 +148,71 @@
   </div>
 </div>
 <ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
+
+
+
+
+<div bsModal #lgModalRequi="bs-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Informaci&oacute;n de la Vacante</h4>
+        <!-- <button placement="right" tooltip="Imprimir Requisición" class="mr-1 btn btn-xs btn-info mat-elevation-z8"
+          (click)="childModal.show()">
+          <em class="fa fa-print"></em>
+        </button> -->
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModalRequi.hide()"
+          aria-label="Close">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-info-vacante [Folios]="folio" [Requisicion]="id"></app-info-vacante>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8"
+          (click)="lgModalRequi.hide()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div bsModal #lgModalCom="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Vacante: {{vBtra}} {{folio}}</h4>
+        <button type="button" class="close pull-right" (click)="lgModalCom.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <comentario-vacante [RequisicionId]="id" [MotivoId]="7"></comentario-vacante>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="md-1 btn btn-success mat-elevation-z8"
+          (click)="lgModalCom.hide();">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="reporteCandidatos" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal
+  #candiModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="float-left text-warning"><em class="fa fa-users mr-2"></em>CANDIDATOS EN PROCESO / REQUISICI&Oacute;N
+          {{folio}} - {{vBtra}}</h5>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="reporteCandidatos=false;">
+          <i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <app-reporte-candidatos [RequisicionId]="id" [EstatusId]="element.estatusId"></app-reporte-candidatos>
+      </div>
+    </div>
+  </div>
+</div>
