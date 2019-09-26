@@ -125,14 +125,12 @@ export class DtRutasCamionRequiComponent implements OnInit, AfterViewInit, OnCha
 
 
   agregarRutasCamion() {
-    debugger;
     this.ShowModalRutas = true;
     this.Accion = 'Agregar';
     this.Edit = false;
   }
 
   updateRutasCamion() {
-    debugger;
     this.ShowModalRutas = true;
     this.Accion = 'Editar';
     this.RutaCamion = this.ruta.ruta;

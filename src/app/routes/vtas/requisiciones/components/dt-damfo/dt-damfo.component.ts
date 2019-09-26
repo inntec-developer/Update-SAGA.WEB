@@ -231,7 +231,6 @@ export class DtDamfoComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
-    debugger;
     if (data['usuarioAlta'] === this._setting.user.usuario) {
       this.isEditable = true;
     } else {

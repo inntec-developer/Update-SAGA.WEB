@@ -364,9 +364,7 @@ export class DtRequisicionReclPuroComponent implements OnInit {
     dialogDlt.afterClosed().subscribe(result => {
       if (result != "") {
         if (result.Ok == 200) {
-
           this.postulacionservice.SetProcesoVacante({ estatusId: result.estatus, requisicionId: this.RequisicionId }).subscribe(data => {
-
             if (data == 201) {
               this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
               this.refreshTable();

@@ -84,7 +84,7 @@ export class DocClienteComponent implements OnInit, AfterContentInit {
     } else {
       const data = {
         isEdit: this.isActionEdit,
-        index: this.index,
+        Index: this.index,
         Documento: this.documento.get('documento').value.toUpperCase(),
         UsuarioAlta: this._setting.user.usuario,
       };

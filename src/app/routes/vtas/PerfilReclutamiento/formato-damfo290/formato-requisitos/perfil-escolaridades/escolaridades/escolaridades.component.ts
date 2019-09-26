@@ -83,7 +83,7 @@ export class EscolaridadesComponent implements OnInit, AfterContentInit {
     } else {
       const data = {
         isEdit: this.isActionEdit,
-        index: this.index,
+        Index: this.index,
         escolaridadId: this.escolaridad.get('escolaridadId').value,
         estadoEstudioId: this.escolaridad.get('nivelId').value,
       };

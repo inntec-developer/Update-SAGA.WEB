@@ -127,10 +127,10 @@ export class PerfilBeneficiosComponent implements OnInit, OnChanges {
           Index: data['Index'],
           tipoBeneficioId: data['tipoBeneficioId'],
           Cantidad: data['cantidad'],
-          Observaciones: data['observaciones'],
+          Observaciones: data['observaciones'].toUpperCase(),
           UsuarioAlta: data['UsuarioAlta']
         };
-        this.BeneficiosNew[data['index']] = editRegistro;
+        this.BeneficiosNew[data['Index']] = editRegistro;
       } else {
         this.removeBeneficio(data['Index']);
         this.popToast('info', 'Beneficios', 'El Beneficio ya existe, intente con otra.');

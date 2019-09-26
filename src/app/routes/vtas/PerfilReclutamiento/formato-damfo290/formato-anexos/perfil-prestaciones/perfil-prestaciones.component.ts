@@ -76,15 +76,15 @@ export class PerfilPrestacionesComponent implements OnInit, OnChanges {
   getRegistros(data: any) {
     if (!data['isEdit']) {
       this.PrestacionesNew.push({
-        Prestamo: data['Prestacion'],
+        Prestamo: data['Prestacion'].toUpperCase(),
         UsuarioAlta: data['UsuarioAlta']
       });
     } else {
       const editRegistro = {
-        Prestacion: data['Prestacion'],
+        Prestacion: data['Prestacion'].toUpperCase(),
         UsuarioAlta: data['UsuarioAlta']
       };
-      this.PrestacionesNew[data['index']] = editRegistro;
+      this.PrestacionesNew[data['Index']] = editRegistro;
     }
     this.PrestacionesEmt.emit(this.PrestacionesNew);
   }

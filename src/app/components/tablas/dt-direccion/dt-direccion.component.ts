@@ -10,6 +10,7 @@ export class DtDireccionComponent implements OnInit, OnChanges {
   @Input() Direcciones: any[];
   @Input() Perfil290: boolean;
   ShowModal = false;
+  ShowModalRutas = false;
   public Direccion: string;
   public getAddress = false;
   public rows: Array<any> = [];
@@ -50,7 +51,6 @@ export class DtDireccionComponent implements OnInit, OnChanges {
     this.rows = data;
   }
   public onCellClick(data: any): any {
-    debugger;
     this.Direccion = data['calle'] + ' ' +
       data['numeroExterior'] + ', ' +
       data['colonia'] + ', ' +

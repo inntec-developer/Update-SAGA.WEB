@@ -84,7 +84,7 @@ export class PerfilDocClienteComponent implements OnInit, OnChanges {
         Documento: data['Documento'],
         UsuarioAlta: data['UsuarioAlta']
       };
-      this.DocumentosNew[data['index']] = editRegistro;
+      this.DocumentosNew[data['Index']] = editRegistro;
     }
     this.DocumentosEmt.emit(this.DocumentosNew);
   }

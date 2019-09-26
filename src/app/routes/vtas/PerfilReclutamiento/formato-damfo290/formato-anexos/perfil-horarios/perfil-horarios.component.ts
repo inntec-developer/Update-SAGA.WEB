@@ -137,17 +137,17 @@ export class PerfilHorariosComponent implements OnInit, OnChanges {
         const editRegistro = {
           Index: data['Index'],
           id: data['id'],
-          nombre: data['horario'],
+          nombre: data['nombre'].toUpperCase(),
           deDiaId: data['deDiaId'],
           aDiaId: data['aDiaId'],
           deHora: data['deHora'],
           aHora: data['aHora'],
           numeroVacantes: data['vacantes'],
-          especificaciones: data['especificaciones'],
+          especificaciones: data['especificaciones'].toUpperCase(),
           activo: data['activo'],
           UsuarioAlta: data['Usuario']
         };
-        this.HorariosNew[data['index']] = editRegistro;
+        this.HorariosNew[data['Index']] = editRegistro;
       } else {
         this.removeHorario(data['Index']);
         this.popToast('info', 'Horarios', 'El horarios ya existe, intente con otra.');

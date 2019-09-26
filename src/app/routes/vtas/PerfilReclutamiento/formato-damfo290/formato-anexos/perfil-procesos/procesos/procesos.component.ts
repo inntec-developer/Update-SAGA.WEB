@@ -84,7 +84,7 @@ export class ProcesosComponent implements OnInit, AfterContentInit {
     } else {
       const data = {
         isEdit: this.isActionEdit,
-        index: this.index,
+        Index: this.index,
         Proceso: this.proceso.get('proceso').value.toUpperCase(),
         UsuarioAlta: this._setting.user.usuario,
       };

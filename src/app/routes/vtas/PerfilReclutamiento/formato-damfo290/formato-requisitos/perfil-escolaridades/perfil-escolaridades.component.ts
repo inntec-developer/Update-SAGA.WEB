@@ -88,7 +88,7 @@ export class PerfilEscolaridadesComponent implements OnInit, OnChanges {
         estadoEstudioId: data['estadoEstudioId'],
         UsuarioAlta: this._settings['user']['usuario']
       };
-      this.EscolaridadesNew[data['index']] = editRegistro;
+      this.EscolaridadesNew[data['Index']] = editRegistro;
     }
     this.EscolaridadesEmt.emit(this.EscolaridadesNew);
   }

@@ -51,7 +51,7 @@ export class ActividadesComponent implements OnInit, AfterContentInit {
         Index: this.index,
         IsEdit: this.isActionEdit,
         id: this.actividad.get('id').value,
-        actividad: this.actividad.get('actividad').value,
+        actividades: this.actividad.get('actividad').value,
         Usuario: this._setting.user.usuario,
         DAMFO290Id: this.IdFormato
       };
@@ -84,7 +84,7 @@ export class ActividadesComponent implements OnInit, AfterContentInit {
     } else {
       const data = {
         isEdit: this.isActionEdit,
-        index: this.index,
+        Index: this.index,
         actividad: this.actividad.get('actividad').value,
         UsuarioAlta: this._setting.user.usuario,
       };

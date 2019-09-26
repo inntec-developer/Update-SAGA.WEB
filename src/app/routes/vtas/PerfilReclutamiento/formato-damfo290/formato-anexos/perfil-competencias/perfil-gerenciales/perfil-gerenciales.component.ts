@@ -124,7 +124,7 @@ export class PerfilGerencialesComponent implements OnInit, OnChanges {
           Nivel: data['Nivel'],
           UsuarioAlta: this._settings['user']['usuario']
         };
-        this.CompetenciaNew[data['index']] = editRegistro;
+        this.CompetenciaNew[data['Index']] = editRegistro;
       } else {
         this.removeCompetencia(data['Index']);
         this.popToast('info', 'Competecia Area', 'La competencia ya existe, intente con otra.');

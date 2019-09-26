@@ -77,15 +77,15 @@ export class PerfilObservacionesComponent implements OnInit, OnChanges {
   getRegistros(data: any) {
     if (!data['isEdit']) {
       this.ObservacionesNew.push({
-        observaciones: data['observaciones'],
+        observaciones: data['observaciones'].toUpperCase(),
         UsuarioAlta: data['UsuarioAlta']
       });
     } else {
       const editRegistro = {
-        observaciones: data['observaciones'],
+        observaciones: data['observaciones'].toUpperCase(),
         UsuarioAlta: data['UsuarioAlta']
       };
-      this.ObservacionesNew[data['index']] = editRegistro;
+      this.ObservacionesNew[data['Index']] = editRegistro;
     }
     this.ObservacionesEmt.emit(this.ObservacionesNew);
   }

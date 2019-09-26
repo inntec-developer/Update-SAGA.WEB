@@ -819,7 +819,43 @@ export class ViewdamfoComponent implements OnInit {
       doc.setFontSize(10);
       doc.rect(20, row, 570, 15);
       doc.text(Autori, xOffsetAuto, row += 10);
-      row += 5;
+      row += 15;
+
+      cc = row;
+      ca = row;
+      cg = row;
+      debugger;
+      doc.rect(20, cc, 183, 15 + 370);
+      doc.rect(20, cc, 183, 15);
+      doc.text('DAMSA OPERACIONES / VENTAS', 35, cc += 10);
+      doc.rect(215, ca, 183, 15);
+      doc.rect(215, ca, 183, 15 + 370);
+      doc.text('DAMSA RECLUTAMIENTO', 240, ca += 10);
+      doc.rect(408, cg, 183, 15);
+      doc.rect(408, cg, 183, 15 + 370);
+      doc.text('CLIENTE', 480, cg += 10);
+
+      doc.setFontSize(6);
+      doc.rect(20, cc + 165, 183, 15);
+      doc.text('ELABORÓ (NOMBRE Y FIRMA)', 60, cc + 175);
+      doc.rect(215, ca + 165, 183, 15);
+      doc.text('ELABORÓ (NOMBRE Y FIRMA)', 265, ca + 175);
+      doc.rect(408, cg + 165, 183, 15);
+      doc.text('ELABORÓ (NOMBRE Y FIRMA)', 470, cg + 175);
+
+      doc.rect(20, cc += 360, 183, 15);
+      doc.text('AUTORIZÓ (NOMBRE Y FIRMA)', 60, cc += 10);
+      doc.rect(215, ca += 360, 183, 15);
+      doc.text('AUTORIZÓ (NOMBRE Y FIRMA)', 265, ca += 10);
+      doc.rect(408, cg += 360, 183, 15);
+      doc.text('AUTORIZÓ (NOMBRE Y FIRMA)', 470, cg += 10);
+
+
+
+
+
+
+
       doc.save(nombrePerfil + '.pdf');
       this.imprimir = false;
     }, 3000);

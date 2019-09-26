@@ -103,8 +103,8 @@ export class PerfilPstClienteComponent implements OnInit, OnChanges {
       if (create) {
         this.PsicometriasNew.push({
           Index: data['Index'],
-          psicometria: data['psicometria'],
-          descripcion: data['descripcion'],
+          psicometria: data['psicometria'].toUpperCase(),
+          descripcion: data['descripcion'].toUpperCase(),
           UsuarioAlta: data['UsuarioAlta']
         });
       } else {
@@ -122,11 +122,11 @@ export class PerfilPstClienteComponent implements OnInit, OnChanges {
       if (edit) {
         const editRegistro = {
           Index: data['Index'],
-          psicometria: data['psicometria'],
-          descripcion: data['descripcion'],
+          psicometria: data['psicometria'].toUpperCase(),
+          descripcion: data['descripcion'].toUpperCase(),
           UsuarioAlta: data['UsuarioAlta']
         };
-        this.PsicometriasNew[data['index']] = editRegistro;
+        this.PsicometriasNew[data['Index']] = editRegistro;
       } else {
         this.removePsicometria(data['Index']);
         this.popToast('info', 'Psicometría Cliente', 'La psicometría ya existe, intente con otra.');

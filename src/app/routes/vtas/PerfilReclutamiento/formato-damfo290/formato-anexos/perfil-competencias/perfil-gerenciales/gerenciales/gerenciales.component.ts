@@ -101,7 +101,7 @@ export class GerencialesComponent implements OnInit, AfterContentInit {
     } else {
       const data = {
         isEdit: this.isActionEdit,
-        index: this.index,
+        Index: this.index,
         CompetenciaId: this.competencia.get('competenciaId').value,
         Nivel: this.competencia.get('nivel').value,
       };

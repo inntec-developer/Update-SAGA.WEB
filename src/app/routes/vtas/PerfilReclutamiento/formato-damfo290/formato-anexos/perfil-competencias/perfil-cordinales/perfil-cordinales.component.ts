@@ -91,7 +91,7 @@ export class PerfilCordinalesComponent implements OnInit, OnChanges {
     if (!data['isEdit']) {
       let create = true;
       if (this.CompetenciaNew.length > 0) {
-        create = this.CompetenciaNew.find(x => {
+        this.CompetenciaNew.find(x => {
           if (x['CompetenciaId'] === data['CompetenciaId']) {
             return create = false;
           }
@@ -123,7 +123,7 @@ export class PerfilCordinalesComponent implements OnInit, OnChanges {
           Nivel: data['Nivel'],
           UsuarioAlta: this._settings['user']['usuario']
         };
-        this.CompetenciaNew[data['index']] = editRegistro;
+        this.CompetenciaNew[data['Index']] = editRegistro;
       } else {
         this.removeCompetencia(data['Index']);
         this.popToast('info', 'Competecia Cardinal', 'La competencia ya existe, intente con otra.');

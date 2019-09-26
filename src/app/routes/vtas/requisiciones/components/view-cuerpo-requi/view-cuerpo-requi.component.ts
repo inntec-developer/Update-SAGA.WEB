@@ -30,7 +30,6 @@ export class ViewCuerpoRequiComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.arte = 'DamsaVacantes_PP5';
-    debugger;
     this.GetDataRequi();
   }
 
@@ -47,12 +46,10 @@ export class ViewCuerpoRequiComponent implements OnInit, OnChanges {
   }
 
   GetDataRequi() {
-    debugger;
     this.spinner.show();
     this.serviceRequisiciones.getNewRequi(this.Requisicion)
       .subscribe(data => {
         this.requisicion = data;
-        debugger;
         this.arte = data['arte'];
         this.EstatusRequi = data.estatusId;
         this.spinner.hide();

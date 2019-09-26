@@ -78,16 +78,17 @@ export class PerfilProcesosComponent implements OnInit, OnChanges {
     if (!data['isEdit']) {
       this.Orden += 1;
       this.ProcesosNew.push({
-        Proceso: data['Proceso'],
+        Proceso: data['Proceso'].toUpperCase(),
         Orden: this.Orden,
         UsuarioAlta: data['UsuarioAlta']
       });
     } else {
       const editRegistro = {
-        Proceso: data['Proceso'],
+        Proceso: data['Proceso'].toUpperCase(),
         UsuarioAlta: data['UsuarioAlta']
       };
-      this.ProcesosNew[data['index']] = editRegistro;
+      this.ProcesosNew[data['Index']]['Proceso'] = editRegistro.Proceso;
+      this.ProcesosNew[data['Index']]['UsuarioAlta'] = editRegistro.UsuarioAlta;
     }
     this.ProcesosEmt.emit(this.ProcesosNew);
   }

@@ -84,7 +84,7 @@ export class PrestacionesComponent implements OnInit, AfterContentInit {
     } else {
       const data = {
         isEdit: this.isActionEdit,
-        index: this.index,
+        Index: this.index,
         Prestacion: this.prestacion.get('prestacion').value,
         UsuarioAlta: this._setting.user.usuario,
       };

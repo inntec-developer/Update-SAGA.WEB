@@ -119,10 +119,11 @@ export class PerfilPstDamsaComponent implements OnInit, OnChanges {
       });
       if (edit) {
         const editRegistro = {
+          Index: data['Index'],
           psicometriaId: data['psicometriaId'],
           UsuarioAlta: data['UsuarioAlta']
         };
-        this.PsicometriasNew[data['index']] = editRegistro;
+        this.PsicometriasNew[data['Index']] = editRegistro;
       } else {
         this.removePsicometria(data['Index']);
         this.popToast('info', 'Psicometría Damsa', 'La psicometría ya existe intente con otra.');
