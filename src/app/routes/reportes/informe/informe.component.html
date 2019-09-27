@@ -67,7 +67,7 @@ type="square-jelly-box"
       <select  (change)="Ocultar()" class="form-control" id="TipoReporte">
           <option value="1">Por Solicitud</option>
           <option value="2">Por Estatus</option>
-          <option value="3">General</option>
+          <option selected value="3">General</option>
           <option value="4">Productividad Cubiertos</option>
           <option value="5">Cumplimiento</option>
           <option value="6">Detalle Coordinador</option>
@@ -296,7 +296,7 @@ type="square-jelly-box"
       <div class="col-xl-2 " id="divestatus">
         <mat-form-field >
           <mat-label>Estatus</mat-label>
-          <mat-select  (selectionChange)="PruebaEstatus($event.value)"
+          <mat-select name="estatuSelect"  (selectionChange)="PruebaEstatus($event.value)"
           multiple
           style="z-index: 100px !important">
             <!-- <mat-option> None </mat-option> -->
@@ -307,7 +307,6 @@ type="square-jelly-box"
               </mat-option>
             </mat-optgroup>
           </mat-select>
-
         </mat-form-field>
       </div>
 
@@ -509,10 +508,10 @@ type="square-jelly-box"
 
 
     <div class="col-xl-2" id="DivBotones" style="margin-top: 10px;">
-        <button id="exel1" tooltip="Exportar" (click)="hijo.Exportar()" class="btn btn-sm btn-warning btnReport mat-elevation-z8">
+        <button id="exel1" tooltip="Exportar" (click)="hijo.Exportar()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
             <em  class="fa fa-download"></em>
           </button>
-          <button id="exel2" tooltip="Exportar" (click)="ReGeneral.exportAsXLSX()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
+          <button id="exel2" tooltip="Exportar" (click)="ReGeneral.exportAsXLSX()" class=" btn btn-sm btn-warning btnReport mat-elevation-z8">
             <em  class="fa fa-download"></em>
           </button>
           <button id="exelProact" tooltip="Exportar" style="right: auto;" (click)="ProAct.Exportar()" class="ocultar btn btn-sm btn-warning btnReport mat-elevation-z8">
@@ -542,10 +541,10 @@ type="square-jelly-box"
 
 
 
-        <button class="btn btn-sm btn-success btnReport mat-elevation-z8" (click)="hijo.Generar(objsucursal,objsolicit,objrecluta,objempresa,objstatus,objtiporeclu,objtipocordi,objusercoo)" tooltip="Generar Reporte" id="report1"  >
+        <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" (click)="hijo.Generar(objsucursal,objsolicit,objrecluta,objempresa,objstatus,objtiporeclu,objtipocordi,objusercoo)" tooltip="Generar Reporte" id="report1"  >
             <em class="fa fa-bar-chart"></em>
           </button>
-        <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" (click)="ReGeneral.llamado(objsucursal,objsolicit,objrecluta,objempresa,objstatus,objtiporeclu,objtipocordi)" tooltip="Generar Reporte" id="report2"  >
+        <button class=" btn btn-sm btn-success btnReport mat-elevation-z8" (click)="ReGeneral.llamado(objsucursal,objsolicit,objrecluta,objempresa,objstatus,objtiporeclu,objtipocordi)" tooltip="Generar Reporte" id="report2"  >
             <em  class="fa fa-bar-chart"></em>
           </button>
         <button class="ocultar btn btn-sm btn-success btnReport mat-elevation-z8" style="right: auto;" (click)="ProAct.Generar(objrecluta,objtipocordi)" tooltip="Generar Reporte" id="repProActi"  >
