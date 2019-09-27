@@ -10,13 +10,13 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field class="col-2">
+      <mat-form-field class="col-4">
         <mat-icon matPrefix>attach_money</mat-icon>
         <input matInput #CantidadCtrl type="number" class="text-right" placeholder="Cantidad"
           formControlName="cantidadId" required="">
         <strong matSuffix>MXN.</strong>
       </mat-form-field>
-      <mat-form-field class="col-5">
+      <mat-form-field class="col-3">
         <textarea #ObservacionesCtrl matInput maxlength="500" placeholder="Observaciones" rows="4"
           [value]="ObservacionesCtrl.value.toUpperCase()"
           formControlName="observacionesId"></textarea>

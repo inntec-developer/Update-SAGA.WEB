@@ -1,8 +1,8 @@
 <div class="content-heading" [hidden]="imprimir">
-  <div>
+  <!-- <div>
     Requisiciones
     <span class="text-sm d-none d-sm-block">Visualizaci&oacute;n de Requisici&oacute;n.</span>
-  </div>
+  </div> -->
   <!-- Breadcrumb right aligned-->
   <ol class="breadcrumb ml-auto">
     <li class="breadcrumb-item">
@@ -15,17 +15,18 @@
   </ol>
 </div>
 <!-- Botones superiores Izquierdos -->
-<div class="row" [hidden]="imprimir">
+<div class="row">
   <div class="col-md-12">
     <div class="d-flex justify-content-between">
       <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-xs btn-acciones mat-elevation-z8"
         [disabled]="estatusId != 4" [ngClass]="(estatusId != 4) ? 'disabled' : 'btn-primary'" container="body"
         placement="bottom" tooltip="Editar" (click)="editRequi()">
         <em class="icon-pencil"></em></button>
-      <button placement="right" tooltip="Imprimir Requisición" class="mr-1 btn btn-xs btn-info mat-elevation-z8"
-        (click)="print()">
+      <button *ngIf="!imprimir" placement="right" tooltip="Descargar Requisición" class="mr-1 btn btn-xs btn-info mat-elevation-z8"
+        (click)="createPDF()">
         <em class="fa fa-print"></em>
       </button>
+      <span *ngIf="imprimir"><i class="fa fa-spinner fa-pulse" aria-hidden="true"></i></span>
       <button container="body" placement="bottom" tooltip="Regresar"
         class="mr-1 btn btn-xs btn-warning mat-elevation-z8" type="button" [routerLink]="['/ventas/requisicion']">
         <em class="icon-action-undo"></em>
@@ -39,7 +40,7 @@
   <app-view-cuerpo-requi [Requisicion]="RequisicionId" [ShowRequi]="true"></app-view-cuerpo-requi>
 </div>
 
-<div class="row" [hidden]="imprimir">
+<!-- <div class="row" [hidden]="imprimir">
   <div class="col-md-12">
     <div class="d-flex justify-content-between">
       <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-xs btn-acciones mat-elevation-z8"
@@ -56,7 +57,7 @@
       </button>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- Spinner para esperar información  -->
 <ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
@@ -79,3 +80,7 @@
     </div>
   </div>
 </div>
+
+
+<toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
+

@@ -29,14 +29,14 @@
     <!-- START User avatar toggle-->
     <li class="nav-item d-none d-md-block">
       <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
-      <a class="nav-link" title="Ocultar perfil" (click)="toggleUserBlock($event)">
+      <a class="nav-link" placement="bottom" tooltip="Ocultar perfil" (click)="toggleUserBlock($event)">
         <em class="icon-user"></em>
       </a>
     </li>
     <!-- END User avatar toggle-->
     <!-- START lock screen-->
     <li class="nav-item d-none d-md-block">
-      <a class="nav-link" title="Cerrar sesi&oacute;n" [routerLink]="'/login'">
+      <a class="nav-link" placement="bottom" tooltip="Cerrar sesi&oacute;n" [routerLink]="'/login'">
         <em class="fa fa-power-off"></em>
       </a>
     </li>
@@ -44,7 +44,7 @@
     <!-- START sistema tickets-->
     <li class="nav-item d-none d-md-block">
       <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
-      <a class="nav-link" title="Sistema de turnos" [routerLink]="'/Tickets'">
+      <a class="nav-link" placement="bottom" tooltip="Sistema de turnos" [routerLink]="'/Tickets'">
         <em class="fa fa-ticket"></em>
       </a>
     </li>
@@ -53,7 +53,7 @@
     <!--Start Mostrar Calendario -->
     <li class="nav-item d-none d-md-block">
       <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
-      <a class="nav-link" title="Calendario" [routerLink]="['/home/Calendario']">
+      <a class="nav-link" placement="bottom" tooltip="Calendario" [routerLink]="['/home/Calendario']">
         <em class="fa fa-calendar"></em>
       </a>
     </li>
@@ -61,25 +61,25 @@
     <!--Start Mostrar requis pendientes factura -->
     <li *ngIf="tipoUsuario == '14'" class="nav-item d-none d-md-block">
       <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
-      <a class="nav-link" title="Enviar a factura" [routerLink]="['/reclutamiento/autorizarRequi']">
+      <a class="nav-link" placement="bottom" tooltip="Enviar a factura" [routerLink]="['/reclutamiento/autorizarRequi']">
         <em class="fa fa-check"></em>
       </a>
     </li>
     <!-- End Mostrar Acerca de -->
     <li class="nav-item d-none d-md-block">
-        <a href="#" (click)="openModal(acercaDe)" title="Actualizaci&oacute;n" class="nav-link">
+        <a href="#" (click)="openModal(acercaDe)" placement="bottom" tooltip="Actualizaci&oacute;n" class="nav-link">
           <em class="fa fa-question-circle-o"></em>
         </a>
       </li>
     <!-- End Cpy  Version y correo soporte -->
     <li class="nav-item d-none d-md-block">
-      <a href="#" (click)="openModalInfo(infosistem)" title="Informacion del Sistem" class="nav-link">
+      <a href="#" (click)="openModalInfo(infosistem)" placement="bottom" tooltip="Información del Sistem" class="nav-link">
         <em class="fa fa-info-circle"></em>
       </a>
     </li>
      <!-- Consulta -->
      <li class="nav-item d-none d-md-block">
-        <a href="#" (click)="openModalCon(Consulta)" title="Consulta" class="nav-link">
+        <a href="#" (click)="openModalCon(Consulta)" placement="bottom" tooltip="Consulta" class="nav-link">
           <em class="fa fa-search"></em>
         </a>
       </li>
@@ -95,19 +95,19 @@
             </a>
         </li> -->
     <li *ngIf="tipoUsuario == '1'" class="nav-item">
-      <a class="nav-link" title="Correo Factuación Puro" (click)="openModal(SendEmail)">
+      <a class="nav-link" placement="bottom" tooltip="Correo Facturación Puro" (click)="openModal(SendEmail)">
         <em class="fa fa-envelope"></em>
       </a>
     </li>
     <li *ngIf="tipoUsuario == '1'" class="nav-item">
-      <a class="nav-link" title="Jobs" [routerLink]="'/admin/jobPause'">
+      <a class="nav-link" placement="bottom" tooltip="Jobs" [routerLink]="'/admin/jobPause'">
         <em class="fa fa-bolt"></em>
       </a>
     </li>
 
     <!-- START Alert menu-->
     <li class="nav-item dropdown dropdown-list" dropdown>
-      <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" dropdownToggle>
+      <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" placement="bottom" tooltip="Mis alertas" dropdownToggle>
         <em class="icon-bell alertPosition"></em>
         <span *ngIf="NotRead.length > 0 else AlertOk" class="badge badge-danger alertPosition">{{NotRead.length}}</span>
         <ng-template #AlertOk>
@@ -357,8 +357,8 @@
     </div>
   </ng-template>
 
- 
- 
+
+
 
 
 

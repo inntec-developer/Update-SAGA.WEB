@@ -64,16 +64,17 @@ export class RequisicionesService {
   private URLGetAsignados = ApiConection.ServiceUrl + ApiConection.GetAsignados;
   private UrlGetRequisicionesHistorial = ApiConection.ServiceUrl + ApiConection.getRequisicionesHistorial;
   private URLGetRequisPendientes = ApiConection.ServiceUrl + ApiConection.GetRequisPendientes;
+  private URLGetRequisicionPDF = ApiConection.ServiceUrl + ApiConection.GetRequisicionPDF;
 
   constructor(private http: Http, private _httpClient: HttpClient) { }
   // Recupera todos los damfos que esten dados de alta y se encuentren activos
   getDamgo290(): Observable<any> {
-    return this._httpClient.get(this.urlGetViewDamfos, {headers: this.httpOptions.headers});
+    return this._httpClient.get(this.urlGetViewDamfos, { headers: this.httpOptions.headers });
   }
   // Recupera las direcciones del cliente que se seleccione para generar Requisicion
   getAddress(damfoId: string): Observable<any> {
     let params = new HttpParams().set('Id', damfoId)
-    return this._httpClient.get(this.urlAddress, {params: params, headers: this.httpOptions.headers});
+    return this._httpClient.get(this.urlAddress, { params: params, headers: this.httpOptions.headers });
   }
   // Generea una nueva requisicion y posteriormente regresa el ID de la nueva requisicion.
   createNewRequi(data: any): Observable<any> {
@@ -82,16 +83,16 @@ export class RequisicionesService {
   // Recupera la informacion completa de la requisicion que se requiera
   getNewRequi(requisicionId: string): Observable<any> {
     let params = new HttpParams().set('Id', requisicionId);
-    return this._httpClient.get(this.urlGetRequisicionById, {params: params, headers: this.httpOptions.headers});
+    return this._httpClient.get(this.urlGetRequisicionById, { params: params, headers: this.httpOptions.headers });
   }
   getRequiFolio(folio: any): Observable<any> {
     let params = new HttpParams().set('folio', folio);
-    return this._httpClient.get(this.urlGetRequisicionByFolio, {params: params, headers: this.httpOptions.headers});
+    return this._httpClient.get(this.urlGetRequisicionByFolio, { params: params, headers: this.httpOptions.headers });
   }
   // Recupera la información completa del DAMFO-290 que se requiera.
   getDamfoById(damfoId: string) {
     let params = new HttpParams().set('id', damfoId);
-    return this._httpClient.get<any>(this.urlGetDamfoById, {params: params, headers: this.httpOptions.headers});
+    return this._httpClient.get<any>(this.urlGetDamfoById, { params: params, headers: this.httpOptions.headers });
   }
   // Recuperar las rutas de camiones de las direccionaes relacionadas con el damfo - cliente
   getDamfoRutasCamion(clienteId: string): Observable<any> {
@@ -102,7 +103,7 @@ export class RequisicionesService {
   // Recupera la información de las requisiciones que se han generado.
   getRequisiciones(user: string): Observable<any> {
     let params = new HttpParams().set('propietario', user)
-    return this._httpClient.get(this.urlGetRequisicionesAll, {params:  params, headers: this.httpOptions.headers});
+    return this._httpClient.get(this.urlGetRequisicionesAll, { params: params, headers: this.httpOptions.headers });
   }
 
   GetRequisicionesHistorial(propietario): Observable<any> {
@@ -114,7 +115,7 @@ export class RequisicionesService {
   // Recupera la información de las requisiciones que se han asignado al reclutador.
   getRequiReclutador(user: string): Observable<any> {
     let params = new HttpParams().set('IdUsuario', user);
-    return this._httpClient.get(this.urlGetRequiReclutador, {params: params, headers: this.httpOptions.headers});
+    return this._httpClient.get(this.urlGetRequiReclutador, { params: params, headers: this.httpOptions.headers });
   }
 
   // Recuperar la direccion que se registro en la requisicion.
@@ -139,7 +140,7 @@ export class RequisicionesService {
     return this._httpClient.get(this.URLGetRequiEstadisticos, { params: params, headers: this.httpOptions.headers });
   }
   GetRequisPendientes(): Observable<any> {
-    return this._httpClient.get(this.URLGetRequisPendientes, {headers: this.httpOptions.headers});
+    return this._httpClient.get(this.URLGetRequisPendientes, { headers: this.httpOptions.headers });
   }
   // ---------------------------------------------------------------------------------------------------------------
   // Crud para rutas de Camiones dentro de la requisición.
@@ -162,7 +163,7 @@ export class RequisicionesService {
   // ---------------------------------------------------------------------------------------------------------------
   getRequiHorarios(requisicionId: string) {
     let params = new HttpParams().set('id', requisicionId)
-    return this._httpClient.get(this.urlGetHorariosReequisicion, {params: params, headers: this.httpOptions.headers});
+    return this._httpClient.get(this.urlGetHorariosReequisicion, { params: params, headers: this.httpOptions.headers });
   }
 
   getVacantesDamfo(damfoId: string): Observable<any> {
@@ -206,10 +207,9 @@ export class RequisicionesService {
     return this._httpClient.get(this.URLGetInformeRequisiciones, { params: params, headers: this.httpOptions.headers });
   }
 
-  GetAsignados(requisicionId: any): Observable<any>
-  {
+  GetAsignados(requisicionId: any): Observable<any> {
     let params = new HttpParams().set('requisicionId', requisicionId);
-    return this._httpClient.get(this.URLGetAsignados, { params: params, headers: this.httpOptions.headers});
+    return this._httpClient.get(this.URLGetAsignados, { params: params, headers: this.httpOptions.headers });
   }
 
   GetRequiTipoRecl(propietarioId: any, tipo): Observable<any> {
@@ -217,26 +217,25 @@ export class RequisicionesService {
     return this._httpClient.get(this.URLGetRequiTipoRecl, { params: params, headers: this.httpOptions.headers });
   }
 
-  SendEmailRequiPuro(IdRequisicion: any): Observable<any>{
+  SendEmailRequiPuro(IdRequisicion: any): Observable<any> {
     let params = new HttpParams().set('IdRequisicion', IdRequisicion);
-    return this._httpClient.get(this.URLSendEmailRequiPuro, {params: params});
+    return this._httpClient.get(this.URLSendEmailRequiPuro, { params: params });
   }
 
-  SendEmailRedesSociales(data: any): Observable<any>{
+  SendEmailRedesSociales(data: any): Observable<any> {
     return this._httpClient.post(this.URLSendEmailRedesSociales, data, this.httpOptions);
   }
 
-  SendEmailNuevaRequi(data: any): Observable<any>{
+  SendEmailNuevaRequi(data: any): Observable<any> {
     return this._httpClient.post(this.URLSendEmailNuevaRequisicion, data, this.httpOptions);
   }
 
-  PublicarNuevaRequisicion(data: any): Observable<any>{
-    let params = new HttpParams().set('Id', data);
-    return this._httpClient.get(this.URLPublicarNuevaRequisicion, {params: params, headers: this.httpOptions.headers})
+  PublicarNuevaRequisicion(data: any): Observable<any> {
+    const params = new HttpParams().set('Id', data);
+    return this._httpClient.get(this.URLPublicarNuevaRequisicion, { params: params, headers: this.httpOptions.headers });
   }
 
-  AddDatosFactura(datos):Observable<any>
-  {
+  AddDatosFactura(datos): Observable<any> {
     return this._httpClient.post(this.URLAddDtosFactura, datos, this.httpOptions);
   }
 
@@ -261,11 +260,11 @@ export class RequisicionesService {
 
 
 
-  GetReporte70(clave:string,ofc:string,tipo:string,fini:string,ffin:string,emp:string,
-    sol:string,trcl:string,cor:string,stus:string,recl:string) : Observable<any> {
-    return this._httpClient.get(this.URLGetReporte70 + '?clave='+clave+'&ofc='+ofc+'&tipo='+tipo+'&fini='+fini
-    +'&ffin='+ffin+'&emp='+emp+'&sol='+sol+'&trcl='+trcl+'&cor='+cor+'&stus='+stus+'&recl='+recl)
-    .catch(this.handleError);
+  GetReporte70(clave: string, ofc: string, tipo: string, fini: string, ffin: string, emp: string,
+    sol: string, trcl: string, cor: string, stus: string, recl: string): Observable<any> {
+    return this._httpClient.get(this.URLGetReporte70 + '?clave=' + clave + '&ofc=' + ofc + '&tipo=' + tipo + '&fini=' + fini
+      + '&ffin=' + ffin + '&emp=' + emp + '&sol=' + sol + '&trcl=' + trcl + '&cor=' + cor + '&stus=' + stus + '&recl=' + recl)
+      .catch(this.handleError);
   }
   // Muestra un error en consola y regresa el mismo al Frond-End en caso de que se genere el mismo.
   public handleError(error: any) {
@@ -274,5 +273,10 @@ export class RequisicionesService {
       return Observable.throw(error.json().error || 'Back-End server error');
     }
     return Observable.throw(error || 'Back-End server error');
+  }
+
+  getRequisicionPDF(id: string): Observable<any> {
+    const params = new HttpParams().set('RequisicionId', id);
+    return this._httpClient.get(this.URLGetRequisicionPDF, { params: params, headers: this.httpOptions.headers });
   }
 }
