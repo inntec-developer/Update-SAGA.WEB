@@ -99,6 +99,8 @@ export class DtRutasCamionRequiComponent implements OnInit, AfterViewInit, OnCha
       this.rows = data;
       if (this.rows.length === 0) {
         this.TableDisable = true;
+      } else {
+        this.TableDisable = false;
       }
     }, err => {
       console.error(err);
@@ -252,16 +254,15 @@ export class DtRutasCamionRequiComponent implements OnInit, AfterViewInit, OnCha
 
     this.rutasService.addRutaCamion(rc).subscribe(data => {
       if (data === 200) {
-        this.rutasService.getRequiRutasCamion(this.DireccionId).subscribe(result => {
-          this.rows = result;
+        this.cargarRutas(this.DireccionId);
+        setTimeout(() => {
           const msg = 'La ruta de camión se registro correctamente.';
           this.popToast('success', 'Ruta de Camión', msg);
           this.loading = false;
           this.ShowModalRutas = false;
-        }, err => {
-          console.error(err);
-          this.loading = false;
-        });
+          this.RutaCamion = '';
+          this.ViaCamion = '';
+        }, 1000);
       } else if (data === 404) {
         const msg = 'Algo salio mal intenta de nuevo, si el problema persiste comunicate al departamento de TI.';
         this.popToast('error', 'Ruta de Camión', msg);
@@ -288,15 +289,15 @@ export class DtRutasCamionRequiComponent implements OnInit, AfterViewInit, OnCha
 
     this.rutasService.updateRutaCamion(rc).subscribe(data => {
       if (data === 200) {
-        this.rutasService.getRequiRutasCamion(this.DireccionId).subscribe(result => {
-          this.rows = result;
+        this.cargarRutas(this.DireccionId);
+        setTimeout(() => {
           const msg = 'La ruta de camión se actualizó correctamente.';
           this.popToast('success', 'Ruta de Camión', msg);
           this.loading = false;
           this.ShowModalRutas = false;
-        }, err => {
-          console.error(err)
-        });
+          this.RutaCamion = '';
+          this.ViaCamion = '';
+        }, 1000);
       } else if (data === 404) {
         const msg = 'Algo salio mal intenta de nuevo, si el problema persiste comunicate al departamento de TI.';
         this.popToast('error', 'Ruta de Camión', msg);

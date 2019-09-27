@@ -69,60 +69,48 @@ export class FormatoAnexosComponent implements OnInit, OnChanges {
 
   getBeneficios(data: any) {
     this.Beneficios = data;
-    console.log('Beneficios', data);
   }
   getHorarios(data: any) {
     this.Horarios = data;
-    console.log('Horarios', data);
   }
   getActividades(data: any) {
     this.Actividades = data;
-    console.log('Actividades', data);
   }
 
   getObservaciones(data: any) {
     this.Observaciones = data;
-    console.log('Observaciones', data);
   }
 
   getPstDamsa(data: any) {
     this.PsicometriasD = data;
-    console.log('Pst DAMSA', data);
   }
 
   getPstCliente(data: any) {
     this.PsicometriasC = data;
-    console.log('Pst Cliente', data);
   }
 
   getDocumento(data: any) {
     this.Documentos = data;
-    console.log('Documentos', data);
   }
 
   getProceso(data: any) {
     this.Procesos = data;
-    console.log('Porcesos', data);
   }
 
   getPrestacion(data: any) {
     this.Prestaciones = data;
-    console.log('Prestaciones', data);
   }
 
   getCardinales(data: any) {
     this.Cardinales = data;
-    console.log('Cardinales', data);
   }
 
   getAreas(data: any) {
     this.Areas = data;
-    console.log('Areas', data);
   }
 
   getGerenciales(data: any) {
     this.Gerenciales = data;
-    console.log('Gerenciales', data);
   }
 
 }

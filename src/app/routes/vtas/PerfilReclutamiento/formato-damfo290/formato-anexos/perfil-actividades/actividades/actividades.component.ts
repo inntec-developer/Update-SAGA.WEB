@@ -55,7 +55,7 @@ export class ActividadesComponent implements OnInit, AfterContentInit {
         Usuario: this._setting.user.usuario,
         DAMFO290Id: this.IdFormato
       };
-      this.Actividad = obj['actividad'];
+      this.Actividad = obj['actividades'];
       if (!this.isActionEdit) {
         obj['action'] = 'create';
         this._servicePerfilR.CrudActividad(obj).subscribe(x => {

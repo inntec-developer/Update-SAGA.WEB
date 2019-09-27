@@ -212,7 +212,6 @@ export class FormatoRequisitosComponent implements OnInit, OnChanges {
   //#region Funciones para recuperar informacion de otros componentes
   getEscolaridades(data: any) {
     this.Escolaridades = data;
-    console.log('Padre', data);
   }
   //#endregion
 

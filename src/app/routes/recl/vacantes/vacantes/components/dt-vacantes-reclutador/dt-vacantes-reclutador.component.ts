@@ -219,7 +219,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
         this.spinner.hide();
       }
     });
-}
+  }
 
   getRequiEstadisticos() {
     this.service.GetRequiEstadisticos(this.settings.user['id']).subscribe(data => {
@@ -432,21 +432,30 @@ export class DtVacantesReclutadorComponent implements OnInit {
     //  revisar en pausa
 
     if (this.element.aprobada === true && this.element.aprobadorId === this.settings.user['id'] && this.element.contratados === 0
-        && (estatusId !== 39 && estatusId !== 34 && estatusId !== 35 && estatusId !== 36 && estatusId !== 37)
-        && this.element.vacantes > 0) {
+      && (estatusId !== 39 && estatusId !== 34 && estatusId !== 35 && estatusId !== 36 && estatusId !== 37)
+      && this.element.vacantes > 0) {
       this.asignar = false;
       this.disenador = false;
     } else if (this.element.aprobada === false && this.element.contratados === 0
-        && (estatusId !== 39 && estatusId !== 34 && estatusId !== 35 && estatusId !== 36 && estatusId !== 37)
-        && this.element.vacantes > 0) {
+      && (estatusId !== 39 && estatusId !== 34 && estatusId !== 35 && estatusId !== 36 && estatusId !== 37)
+      && this.element.vacantes > 0) {
       this.asignar = false;
       this.disenador = false;
     } else {
       this.asignar = true;
       this.disenador = true;
     }
+    if (estatusId === 46 || estatusId === 43) {
+      this.asignar = true;
+      this.bc = true; //  busqueda candidato
+      this.sc = true; //  socieconomico
+      this.ecc = true; //  envío candidato cliente
+      this.ec = true; //  espera contratacion
+      this.nbc = true; //  nueva busqueda candidato
+      this.pausa = true;
+      this.disenador = true;
 
-    if (estatusId === 4 && this.element.vacantes > 0) {//  nueva
+    } else if (estatusId === 4 && this.element.vacantes > 0) {//  nueva
       this.bc = true; //  busqueda candidato
       this.sc = true; //  socieconomico
       this.ecc = true; //  envío candidato cliente
@@ -476,7 +485,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; // espera contratacion
       this.nbc = true; // nueva busqueda candidato
     } else if (estatusId === 7 && this.element.vacantes > 0 && this.element.enProceso > 0
-      && this.element.enProcesoFC === 0 && this.element.enProcesoFR === 0){//  publicada
+      && this.element.enProcesoFC === 0 && this.element.enProcesoFR === 0) {//  publicada
       this.bc = false; // busqueda candidato
       this.sc = true; // socieconomico
       this.ecc = true; // envío candidato cliente
@@ -544,7 +553,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.pausa = true;
     } else if ((estatusId === 5 || estatusId === 31) &&
       this.element.vacantes > 0 && this.element.enProceso === 0 && this.element.enProcesoFC === 0 && this.element.enProcesoFR === 0) {
-       // reactivada  - garantia de busqueda - nueva busqueda
+      // reactivada  - garantia de busqueda - nueva busqueda
       this.bc = false; // busqueda candidato
       this.sc = true; // socieconomico
       this.ecc = true; // envío candidato cliente
@@ -552,8 +561,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.nbc = true; // nueva busqueda candidato
       this.pausa = true;
     } else if ((estatusId === 5 || estatusId === 31) && this.element.vacantes > 0
-    && this.element.enProcesoFC === 0 && this.element.enProcesoFR === 0 && this.element.enProceso > 0) {
-    // reactivada   - garantia de busqueda - nueva busqueda -pausada
+      && this.element.enProcesoFC === 0 && this.element.enProcesoFR === 0 && this.element.enProceso > 0) {
+      // reactivada   - garantia de busqueda - nueva busqueda -pausada
       this.bc = false; // busqueda candidato
       this.sc = true; // socieconomico
       this.ecc = true; // envío candidato cliente
@@ -697,7 +706,8 @@ export class DtVacantesReclutadorComponent implements OnInit {
         this.postulateservice.SetProcesoVacante({
           estatusId: estatusId,
           requisicionId: this.requi.id,
-          ReclutadorId: this.settings.user['id'] }).subscribe(data => {
+          ReclutadorId: this.settings.user['id']
+        }).subscribe(data => {
           if (data === 201) {
             var idx = this.rows.findIndex(x => x.id === this.requi.id);
             this.rows[idx]['estatus'] = estatus;
@@ -833,7 +843,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
         }
         const d = row.diasTrans;
         const c = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
-       // var e = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
+        // var e = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
 
         if (!Array.isArray(row.reclutadores)) {
           reclutador = 'SIN ASIGNAR';
@@ -863,7 +873,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
           'DIAS TRANSCURRIDOS': d,
           'FECHA CREACION': c,
           SUELDO: row.sueldoMinimo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) +
-          ' - ' + row.sueldoMaximo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) ,
+            ' - ' + row.sueldoMaximo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
           ESTATUS: row.estatus,
           COORDINADOR: coordinador,
           SOLICITANTE: row.solicita,

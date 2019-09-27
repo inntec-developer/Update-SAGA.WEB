@@ -107,11 +107,11 @@ export class ViewdamfoComponent implements OnInit {
     this.getParams();
   }
   ngOnInit() {
+    this.imprimir = true;
     this.spinner.show();
     this.serviceCatalogos.getDocumentosDamsa()
       .subscribe(data => {
         this.documentosDamsa = data;
-        console.log(this.documentosDamsa);
       });
     this.serviceCatalogos.getPrestacionesLey()
       .subscribe(data => {
@@ -163,11 +163,10 @@ export class ViewdamfoComponent implements OnInit {
           const arte = '.Arte';
           this.arteDamfo = html2canvas($(arte)[0], { useCORS: true }).then(function (canvas) {
             const data = canvas.toDataURL('image/jpg', 1.0);
-            console.log('ARTE IMG', data);
             return data;
           });
           this.imprimir = false;
-        }, 5000);
+        }, 2000);
       } else {
         this.popToast(
           'error',
@@ -430,7 +429,13 @@ export class ViewdamfoComponent implements OnInit {
           row = 20;
           newPage = true;
         }
-        doc.text(act + '.- ' + x.actividades.toUpperCase(), 40, row += 10);
+        const splitActividades = doc.splitTextToSize(act + '.-' + x.actividades.toUpperCase(), 500);
+        if (act === 1) {
+          doc.text(40, row += 10, splitActividades);
+        } else {
+          doc.text(40, row, splitActividades);
+        }
+        row += splitActividades.length * 10;
         act++;
       });
       row += 5;
@@ -446,10 +451,16 @@ export class ViewdamfoComponent implements OnInit {
           row = 20;
           newPage = true;
         }
-        doc.text(act + '.- ' + x.observaciones.toUpperCase(), 40, row += 10);
+        const splitObservaciones = doc.splitTextToSize(obs + '.- ' + x.observaciones.toUpperCase(), 500);
+        if (obs === 1) {
+          doc.text(40, row += 10, splitObservaciones);
+        } else {
+          doc.text(40, row, splitObservaciones);
+        }
+        row += splitObservaciones.length * 10;
+        obs++;
       });
       newPage = false;
-      obs++;
       row += 5;
       const Psicometrias = 'PSICOMETRIAS A APLICAR ';
       const xOffsetPSI = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(Psicometrias) * doc.internal.getFontSize() / 2);
@@ -601,7 +612,7 @@ export class ViewdamfoComponent implements OnInit {
           row = 20;
           newPage = true;
         }
-        doc.text(d + '.- ' + x.documentoDamsa.toUpperCase(), 60, row += 10);
+        doc.text(d + '.- ' + x.documentoDamsa.toUpperCase(), 40, row += 10);
         d++;
       });
       d = 1;
@@ -611,7 +622,15 @@ export class ViewdamfoComponent implements OnInit {
           rowC = 20;
           newPage = true;
         }
-        doc.text(d + '.- ' + x.documento.toUpperCase(), (xOffsetDocD * 2) + 30, rowC += 10);
+        const splitDocAd = doc.splitTextToSize(d + '.- ' + x.documento.toUpperCase(), 245);
+        if (d === 1) {
+          doc.text((xOffsetDocD * 2) + 10, rowC += 10, splitDocAd);
+        } else {
+          doc.text((xOffsetDocD * 2) + 10, rowC, splitDocAd);
+        }
+
+        rowC += splitDocAd.length * 10;
+        d++;
       });
       newPage = false;
       row += 5;
@@ -824,7 +843,6 @@ export class ViewdamfoComponent implements OnInit {
       cc = row;
       ca = row;
       cg = row;
-      debugger;
       doc.rect(20, cc, 183, 15 + 370);
       doc.rect(20, cc, 183, 15);
       doc.text('DAMSA OPERACIONES / VENTAS', 35, cc += 10);

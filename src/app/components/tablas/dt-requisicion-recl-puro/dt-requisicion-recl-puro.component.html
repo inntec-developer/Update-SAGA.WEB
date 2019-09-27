@@ -35,11 +35,11 @@
           <em class="fa fa-file-text-o"></em>
         </button>
         <!--  -->
-        <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8" [disabled]="!autorizar"
+        <!-- <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8" [disabled]="!autorizar"
           [ngClass]="!autorizar ? 'disabled' : 'btn-success'" container="body" placement="bottom"
-          tooltip="Autorizar" (click)="updataStatus(4, 'Nueva'); autorizar = false;"> 
+          tooltip="Autorizar" (click)="updataStatus(4, 'Nueva'); autorizar = false;">
           <i class="fa fa-check"></i>
-        </button>
+        </button> -->
 
         <button id='delete' chkPrivilegiosButtons class="mr-2 btn-xs mat-elevation-z8" [disabled]="!cancelar" [ngClass]="!cancelar ? 'btn disabled' : 'btn btn-danger'"
           container="body" placement="bottom" tooltip="Cancelar" (click)="openDialogCancel();">
