@@ -114,6 +114,7 @@ export class ApiConection {
   public static GetReporte70 = 'Requisiciones/getReporte70';
   public static GetRepoteCandidatos = 'Candidatos/getRPTCandidatosVacante';
   public static GetRequisPendientes = 'Requisiciones/getRequisPendientes';
+  public static GetRequisicionPDF = 'Requisiciones/getRequisicionPDF';
 
 
   /* Clientes / Prospectos */
