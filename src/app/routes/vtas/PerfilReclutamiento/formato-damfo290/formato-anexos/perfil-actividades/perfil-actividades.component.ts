@@ -78,12 +78,12 @@ export class PerfilActividadesComponent implements OnInit, OnChanges {
   getRegistros(data: any) {
     if (!data['isEdit']) {
       this.ActividadesNew.push({
-        Actividades: data['actividades'].toUpperCase(),
+        Actividades: data['actividad'].toUpperCase(),
         UsuarioAlta: data['UsuarioAlta']
       });
     } else {
       const editRegistro = {
-        Actividades: data['actividades'].toUpperCase(),
+        Actividades: data['actividad'].toUpperCase(),
         UsuarioAlta: data['UsuarioAlta']
       };
       this.ActividadesNew[data['Index']] = editRegistro;
