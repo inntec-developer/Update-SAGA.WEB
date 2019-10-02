@@ -110,7 +110,7 @@ public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: t
 }
 
 public refresh() {
-  this.GetCandidatosNR();
+
     this.columns.forEach(element => {
       element.filtering.filterString = '';
       (<HTMLInputElement>document.getElementById(element.name)).value = '';
@@ -137,6 +137,7 @@ public clearfilters() {
   GetCandidatosNR() {
     this.service.GetFoliosIncidencias(this.estatusId, this.settings.user['id']).subscribe(result => {
       this.candidatos = result;
+      this.onChangeTable(this.config);
     });
 
   }
@@ -197,14 +198,14 @@ public clearfilters() {
     if (modal == 1) {
       swal({
         title: '¿ESTÁS SEGURO?',
-        text: '¡El candidato quedará como NR!',
+        text: '¡El candidato quedará como NR!. El proceso puede durar varios segundos. Por favor espere',
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#ec2121',
         confirmButtonText: '¡Si, validar como NR!',
         cancelButtonText: '¡No, cancelar!',
         closeOnConfirm: false,
-        closeOnCancel: false
+        closeOnCancel: true
       }, (isConfirm) => {
         window.onkeydown = null;
         window.onfocus = null;
@@ -215,15 +216,9 @@ public clearfilters() {
             if (data === 200) {
               this.comentario = '';
               row.activar = false;
-              if (estatus === 27) {
-
-                row.estatus = 'Disponible';
-              } else {
-
-                row.estatus = 'NR';
-
-              }
-              this.refresh();
+              const idx = this.candidatos.findIndex(x => x.candidatoId === row.candidatoId);
+              this.candidatos.splice(idx, 1);
+              this.onChangeTable(this.config);
               swal('¡Candidato NR!', 'Los datos se actualizaron con éxito.', 'success');
 
             }
@@ -241,7 +236,7 @@ public clearfilters() {
     } else {
       swal({
         title: '¿ESTÁS SEGURO?',
-        text: '¡El candidato quedará como liberado!',
+        text: '¡El candidato quedará como liberado!. El proceso puede durar varios segundos. Por favor espere',
         type: 'warning',
         showCancelButton: true,
         confirmButtonClass: 'btn btn-success',
@@ -258,16 +253,9 @@ public clearfilters() {
             if (data === 200) {
               this.comentario = '';
               row.activar = false;
-              if (estatus === 27) {
-
-
-                row.estatus = 'Disponible';
-              } else {
-
-                row.estatus = 'NR';
-
-              }
-              this.refresh();
+              const idx = this.candidatos.findIndex(x => x.candidatoId === row.candidatoId);
+              this.candidatos.splice(idx, 1);
+              this.onChangeTable(this.config);
               swal('¡Candidato Liberado!', 'Los datos se actualizaron con éxito.', 'success');
 
             }

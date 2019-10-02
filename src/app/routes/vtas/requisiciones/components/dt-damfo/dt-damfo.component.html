@@ -63,7 +63,8 @@
     <div class="row" #tableContainer>
       <div class="col-sm-12 col-md-12 table-responsive clearfix">
         <div>
-          <pre class="card-block float-right">Registros Totales: {{dataSource.length}}</pre>
+            <span class="text-muted font-weight-bold float-right text-uppercase mt-2 mb-3 ">Registros Totales<span
+              class="badge badge-pill badge-success ml-1">{{dataSource.length  | numerico}}</span></span>
         </div>
         <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
           <thead>
@@ -109,14 +110,10 @@
         </table>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12 col-sm-12 clearfix">
-        <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
+    <div class="d-flex justify-content-end">
+        <pagination *ngIf="config.paging" class="pagination-sm mt-2" [(ngModel)]="page" [totalItems]="length"
           [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
           (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
-        <pre *ngIf="config.paging"
-          class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}} Registros: {{registros}}</small></pre>
-      </div>
     </div>
   </div>
 </div>

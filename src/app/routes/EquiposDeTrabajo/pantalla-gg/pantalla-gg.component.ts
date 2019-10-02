@@ -1,5 +1,5 @@
 import { SettingsService } from './../../../core/settings/settings.service';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ColorsService } from '../../../shared/colors/colors.service';
 import { EquiposTrabajoService } from './../../../service/EquiposDeTrabajo/equipos-trabajo.service';
 import { Component, OnInit } from '@angular/core';
@@ -86,9 +86,14 @@ sparkOptionsDanger = {
   sub: any;
   migasDtos = [];
   usuarioLogin = this.settings.user['id'];
-  constructor(private _service: EquiposTrabajoService, public colors: ColorsService, private settings: SettingsService) { }
+  constructor(
+    private _service: EquiposTrabajoService,
+    public colors: ColorsService,
+    private settings: SettingsService,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
+    this.spinner.show();
     this.GetRport();
   }
 
@@ -98,6 +103,7 @@ sparkOptionsDanger = {
 
         this.reporte = result;
       this.loadCharts(this.reporte[0]);
+      this.spinner.hide();
       }
     });
   }
@@ -107,10 +113,10 @@ sparkOptionsDanger = {
     this.gerente = [];
     this.usuarioId = row.reclutadorId;
     this.migasDtos.push(row);
-this.totalCub = 0;
-this.totalPos = 0;
-this.totalFal = 0;
-this.totalCump = 0;
+    this.totalCub = 0;
+    this.totalPos = 0;
+    this.totalFal = 0;
+    this.totalCump = 0;
 
     if (this.migas.length > 0) {
       this.lider = this.migas[this.migas.length - 1];
@@ -139,27 +145,27 @@ this.totalCump = 0;
         cont++;
       });
 
-      if (row.requis.length > 0) {
-        const aux = this.gerente.reduce(function (valorAnterior, valorActual, indice, vector) {
-          return valorAnterior + valorActual.totalPos;
-        }, 0);
+      // if (row.requis.length > 0) {
+      //   const aux = this.gerente.reduce(function (valorAnterior, valorActual, indice, vector) {
+      //     return valorAnterior + valorActual.totalPos;
+      //   }, 0);
 
-        const auxCon = this.gerente.reduce(function (valorAnterior, valorActual, indice, vector) {
-          return valorAnterior + valorActual.totalCub;
-        }, 0);
+      //   const auxCon = this.gerente.reduce(function (valorAnterior, valorActual, indice, vector) {
+      //     return valorAnterior + valorActual.totalCub;
+      //   }, 0);
 
-        this.gerente.push({
-          reclutadorId: row.reclutadorId,
-          nombre: row.nombre,
-          foto: row.foto,
-          resumen: row.resumen,
-          totalPos: row.totalPos - aux,
-          totalCub: row.totalCub - auxCon,
-          totalFal: (row.totalPos - aux ) - (row.totalCub - auxCon),
-          totalCump: Math.round((row.totalCub - auxCon) * 100 / (row.totalPos - aux) || 0),
-          bg: this.backgroundColor[cont++],
-        });
-      }
+      //   this.gerente.push({
+      //     reclutadorId: row.reclutadorId,
+      //     nombre: row.nombre,
+      //     foto: row.foto,
+      //     resumen: row.resumen,
+      //     totalPos: row.totalPos - aux,
+      //     totalCub: row.totalCub - auxCon,
+      //     totalFal: (row.totalPos - aux ) - (row.totalCub - auxCon),
+      //     totalCump: Math.round((row.totalCub - auxCon) * 100 / (row.totalPos - aux) || 0),
+      //     bg: this.backgroundColor[cont++],
+      //   });
+      // }
     }
     this.totalPos = row.totalPos;
     this.totalCub = row.totalCub;

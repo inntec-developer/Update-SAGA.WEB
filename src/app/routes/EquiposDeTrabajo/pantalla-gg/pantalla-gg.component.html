@@ -72,7 +72,7 @@
                     <div class="d-flex align-items-center float-left"><img class="img-fluid circle thumb32 mr-1" [src]="t.foto" (error)="errorImg(t)" /><span>{{t.nombre | uppercase}}</span>
                 
                     </div>
-                    <div class="float-right mt-1">
+                    <div *ngIf= "t.resumen.length > 0" class="float-right mt-1">
                         <button (click)="loadCharts(t, lider);" class="btn btn-xs btn-success float-right mb-2 mr-1" container="body" placement="bottom" tooltip="Ver Detalle"><i class="fa fa-eye"></i></button>
                     </div>
                 </div>
@@ -93,10 +93,14 @@
                         </ng-container>
                     </ng-container>
                     <div class="text-center mt-2">
-                            <div tooltip="{{t.totalCump}} %">
-                                <progressbar class="progress-xs m-0" value="{{t.totalCump}}" type="info"></progressbar>
+                        <div class="progress progress-xs m-0" tooltip="{{t.totalCump}} %">
+                            <div [ngClass]="{'bg-danger': t.totalCump <= 25, 'bg-warning': t.totalCump > 25 && t.totalCump <= 50, 'bg-yellow': t.totalCump > 50 && t.totalCump <= 75, 'bg-success': t.totalCump > 75 }" 
+                                class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="t.totalCump" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: t.totalCump + '%'}">
                             </div>
-                            <small class="text-muted">{{t.totalCump || 0}} % Cumplimiento</small>
+                        </div>
+                        <small class="text-muted">{{t.totalCump || 0}} % Cumplimiento</small>
+                                <!-- <progressbar  
+                                    class="progress-xs m-0" value="{{t.totalCump}}" type="info"></progressbar> -->
                     </div>
                 </div>
                 <div class="card-body">
@@ -125,7 +129,7 @@
     </ng-container>
 </div>
 </ng-scrollbar>
-
+<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
 <!-- Modal para reporte -->
 <div *ngIf="modal" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #lgModal="bs-modal" class="modal"
   tabindex="-1" role="document" aria-labelledby="dialog-auto-name">

@@ -71,7 +71,7 @@ export class AdminServiceService {
   private UrlGetBGArte = ApiConection.ServiceUrl + ApiConection.GetBGArte;
   private UrlGuardarArte = ApiConection.ServiceUrl + ApiConection.GuardarArte;
   private UrlUploadBG = ApiConection.ServiceUrl + ApiConection.UploadBG;
-
+  private UrlUploadAnexos = ApiConection.ServiceUrl + ApiConection.UploadAnexos;
   constructor(private _httpClient: HttpClient ) {
 
   }
@@ -83,9 +83,8 @@ export class AdminServiceService {
     return this._httpClient.post(this.UrlUploadImage, formData );
   }
 
-  GetFiles(candidatoId): Observable<any>
-  {
-     let params = new HttpParams().set('entidadId', candidatoId)
+  GetFiles(candidatoId, ruta): Observable<any> {
+     const params = new HttpParams().set('entidadId', candidatoId).set('ruta', ruta);
 
      return this._httpClient.get(this.UrlGetFiles, {params: params});
   }
@@ -126,6 +125,11 @@ export class AdminServiceService {
     const formData = new FormData();
     formData.append('file', file, file.name + '_' + candidatoId );
     return this._httpClient.post(this.UrlUploadFile, formData );
+  }
+  UploadAnexos( file: File, damfoId ): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file, file.name + '_' + damfoId );
+    return this._httpClient.post(this.UrlUploadAnexos, formData );
   }
   UploadBG( file: File ): Observable<any> {
     const formData = new FormData();

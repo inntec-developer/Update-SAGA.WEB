@@ -27,51 +27,23 @@
           <em class="icon-trash"></em>
         </button>
         <em class="vl mr-2"></em>
-        <!-- <button id='update' chkPrivilegiosButtons class="mb-1 btn btn-acciones margen"
-                       container="body" placement="bottom" tooltip="Activar" [ngClass]="(estatusId != 8 || !element) ? 'disabled' : 'btn-success'" (click)="openDialogReActivar()"><em
-                        class="icon-refresh"></em></button> -->
-
-        <!--estatus melina-->
         <button id="update" chkPrivilegiosButtons [disabled]="cubierta" class="mr-2 btn btn-xs mat-elevation-z8"
           [ngClass]="cubierta ? 'disabled' : 'btn-warning'" type="button" (click)="openDialogCubrir()"
           container="body" placement="bottom" tooltip="Cubrir Folio">
           <em class="fa fa fa-shield"></em>
         </button>
-        <!-- <button id="update" chkPrivilegiosButtons [disabled]="cp" class="mr-2 btn btn-xs"
-          [ngClass]="cp ? 'disabled' : 'btn-warning'" type="button"
-          (click)="updataStatus(35, 'Cubierta Parcialmente')" container="body" placement="bottom"
-          tooltip="Cubierta Parcialmente">
-          <em class="fa fa-star-half-o"></em>
-        </button>
-        <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs"
-          [ngClass]="crm ? 'disabled' : 'btn-warning'" [disabled]="crm" type="button"
-          (click)="updataStatus(36, 'Cubierta por Medios')" container="body" placement="bottom"
-          tooltip="Cubierta por Reclutamiento Medios">
-          <em class="fa fa-star"></em>
-        </button>
-        <button id="update" chkPrivilegiosButtons [disabled]="cc" class="mr-2 btn btn-xs"
-          [ngClass]="cc ? 'disabled' : 'btn-info'" type="button"
-          (click)="updataStatus(37, 'Cubierta por Cliente')" container="body" placement="bottom"
-          tooltip="Cubierta por Cliente">
-          <em class="fa fa fa-magic"></em>
-        </button> -->
         <button id='delete' chkPrivilegiosButtons [disabled]="cancelar" class="mr-2 btn btn-xs mat-elevation-z8"
           [ngClass]="cancelar ? 'disabled' : 'btn-danger'" container="body" placement="bottom"
           tooltip="Cancelar" (click)="openDialogCancel();">
           <em class="icon-ban"></em>
         </button>
-        <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8"
-          [ngClass]="gbc ? 'disabled' : 'btn-success'" [disabled]="gbc" type="button"
-          (click)="updataStatus(38, 'Garant&iacute;a de B&uacute;squeda')" container="body" placement="bottom"
-          tooltip="Garant&iacute;a B&uacute;squeda Candidatos">
-          <em class="fa fa-user-circle"></em>
-        </button>
+   
         <em class="vl mr-2"></em>
-         <button type="button" class="mr-1 btn btn-xs btn-primary mat-elevation-z8"
+         <button type="button" class="mr-2 btn btn-xs btn-primary mat-elevation-z8"
               (click)="historial=true;" container="body" placement="bottom" tooltip="Historial">
               <i class="fa fa-area-chart"></i>
             </button>
-            <button *ngIf="tipoUsuarioId != 8" class="btn btn-xs mr-1 mat-elevation-z8" [ngClass]="element.length == 0 ? 'disable' : 'btn-purple'" [disabled]="element.length == 0" id='special' chkPrivilegiosButtons type="button" (click)="openDialogTransfer()" container="body" placement="bottom"
+            <button *ngIf="tipoUsuarioId != 8" class="btn btn-xs mr-2 mat-elevation-z8" [ngClass]="element.length == 0 ? 'disable' : 'btn-purple'" [disabled]="element.length == 0" id='special' chkPrivilegiosButtons type="button" (click)="openDialogTransfer()" container="body" placement="bottom"
             tooltip="Transferir folio"><i class="fa fa-exchange"></i>
           </button>
         <button type="button" [disabled]="rows.length == 0" class="mr-2 btn btn-xs mat-elevation-z8" [ngClass]="rows.length == 0 ? 'disable' : 'btn-success'"
@@ -94,15 +66,6 @@
         </button>
       </div>
     </div>
-    <!-- <div class="row">
-        <div class="col-md-12">
-          <mat-form-field>
-            <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
-              (tableChanged)="onChangeTable(config)" id="filterGeneral">
-          </mat-form-field>
-        </div>
-        </div> -->
-
     <div class="row">
       <div class="col-sm-12 col-md-12 table-responsive clearfix">
         <div class="mt-3 ">

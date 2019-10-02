@@ -23,7 +23,7 @@ export class EditorArteRequisicionesComponent implements OnInit {
 
   @Input() requisicionId;
 
-  bg = './../assets/img/ArteVacantes/DamsaVacantes_PP1.jpg';
+  bg = '';
 
   fontVacante: Font = new Font({
     family: 'Roboto',
@@ -69,7 +69,8 @@ export class EditorArteRequisicionesComponent implements OnInit {
   constructor(private dialog: MatDialog,
     private _service: AdminServiceService,
     private settings: SettingsService,
-    private _serviceTickets: SistTicketsService) { }
+    private _serviceTickets: SistTicketsService) {
+    }
 
   ngOnInit() {
    this.openDialogRequiArte();
@@ -84,7 +85,7 @@ export class EditorArteRequisicionesComponent implements OnInit {
       console.log(result)
       if (result !== '') {
         this._service.GetBG('ArteRequi/BG/' + result.nom).subscribe(r => {
-          let type = result.type.replace('.', '');
+          const type = result.type.replace('.', '');
           this.bg = 'data:image/' + type + ';base64,' + r;
         });
       } else {
@@ -97,6 +98,7 @@ export class EditorArteRequisicionesComponent implements OnInit {
     this._serviceTickets.GetVacantesByRequi(this.requisicionId).subscribe(data => {
        this.vBtra = data[0]['vBtra'];
        this.experiencia = data[0]['experiencia'].substring(0, 150);
+       this.bg = data[0]['bg'];
     });
     // let dialogCnc = this.dialog.open(DlgRequiArteComponent, {
     //   width: '90%',

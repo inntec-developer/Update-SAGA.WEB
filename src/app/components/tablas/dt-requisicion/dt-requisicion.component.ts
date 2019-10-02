@@ -549,9 +549,9 @@ export class DtRequisicionComponent implements OnInit {
   }
 
   updataStatus(estatusId, estatus) {
-    const datos = { estatusId: estatusId, requisicionId: this.element.id }
+    const datos = { estatusId: estatusId, requisicionId: this.element.id };
     const emails = [];
-    if (estatusId == 8) {
+    if (estatusId === 8) {
       var idx = this.rows.findIndex(x => x.id == this.element.id);
 
       this.rows[idx]['enProcesoN'].forEach(element => {
@@ -581,8 +581,7 @@ export class DtRequisicionComponent implements OnInit {
           // this.onChangeTable(this.config);
         });
       }
-    }
-    else {
+    } else {
       this.postulacionservice.SetProcesoVacante(datos).subscribe(data => {
         if (data == 201) {
           let idx = this.rows.findIndex(x => x.id == this.element.id);

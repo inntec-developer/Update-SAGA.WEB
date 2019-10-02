@@ -4,6 +4,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { SettingsService } from '../../../../../core/settings/settings.service';
 import { DatePipe } from '@angular/common';
 import { ExcelService } from '../../../../../service/ExcelService/excel.service';
+import { PostulateService } from '../../../../../service/SeguimientoVacante/postulate.service';
+import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+
 @Component({
   selector: 'app-dthistorial',
   templateUrl: './dthistorial.component.html',
@@ -11,7 +14,7 @@ import { ExcelService } from '../../../../../service/ExcelService/excel.service'
 })
 export class DTHistorialComponent implements OnInit {
 
-  //scroll
+  // scroll
   disabled = false;
   compact = false;
   invertX = false;
@@ -20,19 +23,19 @@ export class DTHistorialComponent implements OnInit {
 
   // Variables Globales
   public dataSource: Array<any> = [];
-  Vacantes: number = 0;
+  Vacantes = 0;
 
   // Varaibles del paginador
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
   showFilterRow: boolean;
   registros: number;
-  totalContratados: number = 0;
-  clearFilter: boolean = false;
+  totalContratados = 0;
+  clearFilter = false;
   element: any = [];
   rowAux: any = [];
   reporteCandidatos = false;
@@ -64,10 +67,22 @@ export class DTHistorialComponent implements OnInit {
     { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores',
     filtering: { filterString: '', placeholder: 'Reclutador' } },
   ];
-
+  /*
+ * Creacion de mensajes
+ * */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7, tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
   constructor( private service: RequisicionesService, private spinner: NgxSpinnerService,
     private settings: SettingsService,
     private excelService: ExcelService,
+    private postulacionservice: PostulateService,
+    private toasterService: ToasterService,
     private pipe: DatePipe ) { }
 
   ngOnInit() {
@@ -82,6 +97,7 @@ export class DTHistorialComponent implements OnInit {
       this.dataSource.forEach(r => {
         this.totalContratados += r.contratados;
       });
+      console.log(this.dataSource)
      this.onChangeTable(this.config);
     });
   }
@@ -102,17 +118,16 @@ export class DTHistorialComponent implements OnInit {
             if (!Array.isArray(item[column.name])) {
               return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
             } else {
-                let aux = item[column.name];
-                let mocos = false;
+                let flag = false;
                 if (item[column.name].length > 0) {
                   item[column.name].forEach(element => {
                     if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase())) {
-                      mocos = true;
+                      flag = true;
                       return;
                     }
                   });
 
-                  if(mocos) {
+                  if (flag) {
                     return item[column.name];
                   }
                 } else {
@@ -168,6 +183,7 @@ export class DTHistorialComponent implements OnInit {
       });
       this.spinner.hide();
     }, 800);
+    this.onChangeTable(this.config);
   }
 
   public clearfilters() {
@@ -178,24 +194,36 @@ export class DTHistorialComponent implements OnInit {
     this.onChangeTable(this.config);
 
   }
+  updataStatus(estatusId, estatus) {
+    const datos = { estatusId: estatusId, requisicionId: this.element.id };
+      this.postulacionservice.SetProcesoVacante(datos).subscribe(data => {
+        if (data === 201) {
+          this.refreshTable();
+          this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+
+        } else {
+          this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
+        }
+
+      });
+    }
 
   exportAsXLSX() {
 
     if (this.dataSource.length > 0) {
-      var aux = [];
-      var reclutador = '';
-      var coordinador = '';
+      const aux = [];
+      let reclutador = '';
+      let coordinador = '';
 
       this.dataSource.forEach(row => {
         const d = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
-        // var mocos = (d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString()
         const e = this.pipe.transform(new Date(row.fch_Cumplimiento), 'dd/MM/yyyy');
 
-        if (!Array.isArray(row.reclutadores) ){
+        if (!Array.isArray(row.reclutadores) ) {
           reclutador = 'SIN ASIGNAR';
         } else if (row.reclutadores.length > 1) {
           row.reclutadores.forEach(element => {
-            reclutador = reclutador + element + ', \n'
+            reclutador = reclutador + element + ', \n';
           });
         } else {
           reclutador = row.reclutadores[0];
@@ -226,10 +254,17 @@ export class DTHistorialComponent implements OnInit {
         reclutador = '';
       });
 
-      //   })
-      // })
       this.excelService.exportAsExcelFile(aux, 'Historico');
       this.refreshTable();
     }
+  }
+  popToast(type, title, body) {
+    const toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 5000,
+      body: body
+    };
+    this.toasterService.pop(toast);
   }
 }

@@ -52,9 +52,21 @@ export class RportAtencionTurnosComponent implements OnInit {
   GetReport()
   {
     this._service.GetRportAtencion().subscribe(data => {
-      this.result = data;
-      this.rows = data;
+      const aux = [];
 
+      data.forEach(element => {
+        element.datos.forEach(item => {
+          aux.push({
+            fecha: element.fecha,
+            reclutador: item.reclutador,
+            total: item.total,
+            concita: item.concita,
+            sincita: item.sincita
+          });
+        });
+      });
+      this.result = aux;
+      this.rows = aux;
       this.onChangeTable(this.config);
     });
 

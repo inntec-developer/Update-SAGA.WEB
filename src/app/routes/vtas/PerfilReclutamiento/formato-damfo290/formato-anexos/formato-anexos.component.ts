@@ -1,12 +1,14 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-
+import { MatDialog } from '@angular/material';
 import { PerfilReclutamientoService } from '../../../../../service/PerfilReclutamiento/perfil-reclutamiento.service';
+import { AdminServiceService } from '../../../../../service/AdminServicios/admin-service.service';
+import { DlgBGArteComponent } from '../../../../../components/editor-arte-requisiciones/dlg-bgarte/dlg-bgarte.component';
 
 @Component({
   selector: 'app-formato-anexos',
   templateUrl: './formato-anexos.component.html',
   styleUrls: ['./formato-anexos.component.scss'],
-  providers: [PerfilReclutamientoService]
+  providers: [PerfilReclutamientoService, AdminServiceService]
 })
 export class FormatoAnexosComponent implements OnInit, OnChanges {
   @Input('IdFormato') IdFormato: any;
@@ -24,7 +26,7 @@ export class FormatoAnexosComponent implements OnInit, OnChanges {
   public Areas: any[] = [];
   public Gerenciales: any[] = [];
 
-  public Arte = 'DamsaVacantes_PP';
+  public Arte = '';
   public Artes = [
     { id: 1, value: 'DamsaVacantes_PP' },
     { id: 2, value: 'DamsaVacantes_PP1' },
@@ -37,18 +39,24 @@ export class FormatoAnexosComponent implements OnInit, OnChanges {
     { id: 1, value: 'DamsaVacantes_PP8' },
     { id: 1, value: 'DamsaVacantes_PP17' },
   ];
+  bg = '';
 
   constructor(
-    private _servicePerfilR: PerfilReclutamientoService
-  ) { }
+    private _servicePerfilR: PerfilReclutamientoService,
+    private dialog: MatDialog,
+    private _service: AdminServiceService
+  ) {
+   }
 
   ngOnInit() {
+    this.getBG('DamsaVacantes_PP1.jpg', 'jpg');
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdFormato != null) {
       this._servicePerfilR.getAnexosPerfil(this.IdFormato).subscribe(data => {
         if (data !== 404) {
+
           this.Beneficios = data['beneficios'];
           this.Horarios = data['horarios'];
           this.Actividades = data['actividades'];
@@ -61,7 +69,7 @@ export class FormatoAnexosComponent implements OnInit, OnChanges {
           this.Cardinales = data['cardinales'];
           this.Areas = data['areas'];
           this.Gerenciales = data['gerenciales'];
-          this.Arte = data['arte']
+          this.bg = data['arte'];
         }
       });
     }
@@ -113,4 +121,23 @@ export class FormatoAnexosComponent implements OnInit, OnChanges {
     this.Gerenciales = data;
   }
 
+  getBG(nombre: string, type: string) {
+    this._service.GetBG('ArteRequi/BG/' + nombre).subscribe(r => {
+      this.bg = 'data:image/' + type + ';base64,' + r;
+      this.Arte = nombre;
+      console.log(this.Arte);
+    });
+  }
+  openDialogBG() {
+    const dialogCnc = this.dialog.open(DlgBGArteComponent, {
+      width: '90%',
+      height: '90%',
+    });
+    dialogCnc.afterClosed().subscribe(result => {
+      if (result !== '') {
+        const type = result.type.replace('.', '');
+        this.getBG(result.nom, type);
+      }
+    });
+  }
 }

@@ -29,7 +29,7 @@
     <app-formato-anexos [IdFormato]="IdFormato"></app-formato-anexos>
   </tab>
   <tab heading="Anexos" id="TapAnexos" *ngIf="!isNew">
-   <app-file-manager [candidatoId]='IdFormato'></app-file-manager>
+   <app-file-manager [candidatoId]='IdFormato' [ruta]="'/utilerias/Files/ANEXOSDAMFO/'"></app-file-manager>
   </tab>
 </tabset>
 <br>

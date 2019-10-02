@@ -2,12 +2,18 @@
   <div class="row bg-light">
   <div class="col-sm-12 col-md-12">
       <button id="view" (click)="lgModal15.show()" placement="right" tooltip="Ver Requisición"
-          class="mr-1 mat-elevation-z8" [disabled]="element.length == 0"
+          class="mr-2 mat-elevation-z8" [disabled]="element.length == 0"
           [ngClass]="element.length == 0 ? 'btn btn-xs disabled':'btn btn-xs btn-warning'">
           <em class="fa fa-eye"></em></button>
-        <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-1 btn btn-xs mat-elevation-z8"
+        <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-2 btn btn-xs mat-elevation-z8"
           [disabled]="element.length == 0" [ngClass]="element.length == 0 ? 'disabled' : 'btn-dark'" container="body" placement="bottom"
           tooltip="Comentarios"><em class="fa fa-comments-o"></em></button>
+          <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8"
+          [disabled]="element.length == 0 || element.estatusId == 8" [ngClass]="element.length == 0 || element.estatusId == 8 ? 'disabled' : 'btn-success'" type="button"
+          (click)="updataStatus(38, 'Garant&iacute;a de B&uacute;squeda')" container="body" placement="bottom"
+          tooltip="Garant&iacute;a B&uacute;squeda Candidatos">
+          <em class="fa fa-user-circle"></em>
+        </button>
           <button class="btn btn-xs mat-elevation-z8" [disabled]="element.length == 0 || element.contratados == 0"
           (click)="reporteCandidatos = true" [ngClass]="element.length == 0 || element.contratados == 0 ? 'disabled' : 'btn-warning'"
           container="body" placement="bottom" tooltip="Candidatos">

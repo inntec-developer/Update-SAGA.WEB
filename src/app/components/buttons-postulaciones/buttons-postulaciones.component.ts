@@ -17,7 +17,7 @@ import { PostulateService } from './../../service/SeguimientoVacante/postulate.s
 import { RequisicionesService } from '../../service';
 import { SettingsService } from './../../core/settings/settings.service';
 import { Router } from '@angular/router';
-
+const swal = require('sweetalert');
 @Component({
   selector: 'app-buttons-postulaciones',
   templateUrl: './buttons-postulaciones.component.html',
@@ -385,7 +385,6 @@ export class ButtonsPostulacionesComponent implements OnInit {
     this.service.GetProceso(this.RequisicionId, this.settings.user['id']).subscribe(data => {
 
       this.dataSource = [];
-
       data.forEach(element => {
         const perfil = {
           id: element.id,
@@ -593,11 +592,29 @@ export class ButtonsPostulacionesComponent implements OnInit {
       } else if (estatusId === 18) {
         this.GetHorarioRequis(estatusId, estatus);
       } else if (estatusId === 42) {
-        const datos = { candidatoId: this.candidatoId,
-          estatusId: estatusId,
-          requisicionId: this.RequisicionId,
-          horarioId: this.horarioId, ReclutadorId: this.settings.user['id'] };
-        this.OpenDialogComentariosNR(datos, estatusId, estatus);
+        swal({
+          title: '¿ESTÁS SEGURO?',
+          text: '¡El candidato se enviara a revisión!. Este proceso puede tomar varios segundos. Por favor espere',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#ec2121',
+          confirmButtonText: '¡Si, enviar a revisión!',
+          cancelButtonText: '¡No, cancelar!',
+          closeOnConfirm: true,
+          closeOnCancel: true
+        }, (isConfirm) => {
+          window.onkeydown = null;
+          window.onfocus = null;
+          if (isConfirm) {
+            const datos = { candidatoId: this.candidatoId,
+            estatusId: estatusId,
+            requisicionId: this.RequisicionId,
+            horarioId: this.horarioId, ReclutadorId: this.settings.user['id'] };
+            this.OpenDialogComentariosNR(datos, estatusId, estatus);
+          } else {
+            swal('Cancelado', 'No se realizó ningún cambio', 'error');
+          }
+        });
 
       } else if (estatusId === 24) {
         const idx = this.conteo.findIndex(x => x.id === this.horarioId);
@@ -629,6 +646,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   }
 
   SetApiProceso(datos, estatusId, estatus) {
+    this.spinner.show();
     this.service.SetProceso(datos).subscribe(data => {
       if (data === 201) {
         this.SetStatusBolsa(this.candidatoId, estatusId, estatus);
@@ -645,10 +663,12 @@ export class ButtonsPostulacionesComponent implements OnInit {
         this.liberado = true;
         this.GetConteoVacante();
         this.onChangeTable(this.config);
-
+        this.spinner.hide();
       } else if (data === 300) {
+        this.spinner.hide();
         this.popToast('info', 'Apartado', 'El candidato ya esta apartado o en proceso');
       } else {
+        this.spinner.hide();
         this.popToast('error', 'Error', 'Ocurrió un error al intentar actualizar datos');
       }
     });

@@ -259,7 +259,7 @@ export class ApiConection {
   public static GetBGArte = 'admin/getBGArte';
   public static GuardarArte = 'admin/guardarArte';
   public static UploadBG = 'admin/uploadBG';
-
+  public static UploadAnexos = 'admin/uploadAnexos';
   /*Seguimiento Vacantes*/
   public static getDtosCard = 'reclutamiento/seguimientovacante/getCard';
   public static getDtosDetail = 'reclutamiento/seguimientovacante/getvacantesdtl';

@@ -15,6 +15,7 @@ export class FileManagerComponent implements OnInit {
 
   @Input() public accept: Array<string> = [];
   @Input() public candidatoId: any;
+  @Input() public ruta: any;
 
   @ViewChild('staticModal') modal;
   // config scroll
@@ -72,9 +73,22 @@ export class FileManagerComponent implements OnInit {
   // }
 
   fileChangeListener($event) {
-    let file: File = $event.target.files[0];
-
-    this.service.UploadFile(file, this.candidatoId).subscribe(result => {
+    const file: File = $event.target.files[0];
+    if (this.ruta.includes('users')) {
+      this.service.UploadFile(file, this.candidatoId).subscribe(result => {
+        if (result === 201) {
+          this.ngOnInit();
+          this.alerts[0]['msg'] = 'El archivo ' + file.name + ' se subió con éxito';
+          this.alert = this.alerts[0];
+          this.verMsj = true;
+        } else {
+          this.alerts[1]['msg'] = 'Ocurrió un error al intentar subir archivo ' + file.name;
+          this.alert = this.alerts[1];
+          this.verMsj = true;
+        }
+      });
+  } else {
+    this.service.UploadAnexos(file, this.candidatoId).subscribe(result => {
       if (result === 201) {
         this.ngOnInit();
         this.alerts[0]['msg'] = 'El archivo ' + file.name + ' se subió con éxito';
@@ -86,6 +100,7 @@ export class FileManagerComponent implements OnInit {
         this.verMsj = true;
       }
     });
+  }
 
   }
 
@@ -100,9 +115,9 @@ export class FileManagerComponent implements OnInit {
     } else {
       this.imgShow = false;
       this.pdfShow = true;
-      this.pdfSrc = this.service.GetPdf('utilerias/Files/users/' + this.candidatoId + '/' + datos.nom).subscribe(data => {
+      this.pdfSrc = this.service.GetPdf(this.ruta + this.candidatoId + '/' + datos.nom).subscribe(data => {
         const fileurl = window.URL.createObjectURL(data);
-        window.open(fileurl)
+        window.open(fileurl);
         // this.pdfSrc = fileurl;
         // this.modal.show();
       });
@@ -111,7 +126,7 @@ export class FileManagerComponent implements OnInit {
 
 
   downloadFile(datos) {
-    const ruta = '/utilerias/Files/users/' + this.candidatoId + '/';
+    const ruta = this.ruta + this.candidatoId + '/';
 
     this.service.DownloadFiles(ruta + datos.nom).subscribe(res => {
       saveAs(res, datos.nom);
@@ -135,7 +150,7 @@ export class FileManagerComponent implements OnInit {
       window.onkeydown = null;
       window.onfocus = null;
       if (isConfirm) {
-        const ruta = '/utilerias/Files/users/' + this.candidatoId + '/';
+        const ruta = this.ruta + this.candidatoId + '/';
         this.service.DeleteFiles(ruta + datos.nom).subscribe(res => {
           if (res === 200) {
             swal('Borrar Archivo', 'El archivo se borró con éxito', 'success');
@@ -203,7 +218,7 @@ export class FileManagerComponent implements OnInit {
 
   GetFiles() {
     if (this.candidatoId) {
-      this.service.GetFiles(this.candidatoId)
+      this.service.GetFiles(this.candidatoId, this.ruta)
         .subscribe(data => {
           this.getTypes(data);
         });

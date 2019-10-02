@@ -51,7 +51,6 @@
           <i class="fa fa-bar-chart"></i>
         </button>
 
-
         <button id="update" chkPrivilegiosButtons class="mr-1 mat-elevation-z8" [disabled]="ec"
           [ngClass]="ec ? 'btn btn-xs disabled' : 'btn btn-xs btn-info'" type="button"
           (click)="SetStatus(33, 'Espera de Ctns')" container="body" placement="bottom"
@@ -61,7 +60,7 @@
 
         <button id="update" chkPrivilegiosButtons class="mr-1 mat-elevation-z8" [disabled]="pausa"
           [ngClass]="pausa ? 'btn btn-xs disabled' : 'btn btn-xs btn-info'" type="button"
-          (click)="SetStatus(39, 'Pausada')" container="body" placement="bottom" tooltip="Pausada">
+          (click)="SetStatus(39, 'Pausada')" container="body" placement="bottom" tooltip="Pausar">
           <i class="fa fa-pause-circle-o"></i>
         </button>
 

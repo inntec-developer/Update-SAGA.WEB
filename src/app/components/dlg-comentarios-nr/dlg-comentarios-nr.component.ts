@@ -18,6 +18,21 @@ export class DlgComentariosNRComponent implements OnInit, AfterViewInit {
   public comentario: string;
   public motivoId: any;
   public loading = false;
+
+  /**
+   * configuracion para mensajes de acciones.
+   */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+    preventDuplicates: true,
+  });
+
   constructor(@Inject(MAT_DIALOG_DATA) public usuario: any,
    private serviceCandidato: CandidatosService,
    private serviceComentarios: ComentariosService,
@@ -43,8 +58,7 @@ export class DlgComentariosNRComponent implements OnInit, AfterViewInit {
 
   }
 
-  AddComentario()
-  {
+  AddComentario() {
     this.loading = true;
     const Comentario = {
         Comentario: this.comentario,
@@ -53,10 +67,8 @@ export class DlgComentariosNRComponent implements OnInit, AfterViewInit {
         MotivoId: this.motivoId,
         Usuario: this.settings.user['usuario'],
         UsuarioId: this.settings.user['id']
-      }
-
+      };
       this.serviceComentarios.AddComentariosNR(Comentario).subscribe(data => {
-
         if (data === 200) {
           this.comentario = '';
           this.motivoId = 0;
@@ -64,9 +76,7 @@ export class DlgComentariosNRComponent implements OnInit, AfterViewInit {
           this.loading = false;
         //  this.popToast('success', 'Candidato posible NR', 'El comentario se agregó con éxito');
           this.dialog.close(true);
-        }
-        else
-        {
+        } else {
           this.loading = false;
 
        //   this.popToast('error', 'Candidato posible NR', 'Ocurrio un error al intentar agregar comentario');
@@ -77,23 +87,8 @@ export class DlgComentariosNRComponent implements OnInit, AfterViewInit {
       });
     }
 
-
-/**
-   * configuracion para mensajes de acciones.
-   */
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    limit: 7,
-    tapToDismiss: false,
-    showCloseButton: true,
-    mouseoverTimerStop: true,
-    preventDuplicates: true,
-  });
-
   popToast(type, title, body) {
-    var toast: Toast = {
+    const toast: Toast = {
       type: type,
       title: title,
       timeout: 4000,

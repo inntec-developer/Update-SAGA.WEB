@@ -42,10 +42,10 @@
           <div>
             <tr *ngFor="let r of rows">
               <td class="text-center">{{r.fecha | date:'dd/MM/yyyy' }}</td>
-              <td class="text-center">{{r.datos[0].reclutador || 'SIN ASIGNAR'}}</td>
-              <td class="text-center"><small class="badge badge-pill badge-success"> {{r.datos[0].total }}</small></td>
-              <td class="text-center"><small class="badge badge-pill badge-warning"> {{r.datos[0].concita }}</small></td>
-              <td class="text-center"><small class="badge badge-pill badge-purple"> {{r.datos[0].sincita }}</small></td>
+              <td class="text-center">{{r.reclutador || 'SIN ASIGNAR'}}</td>
+              <td class="text-center"><small class="badge badge-pill badge-success"> {{r.total }}</small></td>
+              <td class="text-center"><small class="badge badge-pill badge-warning"> {{r.concita }}</small></td>
+              <td class="text-center"><small class="badge badge-pill badge-purple"> {{r.sincita }}</small></td>
               <!-- <td class="text-center"><small class="badge badge-pill badge-info"> 20 min</small></td> -->
             </tr>
           </div>
