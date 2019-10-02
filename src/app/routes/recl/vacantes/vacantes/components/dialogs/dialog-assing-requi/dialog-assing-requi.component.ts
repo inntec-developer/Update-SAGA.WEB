@@ -285,7 +285,7 @@ export class DialogAssingRequiComponent implements OnInit {
             this.dialogAssing.close(true);
           }
           else {
-            swal('Aprobación / Asignación Requisición', 'Algo Salio mal intentear actualizar la información.', 'error');
+            swal('Aprobación / Asignación Requisición', 'Algo Salio mal intentar actualizar la información.', 'error');
             this.loading = false;
           }
         });
