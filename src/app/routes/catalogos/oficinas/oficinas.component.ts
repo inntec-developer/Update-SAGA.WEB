@@ -1,13 +1,14 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-
 import { ApiConection } from '../../../service/api-conection.service';
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
 import {Http} from '@angular/http';
 import {MatTableDataSource} from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { window } from 'rxjs-compat/operator/window';
+
+declare var $: any;
 
 @Component({
   selector: 'app-oficinas',
@@ -73,7 +74,7 @@ export class OficinasComponent implements OnInit {
   }
 
   llamartipo(){
-    this.tipo = [{id:0,nombre:'Seleccione tipo de reclutamiento'},
+    this.tipo = [//{id:0,nombre:'Seleccione tipo de reclutamiento'},
     {id:3,nombre:'Reclutamiento'},
     {id:1,nombre:'Corporativo'},
     {id:2,nombre:'Ventas'},
@@ -85,13 +86,10 @@ export class OficinasComponent implements OnInit {
     this.LimpiaFiltro(0);
     this.LimpiaFiltro(1);
     this.Servicio.getSucursales('').subscribe(item =>{
-
       this.datos = item;
       this.requisiciones = item;
       this.onChangeTable(this.config);
       this.spinner.hide();
-      
-
       })
   }
 
@@ -107,23 +105,22 @@ export class OficinasComponent implements OnInit {
     let nom = document.getElementById('nombreOfi')['value'];
     let est = document.getElementById('EstadoOfi')['value'];
     let mun = document.getElementById('MunicipioOfi')['value'];
-    let col = document.getElementById('colonia')['value'];
+    let col = document.getElementById('coloniaOfi')['value'];
     let cp = document.getElementById('cp')['value'];
-    let calle = document.getElementById('calle')['value'];
-    let num = document.getElementById('numero')['value'];
-    let tel = document.getElementById('telefono')['value'];
-    let email = document.getElementById('email')['value'];
-    let lat = document.getElementById('latitud')['value'];
-    let lon = document.getElementById('longitud')['value'];
+    let calle = document.getElementById('calleOfi')['value'];
+    let num = document.getElementById('numeroOfi')['value'];
+    let tel = document.getElementById('telefonoOfi')['value'];
+    let email = document.getElementById('emailOfi')['value'];
+    let lat = $("#latitudOfi").val();
+    let lon = $("#longitudOfi").val();
     let tipo = document.getElementById('tipoOfi')['value'];
     let act = document.getElementById('checkModal-input')['checked'];
     let id = document.getElementById('Identi')['value'];
 
-    if(tipo == "0"){
-      alert("Seleccione un tipo de reclutamiento")
-      return
-    }
-
+    // if(tipo == "0"){
+    //   tipo = 2;
+    // }
+debugger;
     if(id == '0'){
       this.Servicio.GuardarOficina(nom , est , mun , col , cp , calle , num , tel , email ,lat , lon , tipo ).subscribe(item =>{
         alert(item)
@@ -175,7 +172,7 @@ export class OficinasComponent implements OnInit {
   AbrirModal(){
     document.getElementById('Identi')['value'] = '0';
     document.getElementById('tipoOfi')['value'] = '3';
-    
+
 
     this.nombre = "";
     this.cp = "";
@@ -186,7 +183,7 @@ export class OficinasComponent implements OnInit {
     this.lat = "";
     this.lon = "";
 
-   
+
     this.nombre = '';
     this.Servicio.getOficinaEstado('0').subscribe(item =>{
       this.Estado = item;
@@ -194,11 +191,11 @@ export class OficinasComponent implements OnInit {
       })
       this.Municipio = [{id:0,municipio:'Seleccione un municipio'}]
       this.Colonia = [{id:0,colonia:'Seleccione una colonia'}]
-      
+
   }
 
   EditarModal(id){
-debugger;
+
     document.getElementById('Identi')['value'] = id;
     this.nombre = document.getElementById('nombre_' + id)['value'];
     this.cp = document.getElementById('codigopostal_' + id)['value'];
@@ -212,7 +209,7 @@ debugger;
     let mun = document.getElementById('Municipio_'+ id)['value'];
     let col = document.getElementById('Colonia_'+ id)['value'];
     var ofiId = document.getElementById('TipoOficina_'+ id)['value'];
-   
+
     document.getElementById('tipoOfi')['value'] = ofiId;
 
     this.Servicio.getOficinaEstado(es).subscribe(item =>{
@@ -290,7 +287,7 @@ debugger;
         { title: 'longitud', className: 'text-success text-center', name: 'longitud', filtering: { filterString: '', placeholder: 'longitud' } },
         { title: 'tipoOficina', className: 'text-success text-center', name: 'tipoOficina', filtering: { filterString: '', placeholder: 'tipo Oficina' } },
         { title: 'Activo', className: 'text-success text-center'},
-        { title: 'Accion', className: 'text-success text-center'}, 
+        { title: 'Accion', className: 'text-success text-center'},
       ];
     }
   }
@@ -450,6 +447,6 @@ public clearfilters() {
 
 }
 
-  
+
 }
 
