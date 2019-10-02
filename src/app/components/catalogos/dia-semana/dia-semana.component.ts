@@ -34,6 +34,7 @@ export class DiaSemanaComponent implements OnInit, OnChanges {
     this.formDias = new FormGroup({
       id: new FormControl(),
       diaSemana: new FormControl({value: '', disabled: true}, [Validators.required]),
+      tipo: new FormControl({value: '', disabled: true}, [Validators.required]),
       activo: new FormControl({value: '', disabled: true})
     });
   }
@@ -46,6 +47,7 @@ export class DiaSemanaComponent implements OnInit, OnChanges {
       this.Habilita(false);
       this.formDias.get('id').setValue(this.SelectedDia.id);
       this.formDias.get('diaSemana').setValue(this.SelectedDia.diaSemana);
+      this.formDias.get('tipo').setValue(this.SelectedDia.tipo);
       this.formDias.get('activo').setValue(this.SelectedDia.activo);
     }
     if (this.Log !== undefined) {
@@ -87,9 +89,11 @@ export class DiaSemanaComponent implements OnInit, OnChanges {
   Habilita(opt: boolean) {
     if (!opt) {
       this.formDias.get('diaSemana').enable();
+      this.formDias.get('tipo').enable();
       this.formDias.get('activo').enable();
     } else {
       this.formDias.get('diaSemana').disable();
+      this.formDias.get('tipo').disable();
       this.formDias.get('activo').disable();
     }
   }

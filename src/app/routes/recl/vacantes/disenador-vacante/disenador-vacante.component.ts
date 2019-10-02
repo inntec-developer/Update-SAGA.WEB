@@ -23,9 +23,9 @@ import { id } from '@swimlane/ngx-datatable/release/utils';
 })
 
 export class DisenadorVacanteComponent implements OnInit {
-  @Input() Folio;
-  @Input() Requi;
-  @Input() VBtra;
+  @Input() Folio: any;
+  @Input() Requi: string;
+  @Input() VBtra: any;
 
   public General: any[];
   public Contrato: any[];
@@ -100,10 +100,12 @@ export class DisenadorVacanteComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.spinner.show();
     this.service.getGeneral(this.Requi)
       .subscribe(data => {
         this.General = data;
         this.ViewRequi = data[0].requi;
+        this.spinner.hide();
         this.contactos = data[0].requi.contactos[0];
         this.escolaridadesRequi = data[0].requi.escolaridadesRequi;
         this.horariosRequi = data[0].requi.horariosRequi;
