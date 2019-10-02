@@ -575,7 +575,11 @@ export class ViewdamfoComponent implements OnInit {
       doc.text(Contrato, xOffsetCon, row += 10);
       row += 5;
       doc.setFontSize(8);
-      doc.text('TIPO CONTRATO: ' + this.damfo290.tipoContrato.toUpperCase() + '\t' + this.damfo290.tiempo.toUpperCase(), 40, row += 10);
+      if (this.damfo290.tipoContratoId === 1) {
+        doc.text('TIPO CONTRATO: ' + this.damfo290.tipoContrato.toUpperCase() + '\t', 40, row += 10);
+      } else {
+        doc.text('TIPO CONTRATO: ' + this.damfo290.tipoContrato.toUpperCase() + '\t' + this.damfo290.tiempo.toUpperCase(), 40, row += 10);
+      }
       row += 5;
       if (row >= 755 && newPage === false) {
         doc.addPage();
