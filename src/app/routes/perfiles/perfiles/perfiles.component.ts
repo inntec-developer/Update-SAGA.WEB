@@ -30,6 +30,7 @@ export class PerfilesComponent implements OnInit {
 
   ngOnInit() {
     this._Route.params.subscribe(params => {
+      debugger;
       this.foto = params['picture'];
       this.nombre = params['name'];
       this.clave = params['clave'];
@@ -39,7 +40,6 @@ export class PerfilesComponent implements OnInit {
       this.lider = params['lider'];
       this.departamento = params['departamento'];
       this.roles = params['roles'];
-      console.log(this.roles);
       });
     }
 

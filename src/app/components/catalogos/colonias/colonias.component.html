@@ -9,7 +9,7 @@
                 <div class="col-md-2 m-5">
                     <mat-form-field>
                         <mat-label>Selecciona un pais</mat-label>
-                        <mat-select formControlName="pais">
+                        <mat-select formControlName="pais" (selectionChange)="ChPais($event.source.selected.viewValue)">
                             <mat-option *ngFor="let pais of CPaises" [value]="pais.id" (click)="ChPais(pais.pais)">
                                 {{pais.pais}}
                             </mat-option>
@@ -19,7 +19,7 @@
                 <div class="col-md-2 m-5">
                     <mat-form-field>
                         <mat-label>Selecciona un estado</mat-label>
-                        <mat-select formControlName="estado">
+                        <mat-select formControlName="estado" (selectionChange)="ChEstado($event.source.selected.viewValue)">
                             <mat-option *ngFor="let estado of CEstados" [value]="estado.id" (click)="ChEstado(estado.estado)">
                                 {{estado.estado}}
                             </mat-option>

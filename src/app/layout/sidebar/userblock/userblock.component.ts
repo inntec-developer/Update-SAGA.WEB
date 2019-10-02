@@ -1,4 +1,4 @@
-import * as jwt_decode from "jwt-decode";
+import * as jwt_decode from 'jwt-decode';
 
 import { Component, OnInit, SimpleChanges } from '@angular/core';
 
