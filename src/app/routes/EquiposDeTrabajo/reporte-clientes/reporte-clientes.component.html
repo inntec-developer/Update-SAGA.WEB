@@ -68,8 +68,9 @@
                 </div>
                 <div class="card-body bt bb h-75">
                   <ng-container *ngFor="let r of t.reclutadores">
-                    <div class="inline" container="body" placement="right" tooltip="{{r.nombre}}">
-                      <img class="img-fluid circle thumb48" [src]="r.foto" (error)="errorImg(r)" />
+                    <div class="inline">
+                      <img container="body" placement="right" tooltip="{{r.nombre}}" *ngIf="r.tipoUsuario == 4 || r.tipoUsuario == 5 || r.tipoUsuario == 10" class="img-fluid circle thumb48" [src]="r.foto" (error)="errorImg(r)" />
+                      <img container="body" placement="right" tooltip="{{r.nombre}}" *ngIf="r.tipoUsuario == 11" class="img-fluid circle thumb32" [src]="r.foto" (error)="errorImg(r)" />
                     </div>
                   </ng-container>
                   <div class="text-center mt-2">
@@ -136,8 +137,9 @@
             class="fa fa-times"></i></button>
       </div>
       <div class="modal-body">
-        <app-tabla-equipos [usuarioId]="usuarioLogin" [orden]="orden" [flag]='1'></app-tabla-equipos>
+        <app-tabla-equipos [usuarioId]="usuarioLogin" [orden]="orden" [flag]=1></app-tabla-equipos>
       </div>
     </div>
   </div>
 </div>
+<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>

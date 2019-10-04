@@ -16,9 +16,10 @@ import { RollsStructComponent } from './rolls-struct/rolls-struct.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ToolsModule } from '../../tools/tools.module';
 import { UploadImgsComponent } from './upload-imgs/upload-imgs.component';
+import { AdminPrincipalComponent } from './admin-principal/admin-principal.component';
 
 const routes: Routes = [
-    { path: 'roles', component: RollsStructComponent, data: {'componente':'Roles'} },
+    { path: 'roles', component: AdminPrincipalComponent, data: {'componente':'Roles'} },
     { path: 'agregar', component: AddPersonaComponent, data: {'componente':'Usuarios'} },
     { path: 'grupo', component: AddadminComponent, data: {'componente':'Usuarios a grupos'} },
     { path: 'grupoAdd', component: AddGrupoComponent, data: {'componente':'Grupos'} },
@@ -50,7 +51,8 @@ const routes: Routes = [
       UploadImgsComponent,
       FilesContratadosComponent,
       JobRequiPauseComponent,
-      PopupModalComponent
+      PopupModalComponent,
+      AdminPrincipalComponent
     ],
     exports: [
         RouterModule

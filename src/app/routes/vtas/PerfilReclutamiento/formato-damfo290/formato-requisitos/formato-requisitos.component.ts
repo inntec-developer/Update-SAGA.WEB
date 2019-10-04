@@ -167,8 +167,8 @@ export class FormatoRequisitosComponent implements OnInit, OnChanges {
       this.AreasAux = element;
     });
     this._serviceCatalgos.getCatalogoForId(23).subscribe(element => {
-      this.DiasCorte = element;
-      this.DiasPago = element;
+      this.DiasCorte = element.filter(e => e.tipo === 1);
+      this.DiasPago = element.filter(e => e.tipo === 2);
     });
     this._serviceCatalgos.getCatalogoForId(24).subscribe(element => {
       this.TiposNomina = element;

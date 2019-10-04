@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild, ViewChildren } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild, ViewChildren, OnChanges } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
@@ -22,7 +22,7 @@ declare var $: any;
   styleUrls: ['./info-candidato.component.scss'],
   providers: [InfoCandidatoService]
 })
-export class InfoCandidatoComponent implements OnInit {
+export class InfoCandidatoComponent implements OnInit, OnChanges {
   candidato: any;
   @Input('IdCandidato') CandidatoId: string;
   @Input('VerVacantes') VerVacantes: boolean = true;
@@ -74,12 +74,64 @@ export class InfoCandidatoComponent implements OnInit {
   desapartar = true;
   loading: boolean;
 
-  //examenes
+  // examenes
   examen = { 'tecnicos': [], 'psicometricos': [] };
   modalExamen = false;
   modalComentarios = false;
-  ShowButtonCV: boolean = false;
+  ShowButtonCV = false;
 
+  /*
+    Tabla de postulaciones del candidato visualizado.
+  */
+
+ public rows_p: Array<any> = [];
+ public columns_p: Array<any> = [
+   { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+   { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
+   { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
+ ];
+ /*
+   Variables y funcionamiento para Tabla de Postulaciones de Candidato.
+ */
+ registros_p: number;
+/*
+    Columnas para Tabla de Vacantes
+  */
+ public rows: Array<any> = [];
+ public columns: Array<any> = [
+   { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+   { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
+   { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
+   { title: 'Cub/Vac', className: 'text-info text-center', name: 'vacantes',
+   filtering: { filterString: '', placeholder: 'Cubiertas/Vacantes' } },
+   { title: 'Tipo Recl.', className: 'text-info text-center', name: 'tipoReclutamiento',
+   filtering: { filterString: '', placeholder: 'Tipo' } },
+   { title: 'Cumplimiento', className: 'text-info text-center', name: 'fch_Cumplimiento',
+   filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+   { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
+ ];
+ public config_v: any = {
+  paging: true,
+  filtering: { filterString: '' },
+  className: ['table-hover mb-0']
+  };
+  public config_p: any = {
+    className: ['table-striped table-bordered mb-0 d-table-fixed']
+  };
+
+  /**
+   * configuracion para mensajes de acciones.
+   */
+
+  popToast(type, title, body) {
+    const toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 4000,
+      body: body
+    };
+    this.toasterService.pop(toast);
+  }
 
   constructor(
     private _serviceCandidato: InfoCandidatoService,
@@ -95,7 +147,7 @@ export class InfoCandidatoComponent implements OnInit {
       id: null,
       vBtra: null,
       folio: null
-    }
+    };
 
     this.usuario = this.settings.user['nombre'];
     this.usuarioId = this.settings.user['id']
@@ -107,13 +159,13 @@ export class InfoCandidatoComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
+    // Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    // Add '${implements OnChanges}' to the class.
     if (changes.CandidatoId && !changes.CandidatoId.isFirstChange()) {
       this.SelectedMisVacantes = true;
       this.ngOnInit();
       this.getPostulaciones();
-      this.refreshTable_v()
+      this.refreshTable_v();
       this.vacante = {};
       this.procesoCandidatoId = 0;
       this.Status = '';
@@ -123,10 +175,10 @@ export class InfoCandidatoComponent implements OnInit {
 
   }
 
-  validarFecha(fnac) : number{
-    var fn = new Date(fnac);
-    var date = new Date();
-    var edad = date.getFullYear() - fn.getFullYear();
+  validarFecha(fnac): number {
+    const fn = new Date(fnac);
+    const date = new Date();
+    let edad = date.getFullYear() - fn.getFullYear();
 
     if (date.getMonth() < fn.getMonth() - 1) {
       edad--;
@@ -141,12 +193,11 @@ export class InfoCandidatoComponent implements OnInit {
     this.spinner.show();
     // this.CandidatoId = '4F65DAC1-C6A0-E811-80E8-9E274155325E'
     this._serviceCandidato.getInfoCandidato(this.CandidatoId).subscribe(data => {
-
       this.candidato = {
         id: data.id,
         picture: ApiConection.ServiceUrlBolsa + data.foto,
         nombre: data.nombre,
-        aboutMe: data.aboutMe.length != 0 ? data.aboutMe[0]['acercaDeMi'] : null,
+        aboutMe: data.aboutMe.length !== 0 ? data.aboutMe[0]['acercaDeMi'] : null,
         edad: this.validarFecha(data.fechaNacimiento),
         genero: data.genero,
         correo: data.email ? data.email.email : null,
@@ -164,12 +215,11 @@ export class InfoCandidatoComponent implements OnInit {
         info: data.candidato,
         propietarioId: data.propietarioId,
         urlCv: data.urlCv
-      }
-      if (this.candidato.urlCv != '') {
+      };
+      if (this.candidato.urlCv !== '') {
         this.urlCV = ApiConection.ServiceUrlBolsa + this.candidato.urlCv;
         this.ShowButtonCV = true;
-      }
-      else {
+      } else {
         this.urlCV = '';
         this.ShowButtonCV = false;
       }
@@ -185,6 +235,7 @@ export class InfoCandidatoComponent implements OnInit {
       this._serviceExamen.GetExamenCandidato(this.candidato.id).subscribe(exa => {
         this.examen.tecnicos = exa[0];
         this.examen.psicometricos = exa[1];
+        this.getPostulaciones();
         this.spinner.hide();
       });
     });
@@ -196,114 +247,39 @@ export class InfoCandidatoComponent implements OnInit {
     this.auxestatus = true;
   }
 
-  ngAfterViewInit() {
-    this.getPostulaciones();
-    setTimeout(() => {
-      this.onChangeTable_v(this.config_v);
-    }, 1500);
-  }
-
-  /*
-    Columnas para Tabla de Vacantes
-  */
-  public rows: Array<any> = [];
-  public columns: Array<any> = [
-    { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
-    { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
-    { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
-    { title: 'No. Vacantes', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No. Vacantes' } },
-    { title: 'Tipo Recl.', className: 'text-info text-center', name: 'tipoReclutamiento', filtering: { filterString: '', placeholder: 'Tipo' } },
-    { title: 'Cumplimiento', className: 'text-info text-center', name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
-    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
-  ];
+  // ngAfterViewInit() {
+  //   this.getPostulaciones();
+  //   setTimeout(() => {
+  //     this.onChangeTable_v(this.config_v);
+  //   }, 1500);
+  // }
 
   getMisVacates() {
     this._serviceCandidato.getMisVacantes(this.settings.user['id']).subscribe(data => {
       this.dataSource_v = data;
+      this.onChangeTable_v(this.config_v);
     });
   }
-
-  public config_v: any = {
-    paging: true,
-    //sorting: { columns: this.columns },
-    filtering: { filterString: '' },
-    className: ['table-hover mb-0']
-  };
 
   public changePage_v(page: any, data: Array<any> = this.dataSource_v): Array<any> {
-    let start = (page.page - 1) * page.itemsPerPage;
-    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    const start = (page.page - 1) * page.itemsPerPage;
+    const end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
-  }
-
-  public changeSort_v(data: any, config: any): any {
-    if (!config.sorting) {
-      return data;
-    }
-
-    let columns = this.config_v.sorting.columns || [];
-    let columnName: string = void 0;
-    let sort: string = void 0;
-
-    for (let i = 0; i < columns.length; i++) {
-      if (columns[i].sort !== '' && columns[i].sort !== false) {
-        columnName = columns[i].name;
-        sort = columns[i].sort;
-      }
-    }
-
-    if (!columnName) {
-      return data;
-    }
-    // simple sorting
-    return data.sort((previous: any, current: any) => {
-      if (previous[columnName] > current[columnName]) {
-        return sort === 'desc' ? -1 : 1;
-      } else if (previous[columnName] < current[columnName]) {
-        return sort === 'asc' ? -1 : 1;
-      }
-      return 0;
-    });
   }
 
   public changeFilter_v(data: any, config: any): any {
     let filteredData: Array<any> = data;
+    this.showFilterRow_v = true;
     this.columns.forEach((column: any) => {
-      if (column.filtering) {
-        this.showFilterRow_v = true;
+      if (column.filtering.filterString !== '') {
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
+          if (item[column.name] != null) {
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+          }
         });
       }
     });
 
-    if (!config.filtering) {
-      return filteredData;
-    }
-
-    if (config.filtering.columnName) {
-      return filteredData.filter((item: any) =>
-        item[config.filtering.columnName].toLowerCase().match(this.config_v.filtering.filterString.toLowerCase()));
-    }
-
-    let tempArray: Array<any> = [];
-    filteredData.forEach((item: any) => {
-      let flag = false;
-      this.columns.forEach((column: any) => {
-        if (item[column.name] == null) {
-          flag = true;
-        } else {
-          if (item[column.name].toString().toLowerCase().match(this.config_v.filtering.filterString.toLowerCase())) {
-            flag = true;
-          }
-        }
-      });
-      if (flag) {
-        tempArray.push(item);
-      }
-    });
-    filteredData = tempArray;
     return filteredData;
   }
 
@@ -312,15 +288,11 @@ export class InfoCandidatoComponent implements OnInit {
       (<any>Object).assign(this.config_v.filtering, config.filtering);
     }
 
-    if (config.sorting) {
-      (<any>Object).assign(this.config_v.sorting, config.sorting);
-    }
     this.registros_v = this.dataSource_v.length;
     this.rows = this.dataSource_v;
-    let filteredData = this.changeFilter_v(this.dataSource_v, this.config_v);
-    let sortedData = this.changeSort_v(filteredData, this.config_v);
-    this.rows = page && config.paging ? this.changePage_v(page, sortedData) : sortedData;
-    this.length_v = sortedData.length;
+    const filteredData = this.changeFilter_v(this.dataSource_v, this.config_v);
+    this.rows = page && config.paging ? this.changePage_v(page, filteredData) : filteredData;
+    this.length_v = filteredData.length;
 
   }
 
@@ -357,25 +329,30 @@ export class InfoCandidatoComponent implements OnInit {
       this.desapartar = true;
     } else {
       this.selected = true;
-      let index = this.dataSource_v.indexOf(data.row);
+      const index = this.dataSource_v.indexOf(data.row);
       this.vacante = {
         id: data.id,
         vBtra: data.vBtra,
         folio: data.folio
-      }
+      };
       this.infoFolio = data.folio;
       this.infoRequiId = data.id;
 
       if (this.candidato.estatus != null) {
-        data.vacantes == 0 || data.vacantes == data.contratados || data.estatusId == 39 || this.candidato.estatusId == 28 ||
-          (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId == 26) ||
-          (this.candidato.estatus.requisicionId == data.id && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 40) ||
-          (this.candidato.estatus.requisicionId != data.id && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 26 && this.candidato.estatus.estatusId != 40) ? this.auxestatus = true : this.auxestatus = false;
+        data.vacantes === 0 || data.vacantes === data.contratados || data.estatusId === 39 || this.candidato.estatusId === 28 ||
+          (this.candidato.estatus.requisicionId === data.id && this.candidato.estatus.estatusId === 26) ||
+          (this.candidato.estatus.requisicionId === data.id && this.candidato.estatus.estatusId !== 27 &&
+          this.candidato.estatus.estatusId !== 40) ||
+          (this.candidato.estatus.requisicionId !== data.id && this.candidato.estatus.estatusId !== 27 &&
+          this.candidato.estatus.estatusId !== 26 &&
+          this.candidato.estatus.estatusId !== 40) ? this.auxestatus = true : this.auxestatus = false;
 
-        data.estatusId != 39 && (this.candidato.estatus.requisicionId == data.id && this.reclutadorId == this.usuarioId && this.candidato.estatus.estatusId != 27 && this.candidato.estatus.estatusId != 40 &&
-          this.candidato.estatus.estatusId != 24 && this.candidato.estatus.estatusId != 26 && this.candidato.estatus.estatusId != 28 && this.candidato.estatus.estatusId != 42) ? this.desapartar = false : this.desapartar = true;
-      }
-      else {
+        data.estatusId !== 39 && (this.candidato.estatus.requisicionId === data.id && this.reclutadorId === this.usuarioId &&
+          this.candidato.estatus.estatusId !== 27 && this.candidato.estatus.estatusId !== 40 &&
+          this.candidato.estatus.estatusId !== 24 && this.candidato.estatus.estatusId !== 26 &&
+          this.candidato.estatus.estatusId !== 28 && this.candidato.estatus.estatusId !== 42) ?
+          this.desapartar = false : this.desapartar = true;
+      } else {
         this.desapartar = true;
 
         data.vacantes > 0 && data.vacantes > data.contratados ? this.auxestatus = false : this.auxestatus = true;
@@ -384,39 +361,21 @@ export class InfoCandidatoComponent implements OnInit {
       }
     }
 
-    if (this.rowAux.length == 0) {
+    if (this.rowAux.length === 0) {
       this.rowAux = data;
-    }
-    else if (data.selected && this.rowAux != []) {
-      var aux = data;
+    } else if (data.selected && this.rowAux !== []) {
+      const aux = data;
       data = this.rowAux;
       data.selected = false;
       aux.selected = true;
       this.rowAux = aux;
     }
 
-
   }
-
-
-  /*
-    Tabla de postulaciones del candidato visualizado.
-  */
-
-  public rows_p: Array<any> = [];
-  public columns_p: Array<any> = [
-    { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
-    { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
-    { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
-  ];
-  /*
-    Variables y funcionamiento para Tabla de Postulaciones de Candidato.
-  */
-  registros_p: number;
 
   getPostulaciones() {
     this._serviceCandidato.getPostulaciones(this.CandidatoId).subscribe(data => {
-      this.dataSource_p = data
+      this.dataSource_p = data;
       this.rows_p = data;
       this.registros_p = this.rows_p.length;
     });
@@ -426,23 +385,6 @@ export class InfoCandidatoComponent implements OnInit {
     this.getMisVacates();
   }
 
-  public config_p: any = {
-    className: ['table-striped table-bordered mb-0 d-table-fixed']
-  };
-
-  /**
-   * configuracion para mensajes de acciones.
-   */
-
-  popToast(type, title, body) {
-    var toast: Toast = {
-      type: type,
-      title: title,
-      timeout: 4000,
-      body: body
-    }
-    this.toasterService.pop(toast);
-  }
   notAccess() {
     var msg = 'Accion no permitada, el candidato se encuentra en proceso con ' + this.reclutador;
     this.popToast('error', 'No Autorizado', msg);
@@ -471,9 +413,11 @@ export class InfoCandidatoComponent implements OnInit {
             this.GetInfoCandidato();
             this.auxestatus = true;
             this.desapartar = false;
-            this.ngAfterViewInit();
+            this.refreshTable_v();
 
-            var msg = 'El candidato se aparto correctamente.';
+            this.getPostulaciones();
+
+            const msg = 'El candidato se aparto correctamente.';
             this.popToast('success', 'Apartado', msg);
             this.Emiter = {
               estatusId: 12,
@@ -484,23 +428,22 @@ export class InfoCandidatoComponent implements OnInit {
             break;
           }
           case 304: {
-            msg = 'El candidato ya esta apartado o en proceso.';
-            this.popToast('info', 'Apartado', msg); ''
+            const msg = 'El candidato ya esta apartado o en proceso.';
+            this.popToast('info', 'Apartado', msg);
             this.loading = false;
             this.auxestatus = true;
             this.desapartar = true;
             break;
           }
           case 404: {
-            var msg = 'Error el intentar apartar el candidato. Consulte al departamento de soporte si el problema persiste.';
+            const msg = 'Error el intentar apartar el candidato. Consulte al departamento de soporte si el problema persiste.';
             this.popToast('error', 'Apartado', msg);
             this.loading = false;
             this.auxestatus = false;
             break;
           }
           default: {
-            var msg = 'Error inesperado y desconocido, reporte el problema el departamento de soporte.';
-            this.popToast('error', 'Oops!!', msg);
+            this.popToast('error', 'Oops!!', 'Error inesperado y desconocido, reporte el problema el departamento de soporte.');
             this.loading = false;
             this.auxestatus = false;
             break;
@@ -518,27 +461,24 @@ export class InfoCandidatoComponent implements OnInit {
 
 
   onClose(value) {
-    if (value == 200) {
+    if (value === 200) {
       this.GetInfoCandidato();
       this.desapartar = true;
       this.auxestatus = false;
 
-      this.ngAfterViewInit();
-
-      var msg = 'El candidato se libero correctamente.';
-      this.popToast('warning', 'Liberado', msg);
+      this.refreshTable_v();
+      this.getPostulaciones();
+      this.popToast('warning', 'Liberado', 'El candidato se libero correctamente.');
       this.modal.hide();
       this.dlgLiberar = false;
-    }
-    else if (value == 404) {
-      var msg = 'Error el intentar liberar el candidato. Consulte al departamento de soporte si el problema persiste.';
+    } else if (value === 404) {
+      const msg = 'Error el intentar liberar el candidato. Consulte al departamento de soporte si el problema persiste.';
       this.desapartar = false;
       this.auxestatus = true;
       this.popToast('error', 'Apartado', msg);
       this.modal.hide();
       this.dlgLiberar = false;
-    }
-    else {
+    } else {
       this.modal.hide();
       this.dlgLiberar = false;
     }
@@ -552,7 +492,7 @@ export class InfoCandidatoComponent implements OnInit {
       ReclutadorId: this.settings.user['id'],
       ProcesoCandidatoId: this.Estatus,
 
-    })
+    });
 
     this.dlgLiberar = true;
   }
@@ -565,7 +505,7 @@ export class InfoCandidatoComponent implements OnInit {
       ReclutadorId: this.settings.user['id'],
       ProcesoCandidatoId: this.Estatus,
 
-    })
+    });
 
     this.dlgLiberar = true;
 
@@ -594,16 +534,16 @@ export class InfoCandidatoComponent implements OnInit {
   }
   _liberarCandidato(result) {
 
-    if (this.reclutador == this.usuario || !this.candidato.estatus) {
+    if (this.reclutador === this.usuario || !this.candidato.estatus) {
       this.loading = true;
-      var data = {
+      const data = {
         RequisicionId: this.vacante.id,
         CandidatoId: this.CandidatoId,
         ReclutadorId: this.settings.user['id'],
         MotivoId: result.motivo,
         ProcesoCandidatoId: this.Estatus,
         Comentario: result.comentario,
-      }
+      };
       this._serviceCandidato.setLiberarCandidato(data)
         .subscribe(data => {
           switch (data) {
@@ -612,11 +552,11 @@ export class InfoCandidatoComponent implements OnInit {
               this.desapartar = true;
               this.auxestatus = false;
 
-              this.ngAfterViewInit();
+              this.getPostulaciones();
 
               this.loading = false;
 
-              var msg = 'El candidato se libero correctamente.';
+              const msg = 'El candidato se libero correctamente.';
               this.popToast('warning', 'Liberado', msg);
               this.Emiter = {
                 estatusId: 27,
@@ -629,7 +569,7 @@ export class InfoCandidatoComponent implements OnInit {
               break;
             }
             case 404: {
-              var msg = 'Error el intentar liberar el candidato. Consulte al departamento de soporte si el problema persiste.';
+              const msg = 'Error el intentar liberar el candidato. Consulte al departamento de soporte si el problema persiste.';
               this.desapartar = false;
               this.auxestatus = true;
               this.popToast('error', 'Apartado', msg);
@@ -638,18 +578,17 @@ export class InfoCandidatoComponent implements OnInit {
             }
           }
         });
-    }
-    else {
+    } else {
       this.notAccess();
     }
   }
 
   showCvCandidato() {
-    var window290 = window.open(this.urlCV, "_blank",
-      "toolbar=no,scrollbars=no,resizable=no,status=no,menubar=no,location=no,fullscreen=yes,directories=no");
+    const window290 = window.open(this.urlCV, '_blank',
+      'toolbar=no,scrollbars=no,resizable=no,status=no,menubar=no,location=no,fullscreen=yes,directories=no');
   }
 
   ImgErrorCandidato() {
-    this.candidato['picture'] = '/assets/img/user/default-user.png'
+    this.candidato['picture'] = '/assets/img/user/default-user.png';
   }
 }

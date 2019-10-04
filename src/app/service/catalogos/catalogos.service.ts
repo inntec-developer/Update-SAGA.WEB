@@ -256,7 +256,7 @@ return this._httpClient.get(this.UrlGetTipoDireccion, {headers: this.httpOptions
     return;
   }
 
-  getCatalogoForId(IdCatalogo: any): Observable<any>{
+  getCatalogoForId(IdCatalogo: any): Observable<any> {
     const params = new HttpParams().set('IdCatalogo', IdCatalogo);
     return this._httpClient.get<any>(this.UrlGetCatalgoForId, {params: params, headers: this.httpOptions.headers});
   }

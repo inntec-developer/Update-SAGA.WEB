@@ -30,16 +30,21 @@ public dataSource: Array<any> = [];
 
   public rows: Array<any> = [];
   public columns: Array<any> = [
-    { title: 'Folio', sorting: 'desc', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
-    { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
+    { title: 'Folio', sorting: 'desc', className: 'text-success text-center', name: 'folio',
+    filtering: { filterString: '', placeholder: 'Folio' } },
+    { title: 'Cliente', className: 'text-info text-center', name: 'cliente',
+    filtering:{ filterString: '', placeholder: 'Cliente' } },
     { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
-    { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento',
+    filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'Posiciones', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: '0' } },
     { title: 'Cubiertas', className: 'text-info text-center', name: 'contratados', filtering: { filterString: '', placeholder: '0' } },
     { title: 'Faltantes', className: 'text-info text-center', name: 'faltantes', filtering: { filterString: '', placeholder: '0' } },
     { title: '% Cumpl.', className: 'text-info text-center', name: 'cumplimiento', filtering: { filterString: '', placeholder: '0' } },
-    { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador', filtering: { filterString: '', placeholder: 'Coordinador', columnName: 'reclutadores' } },
-    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador', columnName: 'reclutadores' } },
+    { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador',
+    filtering: { filterString: '', placeholder: 'Coordinador', columnName: 'reclutadores' } },
+    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores',
+    filtering: { filterString: '', placeholder: 'Reclutador', columnName: 'reclutadores' } },
   ];
   public config: any = {
     paging: true,
@@ -157,7 +162,11 @@ public dataSource: Array<any> = [];
 
   public refreshTable() {
 
+    if (this.flag === 0) {
     this.getRequisiciones();
+    } else {
+      this.getRequisicionesClientes();
+    }
     setTimeout(() => {
       this.columns.forEach(element => {
         element.filtering.filterString = '';

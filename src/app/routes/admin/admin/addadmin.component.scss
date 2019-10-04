@@ -1,5 +1,4 @@
 .panel-body {
-  overflow-x: hidden;
   height: 800px;
 }
 .tituloPuesto
@@ -43,6 +42,15 @@
 {
     width: 350px;
 }
+
+ng-scrollbar {
+  --scrollbar-size: 4px;
+  --scrollbar-thumb-color: rgb(94, 175, 255);
+  --scrollbar-thumb-hover-color: dodgerblue;
+  --scrollbar-border-radius: 4px;
+}
+
+
 /**
  * For the correct positioning of the placeholder element, the dnd-list and
  * it's children must have position: relative

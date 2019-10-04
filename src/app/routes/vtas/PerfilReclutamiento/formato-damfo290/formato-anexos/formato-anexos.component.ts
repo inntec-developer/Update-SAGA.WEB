@@ -56,7 +56,6 @@ export class FormatoAnexosComponent implements OnInit, OnChanges {
     if (this.IdFormato != null) {
       this._servicePerfilR.getAnexosPerfil(this.IdFormato).subscribe(data => {
         if (data !== 404) {
-
           this.Beneficios = data['beneficios'];
           this.Horarios = data['horarios'];
           this.Actividades = data['actividades'];

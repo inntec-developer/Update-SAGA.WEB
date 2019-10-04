@@ -1,72 +1,91 @@
 
-<div class="content-heading">
-    <div>
-      Grupos
-      <span class="text-sm d-none d-sm-block">Administraci&oacute;n de grupos.</span>
-    </div>
-    <!-- Breadcrumb right aligned-->
-    <ol class="breadcrumb ml-auto">
-      <li class="breadcrumb-item">
-        <a [routerLink]="['/home']">Inicio</a>
-      </li>
-      <li class="breadcrumb-item active">Grupos</li>
-    </ol>
-  </div>
-  
 
-<form [formGroup]="formGrupos" novalidate >
-  <div>
-      <!-- <div *ngIf="verMsj">
-          <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
-        </div> -->
-
-    <div class="panel mat-elevation-z8">
-     <div class="panel-body">
-       <br/><br/>
-       <div class="col-md-4">
-          <div class="input-group">
-          <input (input)="Search($event)" class="input-sm form-control" type="text" placeholder="Filtrar" />
-          </div>
-      </div>
+  <div *ngIf="!agregar">
+    <div class="card">
+     <div class="card-body">
+        <div class="row p-2 mb-1 bg-light">
+            <div class="col">
+                <ng-template #popTemplate>
+                  <h3 class="popover-header text-center">{{grupo}}</h3>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="popover-body" *ngFor="let r of UsuariosList">
+                        <img class="float-left img-fluid circle thumb32" src={{r.fotoAux}} alt=""/>
+                        <span class="bodymio"> {{ ' ' + r.nombre + ' ' + r.apellidoPaterno + ' ' + r.apellidoMaterno}} </span>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+                <button (click)="grupo=dataRow.nombre; GetUsuarios(dataRow.id);" [disabled]="dataRow.length == 0" [ngClass]="dataRow.length == 0 ? 'disable' : 'btn-warning'" class="btn btn-xs mat-elevation-z8 float-left mr-2"
+                 data-toggle="popover" [popover]="popTemplate" placement="right" [outsideClick]="true"  container="body" placement="bottom" tooltip="Ver integrantes del grupo"><i class="fa fa-eye"></i></button>
+                 <button id='create' chkPrivilegiosButtons class="btn btn-xs btn-info mat-elevation-z8 float-left mr-2" (click)="agregar = true;iniciarForms();" container="body" placement="bottom"
+                tooltip="Agregar Grupo">
+                <i class="fa fa-plus"></i></button>
+                <button id='update' chkPrivilegiosButtons [disabled]="dataRow.length == 0" [ngClass]="dataRow.length == 0 ? 'disable' : 'btn-success'" class="btn btn-xs mat-elevation-z8 float-left mr-2" (click)="UpdateActivo(true)" container="body" placement="bottom"
+                tooltip="Activar Grupo">
+                <i class="fa fa-check"></i></button>
+                <button id='update' chkPrivilegiosButtons [disabled]="dataRow.length == 0" [ngClass]="dataRow.length == 0 ? 'disable' : 'btn-danger'" class="btn btn-xs mat-elevation-z8 float-left mr-2" (click)="UpdateActivo(false)" container="body" placement="bottom"
+                tooltip="Desactivar Grupo">
+                <i class="fa fa-ban"></i>
+              </button>
+                  
+                <button *ngIf="tipoUsuario == '1'" [disabled]="dataRow.length == 0" [ngClass]="dataRow.length == 0 ? 'disable' : 'btn-danger'" class="btn btn-xs mat-elevation-z8 float-left mr-2" (click)="DeleteGrupo()" container="body" placement="bottom"
+                tooltip="Borrar Grupo">
+                <i class="fa fa-trash"></i>
+              </button>
+              <button class="btn btn-xs btn-success mat-elevation-z8 float-left mr-2" (click)="exportAsXLSX()" container="body" placement="bottom"
+              tooltip="Descargar">
+              <i class="fa fa-download"></i>
+            </button>
       
-       <p class="text-center pv">GRUPOS</p>
+              <button type="button" class="btn btn-xs btn-success mat-elevation-z8 float-right mr-1" (click)="refreshTable()" container="body"
+                placement="bottom" tooltip="Actualizar" container="body">
+                <em class="icon-refresh"></em>
+              </button>
+              <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" class="mr-1 btn btn-xs btn-primary mat-elevation-z8 float-right">
+                <em class="fa fa-eraser"></em>
+              </button>
+              <span class="text-muted font-weight-bold float-right text-uppercase mr-4 ">Total de Grupos
+                <span class="badge badge-pill badge-success">{{Grupos.length}}</span>
+              </span>
+            </div>
+          </div>
+   
        <br/>
-           <div class="table-responsive">
-               <table #tableG class="table table-bordered table-hover table-striped">
+           <div>
+               <table class="table" style="width:100%">
                    <thead>
-                       <tr >
-                          <th class="text-center"></th>
-                          <th class="text-center">Foto</th>
-                           <th class="text-center">Nombre</th>
-                           <th class="text-center">Descripción</th>
-                           <th class="text-center">Tipo Grupo</th>
-                           <th class="text-center">Usuario Alta</th>
-                           <th class="text-center">Activo</th>
-                           <th class="text-center"></th>
+                       <tr>
+                          <th style="width:100px;"></th>
+                          <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+                            <small>{{column.title | uppercase}}</small>
+                          </th>
+                          <th style="width:100px;"></th>
                        </tr>
+                       <tr>
+                          <th><input  class="form-control form-control-sm" id="foto" disabled></th>
+                          <th *ngFor="let column of columns">
+                            <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
+                              [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                              class="form-control form-control-sm" id="{{column.name}}G">
+                          </th>
+                          <th><input  class="form-control form-control-sm" id="mocos" disabled></th>
+                        </tr>
                    </thead>
                    <tbody>
-                      <ng-template #popTemplate>
-      
-                          <h3 class="popover-header text-center">{{grupo}}</h3>
-                          <div class = "row">
-                          <div class="col-md-12">
-                          <div class="popover-body" *ngFor="let r of UsuariosList">
-                            <img class="float-left img-fluid circle thumb32" src={{r.fotoAux}} alt="" />
-                            <span class="bodymio"> {{ ' ' + r.nombre + ' ' + r.apellidoPaterno + ' ' + r.apellidoMaterno}} </span> 
-                          </div>
-                        </div>
-                      </div>
-    
-
-                  </ng-template>
-
-                       <tr *ngFor="let g of Grupos; let rowIndex = index; let value = index" [class.selected]="g.selected" (click)="onSelect(g, rowIndex)">
-                          <td class="text-center">
-                            <btn-view [xs]="true" (click)="grupo=g.nombre; GetUsuarios(g.id);" data-toggle="popover" [popover]="popTemplate" placement="right" [outsideClick]="true"  container="body" placement="bottom" tooltip="Ver integrantes del grupo"></btn-view>
-                          </td>
-                          <td class="align-middle text-center">
-                            <a  container="body" placement="bottom" tooltip="Click para editar" (click)="rowAux=rowIndex; CrearURL(g.id); staticModal.show()"><img class="img-fluid circle thumb48" src={{g.fotoAux}} alt="Image" /></a>
+                     
+                  <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+                  [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+                       <tr *ngFor="let g of rows; let rowIndex = index; let value = index" [class.selected]="g.selected" (click)="onSelect(g, rowIndex)">
+                          <td class="align-middle" style="width:100px">
+                            <div class="media">
+                              <a> <img class="img-fluid circle thumb32" src={{g.fotoAux}} alt="Avatar" /></a>
+                            </div>
+                            <ng-template #popTemplate>
+                              <div class="media">
+                                <img class="img-fluid circle thumb64" src={{g.fotoAux}} alt="Avatar" />
+                              </div>
+                            </ng-template>
                           </td>
                            <td class="text-center">
                               <span  container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
@@ -84,7 +103,7 @@
                             <span  container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-tipoGrupo'] = true" *ngIf="!editing[rowIndex + '-tipoGrupo']">
                               {{g.tipoGrupo}}
                             </span>
-                            <select class="form-control-sm" (change)="UpdateTipo($event, 'tipoGrupoId', rowIndex, g)" *ngIf="editing[rowIndex + '-tipoGrupo']">
+                            <select class="form-control form-control-sm" (change)="UpdateTipo($event, 'tipoGrupoId', rowIndex, g)" *ngIf="editing[rowIndex + '-tipoGrupo']">
                               <option [value]='-1'>Seleccionar Tipo Grupo</option>
                               <option *ngFor="let t of ListTipos" [value]='t.id'>{{t.tipo}}</option>
                             </select>
@@ -93,31 +112,30 @@
                               {{g.usuarioAlta}}
                            </td>
                            <td class="text-center">
-                             <mat-checkbox class="checkbox" (change)="updateValue($event, 'activo', rowIndex, g); UpdateActivo(g, $event)" [checked]="g.activo"></mat-checkbox>
+                             <mat-checkbox class="checkbox" [disabled]="true" [checked]="g.activo"></mat-checkbox>
                            </td>
-                           <td class="text-center">
-                              <btn-check id='update' chkPrivilegiosButtons [xs]="true" (click)="updateGrupo($event, rowIndex)"  container="body" placement="bottom" tooltip="Guardar Cambios"></btn-check>
-                              <span style="margin-left: 5px;"></span>
-                              <btn-delete id='delete' chkPrivilegiosButtons [xs]="true"  container="body" placement="bottom" tooltip="Eliminar Grupo" (click)="DeleteGrupo($event,rowIndex)"></btn-delete>
+                           <td class="text-center" style="width:100px">
+                              <button id='update' chkPrivilegiosButtons (click)="updateGrupo(g, rowIndex)" [disabled]="!editingRow[rowIndex + '-save']" [ngClass] = "!editingRow[rowIndex + '-save'] ? 'disable' : 'btn-warning '"class="mr-1 btn btn-xs float-right mat-elevation-z8"
+                              container="body" placement="bottom" tooltip="Guardar Cambios"><i class="fa fa-floppy-o"></i></button>
                            </td>
                        </tr>
+                       </ng-scrollbar>
                    </tbody>
                </table>
-               <br/>
-               <div *ngIf="verMsj">
-                  <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+               <div>
+                  <pagination *ngIf="config.paging" class="pagination-sm float-right mt-2 mr-2" [(ngModel)]="page" [totalItems]="length"
+                    [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+                    (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
+            
                 </div>
-    
            </div>
         </div>
     </div>
   </div>
-<br/>
-<br/>
-<br/>
-<hr>
-  <div>
-    <div class="panel panel-body">
+
+  <div *ngIf="agregar">
+      <form [formGroup]="formGrupos">
+    <div class="card card-body">
         <p class="text-center pv">AGREGAR GRUPO</p>
       <section>
         <mat-form-field>
@@ -151,12 +169,14 @@
             <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
           </div>
         </div> -->
-        <button [disabled]="!formGrupos.valid" (click)="saveData()" class="btn btn-primary example-label pull-right">Guardar</button>
-       </section> 
+        <button [disabled]="!formGrupos.valid" (click)="saveData()" class="btn btn-labeled btn-success float-right"><span class="btn-label"><i class="fa fa-floppy-o"></i></span>Guardar</button>
+        <button (click)="agregar = false" class="btn btn-labeled btn-danger float-right mr-2"><span class="btn-label"><i class="fa fa-times"></i></span>Cancelar</button>
+      </section> 
     </div>
     <br/><br/><br/>
+  </form>
   </div>
-</form>
+
 
 <toaster-container toaster-options="{'toaster-id': 2 }" [toasterconfig]="toasterconfig"></toaster-container>
 

@@ -2,7 +2,7 @@ import { ColorsService } from './../../../shared/colors/colors.service';
 import { EquiposTrabajoService } from './../../../service/EquiposDeTrabajo/equipos-trabajo.service';
 import { Component, OnInit } from '@angular/core';
 import { SettingsService } from '../../../core/settings/settings.service';
-import { element } from 'protractor';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-reporte-clientes',
@@ -53,7 +53,11 @@ sparkOptionsDanger = {
     height: 24
 };
 
-  constructor(private _service: EquiposTrabajoService, private settings: SettingsService, public colors: ColorsService ) {
+  constructor(
+    private _service: EquiposTrabajoService,
+    private settings: SettingsService,
+    public colors: ColorsService,
+    private spinner: NgxSpinnerService ) {
     this.usuarioLogin = this.settings.user['id']; // this.settings.user['id']; FA6039C6-6497-E911-8993-B2AAD340F890 gg
     // 6A0B5070-5797-E911-8993-B2AAD340F890 regional gdl
     // FAD3AB2A-5797-E911-8993-B2AAD340F890 regional mty
@@ -65,6 +69,7 @@ sparkOptionsDanger = {
   }
 
   GetReporteClientes() {
+    this.spinner.show();
     this._service.GetRportClientes(this.usuarioLogin).subscribe(data => {
       this.reporte = data;
       this.totalCub = 0;
@@ -87,7 +92,7 @@ sparkOptionsDanger = {
 
       this.totalCump = Math.round(this.totalPos > 0 ? this.totalCub * 100 / this.totalPos : 0);
       this.totalFal = this.totalPos - this.totalCub;
-
+    this.spinner.hide();
     });
   }
 

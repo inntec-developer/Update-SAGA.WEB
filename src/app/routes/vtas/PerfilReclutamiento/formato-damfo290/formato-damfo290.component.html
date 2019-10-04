@@ -18,14 +18,36 @@
 </section>
 <tabset [justified]="true">
   <tab heading="Cliente" id="TapCliente">
+      <ng-template tabHeading >
+          <i *ngIf="!cliente.formCliente.valid" class="text-danger fa fa-exclamation-circle ml-3" container="body" placement="right" tooltip="campos vacios"></i>
+        </ng-template>
     <app-formato-cliente [IdFormato]="IdFormato" #FormatoClienteCpt></app-formato-cliente>
   </tab>
   <!-- [disabled]="!cliente.formCliente.valid" -->
   <tab heading="Datos de Perfil" id="TapRequisitos" [disabled]="!cliente.formCliente.valid">
+      <ng-template tabHeading>
+          <i *ngIf="cliente.formCliente.valid && (!requisitos.formEncabezado.valid || requisitos.Escolaridades.length == 0)" 
+          class="text-danger fa fa-exclamation-circle ml-3" container="body" placement="right" tooltip="campos vacios"></i>
+        </ng-template>
     <app-formato-requisitos [IdFormato]="IdFormato"></app-formato-requisitos>
   </tab>
   <!-- [disabled]="!cliente.formCliente.valid" -->
   <tab heading="Horarios, Prestaciones ..." id="TapInfoAdicional" [disabled]="!cliente.formCliente.valid">
+      <ng-template tabHeading>
+          <i *ngIf="cliente.formCliente.valid && ( anexos.Actividades.length == 0 ||
+          anexos.Areas.length == 0 ||
+          anexos.Beneficios.length == 0 ||
+          anexos.Cardinales.length == 0 ||
+          anexos.Documentos.length == 0 ||
+          anexos.Gerenciales.length == 0 ||
+          anexos.Horarios.length == 0 ||
+          anexos.Observaciones.length == 0 ||
+          anexos.Prestaciones.length == 0 ||
+          anexos.Procesos.length == 0 ||
+          anexos.PsicometriasC.length == 0 ||
+          anexos.PsicometriasD.length == 0)" 
+          class="text-danger fa fa-exclamation-circle ml-3" container="body" placement="right" tooltip="campos vacios"></i>
+        </ng-template>
     <app-formato-anexos [IdFormato]="IdFormato"></app-formato-anexos>
   </tab>
   <tab heading="Anexos" id="TapAnexos" *ngIf="!isNew">

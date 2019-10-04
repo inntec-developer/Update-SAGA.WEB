@@ -1,36 +1,51 @@
 
-table {
-  background-color: transparent;
-  box-shadow: 0 0 0 #000;
-}
+
 tr td {
   cursor: pointer
 }
 
+table tbody {
+  display: block;
+  height: 450px;
+
+}
+table thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table thead {
+  width: calc(100% - 1em)
+}
+
+table {
+  width: 400px;
+}
+
+
+table tbody tr:hover{
+  font-size: 14.5px;
+  box-shadow:1px 20px 60px rgba(0,0,0,.23);
+}
 tr.selected td {
   background-color:  #5d9cec !important;
   color: white;
 }
 
-.empty-row {
-  text-align: center;
-  margin-top: 20px;
-}
-.widthSelect
+table tbody div
 {
-  width: 50%;
+  height: 350px;
 }
-
-.marginText
-{
-  margin-top: -20px;
-}
-.marginButtons
-{
-  margin-top: -32.5px;
-}
-
 .ilong
 {
     width: 350px;
+}
+
+ng-scrollbar {
+  --scrollbar-size: 6px;
+  --scrollbar-thumb-color: rgb(94, 175, 255);
+  --scrollbar-thumb-hover-color: dodgerblue;
+  --scrollbar-border-radius: 6px;
 }

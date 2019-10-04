@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import { ApiConection } from '../../../service/api-conection.service';
-import { forEach } from '@angular/router/src/utils/collection';
+
 
 @Component({
   selector: 'app-addadmin',
@@ -26,8 +26,27 @@ export class AddadminComponent implements OnInit {
   IdGrupo: any = null;
   draggable = false;
   flag = false;
-  msj = 'Arrastrar usuario aqui'
- 
+  msj = 'Arrastrar usuario aqui';
+  // scroll
+  disabled = false;
+  compact = false;
+  invertX = false;
+  invertY = false;
+  shown = 'hover';
+     /**
+  * configuracion para mensajes de acciones.
+  */
+ toaster: any;
+ toasterConfig: any;
+ toasterconfig: ToasterConfig = new ToasterConfig({
+   positionClass: 'toast-bottom-right',
+   limit: 7,
+   tapToDismiss: false,
+   showCloseButton: true,
+   mouseoverTimerStop: true,
+   preventDuplicates: true,
+ });
+
   constructor(private service: AdminServiceService, public fb: FormBuilder, private toasterService: ToasterService) {}
 
   ngOnInit() {
@@ -42,22 +61,21 @@ export class AddadminComponent implements OnInit {
   }
 
   public Search(data: any) {
-    let tempArray: Array<any> = [];
-    let colFiltar: Array<any> = [{title: "clave"}, { title: "nombre" }, { title: "apellidoPaterno" }, {title: "emails"}];
+    const tempArray: Array<any> = [];
+    const colFiltar: Array<any> = [{title: 'clave'}, { title: 'nombre' }, { title: 'apellidoPaterno' }, {title: 'emails'}];
 
     this.filteredData.forEach(function (item) {
       let flag = false;
       colFiltar.forEach(function (c) {
-        if(item[c.title] != null)
-        {
-        if (item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
-          flag = true;
+        if (item[c.title] != null) {
+          if (item[c.title].toString().toLowerCase().match(data.target.value.toLowerCase())) {
+            flag = true;
+          }
         }
-      }
       });
 
       if (flag) {
-        tempArray.push(item)
+        tempArray.push(item);
       }
     });
 
@@ -175,7 +193,7 @@ export class AddadminComponent implements OnInit {
 
   GetUserByGroup(Id) {
 
-    if(Id !== "0" && Id !== 0 && Id === this.IdGrupo)
+    if(Id !== '0' && Id !== 0 && Id === this.IdGrupo)
     {
       this.service.GetUsuarioByGrupo(Id)
         .subscribe(
@@ -212,7 +230,7 @@ export class AddadminComponent implements OnInit {
 
   addUsuarioGrupo(idgrupo) {
 
-    if(idgrupo !== "0" && idgrupo != null && idgrupo != 0)
+    if(idgrupo !== '0' && idgrupo != null && idgrupo != 0)
     {
     let lug = [];
 
@@ -243,7 +261,7 @@ export class AddadminComponent implements OnInit {
             });
             this.popToast('success', 'Actualizar Datos', 'Los datos se actualizaron con éxito');
             this.ListaPG = [];
-            this.IdGrupo = "0";
+            this.IdGrupo = '0';
             this.formAdmin = this.fb.group({
               slcGrupo: ['0', [Validators.required]],
               filterInput: ''
@@ -276,45 +294,35 @@ export class AddadminComponent implements OnInit {
           this.ListEntidades = e;
           this.ListAuxEntidades = e;
 
-          this.ListEntidades.forEach(item => {
-            item.fotoAux = ApiConection.ServiceUrlFoto + item.foto;
-          })
+          // this.ListEntidades.forEach(item => {
+          //   item.fotoAux = ApiConection.ServiceUrlFoto + item.foto;
+          // })
           this.ListAuxEntidades = this.ListEntidades;
 
           this.filteredData = this.ListEntidades;
-
-        })
+        });
   }
 
   GetGrupos() {
     this.listGrupos = [];
-    this.service.getGrupos()
-      .subscribe(
-        e => {
-          this.listGrupos = e;
-          var aux = this.listGrupos.filter(x => {
-            return x.activo
-          })
-          this.listGrupos = aux;
-        })
+    this.service.getGrupos().subscribe(e => {
+      this.listGrupos = e;
+      const aux = this.listGrupos.filter(x => {
+        return x.activo;
+      });
+      this.listGrupos = aux;
+    });
   }
 
-   /**
-  * configuracion para mensajes de acciones.
-  */
- toaster: any;
- toasterConfig: any;
- toasterconfig: ToasterConfig = new ToasterConfig({
-   positionClass: 'toast-bottom-right',
-   limit: 7,
-   tapToDismiss: false,
-   showCloseButton: true,
-   mouseoverTimerStop: true,
-   preventDuplicates: true,
- });
+  errorImg(entidadId, pg) {
+    const index = this.ListEntidades.findIndex(u => u.entidadId === entidadId);
+    // this.ListEntidades[index]['foto'] = '/assets/img/user/default.jpg';
+    pg.foto = '/assets/img/user/default.jpg';
+  }
+
 
  popToast(type, title, body) {
-   var toast: Toast = {
+   const toast: Toast = {
      type: type,
      title: title,
      timeout: 4000,

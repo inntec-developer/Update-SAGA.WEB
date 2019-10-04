@@ -137,7 +137,7 @@ export class FileManagerComponent implements OnInit {
   deleteFile(datos) {
     swal({
       title: '¿ESTÁS SEGURO?',
-      text: '¡Se borrara el archivo ' + datos.nom + '!',
+      text: '¡Se borrará el archivo ' + datos.nom + '!',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#ec2121',

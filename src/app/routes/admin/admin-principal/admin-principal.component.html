@@ -1,0 +1,48 @@
+<div class="content-heading">
+    <div>
+      Sistema
+      <span class="text-sm d-none d-sm-block">Administraci&oacute;n de usuarios.</span>
+    </div>
+    <ol class="breadcrumb ml-auto">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/home']">Inicio</a>
+      </li>
+      <li class="breadcrumb-item active">Seguridad</li>
+    </ol>
+  </div>
+<tabset [justified]="true">
+    <tab heading="USUARIOS" id="TapUsuarios">
+        <ng-template tabHeading >
+            <i class="text-info fa fa-address-book float-left fa-2x ml-3"></i>
+          </ng-template>
+      <app-add-persona></app-add-persona>
+    </tab>
+    <tab heading="GRUPOS" id="TapGrupos">
+        <ng-template tabHeading >
+            <i class="text-info fa fa-users float-left fa-2x ml-3"></i>
+          </ng-template>
+      <app-add-grupo></app-add-grupo>
+    </tab>
+    <tab heading="USUARIOS A GRUPOS" id="TapUserGroup">
+        <ng-template tabHeading >
+            <i class="text-info fa fa-user mr-2 float-left fa-2x ml-3"></i>
+            <i class="text-success fa fa-angle-double-right float-left fa-2x" aria-hidden="true"></i>
+            <i class="text-info fa fa-users ml-2 float-left fa-2x"></i>
+          </ng-template>
+      <app-addadmin></app-addadmin>
+    </tab>
+    <tab heading="ASIGNAR ROLES" id="TapAsignar">
+        <ng-template tabHeading >
+            <i class="text-info fa fa-users mr-2 float-left fa-2x ml-3"></i>
+            <i class="text-success fa fa-angle-double-right float-left fa-2x" aria-hidden="true"></i>
+            <i class="text-info fa fa-cogs ml-2 float-left fa-2x"></i>
+          </ng-template>
+      <app-rol-grupo></app-rol-grupo>
+    </tab>
+    <!-- <tab heading="PRIVILEGIOS" id="TapAsignar">
+        <ng-template tabHeading >
+            <i class="text-info fa fa-cogs float-left fa-2x ml-3"></i>
+          </ng-template>
+      <app-rolls-struct></app-rolls-struct>
+    </tab> -->
+</tabset>

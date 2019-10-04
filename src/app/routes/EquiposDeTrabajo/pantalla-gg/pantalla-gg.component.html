@@ -83,13 +83,13 @@
                             <div class="inline" container="body" placement="right" tooltip="{{r.nombre}}">
                                 <img class="img-fluid circle thumb48" [src]="r.foto" (error)="errorImg(r)" />
                             </div>
-                            <ng-container *ngIf= "r.resumen.length > 0">
+                            <!-- <ng-container *ngIf= "r.resumen.length > 0">
                                 <ng-container *ngFor="let rr of r.resumen">
                                     <div class="inline" container="body" placement="right" tooltip="{{rr.nombre}}">
                                         <img class="rounded-circle thumb32" [src]="rr.foto" (error)="errorImg(rr)" />
                                     </div>
                                 </ng-container>
-                            </ng-container>
+                            </ng-container> -->
                         </ng-container>
                     </ng-container>
                     <div class="text-center mt-2">
@@ -146,3 +146,4 @@
     </div>
   </div>
 </div>
+<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>

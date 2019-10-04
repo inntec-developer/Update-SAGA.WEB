@@ -1,35 +1,27 @@
-<div class="content-heading">
-  <div>
-    Usuarios
-    <span class="text-sm d-none d-sm-block">Administraci&oacute;n de usuarios.</span>
-  </div>
-  <!-- Breadcrumb right aligned-->
-  <ol class="breadcrumb ml-auto">
-    <li class="breadcrumb-item">
-      <a [routerLink]="['/home']">Inicio</a>
-    </li>
-    <li class="breadcrumb-item active">Usuarios</li>
-  </ol>
-</div>
+
 <div class="card">
   <div class="card-body">
     <div class="row p-2 mb-1 bg-light">
       <div class="col">
-          <button id='update' chkPrivilegiosButtons [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-success'" class="btn btn-xs mat-elevation-z8 float-left mr-1" (click)="Actualizar(true)" container="body" placement="bottom"
+          <button id='update' chkPrivilegiosButtons [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-success'" class="btn btn-xs mat-elevation-z8 float-left mr-2" (click)="Actualizar(true)" container="body" placement="bottom"
           tooltip="Activar Usuario">
-          <em class="fa fa-check"></em></button>
-          <button id='update' chkPrivilegiosButtons [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-danger'" class="btn btn-xs mat-elevation-z8 float-left mr-1" (click)="Actualizar(false)" container="body" placement="bottom"
+          <i class="fa fa-check"></i></button>
+          <button id='update' chkPrivilegiosButtons [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-danger'" class="btn btn-xs mat-elevation-z8 float-left mr-2" (click)="Actualizar(false)" container="body" placement="bottom"
           tooltip="Desactivar Usuario">
-          <em class="fa fa-ban"></em>
+          <i class="fa fa-ban"></i>
         </button>
-        <button id='special' chkPrivilegiosButtons [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-purple'" class="btn btn-xs mat-elevation-z8 float-left mr-1" (click)="SendEmail(rowAux)" container="body" placement="bottom"
+        <button id='special' chkPrivilegiosButtons [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-purple'" class="btn btn-xs mat-elevation-z8 float-left mr-2" (click)="SendEmail(rowAux)" container="body" placement="bottom"
         tooltip="Enviar Correo">
-        <em class="fa fa-envelope"></em></button>
+        <i class="fa fa-envelope"></i></button>
 
-          <button *ngIf="tipoUsuario == '1'" [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-danger'" class="btn btn-xs mat-elevation-z8 float-left" (click)="Borrar(p)" container="body" placement="bottom"
+          <button *ngIf="tipoUsuario == '1'" [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-danger'" class="btn btn-xs mat-elevation-z8 float-left mr-2" (click)="Borrar(p)" container="body" placement="bottom"
           tooltip="Borrar Usuario">
-          <em class="fa fa-trash"></em>
+          <i class="fa fa-trash"></i>
         </button>
+        <button class="btn btn-xs btn-success mat-elevation-z8 float-left mr-2" (click)="exportAsXLSX()" container="body" placement="bottom"
+        tooltip="Descargar">
+        <i class="fa fa-download"></i>
+      </button>
 
         <button type="button" class="btn btn-xs btn-success mat-elevation-z8 float-right mr-1" (click)="refreshTable()" container="body"
           placement="bottom" tooltip="Actualizar" container="body">
@@ -183,9 +175,9 @@
             </td>
             <td class="action-width">
   
-          <button id='update' chkPrivilegiosButtons [disabled]="!editar" [ngClass] = "!editar ? 'disable' : 'btn-warning '"class="mr-1 btn btn-xs float-right mat-elevation-z8" (click)="updateUser(p, rowIndex)" container="body"
+          <button id='update' chkPrivilegiosButtons [disabled]="!editingRow[rowIndex + '-user']" [ngClass] = "!editingRow[rowIndex + '-user'] ? 'disable' : 'btn-warning '"class="mr-1 btn btn-xs float-right mat-elevation-z8" (click)="updateUser(p, rowIndex)" container="body"
             placement="bottom" tooltip="Guardar Cambios">
-            <em class="fa fa-floppy-o"></em>
+            <i class="fa fa-floppy-o"></i>
           </button>
             </td>
           </tr>
@@ -195,7 +187,7 @@
       </table>
   </div>
   <div>
-      <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
+      <pagination *ngIf="config.paging" class="pagination-sm float-right mt-2 mr-2" [(ngModel)]="page" [totalItems]="length"
         [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
         (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
 

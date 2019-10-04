@@ -291,7 +291,7 @@ export class HorariosComponent implements OnInit, AfterContentInit {
 
   getCatalogos() {
     this._serviceCatalogos.getCatalogoForId(23).subscribe(element => {
-      this.DiasSemana = element;
+      this.DiasSemana = element.filter(x => x.tipo === 3);
     });
   }
 

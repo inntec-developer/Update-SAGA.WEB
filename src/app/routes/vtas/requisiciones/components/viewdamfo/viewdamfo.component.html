@@ -321,18 +321,13 @@
       </app-dt-competencia-gerencial>
     </div>
   </div>
-  <div class="row">
-    <div class="col-lg-6 col-md-6 col-offset-md-3 col-offset-lg-3 col-sm-12 cols-xs-12">
-      <div class="title-headre-view d-flex justify-content-between">
-        <h4>Arte para redes</h4>
-      </div>
-      <div class="card box ">
-        <div class="card-body">
-          <img src="assets/img/ArteVacantes/{{arte}}.jpg" class="float-center img-arte Arte">
-        </div>
-      </div>
+  <div class="title-headre-view">
+      <h4>Arte para redes</h4>
     </div>
+  <div class="d-flex justify-content-center">
+    <img [src]="arte" alt="Random slide" class="float-center img-arte Arte">
   </div>
+
 
   <!-- <br *ngIf="imprimir" />
   <div class="row" *ngIf="imprimir">

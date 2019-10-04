@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 
 
-
 @Component({
   selector: 'app-pantalla-gg',
   templateUrl: './pantalla-gg.component.html',
@@ -93,11 +92,11 @@ sparkOptionsDanger = {
     private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
-    this.spinner.show();
     this.GetRport();
   }
 
   GetRport() {
+    this.spinner.show();
     this._service.GetRportGG(this.usuarioLogin).subscribe(result => {
       if (result !== 417) {
 
