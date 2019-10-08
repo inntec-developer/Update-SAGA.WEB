@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, ViewChild, AfterContentInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { FormatoAnexosComponent } from './formato-anexos/formato-anexos.component';
@@ -14,7 +14,7 @@ import { SettingsService } from '../../../../core/settings/settings.service';
   styleUrls: ['./formato-damfo290.component.scss'],
   providers: [PerfilReclutamientoService]
 })
-export class FormatoDAMFO290Component implements OnInit, OnChanges {
+export class FormatoDAMFO290Component implements OnInit, OnChanges, AfterContentInit {
   @ViewChild(FormatoClienteComponent) cliente: FormatoClienteComponent;
   @ViewChild(FormatoRequisitosComponent) requisitos: FormatoRequisitosComponent;
   @ViewChild(FormatoAnexosComponent) anexos: FormatoAnexosComponent;
@@ -36,6 +36,11 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges {
     mouseoverTimerStop: true,
   });
 
+  msgCliente = '';
+  msgRS = '-Razón Social';
+  msgTipo = '-Tipo Reclutamiento';
+  msgClase = '-Coordinacion';
+  interval: NodeJS.Timer;
   constructor(
     private _servicePerfilR: PerfilReclutamientoService,
     private _setting: SettingsService,
@@ -50,11 +55,31 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges {
       } else {
         this.isNew = true;
       }
+
     });
+
   }
   ngOnInit() {
+    this.msgCliente = 'campos por llenar: -Razón social -Tipo reclutamiento - Coordinación';
   }
 
+  ngAfterContentInit() {
+    this.interval = setInterval(() => this.getMsg(), 2000);
+  }
+  getMsg() {
+    if (!this.cliente.formCliente.controls['RazonSocial'].invalid) {
+      this.msgRS = '';
+    }
+    if (!this.cliente.formCliente.controls['Tipo'].invalid) {
+      this.msgTipo = '';
+    }
+    if (!this.cliente.formCliente.controls['Clase'].invalid) {
+      this.msgClase = '';
+    }
+    if (this.cliente.formCliente.valid) {
+      clearInterval(this.interval);
+    }
+  }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.cliente['Cliente'][0]['id'] && !changes.cliente['Cliente'][0]['id'].isFirstChange()) {
       const obj = this.cliente.Cliente[0]['id'];

@@ -8,8 +8,8 @@
         <button id="view" chkPrivilegiosButtons (click)="lgModal.show()" class="mr-2 btn btn-xs mat-elevation-z8"
           [disabled]="element.length == 0" [ngClass]="element.length == 0 ? 'disabled' : 'btn-dark'" container="body" placement="bottom"
           tooltip="Comentarios"><em class="fa fa-comments-o"></em></button>
-          <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8"
-          [disabled]="element.length == 0 || element.estatusId == 8" [ngClass]="element.length == 0 || element.estatusId == 8 ? 'disabled' : 'btn-success'" type="button"
+          <button *ngIf="ventas" class="mr-2 btn btn-xs mat-elevation-z8"
+          [disabled]="element.length == 0 || element.estatusId == 8 || element.tipoReclutamientoId != 1" [ngClass]="element.length == 0 || element.estatusId == 8 || element.tipoReclutamientoId != 1 ? 'disabled' : 'btn-success'" type="button"
           (click)="updataStatus(38, 'Garant&iacute;a de B&uacute;squeda')" container="body" placement="bottom"
           tooltip="Garant&iacute;a B&uacute;squeda Candidatos">
           <em class="fa fa-user-circle"></em>

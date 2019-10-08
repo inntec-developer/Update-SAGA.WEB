@@ -120,8 +120,6 @@ export class FormatoClienteComponent implements OnInit, OnChanges {
     }
   }
 
-
-
   filter() {
     const filter = this.formCliente.get('RazonSocial').value;
     if (filter !== '' || filter != null && filter.length > 5) {

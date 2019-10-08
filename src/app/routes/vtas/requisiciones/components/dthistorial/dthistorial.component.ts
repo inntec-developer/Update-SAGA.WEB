@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { RequisicionesService } from '../../../../../service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SettingsService } from '../../../../../core/settings/settings.service';
@@ -13,7 +13,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
   styleUrls: ['./dthistorial.component.scss']
 })
 export class DTHistorialComponent implements OnInit {
-
+@Input() ventas = false;
   // scroll
   disabled = false;
   compact = false;

@@ -17,7 +17,7 @@
 <div class="row">
     <div class="col-md-6">
       <div class="panel panel-default panel-flat mat-elevation-z8 mt-3">
-        <div class="panel-heading d-flex justify-content-between "><span class="text-muted">USUARIOS</span>
+        <div class="panel-heading d-flex justify-content-between "><span class="text-muted">TOTAL DE USUARIOS <small class="badge badge-success ml-1">{{registros}}</small></span>
           <div class="input-group input-group-sm ilong"> 
             <input formControlName="filterInput" (input)="Search($event)" class="form-control form-control-sm" type="text" placeholder="Filtrar"
             />
@@ -27,23 +27,23 @@
           </div>
         </div>
         <br/>
-        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="true" [trackY]="true"
         [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
         <div class="panel-body" dnd-sortable-container [dropZones]="['demo1']" [sortableData]="ListEntidades">
           <div *ngFor="let p of ListEntidades; let i = index" class="panel panel-defaul" dnd-sortable [sortableIndex]="i" dnd-draggable [dragData]="p" [dragEnabled]="draggable" >
-            <div class="media">
+            <div class="media ml-1">
               <img class="float-left img-fluid circle thumb48 marginimg" src="{{p.foto}}" (error)="errorImg(p.entidadId, p)" />
               <div class="media-body">
                 <div class="float-right badge badge-info mr-2">{{p.departamento}}</div>
                 <h4>{{p.nombre + ' ' + p.apellidoPaterno + ' ' + p.apellidoMaterno }}</h4>
-                <p *ngIf="p.clave != '' && p.clave != null">Clave: {{ p.clave }}</p>
-                <p *ngIf="p.usuario != '' && p.usuario != null">Álias: {{ p.usuario }}</p>
-                <p *ngIf="p.emails != '' && p.emails != null">Email: {{p.emails}} </p>
-                <p *ngIf="p.descripcion != '' && p.descripcion != null">{{ p.descripcion }}</p>
-                <p *ngIf="p.grupos.length > 0">Grupo: {{p.grupos.length}}
+                <p class="text-muted" *ngIf="p.clave != '' && p.clave != null">CLAVE: {{ p.clave }}</p>
+                <p class="text-muted" *ngIf="p.usuario != '' && p.usuario != null">ÁLIAS: {{ p.usuario }}</p>
+                <p class="text-muted" *ngIf="p.emails != '' && p.emails != null">EMAIL: {{p.emails}} </p>
+                <p class="text-muted" *ngIf="p.descripcion != '' && p.descripcion != null">{{ p.descripcion }}</p>
+                <p class="text-muted">GRUPO<small class="badge badge-success ml-1">{{p.grupos.length}}</small>
                   <span *ngFor="let g of p.grupos">
                     <div class="row">
-                    <div class="col-md-2"><span class="text-center">{{g.grupo}}</span></div>
+                    <div class="col-md-2"><span class="text-center text-warning">{{g.grupo}}</span></div>
                       <button type="button" class="close float-right" aria-label="Close" (click)="DeleteUsers(g.id, p.entidadId)"  container="body" placement="bottom" tooltip="Quitar Grupo">
                         <span aria-hidden="true">&times;</span>
                       </button>

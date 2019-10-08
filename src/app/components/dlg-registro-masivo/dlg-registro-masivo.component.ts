@@ -44,7 +44,7 @@ const swal = require('sweetalert');
 })
 export class DlgRegistroMasivoComponent implements OnInit {
 
-  //scroll
+  // scroll
   public disabled = false;
   public invertX = false;
   public compact = false;

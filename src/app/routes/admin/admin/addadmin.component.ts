@@ -46,6 +46,7 @@ export class AddadminComponent implements OnInit {
    mouseoverTimerStop: true,
    preventDuplicates: true,
  });
+  registros = 0;
 
   constructor(private service: AdminServiceService, public fb: FormBuilder, private toasterService: ToasterService) {}
 
@@ -291,9 +292,8 @@ export class AddadminComponent implements OnInit {
     this.service.GetEntidades()
       .subscribe(
         e => {
-          this.ListEntidades = e;
-          this.ListAuxEntidades = e;
-
+          this.ListEntidades = e.filter(x => x.userActivo || x.grupoActivo);
+          this.registros = this.ListEntidades.length;
           // this.ListEntidades.forEach(item => {
           //   item.fotoAux = ApiConection.ServiceUrlFoto + item.foto;
           // })

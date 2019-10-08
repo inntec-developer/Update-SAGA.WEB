@@ -19,7 +19,8 @@
 <tabset [justified]="true">
   <tab heading="Cliente" id="TapCliente">
       <ng-template tabHeading >
-          <i *ngIf="!cliente.formCliente.valid" class="text-danger fa fa-exclamation-circle ml-3" container="body" placement="right" tooltip="campos vacios"></i>
+          <i *ngIf="!cliente.formCliente.valid" class="text-danger fa fa-exclamation-circle ml-3" 
+          container="body" placement="right" tooltip="Campos por llenar: {{msgRS}} {{msgTipo}} {{msgClase}}"></i>
         </ng-template>
     <app-formato-cliente [IdFormato]="IdFormato" #FormatoClienteCpt></app-formato-cliente>
   </tab>

@@ -289,6 +289,8 @@ agregar = false;
         element.filtering.filterString = '';
         (<HTMLInputElement>document.getElementById(element.name + 'G')).value = '';
     });
+    this.editing = {};
+    this.editingRow = {};
     this.onChangeTable(this.config);
   }
   refreshTable() {
@@ -297,6 +299,8 @@ agregar = false;
         (<HTMLInputElement>document.getElementById(element.name + 'G')).value = '';
     });
     this.rowAux = [];
+    this.editing = {};
+    this.editingRow = {};
     this.getGrupos();
   }
   exportAsXLSX() {

@@ -70,7 +70,7 @@
                   <ng-container *ngFor="let r of t.reclutadores">
                     <div class="inline">
                       <img container="body" placement="right" tooltip="{{r.nombre}}" *ngIf="r.tipoUsuario == 4 || r.tipoUsuario == 5 || r.tipoUsuario == 10" class="img-fluid circle thumb48" [src]="r.foto" (error)="errorImg(r)" />
-                      <img container="body" placement="right" tooltip="{{r.nombre}}" *ngIf="r.tipoUsuario == 11" class="img-fluid circle thumb32" [src]="r.foto" (error)="errorImg(r)" />
+                      <img container="body" placement="right" tooltip="{{r.nombre}}" *ngIf="r.tipoUsuario != 4 && r.tipoUsuario != 5 && r.tipoUsuario != 10" class="img-fluid circle thumb32" [src]="r.foto" (error)="errorImg(r)" />
                     </div>
                   </ng-container>
                   <div class="text-center mt-2">

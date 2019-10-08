@@ -1,3 +1,4 @@
+import { AdminServiceService } from './../../../../../service/AdminServicios/admin-service.service';
 import 'jspdf-autotable';
 
 import * as jspdf from 'jspdf';
@@ -14,10 +15,9 @@ import { MonedaPipe } from './../../../../../shared/pipes/moneda.pipe';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SettingsService } from '../../../../../core/settings/settings.service';
 import html2canvas from 'html2canvas';
-
+const swal = require('sweetalert2');
 declare var $: any;
 // declare let jspdf ;
-
 
 // declare const require: any;
 // const jspdf = require('jspdf');
@@ -27,7 +27,7 @@ declare var $: any;
   selector: 'app-viewdamfo',
   templateUrl: './viewdamfo.component.html',
   styleUrls: ['./viewdamfo.component.scss'],
-  providers: [RequisicionesService, CatalogosService, DatePipe, MonedaPipe]
+  providers: [RequisicionesService, CatalogosService, DatePipe, MonedaPipe, AdminServiceService]
 })
 export class ViewdamfoComponent implements OnInit {
 
@@ -87,10 +87,6 @@ export class ViewdamfoComponent implements OnInit {
     { dia: '* El que determinen las leyes federales y locales electorales, para efectuar la jornada electoral' }
   ];
 
-
-
-
-
   constructor(
     private serviceRequisiciones: RequisicionesService,
     private dialog: MatDialog,
@@ -101,7 +97,8 @@ export class ViewdamfoComponent implements OnInit {
     private toasterService: ToasterService,
     private serviceCatalogos: CatalogosService,
     private datePipe: DatePipe,
-    private monedaPipe: MonedaPipe
+    private monedaPipe: MonedaPipe,
+    private _service: AdminServiceService
 
   ) {
     this.getParams();
@@ -127,9 +124,19 @@ export class ViewdamfoComponent implements OnInit {
           this.periodoPagoId = data.periodoPagoId;
           this.damfo290 = data;
           this.direcciones = [];
-          this.arte = this.damfo290['arte'];
           this.serviceRequisiciones.getDamfoRutasCamion(this.damfo290.clienteId).subscribe(rutas => {
             this.rutasCamion = rutas;
+          });
+
+          const aux = data['arte'];
+          let id = aux.lastIndexOf('/');
+          const nom = aux.substr(id + 1, aux.length);
+          id = nom.lastIndexOf('.');
+          let type = nom.substr(id + 1, nom.length);
+          type = type.replace('.', '');
+
+          this._service.GetBG('ArteRequi/BG/' + nom).subscribe(r => {
+            this.arte = 'data:image/' + type + ';base64,' + r;
           });
 
           this.damfo290['cliente']['direcciones'].forEach(x => {
@@ -148,6 +155,7 @@ export class ViewdamfoComponent implements OnInit {
           } else {
             this.isEditable = false;
           }
+this.imprimir = false;
           this.spinner.hide();
         });
     }
@@ -158,15 +166,6 @@ export class ViewdamfoComponent implements OnInit {
       if (params['IdDamfo'] != null) {
         this.damfoId = params['IdDamfo'];
         this.Perfil290 = params['Perfil290'] || false;
-        setTimeout(() => {
-          // OBTENER EL ARTE DEL DAMFO ------------------------------------------------------->
-          const arte = '.Arte';
-          this.arteDamfo = html2canvas($(arte)[0], { useCORS: true }).then(function (canvas) {
-            const data = canvas.toDataURL('image/jpg', 1.0);
-            return data;
-          });
-          this.imprimir = false;
-        }, 2000);
       } else {
         this.popToast(
           'error',
@@ -211,6 +210,31 @@ export class ViewdamfoComponent implements OnInit {
 
   createPDF() {
     this.imprimir = true;
+    let timerInterval;
+    swal.fire({
+      title: 'Descargar Damfo-290 PDF!',
+      text: 'El proceso puede durar varios segundos. Por favor espere...',
+      html:  '<strong></strong> seconds.<br/><br/>',
+      type: 'warning',
+      showConfirmButton: false,
+      timer: 3000,
+      onBeforeOpen: () => {
+        swal.showLoading();
+        timerInterval = setInterval(() => {
+          swal.getContent().querySelector('strong')
+            .textContent = swal.getTimerLeft();
+        }, 100);
+      },
+      onClose: () => {
+        clearInterval(timerInterval);
+      }
+    }).then((result) => {
+      if (
+        /* Read more about handling dismissals below */
+        result.dismiss === swal.DismissReason.timer
+      ) {
+      }
+    });
     let row = 80;
     const nombrePerfil = this.damfo290['nombrePerfil'];
     const doc = new jspdf('p', 'pt', 'letter');
@@ -310,6 +334,7 @@ export class ViewdamfoComponent implements OnInit {
     });
 
     // OBTENER EL ARTE DEL DAMFO ------------------------------------------------------->
+
     setTimeout(() => {
       doc.addPage();
       row = 20;
@@ -823,19 +848,25 @@ export class ViewdamfoComponent implements OnInit {
       doc.addPage();
 
       row = 20;
+
       const Arte = 'ARTE';
+
       const xOffsetArte = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(Arte) * doc.internal.getFontSize() / 2);
       doc.setFontSize(10);
       doc.rect(20, row, 570, 15);
       doc.text(Arte, xOffsetArte, row += 10);
       row += 5;
-      doc.addImage(
-        this.arteDamfo['__zone_symbol__value'], 'JPEG',
-        40,
-        row += 10,
-        530,
-        300
-      );
+
+        // OBTENER EL ARTE DEL DAMFO ------------------------------------------------------->
+      const node = document.getElementById('my-node');
+          doc.addImage(
+            node['currentSrc'], 'PNG',
+            40,
+            row += 10,
+            530,
+            300
+          );
+
       row = 355;
       const Autori = 'AUTORIZACIONES';
       const xOffsetAuto = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(Autori) * doc.internal.getFontSize() / 2);
@@ -871,12 +902,6 @@ export class ViewdamfoComponent implements OnInit {
       doc.text('AUTORIZÓ (NOMBRE Y FIRMA)', 265, ca += 10);
       doc.rect(408, cg += 360, 183, 15);
       doc.text('AUTORIZÓ (NOMBRE Y FIRMA)', 470, cg += 10);
-
-
-
-
-
-
 
       doc.save(nombrePerfil + '.pdf');
       this.imprimir = false;

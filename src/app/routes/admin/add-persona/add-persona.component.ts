@@ -142,14 +142,6 @@ export class AddPersonaComponent implements OnInit {
     return filteredData;
   }
 
-  public clearfilters() {
-    this.columns.forEach(element => {
-        element.filtering.filterString = '';
-        (<HTMLInputElement>document.getElementById(element.name)).value = '';
-    });
-    this.onChangeTable(this.config);
-  }
-
   Borrar() {
     if(this.rowAux) {
       swal({
@@ -173,7 +165,8 @@ export class AddPersonaComponent implements OnInit {
               this.popToast('success', 'Actualizar Datos', 'Los datos de usuario se borraron con éxito');
               this.refreshTable();
             } else {
-              this.popToast('error', 'Actualizar Datos', 'Ocurrió un error al intentar borrar datos. Esto se debe a que el usuario ya cuenta con algun movimiento en su cuenta');
+              this.popToast('error', 'Actualizar Datos',
+              'Ocurrió un error al intentar borrar datos. Esto se debe a que el usuario ya cuenta con algun movimiento en su cuenta');
             }
           });
         } else {
@@ -185,23 +178,36 @@ export class AddPersonaComponent implements OnInit {
   public onCellClick(data: any): any {
     data.selected ? data.selected = false : data.selected = true;
 
-    if (this.rowAux.length == 0) {
+    if (this.rowAux.length === 0) {
       this.rowAux = data;
-    }
-    else if (data.selected && this.rowAux != []) {
-      var aux = data;
+    } else if (data.selected && this.rowAux !== []) {
+      const aux = data;
       data = this.rowAux;
       data.selected = false;
       aux.selected = true;
       this.rowAux = aux;
     }
   }
+
+  public clearfilters() {
+    this.columns.forEach(element => {
+        element.filtering.filterString = '';
+        (<HTMLInputElement>document.getElementById(element.name)).value = '';
+    });
+    this.editingRow = {};
+    this.editing = {};
+    this.onChangeTable(this.config);
+
+  }
+
   refreshTable() {
     this.columns.forEach(element => {
         element.filtering.filterString = '';
         (<HTMLInputElement>document.getElementById(element.name)).value = '';
     });
     this.rowAux = [];
+    this.editingRow = {};
+    this.editing = {};
     this.getUsuarios();
     this.GetCatalogos();
   }

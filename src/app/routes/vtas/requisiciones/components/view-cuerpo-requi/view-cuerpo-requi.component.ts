@@ -1,3 +1,4 @@
+import { AdminServiceService } from './../../../../../service/AdminServicios/admin-service.service';
 import { ActivatedRoute, CanDeactivate, Router } from '@angular/router';
 import { AfterContentChecked, AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CatalogosService, RequisicionesService } from '../../../../../service/index';
@@ -11,7 +12,7 @@ import { SettingsService } from '../../../../../core/settings/settings.service';
   selector: 'app-view-cuerpo-requi',
   templateUrl: './view-cuerpo-requi.component.html',
   styleUrls: ['./view-cuerpo-requi.component.scss'],
-  providers: [RequisicionesService, CatalogosService]
+  providers: [RequisicionesService, CatalogosService, AdminServiceService]
 })
 export class ViewCuerpoRequiComponent implements OnInit, OnChanges {
   @Input('Requisicion') Requisicion: string;
@@ -22,14 +23,15 @@ export class ViewCuerpoRequiComponent implements OnInit, OnChanges {
   public checked = false;
   public EstatusRequi: any;
   arte: string;
-
+  bg = '';
   constructor(
     private serviceRequisiciones: RequisicionesService,
     private spinner: NgxSpinnerService,
+    private _service: AdminServiceService
   ) { }
 
   ngOnInit() {
-    this.arte = 'DamsaVacantes_PP5';
+    // this.arte = 'DamsaVacantes_PP5';
     this.GetDataRequi();
   }
 
@@ -50,7 +52,15 @@ export class ViewCuerpoRequiComponent implements OnInit, OnChanges {
     this.serviceRequisiciones.getNewRequi(this.Requisicion)
       .subscribe(data => {
         this.requisicion = data;
-        this.arte = data['arte'];
+        const aux = data['arte'];
+        let id = aux.lastIndexOf('/');
+        const nom = aux.substr(id + 1, aux.length);
+        id = nom.lastIndexOf('.');
+        let type = nom.substr(id + 1, nom.length);
+        type = type.replace('.', '');
+        this._service.GetBG('ArteRequi/BG/' + nom).subscribe(r => {
+          this.arte = 'data:image/' + type + ';base64,' + r;
+        });
         this.EstatusRequi = data.estatusId;
         this.spinner.hide();
       });

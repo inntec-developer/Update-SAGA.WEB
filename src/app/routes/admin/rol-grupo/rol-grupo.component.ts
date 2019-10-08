@@ -223,7 +223,7 @@ this.rolId = $event.target.value;
   GetEntidades() {
     this.Grupos = [];
     this.service.GetEntidades().subscribe(e => {
-      this.Grupos = e;
+      this.Grupos = e.filter(x => x.userActivo || x.grupoActivo);
       this.filteredGroups = this.Grupos;
       this.onChangeTable(this.config);
     });
