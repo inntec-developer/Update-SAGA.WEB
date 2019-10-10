@@ -261,9 +261,10 @@ export class RequisicionesService {
 
 
   GetReporte70(clave: string, ofc: string, tipo: string, fini: string, ffin: string, emp: string,
-    sol: string, trcl: string, cor: string, stus: string, recl: string): Observable<any> {
+    sol: string, trcl: string, cor: string, stus: string, recl: string,usuario:string): Observable<any> {
     return this._httpClient.get(this.URLGetReporte70 + '?clave=' + clave + '&ofc=' + ofc + '&tipo=' + tipo + '&fini=' + fini
-      + '&ffin=' + ffin + '&emp=' + emp + '&sol=' + sol + '&trcl=' + trcl + '&cor=' + cor + '&stus=' + stus + '&recl=' + recl)
+      + '&ffin=' + ffin + '&emp=' + emp + '&sol=' + sol + '&trcl=' + trcl + '&cor=' + cor + '&stus=' + stus 
+      + '&recl=' + recl + '&usuario='+usuario)
       .catch(this.handleError);
   }
   // Muestra un error en consola y regresa el mismo al Frond-End en caso de que se genere el mismo.

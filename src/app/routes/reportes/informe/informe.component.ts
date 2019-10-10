@@ -15,7 +15,7 @@ import { FormGroup } from '@angular/forms';
 import {Http} from '@angular/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { daLocale } from 'ngx-bootstrap/chronos/i18n/da';
-
+import { SettingsService } from '../../../core/settings/settings.service';
  
 
 declare var jQuery:any;
@@ -36,7 +36,7 @@ const moment = _rollupMoment || _moment;
 })
 export class InformeComponent implements OnInit {
  
- 
+  public TipoUsuario: any;
   public value: any;
   public Empresas : any[];
   public Clientes : any[];
@@ -85,8 +85,8 @@ export class InformeComponent implements OnInit {
     private adapter: DateAdapter<any>,
  //   private toasterService: ToasterService,
     private spinner: NgxSpinnerService,
-    private estados: CatalogosService
-   
+    private estados: CatalogosService,
+    private settings: SettingsService
   ) {
     
   
@@ -124,7 +124,11 @@ export class InformeComponent implements OnInit {
    }
  
   ngOnInit() {
- 
+    this.TipoUsuario = this.settings.user['tipoUsuarioId'];
+    if(this.TipoUsuario == 11){
+      document.getElementById('divreclutador').classList.add('ocultar');
+      document.getElementById('DivdivReclu').classList.remove('ocultar');
+    }
     // let date = new Date();
     // console.log("fecha: "+ date.getDate() +"-"+ date.getMonth());
     // console.log("fecha: "+ (date.setDate(date.getDate() + 1)).toString());
@@ -533,6 +537,10 @@ GeneraEstatusBolsa(){
     document.getElementById('divBusCoordina').classList.remove('ocultar');
     document.getElementById('divEmpresas').classList.remove('ocultar');
     document.getElementById('divSucursal').classList.remove('ocultar');
+  }
+
+  if(this.TipoUsuario == 11){
+    document.getElementById('divreclutador').classList.add('ocultar');
   }
  
  }
