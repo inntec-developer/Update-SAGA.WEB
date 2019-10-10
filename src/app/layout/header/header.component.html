@@ -324,7 +324,7 @@
         <div style="width: 200px">
             <mat-form-field >
                 <span matPrefix></span>
-                <input type="tel" id="BtnConsulVacant"  matInput placeholder="Nombre de la vacante">
+                <input type="tel" (keydown)=comandoEvent($event) id="BtnConsulVacant"  matInput placeholder="Nombre de la vacante">
                 <em (click)="BusquedaModal()" style="float:right;cursor: pointer" class="fa fa-search"></em>
               </mat-form-field>
         </div>
