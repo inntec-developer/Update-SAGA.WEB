@@ -1,12 +1,14 @@
 <form [formGroup]="ActividadArray">
-  <section class="col-12">
+  <section class="d-flex justify-content-between">
     <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
-    <strong class="text-warning">Principales actividades a desarrollar</strong>
-    <span class="fa fa-plus em-button text-primary float-right"
-      (click)="AddActividad()"></span>
-    <mat-divider></mat-divider>
+    <strong class="text-warning">Principales actividades a desarrollar <i *ngIf="ActividadesNew.length == 0" class="text-danger fa fa-exclamation-circle ml-3" 
+      container="body" placement="right" tooltip="Campo requerido"></i></strong>
+    <button class="btn btn-xs btn-primary mr-1 mb-1 mat-elevation-z8"
+      (click)="AddActividad()" container="body" placement="top" tooltip="Agregar actividades"><i class="fa fa-plus"></i></button>
   </section>
+  <mat-divider></mat-divider>
   <section>
+  <div *ngIf="ActividadArray['controls'].actividad['controls'].length > 0" class="card card-body mt-1">
     <div *ngFor="let actividad of ActividadArray['controls'].actividad['controls']; let i=index">
       <div formArrayName="actividad">
         <form [formGroupName]="i">
@@ -16,5 +18,6 @@
         </form>
       </div>
     </div>
+  </div>
   </section>
 </form>

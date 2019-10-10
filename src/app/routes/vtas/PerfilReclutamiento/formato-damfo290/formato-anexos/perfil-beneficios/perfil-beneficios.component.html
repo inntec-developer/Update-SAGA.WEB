@@ -1,18 +1,22 @@
 <form [formGroup]="BeneficioArray">
-  <section class="col-12">
+  <section class="d-flex justify-content-between">
     <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
-    <strong class="text-warning">Beneficios</strong> <span class="fa fa-plus em-button text-primary float-right"
-      (click)="AddBeneficio()"></span>
-    <mat-divider></mat-divider>
+    <strong class="text-warning">Beneficios <i *ngIf="BeneficiosNew.length == 0" class="text-danger fa fa-exclamation-circle ml-3" 
+      container="body" placement="right" tooltip="Campo requerido"></i></strong> 
+      <button class="btn btn-xs btn-primary mr-1 mb-1 mat-elevation-z8"
+      (click)="AddBeneficio()" container="body" placement="top" tooltip="Agregar beneficio"><i class="fa fa-plus"></i></button>
   </section>
+  <mat-divider></mat-divider>
   <section>
-    <div *ngFor="let beneficio of BeneficioArray['controls'].beneficio['controls']; let i=index">
-      <div formArrayName="beneficio">
-        <form [formGroupName]="i">
-          <app-beneficios-p [IdFormato]="IdFormato" [beneficio]="BeneficioArray.controls.beneficio.controls[i]" [index]="i"
-            (Add)="Agregar($event)" (remove)="removeBeneficio($event)" (Registros)="getRegistros($event)">
-          </app-beneficios-p>
-        </form>
+    <div *ngIf="BeneficioArray['controls'].beneficio['controls'].length > 0" class="card card-body mt-1">
+      <div *ngFor="let beneficio of BeneficioArray['controls'].beneficio['controls']; let i=index">
+        <div formArrayName="beneficio">
+          <form [formGroupName]="i">
+            <app-beneficios-p [IdFormato]="IdFormato" [beneficio]="BeneficioArray.controls.beneficio.controls[i]"
+              [index]="i" (Add)="Agregar($event)" (remove)="removeBeneficio($event)" (Registros)="getRegistros($event)">
+            </app-beneficios-p>
+          </form>
+        </div>
       </div>
     </div>
   </section>

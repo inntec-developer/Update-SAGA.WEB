@@ -62,8 +62,8 @@
       </table>
     </div>
   </div>
-  <div class="text-right">
-    <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+  <div class="d-flex justify-content-end">
+    <pagination *ngIf="config.paging" class="pagination-sm mr-1 mt-2" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
       [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
       (numPages)="numPages = $event">
     </pagination>

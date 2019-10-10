@@ -27,20 +27,8 @@ export class FormatoAnexosComponent implements OnInit, OnChanges {
   public Gerenciales: any[] = [];
 
   public Arte = '';
-  public Artes = [
-    { id: 1, value: 'DamsaVacantes_PP' },
-    { id: 2, value: 'DamsaVacantes_PP1' },
-    { id: 3, value: 'DamsaVacantes_PP2' },
-    { id: 4, value: 'DamsaVacantes_PP3' },
-    { id: 5, value: 'DamsaVacantes_PP4' },
-    { id: 6, value: 'DamsaVacantes_PP5' },
-    { id: 7, value: 'DamsaVacantes_PP6' },
-    { id: 1, value: 'DamsaVacantes_PP7' },
-    { id: 1, value: 'DamsaVacantes_PP8' },
-    { id: 1, value: 'DamsaVacantes_PP17' },
-  ];
   bg = '';
-
+  imgLoading = false;
   constructor(
     private _servicePerfilR: PerfilReclutamientoService,
     private dialog: MatDialog,
@@ -136,10 +124,11 @@ export class FormatoAnexosComponent implements OnInit, OnChanges {
     this._service.GetBG('ArteRequi/BG/' + nombre).subscribe(r => {
       this.bg = 'data:image/' + type + ';base64,' + r;
       this.Arte = nombre;
-      console.log(this.Arte);
+      this.imgLoading = false;
     });
   }
   openDialogBG() {
+    this.imgLoading = true;
     const dialogCnc = this.dialog.open(DlgBGArteComponent, {
       width: '90%',
       height: '90%',

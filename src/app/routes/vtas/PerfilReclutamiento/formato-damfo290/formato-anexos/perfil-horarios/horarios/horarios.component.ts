@@ -1,3 +1,4 @@
+import { toDate } from '@angular/common/src/i18n/format_date';
 import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { CatalogosService } from '../../../../../../../service';
@@ -88,6 +89,20 @@ export class HorariosComponent implements OnInit, AfterContentInit {
       this.activo = this.horario.get('activo').value;
     } else {
       this.Edit = true;
+    }
+  }
+
+  mocos($event) {
+
+    const horaInicio = this.horario.get('deHora').value.split(':');
+    const horaFinal = $event.target.value.split(':');
+
+    const deHora = new Date(0, 0, 0, horaInicio[0], horaInicio[1], 0);
+    const aHora = new Date(0, 0, 0, horaFinal[0], horaFinal[1], 0);
+
+    if (horaInicio[0] < 12 && deHora > aHora) {
+      this.horario.get('aHora').markAsUntouched();
+      this.horario.get('aHora').reset();
     }
   }
 
