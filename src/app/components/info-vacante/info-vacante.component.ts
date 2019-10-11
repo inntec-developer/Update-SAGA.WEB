@@ -7,12 +7,13 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
 
 import { FormBuilder } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AdminServiceService } from '../../service/AdminServicios/admin-service.service';
 
 @Component({
   selector: 'app-info-vacante',
   templateUrl: './info-vacante.component.html',
   styleUrls: ['./info-vacante.component.scss'],
-  providers: [RequisicionesService,
+  providers: [RequisicionesService, AdminServiceService,
     CatalogosService,
     { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
@@ -60,7 +61,8 @@ export class InfoVacanteComponent implements OnInit, OnChanges {
     public serviceCatalogos: CatalogosService,
     private _Router: Router,
     private _Route: ActivatedRoute,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private _service: AdminServiceService
   ) { }
 
   ngOnInit() {
@@ -127,7 +129,16 @@ export class InfoVacanteComponent implements OnInit, OnChanges {
       .subscribe(data => {
         this.requisicion = data;
         this.cliente = data['cliente'];
-        this.arte = data['arte'];
+        const aux = data['arte'];
+        let id = aux.lastIndexOf('/');
+        const nom = aux.substr(id + 1, aux.length);
+        id = nom.lastIndexOf('.');
+        let type = nom.substr(id + 1, nom.length);
+        type = type.replace('.', '');
+        this._service.GetBG('ArteRequi/BG/' + nom).subscribe(r => {
+          this.arte = 'data:image/' + type + ';base64,' + r;
+        });
+
         this.horariosRequi = data['horarios'];
         this.spinner.hide();
       });

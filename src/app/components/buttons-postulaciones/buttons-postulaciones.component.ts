@@ -155,7 +155,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       this.nr = true;
 
     }
-    else if (estatus === 10 || estatus === 12) //postulado apartado
+    else if (estatus === 10 || estatus === 12) // postulado apartado
     {
       this.cr = false;
       this.enr = true;
