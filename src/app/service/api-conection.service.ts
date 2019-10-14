@@ -115,7 +115,7 @@ export class ApiConection {
   public static GetRepoteCandidatos = 'Candidatos/getRPTCandidatosVacante';
   public static GetRequisPendientes = 'Requisiciones/getRequisPendientes';
   public static GetRequisicionPDF = 'Requisiciones/getRequisicionPDF';
-
+public static GetClasesTiposRecl = 'PerfilReclutamiento/getTipoClase';
 
   /* Clientes / Prospectos */
   public static GetProspectos = 'Directorio/getProspectos';

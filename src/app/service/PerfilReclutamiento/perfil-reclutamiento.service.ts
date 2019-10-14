@@ -46,6 +46,8 @@ export class PerfilReclutamientoService {
   private urlCrudCompGerenciales = ApiConection.ServiceUrl + ApiConection.CrudCompGerenciales;
   private urlCrudPerfilReclutamiento = ApiConection.ServiceUrl + ApiConection.CrudPerfilReclutamiento;
 
+  private urlGetClasesTipos = ApiConection.ServiceUrl + ApiConection.GetClasesTiposRecl;
+
   constructor(
     private _httpClient: HttpClient
   ) { }
@@ -75,6 +77,9 @@ export class PerfilReclutamientoService {
     return this._httpClient.get<any>(this.urlGetAnexosPerfil, { params: params, headers: this.httpOptions.headers });
   }
 
+  getTiposClasesRecl(): Observable<any> {
+    return this._httpClient.get<any>(this.urlGetClasesTipos);
+  }
   addEscolaridad(data: any): Observable<any> {
     return this._httpClient.post<any>(this.urlAddEscolaridad, data, this.httpOptions);
   }

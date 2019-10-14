@@ -540,7 +540,8 @@ horario = '';
 
       obj = this.dataSource[this.rowIndex];
       obj['email'] = [{ email: this.email.trim() || 'SIN REGISTRO', UsuarioMod: this.settings.user['usuario'] }];
-      obj['telefono'] = [{ ClaveLada: this.txtLada, telefono: this.txtLada + '-' + this.txtPhone, UsuarioMod: this.settings.user['usuario'], }],
+      obj['telefono'] = [{ ClaveLada: this.txtLada,
+        telefono: this.txtLada + '-' + this.txtPhone, UsuarioMod: this.settings.user['usuario'], }],
       this.CandidatosService.UpdateCandidatoMasivo(obj).subscribe(r => {
         if ( r === 200) {
           this.GetCandidatos();
