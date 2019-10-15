@@ -1,12 +1,16 @@
 <form [formGroup]="HorarioArray">
-    <section class="col-12">
+    <section class="d-flex justify-content-between">
       <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
-      <strong class="text-warning">Horarios</strong> <span class="fa fa-plus em-button text-primary float-right"
-        (click)="AddHorario()"></span>
-      <mat-divider></mat-divider>
+      <strong class="text-warning">Horarios  <i *ngIf="HorariosNew.length == 0" class="text-danger fa fa-exclamation-circle ml-3" 
+        container="body" placement="right" tooltip="Campo requerido"></i></strong>
+       <button class=" btn btn-xs btn-primary mr-1 mb-1 mat-elevation-z8" (click)="AddHorario()" container="body" placement="top" tooltip="Agregar horario">        
+        <i class="fa fa-plus"></i>
+      </button>
     </section>
+    <mat-divider></mat-divider>
     <section>
-      <div *ngFor="let horario of HorarioArray['controls'].horario['controls']; let i=index">
+      <div *ngIf="HorarioArray['controls'].horario['controls'].length > 0" class="card card-body mt-1">
+      <div *ngFor="let horario of HorarioArray['controls'].horario['controls']; let i=index" class="d-flex justify-content-between mt-1">
         <div formArrayName="horario">
           <form [formGroupName]="i">
             <app-horarios-p [IdFormato]="IdFormato" [horario]="HorarioArray.controls.horario.controls[i]" [index]="i"
@@ -15,5 +19,6 @@
           </form>
         </div>
       </div>
+    </div>
     </section>
   </form>

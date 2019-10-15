@@ -59,6 +59,8 @@ export class DTHistorialComponent implements OnInit {
     filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento',
     filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Fecha Modificación.', className: 'text-info text-center', name: 'fch_Modificacion',
+    filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
     { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador',
     filtering: { filterString: '', placeholder: 'Coordinador' } },

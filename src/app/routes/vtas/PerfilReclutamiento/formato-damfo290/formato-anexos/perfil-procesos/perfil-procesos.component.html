@@ -1,12 +1,15 @@
 <form [formGroup]="ProcesosArray">
-    <section class="col-12">
-      <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
-      <strong class="text-warning">Proceso</strong>
-      <span class="fa fa-plus em-button text-primary float-right"
-        (click)="AddProceso()"></span>
-      <mat-divider></mat-divider>
-    </section>
-    <section>
+  <section class="d-flex justify-content-between">
+    <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
+    <strong class="text-warning">Proceso <i *ngIf="ProcesosNew.length == 0"
+        class="text-danger fa fa-exclamation-circle ml-3" container="body" placement="right"
+        tooltip="Campo requerido"></i></strong>
+    <button class="btn btn-xs btn-primary mr-1 mb-1 mat-elevation-z8" (click)="AddProceso()" container="body"
+      placement="top" tooltip="Agregar proceso"><i class="fa fa-plus"></i></button>
+  </section>
+  <mat-divider></mat-divider>
+  <section>
+    <div *ngIf="ProcesosArray['controls'].proceso['controls'].length > 0" class="card card-body mt-1">
       <div *ngFor="let proceso of ProcesosArray['controls'].proceso['controls']; let i=index">
         <div formArrayName="proceso">
           <form [formGroupName]="i">
@@ -16,5 +19,6 @@
           </form>
         </div>
       </div>
-    </section>
-  </form>
+    </div>
+  </section>
+</form>

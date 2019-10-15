@@ -4,6 +4,7 @@ import { DatePipe } from '@angular/common';
 import { ExcelService } from '../../service/ExcelService/excel.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from './../../service/requisiciones/requisiciones.service';
+import { SettingsService } from '../../core/settings/settings.service';
 
 @Component({
   selector: 'app-reporte70',
@@ -13,7 +14,7 @@ import { RequisicionesService } from './../../service/requisiciones/requisicione
 })
 export class Reporte70Component implements OnInit {
 
-
+  private usuario: any;
   public disabled = false;
   public compact = false;
   public invertX = true;
@@ -43,9 +44,16 @@ export class Reporte70Component implements OnInit {
 
   registros: any;
   showFilterRow: boolean;
-  constructor(private _service: RequisicionesService, private pipe: DatePipe, private excelService: ExcelService, private spinner: NgxSpinnerService) { }
+  constructor(
+    private _service: RequisicionesService,
+    private pipe: DatePipe,
+    private excelService: ExcelService,
+    private spinner: NgxSpinnerService,
+    private settings: SettingsService
+  ) { }
 
   ngOnInit() {
+    this.usuario = this.settings.user['id'];
     // this.spinner.show();
     // this.GetReporte70();
   }
@@ -205,9 +213,9 @@ export class Reporte70Component implements OnInit {
       var inicio = inc['value'];
       var final = fin['value'];
       let tipo = document.getElementById('TipoReporte')['value'];
+      let usuarios = this.usuario;
 
-
-     this._service.GetReporte70("",ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec).subscribe(result => {
+     this._service.GetReporte70("",ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec,usuarios).subscribe(result => {
       this.requisiciones = result;
        this.onChangeTable(this.config);
        this.numPosiciones = 0;

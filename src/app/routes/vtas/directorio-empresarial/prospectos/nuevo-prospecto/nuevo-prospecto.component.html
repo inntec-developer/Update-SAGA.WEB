@@ -207,8 +207,10 @@
                   Principal
                 </mat-slide-toggle>
                 <p></p>
-                <mat-slide-toggle class="text-success" [color]="warn" formControlName="Activo">
+                <mat-slide-toggle class="text-success" [color]="warn" formControlName="Activo" #activo>
                   Activo
+                  <i *ngIf="!activo.checked" class="text-warning fa fa-exclamation-circle ml-2" 
+                      container="body" placement="right" tooltip="Debe agregar al menos una direcci&oacute;n activa"></i>
                 </mat-slide-toggle>
               </div>
             </div>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ReportesService } from '../../../service/Reporte/reportes.service';
 import { ExcelService } from '../../../service/ExcelService/excel.service';
-
+import { SettingsService } from '../../../core/settings/settings.service';
 
 
 @Component({
@@ -12,6 +12,7 @@ import { ExcelService } from '../../../service/ExcelService/excel.service';
 })
 export class CubiertoComponent implements OnInit {
 
+  private usuario: any;
   public General : any[];
   public columns: Array<any>;
  
@@ -38,10 +39,11 @@ export class CubiertoComponent implements OnInit {
   constructor(private servicio:ReportesService, 
               private spinner:NgxSpinnerService,
               private Exel: ExcelService,
+              private settings: SettingsService
             ) { }
 
   ngOnInit() {
-    
+    this.usuario = this.settings.user['id'];
   }
 
   convertDateTime(dateTime){
@@ -156,13 +158,13 @@ ucor = ucor == undefined?'0':ucor;
     let pal = document.getElementById('palabra');
     let inc = document.getElementById('fechaInicial');
     let fin = document.getElementById('fechaFinal');
-
+    let usuarios = this.usuario;
     // var palabra = pal['value'];
     var inicio = inc['value'];
     var final = fin['value'];
     let tipo = document.getElementById('TipoReporte')['value'];
 
-    this.servicio.GetInforme("",ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec,ucor)
+    this.servicio.GetInforme("",ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec,ucor,usuarios)
     .subscribe( data => {
     // this.popGenerico(data.mensaje,data.bandera,'Publicacion');
     this.requisiciones = data;

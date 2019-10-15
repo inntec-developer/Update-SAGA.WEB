@@ -198,7 +198,7 @@ export class FormatoRequisitosComponent implements OnInit, OnChanges {
 
   getContrato() {
     if (this.formEncabezado.get('Contrato').value !== 2) {
-      this.formEncabezado.controls['TiempoContrato'].reset();
+      // this.formEncabezado.controls['TiempoContrato'].reset();
       this.formEncabezado.controls['TiempoContrato'].markAsTouched();
     }
   }

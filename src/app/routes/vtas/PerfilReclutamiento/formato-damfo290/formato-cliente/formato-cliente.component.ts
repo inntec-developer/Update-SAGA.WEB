@@ -27,17 +27,15 @@ export class FormatoClienteComponent implements OnInit, OnChanges {
   DisableComponente = false;
   options: any;
 
-  TiposReclutamientos = [
-    { id: 1, tipoReclutamiento: 'Puro' },
-    { id: 2, tipoReclutamiento: 'Subcontratación' },
-    { id: 3, tipoReclutamiento: 'Staff' }
-  ];
+  // { id: 1, tipoReclutamiento: 'Puro' },
+  // { id: 2, tipoReclutamiento: 'Subcontratación' },
+  // { id: 3, tipoReclutamiento: 'Staff' }
+  TiposReclutamientos = [];
 
-  ClasesReclutamientos = [
-    { id: 1, calsesReclutamiento: 'Especializado' },
-    { id: 2, calsesReclutamiento: 'Operativo' },
-    { id: 3, calsesReclutamiento: 'Masivo' }
-  ];
+  // { id: 1, calsesReclutamiento: 'Especializado' },
+  // { id: 2, calsesReclutamiento: 'Operativo' },
+  // { id: 3, calsesReclutamiento: 'Masivo' }
+  ClasesReclutamientos = [];
 
   /*Mensajes del sistema */
   toaster: any;
@@ -80,6 +78,7 @@ export class FormatoClienteComponent implements OnInit, OnChanges {
       Clase: ['', Validators.required],
     });
 
+    this.GetClasesTiposRecl();
     this.markFormGroupTouched(this.formCliente);
 
   }
@@ -120,6 +119,12 @@ export class FormatoClienteComponent implements OnInit, OnChanges {
     }
   }
 
+  GetClasesTiposRecl() {
+    this._servicePerfilR.getTiposClasesRecl().subscribe( result => {
+      this.TiposReclutamientos = result.tipos;
+      this.ClasesReclutamientos = result.clases;
+    });
+  }
   filter() {
     const filter = this.formCliente.get('RazonSocial').value;
     if (filter !== '' || filter != null && filter.length > 5) {
@@ -157,6 +162,23 @@ export class FormatoClienteComponent implements OnInit, OnChanges {
       this.Telefonos = data['telefonos'];
       this.Contactos = data['contactos'];
     });
+  }
+
+  Borrar() {
+    this.AuxOptions = [];
+    this.formCliente.controls['RazonSocial'].reset();
+    this.formCliente.controls['RazonSocial'].markAsUntouched();
+    this.formCliente.controls['NombreComercial'].reset();
+    this.formCliente.controls['RFC'].reset();
+    this.formCliente.controls['Giro'].reset();
+    this.formCliente.controls['Actividad'].reset();
+    this.formCliente.controls['Tipo'].reset();
+    this.formCliente.controls['Tipo'].reset();
+    this.formCliente.controls['Clase'].reset();
+
+    this.Direcciones = [];
+    this.Telefonos = [];
+    this.Contactos = [];
   }
 
   popToast(type: any, title: any, body: any) {

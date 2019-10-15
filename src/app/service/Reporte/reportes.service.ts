@@ -87,11 +87,12 @@ getVRadial(data: any) : Observable<any>{
 
 
 GetInforme(clave:string,ofc:string,tipo:string,fini:string,ffin:string,emp:string,
-    sol:string,trcl:string,cor:string,stus:string,recl:string,usercor:string): 
+    sol:string,trcl:string,cor:string,stus:string,recl:string,usercor:string,usuario:string): 
     Observable<any> {
     return this.http.get(
         this.UrlInforme + '?clave='+clave+'&ofc='+ofc+'&tipo='+tipo+'&fini='+fini
-      +'&ffin='+ffin+'&emp='+emp+'&sol='+sol+'&trcl='+trcl+'&cor='+cor+'&stus='+stus+'&recl='+recl +'&usercor='+usercor
+      +'&ffin='+ffin+'&emp='+emp+'&sol='+sol+'&trcl='+trcl+'&cor='+cor+'&stus='+stus+'&recl='+recl 
+      +'&usercor='+usercor +'&usuario='+usuario
     ).map(result => result.json()).catch(this.handleError);
 }
 

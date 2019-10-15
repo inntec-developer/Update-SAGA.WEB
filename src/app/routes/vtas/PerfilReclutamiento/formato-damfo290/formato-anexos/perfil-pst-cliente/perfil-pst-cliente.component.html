@@ -1,18 +1,22 @@
 <form [formGroup]="PsicometriasCArray">
-  <section class="col-12">
+  <section class="d-flex justify-content-between">
     <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
-    <strong class="text-warning">Psicometr&iacute;as Cliente</strong>
-    <span class="fa fa-plus em-button text-primary float-right" (click)="AddPsicometria()"></span>
-    <mat-divider></mat-divider>
+    <strong class="text-warning">Psicometr&iacute;as Cliente <i *ngIf="PsicometriasNew.length == 0" class="text-danger fa fa-exclamation-circle ml-3" 
+      container="body" placement="right" tooltip="Campo requerido"></i></strong>
+    <button class="btn btn-xs btn-primary mr-1 mb-1 mat-elevation-z8"
+    (click)="AddPsicometria()" container="body" placement="top" tooltip="Agregar Psicometr&iacute;a"><i class="fa fa-plus"></i></button>
   </section>
+  <mat-divider></mat-divider>
   <section>
-    <div *ngFor="let psicometria of PsicometriasCArray['controls'].psicometria['controls']; let i=index">
-      <div formArrayName="psicometria">
-        <form [formGroupName]="i">
-          <app-pst-cliente [IdFormato]="IdFormato" [psicometriaC]="PsicometriasCArray.controls.psicometria.controls[i]"
-            [index]="i" (Add)="Agregar($event)" (remove)="removePsicometria($event)" (Registros)="getRegistros($event)">
-          </app-pst-cliente>
-        </form>
+    <div *ngIf="PsicometriasCArray['controls'].psicometria['controls'].length > 0" class="card card-body mt-1">
+      <div *ngFor="let psicometria of PsicometriasCArray['controls'].psicometria['controls']; let i=index">
+        <div formArrayName="psicometria">
+          <form [formGroupName]="i">
+            <app-pst-cliente [IdFormato]="IdFormato" [psicometriaC]="PsicometriasCArray.controls.psicometria.controls[i]"
+              [index]="i" (Add)="Agregar($event)" (remove)="removePsicometria($event)" (Registros)="getRegistros($event)">
+            </app-pst-cliente>
+          </form>
+        </div>
       </div>
     </div>
   </section>

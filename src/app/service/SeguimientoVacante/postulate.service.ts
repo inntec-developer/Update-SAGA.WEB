@@ -35,7 +35,8 @@ export class PostulateService {
   private UrlRegistrarCandidatos = ApiConection.ServiceUrl + ApiConection.registrarCandidatos;
   private UrlValidarEmailCandidato = ApiConection.ServiceUrl + ApiConection.validarEmailCandidato;
   private UrlValidarTelCandidato = ApiConection.ServiceUrl + ApiConection.validarTelCandidato;
-  private UrlGetCandidatosCubiertos = ApiConection.ServiceUrl + ApiConection.getCandidatosCubiertos
+  private UrlGetCandidatosCubiertos = ApiConection.ServiceUrl + ApiConection.getCandidatosCubiertos;
+  private UrlCubrirMasivos = ApiConection.ServiceUrl + ApiConection.cubrirMasivos;
 
   constructor(private _HttpClient: HttpClient) { }
 
@@ -72,6 +73,9 @@ export class PostulateService {
   {
     let params = new HttpParams().set('requisicionId', requisicionId);
     return this._HttpClient.get(this.UrlGetCandidatosCubiertos, { params: params, headers: this.httpOptions.headers })
+  }
+  CubrirMasivos(data) {
+    return this._HttpClient.post(this.UrlCubrirMasivos, data, this.httpOptions );
   }
 
   SetProcesoVacante(data)

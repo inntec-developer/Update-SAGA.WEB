@@ -387,7 +387,7 @@ export class DtDamfoComponent implements OnInit {
   eliminarFormato290(){
     swal({
       title: 'Eliminar Formato 290 -' + this.element['nombrePerfil'] + '?',
-      text: 'Este Formato 290 se eliminara.',
+      text: 'Este Formato 290 se eliminará.',
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#DD6B55',
@@ -407,7 +407,7 @@ export class DtDamfoComponent implements OnInit {
         this._perfillR.CrudPerfilReclutamiento(perfil).subscribe(x => {
           this.damfoId = x;
           this.refreshTable();
-          swal('Se elimino el damfo correctamente', '', 'success');
+          swal('Se eliminó el damfo correctamente', '', 'success');
         });
       }
       window.onkeydown = null;

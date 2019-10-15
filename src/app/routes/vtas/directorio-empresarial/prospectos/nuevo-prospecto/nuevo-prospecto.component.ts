@@ -9,6 +9,8 @@ import { CompanyValidation } from './company-validation';
 import { Router } from '@angular/router';
 import { SettingsService } from '../../../../../core/settings/settings.service';
 
+const swal = require('sweetalert2');
+
 @Component({
   selector: 'app-nuevo-prospecto',
   templateUrl: './nuevo-prospecto.component.html',
@@ -512,6 +514,7 @@ export class NuevoProspectoComponent implements OnInit {
       emails: [],
       contactos: []
     }
+
     if (data.esPrincipal) {
       this.Principal = data.esPrincipal;
     }
@@ -1787,14 +1790,14 @@ export class NuevoProspectoComponent implements OnInit {
     });
 
     if (notData) {
-      msg = msg + 'no esta asignado a una dirección, favor de verificarlo para continuer'
+      msg = msg + 'no esta asignado a una dirección, favor de verificarlo para continuar';
       this.popToast('info', 'Sin asignación de Dirección', msg);
       this.loading = false;
       return;
     }
 
 
-    var prospecto = {
+    const prospecto = {
       NombreComercial: this.formGeneral.get('Empresa').value,
       Clasificacion: this.clf,
       esCliete: 0,
@@ -1812,24 +1815,35 @@ export class NuevoProspectoComponent implements OnInit {
       DireccionEmail: DireccionEmail,
       DireccionTelefono: DireccionTelefono,
       DireccionContacto: DireccionContacto
-    }
+    };
+
+    const val = this.DireccionesNew.filter(x => x.activo).length;
+
+    if (val > 0 ) {
     this._ClienteService.addProspecto(prospecto).subscribe(element => {
-      if (element == 202) {
+      if (element === 202) {
         let msg = 'Se a Registrado Correctamente el Prospecto' + prospecto['NombreComercial'];
         this.popToast('success', 'Prospectos', msg);
         setTimeout(() => {
           this.loading = false;
-          this.router.navigate(['/ventas/directorio'])
+          this.router.navigate(['/ventas/directorio']);
         }, 2000);
 
-      }
-      else {
+      } else {
         let msg = 'Error al intentar registrar Correctamente el Prospecto' + prospecto['Nombre Comercial'];
         this.popToast('error', 'Prospectos', msg);
         this.loading = false;
       }
 
-    })
+    });
+  } else {
+    swal.fire({
+      type: 'error',
+      title: '¡Oops...!',
+      text: 'Debe proporcionar al menos una dirección activa'
+    });
+    this.loading = false;
+    }
   }
 
 

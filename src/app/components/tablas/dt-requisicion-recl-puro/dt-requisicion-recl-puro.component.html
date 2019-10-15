@@ -97,13 +97,14 @@
               <td> {{row.cliente | uppercase}}</td>
               <td class="text-center"> {{row.vBtra | uppercase}}</td>
               <td class="text-center">
-                <span class="px-1 mr-1  badge  badge-pill badge-info"> {{row.vacantes}}</span>
+                <span class="mr-1 badge badge-pill badge-info"> {{row.vacantes}}</span>
               </td>
               <!-- <td class="text-center"> {{row.tipoReclutamiento}}</td> -->
               <!-- <td class="text-right"> {{row.sueldoMinimo | moneda: $}}</td>
       <td class="text-right"> {{row.sueldoMaximo | moneda: $}}</td> -->
               <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
               <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
+              <td class="text-center"><span class="mr-1 badge badge-pill badge-info" [class.badge-warning]="row.diasTrans > 2">{{row.diasTrans}}</span></td>
               <td class="text-center">
                 <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-success"
                   [class.badge-warning]="row.estatusId  === 43">
@@ -118,7 +119,7 @@
                 </ng-template>
               </td>
               <td class="text-center">
-                <small class="badge badge-pill" [class.badge-danger]="row.prioridadId  === 1" [class.badge-warning]="row.prioridadId  === 2">
+                <small class="badge badge-pill" [class.badge-danger]="row.prioridadId  === 1" [class.badge-info]="row.prioridadId  === 2">
                   {{row.prioridad}}
                 </small>
               </td>

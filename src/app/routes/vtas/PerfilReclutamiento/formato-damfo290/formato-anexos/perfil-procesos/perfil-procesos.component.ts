@@ -16,7 +16,7 @@ export class PerfilProcesosComponent implements OnInit, OnChanges {
   Orden = 0;
 
   esNuevo = true;
-  private Add: boolean;
+  private Add = false;
 
   public ProcesosArray: FormGroup;
   public proceso: any;

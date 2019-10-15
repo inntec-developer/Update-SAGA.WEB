@@ -12,10 +12,10 @@
     <div class="row p-2 bg-light clearfix">
       <div class="col-sm-12 col-md-12">
         <button (click)="lgModal15.show()" placement="bottom" tooltip="Ver Requisición" class="mr-1 mat-elevation-z8"
-          [disabled]="!element" [ngClass]="(!element) ? 'btn btn-xs disabled':'btn btn-xs btn-warning'">
+          [disabled]="element.length == 0" [ngClass]="(element.length == 0) ? 'btn btn-xs disabled':'btn btn-xs btn-warning'">
           <i class="fa fa-eye"></i></button>
-        <button (click)="lgModal.show()" class="mr-1 btn btn-xs mat-elevation-z8" [disabled]="!element"
-          [ngClass]="(!element) ? 'disabled' : 'btn-dark'" container="body" placement="bottom" tooltip="Comentarios"><i
+        <button (click)="lgModal.show()" class="mr-1 btn btn-xs mat-elevation-z8" [disabled]="element.length == 0"
+          [ngClass]="(element.length == 0) ? 'disabled' : 'btn-dark'" container="body" placement="bottom" tooltip="Comentarios"><i
             class="fa fa-comments-o"></i></button>
         <button id="create" chkPrivilegiosButtons (click)="openDialogAssingRequi()" placement="bottom" tooltip="Asignar"
           container="body" class="mr-1 mat-elevation-z8" [disabled]="asignar"
@@ -145,7 +145,6 @@
 
       </div>
     </div>
-
     <div class="row" #tableContainer>
       <div class="col-sm-12 col-md-12 table-responsive clearfix">
         <div class="mt-3 ">
@@ -199,7 +198,7 @@
                     <span class="mr-1  badge  badge-pill badge-info"> {{row.contratados}}/{{row.vacantes}}</span>
                   </td>
                   <td class="text-center"> {{row.claseReclutamiento | uppercase}}</td>
-                  <td class="text-center" placement="top" tooltip="Fecha Creacion: {{row.fch_Creacion | date: 'dd/MM/yyyy'}}" container='body'> {{row.diasTrans | number}}</td>
+                  <td class="text-center" placement="top" tooltip="Fecha Creacion: {{row.fch_Creacion | date: 'dd/MM/yyyy'}}" container='body'> <span class="mr-1 badge badge-pill badge-info" [class.badge-warning]="row.diasTrans > 2">{{row.diasTrans || number}}</span></td>
                   <td class="text-right"> {{row.sueldoMinimo | moneda:'$'}} - {{row.sueldoMaximo | moneda:'$'}}</td>
                   <td class="text-center">
                     <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info"
@@ -466,16 +465,17 @@
               <mat-checkbox [(ngModel)]="ExpApt" class="margin-checkbox">Experiencia / Aptitudes </mat-checkbox>
               <mat-checkbox [(ngModel)]="Direccion" class="margin-checkbox">Direcci&oacute;n</mat-checkbox>
               <mat-checkbox [(ngModel)]="Beneficio" class="margin-checkbox">Beneficios</mat-checkbox>
+              <mat-checkbox [(ngModel)]="ActObsProd" class="margin-checkbox">Actividades / Obser / Porceso</mat-checkbox>
             </section>
           </div>
           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <section>
-                <mat-checkbox [(ngModel)]="ActObsProd" class="margin-checkbox">Actividades / Obser / Porceso</mat-checkbox>
               <mat-checkbox [(ngModel)]="Telefono" class="margin-checkbox">T&eacute;lefonos</mat-checkbox>
               <mat-checkbox [(ngModel)]="Contacto" class="margin-checkbox">Contactos</mat-checkbox>
               <mat-checkbox [(ngModel)]="DocPrest" class="margin-checkbox">Documentos / Prestaciones</mat-checkbox>
               <mat-checkbox [(ngModel)]="Psicom" class="margin-checkbox">Psicometr&iacute;as</mat-checkbox>
               <mat-checkbox [(ngModel)]="Competencia" class="margin-checkbox">Competencias</mat-checkbox>
+              <mat-checkbox [(ngModel)]="arteRedes" class="margin-checkbox">Arte para redes</mat-checkbox>
             </section>
           </div>
         </div>

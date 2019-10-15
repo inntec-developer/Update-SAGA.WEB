@@ -9,6 +9,7 @@ import { ExcelService } from '../../../service/ExcelService/excel.service';
 import {Http} from '@angular/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ReportesService } from '../../../service/Reporte/reportes.service';
+import { SettingsService } from '../../../core/settings/settings.service';
 
 
 
@@ -20,6 +21,7 @@ import { ReportesService } from '../../../service/Reporte/reportes.service';
 })
 export class TablaReporteComponent implements OnInit {
    
+  private usuario: any;
   @Input('data') valor:any;
   public General : any[];
   public palabra :string;
@@ -50,11 +52,14 @@ export class TablaReporteComponent implements OnInit {
   constructor(
     private Servicio: ReportesService,
     private Exel: ExcelService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private settings: SettingsService
 //    private pipe:DatePipe
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.usuario = this.settings.user['id'];
+  }
   
   Guardar(valor){
     var dato = valor;
@@ -150,8 +155,9 @@ ucor = ucor == undefined?'0':ucor;
     var inicio = inc['value'];
     var final = fin['value'];
     let tipo = document.getElementById('TipoReporte')['value'];
-
-    this.Servicio.GetInforme("",ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec,ucor)
+    let usuarios = this.usuario;
+    
+    this.Servicio.GetInforme("",ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec,ucor,usuarios)
     .subscribe( data => {
     // this.popGenerico(data.mensaje,data.bandera,'Publicacion');
     this.requisiciones = data;

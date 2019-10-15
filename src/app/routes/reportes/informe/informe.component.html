@@ -64,7 +64,7 @@ type="square-jelly-box"
 <div class="col-xl-2">
     <div class="form-group divtiporeport">
      
-      <select  (change)="Ocultar()" class="form-control" id="TipoReporte">
+      <select *ngIf="TipoUsuario != 11"  (change)="Ocultar()" class="form-control" id="TipoReporte">
           <option value="1">Por Solicitud</option>
           <option value="2">Por Estatus</option>
           <option selected value="3">General</option>
@@ -77,6 +77,11 @@ type="square-jelly-box"
           <option value="10">Clientes</option>
           <option value="11">Cubiertos</option>
       </select>
+      <select *ngIf="TipoUsuario == 11"  (change)="Ocultar()" class="form-control" id="TipoReporte">
+        <option value="1">Por Solicitud</option>
+        <option value="2">Por Estatus</option>
+        <option selected value="3">General</option>
+    </select>
     </div>
 </div>
 
@@ -101,7 +106,7 @@ type="square-jelly-box"
     <div class="form-group">
       
         <mat-form-field  >
-            <input  matInput [min]="date2.value" [max]="date.value"    [matDatepicker]="fechaFinal" id="fechaFinal"  [formControl]="date">
+            <input  matInput [min]="date2.value"  [max]="date3.value"    [matDatepicker]="fechaFinal" id="fechaFinal"  [formControl]="date">
             <mat-datepicker-toggle matSuffix [for]="fechaFinal"></mat-datepicker-toggle>
             <mat-datepicker #fechaFinal ></mat-datepicker>
           </mat-form-field>
@@ -492,6 +497,7 @@ type="square-jelly-box"
 </div>
 
 <div class="col-xl-4" id="Divdiv"></div>
+<div class="col-xl-4 ocultar" id="DivdivReclu"></div>
 <div class="col-xl-2 ocultar" id="Divdiv3"></div>
   <div class="col-xl-2"  >
       <button id="btnGraficaVacante"   (click)="GraficaVacante.Generar(objempresa,objtipocordi)" class="ocultar btn btn-sm btn-primary btnReport mat-elevation-z8 grafica" tooltip="Grafica">

@@ -72,7 +72,7 @@ import { VectormapDirective } from './directives/vectormap/vectormap.directive';
     TypeaheadModule.forRoot(),
     ToasterModule,
     NgScrollbarModule,
-    NgbModule,
+    NgbModule
   ],
   providers: [
     ColorsService,

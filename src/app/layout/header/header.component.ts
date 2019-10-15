@@ -204,6 +204,12 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  comandoEvent(event:any){
+    if (event.keyCode === 13 ) {
+      this.BusquedaModal()
+  }
+  }
+
 
   BusquedaModal(){
     this.spiner.show();

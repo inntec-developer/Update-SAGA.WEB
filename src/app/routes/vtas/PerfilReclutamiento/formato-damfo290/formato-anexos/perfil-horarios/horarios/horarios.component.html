@@ -1,4 +1,4 @@
-<!-- <div class="container"> -->
+<div class="card card-body">
 <form [formGroup]="horario" id="index">
   <section [hidden]="!Edit">
     <div class="row">
@@ -23,11 +23,11 @@
       </mat-form-field>
 
       <mat-form-field class="col-1">
-        <input matInput #deDiaCtrl type="time" class="text-right" placeholder="De Hora" formControlName="deHora"
+        <input matInput #deDiaCtrl type="time" class="text-right" placeholder="De Hora" formControlName="deHora" 
           required="">
-      </mat-form-field>
+        </mat-form-field>
       <mat-form-field class="col-1">
-        <input matInput #deHoraCtrl type="time" class="text-right" placeholder="A Hora" formControlName="aHora"
+        <input matInput #deHoraCtrl type="time" class="text-right" placeholder="A Hora" formControlName="aHora" (change)="mocos($event)"
           required="">
       </mat-form-field>
 
@@ -71,4 +71,4 @@
     <strong>{{MsgAlert | uppercase}}</strong>
   </alert>
 </form>
-<!-- </div> -->
+</div>

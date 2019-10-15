@@ -1,20 +1,23 @@
 <form [formGroup]="DocumentosArray">
-    <section class="col-12">
-      <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
-      <strong class="text-warning">Documentos adicionales a petici&oacute;n del cliente</strong>
-      <span class="fa fa-plus em-button text-primary float-right"
-        (click)="AddDocumento()"></span>
-      <mat-divider></mat-divider>
-    </section>
-    <section>
+  <section class="d-flex justify-content-between">
+    <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
+    <strong class="text-warning">Documentos adicionales a petici&oacute;n del cliente  <i *ngIf="DocumentosNew.length == 0" class="text-danger fa fa-exclamation-circle ml-3" 
+      container="body" placement="right" tooltip="Campo requerido"></i></strong>
+    <button class="btn btn-xs btn-primary mr-1 mb-1 mat-elevation-z8" (click)="AddDocumento()" container="body"
+      placement="top" tooltip="Agregar documentos"><i class="fa fa-plus"></i></button>
+  </section>
+  <mat-divider></mat-divider>
+  <section>
+    <div *ngIf="DocumentosArray['controls'].documento['controls'].length > 0" class="card card-body mt-1">
       <div *ngFor="let documento of DocumentosArray['controls'].documento['controls']; let i=index">
         <div formArrayName="documento">
           <form [formGroupName]="i">
-            <app-doc-cliente [IdFormato]="IdFormato" [documento]="DocumentosArray.controls.documento.controls[i]" [index]="i"
-              (Add)="Agregar($event)" (remove)="removeDocumento($event)" (Registros)="getRegistros($event)">
+            <app-doc-cliente [IdFormato]="IdFormato" [documento]="DocumentosArray.controls.documento.controls[i]"
+              [index]="i" (Add)="Agregar($event)" (remove)="removeDocumento($event)" (Registros)="getRegistros($event)">
             </app-doc-cliente>
           </form>
         </div>
       </div>
-    </section>
-  </form>
+    </div>
+  </section>
+</form>

@@ -95,8 +95,7 @@ export class BusquedaCandidatosComponent implements OnInit {
   toolTipePC: string;
   alerts: any;
   loadingPC: boolean;
-  palabraClave: string = '';
-
+  palabraClave = '';
 
   constructor(
     private service: CandidatosService
@@ -197,7 +196,7 @@ export class BusquedaCandidatosComponent implements OnInit {
     this.filtroColonia = this.Colonias.filter(col =>
       col.colonia.toLowerCase().indexOf(colonia.toLowerCase()) === 0);
     this.cp = this.filtroColonia[0].cp;
-    return this.filtroColonia
+    return this.filtroColonia;
   }
 
   // Area Experiencia
@@ -304,9 +303,9 @@ export class BusquedaCandidatosComponent implements OnInit {
     // }
   }
   Buscar() {
-    if (this.loading == false) {
+    if (this.loading === false) {
       this.loading = true;
-      let filtroCandidatos: Filtros = new Filtros();
+      const filtroCandidatos: Filtros = new Filtros();
       filtroCandidatos.IdPais = this.filtropais ? this.filtropais[0].id : null,
         filtroCandidatos.IdEstado = this.filtroestado ? this.filtroestado[0].id : null,
         filtroCandidatos.IdMunicipio = this.filtromunicipio ? this.filtromunicipio[0].id : null,
@@ -334,8 +333,8 @@ export class BusquedaCandidatosComponent implements OnInit {
   }
 
   buscarPalabraClave(palabraclave: string) {
-    var busqueda = palabraclave.trim();
-    if(busqueda != ''){
+    const busqueda = palabraclave.trim();
+    if (busqueda !== '') {
       this.loading = true;
       this.service.getcandidatosPalabraClave(busqueda).subscribe(data => {
         this.Candidatos = data;
@@ -343,7 +342,7 @@ export class BusquedaCandidatosComponent implements OnInit {
         this.loading = false;
         this.expanded = false;
       });
-    }else{
+    } else {
       swal('Agregue información a buscar.', '', 'info');
     }
   }

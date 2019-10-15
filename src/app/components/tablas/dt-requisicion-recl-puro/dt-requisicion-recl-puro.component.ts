@@ -78,6 +78,8 @@ export class DtRequisicionReclPuroComponent implements OnInit {
     filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento',
     filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Días Transc.', className: 'text-info text-center', name: 'diasTrans',
+    filtering: { filterString: '', placeholder: 'Días' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus',
     filtering: { filterString: '', placeholder: 'Estatus' } },
     { title: 'Prioridad', className: 'text-info text-center', name: 'prioridad',
