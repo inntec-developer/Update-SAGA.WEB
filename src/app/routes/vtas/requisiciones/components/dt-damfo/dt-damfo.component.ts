@@ -82,6 +82,10 @@ export class DtDamfoComponent implements OnInit {
     {
       title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion',
       filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }
+    },
+    {
+      title: 'Usuario', className: 'text-info text-center', name: 'usuarioAlta',
+      filtering: { filterString: '', placeholder: 'Usuario' }
     }
   ];
 
@@ -170,9 +174,9 @@ export class DtDamfoComponent implements OnInit {
 
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
+    this.showFilterRow = true;
     this.columns.forEach((column: any) => {
-      if (column.filtering) {
-        this.showFilterRow = true;
+      if (column.filtering && column.filtering.filterString !== '') {
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null) {
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
@@ -180,33 +184,6 @@ export class DtDamfoComponent implements OnInit {
         });
       }
     });
-
-    if (!config.filtering) {
-      return filteredData;
-    }
-
-    if (config.filtering.columnName) {
-      return filteredData.filter((item: any) =>
-        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-    }
-
-    const tempArray: Array<any> = [];
-    filteredData.forEach((item: any) => {
-      let flag = false;
-      this.columns.forEach((column: any) => {
-        if (item[column.name] == null) {
-          flag = true;
-        } else {
-          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-            flag = true;
-          }
-        }
-      });
-      if (flag) {
-        tempArray.push(item);
-      }
-    });
-    filteredData = tempArray;
 
     return filteredData;
   }
@@ -222,10 +199,9 @@ export class DtDamfoComponent implements OnInit {
     this.registros = this.dataSource.length;
     this.rows = this.dataSource;
     const filteredData = this.changeFilter(this.dataSource, this.config);
-    const sortedData = this.changeSort(filteredData, this.config);
-    this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
+    this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
     this.registros = this.rows.length;
-    this.length = sortedData.length;
+    this.length = filteredData.length;
     this.spinner.hide();
 
   }

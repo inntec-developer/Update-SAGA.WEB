@@ -134,11 +134,11 @@ export class ViewRequisicionComponent implements OnInit {
     let timerInterval;
     swal.fire({
       title: '¡Descargar Requisición PDF!',
-      html:  '<strong></strong> seconds.<br/><br/>',
+      html:  '<strong></strong><br/><br/>',
       text: 'El proceso puede durar varios segundos. Por favor espere...',
       type: 'warning',
       showConfirmButton: false,
-      timer: 5000,
+      timer: 3000,
       onBeforeOpen: () => {
         swal.showLoading();
         timerInterval = setInterval(() => {
@@ -159,7 +159,6 @@ export class ViewRequisicionComponent implements OnInit {
     this.serviceRequisiciones.getRequisicionPDF(this.RequisicionId).subscribe(result => {
       if (result !== 404) {
         this.Requisicion = result;
-        console.log('Requisicion ', this.Requisicion);
         this.imprimir = true;
         let row = 80;
         const nombrePerfil = this.Requisicion['vBtra'];

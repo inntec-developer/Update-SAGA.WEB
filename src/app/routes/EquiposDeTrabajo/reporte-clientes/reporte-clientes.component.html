@@ -74,10 +74,12 @@
                     </div>
                   </ng-container>
                   <div class="text-center mt-2">
-                            <div tooltip="{{t.totalCump}} %">
-                                <progressbar class="progress-xs m-0" value="{{t.totalCump}}" type="info"></progressbar>
-                            </div>
-                            <small class="text-muted">{{t.totalCump || 0}} % Cumplimiento</small>
+                      <div class="progress progress-xs m-0" tooltip="{{t.totalCump}} %">
+                          <div [ngClass]="{'bg-danger': t.totalCump <= 25, 'bg-warning': t.totalCump > 25 && t.totalCump <= 50, 'bg-yellow': t.totalCump > 50 && t.totalCump <= 75, 'bg-success': t.totalCump > 75 }" 
+                              class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="t.totalCump" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: t.totalCump + '%'}">
+                          </div>
+                      </div>
+                      <small class="text-muted">{{t.totalCump || 0}} % Cumplimiento</small>
                     </div>
                 </div>
                 <div class="card-body">

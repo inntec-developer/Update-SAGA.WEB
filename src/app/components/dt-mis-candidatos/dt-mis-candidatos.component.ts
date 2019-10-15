@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-
+import { Component, EventEmitter, Input, OnInit, Output, AfterViewInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { CandidatosService } from './../../service/Candidatos/candidatos.service';
 import { SettingsService } from '../../core/settings/settings.service';
+import { ExcelService } from '../../service/ExcelService/excel.service';
 
 declare var $: any;
 
@@ -9,9 +10,9 @@ declare var $: any;
   selector: 'app-dt-mis-candidatos',
   templateUrl: './dt-mis-candidatos.component.html',
   styleUrls: ['./dt-mis-candidatos.component.scss'],
-  providers: [CandidatosService]
+  providers: [CandidatosService, DatePipe]
 })
-export class DtMisCandidatosComponent implements OnInit {
+export class DtMisCandidatosComponent implements OnInit, AfterViewInit {
   @Output('CandidatoId') CandidatoId: EventEmitter<any> = new EventEmitter<any>();
   disabled = false;
   compact = false;
@@ -21,13 +22,13 @@ export class DtMisCandidatosComponent implements OnInit {
 
   public dataSource: Array<any> = [];
   // Varaibles del paginador
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
-  selected: boolean = false;
+  selected = false;
   rowAux = [];
 
   showFilterRow: boolean;
@@ -36,28 +37,7 @@ export class DtMisCandidatosComponent implements OnInit {
   element: any = {};
 
   ReclutadorId: string;
-
-  constructor(
-    private service: CandidatosService,
-    private settings: SettingsService) {
-    this.ReclutadorId = this.settings.user['id'];
-    this.misCandidatos();
-   }
-
-  ngOnInit() {
-    // this.ReclutadorId = this.settings.user['id'];
-    // this.onChangeTable(this.config);
-  }
-
-  ngAfterViewInit() {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
-    setTimeout(() => {
-      this.onChangeTable(this.config);
-    }, 1500);
-  }
-
-  public rows: Array<any> = []
+  public rows: Array<any> = [];
   public columns: Array<any> = [
     { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
@@ -70,13 +50,30 @@ export class DtMisCandidatosComponent implements OnInit {
     { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad', filtering: { filterString: '', placeholder: 'Fecha Nacimiento' } },
     { title: 'CURP', className: 'text-success text-center', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
     { title: 'RFC', className: 'text-success text-center', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
-  ]
-
+  ];
   public config: any = {
     paging: true,
-    //sorting: { colums: this.columns },
     filtering: { filterString: '' },
     className: ['table-hover mb-0']
+  };
+  constructor(
+    private service: CandidatosService,
+    private settings: SettingsService,
+    private excelService: ExcelService,
+    private pipe: DatePipe) {
+    this.ReclutadorId = this.settings.user['id'];
+    this.misCandidatos();
+   }
+
+  ngOnInit() {
+    // this.ReclutadorId = this.settings.user['id'];
+    // this.onChangeTable(this.config);
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.onChangeTable(this.config);
+    }, 1500);
   }
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
@@ -238,11 +235,34 @@ export class DtMisCandidatosComponent implements OnInit {
     }, 800);
   }
 
-  public clearfilters(){
+  public clearfilters() {
     this.columns.forEach(element => {
       element.filtering.filterString = '';
      (<HTMLInputElement>document.getElementById(element.name + 'v')).value = '';
     });
     this.onChangeTable(this.config);
+  }
+  exportAsXLSX() {
+    if (this.dataSource.length > 0) {
+      const aux = [];
+      this.dataSource.forEach(row => {
+        const edad = this.pipe.transform(new Date(row.edad), 'dd/MM/yyyy');
+
+        aux.push({
+          ESTATUS: row.estatus,
+          NOMBRE: row.nombre,
+          'ÁREA EXPERIENCIA': row.areaExp,
+          'ÁREA INTERES': row.vBtra,
+          'SUELDO ACEPTABLE': row.sueldoMinimo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
+          'FECHA NACIMIENTO': edad,
+          'CURP': row.curp,
+          'RFC': row.rfc,
+        });
+      });
+
+      //    })
+      //  })
+      this.excelService.exportAsExcelFile(aux, 'Resultado_Busqueda_Candidatos');
+    }
   }
 }

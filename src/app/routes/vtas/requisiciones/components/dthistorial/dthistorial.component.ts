@@ -99,7 +99,6 @@ export class DTHistorialComponent implements OnInit {
       this.dataSource.forEach(r => {
         this.totalContratados += r.contratados;
       });
-      console.log(this.dataSource)
      this.onChangeTable(this.config);
     });
   }
@@ -220,6 +219,8 @@ export class DTHistorialComponent implements OnInit {
       this.dataSource.forEach(row => {
         const d = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
         const e = this.pipe.transform(new Date(row.fch_Cumplimiento), 'dd/MM/yyyy');
+        const m = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
+
 
         if (!Array.isArray(row.reclutadores) ) {
           reclutador = 'SIN ASIGNAR';
@@ -248,6 +249,7 @@ export class DTHistorialComponent implements OnInit {
           COORDINACION: row.claseReclutamiento,
           'FECHA CREACIÓN': d, // new Date(d.getFullYear() + '-' + (d.getMonth()) + '-' + d.getDate()).toString(),
           'FECHA CUMPLIMIENTO': e,
+          'FECHA MODIFICACIÓN': m,
           ESTATUS: row.estatus,
           COORDINADOR: coordinador,
           SOLICITANTE: row.solicita,

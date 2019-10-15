@@ -66,9 +66,10 @@ import { ViewdamfoComponent } from './requisiciones/components/viewdamfo/viewdam
 
 const routes: Routes = [
   { path: 'directorio', component: DirectorioEmpresarialComponent, data: { componente: 'Directorio Empresarial' } },
-  { path: 'nuevoProspecto', component: NuevoProspectoComponent },
-  { path: 'editarCliente/:ClienteId', component: EditarClientesComponent },
-  { path: 'visualizarCliente/:ClienteId', component: VerClienteComponent },
+  { path: 'returnDir/:ruta', component: DirectorioEmpresarialComponent },
+  { path: 'nuevoProspecto/:ruta', component: NuevoProspectoComponent },
+  { path: 'editarCliente/:ClienteId/:ruta', component: EditarClientesComponent },
+  { path: 'visualizarCliente/:ClienteId/:ruta', component: VerClienteComponent },
   { path: 'requisicion', component: RequisicionComponent, data: { componente: 'Requisiciones' } },
   { path: 'crearRequisicion', component: DtCrearRequisicionComponent },
   { path: 'requisicionNueva/:IdDamfo/:IdDireccion/:IdEstatus/:Confidencial', component: RequisicionNuevaComponent },

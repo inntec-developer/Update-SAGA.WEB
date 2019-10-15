@@ -1,3 +1,4 @@
+import { DirectorioEmpresarialComponent } from './../directorio-empresarial.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,7 +10,7 @@ import { SettingsService } from '../../../../core/settings/settings.service';
   selector: 'app-ver-cliente',
   templateUrl: './ver-cliente.component.html',
   styleUrls: ['./ver-cliente.component.scss'],
-  providers: [ClientesService]
+  providers: [ClientesService, DirectorioEmpresarialComponent ]
 })
 export class VerClienteComponent implements OnInit {
   public ClienteId: any;
@@ -24,16 +25,20 @@ export class VerClienteComponent implements OnInit {
   public invertY = false;
   public shown = 'hover';
   public imprimir: boolean;
+  ruta: any;
   constructor(
     private spinner: NgxSpinnerService,
     private _Router: Router,
     private _Route: ActivatedRoute,
     private _service: ClientesService,
     public settings: SettingsService,
+    private dir: DirectorioEmpresarialComponent
   ) {
     this._Route.params.subscribe(params => {
+
       if (params['ClienteId'] != null) {
         this.ClienteId = params['ClienteId'];
+        this.ruta = params['ruta'];
         this._service.getCliente(this.ClienteId).subscribe(result => {
           if (result != null) {
             this.Cliente = result;
@@ -41,11 +46,14 @@ export class VerClienteComponent implements OnInit {
           }
         });
       } else {
-        this._Router.navigate(['/ventas/directorio']);
+        this._Router.navigate(['/ventas/returnDir', this.ruta]);
       }
     });
   }
 
+  regresar() {
+      this._Router.navigate(['/ventas/returnDir', this.ruta]);
+  }
   ngOnInit() {
     this.oneAtATime = false;
   }

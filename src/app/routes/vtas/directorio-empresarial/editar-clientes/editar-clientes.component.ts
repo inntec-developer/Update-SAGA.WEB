@@ -21,6 +21,7 @@ export class EditarClientesComponent implements OnInit {
   Emails: any = [];
   Contactos: any = [];
   EntidadId: any;
+  ruta: any;
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -32,9 +33,10 @@ export class EditarClientesComponent implements OnInit {
     this._Route.params.subscribe(params => {
       if (params['ClienteId'] != null) {
         this.ClienteId = params['ClienteId'];
+        this.ruta = params['ruta'];
         this.getInfoCliente(this.ClienteId)
       } else {
-        this._Router.navigate(['/ventas/directorio']);
+        this._Router.navigate(['/ventas/returnDir', this.ruta]);
       }
     });
   }
@@ -42,11 +44,15 @@ export class EditarClientesComponent implements OnInit {
   ngOnInit() {
   }
 
+  regresar() {
+    this._Router.navigate(['/ventas/returnDir', this.ruta]);
+}
+
   changeData(data){
-    var DireccionIndexUpdate = this.Direcciones.findIndex(x => x.id == data.id)
+    const DireccionIndexUpdate = this.Direcciones.findIndex(x => x.id == data.id)
     if(DireccionIndexUpdate != null){
       this.Direcciones[DireccionIndexUpdate] = data;
-    }else{
+    } else {
       this.Direcciones.push(data);
     }
 

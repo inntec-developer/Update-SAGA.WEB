@@ -6,7 +6,7 @@ import { emptyStringGetter, id } from '@swimlane/ngx-datatable/release/utils';
 import { CatalogosService } from './../../../../../service/catalogos/catalogos.service';
 import { ClientesService } from '../../../../../service/clientes/clientes.service';
 import { CompanyValidation } from './company-validation';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SettingsService } from '../../../../../core/settings/settings.service';
 
 const swal = require('sweetalert2');
@@ -119,16 +119,22 @@ export class NuevoProspectoComponent implements OnInit {
   public PrincipalT: boolean = false;
   public Usuario: string;
   //#endregion
-
+  ruta = 1;
 
   constructor(
     private router: Router,
+    private _Route: ActivatedRoute,
     private fb: FormBuilder,
     private _CatalogoService: CatalogosService,
     private _ClienteService: ClientesService,
     private toasterService: ToasterService,
     private settings: SettingsService
   ) {
+    this._Route.params.subscribe(params => {
+      if (params['ruta'] != null) {
+        this.ruta = params['ruta'];
+      }
+    });
     // #region FORMULARIO DE DATOS GENERALES
     this.formGeneral = new FormGroup({
       Empresa: new FormControl('', [Validators.required, Validators.maxLength(100)]),
@@ -1826,7 +1832,7 @@ export class NuevoProspectoComponent implements OnInit {
         this.popToast('success', 'Prospectos', msg);
         setTimeout(() => {
           this.loading = false;
-          this.router.navigate(['/ventas/directorio']);
+          this.router.navigate(['/ventas/returnDir', this.ruta]);
         }, 2000);
 
       } else {

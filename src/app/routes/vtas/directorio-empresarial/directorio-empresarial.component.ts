@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ClientesService } from './../../../service/clientes/clientes.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-directorio-empresarial',
@@ -12,17 +12,28 @@ import { Router } from '@angular/router';
 export class DirectorioEmpresarialComponent implements OnInit {
   public Prospectos: Array<any> = [];
   public Clientes: Array<any> = [];
-  public CountProspectos: number = 0;
-  public CountClientes: number = 0;
-  public viewProspectos: boolean = null;
-
+  public CountProspectos = 0;
+  public CountClientes = 0;
+  public viewProspectos = false;
 
   constructor(
     private _service: ClientesService,
-    private _Router: Router
-    ) { }
+    private _Router: Router,
+    private _Route: ActivatedRoute,
+    ) {
+  }
 
   ngOnInit() {
+this._Route.params.subscribe(params => {
+  if (params['ruta'] != null) {
+    if (params['ruta'] === '2') {
+      this.viewProspectos = true;
+    } else {
+      this.viewProspectos = false;
+    }
+  }
+});
+
     this._service.getProspectos().subscribe(element =>{
       this.Prospectos = element;
       this.CountProspectos = this.Prospectos.length;
@@ -34,11 +45,12 @@ export class DirectorioEmpresarialComponent implements OnInit {
     });
   }
 
-  clicProspectos(){
-    this._Router.navigate(['/ventas/prospectos',this.Prospectos], { skipLocationChange: true });
-  }
+  // clicProspectos() {
 
-  selectClientes(){
+  //   this._Router.navigate(['/ventas/prospectos',this.Prospectos], { skipLocationChange: true });
+  // }
+
+  selectClientes() {
     this.viewProspectos = false;
   }
 

@@ -1,34 +1,36 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, OnChanges } from '@angular/core';
+import { ExcelService } from '../../service/ExcelService/excel.service';
+import { DatePipe } from '@angular/common';
 declare var $: any;
 
 @Component({
   selector: 'app-dt-busqueda-candidatos',
   templateUrl: './dt-busqueda-candidatos.component.html',
-  styleUrls: ['./dt-busqueda-candidatos.component.scss']
+  styleUrls: ['./dt-busqueda-candidatos.component.scss'],
+  providers: [DatePipe]
 })
 
 
 
-export class DtBusquedaCandidatosComponent implements OnInit {
-   //scroll
+export class DtBusquedaCandidatosComponent implements OnInit, OnChanges {
+   // scroll
    disabled = false;
    compact = false;
    invertX = false;
    invertY = false;
    shown = 'hover';
-   
+
   @Input('Candidatos') Candidatos: any;
   @Output('CandidatoId') CandidatoId: EventEmitter<any> = new EventEmitter<any>();
   public dataSource: Array<any> = [];
   // Varaibles del paginador
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
-  selected: boolean = false;
+  selected = false;
   rowAux = [];
 
   showFilterRow: boolean;
@@ -37,7 +39,30 @@ export class DtBusquedaCandidatosComponent implements OnInit {
   element: any = {};
   objLiberar: any;
 
-  constructor() { }
+  public rows: Array<any> = [];
+  public columns: Array<any> = [
+    { title: 'Estatus', className: 'text-center text-success', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
+    { title: 'Nombre Candidato', className: 'text-center text-info', name: 'nombre',
+    filtering: { filterString: '', placeholder: 'Nombre' } },
+    { title: 'Área Experiencia', className: 'text-center text-info', name: 'areaExp',
+    filtering: { filterString: '', placeholder: 'Experiencia' } },
+    { title: 'Área Interes', className: 'text-center text-info', name: 'areaInt', filtering: { filterString: '', placeholder: 'Interes' } },
+    { title: 'Localidad', className: 'text-center text-info', name: 'localidad',
+    filtering: { filterString: '', placeholder: 'Localidad' } },
+    { title: 'Sueldo Aceptable', className: 'text-info text-center', name: 'sueldoMinimo',
+    filtering: { filterString: '', placeholder: 'Sueldo aceptable' } },
+    { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad',
+    filtering: { filterString: '', placeholder: 'Fecha Nacimiento' } },
+    { title: 'CURP', className: 'text-center text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
+    { title: 'RFC', className: 'text-center text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
+  ];
+
+  public config: any = {
+    paging: true,
+    filtering: { filterString: '' },
+    className: ['table-hover mb-0']
+  };
+  constructor(private excelService: ExcelService, private pipe: DatePipe) { }
 
   ngOnInit() {
     this.dataSource = this.Candidatos;
@@ -45,32 +70,11 @@ export class DtBusquedaCandidatosComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
+    // Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    // Add '${implements OnChanges}' to the class.
     if (changes.Candidatos && !changes.Candidatos.isFirstChange()) {
       this.ngOnInit();
     }
-  }
-
-  public rows: Array<any> = []
-  public columns: Array<any> = [
-    { title: 'Estatus', className: 'text-center text-success', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
-    { title: 'Nombre Candidato', className: 'text-center text-info', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
-    { title: 'Área Experiencia', className: 'text-center text-info', name: 'areaExp', filtering: { filterString: '', placeholder: 'Experiencia' } },
-    { title: 'Área Interes', className: 'text-center text-info', name: 'areaInt', filtering: { filterString: '', placeholder: 'Interes' } },
-    { title: 'Localidad', className: 'text-center text-info', name: 'localidad', filtering: { filterString: '', placeholder: 'Localidad' } },
-    { title: 'Sueldo Aceptable', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo aceptable' } },
-    { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad', filtering: { filterString: '', placeholder: 'Fecha Nacimiento' } },
-    { title: 'CURP', className: 'text-center text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
-    { title: 'RFC', className: 'text-center text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
-  ]
-
-
-  public config: any = {
-    paging: true,
-    //sorting: { colums: this.columns },
-    filtering: { filterString: '' },
-    className: ['table-hover mb-0']
   }
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
@@ -109,8 +113,7 @@ export class DtBusquedaCandidatosComponent implements OnInit {
       return 0;
     });
   }
-public getCleanedString(cadena: string) : string
-{
+public getCleanedString(cadena: string): string {
   cadena = cadena.replace(/á/gi,"a");
   cadena = cadena.replace(/é/gi,"e");
   cadena = cadena.replace(/í/gi,"i");
@@ -127,46 +130,17 @@ public getCleanedString(cadena: string) : string
     this.columns.forEach((column: any) => {
       if (column.filtering.filterString != "") {
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
-          {
-            let itemAux = this.getCleanedString(item[column.name].toString().toLowerCase());
-            let itemAux2 = this.getCleanedString(column.filtering.filterString.toLowerCase());
+          if (item[column.name] != null) {
+            const itemAux = this.getCleanedString(item[column.name].toString().toLowerCase());
+            const itemAux2 = this.getCleanedString(column.filtering.filterString.toLowerCase());
 
-            if(itemAux.match(itemAux2))
-            {
+            if (itemAux.match(itemAux2)) {
               return item;
             }
           }
         });
       }
     });
-
-    // if (!config.filtering) {
-    //   return filteredData;
-    // }
-
-    // if (config.filtering.columnName) {
-    //   return filteredData.filter((item: any) =>
-    //     item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-    // }
-
-    // let tempArray: Array<any> = [];
-    // filteredData.forEach((item: any) => {
-    //   let flag = false;
-    //   this.columns.forEach((column: any) => {
-    //     if (item[column.name] == null) {
-    //       flag = true;
-    //     } else {
-    //       if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-    //         flag = true;
-    //       }
-    //     }
-    //   });
-    //   if (flag) {
-    //     tempArray.push(item);
-    //   }
-    // });
-    // filteredData = tempArray;
 
     return filteredData;
   }
@@ -181,10 +155,9 @@ public getCleanedString(cadena: string) : string
     }
     this.registros = this.dataSource.length;
     this.rows = this.dataSource;
-    let filteredData = this.changeFilter(this.dataSource, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
-    this.length = sortedData.length;
+    const filteredData = this.changeFilter(this.dataSource, this.config);
+    this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
+    this.length = filteredData.length;
   }
 
   public onCellClick(data: any): any {
@@ -222,4 +195,27 @@ public getCleanedString(cadena: string) : string
     this.onChangeTable(this.config);
   }
 
+  exportAsXLSX() {
+    if (this.dataSource.length > 0) {
+      const aux = [];
+      this.dataSource.forEach(row => {
+        const edad = this.pipe.transform(new Date(row.edad), 'dd/MM/yyyy');
+
+        aux.push({
+          ESTATUS: row.estatus,
+          NOMBRE: row.nombre,
+          'ÁREA EXPERIENCIA': row.areaExp,
+          'ÁREA INTERES': row.vBtra,
+          'SUELDO ACEPTABLE': row.sueldoMinimo.toLocaleString('en-US', { style: 'currency', currency: 'USD' }),
+          'FECHA NACIMIENTO': edad,
+          'CURP': row.curp,
+          'RFC': row.rfc,
+        });
+      });
+
+      //    })
+      //  })
+      this.excelService.exportAsExcelFile(aux, 'Resultado_Busqueda_Candidatos');
+    }
+  }
 }

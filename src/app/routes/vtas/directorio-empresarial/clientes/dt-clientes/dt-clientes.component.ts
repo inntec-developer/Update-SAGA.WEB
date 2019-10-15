@@ -276,9 +276,9 @@ export class DtClientesComponent implements OnInit {
   }
 
   editarCliente() {
-    this._Router.navigate(['/ventas/editarCliente', this.element['id']], { skipLocationChange: true });
+    this._Router.navigate(['/ventas/editarCliente', this.element['id'], 1], { skipLocationChange: true });
   }
   visualizarCliente() {
-    this._Router.navigate(['/ventas/visualizarCliente', this.element['id']], { skipLocationChange: true });
+    this._Router.navigate(['/ventas/visualizarCliente', this.element['id'], 1], { skipLocationChange: true });
   }
 }

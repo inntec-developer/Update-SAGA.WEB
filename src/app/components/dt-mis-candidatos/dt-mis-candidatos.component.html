@@ -4,18 +4,25 @@
       <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
         (tableChanged)="onChangeTable(config)">
     </mat-form-field> -->
-    <div class="row justify-content-end">
+    <div class="d-flex justify-content-end">
       <!-- <div class="d-flex align-items-stretch ">
      <btn-view (click)="openDialogShowRequi(element.id, element.folio)"  container="body" placement="bottom" tooltip="Ver Requisición"></btn-view>
       </div> -->
-
-        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="mr-1 mb-1 btn btn-primary mat-elevation-z8">
-          <em class="fa fa-eraser"></em>
+     
+      <button (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Descargar" class="btn btn-xs btn-success mb-1 mr-2 mat-elevation-z8">
+          <i class="fa fa-download"></i>
         </button>
-        <button class="mr-1 mb-1 btn btn-success mat-elevation-z8" type="button" (click)="refreshTable()" container="body"
+        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" class="mr-2 btn-xs mb-1 btn btn-primary mat-elevation-z8">
+          <i class="fa fa-eraser"></i>
+        </button>
+        <button class="mr-1 btn-xs mb-1 btn btn-success mat-elevation-z8" type="button" (click)="refreshTable()" container="body"
           placement="bottom" tooltip="Actualizar">
-          <em class="icon-refresh"></em>
+          <i class="icon-refresh"></i>
         </button>
+    </div>
+    <div class="d-flex justify-content-end">
+    <span class="text-muted font-weight-bold float-right text-uppercase mt-3">Total de registros <span
+      class="badge badge-pill badge-success ml-1">{{dataSource.length  | numerico}}</span></span>
     </div>
   </div>
 
@@ -76,7 +83,7 @@
       </table>
     </div>
   </div>
-  <div class="text-right">
+  <div class="d-flex justify-content-end">
     <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
       [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)"
       (numPages)="numPages = $event">

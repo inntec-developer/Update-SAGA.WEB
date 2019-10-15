@@ -22,7 +22,24 @@ export class DtProspectosComponent implements OnInit {
   public invertX = false;
   public invertY = false;
   public shown = 'hover';
+/* Configuración de tabla */
+public rows: Array<any> = [];
+public columns: Array<any> = [
+  { title: 'Nombre Comercial', sorting: 'desc', className: 'text-success text-center', name: 'nombrecomercial', filtering: { filterString: '', placeholder: 'Nombre' } },
+  { title: 'Giro', className: 'text-info text-center', name: 'giroEmpresa', filtering: { filterString: '', placeholder: 'Giro' } },
+  { title: 'Actividad', className: 'text-info text-center', name: 'actividadEmpresa', filtering: { filterString: '', placeholder: 'Actividad' } },
+  { title: 'Tamaño', className: 'text-info text-center', name: 'tamanoEmpresa', filtering: { filterString: '', placeholder: 'Tamaño' } },
+  { title: 'Empleados', className: 'text-info text-center', name: 'numeroEmpleados', filtering: { filterString: '', placeholder: 'No. Empleados' } },
+  { title: 'Clasificación', className: 'text-info text-center', name: 'clasificacion', filtering: { filterString: '', placeholder: 'Calsificación' } },
+  { title: 'TipoEmpresa', className: 'text-info text-center', name: 'tipoEmpresa', filtering: { filterString: '', placeholder: 'Tipo' } },
+];
 
+public config: any = {
+  paging: true,
+  //sorting: { columns: this.columns },
+  filtering: { filterString: '' },
+  className: ['table-hover  mb-0']
+};
   public dataSource: Array<any> = [];
   public errorMessage: any;
   public showFilterRow: boolean;
@@ -87,25 +104,6 @@ export class DtProspectosComponent implements OnInit {
     }, error => this.errorMessage = <any>error);
   };
 
-  /* Configuración de tabla */
-  public rows: Array<any> = [];
-  public columns: Array<any> = [
-    { title: 'Nombre Comercial', sorting: 'desc', className: 'text-success text-center', name: 'nombrecomercial', filtering: { filterString: '', placeholder: 'Nombre' } },
-    { title: 'Giro', className: 'text-info text-center', name: 'giroEmpresa', filtering: { filterString: '', placeholder: 'Giro' } },
-    { title: 'Actividad', className: 'text-info text-center', name: 'actividadEmpresa', filtering: { filterString: '', placeholder: 'Actividad' } },
-    { title: 'Tamaño', className: 'text-info text-center', name: 'tamanoEmpresa', filtering: { filterString: '', placeholder: 'Tamaño' } },
-    { title: 'Empleados', className: 'text-info text-center', name: 'numeroEmpleados', filtering: { filterString: '', placeholder: 'No. Empleados' } },
-    { title: 'Clasificación', className: 'text-info text-center', name: 'clasificacion', filtering: { filterString: '', placeholder: 'Calsificación' } },
-    { title: 'TipoEmpresa', className: 'text-info text-center', name: 'tipoEmpresa', filtering: { filterString: '', placeholder: 'Tipo' } },
-  ];
-
-  public config: any = {
-    paging: true,
-    //sorting: { columns: this.columns },
-    filtering: { filterString: '' },
-    className: ['table-hover  mb-0']
-  };
-
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
     let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
@@ -148,40 +146,14 @@ export class DtProspectosComponent implements OnInit {
     let filteredData: Array<any> = data;
     this.columns.forEach((column: any) => {
       this.clearFilter = true;
-      if (column.filtering) {
-
+      if (column.filtering && column.filtering.filterString !== '') {
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
+          if (item[column.name] != null) {
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+          }
         });
       }
     });
-    if (!config.filtering) {
-      return filteredData;
-    }
-
-    if (config.filtering.columnName) {
-      return filteredData.filter((item: any) =>
-        item[config.filtering.columnName].toLowerCase().match(this.config.filtering.filterString.toLowerCase()));
-    }
-
-    let tempArray: Array<any> = [];
-    filteredData.forEach((item: any) => {
-      let flag = false;
-      this.columns.forEach((column: any) => {
-        if (item[column.name] == null) {
-          flag = true;
-        } else {
-          if (item[column.name].toString().toLowerCase().match(this.config.filtering.filterString.toLowerCase())) {
-            flag = true;
-          }
-        }
-      });
-      if (flag) {
-        tempArray.push(item);
-      }
-    });
-    filteredData = tempArray;
     return filteredData;
   }
 
@@ -191,15 +163,11 @@ export class DtProspectosComponent implements OnInit {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
 
-    if (config.sorting) {
-      (<any>Object).assign(this.config.sorting, config.sorting);
-    }
     this.rows = this.dataSource;
-    let filteredData = this.changeFilter(this.dataSource, this.config);
-    let sortedData = this.changeSort(filteredData, this.config);
-    this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
+    const filteredData = this.changeFilter(this.dataSource, this.config);
+    this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
     this.registros = this.rows.length;
-    this.length = sortedData.length;
+    this.length = filteredData.length;
     this.Loading = false;
   }
 
@@ -216,8 +184,7 @@ export class DtProspectosComponent implements OnInit {
     }
     if (this.rowAux.length == 0) {
       this.rowAux = data;
-    }
-    else if (data.selected && this.rowAux != []) {
+    } else if (data.selected && this.rowAux != []) {
       var aux = data;
       data = this.rowAux;
       data.selected = false;
@@ -269,12 +236,12 @@ export class DtProspectosComponent implements OnInit {
     })
   }
 
-  editarProspecto(){
-    this._Router.navigate(['/ventas/editarCliente', this.element['id'], ], { skipLocationChange: true });
+  editarProspecto() {
+    this._Router.navigate(['/ventas/editarCliente', this.element['id'], 2], { skipLocationChange: true });
   }
 
-  visualizarProspecto(){
-    this._Router.navigate(['/ventas/visualizarCliente', this.element['id'], ], { skipLocationChange: true });
+  visualizarProspecto() {
+    this._Router.navigate(['/ventas/visualizarCliente', this.element['id'], 2], { skipLocationChange: true });
   }
 
 

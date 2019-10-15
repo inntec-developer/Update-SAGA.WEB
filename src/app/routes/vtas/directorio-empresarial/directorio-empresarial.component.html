@@ -12,23 +12,22 @@
   </ol>
 </div>
 
-
 <div class="row">
   <div class="col-md-6 col-sm-6">
     <button type="button" class="btn btn-lg btn-block" [ngClass]="viewProspectos ? 'btn-primary mat-elevation-z8' : 'btn-secondary'" (click)="selectProspectos()">
       <div class="row">
-        <div class="col-md-4"><em class=" fa fa-users fa-3x"></em></div>
-        <div class="col-md-4"><h3 class="text-button">Prospectos</h3></div>
-        <div class="col-md-4"><strong class="text-button float-right">No. {{CountProspectos}}</strong></div>
+        <div class="col-md-4"><i class=" fa fa-users fa-3x"></i></div>
+        <div class="col-md-4"><h3 class="text-button">PROSPECTOS</h3></div>
+        <div class="col-md-4"><h3 class="text-button float-right"><span class="badge badge-pill badge-warning">{{CountProspectos | numerico}}</span></h3></div>
       </div>
     </button>
   </div>
   <div class="col.md-6 col-sm-6">
     <button type="button" class="btn btn-lg btn-block" [ngClass]="!viewProspectos ? 'btn-success mat-elevation-z8' : 'btn-secondary'" (click)="selectClientes()">
         <div class="row">
-            <div class="col-md-4"><em class=" fa fa-handshake-o fa-3x "></em></div>
-            <div class="col-md-4"><h3 class="text-button">Clientes</h3></div>
-            <div class="col-md-4"><strong class="text-button float-right">No. {{CountClientes}}</strong></div>
+            <div class="col-md-4"><i class=" fa fa-handshake-o fa-3x "></i></div>
+            <div class="col-md-4"><h3 class="text-button">CLIENTES</h3></div>
+            <div class="col-md-4"><h3 class="text-button float-right"><span class="badge badge-pill badge-warning">{{CountClientes | numerico}}</span></h3></div>
           </div>
     </button>
   </div>
