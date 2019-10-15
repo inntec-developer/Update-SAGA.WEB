@@ -57,11 +57,8 @@
                 [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
                 class="form-control form-control-sm" id="{{column.name}}1">
             </th>
-
           </tr>
-
         </thead>
-
         <tbody>
           <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
             [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
@@ -86,6 +83,7 @@
           <td class="text-right"> {{row.sueldoMaximo | moneda: $}}</td> -->
                 <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
                 <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
+                <td class="text-center">{{row.fch_Modificacion | date:'dd/MM/yyyy'}}</td>
                 <td class="text-center">
                   <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info"
                     [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"

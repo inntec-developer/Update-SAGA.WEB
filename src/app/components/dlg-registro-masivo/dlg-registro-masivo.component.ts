@@ -1,6 +1,7 @@
+import { FormGroup, NgForm } from '@angular/forms';
 
 import { CURPValidator } from './GenerarCURP';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -12,6 +13,7 @@ import { SettingsService } from '../../core/settings/settings.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogHorariosConteoComponent } from '../dialog-horarios-conteo/dialog-horarios-conteo.component';
 import { RequisicionesService } from '../../service';
+import { InfoCandidatoService } from '../../service/SeguimientoVacante/info-candidato.service';
 export const MY_FORMATS = {
   parse: {
     dateInput: 'YYYY/MM/DD',
@@ -25,7 +27,7 @@ export const MY_FORMATS = {
   },
 };
 const swal = require('sweetalert');
-
+const Swal = require('sweetalert2');
 @Component({
   selector: 'app-dlg-registro-masivo',
   templateUrl: './dlg-registro-masivo.component.html',
@@ -90,6 +92,7 @@ export class DlgRegistroMasivoComponent implements OnInit {
     { title: 'Estado Nac.', className: 'text-center', name: 'estado', filtering: { filterString: '', placeholder: 'Estado' } },
     { title: 'Email', className: 'text-center', name: 'email', filtering: { filterString: '', placeholder: 'Email' } },
     { title: 'Teléfono', className: 'text-center', name: 'telefono', filtering: { filterString: '', placeholder: 'Teléfono' } },
+    { title: 'Estatus', className: 'text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } }
   ];
   rows: any[] = [];
   registros = 0;
@@ -113,6 +116,7 @@ toasterconfig: ToasterConfig = new ToasterConfig({
 horario = '';
   horarioId: any;
   tipoMediosId: any;
+  contratados: number;
 
   constructor(private postulateservice: PostulateService,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -123,7 +127,8 @@ horario = '';
     private settings: SettingsService,
     private spinner: NgxSpinnerService,
     private dialog2: MatDialog,
-    private Requiservice: RequisicionesService) {
+    private Requiservice: RequisicionesService,
+    private CandidatosService: InfoCandidatoService) {
     this.adapter.setLocale('es');
 
 
@@ -173,19 +178,20 @@ horario = '';
     this.length = filteredData.length;
   }
 
-  public onCellClick(row, rowIndex) {
+  public onCellClick(row, rowIndex, f: NgForm) {
+
     row.selected = true;
     this.rowIndex = rowIndex;
     this.curp = row.curp;
     this.nom = row.nombre;
     this.ap = row.apellidoPaterno;
     this.am = row.apellidoMaterno;
-    this.email = row.email;
-    this.txtLada = row.lada;
-    this.txtPhone = row.telefono.substring(row.telefono.indexOf('-') + 1, row.telefono.length);
+    this.email = row.email === null ? 'REGISTRO POR TELEFONO' : row.email;
+    this.txtLada = row.lada === null ? '---' : row.lada;
+    this.txtPhone = row.telefono === null ? '--------' : row.telefono.substring(row.telefono.indexOf('-') + 1, row.telefono.length);
     // this.municipios = {id: row.MunicipioNacimientoId, municipio: row.municipio};
     this.model.options = row.genero === 'Mujer' ? '2' : '1';
-    this.modelOpc.options = row.opcionRegistro;
+    this.modelOpc.options = row.telefono === null ? '1' : '2';
     this.estadoId = row.EstadoNacimientoId;
     this.date = new Date(row.fechaNac);
     this.validarFecha(this.date);
@@ -194,7 +200,7 @@ horario = '';
     if (this.rowAux.length === 0) {
       this.rowAux = row;
     } else if (this.rowAux !== []) {
-      let aux = row;
+      const aux = row;
       row = this.rowAux;
       row.selected = false;
       this.rowAux = aux;
@@ -204,6 +210,7 @@ horario = '';
 
   ngOnInit() {
     this.GetEstados();
+    this.GetCandidatos();
   }
   GetEstados() {
     this._service.GetEstados().subscribe(data => {
@@ -230,6 +237,36 @@ horario = '';
     this.curp = curp;
     return curp;
   }
+
+  GetCandidatos()  {
+    this.CandidatosService.getCandidatosByVacante(this.data.requisicionId, 12).subscribe(data => {
+      this.dataSource = [];
+      this.contratados = 0;
+      data.forEach(element => {
+        this.dataSource.push({
+          Id: element.candidatoId,
+          candidatoId: element.candidatoId,
+          requisicionId: this.data.requisicionId,
+          curp: element.datos[0].curp,
+          estatus: element.estatus,
+          nombre: element.datos[0].nombre,
+            apellidoPaterno: element.datos[0].apellidoPaterno,
+            apellidoMaterno: element.datos[0].apellidoMaterno,
+            email: element.datos[0].email,
+            fechaNac: element.datos[0].edad,
+            genero: element.datos[0].generoId === 2 ? 'Mujer' : 'Hombre',
+            EstadoNacimientoId: element.datos[0].estadoNacimientoId,
+            estado: element.datos[0].estadoNacimiento,
+            lada: element.datos[0].lada,
+            telefono: element.datos[0].telefono,
+            horario: element.horario,
+            horarioId: element.horarioId,
+            tipoMediosId: element.tipoMediosId
+        });
+      });
+      this.onChangeTable(this.config);
+    });
+  }
   AgregarCandidato() {
     if (this.modelOpc.options === '1') {
       this.ValidarEmail(this.email);
@@ -243,49 +280,244 @@ horario = '';
       if (count < 0) {
         swal('Registro', 'Ya se cubrió el total de vacantes.', 'warning');
       } else {
-        // let email = [{ email: this.email.trim(), UsuarioAlta: 'INNTEC' }];
-
-        const estado = this.estados.filter(item => {
-          if (item.id.toString() === this.estadoId) {
-            return item.estado;
-          }
+        const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger mr-2'
+          },
+          buttonsStyling: false
         });
 
-        const candidato = {
-          curp: this.curp,
-          nombre: this.nom,
-          apellidoPaterno: this.ap,
-          apellidoMaterno: this.am,
-          email: this.email.trim(),
-          fechaNac: this.fn.getFullYear().toString() + '/' + (this.fn.getMonth() + 1).toString() + '/' + this.fn.getDate().toString(),
-          genero: this.model.options == '2' ? 'Mujer' : 'Hombre',
-          EstadoNacimientoId: this.estadoId,
-          estado: estado[0].estado,
-          lada: this.txtLada,
-          telefono: this.txtLada + '-' + this.txtPhone,
-          opcionRegistro: this.modelOpc.options,
-          horario: this.horario,
-          horarioId: this.horarioId,
-          tipoMediosId: this.tipoMediosId
-        };
+        swalWithBootstrapButtons.fire({
+          title: '¿Estas seguro?',
+          text: 'El candidato se registrará con el estatus de apartado para la vacante de  ' + this.data.vacante,
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: '¡Si, registrar!',
+          cancelButtonText: '¡No, cancelar!',
+          reverseButtons: true
+        }).then((result) => {
+          if (result.value) {
+            let timerInterval;
+            Swal.fire({
+              title: 'Registro Masivo',
+              html: 'Esto puede tardar varios segundos por favor espere... <strong></strong>',
+              type: 'warning',
+              showConfirmButton: false,
+              timer: 3000,
+              onBeforeOpen: () => {
+                Swal.showLoading();
+                timerInterval = setInterval(() => {
+                  Swal.getContent().querySelector('strong')
+                    .textContent = Swal.getTimerLeft();
+                }, 100);
+              },
+              onClose: () => {
+                clearInterval(timerInterval);
+              }
+            }).then((rr) => {
+              if (
+                /* Read more about handling dismissals below */
+                rr.dismiss === Swal.DismissReason.timer
+              ) {
+                console.log('I was closed by the timer');
+              }
+            });
 
-        this.dataSource.push(candidato);
-        this.onChangeTable(this.config);
-        this.BorrarCampos();
+            const estado = this.estados.filter(item => {
+              if (item.id.toString() === this.estadoId) {
+                return item.estado;
+              }
+            });
+            const email = [{ email: this.email.trim() || 'SIN REGISTRO', UsuarioAlta: this.settings.user['usuario'], }];
+            const candidato = {
+              Curp: this.curp,
+              Nombre: this.nom,
+              ApellidoPaterno: this.ap,
+              ApellidoMaterno: this.am,
+              Email: email,
+              FechaNac: this.fn.getFullYear().toString() + '/' + (this.fn.getMonth() + 1).toString() + '/' + this.fn.getDate().toString(),
+              GeneroId: this.model.options === '2' ? 2 : 1,
+              EstadoNacimientoId: this.estadoId,
+              Telefono: [{ ClavePais: 52, ClaveLada: this.txtLada, telefono: this.txtLada + '-' + this.txtPhone, TipoTelefonoId: 1 }],
+              requisicionId: this.data.requisicionId,
+              reclutadorId: this.settings.user['id'],
+              OpcionRegistro: this.modelOpc.options,
+              horarioId: this.horarioId,
+              tipoMediosId: this.tipoMediosId,
+            };
 
-        if (count === 0) {
-          swal('Vacante cubierta', 'Se cubrió el total de vacantes, no se podrá agregar más candidatos', 'warning');
-        }
+            this.postulateservice.RegistrarCandidatos(candidato).subscribe(data => {
+              if (data !== 417) {
+                this.GetCandidatos();
+                this.BorrarCampos();
+              } else { }
+            });
+
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire(
+              'Cancelado',
+              'No se realizó ningun cambio',
+              'error'
+            );
+          }
+        });
       }
     }
   }
+  cubrirCandidatos() {
+    const count = this.data.nv - (this.data.contratados + this.dataSource.length);
+    if (count < 0) {
+      swal('Registro', 'El total de candidatos es mayor al de las vacantes', 'warning');
+    } else {
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger mr-2'
+        },
+        buttonsStyling: false
+      });
 
+      swalWithBootstrapButtons.fire({
+        title: '¿Estas seguro?',
+        text: '¡Se cubrirán (' + this.dataSource.length.toString() + ') candidatos para la vacante de ' + this.data.vacante,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '¡Si, cubrir candidato(s)!',
+        cancelButtonText: '¡No, cancelar!',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.value) {
+          let timerInterval;
+          Swal.fire({
+            title: 'Actualizar candidatos a cubiertos',
+            html: 'El proceso puede tardar varios segundos por favor espere... <strong></strong>.',
+            timer: 4000,
+            type: 'warning',
+            showConfirmButton: false,
+            onBeforeOpen: () => {
+              Swal.showLoading();
+              timerInterval = setInterval(() => {
+                Swal.getContent().querySelector('strong')
+                  .textContent = Swal.getTimerLeft();
+              }, 100);
+            },
+            onClose: () => {
+              clearInterval(timerInterval);
+            }
+          }).then((x) => {
+            if (
+              /* Read more about handling dismissals below */
+              x.dismiss === Swal.DismissReason.timer
+            ) { }
+          });
+
+          const datos = [];
+          this.dataSource.forEach(r => {
+            datos.push({
+              candidatoId: r.candidatoId,
+              estatusId: 24,
+              requisicionId: r.requisicionId,
+              horarioId: r.horarioId,
+              ReclutadorId: this.settings.user['id']
+            });
+          });
+          this.postulateservice.CubrirMasivos(datos).subscribe(data => {
+            if (data === 200) {
+              swalWithBootstrapButtons.fire({
+                title: 'Cubrir candidatos',
+                text: 'Los cambios se realizaron con éxito. ¿Deseas enviar notificacion a los candidatos?. El proceso puede durar varios segundos',
+                type: 'success',
+                showCancelButton: true,
+                confirmButtonText: '¡Si, enviar!',
+                cancelButtonText: '¡No, salir!',
+                reverseButtons: true
+              }).then((result2) => {
+                if (result2.value) {
+                  let timerInterval;
+                  Swal.fire({
+                    title: 'Envío notificación candidatos cubiertos',
+                    html: 'por favor espere... <strong></strong>.',
+                    type: 'warning',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    onBeforeOpen: () => {
+                      Swal.showLoading();
+                      timerInterval = setInterval(() => {
+                        Swal.getContent().querySelector('strong')
+                          .textContent = Swal.getTimerLeft();
+                      }, 100);
+                    },
+                    onClose: () => {
+                      clearInterval(timerInterval);
+                    }
+                  }).then((x) => {
+                    if (x.dismiss === Swal.DismissReason.timer) {
+                      this.dialog.close();
+                    }
+                  });
+                  const datosCand = [];
+                  this.dataSource.forEach(rr => {
+                    datosCand.push(rr.candidatoId);
+                  });
+
+                  this.postulateservice.SendEmailContratados(datosCand).subscribe(x => {
+                    this.dialog.close();
+                  });
+                } else {
+                  this.dialog.close(data);
+                }
+              });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+              swalWithBootstrapButtons.fire(
+                'Cancelado',
+                'No se realizó ningun cambio',
+                'error'
+              );
+            }
+          });
+        } else {
+          swalWithBootstrapButtons.fire(
+            'Cancelado',
+            'No se realizó ningun cambio',
+            'error'
+          );
+        }
+      });
+    }
+
+  }
   EditarCandidato() {
+
     if (this.modelOpc.options === '1') {
       this.ValidarEmail(this.email);
     } else {
       this.ValidarTelefono();
-    } if (this.valEmail === '' && this.valTel === '') {
+    }
+
+    if (this.valEmail === '' && this.valTel === '') {
+      let obj = [];
+      let timerInterval;
+                  Swal.fire({
+                    title: 'Actualizar candidatos',
+                    html: 'por favor espere... <strong></strong>.',
+                    type: 'warning',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    onBeforeOpen: () => {
+                      Swal.showLoading();
+                      timerInterval = setInterval(() => {
+                        Swal.getContent().querySelector('strong')
+                          .textContent = Swal.getTimerLeft();
+                      }, 100);
+                    },
+                    onClose: () => {
+                      clearInterval(timerInterval);
+                    }
+                  }).then((x) => {
+                    if (x.dismiss === Swal.DismissReason.timer) {
+                    }
+                  });
       const estado = this.estados.filter(item => {
         if (item.id === this.estadoId) {
           return item.estado;
@@ -296,19 +528,30 @@ horario = '';
         this.dataSource[this.rowIndex].nombre = this.nom,
         this.dataSource[this.rowIndex].apellidoPaterno = this.ap,
         this.dataSource[this.rowIndex].apellidoMaterno = this.am,
-        this.dataSource[this.rowIndex].email = this.email.trim(),
         this.dataSource[this.rowIndex].fechaNac = this.fn.getFullYear().toString() + '/' + (this.fn.getMonth() + 1).toString() + '/' + this.fn.getDate().toString(),
         this.dataSource[this.rowIndex].genero = this.model.options == '2' ? 'Mujer' : 'Hombre',
         this.dataSource[this.rowIndex].EstadoNacimientoId = this.estadoId,
         this.dataSource[this.rowIndex].estado = estado[0].estado,
         this.dataSource[this.rowIndex].MunicipioNacimientoId = this.municipioId,
-        // municipio: municipio[0].municipio,
+        this.dataSource[this.rowIndex].email = this.email.trim(),
         this.dataSource[this.rowIndex].lada = this.txtLada;
       this.dataSource[this.rowIndex].telefono = this.txtPhone;
       this.dataSource[this.rowIndex].opcionRegistro = this.modelOpc.options;
 
-      this.onChangeTable(this.config);
-      this.BorrarCampos();
+      obj = this.dataSource[this.rowIndex];
+      obj['email'] = [{ email: this.email.trim() || 'SIN REGISTRO', UsuarioMod: this.settings.user['usuario'] }];
+      obj['telefono'] = [{ ClaveLada: this.txtLada,
+        telefono: this.txtLada + '-' + this.txtPhone, UsuarioMod: this.settings.user['usuario'], }],
+      this.CandidatosService.UpdateCandidatoMasivo(obj).subscribe(r => {
+        if ( r === 200) {
+          this.GetCandidatos();
+          this.onChangeTable(this.config);
+          this.BorrarCampos();
+        } else {
+          swal('Error', 'Ocurrió un error al intentar modificar. Por favor intentelo de nuevo', 'error');
+        }
+      });
+
     }
 
   }
@@ -382,7 +625,7 @@ horario = '';
         this.email = '';
       }
       this.txtLada = '---';
-      this.txtPhone = '-------'
+      this.txtPhone = '-------';
 
     } else if (val === 2 && this.txtPhone.length > 0) {
       if (!regex.test(this.txtPhone)) {
@@ -393,66 +636,7 @@ horario = '';
 
     }
   }
-  registrar() {
-    const count = this.data.nv - (this.data.contratados + this.dataSource.length);
-    if (count < 0) {
-      swal('Registro', 'El total de candidatos es mayor al de las vacantes', 'warning');
-    } else {
-      swal({
-        title: '¿ESTÁS SEGURO?',
-        text: '¡Se registrarán (' + this.dataSource.length.toString() + ') candidatos con estatus cubierto para la vacante de ' + this.data.vacante,
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#21a240',
-        confirmButtonText: '¡Si, registrar candidato(s)!',
-        cancelButtonText: '¡No, cancelar!',
-        closeOnConfirm: true,
-        closeOnCancel: true
-      }, (isConfirm) => {
-        window.onkeydown = null;
-        window.onfocus = null;
-        if (isConfirm) {
 
-          this.spinner.show();
-          const aux = [];
-
-          this.dataSource.forEach(element => {
-            const email = [{ email: element.email.trim() || 'SIN REGISTRO', UsuarioAlta: 'INNTEC' }];
-
-            const candidato = {
-              Curp: element.curp,
-              Nombre: element.nombre,
-              ApellidoPaterno: element.apellidoPaterno,
-              ApellidoMaterno: element.apellidoMaterno,
-              Email: email,
-              FechaNac: element.fechaNac,
-              GeneroId: element.genero == 'Mujer' ? 2 : 1,
-              EstadoNacimientoId: element.EstadoNacimientoId,
-              Telefono: [{ ClavePais: 52, ClaveLada: element.lada, telefono: element.telefono, TipoTelefonoId: 1 }],
-              requisicionId: this.data.requisicionId,
-              reclutadorId: this.settings.user['id'],
-              OpcionRegistro: element.opcionRegistro,
-              horarioId: this.horarioId,
-              tipoMediosId: this.tipoMediosId,
-            };
-            aux.push(candidato);
-          });
-          this.postulateservice.RegistrarCandidatos(aux).subscribe(data => {
-            this.spinner.hide();
-            if (data !== 417) {
-              this.dialog.close(data);
-            }
-
-          });
-
-        } else {
-          this.spinner.hide();
-          swal('Cancelado', 'No se realizó ningún cambio', 'error');
-        }
-      });
-    }
-
-  }
   updateValue($event, cell, rowIndex, g) {
 
     if (cell === 'estado') {

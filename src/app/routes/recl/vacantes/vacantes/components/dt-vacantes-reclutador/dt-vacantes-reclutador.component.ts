@@ -118,6 +118,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     DocPrest: true,
     Psicom: true,
     Competencia: true,
+    arteRedes: true
   };
   labelPosition = 'before';
   Encabezado = true;
@@ -132,6 +133,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   DocPrest = false;
   Psicom = false;
   Competencia = false;
+  arteRedes = false;
 
   public rows: Array<any> = [];
   public columns: Array<any> = [
@@ -908,6 +910,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       DocPrest: this.DocPrest,
       Psicom: this.Psicom,
       Competencia: this.Competencia,
+      arteRedes: this.arteRedes
     };
     this.EmImprimir.emit(this.imprimir);
     if (!this.settings.layout.isCollapsed) {

@@ -1,8 +1,8 @@
 export class ApiConection {
   public static ServiceUrl = 'http://localhost:33333/api/';
   public static ServiceUrlImgExamenes = 'http://localhost:33333/';
-  public static ServiceUrlWeb = 'http://localhost:4200/'
-  public static ServiceUrlFileManager = 'http://localhost:33333/utilerias/';
+  public static ServiceUrlWeb = 'http://localhost:4200/';
+  // public static ServiceUrlFileManager = 'http://localhost:33333/utilerias/';
   // public static ServiceUrl = 'http://10.10.12.31:333/api/';
   // public static ServiceUrlImgExamenes = 'http://10.10.12.31:333/api/';
 
@@ -24,7 +24,7 @@ export class ApiConection {
   // public static ServiceUrlImgExamenes = 'https://apisb.damsa.com.mx';
 
   public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
-  // public static ServiceUrlFileManager = 'https://apisb.damsa.com.mx/utilerias/';
+  public static ServiceUrlFileManager = 'https://apisb.damsa.com.mx/utilerias/';
   public static ServiceUrlFoto = 'https://apisb.damsa.com.mx/';
   public static ServiceUrlBolsa = 'https://btapi.damsa.com.mx';
   public static ServiceUrlLoginBolsa = 'https://btweb.damsa.com.mx';
@@ -115,7 +115,7 @@ export class ApiConection {
   public static GetRepoteCandidatos = 'Candidatos/getRPTCandidatosVacante';
   public static GetRequisPendientes = 'Requisiciones/getRequisPendientes';
   public static GetRequisicionPDF = 'Requisiciones/getRequisicionPDF';
-
+public static GetClasesTiposRecl = 'PerfilReclutamiento/getTipoClase';
 
   /* Clientes / Prospectos */
   public static GetProspectos = 'Directorio/getProspectos';
@@ -183,6 +183,9 @@ export class ApiConection {
   public static GetCandidatosNR = 'Candidatos/getFoliosIncidencias';
   public static AddRespuesta = 'Candidatos/addRespuesta';
   public static GetInfoContratados = 'Candidatos/getInfoContratados';
+  public static GetCandidatosByVacante = 'Candidatos/getCandidatosByVacante';
+  public static UpdateCandidatoMasivo = 'Candidatos/updateCandidatosMasivo';
+  
 
   /* Vacantes */
   public static getRequis = '/dvacante/get';
@@ -289,6 +292,7 @@ export class ApiConection {
   public static validarEmailCandidato = 'reclutamiento/seguimientovacante/validarEmailCandidato';
   public static validarTelCandidato = 'reclutamiento/seguimientovacante/validarTelCandidato';
   public static getCandidatosCubiertos = 'reclutamiento/seguimientovacante/getCandidatosCubiertos';
+  public static cubrirMasivos = 'reclutamiento/seguimientovacante/cubrirMasivos';
 
 
   /*Examenes */

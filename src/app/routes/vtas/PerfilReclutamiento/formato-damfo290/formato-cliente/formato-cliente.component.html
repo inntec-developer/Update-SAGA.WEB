@@ -2,8 +2,12 @@
   <section #ClienteSection class="row">
     <mat-form-field class="col-12">
       <input #RazonSocialCtrl type="text" placeholder="Razón Social" aria-label="Number" matInput autofocus
-        formControlName="RazonSocial" [value]="RazonSocialCtrl.value.toUpperCase()" [matAutocomplete]="cliente"
-        (keyup.enter)="filter()" required="" />
+        formControlName="RazonSocial" [value]="RazonSocialCtrl.value.toUpperCase()" [matAutocomplete]="cliente" (keyup)="filter();"
+        required="" >
+        <button mat-button *ngIf="RazonSocialCtrl.value.length > 1" matSuffix mat-icon-button aria-label="Clear" (click)="Borrar();">
+            <mat-icon>close</mat-icon>
+          </button>
+        <!-- <i class="fa fa-question-circle text-warning float-right" aria-hidden="true" placement="left" tooltip="Capture los primeros caracteres y de Enter"></i> -->
       <mat-autocomplete #cliente="matAutocomplete" (optionSelected)="selected($event)">
         <mat-option *ngFor="let option of AuxOptions" [value]="option.razonSocial" class="option-container">
           <span class="razonSocial"><strong>{{option.razonSocial | uppercase}}</strong></span>
@@ -17,30 +21,30 @@
   </section>
   <section #InfoFiscalSection class="row">
     <mat-form-field class="col-6">
-      <input matInput placeholder="Nombre Comercial" formControlName="NombreComercial">
+      <input matInput placeholder="Nombre Comercial" formControlName="NombreComercial" class="text-info">
     </mat-form-field>
-    <mat-form-field class="col-6">
-      <input matInput placeholder="RFC" formControlName="RFC">
+    <mat-form-field class="col-6 text-muted">
+      <input matInput placeholder="RFC" formControlName="RFC" class="text-info">
     </mat-form-field>
   </section>
   <section #InfoClienteSection class="row">
-    <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-      <input matInput placeholder="Giro de la Empresa" formControlName="Giro">
+    <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-muted">
+      <input matInput placeholder="Giro de la Empresa" formControlName="Giro" class="text-info">
     </mat-form-field>
     <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-      <input matInput placeholder="Actividad de la Empresa" formControlName="Actividad">
+      <input matInput placeholder="Actividad de la Empresa" formControlName="Actividad" class="text-info">
     </mat-form-field>
     <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
       <mat-select placeholder="Tipo Reclutamiento" formControlName="Tipo" required #TipoReclutamientoCtrl>
         <mat-option *ngFor="let x of TiposReclutamientos" [value]="x.id">
-          {{x.tipoReclutamiento | uppercase}}
+          {{x.descripcion | uppercase}}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
       <mat-select placeholder="Coordinación" formControlName="Clase" required #ClaseReclutamiento>
         <mat-option *ngFor="let x of ClasesReclutamientos" [value]="x.id">
-          {{x.calsesReclutamiento | uppercase}}
+          {{x.descripcion | uppercase}}
         </mat-option>
       </mat-select>
     </mat-form-field>

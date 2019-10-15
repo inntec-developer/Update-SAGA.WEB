@@ -14,6 +14,8 @@ import { PostulateService } from '../../../service/SeguimientoVacante/postulate.
 import { RequisicionesService } from '../../../service';
 import { Router } from '@angular/router';
 import { SettingsService } from '../../../core/settings/settings.service';
+import { ComentariosService } from '../../../service/Comentarios/comentarios.service';
+import { flattenStyles } from '@angular/platform-browser/src/dom/dom_renderer';
 
 declare var $: any;
 
@@ -148,6 +150,7 @@ export class DtRequisicionComponent implements OnInit {
     filtering: { filterString: '' },
     className: ['table-hover  mb-0']
   };
+  puro = false;
 
   constructor(
     private service: RequisicionesService,
@@ -158,7 +161,8 @@ export class DtRequisicionComponent implements OnInit {
     private toasterService: ToasterService,
     private excelService: ExcelService,
     private pipe: DatePipe,
-    private settings: SettingsService
+    private settings: SettingsService,
+    private _ComentariosService: ComentariosService
 
   ) { }
 
@@ -215,9 +219,9 @@ export class DtRequisicionComponent implements OnInit {
 
     });
   }
-
   ValidarEstatus(estatusId) {
     this.cubiertas = [];
+
     if (this.element.vacantes === 0 && estatusId !== 8 && estatusId !== 9) {
       this.gbc = true; // garantía busqueda candidato
       this.cubierta = true;
@@ -232,11 +236,11 @@ export class DtRequisicionComponent implements OnInit {
       this.gbc = true; // garantía busqueda candidato
       this.cubierta = false;
       if (this.element.contratados === 0) {
-        this.cubiertas.push({ id: 37, descripcion: 'Cubierta por el cliente' },
-          { id: 47, descripcion: 'Promoción interna' },
-          { id: 48, descripcion: 'Operaciones' });
+        this.cubiertas.push({ id: 37, descripcion: 'Cubierta por el cliente', puro: this.puro },
+          { id: 47, descripcion: 'Promoción interna', puro: this.puro },
+          { id: 48, descripcion: 'Operaciones', puro: this.puro });
       } else {
-        this.cubiertas.push({ id: 37, descripcion: 'Cubierta por el cliente' });
+        this.cubiertas.push({ id: 37, descripcion: 'Cubierta por el cliente', puro: this.puro });
       }
       this.cc = false; // cubierta por el cliente
       this.crm = true; // cubierta reclutamiento medios
@@ -259,9 +263,9 @@ export class DtRequisicionComponent implements OnInit {
     } else if (estatusId < 34 && estatusId !== 8 && this.element.enProceso > 0 && this.element.contratados === 0) {
       this.gbc = true;
       this.cubierta = false;
-      this.cubiertas.push({ id: 37, descripcion: 'Cubierta por el cliente' },
-        { id: 47, descripcion: 'Promoción interna' },
-        { id: 48, descripcion: 'Operaciones' });
+      this.cubiertas.push({ id: 37, descripcion: 'Cubierta por el cliente', puro: this.puro},
+        { id: 47, descripcion: 'Promoción interna', puro: this.puro},
+        { id: 48, descripcion: 'Operaciones', puro: this.puro});
       this.cc = false; // cubierta por el cliente
       this.crm = true; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
@@ -273,9 +277,9 @@ export class DtRequisicionComponent implements OnInit {
       this.gbc = true;
       this.cubierta = false;
       this.cc = false; // cubierta por el cliente
-      this.cubiertas.push({ id: 37, descripcion: 'Cubierta por el cliente' },
-        { id: 47, descripcion: 'Promoción interna' },
-        { id: 48, descripcion: 'Operaciones' });
+      this.cubiertas.push({ id: 37, descripcion: 'Cubierta por el cliente', puro: this.puro},
+        { id: 47, descripcion: 'Promoción interna', puro: this.puro},
+        { id: 48, descripcion: 'Operaciones', puro: this.puro});
 
       this.crm = true; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
@@ -285,7 +289,8 @@ export class DtRequisicionComponent implements OnInit {
     } else if (estatusId < 34 && estatusId !== 8 && this.element.vacantes > 0 && this.element.contratados === this.element.vacantes) {
       this.gbc = true; // garantía busqueda candidato
       this.cubierta = false;
-      this.cubiertas.push({ id: 34, descripcion: 'Cubierta' }, { id: 36, descripcion: 'Cubierta por medios' });
+      this.cubiertas.push({ id: 34, descripcion: 'Cubierta', puro: this.puro },
+      { id: 36, descripcion: 'Cubierta por medios', puro: this.puro });
 
       this.cc = true; // cubierta por el cliente
       this.crm = false; // cubierta reclutamiento medios
@@ -299,7 +304,7 @@ export class DtRequisicionComponent implements OnInit {
       this.gbc = true; // garantía busqueda candidato
       this.cubierta = false;
       this.cc = false; // cubierta por el cliente
-      this.cubiertas.push({ id: 35, descripcion: 'Cubierta parcialmente' });
+      this.cubiertas.push({ id: 35, descripcion: 'Cubierta parcialmente', puro: this.puro });
 
       this.crm = true; // cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
@@ -311,9 +316,9 @@ export class DtRequisicionComponent implements OnInit {
       this.gbc = true;
       this.cubierta = false;
       this.cc = false; // cubierta por el cliente
-      this.cubiertas.push({ id: 37, descripcion: 'Cubierta por el cliente' },
-        { id: 47, descripcion: 'Promoción interna' },
-        { id: 48, descripcion: 'Operaciones' });
+      this.cubiertas.push({ id: 37, descripcion: 'Cubierta por el cliente', puro: this.puro},
+        { id: 47, descripcion: 'Promoción interna', puro: this.puro},
+        { id: 48, descripcion: 'Operaciones', puro: this.puro});
       this.crm = true; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
@@ -344,7 +349,8 @@ export class DtRequisicionComponent implements OnInit {
     } else if (estatusId === 38 && this.element.vacantes > 0 && this.element.contratados === this.element.vacantes) {
       this.gbc = true; // garantía busqueda candidato
       this.cubierta = false;
-      this.cubiertas.push({ id: 34, descripcion: 'Cubierta' }, { id: 36, descripcion: 'Cubierta por medios' });
+      this.cubiertas.push({ id: 34, descripcion: 'Cubierta', puro: this.puro },
+      { id: 36, descripcion: 'Cubierta por medios', puro: this.puro });
       this.cc = true; // cubierta por el cliente
       this.crm = false; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
@@ -357,7 +363,7 @@ export class DtRequisicionComponent implements OnInit {
       this.gbc = true; // garantía busqueda candidato
       this.cubierta = false;
       this.cc = false; // cubierta por el cliente
-      this.cubiertas.push({ id: 35, descripcion: 'Cubierta parcialmente' });
+      this.cubiertas.push({ id: 35, descripcion: 'Cubierta parcialmente', puro: this.puro });
 
       this.crm = true; // cubierta reclutamiento medios
       this.cp = false; // cubierta parcialmente
@@ -458,7 +464,7 @@ export class DtRequisicionComponent implements OnInit {
     this.Folio = data.folio;
     this.Vacante = data.vBtra;
     this.element = data;
-
+    this.puro = data.tipoReclutamientoId === 1 ? true : false;
     this.ValidarEstatus(data.estatusId);
     if (!data.selected) {
       this.ValidarEstatus(9999);
@@ -583,14 +589,14 @@ export class DtRequisicionComponent implements OnInit {
       }
     } else {
       this.postulacionservice.SetProcesoVacante(datos).subscribe(data => {
-        if (data == 201) {
-          let idx = this.rows.findIndex(x => x.id == this.element.id);
-          this.rows[idx]['estatus'] = estatus;
-          this.rows[idx]['estatusId'] = estatusId;
+        if (data === 201) {
+          // let idx = this.rows.findIndex(x => x.id === this.element.id);
+          // this.rows[idx]['estatus'] = estatus;
+          // this.rows[idx]['estatusId'] = estatusId;
 
           if (estatusId >= 34 && estatusId <= 37) {
             this.rows[idx]['enProcesoN'].forEach(element => {
-              if (element.estatusId != 24 && element.estatusId != 42 && element.estatusId != 27 && element.estatusId != 28) {
+              if (element.estatusId !== 24 && element.estatusId !== 42 && element.estatusId !== 27 && element.estatusId !== 28) {
                 emails.push(
                   {
                     requisicionId: this.RequisicionId,
@@ -605,7 +611,7 @@ export class DtRequisicionComponent implements OnInit {
             });
 
             this.rows[idx]['postuladosN'].forEach(element => {
-              if (element.statusId == 1) {
+              if (element.statusId === 1) {
                 emails.push(
                   {
                     requisicionId: this.RequisicionId,
@@ -617,7 +623,7 @@ export class DtRequisicionComponent implements OnInit {
                   }
                 );
               }
-            })
+            });
             if (emails.length > 0) {
               this.postulacionservice.SendEmailsNoContratado(emails).subscribe(data => {
               });
@@ -639,10 +645,10 @@ export class DtRequisicionComponent implements OnInit {
   }
 
   openDialogDelete() {
-    let dialogDlt = this.dialog.open(DialogDeleteRequiComponent, {
+    const dialogDlt = this.dialog.open(DialogDeleteRequiComponent, {
       data: this.element
     });
-    var window: Window
+
     dialogDlt.afterClosed().subscribe(result => {
       if (result == 200) {
         this.refreshTable();
@@ -694,11 +700,32 @@ export class DtRequisicionComponent implements OnInit {
       disableClose: true
     });
     dialogCnc.afterClosed().subscribe(result => {
-      if (result != 0) {
+      if (result !== 0) {
         this.updataStatus(result.id, result.descripcion);
+        if ( this.puro && result.ajustes !== '') {
+          this.AddComentarios(result.ajustes);
+        }
+
         this.ValidarEstatus(result.id);
         this.refreshTable();
+        if (this.puro) {
+          this.SendEmail();
+        }
       }
+    });
+  }
+
+  AddComentarios(ajustes: string) {
+    const comment = {
+           Comentario: ajustes,
+           RequisicionId: this.RequisicionId,
+           UsuarioAlta: this.settings.user['usuario'],
+           reclutadorId: this.settings.user['id'],
+           MotivoId: 9,
+           EstatusId: 0
+    };
+
+    this._ComentariosService.addComentarioVacante(comment).subscribe(data => {
     });
   }
 
@@ -716,7 +743,7 @@ export class DtRequisicionComponent implements OnInit {
 
   SendEmail() {
     this.service.SendEmailRequiPuro(this.RequisicionId).subscribe(email => {
-      if (email == 200) {
+      if (email === 200) {
         this.popToast('success', 'Notificación', 'Se ha notificado por medio de correo electrónico a los usuarios correspondientes.');
       } else {
         this.popToast('error', 'Estatus', 'Ocurrió un error al intentar notificar por correo electrónico los cambios realizados.');
