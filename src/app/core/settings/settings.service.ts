@@ -39,8 +39,8 @@ export class SettingsService {
     // App Settings
     // -----------------------------------
     this.app = {
-      vertionTime: '20190927_1735_DVP-SBI610/20190927_1735_DVP-SBI611',
-      vertion: 'v2.0.109271735',
+      vertionTime: '20191009_0946_DVP-SBI610/20191009_0946_DVP-SBI611',
+      vertion: 'v2.0.110090946',
       environment: 'BETA',
       name: 'SAGA - Inntec',
       description: 'Sistema Administrativo de Gestión Avanzada',
