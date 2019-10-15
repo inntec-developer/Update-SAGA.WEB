@@ -75,7 +75,7 @@ export class InformeComponent implements OnInit {
    public myDate: any = new Date();
   date = new FormControl(new Date());
   date2 = new FormControl(new Date());
- 
+  date3 = new FormControl(new Date());
   constructor(
     private Rutas: ActivatedRoute,
     private Servicio: ReportesService,
