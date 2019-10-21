@@ -14,18 +14,18 @@
         <div class="col-xl-12">
           <div style="margin-top: -18px;">
               <small class="globo11"><span > Masivos: <span
-                class="badge badge-primary ">{{masivopos}}</span></span></small>
+                class="badge badge-primary ">{{masivopos|numerico}}</span></span></small>
           
               <small class="globo22"><span > Operativo: <span
-                class="badge badge-warning">{{operativopos}}</span></span></small>
+                class="badge badge-warning">{{operativopos|numerico}}</span></span></small>
         
               <small class="globo33"><span > Especializado: <span
-                class="badge badge-danger">{{especialpos}}</span></span></small>
+                class="badge badge-danger">{{especialpos|numerico}}</span></span></small>
           </div>
         </div>
         <mat-divider></mat-divider>
         <small ><span style="margin-right: 11px;margin-top:20px" class="float-right"> Total Posiciones: <span
-              class="badge badge-info">{{masivopos + operativopos + especialpos}}</span></span></small>
+              class="badge badge-info">{{masivopos + operativopos + especialpos |numerico}}</span></span></small>
       </div>
     </div>
   </div>
