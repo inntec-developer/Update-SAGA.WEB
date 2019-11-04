@@ -340,6 +340,7 @@ public static GetClasesTiposRecl = 'PerfilReclutamiento/getTipoClase';
   public static GetCandidatoRep = 'reporte/candidatos';
   public static GetVacanteReporte = 'reporte/vacante';
   public static GetClientesReporte = 'reporte/clientes';
+  public static GetEstadosFolios = 'reporte/mapafolios';
 
   /*Consulta */
   public static GetConsultavacante = 'reporte/consultavacante';

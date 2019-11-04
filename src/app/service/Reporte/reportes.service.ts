@@ -30,6 +30,7 @@ export class ReportesService {
   private UrlCandidato = ApiConection.ServiceUrl+ApiConection.GetCandidatoRep;
   private UrlVacante = ApiConection.ServiceUrl+ApiConection.GetVacanteReporte;
   private UrlClientes = ApiConection.ServiceUrl+ApiConection.GetClientesReporte;
+  private UrlMapaFolios = ApiConection.ServiceUrl+ApiConection.GetEstadosFolios;
 
   constructor(private http: Http,private _httpClient : HttpClient) {  }
   
@@ -40,6 +41,13 @@ export class ReportesService {
     }
     return Observable.throw(error || 'backend server error');
 }
+
+getMapaFolios(): Observable<any> {
+    // return this.http.get(this.UrlMapaFolios)
+    // .map(result => result.json())
+    // .catch(this.handleError);
+     return this._httpClient.get(this.UrlMapaFolios);
+    }
 
 getClientes(fini:string,ffin:string,bandera:string): Observable<any> {
     let params = new HttpParams().set('fini', fini).set('ffin', ffin).set('bandera', bandera);
