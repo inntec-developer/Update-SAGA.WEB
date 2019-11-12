@@ -498,7 +498,19 @@ type="square-jelly-box"
 
 <div class="col-xl-4" id="Divdiv"></div>
 <div class="col-xl-4 ocultar" id="DivdivReclu"></div>
-<div class="col-xl-2 ocultar" id="Divdiv3"></div>
+<div class="col-xl-2 ocultar" id="Divdiv3">
+  <div class="form-group divtiporeport">
+    <select  (change)="OcultarCliente()" id="TipoRcliente" class="form-control" >
+        <option selected value="1">Clientes activos </option>
+        <option value="2">Clientes sin servicio </option>
+        <option value="3">Ultimo servicio ofrecido</option>
+    </select>
+  
+  </div>
+</div>
+
+
+
   <div class="col-xl-2"  >
       <button id="btnGraficaVacante"   (click)="GraficaVacante.Generar(objempresa,objtipocordi)" class="ocultar btn btn-sm btn-primary btnReport mat-elevation-z8 grafica" tooltip="Grafica">
           <em  class="fa fa-pie-chart" ></em>
@@ -541,6 +553,9 @@ type="square-jelly-box"
           <button id="exelCliente" tooltip="Exportar" style="right: auto;" (click)="Clientes2.Exportar()" class="ocultar botonesClient btn btn-sm btn-warning btnReport mat-elevation-z8">
             <em  class="fa fa-download"></em>
           </button>
+          <button id="exelClienteDetalle" tooltip="Exportar" style="right: auto;" (click)="ClientesDetalle.Exportar()" class="ocultar botonesClient btn btn-sm btn-warning btnReport mat-elevation-z8">
+            <em  class="fa fa-download"></em>
+          </button>
           <button id="exelCubierto" tooltip="Exportar" style="right: auto;" (click)="CubiertoReport.Exportar()" class="ocultar botonesClient btn btn-sm btn-warning btnReport mat-elevation-z8">
             <em  class="fa fa-download"></em>
           </button>
@@ -574,6 +589,9 @@ type="square-jelly-box"
         <button id="repCliente"  (click)="Clientes2.Generar()" tooltip="Generar Reporte" style="right: auto;"   class="ocultar botonesClient btn btn-sm btn-success btnReport mat-elevation-z8" >
           <em  class="fa fa-bar-chart"></em>
         </button>
+        <button id="repClienteDetalle"  (click)="ClientesDetalle.Generar()" tooltip="Generar Reporte" style="right: auto;"   class="ocultar botonesClient btn btn-sm btn-success btnReport mat-elevation-z8" >
+          <em  class="fa fa-bar-chart"></em>
+        </button>
         <button id="repCubierto"  (click)="CubiertoReport.Generar()" tooltip="Generar Reporte" style="right: auto;"   class="ocultar botonesClient btn btn-sm btn-success btnReport mat-elevation-z8" >
           <em  class="fa fa-bar-chart"></em>
         </button>
@@ -604,6 +622,8 @@ type="square-jelly-box"
 <app-vacante id="DivVacante" #Vacante ></app-vacante>
 
 <app-cliente id="DivClientes" #Clientes2 ></app-cliente>
+
+<app-cliente-detalle id="DivClienteDetalle" #ClientesDetalle></app-cliente-detalle>
 
 <app-cubierto id="DivCubiertoReport" #CubiertoReport></app-cubierto>
 

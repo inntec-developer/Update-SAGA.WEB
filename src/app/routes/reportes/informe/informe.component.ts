@@ -344,6 +344,42 @@ GeneraEstatusBolsa(){
      $(".cdk-overlay-backdrop").click();
               }, 200);
   }
+
+  OcultarCliente(){
+   
+    let tipo = document.getElementById('TipoRcliente')['value'];
+    document.getElementById('btnGraficaCliente').classList.add('ocultar');
+    document.getElementById('DivClientes').classList.add('ocultar');
+    document.getElementById('DivClienteDetalle').classList.add('ocultar');
+    document.getElementById('DivGraficaCliente').classList.add('ocultar');
+    document.getElementById('repCliente').classList.add('ocultar');
+    document.getElementById('exelCliente').classList.add('ocultar');
+    document.getElementById('repClienteDetalle').classList.add('ocultar');
+    document.getElementById('exelClienteDetalle').classList.add('ocultar');
+    document.getElementById('divFechafinal').classList.add('ocultar');
+    document.getElementById('divFechaInicial').classList.add('ocultar');
+    document.getElementById('DivdivReclu').classList.add('ocultar');
+    if(tipo == 1){
+      document.getElementById('DivClientes').classList.remove('ocultar');
+      document.getElementById('btnGraficaCliente').classList.remove('ocultar');
+      document.getElementById('divFechafinal').classList.remove('ocultar');
+      document.getElementById('divFechaInicial').classList.remove('ocultar');
+      document.getElementById('repCliente').classList.remove('ocultar');
+      document.getElementById('exelCliente').classList.remove('ocultar');
+      document.getElementById('DivGraficaCliente').classList.remove('ocultar');
+    }else if(tipo == 2){
+      document.getElementById('DivClienteDetalle').classList.remove('ocultar');
+      document.getElementById('DivdivReclu').classList.remove('ocultar');
+      document.getElementById('repClienteDetalle').classList.remove('ocultar');
+      document.getElementById('exelClienteDetalle').classList.remove('ocultar');
+    }else if(tipo == 3){
+      document.getElementById('DivClienteDetalle').classList.remove('ocultar');
+      document.getElementById('DivdivReclu').classList.remove('ocultar');
+      document.getElementById('repClienteDetalle').classList.remove('ocultar');
+      document.getElementById('exelClienteDetalle').classList.remove('ocultar');
+    }
+    
+  }
  
  Ocultar(){
 
@@ -365,7 +401,6 @@ GeneraEstatusBolsa(){
   //   this.quitarselec();
   // }
 
-
   document.getElementById('DivReportefil').classList.add('ocultar');
   document.getElementById('Divprincipal').classList.add('ocultar');
   document.getElementById('DivProacti').classList.add('ocultar');
@@ -376,6 +411,7 @@ GeneraEstatusBolsa(){
   document.getElementById('DivVacante').classList.add('ocultar');
   document.getElementById('DivGraficaVacante').classList.add('ocultar');
   document.getElementById('DivClientes').classList.add('ocultar');
+  document.getElementById('DivClienteDetalle').classList.add('ocultar');
   document.getElementById('DivCubiertoReport').classList.add('ocultar');
   document.getElementById('DivGraficaCordina').classList.add('ocultar');
   document.getElementById('DivGraficaCliente').classList.add('ocultar');
@@ -400,6 +436,8 @@ GeneraEstatusBolsa(){
   document.getElementById('exelVacante').classList.add('ocultar');
   document.getElementById('repCliente').classList.add('ocultar');
   document.getElementById('exelCliente').classList.add('ocultar');
+  document.getElementById('repClienteDetalle').classList.add('ocultar');
+  document.getElementById('exelClienteDetalle').classList.add('ocultar');
   document.getElementById('repCubierto').classList.add('ocultar');
   document.getElementById('exelCubierto').classList.add('ocultar');
   document.getElementById('btnGraficaCordina').classList.add('ocultar');
@@ -409,7 +447,7 @@ GeneraEstatusBolsa(){
   document.getElementById('btnGraficaCliente').classList.add('ocultar');
   
 
- 
+  document.getElementById('DivdivReclu').classList.add('ocultar');
   document.getElementById('divBusCoordina2').classList.add('ocultar');
   document.getElementById('divreclutador').classList.remove('ocultar');
   document.getElementById('divestatus2').classList.add('ocultar');
