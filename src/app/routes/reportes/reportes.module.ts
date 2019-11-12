@@ -22,6 +22,8 @@ import { ClienteComponent } from './cliente/cliente.component';
 import { CubiertoComponent } from './cubierto/cubierto.component';
 import { CalidadComponent } from './calidad/calidad.component';
 import { MapaReporteComponent } from './mapa-reporte/mapa-reporte.component';
+import { ClienteDetalleComponent } from './cliente-detalle/cliente-detalle.component';
+import { IndicadoresVentasComponent } from './indicadores-ventas/indicadores-ventas.component';
 
 //import { DatePipe } from '@angular/common';
 
@@ -39,7 +41,7 @@ const routes:Routes =[
     RouterModule.forChild(routes),
     ComponentsModule,
   ],
-  declarations: [InformeComponent, TablaReporteComponent, ReporteGeneralComponent, IndicadoresComponent, ProductividadComponent, DetallereclutaComponent, DetallecordinaComponent, CoordinacionComponent, CandidatobolsaComponent, VacanteComponent, ClienteComponent, CubiertoComponent, CalidadComponent, MapaReporteComponent],
+  declarations: [InformeComponent, TablaReporteComponent, ReporteGeneralComponent, IndicadoresComponent, ProductividadComponent, DetallereclutaComponent, DetallecordinaComponent, CoordinacionComponent, CandidatobolsaComponent, VacanteComponent, ClienteComponent, CubiertoComponent, CalidadComponent, MapaReporteComponent, ClienteDetalleComponent, IndicadoresVentasComponent],
   providers: [ReportesService,ExcelService,ComponentsService,CatalogosService]
 })
 export class ReportesModule { }
