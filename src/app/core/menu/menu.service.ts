@@ -42,21 +42,20 @@ export class MenuService {
   /*recursividad para generar el menu*/
   setSubMenu(modules, privilegios) {
 
-    var menuList = [];
+    const menuList = [];
 
     modules.children = privilegios.filter(function (c) {
-      return c.IdPadre === modules.EstructuraId
+      return c.IdPadre === modules.EstructuraId && c.TipoEstructuraId !== 8;
     });
 
     if (modules.children != null) {
       modules.children.forEach(element => {
-        if (modules.TipoEstructuraId < 4 && element.Read) { //para limitar lo que se puede ver en el menu
-          if (element.IdPadre == modules.EstructuraId) {
-            var submenu = { text: element.Nombre, link: element.Accion, submenu: this.setSubMenu(element, privilegios) }
+        if (modules.TipoEstructuraId < 4 && element.Read) { // para limitar lo que se puede ver en el menu
+          if (element.IdPadre === modules.EstructuraId) {
+            const submenu = { text: element.Nombre, link: element.Accion, submenu: this.setSubMenu(element, privilegios) };
             if (submenu.submenu.length === 0) {
-              menuList.push({ text: submenu.text, link: submenu.link })
-            }
-            else {
+              menuList.push({ text: submenu.text, link: submenu.link });
+            } else {
               menuList.push(submenu);
             }
             // menuList.push({text: element.nombre, link: element.accion, submenu: this.otraSub(element, privilegios) })
@@ -64,31 +63,29 @@ export class MenuService {
         }
       });
     }
-    return menuList
+    return menuList;
 
   }
-  setEstructuraMenu() //creo el menu dependiendo de los privilegios de usuario
-  {
+  setEstructuraMenu() { // creo el menu dependiendo de los privilegios de usuario
     // let decode = this.getDecodedAccessToken(sessionStorage.getItem('access-token'));
     // this.Priv = JSON.parse(decode['role'])
     // var privilegios = this.Priv;
 
-    var privilegios = this.settings.user['privilegios'];
+    const privilegios = this.settings.user['privilegios'];
 
     if (this.menuItems.length > 2) {
-      this.menuItems.splice(2, this.menuItems.length - 2)
+      this.menuItems.splice(2, this.menuItems.length - 2);
     }
 
-    var modules = privilegios.filter(function (row) {
-      return row.TipoEstructuraId === 2 && row.Read
+    let modules = privilegios.filter(function (row) {
+      return row.TipoEstructuraId === 2 && row.Read;
     });
 
     modules.forEach(element => {
       if (element.Accion === null) {
-        this.menuItems.push({ text: element.Nombre, icon: element.Icono, submenu: this.setSubMenu(element, privilegios) })
-      }
-      else {
-        this.menuItems.push({ text: element.Nombre, icon: element.Icono, link: element.Accion })
+        this.menuItems.push({ text: element.Nombre, icon: element.Icono, submenu: this.setSubMenu(element, privilegios) });
+      } else {
+        this.menuItems.push({ text: element.Nombre, icon: element.Icono, link: element.Accion });
       }
     });
 

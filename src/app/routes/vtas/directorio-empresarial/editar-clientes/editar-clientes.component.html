@@ -8,7 +8,7 @@
       <a [routerLink]="['/home']">Inicio</a>
     </li>
     <li class="breadcrumb-item">
-      <a [routerLink]="['/ventas/returnDir', ruta]">Directorio Empresarial</a>
+      <a [routerLink]="['/ventas/directorio']" [queryParams]="{ruta: ruta}" [skipLocationChange]=true>Directorio Empresarial</a>
     </li>
     <li class="breadcrumb-item active">Editar</li>
   </ol>
@@ -16,7 +16,7 @@
 
 <div class="row">
   <div class="col-md-12">
-      <button container="body" placement="bottom" tooltip="Regresar" class="mr-1 btn btn-xs btn-warning float-right mat-elevation-z8" type="button" [routerLink]="['/ventas/returnDir', ruta]">
+      <button container="body" placement="bottom" tooltip="Regresar" class="mr-1 btn btn-xs btn-warning float-right mat-elevation-z8" type="button" [routerLink]="['/ventas/directorio']" [queryParams]="{ruta: ruta}" [skipLocationChange]=true>
         <em class="icon-action-undo"></em>
       </button>
   </div>

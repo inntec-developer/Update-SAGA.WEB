@@ -84,8 +84,8 @@ export class ReporteConcurrenciaComponent implements OnInit {
 
 
   public changePage(page: any, data: Array<any> = this.reporte): Array<any> {
-    let start = (page.page - 1) * page.itemsPerPage;
-    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    const start = (page.page - 1) * page.itemsPerPage;
+    const end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
   }
 
@@ -164,10 +164,17 @@ public refreshTable() {
 
     if (this.reporte.length > 0) {
       const aux = [];
+      let d: any;
+      let h: any;
       this.reporte.forEach(row => {
-
-        const d = this.pipe.transform(new Date(row.fecha), 'yyyy-MM-dd H:mm');
-        const h = this.pipe.transform(new Date(row.fecha), 'H:mm');
+        if (row.fecha.length > 0) {
+          console.log(row.fecha)
+          d = this.pipe.transform(new Date(row.fecha), 'yyyy-MM-dd H:mm');
+          h = this.pipe.transform(new Date(row.fecha), 'H:mm');
+        } else {
+          d = '';
+          h = '';
+        }
 
         // let estatus = '';
         // row.resumen.forEach(element => {

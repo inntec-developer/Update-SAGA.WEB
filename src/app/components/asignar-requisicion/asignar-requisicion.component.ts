@@ -10,12 +10,12 @@ import { ComponentsService } from '../../service/Components/components.service';
   providers: [ComponentsService]
 })
 export class AsignarRequisicionComponent implements OnInit {
-  //Formulario
+  // Formulario
   public value: any;
   public AsignacionForm: FormGroup;
   public filteredData: Array<any> = [];
   public filtro: string;
-  //Variables de entrada
+  // Variables de entrada
   @Input() placeHolder: string;
   @Input() Asignados: any[];
 
@@ -25,7 +25,7 @@ export class AsignarRequisicionComponent implements OnInit {
   public items: any[] = []
 
   public asignacionCtrl: any[];
-  public allowClear: boolean = true;
+  public allowClear = true;
   constructor(
     private serviceComponents: ComponentsService
   ) {
@@ -69,29 +69,27 @@ export class AsignarRequisicionComponent implements OnInit {
   }
 
   public Search(data: any) {
-    let tempArray: Array<any> = [];
-    let colFilter: Array<any> = [{ title: 'usuarios' }]
+    const tempArray: Array<any> = [];
+    const colFilter: Array<any> = [{ title: 'usuarios' }]
     let flag = false;
     this.filteredData.forEach(function (item) {
       colFilter.forEach(function (c) {
-
-        if (c.title == 'usuarios') {
-          var user = item['usuarios'];
+        if (c.title === 'usuarios') {
+          const user = item['usuarios'];
           if (user.length > 0) {
             user.forEach(function (u) {
               if (u['nombre'].toString().toLowerCase().match(data.target.value.toLowerCase())) {
-                flag = true
+                flag = true;
               }
               if (u['email'].toString().toLowerCase().match(data.target.value.toLowerCase())) {
-                flag = true
+                flag = true;
               }
-
-            })
+            });
           }
         }
       });
       if (flag) {
-        tempArray.push(item)
+        tempArray.push(item);
       }
     });
     this.items = tempArray;

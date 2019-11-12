@@ -24,7 +24,7 @@ export class DirectorioEmpresarialComponent implements OnInit {
   }
 
   ngOnInit() {
-this._Route.params.subscribe(params => {
+this._Route.queryParams.subscribe(params => {
   if (params['ruta'] != null) {
     if (params['ruta'] === '2') {
       this.viewProspectos = true;

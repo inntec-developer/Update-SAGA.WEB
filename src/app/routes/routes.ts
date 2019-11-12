@@ -31,6 +31,7 @@ export const routes = [
             { path: 'reporte', loadChildren:'./reportes/reportes.module#ReportesModule'},
             { path: 'tickets', loadChildren: './SistTickets/sist-tickets.module#SistTicketsModule'},
             { path: 'equipos', loadChildren: './EquiposDeTrabajo/equipos.module#EquiposModule'},
+            {path: 'webcampo', loadChildren: './ReclutamientoCampo/campo-web.module#CampoWebModule'}
         ]},
 
 

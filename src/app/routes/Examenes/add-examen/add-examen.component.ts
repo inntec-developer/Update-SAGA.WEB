@@ -17,17 +17,30 @@ export class AddExamenComponent implements OnInit {
 
   examen = [];
   tipoexamenId = 0;
-  preguntas = "";
+  preguntas = '';
 
-  resp1 = "";
+  resp1 = '';
   pa = false;
-  nomExamen = "";
-  respInc = "";
-  msg: string = "";
-  img: boolean = false;
+  nomExamen = '';
+  respInc = '';
+  msg = '';
+  img = false;
   respVal: boolean;
-  imgPregunta = { Pregunta: "", Tipo: 0, file: "", name: "", type: "" };
+  imgPregunta = { Pregunta: '', Tipo: 0, file: '', name: '', type: '' };
 
+ /**
+ * configuracion para mensajes de acciones.
+ */
+toaster: any;
+toasterConfig: any;
+toasterconfig: ToasterConfig = new ToasterConfig({
+  positionClass: 'toast-bottom-right',
+  limit: 7,
+  tapToDismiss: false,
+  showCloseButton: true,
+  mouseoverTimerStop: true,
+  preventDuplicates: true,
+});
 
   constructor(private service: ExamenesService, private toasterService: ToasterService) { }
 
@@ -42,42 +55,38 @@ export class AddExamenComponent implements OnInit {
   }
 
   AgregarRespuesta(resp, value) {
-    if (this.preguntas != "") {
-      if (value == 3) {
+    if (this.preguntas !== '') {
+      if (value === 3) {
         if (this.pa) {
           this.respuestas = [];
+        } else {
+          this.resp1 = '';
         }
-        else {
-          this.resp1 = "";
-        }
-      }
-      else {
-        if (this.respuestas.length > 0 && value == 1) {
-          var aux = false;
+      } else {
+        if (this.respuestas.length > 0 && value === 1) {
+          let aux = false;
           this.respuestas = this.respuestas.filter(function (item) {
             if (item.value === 1) {
               item.resp = resp;
-              item.file = "";
-              item.name = ""
-              item.type = ""
+              item.file = '';
+              item.name = '';
+              item.type = '';
               aux = true;
             }
             return item;
           });
 
           if (!aux) {
-            this.respuestas.push({ resp: resp, value: value, file: "", name: "", type: "" });
+            this.respuestas.push({ resp: resp, value: value, file: '', name: '', type: '' });
           }
-        }
-        else {
-          this.respuestas.push({ resp: resp, value: value, file: "", name: "", type: "" });
+        } else {
+          this.respuestas.push({ resp: resp, value: value, file: '', name: '', type: '' });
         }
       }
 
-      this.respInc = "";
+      this.respInc = '';
     }
   }
-
   updateTipoExamen() {
     if (this.examen.length > 0) {
       this.examen.forEach(e => {
@@ -88,56 +97,56 @@ export class AddExamenComponent implements OnInit {
 
   AgregarPregunta() {
     if (this.respuestas.length > 3) {
-      if (this.imgPregunta.file.length == 0) {
+      if (this.imgPregunta.file.length === 0) {
         this.imgPregunta = { Pregunta: this.preguntas, Tipo: 2, file: '', name: '', type: '' }
-      }
-      else {
+      } else {
         this.imgPregunta.Tipo = 2;
       }
 
-      this.examen.push({ Pregunta: this.imgPregunta, Respuestas: this.respuestas, TipoExamen: { Id: this.tipoexamenId, Nombre: this.nomExamen } })
+      this.examen.push({ Pregunta: this.imgPregunta,
+        Respuestas: this.respuestas,
+        TipoExamen: { Id: this.tipoexamenId, Nombre: this.nomExamen } });
 
-      this.preguntas = "";
+      this.preguntas = '';
       this.respuestas = [];
-      this.resp1 = "";
+      this.resp1 = '';
       this.pa = false;
-      this.respInc = "";
-      this.msg = "";
+      this.respInc = '';
+      this.msg = '';
       this.img = false;
       this.respVal = false;
-      this.imgPregunta = { Pregunta: "", Tipo: 0, file: "", name: "", type: "" };
-    }
-    else if (this.respuestas.length == 0) {
+      this.imgPregunta = { Pregunta: '', Tipo: 0, file: '', name: '', type: '' };
+    } else if (this.respuestas.length == 0) {
       if (this.imgPregunta.file.length == 0) {
         this.imgPregunta = { Pregunta: this.preguntas, Tipo: 1, file: '', name: '', type: '' }
-      }
-      else {
+      } else {
         this.imgPregunta.Tipo = 1;
       }
 
-      this.examen.push({ Pregunta: this.imgPregunta, Respuestas: this.respuestas, TipoExamen: { Id: this.tipoexamenId, Nombre: this.nomExamen } })
+      this.examen.push({ Pregunta: this.imgPregunta, 
+        Respuestas: this.respuestas, 
+        TipoExamen: { Id: this.tipoexamenId, Nombre: this.nomExamen } });
 
-      this.preguntas = "";
+      this.preguntas = '';
       this.respuestas = [];
-      this.resp1 = "";
+      this.resp1 = '';
       this.pa = false;
-      this.respInc = "";
-      this.msg = "";
+      this.respInc = '';
+      this.msg = '';
       this.img = false;
       this.respVal = false;
-      this.imgPregunta = { Pregunta: "", Tipo: 0, file: "", name: "", type: "" };
-    }
-    else {
-      this.msg = "Debe agregar mas de una opción de respuesta para la pregunta";
+      this.imgPregunta = { Pregunta: '', Tipo: 0, file: '', name: '', type: '' };
+    }  else {
+      this.msg = 'Debe agregar mas de una opción de respuesta para la pregunta';
     }
   }
 
   UpdatePregunta(value, index, $event) {
-    var self = this;
+    const self = this;
 
     if ($event) {
-      let file: File = $event.target.files[0];
-      var reader = new FileReader();
+      const file: File = $event.target.files[0];
+      const reader = new FileReader();
       reader.readAsDataURL(file);
 
       reader.onload = function () {
@@ -145,78 +154,73 @@ export class AddExamenComponent implements OnInit {
         self.examen[index].Pregunta.file = reader.result;
         self.examen[index].Pregunta.name = file.name;
         self.examen[index].Pregunta.type = file.type;
-      }
-    }
-    else {
+      };
+    } else {
       self.examen[index].Pregunta.Pregunta = value;
-      self.examen[index].Pregunta.file = "";
-      self.examen[index].Pregunta.name = "";
-      self.examen[index].Pregunta.type = "";
+      self.examen[index].Pregunta.file = '';
+      self.examen[index].Pregunta.name = '';
+      self.examen[index].Pregunta.type = '';
     }
   }
 
   UpdateResp(value, index1, index2, $event) {
     if ($event) {
-      let file: File = $event.target.files[0];
-      var reader = new FileReader();
+      const file: File = $event.target.files[0];
+      const reader = new FileReader();
       reader.readAsDataURL(file);
-      var self = this;
+      const self = this;
 
       reader.onload = function () {
-        if (index1 == -1) {
+        if (index1 === -1) {
           self.respuestas[index2].file = reader.result;
           self.respuestas[index2].name = file.name;
           self.respuestas[index2].type = file.type;
-        }
-        else {
+        } else {
           self.examen[index1].Respuestas[index2].resp = value;
           self.examen[index1].Respuestas[index2].file = reader.result;
           self.examen[index1].Respuestas[index2].name = file.name;
           self.examen[index1].Respuestas[index2].type = file.type;
         }
-      }
-    }
-    else {
-
-      self.examen[index1].Respuestas[index2].resp = value;
-      self.examen[index1].Respuestas[index2].file = "";
-      self.examen[index1].Respuestas[index2].name = "";
-      self.examen[index1].Respuestas[index2].type = "";
+      };
+    } else {
+      this.examen[index1].Respuestas[index2].resp = value;
+      this.examen[index1].Respuestas[index2].file = '';
+      this.examen[index1].Respuestas[index2].name = '';
+      this.examen[index1].Respuestas[index2].type = '';
     }
   }
+
   AgregarExamen() {
     this.service.InsertExamenes(this.examen).subscribe(data => {
-      if (data == 200) {
+      if (data === 200) {
         this.popToast('success', 'Generar Examen', 'El examen se generó con éxito');
         this.Borrar();
-      }
-      else {
+      } else {
         this.popToast('error', 'Generar Examen', 'Ocurrió un error al intentar generar examen');
 
       }
-    })
+    });
   }
 
 
   fileChangeListener($event, resp, value, prVal) {
-    let file: File = $event.target.files[0];
+    const file: File = $event.target.files[0];
 
     if (this.isImage(file.type)) {
-      var reader = new FileReader();
+      const reader = new FileReader();
       reader.readAsDataURL(file);
-      var self = this;
-
       resp = resp || file.name;
-
+      if ( this.preguntas === '') {
+        this.preguntas = file.name;
+      }
+      const self = this;
       reader.onload = function () {
         // self.base64textString = reader.result;
-        if (self.preguntas != "") {
-          if (prVal == 1) {
+          if (prVal === 1) {
             self.imgPregunta = { Pregunta: self.preguntas, Tipo: 3, file: reader.result, name: file.name, type: file.type };
-          }
-          else {
-            if (value == 1) {
-              var aux = false;
+          } else {
+            if (value === 1) {
+              let aux = false;
               if (self.respuestas.length > 0) {
                 self.respuestas = self.respuestas.filter(function (item) {
                   if (item.value === 1) {
@@ -232,24 +236,20 @@ export class AddExamenComponent implements OnInit {
                 if (!aux) {
                   self.respuestas.push({ resp: resp, value: value, file: reader.result, name: file.name, type: file.type });
                 }
-              }
-              else {
+              } else {
                 self.respuestas.push({ resp: resp, value: value, file: reader.result, name: file.name, type: file.type });
               }
-            }
-            else if (value == 0) {
+            } else if (value === 0) {
               self.respuestas.push({ resp: resp, value: value, file: reader.result, name: file.name, type: file.type });
-            }
-            else {
+            } else {
               self.respuestas = [];
-              self.resp1 = "";
+              self.resp1 = '';
             }
-            self.respInc = "";
+            self.respInc = '';
           }
-        }
+
       };
-    }
-    else {
+    } else {
       this.popToast('error', 'Generar Examen', 'Solo puede agregar imágenes');
     }
   }
@@ -257,14 +257,14 @@ export class AddExamenComponent implements OnInit {
   Borrar() {
     this.examen = [];
     this.respuestas = [];
-    this.preguntas = "";
-    this.resp1 = "";
+    this.preguntas = '';
+    this.resp1 = '';
     this.pa = false;
-    this.respInc = "";
+    this.respInc = '';
     this.tipoexamenId = 0;
-    this.nomExamen = "";
+    this.nomExamen = '';
     this.se.setValue('');
-    this.imgPregunta = { Pregunta: "", Tipo: 0, file: "", name: "", type: "" };
+    this.imgPregunta = { Pregunta: '', Tipo: 0, file: '', name: '', type: '' };
     this.img = false;
 
   }
@@ -279,23 +279,8 @@ export class AddExamenComponent implements OnInit {
     return /^image\/(.*)$/.test(fileType);
   }
 
-
-  /**
- * configuracion para mensajes de acciones.
- */
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    limit: 7,
-    tapToDismiss: false,
-    showCloseButton: true,
-    mouseoverTimerStop: true,
-    preventDuplicates: true,
-  });
-
   popToast(type, title, body) {
-    var toast: Toast = {
+    const toast: Toast = {
       type: type,
       title: title,
       timeout: 4000,

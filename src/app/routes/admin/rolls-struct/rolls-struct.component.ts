@@ -50,60 +50,49 @@ onClosed(): void {
 
   constructor(private service: AdminServiceService) { }
 
-  GuardarCambios()
-  {
-    var privilegios = this.grid.privilegios;
+  GuardarCambios() {
+    const privilegios = this.grid.privilegios;
     if (this.grid.privilegios.length > 0) {
-      if(this.nomRol != '' && this.nuevoRol == true)
+      if(this.nomRol !== '' && this.nuevoRol === true)
       {
-        var nom = this.nomRol;
-        let obj = this.grid.privilegios.map(function (item) {
+        const nom = this.nomRol;
+        const obj = this.grid.privilegios.map(function (item) {
           item.Nombre = nom;
           return item;
         });
 
         this.service.AddRoles(obj)
           .subscribe(data => {
-            if(data == 201)
-            {
+            if(data === 201) {
               this.alerts[0]['msg'] = 'Los datos se agregaron con éxito';
               this.alert = this.alerts[0];
               this.verMsj = true;
               this.grid.privilegios = [];
-              this.nomRol = "";
+              this.nomRol = '';
 
               this.GetRoles();
-            }
-            else
-            {
-              this.alerts[1]['msg'] = 'Ocurrio un error al intentar agregar'
+            } else {
+              this.alerts[1]['msg'] = 'Ocurrio un error al intentar agregar';
               this.alert = this.alerts[1];
               this.verMsj = true;
             }
           });
-      }
-      else
-      {
+      } else {
         this.service.UpdatePrivilegios(privilegios)
           .subscribe(data => {
-            if(data == 201)
-            {
-              this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito'
+            if(data === 201) {
+              this.alerts[0]['msg'] = 'Los datos se actualizaron con éxito';
               this.alert = this.alerts[0];
               this.verMsj = true;
               this.grid.privilegios = [];
-            }
-            else
-            {
+            } else {
               this.alerts[1]['msg'] = 'Ocurrio un error al intentar actualizar'
               this.alert = this.alerts[1];
               this.verMsj = true;
             }
           });
-
       }
-    }
-    else {
+    } else {
       this.alerts[1]['msg'] =  'No se ha seleccionado Estructuras';
       this.alert = this.alerts[1];
       this.verMsj = true;
@@ -147,16 +136,17 @@ onClosed(): void {
 
   CrearEstructura(node, rolId) {
     node.rolId = rolId;
-    if(node.tipoEstructuraId > 2)
-      node.collapsed = false;
-    else
+    if (node.tipoEstructuraId > 2) {
+            node.collapsed = false;
+    } else {
       node.collapsed = true;
+    }
 
     this.nodesAux.push(node);
 
     if (node.children.length > 0) {
       node.children.forEach(element => {
-        this.CrearEstructura(element, rolId)
+        this.CrearEstructura(element, rolId);
       });
     }
 
@@ -178,38 +168,32 @@ onClosed(): void {
 
      if (node.children.length > 0) {
        node.children.forEach(element => {
-         this.ChangeCollapsed(element)
+         this.ChangeCollapsed(element);
        });
      }
 
    }
 
-  GetNodes( node )
-  {
-    if(node.children)
-    {
+  GetNodes( node ) {
+    if (node.children.length > 0) {
       node.children.forEach(element => {
         this.ChangeCollapsed(element);
       });
     }
- 
   }
 
 
-  filtrarTree(rol)
-  {
+  filtrarTree(rol) {
     this.StructList.forEach(element => {
-
-      var idx = this.nodes.findIndex(x => x.estructuraId == element.estructuraId )
-      if(idx != -1)
-      {
+      const idx = this.nodes.findIndex(x => x.estructuraId === element.estructuraId )
+      if (idx !== -1) {
         this.nodes[idx]['create'] = element.create;
         this.nodes[idx]['read'] = element.read;
         this.nodes[idx]['update'] = element.update;
         this.nodes[idx]['delete'] = element.delete;
         this.nodes[idx]['especial'] = element.especial;
         this.nodes[idx]['rolId'] = rol;
-        this.GetNodes(this.nodes[idx]);
+      //  this.GetNodes(this.nodes[idx]);
       }
 
 
@@ -233,23 +217,22 @@ onClosed(): void {
            this.nodesAux = [];
 
            this.nodes.forEach(element => {
-            this.CrearEstructura(element, 0)
+            this.CrearEstructura(element, 0);
            });
 
            this.nodes = this.nodesAux;
            this.grid.nodes = this.nodes;
-        })
+        });
   }
 
   GetTreeByRol(rol) {
     this.verMsj = false;
 
     this.service.GetEstructuraRoles(rol)
-        .subscribe(
-          e => {
+        .subscribe( e => {
             this.grid.ngOnInit();
 
-            //limpio las variables pero no pierdo la estructura
+            // limpio las variables pero no pierdo la estructura
             this.nodes.forEach(element => {
               element.create = false;
               element.read = false;
@@ -257,15 +240,16 @@ onClosed(): void {
               element.delete = false;
               element.especial = false;
 
-            if(element.tipoEstructuraId > 2)
+            if (element.tipoEstructuraId > 2) {
               element.collapsed = false;
-            else
+            } else {
               element.collapsed = true;
+            }
             });
 
             this.StructList = e;
             this.filteredData = e;
-            this.filtrarTree(rol)
+            this.filtrarTree(rol);
           });
 
 
@@ -290,72 +274,60 @@ onClosed(): void {
   //       })
   // }
 
-  selected(value)
-  {
+  selected(value) {
     this.listAux = [];
     let aux = [];
 
-    let tempArray: Array<any> = [];
+    const tempArray: Array<any> = [];
 
     this.filteredData = this.StructList.filter(function(item){
-      return item.rolId == value
+      return item.rolId === value;
 
     });
     this.listEntidades.forEach(element => {
-      aux = element.roles.filter(function(item)
-        {
-          return item.id == value;
+      aux = element.roles.filter(function(item)  {
+          return item.id === value;
+      });
 
-        })
-      if(aux.length > 0)
-      {
-        this.listAux.push(element)
+      if (aux.length > 0)  {
+        this.listAux.push(element);
       }
 
     });
   }
 
-  DeleteRoles(id)
-  {
+  DeleteRoles(id) {
     this.service.DeleteRoles(id)
-      .subscribe( data => {
-        if(data == 201)
-            {
-              this.alerts[0]['msg'] = 'Se borró el Rol con éxito';
-              this.alert = this.alerts[0];
-              this.verMsj = true;
-            }
-            else
-            {
-              this.alerts[1]['msg'] = 'Ocurrio un error al intentar borrar rol';
-              this.alert = this.alerts[1];
-            }
+      .subscribe(data => {
+        if (data === 201) {
+          this.alerts[0]['msg'] = 'Se borró el Rol con éxito';
+          this.alert = this.alerts[0];
+          this.verMsj = true;
+        } else {
+          this.alerts[1]['msg'] = 'Ocurrio un error al intentar borrar rol';
+          this.alert = this.alerts[1];
+        }
         this.ngOnInit();
-    });
-
+      });
  }
 
- GetRoles()
-  {
+ GetRoles() {
     this.service.getRoles()
     .subscribe(
       e=>{
         this.listRoles = e;
 
-      })
+      });
   }
-  GetEntidades(id)
-  {
+  GetEntidades(id) {
     this.service.GetEntidadesUG(id)
-    .subscribe(
-      e=>{
+      .subscribe(e => {
         this.listEntidades = e;
 
         this.listEntidades.forEach(item => {
           item.fotoAux = ApiConection.ServiceUrlFoto + item.foto;
-        })
-
-      })
+        });
+      });
   }
 
   ngOnInit() {

@@ -9,25 +9,6 @@ import { AsignarRequisicionComponent } from './asignar-requisicion/asignar-requi
 import { AsignarRequisicionLiderComponent } from './asignar-requisicion-lider/asignar-requisicion-lider.component';
 import { AutorizarFacturasPuroComponent } from './tablas/autorizar-facturas-puro/autorizar-facturas-puro.component';
 import { BusquedaCandidatosComponent } from './busqueda-candidatos/busqueda-candidatos.component';
-import { ButtonAcceptComponent } from './buttons/button-accept/button-accept.component';
-import { ButtonAddComponent } from './buttons/button-add/button-add.component';
-import { ButtonAssignComponent } from './buttons/button-assign/button-assign.component';
-import { ButtonCancelComponent } from './buttons/button-cancel/button-cancel.component';
-import { ButtonCheckComponent } from './buttons/button-check/button-check.component';
-import { ButtonClosedComponent } from './buttons/button-closed/button-closed.component';
-import { ButtonDeleteComponent } from './buttons/button-delete/button-delete.component';
-import { ButtonDesignComponent } from './buttons/button-design/button-design.component';
-import { ButtonDislikeComponent } from './buttons/button-dislike/button-dislike.component';
-import { ButtonDocsComponent } from './buttons/button-docs/button-docs.component';
-import { ButtonEditComponent } from './buttons/button-edit/button-edit.component';
-import { ButtonEmailComponent } from './buttons/button-email/button-email.component';
-import { ButtonLikeComponent } from './buttons/button-like/button-like.component';
-import { ButtonPrintComponent } from './buttons/button-print/button-print.component';
-import { ButtonRefreshComponent } from './buttons/button-refresh/button-refresh.component';
-import { ButtonReturnComponent } from './buttons/button-return/button-return.component';
-import { ButtonSaveComponent } from './buttons/button-save/button-save.component';
-import { ButtonSendComponent } from './buttons/button-send/button-send.component';
-import { ButtonViewComponent } from './buttons/button-view/button-view.component';
 import { ButtonsPostulacionesComponent } from './buttons-postulaciones/buttons-postulaciones.component';
 import { CURPValidator } from './dlg-registro-masivo/GenerarCURP';
 import { CalendarioCandidatoComponent } from './calendario/calendario-candidato/calendario-candidato.component';
@@ -157,6 +138,8 @@ import { VacantesComponent } from './Tracking/vacantes/vacantes.component';
 import { GraficaCalidadActivoComponent } from './Graficas/grafica-calidad-activo/grafica-calidad-activo.component';
 import { GraficaCalidadVencidaComponent } from './Graficas/grafica-calidad-vencida/grafica-calidad-vencida.component';
 import { GraficaReporteComponent } from './Graficas/grafica-calidad-activo/grafica-reporte/grafica-reporte.component';
+import { PopNotificacionesComponent } from './pop-notificaciones/pop-notificaciones.component';
+import { DlgCandidatoToRequiComponent } from './dlg-candidato-to-requi/dlg-candidato-to-requi.component';
 
 @NgModule({
   imports: [
@@ -186,31 +169,12 @@ import { GraficaReporteComponent } from './Graficas/grafica-calidad-activo/grafi
     DtDirecionRequiComponent,
     DialogEditHorarioComponent,
     AsignarRequisicionComponent,
-    ButtonSaveComponent,
-    ButtonEditComponent,
-    ButtonDeleteComponent,
-    ButtonViewComponent,
-    ButtonCancelComponent,
-    ButtonReturnComponent,
-    ButtonRefreshComponent,
-    ButtonDesignComponent,
-    ButtonCheckComponent,
-    ButtonClosedComponent,
-    ButtonAssignComponent,
-    ButtonPrintComponent,
-    ButtonAcceptComponent,
-    ButtonDocsComponent,
-    ButtonAddComponent,
     BusquedaCandidatosComponent,
     ClockComponent,
-    ButtonLikeComponent,
-    ButtonDislikeComponent,
-    ButtonSendComponent,
     CardVacanteComponent,
     DetailVacantesComponent,
     ButtonsPostulacionesComponent,
     ComentarioVacanteComponent,
-    ButtonEmailComponent,
     AsignarRequisicionLiderComponent,
     InfoCandidatoComponent,
     DtBusquedaCandidatosComponent,
@@ -319,9 +283,12 @@ import { GraficaReporteComponent } from './Graficas/grafica-calidad-activo/grafi
     MapsAddressComponent,
     GraficaCalidadActivoComponent,
     GraficaCalidadVencidaComponent,
-    GraficaReporteComponent
+    GraficaReporteComponent,
+    PopNotificacionesComponent,
+    DlgCandidatoToRequiComponent
   ],
   exports: [
+    CandidatosCubiertosRportComponent,
     DtDireccionComponent,
     DtTelefonosComponent,
     DtContactosComponent,
@@ -343,31 +310,12 @@ import { GraficaReporteComponent } from './Graficas/grafica-calidad-activo/grafi
     DtDirecionRequiComponent,
     DialogEditHorarioComponent,
     AsignarRequisicionComponent,
-    ButtonSaveComponent,
-    ButtonEditComponent,
-    ButtonDeleteComponent,
-    ButtonViewComponent,
-    ButtonCancelComponent,
-    ButtonReturnComponent,
-    ButtonRefreshComponent,
-    ButtonDesignComponent,
-    ButtonCheckComponent,
-    ButtonClosedComponent,
-    ButtonAssignComponent,
-    ButtonPrintComponent,
-    ButtonAcceptComponent,
-    ButtonDocsComponent,
-    ButtonAddComponent,
     BusquedaCandidatosComponent,
     ClockComponent,
-    ButtonLikeComponent,
-    ButtonDislikeComponent,
-    ButtonSendComponent,
     CardVacanteComponent,
     DetailVacantesComponent,
     ButtonsPostulacionesComponent,
     ComentarioVacanteComponent,
-    ButtonEmailComponent,
     AsignarRequisicionLiderComponent,
     InfoCandidatoComponent,
     DtBusquedaCandidatosComponent,
@@ -428,9 +376,12 @@ import { GraficaReporteComponent } from './Graficas/grafica-calidad-activo/grafi
     FoliosActivosComponent,
     MapsAddressComponent,
     GraficaCalidadActivoComponent,
-    GraficaCalidadVencidaComponent
+    GraficaCalidadVencidaComponent,
+    PopNotificacionesComponent,
+    DlgCandidatoToRequiComponent
   ],
-  entryComponents: [DlgRequiArteComponent, DlgBGArteComponent, DlgCubiertasComponent,
+  entryComponents: [DlgCandidatoToRequiComponent,PopNotificacionesComponent, DlgRequiArteComponent,
+    DlgBGArteComponent, DlgCubiertasComponent,
     DlgResultadosMedicosComponent, DlgRegistroMasivoComponent,
     RegistroReclutadorComponent, TicketsRegisterComponent,
     DlgRevisarExamenesComponent, DialogHorariosConteoComponent,

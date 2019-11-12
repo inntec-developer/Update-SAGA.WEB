@@ -1,0 +1,119 @@
+<div class="content-heading">
+    <div>
+      <span class="text-sm d-none d-sm-block"><a class="mr-1" [routerLink]="['/webcampo/inicio']"><i class="fa fa-home text-success mr-2" aria-hidden="true"></i>RECLUTADORES</a></span>
+    </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+      <li class="breadcrumb-item active text-muted">VACANTES RECLUTADOR</li>
+    </ol>
+  </div>
+<div class="card">
+    <h5 class="card-header bg-info"><i class="fa fa-user mr-1"></i>{{reclutador | uppercase}}</h5>
+  <div class="card-body">
+
+  <div class="d-flex justify-content-end">
+  <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total posiciones cubiertas
+      <span class="badge badge-pill badge-success ml-1">{{totalContratados  | numerico}}</span></span>
+<span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total de posiciones
+  activas <span class="badge badge-pill badge-success ml-1">{{totalPos  | numerico}}</span></span>
+  <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total de registros
+      <span class="badge badge-pill badge-success ml-1">{{dataSource.length  | numerico}}</span></span>
+</div>
+    <div class="row bg-light p-1 mb-1">
+      <div class="col">
+      <button (click)="lgModal15.show()" [disabled]="element.length == 0" [ngClass]="element.length == 0 ? 'disable' : 'btn-warning'" class="btn btn-xs mat-elevation-z8 float-left mr-2" placement="bottom" tooltip="Ver vacante"><i class="fa fa-eye"></i></button>
+      <button [disabled]="element.length == 0 || element.contratados >= element.vacantes" [ngClass]="element.length == 0 || element.contratados >= element.vacantes ? 'disabled' : 'btn-success'" class="mb-1 btn btn-xs ml-2 mat-elevation-z8" container="body" placement="bottom" tooltip="Registrar candidato"
+          (click)="OpenDialogRegistrar(element)">
+          <i class="fa fa-plus"></i>
+        </button>
+      <button [disabled]="element.length == 0 || element.contratados == 0" [ngClass]="element.length == 0 || element.contratados == 0? 'disable' : 'btn-info'" class="btn btn-xs mat-elevation-z8 float-left" placement="bottom" tooltip="Ver candidatos" 
+      (click)="Editar()" ><i class="fa fa-users"></i>
+        <span *ngIf="element.length > 0 || element.contratados > 0" class="badge badge-pill badge-warning">{{element.contratados}}</span>
+      </button>
+      <button  class="btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="refreshTable()"
+      container="body" placement="bottom" tooltip="Actualizar">
+      <i class="icon-refresh"></i>
+    </button>
+    <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
+      class="mr-2 btn btn-xs btn-info float-right mat-elevation-z8">
+      <em class="fa fa-eraser"></em>
+    </button>
+  </div>
+    </div>
+      <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+      [disabled]="disabled">
+      <div style="height: 400px;">
+      <table class="table">
+          <thead>
+              <tr>
+                <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+                  <small>{{column.title | uppercase}}</small>
+                </th>
+              </tr>
+              <tr>
+                <th *ngFor="let column of columns">
+                  <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
+                    [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                    class="form-control form-control-sm" id="{{column.name}}">
+                </th>
+              </tr>
+            </thead>
+          <tbody>
+              <ng-container *ngIf="dataSource.length > 0 else NotCandidatos">
+            <tr *ngFor="let r of rows; let rowIndex = index" (click)="onCellClick(r)" [class.selected]="r.selected">
+
+              <td class="text-center text-muted">{{ r.folio }}</td>
+
+              <td class="text-center text-muted">{{r.vBtra | uppercase}}</td>
+              <td class="text-center text-muted">{{r.cliente | uppercase}}</td>
+              <td class="text-center text-muted">{{r.contratados}}/{{r.vacantes}}</td>
+              <td class="text-center text-muted">{{r.fch_Cumplimiento | date:'dd-MM-yyyy'}}</td>
+           
+            </tr>
+          </ng-container>
+          </tbody>
+        </table>
+      </div>
+      </ng-scrollbar>
+      <pagination *ngIf="config.paging" class="pagination-sm mt-2 float-right" [(ngModel)]="page" [totalItems]="length"
+      [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+      (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
+</div>
+  </div>
+
+  <div bsModal #lgModal15="bs-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 id="dialog-sizes-name1" class="modal-title pull-left">INFORMACI&Oacute;N DE LA VACANTE</h4>
+            <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal15.hide()"
+              aria-label="Close">
+              <i class="fa fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <app-info-vacante [HiddenPrint]="false" [Folios]="element.folio" [Requisicion]="element.id" [ShowSection]="SelectiedSection"></app-info-vacante>
+          </div>
+          <div class="modal-footer">
+              <button class="btn btn-xs btn-labeled btn-danger mb-1 mr-2 mat-elevation-z8" (click)="lgModal15.hide()">
+                  <span class="btn-label">
+                    <i class="fa fa-times"></i>
+                  </span> CERRAR
+                </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!--mensaje cuando esta vacio la tabla-->
+  <ng-template #NotCandidatos>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <alert type="info">
+                <strong>Oops!</strong> El reclutador no cuenta con requisiciones asignadas.
+              </alert>
+        </div>
+      </div>
+    </ng-template>
+
+    <ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>

@@ -73,7 +73,7 @@ export class RequisicionesService {
   }
   // Recupera las direcciones del cliente que se seleccione para generar Requisicion
   getAddress(damfoId: string): Observable<any> {
-    let params = new HttpParams().set('Id', damfoId)
+    const params = new HttpParams().set('Id', damfoId);
     return this._httpClient.get(this.urlAddress, { params: params, headers: this.httpOptions.headers });
   }
   // Generea una nueva requisicion y posteriormente regresa el ID de la nueva requisicion.
@@ -86,7 +86,7 @@ export class RequisicionesService {
     return this._httpClient.get(this.urlGetRequisicionById, { params: params, headers: this.httpOptions.headers });
   }
   getRequiFolio(folio: any): Observable<any> {
-    let params = new HttpParams().set('folio', folio);
+    const params = new HttpParams().set('folio', folio);
     return this._httpClient.get(this.urlGetRequisicionByFolio, { params: params, headers: this.httpOptions.headers });
   }
   // Recupera la información completa del DAMFO-290 que se requiera.

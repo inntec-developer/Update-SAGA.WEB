@@ -301,16 +301,12 @@ horario = '';
             let timerInterval;
             Swal.fire({
               title: 'Registro Masivo',
-              html: 'Esto puede tardar varios segundos por favor espere... <strong></strong>',
+              html: 'Esto puede tardar varios segundos por favor espere...',
               type: 'warning',
               showConfirmButton: false,
-              timer: 3000,
+              timer: 2000,
               onBeforeOpen: () => {
                 Swal.showLoading();
-                timerInterval = setInterval(() => {
-                  Swal.getContent().querySelector('strong')
-                    .textContent = Swal.getTimerLeft();
-                }, 100);
               },
               onClose: () => {
                 clearInterval(timerInterval);
@@ -341,7 +337,8 @@ horario = '';
               EstadoNacimientoId: this.estadoId,
               Telefono: [{ ClavePais: 52, ClaveLada: this.txtLada, telefono: this.txtLada + '-' + this.txtPhone, TipoTelefonoId: 1 }],
               requisicionId: this.data.requisicionId,
-              reclutadorId: this.settings.user['id'],
+               // reclutadorId: this.settings.user['id'],
+              reclutadorId:  this.settings.user['id'],
               OpcionRegistro: this.modelOpc.options,
               horarioId: this.horarioId,
               tipoMediosId: this.tipoMediosId,
@@ -391,16 +388,16 @@ horario = '';
           let timerInterval;
           Swal.fire({
             title: 'Actualizar candidatos a cubiertos',
-            html: 'El proceso puede tardar varios segundos por favor espere... <strong></strong>.',
-            timer: 4000,
+            html: 'El proceso puede tardar varios segundos por favor espere... ',
+            timer: 3000,
             type: 'warning',
             showConfirmButton: false,
             onBeforeOpen: () => {
               Swal.showLoading();
-              timerInterval = setInterval(() => {
-                Swal.getContent().querySelector('strong')
-                  .textContent = Swal.getTimerLeft();
-              }, 100);
+              // timerInterval = setInterval(() => {
+              //   Swal.getContent().querySelector('strong')
+              //     .textContent = Swal.getTimerLeft();
+              // }, 100);
             },
             onClose: () => {
               clearInterval(timerInterval);
@@ -419,41 +416,44 @@ horario = '';
               estatusId: 24,
               requisicionId: r.requisicionId,
               horarioId: r.horarioId,
-              ReclutadorId: this.settings.user['id']
+              ReclutadorId: this.data.reclutadorId,
+              CURP: r.curp,
+              fechaNacimiento: r.fechaNac,
+              Nombre: r.nombre,
+              ApellidoPaterno: r.apellidoPaterno,
+              ApellidoMaterno: r.apellidoMaterno,
+              EstadoNacimientoId: this.estadoId,
+              GeneroId: this.model.options === '2' ? 2 : 1,
             });
           });
           this.postulateservice.CubrirMasivos(datos).subscribe(data => {
             if (data === 200) {
               swalWithBootstrapButtons.fire({
                 title: 'Cubrir candidatos',
-                text: 'Los cambios se realizaron con éxito. ¿Deseas enviar notificacion a los candidatos?. El proceso puede durar varios segundos',
+                text: 'Los cambios se realizaron con éxito. ¿Deseas enviar notificacion a los candidatos?. ' +
+                'El proceso puede durar varios segundos',
                 type: 'success',
                 showCancelButton: true,
-                confirmButtonText: '¡Si, enviar!',
-                cancelButtonText: '¡No, salir!',
+                confirmButtonText: '¡SI, ENVIAR!',
+                cancelButtonText: 'NO, SALIR!',
                 reverseButtons: true
-              }).then((result2) => {
+              }).then(result2 => {
                 if (result2.value) {
-                  let timerInterval;
+                  let timerInterval2;
                   Swal.fire({
                     title: 'Envío notificación candidatos cubiertos',
-                    html: 'por favor espere... <strong></strong>.',
+                    html: 'por favor espere...',
                     type: 'warning',
                     showConfirmButton: false,
-                    timer: 3000,
+                    timer: 2500,
                     onBeforeOpen: () => {
                       Swal.showLoading();
-                      timerInterval = setInterval(() => {
-                        Swal.getContent().querySelector('strong')
-                          .textContent = Swal.getTimerLeft();
-                      }, 100);
                     },
                     onClose: () => {
-                      clearInterval(timerInterval);
+                      clearInterval(timerInterval2);
                     }
                   }).then((x) => {
                     if (x.dismiss === Swal.DismissReason.timer) {
-                      this.dialog.close();
                     }
                   });
                   const datosCand = [];
@@ -465,7 +465,7 @@ horario = '';
                     this.dialog.close();
                   });
                 } else {
-                  this.dialog.close(data);
+                  this.dialog.close(datos.length);
                 }
               });
             } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -528,7 +528,8 @@ horario = '';
         this.dataSource[this.rowIndex].nombre = this.nom,
         this.dataSource[this.rowIndex].apellidoPaterno = this.ap,
         this.dataSource[this.rowIndex].apellidoMaterno = this.am,
-        this.dataSource[this.rowIndex].fechaNac = this.fn.getFullYear().toString() + '/' + (this.fn.getMonth() + 1).toString() + '/' + this.fn.getDate().toString(),
+        this.dataSource[this.rowIndex].fechaNac = this.fn.getFullYear().toString() +
+         '/' + (this.fn.getMonth() + 1).toString() + '/' + this.fn.getDate().toString(),
         this.dataSource[this.rowIndex].genero = this.model.options == '2' ? 'Mujer' : 'Hombre',
         this.dataSource[this.rowIndex].EstadoNacimientoId = this.estadoId,
         this.dataSource[this.rowIndex].estado = estado[0].estado,

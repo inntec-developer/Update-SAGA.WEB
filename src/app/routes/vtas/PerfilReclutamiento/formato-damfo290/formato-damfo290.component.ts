@@ -8,6 +8,8 @@ import { FormatoRequisitosComponent } from './formato-requisitos/formato-requisi
 import { PerfilReclutamientoService } from './../../../../service/PerfilReclutamiento/perfil-reclutamiento.service';
 import { SettingsService } from '../../../../core/settings/settings.service';
 
+const swal = require('sweetalert2');
+
 @Component({
   selector: 'app-formato-damfo290',
   templateUrl: './formato-damfo290.component.html',
@@ -87,7 +89,7 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges, AfterContent
   }
 
   GuardarPerfil() {
-    this.loading = true;
+   this.loading = true;
     const apt = this.requisitos.formEncabezado.get('Aptitud').value;
     const Aptitudes = [];
 
@@ -155,7 +157,7 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges, AfterContent
       if (x !== 404 && x !== 406) {
         if (PerfilReclutamiento['Action'] === 'create') {
           this.popToast('success', 'Perfil Reclutamiento',
-            'Se acreado con éxito el perfil de reclutamiento par la vacante' +
+            'Se creó con éxito el perfil de reclutamiento par la vacante' +
             Encabezado['NombrePerfil'] + '.');
         } else {
           this.popToast('success', 'Perfil Reclutamiento',
@@ -169,9 +171,6 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges, AfterContent
           this.loading = false;
       }
     });
-
-
-    console.log('guardar Perfil', PerfilReclutamiento);
   }
 
   popToast(type: any, title: any, body: any) {

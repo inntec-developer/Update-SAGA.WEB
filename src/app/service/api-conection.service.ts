@@ -1,10 +1,8 @@
+import { state } from '@angular/animations';
 export class ApiConection {
   public static ServiceUrl = 'http://localhost:33333/api/';
   public static ServiceUrlImgExamenes = 'http://localhost:33333/';
   public static ServiceUrlWeb = 'http://localhost:4200/';
-  // public static ServiceUrlFileManager = 'http://localhost:33333/utilerias/';
-  // public static ServiceUrl = 'http://10.10.12.31:333/api/';
-  // public static ServiceUrlImgExamenes = 'http://10.10.12.31:333/api/';
 
   // Produccion
   // public static ServiceUrlWeb = 'https://weberp.damsa.com.mx/';
@@ -48,6 +46,7 @@ export class ApiConection {
   public static GetAlertStm = 'AlertSTM/getAlert';
   public static GetAllAlertStm = 'AlertSTM/getAllAlert';
   public static DeleteAlertStm = 'AlertSTM/deleteAlert';
+  public static GetCountAlert = 'AlertSTM/getAlertCount';
 
   /* Catalogos */
   public static GetDocumentosDamsa = 'Catalogos/getDocDamsa';
@@ -185,6 +184,7 @@ public static GetClasesTiposRecl = 'PerfilReclutamiento/getTipoClase';
   public static GetInfoContratados = 'Candidatos/getInfoContratados';
   public static GetCandidatosByVacante = 'Candidatos/getCandidatosByVacante';
   public static UpdateCandidatoMasivo = 'Candidatos/updateCandidatosMasivo';
+  public static EmailPeticionLiberar = 'Candidatos/emailPeticionLiberar';
   
 
   /* Vacantes */
@@ -211,9 +211,6 @@ public static GetClasesTiposRecl = 'PerfilReclutamiento/getTipoClase';
   public static GuardarConfi = '/dvacante/GuardarVacante';
   public static getCampos = '/dvacante/getCampos';
   public static getClasificaciones = '/dvacante/getClasificaciones';
-
-
-
 
   /* Admin */
   public static getDtosPersonal = '/admin/get';
@@ -464,4 +461,15 @@ public static GetClasesTiposRecl = 'PerfilReclutamiento/getTipoClase';
   public static CrudCompAreas = 'PerfilReclutamiento/crudCompArea';
   public static CrudCompGerenciales = 'PerfilReclutamiento/crudCompGerencial';
   public static CrudPerfilReclutamiento = 'PerfilReclutamiento/crudPerfilReclutamiento';
+
+  // Reclutamiento campo
+  public static GetReclutadoresCampo = 'Campo/getReclutadores';
+  public static GetRequisReclutadores = 'Campo/getRequisReclutadores';
+  public static GetUnidadesNegocio = 'Campo/getUnidadesNegocios';
+  public static GetReclutadoresByUnidad = 'Campo/getReclutadoresByUnidades';
+  public static GetCandidatosProceso = 'Campo/getCandidatosProceso';
+  public static UpdateContratadosCampo  = 'Campo/updateContratadosCampo';
+
+  // ventas costos
+  public static GetCostos = 'Costos/getCostos';
 }

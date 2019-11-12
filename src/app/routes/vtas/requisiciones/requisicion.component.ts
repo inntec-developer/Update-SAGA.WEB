@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DtDamfoComponent } from './components/dt-damfo/dt-damfo.component'
 
 // Componentes
@@ -14,14 +13,23 @@ import { DtDamfoComponent } from './components/dt-damfo/dt-damfo.component'
 
 export class RequisicionComponent implements OnInit {
     ruta: any;
+    folio = '';
     constructor(
-        private activateRoute : ActivatedRoute
+        private activateRoute: ActivatedRoute
     ) {
         this.ruta = this.activateRoute.snapshot.routeConfig.data;
         sessionStorage.setItem('ruta', this.ruta.componente);
     }
-    //Varaibales Globales
-    ngOnInit() {
 
+    ngOnInit() {
+        this.getParams();
     }
+
+    getParams() {
+        this.activateRoute.params.subscribe(params => {
+          if (params['folio'] != null) {
+            this.folio = params['folio'];
+          }
+        });
+      }
 }

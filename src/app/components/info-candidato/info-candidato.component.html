@@ -2,16 +2,17 @@
   <div class="col-lg-4 col-md-3 col-sm-12 col-xs-12">
     <div *ngIf="candidato" class="dt-container mat-elevation-z8">
       <div class="card-header justify-content-between">
-        <em class="fa fa-user-circle-o"></em>
-        <label> Informaci&oacute;n Principal</label>
+        
+        <label class="text-muted"><i class="fa fa-user-circle-o mr-1"></i>Informaci&oacute;n Principal</label>
         <button *ngIf="examen.tecnicos.length > 0 || examen.psicometricos.length > 0"
           class="btn btn-xs btn-warning float-right mat-elevation-z8" (click)="modalExamen=true;" container="body"
           placement="bottom" tooltip="Examenes Realizados">
           <i class="fa fa-pencil"></i></button>
-          <button  class="btn btn-xs btn-dark float-right mat-elevation-z8 mr-1" (click)="modalComentarios=true;" container="body"
+          <button  class="btn btn-xs btn-dark float-right mat-elevation-z8 mr-2" (click)="modalComentarios=true;" container="body"
           placement="bottom" tooltip="Comentarios">
           <i class="fa fa-comments-o"></i>
         </button>
+   
         <!-- <a class="float-right text-muted" (click)="favContact1=!favContact1">
           <em class="fa" [ngClass]="favContact1 ? 'fa-star text-warning' : 'fa-star-o'"></em>
         </a> -->
@@ -63,24 +64,29 @@
       <div class="card-footer">
         <div class="row">
           <div class="col-md-2 text-center">
-            <em *ngIf="!candidato.estatus || procesoCandidatoId === 27" class="fa fa-unlock m-0  text-success"></em>
-            <em *ngIf="procesoCandidatoId != 27 && candidato.estatus" class="fa fa-lock m-0 text-primary"></em>
+            <i *ngIf="(!candidato.estatus || procesoCandidatoId === 27)" class="fa fa-unlock m-0  text-success"></i>
+            <i *ngIf="procesoCandidatoId != 27 && candidato.estatus && procesoCandidatoId != 24 && candidato.estatus.estatusId != 12" class="fa fa-lock m-0 text-primary"></i>
+            <button *ngIf="candidato.estatus && candidato.estatus.estatusId == 12" class="btn btn-xs btn-info float-right mat-elevation-z8 ml-3" [disabled]="btnNotificacion" (click)="EnviarNotificacion()" container="body"
+              placement="bottom" tooltip="Enviar notificaci&oacute;n para liberar candidato">
+              <i class="fa fa-bell-o" aria-hidden="true"></i>
+            </button>
+            <button *ngIf="procesoCandidatoId == 24 && candidato.propietarioId == usuarioId" id="delete" chkPrivilegiosButtons class="btn btn-xs btn-danger ml-3 float-right mat-elevation-z8"
+            (click)="LiberarPermisoEjecutivo()" placement="bottom" tooltip="Liberar candidato"><i class="fa fa-thumbs-o-down"></i></button>
           </div>
           <div class="col-md-10 text-right">
             <h5 *ngIf="candidato.estatus" class="m-0"
               [ngClass]="(procesoCandidatoId === 27) ? 'text-success':'text-primary'"
               [class.text-warning]="candidato.estatus.estatusId === 42">
-              <small *ngIf="candidato.estatus.estatusId != 28">{{ Status }} por: {{reclutador}} </small>
+              <small *ngIf="candidato.estatus.estatusId != 28">{{ Status }} por: {{reclutador}} </small>  
+              
               <small *ngIf="candidato.estatus.estatusId == 28" class="text-danger">POSTULADO por: {{reclutador}}
               </small>
             </h5>
             <h5 *ngIf="!candidato.estatus" class="text-success">Candidato Disponible</h5>
+          
           </div>
         </div>
-        <div *ngIf="procesoCandidatoId == 24 && candidato.propietarioId == usuarioId">
-          <button id="delete" chkPrivilegiosButtons class="btn btn-xs btn-danger float-right mat-elevation-z8"
-            (click)="LiberarPermisoEjecutivo()"><i class="fa fa-thumbs-o-down"></i></button>
-        </div>
+         
       </div>
     </div>
     <br>
@@ -101,7 +107,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let row of rows_p" class="text-muted">
+                <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+                [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+                <div>
+              <tr *ngFor="let row of rows_p" class="text-muted" >
                 <td class="text-center"> {{row.folio}} </td>
                 <td class="text-center"> {{row.vBtra}}</td>
                 <td class="text-center">
@@ -123,6 +132,8 @@
                   </ng-template>
                 </td>
               </tr>
+</div>
+              </ng-scrollbar>
             </tbody>
           </table>
         </div>

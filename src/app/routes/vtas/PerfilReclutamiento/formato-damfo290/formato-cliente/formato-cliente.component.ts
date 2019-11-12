@@ -5,6 +5,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { PerfilReclutamientoService } from './../../../../../service/PerfilReclutamiento/perfil-reclutamiento.service';
 import { SettingsService } from '../../../../../core/settings/settings.service';
 
+
 declare var google: any;
 
 @Component({
@@ -15,6 +16,7 @@ declare var google: any;
 })
 export class FormatoClienteComponent implements OnInit, OnChanges {
   @Input() IdFormato: any;
+  @Input() ctrlContratos: any;
 
   public formCliente: FormGroup;
   select: any;
@@ -92,6 +94,9 @@ export class FormatoClienteComponent implements OnInit, OnChanges {
     });
   }
 
+  selectTipo() {
+    this.ctrlContratos.formEncabezado.controls['Contrato'].reset();
+  }
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdFormato != null) {
       this.DisableComponente = true;
@@ -125,7 +130,8 @@ export class FormatoClienteComponent implements OnInit, OnChanges {
       this.ClasesReclutamientos = result.clases;
     });
   }
-  filter() {
+  filter($event) {
+    if ( $event.keyCode !== 40 && $event.keyCode !== 38 ) {
     const filter = this.formCliente.get('RazonSocial').value;
     if (filter !== '' || filter != null && filter.length > 5) {
       this._servicePerfilR.getClientes(filter).subscribe(data => {
@@ -136,15 +142,19 @@ export class FormatoClienteComponent implements OnInit, OnChanges {
               element['rfc'].toString().toLowerCase().match(filter.toString().toLowerCase()) ||
               element['nombrecomercial'].toString().toLowerCase().match(filter.toString().toLowerCase());
           });
-        } else {
-          this.popToast('error', 'Oops!!', 'No se encontraron resultados con ' + filter + ' intente de nuevo.');
-          if (this.Cliente != null) {
-            this.formCliente.controls['RazonSocial'].setValue(this.Cliente[0]['razonSocial']);
-          }
-
         }
+        // else {
+        //   this.popToast('error', 'Oops!!', 'No se encontraron resultados con ' + filter + ' intente de nuevo.');
+        //   if (this.Cliente != null) {
+        //     this.formCliente.controls['RazonSocial'].setValue(this.Cliente[0]['razonSocial']);
+        //   }
+
+        // }
       });
+    } else if (filter === '') {
+      this.Borrar();
     }
+  }
   }
 
 
@@ -172,7 +182,6 @@ export class FormatoClienteComponent implements OnInit, OnChanges {
     this.formCliente.controls['RFC'].reset();
     this.formCliente.controls['Giro'].reset();
     this.formCliente.controls['Actividad'].reset();
-    this.formCliente.controls['Tipo'].reset();
     this.formCliente.controls['Tipo'].reset();
     this.formCliente.controls['Clase'].reset();
 

@@ -1,0 +1,16 @@
+<div class="card">
+  <div class="card-body">
+    <ng-container *ngFor="let row of dataSource">
+      <h5 class="text-muted"><i class="fa fa-user-md text-success mr-1" aria-hidden="true"></i>{{row.descripcion}}</h5>
+      <ng-container *ngFor="let r of row.tipos">
+        <mat-form-field class="ml-2">
+          <mat-icon matPrefix>attach_money</mat-icon>
+          <input matInput #costoMedico class="text-right" style="font-size: 18px;" step="any" type="number"
+            placeholder="Costo" formControlName="costoMedico">
+          <strong matSuffix>MXN.</strong>
+        </mat-form-field>
+        <hr>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

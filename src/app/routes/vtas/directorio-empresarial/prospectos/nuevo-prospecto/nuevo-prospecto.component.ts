@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { emptyStringGetter, id } from '@swimlane/ngx-datatable/release/utils';
@@ -8,6 +8,8 @@ import { ClientesService } from '../../../../../service/clientes/clientes.servic
 import { CompanyValidation } from './company-validation';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SettingsService } from '../../../../../core/settings/settings.service';
+import { ModalDirective } from 'ngx-bootstrap';
+import { RFCValidator } from '../dt-prospectos/rfc-validation';
 
 const swal = require('sweetalert2');
 
@@ -18,15 +20,17 @@ const swal = require('sweetalert2');
   providers: [CatalogosService, ClientesService]
 })
 export class NuevoProspectoComponent implements OnInit {
+  @ViewChild('HacerClienteModal') ShownModal: ModalDirective;
+  
   // Customs
-  public CMNumEmleados: number = 10;
+  public CMNumEmleados = 10;
   //#region Variables
-  public loading: boolean = false;
-  //Edit for columns
+  public loading = false;
+  // Edit for columns
   public editingCT = {};
 
-  public itemsPerPage: number = 5;
-  public maxSize: number = 5;
+  public itemsPerPage = 5;
+  public maxSize = 5;
   public showFilterRowD: boolean;
   public showFilterRowT: boolean;
   public showFilterRowC: boolean;
@@ -43,12 +47,12 @@ export class NuevoProspectoComponent implements OnInit {
   public auxColonia: any;
   public auxTipoDireccion: any;
   public auxTipoTelefono: any;
-  private idAuxD: number = 1;
-  private idAuxT: number = 1;
-  private idAuxC: number = 1;
-  private idAuxCn: number = 1;
-  private idAuxCnT: number = 1;
-  private idAuxCnC: number = 1;
+  private idAuxD = 1;
+  private idAuxT = 1;
+  private idAuxC = 1;
+  private idAuxCn = 1;
+  private idAuxCnT = 1;
+  private idAuxCnC = 1;
   /***************************/
 
   public formGeneral: FormGroup;
@@ -58,7 +62,8 @@ export class NuevoProspectoComponent implements OnInit {
   public formContactos: FormGroup;
   public formContactoTelefonos: FormGroup;
   public formContactoCorreo: FormGroup;
-
+  /* Formulario para hacer cliente */
+  public formCliente: FormGroup;
   public addDireccion: boolean;
   public DireccionesNew: Array<any> = [];
   public indexDireccion: any;
@@ -107,19 +112,31 @@ export class NuevoProspectoComponent implements OnInit {
   public municipios: any;
   public colonias: any;
   public cp: any;
-  public Principal: boolean = false;
+  public Principal = false;
 
-  public isReadonly: boolean = false;
-  public maxRat: number = 3;
-  public clf: number = 1;
+  public isReadonly = false;
+  public maxRat = 3;
+  public clf = 1;
   public overStar: number;
   public percent: number;
 
   public ladaPais: any = 52;
-  public PrincipalT: boolean = false;
+  public PrincipalT = false;
   public Usuario: string;
   //#endregion
   ruta = 1;
+  clienteId: any;
+
+    //#region  CREACION DE MENSAJES
+    toaster: any;
+    toasterConfig: any;
+    toasterconfig: ToasterConfig = new ToasterConfig({
+      positionClass: 'toast-bottom-right',
+      limit: 7, tapToDismiss: false,
+      showCloseButton: true,
+      mouseoverTimerStop: true,
+    });
+  nombrecomercial: any;
 
   constructor(
     private router: Router,
@@ -202,6 +219,12 @@ export class NuevoProspectoComponent implements OnInit {
     this.formContactoCorreo = new FormGroup({
       Email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(100)])
     });
+
+    this.formCliente = new FormGroup({
+      RazonSocial: new FormControl('',[Validators.required, Validators.maxLength(100)]),
+      RFC: new FormControl('', [Validators.required, Validators.maxLength(13), Validators.minLength(12)]),
+      ValidarRFC: new FormControl('', [Validators.required, Validators.maxLength(13), Validators.minLength(12)])
+    });
     // #endregion
   }
 
@@ -278,7 +301,13 @@ export class NuevoProspectoComponent implements OnInit {
       Email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]]
     });
 
+    this.formCliente = this.fb.group({
+      RazonSocial: ['', [Validators.required, Validators.maxLength(100)]],
+      RFC: ['', [Validators.required, Validators.maxLength(13), Validators.minLength(12)]],
+      ValidarRFC:  ['', [Validators.required, Validators.maxLength(13), Validators.minLength(12)]]
+    }, { validator: RFCValidator.MachRFC });
     // #endregion
+
   }
 
   //#region Servicios GET
@@ -491,7 +520,7 @@ export class NuevoProspectoComponent implements OnInit {
         }
       });
       this.auxColonia = this.colonias.filter(x => {
-        if(x.id == this.formDirecciones.get('Colonias').value){
+        if(x.id === this.formDirecciones.get('Colonias').value){
           return x.colonia;
         }
       });
@@ -608,21 +637,21 @@ export class NuevoProspectoComponent implements OnInit {
   }
 
   DtDireccion() {
-    var idDireccion = this.DireccionesNew[this.indexDireccion]['idAux'];
+    const idDireccion = this.DireccionesNew[this.indexDireccion]['idAux'];
 
-    if (this.DireccionesNew[this.indexDireccion]['esPrincipal'] == true) {
+    if (this.DireccionesNew[this.indexDireccion]['esPrincipal'] === true) {
       this.Principal = false;
     }
     this.DireccionesNew.splice(this.indexDireccion, 1);
     if (this.CorreosNew.length > 0) {
-      var EmailIndexDelete = this.CorreosNew.findIndex(x => x.idDireccion == idDireccion)
+      const EmailIndexDelete = this.CorreosNew.findIndex(x => x.idDireccion === idDireccion);
       this.CorreosNew[EmailIndexDelete]['calle'] = 'Sin Registro';
       this.CorreosNew[EmailIndexDelete]['idDireccion'] = 0;
       this.onChangeTableC(this.config);
     }
     if (this.TelefonosNew.length > 0) {
-      var TelefonoIndexDelete = this.TelefonosNew.findIndex(x => x.idDireccion == idDireccion)
-      if (this.TelefonosNew[TelefonoIndexDelete]['esPrincipal'] == true) {
+      const TelefonoIndexDelete = this.TelefonosNew.findIndex(x => x.idDireccion === idDireccion);
+      if (this.TelefonosNew[TelefonoIndexDelete]['esPrincipal'] === true) {
         this.PrincipalT = false;
       }
       this.TelefonosNew[TelefonoIndexDelete]['calle'] = 'Sin Registro';
@@ -630,7 +659,7 @@ export class NuevoProspectoComponent implements OnInit {
       this.onChangeTableC(this.config);
     }
     if (this.ContactosNew.length > 0) {
-      var ContactoIndexDelete = this.ContactosNew.findIndex(x => x.idDireccion == idDireccion)
+      const ContactoIndexDelete = this.ContactosNew.findIndex(x => x.idDireccion === idDireccion);
       this.ContactosNew[ContactoIndexDelete]['calle'] = 'Sin Registro';
       this.ContactosNew[ContactoIndexDelete]['idDireccion'] = 0;
       this.onChangeTableC(this.config);
@@ -641,9 +670,9 @@ export class NuevoProspectoComponent implements OnInit {
 
   //#region FUNCIONES PARA TELEFONOS
   AddTelefono() {
-    let idDireccion = this.formTelefonos.get('TelDireccion').value;
-    let idxDireccion = this.DireccionesNew.findIndex(x => x.idAux == idDireccion)
-    let tipoTelefonoId = this.formTelefonos.get('TipoTelefono').value;
+    const idDireccion = this.formTelefonos.get('TelDireccion').value;
+    const idxDireccion = this.DireccionesNew.findIndex(x => x.idAux === idDireccion);
+    const tipoTelefonoId = this.formTelefonos.get('TipoTelefono').value;
     this.auxTipoTelefono = this.tipoTelefonos.filter(x => {
       if (x.id == tipoTelefonoId) {
         return x.tipo
@@ -665,7 +694,7 @@ export class NuevoProspectoComponent implements OnInit {
       activo: this.formTelefonos.get('Activo').value,
       esPrincipal: this.formTelefonos.get('Principal').value,
       usuarioAlta: this.Usuario,
-    }
+    };
     if (data.esPrincipal) {
       this.PrincipalT = data.esPrincipal;
     }
@@ -1823,20 +1852,61 @@ export class NuevoProspectoComponent implements OnInit {
       DireccionContacto: DireccionContacto
     };
 
+    this.nombrecomercial = prospecto.NombreComercial;
     const val = this.DireccionesNew.filter(x => x.activo).length;
 
     if (val > 0 ) {
     this._ClienteService.addProspecto(prospecto).subscribe(element => {
-      if (element === 202) {
-        let msg = 'Se a Registrado Correctamente el Prospecto' + prospecto['NombreComercial'];
-        this.popToast('success', 'Prospectos', msg);
-        setTimeout(() => {
-          this.loading = false;
-          this.router.navigate(['/ventas/returnDir', this.ruta]);
-        }, 2000);
+      if (element !== 304) {
+        this.clienteId = element;
+        const swalWithBootstrapButtons = swal.mixin({
+          customClass: {
+            confirmButton: 'btn btn-success ml-2',
+            cancelButton: 'btn btn-danger'
+          },
+          buttonsStyling: false
+        });
+
+        swalWithBootstrapButtons.fire({
+          title: '¿Deseas volverlo cliente?',
+          text: 'Se registró correctamente el prospecto ' + prospecto['NombreComercial'] + '. ¡Ya puedes volverlo cliente.!',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: '¡Si, volverlo cliente!',
+          cancelButtonText: '¡No, Salir!',
+          reverseButtons: true
+        }).then((result) => {
+          if (result.value) {
+              this.ShownModal.show();
+              // } else {
+              //   swalWithBootstrapButtons.fire(
+              //     'Ocurrió un error',
+              //     'Para volver cliente al prospecto ' + prospecto['NombreComercial'] + 'lo podrá hacer en la sección de prospectos',
+              //     'error'
+              //   );
+              //   this.router.navigate(['/ventas/directorio', 2]);
+              // }
+          } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === swal.DismissReason.cancel
+          ) {
+            swalWithBootstrapButtons.fire(
+              'Cancelado',
+              'Para volver cliente al prospecto ' + prospecto['NombreComercial'] + ' lo podrá hacer en la sección de prospectos',
+              'error'
+            );
+            this.router.navigate(['/ventas/directorio'], {queryParams: {ruta: 2}});
+          }
+        });
+        // let msg = 'Se a Registrado Correctamente el Prospecto' + prospecto['NombreComercial'];
+        // this.popToast('success', 'Prospectos', msg);
+        // setTimeout(() => {
+        //   this.loading = false;
+        //   this.router.navigate(['/ventas/directorio', this.ruta]);
+        // }, 2000);
 
       } else {
-        let msg = 'Error al intentar registrar Correctamente el Prospecto' + prospecto['Nombre Comercial'];
+        let msg = 'Error al intentar registrar Correctamente el Prospecto ' + prospecto['Nombre Comercial'];
         this.popToast('error', 'Prospectos', msg);
         this.loading = false;
       }
@@ -1852,18 +1922,44 @@ export class NuevoProspectoComponent implements OnInit {
     }
   }
 
+  createCliente() {
+    const cliente = {
+      Id: this.clienteId,
+      RazonSocial: this.formCliente.get('RazonSocial').value,
+      RFC: this.formCliente.get('RFC').value,
+      Usuario: this.Usuario
+    }
+    this._ClienteService.hacerCliente(cliente).subscribe(result => {
+      if (result === 200) {
+        swal.fire({
+          position: 'top-end',
+          type: 'success',
+          title: 'Clientes',
+          text: 'El prospecto se pasó con éxito a clientes, ir a la sección de clientes para visualizarlo.',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        this.ShownModal.hide();
+        const msg = 'El prospecto se pasó con éxito a clientes, ir a la sección de clientes para visualizarlo.';
+        this.popToast('success', 'Prospecto', msg);
+        this.router.navigate(['/ventas/directorio'], {queryParams: {ruta: 1}});
+      } else {
+        swal.fire({
+          type: 'error',
+          title: '¡Oops...!',
+          text: 'Ocurrió un error al intentar pasar el prospecto a cliente. Se redigirá a la seccion prospectos para visulizar'
+        });
+        this.loading = false;
+        this.ShownModal.hide();
+        this.router.navigate(['/ventas/directorio'], {queryParams: {ruta: 2}});
 
-  //#region  CREACION DE MENSAJES
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    limit: 7, tapToDismiss: false,
-    showCloseButton: true,
-    mouseoverTimerStop: true,
-  });
+      }
+    })
+  }
+
+
   popToast(type, title, body) {
-    var toast: Toast = {
+    const toast: Toast = {
       type: type,
       title: title,
       timeout: 5000,

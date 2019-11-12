@@ -21,7 +21,7 @@ privilegios = [];
 alert = '';
 listAux = [];
 children = [];
-  constructor(private service: AdminServiceService ,public fb: FormBuilder) {
+  constructor(private service: AdminServiceService , public fb: FormBuilder) {
 
    }
 
@@ -29,23 +29,20 @@ children = [];
 
     node[title.toLowerCase()] = $event.checked;
 
-    if(this.rol > 0)
-    {
+    if (this.rol > 0) {
       node.rolId = this.rol;
     }
 
     if (this.privilegios.length > 0) {
-      let idx = this.privilegios.findIndex(x => {
-        return x.estructuraId == node.estructuraId
-      })
+      const idx = this.privilegios.findIndex(x => {
+        return x.estructuraId === node.estructuraId;
+      });
       if (idx === -1) {
         this.privilegios.push(node);
-      }
-      else {
+      } else {
         this.privilegios[idx][title.toLowerCase()] = $event.checked;
       }
-    }
-    else {
+    } else {
       this.privilegios.push(node);
     }
 
@@ -60,13 +57,13 @@ children = [];
     }
   }
 
-  //de arbol la convierto en lista solo pra visualizar como grid
+  // de arbol la convierto en lista solo pra visualizar como grid
   CrearEstructura(node) {
       this.listAux.push(node);
 
      if (node.children.length > 0) {
         node.children.forEach(element => {
-          this.CrearEstructura(element)
+          this.CrearEstructura(element);
       });
      }
   }
@@ -76,16 +73,14 @@ children = [];
 
      if (node.children.length > 0) {
        node.children.forEach(element => {
-         this.ChangeCollapsed(element)
+         this.ChangeCollapsed(element);
        });
      }
 
    }
 
-  GetNodes( node, i)
-  {
-    if(node.children)
-    {
+  GetNodes( node, i) {
+    if ( node.children) {
       node.children.forEach(element => {
         this.ChangeCollapsed(element);
       });

@@ -41,6 +41,7 @@ export class InfoCandidatoService {
   private UrlLiberarCandidato = ApiConection.ServiceUrl + ApiConection.setLiberarCandidato;
   private UrlGetCandidatosByVacante = ApiConection.ServiceUrl + ApiConection.GetCandidatosByVacante;
   private UrlUpdateCandidatoMasivo = ApiConection.ServiceUrl + ApiConection.UpdateCandidatoMasivo;
+  private UrlEmailPeticionLiberar = ApiConection.ServiceUrl + ApiConection.EmailPeticionLiberar;
 
   constructor(private _httpClient: HttpClient,) { }
 
@@ -73,5 +74,9 @@ export class InfoCandidatoService {
 
   UpdateCandidatoMasivo(data) {
     return this._httpClient.post(this.UrlUpdateCandidatoMasivo, data, this.httpOptions2 );
+  }
+
+  EmailPeticionLiberar(data) {
+    return this._httpClient.post(this.UrlEmailPeticionLiberar, data, this.httpOptions2)
   }
 }

@@ -15,7 +15,6 @@ const swal = require('sweetalert');
   providers: [AdminServiceService, ComentariosService, RequisicionesService]
 })
 export class DlgTransferComponent implements OnInit {
-  
   disabled = false;
   compact = false;
   invertX = false;
@@ -32,12 +31,12 @@ dataSource = [];
 
   rowAux;
   coordId;
-  coordNom = "";
-  titulo = "";
+  coordNom = '';
+  titulo = '';
   usuario = 0;
-  verRecl: boolean = false;
-  loading: boolean = false;
-  public comentario: string = "";
+  verRecl = false;
+  loading = false;
+  public comentario = '';
   dataRowIndex: any;
   dataRowIndex2: any;
   rowAux2: any;
@@ -56,19 +55,16 @@ dataSource = [];
   ngOnInit() {
    this.GetCoordinadores();
   }
-  setLista2()
-  {
-   this._sevice.GetByUsuario("Ejv-Recl").subscribe(result => {
+  setLista2() {
+   this._sevice.GetByUsuario('Ejv-Recl').subscribe(result => {
         this.listaAsignar2 = result;
         this.dataSource2 = result;
 
       });
   }
 
-  GetReclutadores($event)
-  {
-    if($event.checked)
-    {
+  GetReclutadores($event) {
+    if($event.checked) {
       this._requiService.GetAsignados(this.data.id).subscribe(result => {
         this.listaAsignar = result;
         this.dataSource1 = result;
@@ -77,42 +73,30 @@ dataSource = [];
         this.verRecl = true;
       this.usuario = this.data.usuario;
       this.data.usuario = 11;
-      this.titulo = "Reclutador";
+      this.titulo = 'Reclutador';
         // this.setLista2();
       });
-    }
-    else
-    {
+    } else {
       this.verRecl = false;
       this.data.usuario = this.usuario;
       this.asig = [];
       this.GetCoordinadores();
     }
   }
-  GetCoordinadores()
-  {
+  GetCoordinadores() {
     this._sevice.GetByUsuario(this.data.depto).subscribe(data => {
       this.coord = data;
       this.dataSource = data;
-      if(this.data.usuario == 4)
-      {
-        this.titulo = "Coordinador";
-      }
-      else if(this.data.usuario == 5)
-      {
-        this.titulo = "Lider";
-      }
-      else if(this.data.usuario == 10)
-      {
-        this.titulo = "Ejecutivo de cuenta";
-      }
-      else if(this.data.usuario == 11)
-      {
-        this.titulo = "Reclutador";
-      }
-      else
-      {
-        this.titulo = "Ejecutivo";
+      if(this.data.usuario === 4) {
+        this.titulo = 'Coordinador';
+      } else if (this.data.usuario === 5) {
+        this.titulo = 'Lider';
+      } else if (this.data.usuario === 10) {
+        this.titulo = 'Ejecutivo de cuenta';
+      } else if (this.data.usuario === 11) {
+        this.titulo = 'Reclutador';
+      } else {
+        this.titulo = 'Ejecutivo';
       }
     });
   }
@@ -177,20 +161,15 @@ dataSource = [];
       }
   }
 
-  Seleccionar(row, rowIndex)
-  {
-    if(this.dataRowIndex != rowIndex)
-    {
-      if(this.rowAux)
-      {
+  Seleccionar(row, rowIndex) {
+    if(this.dataRowIndex !== rowIndex) {
+      if (this.rowAux) {
         this.rowAux.selected = false;
       }
       this.dataRowIndex = rowIndex;
       this.rowAux = row;
       row.selected = true;
-    }
-    else
-    {
+    } else {
       this.rowAux = row;
       this.dataRowIndex = rowIndex;
       row.selected = true; //para poner el background cuando seleccione
@@ -228,14 +207,14 @@ dataSource = [];
         Tipo: tipo
       }
       swal({
-        title: "¿ESTÁS SEGURO?",
-        text: "¡Se asignará la vacante con folio " + this.data.folio + "!",
-        type: "warning",
+        title: '¿ESTÁS SEGURO?',
+        text: '¡Se asignará la vacante con folio ' + this.data.folio + '!',
+        type: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#ec2121",
-        confirmButtonText: "Aceptar",
-        cancelButtonColor: "#ec2121",
-        cancelButtonText: "Cancelar",
+        confirmButtonColor: '#ec2121',
+        confirmButtonText: 'Aceptar',
+        cancelButtonColor: '#ec2121',
+        cancelButtonText: 'Cancelar',
         closeOnConfirm: true,
         closeOnCancel: true
       }, (isConfirm) => {
@@ -250,7 +229,7 @@ dataSource = [];
               this.rowAux.selected = false;
               this.loading = false;
 
-              swal("TRANSFERIR", '¡La asignación se realizó con éxito!', 'success' );
+              swal('TRANSFERIR', '¡La asignación se realizó con éxito!', 'success' );
               this.dialog.close(true);
 
             }
@@ -264,7 +243,7 @@ dataSource = [];
 
         }
         else {
-          swal("Cancelado", "No se realizó ningún cambio", "error");
+          swal('Cancelado', 'No se realizó ningún cambio', 'error');
         }
       });
 
@@ -279,7 +258,7 @@ dataSource = [];
     let search = data.target.value;
     let tempArray: Array<any> = [];
 
-    let colFiltar: Array<any> = [{ title: "nombre" }];
+    let colFiltar: Array<any> = [{ title: 'nombre' }];
 
     aux.forEach(function (item) {
       let flag = false;

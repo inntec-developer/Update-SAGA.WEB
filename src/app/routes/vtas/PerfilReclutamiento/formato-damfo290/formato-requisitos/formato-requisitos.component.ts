@@ -18,6 +18,7 @@ import { SettingsService } from '../../../../../core/settings/settings.service';
 export class FormatoRequisitosComponent implements OnInit, OnChanges {
   @ViewChild('AptitudtInput') AptitudtInput: ElementRef;
   @Input() IdFormato: any;
+  @Input() tipoReclutamiento: any;
   EditPerfil = false;
   isContratoPrueba = false;
   public formEncabezado: FormGroup;
@@ -111,7 +112,7 @@ export class FormatoRequisitosComponent implements OnInit, OnChanges {
       this.EditPerfil = true;
       this._servicePerfilR.getInfoPerfil(this.IdFormato).subscribe(element => {
 
-        this.Escolaridades = element['escolaridades'];
+       this.Escolaridades = element['escolaridades'];
 
         const aptitudes = [];
         element['aptitudes'].forEach(x => {

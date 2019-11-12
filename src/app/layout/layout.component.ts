@@ -1,8 +1,10 @@
+import { PopNotificacionesComponent } from './../components/pop-notificaciones/pop-notificaciones.component';
 import { Component, OnInit } from '@angular/core';
-
+import { Toast, ToasterConfig, ToasterService, BodyOutputType } from 'angular2-toaster';
 import { ApiConection } from '../service/api-conection.service';
 import { SettingsService } from '../core/settings/settings.service';
-
+import { Observable, Subscription } from 'rxjs';
+import { ComponentsService } from '../service';
 declare var $: any;
 
 const swal = require('sweetalert');
@@ -10,7 +12,8 @@ const swal = require('sweetalert');
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss']
+  styleUrls: ['./layout.component.scss'],
+  providers: [ComponentsService, PopNotificacionesComponent]
 })
 export class LayoutComponent implements OnInit {
 
@@ -18,11 +21,38 @@ export class LayoutComponent implements OnInit {
   private mouseStop = null;
   public lock: boolean;
   public print: boolean;
+  private subscription: Subscription;
+  idToast: string;
 
-  constructor(private settings: SettingsService) { }
+  popToast() {
+    const toast: Toast = {
+      type: 'warning',
+      title: 'Notificaciones',
+      timeout: 15000,
+      body: PopNotificacionesComponent,
+      bodyOutputType: BodyOutputType.Component
+    };
+    this.idToast = toast.toastId;
+    this.toasterService.pop(toast);
+  }
+
+  constructor(
+    private settings: SettingsService,
+    private toasterService: ToasterService,
+    public _service: ComponentsService,
+    private pop: PopNotificacionesComponent) { }
 
   ngOnInit() {
     this.print = this.settings.actionPrint;
+    const timer = Observable.timer(1000, 60000);
+    this.subscription = timer.subscribe(x => {
+      this.toasterService.clear(this.idToast);
+      this._service.CheckAlertas(this.settings.user['id']).subscribe(elemnt => {
+        if (elemnt > 0 && elemnt !== 404) {
+          this.popToast();
+        }
+      });
+    });
   }
 
   Sesion() {

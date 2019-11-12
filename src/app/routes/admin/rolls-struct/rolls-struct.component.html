@@ -25,20 +25,21 @@
         <div *ngIf="nuevoRol" class="input-group mb-3 select">
             <input type="text" class="form-control" placeholder="Nombre" aria-label="" aria-describedby="inputGroup-sizing-sm" [(ngModel)]="nomRol">
             <div class="input-group-prepend">
-                <button class="btn btn-secondary mat-elevation-z8" (click)="GetTreeRoles();nuevoRol=false;" type="button"> <span aria-hidden="true">&times;</span></button>
+                <button class="btn btn-xs btn-danger" (click)="GetTreeRoles();nuevoRol=false;" type="button"> <span aria-hidden="true">&times;</span></button>
             </div>
-            <btn-check id='create' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="GuardarCambios()"  container="body" placement="bottom" tooltip="Guardar Cambios"></btn-check>
+            <button id='create' class="btn btn-xs btn-success ml-2 mat-elevation-z8" chkPrivilegiosButtons (click)="GuardarCambios()"  container="body" placement="bottom" tooltip="Guardar Cambios"><i class="fa fa-check" aria-hidden="true"></i></button>
         </div>
+        
       </div>
       <div *ngIf="!nuevoRol" class="col-md-4" >
-        <btn-view id='read' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="staticModal.show();GetEntidades(id)" data-toggle="modal" data-target="#staticModal"  container="body" placement="bottom" tooltip="Ver integrantes del rol"></btn-view>
+        <button id='read' class="btn btn-xs btn-info ml-2 mat-elevation-z8" chkPrivilegiosButtons (click)="staticModal.show();GetEntidades(id)" data-toggle="modal" data-target="#staticModal"  container="body" placement="bottom" tooltip="Ver integrantes del rol"><i class="fa fa-eye" aria-hidden="true"></i></button>
 
-        <btn-add id='create' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="nuevoRol=true;GetTreeRoles()" data-toggle="modal" data-target="#modalNodes"
-           container="body" placement="bottom" tooltip="Agregar Rol"></btn-add>
+        <button id='create' class="btn btn-xs btn-success ml-2 mat-elevation-z8" chkPrivilegiosButtons (click)="nuevoRol=true;GetTreeRoles()" data-toggle="modal" data-target="#modalNodes"
+           container="body" placement="bottom" tooltip="Agregar Rol"><i class="fa fa-plus" aria-hidden="true"></i></button>
 
-        <btn-check id='update' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="GuardarCambios()"  container="body" placement="bottom" tooltip="Guardar Cambios"></btn-check>
+        <button id='update' class="btn btn-xs btn-warning ml-2 mat-elevation-z8" chkPrivilegiosButtons (click)="GuardarCambios()"  container="body" placement="bottom" tooltip="Guardar Cambios"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
 
-        <btn-delete id='delete' class="marginButtons" [xs]="true" chkPrivilegiosButtons (click)="DeleteRoles(id)"  container="body" placement="bottom" tooltip="Eliminar Rol Seleccionado"></btn-delete>
+        <button id='delete' class="btn btn-xs btn-danger ml-2 mat-elevation-z8" chkPrivilegiosButtons (click)="DeleteRoles(id)"  container="body" placement="bottom" tooltip="Eliminar Rol Seleccionado"><i class="fa fa-trash" aria-hidden="true"></i></button>
 
       </div>
     </div>
@@ -56,7 +57,7 @@
           <div *ngIf="verMsj">
               <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
             </div>
-        <btn-check id='create' [xs]="true" chkPrivilegiosButtons class="btn-xs float-right marginButtonsFinal" (click)="GuardarCambios()"  container="body" placement="bottom" tooltip="Guardar Cambios"></btn-check>
+        <button id='create' chkPrivilegiosButtons class="btn btn-xs btn-success float-right marginButtonsFinal mat-elevation-z8" (click)="GuardarCambios()"  container="body" placement="bottom" tooltip="Guardar Cambios"><i class="fa fa-check" aria-hidden="true"></i></button>
           </div>
         </div>
         <br/>
@@ -126,52 +127,3 @@
      </div>
 
 
-
-
-
-
-
-     <!-- <table #tbl class="table table-responsive table-bordered table-hover">
-        <thead><tr><td *ngFor="let c of columns" class="text-center">{{c.title}}</td></tr></thead>
-          <tbody>
-            <tr *ngFor="let r of filteredData; let rowIndex = index">
-
-              <td class="text-center">
-                  {{r['rol']}} -->
-                <!-- <span  container="body" placement="bottom" tooltip="Double click to edit" (dblclick)="editing[rowIndex + '-' + 'rol'] = true" *ngIf="!editing[rowIndex + '-' + 'rol']">
-                  {{r['rol']}}
-                </span>
-                <input autofocus (blur)="updateValue($event, rol, rowIndex)" *ngIf="editing[rowIndex + '-' + 'rol']" type="text" [value] = "r['rol']" />  -->
-              <!-- </td>
-              <td class="text-center">
-                  {{r['nombre']}} -->
-                  <!-- <span  container="body" placement="bottom" tooltip="Double click to edit" (dblclick)="editing[rowIndex + '-' + 'nombre' ] = true" *ngIf="!editing[rowIndex + '-' + 'nombre']">
-                    {{r['nombre']}}
-                  </span>
-                  <input autofocus (blur)="updateValue($event, 'nombre', rowIndex)" *ngIf="editing[rowIndex + '-' + 'nombre']" type="text" [value] = "r['nombre']" />  -->
-
-              <!--   </td><td class="center">
-                <mat-checkbox #crear id="{{ 'C-' + rowIndex}}" (change)="r['create'] = crear.checked" class="checkbox" [checked]="r.create" [disabled] = "hiddenSelect"></mat-checkbox><span></span>
-              </td>
-              <td>
-                <mat-checkbox #leer id="{{ 'R-' + rowIndex}}" (change)="r['read'] = leer.checked" class=" center-block checkbox" [checked]="r.read" [disabled] = "hiddenSelect"></mat-checkbox>
-                <span></span>
-              </td>
-              <td class="center">
-                <mat-checkbox #modificar id="{{ 'U-' + rowIndex}}" (change)="r['update'] = modificar.checked" class="checkbox" [checked]="r.update" [disabled] = "hiddenSelect"></mat-checkbox>
-                <span></span>
-              </td>
-              <td class="center">
-                <mat-checkbox #borrar id="{{ 'D-' + rowIndex}}" (change)="r['delete'] = borrar.checked" class="checkbox" [checked]="r.delete" [disabled] = "hiddenSelect"></mat-checkbox>
-                <span></span>
-              </td>
-              <td class="center">
-                <mat-checkbox #especial (change)="r['especial'] = especial.checked" class="checkbox" [checked]="r.especial" [disabled] = "hiddenSelect"></mat-checkbox>
-                <span></span>
-              </td>
-              <td *ngIf="!hiddenSelect" class="center-block" >
-                <btn-check id='update' chkPrivilegiosButtons  container="body" placement="bottom" tooltip="Guardar Cambios" (click)="GuardarCambios(r)"></btn-check>
-              </td>
-          </tr>
-        </tbody>
-    </table> -->

@@ -1,0 +1,132 @@
+
+<div class="content-heading">
+    <div>
+      <span class="text-sm d-none d-sm-block"><a class="mr-1" [routerLink]="['/webcampo/inicio']"><i class="fa fa-home text-success mr-2" aria-hidden="true"></i>RECLUTADORES</a></span>
+    </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+      <li class="breadcrumb-item">
+        <a class="text-info text-bold" [routerLink]="['/webcampo/reclutadorvacantes']" [queryParams]="{reclutador: reclutador, reclutadorId: reclutadorId}" [skipLocationChange]=true>VACANTES RECLUTADOR</a>
+      </li>
+      <li class="breadcrumb-item active text-muted">CANDIDATOS</li>
+    </ol>
+  </div><div class="card">
+
+          <h5 class="card-header bg-info">PERFIL: {{vBtra | uppercase}} / RECLUTADOR: {{reclutador | uppercase}}</h5>
+          <!-- <button class="btn btn-xs btn-warning float-right mat-elevation-z8 mt-1" (click)="Regresar()" placement="bottom" tooltip="Regresar a Reclutadores"><i class="fa fa-reply" aria-hidden="true"></i></button> -->
+  
+    <div class="card-body">
+        <!-- <div class="row p-1 bg-info mb-3">
+            <div class="col clearfix">
+                <h5 class="float-left mt-2">PERFIL: {{vBtra | uppercase}} / RECLUTADOR: {{reclutador | uppercase}}</h5>
+                
+            </div>
+          </div> -->
+<div class="row">
+  <div class="col">
+      <button [disabled]="data.contratados === data.vacantes" [ngClass]="data.contratados === data.vacantes ? 'disabled' : 'btn-success'" class="mr-2 float-left btn btn-xs mat-elevation-z8"
+      (click)="openDialogApartar(rowAux)" container="body" placement="bottom" tooltip="Apartar candidato">
+      <i class="fa fa-thumbs-o-up"></i>
+    </button>
+      <button [ngClass]="rowAux.length == 0 || rowAux.estatusId == 24 ? 'btn btn-xs disabled' : 'btn btn-xs btn-danger'" class="mr-2 float-left mat-elevation-z8" [disabled]="rowAux.length == 0 || rowAux.estatusId == 24"
+      (click)="openDialogLiberar(rowAux)" container="body" placement="bottom" tooltip="Liberar candidato">
+      <i class="fa fa-thumbs-o-down"></i>
+    </button>
+    <button [ngClass]="rowAux.length == 0 || rowAux.estatusId == 24 ? 'btn btn-xs disabled' : 'btn btn-xs btn-warning'" class="mr-2 float-left mat-elevation-z8" [disabled]="rowAux.length == 0 || rowAux.estatusId == 24"
+    (click)="editar()" container="body" placement="bottom" tooltip="Editar">
+    <i class="fa fa-pencil"></i>
+  </button>
+        <button class="btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="refreshTable()"
+        container="body" placement="bottom" tooltip="Actualizar">
+        <i class="icon-refresh"></i>
+      </button>
+        <button class="btn btn-xs float-right mr-2 mat-elevation-z8" (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
+        container="body" [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'disabled':'btn-primary'">
+        <i class="fa fa-eraser"></i>
+      </button>
+      <span class="text-muted font-weight-bold float-right text-uppercase mr-3 ">Total de Candidatos <span
+        class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span></span>
+          <span class="text-muted font-weight-bold float-right text-uppercase mr-3 ">Candidatos cubiertos<span
+            class="badge badge-pill badge-success ml-1">{{data.contratados}}</span></span>
+            <span class="text-muted font-weight-bold float-right text-uppercase mr-3 ">Total de vacantes<span
+              class="badge badge-pill badge-success ml-1">{{data.vacantes}}</span></span>
+      </div>
+    </div>
+        <div class="d-flex justify-content-start mt-2">
+    <i class="fa fa-exclamation-triangle text-warning mr-1" aria-hidden="true"></i><small class="text-warning">Solo puede editar candidatos apartados</small>
+  </div>
+        <table *ngIf="dataSource.length > 0 else NotCandidatos" id="resultDataTable" ngClass="{{config.className || ''}}" class="table">
+          <thead>
+            <tr>
+              <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+                <small>{{column.title | uppercase}}</small>
+              </th>
+  
+            </tr>
+            <tr>
+              <td *ngFor="let column of columns">
+                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                  class="form-control form-control-sm" id="{{column.name}}_1">
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+              <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+              [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+              <div>
+            <tr *ngFor="let row of rows; let rowIndex = index;" [class.unselectable]="row.estatusId == 24" (click)="onCellClick(row, rowIndex)" [class.bg-primary]="row.selected" [class.bg-warning]="row.estatusId == 24">
+              <td class="text-center">
+                <span *ngIf="row.estatusId != 12 && row.estatusId != 17 && row.estatusId != 27 else sinAsignar">{{row.horario}}</span>
+                <ng-template #sinAsignar>
+                  <span>SIN ASIGNAR</span>
+                </ng-template>
+              </td>
+              <td class="text-center"> {{row.nombre | uppercase}}</td>
+              <td class="text-center"> {{row.localidad | uppercase}} </td>
+              <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
+              <td class="text-center"> {{row.genero | uppercase }}</td>
+              <td class="text-center"> {{row.curp | uppercase }}</td>
+              <td class="text-center"> {{row.telefono | uppercase }}</td>
+              <td class="text-center"> {{row.email | uppercase }}</td>
+              <td class="text-center"> {{row.reclutador | uppercase }}</td>
+            </tr>
+            </div>
+            </ng-scrollbar>
+          </tbody>
+        </table>
+    </div>
+    <hr>
+    <div class="float-right">
+      <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="pageInfo" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+        [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+      </pagination>
+    </div>
+  
+  </div>
+  <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
+  <!--mensaje cuando esta vacio la tabla-->
+  <ng-template #NotCandidatos>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <alert type="info">
+                <strong>Oops!</strong> A&uacute;n no cuentas con candidatos en proceso / apartados.
+              </alert>
+        </div>
+      </div>
+    </ng-template>
+ <!-- Modal para dlgLiberar  -->
+<div *ngIf="dlgLiberar" [config]="{show: true, ignoreBackdropClick: true, keyboard: false}" bsModal #modallib="bs-modal"
+class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+<div class="modal-dialog">
+  <div class="modal-content">
+  
+    <div class="modal-body">
+      <app-dialog-liberar-candidato [objLiberar]="objLiberar" (close)="onClose($event)">
+      </app-dialog-liberar-candidato>
+    </div>
+    <!-- <div class="modal-footer">
+      <button type="button" class="md-1 btn btn-outline-success" (click)="modallib.hide()">Cerrar</button>
+    </div> -->
+  </div>
+</div>
+</div>

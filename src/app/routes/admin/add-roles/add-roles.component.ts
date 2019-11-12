@@ -35,8 +35,7 @@ export class AddRolesComponent implements OnInit {
   collapsed = false;
   constructor(private service: AdminServiceService) { }
 
-  GuardarCambios()
-  {
+  GuardarCambios() {
     var privilegios = this.grid.privilegios;
     if (this.grid.privilegios.length > 0) {
       if(this.nomRol != '' && this.nuevoRol == true)

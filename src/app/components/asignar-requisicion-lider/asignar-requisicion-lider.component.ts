@@ -20,17 +20,17 @@ export class AsignarRequisicionLiderComponent implements OnInit {
 
   public items: any[] = [];
   public value: any;
-  public asignacionCtrl : any[];
-  public allowClear : boolean = true;
+  public asignacionCtrl: any[];
+  public allowClear = true;
 
   constructor(
-    private serviceComponents : ComponentsService
+    private serviceComponents: ComponentsService
   ) {
     this.getGrpUserL();
     this.AsignacionForm = new FormGroup({
       selectControl: new FormControl({value: '', disable: false})
     });
-    if(! this.Asignados){
+    if (! this.Asignados){
       this.AsignacionForm.patchValue({
         selectControl: this.Asignados
       });
@@ -54,7 +54,7 @@ export class AsignarRequisicionLiderComponent implements OnInit {
 
   }
 
-  getGrpUserL(){
+  getGrpUserL() {
     this.serviceComponents.getUserGroupL()
     .subscribe(data =>{
       this.items = data;

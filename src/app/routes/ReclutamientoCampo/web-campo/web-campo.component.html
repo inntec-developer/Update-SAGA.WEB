@@ -1,0 +1,84 @@
+<div class="content-heading">
+    <div>
+      <span class="text-sm d-none d-sm-block"><i class="fa fa-home text-success mr-1" aria-hidden="true"></i>RECLUTAMIENTO DE CAMPO</span>
+    </div>
+  
+  </div>
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-body bg-light border">
+            <h4 class="bg-warning-light p-1"><i class="fa fa-globe mr-1" aria-hidden="true"></i>UNIDADES DE NEGOCIO</h4>
+            <hr>
+            <mat-radio-group aria-label="Select an option" [(ngModel)]="unId" (change)="GetDtosReclutadoresByUnidad()">
+                <mat-radio-button [checked]="true" [value]="0">TODAS</mat-radio-button>
+                <mat-radio-button *ngFor="let u of unidadesnegocios" [value]="u.id">{{u.descripcion}}</mat-radio-button>
+             </mat-radio-group>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 col-md-6">
+        <div class="input-group input-group-sm float-left mt-1 mb-1 with-focus longInput">
+
+          <input (input)="onChangeTable($event)" class="form-control form-control-sm border-right-0 " type="text" placeholder="Filtrar por nombre" />
+          <div class="input-group-append">
+            <span class="input-group-text fa fa-search text-info bg-transparent border-left-0"></span>
+          </div>
+        </div>
+        </div>
+        <div class="col-sm-6 col-md-6">
+        <div class="float-right"><span class="text-muted font-weight-bold float-right text-uppercase float-right mr-4">Total de Registros <span
+          class="badge badge-pill badge-success ml-1">{{totalReclutadores}}</span></span></div>
+      </div>
+    </div>
+    <hr>
+    <ng-container *ngFor="let r of rows">
+    <ng-container *ngIf="r.reclutadores.length > 0">
+      <h5 class="p-1 bg-info-light"><i class="fa fa-building-o mr-2" aria-hidden="true"></i>{{r.oficina | uppercase}}
+      <span class="float-right">TOTAL RECLUTADORES<span class="badge badge-pill badge-success ml-2">{{r.reclutadores.length}}</span></span>  
+      </h5>
+    
+ <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+ [disabled]="disabled">
+ <div style="height: 200px;">
+ <div id="accordion">
+    <div class="card" *ngFor="let row of r.reclutadores; let rowIndex = index">
+      <div class="card-header" [class.bg-info]="row.verRow">
+        <h5>
+            <a (click)="GoVacantes(row)"> <span class="text-muted float-left" placement="bottom" tooltip="click para ver vacantes">
+                <i class="text-info fa fa-user mr-2"></i>{{ row.nombre | uppercase }} 
+                  <span class="badge badge-pill badge-warning ml-1" placement="right" tooltip="total de vacantes">{{row.requis}}</span>
+                </span>
+            </a>
+
+          <!-- <i *ngIf="!row.verRow" class="fa fa-caret-down float-right text-muted" aria-hidden="true"></i>
+          <i *ngIf="row.verRow" class="fa fa-caret-up float-right text-white" aria-hidden="true"></i> -->
+        </h5>
+
+      </div>
+
+      <!-- <div id="tblRequis{{rowIndex}}" class="collapse show">
+       
+      </div> -->
+    </div>
+    </div>
+  </div>
+
+  </ng-scrollbar>
+</ng-container>
+</ng-container>
+  <!-- <br/>
+  <div class="d-flex justify-content-end">
+    <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
+    [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+    (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
+
+      </div> -->
+
+  </div>
+</div>
+

@@ -1,5 +1,5 @@
 import { DirectorioEmpresarialComponent } from './../directorio-empresarial.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { ClientesService } from '../../../../service/clientes/clientes.service';
@@ -18,7 +18,7 @@ export class VerClienteComponent implements OnInit {
   public esCliente: boolean;
   public oneAtATime: boolean;
 
-  //scroll
+  // scroll
   public disabled = false;
   public compact = false;
   public invertX = false;
@@ -34,8 +34,7 @@ export class VerClienteComponent implements OnInit {
     public settings: SettingsService,
     private dir: DirectorioEmpresarialComponent
   ) {
-    this._Route.params.subscribe(params => {
-
+    this._Route.queryParams.subscribe(params => {
       if (params['ClienteId'] != null) {
         this.ClienteId = params['ClienteId'];
         this.ruta = params['ruta'];
@@ -46,23 +45,42 @@ export class VerClienteComponent implements OnInit {
           }
         });
       } else {
-        this._Router.navigate(['/ventas/returnDir', this.ruta]);
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+             'ruta': this.ruta
+          },
+          skipLocationChange: true
+        };
+        this._Router.navigate(['/ventas/directorio'], navigationExtras);
       }
     });
   }
 
   regresar() {
-      this._Router.navigate(['/ventas/returnDir', this.ruta]);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+         'ruta': this.ruta
+      },
+      skipLocationChange: true
+    };
+    this._Router.navigate(['/ventas/directorio'], navigationExtras);
   }
   ngOnInit() {
     this.oneAtATime = false;
   }
 
-  editarCliente(){
-    this._Router.navigate(['/ventas/editarCliente', this.ClienteId], { skipLocationChange: true });
+  editarCliente() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        'ClienteId': this.ClienteId,
+         'ruta': this.ruta
+      },
+      skipLocationChange: true
+    };
+    this._Router.navigate(['/ventas/editarCliente'], navigationExtras);
   }
 
-  print(){
+  print() {
     this.imprimir = true;
     if(!this.settings.layout.isCollapsed){
         this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;

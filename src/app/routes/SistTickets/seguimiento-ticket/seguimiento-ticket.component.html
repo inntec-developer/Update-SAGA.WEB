@@ -122,7 +122,7 @@
 
       </ng-container>
       <div *ngIf="ticket[0].candidato.length == 0">
-        <span>Debe registrar al candidato para seguir con su proceso</span>
+        <span class="text-warning"><i class="fa fa-exclamation-triangle mr-1" aria-hidden="true"></i>Debe registrar al candidato para seguir con su proceso</span>
 
           <div class="d-flex justify-content-center">
             <button class="btn btn-purple btn-registro mat-elevation-z8 mt-3 font-weight-bold" type="button" (click)="registrarUsuario();">REGISTRAR</button>

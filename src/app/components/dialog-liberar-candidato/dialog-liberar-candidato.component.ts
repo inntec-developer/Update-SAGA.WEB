@@ -25,9 +25,7 @@ export class DialogLiberarCandidatoComponent implements OnInit {
   constructor(
     private service: CandidatosService,
     private _serviceCandidato: InfoCandidatoService
-    ) { 
-      
-     }
+    ) {}
 
   ngOnInit() {
     this.liberar.comentario = '';
@@ -43,26 +41,22 @@ export class DialogLiberarCandidatoComponent implements OnInit {
 
   _liberarCandidato() {
       this.loading = true;
-     
-      var data = {
+      const data = {
         RequisicionId: this.objLiberar[0].RequisicionId,
         CandidatoId: this.objLiberar[0].CandidatoId,
         ReclutadorId: this.objLiberar[0].ReclutadorId,
         MotivoId: this.liberar.motivo,
         ProcesoCandidatoId: this.objLiberar[0].ProcesoCandidatoId,
         Comentario: this.liberar.comentario
-      }
+      };
 
       this._serviceCandidato.setLiberarCandidato(data)
         .subscribe(result => {
-   
-            if( result == 200) {
+            if( result === 200) {
               this.loading = false;
 
               this.close.emit(200);
-            }
-            else
-            {
+            } else {
               this.loading = false;
               this.close.emit(404);
             }

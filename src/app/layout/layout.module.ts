@@ -1,3 +1,4 @@
+import { ComponentsModule } from './../components/components.module';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { ModalModule, PopoverModule, TooltipModule } from 'ngx-bootstrap';
 
@@ -23,7 +24,8 @@ registerLocaleData(es);
         PopoverModule.forRoot(),
         TooltipModule.forRoot(),
         ModalModule.forRoot(),
-        ToolsModule
+        ToolsModule,
+        ComponentsModule
     ],
     providers: [
         UserblockService, { provide: LOCALE_ID, useValue: 'es-ES' }

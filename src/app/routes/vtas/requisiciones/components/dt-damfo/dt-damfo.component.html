@@ -4,55 +4,55 @@
       <div class="col-sm-12 col-md-12 clearfix p-2 bg-light">
         <button *ngIf="Perfil290" id="create" chkPrivilegiosButtons class="mr-2 btn btn-xs btn-info mat-elevation-z8"
           container="body" placement="bottom" tooltip="Nuevo DAMFO-290" (click)="crearPerfil290()">
-          <em class="fa fa-plus"></em>
+          <i class="fa fa-plus"></i>
         </button>
         <button id="view" chkPrivilegiosButtons (click)="showDamfo()" class="mr-2 btn btn-xs mat-elevation-z8"
-          [disabled]="!selected" [ngClass]="(!selected) ? 'disabled' : 'btn-warning'" container="body"
+          [disabled]="element.length == 0" [ngClass]="element.length == 0 ? 'disabled' : 'btn-warning'" container="body"
           placement="bottom" tooltip="Visualizar">
-          <em class="fa fa-eye"></em>
+          <i class="fa fa-eye"></i>
         </button>
         <button *ngIf="Perfil290" id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8"
-          [ngClass]="!selected || !isEditable ? 'disabled' : 'btn-primary'" container="body" placement="bottom"
-          [disabled]="!selected || !isEditable"
+          [ngClass]="element.length == 0 || !isEditable ? 'disabled' : 'btn-primary'" container="body" placement="bottom"
+          [disabled]="element.length == 0 || !isEditable"
           tooltip="Editar" (click)="editar290()">
-          <em class="icon-pencil"></em>
+          <i class="icon-pencil"></i>
         </button>
         <button *ngIf="Perfil290" id="create" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8"
-          [ngClass]="!selected || !isEditable ? 'disabled' : 'btn-warning'" container="body" placement="bottom"
-          [disabled]="!selected || !isEditable"
+          [ngClass]="element.length == 0|| !isEditable ? 'disabled' : 'btn-warning'" container="body" placement="bottom"
+          [disabled]="element.length == 0 || !isEditable"
           tooltip="Clonar Formato" (click)="clonarFormato290()">
-          <em class="fa fa-clone"></em>
+          <i class="fa fa-clone"></i>
         </button>
         <button *ngIf="Perfil290" id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8"
-          [ngClass]="!selected || !isEditable ? 'disabled' : 'btn-success'" container="body" placement="bottom"
-          [disabled]="!selected || !isEditable"
+          [ngClass]="element.length == 0 || !isEditable ? 'disabled' : 'btn-success'" container="body" placement="bottom"
+          [disabled]="element.length == 0 || !isEditable"
           tooltip="Anexos" (click)="ShowModal = true;">
-          <em class="fa fa-file-pdf-o"></em>
+          <i class="fa fa-file-pdf-o"></i>
         </button>
         <button *ngIf="Perfil290" id="delete" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8"
-          [ngClass]="!selected || !isEditable ? 'disabled' : 'btn-danger'" container="body" placement="bottom"
-          [disabled]="!selected || !isEditable"
+          [ngClass]="element.length == 0 || !isEditable ? 'disabled' : 'btn-danger'" container="body" placement="bottom"
+          [disabled]="element.length == 0 || !isEditable"
           tooltip="Eliminar" (click)="eliminarFormato290()">
-          <em class="fa fa-trash"></em>
+          <i class="fa fa-trash"></i>
         </button>
         <button *ngIf="!Perfil290" id="view" chkPrivilegiosButtons (click)="openDialog()"
-          class="mr-2 btn btn-xs mat-elevation-z8" [disabled]="!selected"
-          [ngClass]="(!selected) ? 'disabled' : 'btn-success'" container="body" placement="bottom"
+          class="mr-2 btn btn-xs mat-elevation-z8" [disabled]="element.length == 0"
+          [ngClass]="element.length == 0 ? 'disabled' : 'btn-success'" container="body" placement="bottom"
           tooltip="Crear Requisición">
-          <em class="icon-docs"></em>
+          <i class="icon-docs"></i>
         </button>
         <button class="mr-2 btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="refreshTable()"
           container="body" placement="bottom" tooltip="Actualizar">
-          <em class="icon-refresh"></em>
+          <i class="icon-refresh"></i>
         </button>
         <button *ngIf="!Perfil290" container="body" placement="bottom" tooltip="Regresar"
           class="mr-2 btn btn-xs btn-warning float-right mat-elevation-z8" type="button"
           [routerLink]="['/ventas/requisicion']">
-          <em class="icon-action-undo"></em>
+          <i class="icon-action-undo"></i>
         </button>
         <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
           class="mr-2 btn btn-xs btn-info float-right mat-elevation-z8">
-          <em class="fa fa-eraser"></em>
+          <i class="fa fa-eraser"></i>
         </button>
       </div>
       <!-- <ng-template #NewPerfil290>
@@ -103,7 +103,7 @@
                   <td class="text-center">{{row.tipoReclutamiento }}</td>
                   <td class="text-center">{{row.claseReclutamiento}}</td>
                   <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
-                  <td class="text-center">{{row.usuarioAlta}}</td>
+                  <td class="text-center">{{row.usuarioCreacion}}</td>
                 </tr>
               </div>
             </ng-scrollbar>

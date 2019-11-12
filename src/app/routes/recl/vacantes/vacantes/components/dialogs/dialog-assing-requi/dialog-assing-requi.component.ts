@@ -39,8 +39,8 @@ export class DialogAssingRequiComponent implements OnInit {
       Id: 3,
       Ponderacion: 3
     }
-  ]
-  //scroll
+  ];
+  // scroll
   disabled = false;
   compact = false;
   invertX = false;
@@ -84,7 +84,7 @@ export class DialogAssingRequiComponent implements OnInit {
   }
   ngOnInit() {
     this.initForm();
-    this.getInformacion()
+    this.getInformacion();
     this.getAsignacion(this.data.asignados);
   }
 
@@ -144,24 +144,26 @@ export class DialogAssingRequiComponent implements OnInit {
 
   getAsignacion($event: any) {
     this.asignadosRequi = $event;
-    if (this.asignadosRequi.length > 0)
+    if (this.asignadosRequi.length > 0) {
       this.alertAssing = false;
-    else
+    } else {
       this.alertAssing = true;
+    }
   }
-
 
   Save() {
     if (this.formAsignaciones.get('diasEnvio').value > 0 && this.formAsignaciones.get('diasEnvio').value <= 20) {
       this.loading = true;
       this.asignadosRequi.push(this.settings.user['id']);
-      let List = [];
-      for (let a of this.asignadosRequi) {
+      const List = [];
+
+      this.asignadosRequi.forEach(a => {
         List.push({ id: a });
-      }
-      let list = this._eliminarObjetosDuplicados(List, 'id');
-      let asg = [];
-      for (let a of list) {
+      });
+
+      const list = this._eliminarObjetosDuplicados(List, 'id');
+      const asg = [];
+      list.forEach(a => {
         asg.push({
           RequisicionId: this.RequiId,
           GrpUsrId: a['id'],
@@ -170,16 +172,25 @@ export class DialogAssingRequiComponent implements OnInit {
           UsuarioMod: this.settings.user['usuario'],
           fch_Modificacion: new Date()
         });
-      }
+      });
+      // for (let a of list) {
+      //   asg.push({
+      //     RequisicionId: this.RequiId,
+      //     GrpUsrId: a['id'],
+      //     CRUD: '',
+      //     UsuarioAlta: this.settings.user['usuario'],
+      //     UsuarioMod: this.settings.user['usuario'],
+      //     fch_Modificacion: new Date()
+      //   });
+      // }
 
-
-      var Ponderacion = {
+      const Ponderacion = {
         id: this.data['ponderacion'] ? this.data['ponderacion']['id'] : '',
         ponderacion: this.formAsignaciones.get('Ponderacion').value,
         requisicionId: this.RequiId
-      }
+      };
 
-      var assing = {
+      const assing = {
         id: this.RequiId,
         fch_Cumplimiento: this.formAsignaciones.get('fch_Cumplimiento').value,
         diasEnvio: this.formAsignaciones.get('diasEnvio').value,
@@ -187,21 +198,22 @@ export class DialogAssingRequiComponent implements OnInit {
         aprobadorId: this.settings.user['id'],
         asignacionRequi: asg,
         ponderacion: Ponderacion
-      }
+      };
+
       this.asignarRequi = assing;
       this.serviceRequisicion.asignarRequisicion(this.asignarRequi)
         .subscribe(data => {
           this.return = data;
-          if (this.return == 200) {
+          if (this.return === 200) {
             if (this.redesSociales) {
-              var oficio = {
+              const oficio = {
                 Id: this.oficiorequisicionId || '',
                 Oficio: this.formRS.get('Oficio').value,
                 Comentario: this.formRS.get('Comentario').value || '',
                 RequisicionId: this.RequiId
-              }
+              };
               this.serviceRequisicion.SendEmailRedesSociales(oficio).subscribe(result => {
-                if (result != 404) {
+                if (result !== 404) {
                   if (!this.Confidencial) {
                     swal({
                       title: 'Se ha notificado al departamento de medios.',
@@ -216,11 +228,11 @@ export class DialogAssingRequiComponent implements OnInit {
                       window.onkeydown = null;
                       window.onfocus = null;
                       if (isConfirm) {
-                        this._Router.navigate(['/reclutamiento/configuracionVacante/', this.RequiId, this.data.folio, this.data.vBtra], { skipLocationChange: true });
+                        this._Router.navigate(['/reclutamiento/configuracionVacante/',
+                         this.RequiId, this.data.folio, this.data.vBtra], { skipLocationChange: true });
                       }
                     });
-                  }
-                  else{
+                  } else {
                     swal('Medios / Redes sociales', 'Se ha notificado al departamento de medios.', 'success');
                   }
 
@@ -232,11 +244,10 @@ export class DialogAssingRequiComponent implements OnInit {
                   this.loading = false;
                 }
               });
-            }
-            else {
+            } else {
               this.dialogAssing.close(true);
               this.loading = false;
-              if (!this.Confidencial){
+              if (!this.Confidencial) {
                 swal({
                   title: 'Diseñador de Vacante',
                   text: 'Desea diseñar la vacante para su publicación en Bolsa DAMSA?',
@@ -250,17 +261,17 @@ export class DialogAssingRequiComponent implements OnInit {
                   window.onkeydown = null;
                   window.onfocus = null;
                   if (isConfirm) {
-                    this._Router.navigate(['/reclutamiento/configuracionVacante/', this.RequiId, this.data.folio, this.data.vBtra], { skipLocationChange: true });
+                    this._Router.navigate(['/reclutamiento/configuracionVacante/', 
+                    this.RequiId, this.data.folio, this.data.vBtra], { skipLocationChange: true });
                   }
                 });
-              }
-              else{
+              } else {
                 swal('Asignación', 'La asignación se realizó con éxito', 'success');
               }
             }
 
             if (!this.redesSociales && !this.data.confidencial) {
-              if (this.data.aprobadorId == this.settings.user['id']) {
+              if (this.data.aprobadorId === this.settings.user['id']) {
                 swal({
                   title: 'Diseñador de Vacante',
                   text: 'Desea diseñar la vacante para su publicación en Bolsa DAMSA?',
@@ -274,23 +285,23 @@ export class DialogAssingRequiComponent implements OnInit {
                   window.onkeydown = null;
                   window.onfocus = null;
                   if (isConfirm) {
-                    this._Router.navigate(['/reclutamiento/configuracionVacante/', this.RequiId, this.data.folio, this.data.vBtra], { skipLocationChange: true });
+                    this._Router.navigate(['/reclutamiento/configuracionVacante/',
+                    this.RequiId, this.data.folio, this.data.vBtra], { skipLocationChange: true });
                   }
                 });
               }
             }
-          } else if (this.return == 300) {
-            swal('Aprobación / Asignación Requisición', 'Este folio ya fue aprobado por otro usuario, actualice la tabla de Vacantes.', 'info');
+          } else if (this.return === 300) {
+            swal('Aprobación / Asignación Requisición',
+            'Este folio ya fue aprobado por otro usuario, actualice la tabla de Vacantes.', 'info');
             this.loading = false;
             this.dialogAssing.close(true);
-          }
-          else {
+          } else {
             swal('Aprobación / Asignación Requisición', 'Algo Salio mal intentar actualizar la información.', 'error');
             this.loading = false;
           }
         });
-    }
-    else {
+    } else {
     }
   }
   // Funcion para eliminar elementos repetidos de una lista.

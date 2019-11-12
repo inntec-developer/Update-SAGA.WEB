@@ -27,6 +27,7 @@ export class PantallaGGComponent implements OnInit {
   gerente = [];
 
   backgroundColor = [
+    '#33B8FF', '#3361FF', '#E3FF33', '#15C946', '#8172EB', '#FAB637', '#FF0000',
     '#FF8F35',
     '#0F3CFF',
     '#3e95cd',

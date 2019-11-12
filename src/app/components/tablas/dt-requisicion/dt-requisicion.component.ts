@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { DatePipe } from '@angular/common';
-import { DialogActivarRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-activar-requi/dialog-activar-requi.component';
 import { DialogCancelRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-cancel-requi/dialog-cancel-requi.component';
 import { DialogDeleteRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-delete-requi/dialog-delete-requi.component';
 import { DlgCubiertasComponent } from './../../dlg-cubiertas/dlg-cubiertas.component';
@@ -26,7 +25,8 @@ declare var $: any;
   providers: [RequisicionesService, PostulateService, DatePipe]
 })
 
-export class DtRequisicionComponent implements OnInit {
+export class DtRequisicionComponent implements OnInit, AfterViewInit {
+  @Input('folio') folio;
   public reporteCandidatos = false;
 
   /*
@@ -173,12 +173,11 @@ export class DtRequisicionComponent implements OnInit {
 
   }
 
-  // ngAfterViewInit() {
-  //   setTimeout(() => {
-  //     this.onChangeTable(this.config);
-  //   }, 1500);
+  ngAfterViewInit() {
+    // (<HTMLInputElement>document.getElementById('folio')).value = this.folio;
+    // this.onChangeTable(this.config);
 
-  // }
+  }
 
   getRequisiciones() {
     this.service.getRequisiciones(this.settings.user['id']).subscribe(data => {
@@ -209,6 +208,13 @@ export class DtRequisicionComponent implements OnInit {
             }
           }
         });
+        if ( this.folio !==  '') {
+          (<HTMLInputElement>document.getElementById('folio')).value = this.folio;
+          const aux = this.dataSource.filter(x => x.folio.toString() === this.folio);
+          // const idx = this.columns.findIndex(x => x.name === 'folio');
+          this.columns[0].filtering.filterString = this.folio;
+          this.folio = '';
+        }
         this.onChangeTable(this.config);
       } else {
         this.popToast('error',
@@ -405,7 +411,7 @@ export class DtRequisicionComponent implements OnInit {
     let filteredData: Array<any> = data;
 
     this.columns.forEach((column: any) => {
-      if (column.filtering.filterString != '') {
+      if (column.filtering.filterString !== '') {
         this.showFilterRow = true;
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null) {
@@ -708,9 +714,9 @@ export class DtRequisicionComponent implements OnInit {
 
         this.ValidarEstatus(result.id);
         this.refreshTable();
-        if (this.puro) {
-          this.SendEmail();
-        }
+        // if (this.puro) {
+        //   this.SendEmail();
+        // }
       }
     });
   }
@@ -721,11 +727,13 @@ export class DtRequisicionComponent implements OnInit {
            RequisicionId: this.RequisicionId,
            UsuarioAlta: this.settings.user['usuario'],
            reclutadorId: this.settings.user['id'],
-           MotivoId: 9,
+           MotivoId: 19,
            EstatusId: 0
     };
 
     this._ComentariosService.addComentarioVacante(comment).subscribe(data => {
+      this.SendEmail();
+      this.refreshTable();
     });
   }
 

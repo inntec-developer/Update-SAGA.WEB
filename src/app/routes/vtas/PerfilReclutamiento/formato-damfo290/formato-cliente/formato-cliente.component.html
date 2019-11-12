@@ -2,7 +2,7 @@
   <section #ClienteSection class="row">
     <mat-form-field class="col-12">
       <input #RazonSocialCtrl type="text" placeholder="Razón Social" aria-label="Number" matInput autofocus
-        formControlName="RazonSocial" [value]="RazonSocialCtrl.value.toUpperCase()" [matAutocomplete]="cliente" (keyup)="filter();"
+        formControlName="RazonSocial" [value]="RazonSocialCtrl.value.toUpperCase()" [matAutocomplete]="cliente" (keyup)="filter($event);"
         required="" >
         <button mat-button *ngIf="RazonSocialCtrl.value.length > 1" matSuffix mat-icon-button aria-label="Clear" (click)="Borrar();">
             <mat-icon>close</mat-icon>
@@ -35,7 +35,7 @@
       <input matInput placeholder="Actividad de la Empresa" formControlName="Actividad" class="text-info">
     </mat-form-field>
     <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-      <mat-select placeholder="Tipo Reclutamiento" formControlName="Tipo" required #TipoReclutamientoCtrl>
+      <mat-select (selectionChange)="selectTipo()" placeholder="Tipo Reclutamiento" formControlName="Tipo" required #TipoReclutamientoCtrl>
         <mat-option *ngFor="let x of TiposReclutamientos" [value]="x.id">
           {{x.descripcion | uppercase}}
         </mat-option>

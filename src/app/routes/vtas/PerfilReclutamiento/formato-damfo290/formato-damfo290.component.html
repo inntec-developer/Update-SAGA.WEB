@@ -22,7 +22,7 @@
           <i *ngIf="!cliente.formCliente.valid" class="text-danger fa fa-exclamation-circle ml-3" 
           container="body" placement="right" tooltip="Campos por llenar: {{msgRS}} {{msgTipo}} {{msgClase}}"></i>
         </ng-template>
-    <app-formato-cliente [IdFormato]="IdFormato" #FormatoClienteCpt></app-formato-cliente>
+    <app-formato-cliente [IdFormato]="IdFormato" [ctrlContratos]="requisitos" #FormatoClienteCpt></app-formato-cliente>
   </tab>
   <!-- [disabled]="!cliente.formCliente.valid" -->
   <tab heading="Datos de Perfil" id="TapRequisitos" [disabled]="!cliente.formCliente.valid">
@@ -30,7 +30,7 @@
           <i *ngIf="cliente.formCliente.valid && (!requisitos.formEncabezado.valid || requisitos.Escolaridades.length == 0)" 
           class="text-danger fa fa-exclamation-circle ml-3" container="body" placement="right" tooltip="campos vacios"></i>
         </ng-template>
-    <app-formato-requisitos [IdFormato]="IdFormato"></app-formato-requisitos>
+    <app-formato-requisitos [IdFormato]="IdFormato" [tipoReclutamiento]="cliente.formCliente.controls['Tipo'].value"></app-formato-requisitos>
   </tab>
   <!-- [disabled]="!cliente.formCliente.valid" -->
   <tab heading="Horarios, Prestaciones ..." id="TapInfoAdicional" [disabled]="!cliente.formCliente.valid">
@@ -53,6 +53,13 @@
   </tab>
   <tab heading="Anexos" id="TapAnexos" *ngIf="!isNew">
    <app-file-manager [candidatoId]='IdFormato' [ruta]="'/utilerias/Files/ANEXOSDAMFO/'"></app-file-manager>
+  </tab>
+  <tab heading="COSTOS" id="tabCostos" [disabled]="!cliente.formCliente.valid">
+      <!-- <ng-template tabHeading>
+          <i *ngIf="cliente.formCliente.valid && (!requisitos.formEncabezado.valid || requisitos.Escolaridades.length == 0)" 
+          class="text-danger fa fa-exclamation-circle ml-3" container="body" placement="right" tooltip="campos vacios"></i>
+        </ng-template> -->
+   <app-formato-costos></app-formato-costos>
   </tab>
 </tabset>
 <br>

@@ -34,6 +34,7 @@ export class ComponentsService {
   private UrlGetAlertStm = ApiConection.ServiceUrl + ApiConection.GetAlertStm;
   private UrlGetAllAletStm = ApiConection.ServiceUrl + ApiConection.GetAllAlertStm;
   private UrlDeleteAlertStm = ApiConection.ServiceUrl + ApiConection.DeleteAlertStm;
+  private UrlGetCountAlert = ApiConection.ServiceUrl + ApiConection.GetCountAlert;
 
   // Graficas
   private UrlGetVacantesInicioPA = ApiConection.ServiceUrl + ApiConection.GraficPAVacantes;
@@ -243,6 +244,11 @@ export class ComponentsService {
   getRequiUnidadNegocio(data: any): Observable<any>{
     return this._httpClient.post<any>(this.UrlGetRequiUnidadNegocio, data, this.httpOptions )
     .map(result => result);
+  }
+
+  CheckAlertas(usuarioId): Observable<any> {
+    const params = new HttpParams().set('Id', usuarioId);
+    return this._httpClient.get(this.UrlGetCountAlert, {params: params, headers: this.httpOptions.headers});
   }
 
   checkFolioPuro(folio: any):Observable<any>{

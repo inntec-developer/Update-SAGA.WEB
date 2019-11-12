@@ -1,4 +1,4 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { Cliente } from './../../../../models/vtas/Cliente';
@@ -21,7 +21,7 @@ export class EditarClientesComponent implements OnInit {
   Emails: any = [];
   Contactos: any = [];
   EntidadId: any;
-  ruta: any;
+  ruta = 1;
 
   constructor(
     private spinner: NgxSpinnerService,
@@ -30,13 +30,13 @@ export class EditarClientesComponent implements OnInit {
     private _service: ClientesService
   ) {
     // this.spinner.show();
-    this._Route.params.subscribe(params => {
+    this._Route.queryParams.subscribe(params => {
       if (params['ClienteId'] != null) {
         this.ClienteId = params['ClienteId'];
         this.ruta = params['ruta'];
-        this.getInfoCliente(this.ClienteId)
+        this.getInfoCliente(this.ClienteId);
       } else {
-        this._Router.navigate(['/ventas/returnDir', this.ruta]);
+        this._Router.navigate(['/ventas/directorio'], { queryParams: {ruta: this.ruta}, skipLocationChange: true});
       }
     });
   }
@@ -44,11 +44,18 @@ export class EditarClientesComponent implements OnInit {
   ngOnInit() {
   }
 
-  regresar() {
-    this._Router.navigate(['/ventas/returnDir', this.ruta]);
-}
+//   regresar() {
+//     const navigationExtras: NavigationExtras = {
+//       queryParams: {
+//          'ruta': this.ruta
+//       },
+//       skipLocationChange: true
+//     };
+//     debugger;
+//     this._Router.navigate(['/ventas/directorio'], navigationExtras);
+// }
 
-  changeData(data){
+  changeData(data) {
     const DireccionIndexUpdate = this.Direcciones.findIndex(x => x.id == data.id)
     if(DireccionIndexUpdate != null){
       this.Direcciones[DireccionIndexUpdate] = data;

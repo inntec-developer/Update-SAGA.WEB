@@ -84,7 +84,7 @@ export class DtDamfoComponent implements OnInit {
       filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }
     },
     {
-      title: 'Usuario', className: 'text-info text-center', name: 'usuarioAlta',
+      title: 'Usuario', className: 'text-info text-center', name: 'usuarioCreacion',
       filtering: { filterString: '', placeholder: 'Usuario' }
     }
   ];
@@ -207,6 +207,7 @@ export class DtDamfoComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
+
     if (data['usuarioAlta'] === this._setting.user.usuario) {
       this.isEditable = true;
     } else {

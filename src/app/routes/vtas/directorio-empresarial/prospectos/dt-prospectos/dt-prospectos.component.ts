@@ -4,7 +4,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { ClientesService } from '../../../../../service/clientes/clientes.service';
 import { RFCValidator } from './rfc-validation';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { SettingsService } from '../../../../../core/settings/settings.service';
 
 declare var $: any;
@@ -216,32 +216,43 @@ public config: any = {
     }
   }
 
-  createCliente(){
-    var cliente = {
+  createCliente() {
+    const cliente = {
       Id: this.element.id,
       RazonSocial: this.formCliente.get('RazonSocial').value,
       RFC: this.formCliente.get('RFC').value,
       Usuario: this.Usuario
-    }
+    };
     this._service.hacerCliente(cliente).subscribe(result => {
-      if(result == 200){
-        var msg = 'El prospecto se pasó con éxito a clientes, ir a la sección de clientes para visualizarlo.'
-        this.popToast('success', 'Prospecto', msg);
+      if(result === 200) {
+        this.popToast('success', 'Prospecto', 'El prospecto se pasó con éxito a clientes, ir a la sección de clientes para visualizarlo.');
         this.refreshTable();
+      } else {
+        this.popToast('error', 'Prospectos', 'Ocurrio un error al intntar pasar a cliente el prospecto');
       }
-      else{
-        var msg = 'Ocurrio un error al intntar pasar a cliente el prospecto';
-        this.popToast('error', 'Prospectos', msg);
-      }
-    })
+    });
   }
 
   editarProspecto() {
-    this._Router.navigate(['/ventas/editarCliente', this.element['id'], 2], { skipLocationChange: true });
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        'ClienteId': this.element['id'],
+         'ruta': 2
+      },
+      skipLocationChange: true
+    };
+    this._Router.navigate(['/ventas/editarCliente'], navigationExtras);
   }
 
   visualizarProspecto() {
-    this._Router.navigate(['/ventas/visualizarCliente', this.element['id'], 2], { skipLocationChange: true });
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        'ClienteId': this.element['id'],
+         'ruta': 2
+      },
+      skipLocationChange: true
+    };
+    this._Router.navigate(['/ventas/visualizarCliente'], navigationExtras);
   }
 
 

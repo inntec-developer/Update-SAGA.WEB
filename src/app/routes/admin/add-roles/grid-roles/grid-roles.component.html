@@ -28,10 +28,12 @@
             <tbody>
                 <ng-container *ngFor="let node of nodes; let i = index">
                    <tr *ngIf="node.collapsed">
-                       <td  [class.text-info]="node.tipoEstructuraId == 3 || node.tipoEstructuraId == 4" [ngClass]="{'text-muted text-uppercase font-weight-bold': node.tipoEstructuraId == 2, 
+                       <td  [class.text-info]="node.tipoEstructuraId == 3 || node.tipoEstructuraId == 4" 
+                            [ngClass]="{'text-muted text-uppercase font-weight-bold': node.tipoEstructuraId == 2, 
                             'esparbol2' : node.tipoEstructuraId == 3,
                             'text-warning': node.tipoEstructuraId == 3 && node.accion == null,
-                            'esparbol4': node.tipoEstructuraId == 4}">
+                            'text-success': node.tipoEstructuraId == 8 && node.accion == null,
+                            'esparbol4': node.tipoEstructuraId == 4 || node.tipoEstructuraId == 8 }">
                             <button class="btn btn-xs btn-success mat-elevation-z8 float-left" *ngIf="node.tipoEstructuraId==2 && node.children.length > 0" (click)="GetNodes(node, i)">
                                     <em class="fa fa-plus"></em>
                             </button>
@@ -50,14 +52,7 @@
 </tbody>
 </table>
     <br/>
-    <!-- <div class="row">
-        <div class="col-md-12 pull-left">
-           <span>{{alert}}</span>
-        </div>
-        <div class="col-md-12">
-            <btn-check id='create' chkPrivilegiosButtons class="pull-right" (click)="saveData()"  container="body" placement="bottom" tooltip="Guardar Cambios"></btn-check>
-        </div>
-    </div> -->
+   
 </div>
 </div>
 

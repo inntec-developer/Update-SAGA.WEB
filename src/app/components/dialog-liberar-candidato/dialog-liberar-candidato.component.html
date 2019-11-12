@@ -39,15 +39,17 @@
   <mat-divider></mat-divider>
 </mat-dialog-content>
 <br/>
-<mat-dialog-actions>
-  <button class="btn btn-xs btn-labeled btn-danger mb-1 margin mat-elevation-z8" (click)="onCloseDialog()">
+<mat-dialog-actions class="d-flex justify-content-end">
+
+  <button class="btn btn-xs btn-labeled btn-danger mb-1 mr-2 mat-elevation-z8" (click)="onCloseDialog()">
     <span class="btn-label">
       <i class="fa fa-times"></i>
-    </span> Cancelar
+    </span> CANCELAR
   </button>
-  <button type="button" [disabled]="!liberar.motivo || liberar.comentario.length <= 30" class="btn btn-xs btn-labeled btn-success mb-1 margin mat-elevation-z8" (click)="_liberarCandidato()">
+  <button type="button" [disabled]="!liberar.motivo || liberar.comentario.length <= 30" class="btn btn-xs btn-labeled btn-success mb-1 mat-elevation-z8" (click)="_liberarCandidato()">
     <span class="btn-label">
       <i class="fa fa-check"></i>
-    </span> Aceptar
+    </span> ACEPTAR
   </button>
+
 </mat-dialog-actions>

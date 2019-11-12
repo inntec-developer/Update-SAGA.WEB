@@ -8,7 +8,6 @@ import { ContactosClienteComponent } from './directorio-empresarial/editar-clien
 import { CordinalesComponent } from './PerfilReclutamiento/formato-damfo290/formato-anexos/perfil-competencias/perfil-cordinales/cordinales/cordinales.component';
 import { CorreosClienteComponent } from './directorio-empresarial/editar-clientes/Components/correos-cliente/correos-cliente.component';
 import { DatosGeneralesComponent } from './directorio-empresarial/editar-clientes/Components/datos-generales/datos-generales.component';
-import { DialogActivarRequiComponent } from './requisiciones/components/dialog-activar-requi/dialog-activar-requi.component';
 import { DialogCancelRequiComponent } from './requisiciones/components/dialog-cancel-requi/dialog-cancel-requi.component';
 import { DialogDeleteRequiComponent } from './requisiciones/components/dialog-delete-requi/dialog-delete-requi.component';
 import { DialogEditHorarioComponent } from '../../components/tablas/dt-horarios/dialog-edit-horario/dialog-edit-horario.component';
@@ -62,15 +61,23 @@ import { VerClienteComponent } from './directorio-empresarial/ver-cliente/ver-cl
 import { ViewCuerpoRequiComponent } from './requisiciones/components/view-cuerpo-requi/view-cuerpo-requi.component';
 import { ViewInforRequiComponent } from './requisiciones/components/view-info-requi/view-info-requi.component';
 import { ViewRequisicionComponent } from './requisiciones/components/view-requisicion/view-requisicion.component';
-import { ViewdamfoComponent } from './requisiciones/components/viewdamfo/viewdamfo.component';
+import { ViewdamfoComponent } from './requisiciones/components/viewdamfo/viewdamfo.component';;
+import { FormatoCostosComponent } from './PerfilReclutamiento/formato-damfo290/formato-costos/formato-costos.component'
 
 const routes: Routes = [
-  { path: 'directorio', component: DirectorioEmpresarialComponent, data: { componente: 'Directorio Empresarial' } },
-  { path: 'returnDir/:ruta', component: DirectorioEmpresarialComponent },
+  // { path: 'directorio',
+  // children: [
+  //   { path: '', component: DirectorioEmpresarialComponent, data: { componente: 'Directorio Empresarial' } },
+  //   { path: ':ruta', component: DirectorioEmpresarialComponent, data: { componente: 'Directorio Empresarial', ruta: 1 } }
+  // ]  },
+  { path: 'directorio', component: DirectorioEmpresarialComponent, data: { componente: 'Directorio Empresarial' }},
   { path: 'nuevoProspecto/:ruta', component: NuevoProspectoComponent },
-  { path: 'editarCliente/:ClienteId/:ruta', component: EditarClientesComponent },
-  { path: 'visualizarCliente/:ClienteId/:ruta', component: VerClienteComponent },
+  { path: 'editarCliente', component: EditarClientesComponent },
+  // { path: 'editarCliente/:ClienteId/:ruta', component: EditarClientesComponent },
+  // { path: 'visualizarCliente/:ClienteId/:ruta', component: VerClienteComponent },
+  { path: 'visualizarCliente', component: VerClienteComponent },
   { path: 'requisicion', component: RequisicionComponent, data: { componente: 'Requisiciones' } },
+  { path: 'requisicion/:folio', component: RequisicionComponent, data: { componente: 'Requisiciones' } },
   { path: 'crearRequisicion', component: DtCrearRequisicionComponent },
   { path: 'requisicionNueva/:IdDamfo/:IdDireccion/:IdEstatus/:Confidencial', component: RequisicionNuevaComponent },
   { path: 'visualizarDamfo290/:IdDamfo', component: ViewdamfoComponent, data: { componente: 'Formato 290' } },
@@ -108,7 +115,6 @@ const routes: Routes = [
     UpdateInfoRequiComponent,
     DialogDeleteRequiComponent,
     DialogCancelRequiComponent,
-    DialogActivarRequiComponent,
     DirectorioEmpresarialComponent,
     DtProspectosComponent,
     DtClientesComponent,
@@ -150,13 +156,13 @@ const routes: Routes = [
     PerfilGerencialesComponent,
     AreasComponent,
     GerencialesComponent,
-    CordinalesComponent
+    CordinalesComponent,
+    FormatoCostosComponent
   ],
   entryComponents: [
     DialogdamfoComponent,
     DialogDeleteRequiComponent,
     DialogCancelRequiComponent,
-    DialogActivarRequiComponent,
     DialogEditHorarioComponent,
     DialogRutasComponent
   ],

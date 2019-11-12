@@ -1,5 +1,4 @@
 import { RouterModule, Routes } from '@angular/router';
-
 import { CarruselArteVacantesComponent } from './carrusel-arte-vacantes/carrusel-arte-vacantes.component';
 import { CarruselVacantesComponent } from './carrusel-vacantes/carrusel-vacantes.component';
 import { ComponentsModule } from './../../components/components.module';

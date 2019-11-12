@@ -8,7 +8,7 @@
       <a [routerLink]="['/home']">Inicio</a>
     </li>
     <li class="breadcrumb-item">
-      <a [routerLink]="['/ventas/directorio']">Directorio Empresarial</a>
+      <a [routerLink]="['/ventas/directorio']" [queryParams]="{ruta: ruta}" [skipLocationChange]=true>Directorio Empresarial</a>
     </li>
     <li class="breadcrumb-item active">Visualizar</li>
   </ol>
@@ -28,7 +28,7 @@
         <em class="fa fa-arrow-left"></em>
       </button>
     </div>
-  </div>
+  </div> 
 </div>
 <br *ngIf="!imprimir" />
 <div id="content">

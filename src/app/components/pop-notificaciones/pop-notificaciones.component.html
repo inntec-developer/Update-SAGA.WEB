@@ -1,0 +1,9 @@
+
+<ul class="list-group-flush bg-transparent">
+  <li *ngFor="let m of notificaciones" class="list-group-item bg-transparent text-white"><span>{{m.alert}}</span>
+    <div class="d-flex justify-content-end mt-2">
+    <button class="btn btn-xs btn-success mr-1 mat-elevation-z8" placement="bottom" tooltip="Darle seguimiento" (click)="Seguimiento(m)"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+    <button class="btn btn-xs btn-danger mat-elevation-z8" placement="bottom" tooltip="Marcar como le&iacute;do" (click)="Leidos(m)"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>
+  </div>
+  </li>
+</ul>

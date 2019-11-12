@@ -20,12 +20,12 @@ export class RportAtencionTurnosComponent implements OnInit {
   shown = 'hover';
 
     // Varaibles del paginador
-    public page: number = 1;
-    public itemsPerPage: number = 20;
-    public maxSize: number = 5;
-    public numPages: number = 1;
-    public length: number = 0;
-    clearFilter: boolean = true;
+    public page = 1;
+    public itemsPerPage = 20;
+    public maxSize = 5;
+    public numPages = 1;
+    public length = 0;
+    clearFilter = true;
 
   public columns: Array<any> = [
     { title: 'Fecha', className: 'text-success text-center', name: 'fecha', filtering: { filterString: '',  placeholder: 'aaaa-mm-dd' } },
@@ -123,10 +123,6 @@ export class RportAtencionTurnosComponent implements OnInit {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
 
-    if (config.sorting) {
-      (<any>Object).assign(this.config.sorting, config.sorting);
-    }
-
     this.registros = this.result.length;
     this.rows = this.result;
     const filteredData = this.changeFilter(this.result, this.config);
@@ -162,16 +158,14 @@ public refreshTable() {
       const aux = [];
       this.result.forEach(row => {
         const d = this.pipe.transform(new Date(row.fecha), 'dd/MM/yyyy');
-
-        row.datos.forEach(element => {
         aux.push({
           'FECHA': d,
-          'RECLUTADOR': element.reclutador,
-          'TURNOS ATENDIDOS': element.total,
-          'TURNOS CON CITA': element.concita,
-          'TURNOS SIN CITA': element.sincita
+          'RECLUTADOR': row.reclutador,
+          'TURNOS ATENDIDOS': row.total,
+          'TURNOS CON CITA': row.concita,
+          'TURNOS SIN CITA': row.sincita
         });
-      });
+
       });
 
       this.excelService.exportAsExcelFile(aux, 'Reporte_Turnos_Atendidos');

@@ -7,6 +7,7 @@ import { PostulateService } from '../../service/SeguimientoVacante/postulate.ser
 import { RequisicionesService } from './../../service/requisiciones/requisiciones.service';
 import { SettingsService } from '../../core/settings/settings.service';
 
+const swal = require('sweetalert2');
 @Component({
   selector: 'app-editar-requi-estatus',
   templateUrl: './editar-requi-estatus.component.html',
@@ -19,10 +20,10 @@ export class EditarRequiEstatusComponent implements OnInit {
   @Input('requisPausa') requis = [];
 
   editing = {};
-  comentario: string = '';
+  comentario = '';
   loading = false;
 
-  //scroll
+  // scroll
   public disabled = false;
   public invertX = false;
   public compact = false;
@@ -30,13 +31,13 @@ export class EditarRequiEstatusComponent implements OnInit {
   public shown = 'hover';
 
   // Varaibles del paginador
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
-  showFilterRow: boolean = true;
+  showFilterRow = true;
   registros: number;
 
   public rows: Array<any> = [];
@@ -180,20 +181,36 @@ export class EditarRequiEstatusComponent implements OnInit {
   // estatus vacantes
   SetStatus(row, rowIndex) {
     this.loading = true;
+    swal.fire({
+      title: '¿Estas seguro?',
+      text: '¡Se cambiará el estatus de la requisicion con folio!' + row.folio +
+            '. El proceso puede tardar unos segundos por favor espere.',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, cambiar estatus'
+    }).then((result) => {
+      if (result.value) {
+        this.service.GetUltimoEstatusRequi(row.id).subscribe(result => {
 
-    this.service.GetUltimoEstatusRequi(row.id).subscribe(result => {
-
-      if (result !== 404) {
-        const estatus = result.descripcion;
-
-        const datos = { estatusId: result.estatusId, requisicionId: row.id };
-
-        this.postulateService.SetProcesoVacante(datos).subscribe(data => {
-          if (data === 201) {
-            this.AddComentario(row, rowIndex, datos.estatusId);
-          } else {
-            this.loading = false;
-            this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
+          if (result !== 404) {
+            const estatus = result.descripcion;
+            const datos = { estatusId: result.estatusId, requisicionId: row.id };
+            this.postulateService.SetProcesoVacante(datos).subscribe(data => {
+              if (data === 201) {
+                this.AddComentario(row, rowIndex, datos.estatusId);
+                swal.fire(
+                  'Cambiar estatus',
+                  'Los datos se actualizaron con éxito.',
+                  'success'
+                );
+                this.loading = false;
+              } else {
+                this.loading = false;
+                this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
+              }
+            });
           }
         });
       }
@@ -201,6 +218,7 @@ export class EditarRequiEstatusComponent implements OnInit {
   }
 
   AddComentario(row, rowIndex, estatusId) {
+
     const Comentario = {
       Comentario: this.comentario,
       RequisicionId: row.id,
@@ -217,7 +235,7 @@ export class EditarRequiEstatusComponent implements OnInit {
 
         this.refreshTable();
         this.loading = false;
-        this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+        // this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
         row.activar = false;
       }
     }, err => {

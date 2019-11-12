@@ -1,5 +1,5 @@
 
-import { AfterViewChecked, Component, EventEmitter, OnInit, Output, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, EventEmitter, OnInit, Output, ElementRef, ViewChild, Input } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { CandidatosService } from './../../../../../../service/Candidatos/candidatos.service';
@@ -30,7 +30,7 @@ const swal = require('sweetalert');
 export class DtVacantesReclutadorComponent implements OnInit {
   @Output('Imprimir') EmImprimir: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('content') el: ElementRef;
-
+@Input('folioRuta') folioRuta;
   public imprimir: boolean;
 
   toaster: any;
@@ -213,6 +213,13 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
         this.GetCandidatosNR();
         this.GetRequisicionesPausa();
+
+        if ( this.folioRuta !==  '') {
+          (<HTMLInputElement>document.getElementById('folio')).value = this.folioRuta;
+          const aux = this.dataSource.filter(x => x.folio.toString() === this.folioRuta);
+          this.columns[0].filtering.filterString = this.folioRuta;
+          this.folioRuta = '';
+        }
 
         this.onChangeTable(this.config);
         this.spinner.hide();
@@ -731,52 +738,59 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   openDialogRegistro() {
-    let dialogDlt = this.dialog.open(DlgRegistroMasivoComponent, {
+    const dialogDlt = this.dialog.open(DlgRegistroMasivoComponent, {
       width: '95%',
       height: '95%',
-      data: { requisicionId: this.requi.id, folio: this.requi.folio, cliente: this.element.cliente, vacante: this.vBtra, nv: this.element.vacantes, contratados: this.element.contratados },
+      data: {
+        requisicionId: this.requi.id,
+        folio: this.requi.folio,
+        cliente: this.element.cliente,
+        vacante: this.vBtra, nv: this.element.vacantes,
+        contratados: this.element.contratados,
+        reclutador:  this.settings.user['nombre'],
+        reclutadorId: this.settings.user['id']
+      },
       disableClose: true
-
     });
 
     dialogDlt.afterClosed().subscribe(result => {
       if (result === 0) {
         this.onChangeTable(this.config);
-      }
-      else if (result === 417) {
+      } else if (result === 417) {
         this.popToast('error', 'Registro Masivo', 'Ocurrió un error al intentar registrar candidato');
-      }
-      else {
-        swal({
-          title: 'Registro Masivo de Candidatos',
-          text: '¡Se registraron (' + result.length.toString() + ') candidatos con estatus cubierto para la vacante de ' + this.vBtra + '. ¿Desea enviar notificación a los candidatos registrados?. Esto puede tardar varios minutos',
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#21a240',
-          confirmButtonText: '¡Si, enviar notificación!',
-          cancelButtonText: '¡No, cancelar!',
-          closeOnConfirm: true,
-          closeOnCancel: true
-        }, (isConfirm) => {
-          window.onkeydown = null;
-          window.onfocus = null;
-          if (isConfirm) {
+      } else {
+        // swal({
+        //   title: 'Registro Masivo de Candidatos',
+        //   text: '¡Se registraron (' + result.length.toString() + 
+        //   ') candidatos con estatus cubierto para la vacante de ' + this.vBtra +
+        //   '. ¿Desea enviar notificación a los candidatos registrados?. Esto puede tardar varios minutos',
+        //   type: 'warning',
+        //   showCancelButton: true,
+        //   confirmButtonColor: '#21a240',
+        //   confirmButtonText: '¡Si, enviar notificación!',
+        //   cancelButtonText: '¡No, cancelar!',
+        //   closeOnConfirm: true,
+        //   closeOnCancel: true
+        // }, (isConfirm) => {
+        //   window.onkeydown = null;
+        //   window.onfocus = null;
+        //   if (isConfirm) {
 
-            this.spinner.show();
+        //     this.spinner.show();
 
-            this.postulateservice.SendEmailContratados(result).subscribe(data => {
-              this.spinner.hide();
-              this.refreshTable();
-            });
-          }
-          else {
-            this.spinner.hide();
-            swal('Cancelado', 'No se realizó ningún cambio', 'error');
-            this.refreshTable();
-          }
-        });
-        //  this.popToast('success', 'Registro Masivo', 'El registro se realizó correctamente');
-        //  this.refreshTable();
+        //     this.postulateservice.SendEmailContratados(result).subscribe(data => {
+        //       this.spinner.hide();
+        //       this.refreshTable();
+        //     });
+        //   }
+        //   else {
+        //     this.spinner.hide();
+        //     swal('Cancelado', 'No se realizó ningún cambio', 'error');
+        //     this.refreshTable();
+        //   }
+        // });
+         this.popToast('success', 'Registro Masivo', 'El registro se realizó correctamente');
+          this.refreshTable();
 
       }
     });

@@ -30,8 +30,8 @@ export class InfoCandidatoComponent implements OnInit, OnChanges {
 
   @ViewChild('modallib') modal;
 
-  SelectedMisVacantes: boolean = true;
-  selected: boolean = false;
+  SelectedMisVacantes = true;
+  selected = false;
   rowAux = [];
 
   public dataSource_v: Array<any> = [];
@@ -41,15 +41,15 @@ export class InfoCandidatoComponent implements OnInit, OnChanges {
   /*
     Variables y funcionamiento para Tabla de Mis Vacantes.
   */
-  public page_v: number = 1;
-  public itemsPerPage_v: number = 5;
-  public maxSize_v: number = 5;
-  public numPages_v: number = 1;
-  public length_v: number = 0;
+  public page_v = 1;
+  public itemsPerPage_v = 5;
+  public maxSize_v = 5;
+  public numPages_v = 1;
+  public length_v = 0;
 
   showFilterRow_v: boolean;
   registros_v: number;
-  visible: boolean = true;
+  visible = true;
   requi: { folio: any; id: any; };
   vacante: any = null;
   usuario: string;
@@ -74,6 +74,7 @@ export class InfoCandidatoComponent implements OnInit, OnChanges {
   desapartar = true;
   loading: boolean;
 
+  btnNotificacion = false;
   // examenes
   examen = { 'tecnicos': [], 'psicometricos': [] };
   modalExamen = false;
@@ -150,7 +151,7 @@ export class InfoCandidatoComponent implements OnInit, OnChanges {
     };
 
     this.usuario = this.settings.user['nombre'];
-    this.usuarioId = this.settings.user['id']
+    this.usuarioId = this.settings.user['id'];
     this.getMisVacates();
   }
 
@@ -223,7 +224,6 @@ export class InfoCandidatoComponent implements OnInit, OnChanges {
         this.urlCV = '';
         this.ShowButtonCV = false;
       }
-
       if (this.candidato.estatus) {
         this.Estatus = this.candidato.estatus.id;
         this.procesoCandidatoId = this.candidato.estatus.estatusId;
@@ -405,7 +405,7 @@ export class InfoCandidatoComponent implements OnInit, OnChanges {
       reclutadorId: this.usuarioId,
       estatusId: 12
     }
-    this._serviceCandidato.setApartarCandidato(this.procesoCandidato)
+    this._serviceCandidato.setApartarCandidato(this.procesoCandidato) // controladores / infocandidato
       .subscribe(data => {
         switch (data) {
           case 200: {
@@ -588,6 +588,24 @@ export class InfoCandidatoComponent implements OnInit, OnChanges {
       'toolbar=no,scrollbars=no,resizable=no,status=no,menubar=no,location=no,fullscreen=yes,directories=no');
   }
 
+  EnviarNotificacion() {
+    this.btnNotificacion = true;
+    const data = {
+      ReclutadorId: this.reclutadorId,
+      candidatoId: this.CandidatoId,
+      requisicionId: this.RequisicionId,
+      nombreCandidato: this.candidato.nombre,
+      nombre: this.settings.user['nombre']
+    };
+    this._serviceCandidato.EmailPeticionLiberar(data).subscribe(r => {
+      if (r === 200) {
+        this.popToast('success', 'Correo liberación candidato', 'El correo para pedir liberación de candidato se envió con éxito');
+      } else {
+        this.popToast('error', 'Correo liberación candidato', 'Ocurrió un error al intentar enviar correo. Por favor intentelo de nuevo');
+        this.btnNotificacion = false;
+      }
+    });
+  }
   ImgErrorCandidato() {
     this.candidato['picture'] = '/assets/img/user/default-user.png';
   }

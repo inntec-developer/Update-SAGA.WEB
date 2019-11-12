@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ClientesService } from './../../../../../service/clientes/clientes.service';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 declare var $: any;
 
@@ -276,9 +276,23 @@ export class DtClientesComponent implements OnInit {
   }
 
   editarCliente() {
-    this._Router.navigate(['/ventas/editarCliente', this.element['id'], 1], { skipLocationChange: true });
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        'ClienteId': this.element['id'],
+         'ruta': 1
+      },
+      skipLocationChange: true
+    };
+    this._Router.navigate(['/ventas/editarCliente'], navigationExtras);
   }
   visualizarCliente() {
-    this._Router.navigate(['/ventas/visualizarCliente', this.element['id'], 1], { skipLocationChange: true });
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        'ClienteId': this.element['id'],
+         'ruta': 1
+      },
+      skipLocationChange: true
+    };
+    this._Router.navigate(['/ventas/visualizarCliente'], navigationExtras);
   }
 }

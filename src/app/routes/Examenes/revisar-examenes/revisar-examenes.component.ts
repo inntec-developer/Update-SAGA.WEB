@@ -14,18 +14,17 @@ export class RevisarExamenesComponent implements OnInit {
   resultados = [];
   filteredData: any = [];
   rows = [];
-  search = "";
+  search = '';
 
   public disabled = false;
   public compact = false;
   public shown = 'shown';
 
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
-  
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
   public columns: Array<any> = [
     { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
@@ -38,11 +37,6 @@ export class RevisarExamenesComponent implements OnInit {
     // { title: 'Usuario', className: 'text-primary', name: 'usuario', filtering: { filterString: '', placeholder: 'Usuario' } },
     // { title: 'Fecha', className: 'text-primary', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'Fecha Creacion' } },
   ];
-  constructor(private service: ExamenesService, private dialog: MatDialog) { }
-
-  ngOnInit() {
-    this.GetCandidatos();
-  }
 
   public config: any = {
     paging: true,
@@ -50,6 +44,13 @@ export class RevisarExamenesComponent implements OnInit {
     filtering: { filterString: '' },
     className: ['table-hover mb-0 ']
   };
+
+  constructor(private service: ExamenesService, private dialog: MatDialog) { }
+
+  ngOnInit() {
+    this.GetCandidatos();
+  }
+
 
   public changePage(page: any, data: Array<any> = this.resultados): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
@@ -77,7 +78,7 @@ export class RevisarExamenesComponent implements OnInit {
       aux[0].candidatoId = row.candidatoId;
       aux[0].requisicionId = row.requisicionId;
 
-      let dialog = this.dialog.open(DlgRevisarExamenesComponent, {
+      const dialog = this.dialog.open(DlgRevisarExamenesComponent, {
         width: '60%',
         height: 'auto',
         disableClose: true,
@@ -85,14 +86,14 @@ export class RevisarExamenesComponent implements OnInit {
       });
       dialog.afterClosed().subscribe(result => {
       });
-    })
+    });
   }
   public Search(data: any) {
 
     this.search = data.target.value;
-    let tempArray: Array<any> = [];
+    const tempArray: Array<any> = [];
 
-    let colFiltar: Array<any> = [{ title: "folio" }, { title: "vBtra" }, { title: "cliente" }];
+    const colFiltar: Array<any> = [{ title: 'folio' }, { title: 'vBtra' }, { title: 'cliente' }];
 
     this.resultados.forEach(function (item) {
       let flag = false;
@@ -103,7 +104,7 @@ export class RevisarExamenesComponent implements OnInit {
       });
 
       if (flag) {
-        tempArray.push(item)
+        tempArray.push(item);
       }
     });
 

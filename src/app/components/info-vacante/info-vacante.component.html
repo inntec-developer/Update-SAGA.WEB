@@ -6,18 +6,18 @@
   <div class="row">
     <div class="col-lg-4 col-md-4 col-ms-4 col-xs-12">
       <h4>
-        <strong> Vacantes: </strong>
+        <strong> VACANTES: </strong>
         <label class="badge badge-pill badge-info">{{vacantes}}</label>
       </h4>
     </div>
     <div class="col-lg-4 col-md-4 col-ms-4 col-xs-12">
       <h4 class="text-center">
-        <strong> {{vBtra }} </strong>
+        <strong> PERFIL: <span class="text-info">{{vBtra | uppercase}} </span> </strong>
       </h4>
     </div>
     <div class="col-lg-4 col-md-4 col-ms-4 col-xs-12">
       <h4 class="float-right">
-        <strong>Folio: </strong> <span class="text-warning">{{folio}}</span>
+        <strong>FOLIO: </strong> <span class="text-warning">{{folio}}</span>
       </h4>
     </div>
   </div>
@@ -26,7 +26,7 @@
   <div class="row">
     <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
       <h5>
-        <strong>Fecha Solicitud: </strong>
+        <strong>FECHA SOLICITUD: </strong>
         <label class="card-text"> {{fch_Solicitud | date: 'dd/MM/yyyy'}} a las {{fch_Solicitud | date: 'hh:mm'}}
         </label>
         <small>{{fch_Solicitud | date: 'a'}}</small>
@@ -34,13 +34,13 @@
     </div>
     <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
       <h5>
-        <strong>Fecha Limite: </strong>
+        <strong>FECHA LIMITE: </strong>
         <label class="card-text"> {{fch_Limite | date: 'dd/MM/yyyy'}} </label>
       </h5>
     </div>
     <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
       <h5>
-        <strong>Prioridad: </strong>
+        <strong>PRIORIDAD: </strong>
         <label class="badge badge-pill" [class.badge-danger]="prioridadId  === 1"
           [class.badge-warning]="prioridadId  === 2">
           {{prioridad | uppercase}} </label>
@@ -48,14 +48,14 @@
     </div>
     <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
       <h5>
-        <strong>Fecha Cumplimiento: </strong>
+        <strong>FECHA CUMPLIMIENTO: </strong>
         <label class="card-text"> {{fch_Cumplimiento | date: 'dd/MM/yyyy'}}</label>
       </h5>
     </div>
     <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
       <h5>
-        <strong>Estatus: </strong>
-        <label class="badge badge-pill" [class.badge-warning]="estatusId  === 4"
+        <strong>ESTATUS: </strong>
+        <label class="badge badge-pill badge-info" [class.badge-warning]="estatusId  === 4"
           [class.badge-primary]="estatusId  === 5" [class.badge-info]="estatusId  === 6"
           [class.badge-success]="estatusId  === 7" [class.badge-danger]="estatusId  === 8 || estatusId  === 9">
           {{estatus | uppercase}} </label>
@@ -63,7 +63,7 @@
     </div>
     <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
       <h5>
-        <strong>Confidencial: </strong>
+        <strong>CONFIDENCIAL: </strong>
         <label *ngIf="confidencial" class="badge badge-pill badge-info"> SI</label>
         <label *ngIf="!confidencial" class="badge badge-pill badge-info"> NO</label>
       </h5>
@@ -74,28 +74,27 @@
   <br>
   <div class="d-flex flex-row justify-content-between">
     <h5>
-      <strong>Solicitante</strong>
-      <br>
-      <label class="text-muted">{{solicitante}}</label>
+      <strong>SOLICITANTE</strong>
+      
+      <label class="text-muted mt-2 ml-1">{{solicitante | uppercase}}</label>
     </h5>
     <h5>
-      <strong>Coordinador o líder</strong>
-      <br>
-      <label class="text-muted" *ngIf="estatusId != 4">{{coordinador}}</label>
+      <strong>COORDINADOR O L&Iacute;DER</strong>
+      <label class="text-muted mt-2 ml-1" *ngIf="estatusId != 4">{{coordinador | uppercase}}</label>
       <div *ngIf="estatusId == 4">
         <li class="list-group-item" *ngFor="let x of asignados">
-          <span class="text-muted bg-light">{{x.nombre}} {{x.apellidoPaterno}} {{x.apellidoMaterno}}</span>
+          <span class="text-muted bg-light">{{x.nombre | uppercase}} {{x.apellidoPaterno | uppercase}} {{x.apellidoMaterno | uppercase}}</span>
         </li>
       </div>
     </h5>
 
     <ol class="list-group list-group-flush">
       <h5>
-        <strong>Reclutadores</strong>
+        <strong>RECLUTADORES</strong>
       </h5>
       <div *ngIf="estatusId != 4">
         <li class="list-group-item" *ngFor="let x of asignados">
-          <span class="text-muted bg-light">{{x.nombre}} {{x.apellidoPaterno}} {{x.apellidoMaterno}}</span>
+          <span class="text-muted bg-light">{{x.nombre | uppercase}} {{x.apellidoPaterno | uppercase}} {{x.apellidoMaterno | uppercase}}</span>
         </li>
       </div>
       <div *ngIf="estatusId == 4">
@@ -121,14 +120,14 @@
 <div class="card-body" *ngIf="ShowSection == null || ShowSection.Cliente">
   <div class="row">
     <div class="col-md-3 col-sm-12 col-xs-12">
-      <h5 class="card-title"><strong class="text-info">Datos del cliente</strong></h5>
+      <h5 class="card-title"><strong class="text-info">DATOS DEL CLIENTE</strong></h5>
       <mat-divider></mat-divider>
       <p>
-        <strong>Nombre Comercial: </strong>
+        <strong>NOMBRE COMERCIAL: </strong>
         <label id="nombre" class="card-text"> {{cliente?.nombrecomercial | uppercase}}</label>
       </p>
       <p>
-        <strong>Raz&oacute;n Social: </strong>
+        <strong>RAZ&Oacute;N SOCIAL: </strong>
         <label class="card-text"> {{cliente?.razonSocial | uppercase}}</label>
       </p>
       <p>
@@ -136,29 +135,29 @@
         <label class="card-text"> {{cliente?.rfc | uppercase}}</label>
       </p>
       <p>
-        <strong>Giro Empresa: </strong>
+        <strong>GIRO EMPRESA: </strong>
         <label class="card-text"> {{cliente?.giroEmpresa | uppercase}}</label>
       </p>
       <p>
-        <strong>Actividad Empresa: </strong>
+        <strong>ACTIVIDAD EMPRESA: </strong>
         <label class="card-text"> {{cliente?.actividadEmpresa | uppercase}}</label>
       </p>
     </div>
     <div class="col-md-3 col-sm-12 col-xs-12">
-      <h5 class="card-title"><strong class="text-info">Reclutamiento</strong></h5>
+      <h5 class="card-title"><strong class="text-info">RECLUTAMIENTO</strong></h5>
       <mat-divider></mat-divider>
       <p>
-        <strong>Tipo: </strong>
+        <strong>TIPO: </strong>
         <label class="card-text"> {{requisicion?.tipoReclutamiento | uppercase}}</label>
       </p>
       <p>
-        <strong>Clase: </strong>
+        <strong>CLASE: </strong>
         <label class="card-text"> {{requisicion?.claseReclutamiento | uppercase}}</label>
       </p>
-      <h5 class="card-title"><strong class="text-info">Contrato</strong></h5>
+      <h5 class="card-title"><strong class="text-info">CONTRATO</strong></h5>
       <mat-divider></mat-divider>
       <p>
-        <strong>Tipo: </strong>
+        <strong>TIPO: </strong>
         <label class="card-text"> {{requisicion?.tipoContrato | uppercase}}</label>
       </p>
       <p *ngIf="requisicion?.periodoPrueba == true">
@@ -170,57 +169,57 @@
       <h5 class="card-title"><strong class="text-info">Puesto a Reclutar</strong></h5>
       <mat-divider></mat-divider>
       <p>
-        <strong>Nombre del Perfil: </strong>
+        <strong>NOMBRE PERFIL: </strong>
         <label class="card-text"> {{vBtra | uppercase}}</label>
       </p>
       <p>
-        <strong>&Aacute;rea: </strong>
+        <strong>&Aacute;REA: </strong>
         <label class="card-text"> {{requisicion?.areaExperiencia | uppercase}}</label>
       </p>
       <p>
-        <strong>G&eacute;nero: </strong>
+        <strong>G&Eacute;NERO: </strong>
         <label class="card-text"> {{requisicion?.genero | uppercase}}</label>
       </p>
       <p>
-        <strong>Edad: </strong>
+        <strong>EDAD: </strong>
         <label class="card-text"> {{requisicion?.edadMinima}} años a {{requisicion?.edadMaxima}} años </label>
       </p>
       <p>
-        <strong>Estado Civil: </strong>
+        <strong>ESTADO CIVIL: </strong>
         <label class="card-text"> {{requisicion?.estadoCivil | uppercase}}</label>
       </p>
     </div>
     <div class="col-md-3 col-sm-12 col-xs-12">
-      <h5 class="card-title"><strong class="text-info">Sueldos</strong></h5>
+      <h5 class="card-title"><strong class="text-info">SUELDOS</strong></h5>
       <mat-divider></mat-divider>
       <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-6">
-          <h5 class="text-warning">M&iacute;nimo</h5>
+          <h5 class="text-warning">M&Iacute;NIMO</h5>
           <p>
-            <strong>Mensual: </strong>
+            <strong>MENSUAL: </strong>
             <label class="card-text"> {{requisicion?.sueldoMinimo | moneda: '$'}}</label>
           </p>
           <p>
-            <strong>Semanal: </strong>
+            <strong>SEMANAL: </strong>
             <label class="card-text"> {{(requisicion?.sueldoMinimo / 30) * 7 | moneda: '$'}}</label>
           </p>
           <p>
-            <strong>Diario: </strong>
+            <strong>DIARIO: </strong>
             <label class="card-text"> {{requisicion?.sueldoMinimo / 30 | moneda: '$'}}</label>
           </p>
         </div>
         <div class="col-md-6 col-sm-6 col-xs-6">
-          <h5 class="text-warning">M&aacute;ximo</h5>
+          <h5 class="text-warning">M&Aacute;XIMO</h5>
           <p>
-            <strong>Mensual: </strong>
+            <strong>MENSUAL: </strong>
             <label class="card-text"> {{requisicion?.sueldoMaximo | moneda: '$'}}</label>
           </p>
           <p>
-            <strong>Semanal: </strong>
+            <strong>SEMANAL: </strong>
             <label class="card-text"> {{(requisicion?.sueldoMaximo / 30) * 7 | moneda: '$'}}</label>
           </p>
           <p>
-            <strong>Diario: </strong>
+            <strong>DIARIO: </strong>
             <label class="card-text"> {{requisicion?.sueldoMaximo / 30 | moneda: '$'}}</label>
           </p>
         </div>

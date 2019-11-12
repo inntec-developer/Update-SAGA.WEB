@@ -59,10 +59,10 @@ export class EditorArteRequisicionesComponent implements OnInit {
   ColorPickerDescNesc = 'dark';
   ColorPickerDudas = 'blue';
 
-  vBtra = 'Vacante prueba de Melina';
-  descripcion = 'Importante empresa solicita persona para puesto de ' + this.vBtra + ' en la Zona Metropolitana de Guadalajara';
+  vBtra = '';
+  descripcion = '';
   experiencia = '';
-  contacto = 'Llama al 3333 3333 ext.666 o manda correo indicando el título de la vacante al correo damsa@damsa.com.mx con atención a Nombre';
+  contacto = '';
 
   usuarioId = this.settings.user['id'];
 
@@ -105,6 +105,10 @@ export class EditorArteRequisicionesComponent implements OnInit {
        let type = nom.substr(id + 1, nom.length);
        type = type.replace('.', '');
 
+       this.descripcion = 'Importante empresa solicita persona para puesto de ' + this.vBtra +
+       ' en la Zona Metropolitana de Guadalajara.';
+       this.contacto = 'Llama al 3333 3333 ext.666 o manda correo indicando el título de la vacante al correo damsa@damsa.com.mx ' +
+       'con atención a Nombre';
        this._service.GetBG('ArteRequi/BG/' + nom).subscribe(r => {
         this.bg = 'data:image/' + type + ';base64,' + r;
       });

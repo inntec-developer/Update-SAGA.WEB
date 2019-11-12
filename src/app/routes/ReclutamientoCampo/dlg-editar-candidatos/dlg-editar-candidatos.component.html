@@ -1,0 +1,134 @@
+<div class="d-flex justify-content-between">
+    <h4 class="text-warning float-left mt-1">EDITAR INFORMACION PERSONAL DEL CANDIDATO</h4>
+    <button type="button" class="btn btn-xs btn-danger btn-circle float-right mt-0" (click) ="close()"><i class="fa fa-times"></i></button>
+    </div>
+    <hr>
+<div class="card">
+  <div class="card-body">
+      <form novalidate #f="ngForm">
+          <div class="row">
+            <div class="col">
+              <label class="text-muted">NOMBRE</label>
+              <input type="text" class="form-control form-control-sm" placeholder="Nombre" [(ngModel)]="nom" name="nombre" required />
+            </div>
+            <div class="col">
+              <label class="text-muted">APELLIDO PATERNO</label>
+              <input type="text" class="form-control" placeholder="Apellido paterno" [(ngModel)]="ap" name="app" required>
+            </div>
+            <div class="col">
+              <label class="text-muted">APELLIDO MATERNO</label>
+              <input type="text" class="form-control" placeholder="Apellido paterno" [(ngModel)]="am" name="amm" required>
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="col">
+                <div class="form-group">
+                    <label class="text-muted">GENERO</label>
+                    <div class="input-group">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" [(ngModel)]="model.options" value="2" name="mujer"  [ngModelOptions]="{standalone: true}">
+                        <label class="form-check-label">MUJER</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" [(ngModel)]="model.options" value="1" name="hombre"  [ngModelOptions]="{standalone: true}">
+                        <label class="form-check-label">HOMBRE</label>
+                    </div>
+                    </div>
+                    <small *ngIf="model.options == '0'" class="text-danger">Debe seleccionar g&eacute;nero</small>
+                </div>
+            </div>
+            <div class="col">
+                <mat-form-field class="mt-1">
+                    <input matInput [matDatepicker]="picker" placeholder="Fecha de Nacimiento" [(ngModel)]="date" name="edad" (dateChange)="validarFecha($event.value)">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <small *ngIf="edad >= 18" class="text-info">Edad {{edad}}</small>
+                    <small *ngIf="edad < 18" class="text-danger">El usuario debe ser mayor de edad</small>
+                    </mat-form-field>
+            </div>
+            <div class="col">
+                <div *ngIf="!editEstado" class="form-group">
+                <label class="text-muted">LUGAR DE NACIMIENTO</label>
+                <div class="input-group">
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="estado" name="estado" />
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-xs btn-warning" (click)="editEstado=true"  container="body" placement="top" tooltip="Editar lugar de nacimiento">
+                      <i class="fa fa-pencil" aria-hidden="true"></i></button>
+                </div>  
+              </div>
+              </div>
+                <mat-form-field *ngIf="editEstado">
+                    <mat-select placeholder="LUGAR DE NACIMIENTO" [(ngModel)]="estadoId" name="estado" required>
+                      <mat-option *ngFor="let e of estados" [value]="e.id">
+                          {{e.estado | uppercase}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="text-muted">CURP</label>
+                     <div class="input-group long">
+                        <input type="text" class="form-control form-control-sm" placeholder="CURP *" [(ngModel)]="curp" name="curpp" required
+                            [class.requerido]="curp.length == 0" [class.valido]="curp.length >= 16" minlength="16" maxlength=18 />
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-xs btn-info" (click)="GenerarCurp()"  container="body" placement="top" tooltip="Generar CURP">
+                                  <i class="fa fa-file-text-o" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                </div>
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="col">
+                <div class="form-group with-focus">
+                    <label class="text-muted" for="email">EMAIL</label>
+                    <div class="input-group">
+                    <input [disabled]="model.options==1" type="email" class="form-control form-control-sm" (blur)="ValidarEmail(email)" placeholder="Email *" value="" name="emaill" [(ngModel)]="email" [class.requerido]="email.length < 7" [class.valido]="email.length >= 7"/>
+                    <div class="input-group-append">
+                        <div class="input-group-text" tooltip="Registrar con Email" placement="top" container="body">
+                        <input [disabled]="model.options==1" type="radio" [(ngModel)]="modelOpc.options" name="modelOpc1" value="1" (click)="valOpcionReg(1);" [ngModelOptions]="{standalone: true}">
+                        </div>
+                      </div>
+                    </div>
+                    <small class="text-danger">{{valEmail}}</small>
+                </div>
+            </div>
+            <div class="col-md-2 col-lg-2">
+                <div class="form-group mr-1">
+                    <label class="text-muted" for="txtLada">LADA</label>
+                    <div class="input-group">
+                        <input [disabled]="model.options==2" type="text" minlength="2" maxlength="3" class="form-control form-control-sm ladaLong"
+                            placeholder="Lada *" [(ngModel)]="txtLada" name="Lada" [class.requerido]="txtLada.length < 2" [class.valido]="txtLada.length >= 2"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group long">
+                    <label class="text-muted" for="txtPhone">TEL&Eacute;FONO</label>
+                    <div class="input-group">
+                        <input [disabled]="model.options==2" (blur)="ValidarTelefono()" type="text" minlength="7" maxlength="8" class="form-control form-control-sm" placeholder="Telefono *"
+                            [(ngModel)]="txtPhone" name="Phone" [class.requerido]="txtPhone.length < 7" [class.valido]="txtPhone.length > 6"
+                        />
+                        <div class="input-group-append">
+                            <div class="input-group-text" tooltip="Registrar con Tel&eacute;fono" placement="top" container="body">
+                                <input [disabled]="model.options==2" type="radio" [(ngModel)]="modelOpc.options" name="modelOpc2" value="2" (click)="valOpcionReg(2);" [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-danger">{{valTel}}</small>
+                </div>
+            </div>
+            
+
+          </div>
+          <div class="d-flex justify-content-end mt-3">
+          <button class="btn btn-labeled btn-danger mat-elevation-z8" (click)="close()"><span class="btn-label"><i class="fa fa-times"></i></span>CERRAR</button>
+          <button [disabled]="edad < 18 || email.length == 0 || txtPhone.length == 0" type="button"
+          [ngClass]="edad < 18 || email.length == 0 || txtPhone.length == 0 ? 'disabled' : 'btn-warning'" class="btn btn-labeled ml-2 mat-elevation-z8" (click)="EditarCandidato()">
+          <span class="btn-label"> <i class="fa fa-floppy-o" aria-hidden="true"></i></span>GUARDAR</button>
+        </div>
+
+        </form>
+  </div>
+</div>

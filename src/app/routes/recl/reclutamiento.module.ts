@@ -30,6 +30,7 @@ const routes: Routes = [
   { path: 'configuracionVacante/:Requi/:Folio/:VBtra', component: DisenadorComponent },
   // { path: 'configuracionVacante/:Requi/:Folio/:VBtra', component: DisenadorVacanteComponent },
   { path: 'vacantesReclutador', component: VacantesReclutadorComponent, data: { componente: 'Vacantes' } },
+  { path: 'vacantesReclutador/:folio', component: VacantesReclutadorComponent, data: { componente: 'Vacantes' } },
   { path: 'postulados/:VacanteId/:Folio/:VBtra', component: VacantesPostulateComponent, data: { componente: 'Vacantes' } },
   // tslint:disable-next-line: max-line-length
   { path: 'gestionVacante/:VacanteId/:Folio/:VBtra/:ClienteId/:enProceso/:estatusId', component: SeguimientoVacanteComponent, data: { componente: 'Vacantes' } },
