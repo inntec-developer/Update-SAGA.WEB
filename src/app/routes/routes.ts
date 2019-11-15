@@ -1,4 +1,4 @@
-import { PantallaGGComponent } from './EquiposDeTrabajo/pantalla-gg/pantalla-gg.component';
+import { ContactComponent } from './pages/contact/contact.component';
 import { Error404Component } from './pages/error404/error404.component';
 import { Error500Component } from './pages/error500/error500.component';
 import { InicioKioscoComponent } from './pages/inicio-kiosco/inicio-kiosco.component';
@@ -21,6 +21,8 @@ export const routes = [
         canActivate:[LogInGuardGuard],
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full'},
+            { path: '**', redirectTo: 'pages/404' },
+            { path: 'contact', redirectTo: 'pages/contactanos'},
             { path: 'home', loadChildren: './home/home.module#HomeModule' },
             { path: 'reclutamiento', loadChildren: './recl/reclutamiento.module#ReclutamientoModule'},
             { path: 'ventas', loadChildren: './vtas/ventas.module#VentaModule'},
@@ -28,29 +30,32 @@ export const routes = [
             { path: 'usuario', loadChildren: './perfiles/perfiles.module#PerfilesModule'},
             { path: 'examenes', loadChildren: './Examenes/examenes.module#ExamenesModule'},
             { path: 'catalogos', loadChildren: './catalogos/catalogos.module#CatalogosModule'},
-            { path: 'reporte', loadChildren:'./reportes/reportes.module#ReportesModule'},
+            { path: 'reporte', loadChildren: './reportes/reportes.module#ReportesModule'},
             { path: 'tickets', loadChildren: './SistTickets/sist-tickets.module#SistTicketsModule'},
             { path: 'equipos', loadChildren: './EquiposDeTrabajo/equipos.module#EquiposModule'},
-            {path: 'webcampo', loadChildren: './ReclutamientoCampo/campo-web.module#CampoWebModule'}
+            {path: 'webcampo', loadChildren: './ReclutamientoCampo/campo-web.module#CampoWebModule'},
         ]},
+        {path: 'pages', loadChildren: './pages/pages.module#PagesModule'},
+        { path: 'login', redirectTo: 'pages/login' },
+        { path: 'login/:Folio', redirectTo: 'pages/login/:Folio'},
+        { path: 'register', redirectTo: 'pages/registro' },
+        { path: 'trackingvacantes', redirectTo: 'pages/TrackingVacantes'},
+        { path: 'Verturnos', redirectTo: 'pages/verturnos' },
+        { path: 'Principal', redirectTo: 'pages/Principal'},
+        { path: 'contactanos', redirectTo: 'pages/contactanos'},
 
-
-
-
-    { path: 'login', component: LoginComponent },
-    { path: 'login/:Folio', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
-    { path: 'recover', component: RecoverComponent },
-    { path: 'lock', component: LockComponent },
-    { path: 'maintenance', component: MaintenanceComponent },
-    { path: '404', component: Error404Component },
-    { path: '500', component: Error500Component },
-    { path: 'trackingvacantes', component: TrackingVacantesComponent },
-    { path: 'Tickets', component: TicketsInicioComponent },
-    { path: 'VerTurno', component: VerTurnosComponent},
-    { path: 'Principal', component: InicioKioscoComponent},
+    // { path: 'login/:Folio', component: LoginComponent },
+    // { path: 'register', component: RegisterComponent },
+   // { path: 'recover', component: RecoverComponent },
+   // { path: 'lock', component: LockComponent },
+   // { path: 'maintenance', component: MaintenanceComponent },
+  //  { path: '404', component: Error404Component },
+   // { path: '500', component: Error500Component },
+//    { path: 'trackingvacantes', component: TrackingVacantesComponent },
+    // { path: 'Tickets', component: TicketsInicioComponent },
+    // { path: 'VerTurno', component: VerTurnosComponent},
+    // { path: 'Principal', component: InicioKioscoComponent},
 
 
     // Not found
-    { path: '**', redirectTo: '404' }
 ];

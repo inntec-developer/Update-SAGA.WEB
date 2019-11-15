@@ -1,3 +1,4 @@
+import { FormatoCostosComponent } from './formato-costos/formato-costos.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnChanges, OnInit, SimpleChanges, ViewChild, AfterContentInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
@@ -20,6 +21,7 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges, AfterContent
   @ViewChild(FormatoClienteComponent) cliente: FormatoClienteComponent;
   @ViewChild(FormatoRequisitosComponent) requisitos: FormatoRequisitosComponent;
   @ViewChild(FormatoAnexosComponent) anexos: FormatoAnexosComponent;
+  @ViewChild(FormatoCostosComponent) costos: FormatoCostosComponent;
 
   IdFormato: any;
   isNew = false;
@@ -83,6 +85,7 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges, AfterContent
     }
   }
   ngOnChanges(changes: SimpleChanges): void {
+
     if (changes.cliente['Cliente'][0]['id'] && !changes.cliente['Cliente'][0]['id'].isFirstChange()) {
       const obj = this.cliente.Cliente[0]['id'];
     }
@@ -122,7 +125,8 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges, AfterContent
       ContratoInicialId: this.requisitos.formEncabezado.get('Contrato').value,
       TiempoContratoId: this.requisitos.formEncabezado.get('TiempoContrato').value || null,
       Usuario: this._setting.user.usuario,
-      Arte: this.anexos.Arte
+      Arte: this.anexos.Arte,
+      Costos: this.costos.aplica
     };
 
     const Collections = {
@@ -140,6 +144,7 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges, AfterContent
       psicometriasCliente: this.anexos.PsicometriasC,
       psicometriasDamsa: this.anexos.PsicometriasD,
       escolardadesPerfil: this.requisitos.Escolaridades,
+      costos: this.costos.costos
     };
 
     const PerfilReclutamiento = {
@@ -152,7 +157,6 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges, AfterContent
     } else {
       PerfilReclutamiento['Action'] = 'update';
     }
-
     this._servicePerfilR.CrudPerfilReclutamiento(PerfilReclutamiento).subscribe(x => {
       if (x !== 404 && x !== 406) {
         if (PerfilReclutamiento['Action'] === 'create') {

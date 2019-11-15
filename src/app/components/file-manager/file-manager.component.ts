@@ -174,6 +174,7 @@ export class FileManagerComponent implements OnInit {
   }
 
   getTypes(data) {
+if (data !== 0) {
     data.forEach(element => {
       if (element.ext.toLowerCase() === '.jpeg' || element.ext.toLowerCase() === '.jpg' || element.ext.toLowerCase() === '.png') {
         this.files.push({
@@ -213,7 +214,7 @@ export class FileManagerComponent implements OnInit {
         this.cont_word++;
       }
     });
-
+  }
   }
 
   GetFiles() {

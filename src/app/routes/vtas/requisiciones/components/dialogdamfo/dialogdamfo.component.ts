@@ -22,12 +22,12 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
   IdDamfo: string;
   formDireccion: FormGroup;
   IdDireccion: string;
-  DisabledButton: boolean = false;
+  DisabledButton = false;
   HorariosVacantes: any;
   requisicionId: any;
   IdEstatus: number;
-  confidencial: boolean = false;;
-  warn:string = 'warn';
+  confidencial = false;;
+  warn = 'warn';
 
   constructor(
     public dialogRef: MatDialogRef<DialogdamfoComponent>,
@@ -62,7 +62,7 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
     this.IdDamfo = this.data.id;
     this.formDireccion = new FormGroup({
       direccion: new FormControl()
-    })
+    });
   }
 
   FiltroDireccion(event) {
@@ -86,7 +86,7 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
 
   createRequisicion() {
     this.DisabledButton = true;
-    var horarios = '';
+    let horarios = '';
     if (this.IdDireccion != null) {
       this.service.getVacantesDamfo(this.IdDamfo).subscribe(data => {
         this.HorariosVacantes = data;
@@ -94,17 +94,18 @@ export class DialogdamfoComponent implements OnInit, OnChanges {
         this.HorariosVacantes.forEach(element => {
           horarios = horarios + element.nombre + ' (' + element.vacantes + ') \n';
         });
-        // swal('Requisición Generada.!', 'Vacante(s) registrada(s) del DAM-FO-290: \n' + horarios + '\n El número de vacante(s) en la requisición van en 0 (cero), realice los cambios correspondientes.', 'success');
+        // swal('Requisición Generada.!', 'Vacante(s) registrada(s) del DAM-FO-290: \n' + horarios + '\n
+        // El número de vacante(s) en la requisición van en 0 (cero), realice los cambios correspondientes.', 'success');
       }, err => {
         console.log(err);
       });
-      if (this.data.tipoReclutamiento === "Puro") {
+      if (this.data.tipoReclutamiento === 'Puro') {
         this.IdEstatus = 43;
-      }
-      else {
+      } else {
         this.IdEstatus = 4;
       }
-      this._Router.navigate(['/ventas/requisicionNueva', this.IdDamfo, this.IdDireccion, this.IdEstatus, this.confidencial], { skipLocationChange: true });
+      this._Router.navigate(['/ventas/requisicionNueva', this.IdDamfo, this.IdDireccion, this.IdEstatus, this.confidencial],
+       { skipLocationChange: true });
       this.onNoClick();
     } else {
       this.popToast('error', 'Oops!!', 'Seleccione una dirección para continuar');

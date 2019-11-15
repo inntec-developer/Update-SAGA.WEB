@@ -60,7 +60,15 @@ export class ActividadesComponent implements OnInit, AfterContentInit {
         obj['action'] = 'create';
         this._servicePerfilR.CrudActividad(obj).subscribe(x => {
           if (x !== 404) {
-            this.Registros.emit(obj);
+            const objAux = {
+              Index: this.index,
+              IsEdit: this.isActionEdit,
+              id: this.actividad.get('id').value,
+              actividad: this.actividad.get('actividad').value,
+              Usuario: this._setting.user.usuario,
+              DAMFO290Id: this.IdFormato
+            };
+            this.Registros.emit(objAux);
             this.actividad.controls['id'].setValue(x);
             this.Edit = false;
             this.functionCreateAlert('success', false);
@@ -72,7 +80,15 @@ export class ActividadesComponent implements OnInit, AfterContentInit {
         obj['action'] = 'update';
         this._servicePerfilR.CrudActividad(obj).subscribe(x => {
           if (x !== 404) {
-            this.Registros.emit(obj);
+            const objAux = {
+              Index: this.index,
+              IsEdit: this.isActionEdit,
+              id: this.actividad.get('id').value,
+              actividad: this.actividad.get('actividad').value,
+              Usuario: this._setting.user.usuario,
+              DAMFO290Id: this.IdFormato
+            };
+            this.Registros.emit(objAux);
             this.Edit = false;
             this.isActionEdit = false;
             this.functionCreateAlert('success', true);

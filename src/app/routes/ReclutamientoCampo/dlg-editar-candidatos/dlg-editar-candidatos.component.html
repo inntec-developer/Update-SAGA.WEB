@@ -84,10 +84,10 @@
                 <div class="form-group with-focus">
                     <label class="text-muted" for="email">EMAIL</label>
                     <div class="input-group">
-                    <input [disabled]="model.options==1" type="email" class="form-control form-control-sm" (blur)="ValidarEmail(email)" placeholder="Email *" value="" name="emaill" [(ngModel)]="email" [class.requerido]="email.length < 7" [class.valido]="email.length >= 7"/>
+                    <input [disabled]="model.options == '1'" type="email" class="form-control form-control-sm" (blur)="ValidarEmail(email)" placeholder="Email *" value="" name="emaill" [(ngModel)]="email" [class.requerido]="email.length < 7" [class.valido]="email.length >= 7"/>
                     <div class="input-group-append">
                         <div class="input-group-text" tooltip="Registrar con Email" placement="top" container="body">
-                        <input [disabled]="model.options==1" type="radio" [(ngModel)]="modelOpc.options" name="modelOpc1" value="1" (click)="valOpcionReg(1);" [ngModelOptions]="{standalone: true}">
+                        <input [disabled]="model.options == '1'" type="radio" [(ngModel)]="modelOpc.options" name="modelOpc1" value="1" (click)="valOpcionReg(1);" [ngModelOptions]="{standalone: true}">
                         </div>
                       </div>
                     </div>
@@ -98,7 +98,7 @@
                 <div class="form-group mr-1">
                     <label class="text-muted" for="txtLada">LADA</label>
                     <div class="input-group">
-                        <input [disabled]="model.options==2" type="text" minlength="2" maxlength="3" class="form-control form-control-sm ladaLong"
+                        <input [disabled]="model.options=='2'" type="text" minlength="2" maxlength="3" class="form-control form-control-sm ladaLong"
                             placeholder="Lada *" [(ngModel)]="txtLada" name="Lada" [class.requerido]="txtLada.length < 2" [class.valido]="txtLada.length >= 2"/>
                     </div>
                 </div>
@@ -107,12 +107,12 @@
                 <div class="form-group long">
                     <label class="text-muted" for="txtPhone">TEL&Eacute;FONO</label>
                     <div class="input-group">
-                        <input [disabled]="model.options==2" (blur)="ValidarTelefono()" type="text" minlength="7" maxlength="8" class="form-control form-control-sm" placeholder="Telefono *"
+                        <input [disabled]="model.options=='2'" (blur)="ValidarTelefono()" type="text" minlength="7" maxlength="8" class="form-control form-control-sm" placeholder="Telefono *"
                             [(ngModel)]="txtPhone" name="Phone" [class.requerido]="txtPhone.length < 7" [class.valido]="txtPhone.length > 6"
                         />
                         <div class="input-group-append">
                             <div class="input-group-text" tooltip="Registrar con Tel&eacute;fono" placement="top" container="body">
-                                <input [disabled]="model.options==2" type="radio" [(ngModel)]="modelOpc.options" name="modelOpc2" value="2" (click)="valOpcionReg(2);" [ngModelOptions]="{standalone: true}">
+                                <input [disabled]="model.options=='2'" type="radio" [(ngModel)]="modelOpc.options" name="modelOpc2" value="2" (click)="valOpcionReg(2);" [ngModelOptions]="{standalone: true}">
                             </div>
                         </div>
                     </div>

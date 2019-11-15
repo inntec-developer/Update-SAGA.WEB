@@ -56,7 +56,7 @@ export class RportCandidatosComponent implements OnInit {
 
   candidatoId: any;
   ProcesoCandidatoId: any;
-  rowAux = [];
+  rowAux: any = [];
    /**
    * configuracion para mensajes de acciones.
    */

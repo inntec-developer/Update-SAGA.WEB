@@ -9,7 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { CardService } from './service/SeguimientoVacante/CardService.service';
 import { CoreModule } from './core/core.module';
 import { DetailService } from './service/SeguimientoVacante/DetailService.service';
-import { HttpModule } from '@angular/http';
 import { LayoutModule } from './layout/layout.module';
 import { RoutesModule } from './routes/routes.module';
 import { SharedModule } from './shared/shared.module';
@@ -28,7 +27,6 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   imports: [
     HttpClientModule,
-    HttpModule,
     BrowserAnimationsModule, // required for ng2-tag-input
     CoreModule,
     LayoutModule,

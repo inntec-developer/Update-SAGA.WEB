@@ -140,6 +140,7 @@ import { GraficaCalidadVencidaComponent } from './Graficas/grafica-calidad-venci
 import { GraficaReporteComponent } from './Graficas/grafica-calidad-activo/grafica-reporte/grafica-reporte.component';
 import { PopNotificacionesComponent } from './pop-notificaciones/pop-notificaciones.component';
 import { DlgCandidatoToRequiComponent } from './dlg-candidato-to-requi/dlg-candidato-to-requi.component';
+import { SagaBotComponent } from './saga-bot/saga-bot.component';
 
 @NgModule({
   imports: [
@@ -285,7 +286,8 @@ import { DlgCandidatoToRequiComponent } from './dlg-candidato-to-requi/dlg-candi
     GraficaCalidadVencidaComponent,
     GraficaReporteComponent,
     PopNotificacionesComponent,
-    DlgCandidatoToRequiComponent
+    DlgCandidatoToRequiComponent,
+    SagaBotComponent
   ],
   exports: [
     CandidatosCubiertosRportComponent,
@@ -378,9 +380,10 @@ import { DlgCandidatoToRequiComponent } from './dlg-candidato-to-requi/dlg-candi
     GraficaCalidadActivoComponent,
     GraficaCalidadVencidaComponent,
     PopNotificacionesComponent,
-    DlgCandidatoToRequiComponent
+    DlgCandidatoToRequiComponent,
+    SagaBotComponent
   ],
-  entryComponents: [DlgCandidatoToRequiComponent,PopNotificacionesComponent, DlgRequiArteComponent,
+  entryComponents: [DlgCandidatoToRequiComponent, PopNotificacionesComponent, DlgRequiArteComponent,
     DlgBGArteComponent, DlgCubiertasComponent,
     DlgResultadosMedicosComponent, DlgRegistroMasivoComponent,
     RegistroReclutadorComponent, TicketsRegisterComponent,

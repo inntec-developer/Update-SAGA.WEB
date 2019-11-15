@@ -53,17 +53,15 @@
         <div class="col-lg-4 col-md-6">
             <div class="card border">
                 <div class="card-header text-white">
-                    <div class="h-25 d-inline-block w-100 p-1 bg-primary">
-                    <div class="d-flex align-items-center float-left pl-1 pt-2"><h4 *ngIf="t.cliente.length < 30 else toLength">{{t.cliente | uppercase}}</h4>
+                    <div class="d-flex justify-content-between align-items-center p-1 bg-primary">
+                    <h4 class="mt-1" *ngIf="t.cliente.length < 20 else toLength">{{t.cliente | uppercase}}</h4>
                       <ng-template #toLength>
                           <h4 tooltip="{{t.cliente | uppercase}}" placement="top" container="body"> {{t.cliente | slice:0:30 | uppercase
                             }} ...
                           </h4>
                         </ng-template>
-                    </div>
-                    <div class="float-right mt-1">
                         <button (click)="clienteId = t.clienteId; modal=true; titulo = t.cliente;" class="btn btn-xs btn-success float-right mb-2 mr-1 mat-elevation-z8" container="body" placement="bottom" tooltip="Ver Detalle"><i class="fa fa-bar-chart"></i></button>
-                    </div>
+
                 </div>
                 </div>
                 <div class="card-body bt bb h-75">

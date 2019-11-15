@@ -75,30 +75,41 @@ export class RequisicionNuevaComponent implements OnInit {
           this.spinner.hide();
 
           setTimeout(() => {
-            const sendEmail = {
-              Email: this.settings['user']['email'],
-              Folio: this.folio,
-              VBtra: data['vBtra']
-            };
-            this.serviceRequisiciones.SendEmailNuevaRequi(sendEmail).subscribe(y => {
-              if (y !== 404) {
-                this.popToast('success', 'Nueva Requisición', 'Se te ha enviado un correo notificando que has creado una requisición.');
-                // tslint:disable-next-line: triple-equals
-                if (this.confidencial === false) {
-                  this.serviceRequisiciones.PublicarNuevaRequisicion(this.requisicionId).subscribe(x => {
-                    if (x !== 404) {
-                      this.popToast('success', 'Publicación de Requisición',
-                      'Se ha publicado correctamente en Bolsa de Trabajo la requisición.');
-                    } else {
-                      this.popToast('error', 'Nueva Requisicion', 'Error al intentar publicado en Bolsa de Trabajo la requisición.');
-                    }
-                  });
+            // const sendEmail = {
+            //   Email: this.settings['user']['email'],
+            //   Folio: this.folio,
+            //   VBtra: data['vBtra']
+            // };
+            if (this.confidencial === false) {
+              this.serviceRequisiciones.PublicarNuevaRequisicion(this.requisicionId).subscribe(x => {
+                if (x !== 404) {
+                  this.popToast('success', 'Publicación de Requisición',
+                  'Se ha publicado correctamente en Bolsa de Trabajo la requisición.');
+                } else {
+                  this.popToast('error', 'Nueva Requisicion', 'Error al intentar publicado en Bolsa de Trabajo la requisición.');
                 }
-              } else {
-                // tslint:disable-next-line: max-line-length
-                this.popToast('error', 'Nueva Requisicion', 'Error al intentar notificar por medio de correo electrónico la creación de la requisición.');
-              }
-            });
+              });
+            }
+            // this.serviceRequisiciones.SendEmailNuevaRequi(sendEmail).subscribe(y => {
+            //   if (y !== 404) {
+            //     this.popToast('success', 'Nueva Requisición', 'Se te ha enviado un correo notificando que has creado una requisición.');
+                // tslint:disable-next-line: triple-equals
+                // if (this.confidencial === false) {
+                //   this.serviceRequisiciones.PublicarNuevaRequisicion(this.requisicionId).subscribe(x => {
+                //     if (x !== 404) {
+                //       this.popToast('success', 'Publicación de Requisición',
+                //       'Se ha publicado correctamente en Bolsa de Trabajo la requisición.');
+                //     } else {
+                //       this.popToast('error', 'Nueva Requisicion', 'Error al intentar publicado en Bolsa de Trabajo la requisición.');
+                //     }
+                //   });
+                // }
+            //   } else {
+            //     // tslint:disable-next-line: max-line-length
+            // this.popToast('error', 'Nueva Requisicion',
+            // 'Error al intentar notificar por medio de correo electrónico la creación de la requisición.');
+            //   }
+            // });
           }, 10000);
 
 

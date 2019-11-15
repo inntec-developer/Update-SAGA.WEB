@@ -16,13 +16,10 @@ export class LogInGuardGuard implements CanActivate, CanActivateChild {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      if (!this.authService.isAuthenticated()){
+      if (!this.authService.isAuthenticated()) {
         this.router.navigate(['/login'])
         return false;
-      }
-      else
-      {
-
+      } else {
         return true;
       }
   }
