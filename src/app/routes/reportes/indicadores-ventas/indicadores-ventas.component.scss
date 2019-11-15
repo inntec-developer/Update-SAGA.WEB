@@ -1,0 +1,74 @@
+.opa{
+    background-color:#1FACD7;
+    opacity: .9;
+  filter:  alpha(opacity=80);
+   
+    border: 5px;
+   // height:70px;
+ }
+
+ .sombra{
+  -webkit-box-shadow: 10px 10px 40px -8px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 40px -8px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 40px -8px rgba(0,0,0,0.75);
+ }
+
+
+ .centrar{
+  text-align: center;
+  position: relative;
+  display: grid;
+  z-index: 1000;
+  margin-top: 34%;
+ }
+
+ .scaled {
+  transform: scale(0.5, 0.5); /* Igual que: scaleX(2) scaleY(0.5) */
+  transform-origin: left;
+  background-color: pink;
+}
+
+.dimen{
+  max-width: 25%;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.margen{
+  margin-top: 10px;
+  margin-bottom: 50px;
+}
+
+.left{
+  float: left;
+}
+
+.letra{
+  font-size: 10px
+}
+
+.padi{
+ padding-top: 3px;
+}
+
+
+.reporteMod
+{
+  top: 0% !important;
+  max-width: 100% !important;
+
+}
+
+
+.globo1{
+  position: relative;
+  left: -1%;
+}
+.globo2{
+  position: relative;
+  left: 8%;
+}
+.globo3{
+  position: relative;
+  left: 14%;
+}
