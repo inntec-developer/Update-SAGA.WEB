@@ -74,6 +74,12 @@ export class MapaReporteComponent implements OnInit {
       item.longitude = parseFloat(this.longArray[i]);
       i++
   });
+  this.General = this.General.filter(item => {
+    if (item.folios != '0')
+      return item;
+  });
+
+
       this.PintadoMapa();
     });
    
