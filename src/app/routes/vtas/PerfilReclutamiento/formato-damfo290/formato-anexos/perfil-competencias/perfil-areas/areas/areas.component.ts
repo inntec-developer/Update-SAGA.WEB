@@ -55,7 +55,6 @@ export class AreasComponent implements OnInit, AfterContentInit {
   }
 
   ngOnInit() {
-    console.log('Al inciar', this.AreasRegistradas);
   }
 
   Save() {

@@ -202,7 +202,7 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
               daux.setDate(daux.getDate() + 1);
             }
             r.diasTrans = diasTrans;
-            if (r.estatusId === 4) {
+            if (r.estatusId === 4 || r.estatusId === 43) {
               r.coordinador = r.reclutadores;
               r.reclutadores = 'SIN ASIGNAR';
             }
@@ -210,6 +210,7 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
         });
         if ( this.folio !==  '') {
           (<HTMLInputElement>document.getElementById('folio')).value = this.folio;
+
           const aux = this.dataSource.filter(x => x.folio.toString() === this.folio);
           // const idx = this.columns.findIndex(x => x.name === 'folio');
           this.columns[0].filtering.filterString = this.folio;

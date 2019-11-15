@@ -24,24 +24,29 @@ import { TicketsInicioComponent } from './tickets-inicio/tickets-inicio.componen
 import { TrackingVacantesComponent } from './tracking-vacantes/tracking-vacantes.component';
 import { VerTurnosComponent } from './ver-turnos/ver-turnos.component';
 import { ComponentsModule } from '../../components/components.module';
+import { ContactComponent } from './contact/contact.component';
 
 /* Use this routes definition in case you want to make them lazy-loaded */
-// const routes: Routes = [
-//     { path: 'login', component: LoginComponent },
-//     { path: 'register', component: RegisterComponent },
-//     { path: 'recover', component: RecoverComponent },
-//     { path: 'lock', component: LockComponent },
-//     { path: 'maintenance', component: MaintenanceComponent },
-//     { path: '404', component: Error404Component },
-//     { path: '500', component: Error500Component },
-//      { path: 'TrackingVacantes', component:TrackingVacantesComponent},
-// ];
+const routes: Routes = [
+    { path: 'login', component: LoginComponent },
+    { path: 'login/:Folio', component: LoginComponent },
+    { path: 'registro', component: RegisterComponent },
+   {path: 'contactanos', component: ContactComponent},
+   // { path: 'recover', component: RecoverComponent },
+   // { path: 'lock', component: LockComponent },
+   // { path: 'maintenance', component: MaintenanceComponent },
+   { path: '404', component: Error404Component },
+   // { path: '500', component: Error500Component },
+    { path: 'TrackingVacantes', component: TrackingVacantesComponent},
+     {path: 'Principal', component: InicioKioscoComponent},
+    {path: 'verturnos', component: VerTurnosComponent}
+];
 
 @NgModule({
     imports: [
 
         SharedModule,
-        //  RouterModule.forChild(routes),
+        RouterModule.forChild(routes),
         MatTableModule,
         MatInputModule,
         MatIconModule,
@@ -52,7 +57,7 @@ import { ComponentsModule } from '../../components/components.module';
         ReactiveFormsModule,
         NgScrollbarModule,
         HttpClientModule,
-        SistTicketsModule, 
+        SistTicketsModule,
         ComponentsModule
     ],
     declarations: [
@@ -67,7 +72,8 @@ import { ComponentsModule } from '../../components/components.module';
         TrackingVacantesComponent,
         TicketsInicioComponent,
         VerTurnosComponent,
-        InicioKioscoComponent
+        InicioKioscoComponent,
+        ContactComponent
     ],
     providers: [
         { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() },

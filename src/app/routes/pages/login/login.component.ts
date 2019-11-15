@@ -1,3 +1,4 @@
+
 import * as jwt_decode from 'jwt-decode';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -27,7 +28,7 @@ const swal = require('sweetalert');
   providers: [AdminServiceService, AuthService, CheckVertionSistemService]
 })
 export class LoginComponent implements OnInit {
-
+open = false;
   Folio: any;
   showRequi = false;
   Actualizado = false;

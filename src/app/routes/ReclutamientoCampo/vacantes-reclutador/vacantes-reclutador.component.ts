@@ -11,7 +11,8 @@ const swal = require('sweetalert');
 @Component({
   selector: 'app-vacantes-reclutador',
   templateUrl: './vacantes-reclutador.component.html',
-  styleUrls: ['./vacantes-reclutador.component.scss']
+  styleUrls: ['./vacantes-reclutador.component.scss'],
+  providers: [RequisicionesService]
 })
 export class VacantesReclutadorComponent implements OnInit {
   toaster: any;

@@ -1,15 +1,28 @@
 <div class="card">
   <div class="card-body">
-    <ng-container *ngFor="let row of dataSource">
-      <h5 class="text-muted"><i class="fa fa-user-md text-success mr-1" aria-hidden="true"></i>{{row.descripcion}}</h5>
-      <ng-container *ngFor="let r of row.tipos">
-        <mat-form-field class="ml-2">
-          <mat-icon matPrefix>attach_money</mat-icon>
-          <input matInput #costoMedico class="text-right" style="font-size: 18px;" step="any" type="number"
-            placeholder="Costo" formControlName="costoMedico">
-          <strong matSuffix>MXN.</strong>
-        </mat-form-field>
-        <hr>
+    <div class="d-flex justify-content-end">
+      <h6 class="text-warning float-right"><span class="mr-2">NO APLICA PARA COSTOS</span>
+        <mat-checkbox class="ml-1 mt-1" [(ngModel)]="aplica"></mat-checkbox>
+      </h6>
+    </div>
+    <ng-container *ngIf="!aplica">
+      <ng-container *ngFor="let row of dataSource">
+        <h5 class="bg-warning-light p-1"><i class="fa fa-user-md mr-1" aria-hidden="true"></i>{{row.costo | uppercase}}
+        </h5>
+        <ng-container *ngFor="let r of row.tipos">
+          <div class="d-flex align-items-center justify-content-start">
+            <span class="text-info mr-2">{{r.tipo}}</span>
+            <mat-form-field>
+              <mat-icon matPrefix>attach_money</mat-icon>
+              <input [disabled]="r.disabled" matInput #costoMedico class="text-right" style="font-size: 18px;"
+                step="any" type="number" placeholder="Costo">
+              <strong matSuffix>MXN.</strong>
+            </mat-form-field>
+            <em class="fa fa-check text-success em-button ml-2" (click)="GuardarCosto(r, costoMedico.value)"
+              *ngIf="costoMedico.value > 0 && !r.disabled"></em>
+
+          </div>
+        </ng-container>
       </ng-container>
     </ng-container>
   </div>

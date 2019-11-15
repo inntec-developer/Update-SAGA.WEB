@@ -17,7 +17,7 @@
 <section>
 </section>
 <tabset [justified]="true">
-  <tab heading="Cliente" id="TapCliente">
+  <tab heading="CLIENTE" id="TapCliente">
       <ng-template tabHeading >
           <i *ngIf="!cliente.formCliente.valid" class="text-danger fa fa-exclamation-circle ml-3" 
           container="body" placement="right" tooltip="Campos por llenar: {{msgRS}} {{msgTipo}} {{msgClase}}"></i>
@@ -25,7 +25,7 @@
     <app-formato-cliente [IdFormato]="IdFormato" [ctrlContratos]="requisitos" #FormatoClienteCpt></app-formato-cliente>
   </tab>
   <!-- [disabled]="!cliente.formCliente.valid" -->
-  <tab heading="Datos de Perfil" id="TapRequisitos" [disabled]="!cliente.formCliente.valid">
+  <tab heading="DATOS DE PERFIL" id="TapRequisitos" [disabled]="!cliente.formCliente.valid">
       <ng-template tabHeading>
           <i *ngIf="cliente.formCliente.valid && (!requisitos.formEncabezado.valid || requisitos.Escolaridades.length == 0)" 
           class="text-danger fa fa-exclamation-circle ml-3" container="body" placement="right" tooltip="campos vacios"></i>
@@ -33,7 +33,7 @@
     <app-formato-requisitos [IdFormato]="IdFormato" [tipoReclutamiento]="cliente.formCliente.controls['Tipo'].value"></app-formato-requisitos>
   </tab>
   <!-- [disabled]="!cliente.formCliente.valid" -->
-  <tab heading="Horarios, Prestaciones ..." id="TapInfoAdicional" [disabled]="!cliente.formCliente.valid">
+  <tab heading="HORARIOS, PRESTACIONES ..." id="TapInfoAdicional" [disabled]="!cliente.formCliente.valid">
       <ng-template tabHeading>
           <i *ngIf="cliente.formCliente.valid && ( anexos.Actividades.length == 0 ||
           anexos.Areas.length == 0 ||
@@ -55,18 +55,18 @@
    <app-file-manager [candidatoId]='IdFormato' [ruta]="'/utilerias/Files/ANEXOSDAMFO/'"></app-file-manager>
   </tab>
   <tab heading="COSTOS" id="tabCostos" [disabled]="!cliente.formCliente.valid">
-      <!-- <ng-template tabHeading>
-          <i *ngIf="cliente.formCliente.valid && (!requisitos.formEncabezado.valid || requisitos.Escolaridades.length == 0)" 
+      <ng-template tabHeading>
+          <i *ngIf="cliente.formCliente.valid && !costos.aplica" 
           class="text-danger fa fa-exclamation-circle ml-3" container="body" placement="right" tooltip="campos vacios"></i>
-        </ng-template> -->
-   <app-formato-costos></app-formato-costos>
+        </ng-template>
+   <app-formato-costos [IdFormato]="IdFormato"></app-formato-costos>
   </tab>
 </tabset>
 <br>
 <section class="row">
   <div class="col-lg-6 col-md-6 col-sm-12">
     <button type="reset" class="btn btn-block mat-elevation-z8 btn-danger" [routerLink]="['/reclutamiento/290']"
-      [disabled]="loading">Cancelar</button>
+      [disabled]="loading">CANCELAR</button>
   </div>
   <div class="col-lg-6 col-md-6 col-sm-12">
     <button *ngIf="!loading" class="btn btn-block btn-success mat-elevation-z8" [disabled]="
@@ -84,8 +84,9 @@
     anexos.Prestaciones.length == 0 ||
     anexos.Procesos.length == 0 ||
     anexos.PsicometriasC.length == 0 ||
-    anexos.PsicometriasD.length == 0
-    " (click)="GuardarPerfil()">Guardar</button>
+    anexos.PsicometriasD.length == 0 ||
+    !costos.aplica
+    " (click)="GuardarPerfil()">GUARDAR</button>
     <span *ngIf="loading"><i class="fa fa-spinner fa-2x fa-pulse" aria-hidden="true"></i></span>
   </div>
 </section>

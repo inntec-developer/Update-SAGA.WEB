@@ -1,10 +1,10 @@
-import * as jwt_decode from "jwt-decode";
+import * as jwt_decode from 'jwt-decode';
 
 import { Injectable } from '@angular/core';
-import { SettingsService } from "../settings/settings.service";
+import { SettingsService } from '../settings/settings.service';
 const CerrarSesion = {
   text: 'Cerrar Sesión',
-  link: '/login',
+  link: '/pages/login',
   icon: 'fa fa-power-off',
 };
 @Injectable()

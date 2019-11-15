@@ -120,7 +120,7 @@ export class EscolaridadesComponent implements OnInit, AfterContentInit {
   }
 
   getEscolaridad() {
-    const index = this.Escolaridades.findIndex(x => x.id == this.escolaridad.get('escolaridadId').value);
+    const index = this.Escolaridades.findIndex(x => x.id === this.escolaridad.get('escolaridadId').value);
     this.EscolaridadId = this.escolaridad.get('escolaridadId').value;
     this.Escolaridad = this.Escolaridades[index]['gradoEstudio'];
   }

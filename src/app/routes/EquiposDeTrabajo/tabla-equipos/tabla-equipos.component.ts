@@ -88,7 +88,6 @@ public dataSource: Array<any> = [];
   getRequisicionesClientes() {
     this._service.GetRportTableClientes(this.usuarioId, this.orden).subscribe( data => {
       this.dataSource = data;
-
       this.totalPos = 0;
       this.totalContratados = 0;
 

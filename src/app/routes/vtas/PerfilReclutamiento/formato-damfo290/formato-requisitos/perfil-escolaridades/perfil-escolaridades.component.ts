@@ -36,17 +36,19 @@ export class PerfilEscolaridadesComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdFormato != null) {
       this.esNuevo = false;
-      if (this.Escolaridades.length > 0) {
+      if (this.Escolaridades.length > 0 && changes['Escolaridades'].previousValue.length === 0) {
+        this.EscolaridadesNew = this.Escolaridades;
         this.PopulateForm(this.Escolaridades);
       }
     }
   }
 
-  private PopulateForm(escolaridad: any[]) {
+  private PopulateForm(escolaridad: any) {
     escolaridad.forEach(x => {
       this.AddEscolaridad(1);
     });
-    this.EscolaridadArray.controls['escolaridad'].setValue(this.Escolaridades);
+
+     this.EscolaridadArray.controls['escolaridad'].setValue(this.Escolaridades);
   }
 
   AddEscolaridad(Escolaridad?: any) {
@@ -94,6 +96,7 @@ export class PerfilEscolaridadesComponent implements OnInit, OnChanges {
   }
 
   removeEscolaridad(i: number) {
+    debugger;
     const control = <FormArray>this.EscolaridadArray.controls['escolaridad'];
     control.removeAt(i);
     this.EscolaridadesNew.splice(i, 1);

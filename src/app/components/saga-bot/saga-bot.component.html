@@ -1,0 +1,34 @@
+<div class="card">
+    <div class="d-flex justify-content-between bg-info p-1">
+      <h6 class="mt-1"><img src="../../../assets/img/Inntec/logo_saga2.png"/><span class="ml-2">SAGABOT</span></h6>
+      <button type="button" class="btn btn-xs btn-danger btn-circle mt-2" (click)="closeConversation()"><i
+        class="fa fa-times"></i></button>
+      </div>
+  <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="true" [trackY]="true"
+  [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+  <div class="card-body">
+      <ng-container *ngFor="let message of messages | async">
+          <div id="msgBot" #msgBot class="message" [ngClass]="{ 'from': message.sentBy === 'bot',
+           
+          'to': message.sentBy === 'user' }">
+           
+          <span>{{ message.content }}</span>
+           
+          </div>
+           
+          </ng-container>
+         
+          <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="input-group">
+                  <input type="text" class="form-control form-control-sm round" placeholder="Escribe tu mensaje" [(ngModel)]="formValue" (keyup.enter)="sendMessage()">
+                  <div class="input-group-append">
+                    <button class="btn btn-xs btn-success" (click)="sendMessage()"><i class="fa fa-paper-plane"></i></button>
+                  </div>
+                  </div>
+              </div>
+              </div>
+
+            </div>
+  </ng-scrollbar>
+</div>

@@ -5,7 +5,7 @@
       (click)="AddEscolaridad()" ></span>
     <mat-divider></mat-divider>
   </section>
-  <div class="container">
+  <div *ngIf="EscolaridadArray['controls'].escolaridad['controls'].length > 0" class="container">
     <div *ngFor="let escolaridad of EscolaridadArray['controls'].escolaridad['controls']; let i=index">
       <div formArrayName="escolaridad">
         <form [formGroupName]="i">
