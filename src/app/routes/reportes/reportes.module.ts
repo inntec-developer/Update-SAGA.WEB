@@ -32,7 +32,8 @@ const routes:Routes =[
   {path: 'reporteGeneral', component: ReporteGeneralComponent},
   {path: 'indicador', component: IndicadoresComponent},
   {path: 'calidad', component: CalidadComponent},
-  {path: 'mapa', component: MapaReporteComponent}
+  {path: 'mapa', component: MapaReporteComponent},
+  {path: 'indiventa', component: IndicadoresVentasComponent}
 ]
 @NgModule({
   imports: [

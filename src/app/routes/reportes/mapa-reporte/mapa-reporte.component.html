@@ -6,7 +6,7 @@
 
 <div style="width:100%;height:400px">
   <agm-map [mapTypeId]='tipomapa' [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-    <agm-marker *ngFor="let item of General"
+    <agm-marker *ngFor="let item of General" 
     (markerClick)="popMensaje(item.estado + ' con ' + item.folios +' folios activos')" 
     [latitude]='item.latitude'
     [longitude]='item.longitude'
@@ -21,9 +21,9 @@
 }"
     [label]="{
       color: 'black',
-      fontSize:'12px',
+      fontSize:'16px',
       fontWeight: 'bold',
-      text: item.estado+': '+ item.folios
+      text: '' +item.folios
     }">
   </agm-marker>
   <!-- <agm-marker (markerClick)="popMensaje('Guerrero con 40 folios activos')" [latitude]="latitude2"
@@ -32,7 +32,7 @@
     color: 'black',
     fontSize:'16px',
     fontWeight: 'bold',
-    text: 'Guerrero 40'
+    text: item.estado+': '+ item.folios
   }">
 </agm-marker> -->
   </agm-map>
