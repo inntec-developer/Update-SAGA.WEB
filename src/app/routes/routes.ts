@@ -21,7 +21,6 @@ export const routes = [
         canActivate:[LogInGuardGuard],
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full'},
-            { path: '**', redirectTo: 'pages/404' },
             { path: 'contact', redirectTo: 'pages/contactanos'},
             { path: 'home', loadChildren: './home/home.module#HomeModule' },
             { path: 'reclutamiento', loadChildren: './recl/reclutamiento.module#ReclutamientoModule'},
@@ -36,6 +35,7 @@ export const routes = [
             {path: 'webcampo', loadChildren: './ReclutamientoCampo/campo-web.module#CampoWebModule'},
         ]},
         {path: 'pages', loadChildren: './pages/pages.module#PagesModule'},
+        { path: '**', redirectTo: 'pages/404' },
         { path: 'login', redirectTo: 'pages/login' },
         { path: 'login/:Folio', redirectTo: 'pages/login/:Folio'},
         { path: 'register', redirectTo: 'pages/registro' },

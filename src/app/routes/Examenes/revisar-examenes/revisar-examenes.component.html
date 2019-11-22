@@ -1,11 +1,12 @@
 <div class="card">
   <div class="card-body">
       <h5 class="text-warning">
-          <em class="fa fa-pencil"></em> EXAMENES DISPONIBLES</h5>
+          <i class="fa fa-pencil"></i> EXAMENES DISPONIBLES</h5>
           <hr>
       <div class="d-flex justify-content-start mb-3">
-          <button class="btn btn-xs btn-success mat-elevation-z8" placement="right" tooltip="Generar Examen T&eacute;cnico"  [routerLink]="['/examenes/addexamen']"><i class="fa fa-plus"></i></button>
-          <button class="btn btn-xs btn-warning ml-2 mat-elevation-z8" placement="right" tooltip="Asignar Examen T&eacute;cnico"  [routerLink]="['/examenes/asignar']"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+          <button class="btn btn-xs btn-success mat-elevation-z8" placement="right" tooltip="Generar Examen T&eacute;cnico"  [routerLink]="['/examenes/addexamen']" [queryParams]="{ruta: 2}" [skipLocationChange]=true><i class="fa fa-plus"></i></button>
+          <button class="btn btn-xs btn-warning ml-2 mat-elevation-z8" placement="right" tooltip="Ver Examenes T&eacute;cnicos"  [routerLink]="['/examenes/verexamen']" [skipLocationChange]=true><i class="fa fa-eye"></i></button>
+          <button class="btn btn-xs btn-info ml-2 mat-elevation-z8" placement="right" tooltip="Asignar Examen T&eacute;cnico"  [routerLink]="['/examenes/asignar']"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
       </div>
       <div class="row">
         <div class="col-sm-6 col-md-6">

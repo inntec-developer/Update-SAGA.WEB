@@ -1,3 +1,4 @@
+import { MapaReporteComponent } from './../routes/reportes/mapa-reporte/mapa-reporte.component';
 import { ActividadEmpresaComponent } from './catalogos/actividad-empresa/actividad-empresa.component';
 import { ActividadesComponent } from './tablas/actividades/actividades.component';
 import { ActividadesReclutadorComponent } from './calendario/actividades-reclutador/actividades-reclutador.component';
@@ -141,6 +142,7 @@ import { GraficaReporteComponent } from './Graficas/grafica-calidad-activo/grafi
 import { PopNotificacionesComponent } from './pop-notificaciones/pop-notificaciones.component';
 import { DlgCandidatoToRequiComponent } from './dlg-candidato-to-requi/dlg-candidato-to-requi.component';
 import { SagaBotComponent } from './saga-bot/saga-bot.component';
+import { DlgTransferDamfo290Component } from './dlg-transfer-damfo290/dlg-transfer-damfo290.component';
 
 @NgModule({
   imports: [
@@ -287,7 +289,9 @@ import { SagaBotComponent } from './saga-bot/saga-bot.component';
     GraficaReporteComponent,
     PopNotificacionesComponent,
     DlgCandidatoToRequiComponent,
-    SagaBotComponent
+    SagaBotComponent,
+    MapaReporteComponent,
+    DlgTransferDamfo290Component
   ],
   exports: [
     CandidatosCubiertosRportComponent,
@@ -381,15 +385,19 @@ import { SagaBotComponent } from './saga-bot/saga-bot.component';
     GraficaCalidadVencidaComponent,
     PopNotificacionesComponent,
     DlgCandidatoToRequiComponent,
-    SagaBotComponent
+    SagaBotComponent,
+    MapaReporteComponent,
+    DlgTransferDamfo290Component
   ],
-  entryComponents: [DlgCandidatoToRequiComponent, PopNotificacionesComponent, DlgRequiArteComponent,
+  entryComponents: [DlgTransferDamfo290Component,
+    DlgCandidatoToRequiComponent, PopNotificacionesComponent, DlgRequiArteComponent,
     DlgBGArteComponent, DlgCubiertasComponent,
     DlgResultadosMedicosComponent, DlgRegistroMasivoComponent,
     RegistroReclutadorComponent, TicketsRegisterComponent,
     DlgRevisarExamenesComponent, DialogHorariosConteoComponent,
     DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent,
-    DlgRequisicionPausaComponent, EditarContratadosComponent, DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
+    DlgRequisicionPausaComponent, EditarContratadosComponent,
+    DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
 
 
 })

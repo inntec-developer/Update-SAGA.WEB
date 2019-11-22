@@ -4,12 +4,12 @@
   <div class="card">
     <div class="card-body">
         <h5 class="card-title text-warning mt-2">
-            <em class="fa fa-user-md mr-1"></em> EXAMENES MEDICOS</h5>
+            <i class="fa fa-user-md mr-1"></i> EXAMENES MEDICOS</h5>
         <div class="d-flex justify-content-end mb-3 mr-2">
      
             <button type="button" class="btn btn-xs btn-success mat-elevation-z8 float-right mt-1" (click)="refreshTable()" container="body"
             placement="bottom" tooltip="Actualizar" container="body">
-            <em class="icon-refresh"></em>
+            <i class="icon-refresh"></i>
           </button>
 
         </div>
@@ -37,7 +37,7 @@
         <div class="card" *ngFor="let row of rows; let rowIndex = index">
           <a class="card-header" [class.collapsed]="row.verRow"  (click)="row.verRow = !row.verRow">
             <h5>
-                  <span class="text-primary float-left "><em class="fa fa-file-text-o"></em> {{row.cliente | uppercase}} - {{row.razon | uppercase}} <span class="text-warning">({{row.total}})</span></span>
+                  <span class="text-primary float-left "><i class="fa fa-file-text-o mr-1"></i> {{row.cliente | uppercase}} - {{row.razon | uppercase}} <span class="text-warning">({{row.total}})</span></span>
 
               <i *ngIf="!row.verRow" class="fa fa-caret-down float-right text-muted" aria-hidden="true"></i>
               <i *ngIf="row.verRow" class="fa fa-caret-up float-right text-muted" aria-hidden="true"></i>
@@ -63,8 +63,8 @@
                 <table class="table">
                   <thead>
                     <th class="text-center text-success">FOLIO</th>
-                    <th class="text-center text-success">PERFIL</th>
-                    <th class="text-center text-warning"><em class="fa fa-user mr-2"></em>CANDIDATO</th>
+                    <th class="text-center text-info">PERFIL</th>
+                    <th class="text-center text-warning"><i class="fa fa-user mr-2"></i>CANDIDATO</th>
                     <th class="text-center">EXAMEN</th>
                     <th class="text-center">RESULTADO</th>
                     <th class="text-center">FACTURAR</th>
@@ -73,8 +73,8 @@
                       <ng-container   >
                         <ng-container *ngFor="let r of row.candidatos;" >
                       <tr class="rowHover" *ngFor="let rr of r.candidatos; let rowIndex = index" (click)="onCellClick(r, rr)" [class.bg-primary-light]="rr.selected" >
-                        <td class="text-center text-success">{{ r.folio }}</td>
-                        <td class="text-center text-success">{{ r.vBtra | uppercase}}</td>
+                        <td class="text-center">{{ r.folio }}</td>
+                        <td class="text-center">{{ r.vBtra | uppercase}}</td>
                         <td class="text-center text-warning">{{ rr.nombre | uppercase}}</td>
 
                         <td class="text-center">
@@ -95,7 +95,7 @@
                         </td>
                         <td class="text-center">
                             <div class="form-check mb-2">
-                                <input type="checkbox" [disabled]="!sel" class="form-check-input" (change)="AddCandidato($event, rr, row)">
+                                <input type="checkbox" [disabled]="!sel" class="form-check-input" (change)="AddCandidato($event, rr, r)">
                               </div>
                         </td>
 

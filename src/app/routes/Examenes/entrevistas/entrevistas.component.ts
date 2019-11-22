@@ -143,11 +143,11 @@ export class EntrevistasComponent implements OnInit {
   }
 
   addExamen() {
-    this._Router.navigate(['/examenes/addexamen/'], { skipLocationChange: true });
+    this._Router.navigate(['/examenes/addexamen/'], {queryParams: {ruta: 1}, skipLocationChange: true});
   }
 
   contestarExamen() {
-    this._Router.navigate(['/examenes/contestar/'], { skipLocationChange: true });
+    this._Router.navigate(['/examenes/verentrevista/'], { skipLocationChange: true });
   }
 
   public refreshTable() {

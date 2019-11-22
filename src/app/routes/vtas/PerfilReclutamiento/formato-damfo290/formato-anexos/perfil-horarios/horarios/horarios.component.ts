@@ -54,6 +54,8 @@ export class HorariosComponent implements OnInit, AfterContentInit {
 
   TypeAlert = '';
   MsgAlert = '';
+  topHorarios: any;
+  AuxOptions: any;
 
   constructor(
     private _serviceCatalogos: CatalogosService,
@@ -92,6 +94,48 @@ export class HorariosComponent implements OnInit, AfterContentInit {
     }
   }
 
+  filter($event) {
+    if ($event.keyCode !== 40 && $event.keyCode !== 38) {
+      const filter = this.horario.get('horario').value;
+      if (filter !== '' || filter != null && filter.length > 3) {
+        this._servicePerfilR.getClientes(filter).subscribe(data => {
+          if (data != null && data.length > 0 && data !== 404) {
+            this.AuxOptions = this.topHorarios.filter(element => {
+              return element['nombre'].toString().toLowerCase().match(filter.toString().toLowerCase());
+            });
+          }
+        });
+      } else if (filter === '') {
+      }
+    }
+  }
+
+  selected(event: any, rowIndex) {
+    const select = event['option']['value'];
+    const horario = this.AuxOptions.filter(element => {
+      return element['nombre'].toString().toLowerCase().match(select.nombre.toString().toLowerCase())
+      && element['deDia'].toString().toLowerCase().match(select.deDia.toString().toLowerCase()) &&
+      element['aDia'].toString().toLowerCase().match(select.aDia.toString().toLowerCase()) &&
+      element['deHora'].toString().toLowerCase().match(select.deHora.toString().toLowerCase()) &&
+      element['aHora'].toString().toLowerCase().match(select.aHora.toString().toLowerCase());
+    });
+     this.horario.controls['horario'].setValue(horario[0]['nombre'].toUpperCase());
+     this.horario.controls['deDiaId'].setValue(horario[0]['deDiaId']);
+     this.horario.controls['aDiaId'].setValue(horario[0]['aDiaId']);
+    this.nombre = horario[0]['nombre'];
+    this.deDia = horario[0]['deDia'];
+    this.aDia = horario[0]['aDia'];
+    this.deDiaId = horario[0]['deDiaId'];
+    this.aDiaId = horario[0]['aDiaId'];
+    this.deHora =  horario[0]['deHora'];
+    this.aHora =  horario[0]['aHora'];
+
+    this.OnEdit();
+
+    // this.horario.controls['aDiaId'].setValue(horario[0]['aDia']);
+    //  this.horario.controls['deHora'].setValue(deHora);
+    //  this.horario.controls['aHora'].setValue(aHora);
+  }
   mocos($event) {
 
     const horaInicio = this.horario.get('deHora').value.split(':');
@@ -307,6 +351,9 @@ export class HorariosComponent implements OnInit, AfterContentInit {
   getCatalogos() {
     this._serviceCatalogos.getCatalogoForId(23).subscribe(element => {
       this.DiasSemana = element.filter(x => x.tipo === 3);
+      this._servicePerfilR.getTopHorarios().subscribe(result => {
+        this.topHorarios = result;
+      });
     });
   }
 

@@ -14,7 +14,7 @@ import { CustomValidators } from 'ng2-validation';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { password } from '../../../models/admin/password';
 
-//Modelos
+// Modelos
 export interface DialogData {
   user: string;
 }
@@ -91,7 +91,7 @@ open = false;
     const user = {
       email: email,
       password: password
-    }
+    };
     this.authenticationService.login(user)
       .subscribe(
         data => {

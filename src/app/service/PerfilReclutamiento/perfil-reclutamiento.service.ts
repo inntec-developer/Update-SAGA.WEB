@@ -27,6 +27,7 @@ export class PerfilReclutamientoService {
   private urlGetClienteId = ApiConection.ServiceUrl + ApiConection.GetClienteId;
   private urlGetInfoPerfil = ApiConection.ServiceUrl + ApiConection.GetInfoPerfil;
   private urlGetAnexosPerfil = ApiConection.ServiceUrl + ApiConection.GetAnexosPerfil;
+  private urlGetTopHorarios = ApiConection.ServiceUrl + ApiConection.GetTopHorarios;
 
   private urlAddEscolaridad = ApiConection.ServiceUrl + ApiConection.AddEscolaridad;
   private urlEditEscolaridad = ApiConection.ServiceUrl + ApiConection.EditEscolaridad;
@@ -47,6 +48,8 @@ export class PerfilReclutamientoService {
   private urlCrudPerfilReclutamiento = ApiConection.ServiceUrl + ApiConection.CrudPerfilReclutamiento;
 
   private urlGetClasesTipos = ApiConection.ServiceUrl + ApiConection.GetClasesTiposRecl;
+
+  private urlGetSubOrdinados = ApiConection.ServiceUrl + ApiConection.GetSubordinados;
 
   constructor(
     private _httpClient: HttpClient
@@ -80,6 +83,11 @@ export class PerfilReclutamientoService {
   getTiposClasesRecl(): Observable<any> {
     return this._httpClient.get<any>(this.urlGetClasesTipos);
   }
+
+  getTopHorarios(): Observable<any> {
+    return this._httpClient.get<any>(this.urlGetTopHorarios);
+  }
+
   addEscolaridad(data: any): Observable<any> {
     return this._httpClient.post<any>(this.urlAddEscolaridad, data, this.httpOptions);
   }
@@ -144,4 +152,8 @@ export class PerfilReclutamientoService {
     return this._httpClient.post<any>(this.urlCrudPerfilReclutamiento, data, this.httpOptions);
   }
 
+  GetSubOrdinados(lider:any): Observable<any> {
+    const params = new HttpParams().set('lider', lider);
+    return this._httpClient.get<any>(this.urlGetSubOrdinados, {params: params, headers: this.httpOptions.headers});
+  }
 }

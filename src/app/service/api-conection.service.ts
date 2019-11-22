@@ -444,6 +444,7 @@ public static GetClasesTiposRecl = 'PerfilReclutamiento/getTipoClase';
   public static GetClienteId = 'PerfilReclutamiento/getClienteId';
   public static GetInfoPerfil = 'PerfilReclutamiento/getInfoPerfil';
   public static GetAnexosPerfil = 'PerfilReclutamiento/getAnexosPerfil';
+  public static GetTopHorarios = 'PerfilReclutamiento/getTopHorarios';
 
   public static AddEscolaridad = 'PerfilReclutamiento/addEscolaridad';
   public static EditEscolaridad = 'PerfilReclutamiento/editEscolaridad';
@@ -462,15 +463,19 @@ public static GetClasesTiposRecl = 'PerfilReclutamiento/getTipoClase';
   public static CrudCompAreas = 'PerfilReclutamiento/crudCompArea';
   public static CrudCompGerenciales = 'PerfilReclutamiento/crudCompGerencial';
   public static CrudPerfilReclutamiento = 'PerfilReclutamiento/crudPerfilReclutamiento';
+  public static GetSubordinados = 'PerfilReclutamiento/getSubordinados';
 
   // Reclutamiento campo
   public static GetReclutadoresCampo = 'Campo/getReclutadores';
+  public static GetReclutadoresCampo2 = 'Campo/getReclutadoresCampo';
   public static GetRequisReclutadores = 'Campo/getRequisReclutadores';
   public static GetUnidadesNegocio = 'Campo/getUnidadesNegocios';
   public static GetReclutadoresByUnidad = 'Campo/getReclutadoresByUnidades';
   public static GetCandidatosProceso = 'Campo/getCandidatosProceso';
   public static UpdateContratadosCampo  = 'Campo/updateContratadosCampo';
+  
 
   // ventas costos
   public static GetCostos = 'Costos/getCostos';
+  public static GetCostosByDamfo = 'Costos/getCostosByDamfo';
 }

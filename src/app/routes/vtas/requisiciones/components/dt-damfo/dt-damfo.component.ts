@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../service';
 import { SettingsService } from '../../../../../core/settings/settings.service';
 import { PerfilReclutamientoService } from '../../../../../service/PerfilReclutamiento/perfil-reclutamiento.service';
+import { DlgTransferDamfo290Component } from '../../../../../components/dlg-transfer-damfo290/dlg-transfer-damfo290.component';
 
 declare var $: any;
 const swal = require('sweetalert');
@@ -110,6 +111,7 @@ export class DtDamfoComponent implements OnInit {
     private service: RequisicionesService,
     private _perfillR: PerfilReclutamientoService,
     private dialog: MatDialog,
+    private dialog2: MatDialog,
     private _Router: Router,
     private _Route: ActivatedRoute,
     private spinner: NgxSpinnerService,
@@ -193,9 +195,6 @@ export class DtDamfoComponent implements OnInit {
       (<any>Object).assign(this.config.filtering, config.filtering);
     }
 
-    if (config.sorting) {
-      (<any>Object).assign(this.config.sorting, config.sorting);
-    }
     this.registros = this.dataSource.length;
     this.rows = this.dataSource;
     const filteredData = this.changeFilter(this.dataSource, this.config);
@@ -239,8 +238,9 @@ export class DtDamfoComponent implements OnInit {
   * Funciones para la administracion del 290
   * */
   public refreshTable() {
+    this.spinner.show();
     this.getDamfo290();
-    this.element = null;
+    this.element = [];
     this.selected = false;
   }
 
@@ -278,6 +278,16 @@ export class DtDamfoComponent implements OnInit {
         swal('Ops...!', 'Este formato DAM-FO-290 no cuenta con horarios activos. No es posible generar la requisición', 'error');
       }
     }
+  }
+  openDialogTransfer() {
+    const dialogRef = this.dialog.open(DlgTransferDamfo290Component, {
+          width: '70%',
+          height: 'auto',
+          data: this.element
+    });
+    dialogRef.afterClosed().subscribe(result => {
+        this.refreshTable();
+    });
   }
 
   crearPerfil290() {

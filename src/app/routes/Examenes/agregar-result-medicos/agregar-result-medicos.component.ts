@@ -106,18 +106,17 @@ total = 0;
 
   }
 
-  AddCandidato($event, r, cliente) {
-    if($event.srcElement.checked)
-    {
+  AddCandidato($event, r, requi) {
+    if ($event.srcElement.checked) {
       this.candidatos.push({
         candidatoId: r.candidatoId,
         facturado: true,
-        resultado: r.resultado == 'APTO' ? 1 : 0,
-        clienteId: cliente.clienteId
+        resultado: r.resultado === 'APTO' ? 1 : 0,
+        requisicionId: requi.requisicionId
       });
     } else {
       this.candidatos = this.candidatos.filter(x => {
-        if(x.candidatoId !== r.candidatoId) {
+        if (x.candidatoId !== r.candidatoId) {
           return x;
         }
       });
@@ -156,28 +155,26 @@ total = 0;
         // });
         // this.spinner.hide();
 
-        let dialog = this.dialog.open(DlgResultadosMedicosComponent, {
+        const dialog = this.dialog.open(DlgResultadosMedicosComponent, {
           width: '60%',
           height: '50%',
-          data: { cliente: this.dataSource[0].cliente + ' ' + this.dataSource[0].razon, examenes: this.dataSource[0].examenes, candidatos: this.candidatos.length }
+          data: { cliente: this.dataSource[0].cliente + ' ' +
+           this.dataSource[0].razon, examenes: this.dataSource[0].examenes, candidatos: this.candidatos.length }
         });
         dialog.afterClosed().subscribe(result => {
-          if (result == 'Ok') {
+          if (result === 'Ok') {
             this.spinner.show();
-            this._service.InsertResultMedico(this.candidatos).subscribe(result => {
-              if (result == 200) {
+            this._service.InsertResultMedico(this.candidatos).subscribe(result2 => {
+              if (result2 === 200) {
                 this.candidatos = [];
                 this.GetCandidatosExamen();
                 this.spinner.hide();
-              }
-              else {
+              } else {
                 this.spinner.hide();
                 swal('FACTURA', 'Ocurrió un error al intentar registrar resultados', 'error');
               }
             });
-          }
-          else
-          {
+          } else {
             swal('FACTURA', 'No se realizó ningun cambio', 'warning');
           }
         });

@@ -1,3 +1,14 @@
+<div class="content-heading">
+  <div>
+      <h6>Reclutadores de campo</h6>
+      <span class="text-sm d-none d-sm-block">Administraci&oacute;n de reclutadores.</span>
+  </div>
+  <!-- Breadcrumb right aligned-->
+  <ol class="breadcrumb ml-auto">
+      <li class="breadcrumb-item"><a [routerLink]="['/home']" >Inicio</a></li>
+      <li class="breadcrumb-item active">Reclutadores en campo</li>
+  </ol>
+</div>
 <div class="card">
   <div class="card-body">
     <div class="row p-2 mb-1 bg-light">
@@ -9,9 +20,9 @@
           tooltip="Desactivar Usuario">
           <i class="fa fa-ban"></i>
         </button>
-        <button id='special' chkPrivilegiosButtons [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-purple'" class="btn btn-xs mat-elevation-z8 float-left mr-2" (click)="SendEmail(rowAux)" container="body" placement="bottom"
+        <!-- <button id='special' chkPrivilegiosButtons [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-purple'" class="btn btn-xs mat-elevation-z8 float-left mr-2" (click)="SendEmail(rowAux)" container="body" placement="bottom"
         tooltip="Enviar Correo">
-        <i class="fa fa-envelope"></i></button>
+        <i class="fa fa-envelope"></i></button> -->
 
           <button *ngIf="tipoUsuario == '1'" [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-danger'" class="btn btn-xs mat-elevation-z8 float-left mr-2" (click)="Borrar(p)" container="body" placement="bottom"
           tooltip="Borrar Usuario">
@@ -22,20 +33,19 @@
         <i class="fa fa-download"></i>
       </button>
 
-        <button type="button" class="btn btn-xs btn-success mat-elevation-z8 float-right mr-1" (click)="refreshTable()" container="body"
+        <button type="button" class="btn btn-xs btn-success mat-elevation-z8 float-right mr-2" (click)="refreshTable()" container="body"
           placement="bottom" tooltip="Actualizar" container="body">
           <i class="icon-refresh"></i>
         </button>
-        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" class="mr-1 btn btn-xs mat-elevation-z8 float-right"
-          [disabled]="!clearFilter" [ngClass]="(!clearFilter) ? 'disabled':'btn-primary'">
+        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" class="mr-1 btn btn-xs btn-primary mat-elevation-z8 float-right">
           <i class="fa fa-eraser"></i>
         </button>
         <span class="text-muted font-weight-bold float-right text-uppercase mr-4 ">Total de Usuarios
-          <span class="badge badge-pill badge-success">{{Users.length}}</span>
+          <span class="badge badge-pill badge-success">{{reclutadores.length}}</span>
         </span>
       </div>
     </div>
-    <table id="UsersDataTable" ngClass={{config.className}} class="table" style="width:100%">
+    <table class="table" style="width:100%">
         <thead>
           <tr>
             <th style="width:70px;"></th>
@@ -117,32 +127,8 @@
             </td>
             <td class="text-center" *ngIf="p.email.length > 0">
               {{p.email}}
-              <!-- <tr *ngFor="let e of p.email" class="text-center" >{{e.email}}</tr> -->
             </td>
-            <td class="text-center">
-              <span container="body" placement="bottom" tooltip="Doble click para editar"
-                (dblclick)="editing[rowIndex + '-departamento'] = true" *ngIf="!editing[rowIndex + '-departamento']">
-                {{p.departamento}}
-              </span>
-              <select class="form-control-sm form-control"
-                (change)="updateValue($event, 'departamentoId', rowIndex, p.entidadId)"
-                *ngIf="editing[rowIndex + '-departamento']">
-                <option [value]=0>Seleccionar Departamento</option>
-                <option *ngFor="let d of ListDepas" [value]='d.id'>{{d.nombre}}</option>
-              </select>
-            </td>
-            <td class="text-center">
-              <span container="body" placement="bottom" tooltip="Doble click para editar"
-                (dblclick)="editing[rowIndex + '-tipoUsuario'] = true" *ngIf="!editing[rowIndex + '-tipoUsuario']">
-                {{p.tipoUsuario}}
-              </span>
-              <select class="form-control-sm form-control"
-                (change)="updateValue($event, 'tipoUsuarioId', rowIndex, p.entidadId)"
-                *ngIf="editing[rowIndex + '-tipoUsuario']">
-                <option [value]=0>Seleccionar Tipo Usuario</option>
-                <option *ngFor="let t of ListTipos" [value]='t.id'>{{t.tipo}}</option>
-              </select>
-            </td>
+            <td class="text-center">{{p.departamento}}</td>
             <td class="text-center">
               <span container="body" placement="bottom" tooltip="Doble click para editar"
                 (dblclick)="editing[rowIndex + '-lider'] = true" *ngIf="!editing[rowIndex + '-lider']">
@@ -167,10 +153,6 @@
             </td>
             <td class="text-center">
                 <i class="fa" [ngClass]="p.activo == 1 ? 'text-success fa-user' : 'text-muted fa-user-o'" aria-hidden="true"></i>
-              <!-- <label class="switch"> -->
-                <!-- <input type="checkbox" [checked]="p.activo" disabled/> -->
-                <!-- <span></span>
-              </label> -->
             </td>
             <td class="action-width">
   
@@ -195,38 +177,3 @@
 </div>
 
 <toaster-container toaster-options="{'toaster-id': 2 }" [toasterconfig]="toasterconfig"></toaster-container>
-<!-- <div *ngIf="verMsj">
-              <alert [type]="alert.type" [dismissible]="true" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
-            </div> -->
-
-
-
-<!-- Modal  -->
-
-<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
-  aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title pull-left">Actualizar Foto de Perfil</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-12">
-            <app-upload-imgs #uploadImg [maxFileSize]="1*1024*1024"
-              [accept]="['image/png', 'image/jpeg', 'image/jpg', 'image/bmp']"
-              [errorMessageMaxSize]="'File size great than 1MB'" [name]="name">
-            </app-upload-imgs>
-          </div>
-        </div>
-        <!-- <div class="modal-footer">
-               <btn-closed data-dismiss="modal" (click)="staticModal.hide()"></btn-closed>
-             </div>
-         </div> -->
-      </div>
-    </div>
-  </div>
-</div>

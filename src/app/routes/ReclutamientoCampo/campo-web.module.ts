@@ -8,10 +8,12 @@ import { ComponentsModule } from './../../components/components.module';
 import { VacantesReclutadorComponent } from './vacantes-reclutador/vacantes-reclutador.component';
 import { RportCandidatosComponent } from './rport-candidatos/rport-candidatos.component';
 import { DlgEditarCandidatosComponent } from './dlg-editar-candidatos/dlg-editar-candidatos.component';
+import { AdminReclutadoresCampoComponent } from './admin-reclutadores-campo/admin-reclutadores-campo.component';
 const routes: Routes = [
   { path: 'inicio', component: WebCampoComponent },
   { path: 'rportCandidatos', component: RportCandidatosComponent },
-  { path: 'reclutadorvacantes', component: VacantesReclutadorComponent }
+  { path: 'reclutadorvacantes', component: VacantesReclutadorComponent },
+  { path: 'adminreclutadores', component: AdminReclutadoresCampoComponent }
 ];
 
 @NgModule({
@@ -23,7 +25,8 @@ const routes: Routes = [
     ComponentsModule,
     RouterModule.forChild(routes),
   ],
-  declarations: [WebCampoComponent, VacantesReclutadorComponent, RportCandidatosComponent, DlgEditarCandidatosComponent],
+  declarations: [WebCampoComponent,
+     VacantesReclutadorComponent, RportCandidatosComponent, DlgEditarCandidatosComponent, AdminReclutadoresCampoComponent],
   exports: [
     RouterModule,
     DlgEditarCandidatosComponent

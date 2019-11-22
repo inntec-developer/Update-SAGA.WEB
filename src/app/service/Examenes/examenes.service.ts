@@ -135,6 +135,9 @@ export class ExamenesService {
     let params = new HttpParams().set('tipoexamenId', tipoexamenId);
     return this._httpClient.get(this.URLGetExamenes, {params:params});
   }
+  GetAllExamenes(): Observable<any> {
+    return this._httpClient.get(this.URLGetExamenes);
+  }
   GetExamenesEntrevista(): Observable<any> {
     return this._httpClient.get(this.URLGetExamenesEntrevista);
   }

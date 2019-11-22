@@ -1,8 +1,10 @@
+import { SettingsService } from './../../../core/settings/settings.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { ExamenesService } from './../../../service/Examenes/examenes.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-examen',
@@ -41,8 +43,19 @@ toasterconfig: ToasterConfig = new ToasterConfig({
   mouseoverTimerStop: true,
   preventDuplicates: true,
 });
+  ruta: any = 1;
 
-  constructor(private service: ExamenesService, private toasterService: ToasterService) { }
+  constructor(private service: ExamenesService,
+    private toasterService: ToasterService,
+    private settings: SettingsService,
+    private _Router: Router,
+    private _Route: ActivatedRoute) {
+      this._Route.queryParams.subscribe(params => {
+        if (params['ruta'] != null) {
+          this.ruta = params['ruta'];
+        }
+      });
+   }
 
   ngOnInit() {
     this.GetCatalogoExamenes();
@@ -51,7 +64,7 @@ toasterconfig: ToasterConfig = new ToasterConfig({
   GetCatalogoExamenes() {
     this.service.GetCatalogo().subscribe(data => {
       this.catalogo = data;
-    })
+    });
   }
 
   AgregarRespuesta(resp, value) {
@@ -98,14 +111,16 @@ toasterconfig: ToasterConfig = new ToasterConfig({
   AgregarPregunta() {
     if (this.respuestas.length > 3) {
       if (this.imgPregunta.file.length === 0) {
-        this.imgPregunta = { Pregunta: this.preguntas, Tipo: 2, file: '', name: '', type: '' }
+        this.imgPregunta = { Pregunta: this.preguntas, Tipo: 2, file: '', name: '', type: '' };
       } else {
         this.imgPregunta.Tipo = 2;
       }
 
       this.examen.push({ Pregunta: this.imgPregunta,
         Respuestas: this.respuestas,
-        TipoExamen: { Id: this.tipoexamenId, Nombre: this.nomExamen } });
+        TipoExamen: { Id: this.tipoexamenId, Nombre: this.nomExamen },
+        usuarioId: this.settings.user['id']
+      });
 
       this.preguntas = '';
       this.respuestas = [];
@@ -116,16 +131,17 @@ toasterconfig: ToasterConfig = new ToasterConfig({
       this.img = false;
       this.respVal = false;
       this.imgPregunta = { Pregunta: '', Tipo: 0, file: '', name: '', type: '' };
-    } else if (this.respuestas.length == 0) {
-      if (this.imgPregunta.file.length == 0) {
-        this.imgPregunta = { Pregunta: this.preguntas, Tipo: 1, file: '', name: '', type: '' }
+    } else if (this.respuestas.length === 0) {
+      if (this.imgPregunta.file.length === 0) {
+        this.imgPregunta = { Pregunta: this.preguntas, Tipo: 1, file: '', name: '', type: '' };
       } else {
         this.imgPregunta.Tipo = 1;
       }
 
-      this.examen.push({ Pregunta: this.imgPregunta, 
+      this.examen.push({ Pregunta: this.imgPregunta,
         Respuestas: this.respuestas, 
-        TipoExamen: { Id: this.tipoexamenId, Nombre: this.nomExamen } });
+        TipoExamen: { Id: this.tipoexamenId, Nombre: this.nomExamen },
+        usuarioId: this.settings.user['id'] });
 
       this.preguntas = '';
       this.respuestas = [];

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-import { ExamenesService } from './../../../service/Examenes/examenes.service';
+import { ExamenesService } from '../../../service/Examenes/examenes.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
-  selector: 'app-contestar-examen',
-  templateUrl: './contestar-examen.component.html',
-  styleUrls: ['./contestar-examen.component.scss']
+  selector: 'app-ver-entrevista',
+  templateUrl: './ver-entrevista.component.html',
+  styleUrls: ['./ver-entrevista.component.scss']
 })
-export class ContestarExamenComponent implements OnInit {
+export class VerEntrevistaComponent implements OnInit {
 
   // scroll
   public disabled = false;
@@ -37,7 +37,7 @@ calificacion = 0;
   });
 
   constructor(private service: ExamenesService, private toasterService: ToasterService,
-    public dialog: MatDialogRef<ContestarExamenComponent>) { }
+    public dialog: MatDialogRef<VerEntrevistaComponent>) { }
   nomExamen: any;
 
   ngOnInit() {

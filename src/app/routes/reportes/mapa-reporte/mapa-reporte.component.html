@@ -1,40 +1,21 @@
 
-<!--
-  <img [src]="src"/>
-<div #gmap style="width:100%;height:400px"></div> -->
-
-
 <div style="width:100%;height:400px">
   <agm-map [mapTypeId]='tipomapa' [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-    <agm-marker *ngFor="let item of General" 
-    (markerClick)="popMensaje(item.estado + ' con ' + item.folios +' folios activos')" 
-    [latitude]='item.latitude'
-    [longitude]='item.longitude'
-    class="shadow"
-    [iconUrl] ="
-  {
-    url: 'https://paseovillalta.com/wp-content/uploads/2019/05/ICONO-LOCALES.png',
-    scaledSize: {
-        width: 50,
-        height: 50
-    }
-}"
-    [label]="{
-      color: 'black',
+    <agm-marker *ngFor="let item of General" (mouseOver)="onMouseOver(infoWindow, $event)"
+      (mouseOut)="onMouseOut(infoWindow, $event)" [latitude]='item.latitude' [longitude]='item.longitude' class="shadow"
+      [label]="{
+      color: 'white',
       fontSize:'16px',
       fontWeight: 'bold',
-      text: '' +item.folios
+      text: '' + item.folios
     }">
-  </agm-marker>
-  <!-- <agm-marker (markerClick)="popMensaje('Guerrero con 40 folios activos')" [latitude]="latitude2"
-  [longitude]="longitude2"
-  [label]="{
-    color: 'black',
-    fontSize:'16px',
-    fontWeight: 'bold',
-    text: item.estado+': '+ item.folios
-  }">
-</agm-marker> -->
+      <agm-info-window [disableAutoPan]="false" #infoWindow>
+
+        <div class="bg-info p-2 text-center"> {{item.estado | uppercase}}</div><br/>
+        <div class="font-weight-bold text-center">
+          FOLIOS ACTIVOS<span class="badge badge-pill badge-warning ml-1 mb-1">{{item.folios}}</span>
+        </div>
+      </agm-info-window>
+    </agm-marker>
   </agm-map>
 </div>
-

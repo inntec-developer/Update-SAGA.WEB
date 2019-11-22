@@ -1,8 +1,9 @@
+<form [formGroup]="form">
 <div class="card">
   <div class="card-body">
     <div class="d-flex justify-content-end">
       <h6 class="text-warning float-right"><span class="mr-2">NO APLICA PARA COSTOS</span>
-        <mat-checkbox class="ml-1 mt-1" [(ngModel)]="aplica"></mat-checkbox>
+        <mat-checkbox class="ml-1 mt-1" [checked]="aplica" [(ngModel)]="aplica" formControlName="checkAplica"></mat-checkbox>
       </h6>
     </div>
     <ng-container *ngIf="!aplica">
@@ -14,7 +15,7 @@
             <span class="text-info mr-2">{{r.tipo}}</span>
             <mat-form-field>
               <mat-icon matPrefix>attach_money</mat-icon>
-              <input [disabled]="r.disabled" matInput #costoMedico class="text-right" style="font-size: 18px;"
+              <input [disabled]="r.disabled" matInput #costoMedico formControlName="costoMedico" required="" class="text-right" style="font-size: 18px;"
                 step="any" type="number" placeholder="Costo">
               <strong matSuffix>MXN.</strong>
             </mat-form-field>
@@ -27,3 +28,4 @@
     </ng-container>
   </div>
 </div>
+</form>

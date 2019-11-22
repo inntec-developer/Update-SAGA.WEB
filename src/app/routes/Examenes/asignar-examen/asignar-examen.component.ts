@@ -12,7 +12,7 @@ import { ApiConection } from '../../../service/api-conection.service';
   styleUrls: ['./asignar-examen.component.scss']
 })
 export class AsignarExamenComponent implements OnInit {
-  //scroll
+  // scroll
   public disabled = false;
   public invertX = false;
   public compact = false;
@@ -33,11 +33,11 @@ export class AsignarExamenComponent implements OnInit {
   examenId = 0;
   verExamen = false;
 
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
   public columns: Array<any> = [
     { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
@@ -47,18 +47,30 @@ export class AsignarExamenComponent implements OnInit {
     { title: 'Creación', className: 'text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
   ];
 
+     /**
+  * configuracion para mensajes de acciones.
+  */
+ toaster: any;
+ toasterConfig: any;
+ toasterconfig: ToasterConfig = new ToasterConfig({
+   positionClass: 'toast-bottom-right',
+   limit: 7,
+   tapToDismiss: false,
+   showCloseButton: true,
+   mouseoverTimerStop: true,
+   preventDuplicates: true,
+ });
   constructor(private service: ExamenesService, private toasterService: ToasterService, private requiservicio: RequisicionesService) { }
 //#region paginador
   public config: any = {
     paging: true,
-    //sorting: { columns: this.columns },
     filtering: { filterString: '' },
     className: ['table-hover mb-0 ']
   };
 
   public changePage(page: any, data: Array<any> = this.requisiciones): Array<any> {
-    let start = (page.page - 1) * page.itemsPerPage;
-    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    const start = (page.page - 1) * page.itemsPerPage;
+    const end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
   }
 
@@ -68,9 +80,10 @@ export class AsignarExamenComponent implements OnInit {
     this.columns.forEach((column: any) => {
       if (column.filtering.filterString != "") {
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
+          if (item[column.name] != null) {
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
-        });
+          }
+          });
       }
     });
     return filteredData;
@@ -89,77 +102,63 @@ export class AsignarExamenComponent implements OnInit {
     }
 
     this.rows = this.requisiciones;
-    let filteredData = this.changeFilter(this.requisiciones, this.config);
-    //let sortedData = this.changeSort(filteredData, this.config);
+    const filteredData = this.changeFilter(this.requisiciones, this.config);
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
     this.length = filteredData.length;
 
   }
-  GetCatalogoExamenes()
-  {
+  GetCatalogoExamenes() {
     this.service.GetCatalogo().subscribe(data =>{
       this.catalogo = data;
-    })
+    });
   }
 
-  GetExamenes(tipoexamenId)
-  {
+  GetExamenes(tipoexamenId) {
     this.service.GetExamenes(tipoexamenId).subscribe(data => {
       this.examenes = data;
-
-     
-    })
+    });
   }
 
-  GetExamen(ExamenId)
-  {
+  GetExamen(ExamenId) {
     this.service.GetExamen(ExamenId).subscribe(data => {
       this.examen = data;
-   
       this.examen.forEach(element => {
-        if(element.file != "")
-        {
-        element.file = ApiConection.ServiceUrlImgExamenes + element.file;
+        if (element.file !== '') {
+          element.file = ApiConection.ServiceUrlImgExamenes + element.file;
         }
       });
-    })
+    });
   }
 
-  GetRequisiciones()
-  {
+  GetRequisiciones() {
     this.service.GetRequisicionesEstatus(4).subscribe(data => {
       this.requisiciones = data;
-      this.onChangeTable(this.config)
-    })
+      this.onChangeTable(this.config);
+    });
   }
 
-  GetExamenRequi(requisicionId)
-  {
+  GetExamenRequi(requisicionId) {
     this.service.GetExamenRequi(requisicionId).subscribe(data => {
       this.examenRequi = data;
       this.examenRequi.forEach(element => {
-        if(element.file != "")
-        {
-        element.file = ApiConection.ServiceUrlImgExamenes + element.file;
+        if (element.file !== '') {
+          element.file = ApiConection.ServiceUrlImgExamenes + element.file;
         }
       });
       this.verExamen = true;
-    })
+    });
   }
 
-  AgregarRelacion()
-  {
-    if(this.requiselect.length > 0)
-    {
-      var relacion = [];
+  AgregarRelacion() {
+    if (this.requiselect.length > 0) {
+      const relacion = [];
       this.requiselect.forEach(element => {
          relacion.push( {RequisicionId: element.id, ExamenId: this.examenId});
       });
 
       this.service.InsertRelacion(relacion).subscribe(data => {
-        if(data == 200)
-        {
-          this.popToast('success', 'Asignar Examen', 'La relacion requisición examen se genero con éxito');
+        if (data === 200) {
+          this.popToast('success', 'Asignar Examen', 'La relación requisición examen se generó con éxito');
           this.requiselect = [];
           this.GetRequisiciones();
           this.se.setValue(0);
@@ -169,56 +168,42 @@ export class AsignarExamenComponent implements OnInit {
         }
         else
         {
-          this.popToast('error', 'Asignar Examen', 'Ocurrio un error');
+          this.popToast('error', 'Asignar Examen', 'Ocurrió un error');
         }
       })
     }
 
   }
 
-  closeModal()
-  {
+  closeModal() {
     this.verExamen = false;
   }
-  onSelect(row)
-  {
-    if(row.examen)
-    {
+  onSelect(row) {
+    if (row.examen) {
       row.selected = false;
-    }
-    else
-    {
+    } else {
       row.selected ? row.selected = false : row.selected = true;
 
-      if(row.selected)
-      {
+      if (row.selected) {
         this.requiselect.push(row);
-      }
-      else
-      {
-        this.requiselect = this.requiselect.filter(function(item)
-        {
-          if(item.folio !== row.folio)
-          {
+      } else {
+        this.requiselect = this.requiselect.filter(function(item) {
+          if (item.folio !== row.folio) {
             return item;
           }
         });
       }
     }
-
   }
   public refreshTable() {
-
     this.columns.forEach(element => {
       element.filtering.filterString = '';
       (<HTMLInputElement>document.getElementById(element.name)).value = '';
     });
     this.rows.forEach(e => {
       e.selected = false;
-    })
-
+    });
     this.requiselect = [];
-    
     this.onChangeTable(this.config);
 }
 
@@ -235,28 +220,13 @@ public clearfilters() {
 
 }
 
-
-   /**
-  * configuracion para mensajes de acciones.
-  */
- toaster: any;
- toasterConfig: any;
- toasterconfig: ToasterConfig = new ToasterConfig({
-   positionClass: 'toast-bottom-right',
-   limit: 7,
-   tapToDismiss: false,
-   showCloseButton: true,
-   mouseoverTimerStop: true,
-   preventDuplicates: true,
- });
-
  popToast(type, title, body) {
-   var toast: Toast = {
+   const toast: Toast = {
      type: type,
      title: title,
      timeout: 4000,
      body: body
-   }
+   };
    this.toasterService.pop(toast);
 
  }

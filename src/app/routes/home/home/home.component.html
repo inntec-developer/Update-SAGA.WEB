@@ -34,8 +34,13 @@
     <app-indicador-und-negocio-mx></app-indicador-und-negocio-mx>
   </div>
 </div>
+<div *ngIf="isGerenteNac" class="row card" >
+  <div class="col card-body p-2 mat-elevation-z8" style="width:100%;height:510px">
+<app-mapa-reporte></app-mapa-reporte>
+</div>
+</div>
 
-<div class="row">
+<div *ngIf="!isGerenteNac" class="row">
   <div class="col-lg-4 col-md-4 col-sm-12">
     <app-grafica-vacantes-pie (ChangeFolios)="changeFolios($event)"></app-grafica-vacantes-pie>
   </div>

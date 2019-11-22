@@ -5,7 +5,7 @@ import { AgregarResultadosPsicoComponent } from './agregar-resultados-psico/agre
 import { AsignarExamenComponent } from './asignar-examen/asignar-examen.component';
 import { AsignarPsicometricosComponent } from './asignar-psicometricos/asignar-psicometricos.component';
 import { ComponentsModule } from './../../components/components.module';
-import { ContestarExamenComponent } from './contestar-examen/contestar-examen.component';
+import { VerEntrevistaComponent } from './ver-entrevista/ver-entrevista.component';
 import { HistorialClavesComponent } from './historial-claves/historial-claves.component';
 import { NgModule } from '@angular/core';
 import { RequisicionesService } from '../../service';
@@ -15,11 +15,13 @@ import { ToolsModule } from '../../tools/tools.module';
 import { AgregarResultMedicosComponent } from './agregar-result-medicos/agregar-result-medicos.component';
 import { EntrevistasComponent } from './entrevistas/entrevistas.component';
 import { PrincipalExamenesComponent } from './principal-examenes/principal-examenes.component';
+import { VerExamenTecnicoComponent } from './ver-examen-tecnico/ver-examen-tecnico.component';
 
 const routes: Routes = [
   { path: 'addexamen', component: AddExamenComponent },
   { path: 'asignar', component: AsignarExamenComponent },
-  { path: 'contestar', component: ContestarExamenComponent },
+  { path: 'verentrevista', component: VerEntrevistaComponent },
+  { path: 'verexamen', component: VerExamenTecnicoComponent},
   { path: 'revisar', component: RevisarExamenesComponent },
   { path: 'asignarClaves', component: AsignarPsicometricosComponent },
   { path: 'agregarResultPsico', component: AgregarResultadosPsicoComponent },
@@ -39,22 +41,23 @@ const routes: Routes = [
   declarations: [
     AddExamenComponent,
     AsignarExamenComponent,
-    ContestarExamenComponent,
+    VerEntrevistaComponent,
     AsignarPsicometricosComponent,
     AgregarResultadosPsicoComponent,
     HistorialClavesComponent,
     RevisarExamenesComponent,
     AgregarResultMedicosComponent,
     EntrevistasComponent,
-    PrincipalExamenesComponent
+    PrincipalExamenesComponent,
+    VerExamenTecnicoComponent
     // DlgRevisarExamenesComponent
   ],
   exports: [
-    RouterModule, ContestarExamenComponent
+    RouterModule, VerEntrevistaComponent
   ],
 
-  entryComponents: [ContestarExamenComponent],
-  providers: [RequisicionesService,],
+  entryComponents: [VerEntrevistaComponent],
+  providers: [RequisicionesService],
 
 })
 export class ExamenesModule {

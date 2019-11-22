@@ -57,7 +57,7 @@ export class AuthService {
 
   public isAuthenticated(): boolean {
     if (sessionStorage.getItem('access-token') != null) {
-      if (this.settings.user['id'] == '') {
+      if (this.settings.user['id'] === '') {
         var decode = this.getDecodedAccessToken(sessionStorage.getItem('access-token'));
         this.Priv = JSON.parse(decode['Privilegios'])
         this.settings.user['id'] = decode['IdUsuario'];

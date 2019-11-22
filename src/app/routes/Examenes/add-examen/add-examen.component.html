@@ -4,10 +4,10 @@
   </div>
   <!-- Breadcrumb right aligned-->
   <ol class="breadcrumb ml-auto">
-    <li class="breadcrumb-item">
-      <a [routerLink]="['/home']">Inicio</a>
-    </li>
-    <li class="breadcrumb-item active"><a [routerLink]="['/examenes/Principal']">Principal Examenes</a></li>
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/examenes/Principal']" [queryParams]="{ruta: ruta}" [skipLocationChange]=true>Principal Examenes</a>
+        </li>
+        <li class="breadcrumb-item active">Agregar examen t&eacute;cnico</li>
   </ol>
 </div>
 <div class="row">

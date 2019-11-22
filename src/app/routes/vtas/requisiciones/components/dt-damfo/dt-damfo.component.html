@@ -29,6 +29,12 @@
           tooltip="Anexos" (click)="ShowModal = true;">
           <i class="fa fa-file-pdf-o"></i>
         </button>
+        <button *ngIf="Perfil290" id="special" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8"
+          [ngClass]="element.length == 0 ? 'disabled' : 'btn-purple'" container="body" placement="bottom"
+          [disabled]="element.length == 0"
+          tooltip="Transferir DAMFO-290" (click)="openDialogTransfer()">
+          <i class="fa fa-exchange"></i>
+        </button>
         <button *ngIf="Perfil290" id="delete" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8"
           [ngClass]="element.length == 0 || !isEditable ? 'disabled' : 'btn-danger'" container="body" placement="bottom"
           [disabled]="element.length == 0 || !isEditable"
@@ -66,17 +72,9 @@
             <span class="text-muted font-weight-bold float-right text-uppercase mt-2 mb-3 ">Registros Totales<span
               class="badge badge-pill badge-success ml-1">{{dataSource.length  | numerico}}</span></span>
         </div>
-        <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
+        <table class="table" style="width: 100%;">
           <thead>
             <tr>
-              <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
-                {{column.title | uppercase}}
-                <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)"
-                  [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
-                </i>
-              </th>
-            </tr>
-            <tr *ngIf="showFilterRow">
               <td *ngFor="let column of columns">
                 <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
                   [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"

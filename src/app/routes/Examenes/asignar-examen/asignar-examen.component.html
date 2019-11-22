@@ -3,10 +3,8 @@
     <span class="text-sm d-none d-sm-block">Administraci&oacute;n de ex&aacute;menes.</span>
   </div>
   <ol class="breadcrumb ml-auto">
-    <li class="breadcrumb-item">
-      <a [routerLink]="['/home']">Inicio</a>
-    </li>
-    <li class="breadcrumb-item active"><a [routerLink]="['/examenes/Principal']">Principal Examenes</a></li>
+    <li class="breadcrumb-item"><a [routerLink]="['/examenes/Principal']" [queryParams]="{ruta: 2}" [skipLocationChange]=true>Principal Examenes</a></li>
+    <li class="breadcrumb-item active">Asignar examen</li>
   </ol>
 </div>
 

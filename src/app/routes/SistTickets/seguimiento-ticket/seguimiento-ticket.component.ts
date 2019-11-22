@@ -14,7 +14,7 @@ import { RequisicionesService } from '../../../service';
 import { Router } from '@angular/router';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { SistTicketsService } from './../../../service/SistTickets/sist-tickets.service';
-import { ContestarExamenComponent } from '../../Examenes/contestar-examen/contestar-examen.component';
+import { VerEntrevistaComponent } from '../../Examenes/ver-entrevista/ver-entrevista.component';
 
 
 @Component({
@@ -440,7 +440,7 @@ export class SeguimientoTicketComponent implements OnInit {
   }
   openDialogEntrevista() {
 
-    const dialog = this.dialog.open(ContestarExamenComponent, {
+    const dialog = this.dialog.open(VerEntrevistaComponent, {
       width: '80%',
       height: '70%'
       // data: { candidatoId: this.ticket[0].candidato[0].candidatoId }
@@ -450,8 +450,7 @@ export class SeguimientoTicketComponent implements OnInit {
       }
     });
   }
-  ExamenesCandidatos()
-  {
+  ExamenesCandidatos() {
     this._serviceExamen.GetExamenCandidato(this.ticket[0].candidato[0].candidatoId).subscribe(exa => {
 
       this.examenesCandidato.tecnicos = exa[0];
@@ -464,8 +463,7 @@ export class SeguimientoTicketComponent implements OnInit {
           this.exaTecnico = true;
         }
       }
-      if(this.examenesCandidato.psicometricos.length > 0)
-      {
+      if (this.examenesCandidato.psicometricos.length > 0) {
         if (this.examenesCandidato.psicometricos[0].resultado.toUpperCase() !== 'SIN RESULTADO'
           && this.examenesCandidato.psicometricos[0].requisicionId === this.ticket[0].requisicionId) {
           this.exaPsico = true;
@@ -475,7 +473,7 @@ export class SeguimientoTicketComponent implements OnInit {
   }
 
   registrarUsuario() {
-    let dialogDlt = this.dialog.open(RegistroReclutadorComponent, {
+    const dialogDlt = this.dialog.open(RegistroReclutadorComponent, {
       width: '55%',
       height: 'auto',
       disableClose: true
@@ -484,19 +482,20 @@ export class SeguimientoTicketComponent implements OnInit {
     dialogDlt.afterClosed().subscribe(result => {
       if (result != 417) {
         this._service.UpdateCandidatoTicket(this.ticket[0].ticketId, result.id).subscribe(data => {
-          var datos = { candidatoId: result.id, estatusId: 18, requisicionId: this.ticket[0].requisicionId, ReclutadorId: this.settings.user['id'] };
+          const datos = { candidatoId: result.id,
+            estatusId: 18,
+            requisicionId: this.ticket[0].requisicionId,
+            ReclutadorId: this.settings.user['id'] };
 
-          this.servicePost.SetProceso(datos).subscribe(data => {
+          this.servicePost.SetProceso(datos).subscribe( data => {
             this.GetTicket(this.ticket[0].ticketId);
             this.username = result.username;
             this.pass = result.pass;
-            
             this.popToast('success', 'Seguimiento', 'El registro se realizó correctamente');
           });
 
         });
-      }
-      else if(result == 417) {
+      } else if (result === 417) {
         this.popToast('error', 'Seguimiento', 'Ocurrió un error al intentar registrar candidato');
       }
     });

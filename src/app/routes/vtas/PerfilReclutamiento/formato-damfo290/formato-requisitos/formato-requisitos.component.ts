@@ -106,7 +106,6 @@ export class FormatoRequisitosComponent implements OnInit, OnChanges {
       }
     });
   }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (this.IdFormato != null) {
       this.EditPerfil = true;
@@ -135,7 +134,6 @@ export class FormatoRequisitosComponent implements OnInit, OnChanges {
           SueldoMaximo: element['sueldoMaximo'],
           Experiencia: element['experiencia'],
         });
-
 
         setTimeout(() => {
           this.formEncabezado.patchValue({

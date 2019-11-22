@@ -51,12 +51,12 @@
         </ng-template>
     <app-formato-anexos [IdFormato]="IdFormato"></app-formato-anexos>
   </tab>
-  <tab heading="Anexos" id="TapAnexos" *ngIf="!isNew">
+  <tab heading="ANEXOS" id="TapAnexos" *ngIf="!isNew">
    <app-file-manager [candidatoId]='IdFormato' [ruta]="'/utilerias/Files/ANEXOSDAMFO/'"></app-file-manager>
   </tab>
   <tab heading="COSTOS" id="tabCostos" [disabled]="!cliente.formCliente.valid">
       <ng-template tabHeading>
-          <i *ngIf="cliente.formCliente.valid && !costos.aplica" 
+          <i *ngIf="cliente.formCliente.valid && (!costos.aplica && !costos.validar)" 
           class="text-danger fa fa-exclamation-circle ml-3" container="body" placement="right" tooltip="campos vacios"></i>
         </ng-template>
    <app-formato-costos [IdFormato]="IdFormato"></app-formato-costos>
@@ -85,7 +85,7 @@
     anexos.Procesos.length == 0 ||
     anexos.PsicometriasC.length == 0 ||
     anexos.PsicometriasD.length == 0 ||
-    !costos.aplica
+    !costos.aplica && !costos.validar
     " (click)="GuardarPerfil()">GUARDAR</button>
     <span *ngIf="loading"><i class="fa fa-spinner fa-2x fa-pulse" aria-hidden="true"></i></span>
   </div>

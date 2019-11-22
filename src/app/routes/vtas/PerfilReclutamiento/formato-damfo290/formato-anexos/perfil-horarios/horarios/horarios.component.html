@@ -4,11 +4,20 @@
     <div class="row">
       <mat-form-field class="col-2">
         <input matInput autofocus #NombreCtrl type="text" placeholder="Nombre" formControlName="horario"
-          [value]="NombreCtrl.value.toUpperCase()" required="">
-      </mat-form-field>
+          [value]="NombreCtrl.value.toUpperCase()" required="" [matAutocomplete]="horarios" (keyup)="filter($event);">
+          <mat-autocomplete #horarios="matAutocomplete" (optionSelected)="selected($event, rowIndex)">
+              <mat-option *ngFor="let option of AuxOptions; let rowIndex = index;" [value]="option" class="option-container">
+                <span class="razonSocial"><strong>{{option.nombre | uppercase}}</strong></span>
+                <span class="more-option"><strong class="text-info">De Dia a Dia: </strong><span
+                    class="text-warning">{{option.deDia | uppercase}} a {{option.aDia | uppercase}}</span></span>
+                <span class="more-option"><strong class="text-info">De Hora a Hora: </strong><span
+                    class="text-warning">{{option.deHora | date:'H:mm'}} a {{option.aHora | date:'H:mm'}}</span></span>
+              </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
 
       <mat-form-field class="col-1">
-        <mat-select #t1 placeholder="De Día " formControlName="deDiaId" (selectionChange)="getDeDia()" required="">
+        <mat-select placeholder="De Día " formControlName="deDiaId" (selectionChange)="getDeDia()" required="">
           <mat-option *ngFor="let x of DiasSemana" [value]="x.id">
             {{x.diaSemana | uppercase}}
           </mat-option>

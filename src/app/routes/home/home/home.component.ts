@@ -43,9 +43,9 @@ export class HomeComponent implements OnInit {
 
   public UpdateFolios: any;
   public UpdatePosiciones: any;
-  public GrtOrAud = [1, 3, 8, 12, 13, 14];
+  public GrtOrAud = [1, 3, 8, 12, 14];
   public isGerenteOrAudito = false;
-
+  public isGerenteNac = false;
   constructor(
     private settings: SettingsService,
     // public mapsApiLoader: MapsAPILoader,
@@ -54,9 +54,13 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    const tipoUsuserio = this.settings['user']['tipoUsuarioId'];
-    if (this.GrtOrAud.find(x => x == tipoUsuserio)) {
+    const tipoUsuserio = +this.settings['user']['tipoUsuarioId'];
+    if (this.GrtOrAud.find(x => x === tipoUsuserio)) {
       this.isGerenteOrAudito = true;
+      this.isGerenteNac = false;
+    } else if ( tipoUsuserio === 13) {
+      this.isGerenteNac = true;
+      this.isGerenteOrAudito = false;
     }
 
     // load Places Autocomplete

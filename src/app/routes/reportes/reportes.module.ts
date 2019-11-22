@@ -42,7 +42,24 @@ const routes:Routes =[
     RouterModule.forChild(routes),
     ComponentsModule,
   ],
-  declarations: [InformeComponent, TablaReporteComponent, ReporteGeneralComponent, IndicadoresComponent, ProductividadComponent, DetallereclutaComponent, DetallecordinaComponent, CoordinacionComponent, CandidatobolsaComponent, VacanteComponent, ClienteComponent, CubiertoComponent, CalidadComponent, MapaReporteComponent, ClienteDetalleComponent, IndicadoresVentasComponent],
-  providers: [ReportesService,ExcelService,ComponentsService,CatalogosService]
+  declarations: [
+    InformeComponent,
+    TablaReporteComponent,
+    ReporteGeneralComponent,
+    IndicadoresComponent,
+    ProductividadComponent,
+    DetallereclutaComponent,
+    DetallecordinaComponent,
+    CoordinacionComponent,
+    CandidatobolsaComponent,
+    VacanteComponent,
+    ClienteComponent,
+    CubiertoComponent,
+    CalidadComponent,
+    MapaReporteComponent,
+    ClienteDetalleComponent,
+    IndicadoresVentasComponent
+  ],
+  providers: [ReportesService, ExcelService, ComponentsService, CatalogosService]
 })
 export class ReportesModule { }
