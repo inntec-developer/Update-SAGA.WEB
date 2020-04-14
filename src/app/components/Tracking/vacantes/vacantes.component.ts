@@ -17,29 +17,30 @@ export class VacantesComponent implements OnInit {
   @Input() public clienteId;
   @Input() public flag = 0; // para saber si vengo de tracking o de clientes
 
-  //config scroll
+  // config scroll
   disabled = false;
   compact = false;
   invertX = true;
   invertY = true;
-  shown = 'hover';
+  shown = 'shown';
 
-  //table paginador
+  // table paginador
   registrosInfo: number;
   public dataInfoRequi: Array<any> = [];
   public rowsInfo: Array<any> = [];
-  public pageInfo: number = 1;
-  public itemsPerPageInfo: number = 5;
-  public maxSizeInfo: number = 5;
-  public numPagesInfo: number = 1;
-  public lengthInfo: number = 0;
-  clearFilter: boolean = false;
+  public pageInfo = 1;
+  public itemsPerPageInfo = 5;
+  public maxSizeInfo = 5;
+  public numPagesInfo = 1;
+  public lengthInfo = 0;
+  clearFilter = false;
 
   public columnsInfo: Array<any> = [
     { title: 'FOLIO', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'FOLIO' } },
     { title: 'PERFIL', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'PERFIL' } },
     // { title: 'CLIENTE', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'CLIENTE' } },
-    { title: 'FECHA LÍMITE', className: 'text-info text-center', name: 'fch_limite', filtering: { filterString: '', placeholder: 'aaaa-mm-dd'}},
+    { title: 'FECHA LÍMITE', className: 'text-info text-center', name: 'fch_limite',
+    filtering: { filterString: '', placeholder: 'aaaa-mm-dd'}},
     { title: 'ESTATUS', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'ESTATUS' } },
     { title: '# POSICIONES', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: '0' } },
     { title: '% AVANCE', className: 'text-info text-center', name: 'porcentaje', filtering: { filterString: '', placeholder: '% 0' } },

@@ -20,7 +20,10 @@ export class InicioKioscoComponent implements OnInit {
   user = '';
   pass = '';
   btnCita: boolean;
-  @ViewChild('myCarousel') myCarousel: NgbCarousel;
+ // CAROUSEL PROPS
+ public myInterval = 5000;
+ public noWrapSlides = false;
+
   @ViewChild('lgModal') modal;
 
   vacantes = [];
@@ -36,19 +39,12 @@ export class InicioKioscoComponent implements OnInit {
   search: any;
   categorias4: any[];
 
-  constructor(config: NgbCarouselConfig,
+  constructor(
     private _service: SistTicketsService,
     private _kioscoService: KioscoServiceService,
     private settings: SettingsService
   ) {
-    config.interval = 10000;
-    config.wrap = false;
-    config.pauseOnHover = true;
-
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
       this.GetVacantes();
-  }, 5000);
   }
 
   ngOnInit() {
@@ -89,21 +85,20 @@ export class InicioKioscoComponent implements OnInit {
               color: color,
             };
           });
-          this.categorias4 = this.categorias.splice(12, this.categorias.length);
-          this.categorias3 = this.categorias.splice(8, 11);
-          this.categorias2 = this.categorias.splice(4, 7);
-          this.categorias = this.categorias.splice(0, 3);
-          this.vacantes = this.dataSource;
+          // this.categorias4 = this.categorias.splice(12, this.categorias.length);
+          // this.categorias3 = this.categorias.splice(8, 11);
+          // this.categorias2 = this.categorias.splice(4, 7);
+          // this.categorias = this.categorias.splice(0, 3);
+          this.vacantes = (JSON.parse(JSON.stringify(this.dataSource)));
       }
     });
   }
 
-  FiltrarCategoria(id, mocos) {
-    if (id == 0) {
-      this.vacantes = this.dataSource;
-    }
-    else {
-      var filtro = this.dataSource.filter(item => {
+  FiltrarCategoria(id) {
+    if (id === 0) {
+      this.vacantes = (JSON.parse(JSON.stringify(this.dataSource)));
+    } else {
+      const filtro = this.dataSource.filter(item => {
         if (item.areaId === id) {
           return item;
         }
@@ -112,8 +107,7 @@ export class InicioKioscoComponent implements OnInit {
       this.vacantes = filtro;
     }
     this.activeId = this.vacantes[0].id;
-    this.myCarousel.activeId = this.vacantes[0].id;
-    this.myCarousel.cycle();
+
 
 
     //   setTimeout(() => {
@@ -196,9 +190,9 @@ export class InicioKioscoComponent implements OnInit {
   public Search(data: any) {
 
     this.search = data.target.value;
-    let tempArray: Array<any> = [];
+    const tempArray: Array<any> = [];
 
-    let colFiltar: Array<any> = [{ title: 'vBtra' }];
+    const colFiltar: Array<any> = [{ title: 'vBtra' }];
 
     this.dataSource.forEach(function (item) {
       let flag = false;
@@ -209,15 +203,13 @@ export class InicioKioscoComponent implements OnInit {
       });
 
       if (flag) {
-        tempArray.push(item)
+        tempArray.push(item);
       }
     });
 
     this.vacantes = tempArray;
 
     this.activeId = this.vacantes[0].id;
-    this.myCarousel.activeId = this.vacantes[0].id;
-    this.myCarousel.cycle();
   }
 
   errorImg(item) {

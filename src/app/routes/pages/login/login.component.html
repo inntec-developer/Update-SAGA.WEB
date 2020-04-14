@@ -1,59 +1,82 @@
-<div class="wrapper">
+<div class="wrapper StripesBg">
     <div class="block-center mt-4 wd-xl">
         <!-- START card-->
         <div class="card card-flat">
-            <div class="card-header text-center bg-info">
-                <a href="#">
-                    <img class="block-center rounded" src="assets/img/damsa/logo.png" alt="Image" />
-                </a>
-            </div>
+            <div class="card-header text-center bg-info mb-1">
+                <img class="block-center rounded" src="assets/img/damsa/logo.png" alt="Image" />
+            </div> <img class="sizeBarra" src="assets/img/bg-color.png" alt="" />
             <div class="card-body" *ngIf="Actualizado">
-                <p class="text-center text-muted font-weight-bold py-2">SAGA INN</p>
-                <form [formGroup]="valForm" class="form-validate mb-3" role="form" name="loginForm" novalidate="" (submit)="submitForm($event, valForm.value)">
+                <div class="d-flex justify-content-center align-items-center p-1 mb-2 mt-1">
+                    <img class="sizeInntec mr-1" src="assets/img/Inntec/logo_saga35x35.png" alt="" />
+                    <span class="fontLato text-muted">SAGA INNTEC</span>
+                </div>
+                <form [formGroup]="valForm" class="form-validate mb-3" role="form" name="loginForm" novalidate=""
+                    (submit)="submitForm($event, valForm.value)">
                     <div class="form-group">
                         <div class="input-group input-group-sm with-focus">
-                            <input class="form-control form-control-sm border-right-0" id="email" type="email" name="email" placeholder="Correo electrónico" autocomplete="off" formControlName="email" required="" (blur)="complite()" autofocus/>
+                            <input class="form-control form-control-sm border-right-0 round" id="email" type="email"
+                                name="email" placeholder="Correo electrónico" autocomplete="off" formControlName="email"
+                                required="" (blur)="complite()" autofocus />
                             <div class="input-group-append">
-                                <span class="input-group-text fa fa-envelope text-muted bg-transparent border-left-0"></span>
+                                <span
+                                    class="input-group-text fa fa-envelope text-muted bg-transparent border-left-0"></span>
                             </div>
                         </div>
-                        <div class="text-danger" *ngIf="valForm.controls['email'].hasError('required') && (valForm.controls['email'].dirty || valForm.controls['email'].touched)">
+                        <!-- <div class="text-danger" *ngIf="valForm.controls['email'].hasError('required') && (valForm.controls['email'].dirty || valForm.controls['email'].touched)">
                             <small> El correo es requerido </small>
-                        </div>
-                        <div class="text-danger" *ngIf="valForm.controls['email'].hasError('email') && (valForm.controls['email'].dirty || valForm.controls['email'].touched)">
-                            <small> El correo ingresado no es valido</small>
+                        </div> -->
+                        <div class="text-danger"
+                            *ngIf="valForm.controls['email'].hasError('email') && (valForm.controls['email'].dirty || valForm.controls['email'].touched)">
+                            <small> El formato del correo ingresado no es v&aacute;lido</small>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group input-group-sm with-focus">
-                            <input class="form-control form-control-sm border-right-0" [type]="showPassL ? 'text' : 'password'" name="password" placeholder="Contraseña" formControlName="password" required/>
+                            <input class="form-control form-control-sm border-right-0 round"
+                                [type]="showPassL ? 'text' : 'password'" name="password" placeholder="Contraseña"
+                                formControlName="password" required />
                             <div class="input-group-append" (mouseover)="showPassL=true" (mouseout)="showPassL=false">
                                 <span class="input-group-text fa fa-eye text-muted bg-transparent border-left-0"></span>
                             </div>
                         </div>
-                        <div class="text-danger" *ngIf="valForm.controls['password'].hasError('required') && (valForm.controls['password'].dirty || valForm.controls['password'].touched)">
+                        <div class="text-danger"
+                            *ngIf="valForm.controls['password'].hasError('required') && (valForm.controls['password'].dirty || valForm.controls['password'].touched)">
                             <small>La contraseña es requerida</small>
                         </div>
                     </div>
-                    <span *ngIf="loading"><i class="fa fa-spinner fa-pulse float-left" aria-hidden="true"></i></span>
-                    <span class="text-muted float-right estilomio"><a (click)="Contrasena()" ><i class="fa fa-lock mr-1" aria-hidden="true"></i>¿Olvidaste tu contraseña?</a></span>
-                    <button [disabled]="loading" type="submit" class="login-button float-right"><i class="fa fa-chevron-right"></i></button>
-                    <!-- <button class="btn btn-block btn-success mt-3" type="submit">Ingresar</button>
-                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-                    /> -->
+                    <div class="d-flex justify-content-center align-items-center">
+                        <span *ngIf="loading" class="mr-2"><i class="fa fa-spinner fa-pulse float-left"
+                                aria-hidden="true"></i></span>
+                        <button [disabled]="loading || valForm.invalid" type="submit"
+                            class="btn btn-sm btn-labeled btn-success mat-elevation-z8">
+                            <span class="btn-label2"><i class="fa fa-sign-in mb-1" aria-hidden="true"></i></span>INICIAR
+                        </button>
+                    </div>
 
+                    <small class="text-muted float-right estilomio mt-2"><a (click)="Contrasena()"><i
+                                class="fa fa-lock mr-1" aria-hidden="true"></i>¿Olvidaste tu contraseña?</a></small>
+                    <!-- <button  class="login-button float-right"><i class="fa fa-chevron-right"></i></button> -->
+                    <br>
                 </form>
-                <br/>
-                <br/>
-                <p class="pt-3 text-info text-center"><a [routerLink]="'/register'"><i class="fa fa-user-plus mr-1" aria-hidden="true"></i>¿Necesitas registrarte?</a></p>
-                <br/>
+                <hr>
+                <p class="mt-1 text-muted text-center fontLato">¿Necesitas registrarte?</p>
+                <div class="d-flex justify-content-center mb-3">
+                    <button [disabled]="loading" class="btn btn-labeled btn-purple text-center mat-elevation-z8" [routerLink]="'/register'">
+                        <span class="btn-label btn-label3">
+                            <i class="fa fa-user-plus" aria-hidden="true"></i></span>REGISTRO</button>
+                </div>
             </div>
-            <div *ngIf="failLogin" class="alert alert-link alert-danger text-center btn-block" role="alert">Usuario o contraseña incorrecto</div>
+            <br />
+            <br />
+            <div *ngIf="failLogin" class="alert alert-link alert-danger text-center btn-block" role="alert">Usuario o
+                contraseña incorrecto</div>
             <div *ngIf="noAccess" class="alert alert-warning text-center" role="alert">Sin acceso al sistema</div>
 
             <div class="card-body" *ngIf="!Actualizado">
-              <button class="btn btn-block btn-warning mt-3" (click)="actualizar()">Actualizar a la Versi&oacute;n {{versionDB}}</button>
+                <button class="btn btn-block btn-warning mt-3" (click)="actualizar()">Actualizar a la Versi&oacute;n
+                    {{versionDB}}</button>
             </div>
+
         </div>
 
         <!-- END card-->
@@ -65,7 +88,7 @@
             <span class="mx-2">-</span>
             <span>{{ settings.app.vertion }} </span>
             <span>{{ settings.app.environment }}</span>
-            <br/>
+            <br />
             <span>{{ settings.app.description }}</span>
         </div>
     </div>

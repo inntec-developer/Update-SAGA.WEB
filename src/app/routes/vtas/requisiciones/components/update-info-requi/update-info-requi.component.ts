@@ -51,7 +51,7 @@ export class UpdateInfoRequiComponent implements OnInit, OnChanges, AfterViewIni
   tipoId = 0;
   se = new FormControl('', [Validators.required]);
   ste = new FormControl('', [Validators.required]);
-  DisabledButton: boolean;
+  DisabledButton = true;
   estatusId: any;
   constructor(
     private settings: SettingsService,
@@ -87,21 +87,14 @@ export class UpdateInfoRequiComponent implements OnInit, OnChanges, AfterViewIni
     mouseoverTimerStop: true,
   });
 
-  popToast(type: any, title: any, body: any) {
-
-    const toast: Toast = {
-      type: type,
-      title: title,
-      timeout: 4000,
-      body: body
-    };
-    this.toasterService.pop(toast);
-  }
-
-  ngOnInit() {
-
-    this.DisabledButton = true;
+   ngOnInit() {
     this.placeHolderSelect = 'ASIGNAR COORDINADOR';
+    if (this.Folios != null) {
+      this.getInformacionRequisicio(this.Folios);
+      if (this.NumeroVacantes === 0) {
+        this.DisabledButton = true;
+      }
+    }
     this.getPrioridades();
     this.getEstatus(2);
     this.formRequi = this.fb.group({
@@ -113,16 +106,10 @@ export class UpdateInfoRequiComponent implements OnInit, OnChanges, AfterViewIni
       confidencial: [false],
       estatus: [{ value: '', disabled: true }]
     });
-    this.GetCatalogoExamenes();
+    // this.GetCatalogoExamenes();
   }
 
   ngAfterViewInit(): void {
-    if (this.Folios != null) {
-      this.getInformacionRequisicio(this.Folios);
-      if (this.NumeroVacantes === 0) {
-        this.DisabledButton = true;
-      }
-    }
   }
   getAsignacion(event: any) {
     this.asignadosRequi = event;
@@ -212,7 +199,8 @@ export class UpdateInfoRequiComponent implements OnInit, OnChanges, AfterViewIni
             confidencial: data.confidencial,
           });
           this.estatusId = data.estatus.id;
-          this.GetExamenRequi();
+          // this.GetExamenRequi();
+          this.loading = false;
         }, error => console.error(error));
     }
   }
@@ -232,23 +220,23 @@ export class UpdateInfoRequiComponent implements OnInit, OnChanges, AfterViewIni
   /* Save Requisicion */
   Save() {
     this.loading = true;
-    this.spinner.show();
     const asg = [];
+    let tipo = 2;
     if (this.asignadosRequi.length > 0) {
-
+        if (this.formRequi.get('estatus').value === 4 || this.formRequi.get('estatus').value === 43) {
+          tipo = 1;
+        }
        this.asignadosRequi.forEach( a => {
         asg.push({
           RequisicionId: this.RequiId,
           GrpUsrId: a,
-          CRUD: '',
           UsuarioAlta: this.settings.user['usuario'],
           UsuarioMod: this.settings.user['usuario'],
-          fch_Modificacion: new Date()
+          fch_Modificacion: new Date(),
+          Tipo: tipo
         });
       });
     }
-
-
     const update = {
       id: this.RequiId,
       folio: this.formRequi.get('folio').value,
@@ -266,7 +254,6 @@ export class UpdateInfoRequiComponent implements OnInit, OnChanges, AfterViewIni
         if (this.return === 200) {
           this.popToast('success', 'Requisición', 'La requisición se actualizó correctamente ');
           this.loading = false;
-          this.spinner.hide();
           if (this.estatusId === 43) {
             this.serviceRequisicion.SendEmailRequiPuro(update.id).subscribe(email => {
               if (email === 200) {
@@ -287,12 +274,21 @@ export class UpdateInfoRequiComponent implements OnInit, OnChanges, AfterViewIni
               }
             });
           }
-          this._Router.navigate(['/ventas/requisicion']);
+         this._Router.navigate(['/ventas/requisicion']);
         } else {
-          this.popToast('error', 'Oops!!', 'Algo salio mal intente de nuevo');
+          this.popToast('error', 'Oops!!', 'Algo salió mal intente de nuevo');
           this.loading = false;
-          this.spinner.hide();
         }
       });
   }
+  popToast(type: any, title: any, body: any) {
+    const toast: Toast = {
+      type: type,
+      title: title,
+      timeout: 4000,
+      body: body
+    };
+    this.toasterService.pop(toast);
+  }
+
 }

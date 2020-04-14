@@ -1,8 +1,10 @@
+import { ApiConection } from './../api-conection.service';
 import { Injectable } from '@angular/core';
 import { ApiAiClient } from 'api-ai-javascript/es6/ApiAiClient';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+
 export class Message {
   constructor(public content: string, public sentBy: string) {}
 }
@@ -10,12 +12,12 @@ export class Message {
   providedIn: 'root'
 })
 export class BotService {
-  public ServiceUrl = 'http://localhost:33333/api/';
-  readonly token = environment.dialogflow.angularBot;
+  public ServiceUrl = ApiConection.ServiceUrl;
+  readonly token = environment['dialogflow'].angularBot;
 
   readonly client = new ApiAiClient({ accessToken: this.token });
   conversation = new BehaviorSubject<Message[]>([]);
-  
+
   constructor(private _httpClient: HttpClient) {
   }
 
@@ -28,7 +30,6 @@ export class BotService {
       return this.client.textRequest(msg)
       .then( res  => {
         let speech = '';
-        console.log(res)
           speech = res.result.fulfillment.speech;
           const botMessage = new Message(speech, 'bot');
 
@@ -43,10 +44,10 @@ export class BotService {
   update(msg: Message) {
     this.conversation.next([msg]);
   }
-
-  Sucursales(filtro): Observable<any> {
-    return this._httpClient.get(this.ServiceUrl + 'ChatBot/sucursales?filtro=' + filtro);
-  }
+}
+  // Sucursales(filtro): Observable<any> {
+  //   return this._httpClient.get(this.ServiceUrl + 'ChatBot/sucursales?filtro=' + filtro);
+  // }
 
   // if (res.result.parameters.ciudad === 'Guadalajara') {
   //   this.Sucursales(res.result.parameters.ciudad).subscribe( data => {
@@ -63,4 +64,3 @@ export class BotService {
   //     this.update(botMessage);
   //   });
   // }
-}

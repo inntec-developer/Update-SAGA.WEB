@@ -1,14 +1,4 @@
 
-
-
-.marge{
-margin-top: 22px;
-}
-
-.actions {
-    margin-left: 10px;
-  }
-  
   table tbody {
     display: block;
   
@@ -61,15 +51,7 @@ margin-top: 22px;
     --scrollbar-thumb-hover-color: dodgerblue;
     --scrollbar-border-radius: 4px;
   }
-  .row
-  {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  @media screen and (max-width: 1600px) {
-    .row {flex-direction: column;}
-    .header-button {
-      position: fixed;
-      z-index: 1000;
-    }
+ 
+  em {
+    cursor: pointer;
   }

@@ -1,19 +1,20 @@
 <!-- <div class="dt-container mat-elevation-z8"> -->
-<div class="title-headre-view">
-  <h4>Contactos</h4>
-</div>
-<!-- <div class="card card-default"> -->
-<div class="table-responsive" #tableContainer>
-  <table id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+
+<span class="d-flex justify-content-start align-items-center fontLato text-warning">
+  <i class="fa fa-users mr-1"></i>CONTACTOS</span>
+
+<div *ngIf="(Contactos || []).length > 0" class="table-responsive" #tableContainer>
+  <table id="resultDataTable" class="table" style="width: 100%;">
     <thead>
       <tr>
-        <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+        <th *ngFor="let column of columns" class="{{column.className || ''}}">
+          <small>{{column.title | uppercase}}</small>
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let row of rows" [class.selected]="row.selected" (click)="onCellClick(row)">
-        <td class="text-center">{{row.calle}}</td>
+      <tr class="text-muted" *ngFor="let row of rows" [class.selected]="row.selected" (click)="onCellClick(row)">
+        <td>{{row.calle | uppercase}}</td>
         <td> {{row.nombre | uppercase}} {{row.apellidoPaterno | uppercase}} {{row.apellidoMaterno | uppercase}}</td>
         <td> {{row.puesto | uppercase}}</td>
         <td>
@@ -31,11 +32,9 @@
           <p *ngFor="let e of row.email">{{e.email | uppercase}}</p>
         </td>
       </tr>
-      <tr *ngIf="!rows">
-        Sin resultados...
-      </tr>
     </tbody>
   </table>
 </div>
-<!-- </div> -->
-<!-- </div> -->
+<div *ngIf="(Contactos || []).length == 0" class="alert alert-primary" role="alert">
+   <strong>¡Oops!</strong> No se encontraron contactos ...
+</div>

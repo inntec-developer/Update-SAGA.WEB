@@ -56,7 +56,7 @@ ngOnInit() {
       type: 'pie',
       data: this.Data,
       options: {
-        hoverBorderColor: '#00000',
+        // hoverBorderColor: '#00000',
         responsive: true,
         onClick: this.detectedClick.bind(this),
         animation: {

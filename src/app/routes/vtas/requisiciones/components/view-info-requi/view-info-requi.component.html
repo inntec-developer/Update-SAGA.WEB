@@ -1,97 +1,92 @@
-<!-- <div class="dt-container  mat-elevation-z8">
-  <div class="card-header">
-    <em class="fa fa-list-alt"></em> Información Principal
-  </div> -->
-<div class="card-body">
-  <div class="d-flex justify-content-between">
-    <h4>
-      <strong> Vacantes: </strong>
-      <label class="badge badge-pill badge-info">{{vacantes}}</label>
-    </h4>
-    <h4>
-      <strong> {{vBtra}} </strong>
-    </h4>
-    <h4>
-      <strong>Folio: </strong> <label class="color-folio"> {{folio}}</label>
-    </h4>
+<div class="card card-body">
+  <div *ngIf="loading" class="d-flex align-items-center justify-content-center">
+    <div class="ball-spin-fade-loader">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
   </div>
-  <mat-divider></mat-divider>
-  <br>
-  <div class="row">
-    <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
-      <h5>
-        <strong>Fecha Solicitud: </strong>
-        <label class="card-text"> {{fch_Solicitud | date: 'dd/MM/yyyy'}} a las {{fch_Solicitud | date: 'hh:mm'}}
-        </label>
-        <small>{{fch_Solicitud | date: 'a'}}</small>
-      </h5>
-    </div>
-    <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
-      <h5>
-        <strong>Fecha Limite: </strong>
-        <label class="card-text"> {{fch_Limite | date: 'dd/MM/yyyy'}} </label>
-      </h5>
-    </div>
-    <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
-      <h5>
-        <strong>Prioridad: </strong>
-        <label class="badge badge-pill" [class.badge-danger]="prioridadId  === 1"
-          [class.badge-warning]="prioridadId  === 2"> {{prioridad}} </label>
-      </h5>
-    </div>
-    <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
-      <h5>
-        <strong>Fecha Cumplimiento: </strong>
-        <label class="card-text"> {{fch_Cumplimiento | date: 'dd/MM/yyyy'}}</label>
-      </h5>
-    </div>
-    <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
-      <h5>
-        <strong>Estatus: </strong>
-        <label class="badge badge-pill" [class.badge-warning]="estatusId  === 4"
-          [class.badge-primary]="estatusId  === 5" [class.badge-info]="estatusId  === 6"
-          [class.badge-success]="estatusId  === 7" [class.badge-danger]="estatusId  === 8"> {{estatus}} </label>
-      </h5>
-    </div>
-    <div class="col-lg-2 col-md-2 col-ms-4 col-xs-12">
-      <h5>
-        <strong>Confidencial: </strong>
-        <label *ngIf="confidencial" class="badge badge-pill badge-info"> SI</label>
-        <label *ngIf="!confidencial" class="badge badge-pill badge-info"> NO</label>
-      </h5>
-    </div>
+
+  <div class="d-flex justify-content-between align-items-center p-1 bg-info-light">
+    <span>
+      FOLIO <strong class="ml-1"> {{folio}}</strong>
+    </span>
+    <span>
+      PERFIL<strong class="ml-1">{{vBtra | uppercase}}</strong>
+    </span>
+  </div>
+  <div class="d-flex justify-content-between mt-3">
+    <h5>
+      VACANTES
+      <label class="badge badge-pill badge-info ml-2">{{vacantes}}</label>
+    </h5>
+    <h5>
+      FECHA SOLICITUD
+      <label class="card-text"> {{fch_Solicitud | date: 'dd/MM/yyyy'}} A LAS {{fch_Solicitud | date: 'hh:mm'}}
+      </label>
+      <small class="ml-1">{{fch_Solicitud | date: 'a'}}</small>
+    </h5>
+    <h5>
+      FECHA L&Iacute;MITE
+      <label class="card-text"> {{fch_Limite | date: 'dd/MM/yyyy'}} </label>
+    </h5>
+    <h5>
+      FECHA CUMPLIMIENTO
+      <label class="card-text"> {{fch_Cumplimiento | date: 'dd/MM/yyyy'}}</label>
+    </h5>
+  </div>
+  <div class="d-flex justify-content-between mt-2">
+    <h5>
+      PRIORIDAD
+      <label class="badge badge-pill" [class.badge-danger]="prioridadId  === 1"
+        [class.badge-warning]="prioridadId  === 2"> {{prioridad}} </label>
+    </h5>
+    <h5>
+      CONFIDENCIAL
+      <label *ngIf="confidencial" class="badge badge-pill badge-info"> SI</label>
+      <label *ngIf="!confidencial" class="badge badge-pill badge-info"> NO</label>
+    </h5>
+    <h5>
+      ESTATUS
+      <label class="badge badge-pill" [class.badge-warning]="estatusId  === 4" [class.badge-primary]="estatusId  === 5"
+        [class.badge-info]="estatusId  === 6" [class.badge-success]="estatusId  === 7"
+        [class.badge-danger]="estatusId  === 8"> {{estatus}} </label>
+    </h5>
 
   </div>
-  <div class="d-flex flex-row justify-content-between">
+  <div class="d-flex justify-content-between mt-2">
     <h5>
-      <strong>Solicitante</strong><br>
+      SOLICITANTE<br>
       <label class="text-muted">{{solicitante}}</label>
     </h5>
+    <div>
     <h5>
-      <strong>Coordinador o líder</strong>
-      <br>
-      <label class="text-muted" *ngIf="estatusId != 4">{{coordinador}}</label>
-      <div *ngIf="estatusId == 4">
-        <li class="list-group-item" *ngFor="let x of asignados">
-          <span class="text-muted bg-light">{{x.nombre}} {{x.apellidoPaterno}} {{x.apellidoMaterno}}</span>
-        </li>
-      </div>
+      COORDINADOR O L&Iacute;DER
     </h5>
-
-    <ol class="list-group list-group-flush bg-light">
-      <h5>
-        <strong>Reclutadores</strong>
-      </h5>
-      <div *ngIf="estatusId != 4">
-        <li class="list-group-item" *ngFor="let x of asignados">
-          <span class="text-muted bg-light">{{x.nombre}} {{x.apellidoPaterno}} {{x.apellidoMaterno}}</span>
+      <span *ngIf="(coordinador || []).length == 0" class="text-warning">SIN ASIGNAR</span>
+      <ul *ngIf="(coordinador || []).length > 0" class="list-group list-group-flush">
+        <li class="list-group-item" *ngFor="let x of coordinador">
+          <span class="text-muted text-uppercase">{{x.nombre}} {{x.apellidoPaterno}} {{x.apellidoMaterno}}</span>
         </li>
-      </div>
-      <div *ngIf="estatusId == 4">
-        <span>SIN ASIGNAR</span>
-      </div>
-    </ol>
+      </ul>
+
+    </div>
+    <div>
+      <h5>
+        RECLUTADORES
+      </h5>
+<span *ngIf="(asignados || []).length == 0"  class="text-warning">SIN ASIGNAR</span>
+      <ul *ngIf="(asignados || []).length > 0" class="list-group list-group-flush bg-light">
+        <li class="list-group-item" *ngFor="let x of asignados">
+          <span class="text-muted text-uppercase">{{x.nombre}} {{x.apellidoPaterno}} {{x.apellidoMaterno}}</span>
+        </li>
+    </ul>
   </div>
-  <mat-divider></mat-divider>
+  </div>
 </div>
 <!-- </div> -->

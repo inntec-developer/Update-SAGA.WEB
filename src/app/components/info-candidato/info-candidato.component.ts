@@ -1,17 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild, ViewChildren, OnChanges } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { ApiConection } from './../../service/api-conection.service';
-import { DialogLiberarCandidatoComponent } from '../dialog-liberar-candidato/dialog-liberar-candidato.component';
-import { DirectorioEmpresarialComponent } from './../../routes/vtas/directorio-empresarial/directorio-empresarial.component';
-import { DtCandidatosPostComponent } from './../../routes/recl/vacantes/vacantes/components/dt-candidatos-post/dt-candidatos-post.component';
 import { ExamenesService } from '../../service/Examenes/examenes.service';
 import { InfoCandidatoService } from '../../service/SeguimientoVacante/info-candidato.service';
-import { ModalDirective } from 'ngx-bootstrap';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { SettingsService } from '../../core/settings/settings.service';
-import { log } from 'util';
 
 declare var $: any;
 
@@ -47,6 +41,7 @@ export class InfoCandidatoComponent implements OnInit, OnChanges {
   public numPages_v = 1;
   public length_v = 0;
 
+  spinner = false;
   showFilterRow_v: boolean;
   registros_v: number;
   visible = true;
@@ -72,7 +67,7 @@ export class InfoCandidatoComponent implements OnInit, OnChanges {
   contratados = true;
   auxestatus = true;
   desapartar = true;
-  loading: boolean;
+  loading = false;
 
   btnNotificacion = false;
   // examenes
@@ -137,7 +132,6 @@ export class InfoCandidatoComponent implements OnInit, OnChanges {
   constructor(
     private _serviceCandidato: InfoCandidatoService,
     private toasterService: ToasterService,
-    private spinner: NgxSpinnerService,
     private dialog: MatDialog,
     private _serviceExamen: ExamenesService,
     private settings: SettingsService
@@ -152,7 +146,7 @@ export class InfoCandidatoComponent implements OnInit, OnChanges {
 
     this.usuario = this.settings.user['nombre'];
     this.usuarioId = this.settings.user['id'];
-    this.getMisVacates();
+    // this.getMisVacates();
   }
 
   closeModal() {
@@ -191,8 +185,8 @@ export class InfoCandidatoComponent implements OnInit, OnChanges {
   }
 
   GetInfoCandidato() {
-    this.spinner.show();
     // this.CandidatoId = '4F65DAC1-C6A0-E811-80E8-9E274155325E'
+    this.loading = true;
     this._serviceCandidato.getInfoCandidato(this.CandidatoId).subscribe(data => {
       this.candidato = {
         id: data.id,
@@ -201,7 +195,7 @@ export class InfoCandidatoComponent implements OnInit, OnChanges {
         aboutMe: data.aboutMe.length !== 0 ? data.aboutMe[0]['acercaDeMi'] : null,
         edad: this.validarFecha(data.fechaNacimiento),
         genero: data.genero,
-        correo: data.email ? data.email.email : null,
+        correo: data.email ? data.email : null,
         telefonos: data.telefono,
         direccion: data.direccion,
         redSocial: data.redSocial,
@@ -236,7 +230,6 @@ export class InfoCandidatoComponent implements OnInit, OnChanges {
         this.examen.tecnicos = exa[0];
         this.examen.psicometricos = exa[1];
         this.getPostulaciones();
-        this.spinner.hide();
       });
     });
 
@@ -255,6 +248,7 @@ export class InfoCandidatoComponent implements OnInit, OnChanges {
   // }
 
   getMisVacates() {
+    this.spinner = true;
     this._serviceCandidato.getMisVacantes(this.settings.user['id']).subscribe(data => {
       this.dataSource_v = data;
       this.onChangeTable_v(this.config_v);
@@ -293,7 +287,7 @@ export class InfoCandidatoComponent implements OnInit, OnChanges {
     const filteredData = this.changeFilter_v(this.dataSource_v, this.config_v);
     this.rows = page && config.paging ? this.changePage_v(page, filteredData) : filteredData;
     this.length_v = filteredData.length;
-
+    this.spinner = false;
   }
 
   public refreshTable_v() {
@@ -378,6 +372,7 @@ export class InfoCandidatoComponent implements OnInit, OnChanges {
       this.dataSource_p = data;
       this.rows_p = data;
       this.registros_p = this.rows_p.length;
+      this.loading = false;
     });
   }
 

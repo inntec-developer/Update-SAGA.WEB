@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-
 import { MapsAPILoader } from '@agm/core';
 
 declare var google: any;
@@ -10,7 +9,7 @@ declare var google: any;
   styleUrls: ['./maps-address.component.scss']
 })
 export class MapsAddressComponent implements OnInit, OnChanges {
-  @Input('Direccion') public Direccion: string;
+  @Input('Direccion') Direccion: string;
   scrollwheel = true;
   latitude: number;
   longitude: number;
@@ -47,6 +46,7 @@ export class MapsAddressComponent implements OnInit, OnChanges {
       this.geoCoder = new google.maps.Geocoder();
       this.geoCoder.geocode({ 'address': busqueda }, (results, status) => {
         if (status === 'OK') {
+
           if (results[0]) {
             this.latitude = results[0].geometry.location.lat();
             this.longitude = results[0].geometry.location.lng();
@@ -54,8 +54,8 @@ export class MapsAddressComponent implements OnInit, OnChanges {
             this.address = busqueda;
             this.src = 'https://maps.googleapis.com/maps/api/staticmap?center='
             + this.latitude + ',' + this.longitude
-            + '&markers=color:blue%7Clabel:S%7C'+ this.latitude + ',' + this.longitude
-            + '&zoom=18&size=750x400&key=AIzaSyCvtCCb5IK8MQbFiXe4J2F5LIQqa5fLeSY'
+            + '&markers=color:blue%7Clabel:S%7C' + this.latitude + ',' + this.longitude
+            + '&zoom=18&size=750x400&key=AIzaSyCvtCCb5IK8MQbFiXe4J2F5LIQqa5fLeSY';
           }
         }
       });

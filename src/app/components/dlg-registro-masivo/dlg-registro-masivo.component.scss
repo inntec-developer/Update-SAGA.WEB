@@ -71,7 +71,8 @@ tbody {
     display: table;
     width: 100%;
     table-layout: fixed;
-    font-size: 12px;
+    font-size: 11px;
+    font-family: Lato, sans-serif;
   }
   
   table thead {
@@ -87,11 +88,21 @@ tbody {
       width:260px;
  
   }
+  .longEmail {
+    width: 200px !important;
+  }
+  .longTel {
+    width: 150px !important;
+  }
+  .longRadio {
+    width: 40px;
+  }
   .ladaLong
   {
-      width: 60px;
+      width: 50px !important;
 
   }
+
   .form-control
   {
       height: 25px !important;
@@ -113,4 +124,9 @@ ng-scrollbar {
     --scrollbar-thumb-hover-color: dodgerblue;
     --scrollbar-border-radius: 4px;
   }
-  
+  .spinner {
+    position: absolute;
+    margin-left: 45%;
+    margin-top: 10%;
+    z-index: 9999;
+  }

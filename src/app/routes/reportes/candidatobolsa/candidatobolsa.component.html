@@ -1,68 +1,90 @@
-<div >
-    <h2 *ngIf="General?.length == 0" style="margin-top: 30px">
-        
-         <div style="margin-top: 100px; font-size: 14px" role="alert" class="alert alert-info ng-star-inserted">
-            <strong >Oops!</strong> No se encontraron Resultados
-          </div>
-    </h2>
-   </div>
-   <div>
-     
-  <div class="card"  *ngIf="General?.length > 0" style="margin-top:80px">
+<div *ngIf="spinner" class="spinner">
+  <mat-progress-spinner [color]="color" [mode]="mode" [value]="value">
+  </mat-progress-spinner>
+</div>
+<div>
+  <h2 *ngIf="(General || []).length == 0" style="margin-top: 30px">
+    <div style="margin-top: 100px; font-size: 14px" role="alert" class="alert alert-info ng-star-inserted">
+      <strong>Oops!</strong> No se encontraron resultados. intente con otras opciones
+    </div>
+  </h2>
+</div>
+
+<div class="card" *ngIf="(General || []).length > 0">
   <div class="card-body mat-elevation-z8">
-  
-  <ng-scrollbar #scrollableP [trackX]="true" [trackY]="false" [invertX]="invertX" [invertY]="invertY" [compact]="compact" [shown]="shown"
-    [disableOnBreakpoints]="false" [disabled]="disabled">
-  
-    <div style="width: 100%; height: 400px; overflow: hidden;">
-      <table ngClass="{{config.className || ''}}" class="table">
-        <thead>
-          <tr>
-            <th *ngFor="let column of columns" ngClass="{{column.className || ''}}" >
-              <small>{{column.title | uppercase}}</small>
-              <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
-              </i> -->
-            </th>
-          </tr>
-          <tr *ngIf="showFilterRow">
-            <th *ngFor="let column of columns">
-              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
-                class="form-control form-control-sm" id="{{column.name}}">
-            </th>
-          </tr>
-  
-        </thead>
-       
-        <tbody>
-            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
-            [disableOnBreakpoints]="false" [disabled]="disabled">
-            <div>
-              
-              <tr *ngFor="let item of rows" >
-                  <td class="text-center">{{item.nombre}}</td>
-                  <th class="text-center ">{{item.estado}}</th>
-                  <th class="text-center ">{{item.edad}}</th>
-                  <td class="text-center">{{item.genero}}</td>
-                  <th class="text-center ">{{item.estatus}}</th>
-                  <th class="text-center ">{{item.curp}}</th>
-                  <td class="text-center">{{item.rfc}}</td>
-              </tr>
-            </div>
+    <div class="d-flex justify-content-end align-items-center p-1 bg-warning fontLato">
+      <span>TOTAL DE CANDIDATOS <span
+          class="badge badge-info ml-2">{{totales.total | numerico}}</span></span>
+      <span class="ml-2">TOTAL DE CONTRATADOS <span
+            class="badge badge-info ml-2">{{totales.contratados | numerico}}</span></span>
+            <span class="ml-2">PORCENTAJE DE SEGUIMIENTO<span
+              class="badge badge-info ml-2">{{totales.seguimiento | numerico}} %</span></span>
+      <button (click)="clearfilters()" class="btn btn-xs btn-info mat-elevation-z8 ml-4" tooltip="Limpiar filtros">
+        <i class="fa fa-eraser"></i>
+      </button>
+    </div>
+    
+        <table class="table">
+          <thead>
+            <tr>
+              <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+                <small>{{column.title | uppercase}}</small>
+              </th>
+            </tr>
+            <tr>
+              <th *ngFor="let column of columns">
+                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
+                  [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                  class="form-control form-control-sm" id="{{column.name}}">
+              </th>
+            </tr>
+
+          </thead>
+
+          <tbody>
+            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+              [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+              <div>
+                <tr *ngFor="let item of rows">
+                  <td class="text-center">{{item.fecha | date: 'yyyy-MM-dd'}}</td>
+                  <td class="text-center text-success">{{ item.curp }}</td>
+                  <td class="text-center">{{ item.nombre | uppercase}}</td>
+                  <td class="text-center ">{{ item.estado | uppercase }}</td>
+                  <td class="text-center "><span
+                      class="badge badge-pill badge-success">{{ item.edad | numerico }}</span></td>
+                  <td class="text-center">{{ item.genero | uppercase }}</td>
+                  <td class="text-center"><span *ngIf="item.estatus.length <= 10 else toLength"
+                      class='badge badge-pill badge-info' [class.badge-warning]="item.estatusId === 42"
+                      [class.badge-danger]="item.estatusId == 28">
+                      <small *ngIf="item.estatusId != 28"> {{item.estatus | uppercase }}</small>
+                      <small *ngIf="item.estatusId == 28">POSTULADO</small>
+                    </span></td>
+                  <ng-template #toLength>
+                    <span class='badge badge-pill badge-info' [class.badge-warning]="item.estatusId === 42"
+                      [class.badge-danger]="item.estatusId == 28" placement="bottom"
+                      tooltip="{{item.estatus | uppercase}}" container="body"><small>{{item.estatus | slice:0:6 | uppercase }}
+                      ...</small> </span>
+                  </ng-template>
+                  <td class="text-center">
+                    <span class="easypie-chart" easypiechart [options]="pieOptions" [percent]="item.avance">
+                      <span class="fontLato"><small>{{item.avance}}%</small></span>
+                    </span>
+               </td>
+                </tr>
+              </div>
             </ng-scrollbar>
-        </tbody>
-     
-      </table>
+          </tbody>
+
+        </table>
+
+    <div class="d-flex justify-content-end mt-2">
+
+      <pagination class="pagination-sm" [(ngModel)]="page" [totalItems]="length"
+        [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+        (pageChanged)="config.paging = true; onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
+
+      <!-- <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre> -->
+
     </div>
-  </ng-scrollbar>
-  
-  <br/>
-  <div class="row">
-    <div class="col-md-12 clearfix">
-      <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage"
-        [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
-  
-      <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</small></pre>
-    </div>
   </div>
-  </div>
-  </div>
+</div>

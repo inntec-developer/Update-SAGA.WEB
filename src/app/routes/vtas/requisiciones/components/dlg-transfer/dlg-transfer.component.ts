@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, Input } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { AdminServiceService } from './../../../../../service/AdminServicios/admin-service.service';
 import { ComentariosService } from '../../../../../service/Comentarios/comentarios.service';
@@ -19,7 +19,7 @@ export class DlgTransferComponent implements OnInit {
   compact = false;
   invertX = false;
   invertY = false;
-  shown = 'hover';
+  shown = 'shown';
 dataSource = [];
   coord = [];
   asig = [];
@@ -56,8 +56,8 @@ dataSource = [];
   }
   setLista2() {
    this._sevice.GetByUsuario('Ejv-Recl').subscribe(result => {
-        this.listaAsignar2 = result;
-        this.dataSource2 = result;
+        this.listaAsignar2 = JSON.parse(JSON.stringify(result));
+        this.dataSource2 = JSON.parse(JSON.stringify(result));
 
       });
   }
@@ -65,27 +65,31 @@ dataSource = [];
   GetReclutadores($event) {
     if ($event.checked) {
       this._requiService.GetAsignados(this.data.id).subscribe(result => {
-        this.listaAsignar = result;
-        this.dataSource1 = result;
-        // this.listaAsignar2 = Object.assign([], this.listaAsignar);
+        this.listaAsignar = JSON.parse(JSON.stringify(result));
+        this.dataSource1 = JSON.parse(JSON.stringify(result));
+
         this.setLista2();
         this.verRecl = true;
       this.usuario = this.data.usuario;
       this.data.usuario = 11;
       this.titulo = 'Reclutador';
+      this.dataSource = [];
+      this.coord = [];
+      this.comentario = '';
         // this.setLista2();
       });
     } else {
       this.verRecl = false;
       this.data.usuario = this.usuario;
       this.asig = [];
+      this.comentario = '';
       this.GetCoordinadores();
     }
   }
   GetCoordinadores() {
     this._sevice.GetByUsuario(this.data.depto).subscribe(data => {
-      this.coord = data;
-      this.dataSource = data;
+      this.coord = JSON.parse(JSON.stringify(data));
+      this.dataSource = JSON.parse(JSON.stringify(data));
       if (this.data.usuario === 4) {
         this.titulo = 'Coordinador';
       } else if (this.data.usuario === 5) {
@@ -108,7 +112,7 @@ dataSource = [];
       }
 
       if (this.rowAux) {
-        this.listaAsignar2.push(this.rowAux);
+        // this.listaAsignar2.push(this.rowAux);
         this.asig.pop();
         this.rowAux.selected = false;
 
@@ -131,7 +135,7 @@ dataSource = [];
 
     if (this.dataRowIndex2 !== rowIndex) {
       if (this.rowAux2) {
-          this.listaAsignar.push(this.rowAux2);
+          // this.listaAsignar.push(this.rowAux2);
           this.asig2.pop();
           this.rowAux2.selected = false;
         }
@@ -189,18 +193,18 @@ dataSource = [];
       const swalWithBootstrapButtons = swal.mixin({
         customClass: {
           confirmButton: 'btn btn-success',
-          cancelButton: 'btn btn-danger ml-2'
+          cancelButton: 'btn btn-danger mr-2'
         },
         buttonsStyling: false
       });
       swalWithBootstrapButtons.fire({
         title: '¿ESTÁS SEGURO?',
-        text: '¡Se asignará la vacante con folio ' + this.data.folio + '!',
-        html: 'La transferencia puede durar varios segundos por favor espere',
+        html: '<h4>¡Se asignará la vacante con folio ' + this.data.folio + '!</h4>' +
+        '<br><p>La transferencia puede durar varios segundos por favor espere</p>',
         type: 'warning',
         showCancelButton: true,
-        confirmButtonText: '¡Si, Asignar!',
-        cancelButtonText: 'Cancelar',
+        confirmButtonText: '¡SI, ASIGNAR!',
+        cancelButtonText: 'CANCELAR',
         reverseButtons: true
       }).then((isConfirm) => {
         if (isConfirm.value) {

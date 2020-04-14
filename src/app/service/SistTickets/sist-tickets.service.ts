@@ -28,7 +28,7 @@ export class SistTicketsService {
   private UrlUpdateStatus = ApiConection.ServiceUrl + ApiConection.UpdateStatusTicket;
   private UrlUpdateRequiTicket = ApiConection.ServiceUrl + ApiConection.UpdateRequiTicket;
   private UrlUpdateCandidatoTicket = ApiConection.ServiceUrl + ApiConection.UpdateCandidatoTicket;
-  private UrlGetFilaTickets = ApiConection.ServiceUrl+ApiConection.GetFilaTickets;
+  private UrlGetFilaTickets = ApiConection.ServiceUrl + ApiConection.GetFilaTickets;
   private UrlGetTicketRecl = ApiConection.ServiceUrl + ApiConection.GetTicketRecl;
   private UrlGetTicketExamen = ApiConection.ServiceUrl + ApiConection.GetTicketExamen;
   private UrlGetTicketPrioridad = ApiConection.ServiceUrl + ApiConection.GetTicketPrioridad;
@@ -55,159 +55,134 @@ export class SistTicketsService {
 
   constructor(private _httpClient: HttpClient, private settings: SettingsService) { }
 
-  GetEstados() :Observable<any>
-  {
+  GetEstados(): Observable<any> {
     let params = new HttpParams().set('PaisId', '42');
-    return this._httpClient.get(this.UrlGetEstados, {params: params, headers: this.httpOptions.headers})
+    return this._httpClient.get(this.UrlGetEstados, { params: params, headers: this.httpOptions.headers })
 
   }
 
-  GetMunicipio(estadoId) :Observable<any>
-  {
+  GetMunicipio(estadoId): Observable<any> {
     let params = new HttpParams().set('EstadoId', estadoId);
-    return this._httpClient.get(this.UrlGetMunicipioByEstado, {params: params, headers: this.httpOptions.headers})
+    return this._httpClient.get(this.UrlGetMunicipioByEstado, { params: params, headers: this.httpOptions.headers })
 
   }
 
-  RegistrarCandidato(datos) :Observable<any>
-  {
-    let params = new HttpParams().set('datos', datos);
-    return this._httpClient.post(this.UrlRegistrarCandidato, datos, this.httpOptions)
+  RegistrarCandidato(datos): Observable<any> {
+    return this._httpClient.post(this.UrlRegistrarCandidato, datos, this.httpOptions);
   }
 
-  LoginBolsa(usuario, pass) :Observable<any>
-  {
+  LoginBolsa(usuario, pass): Observable<any> {
     let params = new HttpParams().set('usuario', usuario).set('pass', pass);
-    return this._httpClient.get(this.UrlLoginBolsa, {params: params})
+    return this._httpClient.get(this.UrlLoginBolsa, { params: params })
   }
-  InsertTicket(ticketId, reclutadorId, modulo) : Observable<any>
-  {
+  InsertTicket(ticketId, reclutadorId, modulo): Observable<any> {
     let params = new HttpParams().set('Ticket', ticketId).set('ReclutadorId', reclutadorId).set('ModuloId', modulo);
-    return this._httpClient.get(this.UrlInsertTicket, {params: params})
+    return this._httpClient.get(this.UrlInsertTicket, { params: params })
   }
 
-  UpdateStatusTicket(ticketId, estatus, modulo) : Observable<any>
-  {
+  UpdateStatusTicket(ticketId, estatus, modulo): Observable<any> {
     let params = new HttpParams().set('ticketId', ticketId).set('estatus', estatus).set('moduloId', modulo);
-    return this._httpClient.get(this.UrlUpdateStatus, {params:params, headers: this.httpOptions.headers})
+    return this._httpClient.get(this.UrlUpdateStatus, { params: params, headers: this.httpOptions.headers })
   }
 
-  UpdateRequiTicket(ticketId, requisicionId)
-  {
+  UpdateRequiTicket(ticketId, requisicionId) {
     let params = new HttpParams().set('ticketId', ticketId).set('requisicionId', requisicionId);
-    return this._httpClient.get(this.UrlUpdateRequiTicket, {params:params, headers: this.httpOptions.headers})
+    return this._httpClient.get(this.UrlUpdateRequiTicket, { params: params, headers: this.httpOptions.headers })
   }
 
-  UpdateCandidatoTicket(ticketId, candidatoId)
-  {
+  UpdateCandidatoTicket(ticketId, candidatoId) {
     let params = new HttpParams().set('ticketId', ticketId).set('candidatoId', candidatoId);
-    return this._httpClient.get(this.UrlUpdateCandidatoTicket, {params:params})
+    return this._httpClient.get(this.UrlUpdateCandidatoTicket, { params: params })
   }
 
-  GetFilaTickets(modulo, reclutador) :Observable<any>
-  {
+  GetFilaTickets(modulo, reclutador): Observable<any> {
     let params = new HttpParams().set('modulo', modulo).set('reclutadorId', reclutador);
-    return this._httpClient.get(this.UrlGetFilaTickets, {params:params, headers: this.httpOptions.headers})
+    return this._httpClient.get(this.UrlGetFilaTickets, { params: params, headers: this.httpOptions.headers })
 
   }
-  GetTicketEnAtencion() :Observable<any>
-  {
+  GetTicketEnAtencion(): Observable<any> {
     return this._httpClient.get(this.UrlGetTicketEnAtencion)
   }
-  GetTicketsGenerados() :Observable<any>
-  {
+  GetTicketsGenerados(): Observable<any> {
     return this._httpClient.get(this.UrlGetTicketsGenerados)
   }
-  GetRportAtencion() :Observable<any>
-  {
+  GetRportAtencion(): Observable<any> {
     return this._httpClient.get(this.UrlGetRportAtencion)
   }
-  GetTicketPrioridad(reclutadorId, modulo) :Observable<any>
-  {
+  GetTicketPrioridad(reclutadorId, modulo): Observable<any> {
     let params = new HttpParams().set('reclutadorId', reclutadorId).set('ModuloId', modulo);
-    return this._httpClient.get(this.UrlGetTicketPrioridad, {params: params})
+    return this._httpClient.get(this.UrlGetTicketPrioridad, { params: params })
   }
-  GetCitas(reclutadorId, modulo) :Observable<any>
-  {
+  GetCitas(reclutadorId, modulo): Observable<any> {
     let params = new HttpParams().set('reclutadorId', reclutadorId).set('ModuloId', modulo);
-    return this._httpClient.get(this.UrlGetCitas, {params: params})
+    return this._httpClient.get(this.UrlGetCitas, { params: params })
   }
-  GetTicketRecl(ticket, recl) :Observable<any>
-  {
-     let params = new HttpParams().set('Ticket', ticket).set('ReclutadorId', recl);
-    return this._httpClient.get(this.UrlGetTicketRecl, {params: params})
-
-  }
-
-  GetTicketExamen(ticket) :Observable<any>
-  {
-     let params = new HttpParams().set('Ticket', ticket);
-    return this._httpClient.get(this.UrlGetTicketExamen, {params: params})
+  GetTicketRecl(ticket, recl): Observable<any> {
+    let params = new HttpParams().set('Ticket', ticket).set('ReclutadorId', recl);
+    return this._httpClient.get(this.UrlGetTicketRecl, { params: params })
 
   }
 
-  PostularCandidato(candidatoId, requisicionId) : Observable<any>
-  {
+  GetTicketExamen(ticket): Observable<any> {
+    let params = new HttpParams().set('Ticket', ticket);
+    return this._httpClient.get(this.UrlGetTicketExamen, { params: params })
+
+  }
+
+  PostularCandidato(candidatoId, requisicionId): Observable<any> {
     let params = new HttpParams().set('candidatoId', candidatoId).set('requisicionId', requisicionId);
-    return this._httpClient.get(this.UrlPostularCandidato, {params: params})
+    return this._httpClient.get(this.UrlPostularCandidato, { params: params })
   }
 
 
-  GetPostulaciones(candidatoId) : Observable<any>
-  {
+  GetPostulaciones(candidatoId): Observable<any> {
     let params = new HttpParams().set('candidatoId', candidatoId);
-    return this._httpClient.get(this.UrlGetPostulaciones, {params: params})
+    return this._httpClient.get(this.UrlGetPostulaciones, { params: params })
   }
 
-  GetVacantesReclutador(reclutadorId) : Observable<any>
-  {
-    let params = new HttpParams().set('reclutadorId', this.settings.user['id'] );
-    return this._httpClient.get(this.UrlGetVacantesReclutador, {params: params})
+  GetVacantesReclutador(reclutadorId): Observable<any> {
+    let params = new HttpParams().set('reclutadorId', this.settings.user['id']);
+    return this._httpClient.get(this.UrlGetVacantesReclutador, { params: params })
   }
 
 
-  LiberarCandidato(requi, candidato) : Observable<any>{
+  LiberarCandidato(requi, candidato): Observable<any> {
     let params = new HttpParams().set('requisicionId', requi).set('candidatoId', candidato);
-    return this._httpClient.get(this.UrlLiberarCandidato, {params: params});
+    return this._httpClient.get(this.UrlLiberarCandidato, { params: params });
   }
 
-  SetEstatusCandidato(candidatoId, requisicionId, estatusId) : Observable<any>{
+  SetEstatusCandidato(candidatoId, requisicionId, estatusId): Observable<any> {
     let params = new HttpParams().set('candidatoId', candidatoId).set('requisicionId', requisicionId).set('estatusId', estatusId);
-    return this._httpClient.get(this.UrlSetEstatusCandidato, {params: params});
+    return this._httpClient.get(this.UrlSetEstatusCandidato, { params: params });
   }
 
   GetVacantes(): Observable<any> {
     return this._httpClient.get(this.UrlGetVacantes);
   }
-  GetVacantesByRequi(requiId) : Observable<any> {
+  GetVacantesByRequi(requiId): Observable<any> {
     const params = new HttpParams().set('requisicionId', requiId);
-    return this._httpClient.get(this.UrlGetVacantesById, {params: params});
+    return this._httpClient.get(this.UrlGetVacantesById, { params: params });
   }
-  GetModulos(): Observable<any>
-  {
+  GetModulos(): Observable<any> {
     return this._httpClient.get(this.UrlGetModulos);
   }
-  SetExamen(objeto) : Observable<any>
-  {
+  SetExamen(objeto): Observable<any> {
     return this._httpClient.post(this.UrlSetExamen, objeto, this.httpOptions);
   }
 
-  GetTicketConCita(folio) : Observable<any>
-  {
+  GetTicketConCita(folio): Observable<any> {
     let params = new HttpParams().set('folio', folio);
-    return this._httpClient.get(this.UrlGetTicketConCita, {params: params});
+    return this._httpClient.get(this.UrlGetTicketConCita, { params: params });
 
   }
 
-  GetTicketSinCita(requisicionId, candidatoId) : Observable<any>
-  {
-    let params = new HttpParams().set('requisicionId', requisicionId).set('candidatoId', candidatoId );
-    return this._httpClient.get(this.UrlGetTicketSinCita, {params: params});
+  GetTicketSinCita(requisicionId, candidatoId): Observable<any> {
+    let params = new HttpParams().set('requisicionId', requisicionId).set('candidatoId', candidatoId);
+    return this._httpClient.get(this.UrlGetTicketSinCita, { params: params });
 
   }
 
-  GetConcurrenciaReporte() : Observable<any>
-  {
+  GetConcurrenciaReporte(): Observable<any> {
     return this._httpClient.get(this.UrlGetConcurrenciaReporte);
   }
 }

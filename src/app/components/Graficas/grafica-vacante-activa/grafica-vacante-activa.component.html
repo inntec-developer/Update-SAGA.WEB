@@ -1,25 +1,22 @@
-
-<div class="card box">
-    <div class="card-body mat-elevation-z8">
-      <div class="d-flex justify-content-between">
-        <label class="text-info"><strong>Estatus Activo</strong> </label>
-        <em class="icon-refresh em- text-success"
-              (click)="ngOnInit()"></em>
-      </div>
-      <br>
-      <div>
-        <canvas id="activaIndi"></canvas>
-        <br>
-        <mat-divider></mat-divider>
-        <small ><span class="float-left"> Total folios: <span
-          class="badge badge-info marge">{{total|numerico}}</span></span></small>
-        <small ><span class="float-right"> Total Posiciones: <span
-              class="badge badge-info marge">{{NumeroPos|numerico}}</span></span></small>
-      </div>
+<div class="card">
+  <div class="card-body mat-elevation-z8 text-uppercase">
+    <div class="d-flex justify-content-between align-items-center p-1 bg-warning fontRoboto">
+      <span>Estatus Activo</span>
+      <em class="icon-refresh" (click)="ngOnInit()"></em>
     </div>
+    <br>
+    <canvas id="activaIndi"></canvas>
+    <br>
+    <div class="d-flex justify-content-start p-1 mt-2 fontLato"> 
+      <small>Total folios<span class="badge badge-success ml-1">{{total|numerico}}</span></small>
+    </div>
+    <mat-divider></mat-divider>
+    <small class="float-right fontLato mt-1">Total Posiciones<span
+        class="badge badge-info ml-1">{{NumeroPos|numerico}}</span></small>
   </div>
+</div>
 
-  <!-- <div style="text-align: center">
+<!-- <div style="text-align: center">
         <strong style="color: #23b7e5" >{{total}} Estatus Activo</strong> 
       </div>
 <div   >
@@ -29,18 +26,19 @@
 
 
 <!-- Modal para visualizar vacantes seleccionadas -->
-<div *ngIf="ShowModal" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #MessageModal="bs-modal" class="modal"
-tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
-<div class="modal-dialog modal-lg reporteMod">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="float-left text-warning"><em class="fa fa-file-text-o mr-2"></em>Informaci&oacute;n de Vacantes {{EstadoVacante}} </h4>
-      <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="ShowModal=false"><i
-          class="fa fa-times"></i></button>
-    </div>
-    <div class="modal-body">
-      <app-dt-vacantes-grafica-pa [EstadoVacante]="EstadoVacante" ></app-dt-vacantes-grafica-pa>
+<div *ngIf="ShowModal" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal
+  #MessageModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-lg reporteMod">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="float-left text-warning"><em class="fa fa-file-text-o mr-2"></em>Informaci&oacute;n de Vacantes
+          {{EstadoVacante}} </h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="ShowModal=false"><i
+            class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <app-dt-vacantes-grafica-pa [EstadoVacante]="EstadoVacante"></app-dt-vacantes-grafica-pa>
+      </div>
     </div>
   </div>
-</div>
 </div>

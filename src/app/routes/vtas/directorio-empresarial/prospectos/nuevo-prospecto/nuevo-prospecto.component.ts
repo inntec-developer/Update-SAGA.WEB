@@ -1,14 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-import { emptyStringGetter, id } from '@swimlane/ngx-datatable/release/utils';
 
 import { CatalogosService } from './../../../../../service/catalogos/catalogos.service';
 import { ClientesService } from '../../../../../service/clientes/clientes.service';
 import { CompanyValidation } from './company-validation';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SettingsService } from '../../../../../core/settings/settings.service';
-import { ModalDirective } from 'ngx-bootstrap';
+import { ModalDirective } from 'ngx-bootstrap/modal/public_api';
 import { RFCValidator } from '../dt-prospectos/rfc-validation';
 
 const swal = require('sweetalert2');
@@ -21,7 +20,7 @@ const swal = require('sweetalert2');
 })
 export class NuevoProspectoComponent implements OnInit {
   @ViewChild('HacerClienteModal') ShownModal: ModalDirective;
-  
+
   // Customs
   public CMNumEmleados = 10;
   //#region Variables
@@ -64,30 +63,32 @@ export class NuevoProspectoComponent implements OnInit {
   public formContactoCorreo: FormGroup;
   /* Formulario para hacer cliente */
   public formCliente: FormGroup;
-  public addDireccion: boolean;
+  public ClienteArray: FormGroup;
+
+  public addDireccion = true;
   public DireccionesNew: Array<any> = [];
   public indexDireccion: any;
   public EditDireccion: boolean;
-  public textbtnDirecciones: string;
+  public textbtnDirecciones = 'AGREGAR';
 
-  public addTelefono: boolean;
+  public addTelefono = true;
   public TelefonosNew: Array<any> = [];
   public indexTelefonos: any;
   public EditTelefono: boolean;
-  public textbtnTelefono: string;
+  public textbtnTelefono = 'AGREGAR';
   public esOficina: any;
 
-  public addCorreo: boolean;
+  public addCorreo = true;
   public CorreosNew: Array<any> = [];
   public indexCorreos: any;
   public EditCorreo: boolean;
-  public textbtnCorreo: string;
+  public textbtnCorreo = 'AGREGAR';
 
-  public addContacto: boolean;
+  public addContacto = true;
   public ContactosNew: Array<any> = [];
   public indexContacto: any;
   public EditContacto: boolean;
-  public textbtnContacto: string;
+  public textbtnContacto = 'AGREGAR';
   public esOficinaContacto: any;
 
   public addContactoTelefono: boolean;
@@ -137,6 +138,9 @@ export class NuevoProspectoComponent implements OnInit {
       mouseoverTimerStop: true,
     });
   nombrecomercial: any;
+  direccionesfiscales: any = [];
+  datosFiscales: any = [];
+  validarRFC: boolean;
 
   constructor(
     private router: Router,
@@ -295,7 +299,7 @@ export class NuevoProspectoComponent implements OnInit {
       Lada: ['', [Validators.required, Validators.maxLength(3)]],
       Numero: ['', [Validators.required, Validators.maxLength(8)]],
       Extension: [''],
-    })
+    });
 
     this.formContactoCorreo = this.fb.group({
       Email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]]
@@ -310,6 +314,9 @@ export class NuevoProspectoComponent implements OnInit {
 
   }
 
+  regresar() {
+    this.router.navigate(['/ventas/directorio'], {queryParams: {ruta: 2}});
+  }
   //#region Servicios GET
   getCatalogos() {
     this._CatalogoService.getGiroEmp().subscribe(result => {
@@ -501,31 +508,31 @@ export class NuevoProspectoComponent implements OnInit {
   //#region FUNCIONES PARA DIRECCION
   AddDireccion() {
     this.auxTipoDireccion = this.tipoDireccion.filter(x => {
-      if (x.id == this.formDirecciones.get('TipoDireccion').value) {
-        return x.tipoDireccion
+      if (x.id === this.formDirecciones.get('TipoDireccion').value) {
+        return x.tipoDireccion;
       }
       this.auxPais = this.paises.filter(x => {
-        if(x.id == this.formDirecciones.get('Paises').value){
+        if (x.id === this.formDirecciones.get('Paises').value) {
           return x.pais;
         }
       });
       this.auxEstado = this.estados.filter(x => {
-        if(x.id == this.formDirecciones.get('Estados').value){
+        if (x.id === this.formDirecciones.get('Estados').value) {
           return x.estado;
         }
       });
       this.auxMunicipio = this.municipios.filter(x => {
-        if(x.id == this.formDirecciones.get('Municipios').value){
+        if (x.id === this.formDirecciones.get('Municipios').value) {
           return x.municipio;
         }
       });
       this.auxColonia = this.colonias.filter(x => {
-        if(x.id === this.formDirecciones.get('Colonias').value){
+        if(x.id === this.formDirecciones.get('Colonias').value) {
           return x.colonia;
         }
       });
     });
-    let data = {
+    const data = {
       idAux: this.idAuxD,
       tipoDireccionId: this.formDirecciones.get('TipoDireccion').value,
       tipoDireccion: this.auxTipoDireccion[0]['tipoDireccion'],
@@ -555,61 +562,57 @@ export class NuevoProspectoComponent implements OnInit {
     }
 
     if (!this.EditDireccion) {
-      var exist = this.DireccionesNew.find(element => {
-        if (element.calle == data.calle
-          && element.numeroExterior == data.numeroExterior
-          && element.numeroInterior == data.numeroInterior
-          && element.codigoPostal == data.codigoPostal) {
+      const exist = this.DireccionesNew.find(element => {
+        if (element.calle === data.calle
+          && element.numeroExterior === data.numeroExterior
+          && element.numeroInterior === data.numeroInterior
+          && element.codigoPostal === data.codigoPostal) {
           return true;
-        }
-        else {
+        } else {
           return false;
         }
       });
       if (!exist) {
         this.DireccionesNew.push(data);
         this.idAuxD++;
-      }
-      else {
+      } else {
         this.popToast('info', 'Direcciones', 'La dirección que intenta registrar ya existe.');
         return;
       }
 
     } else {
-      var idDireccion = this.DireccionesNew[this.indexDireccion]['idAux'];
+      const idDireccion = this.DireccionesNew[this.indexDireccion]['idAux'];
       data.idAux = idDireccion;
-      var exist = this.DireccionesNew.find(element => {
-        if (element.calle == data.calle
-          && element.numeroExterior == data.numeroExterior
-          && element.numeroInterior == data.numeroInterior
-          && element.codigoPostal == data.codigoPostal
-          && element.idAux != idDireccion) {
+      const exist = this.DireccionesNew.find(element => {
+        if (element.calle === data.calle
+          && element.numeroExterior === data.numeroExterior
+          && element.numeroInterior === data.numeroInterior
+          && element.codigoPostal === data.codigoPostal
+          && element.idAux !== idDireccion) {
           return true;
-        }
-        else {
+        } else {
           return false;
         }
       });
       if (!exist) {
         this.DireccionesNew[this.indexDireccion] = data;
         if (this.CorreosNew.length > 0) {
-          var EmailIndexUpdate = this.CorreosNew.findIndex(x => x.idDireccion == idDireccion)
+          const EmailIndexUpdate = this.CorreosNew.findIndex(x => x.idDireccion === idDireccion);
           this.CorreosNew[EmailIndexUpdate]['calle'] = data.calle;
           this.onChangeTableC(this.config);
         }
         if (this.TelefonosNew.length > 0) {
-          var TelefonoIndexUpdate = this.TelefonosNew.findIndex(x => x.idDireccion == idDireccion)
+          const TelefonoIndexUpdate = this.TelefonosNew.findIndex(x => x.idDireccion === idDireccion);
           this.TelefonosNew[TelefonoIndexUpdate]['calle'] = data.calle;
           this.onChangeTableC(this.config);
         }
         if (this.ContactosNew.length > 0) {
-          var ContactoIndexUpdate = this.ContactosNew.findIndex(x => x.idDireccion == idDireccion)
+          const ContactoIndexUpdate = this.ContactosNew.findIndex(x => x.idDireccion === idDireccion);
           this.ContactosNew[ContactoIndexUpdate]['calle'] = data.calle;
         }
         this.EditDireccion = false;
         this.elementD = null;
-      }
-      else {
+      } else {
         this.popToast('info', 'Direcciones', 'La dirección que intenta actualizar ya existe.');
         return;
       }
@@ -674,14 +677,14 @@ export class NuevoProspectoComponent implements OnInit {
     const idxDireccion = this.DireccionesNew.findIndex(x => x.idAux === idDireccion);
     const tipoTelefonoId = this.formTelefonos.get('TipoTelefono').value;
     this.auxTipoTelefono = this.tipoTelefonos.filter(x => {
-      if (x.id == tipoTelefonoId) {
-        return x.tipo
+      if (x.id === tipoTelefonoId) {
+        return x.tipo;
       }
     });
-    if (tipoTelefonoId != 4) {
+    if (tipoTelefonoId !== 4) {
       this.formTelefonos.controls['Extension'].setValue('');
     }
-    let data = {
+    const data = {
       idAux: this.idAuxT,
       idDireccion: idDireccion,
       calle: this.DireccionesNew[idxDireccion]['calle'],
@@ -700,9 +703,9 @@ export class NuevoProspectoComponent implements OnInit {
     }
 
     if (!this.EditTelefono) {
-      var exist = this.TelefonosNew.find(element => {
-        if (element.telefono == data.telefono
-          && element.extension == data.extension) {
+      const exist = this.TelefonosNew.find(element => {
+        if (element.telefono === data.telefono
+          && element.extension === data.extension) {
           return true;
         } else {
           return false;
@@ -712,19 +715,18 @@ export class NuevoProspectoComponent implements OnInit {
         this.TelefonosNew.push(data);
         this.idAuxT++;
 
-      }
-      else {
+      }  else {
         this.popToast('info', 'Teléfonos', 'El Teléfono que intenta registrar ya existe.');
         return;
       }
 
     } else {
-      var idTelefono = this.TelefonosNew[this.indexTelefonos]['idAux'];
+      const idTelefono = this.TelefonosNew[this.indexTelefonos]['idAux'];
       data.idAux = idTelefono;
-      var exist = this.TelefonosNew.find(element => {
-        if (element.telefono == data.telefono
-          && element.extension == data.extension
-          && element.idAux != idTelefono) {
+      const exist = this.TelefonosNew.find(element => {
+        if (element.telefono === data.telefono
+          && element.extension === data.extension
+          && element.idAux !== idTelefono) {
           return true;
         } else {
           return false;
@@ -734,8 +736,7 @@ export class NuevoProspectoComponent implements OnInit {
         this.TelefonosNew[this.indexTelefonos] = data;
         this.EditTelefono = false;
         this.elementT = null;
-      }
-      else {
+      } else {
         this.popToast('info', 'Teléfonos', 'El Teléfono que intenta actualizar ya existe.');
         return;
       }
@@ -774,9 +775,9 @@ export class NuevoProspectoComponent implements OnInit {
 
   //#region FUNCIONES PARA EMAILS
   AddEmail() {
-    let idDireccion = this.formCorreos.get('EmailDireccion').value;
-    let idxDireccion = this.DireccionesNew.findIndex(x => x.idAux == idDireccion)
-    let data = {
+    const idDireccion = this.formCorreos.get('EmailDireccion').value;
+    const idxDireccion = this.DireccionesNew.findIndex(x => x.idAux === idDireccion);
+    const data = {
       idAux: this.idAuxC,
       idDireccion: idDireccion,
       calle: this.DireccionesNew[idxDireccion]['calle'],
@@ -786,32 +787,29 @@ export class NuevoProspectoComponent implements OnInit {
     }
 
     if (!this.EditCorreo) {
-      var exist = this.CorreosNew.find(element => {
-        if (element.email == data.email) {
+      const exist = this.CorreosNew.find(element => {
+        if (element.email === data.email) {
           return true;
-        }
-        else {
+        } else {
           return false;
         }
       });
       if (!exist) {
         this.CorreosNew.push(data);
         this.idAuxC++;
-      }
-      else {
+      } else {
         this.popToast('info', 'Correo Electrónico', 'El correo electrónico que intenta registrar ya existe.');
         return;
       }
 
     } else {
-      var idEmail = this.CorreosNew[this.indexCorreos]['idAux'];
+      const idEmail = this.CorreosNew[this.indexCorreos]['idAux'];
       data.idAux = idEmail;
-      var exist = this.CorreosNew.find(element => {
-        if (element.email == data.email
-          && element.idAux != idEmail) {
+      const exist = this.CorreosNew.find(element => {
+        if (element.email === data.email
+          && element.idAux !== idEmail) {
           return true;
-        }
-        else {
+        } else {
           return false;
         }
       });
@@ -819,8 +817,7 @@ export class NuevoProspectoComponent implements OnInit {
         this.CorreosNew[this.indexCorreos] = data;
         this.EditCorreo = false;
         this.elementC = null;
-      }
-      else {
+      } else {
         this.popToast('info', 'Correo Electrónico', 'El correo electrónico que intenta actualizar ya existe.');
         return;
       }
@@ -847,10 +844,36 @@ export class NuevoProspectoComponent implements OnInit {
 
   //#region FUNCIONES PARA CONTACTOS
   AddContacto() {
-    let idDireccion = this.formContactos.get('ContactoDireccion').value;
-    let idxDireccion = this.DireccionesNew.findIndex(x => x.idAux == idDireccion)
+    const idDireccion = this.formContactos.get('ContactoDireccion').value;
+    const idxDireccion = this.DireccionesNew.findIndex(x => x.idAux === idDireccion);
 
-    let data = {
+    if (this.Telefonos.length === 0) {
+      const auxTel = [{
+        idAux: this.idAuxT,
+        idDireccion: idDireccion,
+        calle: this.DireccionesNew[idxDireccion]['calle'],
+        tTelefono: this.auxTipoTelefono[0].tipo,
+        tipoTelefonoId: 4,
+        clavePais: +52,
+        claveLada: '000',
+        extension: '00',
+        telefono: this.formTelefonos.get('Numero').value || '00000000',
+        activo: false,
+        esPrincipal: false,
+        usuarioAlta: this.Usuario,
+      }];
+    }
+    if (this.Emails.length === 0) {
+      const auxEmail = {
+        idAux: this.idAuxC,
+        idDireccion: idDireccion,
+        calle: this.DireccionesNew[idxDireccion]['calle'],
+        email: 'SIN REGISTRO',
+        esPrincipal: false,
+        usuarioAlta: this.Usuario,
+      };
+    }
+    const data = {
       idAux: this.idAuxCn,
       idDireccion: idDireccion,
       calle: this.DireccionesNew[idxDireccion]['calle'],
@@ -864,7 +887,7 @@ export class NuevoProspectoComponent implements OnInit {
       usuarioAlta: this.Usuario,
       telefonos: this.Telefonos,
       emails: this.Emails
-    }
+    };
     if (!this.EditContacto) {
       this.ContactosNew.push(data);
       this.idAuxCn++;
@@ -899,18 +922,18 @@ export class NuevoProspectoComponent implements OnInit {
   }
 
   AddContactoTelefono() {
-    let tipoTelefonoId = this.formContactoTelefonos.get('TipoTelefono').value;
+    const tipoTelefonoId = this.formContactoTelefonos.get('TipoTelefono').value;
 
-    if (tipoTelefonoId != 4) {
+    if (tipoTelefonoId !== 4) {
       this.formContactoTelefonos.controls['Extension'].setValue('');
     }
     this.auxTipoTelefono = this.tipoTelefonos.filter(x => {
-      if (x.id == tipoTelefonoId) {
+      if (x.id === tipoTelefonoId) {
         return x.tipo;
       }
     });
 
-    let telefono = {
+    const telefono = {
       idAux: this.idAuxCnT,
       tipoTelefonos: this.auxTipoTelefono[0].tipo,
       tipoTelefonoId: this.formContactoTelefonos.get('TipoTelefono').value,
@@ -921,12 +944,12 @@ export class NuevoProspectoComponent implements OnInit {
       activo: true,
       esPrincipal: true,
       UsuarioAlta: this.Usuario,
-    }
+    };
 
     if (!this.EditContactoTelefono) {
-      var exist = this.Telefonos.find(element => {
-        if (element.telefono == telefono.telefono
-          && element.extension == telefono.extension) {
+      const exist = this.Telefonos.find(element => {
+        if (element.telefono === telefono.telefono
+          && element.extension === telefono.extension) {
           return true;
         } else {
           return false;
@@ -936,19 +959,18 @@ export class NuevoProspectoComponent implements OnInit {
         this.Telefonos.push(telefono);
         this.idAuxCnT++;
         this.lengthCnT = this.Telefonos.length;
-      }
-      else {
+      } else {
         this.popToast('info', 'Contacto Teléfonos', 'El Teléfono que intenta registrar ya existe.');
         return;
       }
 
     } else {
-      var idTelefono = this.Telefonos[this.indexContactoTelefonos]['idAux'];
+      const idTelefono = this.Telefonos[this.indexContactoTelefonos]['idAux'];
       telefono.idAux = idTelefono;
-      var exist = this.Telefonos.find(element => {
-        if (element.telefono == telefono.telefono
-          && element.extension == telefono.extension
-          && element.idAux != idTelefono) {
+      const exist = this.Telefonos.find(element => {
+        if (element.telefono === telefono.telefono
+          && element.extension === telefono.extension
+          && element.idAux !== idTelefono) {
           return true;
         } else {
           return false;
@@ -958,8 +980,7 @@ export class NuevoProspectoComponent implements OnInit {
         this.Telefonos[this.indexContactoTelefonos] = telefono;
         this.EditContactoTelefono = false;
         this.elementCnT = null;
-      }
-      else {
+      } else {
         this.popToast('info', 'Contacto Teléfonos', 'El Teléfono que intenta actualizar ya existe.');
         return;
       }
@@ -986,19 +1007,18 @@ export class NuevoProspectoComponent implements OnInit {
   }
 
   AddContactoCorreo() {
-    let data = {
+    const data = {
       idAux: this.idAuxCnC,
       email: this.formContactoCorreo.get('Email').value,
       esPrincipal: false,
       usuarioAlta: this.Usuario
-    }
+    };
 
     if (!this.EditContactoCorreo) {
-      var exist = this.Emails.find(element => {
-        if (element.email == data.email) {
+      const exist = this.Emails.find(element => {
+        if (element.email === data.email) {
           return true;
-        }
-        else {
+        } else {
           return false;
         }
       });
@@ -1006,21 +1026,19 @@ export class NuevoProspectoComponent implements OnInit {
         this.Emails.push(data);
         this.idAuxCnC++;
         this.lengthCnC = this.Emails.length;
-      }
-      else {
+      } else {
         this.popToast('info', 'Correo Electrónico', 'El correo electrónico que intenta registrar ya existe.');
         return;
       }
 
     } else {
-      var idEmail = this.Emails[this.indexContactoCorreos]['idAux'];
+      const idEmail = this.Emails[this.indexContactoCorreos]['idAux'];
       data.idAux = idEmail;
-      var exist = this.Emails.find(element => {
-        if (element.email == data.email
-          && element.idAux != idEmail) {
+      const exist = this.Emails.find(element => {
+        if (element.email === data.email
+          && element.idAux !== idEmail) {
           return true;
-        }
-        else {
+        } else {
           return false;
         }
       });
@@ -1028,8 +1046,7 @@ export class NuevoProspectoComponent implements OnInit {
         this.Emails[this.indexContactoCorreos] = data;
         this.EditContactoCorreo = false;
         this.elementCnC = null;
-      }
-      else {
+      } else {
         this.popToast('info', 'Correo Electrónico', 'El correo electrónico que intenta actualizar ya existe.');
         return;
       }
@@ -1141,8 +1158,9 @@ export class NuevoProspectoComponent implements OnInit {
     this.columnsD.forEach((column: any) => {
       if (column.filtering) {
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
+          if (item[column.name] != null) {
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
+          }
         });
       }
     });
@@ -1765,48 +1783,48 @@ export class NuevoProspectoComponent implements OnInit {
 
   private GuardarProspecto() {
     this.loading = true;
-    var notData = false;
-    var msg = 'En la sección ';
-    var section = '';
-    var DireccionEmail = [];
-    var DireccionTelefono = [];
-    var DireccionContacto = [];
+    let notData = false;
+    let msg = 'En la sección ';
+    const section = '';
+    const DireccionEmail = [];
+    const DireccionTelefono = [];
+    const DireccionContacto = [];
     this.DireccionesNew.forEach(element => {
-      var idAux = element.idAux;
+      const idAux = element.idAux;
       this.TelefonosNew.forEach(function (telefono: any) {
-        if (idAux == telefono.idDireccion) {
-          let data = {
+        if (idAux === telefono.idDireccion) {
+          const data = {
             calle: element.calle,
             numeroInterior: element.numeroInterior,
             numeroExterior: element.numeroExterior,
             codigoPostal: element.codigoPostal,
             telefono: telefono.telefono,
             extension: telefono.extension
-          }
+          };
           DireccionTelefono.push(data);
-        } else if (telefono.idDireccion == 0) {
+        } else if (telefono.idDireccion === 0) {
           notData = true;
           msg = msg + 'teléfono, ';
         }
       });
       this.CorreosNew.forEach(function (correo: any) {
-        if (idAux == correo.idDireccion) {
-          let data = {
+        if (idAux === correo.idDireccion) {
+          const data = {
             calle: element.calle,
             numeroInterior: element.numeroInterior,
             numeroExterior: element.numeroExterior,
             codigoPostal: element.codigoPostal,
             email: correo.email,
-          }
+          };
           DireccionEmail.push(data);
-        } else if (correo.idDireccion == 0) {
+        } else if (correo.idDireccion === 0) {
           notData = true;
           msg = msg + 'correo electrónico, ';
         }
       });
       this.ContactosNew.forEach(function (contacto: any) {
-        if (idAux == contacto.idDireccion) {
-          let data = {
+        if (idAux === contacto.idDireccion) {
+          const data = {
             calle: element.calle,
             numeroInterior: element.numeroInterior,
             numeroExterior: element.numeroExterior,
@@ -1815,9 +1833,9 @@ export class NuevoProspectoComponent implements OnInit {
             apellidoPaterno: contacto.apellidoPaterno,
             apellidoMaterno: contacto.apellidoMaterno,
             puesto: contacto.puesto
-          }
+          };
           DireccionContacto.push(data);
-        } else if (contacto.idDireccion == 0) {
+        } else if (contacto.idDireccion === 0) {
           notData = true;
           msg = msg + 'contacto, ';
         }
@@ -1856,6 +1874,10 @@ export class NuevoProspectoComponent implements OnInit {
     const val = this.DireccionesNew.filter(x => x.activo).length;
 
     if (val > 0 ) {
+    // if ( this.DireccionesNew.length > 1) {
+    //   this.direccionesfiscales = this.DireccionesNew.filter(element => element.tipoDireccionId === 2);
+    // }
+
     this._ClienteService.addProspecto(prospecto).subscribe(element => {
       if (element !== 304) {
         this.clienteId = element;
@@ -1872,12 +1894,13 @@ export class NuevoProspectoComponent implements OnInit {
           text: 'Se registró correctamente el prospecto ' + prospecto['NombreComercial'] + '. ¡Ya puedes volverlo cliente.!',
           type: 'warning',
           showCancelButton: true,
-          confirmButtonText: '¡Si, volverlo cliente!',
-          cancelButtonText: '¡No, Salir!',
+          confirmButtonText: '¡SI, VOLVERLO CLIENTE!',
+          cancelButtonText: 'NO, SALIR!',
           reverseButtons: true
         }).then((result) => {
           if (result.value) {
               this.ShownModal.show();
+              this.loading = false;
               // } else {
               //   swalWithBootstrapButtons.fire(
               //     'Ocurrió un error',
@@ -1890,6 +1913,7 @@ export class NuevoProspectoComponent implements OnInit {
             /* Read more about handling dismissals below */
             result.dismiss === swal.DismissReason.cancel
           ) {
+            this.loading = false;
             swalWithBootstrapButtons.fire(
               'Cancelado',
               'Para volver cliente al prospecto ' + prospecto['NombreComercial'] + ' lo podrá hacer en la sección de prospectos',
@@ -1922,6 +1946,25 @@ export class NuevoProspectoComponent implements OnInit {
     }
   }
 
+  ValidarDatosFiscales(r, rfc, validar, rs) {
+    console.log(r);
+    if ( rfc === validar) {
+      this.datosFiscales.push({
+        RazonSocial: rs,
+        RFC: rfc,
+      });
+      r.validado = true;
+      r.RazonSocial = rs;
+      r.RFC = rfc;
+    }
+  }
+  SaveDatosFiscales(idx, rs, rfc) {
+  this.datosFiscales.push({
+    RazonSocial: rs,
+    RFC: rfc,
+  });
+
+}
   createCliente() {
     const cliente = {
       Id: this.clienteId,

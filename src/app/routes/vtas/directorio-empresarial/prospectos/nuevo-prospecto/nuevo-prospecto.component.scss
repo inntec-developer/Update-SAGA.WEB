@@ -21,9 +21,7 @@ table {
 //   box-shadow:1px 2px 6px rgba(0,0,0,.23);
 // }
 
-.margen {
-  margin: 0 2px;
-}
+
 
 // tbody tr:hover {
 // font-size: 13px !important;
@@ -32,10 +30,6 @@ table {
 
 .contenedor{
   overflow:hidden;
-}
-
-.aling-div{
-  float: left;
 }
 
 .em-button{
@@ -51,4 +45,21 @@ ng-scrollbar {
   --scrollbar-thumb-color: rgb(94, 175, 255);
   --scrollbar-thumb-hover-color: dodgerblue;
   --scrollbar-border-radius: 4px;
+}
+
+em {
+  cursor: pointer;
+}
+em .emhover:hover {
+  color: #ec2121 !important;
+}
+.modal-lg {
+  max-width: 60%;
+}
+
+.long {
+  width: 100px !important;
+}
+.long_tipo {
+  width: 130px !important;
 }

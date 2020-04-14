@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges, OnChanges } from '@angular/core';
 
 import { ComponentsService } from './../../../service/Components/components.service';
 import { DatePipe } from '@angular/common';
@@ -13,25 +13,25 @@ import { isArray } from 'rxjs/internal/util/isArray';
   styleUrls: ['./dt-vacantes-un.component.scss'],
   providers: [ComponentsService, DatePipe]
 })
-export class DtVacantesUNComponent implements OnInit {
+export class DtVacantesUNComponent implements OnInit, OnChanges {
   @Input('EstadoVacante') EstadoVacante: any;
   @Input('UnidadNegocio') UnidadNegocio: any;
 
   private UsuarioId: string;
 
-  //SCROLL
+  // SCROLL
   disabled = false;
   compact = false;
   invertX = false;
   invertY = false;
-  shown = 'hover';
+  shown = 'shown';
 
   // Varaibles del paginador
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
   public showFilterRow: boolean;
   public dataSource: Array<any> = [];
@@ -40,8 +40,13 @@ export class DtVacantesUNComponent implements OnInit {
 
   public totalPos = 0;
   public bandera = true;
-  totalContratados: number = 0;
-
+  totalContratados = 0;
+  public config: any = {
+    paging: true,
+    //sorting: { columns: this.columns },
+    filtering: { filterString: '' },
+    className: ['table-hover  mb-0']
+  };
 
   constructor(
     private _ComponentService: ComponentsService,
@@ -53,16 +58,22 @@ export class DtVacantesUNComponent implements OnInit {
 
   public rows: Array<any> = [];
   public columns: Array<any> = [
-    { title: 'Folio', sorting: 'desc', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
-    { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
-    { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Folio', sorting: 'desc', className: 'text-success text-center', name: 'folio',
+    filtering: { filterString: '', placeholder: 'Folio' } },
+    { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion',
+    filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento',
+    filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
     { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
     { title: 'Cub/Vac', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No.' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
-    { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador', filtering: { filterString: '', placeholder: 'Coordinador', columnName: 'reclutadores' } },
-    { title: 'Solicitante', className: 'text-info text-center', name: 'propietario', filtering: { filterString: '', placeholder: 'Solicitante' } },
-    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador', columnName: 'reclutadores' } },
+    { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador',
+    filtering: { filterString: '', placeholder: 'Coordinador', columnName: 'reclutadores' } },
+    { title: 'Solicitante', className: 'text-info text-center', name: 'propietario',
+    filtering: { filterString: '', placeholder: 'Solicitante' } },
+    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores',
+    filtering: { filterString: '', placeholder: 'Reclutador', columnName: 'reclutadores' } },
   ];
 
   ngOnInit() {
@@ -81,47 +92,40 @@ export class DtVacantesUNComponent implements OnInit {
 
   getRequisiciones() {
     this._Spinner.show();
-    var estado = this.EstadoVacante;
-    var data = {
+    const estado = this.EstadoVacante;
+    const datos = {
       estadoVacante: estado,
       unidadNegocio: this.UnidadNegocio
     }
-    this._ComponentService.getRequiUnidadNegocio(data).subscribe(data => {
-      if (data != null && data != 404) {
+    this._ComponentService.getRequiUnidadNegocio(datos).subscribe(data => {
+      if (data != null && data !== 404) {
         this.totalPos = 0;
         this.totalContratados = 0;
 
         this.dataSource = data;
         this.dataSource.forEach(r => {
-          if (r.estatusId != 8 && (r.estatusId < 34 || r.estatusId > 37) && this.bandera == true) {
+          if (r.estatusId !== 8 && (r.estatusId < 34 || r.estatusId > 37) && this.bandera === true) {
             this.totalPos += r.vacantes;
             this.totalContratados += r.contratados;
           }
-          if (this.bandera == false) {
+          if (this.bandera === false) {
             this.totalPos += r.vacantes;
             this.totalContratados += r.contratados;
 
           }
-          if (r.estatusId == 4) {
+          if (r.estatusId === 4) {
             r.coordinador = r.reclutadores;
-            r.reclutadores = "SIN ASIGNAR";
+            r.reclutadores = 'SIN ASIGNAR';
           }
         });
         this.onChangeTable(this.config);
         this._Spinner.hide();
-      }else{
+      } else {
         this._Spinner.hide();
       }
     }, error => this.errorMessage = <any>error, function () {}
     );
   }
-
-  public config: any = {
-    paging: true,
-    //sorting: { columns: this.columns },
-    filtering: { filterString: '' },
-    className: ['table-hover  mb-0']
-  };
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;

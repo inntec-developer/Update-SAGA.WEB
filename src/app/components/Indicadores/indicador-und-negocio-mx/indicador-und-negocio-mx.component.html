@@ -1,32 +1,27 @@
-<div class="card box">
-  <div class="card-body mat-elevation-z8">
-    <div class="d-flex justify-content-between">
-      <label class="text-info"><strong>Unidad de Negocio M&eacute;xico</strong></label>
-      <em class="icon-refresh em- text-success" (click)="updateChart()"></em>
+<div class="card">
+  <div class="card-body mat-elevation-z8 text-uppercase">
+    <div class="d-flex justify-content-between align-items-center p-1 bg-warning fontRoboto">
+      <span>Unidad de Negocio M&eacute;xico</span>
+      <em class="icon-refresh" (click)="updateChart()"></em>
     </div>
     <br>
-    <div id="UnidadNegocioMx">
+    <div id="UnidadNegocioMx" class="text-uppercase">
       <canvas id="canvasMx"></canvas>
-      <div class="row">
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <small><span class="float-letf"> Vigentes: <span
-                class="badge badge-success">{{Vigentes}}</span></span></small>
+      <div class="d-flex justify-content-between align-items-center align-items-strech mb-2">
+          <small><small>Vigentes</small><span
+                class="badge badge-success ml-1">{{Vigentes}}</span></small>
+          <small><small>Por Vencer</small><span
+                class="badge badge-warning ml-1">{{PorVencer}}</span></small>
+          <small><small>Vencidas</small><span
+                class="badge badge-danger ml-1">{{Vencidas}}</span></small>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <small><span class="text-center"> PorVencer: <span
-                class="badge badge-warning">{{PorVencer}}</span></span></small>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-12">
-          <small><span class="float-right"> Vencidas: <span
-                class="badge badge-danger">{{Vencidas}}</span></span></small>
-        </div>
-      </div>
       <mat-divider></mat-divider>
-      <br>
-      <small><span class="float-left"> Total Posiciones: <span
-        class="badge badge-primary">{{totalPos}}</span></span></small>
-      <small class="em-button"><span (click)="detectedClick('todas')" class="float-right"> Total Folios: <span
-            class="badge badge-info">{{RegistrosT | numerico}}</span></span></small>
+      <div class="d-flex justify-content-between p-1 align-items-center mt-2">
+      <small><span>Total Posiciones<span
+        class="badge badge-primary ml-1">{{totalPos}}</span></span></small>
+      <a [class.disabled]="RegistrosT== 0" (click)="detectedClick('todas')"><small>Total Folios</small><span
+            class="badge badge-info ml-1">{{RegistrosT | numerico}}</span></a>
+            </div>
     </div>
   </div>
 </div>
@@ -36,11 +31,13 @@
   #MessageModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
   <div class="modal-dialog modal-lg reporteMod">
     <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="float-left text-warning"><em class="fa fa-file-text-o mr-2"></em>Informaci&oacute;n de Vacantes
-          {{EstadoVacante}} por Fecha de Cumplimiento M&eacute;xico </h4>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="ShowModal=false"><i
+      <div class="modal-header fontRoboto text-uppercase">
+        <div class="d-flex justify-content-between align-items-center p-1 bg-info-light w-100">
+        <h5>Informaci&oacute;n de Vacantes
+          {{EstadoVacante}} por Fecha de Cumplimiento M&eacute;xico </h5>
+        <button type="button" class="btn btn-xs btn-danger btn-circle" (click)="ShowModal=false"><i
             class="fa fa-times"></i></button>
+          </div>
       </div>
       <div class="modal-body">
         <app-dt-vacantes-un [EstadoVacante]="EstadoVacante" [UnidadNegocio]="UnidadNegocio"></app-dt-vacantes-un>

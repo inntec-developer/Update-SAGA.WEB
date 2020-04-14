@@ -1,8 +1,13 @@
-import { state } from '@angular/animations';
+
 export class ApiConection {
   public static ServiceUrl = 'http://localhost:33333/api/';
   public static ServiceUrlImgExamenes = 'http://localhost:33333/';
   public static ServiceUrlWeb = 'http://localhost:4200/';
+  public static ServiceUrlFileManager = 'http://localhost:33333/utilerias/';
+  // mio
+  // public static ServiceUrl = 'http://10.10.13.62:333/api/';
+  // public static ServiceUrlImgExamenes = 'http://10.10.13.62:333/';
+  // public static ServiceUrlWeb = 'http://10.10.13.62:444/';
 
   // Produccion
   // public static ServiceUrlWeb = 'https://weberp.damsa.com.mx/';
@@ -19,10 +24,10 @@ export class ApiConection {
   // // Pruebas
   // public static ServiceUrlWeb = 'https://websb.damsa.com.mx/';
   // public static ServiceUrl = 'https://apisb.damsa.com.mx/api/';
-  // public static ServiceUrlImgExamenes = 'https://apisb.damsa.com.mx';
-
+  // public static ServiceUrlImgExamenes = 'https://apisb.damsa.com.mx/';
+  // public static ServiceUrlFileManager = 'https://apisb.damsa.com.mx/utilerias/';
+  
   public static ServiceUrlFotoUser = 'https://apierp.damsa.com.mx/img/';
-  public static ServiceUrlFileManager = 'https://apisb.damsa.com.mx/utilerias/';
   public static ServiceUrlFoto = 'https://apisb.damsa.com.mx/';
   public static ServiceUrlBolsa = 'https://btapi.damsa.com.mx';
   public static ServiceUrlLoginBolsa = 'https://btweb.damsa.com.mx';
@@ -38,7 +43,7 @@ export class ApiConection {
   public static CulminarEvent = 'CalendarEvent/CulminarEvent';
 
   /* Compoentes de Asignacion de Requisiciones */
-  public static GetUserGroup = 'AsignacionRequi/getUserGroup';
+  public static GetUserGroup = 'AsignacionRequi/getUserByType';
   public static GetUserGroupL = 'AsignacionRequi/getUserGroupL';
   public static GetAsignados = 'AsignacionRequi/getAsignados';
 
@@ -66,7 +71,12 @@ export class ApiConection {
   public static GetMunicipio = 'Catalogos/getMunicipio';
   public static GetColonia = 'Catalogos/getColonia';
   public static GetForCP = 'Catalogos/getInfoCP';
-
+  public static GetBancos = 'Catalogos/getInstBancaria';
+  public static GetMotContratacion = 'Catalogos/getMotContratacion';
+  public static GetEstadoCivil = 'Catalogos/getEstadoCivil';
+  public static GetGrupoSanguineo = 'Catalogos/getGrupoSanguineo';
+  public static GetEscolaridades = 'Catalogos/getEscolaridades';
+  public static GetFormaPago = 'Catalogos/getFormaPago';
   /* Catalogos para clientes */
   public static GetGiroEmp = 'Catalogos/getGiroEmp';
   public static GetActividadesEmp = 'Catalogos/getActividadEmp';
@@ -172,6 +182,7 @@ public static GetClasesTiposRecl = 'PerfilReclutamiento/getTipoClase';
   public static ComentariosCandidato = 'Candidatos/getComentarios';
   public static AddComentariosCandidato = 'Candidatos/addComentarios';
   public static GetCandidatoPalabraClave = 'Candidatos/getCandidatoPalabraClave';
+  public static GetTopCandidatos = 'Candidatos/getTopCandidatos';
   public static GetAreasRecl = 'Candidatos/getAreasRecl';
   public static GetMediosRecl = 'Candidatos/getMediosRecl';
   public static UpdateFuenteRecl = 'Candidatos/updateFuenteRecl';
@@ -260,6 +271,18 @@ public static GetClasesTiposRecl = 'PerfilReclutamiento/getTipoClase';
   public static GuardarArte = 'admin/guardarArte';
   public static UploadBG = 'admin/uploadBG';
   public static UploadAnexos = 'admin/uploadAnexos';
+  public static GetTotales = 'admin/getTotales';
+
+  /*Captura*/
+  public static GetDatosContratados = 'admin/getDatosGenerales';
+  public static AgregarDtosContratados = 'admin/agregarDatos';
+  public static GetDocumentosNecesarios = 'admin/getDocumentos';
+  public static ActualizarDocumentos = 'admin/actualizarDocumentos';
+  public static GetDtosGafetes = 'admin/getDatosGafetes';
+  public static GetDtosGafetesByClave = 'admin/getDatosGafetesByClave';
+  public static GetDtosIngresos = 'admin/getDatosIngresos';
+  public static AgregarGafetes = 'admin/agregarGafetes';
+
   /*Seguimiento Vacantes*/
   public static getDtosCard = 'reclutamiento/seguimientovacante/getCard';
   public static getDtosDetail = 'reclutamiento/seguimientovacante/getvacantesdtl';
@@ -274,6 +297,8 @@ public static GetClasesTiposRecl = 'PerfilReclutamiento/getTipoClase';
   public static setProcesoVacante = 'reclutamiento/seguimientovacante/updateStatusVacante';
   public static ComentariosVacante = 'reclutamiento/seguimientovacante/getComentariosVacante';
   public static AddComentariosVacante = 'reclutamiento/seguimientovacante/addComentariosVacante';
+  public static DeleteComentariosVacante = 'reclutamiento/seguimientovacante/deleteComentariosVacante';
+  public static UpdateComentariosVacante = 'reclutamiento/seguimientovacante/updateComentariosVacante';
   public static setStatusBolsa = 'reclutamiento/seguimientovacante/updateStatusBolsa';
   public static sendEmailCandidato = 'reclutamiento/seguimientovacante/sendEmailCandidato';
   public static sendEmailContratados = 'reclutamiento/seguimientovacante/sendEmailContratados';
@@ -290,10 +315,12 @@ public static GetClasesTiposRecl = 'PerfilReclutamiento/getTipoClase';
   public static validarTelCandidato = 'reclutamiento/seguimientovacante/validarTelCandidato';
   public static getCandidatosCubiertos = 'reclutamiento/seguimientovacante/getCandidatosCubiertos';
   public static cubrirMasivos = 'reclutamiento/seguimientovacante/cubrirMasivos';
+  public static TopCandidatos = 'Requisiciones/topCandidatos';
 
 
   /*Examenes */
   public static InsertExamen = 'examenes/insertExamen';
+  public static InsertEntrevista = 'examenes/insertEntrevista';
   public static GetCatalogo = 'examenes/getCatalogo';
   public static GetExamenes = 'examenes/getExamenes';
   public static GetExamen = 'examenes/getExamen';
@@ -473,7 +500,9 @@ public static GetClasesTiposRecl = 'PerfilReclutamiento/getTipoClase';
   public static GetReclutadoresByUnidad = 'Campo/getReclutadoresByUnidades';
   public static GetCandidatosProceso = 'Campo/getCandidatosProceso';
   public static UpdateContratadosCampo  = 'Campo/updateContratadosCampo';
-  
+  public static GetInfoVacante = 'Campo/getInfoVacante';
+  public static GetCandidatosApartados = 'Campo/getCandidatosApartados';
+  public static RegistrarCandidatosCampo = 'Campo/registrarCandidato';
 
   // ventas costos
   public static GetCostos = 'Costos/getCostos';

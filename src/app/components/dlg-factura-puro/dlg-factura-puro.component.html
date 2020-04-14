@@ -1,22 +1,21 @@
-<h5 class="text-warning text-left"> <em class="fa fa-file-text-o"></em> DATOS PARA FACTURACI&Oacute;N - RECLUTAMIENTO PURO
+<div class="d-flex justify-content-center p-1 bg-warning fontRoboto"><span>DATOS PARA FACTURACI&Oacute;N - RECLUTAMIENTO PURO</span>
     <!-- <button type="button" class="btn btn-xs btn-danger btn-circle float-right" mat-dialog-close ><i class="fa fa-times"></i></button> -->
-</h5>
-<mat-divider></mat-divider>
+</div>
 <div class="card">
   <div class="card-body">
     <mat-dialog-content class="scroll">
        <ul class="list-group list-group-flush mb-2">
-            <li class="list-group-item text-muted">EMPRESA: <span class="text-primary">{{data.cliente | uppercase}}</span></li>
-            <li class="list-group-item text-muted">PUESTO: <span class="text-primary">{{data.vBtra | uppercase}} </span></li>
-            <li class="list-group-item text-muted"><span class="mr-1">FOLIO:</span><span class="text-primary mr-3">{{data.folio }}</span>
-              <span class="mr-1">NO:</span><span class="text-primary mr-3">{{data.vacantes }}</span>
-              <span class="mr-1">SUELDO FINAL:</span><span class="text-primary mr-3">{{data.sueldoMaximo |  moneda:'$'}}</span>
-              <span class="mr-1">TOTAL:</span><span class="text-primary"> {{data.sueldoMaximo * data.vacantes |  moneda:'$'}}</span></li>
+            <li class="list-group-item text-muted">EMPRESA: <span class="text-info">{{data.cliente | uppercase}}</span></li>
+            <li class="list-group-item text-muted">PUESTO: <span class="text-info">{{data.vBtra | uppercase}} </span></li>
+            <li class="list-group-item text-muted"><span class="mr-1">FOLIO:</span><span class="text-info mr-3">{{data.folio }}</span>
+              <span class="mr-1">NO:</span><span class="text-info mr-3">{{data.vacantes }}</span>
+              <span class="mr-1">SUELDO FINAL:</span><span class="text-info mr-3">{{data.sueldoMaximo |  moneda:'$'}}</span>
+              <span class="mr-1">TOTAL:</span><span class="text-info"> {{data.sueldoMaximo * data.vacantes |  moneda:'$'}}</span></li>
           </ul>
           <div class="p-3 mb-2 bg-light">
           <ul class="list-group list-group-flush">
-              <li class="text-muted p-2 mb-1 bg-light">RAZ&Oacute;N SOCIAL:<span class="text-primary ml-1">{{data.razon}}</span></li>
-              <li class="text-muted p-2 bg-light">EMPRESA FACTURADORA:<span class="text-primary ml-1">{{data.factura}}</span> </li>
+              <li class="text-muted p-2 mb-1 bg-light">RAZ&Oacute;N SOCIAL:<span class="text-info ml-1">{{data.razon}}</span></li>
+              <li class="text-muted p-2 bg-light">EMPRESA FACTURADORA:<span class="text-info ml-1">{{data.factura}}</span> </li>
             </ul>
           </div>
        <table class="table">
@@ -78,12 +77,12 @@
     <button type="button" class="btn btn-xs btn-labeled btn-danger mb-1 mr-2 float-right mat-elevation-z8" mat-dialog-close>
       <span class="btn-label">
         <i class="fa fa-times"></i>
-      </span> Cancelar
+      </span>CANCELAR
     </button>
     <button type="button" class="btn btn-xs btn-labeled btn-success mb-1 float-right mat-elevation-z8" (click)="AddDtosFactura()" [disabled]="porcentaje < 0">
       <span class="btn-label">
         <i class="fa fa-check"></i>
-      </span> Aceptar
+      </span>ACEPTAR
     </button>
     <img class="loading-position" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
   </mat-dialog-actions>

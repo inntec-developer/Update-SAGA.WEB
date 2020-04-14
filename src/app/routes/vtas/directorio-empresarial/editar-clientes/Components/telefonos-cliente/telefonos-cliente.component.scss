@@ -13,14 +13,9 @@ table {
   width: 400px;
 }
 
-.margen {
-  margin: 0 2px;
+em:hover {
+  color: #ec2121 !important;
 }
-
-.contenedor{
-  overflow:hidden;
-}
-
-.aling-div{
-  float: left;
+.btn-labeled {
+  width: 120px !important;
 }

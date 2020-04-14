@@ -5,7 +5,7 @@ import { Cliente } from './../../../../models/vtas/Cliente';
 import { ClientesService } from '../../../../service/clientes/clientes.service';
 import { FileManagerComponent } from './../../../../components/file-manager/file-manager.component';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { forEach } from '@angular/router/src/utils/collection';
+
 
 @Component({
   selector: 'app-editar-clientes',

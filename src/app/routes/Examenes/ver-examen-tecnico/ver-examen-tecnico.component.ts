@@ -69,8 +69,8 @@ export class VerExamenTecnicoComponent implements OnInit {
       this.onChangeTable(this.config);
     });
   }
-  GetExamen(ExamenId) {
-    this.service.GetExamen(ExamenId).subscribe(data => {
+  GetExamen(Examen) {
+    this.service.GetExamen(Examen.id).subscribe(data => {
       this.examen = data;
       this.examen.forEach(element => {
         if (element.file !== '') {

@@ -1,47 +1,31 @@
-<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
 <div class="content-heading">
-  <div>
-    Requisiciones
-    <span class="text-sm d-none d-sm-block">Edici&oacute;n de Requisici&oacute;n.</span>
-  </div>
-  <!-- Breadcrumb right aligned-->
+    <span class="text-muted">EDICI&Oacute;N DE REQUISICI&Oacute;N.</span>
   <ol class="breadcrumb ml-auto">
-    <li class="breadcrumb-item"><a [routerLink]="['/home']">Inicio</a></li>
-    <li class="breadcrumb-item"><a [routerLink]="['/ventas/requisicion']">Requisición</a></li>
-    <li class="breadcrumb-item active">Editar Requisición</li>
+    <li class="breadcrumb-item"><a [routerLink]="['/ventas/requisicion']">REQUISICIONES</a></li>
+    <li class="breadcrumb-item active">EDITAR REQUISICI&Oacute;N</li>
   </ol>
 </div>
-<!-- Botones superiores Izquierdos -->
 <div class="row">
   <div class="col-md-12 text-right">
     <button container="body" placement="bottom" tooltip="Regresar" class="mr-1 btn btn-xs btn-warning mat-elevation-z8"
       type="button" [routerLink]="['/ventas/requisicion']">
-      <em class="icon-action-undo"></em>
+      <i class="icon-action-undo"></i>
     </button>
   </div>
 </div>
-<!-- <div class="dt-container  mat-elevation-z8">
-  <div class="card-header">
-    <em class="fa fa-user"></em> Vacantes por Horarios
-  </div> -->
-<mat-divider></mat-divider>
-<div class="card-body">
-  <div class="row">
-    <div class="col-md-12">
+<div class="mt-2">
+  <app-view-info-requi [Folios]="folio" (EstatusId)="getEstatusRequi($event)"></app-view-info-requi>
+</div>
+  <div class="mt-2">
       <app-dt-horarios [Horarios]="Horarios" [Requi]="true" [EstatusRequi]="EstatusRequi"
         [TipoReclutamiento]="TipoReclutamiento" (NumeroVacantes)="NumeroVacantes = $event"></app-dt-horarios>
-    </div>
   </div>
-</div>
-<!-- </div> -->
-<div class="card-body">
-  <div class="row">
-    <div class="col-md-12">
+  <div class="mt-2">
       <app-update-info-requi [Folios]="folio" [NumeroVacantes]="NumeroVacantes"></app-update-info-requi>
     </div>
-  </div>
-</div>
-<app-view-cuerpo-requi [Requisicion]="requiId"></app-view-cuerpo-requi>
+
+
+<!-- <app-view-cuerpo-requi [Requisicion]="requiId"></app-view-cuerpo-requi> -->
 
 <!-- <app-update-info-requi [Folios]="folio" [NumeroVacantes]= "NumeroVacantes"></app-update-info-requi>
 <br />

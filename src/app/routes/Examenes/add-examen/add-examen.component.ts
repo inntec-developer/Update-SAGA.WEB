@@ -20,6 +20,7 @@ export class AddExamenComponent implements OnInit {
   examen = [];
   tipoexamenId = 0;
   preguntas = '';
+  tipoPregunta = 0;
 
   resp1 = '';
   pa = false;
@@ -28,8 +29,12 @@ export class AddExamenComponent implements OnInit {
   msg = '';
   img = false;
   respVal: boolean;
-  imgPregunta = { Pregunta: '', Tipo: 0, file: '', name: '', type: '' };
-
+  imgPregunta: any = []; // { Pregunta: '', Tipo: 0, file: '', name: '', type: '' };
+tiposPregunta = [
+  {id: 1, descripcion: 'Pregunta Abierta'},
+  {id: 2, descripcion: 'Opción multiple'},
+  {id: 3, descripcion: 'Puntaje'},
+];
  /**
  * configuracion para mensajes de acciones.
  */
@@ -44,6 +49,9 @@ toasterconfig: ToasterConfig = new ToasterConfig({
   preventDuplicates: true,
 });
   ruta: any = 1;
+  respDesc = '';
+  respValue = 0;
+  descripcion: any;
 
   constructor(private service: ExamenesService,
     private toasterService: ToasterService,
@@ -69,13 +77,14 @@ toasterconfig: ToasterConfig = new ToasterConfig({
 
   AgregarRespuesta(resp, value) {
     if (this.preguntas !== '') {
-      if (value === 3) {
-        if (this.pa) {
+      if (this.tipoPregunta === 1) {
           this.respuestas = [];
-        } else {
           this.resp1 = '';
-        }
-      } else {
+      } else if ( this.tipoPregunta === 3) {
+        this.respuestas.push({ resp: resp, value: value, file: '', name: '', type: '' });
+        this.respDesc = '';
+        this.respValue = 0;
+      }  else {
         if (this.respuestas.length > 0 && value === 1) {
           let aux = false;
           this.respuestas = this.respuestas.filter(function (item) {
@@ -109,52 +118,49 @@ toasterconfig: ToasterConfig = new ToasterConfig({
   }
 
   AgregarPregunta() {
-    if (this.respuestas.length > 3) {
-      if (this.imgPregunta.file.length === 0) {
-        this.imgPregunta = { Pregunta: this.preguntas, Tipo: 2, file: '', name: '', type: '' };
+    if (this.respuestas.length > 1) {
+      if (this.imgPregunta.length === 0) {
+        this.imgPregunta.push({ Pregunta: this.preguntas, Tipo: this.tipoPregunta, file: '', name: '', type: '' });
       } else {
-        this.imgPregunta.Tipo = 2;
+        this.imgPregunta[0]['Tipo'] = this.tipoPregunta;
       }
 
-      this.examen.push({ Pregunta: this.imgPregunta,
+      this.examen.push({ Pregunta: this.imgPregunta[0],
         Respuestas: this.respuestas,
         TipoExamen: { Id: this.tipoexamenId, Nombre: this.nomExamen },
-        usuarioId: this.settings.user['id']
+        Descripcion: '',
+        usuarioId: ''
       });
 
-      this.preguntas = '';
-      this.respuestas = [];
-      this.resp1 = '';
-      this.pa = false;
-      this.respInc = '';
-      this.msg = '';
-      this.img = false;
-      this.respVal = false;
-      this.imgPregunta = { Pregunta: '', Tipo: 0, file: '', name: '', type: '' };
     } else if (this.respuestas.length === 0) {
-      if (this.imgPregunta.file.length === 0) {
-        this.imgPregunta = { Pregunta: this.preguntas, Tipo: 1, file: '', name: '', type: '' };
+      if (this.imgPregunta[0].file.length === 0) {
+        this.imgPregunta = [{ Pregunta: this.preguntas, Tipo: this.tipoPregunta, file: '', name: '', type: '' }];
       } else {
-        this.imgPregunta.Tipo = 1;
+        this.imgPregunta[0].Tipo = 1;
       }
 
-      this.examen.push({ Pregunta: this.imgPregunta,
-        Respuestas: this.respuestas, 
+      this.examen.push({
+        Pregunta: this.imgPregunta[0],
+        Respuestas: this.respuestas,
         TipoExamen: { Id: this.tipoexamenId, Nombre: this.nomExamen },
-        usuarioId: this.settings.user['id'] });
+        Descripcion: '',
+        usuarioId: ''
+      });
 
-      this.preguntas = '';
-      this.respuestas = [];
-      this.resp1 = '';
-      this.pa = false;
-      this.respInc = '';
-      this.msg = '';
-      this.img = false;
-      this.respVal = false;
-      this.imgPregunta = { Pregunta: '', Tipo: 0, file: '', name: '', type: '' };
-    }  else {
-      this.msg = 'Debe agregar mas de una opción de respuesta para la pregunta';
     }
+    this.preguntas = '';
+    this.respuestas = [];
+    this.resp1 = '';
+    this.respDesc = '';
+    this.respValue = 0;
+    this.tipoPregunta = 0;
+    this.pa = false;
+    this.respInc = '';
+    this.msg = '';
+    this.img = false;
+    this.respVal = false;
+    this.imgPregunta = [];
+  
   }
 
   UpdatePregunta(value, index, $event) {
@@ -207,6 +213,8 @@ toasterconfig: ToasterConfig = new ToasterConfig({
   }
 
   AgregarExamen() {
+    this.examen[0].Descripcion = this.descripcion;
+    this.examen[0].UsuarioId = this.settings.user['id'];
     this.service.InsertExamenes(this.examen).subscribe(data => {
       if (data === 200) {
         this.popToast('success', 'Generar Examen', 'El examen se generó con éxito');
@@ -231,9 +239,14 @@ toasterconfig: ToasterConfig = new ToasterConfig({
       }
       const self = this;
       reader.onload = function () {
-        // self.base64textString = reader.result;
           if (prVal === 1) {
-            self.imgPregunta = { Pregunta: self.preguntas, Tipo: 3, file: reader.result, name: file.name, type: file.type };
+            self.imgPregunta = [{
+              Pregunta: self.preguntas,
+              Tipo: self.tipoPregunta,
+              file: reader.result,
+              name: file.name,
+              type: file.type
+            }];
           } else {
             if (value === 1) {
               let aux = false;
@@ -280,8 +293,9 @@ toasterconfig: ToasterConfig = new ToasterConfig({
     this.tipoexamenId = 0;
     this.nomExamen = '';
     this.se.setValue('');
-    this.imgPregunta = { Pregunta: '', Tipo: 0, file: '', name: '', type: '' };
+    this.imgPregunta = []; // { Pregunta: '', Tipo: 0, file: '', name: '', type: '' };
     this.img = false;
+    this.descripcion = '';
 
   }
 

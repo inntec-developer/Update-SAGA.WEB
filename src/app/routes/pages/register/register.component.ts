@@ -4,8 +4,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import { AuthService } from '../../../service/auth/auth.service';
 import { CustomValidators } from 'ng2-validation';
-import { ModalDirective } from 'ngx-bootstrap';
-import { RequestOptions } from '@angular/http';
+import { ModalDirective } from 'ngx-bootstrap/modal/public_api';
+
 import { Router } from '@angular/router';
 import { SettingsService } from '../../../core/settings/settings.service';
 
@@ -136,9 +136,9 @@ export class RegisterComponent implements OnInit {
           LiderId: this.valForm.controls['LiderId'].value,
           Email: this.email,
           Password: this.passwordForm.controls['password'].value,
-          Foto: "/utilerias/img/user/default.jpg"
+          Foto: '/utilerias/img/user/default.jpg'
         };
-
+debugger;
         this.service.AddUsers(persona)
           .subscribe(data => {
             if (data == 201) {
@@ -185,7 +185,7 @@ export class RegisterComponent implements OnInit {
   getLider() {
     this.service.GetLideres()
       .subscribe(result => {
-      this.Lideres = result
+        this.Lideres = result
       });
   }
 

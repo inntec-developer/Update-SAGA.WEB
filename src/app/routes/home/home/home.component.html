@@ -1,14 +1,3 @@
-<!-- <div class="content-heading">
-  <div>
-    Sistema Administrativo de Gestión Avanzada
-    <span class="text-sm d-none d-sm-block">SAGA</span>
-  </div> -->
-<!-- Breadcrumb right aligned-->
-<!-- <ol class="breadcrumb ml-auto">
-    <li class="breadcrumb-item active">Inicio</li>
-  </ol>
-</div> -->
-
 <div class="row">
   <div class="col-lg-3 col-md-3 col-sm-12">
     <app-indicador-perfiles></app-indicador-perfiles>
@@ -23,7 +12,19 @@
     <app-indicador-candidatos></app-indicador-candidatos>
   </div>
 </div>
-<div *ngIf="isGerenteOrAudito" class="row">
+<div class="d-flex justify-content-between align-items-center p-1 bg-info-light">
+  <span>INDICADORES</span>
+  <button id="read" chkPrivilegiosButtons (click)="open = !open"  class="btn btn-xs btn-circle btn-purple mat-elevation-z8" tooltip="Ver mapa" placement="top">
+    <i *ngIf="!open" class="fa fa-globe fa-2x" aria-hidden="true"></i>
+    <i *ngIf="open" class="fa fa-times fa-2x text-danger"></i>
+  </button>
+</div>
+<div *ngIf="open" class="card mt-2" >
+  <div class="card-body">
+<app-mapa-reporte></app-mapa-reporte>
+</div>
+</div>
+<div *ngIf="isGerenteOrAudito" class="row mt-2">
   <div class="col-lg-4 col-md-4 col-sm-12">
     <app-indicador-und-negocio-mty></app-indicador-und-negocio-mty>
   </div>
@@ -34,13 +35,8 @@
     <app-indicador-und-negocio-mx></app-indicador-und-negocio-mx>
   </div>
 </div>
-<div *ngIf="isGerenteNac" class="row card" >
-  <div class="col card-body p-2 mat-elevation-z8" style="width:100%;height:510px">
-<app-mapa-reporte></app-mapa-reporte>
-</div>
-</div>
 
-<div *ngIf="!isGerenteNac" class="row">
+<div class="row mt-2">
   <div class="col-lg-4 col-md-4 col-sm-12">
     <app-grafica-vacantes-pie (ChangeFolios)="changeFolios($event)"></app-grafica-vacantes-pie>
   </div>

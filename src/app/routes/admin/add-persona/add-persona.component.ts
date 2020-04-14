@@ -6,9 +6,8 @@ import { DatePipe } from '@angular/common';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import { ApiConection } from '../../../service/api-conection.service';
 import { FormBuilder } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { SettingsService } from '../../../core/settings/settings.service';
-import { UploadImgsComponent } from '../upload-imgs/upload-imgs.component';
 import { ExcelService } from '../../../service/ExcelService/excel.service';
 
 const swal = require('sweetalert');
@@ -57,7 +56,6 @@ export class AddPersonaComponent implements OnInit {
 
   tipoUsuario = this.settings.user['tipoUsuarioId'];
 
-  @ViewChild('uploadImg') someInput: UploadImgsComponent;
   @ViewChild('staticModal') modal;
 
   public rows: Array<any> = [];
@@ -242,9 +240,6 @@ export class AddPersonaComponent implements OnInit {
   }
 
   closeModal() {
-    this.someInput.removeItem();
-    this.someInput.selectedFile = null;
-
     this.modal.hide();
   }
 

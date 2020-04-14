@@ -1,7 +1,7 @@
-<form [formGroup]="formCliente">
+<form [formGroup]="formCliente" class="text-dark fontLato">
   <section #ClienteSection class="row">
     <mat-form-field class="col-12">
-      <input #RazonSocialCtrl type="text" placeholder="Razón Social" aria-label="Number" matInput autofocus
+      <input class="text-info" #RazonSocialCtrl type="text" placeholder="RAZ&Oacute;N SOCIAL" aria-label="Number" matInput autofocus
         formControlName="RazonSocial" [value]="RazonSocialCtrl.value.toUpperCase()" [matAutocomplete]="cliente" (keyup)="filter($event);"
         required="" >
         <button mat-button *ngIf="RazonSocialCtrl.value.length > 1" matSuffix mat-icon-button aria-label="Clear" (click)="Borrar();">
@@ -21,7 +21,7 @@
   </section>
   <section #InfoFiscalSection class="row">
     <mat-form-field class="col-6">
-      <input matInput placeholder="Nombre Comercial" formControlName="NombreComercial" class="text-info">
+      <input matInput placeholder="NOMBRE COMERCIAL" formControlName="NombreComercial" class="text-info">
     </mat-form-field>
     <mat-form-field class="col-6 text-muted">
       <input matInput placeholder="RFC" formControlName="RFC" class="text-info">
@@ -29,10 +29,10 @@
   </section>
   <section #InfoClienteSection class="row">
     <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12 text-muted">
-      <input matInput placeholder="Giro de la Empresa" formControlName="Giro" class="text-info">
+      <input matInput placeholder="GIRO DE LA EMPRESA" formControlName="Giro" class="text-info">
     </mat-form-field>
     <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-      <input matInput placeholder="Actividad de la Empresa" formControlName="Actividad" class="text-info">
+      <input matInput placeholder="ACTIVIDAD DE LA EMPRESA" formControlName="Actividad" class="text-info">
     </mat-form-field>
     <mat-form-field class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
       <mat-select (selectionChange)="selectTipo()" placeholder="Tipo Reclutamiento" formControlName="Tipo" required #TipoReclutamientoCtrl>
@@ -50,9 +50,9 @@
     </mat-form-field>
   </section>
 </form>
-<section #infoAdiSection class="row">
+<section #infoAdiSection class="row mt-2">
   <div class="col-12">
-    <app-dt-direccion class="col-12" [Direcciones]="Direcciones" [Perfil290]="isPerfilReclutamiento"></app-dt-direccion>
+    <app-dt-direccion id="direcciones" class="col-12" [Direcciones]="Direcciones" [Perfil290]="isPerfilReclutamiento"></app-dt-direccion>
   </div>
   <div class="col-12">
     <app-dt-telefonos class="col-8" [Telefonos]="Telefonos" [Perfil290]="isPerfilReclutamiento"></app-dt-telefonos>

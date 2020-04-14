@@ -8,11 +8,6 @@
   align-items: center;
 }
 
-small {
-  font-size: 11px;
-}
-
-
 .contenedor-firmas {
   height: 100px;
 }
@@ -54,4 +49,8 @@ table {
 
 img-arte{
   width: 40%;
+}
+
+em {
+  cursor: pointer;
 }

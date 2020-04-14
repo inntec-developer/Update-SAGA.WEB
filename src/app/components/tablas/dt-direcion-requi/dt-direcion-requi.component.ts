@@ -1,8 +1,7 @@
 import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 
-import { MatTableDataSource } from '@angular/material';
-import { ModalDirective } from 'ngx-bootstrap';
 import { RequisicionesService } from '../../../service/requisiciones/requisiciones.service';
+import { ModalDirective } from 'ngx-bootstrap/modal/public_api';
 
 declare var $: any;
 

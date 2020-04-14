@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SettingsService } from '../../core/settings/settings.service';
 import { ComentariosService } from '../../service/Comentarios/comentarios.service';
 const swal = require('sweetalert');

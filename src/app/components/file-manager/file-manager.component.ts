@@ -2,6 +2,7 @@ import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/cor
 
 import { AdminServiceService } from '../../service/AdminServicios/admin-service.service';
 import { saveAs } from 'file-saver';
+import { ActivatedRoute, Router } from '@angular/router';
 
 const swal = require('sweetalert');
 
@@ -16,14 +17,15 @@ export class FileManagerComponent implements OnInit {
   @Input() public accept: Array<string> = [];
   @Input() public candidatoId: any;
   @Input() public ruta: any;
+  @Input() public upload = false;
 
   @ViewChild('staticModal') modal;
   // config scroll
   disabled = false;
   compact = false;
-  invertX = true;
-  invertY = true;
-  shown = 'hover';
+  invertX = false;
+  invertY = false;
+  shown = 'shown';
 
   selectedFile: File;
   cont_image = 0;
@@ -37,7 +39,7 @@ export class FileManagerComponent implements OnInit {
   imgShow = false;
   pdfShow = false;
   verMsj = false;
-
+  // "/utilerias/Files/users/"
   alerts: any[] = [
     {
       type: 'success',
@@ -55,7 +57,8 @@ export class FileManagerComponent implements OnInit {
     this.verMsj = false;
   }
 
-  constructor(private service: AdminServiceService) { }
+  constructor(private service: AdminServiceService) {
+  }
 
   ngOnInit() {
     this.files = [];
@@ -64,8 +67,10 @@ export class FileManagerComponent implements OnInit {
     this.cont_word = 0;
     this.cont_xls = 0;
     this.GetFiles();
+
   }
 
+ 
   // ngOnChanges(changes: SimpleChanges): void {
   //   if ((changes.candidatoId && !changes.candidatoId.isFirstChange())) {
   //     this.GetFiles();
@@ -74,7 +79,7 @@ export class FileManagerComponent implements OnInit {
 
   fileChangeListener($event) {
     const file: File = $event.target.files[0];
-    if (this.ruta.includes('users')) {
+    if (this.ruta.includes('candidatos')) {
       this.service.UploadFile(file, this.candidatoId).subscribe(result => {
         if (result === 201) {
           this.ngOnInit();
@@ -126,8 +131,10 @@ export class FileManagerComponent implements OnInit {
 
 
   downloadFile(datos) {
+    if (this.ruta.includes('candidatos')) {
+      this.ruta = '/utilerias/Files/users/';
+    }
     const ruta = this.ruta + this.candidatoId + '/';
-
     this.service.DownloadFiles(ruta + datos.nom).subscribe(res => {
       saveAs(res, datos.nom);
     });
@@ -141,14 +148,15 @@ export class FileManagerComponent implements OnInit {
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#ec2121',
-      confirmButtonText: '¡Si, borrar!',
+      confirmButtonText: '¡SI, BORRAR!',
       cancelButtonColor: '#ec2121',
-      cancelButtonText: '¡No, cancelar!',
+      cancelButtonText: '¡NO, CANCELAR!',
       closeOnConfirm: true,
       closeOnCancel: true
     }, (isConfirm) => {
-      window.onkeydown = null;
-      window.onfocus = null;
+      if (this.ruta.includes('candidatos')) {
+        this.ruta = '/utilerias/Files/users/';
+      }
       if (isConfirm) {
         const ruta = this.ruta + this.candidatoId + '/';
         this.service.DeleteFiles(ruta + datos.nom).subscribe(res => {
@@ -164,9 +172,6 @@ export class FileManagerComponent implements OnInit {
       }
     }
     );
-    window.onkeydown = null;
-    window.onfocus = null;
-
   }
 
   closeModal() {
@@ -194,7 +199,7 @@ if (data !== 0) {
           icon: 'fa-file-pdf-o'
         });
         this.cont_pdf++;
-      } else if (element.ext === '.xlsx') {
+      } else if (element.ext === '.xlsx' || element.ext === '.xls') {
         this.files.push({
           type: element.ext,
           nom: element.nom,
@@ -219,6 +224,9 @@ if (data !== 0) {
 
   GetFiles() {
     if (this.candidatoId) {
+      if (this.ruta.includes('candidato')) {
+        this.ruta = '/utilerias/Files/users/';
+      }
       this.service.GetFiles(this.candidatoId, this.ruta)
         .subscribe(data => {
           this.getTypes(data);

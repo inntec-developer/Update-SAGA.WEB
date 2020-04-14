@@ -1,10 +1,16 @@
-<div class="row text-center">
+<div class="d-flex justify-content-between align-items-center p-1 bg-light">
     <mat-icon>lock</mat-icon>
-    <h3 style="margin-left: 45px">Restablecer contraseña</h3>
-    <span class="text-center">{{data.user}}</span>
+    <h4 class="text-uppercase mt-2">
+        Restablecer contraseña</h4>
+    <button class="btn btn-xs btn-danger btn-circle" (click)='Close()'>
+        <i class="fa fa-times"></i>
+    </button>
+</div>
+<div class="d-flex justify-content-start p-1 mt-2 text-muted">
+    <span>{{data.user}}</span>
 </div>
 <hr>
-<div *ngIf="!Codigo" class="row">
+<div *ngIf="!Codigo" class="d-flex flex-column justify-content-center">
     <mat-form-field>
         <input #pass matInput placeholder="Nueva contraseña" [type]="showpass ? 'text' : 'password'" (blur)="passw(pass.value)">
         <mat-icon matSuffix (mouseover)="showpass=true" (mouseout)="showpass=false">remove_red_eye</mat-icon>
@@ -25,10 +31,13 @@
 </ng-container>
 <br>
 <div class="row">
-    <button *ngIf="!Codigo" class="btn btn-green btn-lg btn-block mat-elevation-z8" type="button" (click)="Enviar()" container="body" placement="bottom" tooltip="Guardar contraseña">
-        Guardar
+
+    <button *ngIf="!Codigo" [disabled]="loading" class="btn btn-green btn-lg btn-block mat-elevation-z8" type="button" (click)="Enviar()" container="body" placement="bottom" tooltip="Guardar contraseña">
+        Guardar     <span *ngIf="loading" class="ml-3 mt-1"><i class="fa fa-spinner fa-pulse float-right"
+            aria-hidden="true"></i></span>
     </button>
-    <button *ngIf="Codigo" class="btn btn-info btn-lg btn-block mat-elevation-z8" type="button" (click)="Confirmar()" container="body" placement="bottom" tooltip="Confirma el código ingresado">
-        Confirmar
+    <button *ngIf="Codigo" [disabled]="loading" class="btn btn-info btn-lg btn-block mat-elevation-z8" type="button" (click)="Confirmar()" container="body" placement="bottom" tooltip="Confirma el código ingresado">
+        Confirmar     <span *ngIf="loading" class="ml-3 mt-1"><i class="fa fa-spinner fa-pulse float-right"
+            aria-hidden="true"></i></span>
     </button>
 </div>

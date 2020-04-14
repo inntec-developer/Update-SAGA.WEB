@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Requis } from '../../../service/DisenioVacante/CatalogoRequi.service';
-import { ActivatedRoute,Router} from '@angular/router';
-import {Http} from '@angular/http';
-//Element  Angular Material
-import {MatTableDataSource} from '@angular/material';
+import { ActivatedRoute, Router} from '@angular/router';
+
+import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
@@ -17,7 +16,6 @@ public datos : any[]
 
   constructor(
     private service: Requis
-    ,private http: Http
     ,private route: ActivatedRoute
     ,private router: Router
   ) { }
@@ -28,7 +26,7 @@ public datos : any[]
   ngOnInit() {
     this.service.getRequis()
     .subscribe(
-      e=>{
+      e=> {
         this.datos = e;
         this.dataSource = new MatTableDataSource(e);
       })

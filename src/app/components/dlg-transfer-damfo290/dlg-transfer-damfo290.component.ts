@@ -1,5 +1,5 @@
 import { PerfilReclutamientoService } from './../../service/PerfilReclutamiento/perfil-reclutamiento.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, OnInit, Inject } from '@angular/core';
 import { ComentariosService } from '../../service/Comentarios/comentarios.service';
 import { SettingsService } from '../../core/settings/settings.service';

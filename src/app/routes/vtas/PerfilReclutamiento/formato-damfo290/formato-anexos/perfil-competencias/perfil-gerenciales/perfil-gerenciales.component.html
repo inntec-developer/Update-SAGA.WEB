@@ -1,9 +1,9 @@
 <form [formGroup]="CompetenciaArray">
   <section class="d-flex justify-content-between">
     <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
-    <strong class="text-warning">Competencias Gerenciales <i *ngIf="CompetenciaNew.length == 0"
+    <span class="text-warning text-uppercase fontRoboto">Competencias Gerenciales <i *ngIf="CompetenciaNew.length == 0"
         class="text-danger fa fa-exclamation-circle ml-3" container="body" placement="right"
-        tooltip="Campo requerido"></i></strong>
+        tooltip="Campo requerido"></i></span>
     <button class="btn btn-xs btn-primary mr-1 mb-1 mat-elevation-z8" (click)="AddCompetencia()" container="body"
       placement="top" tooltip="Agregar competencias gerenciales"><i class="fa fa-plus"></i></button>
   </section>

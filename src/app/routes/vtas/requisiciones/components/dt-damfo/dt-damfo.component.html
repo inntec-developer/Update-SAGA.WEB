@@ -1,18 +1,31 @@
-<div class="card media">
+<ngx-spinner bdOpacity="0.5" bdColor="#333" size="default" color="#fff" type="ball-atom"></ngx-spinner>
+<div *ngIf="!Perfil290" class="content-heading">
+  <span class="text-muted mt-2">GENERAR NUEVA REQUISICI&Oacute;N.</span>
+  <ol class="breadcrumb ml-auto mt-2">
+    <li class="breadcrumb-item ">
+      <a [routerLink]="['/ventas/requisicion']">REQUISICI&Oacute;NES</a>
+    </li>
+    <li class="breadcrumb-item active">REVISI&Oacute;N DAM-FO-290</li>
+  </ol>
+</div>
+<div class="card">
   <div class="card-body mat-elevation-z8">
-    <div class="row">
-      <div class="col-sm-12 col-md-12 clearfix p-2 bg-light">
-        <button *ngIf="Perfil290" id="create" chkPrivilegiosButtons class="mr-2 btn btn-xs btn-info mat-elevation-z8"
+    <!-- <div *ngIf="!Perfil290" class="d-flex justify-content-end p-1">
+        
+    </div> -->
+    <div class="row p-1 bg-light">
+      <div class="col-sm-12 col-md-12">
+        <button *ngIf="Perfil290" id="create" chkPrivilegiosButtons class="mr-2 btn btn-xs btn-success mat-elevation-z8"
           container="body" placement="bottom" tooltip="Nuevo DAMFO-290" (click)="crearPerfil290()">
           <i class="fa fa-plus"></i>
         </button>
         <button id="view" chkPrivilegiosButtons (click)="showDamfo()" class="mr-2 btn btn-xs mat-elevation-z8"
-          [disabled]="element.length == 0" [ngClass]="element.length == 0 ? 'disabled' : 'btn-warning'" container="body"
+          [disabled]="element.length == 0" [ngClass]="element.length == 0 ? 'disabled' : 'btn-info'" container="body"
           placement="bottom" tooltip="Visualizar">
           <i class="fa fa-eye"></i>
         </button>
         <button *ngIf="Perfil290" id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8"
-          [ngClass]="element.length == 0 || !isEditable ? 'disabled' : 'btn-primary'" container="body" placement="bottom"
+          [ngClass]="element.length == 0 || !isEditable ? 'disabled' : 'btn-warning'" container="body" placement="bottom"
           [disabled]="element.length == 0 || !isEditable"
           tooltip="Editar" (click)="editar290()">
           <i class="icon-pencil"></i>
@@ -47,14 +60,14 @@
           tooltip="Crear Requisición">
           <i class="icon-docs"></i>
         </button>
+        <button *ngIf="!Perfil290" container="body" placement="bottom" tooltip="Regresar"
+        class="btn btn-xs btn-warning float-right mat-elevation-z8 ml-3" type="button"
+        [routerLink]="['/ventas/requisicion']">
+        <i class="icon-action-undo"></i>
+      </button>
         <button class="mr-2 btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="refreshTable()"
           container="body" placement="bottom" tooltip="Actualizar">
           <i class="icon-refresh"></i>
-        </button>
-        <button *ngIf="!Perfil290" container="body" placement="bottom" tooltip="Regresar"
-          class="mr-2 btn btn-xs btn-warning float-right mat-elevation-z8" type="button"
-          [routerLink]="['/ventas/requisicion']">
-          <i class="icon-action-undo"></i>
         </button>
         <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
           class="mr-2 btn btn-xs btn-info float-right mat-elevation-z8">
@@ -66,14 +79,19 @@
       </ng-template> -->
     </div>
 
-    <div class="row" #tableContainer>
-      <div class="col-sm-12 col-md-12 table-responsive clearfix">
-        <div>
-            <span class="text-muted font-weight-bold float-right text-uppercase mt-2 mb-3 ">Registros Totales<span
-              class="badge badge-pill badge-success ml-1">{{dataSource.length  | numerico}}</span></span>
+    <div class="row" >
+      <div class="col-sm-12 col-md-12">
+        <div class="d-flex justify-content-end p-1 bg-warning mt-2">
+            <span class="float-right text-uppercase">Registros Totales<span
+              class="badge badge-pill badge-info ml-1">{{dataSource.length  | numerico}}</span></span>
         </div>
         <table class="table" style="width: 100%;">
           <thead>
+              <tr>
+                  <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+                    <small>{{column.title | uppercase}}</small>
+                  </th>
+                </tr>
             <tr>
               <td *ngFor="let column of columns">
                 <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
@@ -94,7 +112,7 @@
                   </td>
                   <td> {{row.nombrePerfil}}</td>
                   <td class="text-center">
-                    <span class="px-1 mr-1  badge  badge-pill badge-info"> {{row.vacantes}}</span>
+                    <span class="px-1 mr-1  badge  badge-pill badge-success"> {{row.vacantes}}</span>
                   </td>
                   <td class="text-right"> {{row.sueldoMinimo | moneda: '$'}}</td>
                   <td class="text-right"> {{row.sueldoMaximo | moneda: '$'}}</td>
@@ -109,7 +127,7 @@
         </table>
       </div>
     </div>
-    <div class="d-flex justify-content-end">
+    <div class="d-flex justify-content-end p-1">
         <pagination *ngIf="config.paging" class="pagination-sm mt-2" [(ngModel)]="page" [totalItems]="length"
           [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
           (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>

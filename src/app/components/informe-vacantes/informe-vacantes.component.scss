@@ -1,6 +1,6 @@
 tbody {
     display: block;
-    height: 280px;
+    height: 350px;
   }
   
   thead,
@@ -24,11 +24,6 @@ tbody {
     box-shadow: 1px 20px 60px rgba(0, 0, 0, .23);
   }
   
-  table tbody tr td .fontMio
-  {
-      font-family: 'Lato', sans-serif;
-    font-size: 12px;
-  }
   
   .badge
   {
@@ -47,8 +42,15 @@ tbody {
   }
 
 ng-scrollbar {
-    --scrollbar-size: 4px;
+    --scrollbar-size: 8px;
     --scrollbar-thumb-color: rgb(94, 175, 255);
     --scrollbar-thumb-hover-color: dodgerblue;
     --scrollbar-border-radius: 4px;
+  }
+
+  .spinner {
+    position: absolute;
+    margin-left: 45%;
+    margin-top: 10%;
+    z-index: 9999;
   }

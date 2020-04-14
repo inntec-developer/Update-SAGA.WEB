@@ -1,9 +1,10 @@
 
 import { ExamenesService } from './../../../service/Examenes/examenes.service';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DlgResultadosMedicosComponent } from '../../../components/dlg-resultados-medicos/dlg-resultados-medicos.component';
+import { ComentarioVacanteComponent } from '../../../components/comentario-vacante/comentario-vacante.component';
 
 const swal = require('sweetalert');
 @Component({
@@ -43,7 +44,11 @@ total = 0;
   requisicionId: any;
   folio: any;
   vBtra: any;
-  constructor(private _service: ExamenesService, private dialog: MatDialog, private spinner: NgxSpinnerService) { }
+  constructor(
+    private _service: ExamenesService,
+    private dialog: MatDialog,
+    private dlgComent: MatDialog,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.GetCandidatosExamen();
@@ -202,6 +207,23 @@ total = 0;
     }
   }
 
+  openDialogComentarios() {
+    const motivoId = 7;
+
+    const dlgComent = this.dlgComent.open(ComentarioVacanteComponent, {
+      width: '85%',
+      height: 'auto',
+      data: {id: this.requisicionId,
+        vBtra: this.vBtra,
+        folio: this.folio,
+        motivoId: motivoId}
+    });
+    dlgComent.afterClosed().subscribe(result => {
+      // if (result === 200) {
+      //   this.popToast('success', 'Comentarios', 'La requisición se canceló exitosamente, podrás consultarla en el histórico');
+      // }
+    });
+  }
 refreshTable() {
   this.GetCandidatosExamen();
 }

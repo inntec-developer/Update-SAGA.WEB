@@ -14,7 +14,7 @@ disabled = false;
 compact = false;
 invertX = false;
 invertY = false;
-shown = 'hover';
+shown = 'shown';
 
 // Variables Globales
 public dataSource: Array<any> = [];

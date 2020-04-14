@@ -12,29 +12,34 @@ import { ViewCuerpoRequiComponent } from '../view-cuerpo-requi/view-cuerpo-requi
   providers: [RequisicionesService]
 })
 export class UpdateRequisicionComponent implements OnInit {
-  public requiId : string;
+  public requiId: string;
   public folio: number;
   public Horarios: any;
   public EstatusRequi: any;
   public TipoReclutamiento: any;
   public NumeroVacantes: any;
+  public estatusId: number;
+
   constructor( private _Router: ActivatedRoute, private _RequiService: RequisicionesService) {
 
   }
-  ngOnInit(){
+  ngOnInit() {
     this._Router.params.subscribe(params => {
-      if(params['IdRequi'] != null){
+      if (params['IdRequi'] != null) {
         this.requiId = params['IdRequi'];
         this.folio = params['Folio'];
         this.EstatusRequi = params['EstatusId'],
         this.TipoReclutamiento = params['TipoReclutamientoId']
         this._RequiService.getRequiHorarios(this.requiId).subscribe(result => {
           this.Horarios = result;
-        })
-      }
-      else{
-        console.log("Error al Cargarla Información");
+        });
+      } else {
+        console.log('Error al Cargarla Información');
       }
     });
    }
+   getEstatusRequi(event) {
+    this.estatusId = event;
+  }
+
 }

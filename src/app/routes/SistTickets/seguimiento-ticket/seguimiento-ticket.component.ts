@@ -7,7 +7,7 @@ import { DialogShowRequiComponent } from '../../recl/vacantes/vacantes/component
 import { DlgAsignarPerfilComponent } from './../../../components/dlg-asignar-perfil/dlg-asignar-perfil.component';
 import { ExamenesService } from './../../../service/Examenes/examenes.service';
 import { InfoCandidatoService } from '../../../service/SeguimientoVacante/info-candidato.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { PostulateService } from '../../../service/SeguimientoVacante/postulate.service';
 import { RegistroReclutadorComponent } from './../../../components/registro-reclutador/registro-reclutador.component';
 import { RequisicionesService } from '../../../service';

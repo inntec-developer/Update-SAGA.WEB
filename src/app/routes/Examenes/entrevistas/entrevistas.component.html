@@ -1,12 +1,16 @@
-
 <toaster-container toaster-options="{'toaster-id': 2 }" [toasterconfig]="toasterconfig"></toaster-container>
 <div class="row p-2 mt-2">
   <div class="col-sm-12 col-md-12">
-    <button (click)="addExamen()" container="body" class="ml-1 btn btn-xs btn-success mat-elevation-z8 float-left mr-2" placement="bottom"
-      tooltip="Agregar">
+    <button (click)="addExamen()" container="body" class="ml-1 btn btn-xs btn-success mat-elevation-z8 float-left mr-2"
+      placement="bottom" tooltip="Agregar Cuestionario">
       <i class="fa fa-plus"></i>
     </button>
-    <button [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-info'" container="body" class="ml-1 btn btn-xs mat-elevation-z8 float-left mr-2" placement="bottom" (click)="verExamen = true;"
+    <button (click)="generarEntrevista()" container="body"
+      class="ml-1 btn btn-xs btn-info mat-elevation-z8 float-left mr-2" placement="bottom" tooltip="Generar Entrevista">
+      <i class="fa fa-cogs"></i>
+    </button>
+    <button [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-warning'" container="body"
+      class="ml-1 btn btn-xs mat-elevation-z8 float-left mr-2" placement="bottom" (click)="verExamen = true;"
       tooltip="Visualizar Examen">
       <i class="fa fa-eye"></i>
     </button>
@@ -14,101 +18,96 @@
       tooltip="Realizar entrevista">
       <i class="fa fa-pencil"></i>
     </button> -->
-  
-    <button class="btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="refreshTable()"
-      container="body" placement="bottom" tooltip="Actualizar">
+
+    <button *ngIf="examenes.length > 0" class="btn btn-xs btn-success float-right mat-elevation-z8" type="button"
+      (click)="refreshTable()" container="body" placement="bottom" tooltip="Actualizar">
       <i class="icon-refresh"></i>
     </button>
-    <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
-    class="mr-2 btn btn-xs btn-info float-right mr-2 mat-elevation-z8">
-    <i class="fa fa-eraser"></i>
-  </button>
+    <button *ngIf="examenes.length > 0" (click)="clearfilters()" container="body" placement="bottom"
+      tooltip="Limpiar Filtros" class="mr-2 btn btn-xs btn-info float-right mr-2 mat-elevation-z8">
+      <i class="fa fa-eraser"></i>
+    </button>
   </div>
 </div>
-<table class="table border-top bb mt-1" style="width: 100%;">
-  <thead>
-    <tr>
-      <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
-        <small>{{column.title | uppercase}}</small>
-      </th>
-    </tr>
-    <tr>
-      <th *ngFor="let column of columns">
-        <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
-          [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
-          class="form-control form-control-sm" id="{{column.name}}">
-      </th>
+<ng-container *ngIf="this.examenes.length > 0 else TablaVacia">
+  <table class="table border-top bb mt-1" style="width: 100%;">
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+          <small>{{column.title | uppercase}}</small>
+        </th>
+      </tr>
+      <tr>
+        <th *ngFor="let column of columns">
+          <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
+            [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+            class="form-control form-control-sm" id="{{column.name}}">
+        </th>
 
-    </tr>
+      </tr>
 
-  </thead>
+    </thead>
 
-  <tbody>
-    <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-      [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
-      <div style="height: 410px">
-        <tr *ngFor="let row of rows; let rowIndex = index" [class.bg-info-light]="row.selected" (click)="onSelect(row)">
-          <td class="text-center">
-            {{row.nombre}}
-          </td>
-          <td class="text-center"> {{row.tipo | uppercase}}</td>
-          <td class="text-center">
-            <a container="body" placement="bottom" tooltip="Doble click para editar"
-            (dblclick)="editing[rowIndex + '-alea'] = true" *ngIf="!editing[rowIndex + '-alea']" 
-            class="mr-1 badge badge-pill badge-info text-white"> {{row.ale | numerico}}</a>
-            <ng-container *ngIf="editing[rowIndex + '-alea']">
-            <mat-form-field>
-                <mat-label>Aleatoriedad</mat-label>
-                <mat-select>
-                  <mat-option *ngFor="let n of row.numPreguntas" value="n" (click)="cambiarAle(n, row.examenId, rowIndex)">
-                    {{n}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </ng-container>
-          </td>
-          <td class="text-center">
+    <tbody>
+      <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+        [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+        <div style="height: 410px">
+          <tr *ngFor="let row of rows; let rowIndex = index" [class.bg-info-light]="row.selected"
+            (click)="onSelect(row)">
+            <td class="text-center">
+              {{row.nombre}}
+            </td>
+            <td class="text-center">
               <span class="mr-1 badge badge-pill badge-info"> {{row.num | numerico}}</span>
-          </td>
-          <td class="text-center">{{row.fch_Modificacion | date:'dd/MM/yyyy'}}</td>
-        
-          <td class="text-center">
-              <span class="mr-1 badge badge-pill badge-info"> {{row.usuario | uppercase}}</span>
-          </td>
-        
-        </tr>
-      </div>
-    </ng-scrollbar>
-  </tbody>
-</table>
-<div class="mt-2 mr-1">
-  <pagination *ngIf="config.paging" class="pagination-sm float-right" [(ngModel)]="page" [totalItems]="length"
-    [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
-    (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
-</div>
-
+            </td>
+            <td class="text-center">{{row.fch_Creacion | date:'dd/MM/yyyy'}}</td>
+            <td class="text-center">{{row.usuario | uppercase}}</td>
+          </tr>
+        </div>
+      </ng-scrollbar>
+    </tbody>
+  </table>
+  <div class="mt-2 mr-1">
+    <pagination *ngIf="config.paging" class="pagination-sm float-right" [(ngModel)]="page" [totalItems]="length"
+      [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+      (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
+  </div>
+</ng-container>
 <div *ngIf="verExamen" [config]="{ show: true, ignoreBackdropClick: true, backdrop: 'static', keyboard: false }" bsModal
   #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title pull-left text-info"><i class="fa fa-file-text-o mr-1" aria-hidden="true"></i>{{element.nombre | uppercase}}</h4>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal.hide();verExamen=false;">
-          <i class="fa fa-times"></i>
-        </button>
+        <div class="d-flex justify-content-between aling-items-center p-1 bg-info-light w-100">
+          <h4 class="mt-2">{{element.nombre | uppercase}}</h4>
+          <button type="button" class="btn btn-xs btn-danger btn-circle" (click)="lgModal.hide();verExamen=false;">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
       </div>
       <div class="modal-body">
         <div class="card">
           <div class="card-body">
-    
-            <ng-scrollbar #scrollable [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
-              [disabled]="disabled">
+            <ng-scrollbar #scrollable [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown"
+              [disableOnBreakpoints]="false" [disabled]="disabled">
+              <div class="d-flex justify-content-center">
+                <p>{{element.descripcion | uppercase}}</p>
+              </div>
               <div style="height: 400px;">
-
-                    <ul class="list-group list-group-flush" *ngFor="let p of element.preguntas; let ind = index">
-                        <li class="list-group-item">{{( ind + 1) + '.- ' + p.pregunta}}</li>
-                    </ul>
-
+                <ul class="list-group mr-1">
+                  <li *ngFor="let p of element.preguntas; let ind = index" class="list-group-item text-info">
+                    <strong>{{( ind + 1) + '.- ' + p.pregunta | uppercase}}</strong>
+                    <div class="d-flex justify-content-between mt-2">
+                      <ng-container *ngFor="let r of p.respuestas">
+                        <div class="form-check-inline">
+                          <label class="form-check-label text-warning">
+                            <input type="radio" class="form-check-input" name="optradio">{{r.respuesta}}
+                          </label>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </ng-scrollbar>
           </div>
@@ -117,3 +116,15 @@
     </div>
   </div>
 </div>
+
+
+<!--mensaje cuando esta vacio la tabla-->
+<ng-template #TablaVacia>
+  <div class="row mt-2">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <alert type="info">
+        <strong>Oops!</strong> No ha generado ninguna entrevista
+      </alert>
+    </div>
+  </div>
+</ng-template>

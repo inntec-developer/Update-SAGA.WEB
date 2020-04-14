@@ -1,4 +1,4 @@
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+// import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { CatalogosService, ComponentsService } from './../../../service/index';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -9,10 +9,10 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { DatePipe } from '@angular/common';
 import { DialogEventComponent } from '../dialog-event/dialog-event.component';
 import { EventoCalendario } from './../../../models/vtas/Requisicion';
-import { MatDialog } from '@angular/material';
+// import { MatDialog } from '@angular/material/dialog';
 import { SettingsService } from '../../../core/settings/settings.service';
-import { getMonth } from 'ngx-bootstrap/chronos';
-import { toDate } from '@angular/common/src/i18n/format_date';
+import { MatDialog } from '@angular/material/dialog';
+
 
 declare var $: any;
 const swal = require('sweetalert');
@@ -38,7 +38,7 @@ export class CalendarioCandidatoComponent implements OnInit {
   public fb: FormBuilder;
   /* * Variables * */
   private minDate = new Date();
-  public modalRef: BsModalRef;
+
   public EventSelected: boolean;
   public EditEventAction = false;
   public $calendar: any;
@@ -116,7 +116,6 @@ export class CalendarioCandidatoComponent implements OnInit {
 
 
   constructor(
-    private modalService: BsModalService,
     private dialog: MatDialog,
     private eventoCalendario: EventoCalendario,
     private componenteService: ComponentsService,

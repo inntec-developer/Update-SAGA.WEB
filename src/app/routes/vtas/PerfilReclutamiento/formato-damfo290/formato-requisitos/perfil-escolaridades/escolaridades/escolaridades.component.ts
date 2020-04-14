@@ -59,9 +59,11 @@ export class EscolaridadesComponent implements OnInit, AfterContentInit {
         Usuario: this._setting.user.usuario,
         DAMFO290Id: this.IdFormato
       };
+      
       if (!this.isActionEdit) {
         this._servicePerfilR.addEscolaridad(obj).subscribe(x => {
           if (x !== 404) {
+            this.Registros.emit(obj);
             this.escolaridad.controls['id'].setValue(x);
             this.Edit = false;
             this.functionCreateAlert('success', false);
@@ -72,6 +74,7 @@ export class EscolaridadesComponent implements OnInit, AfterContentInit {
       } else {
         this._servicePerfilR.editEscolaridad(obj).subscribe(x => {
           if (x !== 404) {
+            this.Registros.emit(obj);
             this.Edit = false;
             this.isActionEdit = false;
             this.functionCreateAlert('success', true);

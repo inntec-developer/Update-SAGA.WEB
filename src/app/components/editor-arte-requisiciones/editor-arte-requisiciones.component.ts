@@ -3,7 +3,7 @@ import { DlgRequiArteComponent } from './dlg-requi-arte/dlg-requi-arte.component
 import { AdminServiceService } from './../../service/AdminServicios/admin-service.service';
 import { DlgBGArteComponent } from './../editor-arte-requisiciones/dlg-bgarte/dlg-bgarte.component';
 import { Component, OnInit, Input } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Font } from 'ngx-font-picker';
 import { SettingsService } from '../../core/settings/settings.service';
 

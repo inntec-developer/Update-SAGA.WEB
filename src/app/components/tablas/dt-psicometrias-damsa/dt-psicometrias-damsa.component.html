@@ -1,13 +1,14 @@
 <!-- <div class="dt-container mat-elevation-z8"> -->
-<div class="title-headre-view d-flex justify-content-between">
-  <h4>Psicometr&iacute;as Damsa</h4>
+<div class="d-flex justify-content-start align-items-center p-1 text-warning">
+  <span>PSICOMETR&Iacute;AS DAMSA</span>
 </div>
 <!-- <div class="card card-default"> -->
 <div class="table-responsive">
-  <table ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+  <table class="table" style="width: 100%;">
     <thead>
       <tr>
-        <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+        <th *ngFor="let column of columns" class="{{column.className || ''}}">
+          <small>{{column.title | uppercase}}</small>
         </th>
       </tr>
     </thead>

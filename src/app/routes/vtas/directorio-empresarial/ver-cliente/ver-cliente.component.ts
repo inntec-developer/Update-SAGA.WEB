@@ -14,10 +14,13 @@ import { SettingsService } from '../../../../core/settings/settings.service';
 })
 export class VerClienteComponent implements OnInit {
   public ClienteId: any;
-  public Cliente: any;
+  public Cliente: any = [];
   public esCliente: boolean;
   public oneAtATime: boolean;
 
+  isOpen1 = false;
+  isOpen2 = false;
+  isOpen3 = false;
   // scroll
   public disabled = false;
   public compact = false;
@@ -31,19 +34,13 @@ export class VerClienteComponent implements OnInit {
     private _Router: Router,
     private _Route: ActivatedRoute,
     private _service: ClientesService,
-    public settings: SettingsService,
-    private dir: DirectorioEmpresarialComponent
+    public settings: SettingsService
   ) {
     this._Route.queryParams.subscribe(params => {
       if (params['ClienteId'] != null) {
         this.ClienteId = params['ClienteId'];
         this.ruta = params['ruta'];
-        this._service.getCliente(this.ClienteId).subscribe(result => {
-          if (result != null) {
-            this.Cliente = result;
-            this.esCliente = result['esCliente'];
-          }
-        });
+       this.GetDtosClientes();
       } else {
         const navigationExtras: NavigationExtras = {
           queryParams: {
@@ -56,6 +53,16 @@ export class VerClienteComponent implements OnInit {
     });
   }
 
+  GetDtosClientes() {
+    this._service.getCliente(this.ClienteId).subscribe(result => {
+      this.spinner.hide();
+      if (result != null) {
+        this.Cliente = result;
+        console.log(this.Cliente)
+        this.esCliente = result['esCliente'];
+      }
+    });
+  }
   regresar() {
     const navigationExtras: NavigationExtras = {
       queryParams: {
@@ -66,6 +73,7 @@ export class VerClienteComponent implements OnInit {
     this._Router.navigate(['/ventas/directorio'], navigationExtras);
   }
   ngOnInit() {
+    this.spinner.show();
     this.oneAtATime = false;
   }
 
@@ -82,18 +90,18 @@ export class VerClienteComponent implements OnInit {
 
   print() {
     this.imprimir = true;
-    if(!this.settings.layout.isCollapsed){
+    if (!this.settings.layout.isCollapsed) {
         this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
     }
     setTimeout(() => {
-      document.getElementById('content').style.marginLeft = "60px";
-      document.getElementById('content').style.marginTop = "25px";
+      document.getElementById('content').style.marginLeft = '60px';
+      document.getElementById('content').style.marginTop = '25px';
       window.print();
     }, 500);
     setTimeout(() => {
       this.imprimir = false;
-      document.getElementById('content').style.marginTop = "0";
-      document.getElementById('content').style.marginLeft = "0";
+      document.getElementById('content').style.marginTop = '0';
+      document.getElementById('content').style.marginLeft = '0';
     }, 500);
 
   }

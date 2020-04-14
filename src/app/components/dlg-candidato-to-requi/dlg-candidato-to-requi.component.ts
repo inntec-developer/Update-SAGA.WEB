@@ -2,7 +2,7 @@ import { filter } from 'rxjs-compat/operator/filter';
 import { CandidatosService } from './../../service/Candidatos/candidatos.service';
 import { ComentariosService } from './../../service/Comentarios/comentarios.service';
 import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { SettingsService } from '../../core/settings/settings.service';
 import { PostulateService } from '../../service/SeguimientoVacante/postulate.service';
 

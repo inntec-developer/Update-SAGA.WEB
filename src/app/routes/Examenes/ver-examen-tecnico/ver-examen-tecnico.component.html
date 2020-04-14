@@ -16,7 +16,7 @@
           <i class="fa fa-pencil"></i> EXAMENES DISPONIBLES</h5>
 <div class="row p-2 mt-2 bg-light">
     <div class="col-sm-12 col-md-12">
-        <button [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-warning'" container="body" class="ml-1 btn btn-xs mat-elevation-z8 float-left mr-2" placement="bottom" (click)="GetExamen(rowAux.id)"
+        <button [disabled]="rowAux.length == 0" [ngClass]="rowAux.length == 0 ? 'disable' : 'btn-warning'" container="body" class="ml-1 btn btn-xs mat-elevation-z8 float-left mr-2" placement="bottom" (click)="GetExamen(rowAux)"
         tooltip="Visualizar Examen">
         <i class="fa fa-eye"></i>
       </button>

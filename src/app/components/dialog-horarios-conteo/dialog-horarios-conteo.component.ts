@@ -1,6 +1,6 @@
 import { CandidatosService } from './../../service/Candidatos/candidatos.service';
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dialog-horarios-conteo',
@@ -18,7 +18,12 @@ export class DialogHorariosConteoComponent implements OnInit {
 
   ngOnInit() {
     this.GetMedios();
-
+    const aux = this.data.filter(x => x.editar);
+    console.log(aux)
+    if (aux.length > 0 ) {
+      this.seleccion = aux[0].id;
+      this.mediosId = aux[0].mediosId;
+    }
     if (this.data.length === 1) {
       if (this.data[0].id !== 0) {
         this.seleccion = this.data[0].id;

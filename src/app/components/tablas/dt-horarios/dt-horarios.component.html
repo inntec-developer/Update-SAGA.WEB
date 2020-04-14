@@ -1,29 +1,33 @@
 <!-- <div class="dt-container mat-elevation-z8"> -->
-  <div class="title-headre-view d-flex justify-content-between">
-    <h4>Horarios</h4>
-    <button id="update" class="mb-1 btn btn-xs"
-      [disabled]="!horario || !EditHorarios" *ngIf="Requi" (click)="openDialogEdit()"
+  <div class="card card-body">
+  <div class="d-flex justify-content-between align-items-center p-1 bg-info-light">
+    <span>HORARIOS</span>
+    <em *ngIf="!Requi && verTabla" class="fa fa-caret-up fa-2x" aria-hidden="true" (click)="verTabla=false"></em>
+    <em *ngIf="!Requi && !verTabla"class="fa fa-caret-down fa-2x" aria-hidden="true" (click)="verTabla=true"></em>
+    <button id="update" class="btn btn-xs"
+      [disabled]="rowAux.length == 0 && !EditHorarios" *ngIf="Requi" (click)="openDialogEdit()"
       chkPrivilegiosButtons
       container="body"
       placement="bottom"
       tooltip="Editar Horario"
-      [ngClass]="(!horario || !EditHorarios) ? 'disabled' : 'btn-info mat-elevation-z8'">
-      <em class="icon-pencil"></em>
+      [ngClass]="rowAux.length == 0 && !EditHorarios ? 'disabled' : 'btn-warning mat-elevation-z8'">
+      <i class="icon-pencil"></i>
     </button>
   </div>
   <!-- <div class="card card-default"> -->
-  <div class="table-responsive" #tableContainer>
-    <table id="tablaHorarios" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+  <div *ngIf="verTabla" class="table-responsive" #tableContainer>
+    <table id="tablaHorarios" class="table" style="width: 100%;">
       <thead>
         <tr>
-          <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+          <th *ngFor="let column of columns" class="{{column.className || ''}}">
+            <small>{{column.title | uppercase}}</small>
           </th>
         </tr>
       </thead>
       <tbody>
         <tr (click)="onCellClick(row)" *ngFor="let row of rows" [class.selected]="row.selected">
           <td class="text-center"> {{row.nombre | uppercase}} </td>
-          <td class="text-center"> {{row.deDia?.diaSemana | uppercase}}</td>
+          <td class="text-center"> {{row.deDia.diaSemana | uppercase}}</td>
           <td class="text-center"> {{row.aDia.diaSemana | uppercase}}</td>
           <td class="text-center"> {{row.deHora | date:"HH:mm"}}</td>
           <td class="text-center"> {{row.aHora | date:"HH:mm"}}</td>
@@ -37,5 +41,6 @@
       </tbody>
     </table>
   </div>
+</div>
   <!-- </div> -->
 <!-- </div> -->

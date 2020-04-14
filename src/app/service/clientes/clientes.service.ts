@@ -1,12 +1,4 @@
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/Rx';
-import 'rxjs/add/observable/throw';
 
-import { Headers, Http, HttpModule, RequestOptions, Response } from '@angular/http';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { ApiConection } from './../api-conection.service';

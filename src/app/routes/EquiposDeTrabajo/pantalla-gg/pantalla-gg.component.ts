@@ -17,7 +17,7 @@ export class PantallaGGComponent implements OnInit {
   compact = false;
   invertX = false;
   invertY = false;
-  shown = 'hover';
+  shown = 'shown';
 
   reporte = [];
   totalCub = 0;
@@ -27,7 +27,7 @@ export class PantallaGGComponent implements OnInit {
   gerente = [];
 
   backgroundColor = [
-    '#33B8FF', '#3361FF', '#E3FF33', '#15C946', '#8172EB', '#FAB637', '#FF0000',
+    '#33B8FF', '#3361FF', '#15C946', '#8172EB', '#FAB637', '#FF0000',
     '#FF8F35',
     '#0F3CFF',
     '#3e95cd',
@@ -100,11 +100,10 @@ sparkOptionsDanger = {
     this.spinner.show();
     this._service.GetRportGG(this.usuarioLogin).subscribe(result => {
       if (result !== 417) {
-
         this.reporte = result;
       this.loadCharts(this.reporte[0]);
-      this.spinner.hide();
       }
+      this.spinner.hide();
     });
   }
 

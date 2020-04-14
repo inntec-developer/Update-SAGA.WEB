@@ -1,48 +1,4 @@
 
-.panel
-{
-    width:450px;
-    height:40px;
-    background:#fff;
-    box-shadow:0 20px 50px rgba(0,0,0,.1);
-    align-content: center;
-    padding-top: 7px;
-    padding-left: 6px;
-}
-
-.box span {
-    display:inline-flex;
-    overflow: hidden;
- }
-.box ul {
-     margin:0;
-     padding:0;
- }
-.box ul li {
-    display:inline-block;
-     list-style: none ;
-
- }
-.box ul li a {
-    display:block;
-     color:#aaa;
-     //color:#00b3ee;
-     margin:0 2px;
-     font-size:14px;
-    // transition:0.5s;
-     text-align:center;
-    // transition: all .2s ease-in-out;
- }
-.box li:hover a {
-     color:#e91e63;
-     //transform: scale(1.1);
-    //transform:rotateY(360deg);
- }
-
- .vl {
-    border-left: 1px solid #aaa;
-    height: 50px;
-}
 
 .pointer tr td
 {
@@ -71,16 +27,8 @@ tr.selected td {
   background-color: transparent !important;
 
 }
-.margen
-{
-    margin-left: 5px;
-}
+
 .modal-lg
 {
     max-width: 100% !important;
 }
-.modal-content
-{
-    height: 800px !important;
-}
-

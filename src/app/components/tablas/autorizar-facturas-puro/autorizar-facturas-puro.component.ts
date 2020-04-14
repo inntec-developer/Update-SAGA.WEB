@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { DialogCancelRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-cancel-requi/dialog-cancel-requi.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../../service';
+import { ComentarioVacanteComponent } from '../../comentario-vacante/comentario-vacante.component';
 
 const swal = require('sweetalert');
 @Component({
@@ -53,13 +54,19 @@ export class AutorizarFacturasPuroComponent implements OnInit {
   ];
   rowAux: any = [];
   element: any = [];
-  comment: boolean = false;
-  view: boolean = false;
-  cancelar: boolean = false;
+  comment = false;
+  view = false;
+  cancelar = false;
 
+  public config: any = {
+    paging: true,
+    filtering: { filterString: '' },
+    className: ['table-hover  mb-0']
+  };
   constructor(private service: RequisicionesService,
      private postulacionservice: PostulateService,
      private spinner: NgxSpinnerService,
+     private dlgComent: MatDialog,
      private toasterService: ToasterService, private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -69,17 +76,10 @@ export class AutorizarFacturasPuroComponent implements OnInit {
   GetRequisiciones() {
     this.service.GetRequisPendientes().subscribe(data => {
       this.dataSource = data;
-      console.log(data)
       this.onChangeTable(this.config);
     })
   }
 
-  public config: any = {
-    paging: true,
-    //sorting: { columns: this.columns },
-    filtering: { filterString: '' },
-    className: ['table-hover  mb-0']
-  };
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
@@ -92,11 +92,12 @@ export class AutorizarFacturasPuroComponent implements OnInit {
     let filteredData: Array<any> = data;
     this.showFilterRow = true;
     this.columns.forEach((column: any) => {
-      if (column.filtering.filterString != "") {
+      if (column.filtering.filterString !== '') {
         filteredData = filteredData.filter((item: any) => {
-          if (item[column.name] != null)
+          if (item[column.name] !== null) {
             return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
-        });
+          }
+          });
       }
     });
 
@@ -144,14 +145,14 @@ export class AutorizarFacturasPuroComponent implements OnInit {
   public Autorizar()
   {
       swal({
-        title: "¿ESTÁS SEGURO?",
-        text: "¡Se enviará a facturar el folio " + this.element.folio + " con porcentaje de " + this.element.porcentaje + "%",
-        type: "warning",
+        title: '¿ESTÁS SEGURO?',
+        text: '¡Se enviará a facturar el folio ' + this.element.folio + ' con porcentaje de ' + this.element.porcentaje + '%',
+        type: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#ec2121",
-        confirmButtonText: "¡Si, enviar a factura!",
-        cancelButtonColor: "#ec2121",
-        cancelButtonText: "¡No, cancelar!",
+        confirmButtonColor: '#ec2121',
+        confirmButtonText: '¡Si, enviar a factura!',
+        cancelButtonColor: '#ec2121',
+        cancelButtonText: '¡No, cancelar!',
         closeOnConfirm: true,
         closeOnCancel: true
       }, (isConfirm) => {
@@ -175,7 +176,7 @@ export class AutorizarFacturasPuroComponent implements OnInit {
 
         }
         else {
-          swal("Cancelado", "No se realizó ningún cambio", "error");
+          swal('Cancelado', 'No se realizó ningún cambio', 'error');
         }
       });
 
@@ -222,6 +223,23 @@ export class AutorizarFacturasPuroComponent implements OnInit {
       } else {
         this.popToast('error', 'Estatus', 'Ocurrió un error al intentar notificar por correo electrónico los cambios realizados.');
       }
+    });
+  }
+  openDialogComentarios() {
+    const motivoId = 7;
+
+    const dlgComent = this.dlgComent.open(ComentarioVacanteComponent, {
+      width: '85%',
+      height: 'auto',
+      data: {id: this.element.id,
+        vBtra: this.element.vBtra,
+        folio: this.element.folio,
+        motivoId: motivoId}
+    });
+    dlgComent.afterClosed().subscribe(result => {
+      // if (result === 200) {
+      //   this.popToast('success', 'Comentarios', 'La requisición se canceló exitosamente, podrás consultarla en el histórico');
+      // }
     });
   }
 

@@ -1,7 +1,8 @@
-import { forEach } from '@angular/router/src/utils/collection';
+
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { SettingsService } from './../../../../../../core/settings/settings.service';
-import { Component, OnInit, EventEmitter, Input, Output, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, SimpleChanges, OnChanges, ViewChild } from '@angular/core';
+import { PerfilReclutamientoService } from '../../../../../../service/PerfilReclutamiento/perfil-reclutamiento.service';
 
 @Component({
   selector: 'app-perfil-actividades',
@@ -23,6 +24,7 @@ export class PerfilActividadesComponent implements OnInit, OnChanges {
 
   constructor(
     private _setting: SettingsService,
+    private _servicePerfilR: PerfilReclutamientoService,
     private fb: FormBuilder,
   ) { }
 
@@ -52,6 +54,17 @@ export class PerfilActividadesComponent implements OnInit, OnChanges {
     });
   }
 
+  AddNA() {
+    const data = {
+      isEdit: false,
+      Index: 0,
+      actividad: 'N/A',
+      UsuarioAlta: this._setting.user.usuario,
+    };
+
+  this.getRegistros(data);
+
+  }
   AddActividad(Actividad?: any) {
     if (this.Add) {
       this.Add = true;

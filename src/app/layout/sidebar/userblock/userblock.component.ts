@@ -18,7 +18,6 @@ export class UserblockComponent implements OnInit {
   default: string;
   constructor(
     public userblockService: UserblockService,
-    private _Service: AuthService,
     private settings: SettingsService
   ) { }
 

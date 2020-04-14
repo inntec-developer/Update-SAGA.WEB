@@ -1,38 +1,46 @@
 <ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
+<div class="content-heading">
+  <span>FACTURA REQUISICIONES</span>
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item"><a [routerLink]="['/home']">INICIO</a></li>
+    <li class="breadcrumb-item active text-muted">AUTORIZAR ENVIO A FACTURAR</li>
+  </ol>
+</div>
 <div class="card">
   <div class="card-body mat-elevation-z8">
     <div class="row">
       <div class="col-12 p-2 bg-light">
         <button (click)="lgModal2.show()" class="ml-2 mr-2 btn btn-xs float-left mat-elevation-z8" [disabled]="!view"
           [ngClass]="(!view) ? 'disabled' : 'btn-warning'" container="body" placement="bottom" tooltip="Visualizar">
-          <em class="fa fa-eye"></em>
+          <i class="fa fa-eye"></i>
         </button>
 
-        <button (click)="lgModal.show()" class="mr-2 btn btn-xs float-left mat-elevation-z8" [disabled]="!comment"
+        <button (click)="openDialogComentarios()" class="mr-2 btn btn-xs float-left mat-elevation-z8" [disabled]="!comment"
           [ngClass]="(!comment) ? 'disabled' : 'btn-dark'" container="body" placement="bottom" tooltip="Comentarios">
           <em class="fa fa-comments-o"></em>
         </button>
         <button class="mr-2 btn btn-xs float-left mat-elevation-z8" type="button" (click)="Autorizar()"
           [disabled]="!autorizar" [ngClass]="!autorizar ? 'disabled' : 'btn-success'" container="body"
           placement="bottom" tooltip="Autorizar">
-          <em class="fa fa-check"></em></button>
+          <i class="fa fa-check"></i></button>
         <button id='delete' chkPrivilegiosButtons class="btn btn-xs float-left mat-elevation-z8" [disabled]="!cancelar"
           [ngClass]="!cancelar ? 'btn disabled' : 'btn btn-danger'" container="body" placement="bottom"
           tooltip="Cancelar" (click)="openDialogCancel();">
-          <em class="icon-ban"></em>
+          <i class="icon-ban"></i>
         </button>
         <button class="btn btn-xs btn-success float-right mat-elevation-z8 ml-2 mr-1" type="button"
           (click)="refreshTable()" container="body" placement="bottom" tooltip="Actualizar">
-          <em class="icon-refresh"></em>
+          <i class="icon-refresh"></i>
         </button>
         <button (click)="clearfilters()" class="btn btn-xs btn-info float-right mat-elevation-z8" container="body"
           placement="bottom" tooltip="Borrar Filtros">
-          <em class="fa fa-eraser"></em>
+          <i class="fa fa-eraser"></i>
         </button>
-        <span class="text-muted font-weight-bold float-right text-uppercase mr-4">Total de Folios <span
-          class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span></span>
+        
       </div>
     </div>
+    <div class="d-flex justify-content-end p-1 bg-warning mt-1"><span class="fontLato text-uppercase">Total de Folios <span
+      class="badge badge-pill badge-info ml-1">{{dataSource.length}}</span></span></div>
     <table class="table">
       <thead>
         <tr>
@@ -65,7 +73,7 @@
               </td>
               <td class="text-center"> {{row.vBtra | uppercase}}</td>
               <td class="text-center">
-                <span class="mr-1 badge badge-pill badge-info"> {{row.vacantes}}</span>
+                <span class="mr-1 badge badge-pill badge-success"> {{row.vacantes}}</span>
               </td>
               <!-- <td class="text-center"> {{row.tipoReclutamiento}}</td> -->
               <!-- <td class="text-right"> {{row.sueldoMinimo | moneda: $}}</td>
@@ -77,7 +85,7 @@
                   [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
                   [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
                   [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
-                  {{row.estatus | uppercase}}
+                  <small>{{row.estatus | uppercase}}</small>
                 </small>
 
                 <ng-template #toLength>
@@ -85,8 +93,8 @@
                     [class.badge-primary]="row.estatusId  === 5"
                     [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
                     [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8"
-                    placement="bottom" tooltip="{{row.estatus | uppercase}}"> {{row.estatus | slice:0:8 | uppercase }}
-                    ...
+                    placement="bottom" tooltip="{{row.estatus | uppercase}}"><small>{{row.estatus | slice:0:8 | uppercase }}
+                    ...</small>
                   </small>
                 </ng-template>
               </td>
@@ -98,38 +106,15 @@
         </ng-scrollbar>
       </tbody>
     </table>
-  </div>
-  <br />
-  <div class="row">
-    <div class="col-md-12 clearfix">
+    <div class="d-flex justify-content-end p-1">
       <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
         [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
         (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
-
-  </div>
 </div>
+  </div>
+
 <!--Mensajes del sistema-->
 <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
-
-<!--Modal de Comentarios-->
-<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">FOLIO: {{element.folio}}</h4>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="lgModal.hide()"
-          aria-label="Close">
-          <i class="fa fa-times"></i>
-        </button>
-      </div>
-      <div class="modal-body">
-        <comentario-vacante [RequisicionId]="element.requisicionId" [MotivoId]="7"></comentario-vacante>
-      </div>
-
-    </div>
-  </div>
-</div>
-
 <!--Modal de datos factura-->
 <div bsModal #lgModal2="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-lg">

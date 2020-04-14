@@ -1,17 +1,9 @@
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/Rx';
-import 'rxjs/add/observable/throw';
 
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 
 import { ApiConection } from '../api-conection.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Response } from '@angular/http';
 
 @Injectable()
 export class ComponentsService {
@@ -125,16 +117,17 @@ export class ComponentsService {
     return this._httpClient.get(this.UrlVacanteActiva, { params: params, headers: this.httpOptions.headers});
   }
   getVPorVencer(data: any): Observable<any> {
-    let params = new HttpParams().set('usuario', data);
+    const params = new HttpParams().set('usuario', data);
     return this._httpClient.get(this.UrlVacantePorVencer, { params: params, headers: this.httpOptions.headers});
   }
   getVVencida(data: any): Observable<any> {
-    let params = new HttpParams().set('usuario', data);
+    const params = new HttpParams().set('usuario', data);
     return this._httpClient.get(this.UrlVacanteVencida, { params: params, headers: this.httpOptions.headers});
   }
 
-  getUserGroup(): Observable<any> {
-    return this._httpClient.get(this.urlGetUserGroup, {headers: this.httpOptions.headers});
+  getUserGroup(usuarios, dept): Observable<any> {
+    const params = new HttpParams().set('type', JSON.stringify(usuarios)).set('dep', JSON.stringify(dept));
+    return this._httpClient.get(this.urlGetUserGroup, {params: params, headers: this.httpOptions.headers});
   }
 
   getUserGroupL(): Observable<any> {
@@ -142,7 +135,7 @@ export class ComponentsService {
   }
 
   getCalendarEvent(data: any): Observable<any> {
-    let params = new HttpParams().set('userId', data);
+    const params = new HttpParams().set('userId', data);
     return this._httpClient.get(this.urlGetCalendarEvent, { params: params, headers: this.httpOptions.headers});
   }
 

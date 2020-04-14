@@ -1,0 +1,116 @@
+<div class="card card-body">
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-ms-4 col-xs-12">
+      <h5>
+        <strong> VACANTES </strong>
+        <label class="badge badge-pill badge-success mt-1">{{requisicion.vacantes}}</label>
+      </h5>
+    </div>
+    <div class="col-lg-4 col-md-4 col-ms-4 col-xs-12">
+      <h5 class="text-center">
+        <strong> PERFIL <span class="text-warning">{{requisicion.vBtra | uppercase}} </span> </strong>
+      </h5>
+    </div>
+    <div class="col-lg-4 col-md-4 col-ms-4 col-xs-12">
+      <h5 class="float-right">
+        <strong>FOLIO </strong> <span class="text-warning">{{requisicion.folio}}</span>
+      </h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+        <h5 class="bg-info-light p-1 text-uppercase">Horario</h5>
+      <div class="card-body">
+        <ul>
+          <li *ngFor="let h of requisicion.horario">{{h}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="row text-uppercase">
+    <div class="col-md-4 col-sm-12 col-xs-12 ">
+      <h5 class="bg-info-light p-1">Puesto a Reclutar</h5>
+      <mat-divider></mat-divider>
+      <p>
+        <strong>NOMBRE PERFIL: </strong>
+        <label class="card-text"> {{requisicion.vBtra | uppercase}}</label>
+      </p>
+      <p>
+        <strong>&Aacute;REA: </strong>
+        <label class="card-text"> {{requisicion.areaExperiencia | uppercase}}</label>
+      </p>
+      <p>
+        <strong>G&Eacute;NERO: </strong>
+        <label class="card-text"> {{requisicion.genero | uppercase}}</label>
+      </p>
+      <p>
+        <strong>EDAD: </strong>
+        <label class="card-text"> {{requisicion.edadMin}} años a {{requisicion.edadMax}} años </label>
+      </p>
+      <p>
+        <strong>ESTADO CIVIL: </strong>
+        <label class="card-text"> {{requisicion.edoCivil | uppercase}}</label>
+      </p>
+    </div>
+    <div class="col-md-4 col-sm-12 col-xs-12">
+        <h5 class="bg-info-light p-1">Escolaridad y Experiencia</h5>
+        <mat-divider></mat-divider>
+          <strong>ESCOLARIDAD: </strong>
+          <ul>
+          <li class="card-text" *ngFor="let e of requisicion.escolaridad"> {{e | uppercase}}</li>
+        </ul>
+  
+        <p>
+          <strong>EXPERIENCIA: </strong>
+          <label class="card-text"> {{requisicion.experiencia | uppercase}}</label>
+        </p>
+       
+          <strong>ACTIVIDADES: </strong>
+          <ul>
+          <li class="card-text" *ngFor="let a of requisicion.actividades"> {{a | uppercase}}</li>
+        </ul>
+ 
+      </div>
+    <div class="col-md-4 col-sm-12 col-xs-12">
+      <h5 class="bg-info-light p-1">Sueldos</h5>
+      <mat-divider></mat-divider>
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          <h5 class="text-warning">M&Iacute;NIMO</h5>
+          <p>
+            <strong>MENSUAL: </strong>
+            <label class="card-text"> {{requisicion.sueldoMin | moneda: '$'}}</label>
+          </p>
+          <p>
+            <strong>SEMANAL: </strong>
+            <label class="card-text"> {{(requisicion.sueldoMin / 30) * 7 | moneda: '$'}}</label>
+          </p>
+          <p>
+            <strong>DIARIO: </strong>
+            <label class="card-text"> {{requisicion.sueldoMin / 30 | moneda: '$'}}</label>
+          </p>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          <h5 class="text-warning">M&Aacute;XIMO</h5>
+          <p>
+            <strong>MENSUAL: </strong>
+            <label class="card-text"> {{requisicion.sueldo | moneda: '$'}}</label>
+          </p>
+          <p>
+            <strong>SEMANAL: </strong>
+            <label class="card-text"> {{(requisicion.sueldo / 30) * 7 | moneda: '$'}}</label>
+          </p>
+          <p>
+            <strong>DIARIO: </strong>
+            <label class="card-text"> {{requisicion.sueldo / 30 | moneda: '$'}}</label>
+          </p>
+          <p>
+              <strong>BENEFICIOS: </strong>
+              <label class="card-text" *ngFor="let b of requisicion.beneficios"> {{b | uppercase}}</label>
+            </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

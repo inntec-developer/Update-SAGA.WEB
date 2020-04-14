@@ -1,10 +1,10 @@
 import { ActivatedRoute, CanDeactivate, Router, } from '@angular/router';
 import { AfterViewChecked, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog } from '@angular/material';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog } from '@angular/material/dialog';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { InfoCandidatoComponent } from './../../../../../../components/info-candidato/info-candidato.component';
-import { ModalDirective } from 'ngx-bootstrap';
+import { ModalDirective } from 'ngx-bootstrap/modal/public_api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from '../../../../../../service/SeguimientoVacante/postulate.service';
 

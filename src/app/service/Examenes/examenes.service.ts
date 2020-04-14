@@ -10,7 +10,14 @@ import { Observable } from 'rxjs';
 })
 export class ExamenesService {
 
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + sessionStorage.getItem('validation-token')
+    })
+  };
   URLInsertExamen = ApiConection.ServiceUrl + ApiConection.InsertExamen;
+  URLInsertEntrevista = ApiConection.ServiceUrl + ApiConection.InsertEntrevista;
   URLGetCatalogo = ApiConection.ServiceUrl + ApiConection.GetCatalogo;
   URLGetExamenes = ApiConection.ServiceUrl + ApiConection.GetExamenes;
   URLGetExamen = ApiConection.ServiceUrl + ApiConection.GetExamen;
@@ -44,15 +51,14 @@ export class ExamenesService {
 
     // params.append('Objeto', examen);
     // params.append('tipoexamen', tipoexamen);
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
+  
 
-    return this._httpClient.post(this.URLInsertExamen, examen, httpOptions);
+    return this._httpClient.post(this.URLInsertExamen, examen, this.httpOptions);
   }
 
+  InsertEntrevista(entrevista): Observable<any> {
+    return this._httpClient.post(this.URLInsertEntrevista, entrevista, this.httpOptions);
+  }
   InsertRelacion(relacion): Observable<any> {
     const params = new HttpParams().set('requiexamen', relacion);
 

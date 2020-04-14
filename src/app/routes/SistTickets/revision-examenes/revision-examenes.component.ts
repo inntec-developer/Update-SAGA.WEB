@@ -3,7 +3,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { DlgRevisarExamenesComponent } from '../../../components/dlg-revisar-examenes/dlg-revisar-examenes.component';
 import { ExamenesService } from '../../../service/Examenes/examenes.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { NgbTabsetConfig } from '@ng-bootstrap/ng-bootstrap';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';

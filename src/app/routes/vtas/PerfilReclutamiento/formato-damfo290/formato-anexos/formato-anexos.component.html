@@ -1,5 +1,6 @@
+<div class="text-dark">
 <section #HorariosSt class="row">
-  <div class="col-12">
+  <div class="col">
     <app-perfil-horarios [IdFormato]="IdFormato" [Horarios]="Horarios" (HorariosEmt)="getHorarios($event)">
     </app-perfil-horarios>
   </div>
@@ -73,7 +74,7 @@
 <section #ArteFormatoSt>
   <div class="row">
     <div class="col-12">
-      <strong class="text-warning">Arte Recomendada.</strong>
+      <span class="text-warning text-uppercase fontRoboto">Arte Recomendada.</span>
       <mat-divider></mat-divider>
     </div>
   </div>
@@ -92,7 +93,7 @@
     <div class="col-8 d-flex justify-content-left">
       <div class="card box">
         <div class="card-body">
-          <img [src]="bg" alt="Random slide" style="width: 450px; height: 300px;">
+          <img src="{{bg}}" alt="Random slide" style="width: 450px; height: 300px;">
           <div *ngIf="imgLoading" class="d-flex align-items-center justify-content-center centerImg">
             <div class="sk-circle">
                 <div class="sk-circle1 sk-child"></div>
@@ -114,3 +115,4 @@
     </div>
   </div>
 </section>
+</div>

@@ -45,11 +45,10 @@ export class EntrevistasComponent implements OnInit {
   editar = false;
   public rows: Array<any> = [];
   public columns: Array<any> = [
-    { title: 'Nombre Examen', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
-    { title: 'Tipo Examen', className: 'text-info text-center', name: 'tipo', filtering: { filterString: '', placeholder: 'Tipo Examen' } },
-    { title: 'Aleatoriedad', className: 'text-info text-center', name: 'ale', filtering: { filterString: '', placeholder: 'Aletoriedad' } },
+    { title: 'Nombre', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'No. Preguntas', className: 'text-info text-center', name: 'num', filtering: { filterString: '', placeholder: 'Numero' } },
-    { title: 'Fecha Modificacion', className: 'text-info text-center', name: 'fch_Modificacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    { title: 'Fecha', className: 'text-info text-center',
+    name: 'fch_Creacion', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'Usuario', className: 'text-info text-center', name: 'usuario', filtering: { filterString: '', placeholder: 'usuario' } },
   ];
   public config: any = {
@@ -146,6 +145,9 @@ export class EntrevistasComponent implements OnInit {
     this._Router.navigate(['/examenes/addexamen/'], {queryParams: {ruta: 1}, skipLocationChange: true});
   }
 
+  generarEntrevista() {
+    this._Router.navigate(['/examenes/generarentrevista/'], { skipLocationChange: true});
+  }
   contestarExamen() {
     this._Router.navigate(['/examenes/verentrevista/'], { skipLocationChange: true });
   }
@@ -170,12 +172,12 @@ export class EntrevistasComponent implements OnInit {
   }
 
   popToast(type: any, title: any, body: any) {
-    var toast: Toast = {
+    const toast: Toast = {
       type: type,
       title: title,
       timeout: 4000,
       body: body
-    }
+    };
     this.toasterService.pop(toast);
 
   }

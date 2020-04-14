@@ -1,9 +1,10 @@
+import { DtBusquedaCandidatosComponent } from './../../../../components/dt-busqueda-candidatos/dt-busqueda-candidatos.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { CandidatosService } from '../../../../service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dt-candidatos',
@@ -14,14 +15,27 @@ import { MatDialog } from '@angular/material';
 export class DtCandidatosComponent implements OnInit, OnChanges {
 
   // Variables utilizadas. ***
-  @Input('Filtrado') FCandidatos: any; //Datos que reciben del filtro. ***
+  @Input('Filtrado') FCandidatos: any; // Datos que reciben del filtro. ***
   @Input('expanded') Expanded: boolean;
+
   candidatos: any;
   step = 0;
   infoCnd = 0;
   idCandidato: any;
-  showCandidato: boolean = false;
+  showCandidato = false;
+activar = false;
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7,
+    tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+    preventDuplicates: true
+  });
 
+  spinner = false;
   setInfoCnd(index: number) {
     this.infoCnd = index;
   }
@@ -45,7 +59,7 @@ export class DtCandidatosComponent implements OnInit, OnChanges {
   // Captamos la variable de la busqueda de candidatos para ver si tiene cambios. ***
   ngOnChanges(changes: SimpleChanges) {
     if (changes.FCandidatos && !changes.FCandidatos.isFirstChange()) {
-      this.ngOnInit();
+      this.candidatos = this.FCandidatos;
       this.setInfoCnd(0);
       this.showCandidato = false;
     }
@@ -53,8 +67,12 @@ export class DtCandidatosComponent implements OnInit, OnChanges {
 
   // Agregamos la carga para la tabla de candidatos. ***
   ngOnInit() {
-    this.candidatos = this.FCandidatos;
-  }
+    this.spinner = true;
+      this.service.getTopCandidatos().subscribe(data => {
+        this.spinner = false;
+        this.candidatos = data;
+      });
+ }
 
   // Boton de ver de la tabla de candidatos. ***
   vercandidato(id): void {
@@ -63,15 +81,5 @@ export class DtCandidatosComponent implements OnInit, OnChanges {
     this.setInfoCnd(1);
   }
 
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    limit: 7,
-    tapToDismiss: false,
-    showCloseButton: true,
-    mouseoverTimerStop: true,
-    preventDuplicates: true
-  });
 }
 

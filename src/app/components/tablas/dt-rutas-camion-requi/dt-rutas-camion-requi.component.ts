@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChanges, ViewChild } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-
 import { DialogRutasComponent } from './dialog-rutas/dialog-rutas.component';
-import { MatDialog } from '@angular/material';
-import { ModalDirective } from 'ngx-bootstrap';
+import { MatDialog } from '@angular/material/dialog';
 import { RequisicionesService } from '../../../service';
 import { SettingsService } from '../../../core/settings/settings.service';
+import { ModalDirective } from 'ngx-bootstrap/modal/public_api';
+
 
 const swal = require('sweetalert');
 
@@ -35,8 +35,8 @@ export class DtRutasCamionRequiComponent implements OnInit, AfterViewInit, OnCha
   TableDisable = false;
 
   public columns: Array<any> = [
-    { title: 'Ruta', className: 'text-info text-center' },
-    { title: 'Vía', className: 'text-info text-center' },
+    { title: 'Ruta', className: 'text-center' },
+    { title: 'Vía', className: 'text-center' },
   ];
 
   public config: any = {
@@ -44,9 +44,9 @@ export class DtRutasCamionRequiComponent implements OnInit, AfterViewInit, OnCha
   };
 
   public columnsD: Array<any> = [
-    { title: 'Dirección', className: 'text-info text-center' },
-    { title: 'Ruta', className: 'text-info text-center' },
-    { title: 'Vía', className: 'text-info text-center' },
+    { title: 'Dirección', className: 'text-center' },
+    { title: 'Ruta', className: 'text-center' },
+    { title: 'Vía', className: 'text-center' },
   ];
 
   public configD: any = {

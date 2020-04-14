@@ -1,24 +1,29 @@
+<!-- <div class="content-heading">
+    <span class="text-muted mt-2">
+     / REQUISICIONES
+    </span>
+</div> -->
 <div class="card">
   <div class="card-body mat-elevation-z8">
     <div class="row p-2 bg-light clearfix">
       <div class="col-sm-12 col-md-12">
-        <button id="create" chkPrivilegiosButtons class="mr-2 btn btn-xs btn-info mat-elevation-z8" container="body"
-          placement="bottom" tooltip="Nuevo" [routerLink]="['/ventas/crearRequisicion']">
+        <button id="create" chkPrivilegiosButtons class="mr-2 btn btn-xs btn-success mat-elevation-z8" container="body"
+          placement="bottom" tooltip="Nuevo" (click)="crearRequi()">
           <i class="fa fa-plus"></i>
         </button>
-        <button (click)="showRequi()" class="mr-2 btn btn-xs mat-elevation-z8"
-          [disabled]="!view" [ngClass]="(!view) ? 'disabled' : 'btn-warning'" container="body"
-          placement="bottom" tooltip="Visualizar">
+        <button (click)="showRequi()" class="mr-2 btn btn-xs mat-elevation-z8" [disabled]="!view"
+          [ngClass]="(!view) ? 'disabled' : 'btn-info'" container="body" placement="bottom" tooltip="Visualizar">
           <i class="fa fa-eye"></i>
         </button>
-        <button (click)="lgModal.show()" class="mr-2 btn btn-xs mat-elevation-z8"
-          [disabled]="!coment" [ngClass]="(!coment) ? 'disabled' : 'btn-dark'" container="body"
-          placement="bottom" tooltip="Comentarios">
+        <button (click)="openDialogComentarios()" class="mr-2 btn btn-xs mat-elevation-z8" [disabled]="!coment"
+          [ngClass]="(!coment) ? 'disabled' : 'btn-dark'" container="body" placement="bottom" tooltip="Comentarios">
           <i class="fa fa-comments-o"></i>
+          <span *ngIf="element.comentarioReclutador"
+            class="badge badge-success badge-warning">{{element.comentarioReclutador.length}}</span>
         </button>
         <button id="create" chkPrivilegiosButtons class="mr-2 btn btn-xs mat-elevation-z8" [disabled]="editar"
-          [ngClass]="editar ? 'disabled' : 'btn-primary'" container="body" placement="bottom"
-          tooltip="Editar" (click)="editRequi()">
+          [ngClass]="editar ? 'disabled' : 'btn-warning'" container="body" placement="bottom" tooltip="Editar"
+          (click)="editRequi()">
           <em class="icon-pencil"></em>
         </button>
         <button id='delete' chkPrivilegiosButtons [disabled]="borrar" class="mr-2 btn btn-xs mat-elevation-z8"
@@ -28,26 +33,30 @@
         </button>
         <em class="vl mr-2"></em>
         <button id="update" chkPrivilegiosButtons [disabled]="cubierta" class="mr-2 btn btn-xs mat-elevation-z8"
-          [ngClass]="cubierta ? 'disabled' : 'btn-warning'" type="button" (click)="openDialogCubrir()"
-          container="body" placement="bottom" tooltip="Cubrir Folio">
-          <em class="fa fa fa-shield"></em>
+          [ngClass]="cubierta ? 'disabled' : 'btn-warning'" type="button" (click)="openDialogCubrir()" container="body"
+          placement="bottom" tooltip="Cubrir Folio">
+          <i class="fa fa fa-shield"></i>
         </button>
         <button id='delete' chkPrivilegiosButtons [disabled]="cancelar" class="mr-2 btn btn-xs mat-elevation-z8"
-          [ngClass]="cancelar ? 'disabled' : 'btn-danger'" container="body" placement="bottom"
-          tooltip="Cancelar" (click)="openDialogCancel();">
-          <em class="icon-ban"></em>
+          [ngClass]="cancelar ? 'disabled' : 'btn-danger'" container="body" placement="bottom" tooltip="Cancelar"
+          (click)="openDialogCancel();">
+          <i class="icon-ban"></i>
         </button>
-   
+
         <em class="vl mr-2"></em>
-         <button type="button" class="mr-2 btn btn-xs btn-primary mat-elevation-z8"
-              (click)="historial=true;" container="body" placement="bottom" tooltip="Historial">
-              <i class="fa fa-area-chart"></i>
-            </button>
-            <button *ngIf="tipoUsuarioId != 8" class="btn btn-xs mr-2 mat-elevation-z8" [ngClass]="element.length == 0 ? 'disable' : 'btn-purple'" [disabled]="element.length == 0" id='special' chkPrivilegiosButtons type="button" (click)="openDialogTransfer()" container="body" placement="bottom"
-            tooltip="Transferir folio"><i class="fa fa-exchange"></i>
-          </button>
-        <button type="button" [disabled]="rows.length == 0" class="mr-2 btn btn-xs mat-elevation-z8" [ngClass]="rows.length == 0 ? 'disable' : 'btn-success'"
-          (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
+        <button type="button" class="mr-2 btn btn-xs btn-primary mat-elevation-z8"
+          [routerLink]="['/ventas/historialRequisicion', true]" [skipLocationChange]=true container="body"
+          placement="bottom" tooltip="Historial">
+          <i class="fa fa-area-chart"></i>
+        </button>
+        <button *ngIf="tipoUsuarioId != 8" class="btn btn-xs mr-2 mat-elevation-z8"
+          [ngClass]="element.length == 0 ? 'disable' : 'btn-purple'" [disabled]="element.length == 0" id='special'
+          chkPrivilegiosButtons type="button" (click)="openDialogTransfer()" container="body" placement="bottom"
+          tooltip="Transferir folio"><i class="fa fa-exchange"></i>
+        </button>
+        <button type="button" [disabled]="rows.length == 0" class="mr-2 btn btn-xs mat-elevation-z8"
+          [ngClass]="rows.length == 0 ? 'disable' : 'btn-success'" (click)="exportAsXLSX()" container="body"
+          placement="bottom" tooltip="Reporte para generar estad&iacute;sticos">
           <i class="fa fa-download"></i>
         </button>
         <button class="btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="refreshTable()"
@@ -56,29 +65,28 @@
         </button>
         <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
           class="mr-2 btn btn-xs btn-info float-right mat-elevation-z8">
-          <em class="fa fa-eraser"></em>
+          <i class="fa fa-eraser"></i>
         </button>
-        <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs float-right mat-elevation-z8" [disabled]="element.length == 0 || element.enProceso == 0"
-          (click)="reporteCandidatos = true" [ngClass]="element.length == 0 || element.enProceso == 0 ? 'disabled' : 'btn-warning'"
-          container="body" placement="bottom" tooltip="Candidatos">
+        <button id="update" chkPrivilegiosButtons class="mr-2 btn btn-xs float-right mat-elevation-z8"
+          [disabled]="element.length == 0 || element.enProceso == 0" (click)="reporteCandidatos = true"
+          [ngClass]="element.length == 0 || element.enProceso == 0 ? 'disabled' : 'btn-warning'" container="body"
+          placement="bottom" tooltip="Candidatos">
           <i class="fa fa-users" aria-hidden="true"></i>
           <span *ngIf="element.enProceso > 0" class="badge badge-pill badge-warning">{{element.enProceso}}</span>
         </button>
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-12 col-md-12 table-responsive clearfix">
-        <div class="mt-3 ">
-            <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total posiciones cubiertas
-                <span class="badge badge-pill badge-success ml-1">{{totalContratados  | numerico}}</span></span>
-          <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total de posiciones
-            activas <span class="badge badge-pill badge-success ml-1">{{totalPos  | numerico}}</span></span>
-          <span class="text-muted font-weight-bold float-right text-uppercase mb-3 ">Total de Folios <span
-              class="badge badge-pill badge-success ml-1">{{dataSource.length  | numerico}}</span></span>
-
+      <div class="col-sm-12 col-md-12">
+        <div class="d-flex justify-content-end p-1 bg-warning fontLato align-items-center mt-3">
+          <span class="ml-2 text-uppercase">Total posiciones cubiertas
+            <span class="badge badge-pill badge-info ml-1">{{totalContratados | numerico}}</span></span>
+          <span class="ml-2 text-uppercase">Total de posiciones
+            activas <span class="badge badge-pill badge-info ml-1">{{totalPos | numerico}}</span></span>
+          <span class="text-uppercase ml-2">Total de Folios <span
+              class="badge badge-pill badge-info ml-1">{{dataSource.length  | numerico}}</span></span>
         </div>
-
-        <table id="resultDataTable" ngClass="{{config.className || ''}}" class="table border-top" style="width: 100%;">
+        <table class="table border-top" style="width: 100%;">
           <thead>
             <tr>
               <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
@@ -108,23 +116,26 @@
                   <td> {{row.cliente | uppercase}}</td>
                   <td class="text-center"> {{row.vBtra | uppercase}}</td>
                   <td class="text-center">
-                    <span class="mr-1 badge badge-pill badge-info"> {{row.contratados}}/{{row.vacantes}}</span>
+                    <span class="mr-1 badge badge-pill badge-success"> {{row.contratados}}/{{row.vacantes}}</span>
                   </td>
-                  <td class="text-center"><span *ngIf="row.tipoReclutamiento.length < 9 else toLengthRecl">{{row.tipoReclutamiento | uppercase}}</span>
-                      <ng-template #toLengthRecl>
-                          <span tooltip="{{row.tipoReclutamiento | uppercase}}" placement="top" container="body"> {{row.tipoReclutamiento | slice:0:8 | uppercase
+                  <td class="text-center"><span
+                      *ngIf="row.tipoReclutamiento.length < 9 else toLengthRecl">{{row.tipoReclutamiento | uppercase}}</span>
+                    <ng-template #toLengthRecl>
+                      <span tooltip="{{row.tipoReclutamiento | uppercase}}" placement="top" container="body"> {{row.tipoReclutamiento | slice:0:8 | uppercase
                             }} ...
-                          </span>
-                        </ng-template>
+                      </span>
+                    </ng-template>
                   </td>
-                  <td class="text-center" placement="top" tooltip="Fecha Creacion: {{row.fch_Creacion | date: 'dd/MM/yyyy'}}" container='body'><span class="badge badge-pill badge-warning">{{row.diasTrans | number}}</span></td>
+                  <td class="text-center" placement="top"
+                    tooltip="Fecha Creacion: {{row.fch_Creacion | date: 'dd/MM/yyyy'}}" container='body'><span
+                      class="badge badge-pill badge-warning">{{row.diasTrans | number}}</span></td>
                   <td class="text-right"> {{row.sueldoMinimo | moneda:'$'}} - {{row.sueldoMaximo | moneda:'$'}}</td>
                   <td class="text-center">
                     <small *ngIf="row.estatus.length < 10 else toLength" class="badge badge-pill badge-info"
                       [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
                       [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
                       [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
-                      {{row.estatus | uppercase}}
+                      <small>{{row.estatus | uppercase}}</small>
                     </small>
 
                     <ng-template #toLength>
@@ -132,8 +143,8 @@
                         [class.badge-primary]="row.estatusId  === 5"
                         [class.badge-info]="row.estatusId  === 6 || row.estatusId >= 29"
                         [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8"
-                        tooltip="{{row.estatus | uppercase}}" placement="top" container="body"> {{row.estatus | slice:0:8 | uppercase
-                        }} ...
+                        tooltip="{{row.estatus | uppercase}}" placement="top" container="body"> <small>{{row.estatus | slice:0:8 | uppercase
+                        }} ...</small>
                       </small>
                     </ng-template>
                   </td>
@@ -150,34 +161,36 @@
                       </div>
                     </ng-template>
 
-                    <span class="text-center text-warning" *ngIf="row.coordinador.length == 0 && (row.estatusId == 4 || row.estatusId == 43)">SIN ASIGNAR</span>
-                    <a class="badge badge-pill badge-primary text-white text-center"
-                      *ngIf="row.coordinador.length > 1 && (row.estatusId == 4 || row.estatusId == 43)" [popover]="popTemplateCoor" placement="left"
-                      container="body" triggers="mouseenter:mouseleave">{{row.coordinador.length}}</a>
-                    <span class="text-center" [class.text-warning] = "row.coordinador[0] == 'SIN ASIGNAR'"
-                      *ngIf="row.coordinador.length == 1 && (row.estatusId == 4 || row.estatusId == 43)">{{row.coordinador[0] | uppercase}}</span>
-                    <span class="text-center" [class.text-warning] = "row.coordinador == 'SIN ASIGNAR'" *ngIf="row.estatusId != 4 && row.estatusId != 43">{{row.coordinador | uppercase}}</span>
+                    <span class="text-center text-warning" *ngIf="row.coordinador.length == 0">SIN
+                      ASIGNAR</span>
+                    <a class="badge badge-pill badge-primary text-white text-center" *ngIf="row.coordinador.length > 1"
+                      [popover]="popTemplateCoor" placement="left" container="body"
+                      triggers="mouseenter:mouseleave">{{row.coordinador.length}}</a>
+                    <span class="text-center" [class.text-warning]="row.coordinador[0] == 'SIN ASIGNAR'"
+                      *ngIf="row.coordinador.length == 1">{{row.coordinador[0] | uppercase}}</span>
                   </td>
-                  <td [class.text-warning] = "row.propietario == 'SIN ASIGNAR'"> {{row.propietario | uppercase}}</td>
+                  <td [class.text-warning]="row.propietario == 'SIN ASIGNAR'"> {{row.propietario | uppercase}}</td>
                   <td class="text-center">
                     <ng-template #popTemplate>
                       <div class="row">
                         <div class="col-md-12">
                           <div class="popover-body">
                             <ul *ngFor="let r of row.reclutadores">
-                              <li class="text-muted" >{{r | uppercase}}</li>
+                              <li class="text-muted">{{r | uppercase}}</li>
                             </ul>
                           </div>
                         </div>
                       </div>
                     </ng-template>
 
-                    <span class="text-center text-warning" *ngIf="row.reclutadores.length == 0 || (row.estatusId == 4 || row.estatusId == 43)">SIN
+                    <span class="text-center text-warning"
+                      *ngIf="row.reclutadores.length == 0 || (row.estatusId == 4 || row.estatusId == 43)">SIN
                       ASIGNAR</span>
                     <a class="badge badge-pill badge-primary text-white text-center"
-                      *ngIf="row.reclutadores.length > 1 && (row.estatusId != 4 && row.estatusId != 43)" [popover]="popTemplate" placement="left"
-                      container="body" triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
-                    <span class="text-center" [class.text-warning] = "row.reclutadores[0] == 'SIN ASIGNAR'"
+                      *ngIf="row.reclutadores.length > 1 && (row.estatusId != 4 && row.estatusId != 43)"
+                      [popover]="popTemplate" placement="left" container="body"
+                      triggers="mouseenter:mouseleave">{{row.reclutadores.length}}</a>
+                    <span class="text-center" [class.text-warning]="row.reclutadores[0] == 'SIN ASIGNAR'"
                       *ngIf="row.reclutadores.length == 1 && (row.estatusId != 4 && row.estatusId != 43)">{{row.reclutadores[0] | uppercase}}</span>
 
                   </td>
@@ -189,50 +202,10 @@
       </div>
     </div>
     <br />
-    <div class="row">
-      <div class="col-md-12 clearfix">
-        <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="page" [totalItems]="length"
-          [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
-          (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
-
-        <!-- <pre *ngIf="config.paging" class="text-muted float-right"><small>P&aacute;gina: {{page}} / {{numPages}} Registros: {{registros}}</small></pre> -->
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Modal para comentarios de la requisicion -->
-<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Requisici&oacute;n: {{Vacante}} {{Folio}}</h4>
-        <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <comentario-vacante [RequisicionId]="RequisicionId" [MotivoId]="7"></comentario-vacante>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-success" (click)="lgModal.hide()">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal para reporte -->
-<div *ngIf="historial" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #MessageModal="bs-modal" class="modal"
-  tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="float-left text-warning"><em class="fa fa-area-chart mr-2"></em>HISTORIAL - REQUISICIONES</h4>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="historial=false; lgModal.hide();"><i
-            class="fa fa-times"></i></button>
-      </div>
-      <div class="modal-body">
-        <app-dthistorial [ventas]="true"></app-dthistorial>
-      </div>
+    <div class="d-flex justify-content-end p-1 mt-2">
+      <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length"
+        [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+        (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
     </div>
   </div>
 </div>
@@ -241,11 +214,10 @@
   #candiModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="float-left text-warning"><em class="fa fa-users mr-2"></em>CANDIDATOS EN PROCESO / REQUISICI&Oacute;N
-          {{Folio}} - {{Vacante}}</h5>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="reporteCandidatos=false;">
-          <i class="fa fa-times"></i></button>
+      <div class="d-flex justify-content-between align-items-center p-1 bg-info ml-2 mt-2 mb-1 mr-2">
+        <span><i class="fa fa-users mr-2"></i>CANDIDATOS EN PROCESO / FOLIO
+          <strong class="ml-1">{{Folio}}</strong> PERFIL<strong class="ml-1">{{Vacante}}</strong></span>
+        <em (click)="reporteCandidatos=false;" class="fa fa-times-circle fa-2x text-danger"></em>
       </div>
       <div class="modal-body">
         <app-reporte-candidatos [RequisicionId]="RequisicionId" [EstatusId]="estatusId"></app-reporte-candidatos>

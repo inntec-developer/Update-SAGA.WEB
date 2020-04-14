@@ -22,7 +22,6 @@ declare var $: any;
 })
 export class HeaderComponent implements OnInit {
 
-  
   public ArrayVacante: Array<any> = [];
   modalRef: BsModalRef;
   public ShowModal: boolean;
@@ -38,7 +37,7 @@ export class HeaderComponent implements OnInit {
   private subscription: Subscription;
   UserId: string;
 
-  Folio: string = '';
+  Folio = '';
   Puro: boolean;
 
   text = renderActualizaciones;

@@ -7,37 +7,36 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 })
 export class DtContactosComponent implements OnInit {
   @Input() Contactos: any[];
-  getPhone : boolean = false;
+  getPhone = false;
   public rows: Array<any> = [];
   rowAux = [];
-  constructor() { }
 
+  public columns: Array<any> = [
+    { title: 'Dirección', className: 'text-success text-center' },
+    { title: 'Nombre', className: 'text-info text-center' },
+    { title: 'Puesto', className: 'text-info text-center' },
+    { title: 'Teléfono', className: 'text-info text-center' },
+    { title: 'Email', className: 'text-info text-center' },
+  ];
+  public config: any = {
+    className: ['table-striped table-bordered mb-0 d-table-fixed']
+  };
+  constructor() { }
   ngOnInit() {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes.Contactos && !changes.Contactos.isFirstChange()){
+    if (changes.Contactos && !changes.Contactos.isFirstChange()) {
       this.cargarContactos(this.Contactos);
     }
   }
 
-  cargarContactos(data){
-  //   if(!this.getPhone){
-      this.rows =  data;
+  cargarContactos(data) {
+    //   if(!this.getPhone){
+    this.rows = data;
     //   this.getPhone = true;
     // }
   }
-  public columns: Array<any> = [
-    {title: 'Dirección', className: 'text-success text-center'},
-    {title: 'Nombre', className: 'text-info'},
-    {title: 'Puesto', className: 'text-info'},
-    {title: 'Teléfono', className: 'text-info'},
-    {title: 'Email', className: 'text-info'},
-  ]
-  public config: any = {
-    className: ['table-striped table-bordered mb-0 d-table-fixed']
-  };
-
   public onCellClick(data: any): any {
     data.selected ? data.selected = false : data.selected = true;
     if (this.rowAux.length == 0) {

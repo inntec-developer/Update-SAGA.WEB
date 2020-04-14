@@ -1,33 +1,30 @@
-<h3 class="text-danger text-center" mat-dialog-title> Cancelar Requisici&oacute;n {{folio}}</h3>
+<h4 class="d-flex justify-content-center align-items-center p-1 bg-danger">CANCELAR REQUISICI&Oacute;N  {{folio}}</h4>
 <mat-divider></mat-divider>
-<mat-dialog-content>
+<mat-dialog-content class="text-info">
   <div class="row">
     <div class="col-sm-12">
-      <strong class="text-primary">Cliente: </strong>
-      <p>{{data.cliente}}</p>
+      <span>CLIENTE</span>
+      <p class="text-muted">{{data.cliente | uppercase}}</p>
     </div>
   </div>
   <div class="row">
     <div class="col-md-4 col-sm-4">
-
-      <strong class="text-primary">Puesto: </strong>
-      <p>{{data.vBtra}}</p>
+      <span>PUESTO</span>
+      <p class="text-muted">{{data.vBtra | uppercase}}</p>
     </div>
     <div class="col-md-4 col-sm-4">
-
-      <strong class="text-primary">Sueldo M&iacute;nimo: </strong>
-      <p>{{data.sueldoMinimo | moneda: '$'}}</p>
+      <span>SUELDO M&Iacute;NIMO</span>
+      <p class="text-muted">{{data.sueldoMinimo | moneda: '$'}}</p>
     </div>
     <div class="col-md-4 col-sm-4">
-
-      <strong class="text-primary">Tipo Reclutamiento: </strong>
-      <p>{{data.tipoReclutamiento}}</p>
+      <span>TIPO RECLUTAMIENTO</span>
+      <p class="text-muted">{{data.tipoReclutamiento}}</p>
     </div>
   </div>
   <div class="row">
     <div class="col-md-4 col-sm-4">
-      <strong class="text-primary">Fecha Creacion: </strong>
-      <p>{{data.fch_Creacion | date:'dd/MM/yyyy HH:mm'}}</p>
+      <span>FECHA CREACI&Oacute;N</span>
+      <p class="text-muted">{{data.fch_Creacion | date:'dd/MM/yyyy HH:mm'}}</p>
     </div>
   </div>
   <mat-divider></mat-divider>
@@ -59,20 +56,25 @@
     <br>
     <mat-divider></mat-divider>
     <div class="alert alert-warning" role="alert">
-      <h4 class="alert-heading">Advertencia!</h4>
-      <p>Todos los usuarios que se encuentren asignadas a esta requisición permaneceran en la misma, para consultas de historicos.</p>
+      <h4 class="alert-heading"><i class="fa fa-exclamation-triangle mr-1" aria-hidden="true"></i> Advertencia</h4>
+      <p>Todos los usuarios que se encuentren asignadas a esta requisición permaneceran en la misma, para consultas de
+        historicos.</p>
     </div>
-    <button type="button" class="btn btn-xs btn-labeled btn-danger mb-1 margen mat-elevation-z8" (click)="onCloseDialog()">
+    <div class="d-flex justify-content-end p-1">
+        <img class="loading-position mr-2" *ngIf="loading"
+        src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
+    <button type="button" class="btn btn-xs btn-labeled btn-danger mr-2 mat-elevation-z8"
+      (click)="onCloseDialog()">
       <span class="btn-label">
         <i class="fa fa-times"></i>
-      </span> Cancelar
+      </span>CANCELAR
     </button>
-    <button type="button" [disabled]="!formComentario.valid || loading" class="btn btn-xs btn-labeled btn-success mb-1 margen mat-elevation-z8"
-      type="submit">
+    <button type="button" [disabled]="!formComentario.valid || loading"
+      class="btn btn-xs btn-labeled btn-success mat-elevation-z8" type="submit">
       <span class="btn-label">
         <i class="fa fa-check"></i>
-      </span> Aceptar
+      </span>ACEPTAR
     </button>
-    <img class="loading-position" *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
-  </form>
+    </div>
+    </form>
 </mat-dialog-actions>

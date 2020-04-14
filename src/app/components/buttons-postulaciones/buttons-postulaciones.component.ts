@@ -10,13 +10,14 @@ import { DialogLiberarCandidatoComponent } from './../dialog-liberar-candidato/d
 import { DlgComentariosNRComponent } from './../dlg-comentarios-nr/dlg-comentarios-nr.component';
 import { EditarContratadosComponent } from '../editar-contratados/editar-contratados.component';
 import { InfoCandidatoService } from '../../service/SeguimientoVacante/info-candidato.service';
-import { MatDialog } from '@angular/material';
-import { ModalDirective } from 'ngx-bootstrap';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalDirective } from 'ngx-bootstrap/modal/public_api';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../service';
 import { SettingsService } from './../../core/settings/settings.service';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
+import { ComentarioVacanteComponent } from '../comentario-vacante/comentario-vacante.component';
 const swal = require('sweetalert');
 @Component({
   selector: 'app-buttons-postulaciones',
@@ -25,11 +26,6 @@ const swal = require('sweetalert');
   providers: [RequisicionesService, PostulateService, InfoCandidatoService, CandidatosService]
 })
 export class ButtonsPostulacionesComponent implements OnInit {
-
-  @Input() RequisicionId;
-  @Input() vacante;
-  @Input() clienteId;
-  @Input() estatusVacante;
 
 
   @ViewChild('MessageModal') ShownModal: ModalDirective;
@@ -82,13 +78,17 @@ export class ButtonsPostulacionesComponent implements OnInit {
   public columns: Array<any> = [
     { title: 'Horario', className: 'text-info', name: 'horario', filtering: { filterString: '', placeholder: 'Horario' } },
     { title: 'Nombre Candidato', className: 'text-info', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
-    { title: 'Área Experiencia', className: 'text-info', name: 'areaExp', filtering: { filterString: '', placeholder: 'Experiencia' } },
-    { title: 'Área Interes', className: 'text-info', name: 'areaInt', filtering: { filterString: '', placeholder: 'Interes' } },
+    // { title: 'Área Experiencia', className: 'text-info', name: 'areaExp', filtering: { filterString: '', placeholder: 'Experiencia' } },
+    // { title: 'Área Interes', className: 'text-info', name: 'areaInt', filtering: { filterString: '', placeholder: 'Interes' } },
     { title: 'Localidad', className: 'text-info', name: 'localidad', filtering: { filterString: '', placeholder: 'Localidad' } },
-    { title: 'Sueldo Aceptable', className: 'text-info text-center', name: 'sueldoMinimo',
-    filtering: { filterString: '', placeholder: 'Sueldo aceptable' } },
-    { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad',
-    filtering: { filterString: '', placeholder: 'Fecha Nacimiento' } },
+    {
+      title: 'Sueldo Aceptable', className: 'text-info text-center', name: 'sueldoMinimo',
+      filtering: { filterString: '', placeholder: 'Sueldo aceptable' }
+    },
+    {
+      title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad',
+      filtering: { filterString: '', placeholder: 'Fecha Nacimiento' }
+    },
     { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
     { title: 'RFC', className: 'text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
     { title: 'NSS', className: 'text-success', name: 'nss', filtering: { filterString: '', placeholder: 'NSS' } },
@@ -114,24 +114,41 @@ export class ButtonsPostulacionesComponent implements OnInit {
     mouseoverTimerStop: true,
     preventDuplicates: true,
   });
+  data: any = [];
 
   constructor(
     private serviceRequi: RequisicionesService,
     private service: PostulateService,
-    private serviceLiberar: InfoCandidatoService,
     private serviceCandidato: CandidatosService,
     private toasterService: ToasterService,
     private spinner: NgxSpinnerService,
     private dialog: MatDialog,
-    private modalService: BsModalService,
     private settings: SettingsService,
-    private _Router: Router) { }
-
-  ngOnInit() {
-    this.getpostulados();
-    this.GetConteoVacante();
+    private dlgComent: MatDialog,
+    private router: Router,
+    private _Router: ActivatedRoute) {
   }
 
+  ngOnInit() {
+    this.getParams();
+
+  }
+  getParams() {
+    this._Router.queryParams.subscribe(params => {
+      if (params['requisicionId'] != null) {
+        this.data = params;
+        this.getpostulados();
+        this.GetConteoVacante();
+      }
+    });
+  }
+
+  regresar() {
+      this.router.navigate(
+        ['/reclutamiento/vacantesReclutador'],
+        { skipLocationChange: true }
+      );
+  }
   ValidarEstatus(estatus) {
     const auxc = this.dataSource.filter(element => {
       return element.estatusId === 24;
@@ -139,7 +156,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
     if (auxc.length === this.conteo[0]['totalVacantes'] && estatus !== 42 && estatus !== 24) {
       this.GetHorarioRequis(estatus, estatus);
-    } else if (this.estatusVacante === 39) {
+    } else if (this.data.estatusVacante === 39) {
       this.cr = true;
       this.enr = true;
       this.fr = true;
@@ -381,9 +398,14 @@ export class ButtonsPostulacionesComponent implements OnInit {
   }
 
   getpostulados() {
-
-    this.service.GetProceso(this.RequisicionId, this.settings.user['id']).subscribe(data => {
-
+this.spinner.show();
+    this.service.GetProceso(this.data.requisicionId, this.settings.user['id']).subscribe(data => {
+      if (data === 400) {
+        this.spinner.hide();
+        this.dataSource = [];
+        this.popToast('error', 'PROCESO', 'Ocurrió un error al intentar obtener datos.' +
+        ' Por favor intentelo de nuevo. si el problemapersiste favor de reportarlo con el administrador');
+      } else {
       this.dataSource = [];
       data.forEach(element => {
         const perfil = {
@@ -414,7 +436,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
           areaReclutamientoId: element.areaReclutamientoId,
           fuenteReclutamiento: element.fuenteReclutamiento,
           fuenteReclutamientoId: element.fuenteReclutamientoId,
-          requisicionId: this.RequisicionId,
+          requisicionId: this.data.requisicionId,
           paisNacimiento: element.perfil[0]['paisNacimiento'] != null ? element.perfil[0]['paisNacimiento'] : 0,
           estadoNacimiento: element.perfil[0]['estadoNacimiento'] != null ? element.perfil[0]['estadoNacimiento'] : 0,
           municipioNacimiento: element.perfil[0]['municipioNacimiento'] != null ? element.perfil[0]['municipioNacimiento'] : 0,
@@ -437,11 +459,12 @@ export class ButtonsPostulacionesComponent implements OnInit {
         this.onChangeTable(this.config);
 
       });
+    }
     }, error => this.errorMessage = <any>error);
   }
 
   GetConteoVacante() {
-    this.service.GetConteoVacante(this.RequisicionId, this.clienteId).subscribe(data => {
+    this.service.GetConteoVacante(this.data.requisicionId, this.data.clienteId).subscribe(data => {
       this.conteo = data;
       const cc = this.conteo.filter(element => {
         if (element.contratados > 0) {
@@ -454,7 +477,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
   GetHorarioRequis(estatusId, estatus) {
 
-    this.serviceRequi.GetHorariosRequiConteo(this.RequisicionId).subscribe(data => {
+    this.serviceRequi.GetHorariosRequiConteo(this.data.requisicionId).subscribe(data => {
       // if (data.length > 0) {
       let aux = data.filter(element => !element.vacantes);
 
@@ -492,12 +515,14 @@ export class ButtonsPostulacionesComponent implements OnInit {
         this.dataSource[idx]['horario'] = nom[0]['nombre'];
         this.dataSource[idx]['horarioId'] = this.horarioId;
 
-        const datos = { candidatoId: this.candidatoId,
+        const datos = {
+          candidatoId: this.candidatoId,
           estatusId: estatusId,
-          requisicionId: this.RequisicionId,
+          requisicionId: this.data.requisicionId,
           horarioId: this.horarioId,
           tipoMediosId: result.mediosId,
-          ReclutadorId: this.settings.user['id'] };
+          ReclutadorId: this.settings.user['id']
+        };
 
         if (estatusId === 24) {
           this.SetApiProceso(datos, estatusId, estatus);
@@ -508,6 +533,26 @@ export class ButtonsPostulacionesComponent implements OnInit {
       } else {
         this.onChangeTable(this.config);
       }
+    });
+  }
+
+  openDialogComentarios() {
+    const motivoId = 7;
+
+    const dlgComent = this.dlgComent.open(ComentarioVacanteComponent, {
+      width: '85%',
+      height: 'auto',
+      data: {
+        id: this.element.id,
+        vBtra: this.element.vBtra,
+        folio: this.element.folio,
+        motivoId: motivoId
+      }
+    });
+    dlgComent.afterClosed().subscribe(result => {
+      // if (result === 200) {
+      //   this.popToast('success', 'Comentarios', 'La requisición se canceló exitosamente, podrás consultarla en el histórico');
+      // }
     });
   }
 
@@ -543,7 +588,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
   openDialogLiberar() {
 
     this.objLiberar = [{
-      RequisicionId: this.RequisicionId,
+      RequisicionId: this.data.requisicionId,
       CandidatoId: this.candidatoId,
       ReclutadorId: this.settings.user['id'],
       ProcesoCandidatoId: this.ProcesoCandidatoId,
@@ -551,13 +596,49 @@ export class ButtonsPostulacionesComponent implements OnInit {
 
     this.dlgLiberar = true;
   }
-
+  showRequi() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        id: this.ProcesoCandidatoId,
+        Folio: this.data.folio,
+        Vacante: this.data.vBtra,
+        clienteId: this.data.clienteId,
+        enProceso: this.dataSource.length,
+        candidatoId: this.candidatoId,
+        estatusId: this.element.estatusId,
+        IdRequi: this.data.requisicionId,
+        horarioId: this.horarioId,
+        ReclutadorId: this.settings.user['id'],
+        TipoReclutamientoId: this.data.tipoReclutamientoId,
+        puro: 4
+      },
+      skipLocationChange: true
+    };
+    this.router.navigate(['/ventas/visualizarRequisicion'], navigationExtras);
+  }
   OpenEditarComponent(datos) {
-    this.dataContratados = this.dataSource.filter(element => {
-      return element.candidatoId === datos.candidatoId;
-    });
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        id: this.ProcesoCandidatoId,
+        folio: this.element.folio,
+        vBtra: this.data.vBtra,
+        clienteId: this.data.clienteId,
+        enProceso: this.dataSource.length,
+        candidatoId: this.candidatoId,
+        estatusId: this.element.estatusId,
+        requisicionId: this.data.requisicionId,
+        horarioId: this.horarioId,
+        ReclutadorId: this.settings.user['id']
+      },
+      skipLocationChange: true
+    };
+    this.router.navigate(['/reclutamiento/editarContratados'], navigationExtras);
+    // this.dataContratados = this.dataSource.filter(element => {
+    //   return element.candidatoId === datos.candidatoId;
+    // });
 
-    this.editarContratados = true;
+    // this.editarContratados = true;
+
   }
 
   OpenDialogComentariosNR(data, estatusId, estatus) {
@@ -566,7 +647,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       nombre: this.rowAux.nombre + ' ' + this.rowAux.apellidoPaterno + ' ' + this.rowAux.apellidoMaterno,
       curp: this.rowAux.curp,
       foto: this.rowAux.foto,
-      requisicionId: this.RequisicionId,
+      requisicionId: this.data.requisicionId,
       ReclutadorId: this.settings.user['id']
     };
 
@@ -585,6 +666,19 @@ export class ButtonsPostulacionesComponent implements OnInit {
   }
 
   SetProceso(estatusId, estatus) {
+    // const datos = {
+    //   id: this.ProcesoCandidatoId,
+    //   folio: this.element.folio,
+    //   vBtra: this.element.vBtra,
+    //   clienteId: this.data.clienteId,
+    //   enProceso: this.dataSource.length,
+    //   candidatoId: this.candidatoId,
+    //   estatusId: this.element.estatusId,
+    //   requisicionId: this.data.requisicionId,
+    //   horarioId: this.horarioId,
+    //   ReclutadorId: this.settings.user['id']
+    // };
+    // this.OpenEditarComponent(datos);
 
     if (this.candidatoId != null) {
       if (estatusId === 27) {
@@ -594,7 +688,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
       } else if (estatusId === 42) {
         swal({
           title: '¿ESTÁS SEGURO?',
-          text: '¡El candidato se enviara a revisión!. Este proceso puede tomar varios segundos. Por favor espere',
+          text: '¡El candidato se enviará a revisión!. Este proceso puede tomar varios segundos. Por favor espere',
           type: 'warning',
           showCancelButton: true,
           confirmButtonColor: '#ec2121',
@@ -606,10 +700,12 @@ export class ButtonsPostulacionesComponent implements OnInit {
           window.onkeydown = null;
           window.onfocus = null;
           if (isConfirm) {
-            const datos = { candidatoId: this.candidatoId,
-            estatusId: estatusId,
-            requisicionId: this.RequisicionId,
-            horarioId: this.horarioId, ReclutadorId: this.settings.user['id'] };
+            const datos = {
+              candidatoId: this.candidatoId,
+              estatusId: estatusId,
+              requisicionId: this.data.requisicionId,
+              horarioId: this.horarioId, ReclutadorId: this.settings.user['id']
+            };
             this.OpenDialogComentariosNR(datos, estatusId, estatus);
           } else {
             swal('Cancelado', 'No se realizó ningún cambio', 'error');
@@ -622,24 +718,30 @@ export class ButtonsPostulacionesComponent implements OnInit {
           if (this.conteo[idx]['contratados'] === this.conteo[idx]['vacantes']) {
             this.GetHorarioRequis(estatusId, estatus);
           } else {
-            const datos = { candidatoId: this.candidatoId,
-              estatusId: estatusId,
-              requisicionId: this.RequisicionId,
+            const datos = {
+              id: this.ProcesoCandidatoId,
+              folio: this.element.folio,
+              vBtra: this.element.vBtra,
+              clienteId: this.data.clienteId,
+              enProceso: this.dataSource.length,
+              candidatoId: this.candidatoId,
+              estatusId: this.element.estatusId,
+              requisicionId: this.data.requisicionId,
               horarioId: this.horarioId,
-              ReclutadorId: this.settings.user['id'] };
+              ReclutadorId: this.settings.user['id']
+            };
             this.OpenEditarComponent(datos);
-
           }
         }
-
       } else {
-        const datos = { candidatoId: this.candidatoId,
+        const datos = {
+          candidatoId: this.candidatoId,
           estatusId: estatusId,
-          requisicionId: this.RequisicionId,
+          requisicionId: this.data.requisicionId,
           horarioId: this.horarioId,
-          ReclutadorId: this.settings.user['id'] };
+          ReclutadorId: this.settings.user['id']
+        };
         this.SetApiProceso(datos, estatusId, estatus);
-
       }
     }
 
@@ -675,18 +777,18 @@ export class ButtonsPostulacionesComponent implements OnInit {
   }
 
   SetStatusBolsa(candidatoId, estatusId, estatus) {
-    let datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 1 };
+    let datos = { candidatoId: candidatoId, requisicionId: this.data.requisicionId, estatusId: 1 };
     if (this.candidatoId != null) {
       if (estatusId === 10) {
-         datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 1 };
+        datos = { candidatoId: candidatoId, requisicionId: this.data.requisicionId, estatusId: 1 };
       } else if (estatusId >= 12 && estatusId <= 15) {
-         datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 2 };
+        datos = { candidatoId: candidatoId, requisicionId: this.data.requisicionId, estatusId: 2 };
       } else if (estatusId === 16 || estatusId === 17 || estatusId === 18) {
-        datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 3 };
+        datos = { candidatoId: candidatoId, requisicionId: this.data.requisicionId, estatusId: 3 };
       } else if (estatusId === 21 || estatusId === 22 || estatusId === 23) {
-        datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 4 };
+        datos = { candidatoId: candidatoId, requisicionId: this.data.requisicionId, estatusId: 4 };
       } else if (estatusId === 24 || estatusId === 25 || estatusId === 27 || estatusId === 40 || estatusId === 42) {
-        datos = { candidatoId: candidatoId, requisicionId: this.RequisicionId, estatusId: 5 };
+        datos = { candidatoId: candidatoId, requisicionId: this.data.requisicionId, estatusId: 5 };
       }
 
       this.service.SetStatusBolsa(datos).subscribe(data => {
@@ -701,24 +803,26 @@ export class ButtonsPostulacionesComponent implements OnInit {
           this.onChangeTable(this.config)
 
           if (estatusId === 17 || estatusId === 21 || estatusId === 27 || estatusId === 24) {
-            const datosCand = { candidatoId: this.candidatoId,
+            const datosCand = {
+              candidatoId: this.candidatoId,
               estatusId: estatusId,
-              vacante: this.vacante,
-              nombre: this.dataSource[idx]['nombre'] };
+              vacante: this.data.vBtra,
+              nombre: this.dataSource[idx]['nombre']
+            };
 
             this.service.SendEmailCandidato(datosCand).subscribe();
 
           }
 
-          if (estatusId === 22 && this.estatusVacante !== '33'
-          && this.estatusVacante !== '30' && this.estatusVacante !== '39'
-          && this.estatusVacante !== '38') {// si es cita con cliente cambio automatico a envio al cliente
-            const datosVacante = { estatusId: 30, requisicionId: this.RequisicionId };
+          if (estatusId === 22 && this.data.estatusVacante !== '33'
+            && this.data.estatusVacante !== '30' && this.data.estatusVacante !== '39'
+            && this.data.estatusVacante !== '38') {// si es cita con cliente cambio automatico a envio al cliente
+            const datosVacante = { estatusId: 30, requisicionId: this.data.requisicionId };
 
             this.service.SetProcesoVacante(datosVacante).subscribe(data => {
             });
-          } else if (estatusId === 23 && this.estatusVacante !== '33' && this.estatusVacante !== '39' && this.estatusVacante !== '38') {
-            const datosVacante = { estatusId: 33, requisicionId: this.RequisicionId }; // espera de contratacion
+          } else if (estatusId === 23 && this.data.estatusVacante !== '33' && this.data.estatusVacante !== '39' && this.data.estatusVacante !== '38') {
+            const datosVacante = { estatusId: 33, requisicionId: this.data.requisicionId }; // espera de contratacion
 
             this.service.SetProcesoVacante(datosVacante).subscribe(data => {
             });
@@ -803,7 +907,7 @@ export class ButtonsPostulacionesComponent implements OnInit {
     this.evm = true;
     this.liberado = true;
     this.pst = true;
-this.element = [];
+    this.element = [];
     this.onChangeTable(this.config);
   }
 
@@ -815,7 +919,7 @@ this.element = [];
         const datos = {
           candidatoId: this.candidatoId,
           estatusId: 24,
-          requisicionId: this.RequisicionId,
+          requisicionId: this.data.requisicionId,
           horarioId: this.horarioId,
           ReclutadorId: this.settings.user['id']
         };
@@ -861,6 +965,7 @@ this.element = [];
     const filteredData = this.changeFilter(this.dataSource, this.config);
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
     this.length = filteredData.length;
+    this.spinner.hide();
   }
 
   public clearfilters() {

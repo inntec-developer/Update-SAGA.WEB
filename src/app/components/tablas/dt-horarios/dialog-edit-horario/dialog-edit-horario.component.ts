@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { FormGroup } from '@angular/forms';
 import { RequisicionesService } from '../../../../service';
@@ -20,59 +20,56 @@ export class DialogEditHorarioComponent implements OnInit {
   msgDanger: boolean;
   msWarning: boolean;
   loading: boolean;
-  public formVacantes : FormGroup;
+  public formVacantes: FormGroup;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private service : RequisicionesService,
-    private dialogVacantes : MatDialogRef<DialogEditHorarioComponent>,
-    public Vacante : Vacante,
+    private service: RequisicionesService,
+    private dialogVacantes: MatDialogRef<DialogEditHorarioComponent>,
+    public Vacante: Vacante,
     private settings: SettingsService
   ) {
     dialogVacantes.disableClose = true;
-   }
+  }
 
   ngOnInit() {
     this.getInformacion();
   }
 
-  getInformacion(){
+  getInformacion() {
     this.RequisicionId = this.data.requisicionId;
     this.HorarioId = this.data.id;
     this.vacanteN = this.data.numeroVacantes;
   }
 
-  onCloseDialog(){
+  onCloseDialog() {
     this.dialogVacantes.close();
   }
 
-  updateVacante(){
+  updateVacante() {
     this.loading = true;
-    var vacante = {
-      id : this.HorarioId,
-      requisicionId : this.RequisicionId,
-      usuario : this.settings.user['usuario'],
-      numeroVacantes : this.vacanteN
-    }
+    const vacante = {
+      id: this.HorarioId,
+      requisicionId: this.RequisicionId,
+      usuario: this.settings.user['usuario'],
+      numeroVacantes: this.vacanteN
+    };
     this.Vacante = vacante;
     this.service.updateVacanates(this.Vacante).subscribe(data => {
       this.result = data;
-      if(this.result == 200){
-        setTimeout(() =>{
-            this.service.getRequiHorarios(this.RequisicionId).subscribe(result =>{
-              this.dialogVacantes.close(result);
-              this.loading = false;
-            });
-        },2000);
+      if (this.result === 200) {
+        setTimeout(() => {
+          this.service.getRequiHorarios(this.RequisicionId).subscribe(result => {
+            this.dialogVacantes.close(result);
+            this.loading = false;
+          });
+        }, 2000);
       }
-      if(this.result == 204){
+      if (this.result === 204) {
         this.loading = false;
         this.msWarning = true;
-        // setTimeout(() =>{
-        //   this.msWarning = false;
-        // },7000);
       }
-      if(this.result == 404){
+      if (this.result === 404) {
         this.loading = false;
         this.msgDanger = true;
         // setTimeout(() =>{

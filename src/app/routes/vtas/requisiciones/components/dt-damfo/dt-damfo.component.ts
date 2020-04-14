@@ -3,7 +3,7 @@ import { BodyOutputType, Toast, ToasterConfig, ToasterService } from 'angular2-t
 import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 
 import { DialogdamfoComponent } from '../dialogdamfo/dialogdamfo.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../../service';
 import { SettingsService } from '../../../../../core/settings/settings.service';
@@ -20,13 +20,13 @@ const swal = require('sweetalert');
   providers: [RequisicionesService, PerfilReclutamientoService]
 })
 export class DtDamfoComponent implements OnInit {
-  @Input('Perfil290') Perfil290: boolean;
+ Perfil290 = true;
   // scroll
   disabled = false;
   compact = false;
   invertX = false;
   invertY = false;
-  shown = 'hover';
+  shown = 'shown';
   ShowModal = false;
   // Varaibales Globales
   public dataSource: Array<any> = [];
@@ -111,15 +111,17 @@ export class DtDamfoComponent implements OnInit {
     private service: RequisicionesService,
     private _perfillR: PerfilReclutamientoService,
     private dialog: MatDialog,
-    private dialog2: MatDialog,
     private _Router: Router,
-    private _Route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private toasterService: ToasterService
-  ) { }
-
-
-
+    private toasterService: ToasterService,
+    private activateRoute: ActivatedRoute
+  ) {
+    this.activateRoute.params.subscribe(params => {
+      if (params['perfil290'] != null) {
+        this.Perfil290 = Boolean(JSON.parse(params['perfil290']));
+      }
+    });
+  }
 
   ngOnInit() {
     /** spinner starts on init */
@@ -135,43 +137,10 @@ export class DtDamfoComponent implements OnInit {
     }, error => this.errorMessage = <any>error);
   }
 
-
-
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
     const start = (page.page - 1) * page.itemsPerPage;
     const end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
-  }
-
-  public changeSort(data: any, config: any): any {
-    if (!config.sorting) {
-      return data;
-    }
-
-    const columns = this.config.sorting.columns || [];
-    let columnName: string = void 0;
-    let sort: string = void 0;
-
-    for (let i = 0; i < columns.length; i++) {
-      if (columns[i].sort !== '' && columns[i].sort !== false) {
-        columnName = columns[i].name;
-        sort = columns[i].sort;
-      }
-    }
-
-    if (!columnName) {
-      return data;
-    }
-
-    // simple sorting
-    return data.sort((previous: any, current: any) => {
-      if (previous[columnName] > current[columnName]) {
-        return sort === 'desc' ? -1 : 1;
-      } else if (previous[columnName] < current[columnName]) {
-        return sort === '' ? -1 : 1;
-      }
-      return 0;
-    });
   }
 
   public changeFilter(data: any, config: any): any {
@@ -206,8 +175,7 @@ export class DtDamfoComponent implements OnInit {
   }
 
   public onCellClick(data: any): any {
-
-    if (data['usuarioAlta'] === this._setting.user.usuario) {
+    if (data['usuarioAlta'].toUpperCase() === this._setting.user.usuario.toUpperCase()) {
       this.isEditable = true;
     } else {
       this.isEditable = false;
@@ -363,7 +331,7 @@ export class DtDamfoComponent implements OnInit {
         this._perfillR.CrudPerfilReclutamiento(perfil).subscribe(x => {
           this.damfoId = x;
           this.editar290();
-          swal('Se clono el damfo correctamente', '', 'success');
+          swal('Se clonó Formato 290 correctamente', '', 'success');
         });
       }
       window.onkeydown = null;
@@ -394,7 +362,7 @@ export class DtDamfoComponent implements OnInit {
         this._perfillR.CrudPerfilReclutamiento(perfil).subscribe(x => {
           this.damfoId = x;
           this.refreshTable();
-          swal('Se eliminó el damfo correctamente', '', 'success');
+          swal('Se eliminó el formato 290 correctamente', '', 'success');
         });
       }
       window.onkeydown = null;

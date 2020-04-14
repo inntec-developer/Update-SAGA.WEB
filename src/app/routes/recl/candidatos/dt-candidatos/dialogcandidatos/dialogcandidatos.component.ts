@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {FormControl,  FormGroup, FormArray, FormBuilder, Validators} from '@angular/forms';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import {MatTableDataSource} from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 
 // Modelos
 import { Apartado } from '../../../../../models/recl/candidatos';

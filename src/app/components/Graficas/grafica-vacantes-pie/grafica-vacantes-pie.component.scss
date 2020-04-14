@@ -5,7 +5,20 @@
 .modal-lg .long {
   max-height: 85% !important;
 }
-
-.em-button{
+em {
   cursor: pointer;
+}
+
+a {
+  cursor: pointer;
+}
+
+a:hover small {
+  font-weight: bold;
+  color: black;
+}
+
+a.disabled {
+  pointer-events: none;
+  cursor: default;
 }

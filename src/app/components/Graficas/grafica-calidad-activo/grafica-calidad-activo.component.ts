@@ -54,7 +54,7 @@ export class GraficaCalidadActivoComponent implements OnInit {
    }
    this.Chart = new Chart('ActivaVic', {
      type: 'pie',
-     title: { text: 'Seguimiento de Vacantes' },
+    //  title: { text: 'Seguimiento de Vacantes' },
      data: this.Data,
      options: {
       onClick: this.detectedClick.bind(this),

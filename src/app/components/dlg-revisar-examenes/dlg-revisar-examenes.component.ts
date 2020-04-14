@@ -1,6 +1,6 @@
 import { ExamenesService } from './../../service/Examenes/examenes.service';
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 @Component({

@@ -1,15 +1,16 @@
 <div class="content-heading">
-        <div>
-          <span class="text-sm d-none d-sm-block"><a class="mr-1" (click)="loadMigas(1)"><i class="fa fa-home text-success" aria-hidden="true"></i></a> EQUIPOS DE TRABAJO.</span>
-        </div>
-        <!-- Breadcrumb right aligned-->
-        <ol class="breadcrumb ml-auto">
-          <li class="breadcrumb-item">
-            <a (click)="loadMigas(2)" class="text-info text-bold">{{lider}}</a>
-          </li>
-          <li class="breadcrumb-item active text-muted">{{sub}}</li>
-        </ol>
-      </div>
+    <div>
+        <span class="text-sm d-none d-sm-block"><a class="mr-1" (click)="loadMigas(1)"><i
+                    class="fa fa-home text-success" aria-hidden="true"></i></a> EQUIPOS DE TRABAJO.</span>
+    </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+        <li class="breadcrumb-item">
+            <a (click)="loadMigas(2)" class="text-info">{{lider | uppercase}}</a>
+        </li>
+        <li class="breadcrumb-item active text-muted">{{sub | uppercase}}</li>
+    </ol>
+</div>
 <div class="d-flex justify-content-around">
     <div class="col-xl-3 col-md-6">
         <div class="card">
@@ -19,8 +20,8 @@
                 </div>
             </div>
             <div class="bg-primary-dark text-center pt-1">
-                    TOTAL DE POSICIONES <label class="badge badge-pill badge-primary">{{totalPos}}</label>
-           </div>
+                TOTAL DE POSICIONES <label class="badge badge-pill badge-primary">{{totalPos}}</label>
+            </div>
         </div>
     </div>
     <div class="col-xl-3 col-md-6">
@@ -31,7 +32,7 @@
                 </div>
             </div>
             <div class="text-center bg-success-dark pt-1">
-                    TOTAL DE CUBIERTAS <label class="badge badge-pill badge-success">{{totalCub}}</label>
+                TOTAL DE CUBIERTAS <label class="badge badge-pill badge-success">{{totalCub}}</label>
             </div>
 
         </div>
@@ -41,109 +42,114 @@
             <div class="card-body bg-warning">
                 <div>
                     <canvas id='canvasFal' height="120" (click)="titulo='Faltantes'; orden= 3; modal = true;"></canvas>
-                </div>               
+                </div>
             </div>
             <div class="text-center bg-warning-dark pt-1">
-                    TOTAL DE FALTANTES <label class="badge badge-pill badge-warning">{{totalFal}}</label>
-                </div>
+                TOTAL DE FALTANTES <label class="badge badge-pill badge-warning">{{totalFal}}</label>
+            </div>
         </div>
     </div>
     <div class="col-xl-3 col-md-6">
         <div class="card">
             <div class="card-body bg-info">
                 <div>
-                    <canvas id='canvasCump' height="120" (click)="titulo='Cumplimiento'; orden= 4; modal = true;"></canvas>
+                    <canvas id='canvasCump' height="120"
+                        (click)="titulo='Cumplimiento'; orden= 4; modal = true;"></canvas>
                 </div>
             </div>
             <div class="text-center bg-info-dark pt-1">
-                    TOTAL DE CUMPLIMIENTO <label class="badge badge-pill badge-info">{{totalCump}} %</label>
-                </div>
+                TOTAL DE CUMPLIMIENTO <label class="badge badge-pill badge-info">{{totalCump}} %</label>
+            </div>
         </div>
     </div>
 </div>
-<ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown"
-[disableOnBreakpoints]="false" [disabled]="disabled">
-<div class="row" style="height: 400px">
-    <ng-container *ngFor="let t of gerente; let ind = index">
-        <div class="col-lg-4 col-md-6">
-            <div class="card border">
-                <div class="card-header text-white">
-                    <div class="h-25 d-inline-block w-100 p-2" [style.background-color]="t.bg">
-                    <div class="d-flex align-items-center float-left"><img class="img-fluid circle thumb32 mr-1" [src]="t.foto" (error)="errorImg(t)" /><span>{{t.nombre | uppercase}}</span>
-                
-                    </div>
-                    <div *ngIf= "t.resumen.length > 0" class="float-right mt-1">
-                        <button (click)="loadCharts(t, lider);" class="btn btn-xs btn-success float-right mb-2 mr-1" container="body" placement="bottom" tooltip="Ver Detalle"><i class="fa fa-eye"></i></button>
-                    </div>
-                </div>
-                </div>
-                <div class="card-body bt bb h-75">
-                    <ng-container *ngIf= "t.resumen.length > 0">
-                        <ng-container *ngFor="let r of t.resumen">
-                            <div class="inline" container="body" placement="right" tooltip="{{r.nombre}}">
-                                <img class="img-fluid circle thumb48" [src]="r.foto" (error)="errorImg(r)" />
-                            </div>
-                            <!-- <ng-container *ngIf= "r.resumen.length > 0">
-                                <ng-container *ngFor="let rr of r.resumen">
-                                    <div class="inline" container="body" placement="right" tooltip="{{rr.nombre}}">
-                                        <img class="rounded-circle thumb32" [src]="rr.foto" (error)="errorImg(rr)" />
-                                    </div>
-                                </ng-container>
-                            </ng-container> -->
-                        </ng-container>
-                    </ng-container>
-                    <div class="text-center mt-2">
-                        <div class="progress progress-xs m-0" tooltip="{{t.totalCump}} %">
-                            <div [ngClass]="{'bg-danger': t.totalCump <= 25, 'bg-warning': t.totalCump > 25 && t.totalCump <= 50, 'bg-yellow': t.totalCump > 50 && t.totalCump <= 75, 'bg-success': t.totalCump > 75 }" 
-                                class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="t.totalCump" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: t.totalCump + '%'}">
+<ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="true" [trackY]="true" [compact]="compact"
+    [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+    <div class="row" style="height: 400px">
+        <ng-container *ngFor="let t of gerente; let ind = index">
+            <div class="col-lg-4 col-md-6">
+                <div class="card border">
+                    <div class="card-header text-white">
+                        <div class="d-flex justify-content-between align-items-center p-1" [style.background-color]="t.bg">
+                            <img class="img-fluid circle thumb32" [src]="t.foto" (error)="errorImg(t)" />
+                            <span class="fontRoboto text-truncate">{{t.nombre | uppercase}}</span>
+                            <div *ngIf="t.resumen.length > 0">
+                                <button (click)="loadCharts(t, lider);"
+                                    class="btn btn-xs btn-success mat-elevation-z8"
+                                    container="body" placement="bottom" tooltip="Ver Detalle"><i
+                                        class="fa fa-eye"></i></button>
                             </div>
                         </div>
-                        <small class="text-muted">{{t.totalCump || 0}} % Cumplimiento</small>
-                                <!-- <progressbar  
-                                    class="progress-xs m-0" value="{{t.totalCump}}" type="info"></progressbar> -->
                     </div>
-                </div>
-                <div class="card-body">
-                    <div class="row text-center">
-                        <div class="col-4">
-                            <p class="text-bold">CUBIERTAS</p>
-                            <div class="sparkline inline mr-2" [sparkline]="sparkOptionsSuccess"
-                                values="{{t.totalPos}}, {{t.totalCub}}"></div>
-                            <br /><small class="text-muted m-0">{{t.totalCub}}</small>
-                        </div>
-                        <div class="col-4">
-                            <p class="text-bold">POSICIONES</p>
-                            <div class="h3 m-0">{{t.totalPos}}</div>
-                        </div>
-                        <div class="col-4">
-                            <p class="text-bold">FALTANTES</p>
-                            <div class="sparkline inline mr-2" [sparkline]="sparkOptionsWarning"
-                                values="{{t.totalPos}}, {{t.totalFal}}"></div>
-                            <br /> <small class="text-muted m-0">{{t.totalFal}}</small>
-                        </div>
-                    </div>
-                </div>
 
+                    <div class="card-body bt himg" >
+                        <ng-scrollbar #scrollable2 [invertX]="true" [invertY]="invertY" [trackX]="true" [trackY]="false" [compact]="compact"
+                        [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+                        <div style="width: 300px; max-height: 49px; overflow-y: hidden;" *ngIf="t.resumen.length > 0">
+                            <ng-container *ngFor="let r of t.resumen">
+                                <div class="inline" container="body" placement="right" tooltip="{{r.nombre}}">
+                                    <img class="img-fluid circle thumb48" [src]="r.foto" (error)="errorImg(r)" />
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ng-scrollbar>
+                        <div class="text-center mb-1">
+                            <div class="progress progress-xs m-0" tooltip="{{t.totalCump}} %">
+                                <div [ngClass]="{'bg-danger': t.totalCump <= 25, 'bg-warning': t.totalCump > 25 && t.totalCump <= 50, 'bg-yellow': t.totalCump > 50 && t.totalCump <= 75, 'bg-success': t.totalCump > 75 }"
+                                    class="progress-bar progress-bar-striped" role="progressbar"
+                                    aria-valuenow="t.totalCump" aria-valuemin="0" aria-valuemax="100"
+                                    [ngStyle]="{width: t.totalCump + '%'}">
+                                </div>
+                            </div>
+                            <small class="text-muted mb-2">{{t.totalCump || 0}} % Cumplimiento</small>
+               
+                        </div>
+                        <br/>
+                    </div>
+                    <div class="card-body bt mt-2">
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <small class="text-bold">CUBIERTAS</small>
+                                <div class="sparkline inline" [sparkline]="sparkOptionsSuccess"
+                                    values="{{t.totalPos}}, {{t.totalCub}}"></div>
+                                <br /><small class="text-muted m-0">{{t.totalCub}}</small>
+                            </div>
+                            <div class="col-4">
+                                <small class="text-bold">POSICIONES</small>
+                                <div class="h3 m-0">{{t.totalPos}}</div>
+                            </div>
+                            <div class="col-4">
+                                <small class="text-bold">FALTANTES</small>
+                                <div class="sparkline inline" [sparkline]="sparkOptionsWarning"
+                                    values="{{t.totalPos}}, {{t.totalFal}}"></div>
+                                <br /><small class="text-muted">{{t.totalFal}}</small>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
-    </ng-container>
-</div>
+        </ng-container>
+    </div>
 </ng-scrollbar>
 <ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
 <!-- Modal para reporte -->
-<div *ngIf="modal" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #lgModal="bs-modal" class="modal"
-  tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="float-left text-warning"><em class="fa fa-area-chart mr-2"></em>INDICADOR {{titulo | uppercase}}</h4>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="modal=false; lgModal.hide();"><i
-            class="fa fa-times"></i></button>
-      </div>
-      <div class="modal-body">
-        <app-tabla-equipos [usuarioId]="usuarioId" [orden]="orden" [flag]=0></app-tabla-equipos>
-      </div>
+<div *ngIf="modal" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #lgModal="bs-modal"
+    class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="d-flex justify-content-between align-items-center p-1 bg-info w-100">
+                <span><i class="fa fa-area-chart mr-2"></i>INDICADOR
+                    {{titulo | uppercase}}</span>
+                <button type="button" class="btn btn-xs btn-danger btn-circle float-right"
+                    (click)="modal=false; lgModal.hide();"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <app-tabla-equipos [usuarioId]="usuarioId" [orden]="orden" [flag]=0></app-tabla-equipos>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>

@@ -1,16 +1,15 @@
+import { SettingsService } from './../../../../core/settings/settings.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, Inject, OnInit, Input } from '@angular/core';
 import { ToasterConfig, ToasterService } from 'angular2-toaster';
 import { views, viewsdtl } from '../../../../models/recl/viewvacantes';
-
 import { ApiConection } from '../../../../service/api-conection.service';
 import { CatalogoConfiguracionService } from '../../../../service/DisenioVacante/catalogo-configuracion.service';
 import { ConfiguracionService } from '../../../../service/DisenioVacante/configuracion.service';
 import { DOCUMENT } from '@angular/common';
-import { Http } from '@angular/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RequisicionesService } from '../../../../service/requisiciones/requisiciones.service';
-import { id } from '@swimlane/ngx-datatable/release/utils';
+
 
 // Modelos
 
@@ -82,13 +81,13 @@ export class DisenadorVacanteComponent implements OnInit {
 
   constructor(
     private service: CatalogoConfiguracionService
-    , private http: Http
     , private route: ActivatedRoute
     , private router: Router
     , private Config: ConfiguracionService
     , toasterService: ToasterService
     , private spinner: NgxSpinnerService
     , private serviceRequi: RequisicionesService
+    , private settings: SettingsService
     , @Inject(DOCUMENT) document
   ) {
     this.toasterService = toasterService;
@@ -150,7 +149,8 @@ export class DisenadorVacanteComponent implements OnInit {
           resumen: res,
           idCampo: item.id,
           nombre: item.nombre,
-          id: this.Requi
+          id: this.Requi,
+          usuarioId: this.settings.user['id']
         };
         this.ListaCon.push(config);
       }
@@ -855,7 +855,7 @@ export class DisenadorVacanteComponent implements OnInit {
   }
 
   popGenerico(mensaje: string, bandera: boolean, titulo: string) {
-    var type = 'success';
+    let type = 'success';
     if (bandera == false) {
       type = 'error';
       mensaje = 'Ocurrio algo inesperado intentelo mas tarde';
@@ -865,7 +865,7 @@ export class DisenadorVacanteComponent implements OnInit {
   }
 
   pop(mensaje: string, bandera: boolean, tipo: boolean, titulo: string, area: string) {
-    var type = 'success';
+    let type = 'success';
     mensaje = 'Se mostrara en  ' + area;
     if (tipo == false) {
       type = 'info';
@@ -918,7 +918,8 @@ export class DisenadorVacanteComponent implements OnInit {
         resumen: res,
         idCampo: item.id,
         nombre: item.nombre,
-        id: this.Requi
+        id: this.Requi,
+        usuarioId: this.settings.user['id']
       }
       this.ListaCon.push(config);
     }
@@ -943,7 +944,8 @@ export class DisenadorVacanteComponent implements OnInit {
         resumen: res,
         idCampo: item.id,
         nombre: item.nombre,
-        id: this.Requi
+        id: this.Requi,
+        usuarioId: this.settings.user['id']
       }
       this.ListaCon.push(config);
     }

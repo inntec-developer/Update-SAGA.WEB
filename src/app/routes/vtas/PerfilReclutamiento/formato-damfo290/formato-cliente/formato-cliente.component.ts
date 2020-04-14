@@ -1,3 +1,4 @@
+import { DtDireccionComponent } from './../../../../../components/tablas/dt-direccion/dt-direccion.component';
 import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
@@ -22,9 +23,9 @@ export class FormatoClienteComponent implements OnInit, OnChanges {
   select: any;
   AuxOptions: any;
   Cliente: any;
-  Direcciones: any;
-  Telefonos: any;
-  Contactos: any;
+  Direcciones: any = [];
+  Telefonos: any = [];
+  Contactos: any = [];
   isPerfilReclutamiento = true;
   DisableComponente = false;
   options: any;
@@ -49,6 +50,7 @@ export class FormatoClienteComponent implements OnInit, OnChanges {
     showCloseButton: true,
     mouseoverTimerStop: true,
   });
+  verDT = false;
 
 
   constructor(
@@ -66,7 +68,6 @@ export class FormatoClienteComponent implements OnInit, OnChanges {
       Tipo: new FormControl('', Validators.required),
       Clase: new FormControl('', Validators.required),
     });
-
   }
 
   ngOnInit() {
@@ -159,14 +160,17 @@ export class FormatoClienteComponent implements OnInit, OnChanges {
 
 
   selected(event: any) {
+    this.Direcciones = [];
     this.select = event['option']['value'];
     this.Cliente = this.AuxOptions.filter(element => {
       return element['razonSocial'].toString().toLowerCase().match(this.select.toString().toLowerCase());
     });
+
     this.formCliente.controls['NombreComercial'].setValue(this.Cliente[0]['nombrecomercial'].toUpperCase());
     this.formCliente.controls['RFC'].setValue(this.Cliente[0]['rfc'].toUpperCase());
     this.formCliente.controls['Giro'].setValue(this.Cliente[0]['giroEmpresa'].toUpperCase());
     this.formCliente.controls['Actividad'].setValue(this.Cliente[0]['actividadEmpresa'].toUpperCase());
+
     this._servicePerfilR.getInfoCliente(this.Cliente[0]['id']).subscribe(data => {
       this.Direcciones = data['direcciones'];
       this.Telefonos = data['telefonos'];

@@ -1,15 +1,8 @@
-import { Http, Response, RequestOptions, Headers, HttpModule } from '@angular/http';
+
 import { Injectable } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/Rx';
-import 'rxjs/add/observable/throw';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 
 import { ApiConection } from '../api-conection.service';
 
@@ -36,124 +29,81 @@ private UrlgetCampos = ApiConection.ServiceUrl+ApiConection.getCampos;
 private UrlgetClasificaciones = ApiConection.ServiceUrl+ApiConection.getClasificaciones;
 
 
-// Error.
-private handleError(error: any) {
-       console.log('sever error:', error);
-       if (error instanceof Response) {
-           return Observable.throw(error.json().error || 'backend server error');
-       }
-       return Observable.throw(error || 'backend server error');
-   }
 
-constructor(private http: Http) {  }
+
+constructor(private http: HttpClient) {  }
 
 getGeneral(RequiID:string): Observable<any> {
-   return this.http.get(this.UrlGeneral + '?Requi='+RequiID)
-       .map(result => result.json())
-       .catch(this.handleError);
+   return this.http.get(this.UrlGeneral + '?Requi='+RequiID);
 }
 
 getContrato(RequiID:string): Observable<any> {
-   return this.http.get(this.UrlContrato + '?Requi='+RequiID)
-       .map(result => result.json())
-       .catch(this.handleError);
+   return this.http.get(this.UrlContrato + '?Requi='+RequiID);
 }
 
 getPuestoReclutar(RequiID:string): Observable<any> {
-   return this.http.get(this.UrlPuestoReclutar + '?Requi='+RequiID)
-       .map(result => result.json())
-       .catch(this.handleError);
+   return this.http.get(this.UrlPuestoReclutar + '?Requi='+RequiID);
 }
 
 getHorario(RequiID:string): Observable<any> {
-   return this.http.get(this.UrlHorario + '?Requi='+RequiID)
-       .map(result => result.json())
-       .catch(this.handleError);
+   return this.http.get(this.UrlHorario + '?Requi='+RequiID);
 }
 
 getsueldo(RequiID:string): Observable<any> {
-   return this.http.get(this.Urlsueldo + '?Requi='+RequiID)
-       .map(result => result.json())
-       .catch(this.handleError);
+   return this.http.get(this.Urlsueldo + '?Requi='+RequiID);
 }
 
 getOtros(RequiID:string): Observable<any> {
-   return this.http.get(this.UrlOtros + '?Requi='+RequiID)
-       .map(result => result.json())
-       .catch(this.handleError);
+   return this.http.get(this.UrlOtros + '?Requi='+RequiID);
 }
 
 
 getActividad(RequiID:string): Observable<any> {
-   return this.http.get(this.UrlActividad + '?Requi='+RequiID)
-       .map(result => result.json())
-       .catch(this.handleError);
+   return this.http.get(this.UrlActividad + '?Requi='+RequiID);
 }
 
 getDireccion(RequiID:string): Observable<any> {
-   return this.http.get(this.UrlDireccion + '?Requi='+RequiID)
-       .map(result => result.json())
-       .catch(this.handleError);
+   return this.http.get(this.UrlDireccion + '?Requi='+RequiID);
 }
 
 getTelefono(RequiID:string): Observable<any> {
-   return this.http.get(this.UrlTelefono + '?Requi='+RequiID)
-       .map(result => result.json())
-       .catch(this.handleError);
+   return this.http.get(this.UrlTelefono + '?Requi='+RequiID);
 }
 
 getBeneficio(RequiID:string): Observable<any> {
-   return this.http.get(this.UrlBeneficio + '?Requi='+RequiID)
-       .map(result => result.json())
-       .catch(this.handleError);
+   return this.http.get(this.UrlBeneficio + '?Requi='+RequiID);
 }
 
 getContacto(RequiID:string): Observable<any> {
-   return this.http.get(this.UrlContacto + '?Requi='+RequiID)
-       .map(result => result.json())
-       .catch(this.handleError);
+   return this.http.get(this.UrlContacto + '?Requi='+RequiID);
 }
 
 getPsicometria(RequiID:string): Observable<any> {
-   return this.http.get(this.UrlPsicometria + '?Requi='+RequiID)
-       .map(result => result.json())
-       .catch(this.handleError);
+   return this.http.get(this.UrlPsicometria + '?Requi='+RequiID);
 }
 
 getDocumento(RequiID:string): Observable<any> {
-   return this.http.get(this.UrlDocumento + '?Requi='+RequiID)
-       .map(result => result.json())
-       .catch(this.handleError);
+   return this.http.get(this.UrlDocumento + '?Requi='+RequiID);
 }
 
 getProceso(RequiID:string): Observable<any> {
-   return this.http.get(this.UrlProceso + '?Requi='+RequiID)
-       .map(result => result.json())
-       .catch(this.handleError);
+   return this.http.get(this.UrlProceso + '?Requi='+RequiID);
 }
 
 getCopetencia(RequiID:string): Observable<any> {
-   return this.http.get(this.UrlCopetencia + '?Requi='+RequiID)
-       .map(result => result.json())
-       .catch(this.handleError);
+   return this.http.get(this.UrlCopetencia + '?Requi='+RequiID);
 }
 
 getUbicacion(RequiID:string): Observable<any> {
-   return this.http.get(this.UrlUbicacion + '?Requi='+RequiID)
-       .map(result => result.json())
-       .catch(this.handleError);
+   return this.http.get(this.UrlUbicacion + '?Requi='+RequiID);
 }
 
 getCampos(): Observable<any> {
-   return this.http.get(this.UrlgetCampos)
-       .map(result => result.json())
-       .catch(this.handleError);
+   return this.http.get(this.UrlgetCampos);
 }
 
 getClasificaciones(): Observable<any> {
-   return this.http.get(this.UrlgetClasificaciones)
-       .map(result => result.json())
-       .catch(this.handleError);
+   return this.http.get(this.UrlgetClasificaciones);
 }
 
 }

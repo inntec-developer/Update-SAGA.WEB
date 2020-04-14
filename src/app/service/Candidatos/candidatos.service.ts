@@ -1,20 +1,7 @@
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/Rx';
-import 'rxjs/add/observable/throw';
-
-import { Headers, Http, HttpModule, RequestOptions, Response } from '@angular/http';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-
 import { ApiConection } from './../api-conection.service';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { stringify } from 'querystring';
 
 @Injectable()
 export class CandidatosService {
@@ -54,17 +41,18 @@ export class CandidatosService {
     private URLGetContratados = ApiConection.ServiceUrl + ApiConection.GetContratados;
     private URLGetFoliosIncidencias = ApiConection.ServiceUrl + ApiConection.GetCandidatosNR;
     private URLGetInfoContratados = ApiConection.ServiceUrl + ApiConection.GetInfoContratados;
+    private URLTopCandidatos = ApiConection.ServiceUrl + ApiConection.GetTopCandidatos;
 
     // Error.
-    private handleError(error: any) {
-        console.log('sever error:', error);
-        if (error instanceof Response) {
-            return Observable.throw(error.json().error || 'backend server error');
-        }
-        return Observable.throw(error || 'backend server error');
-    }
+    // private handleError(error: any) {
+    //     console.log('sever error:', error);
+    //     if (error instanceof Response) {
+    //         return Observable.throw(error.json().error || 'backend server error');
+    //     }
+    //     return Observable.throw(error || 'backend server error');
+    // }
 
-    constructor(private http: Http, private _httpClient: HttpClient) { }
+    constructor(private _httpClient: HttpClient) { }
 
     // Servicios de controller de candidatos.
 
@@ -77,145 +65,82 @@ export class CandidatosService {
     }
 
     GetMotivos(estatus): Observable<any> {
-        let params = new HttpParams().set('estatus', estatus)
-        const httpOptions = {
-            headers: new HttpHeaders({
-              'Content-Type':  'application/json'
-            })
-          };
+        const params = new HttpParams().set('estatus', estatus);
         return this._httpClient.get(this.URLGetMotivos, {params: params});
     }
 
-    GetContratados(candidatos): Observable<any> { // Obtener el esatus del candidato para las banderas de mostrar la información.
-
-        let params = new HttpParams().set('candidatos', candidatos)
-        const httpOptions = {
-            headers: new HttpHeaders({
-              'Content-Type':  'application/json'
-            })
-          };
-        return this._httpClient.post(this.URLGetContratados, candidatos, httpOptions);
+    GetContratados(candidatoId): Observable<any> { // Obtener el esatus del candidato para las banderas de mostrar la información.
+        const params = new HttpParams().set('candidatoId', candidatoId);
+        return this._httpClient.get(this.URLGetContratados, {params: params, headers: this.httpOptions.headers});
     }
 
     GetInfoContratados(): Observable<any> {
         return this._httpClient.get(this.URLGetInfoContratados);
     }
 
-    GetFoliosIncidencias(estatus, propietarioId): Observable<any> { // Obtener el esatus del candidato para las banderas de mostrar la información.
-
-        let params = new HttpParams().set('estatus', estatus).set('propietarioId', propietarioId)
-        const httpOptions = {
-            headers: new HttpHeaders({
-              'Content-Type':  'application/json'
-            })
-          };
-        return this._httpClient.get(this.URLGetFoliosIncidencias, {params:params});
+    GetFoliosIncidencias(estatus, propietarioId): Observable<any> { 
+        // Obtener el esatus del candidato para las banderas de mostrar la información.
+        const params = new HttpParams().set('estatus', estatus).set('propietarioId', propietarioId);
+        return this._httpClient.get(this.URLGetFoliosIncidencias, {params: params});
     }
-
 
     UpdateFuenteRecl(data: any): Observable<any> {
-
-        let params = new HttpParams().set('datos', data)
-        const httpOptions = {
-            headers: new HttpHeaders({
-              'Content-Type':  'application/json'
-            })
-          };
-
-        return this._httpClient.post(this.URLUpdateFuenteRecl, data, httpOptions)
+        return this._httpClient.post(this.URLUpdateFuenteRecl, data, this.httpOptions);
     }
 
-
     UpdateContratados(data: any): Observable<any> {
-
-        let params = new HttpParams().set('datos', data)
-        const httpOptions = {
-            headers: new HttpHeaders({
-              'Content-Type':  'application/json'
-            })
-          };
-
-        return this._httpClient.post(this.URLUpdateCandidatoContratado, data, httpOptions)
+        return this._httpClient.post(this.URLUpdateCandidatoContratado, data, this.httpOptions);
     }
 
     getpaises(): Observable<any> { // Obtener filtro de paises.
-        return this.http.get(this.UrlPaises)
-            .map(result => result.json())
-            .catch(this.handleError);
+        return this._httpClient.get(this.UrlPaises);
     }
 
     getestados(pais: string): Observable<any> { // Obtener filtro de estados.
-        return this.http.get(this.UrlEstados + '?Pais=' + pais)
-            .map(result => result.json())
-            .catch(this.handleError);
+        return this._httpClient.get(this.UrlEstados + '?Pais=' + pais);
     }
 
     getmunicipios(estado: string): Observable<any> { // Obtener filtro de municipios.
-        return this.http.get(this.UrlMunicipios + '?Estado=' + estado)
-            .map(result => result.json())
-            .catch(this.handleError);
+        return this._httpClient.get(this.UrlMunicipios + '?Estado=' + estado);
     }
 
     getcolonias(municipio: string): Observable<any> { // Obtener filtro de colonias.
-        return this.http.get(this.UrlColonias + '?Municipio=' + municipio)
-            .map(result => result.json())
-            .catch(this.handleError);
+        return this._httpClient.get(this.UrlColonias + '?Municipio=' + municipio);
     }
 
     getareasexp(): Observable<any> { // Obtener filtro de areas de experiencia.
-        return this.http.get(this.UrlAreaExp)
-            .map(result => result.json())
-            .catch(this.handleError);
+        return this._httpClient.get(this.UrlAreaExp);
     }
 
     getperfiles(): Observable<any> { // Obtener filtro de areas de perfiles.
-        return this.http.get(this.UrlPerfiles)
-            .map(result => result.json())
-            .catch(this.handleError);
+        return this._httpClient.get(this.UrlPerfiles);
     }
 
     getgeneros(): Observable<any> { // Obtener filtro de areas de generos.
-        return this.http.get(this.UrlGeneros)
-            .map(result => result.json())
-            .catch(this.handleError);
+        return this._httpClient.get(this.UrlGeneros);
     }
 
     getdiscapacidad(): Observable<any> { // Obtener filtro de areas de Discapacidad.
-        return this.http.get(this.UrlDiscapacidad)
-            .map(result => result.json())
-            .catch(this.handleError);
+        return this._httpClient.get(this.UrlDiscapacidad);
     }
 
     gettplicencia(): Observable<any> { // Obtener filtro de areas de tplicencia.
-        return this.http.get(this.UrlTpLicencia)
-            .map(result => result.json())
-            .catch(this.handleError);
+        return this._httpClient.get(this.UrlTpLicencia);
     }
 
     getnivelestudio(): Observable<any> { // Obtener filtro de areas de nivel estudio.
-        return this.http.get(this.UrlNivelEstudios)
-            .map(result => result.json())
-            .catch(this.handleError);
+        return this._httpClient.get(this.UrlNivelEstudios);
     }
 
     getidiomas(): Observable<any> { // Obtener filtro de idiomas.
-        return this.http.get(this.UrlIdiomas)
-            .map(result => result.json())
-            .catch(this.handleError);
+        return this._httpClient.get(this.UrlIdiomas);
     }
 
     getcandidatos(filtrox: any): Observable<any> { // Obtener filtro de candidatos.
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-        return this.http.post(this.UrlCandidatos, JSON.stringify(filtrox), options)
-            .map(result => result.json())
-            .catch(this.handleError);
-        // return this.http.get(this.UrlCandidatos)
-        //     .map(result => result.json())
-        //     .catch(this.handleError);
+        return this._httpClient.post(this.UrlCandidatos, JSON.stringify(filtrox));
     }
     getMisCandidatos(reclutador: any): Observable<any> { // Obtener mis de candidatos.
-        let params = new HttpParams().set('Id', reclutador);
+        const params = new HttpParams().set('Id', reclutador);
         return this._httpClient.get(this.UrlMisCandidatos, { params: params });
     }
 
@@ -228,17 +153,16 @@ export class CandidatosService {
         let params = new HttpParams().set('palabraClave', palabraClave);
         return this._httpClient.get(this.URLPalabraClave, { params: params });
     }
+    getTopCandidatos(): Observable<any> {
+        return this._httpClient.get(this.URLTopCandidatos, {headers: this.httpOptions.headers});
+    }
 
     getpostulaciones(Id: any): Observable<any> { // Obtenemos las postulaciones del candidato.
-        return this.http.get(this.UrlPostulaciones + '?IdCandidato=' + Id)
-            .map(result => result.json())
-            .catch(this.handleError);
+        return this._httpClient.get(this.UrlPostulaciones + '?IdCandidato=' + Id);
     }
 
     getvacantes(Id: any): Observable<any> { // Obtenemos solo las vacantes del reclutador o de la celula a la que pertenece.
-        return this.http.get(this.UrlVacantes + '?IdUsuario=' + Id)
-            .map(result => result.json())
-            .catch(this.handleError);
+        return this._httpClient.get(this.UrlVacantes + '?IdUsuario=' + Id);
     }
 
     getvacantesdtl(Id: any) {
@@ -247,32 +171,15 @@ export class CandidatosService {
     }
 
     postApartar(candidato: any): Observable<any> { // Apartar el candidato y ligar a la vacante.
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-        return this.http.post(this.UrlApartar, JSON.stringify(candidato), options)
-            .map(result => result.json())
-            .catch(this.handleError);
+        return this._httpClient.post(this.UrlApartar, JSON.stringify(candidato));
     }
 
     getEstatusCandidato(Id: any): Observable<any> { // Obtener el esatus del candidato para las banderas de mostrar la información.
-        return this.http.get(this.UrlGetEstatus + '?Id=' + Id)
-            .map(result => result.json())
-            .catch(this.handleError);
+        return this._httpClient.get(this.UrlGetEstatus + '?Id=' + Id);
     }
 
-
-    // postLiberar(candidato: any): Observable<any> { // Eliminar el candidato por liberación.
-    //   let headers = new Headers({ 'Content-Type': 'application/json' });
-    //   let options = new RequestOptions({ headers: headers });
-    //   return this.http.post(this.UrlLiberar, JSON.stringify(candidato), options)
-    //     .map(result => result.json())
-    //     .catch(this.handleError);
-    // }
-
     Liberar(candidato: any): Observable<any> { // Eliminar el candidato por liberación.
-        return this.http.get(this.UrlLiberar + '?Id=' + candidato)
-            .map(result => result.json())
-            .catch(this.handleError);
+        return this._httpClient.get(this.UrlLiberar + '?Id=' + candidato);
     }
 
 }

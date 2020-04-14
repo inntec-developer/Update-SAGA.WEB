@@ -4,7 +4,7 @@ import * as jwt_decode from 'jwt-decode';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import { ApiConection } from '../../../service';
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
 open = false;
   Folio: any;
   showRequi = false;
-  Actualizado = false;
+  Actualizado = true;
   versionDB: string;
 
 
@@ -54,12 +54,12 @@ open = false;
     private authenticationService: AuthService,
     public dialog: MatDialog,
     private _serviceSistem: CheckVertionSistemService) {
-    this._serviceSistem.checkVertionSistem(settings.app.vertion).subscribe(result => {
-      if (result !== 404) {
-        this.Actualizado = result['actualizado'];
-        this.versionDB = result['version'];
-      }
-    });
+    // this._serviceSistem.checkVertionSistem(settings.app.vertion).subscribe(result => {
+    //   if (result !== 404) {
+    //     this.Actualizado = result['actualizado'];
+    //     this.versionDB = result['version'];
+    //   }
+    // });
     this.route.params.subscribe(params => {
       if (params['Folio'] != null) {
         this.Folio = params['Folio'];
@@ -74,9 +74,10 @@ open = false;
 
   submitForm($ev: any, value: any) {
     $ev.preventDefault();
-    for (const c in this.valForm.controls) {
-      this.valForm.controls[c].markAsTouched();
-    }
+
+    this.valForm.controls['email'].markAsTouched();
+    this.valForm.controls['password'].markAsTouched();
+
     if (this.valForm.valid) {
       this.login(value.email, value.password);
     }
@@ -116,8 +117,11 @@ open = false;
             this.settings.user['departamento'] = decode['Departamento'];
             this.settings.user['unidadNegocioId'] = decode['UnidadNegocioId'];
             this.settings.user['roles'] = JSON.parse(decode['Roles']);
-            if (!this.showRequi) {
+
+            if (!this.showRequi && decode['TipoUsuarioId'] !== '15') {
               this.router.navigate(['/home']);
+            } else if (!this.showRequi && decode['TipoUsuarioId'] === '15') {
+              this.router.navigate(['/webcampo/inicio']);
             } else {
               this.router.navigate(['/reclutamiento/showVacanteReclutador/', this.Folio], { skipLocationChange: true });
             }
@@ -165,7 +169,7 @@ open = false;
       swal('¡No has ingresado un correo válido!', 'Válida la información', 'error');
     } else {
       const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-        width: '400px',
+        width: '450px',
         data: { user: this.valForm.get('email').value }
       });
 
@@ -175,10 +179,10 @@ open = false;
     }
   }
 
-  complite(){
-    var email = this.valForm.controls['email'].value || '';
-    var indexOF = email.indexOf('@');
-    if(indexOF == -1 && email.length > 0){
+  complite() {
+    const email = this.valForm.controls['email'].value || '';
+    const indexOF = email.indexOf('@');
+    if (indexOF === -1 && email.length > 0) {
       this.valForm.controls['email'].setValue(email + '@' + this.settings.app.domain);
     }
   }
@@ -198,13 +202,15 @@ export class DialogOverviewExampleDialog {
   RContrasena: string;
   ICodigo: number;
   BCodigo: number;
-  showPass: boolean = false;
-  showPassR: boolean = false;
-
+  showPass = false;
+  showPassR = false;
+  loading = false;
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private service: AdminServiceService) { }
+    private service: AdminServiceService) {
+      dialogRef.disableClose = true;
+    }
 
   passw(value: any) {
     this.Contrasena = value;
@@ -219,27 +225,34 @@ export class DialogOverviewExampleDialog {
   }
 
   Enviar() {
+    this.loading = true;
     if (this.Contrasena !== this.RContrasena) {
       swal('La contraseñas no coinciden', 'Revisa los datos ingresados', 'error');
+      this.loading = false;
       return;
     }
     this.service.EnviaCorreo(this.data.user, this.Contrasena)
       .subscribe(result => {
         this.BCodigo = result;
         this.Codigo = true;
+        this.loading = false;
       });
   }
 
   Confirmar(): void {
+    this.loading = true;
     if (this.ICodigo !== this.BCodigo) {
       swal('El código no es correcto', 'Revisa los datos ingresados', 'error');
+      this.loading = false;
       return;
     }
-    const datos: password = new password();
-    datos.email = this.data.user;
-    datos.password = this.Contrasena;
+    const datos = {
+      Email: this.data.user,
+      Password: this.Contrasena
+    };
     this.service.UpdatePassword(datos)
       .subscribe(data => {
+        this.loading = false;
         if (data === 1) {
           swal('Se ha restablecido correctamente la contraseña', 'Intenta ingresar de nuevo', 'success');
           this.dialogRef.close();
@@ -247,6 +260,9 @@ export class DialogOverviewExampleDialog {
           swal('Hubo un error la restablecer la contraseña', 'Intenta de nuevo', 'error');
         }
       });
+  }
+  Close() {
+    this.dialogRef.close();
   }
 
 }

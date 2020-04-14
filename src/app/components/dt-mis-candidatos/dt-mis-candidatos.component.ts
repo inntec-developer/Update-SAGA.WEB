@@ -18,7 +18,7 @@ export class DtMisCandidatosComponent implements OnInit, AfterViewInit {
   compact = false;
   invertX = false;
   invertY = false;
-  shown = 'hover';
+  shown = 'shown';
 
   public dataSource: Array<any> = [];
   // Varaibles del paginador
@@ -42,20 +42,26 @@ export class DtMisCandidatosComponent implements OnInit, AfterViewInit {
     { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
     { title: 'Vacante', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Vacante' } },
-    { title: 'Nombre Candidato', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
-    { title: 'Área Experiencia', className: 'text-info text-center', name: 'areaExp', filtering: { filterString: '', placeholder: 'Experiencia' } },
-    { title: 'Área Interes', className: 'text-info text-center', name: 'areaInt', filtering: { filterString: '', placeholder: 'Interes' } },
-    { title: 'Localidad', className: 'text-info text-center', name: 'localidad', filtering: { filterString: '', placeholder: 'Localidad' } },
-    { title: 'Sueldo Aceptable', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo aceptable' } },
-    { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad', filtering: { filterString: '', placeholder: 'Fecha Nacimiento' } },
+    { title: 'Nombre Candidato', className: 'text-info text-center', name: 'nombre',
+    filtering: { filterString: '', placeholder: 'Nombre' } },
+    // { title: 'Área Experiencia', className: 'text-info text-center', name: 'areaExp', filtering: { filterString: '', placeholder: 'Experiencia' } },
+    // { title: 'Área Interes', className: 'text-info text-center', name: 'areaInt', filtering: { filterString: '', placeholder: 'Interes' } },
+    { title: 'Localidad', className: 'text-info text-center', name: 'localidad',
+    filtering: { filterString: '', placeholder: 'Localidad' } },
+    { title: 'Sueldo Aceptable', className: 'text-info text-center', name: 'sueldoMinimo',
+    filtering: { filterString: '', placeholder: 'Sueldo aceptable' } },
+    { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad',
+    filtering: { filterString: '', placeholder: 'Fecha Nacimiento' } },
     { title: 'CURP', className: 'text-success text-center', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
-    { title: 'RFC', className: 'text-success text-center', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
+    // { title: 'RFC', className: 'text-success text-center', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
   ];
   public config: any = {
     paging: true,
     filtering: { filterString: '' },
     className: ['table-hover mb-0']
   };
+
+  spinner = false;
   constructor(
     private service: CandidatosService,
     private settings: SettingsService,
@@ -218,8 +224,10 @@ export class DtMisCandidatosComponent implements OnInit, AfterViewInit {
   }
 
   public misCandidatos() {
+    this.spinner = true;
     this.service.getMisCandidatos(this.ReclutadorId).subscribe(data => {
       this.dataSource = data;
+      this.spinner = false;
     });
   }
 

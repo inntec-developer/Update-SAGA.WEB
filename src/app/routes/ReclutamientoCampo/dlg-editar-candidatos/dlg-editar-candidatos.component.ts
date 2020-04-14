@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { ToasterService, ToasterConfig, Toast } from 'angular2-toaster';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { InfoCandidatoService } from '../../../service/SeguimientoVacante/info-candidato.service';

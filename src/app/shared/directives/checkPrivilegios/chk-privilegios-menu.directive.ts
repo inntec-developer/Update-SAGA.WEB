@@ -2,7 +2,7 @@ import { ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot } f
 import { AfterViewInit, Directive } from '@angular/core';
 
 import { SettingsService } from "../../../core/settings/settings.service";
-import { forEach } from '@angular/router/src/utils/collection';
+
 
 @Directive({
   selector: '[chkPrivilegiosMenu]'

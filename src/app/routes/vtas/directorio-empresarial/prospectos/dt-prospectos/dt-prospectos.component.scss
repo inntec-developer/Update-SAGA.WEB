@@ -7,7 +7,6 @@ tbody tr {
   display: table;
   width: 100%;
   table-layout: fixed;
-  font-size: 12px;
 }
 
 table thead {
@@ -24,12 +23,8 @@ table {
 }
 
 table tbody tr:hover {
-  font-size: 14.5px;
+  font-size: 12.5px;
   box-shadow: 1px 20px 60px rgba(0, 0, 0, .23);
-}
-
-.margen {
-  margin: 0 2px;
 }
 
 .modal-lg {
@@ -40,21 +35,18 @@ table tbody tr:hover {
   max-height: 100% !important;
 }
 
+.hacercliente {
+  max-width: 60%;
+}
 table tbody div
 {
   height: 350px;
 }
 ng-scrollbar {
-  --scrollbar-size: 4px;
+  --scrollbar-size: 8px;
   --scrollbar-thumb-color: rgb(94, 175, 255);
   --scrollbar-thumb-hover-color: dodgerblue;
   --scrollbar-border-radius: 4px;
-}
-
-.row
-{
-  display: flex;
-  flex-wrap: wrap;
 }
 
 .color-star{

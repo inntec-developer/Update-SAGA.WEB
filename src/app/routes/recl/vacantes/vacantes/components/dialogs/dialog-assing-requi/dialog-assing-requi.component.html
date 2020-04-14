@@ -1,25 +1,25 @@
-<h3 class="text-primary text-center" mat-dialog-title>Asignar Requisición folio: {{data?.folio}}</h3>
+<h5 class="d-flex justify-content-center align-items-center p-1 bg-warning text-uppercase w-100">Asignar Requisición folio {{data?.folio}}</h5>
 <mat-divider></mat-divider>
 <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact"
   [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
   <div class="card-body">
     <div class="row">
       <div class="col-md-12 col-sm-12">
-        <app-asignar-requisicion-lider #asginaciones [Asignados]='data.asignados' [placeHolder]='placeHolderSelect'
+    <app-asignar-requisicion-lider #asginaciones [Asignados]='data.asignados' [placeHolder]='placeHolderSelect'
           (Asignacion)='getAsignacion($event)'></app-asignar-requisicion-lider>
-      </div>
+      </div> 
     </div>
     <div class="row">
       <div class="col-md-4 col-sm-4">
-        <strong class="text-primary">EMPRESA: </strong>
+        <span class="text-info">EMPRESA </span>
         <p>{{data?.cliente | uppercase}}</p>
       </div>
       <div class="col-md-4 col-sm-4">
-        <strong class="text-primary">PUESTO: </strong>
+        <span class="text-info">PUESTO </span>
         <p>{{data?.vBtra | uppercase}}</p>
       </div>
       <div class="col-md-4">
-        <strong class="text-primary">SUELDO: </strong>
+        <span class="text-info">SUELDO </span>
         <p>De {{data?.sueldoMinimo | moneda: '$'}} a {{data?.sueldoMaximo | moneda:'$'}}</p>
       </div>
     </div>
@@ -39,7 +39,7 @@
             <input type="number" matInput max="20" min="1" placeholder="Días habiles envío al cliente"
               formControlName="diasEnvio" required>
               <mat-hint align="start">
-                  <strong class="text-info">Seleccione de 1 - 20 d&iacute;as</strong>
+                  <span class="text-warning">Seleccione de 1 - 20 d&iacute;as</span>
                 </mat-hint>
           </mat-form-field>
         </div>
@@ -51,13 +51,13 @@
               </mat-option>
             </mat-select>
             <mat-hint align="start">
-              <strong class="text-info">Verificar que la Ponderación sea la correcta</strong>
+              <span class="text-warning">Verificar que la Ponderación sea la correcta</span>
             </mat-hint>
           </mat-form-field>
         </div>
       </div>
     </form>
-    <div class="row" *ngIf="!data.confidencial">
+    <!-- <div class="row" *ngIf="!data.confidencial">
       <div class="col-md-12">
         <mat-checkbox #publicRD [(ngModel)]="redesSociales">Publicar en Redes Sociales ? </mat-checkbox>
         <form [formGroup]="formRS">
@@ -77,8 +77,8 @@
           </div>
         </form>
       </div>
-    </div>
-    <div class="row" #MessageAlert>
+    </div> -->
+    <div class="row mt-3" #MessageAlert>
       <span>
         <small [ngClass]="alertAssing ? 'text-danger': 'text-success'">
           <em *ngIf="alertAssing" class="fa fa-close"></em>
@@ -90,28 +90,32 @@
   </div>
 </ng-scrollbar>
 <mat-divider></mat-divider>
-<mat-dialog-actions>
-
-  <button type="button" class="btn btn-xs btn-labeled btn-danger mb-1 margen float-right mat-elevation-z8"
+<div class="d-flex justify-content-end align-items-center p-1 mt-2">
+  <div class="d-flex justify-content-start w-100 mt-2 text-warning fontLato text-uppercase">
+      <small><i class="fa fa-exclamation-circle mr-1" aria-hidden="true"></i>
+        El proceso puede durar varios segundos por favor espere.
+      </small>
+  </div>
+  <button *ngIf="!loading" type="button" class="btn btn-xs btn-labeled btn-danger mat-elevation-z8"
     (click)="onCloseDialog()">
     <span class="btn-label">
       <i class="fa fa-times"></i>
-    </span> Cancelar
+    </span> CANCELAR
   </button>
   <button type="button" [disabled]="!formAsignaciones.valid || loading ||  alertAssing"
-    *ngIf="!redesSociales && !loading" class="btn btn-xs btn-labeled btn-success mb-1 margen float-right mat-elevation-z8"
+    *ngIf="!redesSociales && !loading" class="btn btn-xs btn-labeled btn-success ml-1 mat-elevation-z8"
     (click)="Save()">
     <span class="btn-label">
       <i class="fa fa-check"></i>
-    </span> Aceptar
+    </span> ACEPTAR
   </button>
   <button type="button" [disabled]="!formAsignaciones.valid || !formRS.valid ||  alertAssing"
-    *ngIf="redesSociales && !loading" class="btn btn-xs btn-labeled btn-success mb-1 margen float-right mat-elevation-z8"
+    *ngIf="redesSociales && !loading" class="btn btn-xs btn-labeled btn-success ml-1 mat-elevation-z8"
     (click)="Save()">
     <span class="btn-label">
       <i class="fa fa-check"></i>
-    </span> Aceptar
+    </span> ACEPTAR
   </button>
   <img class="loading-position" *ngIf="loading"
     src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==">
-</mat-dialog-actions>
+</div>

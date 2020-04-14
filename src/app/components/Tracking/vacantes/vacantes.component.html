@@ -9,16 +9,16 @@
   <div class="col">
 <div class="card mat-elevation-z8">
   <div class="card-header">
-    <div class="row bg-info-light p-2">
+    <div class="row bg-info-light p-1">
         <div class="col-sm-12 clearfix">
-          <label class="float-left text-bold mt-1">DETALLE</label>
-            <button (click)="refreshTableInfo()" container="body" placement="bottom" tooltip="Actualizar" container="body" class="btn btn-xs btn-success float-right mr-2 mat-elevation-z8">
+          <span class="float-left mt-1">DETALLE</span>
+            <button (click)="refreshTableInfo()" container="body" placement="bottom" tooltip="Actualizar" container="body" class="btn btn-xs btn-success float-right mat-elevation-z8">
                 <i class="fa fa-refresh"></i>
              </button>
           <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" class="btn btn-xs btn-warning float-right mr-1 mat-elevation-z8">
             <i class="fa fa-eraser"></i>
          </button>
-         <span class="font-weight-bold float-right text-uppercase mt-1">Total de Folios <span class="badge badge-pill badge-success mr-4 mat-elevation-z8">{{dataInfoRequi.length}}</span></span>
+         <span class="float-right text-uppercase mt-1">Total de Folios<span class="badge badge-success ml-1 mr-4">{{dataInfoRequi.length}}</span></span>
         </div>
       </div>
   </div>
@@ -28,7 +28,7 @@
       <thead>
         <tr>
           <th *ngFor="let column of columnsInfo" ngClass="{{column.className || ''}}">
-            {{column.title}}
+            <small>{{column.title}}</small>
           </th>
         </tr>
         <tr>
@@ -57,13 +57,13 @@
                 <small *ngIf="row.estatus.length < 15 else toLength" class="badge badge-pill badge-primary" [class.badge-warning]="row.estatusId  === 4"
                   [class.badge-primary]="row.estatusId  === 5" [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20"
                   [class.badge-success]="row.estatusId  === 7" [class.badge-danger]="row.estatusId  === 8">
-                  {{row.estatus | uppercase}}
+                  <small>{{row.estatus | uppercase}}</small>
                 </small>
                 <ng-template #toLength>
                   <small class="badge badge-pill badge-info" [class.badge-warning]="row.estatusId  === 4" [class.badge-primary]="row.estatusId  === 5"
                     [class.badge-info]="row.estatusId  === 6 || row.estatusId > 20" [class.badge-success]="row.estatusId  === 7"
                     [class.badge-danger]="row.estatusId  === 8" placement="bottom" tooltip="{{row.estatus | uppercase}}" container='body'>
-                  {{row.estatus | slice:0:9 | uppercase }} ...
+                  <small>{{row.estatus | slice:0:9 | uppercase }} ...</small>
                   </small>
                 </ng-template>
               </td>

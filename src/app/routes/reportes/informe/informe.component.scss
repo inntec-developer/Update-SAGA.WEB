@@ -1,17 +1,24 @@
 
-.btnReport{
-    float: right;
-    margin: 15px;
-}
+// .btnReport{
+//     float: right;
+//     margin: 15px;
+// }
 
-.busqueda{
-    position: relative;
-    /* float: right; */
-    /* margin: 10px; */
-    left: 78%;
-    /* margin-left: auto; */
-    width: 225px;
-    margin-bottom: 15px;
+// .busqueda{
+//     position: relative;
+//     /* float: right; */
+//     /* margin: 10px; */
+//     left: 78%;
+//     /* margin-left: auto; */
+//     width: 225px;
+//     margin-bottom: 15px;
+// }
+
+.bgReporte {
+  background-image: url('../../../../assets/img/Inntec/bgReportes.png');
+  background-repeat: no-repeat;
+  height: 300px;
+  background-position: center;
 }
 
 .mano{
@@ -22,17 +29,12 @@
     display: none !important;
 }
 
-.botonmargen{
-    float: right;
-    margin-top: -2px;
+.logoSaga {
+  width: 15%;
 }
-
-.busmargen{
-    float: left;
-    right: -67%;
-    top: 10px;
+.logoDamsa {
+  width: 70%;
 }
-
 .sombra{
     -webkit-box-shadow: 10px 10px 40px -8px rgba(0,0,0,0.75);
     -moz-box-shadow: 10px 10px 40px -8px rgba(0,0,0,0.75);
@@ -42,10 +44,10 @@
 
 
 
-   .divtiporeport{
-    top: -3px;
-    position: relative;
-   }
+  //  .divtiporeport{
+  //   top: -3px;
+  //   position: relative;
+  //  }
 
 
    table thead,
@@ -71,11 +73,18 @@
     position: relative;
    }
 
+   .form-group {
+     width: 250px;
+   }
 
-   .botonesClient{
+   .search-input {
+     width: 90%;
+     text-transform: uppercase;
+   }
+//    .botonesClient{
   
-    position: relative;
-}
+//     position: relative;
+// }
 
   .graficaCordina{
     padding-bottom: 100px;

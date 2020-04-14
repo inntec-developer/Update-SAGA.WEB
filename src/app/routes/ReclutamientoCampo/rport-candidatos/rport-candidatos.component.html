@@ -11,7 +11,10 @@
       <li class="breadcrumb-item active text-muted">CANDIDATOS</li>
     </ol>
   </div><div class="card">
-
+      <div *ngIf="spinner" class="spinner">
+          <mat-progress-spinner [color]="color" [mode]="mode" [value]="value">
+          </mat-progress-spinner>
+        </div>
           <h5 class="card-header bg-info">PERFIL: {{vBtra | uppercase}} / RECLUTADOR: {{reclutador | uppercase}}</h5>
           <!-- <button class="btn btn-xs btn-warning float-right mat-elevation-z8 mt-1" (click)="Regresar()" placement="bottom" tooltip="Regresar a Reclutadores"><i class="fa fa-reply" aria-hidden="true"></i></button> -->
   
@@ -24,18 +27,18 @@
           </div> -->
 <div class="row">
   <div class="col">
-      <button [disabled]="data.contratados === data.vacantes" [ngClass]="data.contratados === data.vacantes ? 'disabled' : 'btn-success'" class="mr-2 float-left btn btn-xs mat-elevation-z8"
+      <!-- <button [disabled]="(rowAux || []).length == 0 || rowAux.estatusId != 27 || data.contratados === data.vacantes" [ngClass]="(rowAux || []).length == 0 && data.contratados === data.vacantes ? 'disabled' : 'btn-success'" class="mr-2 float-left btn btn-xs mat-elevation-z8"
       (click)="openDialogApartar(rowAux)" container="body" placement="bottom" tooltip="Apartar candidato">
       <i class="fa fa-thumbs-o-up"></i>
-    </button>
+    </button> -->
       <button [ngClass]="rowAux.length == 0 || rowAux.estatusId == 24 ? 'btn btn-xs disabled' : 'btn btn-xs btn-danger'" class="mr-2 float-left mat-elevation-z8" [disabled]="rowAux.length == 0 || rowAux.estatusId == 24"
       (click)="openDialogLiberar(rowAux)" container="body" placement="bottom" tooltip="Liberar candidato">
       <i class="fa fa-thumbs-o-down"></i>
     </button>
-    <button [ngClass]="rowAux.length == 0 || rowAux.estatusId == 24 ? 'btn btn-xs disabled' : 'btn btn-xs btn-warning'" class="mr-2 float-left mat-elevation-z8" [disabled]="rowAux.length == 0 || rowAux.estatusId == 24"
+    <!-- <button [ngClass]="rowAux.length == 0 || rowAux.estatusId == 24 ? 'btn btn-xs disabled' : 'btn btn-xs btn-warning'" class="mr-2 float-left mat-elevation-z8" [disabled]="rowAux.length == 0 || rowAux.estatusId == 24"
     (click)="editar()" container="body" placement="bottom" tooltip="Editar">
     <i class="fa fa-pencil"></i>
-  </button>
+  </button> -->
         <button class="btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="refreshTable()"
         container="body" placement="bottom" tooltip="Actualizar">
         <i class="icon-refresh"></i>
@@ -52,9 +55,9 @@
               class="badge badge-pill badge-success ml-1">{{data.vacantes}}</span></span>
       </div>
     </div>
-        <div class="d-flex justify-content-start mt-2">
+        <!-- <div class="d-flex justify-content-start mt-2">
     <i class="fa fa-exclamation-triangle text-warning mr-1" aria-hidden="true"></i><small class="text-warning">Solo puede editar candidatos apartados</small>
-  </div>
+  </div> -->
         <table *ngIf="dataSource.length > 0 else NotCandidatos" id="resultDataTable" ngClass="{{config.className || ''}}" class="table">
           <thead>
             <tr>
@@ -97,7 +100,7 @@
     </div>
     <hr>
     <div class="float-right">
-      <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="pageInfo" [totalItems]="length" [itemsPerPage]="itemsPerPage"
+      <pagination *ngIf="config.paging" class="pagination-sm float-right" [(ngModel)]="pageInfo" [totalItems]="length" [itemsPerPage]="itemsPerPage"
         [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
       </pagination>
     </div>

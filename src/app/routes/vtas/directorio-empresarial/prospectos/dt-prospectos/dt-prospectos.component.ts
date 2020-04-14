@@ -16,45 +16,51 @@ declare var $: any;
   providers: [ClientesService]
 })
 export class DtProspectosComponent implements OnInit {
-  //scroll
+  // scroll
   public disabled = false;
   public compact = false;
   public invertX = false;
   public invertY = false;
-  public shown = 'hover';
+  public shown = 'shown';
 /* Configuración de tabla */
-public rows: Array<any> = [];
-public columns: Array<any> = [
-  { title: 'Nombre Comercial', sorting: 'desc', className: 'text-success text-center', name: 'nombrecomercial', filtering: { filterString: '', placeholder: 'Nombre' } },
-  { title: 'Giro', className: 'text-info text-center', name: 'giroEmpresa', filtering: { filterString: '', placeholder: 'Giro' } },
-  { title: 'Actividad', className: 'text-info text-center', name: 'actividadEmpresa', filtering: { filterString: '', placeholder: 'Actividad' } },
-  { title: 'Tamaño', className: 'text-info text-center', name: 'tamanoEmpresa', filtering: { filterString: '', placeholder: 'Tamaño' } },
-  { title: 'Empleados', className: 'text-info text-center', name: 'numeroEmpleados', filtering: { filterString: '', placeholder: 'No. Empleados' } },
-  { title: 'Clasificación', className: 'text-info text-center', name: 'clasificacion', filtering: { filterString: '', placeholder: 'Calsificación' } },
-  { title: 'TipoEmpresa', className: 'text-info text-center', name: 'tipoEmpresa', filtering: { filterString: '', placeholder: 'Tipo' } },
+  public rows: Array<any> = [];
+  public columns: Array<any> = [
+  { title: 'Nombre Comercial', sorting: 'desc', className: 'text-success text-center',
+  name: 'nombrecomercial', filtering: { filterString: '', placeholder: 'Nombre' } },
+  { title: 'Giro', className: 'text-info text-center',
+  name: 'giroEmpresa', filtering: { filterString: '', placeholder: 'Giro' } },
+  { title: 'Actividad', className: 'text-info text-center',
+  name: 'actividadEmpresa', filtering: { filterString: '', placeholder: 'Actividad' } },
+  { title: 'Tamaño', className: 'text-info text-center',
+  name: 'tamanoEmpresa', filtering: { filterString: '', placeholder: 'Tamaño' } },
+  { title: 'Empleados', className: 'text-info text-center',
+  name: 'numeroEmpleados', filtering: { filterString: '', placeholder: 'No. Empleados' } },
+  { title: 'Clasificación', className: 'text-info text-center',
+  name: 'clasificacion', filtering: { filterString: '', placeholder: 'Clasificación' } },
+  { title: 'Tipo Empresa', className: 'text-info text-center',
+  name: 'tipoEmpresa', filtering: { filterString: '', placeholder: 'Tipo' } },
 ];
-
+direccionesfiscales: any = [];
 public config: any = {
   paging: true,
-  //sorting: { columns: this.columns },
   filtering: { filterString: '' },
   className: ['table-hover  mb-0']
 };
   public dataSource: Array<any> = [];
   public errorMessage: any;
   public showFilterRow: boolean;
-  public clearFilter: boolean = false;
-  public selected: boolean = false;
+  public clearFilter = false;
+  public selected = false;
 
   /* Formulario para hacer cliente */
   public formCliente: FormGroup;
 
   /* Variables de Paginador */
-  public page: number = 1;
-  public itemsPerPage: number = 20;
-  public maxSize: number = 5;
-  public numPages: number = 1;
-  public length: number = 0;
+  public page = 1;
+  public itemsPerPage = 20;
+  public maxSize = 5;
+  public numPages = 1;
+  public length = 0;
 
   public registros: number;
   public mouseEvent: boolean;
@@ -64,7 +70,17 @@ public config: any = {
   public element: any = null;
   public Usuario: string;
   public Loading: boolean;
-
+ /*
+ * Creacion de mensajes
+ */
+  toaster: any;
+  toasterConfig: any;
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    positionClass: 'toast-bottom-right',
+    limit: 7, tapToDismiss: false,
+    showCloseButton: true,
+    mouseoverTimerStop: true,
+  });
   constructor(
     private _service: ClientesService,
     private fb: FormBuilder,
@@ -73,7 +89,7 @@ public config: any = {
     private settings: SettingsService
   ) {
     this.formCliente = new FormGroup({
-      RazonSocial: new FormControl('',[Validators.required, Validators.maxLength(100)]),
+      RazonSocial: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       RFC: new FormControl('', [Validators.required, Validators.maxLength(13), Validators.minLength(12)]),
       ValidarRFC: new FormControl('', [Validators.required, Validators.maxLength(13), Validators.minLength(12)])
     });
@@ -88,7 +104,7 @@ public config: any = {
       RazonSocial: ['', [Validators.required, Validators.maxLength(100)]],
       RFC: ['', [Validators.required, Validators.maxLength(13), Validators.minLength(12)]],
       ValidarRFC:  ['', [Validators.required, Validators.maxLength(13), Validators.minLength(12)]]
-    }, { validator: RFCValidator.MachRFC })
+    }, { validator: RFCValidator.MachRFC });
   }
 
   // ngAfterViewInit(): void {
@@ -102,11 +118,11 @@ public config: any = {
       this.dataSource = data;
       this.onChangeTable(this.config);
     }, error => this.errorMessage = <any>error);
-  };
+  }
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
-    let start = (page.page - 1) * page.itemsPerPage;
-    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    const start = (page.page - 1) * page.itemsPerPage;
+    const end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
   }
 
@@ -115,7 +131,7 @@ public config: any = {
       return data;
     }
 
-    let columns = this.config.sorting.columns || [];
+    const columns = this.config.sorting.columns || [];
     let columnName: string = void 0;
     let sort: string = void 0;
 
@@ -172,7 +188,7 @@ public config: any = {
   }
 
   /* Funciones secundarias */
-  onCellClick(data: any){
+  onCellClick(data: any) {
     data.selected ? data.selected = false : data.selected = true;
     this.element = data;
 
@@ -182,10 +198,10 @@ public config: any = {
     } else {
       this.selected = true;
     }
-    if (this.rowAux.length == 0) {
+    if (this.rowAux.length === 0) {
       this.rowAux = data;
-    } else if (data.selected && this.rowAux != []) {
-      var aux = data;
+    } else if (data.selected && this.rowAux !== []) {
+      const aux = data;
       data = this.rowAux;
       data.selected = false;
       aux.selected = true;
@@ -193,7 +209,7 @@ public config: any = {
     }
   }
 
-  refreshTable(){
+  refreshTable() {
     this.Loading = true;
     this.getProspectos();
     setTimeout(() => {
@@ -224,7 +240,7 @@ public config: any = {
       Usuario: this.Usuario
     };
     this._service.hacerCliente(cliente).subscribe(result => {
-      if(result === 200) {
+      if (result === 200) {
         this.popToast('success', 'Prospecto', 'El prospecto se pasó con éxito a clientes, ir a la sección de clientes para visualizarlo.');
         this.refreshTable();
       } else {
@@ -254,22 +270,15 @@ public config: any = {
     };
     this._Router.navigate(['/ventas/visualizarCliente'], navigationExtras);
   }
+  regresar() {
+    this._Router.navigate(['/ventas/directorio'], {queryParams: {ruta: 2}});
+  }
 
 
 
- /*
- * Creacion de mensajes
- */
-  toaster: any;
-  toasterConfig: any;
-  toasterconfig: ToasterConfig = new ToasterConfig({
-    positionClass: 'toast-bottom-right',
-    limit: 7, tapToDismiss: false,
-    showCloseButton: true,
-    mouseoverTimerStop: true,
-  });
+
   popToast(type: any, title: any, body: any) {
-    var toast: Toast = {
+    const toast: Toast = {
       type: type,
       title: title,
       timeout: 5000,

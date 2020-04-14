@@ -6,7 +6,6 @@ import { ExcelService } from '../../service/ExcelService/excel.service';
 import { IndicadoresComponent } from './indicadores/indicadores.component';
 import { InformeComponent } from './informe/informe.component';
 import { NgModule } from '@angular/core';
-import { ReporteGeneralComponent } from './reporte-general/reporte-general.component';
 import { ReportesService } from '../../service/Reporte/reportes.service';
 import { SharedModule } from '../../shared/shared.module';
 import { TablaReporteComponent } from './tabla-reporte/tabla-reporte.component';
@@ -25,11 +24,10 @@ import { MapaReporteComponent } from './mapa-reporte/mapa-reporte.component';
 import { ClienteDetalleComponent } from './cliente-detalle/cliente-detalle.component';
 import { IndicadoresVentasComponent } from './indicadores-ventas/indicadores-ventas.component';
 
-//import { DatePipe } from '@angular/common';
+// import { DatePipe } from '@angular/common';
 
-const routes:Routes =[
-  {path: 'informe', component:InformeComponent},
-  {path: 'reporteGeneral', component: ReporteGeneralComponent},
+const routes: Routes = [
+  {path: 'informe', component: InformeComponent},
   {path: 'indicador', component: IndicadoresComponent},
   {path: 'calidad', component: CalidadComponent},
   {path: 'mapa', component: MapaReporteComponent},
@@ -45,7 +43,6 @@ const routes:Routes =[
   declarations: [
     InformeComponent,
     TablaReporteComponent,
-    ReporteGeneralComponent,
     IndicadoresComponent,
     ProductividadComponent,
     DetallereclutaComponent,
@@ -56,7 +53,7 @@ const routes:Routes =[
     ClienteComponent,
     CubiertoComponent,
     CalidadComponent,
-    MapaReporteComponent,
+    // MapaReporteComponent,
     ClienteDetalleComponent,
     IndicadoresVentasComponent
   ],

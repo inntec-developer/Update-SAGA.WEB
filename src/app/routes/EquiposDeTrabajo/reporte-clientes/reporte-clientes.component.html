@@ -1,140 +1,158 @@
 <div class="card">
   <div class="card-body">
-    <div class="d-flex justify-content-around">
-      <div class="col-xl-3 col-md-6">
-        <a (click)="titulo='Posiciones'; orden= 1; modal2 = true;" class="card bg-success flex-row align-items-center align-items-stretch border-0">
-          <div class="col-4 d-flex align-items-center bg-success-dark justify-content-center rounded-left">
-            <i class="fa fa-users fa-3x"></i>
-          </div>
-          <div class="col-8 py-3 bg-success rounded-right">
-            <div class="h2 mt-0">{{totalPos}}</div>
-            <div class="text-uppercase">Total de Posiciones</div>
-          </div>
-        </a>
-      </div>
-      <div class="col-xl-3 col-md-6">
-        <a (click)="titulo='Cubiertas'; orden= 2; modal2 = true;" class="card bg-info mat-elevation-z8 flex-row align-items-center align-items-stretch border-0">
-          <div class="col-4 d-flex align-items-center bg-info-dark justify-content-center rounded-left">
-            <i class="fa fa-user-plus fa-3x"></i>
-          </div>
-          <div class="col-8 py-3 bg-info rounded-right">
-            <div class="h2 mt-0">{{totalCub}}</div>
-            <div class="text-uppercase">Total Cubiertas</div>
-          </div>
-        </a>
-      </div>
-      <div class="col-xl-3 col-md-6">
-        <a (click)="titulo='Faltantes'; orden= 3; modal2 = true;" class="card bg-warning mat-elevation-z8 flex-row align-items-center align-items-stretch border-0">
-          <div class="col-4 d-flex align-items-center bg-warning-dark justify-content-center rounded-left">
-            <i class="fa fa-user-o fa-3x"></i>
-          </div>
-          <div class="col-8 py-3 bg-warning rounded-right">
-            <div class="h2 mt-0">{{totalFal}}</div>
-            <div class="text-uppercase">Total Faltante</div>
-          </div>
-        </a>
-      </div>
-      <div class="col-xl-3 col-md-6">
-        <a (click)="titulo='Cumplimiento'; orden= 4; modal2 = true;" class="card bg-purple mat-elevation-z8 flex-row align-items-center align-items-stretch border-0">
-          <div class="col-4 d-flex align-items-center bg-purple-dark justify-content-center rounded-left">
-            <i class="fa fa-line-chart fa-3x"></i>
-          </div>
-          <div class="col-8 py-3 bg-purple rounded-right">
-            <div class="h2 mt-0">{{totalCump}} %</div>
-            <div class="text-uppercase">Total Cumplimiento</div>
-          </div>
-        </a>
-      </div>
+    <div class="row d-flex justify-content-between align-items-center align-items-stretch">
+      <div class="col-3">
+      <a (click)="titulo='Posiciones'; orden= 1; modal2 = true;" placement="bottom" tooltip="Ver detalle posiciones"
+        class="card bg-success flex-row align-items-center align-items-stretch border-0">
+        <div class="col-4 d-flex align-items-center bg-success-dark justify-content-center rounded-left">
+          <i class="fa fa-users fa-3x"></i>
+        </div>
+        <div class="col-8 py-3 bg-success rounded-right">
+          <div class="h2 mt-0">{{totalPos}}</div>
+          <div class="text-uppercase">Posiciones</div>
+        </div>
+      </a>
     </div>
-    <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown"
-[disableOnBreakpoints]="false" [disabled]="disabled">
-<div class="row mt-4" style="height: 600px">
-    <ng-container *ngFor="let t of reporte; let ind = index">
-        <div class="col-lg-4 col-md-6">
+    <div class="col-3">
+      <a (click)="titulo='Cubiertas'; orden= 2; modal2 = true;" placement="bottom" tooltip="Ver detalle cubiertas"
+        class="card bg-info mat-elevation-z8 flex-row align-items-center align-items-stretch border-0">
+        <div class="col-4 d-flex align-items-center bg-info-dark justify-content-center rounded-left">
+          <i class="fa fa-user-plus fa-3x"></i>
+        </div>
+        <div class="col-8 py-3 bg-info rounded-right">
+          <div class="h2 mt-0">{{totalCub}}</div>
+          <div class="text-uppercase">Cubiertas</div>
+        </div>
+      </a>
+    </div>
+    <div class="col-3">
+      <a (click)="titulo='Faltantes'; orden= 3; modal2 = true;" placement="bottom" tooltip="Ver detalle faltantes"
+        class="card bg-warning mat-elevation-z8 flex-row align-items-center align-items-stretch border-0">
+        <div class="col-4 d-flex align-items-center bg-warning-dark justify-content-center rounded-left">
+          <i class="fa fa-user-o fa-3x"></i>
+        </div>
+        <div class="col-8 py-3 bg-warning rounded-right">
+          <div class="h2 mt-0">{{totalFal}}</div>
+          <div class="text-uppercase">Faltante</div>
+        </div>
+      </a>
+      </div>
+      <div class="col-3">
+      <a (click)="titulo='Cumplimiento'; orden= 4; modal2 = true;" placement="bottom" tooltip="Ver detalle cumplimiento"
+        class="card bg-purple mat-elevation-z8 flex-row align-items-center align-items-stretch border-0">
+        <div class="col-4 d-flex align-items-center bg-purple-dark justify-content-center rounded-left">
+          <i class="fa fa-line-chart fa-3x"></i>
+        </div>
+        <div class="col-8 py-3 bg-purple rounded-right">
+          <div class="h2 mt-0">{{totalCump}} %</div>
+          <div class="text-uppercase">Cumplimiento</div>
+        </div>
+      </a>
+    </div>
+    </div>
+    <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="true" [trackY]="true"
+      [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+      <div class="row mt-4" style="height: 600px">
+        <ng-container *ngFor="let t of reporte; let ind = index">
+          <div class="col-lg-4 col-md-6">
             <div class="card border">
-                <div class="card-header text-white">
-                    <div class="d-flex justify-content-between align-items-center p-1 bg-primary">
-                    <h4 class="mt-1" *ngIf="t.cliente.length < 20 else toLength">{{t.cliente | uppercase}}</h4>
-                      <ng-template #toLength>
-                          <h4 tooltip="{{t.cliente | uppercase}}" placement="top" container="body"> {{t.cliente | slice:0:30 | uppercase
+              <div class="card-header text-white">
+                <div class="d-flex justify-content-between align-items-center p-1 bg-primary fontRoboto">
+                  <h5 class="mt-1" *ngIf="t.cliente.length < 20 else toLength">{{t.cliente | uppercase}}</h5>
+                  <ng-template #toLength>
+                    <h5 tooltip="{{t.cliente | uppercase}}" placement="top" container="body"> {{t.cliente | slice:0:30 | uppercase
                             }} ...
-                          </h4>
-                        </ng-template>
-                        <button (click)="clienteId = t.clienteId; modal=true; titulo = t.cliente;" class="btn btn-xs btn-success float-right mb-2 mr-1 mat-elevation-z8" container="body" placement="bottom" tooltip="Ver Detalle"><i class="fa fa-bar-chart"></i></button>
-
+                    </h5>
+                  </ng-template>
+                  <button (click)="clienteId = t.clienteId; modal=true; titulo = t.cliente;"
+                    class="btn btn-xs btn-success float-right mb-2 mr-1 mat-elevation-z8" container="body"
+                    placement="bottom" tooltip="Ver Detalle"><i class="fa fa-bar-chart"></i></button>
                 </div>
-                </div>
-                <div class="card-body bt bb h-75">
-                  <ng-container *ngFor="let r of t.reclutadores">
-                    <div class="inline">
-                      <img container="body" placement="right" tooltip="{{r.nombre}}" *ngIf="r.tipoUsuario == 4 || r.tipoUsuario == 5 || r.tipoUsuario == 10" class="img-fluid circle thumb48" [src]="r.foto" (error)="errorImg(r)" />
-                      <img container="body" placement="right" tooltip="{{r.nombre}}" *ngIf="r.tipoUsuario != 4 && r.tipoUsuario != 5 && r.tipoUsuario != 10" class="img-fluid circle thumb32" [src]="r.foto" (error)="errorImg(r)" />
+              </div>
+              <div class="card-body bt himg">
+                <ng-scrollbar #scrollable2 [invertX]="true" [invertY]="invertY" [trackX]="true" [trackY]="false"
+                  [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+                  <div style="width: 500px; max-height: 49px; overflow-y: hidden;">
+                    <ng-container *ngFor="let r of t.reclutadores">
+                      <img container="body" placement="right" tooltip="{{r.nombre}}"
+                        *ngIf="r.tipoUsuario == 4 || r.tipoUsuario == 5 || r.tipoUsuario == 10"
+                        class="img-fluid circle thumb48" [src]="r.foto" (error)="errorImg(r)" />
+                      <img container="body" placement="right" tooltip="{{r.nombre}}"
+                        *ngIf="r.tipoUsuario != 4 && r.tipoUsuario != 5 && r.tipoUsuario != 10"
+                        class="img-fluid circle thumb32" [src]="r.foto" (error)="errorImg(r)" />
+                    </ng-container>
+                  </div>
+                </ng-scrollbar>
+                <div class="text-center">
+                  <div class="progress progress-xs m-0" tooltip="{{t.totalCump}} %">
+                    <div
+                      [ngClass]="{'bg-danger': t.totalCump <= 25, 'bg-warning': t.totalCump > 25 && t.totalCump <= 50, 'bg-yellow': t.totalCump > 50 && t.totalCump <= 75, 'bg-success': t.totalCump > 75 }"
+                      class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="t.totalCump"
+                      aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: t.totalCump + '%'}">
                     </div>
-                  </ng-container>
-                  <div class="text-center mt-2">
-                      <div class="progress progress-xs m-0" tooltip="{{t.totalCump}} %">
-                          <div [ngClass]="{'bg-danger': t.totalCump <= 25, 'bg-warning': t.totalCump > 25 && t.totalCump <= 50, 'bg-yellow': t.totalCump > 50 && t.totalCump <= 75, 'bg-success': t.totalCump > 75 }" 
-                              class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="t.totalCump" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width: t.totalCump + '%'}">
-                          </div>
-                      </div>
-                      <small class="text-muted">{{t.totalCump || 0}} % Cumplimiento</small>
-                    </div>
+                  </div>
+                  <small class="text-muted">{{t.totalCump || 0}} % Cumplimiento</small>
                 </div>
-                <div class="card-body">
-                    <div class="row text-center">
-                        <div class="col-4">
-                            <p class="text-bold">CUBIERTAS</p>
-                            <div class="sparkline inline mr-2" [sparkline]="sparkOptionsSuccess"
-                                values="{{t.totalPos}}, {{t.totalCub}}"></div>
-                            <br /><small class="text-muted m-0">{{t.totalCub}}</small>
-                        </div>
-                        <div class="col-4">
-                            <p class="text-bold">POSICIONES</p>
-                            <div class="h3 m-0">{{t.totalPos}}</div>
-                        </div>
-                        <div class="col-4">
-                            <p class="text-bold">FALTANTES</p>
-                            <div class="sparkline inline mr-2" [sparkline]="sparkOptionsWarning"
-                                values="{{t.totalPos}}, {{t.totalFal}}"></div>
-                            <br /> <small class="text-muted m-0">{{t.totalFal}}</small>
-                        </div>
-                    </div>
+              </div>
+              <div class="card-body bt">
+                <div class="d-flex justify-content-between align-items-center align-items-stretch">
+                  <div class="d-flex flex-column align-items-center">
+                    <small class="text-bold">CUBIERTAS</small>
+                    <div class="sparkline inline" [sparkline]="sparkOptionsSuccess"
+                      values="{{t.totalPos}}, {{t.totalCub}}"></div>
+                    <small class="text-muted m-0">{{t.totalCub}}</small>
+                  </div>
+                  <div class="d-flex flex-column align-items-center">
+                    <small class="text-bold">POSICIONES</small>
+                    <div class="h2 m-0">{{t.totalPos}}</div>
+                  </div>
+                  <div class="d-flex flex-column align-items-center">
+                    <small class="text-bold">FALTANTES</small>
+                    <div class="sparkline inline" [sparkline]="sparkOptionsWarning"
+                      values="{{t.totalPos}}, {{t.totalFal}}"></div>
+                    <small class="text-muted m-0">{{t.totalFal}}</small>
+                  </div>
                 </div>
+              </div>
 
             </div>
-        </div>
-    </ng-container>
-</div>
-</ng-scrollbar>
+          </div>
+        </ng-container>
+      </div>
+    </ng-scrollbar>
 
   </div>
 </div>
 <!-- Modal para tracking vacante -->
-<div *ngIf="modal" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #lgModal="bs-modal" class="modal"
-  tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+<div *ngIf="modal" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #lgModal="bs-modal"
+  class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="float-left text-muted"><i class="fa fa-handshake-o mr-2"></i> {{titulo | uppercase}}</h4>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="modal=false; lgModal.hide();"><i
-            class="fa fa-times"></i></button>
+        <div class="d-flex justify-content-between align-items-center p-1 bg-info w-100">
+        <span><i class="fa fa-handshake-o mr-2"></i> {{titulo | uppercase}}</span>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right"
+          (click)="modal=false; lgModal.hide();"><i class="fa fa-times"></i></button>
+          </div>
       </div>
       <div class="modal-body">
-          <app-vacantes [clienteId]='clienteId' [flag]='1'></app-vacantes>
+        <app-vacantes [clienteId]='clienteId' [flag]='1'></app-vacantes>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Modal para reporte -->
-<div *ngIf="modal2" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #lgModal2="bs-modal" class="modal"
-  tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+<div *ngIf="modal2" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #lgModal2="bs-modal"
+  class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="float-left text-warning"><em class="fa fa-area-chart mr-2"></em>INDICADOR {{titulo | uppercase}}</h4>
-        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="modal2=false; lgModal2.hide();"><i
-            class="fa fa-times"></i></button>
+        <div class="d-flex justify-content-between align-items-center p-1 bg-info w-100">
+        <span><i class="fa fa-area-chart mr-2"></i>INDICADOR {{titulo | uppercase}}</span>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right"
+          (click)="modal2=false; lgModal2.hide();"><i class="fa fa-times"></i></button>
+        </div>
       </div>
       <div class="modal-body">
         <app-tabla-equipos [usuarioId]="usuarioLogin" [orden]="orden" [flag]=1></app-tabla-equipos>

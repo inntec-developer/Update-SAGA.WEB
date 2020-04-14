@@ -1,14 +1,15 @@
-
-<!-- <div class="dt-container mat-elevation-z8"> -->
-  <div class="title-headre-view d-flex justify-content-between">
-    <h4>Beneficios</h4>
+  <div class="d-flex justify-content-between align-items-center p-1 bg-info-light">
+    <span>BENEFICIOS</span>
+    <em *ngIf="verTabla" class="fa fa-caret-up fa-2x" aria-hidden="true" (click)="verTabla=false"></em>
+    <em *ngIf="!verTabla"class="fa fa-caret-down fa-2x" aria-hidden="true" (click)="verTabla=true"></em>
   </div>
   <!-- <div class="card card-default"> -->
-    <div class="table-responsive">
-      <table ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+    <div *ngIf="verTabla" class="table-responsive">
+      <table class="table" style="width: 100%;">
         <thead>
           <tr>
-            <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+            <th *ngFor="let column of columns" class="{{column.className || ''}}">
+              <small>{{column.title | uppercase}}</small>
             </th>
           </tr>
         </thead>

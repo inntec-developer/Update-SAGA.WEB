@@ -1,8 +1,11 @@
 <form [formGroup]="ActividadArray">
   <section class="d-flex justify-content-between">
     <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
-    <strong class="text-warning">Principales actividades a desarrollar <i *ngIf="ActividadesNew.length == 0" class="text-danger fa fa-exclamation-circle ml-3" 
-      container="body" placement="right" tooltip="Campo requerido"></i></strong>
+    <span class="text-warning text-uppercase fontRoboto">Principales actividades a desarrollar <i *ngIf="ActividadesNew.length == 0" class="text-danger fa fa-exclamation-circle ml-3" 
+      container="body" placement="right" tooltip="Campo requerido"></i></span>
+      <!-- <h6 class="text-warning float-right"><span class="mr-2">NO APLICA</span>
+        <mat-checkbox class="ml-1 mt-1" (change)="AddNA()" formControlName="checkAplica"></mat-checkbox>
+      </h6> -->
     <button class="btn btn-xs btn-primary mr-1 mb-1 mat-elevation-z8"
       (click)="AddActividad()" container="body" placement="top" tooltip="Agregar actividades"><i class="fa fa-plus"></i></button>
   </section>

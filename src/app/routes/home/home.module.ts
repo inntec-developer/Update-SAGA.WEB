@@ -8,7 +8,7 @@ import { StarCalendarioComponent } from './star-calendario/star-calendario.compo
 import { ToolsModule } from '../../tools/tools.module';
 
 const routes: Routes = [
-    { path: '', component: HomeComponent},
+    { path: '', component: HomeComponent, data: { componente: 'Mapas' } },
     { path: 'Calendario', component: StarCalendarioComponent}
 ];
 @NgModule({

@@ -1,39 +1,6 @@
-table thead tr th
-{
-    font-family: 'Lato', sans-serif;
-  font-size: 10px;
-}
 
-table tbody tr td
-{
-    font-family: 'Lato', sans-serif;
-  font-size: 12px;
-}
-
-tbody {
-  display: block;
-  height: 350px;
-}
-
-thead,
-tbody tr {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-  font-size: 12px;
-}
-
-table thead {
-  width: calc(100% - 1em)
-}
-
-table {
-  width: 100%;
-}
-
-tbody tr:hover {
-  font-size: 14px;
-  box-shadow: 1px 20px 60px rgba(0, 0, 0, .23);
+em {
+  cursor: pointer;
 }
 ng-scrollbar {
   --scrollbar-size: 4px;

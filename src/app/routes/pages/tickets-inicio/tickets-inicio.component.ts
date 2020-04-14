@@ -1,14 +1,11 @@
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { RequisicionesService, ApiConection } from '../../../service';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
 import { TicketsRegisterComponent } from '../../../components/tickets-register/tickets-register.component';
-import { NgbCarouselConfig, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
-
-
 
 const swal = require('sweetalert');
 
@@ -19,10 +16,12 @@ const swal = require('sweetalert');
   providers: [RequisicionesService]
 })
 export class TicketsInicioComponent implements OnInit {
-  showNavigationArrows = true;
-  showNavigationIndicators = false;
-  @ViewChild('myCarousel') myCarousel: NgbCarousel;
- 
+
+ // CAROUSEL PROPS
+ public myInterval = 5000;
+ public noWrapSlides = false;
+ public slides: Array<any> = [];
+
   folio = 0;
   iniciar = false;
   num = '';
@@ -35,14 +34,10 @@ categorias2 = [];
 vacantes = [];
   activeId: any;
   search: any;
-  constructor(config: NgbCarouselConfig,
-    private _service: SistTicketsService,
+  constructor(private _service: SistTicketsService,
     private service: RequisicionesService,
     private dialog: MatDialog,
     private settings: SettingsService) {
-      config.interval = 10000;
-      config.wrap = false;
-      config.pauseOnHover = true;
      }
 
 
@@ -173,14 +168,7 @@ vacantes = [];
   }
 
   GetVacantes() {
-
     this._service.GetVacantes().subscribe(data => {
-      var images = ['./../assets/img/ArteVacantes/DamsaVacantes_PP.jpg',
-      './../assets/img/ArteVacantes/DamsaVacantes_PP1.jpg', './../assets/img/ArteVacantes/DamsaVacantes_PP2.jpg',
-      './../assets/img/ArteVacantes/DamsaVacantes_PP3.jpg', './../assets/img/ArteVacantes/DamsaVacantes_PP4.jpg',
-      './../assets/img/ArteVacantes/DamsaVacantes_PP5.jpg', './../assets/img/ArteVacantes/DamsaVacantes_PP6.jpg', './../assets/img/ArteVacantes/DamsaVacantes_PP7.jpg', './../assets/img/ArteVacantes/DamsaVacantes_PP8.jpg',
-      './../assets/img/ArteVacantes/DamsaVacantes_PP17.jpg'];
-
       this.dataSource = data;
       if (this.dataSource.length > 0) {
         this.dataSource = this.dataSource.filter(element => {
@@ -188,10 +176,9 @@ vacantes = [];
             element.arte != null ? element.arte = ApiConection.ServiceUrlFileManager + element.arte : null;
             return element;
           }
-
         });
 
-        var color = 0;
+        let color = 0;
         this.categorias = Array.from(new Set(this.dataSource.map(s => s.areaId)))
           .map(id => {
             color += 1;
@@ -200,9 +187,8 @@ vacantes = [];
             }
 
             let cat = this.dataSource.find(s => s.areaId === id).categoria;
-            let idx = cat.search(/[/y,]/i);
-            if(idx > -1)
-            {
+            const idx = cat.search(/[/y,]/i);
+            if (idx > -1) {
               cat = cat.substring(0, idx);
             }
             return {
@@ -210,31 +196,29 @@ vacantes = [];
               categoria: cat,
               icono: this.dataSource.find(s => s.areaId === id).icono,
               color: color,
-            }
+            };
           });
-        
+
         // for (var c = 0; c <= 7; c++) {
         //   this.dataSource[c].image = images[c];
         // }
 
-        this.categorias2 = this.categorias.splice(8, this.categorias.length);
-        this.categorias = this.categorias.splice(0, 7);
-        this.vacantes = this.dataSource;
+        // this.categorias2 = this.categorias.splice(8, this.categorias.length);
+        // this.categorias = this.categorias.splice(0, 7);
+        console.log(this.categorias)
+        this.vacantes = (JSON.parse(JSON.stringify(this.dataSource)));
       }
     });
   }
 
-
-  Registrar()
-  {
-    let dialog = this.dialog.open(TicketsRegisterComponent, {
+  Registrar() {
+    const dialog = this.dialog.open(TicketsRegisterComponent, {
       width: 'auto',
       height: 'auto',
       disableClose: true
     });
     dialog.afterClosed().subscribe(result => {
-      if(result)
-      {
+      if(result) {
         this.user = result.username;
         this.pass = result.pass;
         this.iniciar = true;
@@ -281,12 +265,11 @@ vacantes = [];
     this.iniciar = false;
   }
 
-  FiltrarCategoria(id, mocos) {
-    if (id == 0) {
-      this.vacantes = this.dataSource;
-    }
-    else {
-      var filtro = this.dataSource.filter(item => {
+  FiltrarCategoria(id) {
+    if (id === 0) {
+      this.vacantes = (JSON.parse(JSON.stringify(this.dataSource)));
+    } else {
+      const filtro = this.dataSource.filter(item => {
         if (item.areaId === id) {
           return item;
         }
@@ -295,8 +278,8 @@ vacantes = [];
     this.vacantes = filtro;
   }
   this.activeId = this.vacantes[0].id;
-  this.myCarousel.activeId = this.vacantes[0].id;
-  this.myCarousel.cycle();
+  // this.myCarousel.activeId = this.vacantes[0].id;
+  // this.myCarousel.cycle();
 
 
   //   setTimeout(() => {
@@ -309,9 +292,9 @@ vacantes = [];
   public Search(data: any) {
 
     this.search = data.target.value;
-    let tempArray: Array<any> = [];
+    const tempArray: Array<any> = [];
 
-    let colFiltar: Array<any> = [{ title: "vBtra" }];
+    const colFiltar: Array<any> = [{ title: 'vBtra' }];
 
     this.dataSource.forEach(function (item) {
       let flag = false;
@@ -322,15 +305,13 @@ vacantes = [];
       });
 
       if (flag) {
-        tempArray.push(item)
+        tempArray.push(item);
       }
     });
 
     this.vacantes = tempArray;
 
     this.activeId = this.vacantes[0].id;
-    this.myCarousel.activeId = this.vacantes[0].id;
-    this.myCarousel.cycle();
+
   }
-  
 }

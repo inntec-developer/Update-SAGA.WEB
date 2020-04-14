@@ -1,6 +1,8 @@
+import { CandidatosService } from './../../service/Candidatos/candidatos.service';
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { ExcelService } from '../../service/ExcelService/excel.service';
 import { DatePipe } from '@angular/common';
+
 declare var $: any;
 
 @Component({
@@ -18,8 +20,9 @@ export class DtBusquedaCandidatosComponent implements OnInit, OnChanges {
    compact = false;
    invertX = false;
    invertY = false;
-   shown = 'hover';
+   shown = 'shown';
 
+  spinner = false;
   @Input('Candidatos') Candidatos: any;
   @Output('CandidatoId') CandidatoId: EventEmitter<any> = new EventEmitter<any>();
   public dataSource: Array<any> = [];
@@ -62,20 +65,27 @@ export class DtBusquedaCandidatosComponent implements OnInit, OnChanges {
     filtering: { filterString: '' },
     className: ['table-hover mb-0']
   };
-  constructor(private excelService: ExcelService, private pipe: DatePipe) { }
+  constructor(private excelService: ExcelService,
+    private pipe: DatePipe,
+    private service: CandidatosService) { }
 
   ngOnInit() {
-    this.dataSource = this.Candidatos;
-    this.onChangeTable(this.config);
+    this.spinner = true;
+    if (this.Candidatos) {
+      this.dataSource = this.Candidatos;
+      this.onChangeTable(this.config);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     // Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     // Add '${implements OnChanges}' to the class.
     if (changes.Candidatos && !changes.Candidatos.isFirstChange()) {
-      this.ngOnInit();
+      this.dataSource = this.Candidatos;
+    this.onChangeTable(this.config);
     }
   }
+
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;
@@ -158,6 +168,7 @@ public getCleanedString(cadena: string): string {
     const filteredData = this.changeFilter(this.dataSource, this.config);
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
     this.length = filteredData.length;
+    this.spinner = false;
   }
 
   public onCellClick(data: any): any {
@@ -171,11 +182,10 @@ public getCleanedString(cadena: string): string {
       this.selected = true;
     }
 
-    if (this.rowAux.length == 0) {
+    if (this.rowAux.length === 0) {
       this.rowAux = data;
-    }
-    else if (data.selected && this.rowAux != []) {
-      var aux = data;
+    } else if (data.selected && this.rowAux !== []) {
+      const aux = data;
       data = this.rowAux;
       data.selected = false;
       aux.selected = true;
@@ -190,7 +200,7 @@ public getCleanedString(cadena: string): string {
   public clearfilters() {
     this.columns.forEach(element => {
       element.filtering.filterString = '';
-      (<HTMLInputElement>document.getElementById(element.name)).value = '';
+      (<HTMLInputElement>document.getElementById(element.name + '_')).value = '';
     });
     this.onChangeTable(this.config);
   }

@@ -1,5 +1,6 @@
+import { ApiConection } from './../../../../../service/api-conection.service';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { PerfilReclutamientoService } from '../../../../../service/PerfilReclutamiento/perfil-reclutamiento.service';
 import { AdminServiceService } from '../../../../../service/AdminServicios/admin-service.service';
 import { DlgBGArteComponent } from '../../../../../components/editor-arte-requisiciones/dlg-bgarte/dlg-bgarte.component';
@@ -26,8 +27,8 @@ export class FormatoAnexosComponent implements OnInit, OnChanges {
   public Areas: any[] = [];
   public Gerenciales: any[] = [];
 
-  public Arte = '';
-  bg = '';
+  public Arte = 'DamsaVacantes_PP1.jpg';
+  bg = ApiConection.ServiceUrlFileManager + 'img/ArteRequi/BG/DamsaVacantes_PP1.jpg';
   imgLoading = false;
   constructor(
     private _servicePerfilR: PerfilReclutamientoService,
@@ -37,7 +38,6 @@ export class FormatoAnexosComponent implements OnInit, OnChanges {
    }
 
   ngOnInit() {
-    this.getBG('DamsaVacantes_PP1.jpg', 'jpg');
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -56,7 +56,8 @@ export class FormatoAnexosComponent implements OnInit, OnChanges {
           this.Cardinales = data['cardinales'];
           this.Areas = data['areas'];
           this.Gerenciales = data['gerenciales'];
-          this.bg = data['arte'];
+          this.bg = ApiConection.ServiceUrlFileManager + 'img/ArteRequi/BG/' + data['arte'];
+          this.Arte = data['arte'];
         }
       });
     }
@@ -109,11 +110,12 @@ export class FormatoAnexosComponent implements OnInit, OnChanges {
   }
 
   getBG(nombre: string, type: string) {
-    this._service.GetBG('ArteRequi/BG/' + nombre).subscribe(r => {
-      this.bg = 'data:image/' + type + ';base64,' + r;
+    this.bg = ApiConection.ServiceUrlFileManager + 'img/ArteRequi/BG/' + nombre;
+    // this._service.GetBG(nombre).subscribe(r => {
+    //   this.bg = 'data:image/' + type + ';base64,' + r;
       this.Arte = nombre;
-      this.imgLoading = false;
-    });
+       this.imgLoading = false;
+    // });
   }
   openDialogBG() {
     this.imgLoading = true;

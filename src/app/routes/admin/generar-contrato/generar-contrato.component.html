@@ -1,0 +1,99 @@
+<div class="content-heading">
+  <span class="text-muted">ADMINISTRADOR DE PERSONAL</span>
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item">
+      <a class="text-info" [routerLink]="['/admin/ingresos']">INICIO</a>
+    </li>
+    <li class="breadcrumb-item active">GENERAR CONTRATO</li>
+  </ol>
+</div>
+<div class="d-flex justify-content-between p-1 bg-info-light fontRoboto">
+  <span>GENERAR CONTRATO CANDIDATO</span>
+  <button container="body" placement="bottom" tooltip="Regresar" class="btn btn-xs btn-warning" type="button"
+  [routerLink]="['/admin/ingresos']">
+  <i class="icon-action-undo"></i>
+</button>
+</div>
+<div class="row mt-2">
+  <div class="col-xl-8">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-start p-1 w-100">
+          <label for="image-input" class="file-upload">
+            <button class="btn btn-warning">
+              <em class="fa fa-download mr-2"></em>CARGAR CONTRATO</button>
+            <input id="image-input" type="file" (change)="onChange($event)">
+          </label>
+        </div>
+        <div class="document-editor">
+          <div class="document-editor__toolbar"></div>
+          <div class="document-editor__editable-container">
+            <div class="document-editor__editable">
+              <p>{{content}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- <ckeditor [(ngModel)]="content" [editor]="Editor" (ready)="onReady($event)"></ckeditor> -->
+        <br />
+        <div class="d-flex justify-content-end p-1">
+          <button class="btn btn-danger" type="button">
+            <em class="fa fa-trash fa-fw"></em>BORRAR</button>
+            <button class="btn btn-success ml-2" type="button">
+              <em class="fa fa-print fa-fw"></em>IMPRIMIR</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4">
+    <div class="w-100 card card-body">
+      <div class="d-flex justify-content-end align-items-center p-1">
+        <button (click)="GetDtosCandidatos()" class="btn btn-xs btn-success ml-2 mat-elevation-z8">
+          <i class="icon-refresh"></i>
+        </button>
+      </div>
+      <div class="d-flex justify-content-between align-items-center p-1 w-100">
+        <div class="input-group long mr-2">
+          <input (input)="Search($event.target.value)" class="form-control form-control-sm" type="text"
+            placeholder="Buscar por nombre" />
+          <span class="input-group-btn">
+            <button class="btn btn-secondary btn-sm" type="submit">
+              <i class="fa fa-search"></i>
+            </button>
+          </span>
+        </div>
+        <div class="d-flex justify-content-end w-100">
+          <i class="fa fa-users text-warning"></i>
+          <span class="badge badge-info ml-1 mr-2">{{candidatos.length}}</span>
+        </div>
+      </div>
+      <ng-scrollbar [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+        [disabled]="disabled">
+        <div class="mt-1 mr-1" style="height: 450px;">
+          <ng-container *ngFor="let p of rows; let rowIndex = index;">
+            <div class="card">
+              <img class="w-100" src="assets/img/bg-color.png" alt="" />
+              <div class="card-body">
+                <div class="media">
+                  <img class="align-self-start mx-2 circle thumb32" src="/assets/img/user/default-user.png" alt="..."
+                    (error)="errorImg(p)">
+                  <div class="media-body text-truncate">
+                    <p class="mb-1 text-info fontRoboto">
+                      <span>{{p.nom | uppercase}}</span><br>
+                      <span>{{p.apellidoPaterno | uppercase}} {{p.apellidoMaterno | uppercase}}</span>
+                    </p>
+                    <p class="d-flex flex-column text-sm text-muted">
+                      <span><span class="text-muted">CURP </span> {{p.curp}} </span>
+                      <span><span class="text-muted">FECHA NAC. </span> {{p.edad | date: 'yyyy-MM-dd'}} </span>
+                      <span><span class="text-muted">GENERO </span>{{p.genero}} </span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-scrollbar>
+    </div>
+
+  </div>
+</div>

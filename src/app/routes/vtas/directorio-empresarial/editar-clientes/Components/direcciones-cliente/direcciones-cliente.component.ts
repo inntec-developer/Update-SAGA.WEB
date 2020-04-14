@@ -48,6 +48,31 @@ export class DireccionesClienteComponent implements OnInit {
 
   public Usuario: any;
 
+  public config: any = {
+    paging: true,
+    filtering: { filterString: '' },
+    className: ['table table-sm table-hover mb-0']
+  }
+
+  public rowsD: Array<any> = [];
+  public columnsD: Array<any> = [
+    { title: 'Tipo Dirección', sorting: 'desc', className: 'text-success text-center', name: 'tipoDireccion',
+    filtering: { filterString: '', placeholder: 'Tipo' } },
+    { title: 'Código Postal', sorting: 'desc', className: 'text-success text-center', name: 'codigoPostal',
+    filtering: { filterString: '', placeholder: 'C.P.' } },
+    { title: 'País', sorting: 'desc', className: 'text-success text-center', name: 'pais',
+    filtering: { filterString: '', placeholder: 'Pias' } },
+    { title: 'Estado', sorting: 'desc', className: 'text-success text-center', name: 'estado',
+    filtering: { filterString: '', placeholder: 'Estado' } },
+    { title: 'Municipio', className: 'text-center', name: 'municipio', filtering: { filterString: '', placeholder: 'Municipio' } },
+    { title: 'Colonia', className: 'text-center', name: 'colonia', filtering: { filterString: '', placeholder: 'Colonia' } },
+    { title: 'Calle', className: 'text-center', name: 'calle', filtering: { filterString: '', placeholder: 'Calle' } },
+    { title: 'Exterior', className: 'text-center', name: 'numeroExterior', filtering: { filterString: '', placeholder: 'Exterior' } },
+    { title: 'Interior', className: 'text-center', name: 'numeroInterior', filtering: { filterString: '', placeholder: 'Interior' } },
+    { title: 'Referencia', className: 'text-center', name: 'referencia', filtering: { filterString: '', placeholder: 'Referencia' } },
+    { title: 'Principal', className: 'text-center', name: 'esPrincipal', filtering: { filterString: '', placeholder: 'Principal' } },
+    { title: 'Activo', className: 'text-center', name: 'activo', filtering: { filterString: '', placeholder: 'Activo' } },
+  ];
 
 
   constructor(
@@ -344,27 +369,6 @@ export class DireccionesClienteComponent implements OnInit {
   public numPagesD: number = 1;
   public lengthD: number = 0;
 
-  public config: any = {
-    paging: true,
-    filtering: { filterString: '' },
-    className: ['table table-sm table-hover mb-0']
-  }
-
-  public rowsD: Array<any> = [];
-  public columnsD: Array<any> = [
-    { title: 'Tipo Dirección', sorting: 'desc', className: 'text-success text-center', name: 'tipoDireccion', filtering: { filterString: '', placeholder: 'Tipo' } },
-    { title: 'Código Postal', sorting: 'desc', className: 'text-success text-center', name: 'codigoPostal', filtering: { filterString: '', placeholder: 'C.P.' } },
-    { title: 'País', sorting: 'desc', className: 'text-success text-center', name: 'pais', filtering: { filterString: '', placeholder: 'Pias' } },
-    { title: 'Estado', sorting: 'desc', className: 'text-success text-center', name: 'estado', filtering: { filterString: '', placeholder: 'Estado' } },
-    { title: 'Municipio', className: 'text-info text-center', name: 'municipio', filtering: { filterString: '', placeholder: 'Municipio' } },
-    { title: 'Colonia', className: 'text-info text-center', name: 'colonia', filtering: { filterString: '', placeholder: 'Colonia' } },
-    { title: 'Calle', className: 'text-info text-center', name: 'calle', filtering: { filterString: '', placeholder: 'Calle' } },
-    { title: 'Exterior', className: 'text-info text-center', name: 'numeroExterior', filtering: { filterString: '', placeholder: 'Exterior' } },
-    { title: 'Interior', className: 'text-info text-center', name: 'numeroInterior', filtering: { filterString: '', placeholder: 'Interior' } },
-    { title: 'Referencia', className: 'text-info text-center', name: 'referencia', filtering: { filterString: '', placeholder: 'Referencia' } },
-    { title: 'Principal', className: 'text-info text-center', name: 'esPrincipal', filtering: { filterString: '', placeholder: 'Principal' } },
-    { title: 'Activo', className: 'text-info text-center', name: 'activo', filtering: { filterString: '', placeholder: 'Activo' } },
-  ];
 
   public changePageD(page: any, data: Array<any> = this.Direcciones): Array<any> {
     let start = (page.page - 1) * page.itemsPerPage;

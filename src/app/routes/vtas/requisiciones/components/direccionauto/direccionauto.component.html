@@ -1,8 +1,8 @@
 <mat-form-field class="fieldautocomplete-full-width">
   <input matInput placeholder="Dirección" aria-label="Address" [matAutocomplete]="auto" [formControl]="AddressCtrl" (blur)="SendIdDireccion()" required>
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let address of filteredAddress | async" [value]="address.calle">
-          <span>{{address.estado +' - '+ address.calle }}</span>
+      <mat-option *ngFor="let address of filteredAddress | async" [value]="address.calle.toUpperCase()">
+          <span class="text-uppercase">{{address.estado +' - '+ address.calle }}</span>
       </mat-option>
     </mat-autocomplete>
     <mat-hint align="end">Seleccione la Direcci&oacute;n a reclutar</mat-hint>

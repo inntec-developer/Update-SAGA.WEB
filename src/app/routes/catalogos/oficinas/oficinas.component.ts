@@ -3,10 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { ApiConection } from '../../../service/api-conection.service';
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
-import {Http} from '@angular/http';
-import {MatTableDataSource} from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { window } from 'rxjs-compat/operator/window';
+import { MatTableDataSource } from '@angular/material/table';
 
 declare var $: any;
 

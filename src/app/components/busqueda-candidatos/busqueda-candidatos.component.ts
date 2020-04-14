@@ -90,13 +90,13 @@ export class BusquedaCandidatosComponent implements OnInit {
   idiomasCtrl: FormControl;
   filteredidiomas: Observable<any[]>;
   filtroidioma: any;
-  loading: boolean = false;
+  loading = false;
 
   toolTipePC: string;
   alerts: any;
   loadingPC: boolean;
   palabraClave = '';
-
+verBusqueda = false;
   constructor(
     private service: CandidatosService
   ) {

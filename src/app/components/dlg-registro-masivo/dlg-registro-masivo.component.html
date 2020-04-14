@@ -1,303 +1,272 @@
-<div class="d-flex justify-content-between">
-<h4 class="text-warning float-left mt-1">PERFIL: {{data.vacante | uppercase}} - RECLUTADOR: {{data.reclutador}}</h4>
-<button type="button" class="btn btn-xs btn-danger btn-circle float-right mt-0" (click) ="close()"><i class="fa fa-times"></i></button>
+<div class="content-heading">
+    <span>REGISTRO MASIVO</span>
+    <ol class="breadcrumb ml-auto">
+        <li class="breadcrumb-item">
+            <a class="text-info" (click)="Regresar()" style="cursor: pointer;">VACANTES RECLUTADOR</a>
+        </li>
+        <li class="breadcrumb-item active text-muted">REGISTRO CANDIDATOS</li>
+    </ol>
 </div>
-<hr>
-<!-- <mat-dialog-content> -->
-    <div class="card card-body">
-<form novalidate #f="ngForm">
-        <!-- <div class="col-md-4"> -->
+<div class="card">
+    <h5 class="card-header d-flex justify-content-between align-items-center p-1 bg-info">PERFIL {{data.vacante | uppercase}} <span>RECLUTADOR {{data.reclutador | uppercase}}</span>
+    </h5>
+    <div class="card-body fontLato">
+        <form [formGroup]="formRegister" (ngSubmit)="ValidarFormaRegistro()" novalidate>
             <div class="d-flex justify-content-between">
-                <div class="form-group">
-                    <label class="text-muted" for="nombre">NOMBRE</label>
-                    <input type="text" class="form-control form-control-sm long" placeholder="Nombre *" [(ngModel)]="nom" name="nombre" required [class.valido]="nom.length >= 1">
-                            <!-- <small *ngIf="nom.length == 0" class="text-danger">
-                                      El campo nombre es requerido
-                                    </small> -->
-                </div>
-                <div class="form-group">
-                    <label class="text-muted" for="ap">APELLIDO PATERNO</label>
-                    <input type="text" class="form-control form-control-sm long" placeholder="Apellido paterno *" [(ngModel)]="ap" name="app" required [class.valido]="ap.length >= 1" />
-                </div>
-                <div class="form-group">
-                    <label class="text-muted" for="ap">APELLIDO MATERNO</label>
-                    <input type="text" class="form-control form-control-sm long" placeholder="Apellido materno *" [(ngModel)]="am" name="amm" required [class.valido]="am.length >= 1" />
-                </div>
-
+                <mat-form-field class="mr-3">
+                    <input matInput (change)="GenerarCurp(null)" type="text" placeholder="NOMBRE"
+                        formControlName="name">
+                </mat-form-field>
+                <mat-form-field class="mr-3">
+                    <input matInput (change)="GenerarCurp(null)" type="text" placeholder="APELLIDO PATERNO"
+                        formControlName="apellidoP" />
+                </mat-form-field>
+                <mat-form-field class="mr-3">
+                    <input matInput (change)="GenerarCurp(null)" type="text" placeholder="APELLIDO MATERNO"
+                        formControlName="apellidoM" />
+                </mat-form-field>
             </div>
             <mat-divider></mat-divider>
-            <!-- </div> -->
-            <!-- <div class="col-sm-4 col-md-4"> -->
-            <div class="d-flex justify-content-between mt-3">
-                    <div class="form-group">
-                            <label class="text-muted">GENERO</label>
-                            <div class="input-group">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" [(ngModel)]="model.options" value="2" name="mujer" >
-                                <label class="form-check-label" for="inlineRadio1">MUJER</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" [(ngModel)]="model.options" value="1" name="hombre">
-                                <label class="form-check-label" for="inlineRadio2">HOMBRE</label>
-                            </div>
-                            </div>
-                            <small *ngIf="model.options == '0'" class="text-danger">Debe seleccionar g&eacute;nero</small>
-                        </div>
-                <div class="dateLong">
+            <div class="row mt-3">
+                <div class="col-sm-3 col-md-3">
+                    <!--GENERO-->
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <mat-label>GENERO</mat-label>
+                        <mat-radio-group formControlName="gender">
+                            <mat-radio-button (change)="GenerarCurp(null)" value="2"><small>MUJER</small>
+                            </mat-radio-button>
+                            <mat-radio-button (change)="GenerarCurp(null)" value="1" class="ml-2"><small>HOMBRE</small>
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-3">
                     <mat-form-field>
-                    <input matInput [matDatepicker]="picker" placeholder="Fecha de Nacimiento" [(ngModel)]="date" name="edad" (dateChange)="validarFecha($event.value)">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                    <small *ngIf="edad >= 18" class="text-info">Edad {{edad}}</small>
-                    <small *ngIf="edad < 18" class="text-danger">El usuario debe ser mayor de edad</small>
+                        <mat-label>FECHA DE NACIMIENTO</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="dateBirth"
+                            (dateChange)="validarFecha($event.value);GenerarCurp(null);">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <small *ngIf="edad >= 18" class="text-info">Edad {{edad}}</small>
+                    </mat-form-field>
+                    <!-- <small *ngIf="edad < 18" class="text-danger">El usuario debe ser mayor de edad</small> -->
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    <mat-form-field>
+                        <mat-label>LUGAR DE NACIMIENTO</mat-label>
+                        <mat-select formControlName="estado" (selectionChange)="GenerarCurp($event.value)">
+                            <mat-option *ngFor="let e of estados" [value]=e.clave>
+                                {{e.estado | uppercase}}
+                            </mat-option>
+                        </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="form-group">
-                        <label class="text-muted">LUGAR DE NACIMIENTO</label>
-                        <select class="form-control form-control-sm long" [(ngModel)]="estadoId" name="estado" required
-                               [class.requerido]="estadoId == 0" [class.valido]="estadoId > 0" (change)="GenerarCurp()">
-                                <option [value]=0 selected disabled>Selecciona Estado de Nacimiento</option>
-                                <option *ngFor="let e of estados" [value]=e.id>{{e.estado | uppercase}}</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                            <label class="text-muted">CURP</label>
-                             <div class="input-group long">
-                                <input type="text" class="form-control form-control-sm" placeholder="CURP *" [(ngModel)]="curp" name="curpp" required
-                                    [class.requerido]="curp.length == 0" [class.valido]="curp.length >= 16" minlength="16" maxlength=18 />
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-xs btn-info" (click)="GenerarCurp()"  container="body" placement="top" tooltip="Generar CURP">
-                                          <i class="fa fa-file-text-o" aria-hidden="true"></i></button>
-                                    </div>
-                                </div>
-                        </div>
+                <div class="col-sm-3 col-md-3">
+                    <mat-form-field>
+                        <input matInput type="text" placeholder="CURP" formControlName="curp" minlength="16"
+                            maxlength=18 />
+                        <em matSuffix class="fa fa-refresh text-info em-button" container="body" placement="top"
+                            tooltip="Generar CURP" (click)="GenerarCurp(formRegister.get('estado').value)"></em>
+                    </mat-form-field>
+                </div>
             </div>
             <mat-divider></mat-divider>
-        <!-- </div> -->
-     <!-- <div class="col-sm-4 col-md-4"> -->
-            <div class="d-flex justify-content-between mt-3">
-                <div class="form-group with-focus">
-                    <label class="text-muted" for="email">EMAIL</label>
-                    <div class="input-group long">
-                    <input type="email" class="form-control form-control-sm" (blur)="ValidarEmail(email)" placeholder="Email *" value="" name="emaill" [(ngModel)]="email" [class.requerido]="email.length < 7" [class.valido]="email.length >= 7"/>
-                    <div class="input-group-append">
-                        <div class="input-group-text" tooltip="Registrar con Email" placement="top" container="body">
-                        <input type="radio" [(ngModel)]="modelOpc.options" name="modelOpc1" value="1" (click)="valOpcionReg(1);">
-                        </div>
-                      </div>
-                    </div>
-                    <small class="text-danger">{{valEmail}}</small>
+            <div class="row mt-3">
+                <div class="col-sm-6 col-md-6">
+                    <mat-radio-group formControlName="registro">
+                        <mat-radio-button (change)="formaRegistro(1)" value="1">
+                            <mat-form-field class="longEmail">
+                                <input matInput type="email" placeholder="EMAIL" formControlName="email" />
+                            </mat-form-field>
+                        </mat-radio-button>
+                        <mat-radio-button (change)="formaRegistro(2)" value="2" class="ml-3">
+                            <mat-form-field class="ladaLong">
+                                <input matInput type="tel" minlength="2" maxlength="3" placeholder="LADA"
+                                    formControlName="lada" />
+                            </mat-form-field>
+                            <mat-form-field class="longTel ml-3">
+                                <input matInput type="tel" minlength="7" maxlength="8" placeholder="TELEFONO"
+                                    formControlName="telefono" />
+                            </mat-form-field>
+                        </mat-radio-button>
+                    </mat-radio-group>
                 </div>
-                <div class="d-flex justify-content-between">
-                    <div class="form-group mr-1">
-                        <label class="text-muted" for="txtLada">LADA</label>
-                        <div class="input-group">
-                            <input type="text" minlength="2" maxlength="3" class="form-control form-control-sm ladaLong"
-                                placeholder="Lada *" [(ngModel)]="txtLada" name="Lada" [class.requerido]="txtLada.length < 2" [class.valido]="txtLada.length >= 2"/>
-                        </div>
-                    </div>
-                    <div class="form-group long">
-                        <label class="text-muted" for="txtPhone">TEL&Eacute;FONO</label>
-                        <div class="input-group">
-                            <input (blur)="ValidarTelefono()" type="text" minlength="7" maxlength="8" class="form-control form-control-sm" placeholder="Telefono *"
-                                [(ngModel)]="txtPhone" name="Phone" [class.requerido]="txtPhone.length < 7" [class.valido]="txtPhone.length > 6"
-                            />
-                            <div class="input-group-append">
-                                <div class="input-group-text" tooltip="Registrar con Tel&eacute;fono" placement="top" container="body">
-                                    <input type="radio" [(ngModel)]="modelOpc.options" name="modelOpc2" value="2" (click)="valOpcionReg(2);">
-                                </div>
-                            </div>
-                        </div>
-                        <small class="text-danger">{{valTel}}</small>
-                    </div>
-
+                <div class="col-sm-3 col-md-3">
+                    <mat-form-field>
+                        <mat-label>HORARIOS VACANTE</mat-label>
+                        <mat-select formControlName="horariosCtrl">
+                            <mat-option *ngFor="let h of horarios" [value]="h.id">
+                                {{h.nombre | uppercase}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
-
-                <div class="mt-4">
-                <button type="button" class="btn btn-xs btn-danger ml-1 float-right mat-elevation-z8" container="body" placement="bottom" tooltip="Borrar campos" (click)="BorrarCampos()">
-                        <i class="fa fa-trash" aria-hidden="true"></i>
-                        </button>
-
+                <div class="col-sm-3 col-md-3">
+                    <mat-form-field>
+                        <mat-label>FUENTE DE RECLUTAMIENTO</mat-label>
+                        <mat-select formControlName="submedios">
+                            <mat-optgroup *ngFor="let m of medios" [label]="m.nombre | uppercase"
+                                [disabled]="m.disabled">
+                                <mat-option *ngFor="let sub of m.medios" [value]="sub.tipoMediosId">
+                                    {{sub.tipoNombre | uppercase}}
+                                </mat-option>
+                            </mat-optgroup>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div *ngIf="formRegister.get('telefono').errors">
+                <p *ngIf="formRegister.get('telefono').hasError('invalidNumber')">
+                    El valor debe ser num&eacute;rico.
+                </p>
+                <p *ngIf="formRegister.get('telefono').hasError('existNumber')">
+                    El n&uacute;mero de telefono ya se encuentra registrado
+                </p>
+                <p *ngIf="formRegister.get('telefono').hasError('sameNumber')">
+                    El n&uacute;mero de telefono no se debe repetir
+                </p>
+            </div>
+            <div *ngIf="formRegister.get('email').errors">
+                <p *ngIf="formRegister.get('email').hasError('email')">
+                    El email no tiene un formato v&aacute;lido
+                </p>
+                <p *ngIf="formRegister.get('email').hasError('existEmail')">
+                    El email proporcionado ya se encuentra registrado
+                </p>
+                <p *ngIf="formRegister.get('email').hasError('sameEmail')">
+                    El email proporcionado esta repetido
+                </p>
+            </div>
+            <div class="d-flex justify-content-end align-items-center bg-light p-1 mt-4">
+                <button type="button" [disabled]="rowIndex < 0" [ngClass]="rowIndex < 0 ? 'disabled' : 'btn-danger'"
+                    class="btn btn-labeled d-flex justify-content-between align-items-center mat-elevation-z8"
+                    (click)="BorrarCampos()">
+                    <i class="fa fa-trash btn-label" aria-hidden="true"></i>
+                    <span class="font-weight-bold mb-1">BORRAR CAMPOS</span>
+                </button>
                 <button container="body" placement="bottom" tooltip="Guardar cambios"
-                [disabled]="f.invalid || edad < 18 || model.options == '0' || modelOpc.options == '0' || rowIndex == -1 || email.length == 0 || txtPhone.length == 0" type="button"
-                [ngClass]="f.invalid || edad < 18 || model.options == '0' || modelOpc.options == '0' || rowIndex == -1 || email.length == 0 || txtPhone.length == 0 ? 'disabled' : 'btn-warning'" class="btn btn-xs float-right ml-1 mat-elevation-z8" (click)="EditarCandidato()">
-                    <i class="fa fa-floppy-o" aria-hidden="true"></i>
-        </button>
-                <button container="body" placement="bottom" tooltip="Agregar" [disabled]="f.invalid || edad < 18 || model.options == '0' || modelOpc.options == '0' || rowIndex != -1 || email.length == 0 || txtPhone.length == 0"
-                type="button" [ngClass]="f.invalid || edad < 18 || model.options == '0' || modelOpc.options == '0' || rowIndex != -1 || email.length == 0 || txtPhone.length == 0 ? 'disabled' : 'btn-success'" class="btn btn-xs float-right mat-elevation-z8" (click)="GetHorarioRequis()">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
+                    [disabled]="!formRegister.valid || !editar" type="submit"
+                    [ngClass]="!formRegister.valid || !editar ? 'disabled' : 'btn-warning'"
+                    class="btn btn-labeled d-flex justify-content-between align-items-center mat-elevation-z8 ml-3">
+                    <i class="fa fa-floppy-o btn-label" aria-hidden="true"></i>
+                    <span class="font-weight-bold mb-1">GUARDAR CAMBIOS</span>
+                </button>
+                <button type="submit" placement="bottom" tooltip="Agregar" [disabled]="!formRegister.valid || editar"
+                    [ngClass]="!formRegister.valid || editar ? 'disabled' : 'btn-success'"
+                    class="btn btn-labeled d-flex justify-content-between align-items-center mat-elevation-z8 ml-3">
+                    <i class="fa fa-plus btn-label"></i>
+                    <span class="font-weight-bold mb-1">AGREGAR</span>
                 </button>
             </div>
-            </div>
-        <!-- </div> -->
-
-       <mat-divider></mat-divider>
-       <div class="row">
-
-        <div class="col-md-12 col-lg-12">
+        </form>
+        <br>
+        <mat-divider></mat-divider>
+        <br>
+        <div class="d-flex justify-content-start">
             <div class="card card-body mat-elevation-z8">
+                <div *ngIf="spinner" class="spinner">
+                    <mat-progress-spinner [color]="color" [mode]="mode" [value]="value">
+                    </mat-progress-spinner>
+                </div>
                 <div class="row">
                     <div class="col">
-                    <button type="button" [disabled]="dataSource.length == 0" [ngClass]="dataSource.length == 0 ? 'disabled' : 'btn-success'" class="btn btn-labeled mat-elevation-z8 mt-1 d-flex justify-content-between" (click)="cubrirCandidatos()">
-                            <i class="fa fa-user-circle btn-label align-self-center"></i><span class="font-weight-bold mb-1">Cubrir Candidatos</span></button>
-<small *ngIf="data.contratados + this.dataSource.length == data.nv" class="text-warning"><i class="fa fa-exclamation-triangle mr-1" aria-hidden="true"></i>El total de candidatos apartados es el mismo al total de vacantes disponibles</small>
-                          <button *ngIf="dataSource.length > 0" (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
-                          class="btn btn-xs btn-info float-right mat-elevation-z8 mb-1">
-                          <em class="fa fa-eraser"></em>
+                        <button *ngIf="tipoUsuario != 15" type="button" [disabled]="dataSource.length == 0"
+                            [ngClass]="dataSource.length == 0 ? 'disabled' : 'btn-success'"
+                            class="btn btn-labeled mat-elevation-z8 mt-1 d-flex justify-content-between"
+                            (click)="cubrirCandidatos()">
+                            <i class="fa fa-user-circle btn-label align-self-center"></i><span
+                                class="font-weight-bold mb-1">Cubrir Candidatos</span></button>
+                        <small *ngIf="data.contratados + this.dataSource.length == data.nv" class="text-warning"><i
+                                class="fa fa-exclamation-triangle mr-1" aria-hidden="true"></i>El total de
+                            candidatos apartados es el mismo al total de vacantes disponibles</small>
+                        <small *ngIf="alertaVacantes" class="text-warning"><i class="fa fa-exclamation-triangle mr-1"
+                                aria-hidden="true"></i>El total de
+                            candidatos apartados es el mayor o igual al total de vacantes disponibles</small>
+                        <button *ngIf="dataSource.length > 0" (click)="clearfilters()" container="body"
+                            placement="bottom" tooltip="Limpiar Filtros"
+                            class="btn btn-xs btn-info float-right mat-elevation-z8 mb-1">
+                            <em class="fa fa-eraser"></em>
                         </button>
-                        <span class="text-muted font-weight-bold float-right text-uppercase mr-4 mb-1">Total de Candidatos
-                                <span class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span>
-                              </span>
-                        <span class="text-muted font-weight-bold float-right text-uppercase mr-2 mb-1">Cubiertos/Vacantes
-                                <span class="badge badge-pill badge-success ml-1">{{data.contratados}} / {{data.nv}}</span>
-                              </span>
-                        </div>
+                        <span class="text-muted font-weight-bold float-right text-uppercase mr-4 mb-1">Total de
+                            Candidatos
+                            <span class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span>
+                        </span>
+                        <span
+                            class="text-muted font-weight-bold float-right text-uppercase mr-2 mb-1">Cubiertos/Vacantes
+                            <span class="badge badge-pill badge-success ml-1">{{data.contratados}} /
+                                {{data.nv}}</span>
+                        </span>
                     </div>
-                   
+                </div>
                 <table *ngIf="dataSource.length > 0 else NotCandidatos" class="table border-top">
-                        <thead>
-                          <tr>
-
+                    <thead>
+                        <tr>
                             <th *ngFor="let column of columns" ngClass="{{column.className || ''}}">
-                              <small>{{column.title | uppercase}}</small>
-
+                                <small>{{column.title | uppercase}}</small>
                             </th>
-                          </tr>
-                          <tr>
+                        </tr>
+                        <tr>
                             <th *ngFor="let column of columns">
-                              <input *ngIf="column.filtering" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)" placeholder="{{column.filtering.placeholder}}"
-                                class="form-control form-control-sm" id="{{column.name}}">
+                                <input *ngIf="column.filtering" [ngTableFiltering]="column.filtering"
+                                    (tableChanged)="onChangeTable(config)"
+                                    placeholder="{{column.filtering.placeholder}}" class="form-control form-control-sm"
+                                    id="{{column.name}}">
                             </th>
-
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
-                            [disabled]="disabled">
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact"
+                            [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
                             <div style="height: 300px;">
-                              <tr *ngFor="let row of rows; let rowIndex = index" (dblclick)="onCellClick(row, rowIndex,f)" container="body" placement="bottom" tooltip="doble click para editar"  [class.bg-info]="row.selected">
-                               <td class="text-center">{{row.horario}}</td>
-                                <td class="text-center">{{row.curp}}
-                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-curp'] = true" *ngIf="!editing[rowIndex + '-curp']">
-
-                                    </span>
-                                    <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'curp', rowIndex, row)" *ngIf="editing[rowIndex + '-curp']" type="text" [value]=row.curp /> -->
-                                </td>
-                                <td class="text-center">{{row.nombre}}
-                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
-
-                                    </span>
-                                    <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'nombre', rowIndex, row)" *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=row.nombre /> -->
-                                </td>
-                                <td class="text-center">{{row.apellidoPaterno}}
-                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoPaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoPaterno']">
-
-                                    </span>
-                                    <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'apellidoPaterno', rowIndex, row)" *ngIf="editing[rowIndex + '-apellidoPaterno']" type="text" [value]=row.apellidoPaterno /> -->
-                                </td>
-                                <td class="text-center"> {{row.apellidoMaterno}}
-                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-apellidoMaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoMaterno']">
-
-                                    </span>
-                                    <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'apellidoMaterno', rowIndex, row)" *ngIf="editing[rowIndex + '-apellidoMaterno']" type="text" [value]=row.apellidoMaterno /> -->
-                                </td>
-                                <td class="text-center"> {{row.fechaNac | date:'dd/MM/yyyy'}}
-                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-fechaNac'] = true" *ngIf="!editing[rowIndex + '-fechaNac']">
-
-                                    </span>
-                                    <mat-form-field *ngIf="editing[rowIndex + '-fechaNac']">
-                                       <input matInput [matDatepicker]="picker2" placeholder="Fecha de Nacimiento" name="edad" (dateChange)="validarFecha($event)" (blur)="updateValue($event, 'fechaNac', rowIndex, row)" *ngIf="editing[rowIndex + '-fechaNac']">
-                                       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                                       <mat-datepicker #picker2></mat-datepicker>
-                                       <small *ngIf="edad >= 18" class="text-info">Edad {{edad}}</small>
-                                       <small *ngIf="edad < 18" class="text-danger">El usuario debe ser mayor de edad</small>
-                                    </mat-form-field> -->
-                                </td>
-                                <td class="text-center"> {{row.genero}}
-                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-genero'] = true" *ngIf="!editing[rowIndex + '-genero']">
-
-                                    </span>
-                                    <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'genero', rowIndex, row)" *ngIf="editing[rowIndex + '-genero']" type="text" [value]=row.genero /> -->
-                                </td>
-                                <td class="text-center">{{row.estado}}
-                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-estado'] = true" *ngIf="!editing[rowIndex + '-estado']">
-
-                                    </span>
-                                    <select class="form-control form-control-sm" name="estado" (change)="GetMunicipio($event.target.value)" autofocus (blur)="updateValue($event, 'estado', rowIndex, row)" *ngIf="editing[rowIndex + '-estado']" type="text" [value]=row.estadoId>
-                                        <option [value]=0 selected disabled>Selecciona Estado de Nacimiento</option>
-                                        <option *ngFor="let e of estados" [value]=e.id>{{e.estado | uppercase}}</option>
-                                    </select> -->
-                                 </td>
-                                <!-- <td class="text-center">{{row.municipio}} -->
-                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-municipio'] = true" *ngIf="!editing[rowIndex + '-municipio']">
-
-                                    </span>
-                                    <select class="form-control form-control-sm" name="municipio" autofocus (blur)="updateValue($event, 'municipio', rowIndex, row)" *ngIf="editing[rowIndex + '-municipio']" type="text" [value]=row.municipioId>
-                                            <option [value]=0 selected disabled>Selecciona Estado de Nacimiento</option>
-                                            <option *ngFor="let e of municipios" [value]=e.id>{{e.municipio | uppercase}}</option>
-                                    </select> -->
-                                <!-- </td> -->
-                                <td class="text-center">{{row.email}}
-                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-email'] = true" *ngIf="!editing[rowIndex + '-email']">
-
-                                    </span>
-                                    <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'email', rowIndex, row)" *ngIf="editing[rowIndex + '-email']" type="text" [value]=row.email /> -->
-                                </td>
-                                <td class="text-center">{{row.telefono}}
-                                    <!-- <span container="body" placement="bottom" tooltip="Doble click para editar" (dblclick)="editing[rowIndex + '-telefono'] = true" *ngIf="!editing[rowIndex + '-telefono']">
-
-                                    </span>
-                                    <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'telefono', rowIndex, row)" *ngIf="editing[rowIndex + '-telefono']" type="text" [value]=row.telefono /> -->
-                                </td>
-                                <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength"
-                                    class='mr-1 badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42"
-                                    [class.badge-danger]="row.estatusId == 28">
-                                    <span *ngIf="row.estatusId != 28"> {{row.estatus | uppercase }}</span>
-                                    <span *ngIf="row.estatusId == 28">POSTULADO</span>
-                                  </span></td>
-                                <ng-template #toLength>
-                                  <span class='px-1 mr-1 badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42"
-                                    [class.badge-danger]="row.estatusId == 28" placement="bottom" tooltip="{{row.estatus | uppercase}}"
-                                    container="body">{{row.estatus | slice:0:6 | uppercase }} ... </span>
-                                </ng-template>
-                                <!-- <td>
-
-                <button container="body" placement="bottom" tooltip="Borrar Candidato" type="button" class="btn btn-xs btn-danger mat-elevation-z8" (click)="BorrarCandidato(rowIndex)">
-                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-            </button>
-
-                                </td> -->
-                              </tr>
+                                <tr *ngFor="let row of rows; let rowIndex = index"
+                                    (dblclick)="onCellClick(row, rowIndex,f)" container="body" placement="bottom"
+                                    tooltip="doble click para editar" [class.bg-info]="row.selected">
+                                    <td class="text-center">{{row.horario}}</td>
+                                    <td class="text-center">{{row.curp}}</td>
+                                    <td class="text-center">{{row.nombre | uppercase}}</td>
+                                    <td class="text-center">{{row.apellidoPaterno | uppercase}}</td>
+                                    <td class="text-center">{{row.apellidoMaterno | uppercase}}</td>
+                                    <td class="text-center">{{row.fechaNac | date:'dd/MM/yyyy'}}</td>
+                                    <td class="text-center">{{row.genero | uppercase}}</td>
+                                    <td class="text-center">{{row.estadoNacimiento | uppercase}}</td>
+                                    <td class="text-center">{{row.email}}</td>
+                                    <td class="text-center">{{row.lada + row.telefono}}</td>
+                                    <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength"
+                                            class='mr-1 badge badge-pill badge-info'
+                                            [class.badge-warning]="row.estatusId === 42"
+                                            [class.badge-danger]="row.estatusId == 28">
+                                            <span *ngIf="row.estatusId != 28"> {{row.estatus | uppercase }}</span>
+                                            <span *ngIf="row.estatusId == 28">POSTULADO</span>
+                                        </span></td>
+                                    <ng-template #toLength>
+                                        <span class='px-1 mr-1 badge badge-pill badge-info'
+                                            [class.badge-warning]="row.estatusId === 42"
+                                            [class.badge-danger]="row.estatusId == 28" placement="bottom"
+                                            tooltip="{{row.estatus | uppercase}}"
+                                            container="body">{{row.estatus | slice:0:6 | uppercase }} ... </span>
+                                    </ng-template>
+                                </tr>
                             </div>
-                            </ng-scrollbar>
-                        </tbody>
-                      </table>
-                      <div *ngIf="dataSource.length > 0" class="d-flex justify-content-end">
-                            <pagination *ngIf="config.paging" class="pagination-sm mr-2" [(ngModel)]="page" [totalItems]="length"
-                            [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
-                            (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
-                          </pagination>
-                      
-                        </div>
-                    </div>
+                        </ng-scrollbar>
+                    </tbody>
+                </table>
+                <div *ngIf="dataSource.length > 0" class="d-flex justify-content-end">
+                    <pagination *ngIf="config.paging" class="pagination-sm mr-2" [(ngModel)]="page"
+                        [totalItems]="length" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true"
+                        [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+                    </pagination>
+                </div>
+            </div>
         </div>
-
     </div>
-</form>
 </div>
-<!-- </mat-dialog-content>
-<mat-dialog-actions>
-        <button mat-button mat-dialog-close>No</button>
-
-      </mat-dialog-actions> -->
-
-      <!--mensaje cuando esta vacio la tabla-->
+<!--mensaje cuando esta vacio la tabla-->
 <ng-template #NotCandidatos>
-        <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
             <alert type="info">
-              <strong>Oops!</strong> A&uacute;n no cuentas con candidatos para registro.
+                <strong>Oops!</strong> A&uacute;n no cuentas con candidatos para registro.
             </alert>
-          </div>
         </div>
-      </ng-template>
+    </div>
+</ng-template>

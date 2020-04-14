@@ -40,14 +40,12 @@ export class PostulateService {
 
   constructor(private _HttpClient: HttpClient) { }
 
-  ValidarEmailCandidato(email: string) : Observable<any>
-  {
+  ValidarEmailCandidato(email: string): Observable<any> {
     let params = new HttpParams().set('email', email);
     return this._HttpClient.get(this.UrlValidarEmailCandidato, {params: params, headers: this.httpOptions.headers })
   }
-  ValidarTelCandidato(lada, telefono) : Observable<any>
-  {
-    let params = new HttpParams().set('lada', lada).set('telefono', telefono);
+  ValidarTelCandidato(lada, telefono): Observable<any> {
+    const params = new HttpParams().set('lada', lada).set('telefono', telefono);
     return this._HttpClient.get(this.UrlValidarTelCandidato, {params: params, headers: this.httpOptions.headers })
   }
   RegistrarCandidatos(data)
@@ -69,8 +67,7 @@ export class PostulateService {
     return this._HttpClient.get(this.UrlGetConteoVacante, { params: params, headers: this.httpOptions.headers })
   }
 
-  GetCandidatosCubiertos(requisicionId) : Observable<any>
-  {
+  GetCandidatosCubiertos(requisicionId): Observable<any> {
     let params = new HttpParams().set('requisicionId', requisicionId);
     return this._HttpClient.get(this.UrlGetCandidatosCubiertos, { params: params, headers: this.httpOptions.headers })
   }
@@ -78,13 +75,11 @@ export class PostulateService {
     return this._HttpClient.post(this.UrlCubrirMasivos, data, this.httpOptions );
   }
 
-  SetProcesoVacante(data)
-  {
+  SetProcesoVacante(data) {
     return this._HttpClient.post(this.UrlSetProcesoVacante, data, this.httpOptions )
   }
 
-  SetProceso(data)
-  {
+  SetProceso(data) {
     return this._HttpClient.post(this.UrlSetProceso, data, this.httpOptions )
   }
 

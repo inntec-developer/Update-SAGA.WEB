@@ -16,11 +16,6 @@ tbody tr {
   table-layout: fixed;
 }
 
-//   table thead {
-//     width: calc(100% - 1em)
-//   }
-
-
 table {
   width: 100%;
 }
@@ -84,9 +79,14 @@ table tbody tr td
 .popover{
   width: 900px !important;
 }
-
+.spinner {
+  position: absolute;
+  margin-left: 45%;
+  margin-top: 10%;
+  z-index: 9999;
+}
 ng-scrollbar {
-  --scrollbar-size: 4px;
+  --scrollbar-size: 8px;
   --scrollbar-thumb-color: rgb(94, 175, 255);
   --scrollbar-thumb-hover-color: dodgerblue;
   --scrollbar-border-radius: 4px;

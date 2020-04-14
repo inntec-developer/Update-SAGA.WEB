@@ -1,33 +1,25 @@
 <div class="content-heading">
-  <div>
-    Nueva Requisici&oacute;n
-    <span class="text-sm d-none d-sm-block">Generador de Requisiciones.</span>
-  </div>
-  <!-- Breadcrumb right aligned-->
+  <span class="text-muted mt-2">GENERADOR DE REQUISICIONES</span>
   <ol class="breadcrumb ml-auto">
-    <li class="breadcrumb-item"><a [routerLink]="['/home']">Inicio</a></li>
-    <li class="breadcrumb-item"><a [routerLink]="['/ventas/requisicion']">Requisiciones</a></li>
-    <li class="breadcrumb-item active">Nueva Requisicion</li>
+    <li class="breadcrumb-item"><a [routerLink]="['/ventas/requisicion']">REQUISICIONES</a></li>
+    <li class="breadcrumb-item active">NUEVA REQUISICI&Oacute;N</li>
   </ol>
 </div>
-
-<div *ngIf="createRequi">
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md-12">
-        <app-dt-horarios [Horarios]="Horarios" [Requi]="true" [EstatusRequi]="EstatusRequi"
-          [TipoReclutamiento]="TipoReclutamiento" (NumeroVacantes)="NumeroVacantes = $event"></app-dt-horarios>
-      </div>
+<div class="card-body">
+  <div class="row">
+    <div class="col-md-12">
+      <app-dt-horarios [Horarios]="Horarios" [Requi]="true" [EstatusRequi]="EstatusRequi"
+        [TipoReclutamiento]="TipoReclutamiento" (NumeroVacantes)="NumeroVacantes = $event"></app-dt-horarios>
     </div>
   </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md-12">
-        <app-update-info-requi [Folios]="folio" [NumeroVacantes]="NumeroVacantes"></app-update-info-requi>
-      </div>
-    </div>
-  </div>
-  <app-view-cuerpo-requi [Requisicion]="requisicionId" [CreateRequi]="createRequi"></app-view-cuerpo-requi>
 </div>
+<div class="card-body">
+  <div class="row">
+    <div class="col-md-12">
+      <app-update-info-requi [Folios]="folio" [NumeroVacantes]="NumeroVacantes"></app-update-info-requi>
+    </div>
+  </div>
+</div>
+<app-view-cuerpo-requi [Requisicion]="requisicionId" [CreateRequi]="true"></app-view-cuerpo-requi>
 
 <ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>

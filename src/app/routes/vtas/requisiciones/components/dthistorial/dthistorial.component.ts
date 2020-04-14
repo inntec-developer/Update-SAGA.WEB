@@ -1,3 +1,4 @@
+import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, Input } from '@angular/core';
 import { RequisicionesService } from '../../../../../service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -6,20 +7,24 @@ import { DatePipe } from '@angular/common';
 import { ExcelService } from '../../../../../service/ExcelService/excel.service';
 import { PostulateService } from '../../../../../service/SeguimientoVacante/postulate.service';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
+import { ComentarioVacanteComponent } from '../../../../../components/comentario-vacante/comentario-vacante.component';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dthistorial',
   templateUrl: './dthistorial.component.html',
-  styleUrls: ['./dthistorial.component.scss']
+  styleUrls: ['./dthistorial.component.scss'],
+  providers: [DatePipe]
 })
 export class DTHistorialComponent implements OnInit {
-@Input() ventas = false;
+  ventas = false;
   // scroll
   disabled = false;
   compact = false;
   invertX = false;
   invertY = false;
-  shown = 'hover';
+  shown = 'shown';
+  imprimir = false;
 
   // Variables Globales
   public dataSource: Array<any> = [];
@@ -32,6 +37,12 @@ export class DTHistorialComponent implements OnInit {
   public numPages = 1;
   public length = 0;
 
+    // spinner-material
+    color = 'warning';
+    mode = 'indeterminate';
+    value = 60;
+    spinner = true;
+
   showFilterRow: boolean;
   registros: number;
   totalContratados = 0;
@@ -39,7 +50,7 @@ export class DTHistorialComponent implements OnInit {
   element: any = [];
   rowAux: any = [];
   reporteCandidatos = false;
-
+  loading = false;
   public config: any = {
     paging: true,
     filtering: { filterString: '' },
@@ -48,26 +59,42 @@ export class DTHistorialComponent implements OnInit {
 
   public rows: Array<any> = [];
   public columns: Array<any> = [
-    { title: 'Folio', sorting: 'desc', className: 'text-success text-center',
-    name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
+    {
+      title: 'Folio', sorting: 'desc', className: 'text-success text-center',
+      name: 'folio', filtering: { filterString: '', placeholder: 'Folio' }
+    },
     { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
     { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
     { title: 'Cub/Vac', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No.' } },
-    { title: 'Coordinacion', className: 'text-info text-center',
-    name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Coordinacion' } },
-    { title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion',
-    filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
-    { title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento',
-    filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
-    { title: 'Fecha Modificación.', className: 'text-info text-center', name: 'fch_Modificacion',
-    filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
+    {
+      title: 'Coordinacion', className: 'text-info text-center',
+      name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Coordinacion' }
+    },
+    {
+      title: 'Creación', className: 'text-info text-center', name: 'fch_Creacion',
+      filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }
+    },
+    {
+      title: 'Fecha Cump.', className: 'text-info text-center', name: 'fch_Cumplimiento',
+      filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }
+    },
+    {
+      title: 'Fecha Modificación.', className: 'text-info text-center', name: 'fch_Modificacion',
+      filtering: { filterString: '', placeholder: 'aaaa-mm-dd' }
+    },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
-    { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador',
-    filtering: { filterString: '', placeholder: 'Coordinador' } },
-    { title: 'Solicitante', className: 'text-info text-center', name: 'propietario',
-    filtering: { filterString: '', placeholder: 'Solicitante' } },
-    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores',
-    filtering: { filterString: '', placeholder: 'Reclutador' } },
+    {
+      title: 'Coordinador', className: 'text-info text-center', name: 'coordinador',
+      filtering: { filterString: '', placeholder: 'Coordinador' }
+    },
+    {
+      title: 'Solicitante', className: 'text-info text-center', name: 'propietario',
+      filtering: { filterString: '', placeholder: 'Solicitante' }
+    },
+    {
+      title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores',
+      filtering: { filterString: '', placeholder: 'Reclutador' }
+    },
   ];
   /*
  * Creacion de mensajes
@@ -80,18 +107,50 @@ export class DTHistorialComponent implements OnInit {
     showCloseButton: true,
     mouseoverTimerStop: true,
   });
-  constructor( private service: RequisicionesService, private spinner: NgxSpinnerService,
-    private settings: SettingsService,
+  constructor(private service: RequisicionesService,
+        private settings: SettingsService,
     private excelService: ExcelService,
     private postulacionservice: PostulateService,
     private toasterService: ToasterService,
-    private pipe: DatePipe ) { }
+    private dlgComent: MatDialog,
+    private pipe: DatePipe,
+    private _Router: Router,
+    private _Route: ActivatedRoute) {
+    this._Route.params.subscribe(params => {
+      if (params['ventas'] != null) {
+        this.ventas = Boolean(JSON.parse(params['ventas']));
+      }
+    });
+  }
 
   ngOnInit() {
-    this.spinner.show();
+    this.spinner = true;
     this.getRequisiciones();
   }
 
+  regresar() {
+    if (this.ventas) {
+      this._Router.navigate(
+        ['/ventas/requisicion'],
+        { skipLocationChange: true }
+      );
+    } else {
+      this._Router.navigate(
+        ['/reclutamiento/vacantesReclutador'],
+        { skipLocationChange: true }
+      );
+    }
+  }
+  showRequi() {
+    this._Router.navigate(['/ventas/visualizarRequisicion',
+    this.element.id,
+    this.element.folio,
+    this.element.vBtra,
+    this.element.tipoReclutamientoId,
+    3
+  ], { skipLocationChange: true }
+  );
+  }
   getRequisiciones() {
     this.service.GetRequisicionesHistorial(this.settings.user['id']).subscribe(data => {
       this.dataSource = data;
@@ -99,7 +158,7 @@ export class DTHistorialComponent implements OnInit {
       this.dataSource.forEach(r => {
         this.totalContratados += r.contratados;
       });
-     this.onChangeTable(this.config);
+      this.onChangeTable(this.config);
     });
   }
 
@@ -119,23 +178,23 @@ export class DTHistorialComponent implements OnInit {
             if (!Array.isArray(item[column.name])) {
               return item[column.name].toString().toLowerCase().match(column.filtering.filterString.toLowerCase());
             } else {
-                let flag = false;
-                if (item[column.name].length > 0) {
-                  item[column.name].forEach(element => {
-                    if(element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase())) {
-                      flag = true;
-                      return;
-                    }
-                  });
+              let flag = false;
+              if (item[column.name].length > 0) {
+                item[column.name].forEach(element => {
+                  if (element.toString().toLowerCase().match(column.filtering.filterString.toLowerCase())) {
+                    flag = true;
+                    return;
+                  }
+                });
 
-                  if (flag) {
-                    return item[column.name];
-                  }
-                } else {
-                  if ( 'sin asignar'.match(column.filtering.filterString.toLowerCase())) {
-                    return item[column.name];
-                  }
+                if (flag) {
+                  return item[column.name];
                 }
+              } else {
+                if ('sin asignar'.match(column.filtering.filterString.toLowerCase())) {
+                  return item[column.name];
+                }
+              }
             }
           }
         });
@@ -156,7 +215,7 @@ export class DTHistorialComponent implements OnInit {
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
     this.length = filteredData.length;
     this.registros = this.rows.length;
-    this.spinner.hide();
+    this.spinner = false;
   }
 
   public onCellClick(data: any): any {
@@ -174,17 +233,12 @@ export class DTHistorialComponent implements OnInit {
     }
   }
   public refreshTable() {
-    this.spinner.show();
+    this.spinner = true;
+    this.columns.forEach(element => {
+      element.filtering.filterString = '';
+      (<HTMLInputElement>document.getElementById(element.name + '1')).value = '';
+    });
     this.getRequisiciones();
-
-    setTimeout(() => {
-      this.columns.forEach(element => {
-        element.filtering.filterString = '';
-        (<HTMLInputElement>document.getElementById(element.name + '1')).value = '';
-      });
-      this.spinner.hide();
-    }, 800);
-    this.onChangeTable(this.config);
   }
 
   public clearfilters() {
@@ -197,17 +251,17 @@ export class DTHistorialComponent implements OnInit {
   }
   updataStatus(estatusId, estatus) {
     const datos = { estatusId: estatusId, requisicionId: this.element.id };
-      this.postulacionservice.SetProcesoVacante(datos).subscribe(data => {
-        if (data === 201) {
-          this.refreshTable();
-          this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
+    this.postulacionservice.SetProcesoVacante(datos).subscribe(data => {
+      if (data === 201) {
+        this.refreshTable();
+        this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
 
-        } else {
-          this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
-        }
+      } else {
+        this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
+      }
 
-      });
-    }
+    });
+  }
 
   exportAsXLSX() {
 
@@ -222,7 +276,7 @@ export class DTHistorialComponent implements OnInit {
         const m = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
 
 
-        if (!Array.isArray(row.reclutadores) ) {
+        if (!Array.isArray(row.reclutadores)) {
           reclutador = 'SIN ASIGNAR';
         } else if (row.reclutadores.length > 1) {
           row.reclutadores.forEach(element => {
@@ -261,6 +315,25 @@ export class DTHistorialComponent implements OnInit {
       this.excelService.exportAsExcelFile(aux, 'Historico');
       this.refreshTable();
     }
+  }
+  openDialogComentarios() {
+    const motivoId = 7;
+
+    const dlgComent = this.dlgComent.open(ComentarioVacanteComponent, {
+      width: '85%',
+      height: 'auto',
+      data: {
+        id: this.element.id,
+        vBtra: this.element.vBtra,
+        folio: this.element.folio,
+        motivoId: motivoId
+      }
+    });
+    dlgComent.afterClosed().subscribe(result => {
+      // if (result === 200) {
+      //   this.popToast('success', 'Comentarios', 'La requisición se canceló exitosamente, podrás consultarla en el histórico');
+      // }
+    });
   }
   popToast(type, title, body) {
     const toast: Toast = {

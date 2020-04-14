@@ -98,7 +98,7 @@ import { InfoCandidatoComponent } from './info-candidato/info-candidato.componen
 import { InfoVacanteComponent } from './info-vacante/info-vacante.component';
 import { InformeVacantesComponent } from './informe-vacantes/informe-vacantes.component';
 import { JornadaLaboralComponent } from './catalogos/jornada-laboral/jornada-laboral.component';
-import { MAT_DATE_LOCALE } from '@angular/material';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MapsAddressComponent } from './MapsGoogle/maps-address/maps-address.component';
 import { MediovacanteComponent } from './catalogos/mediovacante/mediovacante.component';
 import { ModalidadComponent } from './catalogos/modalidad/modalidad.component';
@@ -117,7 +117,6 @@ import { RegistroCandidatosComponent } from './registro-candidatos/registro-cand
 import { RegistroReclutadorComponent } from './registro-reclutador/registro-reclutador.component';
 import { Reporte70Component } from './reporte70/reporte70.component';
 import { ReporteCandidatosComponent } from './tablas/reporte-candidatos/reporte-candidatos.component';
-import { RequisicionNuevaPuroComponent } from './requisicion-nueva-puro/requisicion-nueva-puro.component';
 import { RolesComponent } from './catalogos/roles/roles.component';
 import { SearchComponent } from './catalogos/search/search.component';
 import { SharedModule } from '../shared/shared.module';
@@ -143,6 +142,7 @@ import { PopNotificacionesComponent } from './pop-notificaciones/pop-notificacio
 import { DlgCandidatoToRequiComponent } from './dlg-candidato-to-requi/dlg-candidato-to-requi.component';
 import { SagaBotComponent } from './saga-bot/saga-bot.component';
 import { DlgTransferDamfo290Component } from './dlg-transfer-damfo290/dlg-transfer-damfo290.component';
+import { DlgTakeFotoComponent } from './dlg-take-foto/dlg-take-foto.component';
 
 @NgModule({
   imports: [
@@ -199,7 +199,6 @@ import { DlgTransferDamfo290Component } from './dlg-transfer-damfo290/dlg-transf
     FileManagerComponent,
     DlgAsignarPerfilComponent,
     DlgFacturaPuroComponent,
-    RequisicionNuevaPuroComponent,
     Reporte70Component,
     GraficaVacantesPieComponent,
     DtVacantesGraficaPAComponent,
@@ -291,7 +290,8 @@ import { DlgTransferDamfo290Component } from './dlg-transfer-damfo290/dlg-transf
     DlgCandidatoToRequiComponent,
     SagaBotComponent,
     MapaReporteComponent,
-    DlgTransferDamfo290Component
+    DlgTransferDamfo290Component,
+    DlgTakeFotoComponent
   ],
   exports: [
     CandidatosCubiertosRportComponent,
@@ -387,17 +387,18 @@ import { DlgTransferDamfo290Component } from './dlg-transfer-damfo290/dlg-transf
     DlgCandidatoToRequiComponent,
     SagaBotComponent,
     MapaReporteComponent,
-    DlgTransferDamfo290Component
+    DlgTransferDamfo290Component,
+    DlgTakeFotoComponent
   ],
-  entryComponents: [DlgTransferDamfo290Component,
+  entryComponents: [ComentarioVacanteComponent, DlgTransferDamfo290Component,
     DlgCandidatoToRequiComponent, PopNotificacionesComponent, DlgRequiArteComponent,
     DlgBGArteComponent, DlgCubiertasComponent,
-    DlgResultadosMedicosComponent, DlgRegistroMasivoComponent,
+    DlgResultadosMedicosComponent,
     RegistroReclutadorComponent, TicketsRegisterComponent,
     DlgRevisarExamenesComponent, DialogHorariosConteoComponent,
     DialogLiberarCandidatoComponent, DialogEventComponent, DlgComentariosNRComponent,
     DlgRequisicionPausaComponent, EditarContratadosComponent,
-    DlgFacturaPuroComponent, DlgAsignarPerfilComponent],
+    DlgFacturaPuroComponent, DlgAsignarPerfilComponent, DlgTakeFotoComponent],
 
 
 })

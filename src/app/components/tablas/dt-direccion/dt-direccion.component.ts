@@ -13,24 +13,24 @@ export class DtDireccionComponent implements OnInit, OnChanges {
   ShowModalRutas = false;
   public Direccion: string;
   public getAddress = false;
-  public rows: Array<any> = [];
+  public rows: any = [];
   public element: any = [];
   public damfoId: any;
   public rowAux = [];
   public selected = false;
 
   public columns: Array<any> = [
-    { title: 'Tipo Dirección', className: 'text-info text-center' },
-    { title: 'País', className: 'text-info text-center' },
-    { title: 'Estado', className: 'text-info text-center' },
-    { title: 'Municipio', className: 'text-info text-center' },
-    { title: 'Colonia', className: 'text-info text-center' },
-    { title: 'Calle', className: 'text-info text-center' },
-    { title: 'Número Ext.', className: 'text-info text-center' },
-    { title: 'Número Int.', className: 'text-info text-center' },
-    { title: 'Código Postal', className: 'text-info text-center' },
-    { title: 'Activo', className: 'text-info text-center' },
-    { title: 'Principal', className: 'text-info text-center' },
+    { title: 'Tipo Dirección', className: 'text-center text-success' },
+    { title: 'País', className: 'text-center text-info' },
+    { title: 'Estado', className: 'text-center text-info' },
+    { title: 'Municipio', className: 'text-center text-info' },
+    { title: 'Colonia', className: 'text-center text-info' },
+    { title: 'Calle', className: 'text-center text-info' },
+    { title: 'Número Ext.', className: 'text-center text-info' },
+    { title: 'Número Int.', className: 'text-center text-info' },
+    { title: 'Código Postal', className: 'text-center text-info' },
+    { title: 'Activo', className: 'text-center text-info' },
+    { title: 'Principal', className: 'text-center text-info' },
   ];
   public config: any = {
     className: ['table-striped table-bordered mb-0 d-table-fixed']

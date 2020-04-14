@@ -48,7 +48,7 @@ export class GraficaCalidadVencidaComponent implements OnInit {
       type: 'bar',
   data: {
     labels: Onombre,
-    value:Ovalor,
+    // value:Ovalor,
     datasets: [
       {
         label: 'Vencida',

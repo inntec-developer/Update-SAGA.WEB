@@ -84,7 +84,7 @@ export class GraficaVacantePorvencComponent implements OnInit {
       }
       this.Chart = new Chart('canvas3', {
         type: 'pie',
-        title: { text: 'Seguimiento de Vacantes' },
+        // title: { text: 'Seguimiento de Vacantes' },
         data: this.Data,
         options: {
           legend: {

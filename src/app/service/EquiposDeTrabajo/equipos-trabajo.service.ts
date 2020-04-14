@@ -9,7 +9,12 @@ import { SettingsService } from '../../core/settings/settings.service';
   providedIn: 'root'
 })
 export class EquiposTrabajoService {
-
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + sessionStorage.getItem('validation-token')
+    })
+  };
   private UrlGetRporGG = ApiConection.ServiceUrl + ApiConection.GetRportGG;
   private UrlGetRporTable = ApiConection.ServiceUrl + ApiConection.GetRportTable;
   private UrlGetRportClientes = ApiConection.ServiceUrl + ApiConection.GetRportClientes;
@@ -21,7 +26,7 @@ export class EquiposTrabajoService {
   GetRportGG(gg): Observable<any> {
     const params = new HttpParams().set('gg', gg);
 
-    return this._httpClient.get(this.UrlGetRporGG, {params: params});
+    return this._httpClient.get(this.UrlGetRporGG, {params: params, headers: this.httpOptions.headers});
   }
 
   GetRportTable(usuario, orden): Observable<any> {

@@ -45,3 +45,9 @@ ng-scrollbar {
   --scrollbar-thumb-hover-color: dodgerblue;
   --scrollbar-border-radius: 4px;
 }
+.spinner {
+  position: absolute;
+  margin-left: 45%;
+  margin-top: 10%;
+  z-index: 9999;
+}

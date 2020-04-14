@@ -1,40 +1,38 @@
 <div class="content-heading" *ngIf="!imprimir">
-  <div>
-    DAM-FO-290
-    <!-- <span class="text-sm d-none d-sm-block">DAM-FO-290</span> -->
-  </div>
-  <!-- Breadcrumb right aligned-->
+  <span class="text-muted mt-2">DAM-FO-290</span>
   <ol class="breadcrumb ml-auto">
-    <li class="breadcrumb-item ">
-      <a [routerLink]="['/home']">Inicio</a>
-    </li>
     <li class="breadcrumb-item">
-      <a [routerLink]="['/reclutamiento/290']">Perfil Reclutamiento</a>
+      <a [routerLink]="['/reclutamiento/290']">PERFIL RECLUTAMIENTO</a>
     </li>
-    <li class="breadcrumb-item active">Formato DAMFO-290</li>
+    <li class="breadcrumb-item active text-muted">FORMATO DAMFO-290</li>
   </ol>
 </div>
 <section>
 </section>
-<tabset [justified]="true">
-  <tab heading="CLIENTE" id="TapCliente">
+<tabset [justified]="true" class="text-warning fontRoboto">
+  <tab heading="" id="TapCliente">
       <ng-template tabHeading >
+        <h5 class="text-center fontRoboto">CLIENTE
           <i *ngIf="!cliente.formCliente.valid" class="text-danger fa fa-exclamation-circle ml-3" 
           container="body" placement="right" tooltip="Campos por llenar: {{msgRS}} {{msgTipo}} {{msgClase}}"></i>
+        </h5>
         </ng-template>
     <app-formato-cliente [IdFormato]="IdFormato" [ctrlContratos]="requisitos" #FormatoClienteCpt></app-formato-cliente>
   </tab>
   <!-- [disabled]="!cliente.formCliente.valid" -->
-  <tab heading="DATOS DE PERFIL" id="TapRequisitos" [disabled]="!cliente.formCliente.valid">
+  <tab heading="" id="TapRequisitos" [disabled]="!cliente.formCliente.valid">
       <ng-template tabHeading>
+        <h5 class="text-center fontRoboto">DATOS DE PERFIL
           <i *ngIf="cliente.formCliente.valid && (!requisitos.formEncabezado.valid || requisitos.Escolaridades.length == 0)" 
           class="text-danger fa fa-exclamation-circle ml-3" container="body" placement="right" tooltip="campos vacios"></i>
+        </h5>
         </ng-template>
     <app-formato-requisitos [IdFormato]="IdFormato" [tipoReclutamiento]="cliente.formCliente.controls['Tipo'].value"></app-formato-requisitos>
   </tab>
   <!-- [disabled]="!cliente.formCliente.valid" -->
-  <tab heading="HORARIOS, PRESTACIONES ..." id="TapInfoAdicional" [disabled]="!cliente.formCliente.valid">
+  <tab heading="" id="TapInfoAdicional" [disabled]="!cliente.formCliente.valid">
       <ng-template tabHeading>
+        <h5 class="text-center fontRoboto">HORARIOS, PRESTACIONES ...
           <i *ngIf="cliente.formCliente.valid && ( anexos.Actividades.length == 0 ||
           anexos.Areas.length == 0 ||
           anexos.Beneficios.length == 0 ||
@@ -48,16 +46,22 @@
           anexos.PsicometriasC.length == 0 ||
           anexos.PsicometriasD.length == 0)" 
           class="text-danger fa fa-exclamation-circle ml-3" container="body" placement="right" tooltip="campos vacios"></i>
+        </h5>
         </ng-template>
     <app-formato-anexos [IdFormato]="IdFormato"></app-formato-anexos>
   </tab>
-  <tab heading="ANEXOS" id="TapAnexos" *ngIf="!isNew">
-   <app-file-manager [candidatoId]='IdFormato' [ruta]="'/utilerias/Files/ANEXOSDAMFO/'"></app-file-manager>
+  <tab heading="" id="TapAnexos" *ngIf="!isNew">
+    <ng-template tabHeading>
+      <h5 class="text-center fontRoboto">ANEXOS</h5>
+      </ng-template>
+   <app-file-manager [candidatoId]='IdFormato' [ruta]="'/utilerias/Files/ANEXOSDAMFO/'" [upload]="true"></app-file-manager>
   </tab>
-  <tab heading="COSTOS" id="tabCostos" [disabled]="!cliente.formCliente.valid">
+  <tab heading="" id="tabCostos" [disabled]="!cliente.formCliente.valid">
       <ng-template tabHeading>
+        <h5 class="text-center fontRoboto">COSTOS
           <i *ngIf="cliente.formCliente.valid && (!costos.aplica && !costos.validar)" 
           class="text-danger fa fa-exclamation-circle ml-3" container="body" placement="right" tooltip="campos vacios"></i>
+        </h5>
         </ng-template>
    <app-formato-costos [IdFormato]="IdFormato"></app-formato-costos>
   </tab>

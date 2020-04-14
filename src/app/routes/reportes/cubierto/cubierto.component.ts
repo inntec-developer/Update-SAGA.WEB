@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ReportesService } from '../../../service/Reporte/reportes.service';
 import { ExcelService } from '../../../service/ExcelService/excel.service';
@@ -11,7 +11,7 @@ import { SettingsService } from '../../../core/settings/settings.service';
   styleUrls: ['./cubierto.component.scss']
 })
 export class CubiertoComponent implements OnInit {
-
+  @Input('tipoReporte') tipoReporte;
   private usuario: any;
   public General : any[];
   public columns: Array<any>;
@@ -164,7 +164,22 @@ ucor = ucor == undefined?'0':ucor;
     var final = fin['value'];
     let tipo = document.getElementById('TipoReporte')['value'];
 
-    this.servicio.GetInforme("",ofc,tipo,inicio,final,emp,sol,trcu,coo,est,rec,ucor,usuarios)
+    const source = {
+      clave: '',
+      ofc: ofc,
+      tipo: this.tipoReporte,
+      fini: inicio,
+      ffin: final,
+      emp: emp,
+      sol: sol,
+      trcl: trcu,
+      coord: coo,
+      stus: est,
+      recl: rec,
+      usercoor: ucor,
+      usuario: usuarios
+    };
+    this.servicio.GetInforme(source)
     .subscribe( data => {
     // this.popGenerico(data.mensaje,data.bandera,'Publicacion');
     this.requisiciones = data;

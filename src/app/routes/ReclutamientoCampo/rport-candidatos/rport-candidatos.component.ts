@@ -4,7 +4,7 @@ import { ToasterConfig, ToasterService, Toast } from 'angular2-toaster';
 import { PostulateService } from '../../../service/SeguimientoVacante/postulate.service';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { DlgEditarCandidatosComponent } from '../dlg-editar-candidatos/dlg-editar-candidatos.component';
 import { ReclutamientoCampoService } from '../../../service/ReclutamientoCampo/reclutamiento-campo.service';
 const Swal = require('sweetalert2');
@@ -30,6 +30,12 @@ export class RportCandidatosComponent implements OnInit {
   public numPages = 1;
   public length = 0;
 
+   // spinner-material
+ color = 'primary';
+ mode = 'indeterminate';
+ value = 60;
+ spinner = false;
+ 
   registros: number;
   clearFilter = false;
   dataSource = [];
@@ -92,12 +98,13 @@ export class RportCandidatosComponent implements OnInit {
           this.reclutador = params['reclutador'];
           this.reclutadorId = params['reclutadorId'];
           this.vBtra = params['vBtra'];
-          this.GetCandidatos();
         }
       });
       }
 
   ngOnInit() {
+    this.spinner = true;
+    this.GetCandidatos();
   }
 
   Regresar() {
@@ -111,7 +118,7 @@ export class RportCandidatosComponent implements OnInit {
     this.router.navigate(['/webcampo/reclutadorvacantes'], navigationExtras);
   }
   GetCandidatos() {
-    this._campoService.GetCandidatosProceso(this.requisicionId).subscribe(data => {
+    this._campoService.GetCandidatosProceso(this.requisicionId, this.reclutadorId, this.settings.user['id']).subscribe(data => {
       this.dataSource = [];
       data.forEach(element => {
         if(element.apartados != null) {
@@ -164,7 +171,7 @@ export class RportCandidatosComponent implements OnInit {
       }
       });
       this.onChangeTable(this.config);
-      console.log(this.dataSource);
+      this.spinner = false;
     });
   }
 

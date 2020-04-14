@@ -1,5 +1,5 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MAT_DATE_LOCALE, MatPaginatorIntl } from '@angular/material';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
@@ -41,6 +41,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TreeGridDirective } from './directives/treeGrid/treeGrid.directive';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { VectormapDirective } from './directives/vectormap/vectormap.directive';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 // https://angular.io/styleguide#!#04-10
 @NgModule({

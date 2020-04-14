@@ -1,8 +1,7 @@
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatPaginatorIntl, MatTableModule, MatInputModule, MatIconModule } from '@angular/material';
+import { MatTableModule } from '@angular/material/table';
 import { PaginationConfig, PaginationModule } from 'ngx-bootstrap/pagination';
-import { PopoverModule, TooltipModule } from 'ngx-bootstrap';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { RouterModule, Routes } from '@angular/router';
 import { getSpanishPaginatorBtp, getSpanishPaginatorIntl } from '../../core/translator/config-paginator/config-paginator.component';
 
@@ -25,6 +24,9 @@ import { TrackingVacantesComponent } from './tracking-vacantes/tracking-vacantes
 import { VerTurnosComponent } from './ver-turnos/ver-turnos.component';
 import { ComponentsModule } from '../../components/components.module';
 import { ContactComponent } from './contact/contact.component';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 /* Use this routes definition in case you want to make them lazy-loaded */
 const routes: Routes = [
@@ -37,8 +39,8 @@ const routes: Routes = [
    // { path: 'maintenance', component: MaintenanceComponent },
    { path: '404', component: Error404Component },
    // { path: '500', component: Error500Component },
-    { path: 'TrackingVacantes', component: TrackingVacantesComponent},
-     {path: 'Principal', component: InicioKioscoComponent},
+    // { path: 'TrackingVacantes', component: TrackingVacantesComponent},
+    //  {path: 'Principal', component: InicioKioscoComponent},
     {path: 'verturnos', component: VerTurnosComponent}
 ];
 

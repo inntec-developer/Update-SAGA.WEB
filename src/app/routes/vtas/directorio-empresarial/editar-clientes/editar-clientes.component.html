@@ -1,42 +1,39 @@
 <div class="content-heading" >
-  <div>
-    Editar Prospecto / Cliente
-  </div>
+  <span class="text-muted fontRoboto">
+   EDITAR PROSPECTO / CLIENTE
+  </span>
   <!-- Breadcrumb right aligned-->
   <ol class="breadcrumb ml-auto">
     <li class="breadcrumb-item">
-      <a [routerLink]="['/home']">Inicio</a>
+      <a class="text-info" [routerLink]="['/ventas/directorio']" [queryParams]="{ruta: ruta}" [skipLocationChange]=true>DIRECTORIO EMPRESARIAL</a>
     </li>
-    <li class="breadcrumb-item">
-      <a [routerLink]="['/ventas/directorio']" [queryParams]="{ruta: ruta}" [skipLocationChange]=true>Directorio Empresarial</a>
-    </li>
-    <li class="breadcrumb-item active">Editar</li>
+    <li class="text-muted fontRoboto breadcrumb-item active">EDITAR</li>
   </ol>
 </div>
 
 <div class="row">
   <div class="col-md-12">
       <button container="body" placement="bottom" tooltip="Regresar" class="mr-1 btn btn-xs btn-warning float-right mat-elevation-z8" type="button" [routerLink]="['/ventas/directorio']" [queryParams]="{ruta: ruta}" [skipLocationChange]=true>
-        <em class="icon-action-undo"></em>
+        <i class="icon-action-undo"></i>
       </button>
   </div>
 </div>
 <br>
 
-<tabset [justified]="true">
-  <tab heading="Información Principal" id="TapInfoPrincipal">
+<tabset [justified]="true" class="text-info fontRoboto">
+  <tab heading="INFORMACI&Oacute;N PRINCIPAL" id="TapInfoPrincipal">
     <app-datos-generales [DatosGenerales]="Cliente"></app-datos-generales>
   </tab>
-  <tab heading="Dirección / Sucursales" id="TapDirecciones">
+  <tab heading="DIRECCI&Oacute;N / SUCURSALES" id="TapDirecciones">
     <app-direcciones-cliente [EntidadId]="EntidadId" [Direcciones]="Direcciones" (DataEmitter)="changeData($event)" (DeleteDireccion)="deleteData($event)" ></app-direcciones-cliente>
   </tab>
-  <tab heading="Teléfonos" id="TapTelefonos">
+  <tab heading="TEL&Eacute;FONOS" id="TapTelefonos">
     <app-telefonos-cliente [EntidadId]="EntidadId" [Direcciones]="Direcciones" [Telefonos]="Telefonos" ></app-telefonos-cliente>
   </tab>
-  <tab heading="Correo Electrónico" id="TapCorreo">
+  <tab heading="CORREO ELECTR&Oacute;NICO" id="TapCorreo">
     <app-correos-cliente [EntidadId]="EntidadId" [Direcciones]="Direcciones" [Correos]="Emails"></app-correos-cliente>
   </tab>
-  <tab heading="Contactos" id="TapContactos">
+  <tab heading="CONTACTOS" id="TapContactos">
     <app-contactos-cliente [EntidadId]="EntidadId" [Direcciones]="Direcciones" [Contactos]="Contactos"></app-contactos-cliente>
   </tab>
 </tabset>

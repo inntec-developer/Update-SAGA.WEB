@@ -1,9 +1,12 @@
+import { element } from 'protractor';
+
+import { SettingsService } from './../../../core/settings/settings.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { RequisicionesService } from '../../../service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToasterService, ToasterConfig, Toast } from 'angular2-toaster';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { DlgRegistroMasivoComponent } from '../../../components/dlg-registro-masivo/dlg-registro-masivo.component';
 import { PostulateService } from '../../../service/SeguimientoVacante/postulate.service';
 import { ReclutamientoCampoService } from '../../../service/ReclutamientoCampo/reclutamiento-campo.service';
@@ -39,6 +42,7 @@ export class VacantesReclutadorComponent implements OnInit {
   reclutadorId;
   dataSource = [];
   rows = [];
+  modalInfoVacante: Boolean = false;
   public columns: Array<any> = [
     { title: 'Folio', className: 'text-info text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
     { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
@@ -59,22 +63,7 @@ export class VacantesReclutadorComponent implements OnInit {
   reporteCandidatos = false;
   totalPos: number;
   totalContratados: number;
-  //  checkBox Seccion de impresion
-  SelectiedSection = {
-    Encabezado: true,
-    Horarios: true,
-    Cliente: true,
-    ExpApt: false,
-    Direccion: false,
-    Beneficio: false,
-    ActObsProd: false,
-    Telefono: false,
-    Contacto: false,
-    DocPrest: false,
-    Psicom: false,
-    Competencia: false,
-    arteRedes: true
-  };
+
   constructor(private _Router: Router,
     private _Route: ActivatedRoute,
     private service: RequisicionesService,
@@ -82,7 +71,8 @@ export class VacantesReclutadorComponent implements OnInit {
     private dialog: MatDialog,
     private toasterService: ToasterService,
     private postulateservice: PostulateService,
-    private _service: ReclutamientoCampoService
+    private _service: ReclutamientoCampoService,
+    private settings: SettingsService
     ) {
     this._Route.queryParams.subscribe(params => {
       if (params['reclutador'] != null) {
@@ -98,7 +88,7 @@ export class VacantesReclutadorComponent implements OnInit {
   }
 
   getVacantes() {
-    this._service.GetRequisReclutadores(this.reclutadorId).subscribe(data => {
+    this._service.GetRequisReclutadores(this.reclutadorId, this.settings.user['id']).subscribe(data => {
       if (data !== 404) {
         this.dataSource = data;
         this.totalPos = 0;
@@ -141,7 +131,7 @@ export class VacantesReclutadorComponent implements OnInit {
     return filteredData;
   }
 
-  Editar() {
+  Candidatos() {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         'requisicionId': this.element['id'],
@@ -155,9 +145,28 @@ export class VacantesReclutadorComponent implements OnInit {
     };
     this._Router.navigate(['/webcampo/rportCandidatos'], navigationExtras);
   }
+  Registro() {
+    const data = {
+      'requisicionId': this.element['id'],
+      'folio': this.element['folio'],
+      'cliente': this.element['cliente'],
+      'vacante': this.element['vBtra'],
+      'nv': this.element.vacantes,
+      'contratados': this.element.contratados,
+      'reclutador': this.reclutador,
+      'reclutadorId': this.reclutadorId,
+      'campo': true
+    };
+    const navigationExtras: NavigationExtras = {
+      queryParams: data,
+      skipLocationChange: true
+    };
+    this._Router.navigate(['/webcampo/registro'], navigationExtras);
+  }
   public onCellClick(data: any): any {
     data.selected ? data.selected = false : data.selected = true;
     this.element = data;
+
     if (!data.selected) {
       this.selected = false;
       this.element = [];
@@ -176,12 +185,20 @@ export class VacantesReclutadorComponent implements OnInit {
     }
   }
 
-  OpenDialogRegistrar(row){
+  OpenDialogRegistrar(row) {
     const dialogDlt = this.dialog.open(DlgRegistroMasivoComponent, {
     width: '95%',
     height: '95%',
-    data: { requisicionId: row.id, folio: row.folio, cliente: row.cliente,
-      vacante: row.vBtra, nv: row.vacantes, contratados: row.contratados, reclutador: this.reclutador, reclutadorId: this.reclutadorId },
+    data: { requisicionId: row.id,
+            folio: row.folio,
+            cliente: row.cliente,
+            vacante: row.vBtra,
+            nv: row.vacantes,
+            contratados: row.contratados,
+            reclutador: this.reclutador,
+            reclutadorId: this.reclutadorId,
+            campo: true
+          },
     disableClose: true
 
   });

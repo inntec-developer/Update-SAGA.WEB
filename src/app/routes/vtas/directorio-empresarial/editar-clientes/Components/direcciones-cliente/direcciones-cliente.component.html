@@ -1,10 +1,12 @@
-<div class="dt-container">
-  <!-- <div class="card-header">
-    <em class="fa fa-map-marker"></em> Direcci&oacute;n / Sucursales
-  </div> -->
-
+<div class="card">
   <div class="card-body">
     <div *ngIf="addDireccion">
+      <div class="d-flex justify-content-between align-items-center mb-2 p-1 bg-info-light">
+        <span class="fontLato">AGRERAR DIRECCI&Oacute;N / SUCURSAL</span>
+        <em (click)="(addDireccion = ! addDireccion) ; cancelarDireccion()" style="cursor: pointer;"
+          class="fa fa-times-circle fa-2x text-danger emhover" aria-hidden="true">
+        </em>
+      </div>
       <form [formGroup]="formDirecciones">
         <div class="row">
           <div class="col-md-2 col-lg-2 col-sm-12">
@@ -19,7 +21,7 @@
           <div class="col-md-2 col-lg-2 col-sm-12">
             <mat-form-field>
               <input matInput formControlName="CodigoPostal" name="CodigoPostal" maxlength="5" #postalCode
-                placeholder="Código Postal" (keyup)="showForCP($event)" required/>
+                placeholder="Código Postal" (keyup)="showForCP($event)" required />
               <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
             </mat-form-field>
           </div>
@@ -106,51 +108,54 @@
 
         <!-- Botones de funcion sobre Direcciones -->
         <div class="modal-footer">
-          <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8"
-            (click)="(addDireccion = ! addDireccion) ; cancelarDireccion()">Cancelar</button>
-          <button type="button" [disabled]="!formDirecciones.valid" class="md-1 btn btn-xs btn-success mat-elevation-z8"
-            (click)="AddDireccion()">{{textbtnDirecciones}}</button>
+          <button type="button"
+            class="btn btn-xs btn-labeled btn-danger d-flex justify-content-between align-items-center mat-elevation-z8"
+            (click)="(addDireccion = ! addDireccion) ; cancelarDireccion()">
+            <span class="btn-label"><i class="fa fa-times" aria-hidden="true"></i></span>CANCELAR</button>
+          <button type="button" [disabled]="!formDirecciones.valid"
+            class="md-1 btn btn-xs btn-labeled btn-success d-flex justify-content-between align-items-center mat-elevation-z8"
+            (click)="AddDireccion()">
+            <span class="btn-label text-center"><i class="fa fa-floppy-o"
+                aria-hidden="true"></i></span>{{textbtnDirecciones | uppercase}}</button>
         </div>
 
       </form>
       <br>
     </div>
     <!-- Tabla de Direcciones -->
-    <div class="butoonAction clearfix p-2 bg-light">
-      <div class="contenedor">
-        <div class="aling-div">
-          <button class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8" *ngIf="!addDireccion" container="body"
-            placement="bottom" tooltip="Agregar" (click)="addDireccion = true; textbtnDirecciones = 'Agregar'">
-            <em class="fa fa-plus"></em>
-          </button>
-        </div>
-        <div class="aling-div" *ngIf="!EditDireccion">
-          <button *ngIf="Direcciones.length > 0" class="mb-1 btn btn-xs  mat-elevation-z8" container="body" placement="bottom"
-            tooltip="Editar" [disabled]="!elementD" [ngClass]="(!elementD) ? 'disabled' : 'btn-primary'"
-            (click)="UpDireccion();  textbtnDirecciones = 'Editar'">
-            <em class="fa fa-pencil"></em>
-          </button>
-          <button *ngIf="Direcciones.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body" placement="bottom"
-            tooltip="Eliminar" [disabled]="!elementD" [ngClass]="(!elementD) ? 'disabled' : 'btn-danger'"
-            (click)="sweetalertEliminarDireccion()">
-            <em class="fa fa-trash"></em>
-          </button>
-        </div>
-      </div>
-    </div>
     <div *ngIf="Direcciones.length > 0">
-      <div class="card media">
-        <div class="card-body">
+      <!-- <div class="card">
+        <div class="card-body"> -->
           <div class="row" #tableDirecciones>
-            <div class="col-sm-12 col-md-12 table-responsive clearfix">
-              <div>
-                <span *ngIf="config.paging" class="float-right">Total Registros: {{registrosD}}</span>
+            <div class="col-sm-12 col-md-12">
+              <div class="d-flex justify-content-start align-items-center p-1 bg-light">
+                <button class="btn btn-xs btn-success mr-2 mat-elevation-z8" *ngIf="!addDireccion" container="body"
+                  placement="bottom" tooltip="Agregar" (click)="addDireccion = true; textbtnDirecciones = 'Agregar'">
+                  <i class="fa fa-plus"></i>
+                </button>
+                <div *ngIf="!EditDireccion">
+                  <button *ngIf="Direcciones.length > 0" class="btn btn-xs mr-2 mat-elevation-z8" container="body"
+                    placement="bottom" tooltip="Editar" [disabled]="!elementD"
+                    [ngClass]="(!elementD) ? 'disabled' : 'btn-warning'"
+                    (click)="UpDireccion();  textbtnDirecciones = 'Editar'">
+                    <i class="fa fa-pencil"></i>
+                  </button>
+                  <button *ngIf="Direcciones.length > 0" class="btn btn-xs margen mat-elevation-z8" container="body"
+                    placement="bottom" tooltip="Eliminar" [disabled]="!elementD"
+                    [ngClass]="(!elementD) ? 'disabled' : 'btn-danger'" (click)="sweetalertEliminarDireccion()">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div>
               </div>
-              <table id="direccionesNuevas" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+              <div class="d-flex justify-content-end p-1 bg-warning mt-2">
+                <span *ngIf="config.paging">TOTAL REGISTROS<span
+                    class="badge badge-pill badge-success ml-2">{{registrosD}}</span></span>
+              </div>
+              <table id="direccionesNuevas" class="table fontRoboto text-muted" style="width: 100%;">
                 <thead>
                   <tr>
                     <th *ngFor="let column of columnsD" ngClass="{{column.className || ''}}">
-                      {{column.title | uppercase}}
+                      <small>{{column.title | uppercase}}</small>
                     </th>
                   </tr>
                   <tr *ngIf="showFilterRowD">
@@ -164,27 +169,28 @@
                 <tbody>
                   <tr *ngFor="let rowd of rowsD; let i=index" (click)="onCellClickD(rowd, rowd.id)"
                     [class.selected]="rowd.selectedD">
-                    <td class="text-center">{{rowd.tipoDireccion}}</td>
+                    <td class="text-center">{{rowd.tipoDireccion | uppercase}}</td>
                     <td class="text-center">{{rowd.codigoPostal}}</td>
-                    <td class="text-center">{{rowd.pais}}</td>
-                    <td class="text-center">{{rowd.estado}}</td>
-                    <td>{{rowd.municipio}}</td>
-                    <td>{{rowd.colonia}}</td>
-                    <td>{{rowd.calle}}</td>
+                    <td class="text-center">{{rowd.pais | uppercase }}</td>
+                    <td class="text-center">{{rowd.estado | uppercase }}</td>
+                    <td>{{rowd.municipio | uppercase}}</td>
+                    <td>{{rowd.colonia | uppercase}}</td>
+                    <td>{{rowd.calle | uppercase}}</td>
                     <td class="text-right"> {{rowd.numeroExterior}}</td>
                     <td class="text-right"> {{rowd.numeroInterior}}</td>
                     <td>
-                      <!-- <small *ngIf="rowd.referencia?.length < 30 else toLengthRF">
-                            {{rowd.referencia}}
-                          </small>
-                          <ng-template #toLengthRF>
-                            <small placement="bottom" tooltip="{{rowd.referencia}}"> {{rowd.referencia | slice:0:30 }}
-                              ...
-                            </small>
-                          </ng-template> -->
-                      <small>
+                      <span *ngIf="rowd.referencia.length < 20 else toLengthRF">
                         {{rowd.referencia | uppercase}}
-                      </small>
+                      </span>
+                      <ng-template #toLengthRF>
+                        <span placement="bottom" tooltip="{{rowd.referencia | uppercase}}">
+                          {{rowd.referencia | slice:0:20 }}
+                          ...
+                        </span>
+                      </ng-template>
+                      <!-- <small>
+                        {{rowd.referencia | uppercase}}
+                      </small> -->
                     </td>
                     <td class="text-center">
                       <small *ngIf="rowd.esPrincipal else Inactivo">
@@ -206,16 +212,16 @@
                 </tbody>
               </table>
               <mat-divider></mat-divider>
-              <div class="text-right">
-                <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="pageD" [totalItems]="lengthD"
-                  [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
-                  (pageChanged)="onChangeTableD(config, $event)" (numPages)="numPagesD = $event">
+              <div class="d-flex justify-content-end p-1 mt-2">
+                <pagination *ngIf="config.paging" class="pagination pagination-sm" [(ngModel)]="pageD"
+                  [totalItems]="lengthD" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true"
+                  [rotate]="false" (pageChanged)="onChangeTableD(config, $event)" (numPages)="numPagesD = $event">
                 </pagination>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        <!-- </div>
+      </div> -->
     </div>
   </div>
 </div>

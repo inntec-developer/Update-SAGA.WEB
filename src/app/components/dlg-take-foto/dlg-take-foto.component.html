@@ -1,0 +1,25 @@
+<div class="card">
+  <div class="d-flex justify-content-between align-items-center fontRoboto p-1 bg-info">
+    <span>TOMAR FOTO</span>
+    <button type="button" class="btn btn-xs btn-danger btn-circle" [disabled]="loading" mat-dialog-close><i
+        class="fa fa-times"></i></button>
+  </div>
+  <div class="card-body">
+    <div class="d-flex justify-content-center p-1">
+      <!-- <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+            [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+            [videoOptions]="videoOptions"
+            [imageQuality]="1"
+            (cameraSwitched)="cameraWasSwitched($event)"
+            (initError)="handleInitError($event)"
+    ></webcam> -->
+    <br/>
+    <button class="actionBtn" (click)="triggerSnapshot();">Take A Snapshot</button>
+    <button class="actionBtn" (click)="toggleWebcam();">Toggle Webcam</button>
+    <br/>
+    </div>
+    <div class="snapshot  d-flex justify-content-center p-1 border" *ngIf="webcamImage">
+      <img [src]="webcamImage.imageAsDataUrl"/>
+    </div>
+  </div>
+</div>

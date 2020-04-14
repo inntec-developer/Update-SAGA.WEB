@@ -1,20 +1,26 @@
-<div class="dt-container ">
+<div class="card">
   <div class="card-body">
     <div *ngIf="addContacto">
+      <div class="d-flex justify-content-between align-items-center mb-2 p-1 bg-info-light">
+        <span class="fontLato">AGRERAR CONTACTO</span>
+        <em (click)="(addContacto = ! addContacto) ; cancelarContacto()" style="cursor: pointer;"
+          class="fa fa-times-circle fa-2x text-danger emhover" aria-hidden="true"></em>
+      </div>
       <form [formGroup]="formContactos">
         <div class="row" #DireccionContacto>
           <div class="col-sm-6 col-ms-6 col-lg-6">
             <mat-form-field>
               <mat-select placeholder="Dirección" formControlName="ContactoDireccion" required>
                 <mat-option *ngFor="let x of Direcciones; let i=index " [value]="x.id">
-                  <span
-                    *ngIf="(x?.calle.length + x?.municipio.length + x?.codigoPostal.length) < 42 else toLengthDr">
-                    <strong class="text-warning">{{x.tipoDireccion}}</strong> {{x.calle}} {{x.numeroExterior}} - {{x.municipio}} - <strong>{{x.codigoPostal}}</strong>
+                  <span *ngIf="(x?.calle.length + x?.municipio.length + x?.codigoPostal.length) < 42 else toLengthDr">
+                    <strong class="text-warning">{{x.tipoDireccion}}</strong> {{x.calle}} {{x.numeroExterior}} -
+                    {{x.municipio}} - <strong>{{x.codigoPostal}}</strong>
                   </span>
                   <ng-template #toLengthDr>
                     <span container="body" placement="bottom"
                       tooltip="{{x.tipoDireccion}} {{x.calle}} - {{x.numeroExterior +' - '+ x.municipio +' - '+ x.codigoPostal}}">
-                      <strong class="text-warning">{{x.tipoDireccion}}</strong> {{x.calle}} {{x.numeroExterior +' - '+ x.municipio +' - '+ x.codigoPostal | slice:0:42}} ...
+                      <strong class="text-warning">{{x.tipoDireccion}}</strong> {{x.calle}}
+                      {{x.numeroExterior +' - '+ x.municipio +' - '+ x.codigoPostal | slice:0:42}} ...
                     </span>
                   </ng-template>
                 </mat-option>
@@ -63,18 +69,16 @@
         </div>
       </form>
       <br>
-      <p *ngIf="elementCn">
-        <alert type="info" [dismissible]="true" [hidden]="showAlert" (onClosed)="onClosed()">
-          <strong>{{msg}}</strong>
-        </alert>
+      <p *ngIf="elementCn" class="fontLato text-warning">
+        <i class="fa fa-exclamation-circle mr-1" aria-hidden="true"></i>{{msg}}
       </p>
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12" #TelefonoContacto>
-          <h4 class="text-success ">Tel&eacute;fonos
-            <span class="pull-right">
-              <em style="margin-left: 10px;" class="fa fa-phone"></em>
+          <span class="text-success fontLato">TEL&Eacute;FONOS
+            <span class="float-right">
+              <i style="margin-left: 10px;" class="fa fa-phone"></i>
             </span>
-          </h4>
+          </span>
           <mat-divider></mat-divider>
           <div *ngIf="addContactoTelefono">
             <form [formGroup]="formContactoTelefonos" class="form-row">
@@ -124,34 +128,32 @@
                 (click)="AddContactoTelefono()"></em>
             </div>
           </div>
-          <br>
-          <div class="clearfix">
-            <div class="aling-div" *ngIf="!addContactoTelefono">
-              <button (click)="addContactoTelefono = true" class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8">
-                <em class="fa fa-plus"></em>
+          <div class="d-flex justify-content-start align-items-center p-1 bg-light mt-2">
+              <button *ngIf="!addContactoTelefono" (click)="addContactoTelefono = true" class="btn btn-xs btn-success mr-1 mat-elevation-z8">
+                <i class="fa fa-plus"></i>
               </button>
-            </div>
-            <div class="aling-div" *ngIf="!EditContactoTelefono">
-              <button *ngIf="Telefonos.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" [disabled]="!elementCnT"
-                [ngClass]="(!elementCnT) ? 'disabled' : 'btn-primary'" (click)="UdContactoTelefono()">
-                <em class="fa fa-pencil"></em>
+            <div *ngIf="!EditContactoTelefono">
+              <button *ngIf="Telefonos.length > 0" class="btn btn-xs mr-1 mat-elevation-z8" [disabled]="!elementCnT"
+                [ngClass]="(!elementCnT) ? 'disabled' : 'btn-warning'" (click)="UdContactoTelefono()">
+                <i class="fa fa-pencil"></i>
               </button>
-              <button *ngIf="Telefonos.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" [disabled]="!elementCnT"
+              <button *ngIf="Telefonos.length > 0" class="btn btn-xs mat-elevation-z8" [disabled]="!elementCnT"
                 [ngClass]="(!elementCnT) ? 'disabled' : 'btn-danger'" (click)="sweetAlertEliminarTelefonoC()">
-                <em class="fa fa-trash"></em>
+                <i class="fa fa-trash"></i>
               </button>
             </div>
           </div>
           <div class="row" *ngIf="Telefonos.length > 0">
-            <div class="col-lg-12 col-md-12 col-sm-12 table-responsive">
-              <div>
-                <span *ngIf="config.paging" class="float-right">Total Registros: {{lengthCnT}}</span>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="d-flex justify-content-end p-1 bg-warning mt-2">
+                <span *ngIf="config.paging">TOTAL REGISTROS<span
+                    class="badge badge-pill badge-success ml-2">{{lengthCnT}}</span></span>
               </div>
-              <table id="ContactoTelefonosNuevos" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+              <table id="ContactoTelefonosNuevos" class="table text-muted fontRoboto" style="width: 100%;">
                 <thead>
                   <tr>
                     <th *ngFor="let column of columnsCnT" ngClass="{{column.className || ''}}">
-                      {{column.title | uppercase}}
+                      <small>{{column.title | uppercase}}</small>
                     </th>
                   </tr>
                 </thead>
@@ -176,10 +178,10 @@
                 </tbody>
               </table>
               <br />
-              <div class="text-right">
-                <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="pageCnT"
-                  [totalItems]="lengthCnT" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true"
-                  previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [rotate]="false"
+              <div class="d-flex justify-content-end p-1 mt-2">
+                <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="pageCnT" [totalItems]="lengthCnT"
+                  [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" previousText="&lsaquo;"
+                  nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [rotate]="false"
                   (pageChanged)="nextPageCnT({page: $event, itemsPerPage: itemsPerPage })"
                   (numPages)="numPagesCnT = $event">
                 </pagination>
@@ -187,12 +189,12 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-6  col-md-6 col-sm-12" #Emailcontacto>
-          <h4 class="text-success ">Correos Electr&oacute;nicos,
-            <span class="pull-right">
-              <em style="margin-left: 10px;" class="fa fa-envelope-o"></em>
+        <div class="col-lg-6 col-md-6 col-sm-12" #Emailcontacto>
+          <span class="text-success fontLato">CORREOS ELECTR&Oacute;NICOS
+            <span class="float-right">
+              <i style="margin-left: 10px;" class="fa fa-envelope-o"></i>
             </span>
-          </h4>
+          </span>
           <mat-divider></mat-divider>
           <div *ngIf="addContactoCorreo">
             <form [formGroup]="formContactoCorreo">
@@ -208,34 +210,34 @@
                 (click)="AddContactoCorreo()"></em>
             </div>
           </div>
-          <br>
-          <div class="clearfix">
-            <div class="aling-div" *ngIf="!addContactoCorreo">
-              <button (click)="addContactoCorreo = true" class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8">
-                <em class="fa fa-plus"></em>
+          <div class="d-flex justify-content-start align-items-center mt-2 p-1 bg-light">
+            <div *ngIf="!addContactoCorreo">
+              <button (click)="addContactoCorreo = true" class="btn btn-xs btn-success mr-1 mat-elevation-z8">
+                <i class="fa fa-plus"></i>
               </button>
             </div>
-            <div class="aling-div" *ngIf="!EditContactoCorreo">
-              <button *ngIf="Emails.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" [disabled]="!elementCnC"
-                [ngClass]="(!elementCnC) ? 'disabled' : 'btn-primary'" (click)="UdContactoCorreo()">
-                <em class="fa fa-pencil"></em>
+            <div *ngIf="!EditContactoCorreo">
+              <button *ngIf="Emails.length > 0" class="btn btn-xs mr-1 mat-elevation-z8" [disabled]="!elementCnC"
+                [ngClass]="(!elementCnC) ? 'disabled' : 'btn-warning'" (click)="UdContactoCorreo()">
+                <i class="fa fa-pencil"></i>
               </button>
-              <button *ngIf="Emails.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" [disabled]="!elementCnC"
+              <button *ngIf="Emails.length > 0" class="btn btn-xs margen mat-elevation-z8" [disabled]="!elementCnC"
                 [ngClass]="(!elementCnC) ? 'disabled' : 'btn-danger'" (click)="sweetAlertEliminarCorreoC()">
-                <em class="fa fa-trash"></em>
+                <i class="fa fa-trash"></i>
               </button>
             </div>
           </div>
           <div class="row" *ngIf="Emails.length > 0">
-            <div class="col-lg-12 col-md-12 col-sm-12 table-responsive">
-              <div>
-                <span *ngIf="config.paging" class="float-right">Total Registros: {{lengthCnC}}</span>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="d-flex justify-content-end p-1 bg-warning mt-2">
+                <span *ngIf="config.paging">TOTAL REGISTROS<span
+                    class="badge badge-pill badge-success ml-2">{{lengthCnC}}</span></span>
               </div>
-              <table id="ContactoCorreosNuevos" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+              <table id="ContactoCorreosNuevos" class="table text-muted fontRoboto" style="width: 100%;">
                 <thead>
                   <tr>
                     <th *ngFor="let column of columnsCnC" ngClass="{{column.className || ''}}">
-                      {{column.title | uppercase}}
+                      <small>{{column.title | uppercase}}</small>
                     </th>
                   </tr>
                 </thead>
@@ -251,7 +253,7 @@
                 </tbody>
               </table>
               <br />
-              <div class="text-right">
+              <div class="d-flex justify-content-end p-1">
                 <pagination *ngIf="config.paging" class="pagination-sm float-left" [(ngModel)]="pageCnC"
                   [totalItems]="lengthCnC" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true"
                   previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [rotate]="false"
@@ -264,49 +266,48 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-xs btn-danger mat-elevation-z8"
-          (click)="(addContacto = ! addContacto) ; cancelarContacto()">Cancelar</button>
-        <button type="button" [disabled]="!formContactos.valid || Telefonos.length === 0 || Emails.length === 0"
+        <button type="button" class="btn btn-labeled btn-xs btn-danger mat-elevation-z8 d-flex justify-content-between align-items-center"
+          (click)="(addContacto = ! addContacto) ; cancelarContacto()">
+          <span class="btn-label"><i class="fa fa-times" aria-hidden="true"></i></span>CANCELAR</button>
+        <button [disabled]="!formContactos.valid || Telefonos.length === 0 || Emails.length === 0"
           [ngClass]="!formContactos.valid || Telefonos.length === 0 || Emails.length === 0 ? 'disabled' : 'btn-success'"
-          class="md-1 btn btn-xs mat-elevation-z8" (click)="AddContacto()">{{textbtnContacto}}</button>
+          class="btn btn-labeled btn-xs mat-elevation-z8 d-flex justify-content-between align-items-center" (click)="AddContacto()">
+          <span class="btn-label text-center"><i class="fa fa-floppy-o" aria-hidden="true"></i></span>{{textbtnContacto | uppercase}}</button>
       </div>
     </div>
     <div *ngIf="!addContacto">
-      <div class="butoonAction clearfix p-2 bg-light">
-        <div class="contenedor">
-          <div class="aling-div">
-            <button class="mb-1 btn btn-xs btn-primary margen mat-elevation-z8" *ngIf="!addContacto" container="body"
-              placement="bottom" tooltip="Agregar" (click)="newContaco()">
-              <em class="fa fa-plus"></em>
-            </button>
-          </div>
-          <div class="aling-div" *ngIf="!EditContacto">
-            <button *ngIf="Contactos.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body" placement="bottom"
-              tooltip="Editar" [disabled]="!elementCn" [ngClass]="(!elementCn) ? 'disabled' : 'btn-primary'"
-              (click)="UpContactos(); textbtnContacto = 'Editar'">
-              <em class="fa fa-pencil"></em>
-            </button>
-            <button *ngIf="Contactos.length > 0" class="mb-1 btn btn-xs margen mat-elevation-z8" container="body" placement="bottom"
-              tooltip="Eliminar" [disabled]="!elementCn" [ngClass]="(!elementCn) ? 'disabled' : 'btn-danger'"
-              (click)="sweetalertEliminarContacto()">
-              <em class="fa fa-trash"></em>
-            </button>
-          </div>
+      <div class="d-flex justify-content-start align-items-center p-1 bg-light">
+        <button class="btn btn-xs btn-success mr-2 mat-elevation-z8" *ngIf="!addContacto" container="body"
+          placement="bottom" tooltip="Agregar" (click)="newContaco()">
+          <i class="fa fa-plus"></i>
+        </button>
+        <div *ngIf="!EditContacto">
+          <button *ngIf="Contactos.length > 0" class="btn btn-xs mr-2 mat-elevation-z8" container="body"
+            placement="bottom" tooltip="Editar" [disabled]="!elementCn"
+            [ngClass]="(!elementCn) ? 'disabled' : 'btn-warning'" (click)="UpContactos(); textbtnContacto = 'Editar'">
+            <i class="fa fa-pencil"></i>
+          </button>
+          <button *ngIf="Contactos.length > 0" class="btn btn-xs mat-elevation-z8" container="body"
+            placement="bottom" tooltip="Eliminar" [disabled]="!elementCn"
+            [ngClass]="(!elementCn) ? 'disabled' : 'btn-danger'" (click)="sweetalertEliminarContacto()">
+            <i class="fa fa-trash"></i>
+          </button>
         </div>
       </div>
       <div *ngIf="Contactos.length > 0">
-        <div class="card media">
-          <div class="card-body">
+        <!-- <div class="card">
+          <div class="card-body"> -->
             <div class="row" #TableContactos>
-              <div class="col-sm-12 col-md-12 table-responsive clearfix">
-                <div>
-                  <span *ngIf="config.paging" class="float-right">Total Registros: {{registrosCn}}</span>
+              <div class="col-sm-12 col-md-12">
+                <div class="d-flex justify-content-end p-1 bg-warning mt-2">
+                  <span *ngIf="config.paging">TOTAL REGISTROS<span
+                      class="badge badge-pill badge-success ml-2">{{registrosCn}}</span></span>
                 </div>
-                <table id="ContactosNuevos" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+                <table id="ContactosNuevos" class="table text-muted fontRoboto" style="width: 100%;">
                   <thead>
                     <tr>
                       <th *ngFor="let column of columnsCn" ngClass="{{column.className || ''}}">
-                        {{column.title | uppercase}}
+                        <small>{{column.title | uppercase}}</small>
                       </th>
                     </tr>
                     <tr *ngIf="showFilterRowCn">
@@ -320,10 +321,11 @@
                   <tbody>
                     <tr *ngFor="let rowcn of rowsCn; let i=index" (click)="onCellClickCn(rowcn, rowcn.id)"
                       [class.selected]="rowcn.selectedCn">
-                      <td>{{rowcn.calle}}</td>
-                      <td>{{rowcn.nombre}} {{rowcn.apellidoPaterno}} {{rowcn.apellidoMaterno}}
+                      <td>{{rowcn.calle | uppercase}}</td>
+                      <td>{{rowcn.nombre | uppercase}} {{rowcn.apellidoPaterno | uppercase}}
+                        {{rowcn.apellidoMaterno |uppercase}}
                       </td>
-                      <td>{{rowcn.puesto}}</td>
+                      <td>{{rowcn.puesto |uppercase}}</td>
                       <td>
                         <p *ngFor="let t of rowcn.telefonos">
                           {{t.tipoTelefono}}:
@@ -338,12 +340,12 @@
                       <td>
                         <p *ngFor="let e of rowcn.emails">{{e.email}}</p>
                       </td>
-                      <td>{{rowcn.infoAdicional}}</td>
+                      <td>{{rowcn.infoAdicional | uppercase}}</td>
                     </tr>
                   </tbody>
                 </table>
                 <mat-divider></mat-divider>
-                <div class="text-right">
+                <div class="d-flex justify-content-end p-1 mt-2">
                   <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="pageCn" [totalItems]="lengthCn"
                     [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
                     (pageChanged)="onChangeTableCn(config, $event)" (numPages)="numPagesCn = $event">
@@ -351,8 +353,8 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          <!-- </div>
+        </div> -->
       </div>
     </div>
 

@@ -1,10 +1,7 @@
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-
-import { AgmCoreModule } from '@agm/core';
 import { AppComponent } from './app.component';
-import { AuthInterceptor } from './service/auth/auth-interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
 import { CardService } from './service/SeguimientoVacante/CardService.service';
 import { CoreModule } from './core/core.module';
@@ -14,12 +11,13 @@ import { RoutesModule } from './routes/routes.module';
 import { SharedModule } from './shared/shared.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
+
 // registrar los locales con el nombre que quieras utilizar a la hora de proveer
 
 // https://github.com/ocombe/ng2-translate/issues/218
-export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
+// export function createTranslateLoader(http: HttpClient) {
+//   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+// }
 
 @NgModule({
   declarations: [
@@ -32,13 +30,13 @@ export function createTranslateLoader(http: HttpClient) {
     LayoutModule,
     SharedModule.forRoot(),
     RoutesModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [HttpClient]
-      }
-    })
+    // TranslateModule.forRoot({
+    //   loader: {
+    //     provide: TranslateLoader,
+    //     useFactory: (createTranslateLoader),
+    //     deps: [HttpClient]
+    //   }
+    // })
   ],
   providers: [
     HttpClientModule,

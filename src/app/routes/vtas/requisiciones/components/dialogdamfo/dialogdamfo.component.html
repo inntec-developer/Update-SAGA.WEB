@@ -1,69 +1,68 @@
-<h3 class="text-primary text-center" mat-dialog-title> Generar Nueva Requisici&oacute;n</h3>
+<h5 class="d-flex justify-content-center align-items-center p-1 bg-info" >GENERAR NUEVA REQUISICI&Oacute;N</h5>
 <mat-divider></mat-divider>
-<mat-dialog-content>
+<mat-dialog-content class="mt-2 fontRoboto text-info">
   <div class="row">
     <div class="col-sm-12">
-      <h5><strong class="text-primary">Cliente: </strong> {{data.cliente}}</h5>
+     <span>CLIENTE <span class="text-muted">{{data.cliente | uppercase}}</span></span> 
     </div>
   </div>
-  <div class="row">
+  <div class="row mt-3">
     <div class="col-md-4 col-sm-4">
-      <h5><strong class="text-primary">Puesto: </strong>{{data.nombrePerfil}}</h5>
+      <span>PUESTO <span class="text-muted">{{data.nombrePerfil | uppercase}}</span></span>
     </div>
     <div class="col-md-4 col-sm-4">
-      <h5><strong class="text-primary">Sueldo M&iacute;nimo: </strong>{{data.sueldoMinimo | moneda: '$'}}</h5>
+      <span>SUELDO M&Iacute;NIMO <span class="text-muted">{{data.sueldoMinimo | moneda: '$'}}</span></span>
     </div>
     <div class="col-md-4 col-sm-4">
-      <h5><strong class="text-primary">Sueldo M&aacute;ximo: </strong>{{data.sueldoMaximo | moneda: '$'}}</h5>
+      <span>SUELDO M&Aacute;XIMO <span class="text-muted">{{data.sueldoMaximo | moneda: '$'}}</span></span>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-4 col-sm-4">
-      <h5><strong class="text-primary">Clase Reclutamiento: </strong>{{data.claseReclutamiento}}</h5>
+  <div class="row mt-3 mb-1">
+    <div class="col-md-6 col-sm-6">
+      <span>CLASE RECLUTAMIENTO <span class="text-muted">{{data.claseReclutamiento | uppercase}}</span></span>
     </div>
-    <div class="col-md-4 col-sm-4">
-      <h5><strong class="text-primary">Tipo Reclutamiento: </strong>{{data.tipoReclutamiento}}</h5>
+    <div class="col-md-6 col-sm-6">
+      <span>TIPO RECLUTAMIENTO <span class="text-muted">{{data.tipoReclutamiento | uppercase}}</span></span>
     </div>
   </div>
   <mat-divider></mat-divider>
-  <div class="row">
-    <div class="col-4">
-      <mat-slide-toggle class="example-margin" [color]="warn" [(ngModel)]="confidencial">
-        Vacante Confidencial
-      </mat-slide-toggle>
+  <div class="row mt-2 fontRoboto mt-3">
+    <div class="col-6">
+      <mat-slide-toggle class="text-warning" [color]="warn" [(ngModel)]="confidencial">
+       <small>VACANTE CONFIDENCIAL</small>
+      </mat-slide-toggle><br>
+      <small class="text-warning"><i class="fa fa-exclamation-circle mr-1" aria-hidden="true"></i> Especifique si la requisici&oacute;n es confidencial o no. </small>
     </div>
     <div class="col-6">
-      <h5 class=text-warning>Especifique si la requisici&oacute;n es confidencial o no. </h5>
-    </div>
-    <div class="col-2">
-      <span *ngIf="confidencial" class="text-info">
-        <strong> Confidencial</strong>
+      <span *ngIf="confidencial" class="text-warning">
+        <span>CONFIDENCIAL</span>
       </span>
       <span *ngIf="!confidencial" class="text-success">
-        <strong> No confidencial</strong>
+        <span>NO CONFIDENCIAL</span>
       </span>
     </div>
   </div>
-  <div class="row">
+  <div class="row mt-2">
     <div class="col-md-12 col-sm-12">
       <app-direccionauto [Damfo]='IdDamfo' [IdDireccion]='IdDireccion' (change)='FiltroDireccion($event)'>
       </app-direccionauto>
     </div>
   </div>
-
   <mat-divider></mat-divider>
 </mat-dialog-content>
 <br>
-<mat-dialog-actions>
-  <button type="button" (click)="onNoClick()" class="btn btn-xs btn-labeled btn-danger mb-1 margin mat-elevation-z8">
+<mat-dialog-actions class="d-flex justify-content-end align-items-center p-1 mb-2">
+  <span *ngIf="spinner" class="mr-2"><i class="fa fa-spinner fa-pulse float-left"
+    aria-hidden="true"></i></span>
+  <button [disabled]="spinner" type="button" (click)="onNoClick()" class="btn btn-xs btn-labeled btn-danger mr-2 mat-elevation-z8">
     <span class="btn-label">
       <i class="fa fa-times"></i>
-    </span> Cancelar
+    </span>CANCELAR
   </button>
-  <button type="button" class="btn btn-xs btn-labeled btn-success mb-1 margin mat-elevation-z8" (click)="createRequisicion()"
-    [disabled]="DisabledButton">
+  <button type="button" class="btn btn-xs btn-labeled btn-success mat-elevation-z8" (click)="createRequisicion()"
+    [disabled]="DisabledButton || spinner">
     <span class="btn-label">
       <i class="fa fa-check"></i>
-    </span> Aceptar
+    </span>ACEPTAR
   </button>
 </mat-dialog-actions>

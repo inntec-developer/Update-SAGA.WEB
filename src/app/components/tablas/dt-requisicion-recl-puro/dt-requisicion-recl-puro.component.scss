@@ -27,12 +27,12 @@
   }
 
   tbody tr:hover {
-    font-size: 14.5px;
+    font-size: 12.5px;
     box-shadow: 1px 20px 60px rgba(0, 0, 0, .23);
   }
 
   ng-scrollbar {
-    --scrollbar-size: 4px;
+    --scrollbar-size: 8px;
     --scrollbar-thumb-color: rgb(94, 175, 255);
     --scrollbar-thumb-hover-color: dodgerblue;
     --scrollbar-border-radius: 4px;
@@ -44,4 +44,11 @@
 
   .modal-lg .long {
     max-height: 100% !important;
+  }
+  button .badge {
+    position: absolute;
+    top: -10px;
+   
+  z-index: 9;
+    font-size: .7em;
   }

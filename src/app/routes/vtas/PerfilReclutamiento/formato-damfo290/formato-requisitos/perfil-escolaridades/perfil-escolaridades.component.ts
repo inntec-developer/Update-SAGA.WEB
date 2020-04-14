@@ -96,12 +96,10 @@ export class PerfilEscolaridadesComponent implements OnInit, OnChanges {
   }
 
   removeEscolaridad(i: number) {
-    debugger;
     const control = <FormArray>this.EscolaridadArray.controls['escolaridad'];
     control.removeAt(i);
     this.EscolaridadesNew.splice(i, 1);
     this.EscolaridadesEmt.emit(this.EscolaridadesNew);
   }
-
 
 }

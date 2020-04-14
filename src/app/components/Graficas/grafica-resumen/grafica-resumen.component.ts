@@ -17,16 +17,15 @@ export class GraficaResumenComponent implements OnInit {
   Chart: Chart;
   Data: any;
   private UsuarioId: any;
-  public nombreCliente:string;
+  public nombreCliente: string;
 
   constructor(
-    private servicio:ReportesService,
+    private servicio: ReportesService,
     private settings: SettingsService,
-    private spinner:NgxSpinnerService
+    private spinner: NgxSpinnerService
     ) { }
 
-    ngOnInit(){
-
+    ngOnInit() {
     }
 
     Generar(empresa,cordina) {
@@ -49,7 +48,8 @@ export class GraficaResumenComponent implements OnInit {
 
     coo = cordina == undefined?'0':coo;
     emp = empresa == undefined?'0':empresa;
-  this.servicio.getVacante(emp,coo).subscribe(item =>{
+  this.servicio.getVacante(emp,coo).subscribe(item => {
+    if(item.length > 0) {
  this.nombreCliente = item[0].vacantenombre;
     var Onombre = [];
     var Opos = [];
@@ -69,7 +69,7 @@ export class GraficaResumenComponent implements OnInit {
    }
    this.Chart = new Chart('GraficaVacante', {
      type: 'pie',
-     title: { text: 'Seguimiento de Vacantes' },
+    //  title: { text: 'Seguimiento de Vacantes' },
      data: this.Data,
      options: {
      // onClick: this.detectedClick.bind(this),
@@ -86,9 +86,9 @@ export class GraficaResumenComponent implements OnInit {
      },
  
    });
-  })
-
- 
-
+  } else {
+    this.spinner.hide();
+  }
+  });
   }
 }

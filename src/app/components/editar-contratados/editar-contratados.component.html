@@ -1,255 +1,156 @@
-<!-- <mat-dialog-content class="my-class">
-<div class="row">
-  <div class="col-lg-8">
-    <h3 class="text-success"  mat-dialog-title>EDITAR PERSONAL CONTRATADO</h3>
-  </div>
-  <div class="col-lg-4">
-    <button type="button" class="btn btn-xs btn-danger btn-circle float-right" mat-dialog-close ><i class="fa fa-times"></i></button>
+<div class="content-heading">
+  <span>EDITAR</span>
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item">
+      <a class="text-info" (click)="Regresar()" style="cursor: pointer;">CANDIDATOS EN PROCESO</a>
+    </li>
+    <li class="breadcrumb-item active text-muted">EDITAR CANDIDATOS CUBIERTOS</li>
+  </ol>
 </div>
-</div>
-<mat-divider></mat-divider><br/> -->
-<!-- <p><strong class="text-warning text-center">Horarios disponibles para la requisici&oacute;n</strong></p> -->
-
- <!-- <form [formGroup]="formdata" role="form" name="formdata" novalidate>  -->
-
-  <div class="table-responsive">
-    <table *ngIf="data.length > 0 else NotCandidatos" class="table table-hover">
-      <thead>
-        <tr>
-          <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
-            {{column.title | uppercase}}
-            <!-- <i *ngIf="config && column.sort" class="pull-right fa" (click)="changeSort($event, config)" [ngClass]="{'fa-chevron-down': column.sort === 'desc', 'fa-chevron-up': column.sort === 'asc'}">
-            </i> -->
-          </th>
-          <th class="text-center"></th>
-        </tr>
-      </thead>
-      <tbody>
-
-        <!-- <tr *ngIf="showFilterRow">
-          <td *ngFor="let column of columns">
-            <input formControlName="filtro" *ngIf="column.filtering" placeholder="{{column.filtering.placeholder | uppercase}}" [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
-              class="form-control">
-          </td>
-        </tr> -->
-        <tr *ngFor="let row of data; let rowIndex = index" [class.classCURP]="row.classCURP">
-         <td class="text-center">{{row.folio}}</td>
-         <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
-              <span (dblclick)="editing[rowIndex + '-curp'] = true" *ngIf="!editing[rowIndex + '-curp']">
-                  {{row.curp | uppercase}}
-              </span>
-
-              <input [(ngModel)]="row.curp" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'curp', rowIndex); row.classCURP=false;" *ngIf="editing[rowIndex + '-curp']" type="text" minlength="18" maxlength=18 [value]=row.curp >
-              <span *ngIf="editing[rowIndex + '-curp']">
-                <small [ngClass]="row.curp.length < 18 ? 'text-danger' : 'text-success'">
-                  <em *ngIf="row.curp.length < 18 " class="fa fa-close"></em>
-                  <em *ngIf="row.curp.length == 18" class="fa fa-check"></em>
-                 CURP debe tener 18 caracteres
-                </small>
-              </span>
-          </td>
-          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
-              <span (dblclick)="editing[rowIndex + '-rfc'] = true" *ngIf="!editing[rowIndex + '-rfc']">
-                  {{row.rfc | uppercase}}
-              </span>
-
-              <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'rfc', rowIndex);" *ngIf="editing[rowIndex + '-rfc']" type="text" maxlength=13 [value]=row.rfc >
-              <span *ngIf="editing[rowIndex + '-rfc']">
-                <small [ngClass]="row.rfc.length < 13 ? 'text-danger' : 'text-success'">
-                  <em *ngIf="row.rfc.length < 13 " class="fa fa-close"></em>
-                  <em *ngIf="row.rfc.length == 13" class="fa fa-check"></em>
-                 RFC debe tener 13 caracteres
-                </small>
-              </span>
-
-          </td>
-          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
-              <span (dblclick)="editing[rowIndex + '-nss'] = true" *ngIf="!editing[rowIndex + '-nss']">
-                  {{row.nss | uppercase}}
-              </span>
-
-              <input class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'nss', rowIndex);" *ngIf="editing[rowIndex + '-nss']" type="text" maxlength=11 [value]=row.nss >
-              <span *ngIf="editing[rowIndex + '-nss']">
-                <small [ngClass]="row.nss.length < 11 ? 'text-danger' : 'text-success'">
-                  <em *ngIf="row.nss.length < 11" class="fa fa-close"></em>
-                  <em *ngIf="row.nss.length == 11" class="fa fa-check"></em>
-                 NSS debe tener 11 caracteres
-                </small>
-              </span>
-
-          </td>
-          <td class="text-center">
-
-              <span (dblclick)="editing[rowIndex + '-edad'] = true" *ngIf="!editing[rowIndex + '-edad']">
-                  {{row.edad | date:'yyyy-MM-dd'}}
-              </span>
-
-              <!-- <mat-form-field *ngIf="editing[rowIndex + '-edad']">
-                  <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateChange)="updateValue($event, 'edad', rowIndex)">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field> -->
-              <!-- <div class="form-group" *ngIf="editing[rowIndex + '-edad']">
-                  <div class="input-group">
-                    <input class="form-control form-control-sm" placeholder="Seleccionar fecha" [(ngModel)]="modelCalendar"
-                           ngbDatepicker #d="ngbDatepicker" (ngModelChange)="updateValue($event, 'edad', rowIndex)">
-                    <div class="input-group-append">
-                      <button class="btn btn-xs btn-info" (click)="d.toggle()" type="button">
-                          <i class="fa fa-calendar" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div> -->
-              <ngb-datepicker *ngIf="editing[rowIndex + '-edad']" [(ngModel)]="modelCalendar" class="custom-day" (select)="updateValue($event, 'edad', rowIndex)" ></ngb-datepicker>
-          <!-- <input *ngIf="editing[rowIndex + '-edad']" type="text" placeholder="Seleccionar fecha" class="form-control form-control-sm customDay"  #dpYMD="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" (change)="updateValue($event, 'edad', rowIndex)"> -->
-
-        </td>
-          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar" >
-              <span (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
-                  {{row.nombre | uppercase}}
-              </span>
-              <input [(ngModel)]="row.nombre" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'nombre', rowIndex)" *ngIf="editing[rowIndex + '-nombre']" type="text" [value]=row.nombre>
-              <span *ngIf="editing[rowIndex + '-nombre']">
-                <small [ngClass]="row.nombre.length <= 0 ? 'text-danger' : 'text-success'">
-                  <em *ngIf="row.nombre.length <= 0 " class="fa fa-close"></em>
-                  <em *ngIf="row.nombre.length > 1" class="fa fa-check"></em>
-                  EL campo Nombre debe contener al menos 1 caracter
-                </small>
-              </span>
-          </td>
-          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar" >
-              <span  (dblclick)="editing[rowIndex + '-apellidoPaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoPaterno']">
-                  {{row.apellidoPaterno | uppercase}}
-              </span>
-              <input [(ngModel)]="row.apellidoPaterno" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'apellidoPaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoPaterno']" type="text" [value]=row.apellidoPaterno>
-              <span *ngIf="editing[rowIndex + '-apellidoPaterno']">
-                <small [ngClass]="row.apellidoPaterno.length <= 0 ? 'text-danger' : 'text-success'">
-                  <em *ngIf="row.apellidoPaterno.length <= 0 " class="fa fa-close"></em>
-                  <em *ngIf="row.apellidoPaterno.length > 1" class="fa fa-check"></em>
-                  El campo Apellido Paterno debe contener al menos un caracter
-                </small>
-              </span>
-          </td>
-          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
-              <span (dblclick)="editing[rowIndex + '-apellidoMaterno'] = true" *ngIf="!editing[rowIndex + '-apellidoMaterno']">
-                  {{row.apellidoMaterno | uppercase}}
-              </span>
-              <input [(ngModel)]="row.apellidoMaterno" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'apellidoMaterno', rowIndex)" *ngIf="editing[rowIndex + '-apellidoMaterno']" type="text" [value]=row.apellidoMaterno>
-              <span *ngIf="editing[rowIndex + '-apellidoMaterno']">
-                <small [ngClass]="row.apellidoMaterno.length <= 0 ? 'text-danger' : 'text-success'">
-                  <em *ngIf="row.apellidoMaterno.length <= 0 " class="fa fa-close"></em>
-                  <em *ngIf="row.apellidoMaterno.length > 1" class="fa fa-check"></em>
-                  El campo Apellido Materno debe contener al menos un caracter
-                </small>
-              </span>
-          </td>
-          <td class="text-center">
-            <span (dblclick)="editing[rowIndex + '-areaReclutamiento'] = true" *ngIf="!editing[rowIndex + '-areaReclutamiento']">
-              {{row.areaReclutamiento | uppercase}}
-            </span>
-
-            <select *ngIf="editing[rowIndex + '-areaReclutamiento']" class="selectpicker form-control form-control-sm" (change)="updateValue($event, 'areaReclutamiento', rowIndex)" title="Choose one of the following...">
-                <option *ngFor="let a of areas" [value]="a.id">{{a.nombre | uppercase }}</option>
-            </select>
-
-             <!-- <mat-form-field *ngIf="editing[rowIndex + '-areaReclutamiento']">
-              <mat-select placeholder="SELECCIONAR AREA DE RECL." [(value)]="areasId" (selectionChange)="updateValue($event, 'areaReclutamiento', rowIndex)" >
-                <mat-option *ngFor="let a of areas" [value]="a.id">
-                    {{a.nombre}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-               -->
-          </td>
-          <td class="text-center" container="body" placement="bottom" tooltip="Doble click para editar">
-            <span (dblclick)="editing[rowIndex + '-fuenteReclutamiento'] = true" *ngIf="!editing[rowIndex + '-fuenteReclutamiento']">
-              {{row.fuenteReclutamiento | uppercase}}
-            </span>
-
-
-            <select *ngIf="editing[rowIndex + '-fuenteReclutamiento']" class="selectpicker form-control form-control-sm" (change)="updateValue($event, 'fuenteReclutamiento', rowIndex)">
-              <optgroup *ngFor="let m of medios" label="{{m.nombre | uppercase}}">
-                <option *ngFor="let sub of m.medios" [value]="sub.tipoMediosId">{{sub.tipoNombre}}</option>
-              </optgroup>
-            </select>
-            <!-- <mat-form-field *ngIf="editing[rowIndex + '-fuenteReclutamiento']">
-              <mat-select placeholder="SELECCIONAR FUENTE DE RECL." [(value)]="mediosId" (selectionChange)="updateValue($event, 'fuenteReclutamiento', rowIndex)">
-                <mat-optgroup *ngFor="let m of medios" [label]="m.nombre | uppercase"
-                              [disabled]="m.disabled">
-                  <mat-option *ngFor="let sub of m.medios" [value]="sub.tipoMediosId">
-                    {{sub.tipoNombre}}
-                  </mat-option>
-                </mat-optgroup>
-              </mat-select>
-            </mat-form-field>
-          </td> -->
-          <td class="text-center">
-                {{row.sueldoMinimo | moneda : '$'}}
-
-            <!-- <input [(ngModel)]="row.sueldoMinimo" class="form-control form-control-sm" autofocus (blur)="updateValue($event, 'sueldoMinimo', rowIndex)" *ngIf="editing[rowIndex + '-sueldoMinimo']" type="text" [value]=row.sueldoMinimo>
-            <span *ngIf="editing[rowIndex + '-sueldoMinimo']">
-              <small [ngClass]="row.sueldoMinimo.length <= 0 ? 'text-danger' : 'text-success'">
-                <em *ngIf="row.sueldoMinimo.length <= 0 " class="fa fa-close"></em>
-                <em *ngIf="row.sueldoMinimo.length > 1" class="fa fa-check"></em>
-                El campo Sueldo debe contener al menos un caracter
-              </small>
-            </span> -->
-          </td>
-          <td class="text-center">{{row.usuario}}</td>
-          <td class="text-center">{{row.fecha | date:'dd-MM-yyyy'}}</td>
-          <td class="text-center">
-            <button [disabled]="row.curp.length < 18 || row.nombre.length < 1 || row.apellidoPaterno.length < 1 || row.apellidoMaterno < 1" class="mb-1 btn btn-xs btn-success mat-elevation-z8" type="button" (click)="UpdateData(row)" container="body" placement="bottom" tooltip="Actualizar">
-              <em class="fa fa-check"></em>
-            </button>
-          </td>
-        </tr>
-
-      </tbody>
-    </table>
+<div class="d-flex justify-content-between align-items-center p-1 bg-cover bg text-white">
+  <div class="radial-bar radial-bar-90 radial-bar radial-bar-warning m-0">
+    <img [src]="dataSource.foto" (error)="errorImg()">
   </div>
-  <!-- <pre class="card card-block card-header"><span class="card-text">Total Registros: {{data.length}}</span></pre> -->
-  <!-- </form>  -->
-
-<br/><br/>
-<mat-divider></mat-divider><br/>
-
-<p class="text-warning" *ngIf="etiqueta">Es necesario completar CURP (con los 2 ultimos digitos validadores), RFC y NSS, </p>
-<div class="float-right">
-
-  <!-- <button class="btn btn-xs btn-labeled btn-danger mb-2 margen" mat-dialog-close>
-    <span class="btn-label">
-        <i class="fa fa-times"></i>
-      </span> Cancelar
-  </button> -->
-  <a class="btn btn-xs btn-labeled btn-warning mb-2 margen mat-elevation-z8" href="https://www.gob.mx/curp/" target="_blank" >
-    <span class="btn-label">
-      <i class="fa fa-file-text-o"></i>
-    </span> Validar CURP
-  </a>
-
-  <button [disabled]="data.length==0" type="button" class="btn btn-xs btn-labeled btn-success mb-2 margen mat-elevation-z8" (click)="exportAsXLSX()">
-    <span class="btn-label">
-      <i class="fa fa-download"></i>
-    </span> Descargar
+  <h5>{{formPersonales.controls.nombre.value | uppercase}} {{formPersonales.controls.apellidoP.value | uppercase}} {{formPersonales.controls.apellidoM.value | uppercase}}</h5>
+  <div class="d-flex flex-column justify-content-start fontRoboto">
+    <span>RECLUTADOR</span>
+    <span>{{reclutador | uppercase }}</span>
+    <span>FOLIO - VACANTE</span>
+    <span>{{data.folio}} - {{data.vBtra | uppercase}}</span>
+  </div>
+  <button container="body" placement="bottom" tooltip="Regresar" class="btn btn-xs btn-warning" type="button"
+    (click)="Regresar()">
+    <i class="icon-action-undo"></i>
   </button>
-  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-  <!-- <button class="btn btn-xs btn-outline-success mb-1 float-right" [disabled]="!seleccion" mat-button [mat-dialog-close]="seleccion">Aceptar</button> -->
-  <!-- <button type="button" class="btn btn-xs btn-labeled btn-outline-success mb-2 margen" [mat-dialog-close]="true">
-    <span class="btn-label">
-      <i class="fa fa-check"></i>
-    </span> Aceptar
-  </button> -->
-
 </div>
-<!-- </mat-dialog-content> -->
+<div *ngIf="spinner" class="spinner">
+  <div class="ball-spin-fade-loader">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <!-- <mat-progress-spinner [color]="color" [mode]="mode" [value]="value">
+  </mat-progress-spinner> -->
+</div>
+<div class="card card-body">
+  <div class="d-flex justify-content-end align-items-center p-1 bg-warning-light fontRoboto mb-2">
+    <div  class="d-flex justify-content-end align-items-center">
+      <a class="btn btn-xs btn-purple mat-elevation-z8" placement="bottom" tooltip="Validar CURP" href="https://www.gob.mx/curp/"
+        target="_blank">
+          <i class="fa fa-file-text-o"></i>
+      </a>
+      <!-- <button [disabled]="data.length==0" type="button" placement="bottom" tooltip="Descargar"
+        class="btn btn-xs btn-success ml-2 mat-elevation-z8" (click)="exportAsXLSX()">
+          <i class="fa fa-download"></i>
+      </button> -->
+    </div>
+  </div>
+  <form [formGroup]="formPersonales" novalidate>
+    <div class="d-flex justify-content-between align-items-center align-items-strech mt-2">
+      <mat-form-field class="mr-3 w-100">
+        <input matInput (change)="GenerarCurp(null)" type="text" placeholder="NOMBRE" formControlName="nombre">
+      </mat-form-field>
+      <mat-form-field class="mr-3 w-100">
+        <input matInput (change)="GenerarCurp(null)" type="text" placeholder="APELLIDO PATERNO"
+          formControlName="apellidoP" />
+      </mat-form-field>
+      <mat-form-field class="mr-3 w-100">
+        <input matInput (change)="GenerarCurp(null)" type="text" placeholder="APELLIDO MATERNO"
+          formControlName="apellidoM" />
+      </mat-form-field>
+    </div>
+    <small class="text-danger" *ngIf="formPersonales.controls.nombre.value.length == 0 ||
+      formPersonales.controls.apellidoP.value.length == 0 ||
+      formPersonales.controls.apellidoM.value.length == 0">Campos requeridos</small>
+    <div class="d-flex justify-content-between align-items-center mt-3">
+      <div class="d-flex flex-column mr-3 w-100" >
+        <small class="text-muted mb-1">GENERO *</small>
+        <mat-radio-group formControlName="genero">
+          <div class="d-flex justify-content-start align-items-center">
+            <mat-radio-button class="mr-4" (change)="GenerarCurp(null)" [value]=2><i class="fa fa-female text-pink mr-1" aria-hidden="true"></i>MUJER
+            </mat-radio-button>
+            <mat-radio-button (change)="GenerarCurp(null)" [value]=1><i class="fa fa-male text-primary mr-1"
+                aria-hidden="true"></i>HOMBRE
+            </mat-radio-button>
+          </div>
+        </mat-radio-group>
+      </div>
+      <mat-form-field class="mr-3 w-100">
+        <mat-label>FECHA DE NACIMIENTO</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fechaNac"
+          (dateChange)="validarFecha($event.value);GenerarCurp(null);">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <small *ngIf="edad >= 18" class="text-info">Edad {{edad}}</small>
+      </mat-form-field>
+      <mat-form-field class="mr-3 w-100">
+        <mat-label>LUGAR DE NACIMIENTO</mat-label>
+        <mat-select formControlName="estadoNac" (selectionChange)="GenerarCurp($event.value)">
+          <mat-option *ngFor="let e of estados" [value]=e.clave>
+            {{e.estado | uppercase}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <small class="text-danger" *ngIf="formPersonales.controls.genero.value == 0">Campos requeridos</small>
+    <div class="d-flex justify-content-between align-items-center w-100 mt-3">
+      <div class="mr-3 d-flex justify-content-between align-items-center w-100">
+      <mat-form-field class="w-100">
+        <input class="text-warning" matInput type="text" placeholder="CURP" formControlName="curp" minlength="16" maxlength=18 />
+        <em matSuffix class="fa fa-refresh text-info em-button" container="body" placement="top" tooltip="Generar CURP"
+          (click)="GenerarCurp(formPersonales.get('estadoNac').value)"></em>
+      </mat-form-field>
+      <mat-form-field class="ml-2">
+        <input matInput type="text" formControlName="cvCurp" maxlength=2>
+      </mat-form-field>
+    </div>
+    <div class="d-flex justify-content-between align-items-center ml-2 w-100">
+      <mat-form-field class="mr-3 w-100">
+        <input class="text-warning" formControlName="rfc" matInput placeholder="RFC *">
+      </mat-form-field>
+      <mat-form-field class="ml-2">
+        <input matInput type="text" formControlName="cvRFC" maxlength=3>
+      </mat-form-field>
+    </div>
+      <mat-form-field class="w-100 ml-2">
+        <input class="text-warning" formControlName="nss" matInput placeholder="NSS *">
+      </mat-form-field>
+    </div>
+    <div class="d-flex justify-content-end mt-2 mb-3">
+      <!-- <a class="btn btn-xs btn-labeled btn-warning mb-2 margen mat-elevation-z8" href="https://www.gob.mx/curp/"
+        target="_blank">
+        <span class="btn-label">
+          <i class="fa fa-file-text-o"></i>
+        </span> Validar CURP
+      </a>
 
-<!--mensaje cuando esta vacio la tabla-->
-<ng-template #NotCandidatos>
+      <button [disabled]="data.length==0" type="button"
+        class="btn btn-xs btn-labeled btn-success mb-2 margen mat-elevation-z8" (click)="exportAsXLSX()">
+        <span class="btn-label">
+          <i class="fa fa-download"></i>
+        </span> Descargar
+      </button> -->
+      <button [disabled]="formPersonales.invalid" type="button"
+        class="btn btn-xs btn-labeled btn-success mat-elevation-z8" (click)="UpdateData()">
+        <span class="btn-label">
+          <i class="fa fa-floppy-o"></i>
+        </span>GUARDAR CAMBIOS
+      </button>
+    </div>
+    </form>
+  </div>
+  <!--mensaje cuando esta vacio la tabla-->
+  <ng-template #NotCandidatos>
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12">
-          <alert type="info">
-              <strong>Oops!</strong> A&uacute;n no cuentas con candidatos cubiertos.
-            </alert>
+        <alert type="info">
+          <strong>Oops!</strong> A&uacute;n no cuentas con candidatos cubiertos.
+        </alert>
       </div>
     </div>
   </ng-template>

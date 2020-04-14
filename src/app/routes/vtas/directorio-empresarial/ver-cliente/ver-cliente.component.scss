@@ -5,19 +5,21 @@
 .dt-container{
   background-color: white !important;
 }
-
-.margin-left{
-  margin-left: 10px;
+a {
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 12px !important;
 }
-
-div ul#rtl_func
-{
-  width: 100%;
-  height: 150px;
+// div ul#rtl_func
+// {
+//   width: 100%;
+//   height: 150px;
+// }
+.acordin-padding {
+text-decoration: none !important;
 }
-
 ng-scrollbar {
-  --scrollbar-size: 4px;
+  --scrollbar-size: 7px;
   --scrollbar-thumb-color: rgb(94, 175, 255);
   --scrollbar-thumb-hover-color: dodgerblue;
   --scrollbar-border-radius: 4px;
@@ -25,38 +27,38 @@ ng-scrollbar {
 
 
 // LISTA EFECTO
-*, *:before, *:after {
-  box-sizing: border-box;
-  margin: 0px;
-  padding: 0px;
-}
+// *, *:before, *:after {
+//   box-sizing: border-box;
+//   margin: 0px;
+//   padding: 0px;
+// }
 
-ul#rtl_func {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  padding: 0 10px;
-  list-style: none;
-}
-ul#rtl_func > li {
-  border-radius: 4px;
-  // border: 1px solid #dedede;
-  font-weight: bold;
-  font-family: 'segoe ui', sans-serif;
-  margin: 10px 0;
-  min-width: 45%;
-  padding: 5px 10px;
-  transition: box-shadow .25s ease;
-}
-ul#rtl_func > li:hover {
-  box-shadow: 0px 0px 15px 5px rgba(0,0,0,.15);
-  cursor: default;
-}
-ul#rtl_func > li > ul > li {
-  list-style: none;
-  font-weight: normal;
-}
-ul#rtl_func > li > ul > li:first-of-type {
-  border-top: 1px solid #eee;
-  margin-top: 4px;
-}
+// ul#rtl_func {
+//   display: flex;
+//   flex-flow: row wrap;
+//   justify-content: space-between;
+//   padding: 0 10px;
+//   list-style: none;
+// }
+// ul#rtl_func > li {
+//   border-radius: 4px;
+//   // border: 1px solid #dedede;
+//   font-weight: bold;
+//   font-family: 'segoe ui', sans-serif;
+//   margin: 10px 0;
+//   min-width: 45%;
+//   padding: 5px 10px;
+//   transition: box-shadow .25s ease;
+// }
+// ul#rtl_func > li:hover {
+//   box-shadow: 0px 0px 15px 5px rgba(0,0,0,.15);
+//   cursor: default;
+// }
+// ul#rtl_func > li > ul > li {
+//   list-style: none;
+//   font-weight: normal;
+// }
+// ul#rtl_func > li > ul > li:first-of-type {
+//   border-top: 1px solid #eee;
+//   margin-top: 4px;
+// }

@@ -1,5 +1,19 @@
 .container-coments {
     display:block;
-    height:450px;
-    overflow:auto;
+    height:350px;
 }
+span .badge {
+    position: absolute;
+    top: 70px;
+  z-index: 9;
+    font-size: .7em;
+  }
+em {
+    cursor: pointer;
+}
+ng-scrollbar {
+    --scrollbar-size: 8px;
+    --scrollbar-thumb-color: rgb(94, 175, 255);
+    --scrollbar-thumb-hover-color: dodgerblue;
+    --scrollbar-border-radius: 4px;
+  }

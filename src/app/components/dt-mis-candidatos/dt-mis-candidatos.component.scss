@@ -1,6 +1,7 @@
 tbody {
   display: block;
-  height: 450px;
+  height: 350px;
+  color: black;
 }
 
 thead,
@@ -15,26 +16,29 @@ thead {
 }
 
 table {
-  width: 400px;
-}
-
-.margen {
-
-  margin: 0 2px;
+  width: 100%;
 }
 
 tbody tr:hover {
-  font-size: 14.5px;
+  font-size: 12.5px;
   box-shadow: 1px 20px 60px rgba(0, 0, 0, .23);
 }
 
 ng-scrollbar {
-  --scrollbar-size: 4px;
+  --scrollbar-size: 8px;
   --scrollbar-thumb-color: rgb(94, 175, 255);
   --scrollbar-thumb-hover-color: dodgerblue;
   --scrollbar-border-radius: 4px;
 }
 
+small .badge {
+  font-size: 8px !important;
+}
 
-
+.spinner {
+  position: absolute;
+  margin-left: 45%;
+  margin-top: 10%;
+  z-index: 9999;
+}
 

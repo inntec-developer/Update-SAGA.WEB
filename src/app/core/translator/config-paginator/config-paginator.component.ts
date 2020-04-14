@@ -1,5 +1,5 @@
-import { MatPaginatorIntl } from '@angular/material';
-import {PaginationConfig} from 'ngx-bootstrap/pagination'
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import {PaginationConfig} from 'ngx-bootstrap/pagination';
 
 const dutchRangeLabel = (page: number, pageSize: number, length: number) => {
   if (length == 0 || pageSize == 0) { return `0 van ${length}`; }

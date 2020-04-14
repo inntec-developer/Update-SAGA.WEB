@@ -1,35 +1,32 @@
 <div class="content-heading" [hidden]="imprimir">
-  <!-- <div>
-    Requisiciones
-    <span class="text-sm d-none d-sm-block">Visualizaci&oacute;n de Requisici&oacute;n.</span>
-  </div> -->
-  <!-- Breadcrumb right aligned-->
+  <span class="text-muted">VISTA REQUISICIONES</span>
   <ol class="breadcrumb ml-auto">
     <li class="breadcrumb-item">
-      <a [routerLink]="['/home']">Inicio</a>
+      <a class="text-info" (click)="regresar()">REQUISICIONES</a>
     </li>
-    <li class="breadcrumb-item">
-      <a [routerLink]="['/ventas/requisicion']">Requisici&oacute;n</a>
-    </li>
-    <li class="breadcrumb-item active">Vista requisici&oacute;n</li>
+    <li class="breadcrumb-item active">VER REQUISICI&Oacute;N</li>
   </ol>
 </div>
-<!-- Botones superiores Izquierdos -->
 <div class="row">
   <div class="col-md-12">
-    <div class="d-flex justify-content-between">
-      <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-xs btn-acciones mat-elevation-z8"
-        [disabled]="estatusId != 4" [ngClass]="(estatusId != 4) ? 'disabled' : 'btn-primary'" container="body"
-        placement="bottom" tooltip="Editar" (click)="editRequi()">
-        <em class="icon-pencil"></em></button>
-      <button *ngIf="!imprimir" placement="right" tooltip="Descargar Requisición" class="mr-1 btn btn-xs btn-info mat-elevation-z8"
-        (click)="createPDF()">
-        <em class="fa fa-print"></em>
+    <div class="d-flex justify-content-between align-items-center p-1">
+      <div>
+        <!-- <button id="view" chkPrivilegiosButtons (click)="openDialogComentarios();" class="mr-2 btn btn-xs btn-dark mat-elevation-z8"
+         container="body"
+        placement="bottom" tooltip="Comentarios"><i class="fa fa-comments-o"></i></button> -->
+        <button id="update" chkPrivilegiosButtons class="mr-1 btn btn-xs mat-elevation-z8" [disabled]="estatusId != 4"
+          [ngClass]="(estatusId != 4) ? 'disabled' : 'btn-warning'" container="body" placement="bottom" tooltip="Editar"
+          (click)="editRequi()">
+          <i class="icon-pencil"></i></button>
+      </div>
+      <button *ngIf="!imprimir" placement="right" tooltip="Descargar Requisición"
+        class="mr-1 btn btn-xs btn-info mat-elevation-z8" (click)="childModal.show()">
+        <i class="fa fa-print"></i>
       </button>
       <span *ngIf="imprimir"><i class="fa fa-spinner fa-pulse" aria-hidden="true"></i></span>
       <button container="body" placement="bottom" tooltip="Regresar"
-        class="mr-1 btn btn-xs btn-warning mat-elevation-z8" type="button" [routerLink]="['/ventas/requisicion']">
-        <em class="icon-action-undo"></em>
+        class="mr-1 btn btn-xs btn-warning mat-elevation-z8" type="button" (click)="regresar()">
+        <i class="icon-action-undo"></i>
       </button>
     </div>
   </div>
@@ -38,6 +35,53 @@
 <div id="content">
   <app-view-info-requi [Folios]="Folio" (EstatusId)="getEstatusRequi($event)"></app-view-info-requi>
   <app-view-cuerpo-requi [Requisicion]="RequisicionId" [ShowRequi]="true"></app-view-cuerpo-requi>
+</div>
+
+
+<div class="modal fade" bsModal #childModal="bs-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title d-flex justify-content-between align-items-center p-1 bg-info w-100 text-uppercase">
+          Informaci&oacute;n a mostrar en Impresi&oacute;n
+          <button type="button" class="btn btn-xs btn-danger btn-circle float-right" aria-label="Close"
+            (click)="childModal.hide(); clearSelection();">
+            <i class="fa fa-times"></i>
+          </button>
+        </h5>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex justify-content-center align-items-center align-items-stretch">
+          <div class="text-uppercase d-flex flex-column">
+            <mat-checkbox [(ngModel)]="SelectiedSection.Encabezado">Encabezado</mat-checkbox>
+            <mat-checkbox [(ngModel)]="SelectiedSection.Horarios">Horarios</mat-checkbox>
+            <mat-checkbox [(ngModel)]="SelectiedSection.Cliente">Cliente</mat-checkbox>
+            <mat-checkbox [(ngModel)]="SelectiedSection.ExpApt">Experiencia / Aptitudes </mat-checkbox>
+            <mat-checkbox [(ngModel)]="SelectiedSection.Direccion">Mapa ubicacion</mat-checkbox>
+            <mat-checkbox [(ngModel)]="SelectiedSection.Telefono">T&eacute;lefonos</mat-checkbox>
+            <mat-checkbox [(ngModel)]="SelectiedSection.Camiones">Rutas de camion</mat-checkbox>
+            <mat-checkbox [(ngModel)]="SelectiedSection.Contacto">Contactos</mat-checkbox>
+            <mat-checkbox [(ngModel)]="SelectiedSection.Requisitos">Requisitos cliente</mat-checkbox>
+          </div>
+          <div class="text-uppercase ml-4 d-flex flex-column">
+            <mat-checkbox [(ngModel)]="SelectiedSection.Sueldos">Sueldos</mat-checkbox>
+            <mat-checkbox [(ngModel)]="SelectiedSection.Beneficio">Beneficios</mat-checkbox>
+            <mat-checkbox [(ngModel)]="SelectiedSection.ActObsProd">Actividades / Obs / Proceso</mat-checkbox>
+            <mat-checkbox [(ngModel)]="SelectiedSection.DocPrest">Documentos / Prestaciones</mat-checkbox>
+            <mat-checkbox [(ngModel)]="SelectiedSection.Psicom">Psicometr&iacute;as</mat-checkbox>
+            <mat-checkbox [(ngModel)]="SelectiedSection.Competencia">Competencias</mat-checkbox>
+            <mat-checkbox [(ngModel)]="SelectiedSection.arteRedes">Arte para redes</mat-checkbox>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="d-flex justify-content-end p-1 mb-1">
+        <button type="button" class="btn btn-labeled btn-success mat-elevation-z8" 
+        (click)="childModal.hide(); createPDF();">
+          <span class="btn-label"><i class="fa fa-print"></i></span>DESCARGAR</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- <div class="row" [hidden]="imprimir">
@@ -60,27 +104,6 @@
 </div> -->
 
 <!-- Spinner para esperar información  -->
-<ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
-<!-- Modal para comentarios de la requisicion -->
-<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 id="dialog-sizes-name1" class="modal-title pull-left">Vacante: {{Vacante}} {{Folio}}</h4>
-        <button type="button" class="close pull-right" (click)="lgModal.hide()" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <comentario-vacante [RequisicionId]="RequisicionId"></comentario-vacante>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="md-1 btn btn-success mat-elevation-z8" (click)="lgModal.hide()">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 <toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>
-

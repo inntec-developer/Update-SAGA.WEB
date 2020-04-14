@@ -165,7 +165,7 @@ export class FormatoDAMFO290Component implements OnInit, OnChanges, AfterContent
             Encabezado['NombrePerfil'] + '.');
         } else {
           this.popToast('success', 'Perfil Reclutamiento',
-          'Se actualizo con éxito el perfil de reclutamiento par la vacante' +
+          'Se actualizós con éxito el perfil de reclutamiento par la vacante' +
           Encabezado['NombrePerfil'] + '.');
         }
         this._Router.navigate(['/reclutamiento/290']);

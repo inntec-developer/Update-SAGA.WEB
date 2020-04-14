@@ -1,19 +1,20 @@
-<mat-accordion class="example-headers-align">
-  <mat-expansion-panel [expanded]="expanded">
-    <mat-expansion-panel-header (click)="expanded  = ! expanded">
-      <mat-panel-title>
-        <mat-icon class="text-primary">find_in_page</mat-icon>
-      </mat-panel-title>
-      <mat-panel-description>
-        <label class="text-primary">Filtrado de Candidatos</label>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <tabset [justified]="true">
-      <tab heading="Búsqueda Básica" id="TapCliente">
+<div class="card card-body fontRoboto">
+      <div class="d-flex justify-content-between align-items-center p-1 bg-info-light">
+        <span>
+          <i class="fa fa-search mr-1" aria-hidden="true"></i>B&Uacute;SQUEDA DE CANDIDATOS
+        </span>
+        <em *ngIf="!verBusqueda" class="fa fa-caret-down fa-2x" (click)="verBusqueda = true;"></em>
+        <em *ngIf="verBusqueda" class="fa fa-caret-up fa-2x" (click)="verBusqueda = false;"></em>
+      </div>
+    <tabset *ngIf="verBusqueda" [justified]="true" class="text-warning fontRoboto">
+      <tab heading="" id="TapCliente">
+          <ng-template tabHeading >
+              <h5 class="text-center fontRoboto">B&Uacute;SQUEDA B&Aacute;SICA</h5>
+            </ng-template>
         <form id="PalabraClave">
           <div class="row">
             <div class="col-md-4 col-lg-4 col-sm-8">
-              <mat-form-field>
+              <mat-form-field class="w-100">
                 <input matInput placeholder="Palabra Clave" [(ngModel)]="palabraClave"
                   [ngModelOptions]="{standalone: true}" (keyup.enter)="buscarPalabraClave(palabraClave);">
                 <button matSuffix mat-icon-button aria-label="Clear" container="body" placement="bottom"
@@ -35,9 +36,14 @@
             </div>
           </div>
         </form>
+        <br>
+        <br>
       </tab>
-      <tab heading="Búsqueda Avanzada" id="TapRequisitos">
-        <form class="find-form" (keyup.control.enter)="Buscar()">
+      <tab heading="" id="TapRequisitos">
+          <ng-template tabHeading >
+              <h5 class="text-center fontRoboto">B&Uacute;SQUEDA AVANZADA</h5>
+            </ng-template>
+        <form class="find-form" (keyup.control.enter)="Buscar()" class="text-muted">
           <hr>
           <div class="row">
             <!-- Inicio de filtros. Filtro de Paises. -->
@@ -294,5 +300,5 @@
           </div>
       </tab>
     </tabset>
-  </mat-expansion-panel>
-</mat-accordion>
+</div>
+

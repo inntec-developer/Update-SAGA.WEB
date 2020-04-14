@@ -1,4 +1,3 @@
-import { VacantesReclutadorComponent } from './../../routes/recl/vacantes/vacantes/vacantes-reclutador/vacantes-reclutador.component';
 import { SettingsService } from './../../core/settings/settings.service';
 import { PostulateService } from './../../service/SeguimientoVacante/postulate.service';
 import { Component, OnInit, Input } from '@angular/core';
@@ -23,12 +22,12 @@ export class CandidatosCubiertosRportComponent implements OnInit {
   clearFilter = false;
   dataSource = [];
 
-  public rows: Array<any> = []
+  public rows: Array<any> = [];
   public columns: Array<any> = [
     { title: 'Horario', className: 'text-info', name: 'horario', filtering: { filterString: '', placeholder: 'Horario' } },
     { title: 'Nombre Candidato', className: 'text-info', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'Localidad', className: 'text-info', name: 'localidad', filtering: { filterString: '', placeholder: 'Localidad' } },
-    { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad', 
+    { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad',
     filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },
     { title: 'CURP', className: 'text-success', name: 'curp', filtering: { filterString: '', placeholder: 'CURP' } },
     { title: 'RFC', className: 'text-success', name: 'rfc', filtering: { filterString: '', placeholder: 'RFC' } },
@@ -224,7 +223,7 @@ this.vacantes = data.vacantes;
       title: title,
       timeout: 4000,
       body: body
-    }
+    };
     this.toasterService.pop(toast);
 
   }

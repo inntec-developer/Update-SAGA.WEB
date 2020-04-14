@@ -41,7 +41,7 @@ export class AuthService {
   }
 
   getUser(user: any) {
-    return this._httpClient.post(this.UrlGetUser, user, httpOptions).pipe(map(data => data));;
+    return this._httpClient.post(this.UrlGetUser, user, httpOptions).pipe(map(data => data));
   }
 
   public isUserActive(email: string): Observable<any> {

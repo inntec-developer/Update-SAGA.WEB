@@ -1,4 +1,4 @@
-import { forEach } from '@angular/router/src/utils/collection';
+
 import { Component, OnInit, EventEmitter, Input, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 
@@ -77,12 +77,12 @@ export class PerfilObservacionesComponent implements OnInit, OnChanges {
   getRegistros(data: any) {
     if (!data['isEdit']) {
       this.ObservacionesNew.push({
-        observaciones: data['observaciones'].toUpperCase(),
+        observaciones: data['Observaciones'].toUpperCase(),
         UsuarioAlta: data['UsuarioAlta']
       });
     } else {
       const editRegistro = {
-        observaciones: data['observaciones'].toUpperCase(),
+        observaciones: data['Observaciones'].toUpperCase(),
         UsuarioAlta: data['UsuarioAlta']
       };
       this.ObservacionesNew[data['Index']] = editRegistro;

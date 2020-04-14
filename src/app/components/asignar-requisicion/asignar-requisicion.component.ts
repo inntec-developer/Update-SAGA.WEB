@@ -22,7 +22,7 @@ export class AsignarRequisicionComponent implements OnInit {
   @Output()
   Asignacion: EventEmitter<any[]> = new EventEmitter();
 
-  public items: any[] = []
+  public items: any[] = [];
 
   public asignacionCtrl: any[];
   public allowClear = true;
@@ -60,7 +60,9 @@ export class AsignarRequisicionComponent implements OnInit {
 
   getGrpUser() {
     this.filtro = '';
-    this.serviceComponents.getUserGroup()
+    const usuarios = ['coordinador', 'lider'];
+    const dept = ['recl'];
+    this.serviceComponents.getUserGroup(usuarios, dept)
       .subscribe(data => {
         this.items = data;
         this.filteredData = this.items;
@@ -70,7 +72,7 @@ export class AsignarRequisicionComponent implements OnInit {
 
   public Search(data: any) {
     const tempArray: Array<any> = [];
-    const colFilter: Array<any> = [{ title: 'usuarios' }]
+    const colFilter: Array<any> = [{ title: 'usuarios' }];
     let flag = false;
     this.filteredData.forEach(function (item) {
       colFilter.forEach(function (c) {

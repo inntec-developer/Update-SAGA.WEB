@@ -2,9 +2,10 @@ import * as jwt_decode from 'jwt-decode';
 
 import { Injectable } from '@angular/core';
 import { SettingsService } from '../settings/settings.service';
+import { Title } from '@angular/platform-browser';
 const CerrarSesion = {
   text: 'Cerrar Sesión',
-  link: '/pages/login',
+  link: '/login',
   icon: 'fa fa-power-off',
 };
 @Injectable()
@@ -47,14 +48,18 @@ export class MenuService {
     modules.children = privilegios.filter(function (c) {
       return c.IdPadre === modules.EstructuraId && c.TipoEstructuraId !== 8;
     });
-
+let title = '';
     if (modules.children != null) {
       modules.children.forEach(element => {
         if (modules.TipoEstructuraId < 4 && element.Read) { // para limitar lo que se puede ver en el menu
+          title = element.Nombre;
+          if ( title === 'Perfil para Reclutar') {
+            title = 'Biblioteca - DAMFO-290';
+          }
           if (element.IdPadre === modules.EstructuraId) {
-            const submenu = { text: element.Nombre, link: element.Accion, submenu: this.setSubMenu(element, privilegios) };
+            const submenu = { text: element.Nombre, title: title, link: element.Accion, submenu: this.setSubMenu(element, privilegios) };
             if (submenu.submenu.length === 0) {
-              menuList.push({ text: submenu.text, link: submenu.link });
+              menuList.push({ text: submenu.text, title: title, link: submenu.link });
             } else {
               menuList.push(submenu);
             }
@@ -80,12 +85,16 @@ export class MenuService {
     let modules = privilegios.filter(function (row) {
       return row.TipoEstructuraId === 2 && row.Read;
     });
-
+    let title = '';
     modules.forEach(element => {
+      title = element.Nombre;
+      if ( title === 'Perfil para Reclutar') {
+        title = 'Biblioteca - DAMFO-290';
+      }
       if (element.Accion === null) {
-        this.menuItems.push({ text: element.Nombre, icon: element.Icono, submenu: this.setSubMenu(element, privilegios) });
+        this.menuItems.push({ text: element.Nombre, title: title, icon: element.Icono, submenu: this.setSubMenu(element, privilegios) });
       } else {
-        this.menuItems.push({ text: element.Nombre, icon: element.Icono, link: element.Accion });
+        this.menuItems.push({ text: element.Nombre, title: title, icon: element.Icono, link: element.Accion });
       }
     });
 

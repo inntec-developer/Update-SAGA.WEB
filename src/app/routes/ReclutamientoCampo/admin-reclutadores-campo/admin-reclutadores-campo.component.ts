@@ -27,23 +27,25 @@ export class AdminReclutadoresCampoComponent implements OnInit {
    invertY = false;
    shown = 'hover';
 
+   tipoUsuario: any;
    editing = {};
   editingRow = {};
   reclutadores: Array<any> = [];
   public rows: Array<any> = [];
   public columns: Array<any> = [
-    { title: 'Clave', className: 'text-center', name: 'clave', filtering: { filterString: '', placeholder: 'Clave' } },
-    { title: 'Alias', className: 'text-center', name: 'usuario', filtering: { filterString: '', placeholder: 'Alias' } },
-    { title: 'Nombre', className: 'text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
-    { title: 'Apellido Pat.', className: 'text-center', name: 'apellidoPaterno',
+    { title: 'Clave', className: 'text-center text-success', name: 'clave', filtering: { filterString: '', placeholder: 'Clave' } },
+    { title: 'Alias', className: 'text-center text-info', name: 'usuario', filtering: { filterString: '', placeholder: 'Alias' } },
+    { title: 'Nombre', className: 'text-center text-info', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
+    { title: 'Apellido Pat.', className: 'text-center text-info', name: 'apellidoPaterno',
     filtering: { filterString: '', placeholder: 'Apellido Pat.' } },
-    { title: 'Apellido Mat', className: 'text-center', name: 'apellidoMaterno',
+    { title: 'Apellido Mat', className: 'text-center text-info', name: 'apellidoMaterno',
     filtering: { filterString: '', placeholder: 'Apellido Mat.' } },
-    { title: 'Email', className: 'text-center', name: 'email', filtering: { filterString: '', placeholder: 'Email' } },
-    { title: 'Depto.', className: 'text-center', name: 'departamento', filtering: { filterString: '', placeholder: 'Depto.' } },
-    { title: 'Asignado a:', className: 'text-center', name: 'nombreLider', filtering: { filterString: '', placeholder: 'Lider' } },
-    { title: 'Ofc / Suc.', className: 'text-center', name: 'oficina', filtering: { filterString: '', placeholder: 'Ofc / Suc' } },
-    { title: 'Activo/Inactivo', className: 'text-center', name: 'activo', filtering: { filterString: '', placeholder: '1 / 0' } },
+    { title: 'Email', className: 'text-center text-info', name: 'email', filtering: { filterString: '', placeholder: 'Email' } },
+    // { title: 'Depto.', className: 'text-center text-info', name: 'departamento', filtering: { filterString: '', placeholder: 'Depto.' } },
+    { title: 'Asignado a:', className: 'text-center text-info', name: 'nombreLider',
+    filtering: { filterString: '', placeholder: 'Lider' } },
+    { title: 'Ofc / Suc.', className: 'text-center text-info', name: 'oficina', filtering: { filterString: '', placeholder: 'Ofc / Suc' } },
+    { title: 'Activo/Inactivo', className: 'text-center text-info', name: 'activo', filtering: { filterString: '', placeholder: '1 / 0' } },
   ];
     /**
   * configuracion para mensajes de acciones.

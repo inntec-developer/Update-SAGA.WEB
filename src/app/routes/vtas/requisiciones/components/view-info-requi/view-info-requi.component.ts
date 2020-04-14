@@ -1,5 +1,6 @@
+import { filter } from 'rxjs-compat/operator/filter';
 import { CatalogosService, RequisicionesService } from '../../../../../service';
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
@@ -16,15 +17,15 @@ import { FormBuilder } from '@angular/forms';
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
   ]
 })
-export class ViewInforRequiComponent implements OnInit {
+export class ViewInforRequiComponent implements OnInit, OnChanges {
   @Input('Folios') Folios: string;
+  @Output() EstatusId: EventEmitter<number> = new EventEmitter();
   public RequiId: string;
-  public checked: boolean = false;
+  public checked = false;
   public Prioridades: any[];
   public Estatus: any[];
   public msj: string;
-
-  @Output() EstatusId: EventEmitter<number> = new EventEmitter();
+  loading = false;
   fch_Solicitud: any;
   folio: any;
   fch_Limite: any;
@@ -40,7 +41,6 @@ export class ViewInforRequiComponent implements OnInit {
   solicitante: any;
   coordinador: any;
 
-
   constructor(
     public fb: FormBuilder,
     public serviceRequisicion: RequisicionesService,
@@ -50,23 +50,20 @@ export class ViewInforRequiComponent implements OnInit {
   ngOnInit() {
     this.getPrioridades();
     this.getEstatus(2);
-  }
-
-  ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
     this.getInitialData();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-    //Add '${implements OnChanges}' to the class.
+    // Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    // Add '${implements OnChanges}' to the class.
     if (changes.Folios && !changes.Folios.isFirstChange()) {
+      this.loading = false;
       this.getInitialData();
     }
   }
 
   getInitialData() {
+    this.loading = true;
     this.serviceRequisicion.getRequiFolio(this.Folios)
       .subscribe(DataRequisicion => {
         this.RequiId = DataRequisicion.id;
@@ -81,10 +78,11 @@ export class ViewInforRequiComponent implements OnInit {
         this.confidencial = DataRequisicion.confidencial;
         this.vacantes = DataRequisicion.vacantes;
         this.solicitante = DataRequisicion.solicitante || 'SIN ASIGNAR';
-        this.coordinador = DataRequisicion.coordinador || 'SIN ASIGNAR';
-        this.asignados = DataRequisicion.asignadosN;
+        this.coordinador = DataRequisicion.asignadosN.filter(c => c.tipo === 1);
+        this.asignados = DataRequisicion.asignadosN.filter(r => r.tipo === 2);
         this.vBtra = DataRequisicion.vBtra;
         this.EstatusId.emit(this.estatusId);
+        this.loading = false;
       });
   }
 
@@ -92,7 +90,7 @@ export class ViewInforRequiComponent implements OnInit {
     this.serviceCatalogos.getPrioridades()
       .subscribe(data => {
         this.Prioridades = data;
-      })
+      });
   }
 
   getEstatus(tipoMov: number) {

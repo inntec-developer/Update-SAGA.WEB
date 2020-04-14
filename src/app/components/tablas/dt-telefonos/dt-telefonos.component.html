@@ -1,19 +1,21 @@
 <!-- <div class="dt-container mat-elevation-z8">-->
-<div class="title-headre-view">
-  <h4>Tel&eacute;fonos</h4>
-</div>
+
+  <span class="d-flex justify-content-start align-items-center fontLato text-warning">
+    <i class="fa fa-phone mr-1"></i>TEL&Eacute;FONOS</span>
+
 <!-- <div class="card card-default"> -->
-<div class="table-responsive" #tableContainer>
-  <table id="resultDataTable" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
+<div *ngIf="(rows || []).length > 0" #tableContainer>
+  <table id="resultDataTable" class="table" style="width: 100%;">
     <thead>
       <tr>
-        <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+        <th *ngFor="let column of columns" class="{{column.className || ''}}">
+          <small>{{column.title | uppercase}}</small>
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let row of rows" [class.selected]="row.selected" (click)="onCellClick(row)">
-        <td class="text-center">{{row.calle}}</td>
+      <tr  class="text-muted" *ngFor="let row of rows" [class.selected]="row.selected" (click)="onCellClick(row)">
+        <td class="text-center">{{row.calle | uppercase}}</td>
         <td class="text-center"> {{row.tipo | uppercase}}</td>
         <td class="text-center"> {{row.clavePais}} - {{row.claveLada}} - {{row.telefono}}</td>
         <td class="text-center"> {{row.extension}}</td>
@@ -38,4 +40,6 @@
   </table>
 </div>
 <!-- </div> -->
-<!-- </div> -->
+<div *ngIf="(rows || []).length == 0" class="alert alert-primary" role="alert">
+    <strong>¡Oops!</strong> No se encontraron telefonos ...
+ </div>

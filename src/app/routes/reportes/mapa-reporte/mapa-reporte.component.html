@@ -1,8 +1,7 @@
-
-<div style="width:100%;height:400px">
-  <agm-map [mapTypeId]='tipomapa' [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-    <agm-marker *ngFor="let item of General" (mouseOver)="onMouseOver(infoWindow, $event)"
-      (mouseOut)="onMouseOut(infoWindow, $event)" [latitude]='item.latitude' [longitude]='item.longitude' class="shadow"
+<agm-map [mapTypeId]='tipomapa' [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+  <ng-container *ngFor="let item of General; let ind = index;"><!--(mouseOut)="onMouseOut(infoWindow, $event)" -->
+    <agm-marker *ngIf="item.folios > 0" (click)="onMouseOver(infoWindow, $event)"
+      [latitude]='item.latitude' [longitude]='item.longitude' class="shadow"
       [label]="{
       color: 'white',
       fontSize:'16px',
@@ -10,12 +9,34 @@
       text: '' + item.folios
     }">
       <agm-info-window [disableAutoPan]="false" #infoWindow>
-
-        <div class="bg-info p-2 text-center"> {{item.estado | uppercase}}</div><br/>
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center fontRoboto">
+              <span class="text-info">{{item.estado | uppercase}}</span>
+              <a class="text-muted" href="">
+                <em class="fa fa-arrow-right"></em>
+              </a>
+            </div>
+            <div class="text-center py-4">
+              <div class="easypie-chart easypie-chart-lg" easypiechart [options]="item.pieOptions" [percent]="item.porcentaje">
+                <span>{{item.porcentaje}}%</span>
+              </div>
+            </div>
+            <div class="text-center" [sparkline]="sparkOptions1" [values]="item.grafica"></div>
+            <!-- placement="top" tooltip="NUEVA,APROBADA,DISEÑADA,BÚSQUEDA,ENVIO AL CLIENTE,NUEVA BUSQUEDA, SOCIOECONOMICO, ESPERA DE CONTRATACION, GARANTÍA DE BUSQUEDA, PAUSADA" -->
+            <small class="d-flex justify-content-center mt-1 text-muted">ESTATUS FOLIOS</small>
+          </div>
+          <div class="card-footer">
+            <p class="text-muted text-center fontLato">
+              <small>PORCENTAJE DE AVANCE</small>
+            </p>
+          </div>
+        </div>
+        <!-- <div class="bg-info p-2 text-center"> {{item.estado | uppercase}}</div><br/>
         <div class="font-weight-bold text-center">
           FOLIOS ACTIVOS<span class="badge badge-pill badge-warning ml-1 mb-1">{{item.folios}}</span>
-        </div>
+        </div> -->
       </agm-info-window>
     </agm-marker>
-  </agm-map>
-</div>
+  </ng-container>
+</agm-map>

@@ -1,5 +1,5 @@
 ng-scrollbar {
-    --scrollbar-size: 4px;
+    --scrollbar-size: 8px;
     --scrollbar-thumb-color: rgb(94, 175, 255);
     --scrollbar-thumb-hover-color: dodgerblue;
     --scrollbar-border-radius: 4px;
@@ -15,4 +15,9 @@ ng-scrollbar {
   }
   a :hover{
     font-size: 15px;
+  }
+  .himg {
+    height: 100px !important;
+    margin-bottom: 10px;
+
   }

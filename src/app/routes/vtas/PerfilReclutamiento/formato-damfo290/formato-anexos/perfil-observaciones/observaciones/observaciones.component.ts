@@ -85,7 +85,7 @@ export class ObservacionesComponent implements OnInit, AfterContentInit {
       const data = {
         isEdit: this.isActionEdit,
         Index: this.index,
-        observaciones: this.observacion.get('observacion').value.toUpperCase(),
+        Observaciones: this.observacion.get('observacion').value.toUpperCase(),
         UsuarioAlta: this._setting.user.usuario,
       };
       this.Observacion = data['observaciones'];

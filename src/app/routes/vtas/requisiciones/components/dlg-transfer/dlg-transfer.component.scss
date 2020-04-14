@@ -1,5 +1,5 @@
 ng-scrollbar {
-    --scrollbar-size: 4px;
+    --scrollbar-size: 8px;
     --scrollbar-thumb-color: rgb(94, 175, 255);
     --scrollbar-thumb-hover-color: dodgerblue;
     --scrollbar-border-radius: 4px;
@@ -7,10 +7,23 @@ ng-scrollbar {
 
   .long
   {
-      height: 300px;
+      height: 200px;
   }
 
   .ilong
   {
-      width: 350px;
+      width: 330px;
+      height: 30px;
   }
+  .input-group {
+    height: 30px;
+  }
+  .round{
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+
+   }
+   .input-group-append span {
+     border-bottom-right-radius: 25px;
+     border-top-right-radius: 25px;
+   }

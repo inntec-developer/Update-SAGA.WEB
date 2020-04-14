@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, Inject, OnInit, AfterContentInit } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Component, Inject, OnInit } from '@angular/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
@@ -7,6 +7,7 @@ import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { CatalogosService } from './../../../service/index';
 import { DatePipe } from '@angular/common';
 import { SettingsService } from '../../../core/settings/settings.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dialog-event',

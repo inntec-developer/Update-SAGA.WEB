@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { ComponentsService } from './../../../service/Components/components.service';
@@ -21,7 +21,7 @@ export class ReporteCandidatosComponent implements OnInit {
   public compact = false;
   public invertX = false;
   public invertY = false;
-  public shown = 'hover';
+  public shown = 'shown';
 
   public UsuarioId: string;
   public objLiberar: Array<any> = [];
@@ -49,7 +49,7 @@ export class ReporteCandidatosComponent implements OnInit {
   public registros: number;
   public Liberar: boolean;
 
-  public rows: Array<any> = []
+  public rows: Array<any> = [];
   public columns: Array<any> = [
     { title: 'Nombre Candidato', className: 'text-info text-center', name: 'nombre', filtering: { filterString: '', placeholder: 'Nombre' } },
     { title: 'Fecha Nacimiento', className: 'text-info text-center', name: 'edad', filtering: { filterString: '', placeholder: 'aaaa-mm-dd' } },

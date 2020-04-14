@@ -7,59 +7,89 @@
         <li class="breadcrumb-item">
           <a [routerLink]="['/examenes/Principal']" [queryParams]="{ruta: ruta}" [skipLocationChange]=true>Principal Examenes</a>
         </li>
-        <li class="breadcrumb-item active">Agregar examen t&eacute;cnico</li>
+        <li class="breadcrumb-item active">Agregar examen</li>
   </ol>
 </div>
 <div class="row">
   <div class="col-md-6">
-    <div class="card">
-      <div class="card-body mat-elevation-z8">
+    <div class="card border">
+      <div class="card-body">
         <h5 class="card-title text-info">
-          <em class="fa fa-cogs"></em> CONFIGURACI&Oacute;N</h5>
+          <i class="fa fa-cogs"></i> CONFIGURACI&Oacute;N</h5>
         <hr>
-        <div class="form-group longSelect">
-          <label class="text-muted">Nombre Examen</label>
-          <input name="ne" class="form-control form-control-sm" type="text" placeholder="Nombre Examen" ngModel required #ne="ngModel"
-            [(ngModel)]="nomExamen">
-          <small *ngIf="!ne.valid" class="form-text text-muted text-danger">Debe agregar nombre de examen</small>
-        </div>
         <mat-form-field class="longSelect">
-          <mat-select placeholder="Seleccionar tipo de examen" [(value)]="tipoexamenId" [formControl]="se" required>
-            <mat-option *ngFor="let c of catalogo" [value]="c.id" (click)="updateTipoExamen(); nom=c.nombre">
-              {{c.nombre}}
-            </mat-option>
-          </mat-select>
+            <mat-select placeholder="Seleccionar tipo de examen" [(value)]="tipoexamenId" [formControl]="se" required>
+              <mat-option *ngFor="let c of catalogo" [value]="c.id" (click)="updateTipoExamen(); nom=c.nombre">
+                {{c.nombre | uppercase}}
+              </mat-option>
+            </mat-select>
         </mat-form-field>
+        <mat-form-field class="longSelect">
+            <textarea matInput placeholder="Descripci&oacute;n"  [(ngModel)]="descripcion" rows="6"></textarea>
+          </mat-form-field>
+          <mat-form-field class="longSelect">
+          <input matInput name="ne" type="text" placeholder="Nombre" ngModel required #ne="ngModel"
+            [(ngModel)]="nomExamen">
+        </mat-form-field>
+        <small *ngIf="!ne.valid" class="form-text text-muted text-danger">Debe agregar nombre de examen</small>
         <br/>
       </div>
     </div>
-
-    <div class="card">
-      <div class="card-body mat-elevation-z8">
+    <div class="card border">
+      <div class="card-body">
         <h5 class="card-title text-info">
-          <em class="fa fa-plus mr-1"></em>AGREGAR PREGUNTA - RESPUESTAS</h5>
+          <i class="fa fa-plus mr-1"></i>AGREGAR PREGUNTA - RESPUESTAS</h5>
         <hr>
         <form>
           <div *ngIf="tipoexamenId > 0 else ValidarTipoExamen">
             <div class="form-group">
-              <label class="text-muted">Pregunta</label>
+              <label class="text-muted">PREGUNTA</label>
               <div class="input-group">
-
                 <input name="pregunta" class="form-control form-control-sm" type="text" placeholder="Pregunta" ngModel required #pregunta="ngModel"
                   [(ngModel)]="preguntas">
                 <div class="input-group-append">
                   <label for="image-pregunta" class="file-upload input-group-text">
-                    <em class="fa fa-file-image-o fa-fw text-warning"></em>
+                    <i class="fa fa-file-image-o fa-fw text-warning"></i>
                     <input class="form-control form-control-sm" id="image-pregunta" type="file" #fileInputP (change)="fileChangeListener($event, '', 1, 1)"
                       [accept]="['image/png', 'image/jpeg', 'image/jpg']">
                   </label>
                 </div>
-
               </div>
               <small *ngIf="!pregunta.valid" class="form-text text-muted text-danger">Debe agregar pregunta</small>
-              <small *ngIf="imgPregunta.name.length > 0" class="form-text text-muted text-danger">{{imgPregunta.name}}</small>
+              <small *ngIf="imgPregunta.length > 0" class="form-text text-muted text-danger">{{imgPregunta.name}}</small>
             </div>
-            <div *ngIf="!pa" class="form-group">
+            <div class="form-group">
+                <label id="example-radio-group-label" class="text-muted"><strong> SELECCIONE COMO SE MOSTRAR&Aacute;(N) LA(S) RESPUESTA(S)</strong></label>
+                <mat-radio-group
+                name="tipos"
+                  class="example-radio-group"
+                  [(ngModel)]="tipoPregunta">
+                  <mat-radio-button class="example-radio-button" *ngFor="let tipo of tiposPregunta" [value]="tipo.id">
+                    {{tipo.descripcion | uppercase}}
+                  </mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <ng-container *ngIf="tipoPregunta == 3">
+              <label class="text-muted">RESPUESTA</label>
+              <div class="d-flex justify-content-between aling-item-center">
+                  <input type="text" [(ngModel)]="respDesc" name="respDesc" placeholder="Respuesta" class="form-control form-control-sm mr-3">
+                  <input type="number" [(ngModel)]="respValue" name="respValue" class="form-control form-control-sm long mr-3">
+                <button [disabled]="respDesc.length == 0" class="btn btn-xs"
+                  [ngClass]="respDesc.length == 0 ? 'disabled' : 'btn-success'" type="button"
+                  (click)="AgregarRespuesta(respDesc, respValue)">
+                  <i class="fa fa-plus"></i>
+                </button>
+              </div>
+              <br />
+              <ul class="list-group">
+                <li *ngFor="let item of respuestas; let ind2 = index" class="list-group-item d-flex justify-content-between aling-item-center text-muted">
+                  <span class="text-info">{{item.resp}}</span>
+                  <span>Puntos <small class="badge badge-pill badge-success">{{item.value}}</small></span>
+                </li>
+              </ul>
+            </ng-container> <!-- puntaje -->
+            <ng-container *ngIf="tipoPregunta == 2" > <!-- opcion multiple -->
+            <div class="form-group">
               <label class="text-muted">Respuesta Correcta</label>
               <div class="input-group">
                 <input ngModel required #respCorr="ngModel" name="respCorr" type="text" class="form-control form-control-sm" placeholder="Respuesta correcta"
@@ -73,25 +103,25 @@
               </div>
               <small *ngIf="!respCorr.valid" class="form-text text-muted text-danger">Debe agregar respuesta</small>
             </div>
-            <div class="input-group d-flex justify-content-between">
-              <label *ngIf="!pa" for="image-input" class="file-upload text-muted">
+            <div class="input-group">
+              <label for="image-input" class="file-upload text-muted">
                 <button class="btn btn-xs btn-warning mr-1 mat-elevation-z8" [disabled]="img">
-                  <em class="fa fa-file-image-o"></em>
+                  <i class="fa fa-file-image-o"></i>
                 </button>Respuesta con imagen
                 <input id="image-inputRC" [disabled]="img" type="file" (change)="fileChangeListener($event, resp1, 1, 0); img=true; respVal=true;"
                   [accept]="['image/png', 'image/jpeg', 'image/jpg']">
               </label>
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" [(ngModel)]="pa" name="pa" value="" (change)="AgregarRespuesta('Pregunta abierta', 3);">
                   <label class="form-check-label text-muted">
                     Es pregunta abierta
                   </label>
                 </div>
-              </div>
+              </div> -->
             </div>
             <hr>
-            <div *ngIf="!pa" class="form-group ">
+            <div class="form-group ">
               <label class="text-muted">Respuesta Incorrecta</label>
               <div class="input-group">
                 <input type="text" class="form-control form-control-sm" [(ngModel)]="respInc" name="respInc" (keydown.enter)="AgregarRespuesta(respInc, 0)">
@@ -116,7 +146,7 @@
 
               <label *ngIf="item.value != 1" for="image-input" class="file-upload float-right">
                 <button class="btn btn-xs btn-warning mr-1 mat-elevation-z8">
-                  <em class="fa fa-file-image-o"></em>
+                  <i class="fa fa-file-image-o"></i>
                 </button>
                 <input class="form-control form-control-sm" id="image-input" type="file" #fileInput (change)="UpdateResp('', -1, ind2, $event)"
                   [accept]="['image/png', 'image/jpeg', 'image/jpg']">
@@ -125,8 +155,9 @@
             </li>
           </ul>
           <small class="text-danger">{{msg}}</small>
+        </ng-container>
           <br/>
-          <button [disabled]="respuestas.length < 4 && !pa" type="button" [ngClass]="respuestas.length < 4 && !pa ? 'btn btn-xs float-right disabled' : 'btn btn-xs btn-success float-right mat-elevation-z8'"
+          <button [disabled]="respuestas.length < 2 && tipoPregunta != 1" type="button" [ngClass]="respuestas.length < 2 && tipoPregunta != 1 ? 'btn btn-xs float-right disabled' : 'btn btn-xs btn-success float-right mat-elevation-z8'"
             (click)="AgregarPregunta()" container="body" placement="bottom" tooltip="Agregar pregunta">
             <em class="fa fa-check"></em>
           </button>
@@ -181,16 +212,18 @@
         <ul class="list-group respStyle">
           <li *ngFor="let r of p.Respuestas; let ind2 = index" class="list-group-item">
             <span *ngIf="!r.update" [ngClass]="r.value === 1 ? ' text-success' : 'text-warning'">{{r.resp}}
+              <span *ngIf="p.Pregunta.Tipo == 3" class="ml-4 text-muted">Puntaje<small class="badge badge-pill badge-success ml-2">{{r.value}}</small></span>
               <button class="btn btn-xs btn-warning float-right mat-elevation-z8" type="button" (click)="r.update=true">
-                <em class="fa fa-pencil"></em>
+                <i class="fa fa-pencil"></i>
               </button>
             </span>
             <div *ngIf="r.update" class="input-group">
               <input class="form-control form-control-sm" type="text" [(ngModel)]="r.resp">
+              <input *ngIf="p.Pregunta.Tipo == 3" class="form-control form-control-sm ml-2 long" type="number" [(ngModel)]="r.value">
               <div class="input-group-append">
-                <button type="button" class="btn btn-xs btn-success float-right mat-elevation-z8" (click)="r.update = false;" container="body" placement="bottom"
+                <button type="button" class="btn btn-xs btn-success float-right ml-2" (click)="r.update = false;" container="body" placement="bottom"
                   tooltip="Actualizar respuesta">
-                  <em class="fa fa-check"></em>
+                  <i class="fa fa-floppy-o"></i>
                 </button>
               </div>
             </div>
@@ -217,7 +250,7 @@
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12">
       <alert type="info">
-        <strong>Oops!</strong> Debe llenar todos los campos del modulo de configuraci&oacute;n.
+        <strong>Oops!</strong> Debe seleccionar tipo de examen en el modulo de configuraci&oacute;n.
       </alert>
     </div>
   </div>

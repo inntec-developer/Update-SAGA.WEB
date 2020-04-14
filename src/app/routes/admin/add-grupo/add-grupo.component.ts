@@ -1,4 +1,4 @@
-import { UploadImgsComponent } from '../upload-imgs/upload-imgs.component';
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -6,7 +6,6 @@ import { ApiConection } from '../../../service';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { ExcelService } from '../../../service/ExcelService/excel.service';
-import { switchAll } from 'rxjs/operators';
 const swal = require('sweetalert');
 @Component({
   selector: 'app-add-grupo',

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { RequisicionesService } from '../../service';
 
 @Component({
@@ -10,21 +10,21 @@ import { RequisicionesService } from '../../service';
 })
 export class DlgFacturaPuroComponent implements OnInit {
 
-  porcentaje: number = 0.00001;
+  porcentaje = 0.00001;
   monto = 0;
   perContratado = 0;
   montoContratado = 0;
   loading = false;
   asignar = false;
 
-  
-  constructor( @Inject(MAT_DIALOG_DATA) public data: any, private service: RequisicionesService,
-   private dialog: MatDialogRef<DlgFacturaPuroComponent>) {
 
-    }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private service: RequisicionesService,
+    private dialog: MatDialogRef<DlgFacturaPuroComponent>) {
+
+  }
 
   ngOnInit() {
-   this.Calcular();
+    this.Calcular();
   }
 
   Calcular() {
@@ -37,28 +37,29 @@ export class DlgFacturaPuroComponent implements OnInit {
     this.montoContratado = this.round((this.data.sueldoMaximo * this.data.vacantes) - this.monto, 4);
 
   }
-  AddDtosFactura()
-  {
+  AddDtosFactura() {
     this.loading = true;
     let estatus = 44;
-    let dtos = {RequisicionId: this.data.id, Porcentaje: this.porcentaje,
-       Monto: this.monto, PerContratado: this.perContratado,
-        MontoContratado: this.montoContratado };
+    let dtos = {
+      RequisicionId: this.data.id, Porcentaje: this.porcentaje,
+      Monto: this.monto, PerContratado: this.perContratado,
+      MontoContratado: this.montoContratado
+    };
 
-      if (this.porcentaje < 50) {
-        estatus = 46;
-      }
+    if (this.porcentaje < 50) {
+      estatus = 46;
+    }
 
     this.service.AddDatosFactura(dtos).subscribe(data => {
       this.loading = false;
-        this.dialog.close({Ok: data, estatus: estatus, porcentaje: this.porcentaje});
+      this.dialog.close({ Ok: data, estatus: estatus, porcentaje: this.porcentaje });
     });
 
   }
 
-  round(value, precision) : any{
-    var rounder = Math.pow(10, precision);
-  return (Math.round(value * rounder) / rounder).toFixed(precision);
-}
+  round(value, precision): any {
+    const rounder = Math.pow(10, precision);
+    return (Math.round(value * rounder) / rounder).toFixed(precision);
+  }
 
 }

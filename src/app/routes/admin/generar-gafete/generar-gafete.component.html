@@ -1,0 +1,206 @@
+<div class="content-heading">
+  <span class="text-muted">ADMINISTRADOR DE PERSONAL</span>
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item">
+      <a class="text-info" [routerLink]="['/admin/ingresos']">INICIO</a>
+    </li>
+    <li class="breadcrumb-item active">GENERAR GAFETE</li>
+  </ol>
+</div>
+<div *ngIf="spinner" class="spinner">
+  <div class="ball-spin-fade-loader">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+<div class="card">
+  <!-- <div class="card-header">
+    <div class="d-flex justify-content-start align-items-center p-1 bg-info-light fontRoboto">
+      <span>GENERAR GAFETE PERSONAL</span>
+    </div>
+  </div> -->
+  <div class="card-body">
+    <mat-tab-group (selectedIndexChange)="SelectTab($event);" [color]="accent">
+      <mat-tab >
+        <ng-template mat-tab-label>INGRESOS</ng-template>
+        <div class="d-flex justify-content-between p-1 mt-2">
+          <div class="w-100">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="input-group long">
+                <input (input)="Search($event.target.value)" class="form-control form-control-sm" type="text"
+                  placeholder="Buscar por nombre" />
+                <span class="input-group-btn">
+                  <button class="btn btn-secondary btn-sm" type="submit">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </span>
+              </div>
+              <div class="mr-2">
+                <small class="text-muted">TOTAL CANDIDATOS</small>
+                <div class="badge badge-info ml-1 mr-2">{{candidatos.length}}</div>
+                <button (click)="GetDtosGafetes()" class="btn btn-xs btn-success ml-2 mat-elevation-z8">
+                  <i class="icon-refresh"></i>
+                </button>
+              </div>
+            </div>
+                <ng-scrollbar [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
+                [disableOnBreakpoints]="false" [disabled]="disabled">
+                <div class="mt-2" style="height: 350px;">
+                <ng-container *ngFor="let p of rows; let rowIndex = index;">
+                  <div class="list-group-item mr-1" [class.selected]="checkedRow[rowIndex] == true"
+                    [ngClass]="spinner ? 'unselectable disabled' : 'selectable'"
+                    (click)="spinner ? $event.stopPropagation() : checkedRow[rowIndex]=!checkedRow[rowIndex];Select(p, checkedRow[rowIndex]);">
+                    <div class="media">
+                      <img class="align-self-start mx-2 circle thumb32" [src]="p.foto"
+                        alt="..." (error)="errorImg(p)">
+                      <div class="media-body text-truncate">
+                        <p class="mb-1 text-info fontRoboto">
+                          <span>{{p.nom | uppercase}}</span><br>
+                          <span>{{p.apellidoPaterno | uppercase}} {{p.apellidoMaterno | uppercase}}</span>
+                        </p>
+                        <p class="d-flex flex-column mb-1 text-sm text-muted">
+                          <span><span class="text-muted">CURP </span> {{p.curp}} </span>
+                          <span><span class="text-muted">FECHA NAC. </span> {{p.edad | date: 'yyyy-MM-dd'}} </span>
+                          <span><span class="text-muted">GENERO </span>{{p.genero}} </span></p>
+                      </div>
+                      <!-- <div class="ml-auto">
+                        <section>
+                          <mat-checkbox [(ngModel)]="checkedRow[rowIndex]"></mat-checkbox>
+                        </section>
+                      </div> -->
+                    </div>
+                  </div>
+                </ng-container>
+              </div> 
+              </ng-scrollbar>
+          </div>
+          <div class="w-100">
+            <div class="d-flex justify-content-end align-items-center mb-2">
+              <small class="text-muted">TOTAL GAFETES
+                <div class="badge badge-info ml-1">{{seleccion.length}}</div></small>
+            </div>
+            <carousel class="ml-2" (activeSlideChange)="selectSlide($event)" [interval]="false" [noWrap]="false">
+              <div class="d-flex justify-content-end align-items-center ml-2">
+              <img id="front" class="mr-2" src="\assets\img\GafeteFront.PNG" [width]="245.66929134"
+                [height]="359.05511811">
+              <img id="back" src="/assets/img/GafeteBack.PNG" [width]="245.66929134" [height]="359.05511811">
+            </div>
+              <slide *ngFor="let item of seleccion; let index=index" [active]="item.active">
+                <div *ngIf="item.foto == '/assets/img/user/default-user.png'" class="takeFoto">
+                  <button  class="btn btn-xs btn-circle btn-success" (click)="takeFoto()"><i class="fa fa-camera fa-2x"></i></button>
+                </div>
+                <div *ngIf="item.foto != '/assets/img/user/default-user.png'" class="takeFoto2">
+                  <img *ngIf="item.foto != '/assets/img/user/default-user.png'" id="front" class="mr-2 thumb64" [src]="item.foto">
+                </div>
+                <!-- <div id="{{'gafete_' + index}}" class="d-flex justify-content-between" style="width: 530px;"> -->
+                <div class="carousel-caption d-flex flex-column">
+                  <span [ngStyle]="adjustFont(item.nom.length)" class="text-capitalize">{{item.nom}}</span>
+                  <span
+                    [ngStyle]="adjustFont(item.apellidoPaterno.length + item.apellidoMaterno.length)">{{item.apellidoPaterno | uppercase}}
+                    {{item.apellidoMaterno | uppercase}}</span>
+                  <span class="text-capitalize" [ngStyle]="adjustFontvBtra(item.puesto.length)">{{item.puesto}}</span>
+                </div>
+                <div class="caption-back">
+                  <p class="dal">DAL0000<span class="fchIngreso">{{item.fch_Ingreso | date: 'dd-MMM-yyyy'}}</span></p>
+                  <p class="nss">{{item.nss}}</p>
+                  <p class="telefono">({{item.lada}}){{item.telefono}}</p>
+                  <p class="curp">{{item.curp}}</p>
+                </div>
+                <div id="{{'divbarcode_' + index}}" class="codigo"></div>
+              </slide>
+            </carousel>
+
+            <div *ngIf="progress" class="d-flex justify-content-start mt-2 p-1">
+              <mat-progress-bar [color]="color" [mode]="mode" [value]="totProgress" [bufferValue]="bufferValue">
+              </mat-progress-bar>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="RE-IMPRIMIR">
+        <div class="d-flex justify-content-between p-1 mt-2">
+          <div class="w-100 mr-4" style="height: 350px;">
+            <div class="d-flex justify-content-start align-items-center input-group w-100">
+              <mat-label>CLAVE</mat-label>
+              <input class="form-control form-control-sm ml-2" type="text" [(ngModel)]="clave"
+                placeholder="DAL0000" />
+              <span class="input-group-btn">
+                <button class="btn btn-success btn-sm" type="button" (click)="GetDtosGafetesClave(clave)">
+                  <i class="fa fa-search"></i>
+                </button>
+              </span>
+            </div>
+            <div *ngIf="candidato else NotCandidato" class="d-flex justify-content-start align-items-center list-group mt-2">
+              <div class="list-group-item list-group-item-action">
+                <div class="media">
+                  <img class="align-self-start mx-2 circle thumb32" src="/assets/img/user/default-user.png" alt="..."
+                    (error)="errorImg(candidato)">
+                  <div class="media-body text-truncate">
+                    <p class="mb-1 text-info fontRoboto">
+                      <span>{{candidato.nom | uppercase}}</span><br>
+                      <span>{{candidato.apellidoPaterno | uppercase}} {{candidato.apellidoMaterno | uppercase}}</span>
+                    </p>
+                    <p class="d-flex flex-column mb-1 text-sm text-muted">
+                      <span><span class="text-muted">CURP </span> {{candidato.curp}} </span>
+                      <span><span class="text-muted">FECHA NAC. </span> {{candidato.edad | date: 'yyyy-MM-dd'}} </span>
+                      <span><span class="text-muted">GENERO </span>{{candidato.genero}} </span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end align-items-center">
+            <div class="d-flex justify-content-between align-items-center">
+              <img id="front" class="mr-2" src="\assets\img\GafeteFront.PNG" [width]="245.66929134"
+                [height]="359.05511811">
+              <img id="back" src="/assets/img/GafeteBack.PNG" [width]="245.66929134" [height]="359.05511811">
+            </div>
+            <div *ngIf="candidato" class="carousel-caption2 d-flex flex-column">
+              <span [ngStyle]="adjustFont(candidato.nom.length)" class="text-capitalize">{{candidato.nom}}</span>
+              <span
+                [ngStyle]="adjustFont(candidato.apellidoPaterno.length + candidato.apellidoMaterno.length)">{{candidato.apellidoPaterno | uppercase}}
+                {{candidato.apellidoMaterno | uppercase}}</span>
+              <span class="text-capitalize" [ngStyle]="adjustFontvBtra(candidato.puesto.length)">{{candidato.puesto}}</span>
+            </div>
+            <div *ngIf="candidato" class="caption-back2">
+              <p class="dal">DAL0000<span class="fchIngreso">{{candidato.fch_Ingreso | date: 'dd-MMM-yyyy'}}</span></p>
+              <p class="nss">{{candidato.nss}}</p>
+              <p class="telefono">({{candidato.lada}}){{candidato.telefono}}</p>
+              <p class="curp">{{candidato.curp}}</p>
+            </div>
+            <div id="divbarcode_0" class="codigo2"></div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+    <div class="d-flex justify-content-end p-1 mt-2 bt">
+      <button [disabled]="(seleccion || []).length == 0"
+        [ngClass]="(seleccion || []).length == 0 ? 'disabled' : 'btn-success'"
+        class="btn btn-labeled mat-elevation-z8 mt-2" (click)="printGafete()">
+        <span class="btn-label"><i class="fa fa-check"></i></span>
+        IMPRIMIR
+      </button>
+    </div>
+  </div>
+</div>
+<ng-template #NotCandidatos>
+  <div class="d-flex justify-content-start w-100 mt-2">
+      <alert type="info">
+        <i class="fa fa-exclamation-circle mr-2" aria-hidden="true"></i><strong>Oops!</strong> A&uacute;n no cuentas con candidatos cubiertos.
+      </alert>
+  </div>
+</ng-template>
+<ng-template #NotCandidato>
+  <div class="d-flex justify-content-center w-100 mt-2">
+      <alert type="info">
+        <i class="fa fa-exclamation-circle mr-2" aria-hidden="true"></i> <strong>Oops!</strong> No se encontr&oacute; personal con la clave {{auxclave}}.
+      </alert>
+  </div>
+</ng-template>
+<toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>

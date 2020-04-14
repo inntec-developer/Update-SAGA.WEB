@@ -56,7 +56,7 @@ export class HorariosComponent implements OnInit, AfterContentInit {
   MsgAlert = '';
   topHorarios: any;
   AuxOptions: any;
-
+rowIndex: any;
   constructor(
     private _serviceCatalogos: CatalogosService,
     private _servicePerfilR: PerfilReclutamientoService,
@@ -122,6 +122,8 @@ export class HorariosComponent implements OnInit, AfterContentInit {
      this.horario.controls['horario'].setValue(horario[0]['nombre'].toUpperCase());
      this.horario.controls['deDiaId'].setValue(horario[0]['deDiaId']);
      this.horario.controls['aDiaId'].setValue(horario[0]['aDiaId']);
+
+
     this.nombre = horario[0]['nombre'];
     this.deDia = horario[0]['deDia'];
     this.aDia = horario[0]['aDia'];
@@ -129,12 +131,32 @@ export class HorariosComponent implements OnInit, AfterContentInit {
     this.aDiaId = horario[0]['aDiaId'];
     this.deHora =  horario[0]['deHora'];
     this.aHora =  horario[0]['aHora'];
+    this.vacantes = 0;
+    // this.OnEdit();
+    let horasI = String(new Date(this.deHora).getHours());
+    if (horasI.length === 1) {
+      horasI = '0' + horasI;
+    }
+    let minutosI = String(new Date(this.deHora).getMinutes());
+    if (minutosI.length === 1) {
+      minutosI = '0' + minutosI;
+    }
+    const hourStart = horasI + ':' + minutosI;
+    let horasF = String(new Date(this.aHora).getHours());
+    if (horasF.length === 1) {
+      horasF = '0' + horasF;
+    }
+    let minutosF = String(new Date(this.aHora).getMinutes());
+    if (minutosF.length === 1) {
+      minutosF = '0' + minutosF;
+    }
+    const hourEnd = horasF + ':' + minutosF;
 
-    this.OnEdit();
+    this.horario.patchValue({
+      deHora: hourStart,
+      aHora: hourEnd
+    });
 
-    // this.horario.controls['aDiaId'].setValue(horario[0]['aDia']);
-    //  this.horario.controls['deHora'].setValue(deHora);
-    //  this.horario.controls['aHora'].setValue(aHora);
   }
   mocos($event) {
 

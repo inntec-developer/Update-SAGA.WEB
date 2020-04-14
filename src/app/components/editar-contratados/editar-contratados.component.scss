@@ -1,26 +1,26 @@
+.bg {
+  background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+  background: -moz-linear-gradient(left, #3931af 0%, #00c6ff 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, #3931af), color-stop(100%, #00c6ff));
+  background: -o-linear-gradient(left, #3931af 0%, #00c6ff 100%);
+  background: -ms-linear-gradient(left, #3931af 0%, #00c6ff 100%);
+  background: linear-gradient(to right, #3931af 0%, #00c6ff 100%);
+  padding: 2%;
+  height: 100%;
 
-.titulo
-{
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    color:#5d9cec !important;  
 }
-
-.margen
-{
-    margin-right: 5px;
-}
-
 tr.classCURP td
 {
     background-color: rgb(240, 168, 183);
     color: white;
 }
 
-.row
-{
-    width: 100% !important;
-}
+.spinner {
+    position: absolute;
+    margin-left: 45%;
+    margin-top: 10%;
+    z-index: 9999;
+  }
 // .table
 // {
 //     width: 100%;

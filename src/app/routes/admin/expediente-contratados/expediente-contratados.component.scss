@@ -1,0 +1,15 @@
+.bg {
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    background: -moz-linear-gradient(left, #3931af 0%, #00c6ff 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, #3931af), color-stop(100%, #00c6ff));
+    background: -o-linear-gradient(left, #3931af 0%, #00c6ff 100%);
+    background: -ms-linear-gradient(left, #3931af 0%, #00c6ff 100%);
+    background: linear-gradient(to right, #3931af 0%, #00c6ff 100%);
+    padding: 2%;
+    height: 100%;
+  
+  }
+  .sizeBarra {
+    width: 100% !important;
+    height: 10% !important;
+  }

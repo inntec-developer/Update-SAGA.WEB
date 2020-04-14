@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { DlgRevisarExamenesComponent } from '../../../components/dlg-revisar-examenes/dlg-revisar-examenes.component';
 import { ExamenesService } from './../../../service/Examenes/examenes.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-revisar-examenes',

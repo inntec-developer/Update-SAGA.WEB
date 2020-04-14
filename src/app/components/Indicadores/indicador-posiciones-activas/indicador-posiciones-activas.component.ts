@@ -61,7 +61,7 @@ export class IndicadorPosicionesActivasComponent implements OnInit {
         data: this.Data,
         options: {
           onClick: this.detectedClick.bind(this),
-          hoverBorderColor: '#00000',
+          // hoverBorderColor: '#00000',
           responsive: true,
           animation: {
             animateRotate: true,

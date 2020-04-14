@@ -1,3 +1,4 @@
+import { ColorsService } from './../../../shared/colors/colors.service';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MapsAPILoader } from '@agm/core';
 import { ReportesService } from '../../../service/Reporte/reportes.service';
@@ -12,7 +13,7 @@ declare var google: any;
 })
 export class MapaReporteComponent implements OnInit {
 
-  public General : any[];
+  public General: any[];
   public scrollwheel = true;
   public latitude: number;
   public longitude: number;
@@ -25,56 +26,93 @@ export class MapaReporteComponent implements OnInit {
   private geoCoder;
   public label: any;
 
-  constructor(
+  sparkOptions1 = {
+    barColor: this.colors.byName('info'),
+    height: 30,
+    barWidth: '5',
+    barSpacing: '2',
+
+  };
+
+
+  constructor(public colors: ColorsService,
     private mapsAPILoader: MapsAPILoader,
     private servicio: ReportesService
   ) { }
 
 
   ngOnInit() {
-    this.latArray = ['21.8852562', '30.8406338', '26.0444446', '19.8301251', '16.7569318', '28.6329957'
-      , '19.4326077', '27.058676', '19.1222634', '24.5592665', '21.0190145', '17.4391926', '20.0910963'
-      , '20.6595382', '19.294099', '19.4043848', '18.8316418', '21.5009712', '25.592172 ', '17.1037154'
-
-      , '18.6085932', '20.5887932', '19.5778903', '22.1564699', '24.8049008', '29.0820824', '17.8409173'
-      , '24.26694', '19.318154', '18.6118374', '20.7098786', '22.7708555'
-    ]
-
-    this.longArray = ['-102.29156769999997', '-115.28375849999998', '-111.66607249999998'
-      , '-90.53490870000002', '-93.1292353', '-106.06910040000002', '-99.13320799999997', '-101.7068294'
-      , '-104.00723479999999', '-104.6587821', '-101.25735859999998', '-99.54509739999997'
-      , '-98.76238739999997', '-103.34943759999999', '-99.701255'
-      , '-101.7068294', '-99.00454', '-104.946946', '-100.0410077', '-96.805773'
-
-      , '-98.1890451', '-100.38988810000001', '-88.0630853', '-100.98554089999999', '-107.4933554'
-      , '-111.1290758', '-92.6189273', '-98.8362755', '-98.2374954', '-96.251794'
-      , '-89.09433769999998', '-102.5832426'
-    ];
     this.tipomapa = 'roadmap';
-    this.servicio.getMapaFolios()
-      .subscribe(data => {
-        this.General = data;
-        let i = 0;
-        this.General.forEach(item => {
-          item.latitude = parseFloat(this.latArray[i]);
-          item.longitude = parseFloat(this.longArray[i]);
-          i++;
-        });
-        this.General = this.General.filter(item => {
-          if (item.folios !== '0') {
-            return item;
-          }
-        });
+    this.servicio.getMapaFolios().subscribe(data => {
+      this.General = data.filter(x => x.folios > 0);
+      console.log(this.General)
+      this.General.forEach(item => {
+        // item.latitude = parseFloat(this.latArray[i]);
+        // item.longitude = parseFloat(this.longArray[i]);
+        item.grafica = [
+          item.nueva,
+          item.aprobada,
+          item.disenada,
+          item.busqueda,
+          item.envio,
+          item.nuevabusq,
+          item.socioeconomico,
+          item.espera,
+          item.garantia,
+          item.pausada,
+        ];
+        item.porcentaje = +this.round(item.folios > 0 ? item.foliosCubiertos * 100 / item.folios : 0, 0);
 
-
-        this.PintadoMapa();
+        if (item.porcentaje === 100) {
+          item.pieOptions = {
+            animate: {
+              duration: 800,
+              enabled: true
+            },
+            barColor: this.colors.byName('success'),
+            // trackColor: 'rgba(200,200,200,0.4)',
+            scaleColor: false,
+            lineWidth: 10,
+            lineCap: 'round',
+            size: 145
+          };
+        } else if (item.porcentaje < 50) {
+          item.pieOptions = {
+            animate: {
+              duration: 800,
+              enabled: true
+            },
+            barColor: this.colors.byName('danger'),
+            // trackColor: 'rgba(200,200,200,0.4)',
+            scaleColor: false,
+            lineWidth: 10,
+            lineCap: 'round',
+            size: 145
+          };
+        } else {
+          item.pieOptions = {
+            animate: {
+              duration: 800,
+              enabled: true
+            },
+            barColor: this.colors.byName('warning'),
+            // trackColor: 'rgba(200,200,200,0.4)',
+            scaleColor: false,
+            lineWidth: 10,
+            lineCap: 'round',
+            size: 145
+          };
+        }
       });
+      this.PintadoMapa('Jalisco');
+    });
+
   }
 
-  PintadoMapa() {
+  PintadoMapa(estado) {
     this.mapsAPILoader.load().then(() => {
       this.geoCoder = new google.maps.Geocoder();
-      this.geoCoder.geocode({ 'address': 'jalisco' }, (results, status) => {
+      this.geoCoder.geocode({ 'address': estado }, (results, status) => {
         if (status === 'OK') {
           if (results[0]) {
             this.zoom = 6;
@@ -89,6 +127,11 @@ export class MapaReporteComponent implements OnInit {
     infoWindow.open();
   }
   onMouseOut(infoWindow, $event: MouseEvent) {
-    infoWindow.close();
+    // infoWindow.close();
   }
+  round(value, precision): any {
+    const rounder = Math.pow(10, precision);
+    return (Math.round(value * rounder) / rounder).toFixed(precision);
+  }
+
 }

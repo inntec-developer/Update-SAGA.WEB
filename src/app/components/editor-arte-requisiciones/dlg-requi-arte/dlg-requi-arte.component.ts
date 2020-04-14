@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SistTicketsService } from '../../../service/SistTickets/sist-tickets.service';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dlg-requi-arte',

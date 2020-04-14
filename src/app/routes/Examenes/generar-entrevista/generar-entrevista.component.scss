@@ -1,0 +1,27 @@
+.row {
+    font-family: 'Lato', sans-serif;
+    //font-family: 'Montserrat', sans-serif;
+}
+li {
+    cursor: pointer;
+}
+
+.long {
+    width: 70px;
+}
+em {
+    cursor: pointer;
+}
+.divScroll {
+    height:300px !important;
+}
+
+.longSelect {
+    height: 62.5px !important;
+}
+ng-scrollbar {
+    --scrollbar-size: 4px;
+    --scrollbar-thumb-color: rgb(94, 175, 255);
+    --scrollbar-thumb-hover-color: dodgerblue;
+    --scrollbar-border-radius: 4px;
+  }

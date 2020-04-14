@@ -1,22 +1,22 @@
 
-import { AfterViewChecked, Component, EventEmitter, OnInit, Output, ElementRef, ViewChild, Input } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ElementRef, ViewChild, Input } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
 
 import { CandidatosService } from './../../../../../../service/Candidatos/candidatos.service';
 import { DatePipe } from '@angular/common';
 import { DialogAssingRequiComponent } from '../dialogs/dialog-assing-requi/dialog-assing-requi.component';
-import { DlgRegistroMasivoComponent } from './../../../../../../components/dlg-registro-masivo/dlg-registro-masivo.component';
 import { DlgRequisicionPausaComponent } from './../../../../../../components/dlg-requisicion-pausa/dlg-requisicion-pausa.component';
 import { DlgTransferComponent } from '../../../../../vtas/requisiciones/components/dlg-transfer/dlg-transfer.component';
 import { ExcelService } from '../../../../../../service/ExcelService/excel.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from './../../../../../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../../../../../service';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { SettingsService } from '../../../../../../core/settings/settings.service';
 import * as jspdf from 'jspdf';
 import * as html2canvas from 'html2canvas';
+import { ComentarioVacanteComponent } from '../../../../../../components/comentario-vacante/comentario-vacante.component';
 
 const swal = require('sweetalert');
 
@@ -30,7 +30,7 @@ const swal = require('sweetalert');
 export class DtVacantesReclutadorComponent implements OnInit {
   @Output('Imprimir') EmImprimir: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('content') el: ElementRef;
-@Input('folioRuta') folioRuta;
+  @Input('folioRuta') folioRuta = '';
   public imprimir: boolean;
 
   toaster: any;
@@ -49,8 +49,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
   public invertX = false;
   public compact = false;
   public invertY = false;
-  public shown = 'hover';
-
+  public shown = 'shown';
 
   public dataSource: Array<any> = [];
   //  Varaibles del paginador
@@ -60,7 +59,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
   public numPages = 1;
   public length = 0;
 
-  showFilterRow = true;
   registros: number;
   errorMessage: any;
   element: any = [];
@@ -95,7 +93,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
   rowAux = [];
   selected = false;
-  clearFilter = false;
   pds = true;
   numeroVacantes: any;
   procesoCandidato = false;
@@ -104,22 +101,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
   totalPos: any = 0;
   totalContratados = 0;
 
-  //  checkBox Seccion de impresion
-  SelectiedSection = {
-    Encabezado: true,
-    Horarios: true,
-    Cliente: true,
-    ExpApt: true,
-    Direccion: true,
-    Beneficio: true,
-    ActObsProd: true,
-    Telefono: true,
-    Contacto: true,
-    DocPrest: true,
-    Psicom: true,
-    Competencia: true,
-    arteRedes: true
-  };
   labelPosition = 'before';
   Encabezado = true;
   Horarios = true;
@@ -135,22 +116,26 @@ export class DtVacantesReclutadorComponent implements OnInit {
   Competencia = false;
   arteRedes = false;
 
-  public rows: Array<any> = [];
-  public columns: Array<any> = [
+  public rows = [];
+  public columns = [
     { title: 'Folio', className: 'text-success text-center', name: 'folio', filtering: { filterString: '', placeholder: 'Folio' } },
-    { title: 'Solicitante', className: 'text-info text-center', name: 'solicita', filtering: { filterString: '', placeholder: 'Solicitante' } },
+    { title: 'Solicitante', className: 'text-info text-center',
+    name: 'solicita', filtering: { filterString: '', placeholder: 'Solicitante' } },
     { title: 'Cliente', className: 'text-info text-center', name: 'cliente', filtering: { filterString: '', placeholder: 'Cliente' } },
     { title: 'Perfil', className: 'text-info text-center', name: 'vBtra', filtering: { filterString: '', placeholder: 'Perfil' } },
     { title: 'Cub/Vac', className: 'text-info text-center', name: 'vacantes', filtering: { filterString: '', placeholder: 'No.' } },
-    { title: 'Coordinación', className: 'text-info text-center', name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Coordinación' } },
-    //  { title: 'Sueldo Mínimo', className: 'text-info text-center', name: 'sueldoMinimo', filtering: { filterString: '', placeholder: 'Sueldo Min' } },
-    //  { title: 'Sueldo Máximo', className: 'text-info text-center', name: 'sueldoMaximo', filtering: { filterString: '', placeholder: 'Sueldo Max' } },
+    { title: 'Coordinación', className: 'text-info text-center',
+    name: 'claseReclutamiento', filtering: { filterString: '', placeholder: 'Coordinación' } },
     { title: 'Días Transc.', className: 'text-info text-center', name: 'diasTrans', filtering: { filterString: '', placeholder: 'Días' } },
-    { title: 'Rango sueldo', className: 'text-info text-center', name: 'rango', filtering: { filterString: '', placeholder: 'Rango sueldo' } },
+    { title: 'Rango sueldo', className: 'text-info text-center',
+    name: 'rango', filtering: { filterString: '', placeholder: 'Rango sueldo' } },
     { title: 'Estatus', className: 'text-info text-center', name: 'estatus', filtering: { filterString: '', placeholder: 'Estatus' } },
-    { title: 'Coordinador', className: 'text-info text-center', name: 'coordinador', filtering: { filterString: '', placeholder: 'Coordinador', columnName: 'reclutadores' } },
-    { title: 'Reclutador', className: 'text-info text-center', name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador', columnName: 'reclutadores' } },
-    { title: 'Postulados', className: 'text-info text-center', name: 'postulados', filtering: { filterString: '', placeholder: 'Postulados' } },
+    { title: 'Coordinador', className: 'text-info text-center',
+    name: 'coordinador', filtering: { filterString: '', placeholder: 'Coordinador', columnName: 'reclutadores' } },
+    { title: 'Reclutador', className: 'text-info text-center',
+    name: 'reclutadores', filtering: { filterString: '', placeholder: 'Reclutador', columnName: 'reclutadores' } },
+    { title: 'Postulados', className: 'text-info text-center',
+    name: 'postulados', filtering: { filterString: '', placeholder: 'Postulados' } },
     { title: 'En Proceso', className: 'text-info text-center', name: 'enProceso', filtering: { filterString: '', placeholder: 'Proceso' } },
   ];
 
@@ -169,10 +154,17 @@ export class DtVacantesReclutadorComponent implements OnInit {
     private toasterService: ToasterService,
     private excelService: ExcelService,
     private pipe: DatePipe,
-    private settings: SettingsService
+    private settings: SettingsService,
+    private activateRoute: ActivatedRoute,
+    private dlgComent: MatDialog
   ) {
     this.enProceso = 0;
     this.postulados = 0;
+    this.activateRoute.params.subscribe(params => {
+      if (params['folio'] != null) {
+        this.folioRuta = params['folio'];
+      }
+    });
   }
 
   ngOnInit() {
@@ -184,7 +176,19 @@ export class DtVacantesReclutadorComponent implements OnInit {
     //      this.spinner.hide();
     //     }, 3000);
   }
-
+  showRequi() {
+    this._Router.navigate(['/ventas/visualizarRequisicion',
+    this.element.id,
+    this.element.folio,
+    this.element.vBtra,
+    this.element.tipoReclutamientoId,
+    3
+  ], { skipLocationChange: true }
+  );
+  }
+  informeVacantes() {
+    this._Router.navigate(['/reclutamiento/informeVacantes'], { skipLocationChange: true });
+  }
   getVacantes() {
     this.service.getRequiReclutador(this.settings.user['id']).subscribe(data => {
       if (data !== 404) {
@@ -202,10 +206,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
             }
             daux.setDate(daux.getDate() + 1);
           }
-          if (r.estatusId === 4) {
-            r.coordinador = r.reclutadores;
-            r.reclutadores = 'SIN ASIGNAR';
-          }
+          // if (r.estatusId === 4) {
+          //   r.coordinador = r.reclutadores;
+          //   r.reclutadores = 'SIN ASIGNAR';
+          // }
           r.diasTrans = diasTrans;
           this.totalPos += r.vacantes;
           this.totalContratados += r.contratados;
@@ -257,10 +261,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
     } else {
       this.postulateservice.SetProcesoVacante(datos).subscribe(data => {
         if (data === 201) {
-          const idx = this.rows.findIndex(x => x.id == this.requi.id);
+          const idx = this.rows.findIndex(x => x.id === this.requi.id);
           this.rows[idx]['estatus'] = estatus;
           this.rows[idx]['estatusId'] = estatusId;
-          this.ValidarEstatus(estatusId)
+          this.ValidarEstatus(estatusId);
           this.onChangeTable(this.config);
           this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
 
@@ -275,15 +279,14 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
-    let start = (page.page - 1) * page.itemsPerPage;
-    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    const start = (page.page - 1) * page.itemsPerPage;
+    const end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
   }
   public changeFilter(data: any, config: any): any {
     let filteredData: Array<any> = data;
     this.columns.forEach((column: any) => {
-      this.clearFilter = true;
-      if (column.filtering.filterString != '') {
+      if (column.filtering.filterString !== '' && column.filtering.filterString !== undefined) {
         filteredData = filteredData.filter((item: any) => {
           if (item[column.name] != null) {
             if (!Array.isArray(item[column.name])) {
@@ -310,8 +313,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
                 if (flag) {
                   return item[column.name];
                 }
-              }
-              else {
+              } else {
                 if ('sin asignar'.match(column.filtering.filterString.toLowerCase())) {
                   return item[column.name];
                 }
@@ -339,11 +341,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
     this.registros = this.rows.length;
     this.length = filteredData.length;
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 700);
-
-
+    this.spinner.hide();
   }
 
   public refreshTable() {
@@ -362,7 +360,6 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   public clearfilters() {
-    this.clearFilter = false;
     //  (<HTMLInputElement>document.getElementById('filterInput')).value = '';
     this.columns.forEach(element => {
       element.filtering.filterString = '';
@@ -379,6 +376,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     data.selected ? data.selected = false : data.selected = true;
     this.estatusId = data.estatusId;
     this.element = data;
+
     this.vBtra = data.vBtra;
     this.id = data.id;
     this.folio = data.folio;
@@ -389,7 +387,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.aprobador = data.aprobadorId || null;
     this.coordinador = data.coordinador || null;
     this.confidencial = data.confidencial;
-    this.ValidarEstatus(this.estatusId)
+    this.ValidarEstatus(this.estatusId);
 
     if (this.enProceso > 0) {
       this.pds = false;
@@ -400,10 +398,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
       folio: data.folio,
       vacante: data.cliente,
       id: data.id
-    }
+    };
 
     if (!data.selected) {
-      this.ValidarEstatus(9999)
+      this.ValidarEstatus(9999);
       this._reinciar();
       this.selected = false;
     } else {
@@ -485,8 +483,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       this.ec = true; //  espera contratacion
       this.nbc = true; //  nueva busqueda candidato
       this.pausa = true;
-    } else if (estatusId === 7 && this.element.vacantes > 0 && this.element.enProceso === 0)//  publicada
-    {
+    } else if (estatusId === 7 && this.element.vacantes > 0 && this.element.enProceso === 0) {//  publicada
       this.bc = false; // busqueda candidato
       this.sc = true; // socieconomico
       this.ecc = true; // envío candidato cliente
@@ -676,6 +673,24 @@ export class DtVacantesReclutadorComponent implements OnInit {
   //    });
   //  }
 
+  openDialogComentarios() {
+    const motivoId = 7;
+
+    const dlgComent = this.dlgComent.open(ComentarioVacanteComponent, {
+      width: '85%',
+      height: 'auto',
+      data: {id: this.element.id,
+        vBtra: this.element.vBtra,
+        folio: this.element.folio,
+        motivoId: motivoId}
+    });
+    dlgComent.afterClosed().subscribe(result => {
+      // if (result === 200) {
+      //   this.popToast('success', 'Comentarios', 'La requisición se canceló exitosamente, podrás consultarla en el histórico');
+      // }
+    });
+  }
+  
   openDialogAssingRequi() {
     const dialogAssing = this.dialog.open(DialogAssingRequiComponent, {
       data: this.element
@@ -683,6 +698,10 @@ export class DtVacantesReclutadorComponent implements OnInit {
     dialogAssing.afterClosed().subscribe(result => {
       if (result) {
         this.refreshTable();
+        const assing = {
+          id: this.requi.id,
+        };
+        this.service.TopCandidatos(assing).subscribe();
       }
     });
   }
@@ -691,7 +710,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
     this.element.usuario = 4;
     this.element.depto = 'Recl';
     const dialogCnc = this.dialog.open(DlgTransferComponent, {
-      width: '50%',
+      width: '60%',
       height: '95%',
       data: this.element
     });
@@ -699,7 +718,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       if (result) {
         this.refreshTable();
       }
-    })
+    });
   }
 
   OpenDialogRequiPausa(estatusId: any, estatus: any) {
@@ -717,7 +736,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
           ReclutadorId: this.settings.user['id']
         }).subscribe(data => {
           if (data === 201) {
-            var idx = this.rows.findIndex(x => x.id === this.requi.id);
+            const idx = this.rows.findIndex(x => x.id === this.requi.id);
             this.rows[idx]['estatus'] = estatus;
             this.rows[idx]['estatusId'] = estatusId;
             this.ValidarEstatus(estatusId);
@@ -726,42 +745,56 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
             this.popToast('success', 'Estatus', 'Los datos se actualizaron con éxito');
 
-          }
-          else {
+          } else {
             this.popToast('error', 'Estatus', 'Ocurrió un error al intentar actualizar los datos');
           }
         });
       }
-    })
-
-
+    });
   }
 
   openDialogRegistro() {
-    const dialogDlt = this.dialog.open(DlgRegistroMasivoComponent, {
-      width: '95%',
-      height: '95%',
-      data: {
-        requisicionId: this.requi.id,
-        folio: this.requi.folio,
-        cliente: this.element.cliente,
-        vacante: this.vBtra, nv: this.element.vacantes,
-        contratados: this.element.contratados,
-        reclutador:  this.settings.user['nombre'],
-        reclutadorId: this.settings.user['id']
-      },
-      disableClose: true
-    });
+    const data = {
+      'requisicionId': this.requi.id,
+      'folio': this.requi.folio,
+      'cliente': this.element.cliente,
+      'vacante': this.vBtra,
+      'nv': this.element.vacantes,
+      'contratados': this.element.contratados,
+      'reclutador': this.settings.user['nombre'],
+      'reclutadorId': this.settings.user['id'],
+      'campo': false
+    };
+    const navigationExtras: NavigationExtras = {
+      queryParams: data,
+      skipLocationChange: true
+    };
+    this._Router.navigate(['/webcampo/registro'], navigationExtras);
 
-    dialogDlt.afterClosed().subscribe(result => {
-      if (result === 0) {
-        this.onChangeTable(this.config);
-      } else if (result === 417) {
-        this.popToast('error', 'Registro Masivo', 'Ocurrió un error al intentar registrar candidato');
-      } else {
+    // const dialogDlt = this.dialog.open(DlgRegistroMasivoComponent, {
+    //   width: '95%',
+    //   height: '95%',
+    //   data: {
+    //     requisicionId: this.requi.id,
+    //     folio: this.requi.folio,
+    //     cliente: this.element.cliente,
+    //     vacante: this.vBtra, nv: this.element.vacantes,
+    //     contratados: this.element.contratados,
+    //     reclutador:  this.settings.user['nombre'],
+    //     reclutadorId: this.settings.user['id']
+    //   },
+    //   disableClose: true
+    // });
+
+    // dialogDlt.afterClosed().subscribe(result => {
+    //   if (result === 0) {
+    //     this.onChangeTable(this.config);
+    //   } else if (result === 417) {
+    //     this.popToast('error', 'Registro Masivo', 'Ocurrió un error al intentar registrar candidato');
+    //   } else {
         // swal({
         //   title: 'Registro Masivo de Candidatos',
-        //   text: '¡Se registraron (' + result.length.toString() + 
+        //   text: '¡Se registraron (' + result.length.toString() +
         //   ') candidatos con estatus cubierto para la vacante de ' + this.vBtra +
         //   '. ¿Desea enviar notificación a los candidatos registrados?. Esto puede tardar varios minutos',
         //   type: 'warning',
@@ -789,11 +822,11 @@ export class DtVacantesReclutadorComponent implements OnInit {
         //     this.refreshTable();
         //   }
         // });
-         this.popToast('success', 'Registro Masivo', 'El registro se realizó correctamente');
-          this.refreshTable();
+        //  this.popToast('success', 'Registro Masivo', 'El registro se realizó correctamente');
+        //   this.refreshTable();
 
-      }
-    });
+      // }
+    // });
   }
   closeModal(flag) {
 
@@ -829,10 +862,24 @@ export class DtVacantesReclutadorComponent implements OnInit {
   }
 
   seguimientoRequi() {
-    if (this.numeroVacantes != 0 && (this.settings.user['tipoUsuarioId'] == '4' || this.settings.user['tipoUsuarioId'] == '3')) {
+    if (this.numeroVacantes !== 0 && (this.settings.user['tipoUsuarioId'] === '4' || this.settings.user['tipoUsuarioId'] == '3')) {
       this.procesoCandidato = true;
     } else if (this.numeroVacantes !== 0) {
-      this._Router.navigate(['/reclutamiento/gestionVacante', this.id, this.folio, this.vBtra, this.clienteId, this.enProceso, this.estatusId], { skipLocationChange: true });
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          id: this.requi.id,
+          tipoReclutamientoId: this.element.tipoReclutamientoId,
+          folio : this.element.folio,
+          vBtra: this.element.vBtra,
+          clienteId: this.clienteId,
+          enProceso: this.enProceso,
+          estatusVacante: this.element.estatusId,
+          requisicionId: this.element.id,
+          reclutadorId: this.settings.user['id']
+        },
+        skipLocationChange: true
+      };
+      this._Router.navigate(['/reclutamiento/gestionVacante'], navigationExtras);
     } else {
       swal('Ops...!', 'Esta vacante no cuenta con posiciones disponibles esta en 0, cambie el número de vacantes disponibles.', 'error');
     }
@@ -908,39 +955,39 @@ export class DtVacantesReclutadorComponent implements OnInit {
 
 
 
-  print() {
-    this.imprimir = true;
+  // print() {
+  //   this.imprimir = true;
 
-    this.SelectiedSection = {
-      Encabezado: this.Encabezado,
-      Horarios: this.Horarios,
-      Cliente: this.Cliente,
-      ExpApt: this.ExpApt,
-      Direccion: this.Direccion,
-      Beneficio: this.Beneficio,
-      ActObsProd: this.ActObsProd,
-      Telefono: this.Telefono,
-      Contacto: this.Contacto,
-      DocPrest: this.DocPrest,
-      Psicom: this.Psicom,
-      Competencia: this.Competencia,
-      arteRedes: this.arteRedes
-    };
-    this.EmImprimir.emit(this.imprimir);
-    if (!this.settings.layout.isCollapsed) {
-      this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
-    }
-    setTimeout(() => {
-      const data = document.getElementById('content');
-      html2canvas(data, { windowWidth: 1500 }).then(canvas => {
-        const contentDataURL = canvas.toDataURL('image/png')
-        const pdf = new jspdf('p', 'pt', 'letter'); //  A4 size page of PDF
-        const width = pdf.internal.pageSize.getWidth();
-        const height = pdf.internal.pageSize.getHeight();
-        const position = 0;
-        pdf.addImage(contentDataURL, 'jpg', 0, position, width, height);
-        pdf.save(this.folio + '.pdf'); //  Generated PDF
-      });
+  //   this.SelectiedSection = {
+  //     Encabezado: this.Encabezado,
+  //     Horarios: this.Horarios,
+  //     Cliente: this.Cliente,
+  //     ExpApt: this.ExpApt,
+  //     Direccion: this.Direccion,
+  //     Beneficio: this.Beneficio,
+  //     ActObsProd: this.ActObsProd,
+  //     Telefono: this.Telefono,
+  //     Contacto: this.Contacto,
+  //     DocPrest: this.DocPrest,
+  //     Psicom: this.Psicom,
+  //     Competencia: this.Competencia,
+  //     arteRedes: this.arteRedes
+  //   };
+  //   this.EmImprimir.emit(this.imprimir);
+  //   if (!this.settings.layout.isCollapsed) {
+  //     this.settings.layout.isCollapsed = !this.settings.layout.isCollapsed;
+  //   }
+  //   setTimeout(() => {
+  //     const data = document.getElementById('content');
+  //     html2canvas(data, { windowWidth: 1500 }).then(canvas => {
+  //       const contentDataURL = canvas.toDataURL('image/png')
+  //       const pdf = new jspdf('p', 'pt', 'letter'); //  A4 size page of PDF
+  //       const width = pdf.internal.pageSize.getWidth();
+  //       const height = pdf.internal.pageSize.getHeight();
+  //       const position = 0;
+  //       pdf.addImage(contentDataURL, 'jpg', 0, position, width, height);
+  //       pdf.save(this.folio + '.pdf'); //  Generated PDF
+  //     });
 
 
       //  const pdf = new jspdf('1', 'pt', 'a4');
@@ -952,13 +999,13 @@ export class DtVacantesReclutadorComponent implements OnInit {
       //  });
 
 
-    }, 1000);
+    // }, 1000);
 
-    setTimeout(() => {
-      this.imprimir = false;
-      this.EmImprimir.emit(this.imprimir);
-    }, 1500);
-  }
+    // setTimeout(() => {
+    //   this.imprimir = false;
+    //   this.EmImprimir.emit(this.imprimir);
+    // }, 1500);
+  // }
 
 
 
@@ -968,7 +1015,7 @@ export class DtVacantesReclutadorComponent implements OnInit {
       title: title,
       timeout: 4000,
       body: body
-    }
+    };
     this.toasterService.pop(toast);
 
   }

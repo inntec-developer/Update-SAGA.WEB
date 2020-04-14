@@ -1,14 +1,14 @@
 import { Component, Inject, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-
 import { AsignarRequis } from '../../../../../../../models/models';
 import { AsignarRequisicionComponent } from './../../../../../../../components/asignar-requisicion/asignar-requisicion.component';
 import { RequisicionesService } from '../../../../../../../service/requisiciones/requisiciones.service';
 import { Router } from '@angular/router';
 import { SettingsService } from '../../../../../../../core/settings/settings.service';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
 const swal = require('sweetalert');
 
@@ -52,7 +52,7 @@ export class DialogAssingRequiComponent implements OnInit {
   public return: any;
   public formAsignaciones: FormGroup;
   public formRS: FormGroup;
-  public asignadosRequi: any[] = [];
+  asignadosRequi: any = [];
   alertAssing: boolean;
   RequiId: string;
   checked: boolean;
@@ -80,7 +80,7 @@ export class DialogAssingRequiComponent implements OnInit {
     this.formRS = new FormGroup({
       Oficio: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       Comentario: new FormControl('', [Validators.maxLength(500)])
-    })
+    });
   }
   ngOnInit() {
     this.initForm();
@@ -102,17 +102,17 @@ export class DialogAssingRequiComponent implements OnInit {
 
   getInformacion() {
     if (this.data != null) {
-      var Ponderacion = 0;
+      let Ponderacion = 0;
       if (this.data['ponderacion'] == null) {
         switch (this.data['claseReclutamientoId']) {
           case 1:
-            Ponderacion = 3
+            Ponderacion = 3;
             break;
           case 2:
-            Ponderacion = 2
+            Ponderacion = 2;
             break;
           case 3:
-            Ponderacion = 1
+            Ponderacion = 1;
             break;
         }
       } else {
@@ -133,7 +133,7 @@ export class DialogAssingRequiComponent implements OnInit {
         this.formRS.patchValue({
           Oficio: this.data['oficio']['oficio'],
           Comentario: this.data['oficio']['comentario'] || ''
-        })
+        });
       }
     }
   }
@@ -167,10 +167,10 @@ export class DialogAssingRequiComponent implements OnInit {
         asg.push({
           RequisicionId: this.RequiId,
           GrpUsrId: a['id'],
-          CRUD: '',
           UsuarioAlta: this.settings.user['usuario'],
           UsuarioMod: this.settings.user['usuario'],
-          fch_Modificacion: new Date()
+          fch_Modificacion: new Date(),
+          Tipo: 2
         });
       });
       // for (let a of list) {
@@ -261,7 +261,7 @@ export class DialogAssingRequiComponent implements OnInit {
                   window.onkeydown = null;
                   window.onfocus = null;
                   if (isConfirm) {
-                    this._Router.navigate(['/reclutamiento/configuracionVacante/', 
+                    this._Router.navigate(['/reclutamiento/configuracionVacante/',
                     this.RequiId, this.data.folio, this.data.vBtra], { skipLocationChange: true });
                   }
                 });
@@ -322,7 +322,7 @@ export class DialogAssingRequiComponent implements OnInit {
 
   validateAsignados(): boolean {
     if (this.asignadosRequi.length > 0) {
-      return true
+      return true;
     } else {
       return true;
     }

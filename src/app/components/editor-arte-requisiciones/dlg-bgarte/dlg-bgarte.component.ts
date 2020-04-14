@@ -2,7 +2,7 @@ import { EditorArteRequisicionesComponent } from './../editor-arte-requisiciones
 import { Component, OnInit } from '@angular/core';
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import { ApiConection } from '../../../service/api-conection.service';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 
 import { saveAs } from 'file-saver';
 
@@ -25,7 +25,7 @@ export class DlgBGArteComponent implements OnInit {
   cont_image = 0;
   files = [];
 
-  constructor(private service: AdminServiceService, private dialog : MatDialogRef<DlgBGArteComponent>,) { }
+  constructor(private service: AdminServiceService, private dialog: MatDialogRef<DlgBGArteComponent>,) { }
 
   ngOnInit() {
     this.GetBackGround();
@@ -40,8 +40,7 @@ export class DlgBGArteComponent implements OnInit {
   getTypes(data) {
 
     data.forEach(element => {
-      if (element.ext.toLowerCase() === '.jpeg' || element.ext.toLowerCase() === '.jpg' || element.ext.toLowerCase() === '.png')
-      {
+      if (element.ext.toLowerCase() === '.jpeg' || element.ext.toLowerCase() === '.jpg' || element.ext.toLowerCase() === '.png') {
         this.files.push({
           type: element.ext,
           nom: element.nom,
@@ -59,7 +58,6 @@ export class DlgBGArteComponent implements OnInit {
     this.dialog.close(file);
   }
   downloadFile(datos) {
-    console.log(datos)
     const ruta = '/utilerias/img/ArteRequi/BG/';
 
     this.service.DownloadFiles(ruta + datos.nom).subscribe( res => {

@@ -1,50 +1,62 @@
 <ngx-spinner bdColor="rgba(198,195,195,0.8)" size="medium" color="#90daff" type="square-jelly-box"></ngx-spinner>
 <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
-<mat-accordion class="example-headers-align">
-  <mat-expansion-panel [expanded]="infoCnd === 0" (opened)="setInfoCnd(0)">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <mat-icon class="text-primary">supervisor_account</mat-icon>
-      </mat-panel-title>
-      <mat-panel-description>
-        <label class="text-primary">Resultado de Candidatos</label>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <!-- Tabal con los resultados de candidatos -->
-    <tabset [justified]="true">
-      <tab heading="Resultados de Búsqueda" id="resultBusqueda">
-        <div *ngIf="candidatos else NotResult">
-          <app-dt-busqueda-candidatos [Candidatos]="candidatos" (CandidatoId)="vercandidato($event)" *ngIf="candidatos">
-          </app-dt-busqueda-candidatos>
-        </div>
-        <ng-template #NotResult>
-          <alert type="info">
-            <strong>Oops!</strong> Realice una b&uacute;squeda para mostrar candidatos...
-          </alert>
-        </ng-template>
-      </tab>
-      <tab heading="Mis Candidatos" id="misCandidatos">
-          <app-dt-mis-candidatos (CandidatoId)="vercandidato($event)"></app-dt-mis-candidatos>
-      </tab>
-    </tabset>
-    <!-- Tabla con los resultados de los candidatos apartas -->
-  </mat-expansion-panel>
-</mat-accordion>
-<mat-accordion *ngIf="showCandidato" class="example-headers-align">
-  <mat-expansion-panel [expanded]="infoCnd === 1" (opened)="setInfoCnd(1)">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <mat-icon class="text-primary">account_circle</mat-icon>
-      </mat-panel-title>
-      <mat-panel-description>
-        <label class="text-primary">Detalle de Candidato</label>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <!-- Empieza el detalle del candidato.-->
-    <app-info-candidato [IdCandidato]="idCandidato"></app-info-candidato>
-  </mat-expansion-panel>
-</mat-accordion>
+<div class="card card-body fontRoboto">
+  <div class="d-flex justify-content-start align-items-center p-1 bg-info-light mb-2">
+    <i class="fa fa-users" aria-hidden="true"></i>
+    <span class="ml-1">CANDIDATOS</span>
+  </div>
+  <div *ngIf="spinner" class="spinner">
+    <div class="ball-spin-fade-loader">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <!-- <mat-progress-spinner [color]="color" [mode]="mode" [value]="value">
+    </mat-progress-spinner> -->
+  </div>
+  <!-- Tabal con los resultados de candidatos -->
+  <tabset [justified]="true" class="text-warning fontRoboto">
+    <tab heading="" id="resultBusqueda" active="true">
+        <ng-template tabHeading >
+            <h5 class="text-center fontRoboto">B&Uacute;SQUEDA</h5>
+          </ng-template>
+        <app-dt-busqueda-candidatos [Candidatos]="candidatos" (CandidatoId)="vercandidato($event)" *ngIf="candidatos">
+        </app-dt-busqueda-candidatos>
+      <ng-template #NotResult>
+        <alert type="primary">
+          <strong>Oops!</strong> Realice una b&uacute;squeda para mostrar candidatos...
+        </alert>
+      </ng-template>
+    </tab>
+    <tab heading="" id="misCandidatos">
+        <ng-template tabHeading >
+            <h5 class="text-center fontRoboto">MIS CANDIDATOS</h5>
+          </ng-template>
+      <app-dt-mis-candidatos (CandidatoId)="vercandidato($event)"></app-dt-mis-candidatos>
+    </tab>
+  </tabset>
+  <!-- Tabla con los resultados de los candidatos apartas -->
+  <div *ngIf="showCandidato" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal
+    #lgModal2="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="d-flex justify-content-between align-items-center p-1 bg-info-light w-100">
+            <span>
+              DETALLE DE CANDIDATO </span>
+            <em (click)="lgModal2.hide();showCandidato=false;" class="fa fa-times-circle fa-2x text-danger"></em>
 
-<!-- <div class="panel-body">
-  <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
-</div> -->
+          </div>
+        </div>
+        <div class="modal-body">
+          <app-info-candidato [IdCandidato]="idCandidato"></app-info-candidato>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

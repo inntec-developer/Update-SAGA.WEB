@@ -1,13 +1,13 @@
+.StripesBg {
+  background-image: linear-gradient(45deg, #F5F7FA 41.67%, #eeeeee 41.67%, #eeeeee 50%, #F5F7FA 50%, #F5F7FA 91.67%, #eeeeee 91.67%, #eeeeee 100%);
+  background-size: 8.49px 8.49px;
+}
 .card
 {
     width: 340px;
-    height: 380px;
+    height: 400px;
 }
 
-.card-body
-{
-    width: 330px;
-}
 a{
     cursor: pointer;
   }
@@ -17,9 +17,8 @@ a:hover
     text-decoration: none;
 }
 
-.bg-info
-{
-    background-color: #23B7E5;
+.estilomio {
+  font-family: 'Lato', sans-serif;
 }
 
   .estilomio a:hover
@@ -60,3 +59,49 @@ a:hover
     color: #e74c3c;
   }
 
+  .btn-label2 {
+    position: relative;
+    left: -59px;
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(0,0,0,0.15);
+    border-radius: 3px 0 0 3px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    height: 28px;
+  }
+  .btn-label3 {position: relative;left: -49px;display: inline-block;padding: 4px 12px;background: rgba(0,0,0,0.15);border-radius: 3px 0 0 3px;
+  border-top-left-radius: 25px;
+border-bottom-left-radius: 25px;
+height: 28px;
+}
+  // .btn-label > .dos {position: relative; left: 10px !important;}
+  // .btn-labeled {padding-top: 0;padding-bottom: 0;}
+  .btn {
+    width: 200px;
+    height: 28px;
+    border-radius: 25px;
+    font-family: 'Roboto', sans-serif;
+  }
+  hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(78, 78, 78, 0.75), rgba(0, 0, 0, 0));
+}
+.sizeBarra {
+  width: 100% !important;
+}
+.sizeInntec {
+  width: 9% !important;
+}
+.round{
+ border-top-left-radius: 25px;
+ border-bottom-left-radius: 25px;
+}
+.input-group-append span {
+  border-bottom-right-radius: 25px;
+  border-top-right-radius: 25px;
+}
+.inntecBG {
+  border:none;
+}

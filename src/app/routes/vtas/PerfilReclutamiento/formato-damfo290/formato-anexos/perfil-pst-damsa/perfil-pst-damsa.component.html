@@ -1,8 +1,8 @@
 <form [formGroup]="PsicometriasArray">
   <section class="d-flex justify-content-between">
     <!-- <em class="fa fa-close text-danger em-button" (click)="CancelarEscolaridad()"></em> -->
-    <strong class="text-warning">Psicometr&iacute;as DAMSA <i *ngIf="PsicometriasNew.length == 0" class="text-danger fa fa-exclamation-circle ml-3" 
-      container="body" placement="right" tooltip="Campo requerido"></i></strong>
+    <span class="text-warning text-uppercase fontRoboto">Psicometr&iacute;as DAMSA <i *ngIf="PsicometriasNew.length == 0" class="text-danger fa fa-exclamation-circle ml-3" 
+      container="body" placement="right" tooltip="Campo requerido"></i></span>
     <button class="btn btn-xs btn-primary mr-1 mb-1 mat-elevation-z8"
     (click)="AddPsicometria()" container="body" placement="top" tooltip="Agregar Psicometr&iacute;a"><i class="fa fa-plus"></i></button>
   </section>

@@ -4,7 +4,7 @@
 
 table tbody {
     display: block;
-    height: 450px;
+    height: 350px;
 
   }
   
@@ -20,12 +20,12 @@ table tbody {
   }
   
   table {
-    width: 400px;
+    width: 100%;
   }
   
   
   table tbody tr:hover{
-    font-size: 14.5px;
+    font-size: 12.5px;
     box-shadow:1px 20px 60px rgba(0,0,0,.23);
   }
 

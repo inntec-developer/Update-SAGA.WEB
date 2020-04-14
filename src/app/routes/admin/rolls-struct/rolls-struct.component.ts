@@ -2,8 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 
 import { AdminServiceService } from '../../../service/AdminServicios/admin-service.service';
 import { ApiConection } from '../../../service/api-conection.service';
-import { element } from 'protractor';
-import { forEach } from '@angular/router/src/utils/collection';
+
 
 @Component({
   selector: 'app-rolls-struct',

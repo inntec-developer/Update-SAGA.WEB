@@ -1,26 +1,20 @@
 <div class="card box">
   <div class="card-body mat-elevation-z8">
-    <div class="d-flex justify-content-between">
-      <label class="text-info"><strong>Folios Activos</strong> </label>
-      <em class="icon-refresh em- text-success"
-            (click)="ngOnInit()"></em>
+    <div class="d-flex justify-content-between align-items-center p-1 bg-warning fontRoboto text-uppercase">
+     <span>Folios Activos</span>
+      <em class="icon-refresh" (click)="ngOnInit()"></em>
     </div>
     <br>
     <div>
       <canvas id="ActivaVic"></canvas>
       <br>
-      <div class="col-xl-12">
-        <div style="margin-top: -18px;">
-            <small class="left"><span > Vigentes: <span
-              class="badge badge-primary ">{{vigentes}}</span></span></small>
-        
-            <small class="right" style="float: right"><span > Vencidas: <span
-              class="badge badge-danger">{{vencidas}}</span></span></small>
-        </div>
+      <div class="d-flex justify-content-between align-items-center mt-2 mb-1 text-uppercase fontLato">
+            <small>Vigentes<span class="badge badge-success ml-1">{{vigentes}}</span></small>
+            <small>Vencidas<span class="badge badge-danger ml-1">{{vencidas}}</span></small>
       </div>
       <mat-divider></mat-divider>
-      <small ><span style="margin-right: 11px;margin-top:20px" class="float-right"> Total Folios: <span
-            class="badge badge-info">{{vigentes + vencidas}}</span></span></small>
+      <small class="float-right mt-1 fontLato text-uppercase"> Total Folios<span
+            class="badge badge-info ml-1">{{vigentes + vencidas}}</span></small>
     </div>
   </div>
 </div>

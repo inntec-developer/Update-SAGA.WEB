@@ -5,6 +5,7 @@ import { RouterModule, Router } from '@angular/router';
 
 import { MenuService } from '../../core/menu/menu.service';
 import { SettingsService } from '../../core/settings/settings.service';
+import { AuthService } from '../../service/auth/auth.service';
 
 describe('Component: Sidebar', () => {
     let mockRouter = {
@@ -20,8 +21,9 @@ describe('Component: Sidebar', () => {
         }).compileComponents();
     });
 
-    it('should create an instance', async(inject([MenuService, SettingsService, Router], (menuService, settingsService, router) => {
-        let component = new SidebarComponent(menuService, settingsService, router);
+    it('should create an instance', async(inject([MenuService, SettingsService, AuthService, Router],
+         (menuService, settingsService, authService, router) => {
+        let component = new SidebarComponent(menuService, settingsService, authService, router);
         expect(component).toBeTruthy();
     })));
 });

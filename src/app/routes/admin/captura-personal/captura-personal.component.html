@@ -1,0 +1,367 @@
+<div class="content-heading">
+  <span class="text-muted">ADMINISTRADOR DE PERSONAL</span>
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item">
+      <a class="text-info" (click)="regresar()">CANDIDATOS</a>
+    </li>
+    <li class="breadcrumb-item active">CAPTURA</li>
+  </ol>
+</div>
+<div *ngIf="spinner" class="spinner">
+  <div class="ball-spin-fade-loader">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <!-- <mat-progress-spinner [color]="color" [mode]="mode" [value]="value">
+  </mat-progress-spinner> -->
+</div>
+<div class="d-flex justify-content-between align-items-center p-1 bg-cover bg text-white">
+  <div class="radial-bar radial-bar-90 radial-bar radial-bar-warning m-0">
+    <img [src]="dataSource.foto" (error)="errorImg()">
+  </div>
+  <h5>{{dataSource.nombre | uppercase}}</h5>
+  <div class="d-flex flex-column justify-content-start fontRoboto">
+    <span>RECLUTADOR</span>
+    <span>{{dataSource.reclutador | uppercase }}</span>
+    <span>FOLIO VACANTE</span>
+    <span>{{folio}}</span>
+  </div>
+  <button container="body" placement="bottom" tooltip="Regresar" class="btn btn-xs btn-warning" type="button"
+    (click)="regresar()">
+    <i class="icon-action-undo"></i>
+  </button>
+</div>
+<div class="mb-3">
+  <img class="sizeBarra" src="assets/img/bg-color.png" alt="" />
+</div>
+<div class="mb-1">
+  <mat-tab-group [color]="accent" [selectedIndex]="0">
+    <mat-tab>
+      <ng-template mat-tab-label><i class="fa fa-address-card-o mr-1"></i>GENERALES</ng-template>
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-start align-items-center p-1 bg-info-light fontRoboto mt-2">
+            <span>DATOS PERSONALES</span>
+          </div>
+          <form [formGroup]="formPersonales">
+            <div class="d-flex justify-content-between align-items-center align-items-strech mt-2">
+              <mat-form-field>
+                <input class="text-warning" formControlName="curp" matInput placeholder="CURP *">
+              </mat-form-field>
+              <mat-form-field class="ml-2">
+                <input class="text-warning" formControlName="rfc" matInput placeholder="RFC *">
+              </mat-form-field>
+              <mat-form-field class="ml-2">
+                <input class="text-warning" formControlName="nss" matInput placeholder="NSS *">
+              </mat-form-field>
+              <mat-form-field class="ml-2">
+                <mat-select formControlName="gs" placeholder="GRUPO SANGU&Iacute;NEO">
+                  <mat-option *ngFor="let e of gruposanguineo" [value]=e.id>
+                    {{e.grupo | uppercase}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="d-flex justify-content-between align-items-center align-items-strech mt-2">
+              <mat-form-field class="w-100">
+                <input class="text-warning" matInput placeholder="ESTADO DE NACIMIENTO *" formControlName="estadoNac" />
+              </mat-form-field>
+              <mat-form-field class="ml-2 w-100">
+                <input class="text-warning" matInput formControlName="fechaNac" placeholder="FECHA DE NACIMIENTO *">
+                <small class="text-info">Edad {{edad}}</small>
+              </mat-form-field>
+              <div class="ml-4 mb-2 w-100">
+                <small class="text-muted mb-1">GENERO *</small><br />
+                <mat-radio-group formControlName="genero">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <mat-radio-button [value]="2"><i class="fa fa-female text-pink mr-1" aria-hidden="true"></i>MUJER
+                    </mat-radio-button>
+                    <mat-radio-button [value]="1" class="mr-2"><i class="fa fa-male text-primary mr-1"
+                        aria-hidden="true"></i>HOMBRE
+                    </mat-radio-button>
+                  </div>
+                </mat-radio-group>
+              </div>
+              <mat-form-field class="ml-2 w-100">
+                <mat-select formControlName="edocivil" placeholder="ESTADO CIVIL *">
+                  <mat-option *ngFor="let e of edocivil" [value]=e.id>
+                    {{e.estadoCivil | uppercase}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="d-flex justify-content-between align-items-center align-items-strech mt-2">
+              <mat-form-field>
+                <input matInput placeholder="NOMBRE DE C&Oacute;NYUGE" formControlName="conyuge" />
+              </mat-form-field>
+              <mat-form-field class="ml-2">
+                <input matInput placeholder="NOMBRE DEL PADRE" formControlName="nompadre" />
+              </mat-form-field>
+              <mat-form-field class="ml-2">
+                <input matInput placeholder="NOMBRE DE LA MADRE" formControlName="nommadre" />
+              </mat-form-field>
+              <mat-form-field class="ml-2">
+                <input matInput placeholder="NOMBRE BENEFICIARIO" formControlName="nombeneficiario" />
+              </mat-form-field>
+            </div>
+          </form>
+          <div class="d-flex justify-content-start align-items-center p-1 bg-info-light mt-3 fontRoboto">
+            <span>DATOS DE DOMICILIO</span>
+          </div>
+          <form [formGroup]="formGenerales">
+            <div class="d-flex justify-content-between align-items-center align-items-strech mt-2">
+              <mat-form-field>
+                <input class="text-warning" formControlName="pais" matInput placeholder="PA&Iacute;S" disabled>
+              </mat-form-field>
+              <mat-form-field class="ml-2 w-100">
+                <mat-select formControlName="estado" placeholder="ESTADO *"
+                  (selectionChange)="GetMunicipios($event.value)">
+                  <mat-option *ngFor="let e of estados" [value]=e.id>
+                    {{e.estado | uppercase}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="ml-2 w-100">
+                <mat-select formControlName="municipio" placeholder="MUNICIPIO *"
+                  (selectionChange)="GetColonias($event.value)">
+                  <mat-option *ngFor="let e of municipios" [value]=e.id>
+                    {{e.municipio | uppercase}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="ml-2 w-100">
+                <mat-select formControlName="colonia" placeholder="COLONIA *" (selectionChange)="GetCP($event.value)">
+                  <mat-option *ngFor="let e of colonias" [value]=e.id>
+                    {{e.colonia | uppercase}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="d-flex justify-content-between align-items-center align-items-strech mt-3">
+              <mat-form-field>
+                <input formControlName="calle" matInput placeholder="CALLE *">
+              </mat-form-field>
+              <mat-form-field class="ml-2">
+                <input formControlName="numext" matInput placeholder="No EXT *">
+              </mat-form-field>
+              <mat-form-field class="ml-2">
+                <input formControlName="numint" matInput placeholder="No INT">
+              </mat-form-field>
+              <mat-form-field class="ml-2">
+                <input formControlName="cp" matInput placeholder="CODIGO POSTAL *">
+              </mat-form-field>
+            </div>
+            <div class="d-flex justify-content-between align-items-center align-items-strech mt-2">
+              <mat-form-field>
+                <mat-label class="d-flex align-items-center">
+                  <i class="fa fa-envelope text-success mr-1" aria-hidden="true"></i><span>CORREO ELECTRONICO</span>
+                </mat-label>
+                <input formControlName="email" matInput placeholder="CORREO ELECTRONICO">
+              </mat-form-field>
+              <div class="d-flex justify-content-between align-items-center align-items-strech">
+                <mat-form-field class="ladaLong ml-2">
+                  <input matInput type="tel" minlength="2" maxlength="3" placeholder="LADA" formControlName="ladaMov" />
+                </mat-form-field>
+                <mat-form-field class="ml-1">
+                  <mat-label class="d-flex align-items-center">
+                    <i class="fa fa-mobile text-success mr-1" aria-hidden="true"></i><span>TELEFONO MOVIL</span>
+                  </mat-label>
+                  <input matInput type="tel" minlength="8" maxlength="8" placeholder="TELEFONO MOVIL" formControlName="telMov" />
+                </mat-form-field>
+              </div>
+              <mat-form-field class="ml-2">
+                <mat-label class="d-flex align-items-center">
+                  <i class="fa fa-phone text-success" aria-hidden="true"></i><span>TELEFONO CASA</span>
+                </mat-label>
+                <input matInput type="tel" minlength="10" maxlength="11" placeholder="TELEFONO CASA"
+                  formControlName="telCasa" />
+              </mat-form-field>
+              <mat-form-field class="ml-2">
+                <mat-label>
+                  <i class="fa fa-mobile text-success mr-1" aria-hidden="true"></i>TELEFONO RECADOS
+                </mat-label>
+                <input matInput type="tel" minlength="10" maxlength="11" placeholder="TELEFONO RECADOS"
+                  formControlName="telRec" />
+              </mat-form-field>
+            </div>
+          </form>
+          <div class="d-flex justify-content-start align-items-center p-1 bg-info-light mt-3 fontRoboto">
+            <span>OTROS</span>
+          </div>
+          <form [formGroup]="formPersonales">
+            <div class="d-flex justify-content-between align-items-center align-items-stretch mt-2">
+              <mat-form-field class="w-100">
+                <mat-label><i class="fa fa-graduation-cap mr-1" aria-hidden="true"></i>ESCOLARIDAD *</mat-label>
+                <mat-select formControlName="escolaridad" placeholder="ESCOLARIDAD *">
+                  <mat-option *ngFor="let e of escolaridades" [value]=e.id>
+                    {{e.gradoEstudio | uppercase}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="ml-3 w-100">
+                <mat-label>OBSERVACIONES</mat-label>
+                <textarea formControlName="observaciones" matInput placeholder="Ejemplo. Titulo en Ing ..."></textarea>
+              </mat-form-field>
+            </div>
+          </form>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label><i class="fa fa-handshake-o mr-2"></i>LABORALES</ng-template>
+      <div class="card card-body">
+        <div class="d-flex justify-content-start align-items-center p-1 bg-info-light fontRoboto">
+          <span>FORMA PAGO</span>
+        </div>
+        <form [formGroup]="formLaborales">
+          <div class="d-flex justify-content-between align-items-center align-items-strech mt-2">
+            <!-- <mat-form-field>
+            <input class="text-warning" formControlName="reclutador" matInput placeholder="RECLUTADOR">
+          </mat-form-field> -->
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker2" formControlName="fechaIng" placeholder="FECHA DE INGRESO *">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="ml-2">
+              <mat-select formControlName="formaPago" placeholder="FORMA DE PAGO *">
+                <mat-option *ngFor="let e of formaPago" [value]=e.id>
+                  {{e.descripcion | uppercase}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="ml-2">
+              <input matInput [matDatepicker]="picker3" formControlName="fechaPago" placeholder="FECHA FORMA DE PAGO">
+              <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+              <mat-datepicker #picker3></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="ml-2">
+              <input formControlName="cuenta" matInput placeholder="N&Uacute;MERO DE CUENTA *">
+            </mat-form-field>
+          </div>
+          <div class="d-flex justify-content-between align-items-center align-items-stretch mt-2">
+            <mat-form-field>
+              <mat-select formControlName="banco" placeholder="INSTITUCI&Oacute;N BANCARIA">
+                <mat-option *ngFor="let e of bancos" [value]=e.id>
+                  {{e.nombre | uppercase}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="ml-2">
+              <mat-icon matPrefix>attach_money</mat-icon>
+              <input matInput class="text-right text-warning" step="any" type="number" placeholder="Sueldo Mínimo"
+                formControlName="sueldoMin">
+              <small matSuffix>MXN.</small>
+            </mat-form-field>
+            <mat-form-field class="ml-2">
+              <mat-icon matPrefix>attach_money</mat-icon>
+              <input matInput class="text-right text-warning" step="any" type="number" placeholder="Sueldo Maximo"
+                formControlName="sueldoMax">
+              <small matSuffix>MXN.</small>
+            </mat-form-field>
+          </div>
+          <div class="d-flex justify-content-between align-items-center align-items-stretch mt-2">
+            <mat-form-field>
+              <mat-icon matPrefix>attach_money</mat-icon>
+              <input formControlName="mensual" matInput type="number" placeholder="SUELDO MENSUAL *">
+            </mat-form-field>
+            <mat-form-field class="ml-2">
+              <mat-icon matPrefix>attach_money</mat-icon>
+              <input type="number" formControlName="diario" matInput placeholder="SUELDO DIARIO *">
+            </mat-form-field>
+            <mat-form-field class="ml-2">
+              <mat-icon matPrefix>attach_money</mat-icon>
+              <input type="number" formControlName="sueldoInt" matInput placeholder="SUELDO INTEGRADO *">
+            </mat-form-field>
+          </div>
+          <div class="d-flex justify-content-start align-items-center p-1 bg-info-light fontRoboto">
+            <span>DATOS PUESTO</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center align-items-stretch mt-2">
+            <mat-form-field class="w-100">
+              <input formControlName="puesto" matInput placeholder="PUESTO *">
+            </mat-form-field>
+            <mat-form-field class="ml-2 w-100">
+              <input formControlName="suc" matInput placeholder="SUCURSAL *">
+            </mat-form-field>
+            <mat-form-field class="ml-2 w-100">
+              <input formControlName="dpto" matInput placeholder="DEPARTAMENTO *">
+            </mat-form-field>
+            <mat-form-field class="ml-2 w-100">
+              <input formControlName="turno" matInput placeholder="TURNO *">
+            </mat-form-field>
+          </div>
+          <div class="d-flex justify-content-start align-items-center  mt-2">
+            <mat-form-field class="w-100">
+              <mat-select formControlName="motivo" placeholder="MOTIVO CONTRATACI&Oacute;N *">
+                <mat-option *ngFor="let e of motivos" [value]=e.id>
+                  {{e.motivo | uppercase}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="ml-2 w-100">
+              <input formControlName="soporte" matInput placeholder="SOPORTE FACTURACI&Oacute;N *">
+            </mat-form-field>
+            <mat-form-field class="ml-2 w-100">
+              <input formControlName="clave" matInput placeholder="CLAVE JEFE INMEDIATO">
+            </mat-form-field>
+            <mat-form-field class="ml-2 w-100">
+              <input formControlName="claveExt" matInput placeholder="CLAVE EXTERNA">
+            </mat-form-field>
+            <!-- <mat-form-field>
+            <input class="text-warning" formControlName="folio" matInput placeholder="FOLIO VACANTE">
+          </mat-form-field> -->
+          </div>
+        </form>
+      </div>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label><i class="fa fa-upload mr-1"></i>DOCUMENTACION</ng-template>
+      <div class="card card-body">
+        <div class="d-flex justify-content-between align-items-center align-items-stretch p-1 bg-info-light fontRoboto">
+          <span>DOCUMENTOS REQUERIDOS</span>
+          <button class="btn btn-xs btn-success mat-elevation-z8" (click)="GetDocNecesarios()">
+            <i class="icon-refresh"></i>
+          </button>
+        </div>
+
+        <ul class="list-group list-group-flush mt-2">
+          <li class="list-group-item" *ngFor="let item of documentos; let row = index;">
+            <div class="d-flex justify-content-between align-items-center fontLato text-muted">
+            <label *ngIf="item.activo"><i class="fa fa-check text-success mr-2"></i> {{item.descripcion | uppercase}}</label>
+            <label style="cursor: pointer;" *ngIf="!item.activo" class="file-upload" style="cursor: pointer;">
+              <em *ngIf="!spinnerFile['spFile' + row]" class="fa fa-upload text-purple mr-2"></em>
+              <i *ngIf="spinnerFile['spFile' + row]" class="fa fa-spinner fa-pulse mr-2" aria-hidden="true"></i>
+              {{item.descripcion | uppercase}}
+              <input style="cursor: pointer;" id="image-input{{row}}" type="file" #fileInput (change)="fileChangeListener($event, row, item.descripcion, item.id)"
+                [accept]="['image/png', 'image/jpeg', 'image/jpg', 'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel', 'application/msword']">
+            </label>
+            <span *ngIf="item.activo" class="badge badge-warning">{{item.fecha | date: 'dd/MM/yyyy'}}</span>
+          </div>
+          </li>
+        </ul>
+
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+<div class="row d-flex justify-content-center">
+  <div class="col-md-6 col-sm-6">
+    <button type="button"
+      class="btn btn-block btn-labeled btn-danger mat-elevation-z8 d-flex justify-content-between align-items-center">
+      <span class="btn-label"><i class="fa fa-times-circle fa-2x"></i></span>CANCELAR</button>
+  </div>
+  <div class="col-md-6 col-sm-6">
+    <button [disabled]="formPersonales.invalid || formGenerales.invalid || formLaborales.invalid"
+      (click)="GuardarDatos()" type="button"
+      class="btn btn-block btn-labeled btn-success mat-elevation-z8 d-flex justify-content-between align-items-center">
+      <span class="btn-label"><i class="fa fa-check-circle fa-2x"></i></span>GUARDAR</button>
+  </div>
+</div>
+<toaster-container toaster-options="{'toaster-id': 1 }" [toasterconfig]="toasterconfig"></toaster-container>

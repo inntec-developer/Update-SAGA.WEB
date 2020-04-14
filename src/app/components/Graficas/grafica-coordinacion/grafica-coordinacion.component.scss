@@ -1,7 +1,4 @@
-.actions {
-    margin-left: 10px;
-  }
-  
+
   table tbody {
     display: block;
   
@@ -39,30 +36,17 @@
     max-width: 100% !important;
   
   }
-  
-  .header-button {
-    margin-top: 10px;
-    z-index: 10;
-  }
+
   table tbody div
   {
     height: 350px;
+  }
+  em {
+    cursor: pointer;
   }
   ng-scrollbar {
     --scrollbar-size: 4px;
     --scrollbar-thumb-color: rgb(94, 175, 255);
     --scrollbar-thumb-hover-color: dodgerblue;
     --scrollbar-border-radius: 4px;
-  }
-  .row
-  {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  @media screen and (max-width: 1600px) {
-    .row {flex-direction: column;}
-    .header-button {
-      position: fixed;
-      z-index: 1000;
-    }
   }

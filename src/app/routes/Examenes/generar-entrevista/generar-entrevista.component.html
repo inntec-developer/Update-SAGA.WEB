@@ -1,0 +1,120 @@
+<div class="content-heading">
+    <div>
+      <span class="text-sm d-none d-sm-block">Administraci&oacute;n de examenes.</span>
+    </div>
+    <!-- Breadcrumb right aligned-->
+    <ol class="breadcrumb ml-auto">
+          <li class="breadcrumb-item">
+            <a [routerLink]="['/examenes/Principal']" [skipLocationChange]=true>Principal Examenes</a>
+          </li>
+          <li class="breadcrumb-item active">Generar entrevista</li>
+    </ol>
+  </div>
+<form [formGroup]="entForm" novalidate>
+<div class="row">
+  <div class="col-sm-6 col-md-6">
+    <div class="card border">
+      <div class="card-body">
+        <h5 class="card-title text-info">
+          <i class="fa fa-pencil mr-1"></i>CUESTIONARIOS DISPONIBLES</h5>
+        <hr>
+        <mat-form-field class="longSelect">
+          <mat-select placeholder="Seleccionar cuestionario" formControlName="controlCuestionarios">
+            <mat-option *ngFor="let e of cuestionarios" [value]="e.id"
+              (click)="GetExamen(e.id); nomExamen = e.nombre; descripcion = e.descripcion;">
+              {{e.nombre}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <hr>
+          <!-- <h5 class="card-title text-info"><span *ngIf="nomExamen">{{nomExamen}}</span></h5> -->
+          <div class="d-flex justify-content-between p-1">
+            <mat-checkbox class="mt-1" [disabled]="(cuestionario || []).length == 0" formControlName="controlTodas" [(ngModel)]="todas" (change)="SelectAll()">SELECCIONAR TODAS</mat-checkbox>
+            <div class="d-flex justify-content-between">
+              <strong class="text-muted mt-1 mr-2">ALEATORIEDAD</strong>
+              <input [disabled]="(cuestionario || []).length == 0" type="number" min="0" [(ngModel)]="alea" formControlName="controlAlea" (change)="ValidarMax()"
+                class="form-control form-control-sm long mr-2">
+              <em *ngIf="alea > 0" class="fa fa-check text-success em-button mt-2" (click)="SelectAlea()"></em>
+            </div>
+          </div>
+          <hr>
+        <div *ngIf="(cuestionario || []).length > 0" class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between p-1">
+                <small class="text-warning"><i class="fa fa-exclamation-triangle mr-2" aria-hidden="true"></i>Da click sobre
+                  la pregunta para seleccionar</small>
+              <span class="text-muted">TOTAL DE PREGUNTAS <small class="badge badge-pill badge-success ml-2">{{cuestionario.length}}</small></span>
+            </div>
+            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+           <div class="divScroll">
+              <ul class="list-group">
+              <li class="list-group-item mr-1" *ngFor="let c of cuestionario; let ind = index"
+                (click)="AgregarPregunta(c, ind)" [class.bg-primary-light]="c.selected" [class.text-white]="c.selected">
+                <p [class.text-white]="c.selected" class="list-group text-muted">{{( ind + 1 ) + '.- ' + c.pregunta}}
+                </p>
+                <div *ngIf="(c.file || []).length > 0" class="media">
+                  <img class="img-fluid" src={{c.file}} alt="Image" style="width: 200px; height: 100px;" />
+                </div>
+                <ul class="d-flex justify-content-between text-info" [class.text-white]="c.selected">
+                  <li *ngFor="let r of c.respuestas">{{r.resp}} <span [class.text-white]="c.selected"
+                      class="text-muted mr-4">Puntaje <small
+                        class="badge badge-pill badge-warning ml-2">{{r.value}}</small></span></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+            </ng-scrollbar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-6">
+    <div class="card border">
+      <div class="card-body">
+        <h5 class="card-title text-warning">
+          <i class="fa fa-cogs mr-1"></i> CONFIGURAR ENTREVISTA</h5>
+        <hr>
+        <mat-form-field>
+            <input matInput formControlName="controlNombre" matInput placeholder="Nombre" [(ngModel)]="nombre">
+          </mat-form-field>
+        <mat-form-field>
+          <textarea formControlName="controlDesc" matInput placeholder="Descripci&oacute;n" [(ngModel)]="descripcionEnt" rows="4" maxlength="600"></textarea>
+          <mat-hint align="end">{{descripcionEnt.length}} / <span class="text-warning">600</span></mat-hint>
+        </mat-form-field>
+        <hr>
+        <div *ngIf="(preguntas || []).length > 0" class="d-flex justify-content-end p-1 mb-1">
+          <button class="btn btn-xs btn-danger mat-elevation-z8" (click)="Borrar()">
+            <i class="fa fa-trash-o"></i>
+          </button>
+        </div>
+        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+        <div *ngIf="(preguntas || []).length > 0" class="divScroll">
+          <ul class="list-group mr-1" dnd-sortable-container [sortableData]="preguntas">
+          <ng-container *ngFor="let p of preguntas; let i = index;">
+            <li class="list-group-item" dnd-sortable [sortableIndex]="i">
+              <p class="list-group text-muted">{{p.pregunta}}</p>
+              <div *ngIf="(p.file || []).length > 0" class="media">
+                <img class="img-fluid" src={{p.file}} alt="Image" style="width: 200px; height: 100px;" />
+              </div>
+              <ul class="text-info d-flex justify-content-between">
+                <li *ngFor="let r of p.respuestas">{{r.resp}} <span class="text-muted mr-4">Puntaje <small
+                      class="badge badge-pill badge-success ml-2">{{r.value}}</small></span></li>
+              </ul>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+        </ng-scrollbar>
+        <div *ngIf="(preguntas || []).length > 0" class="d-flex justify-content-end mt-2 mb-2">
+            <button [disabled]="entForm.invalid" [ngClass]="entForm.invalid ? 'disabled' : 'btn-success'" class="btn btn-labeled mat-elevation-z8"
+            (click)="GenerarEntrevista()" tooltip="Generar Entrevista">
+             <span class="btn-label"><i class="fa fa-file-text-o"></i></span>GENERAR ENTREVISTA
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</form>

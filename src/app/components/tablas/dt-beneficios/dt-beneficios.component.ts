@@ -6,10 +6,11 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
   styleUrls: ['./dt-beneficios.component.scss']
 })
 export class DtBeneficiosComponent implements OnInit {
-  @Input() Beneficios : any[];
-  getBeneficio : boolean = false;
+  @Input() Beneficios: any[];
+  getBeneficio = false;
   public rows: Array<any> = [];
   rowAux = [];
+  verTabla = true;
   constructor() { }
 
   ngOnInit() {

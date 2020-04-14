@@ -1,15 +1,5 @@
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/Rx';
-import 'rxjs/add/observable/throw';
-
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-
 import { ApiConection } from './../api-conection.service';
-import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -62,7 +52,12 @@ export class CatalogosService {
   private UrlGetColoniaOfi = ApiConection.ServiceUrl + ApiConection.GetColoniaOfi;
   private UrlDeleteOficina = ApiConection.ServiceUrl + ApiConection.deleteOficina;
   private UrlAlterOficina = ApiConection.ServiceUrl + ApiConection.alterOficina;
-
+private UrlGetEstadoCivil = ApiConection.ServiceUrl + ApiConection.GetEstadoCivil;
+  private UrlGetInstBancaria = ApiConection.ServiceUrl + ApiConection.GetBancos;
+  private UrlGetMotContratacion = ApiConection.ServiceUrl + ApiConection.GetMotContratacion;
+  private UrlGetGrupoSanguineo = ApiConection.ServiceUrl + ApiConection.GetGrupoSanguineo;
+  private UrlGetEscolaridades = ApiConection.ServiceUrl + ApiConection.GetEscolaridades;
+  private UrlGetFormaPago = ApiConection.ServiceUrl + ApiConection.GetFormaPago;
   /*Menu de catalogos */
   private UrlMenuCatalogos = ApiConection.ServiceUrl + ApiConection.getCatalogos;
   private UrlCatalogos = ApiConection.ServiceUrl + ApiConection.getCatalogosComplete;
@@ -70,7 +65,7 @@ export class CatalogosService {
   private UrlCatalogoFilter = ApiConection.ServiceUrl + ApiConection.FilterCatalogos;
   private UrlGetCatalgoForId = ApiConection.ServiceUrl + ApiConection.GetCatalogoForId;
 
-  constructor(private _httpClient: HttpClient, private http: Http) { }
+  constructor(private _httpClient: HttpClient) { }
 
   getOficinaMunicipio(mun: string, es: string): Observable<any> {
     let params = new HttpParams().set('estado', es).set('municipio', mun);
@@ -210,13 +205,13 @@ return this._httpClient.get(this.UrlGetTipoDireccion, {headers: this.httpOptions
     return this._httpClient.get(this.UrlGetTipoBase, {headers: this.httpOptions.headers});
   }
 
-  /* Catalogos de locasiones */
-  getPais(): Observable<any>{
+  /* Catalogos de locaciones */
+  getPais(): Observable<any> {
     return this._httpClient.get(this.UrlGetPais, {headers: this.httpOptions.headers});
   }
 
-  getEstado(PaisId: any): Observable<any>{
-    let params= new HttpParams().set('PaisId', PaisId);
+  getEstado(PaisId: any): Observable<any> {
+    const params = new HttpParams().set('PaisId', PaisId);
     return this._httpClient.get(this.UrlGetEstado, {params: params, headers: this.httpOptions.headers});
   }
 
@@ -226,12 +221,12 @@ return this._httpClient.get(this.UrlGetTipoDireccion, {headers: this.httpOptions
   }
 
   getColonias(MunicipioId: any): Observable<any>{
-    let params= new HttpParams().set('MunicipioId', MunicipioId);
+    const params = new HttpParams().set('MunicipioId', MunicipioId);
     return this._httpClient.get(this.UrlGetColonia, {params: params, headers: this.httpOptions.headers});
   }
 
   getForCP(cp: any): Observable<any>{
-    let params = new HttpParams().set('CP', cp);
+    const params = new HttpParams().set('CP', cp);
     return this._httpClient.get(this.UrlGetForCP, {params: params, headers: this.httpOptions.headers});
   }
 
@@ -240,7 +235,7 @@ return this._httpClient.get(this.UrlGetTipoDireccion, {headers: this.httpOptions
   }
 
   getCatalogo(IdCatalogo: any): Observable<any> {
-    let params= new HttpParams().set('IdCatalogo', IdCatalogo);
+    const params = new HttpParams().set('IdCatalogo', IdCatalogo);
     return this._httpClient.get(this.UrlCatalogos, {params: params, headers: this.httpOptions.headers});
   }
 
@@ -248,6 +243,25 @@ return this._httpClient.get(this.UrlGetTipoDireccion, {headers: this.httpOptions
     return this._httpClient.post<any>(this.UrlCatalogoFilter, Params, this.httpOptions);
   }
 
+  GetCatalogoBancos(): Observable<any> {
+    return this._httpClient.get(this.UrlGetInstBancaria, {headers: this.httpOptions.headers});
+  }
+  GetMotContratacion(): Observable<any> {
+    return this._httpClient.get(this.UrlGetMotContratacion, {headers: this.httpOptions.headers});
+  }
+  GetEstadoCivil(): Observable<any> {
+    return this._httpClient.get(this.UrlGetEstadoCivil, {headers: this.httpOptions.headers});
+  }
+  GetGrupoSanguineo(): Observable<any> {
+    return this._httpClient.get(this.UrlGetGrupoSanguineo, {headers: this.httpOptions.headers});
+  }
+  GetEscolaridades(): Observable<any> {
+    return this._httpClient.get(this.UrlGetEscolaridades, {headers: this.httpOptions.headers});
+  }
+
+  GetFormaPago(): Observable<any> {
+    return this._httpClient.get(this.UrlGetFormaPago, {headers: this.httpOptions.headers});
+  }
   GuardaCatalogo(Catalogo: any): Observable<any> {
     return this._httpClient.post<any>(this.UrlCatalogoCrud , Catalogo, this.httpOptions);
   }

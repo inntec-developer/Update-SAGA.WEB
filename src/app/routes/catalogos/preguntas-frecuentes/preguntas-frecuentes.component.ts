@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { ApiConection } from '../../../service/api-conection.service';
 import { CatalogosService } from '../../../service/catalogos/catalogos.service';
-import {Http} from '@angular/http';
-import {MatTableDataSource} from '@angular/material';
+
+import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { window } from 'rxjs-compat/operator/window';
 

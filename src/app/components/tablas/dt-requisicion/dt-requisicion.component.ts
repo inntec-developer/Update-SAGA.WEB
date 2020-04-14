@@ -1,21 +1,21 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-
 import { DatePipe } from '@angular/common';
+// tslint:disable-next-line: max-line-length
 import { DialogCancelRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-cancel-requi/dialog-cancel-requi.component';
-import { DialogDeleteRequiComponent } from '../../../routes/vtas/requisiciones/components/dialog-delete-requi/dialog-delete-requi.component';
+// tslint:disable-next-line: max-line-length
 import { DlgCubiertasComponent } from './../../dlg-cubiertas/dlg-cubiertas.component';
 import { DlgTransferComponent } from './../../../routes/vtas/requisiciones/components/dlg-transfer/dlg-transfer.component';
 import { ExcelService } from './../../../service/ExcelService/excel.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { PostulateService } from '../../../service/SeguimientoVacante/postulate.service';
 import { RequisicionesService } from '../../../service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SettingsService } from '../../../core/settings/settings.service';
 import { ComentariosService } from '../../../service/Comentarios/comentarios.service';
-import { flattenStyles } from '@angular/platform-browser/src/dom/dom_renderer';
-
+import { ComentarioVacanteComponent } from '../../comentario-vacante/comentario-vacante.component';
+const Swal = require('sweetalert2');
 declare var $: any;
 
 @Component({
@@ -25,8 +25,8 @@ declare var $: any;
   providers: [RequisicionesService, PostulateService, DatePipe]
 })
 
-export class DtRequisicionComponent implements OnInit, AfterViewInit {
-  @Input('folio') folio;
+export class DtRequisicionComponent implements OnInit {
+  @Input('folio') folio = '';
   public reporteCandidatos = false;
 
   /*
@@ -46,7 +46,7 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
   compact = false;
   invertX = false;
   invertY = false;
-  shown = 'hover';
+  shown = 'shown';
 
   // Variables Globales
   public dataSource: Array<any> = [];
@@ -156,26 +156,27 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
     private service: RequisicionesService,
     private postulacionservice: PostulateService,
     private dialog: MatDialog,
+    private dlgComent: MatDialog,
     private _Router: Router,
     private spinner: NgxSpinnerService,
     private toasterService: ToasterService,
     private excelService: ExcelService,
     private pipe: DatePipe,
     private settings: SettingsService,
-    private _ComentariosService: ComentariosService
-
-  ) { }
+    private _ComentariosService: ComentariosService,
+    private activateRoute: ActivatedRoute
+  ) {
+    this.activateRoute.params.subscribe(params => {
+      if (params['folio'] != null) {
+        this.folio = params['folio'];
+      }
+    });
+  }
 
   ngOnInit(): void {
     /** spinner starts on init */
     this.spinner.show();
     this.getRequisiciones();
-
-  }
-
-  ngAfterViewInit() {
-    // (<HTMLInputElement>document.getElementById('folio')).value = this.folio;
-    // this.onChangeTable(this.config);
 
   }
 
@@ -202,13 +203,13 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
               daux.setDate(daux.getDate() + 1);
             }
             r.diasTrans = diasTrans;
-            if (r.estatusId === 4 || r.estatusId === 43) {
-              r.coordinador = r.reclutadores;
-              r.reclutadores = 'SIN ASIGNAR';
-            }
+            // if (r.estatusId === 4 || r.estatusId === 43) {
+            //   r.coordinador = r.reclutadores;
+            //   r.reclutadores = 'SIN ASIGNAR';
+            // }
           }
         });
-        if ( this.folio !==  '') {
+        if (this.folio !== '') {
           (<HTMLInputElement>document.getElementById('folio')).value = this.folio;
 
           const aux = this.dataSource.filter(x => x.folio.toString() === this.folio);
@@ -270,9 +271,9 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
     } else if (estatusId < 34 && estatusId !== 8 && this.element.enProceso > 0 && this.element.contratados === 0) {
       this.gbc = true;
       this.cubierta = false;
-      this.cubiertas.push({ id: 37, descripcion: 'Cubierta por el cliente', puro: this.puro},
-        { id: 47, descripcion: 'Promoción interna', puro: this.puro},
-        { id: 48, descripcion: 'Operaciones', puro: this.puro});
+      this.cubiertas.push({ id: 37, descripcion: 'Cubierta por el cliente', puro: this.puro },
+        { id: 47, descripcion: 'Promoción interna', puro: this.puro },
+        { id: 48, descripcion: 'Operaciones', puro: this.puro });
       this.cc = false; // cubierta por el cliente
       this.crm = true; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
@@ -284,9 +285,9 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
       this.gbc = true;
       this.cubierta = false;
       this.cc = false; // cubierta por el cliente
-      this.cubiertas.push({ id: 37, descripcion: 'Cubierta por el cliente', puro: this.puro},
-        { id: 47, descripcion: 'Promoción interna', puro: this.puro},
-        { id: 48, descripcion: 'Operaciones', puro: this.puro});
+      this.cubiertas.push({ id: 37, descripcion: 'Cubierta por el cliente', puro: this.puro },
+        { id: 47, descripcion: 'Promoción interna', puro: this.puro },
+        { id: 48, descripcion: 'Operaciones', puro: this.puro });
 
       this.crm = true; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
@@ -297,7 +298,7 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
       this.gbc = true; // garantía busqueda candidato
       this.cubierta = false;
       this.cubiertas.push({ id: 34, descripcion: 'Cubierta', puro: this.puro },
-      { id: 36, descripcion: 'Cubierta por medios', puro: this.puro });
+        { id: 36, descripcion: 'Cubierta por medios', puro: this.puro });
 
       this.cc = true; // cubierta por el cliente
       this.crm = false; // cubierta reclutamiento medios
@@ -323,9 +324,9 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
       this.gbc = true;
       this.cubierta = false;
       this.cc = false; // cubierta por el cliente
-      this.cubiertas.push({ id: 37, descripcion: 'Cubierta por el cliente', puro: this.puro},
-        { id: 47, descripcion: 'Promoción interna', puro: this.puro},
-        { id: 48, descripcion: 'Operaciones', puro: this.puro});
+      this.cubiertas.push({ id: 37, descripcion: 'Cubierta por el cliente', puro: this.puro },
+        { id: 47, descripcion: 'Promoción interna', puro: this.puro },
+        { id: 48, descripcion: 'Operaciones', puro: this.puro });
       this.crm = true; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
       this.cancelar = false;
@@ -357,7 +358,7 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
       this.gbc = true; // garantía busqueda candidato
       this.cubierta = false;
       this.cubiertas.push({ id: 34, descripcion: 'Cubierta', puro: this.puro },
-      { id: 36, descripcion: 'Cubierta por medios', puro: this.puro });
+        { id: 36, descripcion: 'Cubierta por medios', puro: this.puro });
       this.cc = true; // cubierta por el cliente
       this.crm = false; // cubierta reclutamiento medios
       this.cp = true; // cubierta parcialmente
@@ -404,7 +405,7 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
 
   public changePage(page: any, data: Array<any> = this.dataSource): Array<any> {
     const start = (page.page - 1) * page.itemsPerPage;
-    let end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
+    const end = page.itemsPerPage > -1 ? (start + page.itemsPerPage) : data.length;
     return data.slice(start, end);
   }
 
@@ -455,12 +456,8 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
     this.rows = this.dataSource;
     const filteredData = this.changeFilter(this.rows, this.config);
     this.rows = page && config.paging ? this.changePage(page, filteredData) : filteredData;
-    this.registros = this.rows.length;
     this.length = filteredData.length;
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 700);
-
+    this.spinner.hide();
   }
 
   public onCellClick(data: any): any {
@@ -484,7 +481,7 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
       this.coment = true;
     }
 
-    if (this.rowAux.length == 0) {
+    if (this.rowAux.length === 0) {
       this.rowAux = data;
     } else if (data.selected && this.rowAux !== []) {
       const aux = data;
@@ -543,12 +540,21 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
     this.element = [];
   }
 
+  crearRequi() {
+    this._Router.navigate(['/ventas/crearRequisicion/',
+      false
+    ], { skipLocationChange: true }
+    );
+  }
+
   showRequi() {
     this._Router.navigate(['/ventas/visualizarRequisicion/',
       this.element.id,
       this.element.folio,
       this.Vacante,
-      this.element.tipoReclutamientoId], { skipLocationChange: true }
+      this.element.tipoReclutamientoId,
+      0
+    ], { skipLocationChange: true }
     );
   }
 
@@ -564,9 +570,8 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
   updataStatus(estatusId, estatus) {
     const datos = { estatusId: estatusId, requisicionId: this.element.id };
     const emails = [];
+    const idx = this.rows.findIndex(x => x.id === this.element.id);
     if (estatusId === 8) {
-      var idx = this.rows.findIndex(x => x.id == this.element.id);
-
       this.rows[idx]['enProcesoN'].forEach(element => {
         emails.push({
           requisicionId: this.RequisicionId,
@@ -650,20 +655,103 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
     }
 
   }
+  openDialogComentarios() {
+    const motivoId = 7;
 
+    const dlgComent = this.dlgComent.open(ComentarioVacanteComponent, {
+      width: '85%',
+      height: 'auto',
+      data: {id: this.element.id,
+        vBtra: this.element.vBtra,
+        folio: this.element.folio,
+        motivoId: motivoId}
+    });
+    dlgComent.afterClosed().subscribe(result => {
+      // if (result === 200) {
+      //   this.popToast('success', 'Comentarios', 'La requisición se canceló exitosamente, podrás consultarla en el histórico');
+      // }
+    });
+  }
   openDialogDelete() {
-    const dialogDlt = this.dialog.open(DialogDeleteRequiComponent, {
-      data: this.element
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger mr-2'
+      },
+      buttonsStyling: false
     });
 
-    dialogDlt.afterClosed().subscribe(result => {
-      if (result == 200) {
-        this.refreshTable();
-        if (this.element.tipoReclutamientoId === 1) {
-          this.SendEmail();
-        }
+    const html = '<h6 class="text-warning"><strong>SE ELIMINARÁ EL FOLIO <span class="text-success">'
+    + this.element.folio + '</span></strong></h6>' +
+    '<p><span class="text-muted">CLIENTE</span><br>' + this.element.cliente.toUpperCase() + '</p>' +
+    '<p><span class="text-muted">PUESTO</span><br>' + this.element.vBtra.toUpperCase() + '</p>' +
+ '   <p><span class="text-muted">TIPO RECLUTAMIENTO </span><br>' + this.element.tipoReclutamiento.toUpperCase() + '</p>' +
+    '<p><span class="text-muted mr-2">FECHA CREACI&Oacute;N</span><br>' + this.element.fch_Creacion + '</p>';
+    swalWithBootstrapButtons.fire({
+      title: '¿ESTÁS SEGURO?',
+      html: html,
+      showCancelButton: true,
+      confirmButtonText: '¡SI, ELIMINAR!',
+      cancelButtonText: '¡NO, CANCELAR!',
+      reverseButtons: true,
+      type: 'error',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire({
+          title: 'ELIMINANDO FOLIO ...',
+          text: 'El proceso puede durar varios segundos por favor espere',
+          type: 'warning',
+          allowEscapeKey: false,
+          allowEnterKey: false,
+          onOpen: () => {
+            Swal.showLoading();
+            const infoDeleteRequi = {
+              Id: this.element.id,
+              UsuarioMod: this.settings.user['usuario']
+            };
+            this.service.deleteRequisicion(infoDeleteRequi)
+            .subscribe(data => {
+              if (data === 200) {
+                Swal.hideLoading();
+                Swal.close();
+                this.refreshTable();
+                this.popToast('success', 'Requisición', 'El folio ' + this.folio + ' se eliminó correctamente');
+              } else {
+                Swal.hideLoading();
+                this.popToast('danger', 'Requisición', 'Oops!! No se puedo eliminar la requisición ' + this.folio);
+              }
+            });
+          },
+          allowOutsideClick: () => !Swal.isLoading()
+       });
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'CANCELADO',
+          'NO SE REALIZÓ NINGÚN CAMBIO',
+          'error'
+        );
       }
     });
+    // const dialogDlt = this.dialog.open(DialogDeleteRequiComponent, {
+    //   width: '45%',
+    //   height: 'auto',
+    //   data: this.element
+    // });
+
+    // dialogDlt.afterClosed().subscribe(result => {
+    //   if (result === 200) {
+    //     this.refreshTable();
+    //     if (this.element.tipoReclutamientoId === 1) {
+    //       this.SendEmail();
+    //     }
+    //   }
+    // });
   }
 
   openDialogCancel() {
@@ -680,16 +768,14 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
         }
         this.popToast('success', 'Cancelación', 'La requisición se canceló exitosamente, podrás consultarla en el histórico');
       }
-
-
-    })
+    });
   }
   openDialogTransfer() {
     this.element.usuario = 10;
-    this.element.depto = 'Vtas'
-    let dialogCnc = this.dialog.open(DlgTransferComponent, {
-      width: '50%',
-      height: '95%',
+    this.element.depto = 'Vtas';
+    const dialogCnc = this.dialog.open(DlgTransferComponent, {
+      width: '60%',
+      height: '90%',
       data: this.element
     });
     dialogCnc.afterClosed().subscribe(result => {
@@ -697,10 +783,10 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
 
         this.refreshTable();
       }
-    })
+    });
   }
   openDialogCubrir() {
-    let dialogCnc = this.dialog.open(DlgCubiertasComponent, {
+    const dialogCnc = this.dialog.open(DlgCubiertasComponent, {
       width: '35%',
       height: 'auto',
       data: this.cubiertas,
@@ -709,7 +795,7 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
     dialogCnc.afterClosed().subscribe(result => {
       if (result !== 0) {
         this.updataStatus(result.id, result.descripcion);
-        if ( this.puro && result.ajustes !== '') {
+        if (this.puro && result.ajustes !== '') {
           this.AddComentarios(result.ajustes);
         }
 
@@ -724,12 +810,12 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
 
   AddComentarios(ajustes: string) {
     const comment = {
-           Comentario: ajustes,
-           RequisicionId: this.RequisicionId,
-           UsuarioAlta: this.settings.user['usuario'],
-           reclutadorId: this.settings.user['id'],
-           MotivoId: 19,
-           EstatusId: 0
+      Comentario: ajustes,
+      RequisicionId: this.RequisicionId,
+      UsuarioAlta: this.settings.user['usuario'],
+      reclutadorId: this.settings.user['id'],
+      MotivoId: 19,
+      EstatusId: 0
     };
 
     this._ComentariosService.addComentarioVacante(comment).subscribe(data => {
@@ -737,18 +823,6 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
       this.refreshTable();
     });
   }
-
-  // openDialogReActivar() {
-  //   let dialogCnc = this.dialog.open(DialogActivarRequiComponent, {
-  //     width: '25%',
-  //     height: '100%',
-  //     data: this.element
-  //   });
-  //   var window: Window
-  //   dialogCnc.afterClosed().subscribe(result => {
-  //     this.refreshTable();
-  //   });
-  // }
 
   SendEmail() {
     this.service.SendEmailRequiPuro(this.RequisicionId).subscribe(email => {
@@ -789,7 +863,7 @@ export class DtRequisicionComponent implements OnInit, AfterViewInit {
         const c = this.pipe.transform(new Date(row.fch_Creacion), 'dd/MM/yyyy');
         // var e = this.pipe.transform(new Date(row.fch_Modificacion), 'dd/MM/yyyy');
 
-        if (row.estatusId == 4) {
+        if (row.estatusId === 4) {
           coordinador = reclutador;
           reclutador = 'SIN ASIGNAR';
 

@@ -1,44 +1,43 @@
-<div class="card box">
-  <div class="card-body mat-elevation-z8">
-    <div class="d-flex justify-content-between">
-      <label class="text-info"><strong>Posiciones Activas</strong></label>
-      <em class="icon-refresh em- text-success" (click)="updateChart()"></em>
+<div class="card">
+  <div class="card-body mat-elevation-z8 text-uppercase">
+    <div class="d-flex justify-content-between align-items-center p-1 bg-warning fontRoboto">
+      <span>Posiciones Activas</span>
+      <em class="icon-refresh" (click)="updateChart()"></em>
     </div>
     <br>
     <div id="chart"></div>
     <canvas id="canvasPosicionesActivas"></canvas>
-    <div class="row">
+    <br>
+    <div class="row fontLato mt-2 mb-1">
       <div class="col-lg-6 col-md-6 col-sm-12">
-        <small><span class="float-letf"> Cubiertos: <span
-              class="badge badge-success">{{Cubiertos}}</span></span></small>
+        <small><span class="float-left">Cubiertos<span
+              class="badge badge-success ml-1">{{Cubiertos}}</span></span></small>
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12">
-        <small><span class="float-right"> No Cubiertos: <span
-              class="badge badge-warning">{{NoCubiertos}}</span></span></small>
+        <small><span class="float-right">No Cubiertos<span
+              class="badge badge-warning ml-1">{{NoCubiertos}}</span></span></small>
       </div>
     </div>
     <mat-divider></mat-divider>
-    <br>
-    <small><span class="float-right"> Total Posiciones: <span
-          class="badge badge-info">{{RegistrosT}}</span></span></small>
-
+    <small class="float-right fontLato mt-1">Total Posiciones<span class="badge badge-info ml-1">{{RegistrosT}}</span></small>
   </div>
 </div>
 
 
 <!-- Modal para visualizar vacantes seleccionadas -->
-<div *ngIf="ShowModal" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal #MessageModal="bs-modal" class="modal"
-tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
-<div class="modal-dialog modal-lg reporteMod">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="float-left text-warning"><em class="fa fa-file-text-o mr-2"></em>Informaci&oacute;n de Vacantes {{EstadoVacante}} </h4>
-      <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="ShowModal=false"><i
-          class="fa fa-times"></i></button>
-    </div>
-    <div class="modal-body">
-      <app-dt-vacantes-grafica-pa [EstadoVacante]="EstadoVacante"></app-dt-vacantes-grafica-pa>
+<div *ngIf="ShowModal" [config]="{ show: true, ignoreBackdropClick: true, keyboard: false }" bsModal
+  #MessageModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+  <div class="modal-dialog modal-lg reporteMod">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="float-left text-warning"><em class="fa fa-file-text-o mr-2"></em>Informaci&oacute;n de Vacantes
+          {{EstadoVacante}} </h4>
+        <button type="button" class="btn btn-xs btn-danger btn-circle float-right" (click)="ShowModal=false"><i
+            class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <app-dt-vacantes-grafica-pa [EstadoVacante]="EstadoVacante"></app-dt-vacantes-grafica-pa>
+      </div>
     </div>
   </div>
-</div>
 </div>

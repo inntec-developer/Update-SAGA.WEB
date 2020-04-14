@@ -1,16 +1,28 @@
-<div class="card-body" *ngIf="!CreateRequi">
-  <div class="row">
-    <div class="col-md-12">
+<div *ngIf="!CreateRequi">
       <app-dt-horarios [Horarios]="requisicion?.horarios" [Requi]="false" [EstatusRequi]="EstatusRequi">
       </app-dt-horarios>
-    </div>
-  </div>
 </div>
-
-<div class="card-body">
-  <div class="row">
+<div class="card card-body">
+    <div *ngIf="loading" class="d-flex align-items-center justify-content-center">
+        <div class="ball-spin-fade-loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+      </div>
+  <div class="d-flex justify-content-between align-items-center p-1 bg-info-light mt-2">
+    <span>INFORMACI&Oacute;N PRINCIPAL</span>
+    <em *ngIf="principal" class="fa fa-caret-up fa-2x" aria-hidden="true" (click)="principal=false"></em>
+    <em *ngIf="!principal" class="fa fa-caret-down fa-2x" aria-hidden="true" (click)="principal=true"></em>
+  </div>
+  <div *ngIf="principal" class="row mt-2">
     <div class="col-md-3 col-sm-12 col-xs-12">
-      <h5 class="card-title"><strong class="text-info">Datos del cliente</strong></h5>
+      <h5 class="text-warning">DATOS DEL CLIENTE</h5>
       <mat-divider></mat-divider>
       <p>
         <strong>Nombre Comercial: </strong>
@@ -34,7 +46,7 @@
       </p>
     </div>
     <div class="col-md-3 col-sm-12 col-xs-12">
-      <h5 class="card-title"><strong class="text-info">Reclutamiento</strong></h5>
+      <h5 class="text-warning">RECLUTAMIENTO</h5>
       <mat-divider></mat-divider>
       <p>
         <strong>Tipo: </strong>
@@ -44,7 +56,7 @@
         <strong>Clase: </strong>
         <label class="card-text"> {{requisicion?.claseReclutamiento | uppercase}}</label>
       </p>
-      <h5 class="card-title">Contrato</h5>
+      <h5 class="text-warning">CONTRATO</h5>
       <mat-divider></mat-divider>
       <p>
         <strong>Tipo: </strong>
@@ -56,7 +68,7 @@
       </p>
     </div>
     <div class="col-md-3 col-sm-12 col-xs-12">
-      <h5 class="card-title"><strong class="text-info">Puesto a Reclutar</strong></h5>
+      <h5 class="text-warning">PUESTO A RECLUTAR</h5>
       <mat-divider></mat-divider>
       <p>
         <strong>Nombre del Perfil: </strong>
@@ -80,11 +92,11 @@
       </p>
     </div>
     <div class="col-md-3 col-sm-12 col-xs-12">
-      <h5 class="card-title"><strong class="text-info">Sueldos</strong></h5>
+      <h5 class="text-warning">SUELDOS</h5>
       <mat-divider></mat-divider>
       <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-6">
-          <h5 class="text-warning">M&iacute;nimo</h5>
+          <h5 class="text-warning">M&Iacute;IMO</h5>
           <p>
             <strong>Mensual: </strong>
             <label class="card-text"> {{requisicion?.sueldoMinimo | moneda: '$'}}</label>
@@ -99,7 +111,7 @@
           </p>
         </div>
         <div class="col-md-6 col-sm-6 col-xs-6">
-          <h5 class="text-warning">M&aacute;ximo</h5>
+          <h5 class="text-warning">M&Aacute;XIMO</h5>
           <p>
             <strong>Mensual: </strong>
             <label class="card-text"> {{requisicion?.sueldoMaximo | moneda: '$'}}</label>
@@ -118,11 +130,15 @@
     </div>
   </div>
 </div>
-
-<div class="card-body">
-  <div class="row">
+<div class="card card-body">
+  <div class="d-flex justify-content-between align-items-center p-1 bg-info-light mt-2 mb-1">
+    <span>EXPERIENCIA / APTITUDES</span>
+    <em *ngIf="estudios" class="fa fa-caret-up fa-2x" aria-hidden="true" (click)="estudios=false"></em>
+    <em *ngIf="!estudios" class="fa fa-caret-down fa-2x" aria-hidden="true" (click)="estudios=true"></em>
+  </div>
+  <div *ngIf="estudios" class="row mt-2">
     <div class="col-md-3 col-sm-12 col-xs-12">
-      <h5 class="card-title"><strong class="text-info">Estudios / Escolaridades</strong></h5>
+      <h5 class="text-warning">ESTUDIOS/ESCOLARIDADES</h5>
       <mat-divider></mat-divider>
       <ol>
         <li *ngFor="let x of requisicion?.escolaridades">
@@ -131,7 +147,7 @@
       </ol>
     </div>
     <div class="col-md-3 col-sm-12 col-xs-12">
-      <h5 class="card-title"><strong class="text-info">Aptitudes</strong></h5>
+      <h5 class="text-warning">APTITUDES</h5>
       <mat-divider></mat-divider>
       <ol>
         <li *ngFor="let x of requisicion?.aptitudes">
@@ -140,12 +156,12 @@
       </ol>
     </div>
     <div class="col-md-3 col-sm-12 col-xs-12">
-      <h5 class="card-title"><strong class="text-info">Experiencia</strong></h5>
+      <h5 class="text-warning">EXPERIENCIA</h5>
       <mat-divider></mat-divider>
       <label class="card-text">{{requisicion?.experiencia | uppercase}}</label>
     </div>
     <div class="col-md-3 col-sm-12 col-xs-12">
-      <h5 class="card-title"><strong class="text-info">Informaci&oacute;n de Pagos</strong></h5>
+      <h5 class="text-warning">INFORMACI&Oacute;N DE PAGOS</h5>
       <mat-divider></mat-divider>
       <p>
         <strong>D&iacute;as Corte: </strong>
@@ -170,45 +186,62 @@
     </div>
   </div>
 </div>
-<div class="card-body">
-  <div class="row">
+<div class="card card-body">
+    <div class="d-flex justify-content-between align-items-center p-1 bg-info-light">
+        <span>DIRECCI&Oacute;N</span>
+        <em *ngIf="directorio" class="fa fa-caret-up fa-2x" aria-hidden="true" (click)="directorio=false"></em>
+          <em *ngIf="!directorio" class="fa fa-caret-down fa-2x" aria-hidden="true" (click)="directorio=true"></em>
+      </div>
+  <div *ngIf="directorio">
+  <div class="row mt-2">
     <div class="col-md-12">
       <!-- DIRECCIONES -->
       <app-dt-direcion-requi [DireccionId]="requisicion?.direccionId"></app-dt-direcion-requi>
     </div>
   </div>
-  <section class="Mps">
-    <div class="row">
-      <div class="col-md-12">
-        <app-maps-address [Direccion]="requisicion?.direccion"></app-maps-address>
-      </div>
-    </div>
-  </section>
-  <div class="row">
-    <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+  <div class="d-flex justify-content-center mt-2">
+    <app-maps-address [Direccion]="requisicion?.direccion"></app-maps-address>
+  </div>
+  <hr>
+  <div class="row mt-2">
+    <div class="col">
       <!-- TELEFONOS -->
       <app-dt-telefonos [Telefonos]="requisicion?.cliente?.telefonos"></app-dt-telefonos>
     </div>
-    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
-      <!-- TELEFONOS -->
+  </div>
+  <hr>
+  <div class="row mt-2">
+    <div class="col">
+      <!-- RUTAS -->
       <app-dt-rutas-camion-requi [DireccionId]='requisicion?.direccionId' [ShowRequi]="ShowRequi">
       </app-dt-rutas-camion-requi>
     </div>
   </div>
+  <hr>
   <!-- CONTACTOS -->
-  <div class="row">
-    <div class="col-md-10">
+  <div class="row mt-2">
+    <div class="col">
       <app-dt-contactos [Contactos]="requisicion?.cliente?.contactos"></app-dt-contactos>
     </div>
   </div>
-  <div class="row">
+</div>
+</div>
+<div class="card card-body">
+  <div class="row mt-2">
     <div class="col-md-12">
       <!-- BENEFICIOS -->
       <app-dt-beneficios [Beneficios]="requisicion?.beneficios"></app-dt-beneficios>
     </div>
   </div>
-  <!-- ACTIVIDADES OBSERVACIONES PROCESO-->
-  <div class="row">
+</div>
+<!-- ACTIVIDADES OBSERVACIONES PROCESO-->
+<div class="card card-body">
+  <div class="d-flex justify-content-between align-items-center p-1 bg-info-light mt-2">
+    <span>ACTIVIDADES</span>
+    <em *ngIf="actividades" class="fa fa-caret-up fa-2x" aria-hidden="true" (click)="actividades=false"></em>
+    <em *ngIf="!actividades" class="fa fa-caret-down fa-2x" aria-hidden="true" (click)="actividades=true"></em>
+  </div>
+  <div *ngIf="actividades" class="row mt-2">
     <div class="col-md-4">
       <app-actividades [Actividades]="requisicion?.actividades"></app-actividades>
     </div>
@@ -219,7 +252,15 @@
       <app-procesos [Proceso]="requisicion?.procesos"></app-procesos>
     </div>
   </div>
-  <div class="row">
+</div>
+<div class="card card-body">
+  <div class="d-flex justify-content-between align-items-center p-1 bg-info-light mt-2">
+    <span>DOCUMENTOS</span>
+    <em *ngIf="documentos" class="fa fa-caret-up fa-2x" aria-hidden="true" (click)="documentos=false"></em>
+    <em *ngIf="!documentos" class="fa fa-caret-down fa-2x" aria-hidden="true" (click)="documentos=true"></em>
+  </div>
+
+  <div *ngIf="documentos" class="row mt-2">
     <div class="col-md-3">
       <!-- DOCUMENTOS dAMSA -->
       <app-documentos-damsa></app-documentos-damsa>
@@ -237,7 +278,14 @@
       <app-prestaciones-cliente [Prestaciones]="requisicion?.prestacionesCliente"></app-prestaciones-cliente>
     </div>
   </div>
-  <div class="row">
+</div>
+<div class="card card-body">
+  <div class="d-flex justify-content-between align-items-center p-1 bg-info-light mt-2">
+    <span>PSICOMETR&Iacute;AS</span>
+    <em *ngIf="psicometrias" class="fa fa-caret-up fa-2x" aria-hidden="true" (click)="psicometrias=false"></em>
+    <em *ngIf="!psicometrias" class="fa fa-caret-down fa-2x" aria-hidden="true" (click)="psicometrias=true"></em>
+  </div>
+  <div *ngIf="psicometrias" class="row mt-2">
     <div class="col-md-6">
       <!-- PSICOMETRIAS DAMSA -->
       <app-dt-psicometrias-damsa [Psicometrias]="requisicion?.psicometriasDamsa"></app-dt-psicometrias-damsa>
@@ -247,7 +295,14 @@
       <app-dt-psicometrias-cliente [Psicometrias]="requisicion?.psicometriasCliente"></app-dt-psicometrias-cliente>
     </div>
   </div>
-  <div class="row">
+</div>
+<div class="card card-body">
+  <div class="d-flex justify-content-between align-items-center p-1 bg-info-light mt-2">
+    <span>COMPETENCIAS</span>
+    <em *ngIf="competencias" class="fa fa-caret-up fa-2x" aria-hidden="true" (click)="competencias=false"></em>
+    <em *ngIf="!competencias" class="fa fa-caret-down fa-2x" aria-hidden="true" (click)="competencias=true"></em>
+  </div>
+  <div *ngIf="competencias" class="row mt-2">
     <div class="col-md-4 col-lg-4">
       <!-- COMPTENCIAS CARDINALES -->
       <app-dt-competencia-cardinal [Competencias]="requisicion?.competenciasCardinal"></app-dt-competencia-cardinal>
@@ -261,14 +316,42 @@
       <app-dt-competencia-gerencial [Competencias]="requisicion?.competenciasGerencial"></app-dt-competencia-gerencial>
     </div>
   </div>
-  <!-- <div class="row">
-    <div class="col-lg-6 col-md-6 col-offset-md-3 col-offset-lg-3 col-sm-12 cols-xs-12"> -->
-      <div class="title-headre-view d-flex justify-content-left">
-        <h4>Arte para redes</h4>
+</div>
+<div *ngIf="(Comentarios || []).length > 0" class="card card-body">
+  <div class="d-flex justify-content-between align-items-center p-1 bg-info-light mt-2">
+    <h5>COMENTARIOS</h5>
+    <em *ngIf="verComent" class="fa fa-caret-up fa-2x" aria-hidden="true" (click)="verComent=false"></em>
+    <em *ngIf="!verComent" class="fa fa-caret-down fa-2x" aria-hidden="true" (click)="verComent=true"></em>
+  </div>
+  <div *ngIf="verComent" class="d-flex justify-content-center mt-2">
+    <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
+      [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+      <div class="container-coments">
+        <div class="list-group-item list-group-item-action" *ngFor="let coment of Comentarios; let rowIndex = index;">
+          <div class="media">
+            <img class="align-self-start circle mx-2 thumb32" [src]="coment.foto" alt="Image"
+              (error)="ErrorImg(coment.clave, coment.comentario)">
+            <div class="media-body">
+              <span class="text-info">{{coment.usuario | uppercase}}</span>
+              <p *ngIf="(coment.motivo || []).length > 0" class="text-success">{{coment.motivo | uppercase}}</p>
+              <p class="text-muted mb-1 text-sm">{{coment.comentario | uppercase}} </p>
+              <small class="text-warning mr-1">{{coment.fchComentario | date:'dd/MM/yyyy'}}</small>
+              <small class="text-warning">{{coment.fchComentario | date:'hh:mm:ss'}}</small>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="d-flex justify-content-center">
-        <img id='my-node' [src]="arte" alt="Random slide" class="float-center img-arte Arte" style="width: 450px; height: 300px;">
-      </div>
-    <!-- </div>
-  </div> -->
+    </ng-scrollbar>
+  </div>
+</div>
+<div class="card card-body">
+  <div class="d-flex justify-content-between align-items-center p-1 bg-info-light mt-2">
+    <h5>ARTE PARA REDES</h5>
+    <em *ngIf="verArte" class="fa fa-caret-up fa-2x" aria-hidden="true" (click)="verArte=false"></em>
+    <em *ngIf="!verArte" class="fa fa-caret-down fa-2x" aria-hidden="true" (click)="verArte=true"></em>
+  </div>
+  <div *ngIf="verArte" class="d-flex justify-content-center">
+    <img id='my-node' [src]="arte" class="float-center img-arte Arte"
+      style="width: 300px; height: 200px;">
+  </div>
 </div>

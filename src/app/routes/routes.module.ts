@@ -1,3 +1,4 @@
+import { PagesModule } from './pages/pages.module';
 import { AuthRolesGuard } from '../auth-guard/auth-roles.guard';
 import { AuthService } from '../service/auth/auth.service';
 import { LogInGuardGuard } from '../auth-guard/log-in-guard.guard';
@@ -14,6 +15,7 @@ import { routes } from './routes';
     imports: [
         SharedModule,
         RouterModule.forRoot(routes),
+        PagesModule
     ],
     declarations: [
    ],

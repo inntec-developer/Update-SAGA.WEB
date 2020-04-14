@@ -1,8 +1,9 @@
-<div class="card card-body">
+
 <form [formGroup]="horario" id="index">
-  <section [hidden]="!Edit">
-    <div class="row">
-      <mat-form-field class="col-2">
+
+  <section  *ngIf="Edit" >
+    <div class="d-flex justify-content-between align-items-center align-items-stretch">  
+    <mat-form-field>
         <input matInput autofocus #NombreCtrl type="text" placeholder="Nombre" formControlName="horario"
           [value]="NombreCtrl.value.toUpperCase()" required="" [matAutocomplete]="horarios" (keyup)="filter($event);">
           <mat-autocomplete #horarios="matAutocomplete" (optionSelected)="selected($event, rowIndex)">
@@ -15,64 +16,64 @@
               </mat-option>
             </mat-autocomplete>
         </mat-form-field>
-
-      <mat-form-field class="col-1">
+      <mat-form-field class="ml-3">
         <mat-select placeholder="De Día " formControlName="deDiaId" (selectionChange)="getDeDia()" required="">
           <mat-option *ngFor="let x of DiasSemana" [value]="x.id">
             {{x.diaSemana | uppercase}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field class="col-1">
+      <mat-form-field class="ml-3">
         <mat-select #t1 placeholder="A Día " formControlName="aDiaId" (selectionChange)="getADia()" required="">
           <mat-option *ngFor="let x of DiasSemana" [value]="x.id">
             {{x.diaSemana | uppercase}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-
-      <mat-form-field class="col-1">
+      <mat-form-field class="ml-3">
         <input matInput #deDiaCtrl type="time" class="text-right" placeholder="De Hora" formControlName="deHora" 
           required="">
         </mat-form-field>
-      <mat-form-field class="col-1">
+      <mat-form-field class="ml-3">
         <input matInput #deHoraCtrl type="time" class="text-right" placeholder="A Hora" formControlName="aHora" (change)="mocos($event)"
           required="">
       </mat-form-field>
-
-      <mat-form-field class="col-1">
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+      <mat-form-field>
         <input matInput #aHoraCtrl type="number" class="text-right" placeholder="No. Vacantes"
           formControlName="vacantes" required="" >
       </mat-form-field>
-
-      <mat-form-field class="col-3">
-        <textarea #message matInput maxlength="500" placeholder="Especificación" rows="3"
+      <mat-form-field class="ml-1 long">
+        <textarea #message matInput maxlength="500" placeholder="Especificación" rows="2"
           [value]="message.value.toUpperCase()" formControlName="especificaciones"></textarea>
         <mat-hint align="start">
           <strong class="text-warning">Ingrese alguna Especificaci&oacute;n</strong>
         </mat-hint>
         <mat-hint align="end"><strong class="text-info">{{message.value.length}} / 500</strong></mat-hint>
       </mat-form-field>
-      <mat-slide-toggle class="text-success col-1" [color]="warn" formControlName="activo">
+  
+      <mat-slide-toggle class="text-success ml-2" [color]="warn" formControlName="activo">
         Activo
       </mat-slide-toggle>
-      <section class="col-1">
+
+      <section>
         <em class="fa fa-close text-danger em-button float-left" (click)="Remove()"></em>
         <em class="fa fa-check text-success em-button float-left" (click)="Save()" *ngIf="horario.valid"></em>
       </section>
     </div>
   </section>
-  <div [hidden]="Edit" class="col-12">
+  <div *ngIf="nombre" class="text-uppercase">
     <strong class="text-primary">{{index + 1}} - <i class="fa fa-chevron-right fa-x1" aria-hidden="true"></i></strong>
     <strong *ngIf="activo" class="text-success"> ACTIVO - </strong>
     <strong *ngIf="!activo" class="text-danger"> INACTIVO - </strong>
-    <strong class="text-primary">Nombre: </strong> <label>{{nombre | uppercase}} </label> -
-    <strong class="text-primary">De D&iacute;a: </strong><label>{{deDia}}</label> -
-    <strong class="text-primary">A D&iacute;a: </strong><label>{{aDia}}</label> -
-    <strong class="text-primary">De Hora: </strong><label>{{deHora | date:'shortTime'}}</label> -
-    <strong class="text-primary">A Hora: </strong><label>{{aHora | date:'shortTime'}}</label> -
-    <strong class="text-primary">Vacantes: </strong><label>{{vacantes}}</label> -
-    <strong class="text-primary">Especificaciones: </strong><label>{{especificaciones | uppercase}}</label>
+    <span class="text-primary">Nombre: </span> <label>{{nombre | uppercase}} </label> -
+    <span class="text-primary">De D&iacute;a: </span><label>{{deDia}}</label> -
+    <span class="text-primary">A D&iacute;a: </span><label>{{aDia}}</label> -
+    <span class="text-primary">De Hora: </span><label>{{deHora | date:'shortTime'}}</label> -
+    <span class="text-primary">A Hora: </span><label>{{aHora | date:'shortTime'}}</label> -
+    <span class="text-primary">Vacantes: </span><label>{{vacantes}}</label> -
+    <span class="text-primary">Especificaciones: </span><label>{{especificaciones | uppercase}}</label>
     <em class="fa fa-pencil text-info" (click)="OnEdit(); Edit = true"></em>
     <em class="fa fa-close text-danger em-button" (click)="Remove()"></em>
   </div>
@@ -80,4 +81,4 @@
     <strong>{{MsgAlert | uppercase}}</strong>
   </alert>
 </form>
-</div>
+

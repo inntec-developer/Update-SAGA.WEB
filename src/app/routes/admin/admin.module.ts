@@ -1,3 +1,7 @@
+import { ReportesService } from './../../service/Reporte/reportes.service';
+import { CatalogosService } from './../../service/catalogos/catalogos.service';
+import { AdminServiceService } from './../../service/AdminServicios/admin-service.service';
+import { FileManagerComponent } from './../../components/file-manager/file-manager.component';
 import { EditorArteRequisicionesComponent } from './../../components/editor-arte-requisiciones/editor-arte-requisiciones.component';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -15,28 +19,41 @@ import { RolGrupoComponent } from './rol-grupo/rol-grupo.component';
 import { RollsStructComponent } from './rolls-struct/rolls-struct.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ToolsModule } from '../../tools/tools.module';
-import { UploadImgsComponent } from './upload-imgs/upload-imgs.component';
 import { AdminPrincipalComponent } from './admin-principal/admin-principal.component';
+import { CapturaPersonalComponent } from './captura-personal/captura-personal.component';
+import { CurrencyPipe, DatePipe } from '@angular/common';
+import { ExpedienteContratadosComponent } from './expediente-contratados/expediente-contratados.component';
+import { PrincipalIngresosComponent } from './principal-ingresos/principal-ingresos.component';
+import { GenerarGafeteComponent } from './generar-gafete/generar-gafete.component';
+import { GenerarContratoComponent } from './generar-contrato/generar-contrato.component';
 
 const routes: Routes = [
-    { path: 'roles', component: AdminPrincipalComponent, data: {'componente':'Roles'} },
-    { path: 'agregar', component: AddPersonaComponent, data: {'componente':'Usuarios'} },
-    { path: 'grupo', component: AddadminComponent, data: {'componente':'Usuarios a grupos'} },
-    { path: 'grupoAdd', component: AddGrupoComponent, data: {'componente':'Grupos'} },
-    { path: 'rol', component: RolGrupoComponent, data: {'componente':'Grupos a roles'} },
-    { path: 'privilegios', component: RollsStructComponent, data: {'componente':'Privilegios'}},
-    { path: 'filesContratados', component: FilesContratadosComponent},
-    {path: 'jobPause', component:JobRequiPauseComponent},
-    {path: 'editorArte', component:EditorArteRequisicionesComponent}
+    { path: 'roles', component: AdminPrincipalComponent, data: {'componente': 'Roles'} },
+    { path: 'agregar', component: AddPersonaComponent, data: {'componente': 'Usuarios'} },
+    { path: 'grupo', component: AddadminComponent, data: {'componente': 'Usuarios a grupos'} },
+    { path: 'grupoAdd', component: AddGrupoComponent, data: {'componente': 'Grupos'} },
+    { path: 'rol', component: RolGrupoComponent, data: {'componente': 'Grupos a roles'} },
+    { path: 'privilegios', component: RollsStructComponent, data: {'componente': 'Privilegios'}},
+    { path: 'filesContratados',
+      children: [
+        {path: '', component: FilesContratadosComponent},
+        {path: ':ruta', component: FilesContratadosComponent}
+      ] },
+    { path: 'ingresos', component: PrincipalIngresosComponent},
+    { path: 'generarGafetes', component: GenerarGafeteComponent},
+    { path: 'generarContrato', component: GenerarContratoComponent},
+    { path: 'fileManager/:candidatoId/:ruta/:nombre/:reclutador/:folio/:vbtra/:foto', component: ExpedienteContratadosComponent},
+    { path: 'capturaPersonal/:candidatoId/:folio/:vbtra', component: CapturaPersonalComponent},
+    {path: 'jobPause', component: JobRequiPauseComponent},
+    {path: 'editorArte', component: EditorArteRequisicionesComponent}
 ];
-
 
 @NgModule({
     imports: [
         SharedModule,
         ToolsModule,
         RouterModule.forChild(routes),
-        ComponentsModule,
+        ComponentsModule
       ],
     declarations:
     [
@@ -45,19 +62,22 @@ const routes: Routes = [
       AddGrupoComponent,
       AddRolesComponent,
       RolGrupoComponent,
-      UploadImgsComponent,
       RollsStructComponent,
       GridRolesComponent ,
-      UploadImgsComponent,
       FilesContratadosComponent,
       JobRequiPauseComponent,
       PopupModalComponent,
-      AdminPrincipalComponent
+      AdminPrincipalComponent,
+      CapturaPersonalComponent,
+      ExpedienteContratadosComponent,
+      PrincipalIngresosComponent,
+      GenerarGafeteComponent,
+      GenerarContratoComponent
     ],
     exports: [
         RouterModule
     ],
-    providers: []
+    providers: [AdminServiceService, CatalogosService, CurrencyPipe, ReportesService, DatePipe]
 })
 
 export class AdminModule {

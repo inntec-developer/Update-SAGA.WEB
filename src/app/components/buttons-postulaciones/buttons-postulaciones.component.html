@@ -1,34 +1,53 @@
-<div class="dt-container mat-elevation-z8">
+<div class="content-heading">
+  <span class="text-muted">SEGUIMIENTO VACANTE</span>
+  <ol class="breadcrumb ml-auto">
+    <li class="breadcrumb-item">
+      <a class="text-info" (click)="regresar()">VACANTES RECLUTADOR</a>
+    </li>
+    <li class="breadcrumb-item active">PROCESO CANDIDATOS</li>
+  </ol>
+</div>
+<div class="d-flex justify-content-between align-items-center p-1 bg-info-light">
+<div class="fontRoboto"><button (click)="showRequi();" class="mr-2 btn btn-xs btn-warning mat-elevation-z8" container="body" placement="bottom"
+  tooltip="Visualizar vacante">
+  <i class="fa fa-eye"></i>
+</button>{{data.vBtra | uppercase}}</div>
+<button container="body" placement="bottom" tooltip="Regresar"
+class="btn btn-xs btn-warning mat-elevation-z8" type="button" (click)="regresar()">
+<i class="icon-action-undo"></i>
+</button>
+</div>
+<div class="dt-container mat-elevation-z8 mt-2">
   <div class="table-responsive">
     <table ngClass="{{config.className || ''}}" class="table" style="width: 100%;">
       <thead>
         <tr>
-          <th class="text-center">HORARIO</th>
-          <th class="text-center">No VACANTES</th>
-          <th class="text-center">% CUMPLIMIENTO</th>
-          <th class="text-center">ENTREVISTA RECLUTAMIENTO</th>
-          <th class="text-center">ABANDON&Oacute; PROCESO</th>
-          <th class="text-center">DESCARTADOS</th>
-          <th class="text-center">ENVIADO CLIENTE</th>
-          <th class="text-center">ENTREVISTA CLIENTE</th>
-          <th class="text-center">FINALISTA CLIENTE</th>
-          <th class="text-center">RECHAZADOS</th>
-          <th class="text-center">CUBIERTO</th>
+          <th class="text-center"><small>HORARIO</small></th>
+          <th class="text-center"><small>No VACANTES</small></th>
+          <th class="text-center"><small>% CUMPLIMIENTO</small></th>
+          <th class="text-center"><small>ENTREVISTA RECLUTAMIENTO</small></th>
+          <th class="text-center"><small>ABANDON&Oacute; PROCESO</small></th>
+          <th class="text-center"><small>DESCARTADOS</small></th>
+          <th class="text-center"><small>ENVIADO CLIENTE</small></th>
+          <th class="text-center"><small>ENTREVISTA CLIENTE</small></th>
+          <th class="text-center"><small>FINALISTA CLIENTE</small></th>
+          <th class="text-center"><small>RECHAZADOS</small></th>
+          <th class="text-center"><small>CUBIERTO</small></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let row of conteo">
           <td class="text-center"> {{row.horario | uppercase}}</td>
-          <td class="text-center"><span class="badge badge-pill badge-info">{{row.vacantes}}</span></td>
-          <td class="text-center"><span class="badge badge-pill badge-info">{{row.porcentaje}}</span></td>
-          <td class="text-center"><span class="badge badge-pill badge-info">{{row.enProcesoEnt}}</span></td>
-          <td class="text-center"><span class="badge badge-pill badge-info">{{row.abandono}}</span></td>
-          <td class="text-center"><span class="badge badge-pill badge-info">{{row.descartados}}</span></td>
-          <td class="text-center"><span class="badge badge-pill badge-info">{{row.enProcesoFR}}</span></td>
-          <td class="text-center"><span class="badge badge-pill badge-info">{{row.entCliente}}</span></td>
-          <td class="text-center"><span class="badge badge-pill badge-info">{{row.enProcesoFC}}</span></td>
-          <td class="text-center"><span class="badge badge-pill badge-info">{{row.rechazados}}</span></td>
-          <td class="text-center"><span class="badge badge-pill badge-info">{{row.contratados}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-success">{{row.vacantes}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-success">{{row.porcentaje}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-success">{{row.enProcesoEnt}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-success">{{row.abandono}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-success">{{row.descartados}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-success">{{row.enProcesoFR}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-success">{{row.entCliente}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-success">{{row.enProcesoFC}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-success">{{row.rechazados}}</span></td>
+          <td class="text-center"><span class="badge badge-pill badge-success">{{row.contratados}}</span></td>
         </tr>
       </tbody>
     </table>
@@ -36,175 +55,169 @@
 </div>
 <br />
 <br />
-<div class="dt-container mat-elevation-z8">
-  <div class="dt-header">
-      <button (click)="VerCandidato(element)" class="mr-2 btn btn-xs mat-elevation-z8"
-      [disabled]="element.length == 0" [ngClass]="element.length == 0 ? 'disabled' : 'btn-warning'" container="body"
-      placement="bottom" tooltip="Visualizar">
-      <em class="fa fa-eye"></em>
+
+<div class="card">
+  <div class="card-body mat-elevation-z8">
+    <div class="p-1 bg-light">
+      <!-- OpenEditarComponent(element) -->
+      <button (click)="VerCandidato(element);" class="mr-2 btn btn-xs mat-elevation-z8" [disabled]="element.length == 0"
+        [ngClass]="element.length == 0 ? 'disabled' : 'btn-warning'" container="body" placement="bottom"
+        tooltip="Visualizar">
+        <i class="fa fa-eye"></i>
+      </button>
+      <button [ngClass]="pst ? 'btn btn-xs disabled' : 'btn btn-xs btn-success'" class="mr-2 mat-elevation-z8"
+        [disabled]="pst" type="button" (click)="SetProceso(12, 'Apartado')" placement="bottom" tooltip="Apartar"
+        container="body">
+        <i class="fa fa-thumbs-o-up"></i>
+      </button>
+      <button [ngClass]="liberado ? 'btn btn-xs disabled' : 'btn btn-xs btn-danger'" class="mr-2 mat-elevation-z8"
+        [disabled]="liberado" type="button" (click)="SetProceso(27, 'Liberado')" container="body" placement="bottom"
+        tooltip="Desapartar">
+        <i class="fa fa-thumbs-o-down"></i>
+      </button>
+      <button [disabled]="cr" [ngClass]="cr ? 'btn btn-xs disabled' : 'btn btn-xs btn-warning'" type="button"
+        (click)="SetProceso(17, 'Cita Reclutamiento')" container="body" placement="bottom" class="mr-2 mat-elevation-z8"
+        tooltip="Cita Reclutamiento">
+        <i class="fa fa-address-book"></i>
+      </button>
+      <button [ngClass]="enr ? 'btn btn-xs disabled' : 'btn btn-xs btn-warning'" [disabled]="enr" type="button"
+        (click)="SetProceso(18, 'Entrevista Reclutamiento')" container="body" class="mr-2 mat-elevation-z8"
+        placement="bottom" tooltip="Entrevista Reclutamiento">
+        <i class="fa fa-microphone"></i>
+      </button>
+      <button [disabled]="evt" [ngClass]="evt ? 'btn btn-xs disabled' : 'btn btn-xs btn-green'" type="button"
+        class="mr-2 mat-elevation-z8" (click)="SetProceso(13, 'Evaluaci&oacute;n T&eacute;cnica')" container="body"
+        placement="bottom" tooltip="Evaluaci&oacute;n T&eacute;cnica">
+        <i class="fa fa-search"></i>
+      </button>
+      <button [disabled]="evps" [ngClass]="evps ? 'btn btn-xs disabled' : 'btn btn-xs btn-green'" type="button"
+        class="mr-2 mat-elevation-z8" (click)="SetProceso(14, 'Evaluaci&oacute;n Psicom&eacute;trica')" container="body"
+        placement="bottom" tooltip="Evaluaci&oacute;n Psicom&eacute;trica">
+        <i class="fa fa-users"></i>
+      </button>
+      <button [disabled]="evm" [ngClass]="evm ? 'btn btn-xs disabled' : 'btn btn-xs btn-green'" type="button"
+        class="mr-2 mat-elevation-z8" (click)="SetProceso(15, 'Evaluaci&oacute;n M&eacute;dica')" container="body"
+        placement="bottom" tooltip="Evaluaci&oacute;n M&eacute;dica">
+        <i class="fa fa-user-md"></i>
+      </button>
+      <button [disabled]="fr" [ngClass]="fr ? 'btn btn-xs disabled' : 'btn btn-xs btn-warning'" type="button"
+        class="mr-2 mat-elevation-z8" (click)="SetProceso(21, 'Finalista Reclutamiento')" container="body"
+        placement="bottom" tooltip="Finalista Reclutamiento">
+        <i class="fa fa-user-circle-o"></i>
+      </button>
+      <button [disabled]="enc" [ngClass]="enc ? 'btn btn-xs disabled' : 'btn btn-xs btn-info'" type="button"
+        class="mr-2 mat-elevation-z8" (click)="SetProceso(22, 'Entrevista Cliente')" container="body" placement="bottom"
+        tooltip="Entrevista Cliente">
+        <i class="fa fa-microphone"></i>
+      </button>
+      <button [disabled]="fc" [ngClass]="fc ? 'btn btn-xs disabled' : 'btn btn-xs btn-info'" type="button"
+        class="mr-2 mat-elevation-z8" (click)="SetProceso(23, 'Finalista Cliente')" container="body" placement="bottom"
+        tooltip="Finalista Cliente">
+        <i class="fa fa-user-circle-o"></i>
+      </button>
+      <button [disabled]="contratado" [ngClass]="contratado ? 'btn btn-xs disabled' : 'btn btn-xs btn-success'"
+        class="mr-2 mat-elevation-z8" type="button" (click)="SetProceso(24, 'Cubierto')" container="body"
+        placement="bottom" tooltip="Cubierto">
+        <i class="fa fa-user-plus"></i>
+      </button>
+      <!-- <li><a><em class="vl"></em></a></li>
+                        <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(28)"  container="body" placement="bottom" tooltip="Cancelada">-->
+
+      <button [disabled]="rechazado" [ngClass]="rechazado ? 'btn btn-xs disabled' : 'btn btn-xs btn-danger'"
+        type="button" class="mr-2 mat-elevation-z8" (click)="SetProceso(40, 'Rechazado por Cliente')" container="body"
+        placement="bottom" tooltip="Rechazado por Cliente">
+        <i class="fa fa-user-times"></i>
+      </button>
+      <button [disabled]="nr" [ngClass]="nr ? 'btn btn-xs disabled' : 'btn btn-xs btn-danger'" type="button"
+        class="mat-elevation-z8" (click)="SetProceso(42, 'NR')" container="body" placement="bottom" tooltip="NR">
+        <i class="fa fa-flag"></i>
+      </button>
+      <button class="btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="refresh()"
+      container="body" placement="bottom" tooltip="Actualizar">
+      <i class="icon-refresh"></i>
     </button>
-    <!-- <button (click)="lgModal.show()" class="mr-2 btn btn-xs mat-elevation-z8"
-      [disabled]="element.length == 0" [ngClass]="element.length == 0 ? 'disabled' : 'btn-dark'" container="body"
-      placement="bottom" tooltip="Comentarios">
-      <em class="fa fa-comments-o"></em>
-    </button> -->
-    <em class="vl mr-2"></em>
-        <button [ngClass]="pst ? 'btn btn-xs disabled' : 'btn btn-xs btn-success'" class="mr-2 mat-elevation-z8" [disabled]="pst"
-          type="button" (click)="SetProceso(12, 'Apartado')" placement="bottom" tooltip="Apartar" container="body">
-          <em class="fa fa-thumbs-o-up"></em>
-        </button>
-        <button [ngClass]="liberado ? 'btn btn-xs disabled' : 'btn btn-xs btn-danger'" class="mr-2 mat-elevation-z8" [disabled]="liberado"
-          type="button" (click)="SetProceso(27, 'Liberado')" container="body" placement="bottom" tooltip="Desapartar">
-          <em class="fa fa-thumbs-o-down"></em>
-        </button>
-        <em class="vl mr-2"></em>
-        <button [disabled]="cr" [ngClass]="cr ? 'btn btn-xs disabled' : 'btn btn-xs btn-warning'" type="button" (click)="SetProceso(17, 'Cita Reclutamiento')"
-          container="body" placement="bottom" class="mr-2 mat-elevation-z8" tooltip="Cita Reclutamiento">
-          <em class="fa fa-address-book"></em>
-        </button>
-        <button [ngClass]="enr ? 'btn btn-xs disabled' : 'btn btn-xs btn-warning'" [disabled]="enr" type="button" (click)="SetProceso(18, 'Entrevista Reclutamiento')"
-          container="body" class="mr-2 mat-elevation-z8" placement="bottom" tooltip="Entrevista Reclutamiento">
-          <em class="fa fa-microphone"></em>
-        </button>
-        <em class="vl mr-2"></em>
-        <button [disabled]="evt" [ngClass]="evt ? 'btn btn-xs disabled' : 'btn btn-xs btn-green'" type="button" class="mr-2 mat-elevation-z8"
-          (click)="SetProceso(13, 'Evaluaci&oacute;n T&eacute;cnica')" container="body" placement="bottom" tooltip="Evaluaci&oacute;n T&eacute;cnica">
-          <em class="fa fa-search"></em>
-        </button>
-        <button [disabled]="evps" [ngClass]="evps ? 'btn btn-xs disabled' : 'btn btn-xs btn-green'" type="button" class="mr-2 mat-elevation-z8"
-          (click)="SetProceso(14, 'Evaluaci&oacute;n Psicom&eacute;trica')" container="body" placement="bottom" tooltip="Evaluaci&oacute;n Psicom&eacute;trica">
-          <em class="fa fa-users"></em>
-        </button>
-        <button [disabled]="evm" [ngClass]="evm ? 'btn btn-xs disabled' : 'btn btn-xs btn-green'" type="button" class="mr-2 mat-elevation-z8"
-          (click)="SetProceso(15, 'Evaluaci&oacute;n M&eacute;dica')" container="body" placement="bottom" tooltip="Evaluaci&oacute;n M&eacute;dica">
-          <em class="fa fa-user-md"></em>
-        </button>
-        <em class="vl mr-2"></em>
-        <button [disabled]="fr" [ngClass]="fr ? 'btn btn-xs disabled' : 'btn btn-xs btn-warning'" type="button" class="mr-2 mat-elevation-z8"
-          (click)="SetProceso(21, 'Finalista Reclutamiento')" container="body" placement="bottom" tooltip="Finalista Reclutamiento">
-          <em class="fa fa-user-circle-o"></em>
-        </button>
-        <button [disabled]="enc" [ngClass]="enc ? 'btn btn-xs disabled' : 'btn btn-xs btn-info'" type="button" class="mr-2 mat-elevation-z8"
-          (click)="SetProceso(22, 'Entrevista Cliente')" container="body" placement="bottom" tooltip="Entrevista Cliente">
-          <em class="fa fa-microphone"></em>
-        </button>
-        <button [disabled]="fc" [ngClass]="fc ? 'btn btn-xs disabled' : 'btn btn-xs btn-info'" type="button" class="mr-2 mat-elevation-z8"
-          (click)="SetProceso(23, 'Finalista Cliente')" container="body" placement="bottom" tooltip="Finalista Cliente">
-          <em class="fa fa-user-circle-o"></em>
-        </button>
-        <button [disabled]="contratado" [ngClass]="contratado ? 'btn btn-xs disabled' : 'btn btn-xs btn-success'" class="mr-2 mat-elevation-z8"
-          type="button" (click)="SetProceso(24, 'Cubierto')" container="body" placement="bottom" tooltip="Cubierto">
-          <em class="fa fa-user-plus"></em>
-        </button>
-        <!-- <li><a><em class="vl"></em></a></li>
-                      <li><a><button class="mb-1 btn btn-xs btn-outline-danger"  type="button" (click)="SetProceso(28)"  container="body" placement="bottom" tooltip="Cancelada">-->
-
-        <button [disabled]="rechazado" [ngClass]="rechazado ? 'btn btn-xs disabled' : 'btn btn-xs btn-danger'" type="button"
-          class="mr-2 mat-elevation-z8" (click)="SetProceso(40, 'Rechazado por Cliente')" container="body" placement="bottom" tooltip="Rechazado por Cliente">
-          <em class="fa fa-user-times"></em>
-        </button>
-        <button [disabled]="nr" [ngClass]="nr ? 'btn btn-xs disabled' : 'btn btn-xs btn-danger'" type="button" class="mat-elevation-z8"
-          (click)="SetProceso(42, 'NR')" container="body" placement="bottom" tooltip="NR">
-          <em class="fa fa-flag"></em>
-        </button>
-
-        <button class="btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="refresh()" container="body" placement="bottom"
-          tooltip="Actualizar">
-          <em class="icon-refresh"></em>
-        </button>
-
-        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" class="mr-2 btn btn-xs float-right mat-elevation-z8"
-          [disabled]="!showFilterRow" [ngClass]="(!showFilterRow) ? 'disabled':'btn-info'">
-          <em class="fa fa-eraser"></em>
-        </button>
-
-        <span class="text-muted font-weight-bold float-right text-uppercase mt-1 mr-4 ">Total de Candidatos <span
-          class="badge badge-pill badge-success ml-1">{{dataSource.length}}</span></span>
-    <!-- <br />
-
-    <mat-form-field>
-      <input #filterInput matInput placeholder="Filtro todas las columnas" [ngTableFiltering]="config.filtering"
-        (tableChanged)="onChangeTable(config)">
-    </mat-form-field>
-    <br /> -->
-
-  </div>
-  <div class="card">
-    <div class="card-body">
-      <div class="table-responsive" #tableContainer>
-        <table *ngIf="dataSource.length > 0 else NotCandidatos" id="resultDataTable"
-          ngClass="{{config.className || ''}}" class="table">
-          <thead>
-            <tr>
-              <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
-                {{column.title | uppercase}}
-              </th>
-            </tr>
-            <tr *ngIf="showFilterRow">
-              <td *ngFor="let column of columns">
-                <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
-                  [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
-                  class="form-control form-control-sm"  id="{{column.name}}">
-              </td>
-            </tr>
-          </thead>
-          <tbody>
-
-            <tr (dblclick)="VerCandidato(row)" (click)="onCellClick(row)" *ngFor="let row of rows"
-              [class.selected]="row.selected" placement="bottom"
-              tooltip="click para seleccionar - dblclick para visualizar" container="body">
-              <td class="text-center"><span
-                  *ngIf="row.estatusId != 12 && row.estatusId != 17 && row.estatusId != 27 else sinAsignar">{{row.horario | uppercase}}</span>
-              </td>
-              <ng-template #sinAsignar>
-                <span>SIN ASIGNAR</span>
-              </ng-template>
-              <td class="text-center"> {{row.nombre | uppercase}} {{ row.apellidoPaterno | uppercase }} {{row.apellidoMaterno | uppercase}}</td>
-              <td class="text-center"> {{row.areaExp | uppercase}}</td>
-              <td class="text-center"> {{row.areaInt | uppercase}}</td>
-              <td class="text-center"> {{row.localidad | uppercase}} </td>
-              <td class="text-center"> {{row.sueldoMinimo | moneda: '$'}} </td>
-              <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
-              <td class="text-center"> {{row.curp | uppercase }}</td>
-              <td class="text-center"> {{row.rfc | uppercase }}</td>
-              <td class="text-center"> {{row.nss | uppercase }}</td>
-              <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength"
-                  class='mr-1 badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42"
-                  [class.badge-danger]="row.estatusId == 28">
-                  <span *ngIf="row.estatusId != 28"> {{row.estatus | uppercase }}</span>
-                  <span *ngIf="row.estatusId == 28">POSTULADO</span>
-                </span></td>
-              <ng-template #toLength>
-                <span class='px-1 mr-1 badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42"
-                  [class.badge-danger]="row.estatusId == 28" placement="bottom" tooltip="{{row.estatus | uppercase}}"
-                  container="body">{{row.estatus | slice:0:6 | uppercase }} ... </span>
-              </ng-template>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body"
+        class="mr-2 btn btn-xs float-right mat-elevation-z8" [disabled]="!showFilterRow"
+        [ngClass]="(!showFilterRow) ? 'disabled':'btn-info'">
+        <i class="fa fa-eraser"></i>
+      </button>
+    </div>
+    <div class="d-flex justify-content-end align-items-center bg-warning p-1 mt-2">
+      <span class="text-uppercase">Total de Candidatos <span
+          class="badge badge-info ml-1">{{dataSource.length}}</span></span>
+    
+    </div>
+    <div class="table-responsive" #tableContainer>
+      <table *ngIf="dataSource.length > 0 else NotCandidatos" id="resultDataTable" class="table">
+        <thead>
+          <tr>
+            <th class="text-center" *ngFor="let column of columns" ngClass="{{column.className || ''}}">
+              <small>{{column.title | uppercase}}</small>
+            </th>
+          </tr>
+          <tr *ngIf="showFilterRow">
+            <td *ngFor="let column of columns">
+              <input *ngIf="column.filtering" placeholder="{{column.filtering.placeholder}}"
+                [ngTableFiltering]="column.filtering" (tableChanged)="onChangeTable(config)"
+                class="form-control form-control-sm" id="{{column.name}}">
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr (click)="onCellClick(row)" *ngFor="let row of rows"
+            [class.selected]="row.selected" placement="bottom"
+            tooltip="click para seleccionar" container="body">
+            <td class="text-center"><span
+                *ngIf="row.estatusId != 12 && row.estatusId != 17 && row.estatusId != 27 else sinAsignar">{{row.horario | uppercase}}</span>
+            </td>
+            <ng-template #sinAsignar>
+              <span>SIN ASIGNAR</span>
+            </ng-template>
+            <td class="text-center"> {{row.nombre | uppercase}} {{ row.apellidoPaterno | uppercase }}
+              {{row.apellidoMaterno | uppercase}}</td>
+            <!-- <td class="text-center"> {{row.areaExp | uppercase}}</td>
+            <td class="text-center"> {{row.areaInt | uppercase}}</td> -->
+            <td class="text-center"> {{row.localidad | uppercase}} </td>
+            <td class="text-center"> {{row.sueldoMinimo | moneda: '$'}} </td>
+            <td class="text-center"> {{row.edad | date: 'dd/MM/yyyy'}} </td>
+            <td class="text-center"> {{row.curp | uppercase }}</td>
+            <td class="text-center"> {{row.rfc | uppercase }}</td>
+            <td class="text-center"> {{row.nss | uppercase }}</td>
+            <td class="text-center"><span *ngIf="row.estatus.length <= 10 else toLength"
+                class='badge badge-pill badge-info' [class.badge-warning]="row.estatusId === 42"
+                [class.badge-danger]="row.estatusId == 28">
+                <small *ngIf="row.estatusId != 28"> {{row.estatus | uppercase }}</small>
+                <small *ngIf="row.estatusId == 28">POSTULADO</small>
+              </span></td>
+            <ng-template #toLength>
+              <span class='badge badge-info' [class.badge-warning]="row.estatusId === 42"
+                [class.badge-danger]="row.estatusId == 28" placement="bottom" tooltip="{{row.estatus | uppercase}}"
+                container="body"><small>{{row.estatus | slice:0:6 | uppercase }} ...</small> </span>
+            </ng-template>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-  <div class="text-right">
-    <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length"
-      [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
-      (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
-    </pagination>
-  </div>
-  <!-- <pre *ngIf="config.paging"
-    class="card card-block card-header">P&aacute;gina: {{page}} / {{numPages}}  Total Registros: {{registros}}</pre>
-</div> -->
+</div>
+<div class="float-right">
+  <pagination *ngIf="config.paging" class="pagination pagination-sm" [(ngModel)]="page" [totalItems]="length"
+    [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
+    (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
+  </pagination>
+</div>
+
 <toaster-container toaster-options="{'toaster-id': 2 }" [toasterconfig]="toasterconfig"></toaster-container>
 
 <!-- Modal -->
-<div *ngIf="isModalShow" [config]="{ show: true, ignoreBackdropClick: false }" bsModal
-  #MessageModal="bs-modal" class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
+<div *ngIf="isModalShow" [config]="{ show: true, ignoreBackdropClick: false }" bsModal #MessageModal="bs-modal"
+  class="modal" tabindex="-1" role="document" aria-labelledby="dialog-auto-name">
   <div class="modal-dialog modal-lg">
     <div class="modal-content ">
       <div class="modal-header">
         <h4 class="modal-title float-left text-info">INFORMACI&Oacute;N DE CANDIDATO</h4>
         <button type="button" class="btn btn-xs btn-danger btn-circle float-right mat-elevation-z8"
-        (click)="closeModal(1);MessageModal.hide()"><i class="fa fa-times"></i></button>
+          (click)="closeModal(1);MessageModal.hide()"><i class="fa fa-times"></i></button>
       </div>
       <div class="modal-body">
         <app-info-candidato [IdCandidato]='candidatoId' [VerVacantes]='false' (Estatus)="EstatusModal($event)">
@@ -248,7 +261,7 @@
 
 
 <!--Editar contratados-->
-<div *ngIf="editarContratados" [config]="{ show: true, ignoreBackdropClick: true, backdrop: 'static', keyboard: false }"
+<!-- <div *ngIf="editarContratados" [config]="{ show: true, ignoreBackdropClick: true, backdrop: 'static', keyboard: false }"
   bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -263,7 +276,7 @@
 
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- Modal para dlgLiberar  -->
 <div *ngIf="dlgLiberar" [config]="{show: true, ignoreBackdropClick: true, keyboard: false}" bsModal #modallib="bs-modal"
@@ -287,7 +300,7 @@
   </div>
 </div>
 <!-- Modal para comentarios de la requisicion -->
-<div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
+<!-- <div bsModal #lgModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -304,4 +317,4 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->

@@ -1,30 +1,30 @@
 <div class="card">
   <div class="card-body">
-    <div class="d-flex justify-content-end bg-info-light p-2">
+    <div class="d-flex justify-content-end bg-light p-1">
         <button type="button" [disabled]="rows.length == 0" class="mr-2 btn btn-xs mat-elevation-z8" [ngClass]="rows.length == 0 ? 'disable' : 'btn-warning'"
         (click)="exportAsXLSX()" container="body" placement="bottom" tooltip="Descargar">
         <i class="fa fa-download"></i>
       </button>
       <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros"
       class="mr-2 btn btn-xs btn-info float-right mat-elevation-z8">
-      <em class="fa fa-eraser"></em>
+      <i class="fa fa-eraser"></i>
     </button>
   
       <button class="btn btn-xs btn-success float-right mat-elevation-z8" type="button" (click)="refreshTable()"
         container="body" placement="bottom" tooltip="Actualizar">
-        <em class="icon-refresh"></em>
+        <i class="icon-refresh"></i>
       </button>
      
     </div>
-    <div class="d-flex justify-content-end mt-2">
-        <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total posiciones faltantes
-            <span class="badge badge-pill badge-success ml-1">{{totalPos - totalContratados | numerico}}</span></span>
-      <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total posiciones cubiertas
-          <span class="badge badge-pill badge-success ml-1">{{totalContratados  | numerico}}</span></span>
-    <span class="text-muted font-weight-bold float-right ml-2 mb-3 text-uppercase">Total de posiciones activas
-      <span class="badge badge-pill badge-success ml-1">{{totalPos  | numerico}}</span></span>
-    <span class="text-muted font-weight-bold float-right text-uppercase mb-3 ml-2">Total de Folios <span
-        class="badge badge-pill badge-success ml-1">{{dataSource.length  | numerico}}</span></span>
+    <div class="d-flex justify-content-end align-items-center p-1 bg-warning mt-1">
+        <span class="text-uppercase">Total posiciones faltantes
+            <span class="badge badge-pill badge-info ml-1">{{totalPos - totalContratados | numerico}}</span></span>
+      <span class="text-uppercase ml-2">Total posiciones cubiertas
+          <span class="badge badge-pill badge-info ml-1">{{totalContratados  | numerico}}</span></span>
+    <span class="ml-2 text-uppercase">Total de posiciones activas
+      <span class="badge badge-pill badge-info ml-1">{{totalPos  | numerico}}</span></span>
+    <span class="text-uppercase ml-2">Total de Folios <span
+        class="badge badge-pill badge-info ml-1">{{dataSource.length  | numerico}}</span></span>
 
   </div>
   <table class="table border-top bb mt-1" style="width: 100%;">
@@ -57,16 +57,16 @@
               <td class="text-center"> {{row.vBtra | uppercase}}</td>
               <td class="text-center">{{row.fch_Cumplimiento | date:'dd/MM/yyyy'}}</td>
               <td class="text-center">
-                <span class="mr-1 badge badge-pill badge-info"> {{row.vacantes | numerico}}</span>
+                <span class="mr-1 badge badge-pill badge-success"> {{row.vacantes | numerico}}</span>
               </td>
               <td class="text-center">
                   <span class="mr-1 badge badge-pill badge-info"> {{row.contratados | numerico}}</span>
               </td>
               <td class="text-center">
-                  <span class="mr-1 badge badge-pill badge-info"> {{row.faltantes | numerico}}</span>
+                  <span class="mr-1 badge badge-pill badge-warning"> {{row.faltantes | numerico}}</span>
               </td>
               <td class="text-center">
-                  <span class="mr-1 badge badge-pill badge-info"> {{row.cumplimiento |numerico}} %</span>
+                  <span class="mr-1 badge badge-pill badge-purple"> {{row.cumplimiento |numerico}} %</span>
               </td>
               <td class="text-center">
                 <ng-template #popTemplateCoor>

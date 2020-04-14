@@ -11,12 +11,12 @@ import { ComponentsService } from './../../service/Components/components.service
 })
 export class AsignarRequisicionLiderComponent implements OnInit {
   // Formulario
-  public AsignacionForm : FormGroup;
+  public AsignacionForm: FormGroup;
   // Variables de entrada
   @Input() placeHolder: string;
   @Input() Asignados: any[];
 
-  @Output() Asignacion : EventEmitter<any[]> =  new EventEmitter();
+  @Output() Asignacion: EventEmitter<any[]> =  new EventEmitter();
 
   public items: any[] = [];
   public value: any;
@@ -26,11 +26,12 @@ export class AsignarRequisicionLiderComponent implements OnInit {
   constructor(
     private serviceComponents: ComponentsService
   ) {
-    this.getGrpUserL();
+
     this.AsignacionForm = new FormGroup({
       selectControl: new FormControl({value: '', disable: false})
     });
-    if (! this.Asignados){
+
+    if (this.Asignados) {
       this.AsignacionForm.patchValue({
         selectControl: this.Asignados
       });
@@ -38,25 +39,27 @@ export class AsignarRequisicionLiderComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.getGrpUserL();
     this.AsignacionForm.patchValue({
       selectControl: this.Asignados
     });
   }
 
-  public getAsignados(asg){
+  public getAsignados(asg) {
     this.AsignacionForm.patchValue({
       selectControl: asg
      });
   }
 
-  valueChange(obj){
+  valueChange(obj) {
     this.Asignacion.emit(this.AsignacionForm.get('selectControl').value);
-
   }
 
   getGrpUserL() {
-    this.serviceComponents.getUserGroupL()
-    .subscribe(data =>{
+    const usuarios = ['lider', 'reclutador'];
+    const dept = ['recl'];
+    this.serviceComponents.getUserGroup(usuarios, dept)
+    .subscribe(data => {
       this.items = data;
     });
   }

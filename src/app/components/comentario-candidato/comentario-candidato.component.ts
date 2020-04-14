@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, Input, OnInit, SimpleChanges } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { ApiConection } from '../../service';
 import { ComentariosService } from './../../service/Comentarios/comentarios.service';

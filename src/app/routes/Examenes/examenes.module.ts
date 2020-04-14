@@ -1,3 +1,5 @@
+import { SettingsService } from './../../core/settings/settings.service';
+
 import { RouterModule, Routes } from '@angular/router';
 
 import { AddExamenComponent } from './add-examen/add-examen.component';
@@ -16,11 +18,13 @@ import { AgregarResultMedicosComponent } from './agregar-result-medicos/agregar-
 import { EntrevistasComponent } from './entrevistas/entrevistas.component';
 import { PrincipalExamenesComponent } from './principal-examenes/principal-examenes.component';
 import { VerExamenTecnicoComponent } from './ver-examen-tecnico/ver-examen-tecnico.component';
+import { GenerarEntrevistaComponent } from './generar-entrevista/generar-entrevista.component';
 
 const routes: Routes = [
   { path: 'addexamen', component: AddExamenComponent },
   { path: 'asignar', component: AsignarExamenComponent },
   { path: 'verentrevista', component: VerEntrevistaComponent },
+  { path: 'generarentrevista', component: GenerarEntrevistaComponent },
   { path: 'verexamen', component: VerExamenTecnicoComponent},
   { path: 'revisar', component: RevisarExamenesComponent },
   { path: 'asignarClaves', component: AsignarPsicometricosComponent },
@@ -49,7 +53,8 @@ const routes: Routes = [
     AgregarResultMedicosComponent,
     EntrevistasComponent,
     PrincipalExamenesComponent,
-    VerExamenTecnicoComponent
+    VerExamenTecnicoComponent,
+    GenerarEntrevistaComponent
     // DlgRevisarExamenesComponent
   ],
   exports: [
@@ -57,7 +62,7 @@ const routes: Routes = [
   ],
 
   entryComponents: [VerEntrevistaComponent],
-  providers: [RequisicionesService],
+  providers: [RequisicionesService, SettingsService],
 
 })
 export class ExamenesModule {

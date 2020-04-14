@@ -1,6 +1,6 @@
-<!-- <div class="dt-container mat-elevation-z8"> -->
-<div class="title-headre-view d-flex justify-content-between">
-  <h4>Rutas de Camiones</h4>
+<span class="d-flex justify-content-start align-items-center fontLato text-warning">
+    <i class="fa fa-bus mr-1"></i>RUTAS DE CAMIONES</span>
+<div class="d-flex justify-content-between mt-2">
   <div *ngIf="DireccionId && !ShowRequi">
     <button id="update" class="mb-1 btn btn-xs btn-success margen mat-elevation-z8" (click)="agregarRutasCamion()"
       chkPrivilegiosButtons tooltip="Agregar Ruta" placement="bottom">
@@ -22,7 +22,8 @@
     <table id="tablaHorarios" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
       <thead>
         <tr>
-          <th *ngFor="let column of columns" class="{{column.className || ''}}">{{column.title}}
+          <th *ngFor="let column of columns" class="{{column.className || ''}}">
+            <small>{{column.title | uppercase}}</small>
           </th>
         </tr>
       </thead>
@@ -35,9 +36,9 @@
     </table>
   </div>
   <ng-template #NotResult>
-    <alert type="info">
-      <strong>Oops!</strong> Esta direcci&oacute;n no cuenta con rutas registradas...
-    </alert>
+      <div class="alert alert-primary" role="alert">
+          <strong>¡Oops!</strong> Esta direcci&oacute;n no cuenta con rutas registradas...
+       </div>
   </ng-template>
 </div>
 <div *ngIf="DAMFO290Id">
@@ -45,7 +46,8 @@
     <table id="tablaHorarios" ngClass="{{config.className || ''}}" role="grid" style="width: 100%;">
       <thead>
         <tr>
-          <th *ngFor="let column of columnsD" class="{{column.className || ''}}">{{column.title}}
+          <th *ngFor="let column of columnsD" class="{{column.className || ''}}">
+              <small>{{column.title | uppercase}}</small>
           </th>
         </tr>
       </thead>
@@ -59,9 +61,9 @@
     </table>
   </div>
   <ng-template #NotResult>
-    <alert type="info">
-      <strong>Oops!</strong> Esta direcci&oacute;n no cuenta con rutas registradas...
-    </alert>
+      <div class="alert alert-primary" role="alert">
+          <strong>¡Oops!</strong> Esta direcci&oacute;n no cuenta con rutas registradas...
+       </div>
   </ng-template>
 </div>
 

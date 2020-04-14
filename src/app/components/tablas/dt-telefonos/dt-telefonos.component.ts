@@ -1,4 +1,4 @@
-import { AfterContentChecked, Component, Input, SimpleChanges } from '@angular/core';
+import { AfterContentChecked, Component, Input, SimpleChanges, OnChanges, OnInit } from '@angular/core';
 
 declare var $: any;
 @Component({
@@ -6,45 +6,39 @@ declare var $: any;
   templateUrl: './dt-telefonos.component.html',
   styleUrls: ['./dt-telefonos.component.scss']
 })
-export class DtTelefonosComponent  {
+export class DtTelefonosComponent implements OnInit, OnChanges {
   @Input() Telefonos: any[];
   @Input() Perfil290: any;
-  getPhone : boolean = false;
+  getPhone = false;
   public rows: Array<any> = [];
   rowAux = [];
-  constructor() { }
-
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.Perfil290 = this.Perfil290 || false;
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if(changes.Telefonos && !changes.Telefonos.isFirstChange()){
-      this.cargarTelefonos(this.Telefonos);
-    }
-  }
-
-  cargarTelefonos(data){
-    // if(!this.getPhone){
-      this.rows = data;
-    //   this.getPhone = true;
-    // }
-  }
-
   public columns: Array<any> = [
     {title: 'Dirección', className: 'text-success text-center'},
-    {title: 'Tipo Teléfono', className: 'text-info text-center'},
-    {title: 'Teléfono', className: 'text-info text-center'},
-    {title: 'Extensión', className: 'text-info text-center'},
-    {title: 'Activo', className: 'text-info text-center'},
-    {title: 'Principal', className: 'text-info text-center'}
+    {title: 'Tipo Teléfono', className: 'text-center text-info'},
+    {title: 'Teléfono', className: 'text-center text-info'},
+    {title: 'Extensión', className: 'text-center text-info'},
+    {title: 'Activo', className: 'text-center text-info'},
+    {title: 'Principal', className: 'text-center text-info'}
   ];
 
   public config: any = {
     className: ['table-striped table-bordered mb-0 d-table-fixed']
   };
+  constructor() { }
+
+  ngOnInit(): void {
+    this.Perfil290 = this.Perfil290 || false;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.Telefonos && !changes.Telefonos.isFirstChange()) {
+      this.cargarTelefonos(this.Telefonos);
+    }
+  }
+
+  cargarTelefonos(data) {
+      this.rows = data;
+  }
 
   public onCellClick(data: any): any {
     data.selected ? data.selected = false : data.selected = true;

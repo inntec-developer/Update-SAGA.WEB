@@ -1,17 +1,12 @@
 <div class="content-heading">
-  <div>
-      <h6>Reclutadores de campo</h6>
-      <span class="text-sm d-none d-sm-block">Administraci&oacute;n de reclutadores.</span>
-  </div>
-  <!-- Breadcrumb right aligned-->
+  <span class="text-uppercase">Administraci&oacute;n de reclutadores.</span>
   <ol class="breadcrumb ml-auto">
-      <li class="breadcrumb-item"><a [routerLink]="['/home']" >Inicio</a></li>
-      <li class="breadcrumb-item active">Reclutadores en campo</li>
+      <li class="breadcrumb-item active text-uppercase">Reclutadores de campo</li>
   </ol>
 </div>
 <div class="card">
   <div class="card-body">
-    <div class="row p-2 mb-1 bg-light">
+    <div class="row p-1 bg-light">
       <div class="col">
           <button id='update' chkPrivilegiosButtons [disabled]="rowAux.length == 0 || rowAux.activo == 1" [ngClass]="rowAux.length == 0 || rowAux.activo == 1 ? 'disable' : 'btn-success'" class="btn btn-xs mat-elevation-z8 float-left mr-2" (click)="Actualizar(true)" container="body" placement="bottom"
           tooltip="Activar Usuario">
@@ -33,17 +28,19 @@
         <i class="fa fa-download"></i>
       </button>
 
-        <button type="button" class="btn btn-xs btn-success mat-elevation-z8 float-right mr-2" (click)="refreshTable()" container="body"
+        <button type="button" class="btn btn-xs btn-success mat-elevation-z8 float-right ml-2" (click)="refreshTable()" container="body"
           placement="bottom" tooltip="Actualizar" container="body">
           <i class="icon-refresh"></i>
         </button>
-        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" class="mr-1 btn btn-xs btn-primary mat-elevation-z8 float-right">
+        <button (click)="clearfilters()" container="body" placement="bottom" tooltip="Limpiar Filtros" container="body" class="btn btn-xs btn-primary mat-elevation-z8 float-right">
           <i class="fa fa-eraser"></i>
         </button>
-        <span class="text-muted font-weight-bold float-right text-uppercase mr-4 ">Total de Usuarios
-          <span class="badge badge-pill badge-success">{{reclutadores.length}}</span>
-        </span>
       </div>
+    </div>
+    <div class="d-flex justify-content-end align-items-center p-1 bg-warning mt-2">
+        <span class="text-uppercase">Total de Usuarios
+            <span class="badge badge-info">{{reclutadores.length}}</span>
+          </span>
     </div>
     <table class="table" style="width:100%">
         <thead>
@@ -99,7 +96,7 @@
             <td class="text-center">
               <span container="body" placement="bottom" tooltip="Doble click para editar"
                 (dblclick)="editing[rowIndex + '-nombre'] = true" *ngIf="!editing[rowIndex + '-nombre']">
-                {{p.nombre}}
+                {{p.nombre | uppercase}}
               </span>
               <input class="form-control-sm form-control" autofocus
                 (blur)="updateValue($event, 'nombre', rowIndex, p.entidadId)" *ngIf="editing[rowIndex + '-nombre']"
@@ -109,7 +106,7 @@
               <span container="body" placement="bottom" tooltip="Doble click para editar"
                 (dblclick)="editing[rowIndex + '-apellidoPaterno'] = true"
                 *ngIf="!editing[rowIndex + '-apellidoPaterno']">
-                {{p.apellidoPaterno}}
+                {{p.apellidoPaterno | uppercase}}
               </span>
               <input class="form-control-sm form-control" autofocus
                 (blur)="updateValue($event, 'apellidoPaterno', rowIndex, p.entidadId)"
@@ -119,7 +116,7 @@
               <span container="body" placement="bottom" tooltip="Doble click para editar"
                 (dblclick)="editing[rowIndex + '-apellidoMaterno'] = true"
                 *ngIf="!editing[rowIndex + '-apellidoMaterno']">
-                {{p.apellidoMaterno}}
+                {{p.apellidoMaterno | uppercase}}
               </span>
               <input class="form-control-sm form-control" autofocus
                 (blur)="updateValue($event, 'apellidoMaterno', rowIndex, p.entidadId)"
@@ -128,11 +125,11 @@
             <td class="text-center" *ngIf="p.email.length > 0">
               {{p.email}}
             </td>
-            <td class="text-center">{{p.departamento}}</td>
+            <!-- <td class="text-center">{{p.departamento }}</td> -->
             <td class="text-center">
               <span container="body" placement="bottom" tooltip="Doble click para editar"
                 (dblclick)="editing[rowIndex + '-lider'] = true" *ngIf="!editing[rowIndex + '-lider']">
-                {{p.nombreLider}}
+                {{p.nombreLider | uppercase}}
               </span>
               <select class="form-control-sm form-control"
                 (change)="updateValue($event, 'lider', rowIndex, p.entidadId)" *ngIf="editing[rowIndex + '-lider']">
@@ -143,7 +140,7 @@
             <td class="text-center">
               <span container="body" placement="bottom" tooltip="Doble click para editar"
                 (dblclick)="editing[rowIndex + '-oficina'] = true" *ngIf="!editing[rowIndex + '-oficina']">
-                {{p.oficina}}
+                {{p.oficina | uppercase}}
               </span>
               <select class="form-control-sm form-control"
                 (change)="updateValue($event, 'oficina', rowIndex, p.entidadId)" *ngIf="editing[rowIndex + '-oficina']">
@@ -167,8 +164,8 @@
         </tbody>
       </table>
   </div>
-  <div>
-      <pagination *ngIf="config.paging" class="pagination-sm float-right mt-2 mr-2" [(ngModel)]="page" [totalItems]="length"
+  <div class="d-flex justify-content-end p-1 mt-2">
+      <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length"
         [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false"
         (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event"></pagination>
 
