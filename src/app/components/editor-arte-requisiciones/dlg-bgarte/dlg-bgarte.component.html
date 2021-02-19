@@ -23,8 +23,8 @@
 </div>
 </div>
 <div class="col-sm-9 col-md-9 col-lg-9">
-<ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown"
-        [disableOnBreakpoints]="false" [disabled]="disabled">
+<ng-scrollbar #scrollable    
+        track="all" [disabled]="disabled">
     <div class="longScroll">
         <div class="row">
             <ng-container *ngFor="let t of files">

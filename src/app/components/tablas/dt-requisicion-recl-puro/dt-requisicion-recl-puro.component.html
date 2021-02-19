@@ -71,8 +71,8 @@
             </tr>
           </thead>
           <tbody>
-            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-              [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+            <ng-scrollbar #scrollable  
+              track="all" [disabled]="disabled">
               <div>
                 <tr (click)="onCellClick(row)" (dblclick)="lgModal15.show()" *ngFor="let row of rows"
                   [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8"

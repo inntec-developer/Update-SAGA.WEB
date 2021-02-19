@@ -12,8 +12,8 @@
           [accept]="['image/png', 'image/jpeg', 'image/jpg', 'application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel', 'application/msword']">
       </label>
     <div *ngIf="(files || []).length > 0 else NotCandidatos" class="d-flex justify-content-between align-items-center align-items-strech mt-2">
-        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-            [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+        <ng-scrollbar #scrollable  
+            track="all" [disabled]="disabled">
             <div class="longScroll">
                 <div class="row">
                     <ng-container *ngFor="let t of files">

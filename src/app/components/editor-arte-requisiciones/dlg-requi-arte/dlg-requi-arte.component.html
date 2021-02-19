@@ -12,7 +12,7 @@
             </div>
           </div>
 
-        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+        <ng-scrollbar #scrollable track="all" [disabled]="disabled">
           <div class="long">  
             <ul class="list-group" *ngFor="let a of filterData; let rowIndex2 = index;">
                 <li class="list-group-item d-flex justify-content-between">

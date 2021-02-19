@@ -112,8 +112,8 @@
                     <h4 class="card-title text-warning">VACANTE {{ticket[0].vBtra | uppercase}} FOLIO {{ticket[0].folio}}</h4>
                     <h5 class="card-title text-info">EXAMEN ASIGNADO {{examen[0].nombre | uppercase}}</h5>
                     <hr>
-                    <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
-                      [disableOnBreakpoints]="false" [disabled]="disabled">
+                    <ng-scrollbar #scrollable    
+                      track="all" [disabled]="disabled">
                       <div style="height: 330px;">
                         <ng-container *ngFor="let p of examen; let ind = index">
                           <p class="list-group text-primary">{{( ind + 1) + '.- ' + p.pregunta}}</p>

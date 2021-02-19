@@ -11,8 +11,8 @@
   <div class="card">
       <div class="card-body">
           <mat-dialog-content>
-              <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
-              [disableOnBreakpoints]="false" [disabled]="disabled">
+              <ng-scrollbar #scrollable    
+              track="all" [disabled]="disabled">
               <div style="height: 400px;">
               <ng-container *ngFor="let p of examen[0].respuestas; let ind = index" >
                 <em class="text-muted">{{( ind + 1)  + '.- ' + p.pregunta}}</em> <span *ngIf="p.tipop > 1" class="text-success"> Respuesta correcta: {{p.respCorrecta}}</span>

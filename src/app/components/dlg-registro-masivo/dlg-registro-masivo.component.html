@@ -215,8 +215,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact"
-                            [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+                        <ng-scrollbar #scrollableEstatus  track="all" [disabled]="disabled">
                             <div style="height: 300px;">
                                 <tr *ngFor="let row of rows; let rowIndex = index"
                                     (dblclick)="onCellClick(row, rowIndex,f)" container="body" placement="bottom"

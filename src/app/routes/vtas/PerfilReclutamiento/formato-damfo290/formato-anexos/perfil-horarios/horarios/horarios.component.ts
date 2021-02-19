@@ -1,11 +1,11 @@
-import { toDate } from '@angular/common/src/i18n/format_date';
+
 import { AfterContentInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { CatalogosService } from '../../../../../../../service';
 import { FormGroup } from '@angular/forms';
 import { PerfilReclutamientoService } from '../../../../../../../service/PerfilReclutamiento/perfil-reclutamiento.service';
 import { SettingsService } from '../../../../../../../core/settings/settings.service';
-import { detectChanges } from '@angular/core/src/render3';
+
 
 @Component({
   selector: 'app-horarios-p',

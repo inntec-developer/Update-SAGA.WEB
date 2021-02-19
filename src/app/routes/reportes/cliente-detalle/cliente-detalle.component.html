@@ -13,8 +13,7 @@
     <div class="card-body mat-elevation-z8">
       <span class="text-muted font-weight-bold float-right text-uppercase mt-2 mr-4">Total de Clientes <span
         class="badge badge-pill badge-success ml-1 mat-elevation-z8">{{registros}}</span></span>
-      <ng-scrollbar #scrollableP [trackX]="true" [trackY]="false" [invertX]="invertX" [invertY]="invertY" [compact]="compact" [shown]="shown"
-        [disableOnBreakpoints]="false" [disabled]="disabled">
+      <ng-scrollbar #scrollableP track="all" [disabled]="disabled">
 
         <div style="width: 100%; height: 400px; overflow: hidden;">
           <table ngClass="{{config.className || ''}}" class="table">
@@ -36,8 +35,8 @@
             </thead>
 
             <tbody>
-              <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
-                [disableOnBreakpoints]="false" [disabled]="disabled">
+              <ng-scrollbar #scrollable    
+                track="all" [disabled]="disabled">
                 <div>
 
                   <tr *ngFor="let item of rows">

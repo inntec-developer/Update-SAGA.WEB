@@ -219,8 +219,8 @@
     </div>
     <div class="modal-body">
       <div class="contenAcerDe">
-        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="true" [compact]="compact"
-          [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+        <ng-scrollbar #scrollable
+           track="all" [disabled]="disabled">
 
           <div class="content-acercaDe" [innerHTML]="text"></div>
 
@@ -246,8 +246,8 @@
     </div>
     <div class="modal-body">
       <!-- <div class="contenAcerDe"> -->
-      <!-- <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="true" [compact]="compact"
-          [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled"> -->
+      <!-- <ng-scrollbar #scrollable
+           track="all" [disabled]="disabled"> -->
       <span class="text-info-modal"><span class="text-info">¿Tienes dudas o sugerencias?</span> contactanos: <strong
           class="text-warning">
           {{settings.app.email }}</strong></span>

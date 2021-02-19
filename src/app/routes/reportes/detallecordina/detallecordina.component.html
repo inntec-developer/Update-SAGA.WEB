@@ -12,8 +12,7 @@
 <div class="card"  *ngIf="General?.length > 0" style="margin-top:80px">
 <div class="card-body mat-elevation-z8">
 
-<ng-scrollbar #scrollableP [trackX]="true" [trackY]="false" [invertX]="invertX" [invertY]="invertY" [compact]="compact" [shown]="shown"
-  [disableOnBreakpoints]="false" [disabled]="disabled">
+<ng-scrollbar #scrollableP track="all" [disabled]="disabled">
 
   <div style="width: 100%; height: 400px; overflow: hidden;">
     <table ngClass="{{config.className || ''}}" class="table">
@@ -35,8 +34,8 @@
       </thead>
      
       <tbody>
-          <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
-          [disableOnBreakpoints]="false" [disabled]="disabled">
+          <ng-scrollbar #scrollable    
+          track="all" [disabled]="disabled">
           <div>
             
             <tr *ngFor="let item of rows" >

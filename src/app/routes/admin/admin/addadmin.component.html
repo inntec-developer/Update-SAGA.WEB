@@ -27,8 +27,8 @@
           </div>
         </div>
         <br/>
-        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="true" [trackY]="true"
-        [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+        <ng-scrollbar #scrollable  
+        track="all" [disabled]="disabled">
         <div class="panel-body" dnd-sortable-container [dropZones]="['demo1']" [sortableData]="ListEntidades">
           <div *ngFor="let p of ListEntidades; let i = index" class="panel panel-defaul" dnd-sortable [sortableIndex]="i" dnd-draggable [dragData]="p" [dragEnabled]="draggable" >
             <div class="media ml-1">

@@ -46,8 +46,8 @@
             </tr>
           </thead>
           <tbody>
-            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-              [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+            <ng-scrollbar #scrollable  
+              track="all" [disabled]="disabled">
               <div *ngIf="!Loading else SpinnerLoading">
                 <tr *ngFor="let row of rows; let i=index" (click)="onCellClick(row)" [class.selected]="row.selected">
                   <td class="text-center">{{row.rfc}}</td>

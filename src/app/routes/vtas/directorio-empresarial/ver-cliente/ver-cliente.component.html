@@ -111,8 +111,8 @@
           </button>
           <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12">
-              <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-                [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+              <ng-scrollbar #scrollable  
+                track="all" [disabled]="disabled">
                 <div>
                   <ul id="rtl_func">
                     <li class="list_root" id="d_{{i}}" *ngFor="let d of Cliente?.direcciones; let i=index;"><span
@@ -149,8 +149,8 @@
 
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12">
-              <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-                [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+              <ng-scrollbar #scrollable  
+                track="all" [disabled]="disabled">
                 <div>
                   <ul id="rtl_func">
                     <li class="list_root" id="t_{{i}}" *ngFor="let t of Cliente?.telefonos; let i=index;"><span
@@ -186,8 +186,8 @@
           </button>
           <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12">
-              <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-                [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+              <ng-scrollbar #scrollable  
+                track="all" [disabled]="disabled">
                 <div>
                   <ul id="rtl_func">
                     <li class="list_root" id="e_{{i}}" *ngFor="let e of Cliente?.correos; let i=index;">
@@ -207,8 +207,8 @@
               </ng-scrollbar>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12">
-              <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-                [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+              <ng-scrollbar #scrollable  
+                track="all" [disabled]="disabled">
                 <div>
                   <ul id="rtl_func">
                     <li class="list_root" id="e_{{i}}" *ngFor="let c of Cliente?.contactos; let i=index;"><span

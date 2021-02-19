@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from "rxjs/Observable";
 import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
-import { DataTableModule } from 'primeng/primeng';
 import { SettingsService } from '../../../core/settings/settings.service';
 declare var $: any;
 

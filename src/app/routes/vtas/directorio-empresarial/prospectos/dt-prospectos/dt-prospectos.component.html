@@ -53,8 +53,8 @@
         </tr>
       </thead>
       <tbody>
-        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-          [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+        <ng-scrollbar #scrollable  
+          track="all" [disabled]="disabled">
           <div *ngIf="!Loading else SpinnerLoading">
             <tr *ngFor="let row of rows; let i=index" (click)="onCellClick(row)" [class.selected]="row.selected">
               <td class="text-center">
@@ -126,8 +126,8 @@
         <p class="text-warning"><i class="fa fa-exclamation-triangle ml-1" aria-hidden="true"></i> DEBE AGREGAR
           RAZ&Oacute;N SOCIAL Y RFC PARA LAS DIRECCIONES FISCALES DADAS DE ALTA</p>
         <div *ngIf="direccionesfiscales.length > 1" class="card card-body">
-          <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-            [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+          <ng-scrollbar #scrollable  
+            track="all" [disabled]="disabled">
             <div style="height: 400px;">
               <ng-container *ngFor="let r of direccionesfiscales; let idx = index">
                 <h6 class="bg-info p-2">{{r.calle}} {{r.numeroInterior}} {{r.numeroExterior}} {{r.colonia}}

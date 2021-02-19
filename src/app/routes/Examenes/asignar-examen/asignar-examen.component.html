@@ -116,7 +116,7 @@
               </tr>
             </thead>
             <tbody>
-              <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+              <ng-scrollbar #scrollableEstatus  track="all"
                 [disabled]="disabled">
                 <div style="height: 250px;">
                   <tr *ngFor="let row of rows" [class.unselectable]="row.examen" [class.select]="row.selected" (click)="onSelect(row)">
@@ -196,7 +196,7 @@
               <span *ngIf="nomExamen">- Examen de {{nom}} / {{nomExamen}}</span>
             </h5>[ngClass]="r.value == 1 ? 'text-success' : 'text-warning'"
             <hr> -->
-            <ng-scrollbar #scrollable [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+            <ng-scrollbar #scrollable  track="all"
               [disabled]="disabled">
               <div style="height: 400px;">
                 <ng-container *ngFor="let p of examenRequi; let ind = index">

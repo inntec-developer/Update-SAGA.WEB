@@ -50,8 +50,8 @@
       </a>
     </div>
     </div>
-    <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="true" [trackY]="true"
-      [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+    <ng-scrollbar #scrollable  
+      track="all" [disabled]="disabled">
       <div class="row mt-4" style="height: 600px">
         <ng-container *ngFor="let t of reporte; let ind = index">
           <div class="col-lg-4 col-md-6">
@@ -70,8 +70,7 @@
                 </div>
               </div>
               <div class="card-body bt himg">
-                <ng-scrollbar #scrollable2 [invertX]="true" [invertY]="invertY" [trackX]="true" [trackY]="false"
-                  [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+                <ng-scrollbar #scrollable2 track="all" [disabled]="disabled">
                   <div style="width: 500px; max-height: 49px; overflow-y: hidden;">
                     <ng-container *ngFor="let r of t.reclutadores">
                       <img container="body" placement="right" tooltip="{{r.nombre}}"

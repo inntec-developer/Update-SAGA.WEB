@@ -73,8 +73,8 @@
                    </thead>
                    <tbody>
                      
-                  <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-                  [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+                  <ng-scrollbar #scrollable  
+                  track="all" [disabled]="disabled">
                        <tr *ngFor="let g of rows; let rowIndex = index; let value = index" [class.selected]="g.selected" (click)="onSelect(g, rowIndex)">
                           <td class="align-middle" style="width:100px">
                             <div class="media">

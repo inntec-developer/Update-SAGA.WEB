@@ -36,6 +36,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 // import {
 //   // MatAutocompleteModule,
 //   // MatButtonModule,
@@ -71,15 +72,13 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 //   // MatToolbarModule,
 //   // MatTooltipModule
 // } from '@angular/material';
-import { AgGridModule } from 'ag-grid-angular';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { CustomFormsModule } from 'ng2-validation';
 import { DndModule } from 'ng2-dnd';
 import { FocusDirective } from '../shared/directives/focus/focus.directive';
 import { HttpClientModule } from '@angular/common/http';
-import { ImageCropperModule } from 'ng2-img-cropper';
-import { ChartsModule as Ng2ChartsModule } from 'ng2-charts/ng2-charts'
+import { ChartsModule as Ng2ChartsModule } from 'ng2-charts/ng2-charts';
 import { Ng2TableModule } from 'ng2-table';
 import { NgModule } from '@angular/core';
 import { NgScrollbarModule } from 'ngx-scrollbar';
@@ -100,14 +99,12 @@ const DEFAULT_FONT_PICKER_CONFIG: FontPickerConfigInterface = {
 };
 @NgModule({
   imports: [
-    AgGridModule,
     BsDatepickerModule.forRoot(),
     ColorPickerModule,
     CustomFormsModule,
     DndModule.forRoot(),
     FileUploadModule,
     HttpClientModule,
-    ImageCropperModule,
     MatAutocompleteModule,
     MatButtonToggleModule,
     MatCardModule,
@@ -146,6 +143,7 @@ const DEFAULT_FONT_PICKER_CONFIG: FontPickerConfigInterface = {
     FontPickerModule,
     ToasterModule,
     FormsModule,
+    MatCheckboxModule,
     CKEditorModule
   ],
   declarations: [
@@ -160,15 +158,13 @@ const DEFAULT_FONT_PICKER_CONFIG: FontPickerConfigInterface = {
       useValue: DEFAULT_FONT_PICKER_CONFIG
     }
   ],
-  exports:[
+  exports: [
     FocusDirective,
-    AgGridModule,
     BsDatepickerModule,
     ColorPickerModule,
     CustomFormsModule,
     DndModule,
     FileUploadModule,
-    ImageCropperModule,
     MatAutocompleteModule,
     MatCardModule,
     MatChipsModule,
@@ -207,7 +203,8 @@ const DEFAULT_FONT_PICKER_CONFIG: FontPickerConfigInterface = {
     FontPickerModule,
     ToasterModule,
     FormsModule,
-    CKEditorModule
+    CKEditorModule,
+    MatCheckboxModule
   ]
 })
 export class ToolsModule { }

@@ -26,8 +26,8 @@
       </div>
     </div>
     <div *ngIf="!verRecl">
-      <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-        [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+      <ng-scrollbar #scrollable  
+        track="all" [disabled]="disabled">
         <div class="long fontLato">
           <div class="list-group mt-1" *ngFor="let r of coord; let rowIndex = index;">
             <button type="button" [disabled]="loading" (click)="Seleccionar(r, rowIndex)"
@@ -49,8 +49,8 @@
             </div>
           </div>
         </div>
-        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-          [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+        <ng-scrollbar #scrollable  
+          track="all" [disabled]="disabled">
           <div class="long mt-1">
             <div class="list-group fontLato" *ngFor="let l of listaAsignar; let rowIndex = index;">
               <button type="button" [disabled]="loading" (click)="onSelect(l, rowIndex)"
@@ -71,8 +71,8 @@
             </div>
           </div>
         </div>
-            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-              [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+            <ng-scrollbar #scrollable  
+              track="all" [disabled]="disabled">
               <div class="long mt-1">
                 <div class="list-group fontLato" *ngFor="let a of listaAsignar2; let rowIndex2 = index;">
                   <button type="button" [disabled]="loading" (click)="onSelect2(a, rowIndex2)"

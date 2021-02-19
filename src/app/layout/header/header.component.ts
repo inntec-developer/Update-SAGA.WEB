@@ -1,9 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Toast, ToasterConfig, ToasterService } from 'angular2-toaster';
-
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ComponentsService } from './../../service/Components/components.service';
 import { MenuService } from '../../core/menu/menu.service';
 import { SettingsService } from '../../core/settings/settings.service';
@@ -27,8 +25,8 @@ export class HeaderComponent implements OnInit {
   public ShowModal: boolean;
   navCollapsed = true; // for horizontal layout
   menuItems = []; // for horizontal layout
-  alertMessage: Array<any> = []
-  allAlertMessage: Array<any> = []
+  alertMessage: Array<any> = [];
+  allAlertMessage: Array<any> = [];
   isNavSearchVisible: boolean;
   @ViewChild('fsbutton') fsbutton;  // the fullscreen button
   NotRead: Array<any> = [];

@@ -3,9 +3,8 @@ import { Chart } from 'chart.js';
 import { ComponentsService } from './../../../service/Components/components.service';
 import { ReportesService } from '../../../service/Reporte/reportes.service';
 import { SettingsService } from '../../../core/settings/settings.service';
-import { ColorPicker } from 'primeng/primeng';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ColorPickerComponent } from 'ngx-color-picker/dist/lib/color-picker.component';
+import { ColorPickerComponent } from 'ngx-color-picker';
 
 @Component({
   selector: 'app-grafica-resumen',

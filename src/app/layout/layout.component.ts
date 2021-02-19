@@ -39,8 +39,7 @@ export class LayoutComponent implements OnInit {
   constructor(
     private settings: SettingsService,
     private toasterService: ToasterService,
-    public _service: ComponentsService,
-    private pop: PopNotificacionesComponent) { }
+    public _service: ComponentsService) { }
 
   ngOnInit() {
     this.print = this.settings.actionPrint;

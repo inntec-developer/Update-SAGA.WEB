@@ -49,8 +49,8 @@
                 </button>
               </div>
             </div>
-                <ng-scrollbar [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
-                [disableOnBreakpoints]="false" [disabled]="disabled">
+                <ng-scrollbar   
+                track="all" [disabled]="disabled">
                 <div class="mt-2" style="height: 350px;">
                 <ng-container *ngFor="let p of rows; let rowIndex = index;">
                   <div class="list-group-item mr-1" [class.selected]="checkedRow[rowIndex] == true"

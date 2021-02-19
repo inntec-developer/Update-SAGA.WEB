@@ -45,7 +45,7 @@
                   la pregunta para seleccionar</small>
               <span class="text-muted">TOTAL DE PREGUNTAS <small class="badge badge-pill badge-success ml-2">{{cuestionario.length}}</small></span>
             </div>
-            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+            <ng-scrollbar #scrollable track="all" [disabled]="disabled">
            <div class="divScroll">
               <ul class="list-group">
               <li class="list-group-item mr-1" *ngFor="let c of cuestionario; let ind = index"
@@ -88,7 +88,7 @@
             <i class="fa fa-trash-o"></i>
           </button>
         </div>
-        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+        <ng-scrollbar #scrollable track="all" [disabled]="disabled">
         <div *ngIf="(preguntas || []).length > 0" class="divScroll">
           <ul class="list-group mr-1" dnd-sortable-container [sortableData]="preguntas">
           <ng-container *ngFor="let p of preguntas; let i = index;">

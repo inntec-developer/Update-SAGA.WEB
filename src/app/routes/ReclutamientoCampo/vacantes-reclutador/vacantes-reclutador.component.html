@@ -46,8 +46,8 @@
         <span class="text-uppercase ml-2">Total de registros
           <span class="badge badge-info ml-1">{{dataSource.length  | numerico}}</span></span>
       </div>
-    <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown"
-      [disableOnBreakpoints]="false" [disabled]="disabled">
+    <ng-scrollbar #scrollableEstatus   
+      track="all" [disabled]="disabled">
       <div style="height: 400px;">
         <table class="table">
           <thead>

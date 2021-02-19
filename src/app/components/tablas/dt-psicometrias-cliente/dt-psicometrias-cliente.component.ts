@@ -1,6 +1,6 @@
 import { AfterContentChecked, Component, Input, OnChanges, OnInit } from '@angular/core';
 
-import { MatTableDataSource } from '@angular/material'
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-dt-psicometrias-cliente',

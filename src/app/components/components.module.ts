@@ -98,7 +98,6 @@ import { InfoCandidatoComponent } from './info-candidato/info-candidato.componen
 import { InfoVacanteComponent } from './info-vacante/info-vacante.component';
 import { InformeVacantesComponent } from './informe-vacantes/informe-vacantes.component';
 import { JornadaLaboralComponent } from './catalogos/jornada-laboral/jornada-laboral.component';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MapsAddressComponent } from './MapsGoogle/maps-address/maps-address.component';
 import { MediovacanteComponent } from './catalogos/mediovacante/mediovacante.component';
 import { ModalidadComponent } from './catalogos/modalidad/modalidad.component';

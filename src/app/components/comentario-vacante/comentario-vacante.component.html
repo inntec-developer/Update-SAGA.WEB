@@ -10,8 +10,7 @@
   </span>
 </div>
 <div class="card card-body">
-  <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact"
-    [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+  <ng-scrollbar #scrollable track="all" [disabled]="disabled">
     <div class="container-coments">
       <div class="list-group-item list-group-item-action" *ngFor="let coment of Comentarios; let rowIndex = index;">
         <div class="media">

@@ -148,8 +148,8 @@
         <div class="card-body mat-elevation-z8">
           <h5 class="text-center text-warning">
             <i class="fa fa-hourglass-half mr-1" aria-hidden="true"></i>EN ESPERA</h5>
-            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
-            [disableOnBreakpoints]="false" [disabled]="disabled">
+            <ng-scrollbar #scrollable    
+            track="all" [disabled]="disabled">
         <ul class="list-group" style="height: 400px;" >
             <li *ngFor="let t of fila" class="list-group-item" [ngClass]="t.movimientoId == 1 ? 'bg-warning' : 'bg-success'">
               <div class="d-flex flex-row justify-content-between align-items-stretch">
@@ -253,8 +253,8 @@
                 </div>
               </div>
               </div>
-            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true" [compact]="compact" [shown]="shown"
-              [disableOnBreakpoints]="false" [disabled]="disabled">
+            <ng-scrollbar #scrollable    
+              track="all" [disabled]="disabled">
 
               <ul class="list-group long">
                 <li *ngFor="let item of dataSource; let ind = index;" class="list-group-item">

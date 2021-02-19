@@ -27,8 +27,7 @@
     <span class="text-uppercase">Total de Folios <span
         class="badge badge-pill badge-info ml-1">{{totalFolios}}</span></span>
       </div>
-    <ng-scrollbar #scrollableP [trackX]="true" [trackY]="false" [invertX]="invertX" [invertY]="invertY"
-      [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+    <ng-scrollbar #scrollableP track="all" [disabled]="disabled">
       <div style="width: 3000px; overflow: hidden;">
         <table class="table">
           <thead>
@@ -47,8 +46,8 @@
             </tr>
           </thead>
           <tbody>
-            <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-              [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+            <ng-scrollbar #scrollable  
+              track="all" [disabled]="disabled">
               <div>
                 <tr *ngFor="let row of rows" [class.confident]="row.confidencial" [class.cancel]="row.estatusId == 8"
                   [class.selected]="row.selected">
@@ -130,8 +129,8 @@
                       <div class="card">
                         <div class="card-body">
                           <ul class="list-group list-group-flush">
-                            <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact"
-                              [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+                            <ng-scrollbar #scrollableEstatus  
+                               track="all" [disabled]="disabled">
                               <div style="height: 200px;">
                                 <li class="list-group-item" *ngFor="let r of row.estatus">
 
@@ -210,8 +209,7 @@
                     <ng-template #popTemplateComenRecl>
                       <div class="card">
                         <div class="card-body" *ngFor="let r of row.comentarios_reclutador">
-                          <ng-scrollbar #scrollableCom [trackX]="true" [trackY]="true" [compact]="compact"
-                            [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+                          <ng-scrollbar #scrollableCom  track="all" [disabled]="disabled">
                             <div style="height: 200px;">
                               <h5 class="text-center text-warning p-2 bg-light">{{r.reclutador}}</h5>
                               <p class="card-text" *ngFor="let c of r.comentario">

@@ -63,8 +63,8 @@
         </div>
     </div>
 </div>
-<ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="true" [trackY]="true" [compact]="compact"
-    [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+<ng-scrollbar #scrollable   
+     track="all" [disabled]="disabled">
     <div class="row" style="height: 400px">
         <ng-container *ngFor="let t of gerente; let ind = index">
             <div class="col-lg-4 col-md-6">
@@ -83,8 +83,7 @@
                     </div>
 
                     <div class="card-body bt himg" >
-                        <ng-scrollbar #scrollable2 [invertX]="true" [invertY]="invertY" [trackX]="true" [trackY]="false" [compact]="compact"
-                        [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+                        <ng-scrollbar #scrollable2 track="all" [disabled]="disabled">
                         <div style="width: 300px; max-height: 49px; overflow-y: hidden;" *ngIf="t.resumen.length > 0">
                             <ng-container *ngFor="let r of t.resumen">
                                 <div class="inline" container="body" placement="right" tooltip="{{r.nombre}}">

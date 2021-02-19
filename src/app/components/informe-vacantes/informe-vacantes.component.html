@@ -72,8 +72,8 @@
           </tr>
         </thead>
         <tbody>
-          <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-            [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+          <ng-scrollbar #scrollable  
+            track="all" [disabled]="disabled">
             <div>
               <tr *ngFor="let row of rowsInfo" (click)="onCellClick(row)" [class.bg-primary-light]="row.selected">
                 <td class="text-center"> {{row.folio}}</td>

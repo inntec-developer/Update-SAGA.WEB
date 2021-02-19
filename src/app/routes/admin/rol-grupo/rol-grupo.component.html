@@ -31,8 +31,8 @@
                 </tr>
             </thead>
             <tbody>
-            <ng-scrollbar #scrollable2 [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-                [compact]="compact" [disableOnBreakpoints]="false" [disabled]="disabled">
+            <ng-scrollbar #scrollable2  
+                 track="all" [disabled]="disabled">
                 <div>
               <tr container="body" placement="bottom" tooltip="Doble click para seleccionar" *ngFor="let g of rows; let i = index" (dblclick)="onSelect(g)"
                 [class.selected]="g.selected">
@@ -101,8 +101,8 @@
         </div>
     
 <br/>
-<ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-[compact]="compact" [disableOnBreakpoints]="false" [disabled]="disabled">
+<ng-scrollbar #scrollable  
+ track="all" [disabled]="disabled">
         <div class="panel-body p-2" style="height: 560px;">
             <p class="text-danger" *ngIf="!ListaRG.length">No se ha seleccionado grupo</p>
           <div *ngFor='let sel of ListaRG'>

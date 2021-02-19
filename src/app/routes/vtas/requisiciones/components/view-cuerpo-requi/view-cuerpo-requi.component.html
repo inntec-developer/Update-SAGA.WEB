@@ -324,8 +324,8 @@
     <em *ngIf="!verComent" class="fa fa-caret-down fa-2x" aria-hidden="true" (click)="verComent=true"></em>
   </div>
   <div *ngIf="verComent" class="d-flex justify-content-center mt-2">
-    <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-      [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+    <ng-scrollbar #scrollable  
+      track="all" [disabled]="disabled">
       <div class="container-coments">
         <div class="list-group-item list-group-item-action" *ngFor="let coment of Comentarios; let rowIndex = index;">
           <div class="media">

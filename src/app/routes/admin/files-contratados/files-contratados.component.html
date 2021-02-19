@@ -82,8 +82,8 @@
         </tr>
       </thead>
       <tbody>
-        <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown"
-          [disableOnBreakpoints]="false" [disabled]="disabled">
+        <ng-scrollbar #scrollableEstatus   
+          track="all" [disabled]="disabled">
           <div style="height: 350px;">
             <tr *ngFor="let row of rowsInfo; let rowIndex = index" (click)="onCellClick(row)" (dblclick)="reporte == 1 ? $event.stopPropagation() : capturaDtos()"
               [class.bg-primary]="row.selected">

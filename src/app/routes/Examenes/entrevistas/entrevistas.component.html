@@ -49,8 +49,8 @@
     </thead>
 
     <tbody>
-      <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-        [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+      <ng-scrollbar #scrollable  
+        track="all" [disabled]="disabled">
         <div style="height: 410px">
           <tr *ngFor="let row of rows; let rowIndex = index" [class.bg-info-light]="row.selected"
             (click)="onSelect(row)">
@@ -88,8 +88,8 @@
       <div class="modal-body">
         <div class="card">
           <div class="card-body">
-            <ng-scrollbar #scrollable [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown"
-              [disableOnBreakpoints]="false" [disabled]="disabled">
+            <ng-scrollbar #scrollable   
+              track="all" [disabled]="disabled">
               <div class="d-flex justify-content-center">
                 <p>{{element.descripcion | uppercase}}</p>
               </div>

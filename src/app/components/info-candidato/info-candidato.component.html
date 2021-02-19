@@ -127,8 +127,8 @@
               </tr>
             </thead>
             <tbody>
-              <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-                [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+              <ng-scrollbar #scrollable  
+                track="all" [disabled]="disabled">
                 <div style="height: 250px;">
                   <tr *ngFor="let row of rows_p" class="text-muted">
                     <td class="text-center"> {{row.folio}} </td>
@@ -727,8 +727,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <ng-scrollbar #scrollable [invertX]="invertX" [invertY]="invertY" [trackX]="false" [trackY]="true"
-                      [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false" [disabled]="disabled">
+                        <ng-scrollbar #scrollable  
+                      track="all" [disabled]="disabled">
                       <div style="height: 318px;">
                       <tr (click)="onCellClick_v(row)" (dblclick)="lgModal.show()" *ngFor="let row of rows"
                         [class.confident]="row.confidencial"

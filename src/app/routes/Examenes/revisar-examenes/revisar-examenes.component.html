@@ -24,7 +24,7 @@
         </div>
       </div>
       <hr>
-   <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+   <ng-scrollbar #scrollableEstatus  track="all"
    [disabled]="disabled">
    <div style="height: 300px;">
    <div id="accordion">
@@ -41,7 +41,7 @@
 
         <div *ngIf="row.verRow" id="collapseOne" class="collapse show">
           <div class="card-body">
-              <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+              <ng-scrollbar #scrollableEstatus  track="all"
               [disabled]="disabled">
               <div style="height: 300px;">
               <table class="table">

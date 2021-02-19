@@ -129,7 +129,6 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     CheckallDirective,
     VectormapDirective,
     NowDirective,
-    ScrollableDirective,
     JqcloudDirective,
     NowDirective,
     ScrollableDirective,

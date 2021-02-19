@@ -39,7 +39,7 @@
         </tr>
       </thead>
       <tbody>
-        <ng-scrollbar #scrollableEstatus [trackX]="true" [trackY]="true" [compact]="compact" [shown]="shown" [disableOnBreakpoints]="false"
+        <ng-scrollbar #scrollableEstatus  track="all"
           [disabled]="disabled">
           <div>
             <tr *ngFor="let row of rowsInfo">
